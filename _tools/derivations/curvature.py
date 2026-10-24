@@ -8125,6 +8125,92 @@ def morris_thorne(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the perturbed Friedmann universe
+
+def bardeen_perturbations(ck, src):
+    """Both scalars across the well of the flat universe of dust the spacetime diagrams declare,
+    L = 1, at the moment eta = L of the embedding diagram, where a = 1, a' = 2 and a'' = 2, along
+    the line y = z = 0 through the centre of the well, with Friedmann's scalars of the same universe
+    beside them.
+
+    With the potentials constant in time the published scalars of the flat longitudinal chart are
+    R = 12(1 - 2 Phi) + 2 lap Phi and K = 240(1 - 4 Phi) + 80 lap Phi there, so on the line
+    R = 12 + (18 - 4x^2) e^(-x^2)/5 and K = 240 + (144 - 32x^2) e^(-x^2). For a = eta^2 the published
+    pressure perturbation vanishes with the potentials constant, so the dust has no pressure and
+    R = 8 pi G rho/c^2, the trace of Einstein's equations: R over Friedmann's 12 is the published
+    G^eta_eta over Friedmann's, one plus the density contrast, 1.3 at the centre. Checked here: both
+    closed forms against the published scalars, Friedmann's values from the published conformal
+    chart of frw at k = 0, the pressure perturbation, the density contrast, the values the caption
+    states, and every value inside its panel."""
+    name = "bardeen_perturbations"
+    functions = dict(nr.BP_FLAT)
+    held = {"eta": 1.0, "y": 0.0, "z": 0.0}
+    coords = ["x", "eta", "y", "z"]
+    K = Held(Published(src, name, "longitudinal", "kretschmann", coords, [], functions=functions), held)
+    R = Held(Published(src, name, "longitudinal", "ricci_scalar", coords, [], functions=functions), held)
+    G = Held(Published(src, name, "longitudinal", "einstein_tensor", coords, [], ("\\eta", "\\eta"),
+                       functions=functions), held)
+    P = Held(Published(src, name, "longitudinal", "einstein_tensor", coords, [], ("x", "x"),
+                       functions=functions), held)
+    frw = {"a": "eta**2"}
+    K_f = Held(Published(src, "frw", "conformal_spherical", "kretschmann", ["r", "eta"], ["k"], functions=frw),
+               {"eta": 1.0})
+    R_f = Held(Published(src, "frw", "conformal_spherical", "ricci_scalar", ["r", "eta"], ["k"], functions=frw),
+               {"eta": 1.0})
+    G_f = Held(Published(src, "frw", "conformal_spherical", "einstein_tensor", ["r", "eta"], ["k"], ("\\eta", "\\eta"),
+                         functions=frw), {"eta": 1.0})
+    xs = np.linspace(-3, 3, SAMPLES)
+    e = np.exp(-xs * xs)
+    worst = max(np.max(np.abs(R(xs) - (12 + (18 - 4 * xs * xs) * e / 5))),
+                np.max(np.abs(K(xs) / (240 + (144 - 32 * xs * xs) * e) - 1)))
+    ck(f"{name} R and K on the line are 12 + (18 - 4x^2)e^(-x^2)/5 and 240 + (144 - 32x^2)e^(-x^2)", worst < 1e-12,
+       f"worst {worst:.1e}")
+    ck(f"{name} Friedmann's R and K at eta = L are 12 and 240",
+       float(R_f.exact([0.0, 0.0])) == 12 and float(K_f.exact([0.0, 0.0])) == 240)
+    ck(f"{name} far from the well both are Friedmann's",
+       abs(float(R.exact([30.0])) - 12) < 1e-30 and abs(float(K.exact([30.0])) - 240) < 1e-30)
+    ck(f"{name} the published pressure perturbation G^x_x vanishes at eta = L for the declared dust",
+       float(np.max(np.abs(P(xs)))) < 1e-12)
+    contrast = G(xs) / float(G_f.exact([0.0, 0.0]))
+    ck(f"{name} R over Friedmann's is G^eta_eta over Friedmann's, one plus the density contrast",
+       float(np.max(np.abs(R(xs) / 12 - contrast))) < 1e-12)
+    ck(f"{name} at the centre R = 15.6, K = 384 and the density 1.3 times the mean",
+       abs(float(R.exact([0.0])) - 15.6) < 1e-40 and abs(float(K.exact([0.0])) - 384) < 1e-40
+       and abs(contrast[SAMPLES // 2] - 1.3) < 1e-12)
+    x_axis = axis("$x/L$", -3, 3)
+    scales = {"K": {"kind": "linear", "from": 200, "to": 400},
+              "R": {"kind": "linear", "from": 10, "to": 16}}
+    panels = [{"id": p, "name": label, "aspect": 2, "scale": scales[p], "ticks": value_ticks(scales[p])}
+              for p, label in (("K", "$K\\,L^4$"), ("R", "$R\\,L^2$"))]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    curves = []
+    for p, fn, ref in (("K", K, K_f), ("R", R, R_f)):
+        curves += line_curves(ck, name, p, p, fn, "x", x_axis, scales[p], PLOT_W / 2, {})
+        curves += line_curves(ck, f"{name} Friedmann", p, "reference", ref, "r", x_axis, scales[p], PLOT_W / 2, {"k": 0})
+        above, below = beyond(fn, x_axis, scales[p], [])
+        ck(f"{name} {p} stays inside its panel", not above and not below)
+    k_clip = "We draw $K\\,L^4$ on a linear scale from $200$ to $400$, with every value inside the panel."
+    r_clip = "We draw $R\\,L^2$ on a linear scale from $10$ to $16$, with every value inside the panel."
+    return [{
+        "id": "well", "label": "Across the well", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                   ["line", "reference", "Friedmann's universe of the same dust with no well"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the universe along the line through the centre "
+            "of the well ($y = z = 0$) at the moment $\\eta = L$, where $a = 1$, beside Friedmann's universe of the "
+            "same dust with no well.",
+            "$K$ is $240/L^4$ far from the well, Friedmann's value for the same dust, and $384/L^4$ at its centre.",
+            "The dust has no pressure, so $R = 8\\pi G\\rho/c^2$ follows its density $\\rho$: $12/L^2$ far from the well, "
+            "the mean density of the universe at this moment, and $15.6/L^2$ at the centre, 30 percent above it.",
+        ],
+        "ricci_sentences": [[2, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$L = 1$, the width of the well and the unit of length, at $\\eta = L$ with $|x| \\le 3L$.",
+        "input": nr.BP_FLAT_INPUT,
+        "clip": k_clip + " " + r_clip,
+    }]
+
+
 # ---------------------------------------------------------------- the extreme Kerr throat
 
 def near_horizon_extreme_kerr(ck, src):
@@ -11034,6 +11120,7 @@ def place_legends(ck, metric_id, view):
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
+    "bardeen_perturbations": bardeen_perturbations,
     "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,

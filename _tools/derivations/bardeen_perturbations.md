@@ -57,3 +57,21 @@ The two metrics agree to first order in every component, so Bardeen's potentials
 Every value is printed by `bardeen_perturbations_grouped` as a sum over the products of the scale factor and its derivatives, each times the sum of its terms in the potentials, and by `bardeen_perturbations_order` with the background first.
 The Friedmann universe's own term then stands with its first order correction beside it: $R = 6(1 - 2\Phi)a''/a^3 - \dots$ and $K = 12(1 - 4\Phi)a''^2/a^6 - \dots$, and at $\Phi = \Psi = 0$ each value is the published conformal chart of `frw` at $k = 0$, or at its $k$ for the curved chart.
 $G_{xy} = \partial_x\partial_y(\Psi - \Phi)$, so a stress with no off diagonal part gives $\Phi = \Psi$, and $G_{\eta\eta} = 3a'^2/a^2 - 6\partial_\eta\Psi\,a'/a + 2\nabla^2\Psi$ is the time equation, Poisson's with the expansion's two terms.
+
+## Step 6: the drawings
+
+Every drawing takes the width $L$ of one well as its unit of length, and a Gaussian well of depth $1/10$ held still in comoving coordinates, $\Phi = \Psi = -\tfrac{1}{10}e^{-(x^2 + y^2 + z^2)/L^2}$, `nr.BP_WELL`.
+In the flat chart the universe is dust, $a = \eta^2/L^2$, Ma and Bertschinger's $a \propto \tau^2$ of the matter era, and a constant potential is Mukhanov, Feldman and Brandenberger's growing mode, their (17.1) and (17.2), $\Phi = A(\mathbf{x})$.
+With $\Phi = \Psi$ constant and $a = \eta^2$ the published pressure perturbation vanishes, since $2\mathcal{H}' + \mathcal{H}^2 = 0$ for $\mathcal{H} = 2/\eta$, so the declared universe is a solution for dust, which `curvature.py` checks on the published $G^x{}_x$.
+The curved chart is drawn at $k = 1/4L^2$, a closed universe of dust, $a = 1 - \cos(\eta/2L)$, with the same well held still; there a constant potential is no solution, and the view says only what the metric does with the well declared.
+The synchronous chart is drawn as the flat universe and its well carried along Mukhanov, Feldman and Brandenberger's (3.25) and (3.26): $\int a\Phi\,d\eta = \Phi\eta^3/3$, so $E = -\int d\eta\,a^{-1}\int a\Phi\,d\eta = -\eta^2\Phi/6$ and $\psi = \Phi + (a'/a^2)\int a\Phi\,d\eta = \tfrac{5}{3}\Phi$; the convention's formulas then give $\Phi_A = \Phi/3 + 2\Phi/3 = \Phi$ and $\Phi_H = -\tfrac{5}{3}\Phi + \tfrac{2}{3}\Phi = -\Phi$.
+
+The spacetime diagrams draw the plane of $\eta$ and $x$ through the centre of the well, $y = z = 0$, from $\eta = 0$ to $3L$ and $x$ from $-1.5L$ to $1.5L$.
+The two longitudinal views are checked by `null_rays.py --verify` against $\eta \pm x_*(x)$, with $x_*$ the quadrature `_bp_well` of $\sqrt{(1 - 2\Psi)/(1 + 2\Phi)}/\Omega$; on 23 October 2026 both families held to $3 \times 10^{-12}$ and $1.4 \times 10^{-11}$.
+The synchronous chart has no such form, since its metric on the plane depends on $\eta$ and $x$ together; its coordinates are first order alone, and $g_{xx}$ at the centre, $1 + 1/3 - \eta^2/15$ in units of $a^2$, stays above $0.7$ on the plane drawn.
+
+The embedding diagram draws the plane $z = 0$ at $\eta = L$, where $a = 1$, as a surface of revolution about the centre of the well, $\rho = s\sqrt{1 - 2\Psi}$, out to $s = 3L$; it rises by $0.62\,L$, and the rise goes as the square root of the depth of the well.
+Its moment is the line $\eta = L$ on the flat view, and on the synchronous view the curve $\eta(1 + e^{-x^2}/30) = 1$, the same moment carried along $\eta \to \eta + \partial_\eta E$; the curved view draws another spacetime, which `slices.HIDDEN` says.
+
+The curvature figure draws $K$ and $R$ along the same line at the same moment, beside the published scalars of `frw` at $k = 0$ and $a = \eta^2$: $R = 12 + (18 - 4x^2)e^{-x^2}/5$ and $K = 240 + (144 - 32x^2)e^{-x^2}$ in units of $L$.
+For dust $R = 8\pi G\rho/c^2$, so $R/12$ is the density over its mean, $1.3$ at the centre, which equals the published $G^\eta{}_\eta$ over Friedmann's.

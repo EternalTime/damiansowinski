@@ -5108,7 +5108,10 @@ class Slices(unittest.TestCase):
     # The drawings on which no moment of the spacetime's embedding lies: other universes,
     # another cloud, the time reversed shell, and cylinders where no surface of constant t is
     # a moment of space.
-    HIDDEN = {# The black ring and the black half plane of bubbling anti-de Sitter space, other members of the
+    HIDDEN = {# The closed universe of the perturbed Friedmann universe's curved chart, another spacetime than
+              # the flat one whose moment is embedded.
+              "bardeen_perturbations/longitudinal_curved/well",
+              # The black ring and the black half plane of bubbling anti-de Sitter space, other members of the
               # family than the black disc whose plane of droplets is embedded.
               "bubbling_ads/rings/ring_axis", "bubbling_ads/plane_wave/axis", "conformal bubbling_ads/rings",
               # The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
@@ -5814,6 +5817,14 @@ class Slices(unittest.TestCase):
                     return sign * -math.inf
                 return sign * (math.log(max((X - 1) / (X + 1), 1e-300)) / 4 + math.atan(X) / 2)
             return Y_of, list(self.reach(surface))
+        if key.startswith("bardeen_perturbations/"):
+            # The perturbed Friedmann universe's moment eta = L, L = 1, where a = 1: a line in the longitudinal
+            # chart, and in the synchronous chart of the same flat universe of dust the curve
+            # eta (1 + e^(-x^2)/30) = 1, from eta -> eta + d_eta E with E = eta^2 e^(-x^2)/60.
+            hi = self.reach(surface)[1]
+            if key.endswith("/synchronous/well"):
+                return (lambda X: 1 / (1 + math.exp(-X * X) / 30)), [-hi, hi]
+            return (lambda X: 1.0), [-hi, hi]
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]

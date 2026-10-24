@@ -1730,6 +1730,26 @@ EIH_BINARY = {
     "V_2": f"sqrt(29)/40*cos({_EIH_PHASE})*(1/{_EIH_R[0]} - 1/{_EIH_R[1]})",
     "V_3": "0",
 }
+# The perturbed Friedmann universe, in units of the width L of its one well: dust, a = (eta/L)^2,
+# and a Gaussian well of depth 1/10 held still in comoving coordinates, which in the matter era is
+# the growing mode; the closed chart takes k = 1/4L^2 and closed dust; the synchronous chart is the
+# same flat universe carried along eta -> eta - d_eta E and x^i -> x^i - d_i E, psi = 5 Phi/3 and
+# E = -eta^2 Phi/6, which bardeen_perturbations.md derives.
+BP_WELL = "-exp(-(x**2 + y**2 + z**2))/10"
+BP_FLAT = {"a": "eta**2", "Phi": BP_WELL, "Psi": BP_WELL}
+BP_CLOSED = {"a": "1 - cos(eta/2)", "Phi": BP_WELL, "Psi": BP_WELL}
+BP_SYNCHRONOUS = {"a": "eta**2", "psi": "-exp(-(x**2 + y**2 + z**2))/6", "E": "eta**2*exp(-(x**2 + y**2 + z**2))/60"}
+BP_WELL_TEXT = "\\Phi = \\Psi = -\\tfrac{1}{10}e^{-(x^2 + y^2 + z^2)/L^2}"
+BP_FLAT_INPUT = ("A flat universe of dust, $a = \\eta^2/L^2$, with one well of width $L$ held still in comoving "
+                 "coordinates, $" + BP_WELL_TEXT + "$; in the matter era the potentials of a growing "
+                 "perturbation do not change with time.")
+BP_CLOSED_INPUT = ("A closed universe of dust, $k = 1/4L^2$ and $a = 1 - \\cos(\\eta/2L)$, with one well of width "
+                   "$L$ held still in comoving coordinates, $" + BP_WELL_TEXT + "$.")
+BP_SYNCHRONOUS_INPUT = ("The flat universe of dust, $a = \\eta^2/L^2$, and its well of width $L$ carried into "
+                        "coordinates that move with the dust: $\\psi = -\\tfrac{1}{6}e^{-(x^2 + y^2 + z^2)/L^2}$ and "
+                        "$E = \\eta^2e^{-(x^2 + y^2 + z^2)/L^2}/60$, so that Bardeen's potentials are $\\Phi_A = "
+                        "-\\Phi_H = -\\tfrac{1}{10}e^{-(x^2 + y^2 + z^2)/L^2}$.")
+
 EIH_BINARY_INPUT = ("Two bodies of equal mass, $m = GM/c^2$ each, on a circular orbit about the origin in the plane "
                     "$z = 0$, a distance $d = 20\\,m$ apart, turning at the angular velocity $\\Omega$ that the "
                     "equations of motion of Einstein, Infeld, and Hoffmann set to first order in $m/d$, "
@@ -3991,6 +4011,17 @@ DIAGRAMS = [
     Diagram("eih_many_bodies", "standard", "axis", "the axis of the orbit", ("t", "z"), (-30, 30, -30, 30),
             "$z/m$", "$ct/m$", {}, {"x": "0", "y": "0"}, families=SIDEWAYS,
             functions=EIH_BINARY, input=EIH_BINARY_INPUT),
+    # The perturbed Friedmann universe through the centre of its one well, in each of its three charts,
+    # from the big bang of its dust at eta = 0 to eta = 3L.
+    Diagram("bardeen_perturbations", "longitudinal", "well", "through the well", ("\\eta", "x"), (-1.5, 1.5, 0, 3),
+            "$x/L$", "$\\eta/L$", {}, {"y": "0", "z": "0"}, tau="eta", families=SIDEWAYS,
+            functions=BP_FLAT, input=BP_FLAT_INPUT),
+    Diagram("bardeen_perturbations", "longitudinal_curved", "well", "through the well", ("\\eta", "x"),
+            (-1.5, 1.5, 0, 3), "$x/L$", "$\\eta/L$", {"k": "1/4"}, {"y": "0", "z": "0"}, tau="eta",
+            families=SIDEWAYS, functions=BP_CLOSED, input=BP_CLOSED_INPUT),
+    Diagram("bardeen_perturbations", "synchronous", "well", "through the well", ("\\eta", "x"), (-1.5, 1.5, 0, 3),
+            "$x/L$", "$\\eta/L$", {}, {"y": "0", "z": "0"}, tau="eta", families=SIDEWAYS,
+            functions=BP_SYNCHRONOUS, input=BP_SYNCHRONOUS_INPUT),
     Diagram("israel_wilson_perjes", "cylindrical", "midplane", "the midplane", ("t", "\\rho"), (1, 7, -3, 3),
             "$\\rho/m$", "$ct/m$", {}, {"z": "0"}, functions=IWP_TWO, input=IWP_TWO_INPUT, quotient="phi",
             cone=BTZ_CONE),
@@ -9274,6 +9305,33 @@ CAPTIONS = {
         "The cones are narrowest at $z = 0$, midway between the bodies, where $U = 1/5$ and light moves at "
         "$0.70\\,c$ in $t$, and they open toward $45°$ along the axis. On the axis $\\partial_t^2\\chi$ vanishes, so this plane is the same in both charts. The bodies circle in the plane "
         "$z = 0$, ten $m$ from the axis on either side.",
+    ],
+    ("bardeen_perturbations", "longitudinal", "well"): [
+        "The plane of $\\eta$ and $x$ through the centre of the well ($y = z = 0$), which light launched along "
+        "$x$ never leaves, since the well is symmetric about it. Its rays are null geodesics with $dx/d\\eta = "
+        "\\pm\\sqrt{(1 + 2\\Phi)/(1 - 2\\Psi)}$, from which the scale factor drops out.",
+        "The cones are narrowest at the centre of the well, where light crosses $0.82\\,L$ of $x$ in each $L$ of "
+        "$\\eta$, and they open toward $45°$ outside it. A ray that crosses from $x = -1.5\\,L$ to $1.5\\,L$ "
+        "takes $0.37\\,L$ more conformal time than it would with no well. The Kretschmann scalar diverges at "
+        "$\\eta = 0$, the big bang of the dust.",
+    ],
+    ("bardeen_perturbations", "longitudinal_curved", "well"): [
+        "The plane of $\\eta$ and $x$ through the centre of the well ($y = z = 0$), which light launched along "
+        "$x$ never leaves, since the well is symmetric about it. Its rays are null geodesics with $dx/d\\eta = "
+        "\\pm\\Omega\\sqrt{(1 + 2\\Phi)/(1 - 2\\Psi)}$, with $\\Omega = 1 + x^2/16L^2$ on the line.",
+        "The cones are narrowest at the centre of the well and widen outward as $\\Omega$ grows, to $1.12\\,L$ of "
+        "$x$ in each $L$ of $\\eta$ at $x = 1.5\\,L$, since the comoving $x$ of a closed space measures less "
+        "distance further from the centre. The Kretschmann scalar diverges at $\\eta = 0$, the big bang of the "
+        "dust.",
+    ],
+    ("bardeen_perturbations", "synchronous", "well"): [
+        "The plane of $\\eta$ and $x$ through the centre of the well ($y = z = 0$), which light launched along "
+        "$x$ never leaves, since the well is symmetric about it. Its rays are null geodesics with $dx/d\\eta = "
+        "\\pm(1 - 2\\psi + 2\\partial_x^2E)^{-1/2}$.",
+        "These coordinates move with the dust, which falls toward the centre of the well, so the same step in "
+        "$x$ there spans less and less distance as $\\eta$ grows. The cones at the centre open from "
+        "$0.87\\,L$ of $x$ in each $L$ of $\\eta$ at the big bang to $1.17\\,L$ at $\\eta = 3L$. The "
+        "Kretschmann scalar diverges at $\\eta = 0$, the big bang of the dust.",
     ],
     ("eih_many_bodies", "standard", "axis"): [
         "The plane of $t$ and $z$ on the axis of the orbit ($x = y = 0$) of two equal bodies, which light launched "
@@ -15888,6 +15946,20 @@ def _iwp_midplane(rho):
     return np.vectorize(lambda x: quad(integrand, 1.0, x, epsabs=1e-12, epsrel=1e-12)[0])(np.asarray(rho, dtype=float))
 
 
+def _bp_well(x, k=0.0):
+    """The tortoise coordinate through the centre of the perturbed Friedmann universe's declared well,
+    L = 1: the quadrature from 0 of sqrt((1 - 2 Psi)/(1 + 2 Phi))/Omega with Phi = Psi = -e^(-x^2)/10
+    and Omega = 1 + k x^2/4, which a null ray of the plane y = z = 0 keeps as eta -/+ it."""
+    from scipy.integrate import quad
+
+    def slow(v):
+        well = np.exp(-v * v) / 10
+        return np.sqrt((1 + 2 * well) / (1 - 2 * well)) / (1 + k * v * v / 4)
+
+    one = np.vectorize(lambda v: quad(slow, 0, v, epsabs=1e-13, epsrel=1e-13)[0])
+    return one(np.asarray(x, dtype=float))
+
+
 def _eih_axis(z):
     """The tortoise coordinate of the axis of Einstein, Infeld and Hoffmann's two equal bodies, m = 1 at
     ten m from the axis: the quadrature from 0 of sqrt((1 + 2U)/(1 - 2U + 2U^2 - 2 psi)) with
@@ -16312,6 +16384,10 @@ CLOSED_FORMS = {
     ("israel_wilson_perjes", "spherical", "radial"):
         (lambda t, r: t + r + 2 * np.log(r - 1) - 1.25 / (r - 1), lambda t, r: t - r - 2 * np.log(r - 1) + 1.25 / (r - 1),
          lambda t, r: r > 1.05),
+    ("bardeen_perturbations", "longitudinal", "well"):
+        (lambda e, x: e + _bp_well(x), lambda e, x: e - _bp_well(x), None),
+    ("bardeen_perturbations", "longitudinal_curved", "well"):
+        (lambda e, x: e + _bp_well(x, k=0.25), lambda e, x: e - _bp_well(x, k=0.25), None),
     ("eih_many_bodies", "harmonic", "axis"):
         (lambda t, z: t + _eih_axis(z), lambda t, z: t - _eih_axis(z), None),
     ("eih_many_bodies", "standard", "axis"):

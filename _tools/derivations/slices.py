@@ -1212,6 +1212,20 @@ def _kt_eta(t):
     return float(t * hyp2f1(1 / 3, 0.5, 1.5, -t * t))
 
 
+# The moment eta = L of the perturbed Friedmann universe's embedding diagram, L = 1, where a = 1.
+BP_MOMENT = 1.0
+
+
+def bp_synchronous(m):
+    """The moment eta = L of the longitudinal gauge, L = 1, in the synchronous chart of the same flat
+    universe of dust and its well, which the spacetime diagrams declare: the longitudinal time is the
+    synchronous time plus d_eta E, with E = eta^2 e^(-x^2)/60 on the line y = z = 0, so the moment is
+    eta (1 + e^(-x^2)/30) = L, to the first order both charts keep, across the embedding's reach."""
+    lo, hi = m.reach("longitudinal", "x")
+    x = np.linspace(-hi, hi, N)
+    return [np.column_stack([BP_MOMENT / (1.0 + np.exp(-x * x) / 30.0), x])]
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -3050,6 +3064,10 @@ FLAT = {
     ("bonnor_charged_dust", "spheroid_interior", "axis"): lambda: [
         Mark(moments("bonnor_charged_dust", "spheroid", label="$t = 0$, $u = 0$")[0], points=[(0.0, 0.0)])],
     ("bonnor_charged_dust", "spheroid_exterior", "axis"): lambda: [],
+    ("bardeen_perturbations", "longitudinal", "well"): lambda: one(
+        "bardeen_perturbations", lambda m: across(BP_MOMENT, *m.reach("longitudinal", "x")), label="$\\eta = L$"),
+    ("bardeen_perturbations", "synchronous", "well"): lambda: one(
+        "bardeen_perturbations", bp_synchronous, label="$\\eta = L$"),
     ("eih_many_bodies", "harmonic", "axis"): lambda: one(
         "eih_many_bodies", lambda m: across(0.0, *m.reach("harmonic", "y")), view_id="midplane"),
     ("eih_many_bodies", "standard", "axis"): lambda: one(
@@ -3591,6 +3609,7 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("bardeen_perturbations", "longitudinal_curved", "well"): "a closed universe of dust, another spacetime than the flat universe whose moment is embedded",
     ("bubbling_ads", "rings"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
     ("bubbling_ads", "rings", "ring_axis"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
     ("bubbling_ads", "plane_wave", "axis"): "the black half plane, another member of the family than the black disc whose plane of droplets is embedded",

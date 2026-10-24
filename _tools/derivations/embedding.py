@@ -9058,6 +9058,39 @@ def majumdar_papapetrou(ck, src):
     return views
 
 
+def bardeen_perturbations(ck, src):
+    """One moment, eta = L, of the flat universe of dust and its one well that the spacetime diagrams
+    declare, L = 1: a = 1 there, and the plane z = 0 has the metric (1 - 2 Psi)(dx^2 + dy^2) with
+    Psi = -e^(-s^2)/10 at the distance s from the centre of the well, so turned about the line
+    through the centre along z it is a surface of revolution with rho = s sqrt(1 - 2 Psi) and
+    dz/ds = sqrt(1 - 2 Psi - (d rho/ds)^2), real at every s since with f = 1 - 2 Psi the ratio
+    s f'/2f lies between -2 and 0. It is flat at the centre and far from the well, and is drawn out to
+    s = 3L, past the edges of the diagrams' planes."""
+    sl = Slice(src, "bardeen_perturbations", "longitudinal", "x", None, {"eta": 1.0, "z": 0},
+               functions=dict(nr.BP_FLAT), turn="y")
+    top = 3.0
+    size = 2 * float(sl.rho_at(top))
+    radii = (0.5, 1.0, 2.0)
+    plane = Piece("well", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the centre of the well"),
+                   ("edge", "the surface runs on, flat, beyond the well")),
+                  [(r, "r", None) for r in radii] + [(top, "r", None)], size)
+    ck.isometry("perturbed Friedmann universe, the plane z = 0 through the well at eta = L", plane)
+    ck.radius("perturbed Friedmann universe, the well, rho = s sqrt(1 + e^(-s^2)/5)", plane,
+              lambda r: r * np.sqrt(1 + np.exp(-r * r) / 5), size)
+    sheet = Surface([plane])
+    fig = figure_of([sheet], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$s = L$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$3L$")
+    fig.legend("fill", "cover", "the plane $z = 0$ at $\\eta = L$, through the centre of the well")
+    fig.legend("line", "r", "$s$ constant, at $L/2$, $L$, $2L$ and $3L$")
+    fig.legend("line", "meridian", "the angle about the centre of the well constant, every $15°$")
+    return [view("well", "Through the well", "$L$", [sheet], fig.done(),
+                 settings="$L = 1$, the unit of every length, at the moment $\\eta = L$, where $a = 1$, so that "
+                          "$\\Psi = -\\tfrac{1}{10}e^{-s^2/L^2}$ on the plane $z = 0$, with $s = \\sqrt{x^2 + y^2}$.",
+                 input=nr.BP_FLAT_INPUT)]
+
+
 def eih_many_bodies(ck, src):
     """One moment, t = 0, of the binary the spacetime diagrams declare: two bodies of mass m = 1 at
     x = +-10m on a circular orbit. The plane x = 0 midway between them has the metric
@@ -17349,6 +17382,7 @@ DRAWN = {
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
     "eih_many_bodies": eih_many_bodies,
+    "bardeen_perturbations": bardeen_perturbations,
     "mixmaster": mixmaster,
     "kasner": kasner,
     "big_rip": big_rip,
@@ -19112,6 +19146,15 @@ CAPTIONS = {
         "$U + \\rho\\,\\partial_\\rho U = 1 + 8m^3/(\\rho^2 + 4m^2)^{3/2}$ lies between $0$ and $U$.",
         "The surface is flat where it crosses the axis, halfway between the horizons, and far out it rises as "
         "Flamm's paraboloid of the total mass $2m$ does, $dz/d\\rho \\to \\sqrt{4m/\\rho}$.",
+    ],
+    ("bardeen_perturbations", "well"): [
+        "The plane $z = 0$ through the centre of the well at the moment $\\eta = L$, where $a = 1$, drawn as a "
+        "surface in flat space with every distance along it the metric distance. On it the metric is "
+        "$(1 - 2\\Psi)(dx^2 + dy^2)$ with $\\Psi = -\\tfrac{1}{10}e^{-s^2/L^2}$ at the distance $s$ from the centre, "
+        "so the circle of coordinate radius $s$ has the circumference radius $s\\sqrt{1 - 2\\Psi}$.",
+        "The surface is flat at the centre of the well and far from it, and between them it rises by "
+        "$0.62\\,L$ out to $s = 3L$. The rise grows as the square root of the depth of the well, so a well a "
+        "hundred times shallower rises ten times less.",
     ],
     ("eih_many_bodies", "midplane"): [
         "The plane $x = 0$ midway between two bodies of equal mass at $x = \\pm 10\\,m$, at the moment $t = 0$ of "

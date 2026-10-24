@@ -4068,7 +4068,10 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "680e812df6fc5534"
+    "version": "d11f45c76a19dd15",
+    "diagrams": "0690f4bc485f74e3",
+    "embedding": "fde09cde623a1c8c",
+    "curvature": "9996ac09da4ca1ba"
   },
   {
     "id": "petrov_homogeneous",

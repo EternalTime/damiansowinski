@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 188,
+  "count": 189,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -14437,6 +14437,11 @@
           "id": "big_rip",
           "kind": "limit_source",
           "text": "Phantom energy with $w < -1$ in place of the cosmological constant, pulling the universe apart at a finite time. De Sitter space is its limit $w \\to -1$, where that time moves off to infinity [chiba2005]."
+        },
+        {
+          "id": "bardeen_perturbations",
+          "kind": "generalisation",
+          "text": "Any Friedmann universe with two small potentials laid over it. At $\\Phi = \\Psi = 0$ and $a = -c/(H\\eta)$ its flat longitudinal gauge is de Sitter space in flat slices."
         }
       ],
       "references": [
@@ -20803,6 +20808,11 @@
           "id": "lqc_bounce",
           "kind": "special_case",
           "text": "The flat universe of a massless scalar field as loop quantum cosmology has it, $a = (1 + t^2/t_b^2)^{1/6}$, which bounces where Einstein's equations put a big bang [cai2014, ashtekar2006improved]."
+        },
+        {
+          "id": "bardeen_perturbations",
+          "kind": "generalisation",
+          "text": "The Friedmann universe with two small potentials laid over it, $\\Phi$ in $g_{\\eta\\eta}$ and $\\Psi$ in the metric of space. At $\\Phi = \\Psi = 0$ its longitudinal gauge is Friedmann's metric in conformal time."
         }
       ],
       "references": [
@@ -37856,6 +37866,11 @@
           "id": "sultana_dyer",
           "kind": "family",
           "text": "A black hole in the universe of dust that swallows the matter around it, which McVittie's mass never does. It is conformal to Schwarzschild's metric and is no member of McVittie's family [carrera2010mcvittie]."
+        },
+        {
+          "id": "bardeen_perturbations",
+          "kind": "family",
+          "text": "Small potentials laid over a Friedmann universe. Far from the mass McVittie's metric is one of them, with $\\Phi = \\Psi = -r_s/2ar$ to first order in $r_s$."
         }
       ],
       "references": [
@@ -44447,6 +44462,11 @@
           "id": "eih_many_bodies",
           "kind": "family",
           "text": "General relativity's field of many moving bodies, to the same order. One body at rest there is this metric at $\\beta = \\gamma = 1$ [will2014]."
+        },
+        {
+          "id": "bardeen_perturbations",
+          "kind": "family",
+          "text": "Small potentials laid over an expanding universe, as these are laid over flat space. At $a = 1$ the longitudinal gauge carries this metric to first order in the mass, with $\\Phi = -m/r$ and $\\Psi = -\\gamma m/r$."
         }
       ],
       "references": [
@@ -45108,6 +45128,322 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "bardeen_perturbations",
+      "name": "Perturbed Friedmann Universe in Bardeen's Potentials",
+      "short_name": "Perturbed Friedmann Universe",
+      "description": "A Friedmann universe with two small gravitational potentials laid over it, kept to first order in them. It is the spacetime in which the fluctuations of the microwave background and the growth of structure are calculated, and in the longitudinal gauge its two potentials are Bardeen's gauge invariants.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "FLRW",
+        "time-dependent",
+        "inhomogeneous",
+        "approximate solution",
+        "weak field",
+        "cosmic microwave background",
+        "structure formation",
+        "inflation",
+        "gravitational redshift",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit and every quantity to first order in the potentials. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "The unperturbed universe. At $\\Phi = \\Psi = 0$ the longitudinal gauge is Friedmann's metric in conformal time, with flat space or, through $k$, curved."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "The unperturbed universe with a positive cosmological constant alone. At $\\Phi = \\Psi = 0$ and $a = -c/(H\\eta)$, with $\\eta < 0$ and $H$ the constant Hubble rate, the flat longitudinal gauge is de Sitter space in flat slices."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "family",
+          "text": "A point mass in an expanding universe, exact [mcvittie1933]. To first order in $r_s$ its metric is a Friedmann universe with $\\Phi = \\Psi = -r_s/2ar$, the potential of a point mass at the proper distance $ar$."
+        },
+        {
+          "id": "tolman_bondi",
+          "kind": "family",
+          "text": "Spherical lumps of dust in an expanding universe, exact at any density contrast [tolman1934, bondi1947]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "family",
+          "text": "Lumps of dust in an expanding universe with no symmetry, exact at any density contrast [szekeres1975]."
+        },
+        {
+          "id": "ppn_metric",
+          "kind": "family",
+          "text": "The weak field of a body, a potential laid over flat space as these are laid over an expanding universe. At $a = 1$ its metric to first order in the mass is the longitudinal gauge with $\\Phi = -m/r$ and $\\Psi = -\\gamma m/r$."
+        }
+      ],
+      "references": [
+        "ma1995",
+        "mukhanov1992",
+        "lifshitz1946",
+        "sachs1967",
+        "bardeen1980",
+        "bardeen1983",
+        "planck2020",
+        "mcvittie1933",
+        "tolman1934",
+        "bondi1947",
+        "szekeres1975"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen_perturbations.json",
+      "charts": [
+        {
+          "id": "longitudinal",
+          "name": "Longitudinal gauge (conformal Newtonian)",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor ($a > 0$); primes denote $d/d\\eta$"
+            },
+            {
+              "symbol": "\\Phi = \\Phi(\\eta,x,y,z)",
+              "description": "Potential in $g_{\\eta\\eta}$ ($|\\Phi| \\ll 1$), Bardeen's $\\Phi_A$; in the Newtonian limit it is the Newtonian potential over $c^2$"
+            },
+            {
+              "symbol": "\\Psi = \\Psi(\\eta,x,y,z)",
+              "description": "Potential in the metric of space ($|\\Psi| \\ll 1$), Bardeen's $-\\Phi_H$; it equals $\\Phi$ wherever the matter carries no anisotropic stress"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, with $a\\,d\\eta = c\\,dt$, and comoving Cartesian coordinates $(x, y, z)$, all lengths. The gauge and its letters are Mukhanov, Feldman and Brandenberger's longitudinal gauge, written in the signature $(-,+,+,+)$, which is Ma and Bertschinger's conformal Newtonian gauge with their $\\psi$ written $\\Phi$ and their $\\phi$ written $\\Psi$. Bardeen's potentials are $\\Phi_A = \\Phi$ and $\\Phi_H = -\\Psi$, the signs both papers give.",
+          "line_element": "ds^2 = a^2\\left(-\\left(1 + 2\\Phi\\right)d\\eta^2 + \\left(1 - 2\\Psi\\right)\\left(dx^2 + dy^2 + dz^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2\\left(1 + 2\\Phi\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2\\left(1 - 2\\Psi\\right)"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2\\left(1 - 2\\Psi\\right)"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2\\left(1 - 2\\Psi\\right)"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a'' - 12\\Phi\\,a'' - 6a'\\,\\partial_\\eta\\Phi - 18a'\\,\\partial_\\eta\\Psi - 6a\\,\\partial_\\eta^2\\Psi - 2a\\,\\partial_x^2\\Phi + 4a\\,\\partial_x^2\\Psi - 2a\\,\\partial_y^2\\Phi + 4a\\,\\partial_y^2\\Psi - 2a\\,\\partial_z^2\\Phi + 4a\\,\\partial_z^2\\Psi}{a^3}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(a''\\right)^2 - 24a\\,a''\\left(a'\\right)^2 + 24\\left(a'\\right)^4 - 48\\Phi\\,a^2\\left(a''\\right)^2 + 96\\Phi\\,a\\,a''\\left(a'\\right)^2 - 24a^2\\,a''\\,a'\\,\\partial_\\eta\\Phi - 24a^2\\,a''\\,a'\\,\\partial_\\eta\\Psi - 24a^3\\,a''\\,\\partial_\\eta^2\\Psi - 8a^3\\,a''\\,\\partial_x^2\\Phi - 8a^3\\,a''\\,\\partial_y^2\\Phi - 8a^3\\,a''\\,\\partial_z^2\\Phi - 96\\Phi\\left(a'\\right)^4 + 24a\\left(a'\\right)^3\\,\\partial_\\eta\\Phi - 24a\\left(a'\\right)^3\\,\\partial_\\eta\\Psi + 24a^2\\left(a'\\right)^2\\,\\partial_\\eta^2\\Psi + 8a^2\\left(a'\\right)^2\\,\\partial_x^2\\Phi + 16a^2\\left(a'\\right)^2\\,\\partial_x^2\\Psi + 8a^2\\left(a'\\right)^2\\,\\partial_y^2\\Phi + 16a^2\\left(a'\\right)^2\\,\\partial_y^2\\Psi + 8a^2\\left(a'\\right)^2\\,\\partial_z^2\\Phi + 16a^2\\left(a'\\right)^2\\,\\partial_z^2\\Psi}{a^8}"
+        },
+        {
+          "id": "longitudinal_curved",
+          "name": "Longitudinal gauge in curved space",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "x^2 + y^2 + z^2 < -4/k \\;\\text{for}\\; k < 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor ($a > 0$); primes denote $d/d\\eta$"
+            },
+            {
+              "symbol": "k",
+              "description": "Spatial curvature ($k \\in \\{-1,0,+1\\}$)"
+            },
+            {
+              "symbol": "\\Omega = 1 + \\dfrac{k}{4}\\left(x^2 + y^2 + z^2\\right)",
+              "description": "Conformal factor of the space of curvature $k$, whose metric is $\\delta_{ij}/\\Omega^2$"
+            },
+            {
+              "symbol": "\\Phi = \\Phi(\\eta,x,y,z)",
+              "description": "Potential in $g_{\\eta\\eta}$ ($|\\Phi| \\ll 1$), Bardeen's $\\Phi_A$; in the Newtonian limit it is the Newtonian potential over $c^2$"
+            },
+            {
+              "symbol": "\\Psi = \\Psi(\\eta,x,y,z)",
+              "description": "Potential in the metric of space ($|\\Psi| \\ll 1$), Bardeen's $-\\Phi_H$; it equals $\\Phi$ wherever the matter carries no anisotropic stress"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, with $a\\,d\\eta = c\\,dt$, and comoving Cartesian coordinates $(x, y, z)$, all lengths. The gauge, its letters and the background of curvature $k$ are Mukhanov, Feldman and Brandenberger's, written in the signature $(-,+,+,+)$. Bardeen's potentials are $\\Phi_A = \\Phi$ and $\\Phi_H = -\\Psi$, the signs they give.",
+          "line_element": "ds^2 = a^2\\left(-\\left(1 + 2\\Phi\\right)d\\eta^2 + \\dfrac{1 - 2\\Psi}{\\Omega^2}\\left(dx^2 + dy^2 + dz^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2\\left(1 + 2\\Phi\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{a^2\\left(1 - 2\\Psi\\right)}{\\Omega^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{a^2\\left(1 - 2\\Psi\\right)}{\\Omega^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{a^2\\left(1 - 2\\Psi\\right)}{\\Omega^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(1 - 2\\Phi\\right)a''}{a^3} + \\dfrac{6k\\left(1 + 2\\Psi\\right)}{a^2} - \\dfrac{6\\left(\\partial_\\eta\\Phi + 3\\partial_\\eta\\Psi\\right)a'}{a^3} - \\dfrac{2\\Omega^2\\left(\\partial_x^2\\Phi - 2\\partial_x^2\\Psi + \\partial_y^2\\Phi - 2\\partial_y^2\\Psi + \\partial_z^2\\Phi - 2\\partial_z^2\\Psi\\right)}{a^2} + \\dfrac{\\Omega\\,k\\,x\\left(\\partial_x\\Phi - 2\\partial_x\\Psi\\right)}{a^2} + \\dfrac{\\Omega\\,k\\,y\\left(\\partial_y\\Phi - 2\\partial_y\\Psi\\right)}{a^2} + \\dfrac{\\Omega\\,k\\,z\\left(\\partial_z\\Phi - 2\\partial_z\\Psi\\right)}{a^2} - \\dfrac{6\\partial_\\eta^2\\Psi}{a^2}",
+          "kretschmann": "K = \\dfrac{12\\left(1 - 4\\Phi\\right)\\left(a''\\right)^2}{a^6} - \\dfrac{24\\left(1 - 4\\Phi\\right)a''\\left(a'\\right)^2}{a^7} + \\dfrac{24\\left(1 - 4\\Phi\\right)\\left(a'\\right)^4}{a^8} + \\dfrac{24k\\left(1 - 2\\Phi + 2\\Psi\\right)\\left(a'\\right)^2}{a^6} + \\dfrac{12k^2\\left(1 + 4\\Psi\\right)}{a^4} - \\dfrac{24\\left(\\partial_\\eta\\Phi + \\partial_\\eta\\Psi\\right)a''\\,a'}{a^6} - \\dfrac{8\\Omega^2\\left(\\partial_x^2\\Phi + \\partial_y^2\\Phi + \\partial_z^2\\Phi\\right)a''}{a^5} + \\dfrac{4\\Omega\\,k\\,x\\,a''\\,\\partial_x\\Phi}{a^5} + \\dfrac{4\\Omega\\,k\\,y\\,a''\\,\\partial_y\\Phi}{a^5} + \\dfrac{4\\Omega\\,k\\,z\\,a''\\,\\partial_z\\Phi}{a^5} - \\dfrac{24a''\\,\\partial_\\eta^2\\Psi}{a^5} + \\dfrac{24\\left(\\partial_\\eta\\Phi - \\partial_\\eta\\Psi\\right)\\left(a'\\right)^3}{a^7} + \\dfrac{8\\Omega^2\\left(\\partial_x^2\\Phi + 2\\partial_x^2\\Psi + \\partial_y^2\\Phi + 2\\partial_y^2\\Psi + \\partial_z^2\\Phi + 2\\partial_z^2\\Psi\\right)\\left(a'\\right)^2}{a^6} - \\dfrac{4\\Omega\\,k\\,x\\left(\\partial_x\\Phi + 2\\partial_x\\Psi\\right)\\left(a'\\right)^2}{a^6} - \\dfrac{4\\Omega\\,k\\,y\\left(\\partial_y\\Phi + 2\\partial_y\\Psi\\right)\\left(a'\\right)^2}{a^6} - \\dfrac{4\\Omega\\,k\\,z\\left(\\partial_z\\Phi + 2\\partial_z\\Psi\\right)\\left(a'\\right)^2}{a^6} + \\dfrac{24\\left(a'\\right)^2\\,\\partial_\\eta^2\\Psi}{a^6} - \\dfrac{48k\\,a'\\,\\partial_\\eta\\Psi}{a^5} + \\dfrac{16\\Omega^2\\,k\\left(\\partial_x^2\\Psi + \\partial_y^2\\Psi + \\partial_z^2\\Psi\\right)}{a^4} - \\dfrac{8\\Omega\\,k^2\\,x\\,\\partial_x\\Psi}{a^4} - \\dfrac{8\\Omega\\,k^2\\,y\\,\\partial_y\\Psi}{a^4} - \\dfrac{8\\Omega\\,k^2\\,z\\,\\partial_z\\Psi}{a^4}"
+        },
+        {
+          "id": "synchronous",
+          "name": "Synchronous gauge",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Scale factor ($a > 0$); primes denote $d/d\\eta$"
+            },
+            {
+              "symbol": "\\psi = \\psi(\\eta,x,y,z)",
+              "description": "Perturbation of the trace of the metric of space ($|\\psi| \\ll 1$)"
+            },
+            {
+              "symbol": "E = E(\\eta,x,y,z)",
+              "description": "Potential of the traceless part of the metric of space, an area ($|\\partial_i\\partial_j E| \\ll 1$)"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, with $a\\,d\\eta = c\\,dt$, and comoving Cartesian coordinates $(x, y, z)$, all lengths. The gauge is Lifshitz's synchronous gauge in Mukhanov, Feldman and Brandenberger's letters $\\psi$ and $E$, written in the signature $(-,+,+,+)$, and Ma and Bertschinger's $h_{ij}$ is $-2\\psi\\,\\delta_{ij} + 2\\partial_i\\partial_jE$. Bardeen's potentials are $\\Phi_A = -\\partial_\\eta^2E - (a'/a)\\,\\partial_\\eta E$ and $\\Phi_H = -\\psi - (a'/a)\\,\\partial_\\eta E$, from Mukhanov, Feldman and Brandenberger's invariants.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + \\left(1 - 2\\psi + 2\\partial_x^2E\\right)dx^2 + \\left(1 - 2\\psi + 2\\partial_y^2E\\right)dy^2 + \\left(1 - 2\\psi + 2\\partial_z^2E\\right)dz^2 + 4\\partial_x\\partial_yE\\,dx\\,dy + 4\\partial_x\\partial_zE\\,dx\\,dz + 4\\partial_y\\partial_zE\\,dy\\,dz\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2\\left(1 - 2\\psi + 2\\partial_x^2 E\\right)"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "2a^2\\,\\partial_x\\partial_y E"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "2a^2\\,\\partial_x\\partial_y E"
+            },
+            {
+              "indices": [
+                "x",
+                "z"
+              ],
+              "value": "2a^2\\,\\partial_x\\partial_z E"
+            },
+            {
+              "indices": [
+                "z",
+                "x"
+              ],
+              "value": "2a^2\\,\\partial_x\\partial_z E"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2\\left(1 - 2\\psi + 2\\partial_y^2 E\\right)"
+            },
+            {
+              "indices": [
+                "y",
+                "z"
+              ],
+              "value": "2a^2\\,\\partial_y\\partial_z E"
+            },
+            {
+              "indices": [
+                "z",
+                "y"
+              ],
+              "value": "2a^2\\,\\partial_y\\partial_z E"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2\\left(1 - 2\\psi + 2\\partial_z^2 E\\right)"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a'' + 6a'\\,\\partial_\\eta\\partial_x^2 E + 6a'\\,\\partial_\\eta\\partial_y^2 E + 6a'\\,\\partial_\\eta\\partial_z^2 E - 18a'\\,\\partial_\\eta\\psi + 2a\\,\\partial_\\eta^2\\partial_x^2 E + 2a\\,\\partial_\\eta^2\\partial_y^2 E + 2a\\,\\partial_\\eta^2\\partial_z^2 E - 6a\\,\\partial_\\eta^2\\psi + 4a\\,\\partial_x^2\\psi + 4a\\,\\partial_y^2\\psi + 4a\\,\\partial_z^2\\psi}{a^3}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(a''\\right)^2 - 24a\\,a''\\left(a'\\right)^2 + 24\\left(a'\\right)^4 + 8a^2\\,a''\\,a'\\,\\partial_\\eta\\partial_x^2 E + 8a^2\\,a''\\,a'\\,\\partial_\\eta\\partial_y^2 E + 8a^2\\,a''\\,a'\\,\\partial_\\eta\\partial_z^2 E - 24a^2\\,a''\\,a'\\,\\partial_\\eta\\psi + 8a^3\\,a''\\,\\partial_\\eta^2\\partial_x^2 E + 8a^3\\,a''\\,\\partial_\\eta^2\\partial_y^2 E + 8a^3\\,a''\\,\\partial_\\eta^2\\partial_z^2 E - 24a^3\\,a''\\,\\partial_\\eta^2\\psi + 8a\\left(a'\\right)^3\\,\\partial_\\eta\\partial_x^2 E + 8a\\left(a'\\right)^3\\,\\partial_\\eta\\partial_y^2 E + 8a\\left(a'\\right)^3\\,\\partial_\\eta\\partial_z^2 E - 24a\\left(a'\\right)^3\\,\\partial_\\eta\\psi - 8a^2\\left(a'\\right)^2\\,\\partial_\\eta^2\\partial_x^2 E - 8a^2\\left(a'\\right)^2\\,\\partial_\\eta^2\\partial_y^2 E - 8a^2\\left(a'\\right)^2\\,\\partial_\\eta^2\\partial_z^2 E + 24a^2\\left(a'\\right)^2\\,\\partial_\\eta^2\\psi + 16a^2\\left(a'\\right)^2\\,\\partial_x^2\\psi + 16a^2\\left(a'\\right)^2\\,\\partial_y^2\\psi + 16a^2\\left(a'\\right)^2\\,\\partial_z^2\\psi}{a^8}"
         }
       ]
     },
@@ -56778,6 +57114,11 @@
           "id": "datt_ruban_t_models",
           "kind": "special_case",
           "text": "The spherical members of the second class: dust on a tube of spheres that all share one radius, found by B. Datt in 1938 and by Vladimir Ruban in 1968 [datt1938, ruban1968, krasinski1999datt]."
+        },
+        {
+          "id": "bardeen_perturbations",
+          "kind": "family",
+          "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
         }
       ],
       "references": [
@@ -59626,6 +59967,11 @@
           "id": "datt_ruban_t_models",
           "kind": "family",
           "text": "The spherical dust that this family leaves out: every shell has the same radius, and the shells stack along a tube [ruban1969, krasinski1999datt]."
+        },
+        {
+          "id": "bardeen_perturbations",
+          "kind": "family",
+          "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
         }
       ],
       "references": [
