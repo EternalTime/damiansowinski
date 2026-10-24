@@ -8202,6 +8202,8 @@ def morris_thorne(ck, src):
             "and rises toward zero on both sides.",
             "$K = 12b_0^4/(l^2 + b_0^2)^4$, falling as $12b_0^4/l^8$ far from the throat.",
             "$R = -2b_0^2/(l^2 + b_0^2)^2$, falling in magnitude as $2b_0^2/l^4$ far from the throat.",
+            "The Ellis-Bronnikov wormhole has this same geometry when the redshift vanishes and the "
+            "shape function is $b_0^2$ divided by the areal radius, so its figure draws these same curves.",
         ],
         "ricci_sentences": [[2, 0], [4, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$b_0 = 1$, the throat radius and unit of length, with $|l| \\le \\sqrt{24}\\,b_0$.",
@@ -9211,7 +9213,7 @@ def roberts(ck, src):
              "$R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau} = R^\\mu{}_\\mu u^2/4$ depends on $x$ alone.")
     vertex = ("Along every line of constant $x$, $K$ grows as $u^{-4}$ toward $u = v = 0$, where the field's first ray "
               "reaches the centre.")
-    square = "At every event $K = 3(R^\\mu{}_\\mu)^2$."
+    square = "At every event the Kretschmann scalar is three times the square of the Ricci scalar."
     legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
               ["line", "reference", "the threshold, $p = 1$"]]
     both = ("We draw $K\\,\\ell^4e^{-4\\tau}$ on a logarithmic scale from $10^{-6}$ to $10^{4}$ and $R^\\mu{}_\\mu\\,\\ell^2e^{-2\\tau}$ "
