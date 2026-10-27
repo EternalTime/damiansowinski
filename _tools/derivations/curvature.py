@@ -843,6 +843,130 @@ def bach_weyl_ring(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Belinski and Zakharov's two solitons
+
+BZ_BOX = ((-6, 6), (0, 6))        # z/w and ct/w: the box of Belinski and Zakharov's chart's spacetime diagram
+BZ_CELLS = (240, 120)             # the cells of the map across and up, each a twentieth of w on a side
+BZ_SCALE = {"kind": "symlog", "from": -10.0, "to": 1e4, "linear": 1e-4}      # the colours of K w^4
+# The wave of two solitons in Belinski and Zakharov's chart, at w = 1 and cosh beta = 5/4, the wave
+# and the constants every other drawing of this spacetime takes. The pole coordinates carry
+# ct = w sinh tau cosh xi and z = w cosh tau sinh xi, so cosh^2 tau is the root above 1 of
+# A^2 - (1 + (ct)^2/w^2 - z^2/w^2) A - z^2/w^2 = 0 and the chart's three free functions follow it,
+# as Step 5 of _tools/derivations/belinski_zakharov.md writes them, with c set to 1.
+_BZ_A = "((sqrt((t**2/w**2 - z**2/w**2 - 1)**2 + 4*t**2/w**2) + t**2/w**2 - z**2/w**2 + 1)/2)"
+_BZ_SINH2 = f"({_BZ_A} - 1)"                                  # sinh^2 tau
+_BZ_COSH2 = f"(1 + z**2/(w**2*{_BZ_A}))"                      # cosh^2 xi
+_BZ_N = f"(Rational(25, 16)*{_BZ_SINH2} + Rational(9, 16)*{_BZ_COSH2})"
+_BZ_D = f"({_BZ_N} + 2 + Rational(5, 2)*sqrt({_BZ_A}))"       # N + 2 + 2 cosh beta cosh tau
+BZ_FUNCTIONS = {
+    "f": f"{_BZ_N}/(({_BZ_SINH2} + {_BZ_COSH2})*sqrt(t/w))",
+    "P": f"log({_BZ_D}/{_BZ_N})",
+    "Q": f"-Rational(3, 2)*z/(w*sqrt({_BZ_A})*{_BZ_D})",
+}
+BZ_INPUT = ("The wave of two solitons on the Kasner universe that expands alike in two directions, "
+            "$f = N/\\left(\\left(\\sinh^2\\tau + \\cosh^2\\xi\\right)\\sqrt{ct/w}\\right)$, "
+            "$e^{P} = \\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)/N$ and "
+            "$Q = -2\\sinh\\beta\\sinh\\xi/\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)$, with "
+            "$N = \\cosh^2\\beta\\sinh^2\\tau + \\sinh^2\\beta\\cosh^2\\xi$, written in $t$ and $z$ through "
+            "$ct = w\\sinh\\tau\\cosh\\xi$ and $z = w\\cosh\\tau\\sinh\\xi$.")
+
+
+def bz_pole(ct, z, w=1.0):
+    """The pole coordinates tau and xi of the event (ct, z) of Belinski and Zakharov's chart, the
+    one root cosh^2 tau above 1 of A^2 - (1 + (ct)^2/w^2 - z^2/w^2)A - z^2/w^2 = 0 and the xi that
+    z = w cosh tau sinh xi gives with it."""
+    u, v = (np.asarray(ct, dtype=float) / w) ** 2, (np.asarray(z, dtype=float) / w) ** 2
+    a = (np.sqrt((u - v - 1) ** 2 + 4 * u) + u - v + 1) / 2
+    return np.arccosh(np.sqrt(a)), np.arcsinh(np.asarray(z, dtype=float) / (w * np.sqrt(a)))
+
+
+def belinski_zakharov(ck, src):
+    """The wave of two gravitational solitons, its Kretschmann scalar over the plane of z and ct.
+
+    Belinski and Zakharov's chart publishes K in t, z and the free functions f, P and Q, which the
+    figure declares in closed form as the wave of two solitons on the isotropic Kasner universe that
+    every other drawing of this spacetime takes, at w = 1 and cosh beta = 5/4. The wave is a vacuum
+    and the published Ricci scalar vanishes on it, so the figure is K alone, over the box of that
+    chart's spacetime diagram, |z| <= 6w and 0 < ct <= 6w, in 240 cells across and 120 up, coloured
+    on a signed logarithmic scale, linear within 10^-4 of zero, from -10 to 10^4 in units of 1/w^4.
+
+    What the caption states is checked here: the published Ricci scalar vanishes on the declared
+    wave, in sixty digits; the declared functions carry the pole chart's own published K, event for
+    event, in sixty digits; K is the same at z and -z; K w^4 (ct/w)^3 is the same at the crest of
+    the pulse at every time drawn, and the same at its trough; the Kasner limits ahead of the
+    pulses and behind them; and the greatest and least values the clip gives."""
+    w = 1.0
+    CANON, POLE = "canonical", "pole"
+    (z0, z1), (t0, t1) = BZ_BOX
+    x_axis, y_axis = axis("$z/w$", z0, z1), axis("$ct/w$", t0, t1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "belinski_zakharov", [aspect])
+    scale = dict(BZ_SCALE)
+
+    # The chart's horizontal coordinate first, as a map's cells and a curve along z are both read.
+    K = nr_published(src, "belinski_zakharov", CANON, "kretschmann", ["z", "t"], ["w"], None, BZ_FUNCTIONS)
+    ricci = nr_published(src, "belinski_zakharov", CANON, "ricci_scalar", ["z", "t"], ["w"], None, BZ_FUNCTIONS)
+    pole_K = nr_published(src, "belinski_zakharov", POLE, "kretschmann", ["tau", "xi"], ["w", "beta"])
+    pole_R = nr_published(src, "belinski_zakharov", POLE, "ricci_scalar", ["tau", "xi"], ["w", "beta"])
+    beta = math.log(2.0)
+
+    rng = np.random.default_rng(1978)
+    events = list(zip(rng.uniform(z0, z1, 12), rng.uniform(0.05, t1, 12)))
+    worst = max(abs(float(ricci.exact([z, ct, w]))) for z, ct in events)
+    ck("belinski_zakharov the published Ricci scalar vanishes on the declared wave, in sixty digits",
+       worst < 1e-40, f"worst {worst:.1e}")
+    ck("belinski_zakharov the pole chart publishes a vanishing Ricci scalar",
+       float(pole_R.exact([1.0, 0.5, w, beta])) == 0.0)
+    worst = 0.0
+    for z, ct in events:
+        tau, xi = bz_pole(ct, z, w)
+        here, there = float(K.exact([z, ct, w])), float(pole_K.exact([float(tau), float(xi), w, beta]))
+        worst = max(worst, abs(here - there) / max(abs(there), 1e-300))
+    ck("belinski_zakharov the declared functions carry the pole chart's own published K, event for event",
+       worst < 1e-9, f"worst {worst:.1e} at {len(events)} events")
+
+    nx, ny = BZ_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [w])
+    ck("belinski_zakharov K is finite at every cell", np.all(np.isfinite(values)),
+       f"from {np.min(values):.4e} to {np.max(values):.4e}")
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 30), rng.integers(0, ny, 30))}
+                   | {(0, 0), (nx - 1, 0), (nx // 2, ny - 1), (nx - 1, ny - 1)})
+    agrees(ck, "belinski_zakharov map", K, [[xs[i], ys[j], w] for i, j in picks], [values[j, i] for i, j in picks])
+    ck("belinski_zakharov K is the same at z and -z, the symmetry that sends xi and y to minus themselves",
+       np.allclose(values, values[:, ::-1], rtol=1e-9, atol=1e-12))
+
+    greatest, least = float(np.max(values)), float(np.min(values))
+    over = values > scale["to"]
+    rows = sorted({int(j) for j in np.flatnonzero(np.any(over, axis=1))})
+    passes = (3 / (4 * math.sinh(beta) ** 4) / scale["to"]) ** (1 / 3)
+    ck("belinski_zakharov K passes the top of its colours in the row of cells nearest the singularity alone",
+       rows == [0] and bool(np.all(over[0])), f"rows {rows}, below ct = {passes:.4f} w")
+    ck("belinski_zakharov no cell falls below the bottom of its colours", least > scale["from"], f"least {least:.4f}")
+
+    view = {
+        "id": "plane", "label": "the plane of $z$ and $ct$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,w^4$", "scale": scale, "ticks": every_second(scale)},
+        "map": {"metric": "belinski_zakharov", "system": CANON, "scalar": "kretschmann", "x": "z", "y": "t",
+                "params": {"w": w}, "functions": dict(BZ_FUNCTIONS), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [],
+        "legend": [],
+        "caption": [
+            "The Kretschmann scalar $K$ of the wave of two gravitational solitons over the plane of $z$ and $ct$ "
+            "($w = 1$, $\\cosh\\beta = 5/4$), the same at every $x$ and $y$. The wave is a vacuum, so its Ricci "
+            "scalar vanishes. $K$ is the same at $z$ and $-z$, the symmetry that carries $\\xi$ and $y$ to minus "
+            "themselves.",
+        ],
+        "settings": "$w = 1$, the unit of every length, and $\\cosh\\beta = 5/4$, which is $\\beta = \\ln 2$.",
+        "input": BZ_INPUT,
+        "clip": ("We colour $K\\,w^4$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10$ to "
+                 f"$10^{{4}}$, and give a value beyond the top the colour of that end: $K$ passes $10^4/w^4$ below "
+                 f"$ct = {passes:.4f}\\,w$, the row of cells nearest the singularity. The least value coloured is "
+                 f"${least:.3f}/w^4$."),
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- Bonnor and Vaidya's radiating star
 
 BV_BOX = ((0, 3), (-1, 3))        # r/M and u/M: the star's trapped spheres, and the stretch over which it radiates
@@ -12805,6 +12929,7 @@ DRAWN = {
     "bardeen": bardeen,
     "bartnik_mckinnon": bartnik_mckinnon,
     "bardeen_perturbations": bardeen_perturbations,
+    "belinski_zakharov": belinski_zakharov,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
