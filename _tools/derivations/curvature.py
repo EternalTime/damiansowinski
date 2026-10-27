@@ -10380,6 +10380,10 @@ def thin_shell_wormhole(ck, src):
     # stands at the throat alone.
     _, throat_entry, throat_reader = nr.load(name, "throat")
     src.note(name, "throat", ["ricci_scalar"])
+    ck(f"{name} the published K of the chart through the throat holds off the throat alone",
+       "\\ell \\neq 0" in throat_entry["kretschmann"], f"{throat_entry['kretschmann']}")
+    ck(f"{name} the spherical chart's Ricci scalar vanishes, the vacuum off the shell",
+       nr_published(src, name, "spherical", "ricci_scalar", ["r"], ["r_s", "a"]).expr == 0)
     stored = nr.strip_lhs(throat_entry["ricci_scalar"])
     without_delta = stored.replace("\\delta(\\ell)", "1")
     ck(f"{name} the published Ricci scalar is one delta at the throat",
