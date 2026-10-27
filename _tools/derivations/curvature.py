@@ -10583,8 +10583,8 @@ def three_brane_throat(ck, src):
             "The Kretschmann scalar $K$ of the three-brane against the isotropic radius $\\rho$ across the "
             "sheet, the same at every moment and at every point of the sheet and of the sphere, each point of "
             "the plot a 5-sphere of areal radius $(\\rho^4 + L^4)^{1/4}$. The Ricci scalar $R$ vanishes here "
-            "and in every other chart, as the trace of the field equations asks of a self-dual 5-form in ten "
-            "dimensions.",
+            "and in every other chart: a 5-form field in ten dimensions carries a traceless stress tensor, "
+            "and the trace of the field equations leaves $R = 0$.",
             f"Toward $\\rho = 0$ the 1 in $H = 1 + L^4/\\rho^4$ drops out, the spheres close on the radius $L$, "
             f"and $K$ closes on ${tex_number(throat, 3)}/L^4$: it is already "
             f"${tex_number(at_near, 4)}/L^4$ at $\\rho = L/5$, within a percent of that constant. It falls at "
@@ -10593,9 +10593,9 @@ def three_brane_throat(ck, src):
             f"${tex_number(edge, 4)}/L^4$ at $\\rho = {TB_REACH}\\,L$. The horizon $\\rho = 0$ lies infinitely "
             "far down the throat, at the edge of the axis, where $g^{\\rho\\rho} = \\rho^2/\\sqrt{\\rho^4 + L^4}$ "
             "vanishes.",
-            f"The level across the plot is the throat's own $K = {tex_number(throat, 3)}/L^4$, the constant its "
-            "two charts publish at every radius, anti-de Sitter space of five dimensions times a sphere of "
-            "five, both of radius $L$.",
+            f"The level across the plot is $K = {tex_number(throat, 3)}/L^4$ of the throat alone, anti-de "
+            "Sitter space of five dimensions times a sphere of five, both of radius $L$, where it is that "
+            "constant at every radius.",
         ],
         "settings": "$L = 1$, the unit of every length, the radius of the throat and of its sphere, as its "
                     "other drawings take it.",
