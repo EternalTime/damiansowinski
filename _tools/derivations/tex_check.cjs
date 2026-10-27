@@ -23,7 +23,7 @@
    and exits non-zero, naming the file, the place and the string, if anything fails.
 
    `--metric=<id>` holds those four folders to that one spacetime's own files, for a drawing
-   that wants its own strings checked and not the whole collection's:
+   that wants the strings it has just added set in a second:
 
      node _tools/derivations/tex_check.cjs --metric=bardeen
 
@@ -42,7 +42,7 @@ if (only === '') {
   console.error('--metric= names no spacetime');
   process.exit(1);
 }
-const prefix = args.filter(function(a) { return a !== flag; })[0] || path.join(__dirname, '..', '..', '.node.noindex');
+const prefix = args.filter(function(a) { return !a.startsWith('--metric='); })[0] || path.join(__dirname, '..', '..', '.node.noindex');
 const need = createRequire(path.join(path.resolve(prefix), 'node_modules', 'mathjax-full', 'package.json'));
 const {mathjax} = need('mathjax-full/js/mathjax.js');
 const {TeX} = need('mathjax-full/js/input/tex.js');
@@ -99,8 +99,8 @@ function walk(value, where, key, file) {
 }
 
 // A spacetime may have no null ray diagram, no conformal diagram and no curvature figure, so a
-// folder with no file for the one named is said and passed over, and a name no folder carries at
-// all is the error.
+// folder with no file for the one named is named in the output and passed over, and a name no
+// folder carries at all is the error.
 let read = 0;
 for (const folder of ['metrics', 'diagrams', 'conformal', 'curvature']) {
   const dir = path.join(DATA, folder);
