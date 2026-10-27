@@ -1894,7 +1894,7 @@ The dust runs from $|\eta| = 0$ to $1.2$, so the axis spans $-1.538 \le c\tau \l
 The two curves of $K$ use the dust's $b_0^4$ and the vacuum's $r_s^4$ as their units, and the dust's $R$ uses $b_0^2$.
 The $K$ panel is logarithmic from $10^0$ to $10^7$, and the $R$ panel is signed logarithmic, linear within $10^{-2}$, from $0$ to $20$.
 The dust is symmetric about its greatest sphere radius, with $K = 7/b_0^4$ and $R = 1/b_0^2$ there, while the vacuum has $K = 12/r_s^4$ at its horizon and $R = 0$.
-Both native coordinates declare their proper-time maps in `horizontal`, and the vacuum horizon is marked at $c\tau = 0$.
+Both native coordinates declare their proper-time maps in `horizontal`, and the vacuum curve starts at its horizon at $c\tau = 0$.
 `curvature.py` checks the stored scalar formulas, the maps, the dust symmetry, the horizon and the endpoint values before writing the line view.
 The curves stop before the cigarlike singularities at $|\eta| = \pi/2$.
 Kiselev's black hole has two line views at $r_s = 1$ and $r_q = 8\,r_s$, the values of its other drawings, with $r$ from 0 to $10\,r_s$, past the outer horizon: one at $w = -2/3$, the state its other drawings take, with the horizons $r_- = 1.172\,r_s$ and $r_+ = 6.828\,r_s$ marked, and a movie of $w$ from $-1$, the cosmological constant, to $-0.35$ in steps of $1/60$, 40 frames, through $-2/3$, in which the two horizons approach each other and meet at $w = -0.469$, $r = 3.457\,r_s$, after which none is marked.

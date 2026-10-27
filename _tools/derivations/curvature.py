@@ -5383,9 +5383,9 @@ def kantowski_sachs(ck, src):
     params_dust = {"b_0": b0, "kappa": kappa}
     params_vacuum = {"r_s": rs}
     curves = [
-        mapped_curve("K", "K", K_dust, "eta", dust_eta, params_dust, dust_tau, dust_tau_expr, KS_K_SCALE),
+        mapped_curve("K", "K", K_dust, "\\eta", dust_eta, params_dust, dust_tau, dust_tau_expr, KS_K_SCALE),
         mapped_curve("K", "reference", K_vacuum, "T", vacuum_T, params_vacuum, vacuum_tau, vacuum_tau_expr, KS_K_SCALE),
-        mapped_curve("R", "R", R_dust, "eta", dust_eta, params_dust, dust_tau, dust_tau_expr, KS_R_SCALE),
+        mapped_curve("R", "R", R_dust, "\\eta", dust_eta, params_dust, dust_tau, dust_tau_expr, KS_R_SCALE),
     ]
     ck(f"{name} the dust proper-time map is odd", np.allclose(dust_tau(-dust_eta), -dust_tau(dust_eta)))
     ck(f"{name} the vacuum proper-time map runs from the horizon to the plotted endpoint",
@@ -5415,24 +5415,24 @@ def kantowski_sachs(ck, src):
               "$0$ to $20$; every drawn value lies within it.")
     return [{
         "id": "proper_time", "label": "the vacuum and dust models", "kind": "line", "x": x_axis,
-        "panels": panels, "curves": curves, "marks": [{"class": "horizon", "x": 0.0}],
+        "panels": panels, "curves": curves, "marks": [],
         "legend": [["line", "K", "$K$, the Kretschmann scalar"],
                    ["line", "R", "$R$, the Ricci scalar"],
-                   ["line", "reference", "the vacuum interior of Schwarzschild's horizon"],
-                   ["line", "horizon", "$c\\tau = 0$, the vacuum horizon"]],
+                   ["line", "reference", "the vacuum interior of Schwarzschild's horizon"]],
         "caption": [
             "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Kantowski-Sachs against proper time $c\\tau$, "
             "the vacuum interior of Schwarzschild's horizon overlaid with the homogeneous dust model, the same at "
             "every $r$, $\\theta$, and $\\phi$. The dust model is symmetric about its moment of greatest sphere "
             "radius, while the vacuum branch starts at the horizon and runs toward its singularity. The vacuum has "
             "$R = 0$.",
-            f"At $c\\tau = 0$, dust has $K = 7/b_0^4$ and $R = 1/b_0^2$, while the vacuum has $K = 12/r_s^4$. "
-            f"At $|c\\tau| = {tau_end:.3f}$, the dust reaches $K = {tex_number(dust_K_end)}/b_0^4$ and "
-            f"$R = {tex_number(dust_R_end)}/b_0^2$ at $|\\eta| = {eta_end}$, while the vacuum reaches "
-            f"$K = {tex_number(vacuum_K_end)}/r_s^4$. The curves stop before the cigarlike singularities at "
-            "$|\\eta| = \\pi/2$.",
+            "At $c\\tau = 0$, dust has $K = 7/b_0^4$, while the vacuum has $K = 12/r_s^4$. "
+            "At the dust's greatest sphere radius, $R = 1/b_0^2$. "
+            f"At $|c\\tau| = {tau_end:.3f}$, the dust reaches $K = {tex_number(dust_K_end)}/b_0^4$ at "
+            f"$|\\eta| = {eta_end}$, while the vacuum reaches $K = {tex_number(vacuum_K_end)}/r_s^4$. "
+            f"At that endpoint, dust has $R = {tex_number(dust_R_end)}/b_0^2$, and the curves stop before "
+            "the cigarlike singularities at $|\\eta| = \\pi/2$.",
         ],
-        "ricci_sentences": [[0, 0], [0, 2], [1, 0], [1, 1]],
+        "ricci_sentences": [[0, 0], [0, 2], [1, 1], [1, 3]],
         "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$b_0 = r_s = 1$, each the unit of length, with $\\kappa = 0$ for the symmetric dust model; "
                     "$c\\tau$ is proper time from the vacuum horizon or from the dust's greatest sphere radius.",
