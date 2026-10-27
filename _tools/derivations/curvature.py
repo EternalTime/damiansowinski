@@ -5344,7 +5344,7 @@ def kantowski_sachs(ck, src):
     panels = [
         {"id": "K", "name": "$K\\,b_0^4,\\ K\\,r_s^4$", "aspect": 2,
          "scale": KS_K_SCALE, "ticks": value_ticks(KS_K_SCALE)},
-        {"id": "R", "name": "$R\\,b_0^2", "aspect": 2,
+        {"id": "R", "name": "$R\\,b_0^2$", "aspect": 2,
          "scale": KS_R_SCALE, "ticks": value_ticks(KS_R_SCALE)},
     ]
     shape_checks(ck, name, [2, 2])
