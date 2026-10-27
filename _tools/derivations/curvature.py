@@ -10285,11 +10285,21 @@ def thin_shell_wormhole(ck, src):
     clause for ell not zero, so each side's curve is its own, stopping TSW_GAP short of the throat,
     and the throat itself is marked rather than drawn through.
 
+    All of the matter is the shell at the throat, whose Ricci scalar the chart publishes as the
+    distribution -2(4a - 3r_s)delta(ell)/a^2, supported at ell = 0 alone. It is no function of ell,
+    so no panel draws it: the throat is marked with `front`, the one landed class of mark for a
+    surface carrying its curvature as a delta function, as Khan and Penrose's impulsive fronts do,
+    and the caption states the coefficient, which is read from the stored formula by lifting the
+    delta out of it by name, since the reader of published functions takes functions and not
+    distributions.
+
     What the caption states is checked here: a lies outside r_s; the two sides carry one formula,
     whose limit at the throat is 12 r_s^2/a^6; K falls from the throat outward and stays inside its
     panel; its value at the edge of the plot is 12 r_s^2/(a + 3r_s)^6 and it falls off far out as
-    12 r_s^2/ell^6; the spheres are least at the throat; and the published g^ell-ell is positive at
-    every ell drawn, least 1 - r_s/a at the throat, so no horizon is marked.
+    12 r_s^2/ell^6; the spheres are least at the throat; the published g^ell-ell is positive at
+    every ell drawn, least 1 - r_s/a at the throat, so no horizon is marked; and the published Ricci
+    scalar is one delta at the throat whose coefficient is -2(4a - 3r_s)/a^2, free of ell and
+    negative at every throat outside the horizon.
     """
     name = "thin_shell_wormhole"
     rs, a = 1.0, float(TSW_THROAT)
@@ -10351,22 +10361,47 @@ def thin_shell_wormhole(ck, src):
        np.all(gll(both, rs, a) > 0) and abs(float(gll.exact([0.0, rs, a])) - (1 - rs / a)) < AGREE,
        f"least {1 - rs / a:.3f}")
 
+    # The stored Ricci scalar is a distribution, which the reader of published functions does not
+    # take, so the delta is lifted out of the stored string by name and what multiplies it is read
+    # as an ordinary expression: nothing of ell may be left in it, since the shell's curvature
+    # stands at the throat alone.
+    _, throat_entry, throat_reader = nr.load(name, "throat")
+    src.note(name, "throat", ["ricci_scalar"])
+    stored = nr.strip_lhs(throat_entry["ricci_scalar"])
+    without_delta = stored.replace("\\delta(\\ell)", "1")
+    ck(f"{name} the published Ricci scalar is one delta at the throat",
+       stored.count("\\delta") == 1 and "\\delta(\\ell)" in stored and "\\ell" not in without_delta,
+       f"{stored}")
+    shell_rs, shell_a = throat_reader.parameters["r_s"], throat_reader.parameters["a"]
+    coefficient = throat_reader(without_delta)
+    ck(f"{name} the delta's coefficient is -2(4a - 3r_s)/a^2",
+       sp.simplify(coefficient - (-2 * (4 * shell_a - 3 * shell_rs) / shell_a ** 2)) == 0,
+       f"{coefficient}")
+    shell = float(coefficient.subs({shell_rs: rs, shell_a: a}))
+    ck(f"{name} the coefficient is negative at every throat outside the horizon",
+       shell < 0 and 4 * a - 3 * rs > 0, f"{shell:.9g}/r_s")
+
     return [{
         "id": "throat", "kind": "line", "x": x_axis, "panels": [panel],
-        "curves": curves, "marks": [],
-        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "curves": curves, "marks": [{"class": "front", "x": 0.0}],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "front", "the shell at the throat, $\\ell = 0$"]],
         "caption": [
             f"The Kretschmann scalar $K$ of Visser's thin shell wormhole against $\\ell$ ($a = {a}\\,r_s$), "
             "the same at every $t$, $\\theta$, and $\\phi$, with $\\ell < 0$ on one side of the throat and "
             "$\\ell > 0$ on the other, each point of the plot a sphere of areal radius $a + |\\ell|$. "
             "Off the shell the spacetime is Schwarzschild's vacuum, where "
-            "$K = 12r_s^2/(a + |\\ell|)^6$.",
+            "$K = 12r_s^2/(a + |\\ell|)^6$ and the Ricci scalar $R$ vanishes.",
             f"$K$ is greatest at the throat, $12r_s^2/a^6 = {tex_number(throat, 4)}/r_s^4$, the spheres there "
             f"being the least of the wormhole, and falls to ${tex_number(edge, 4)}/r_s^4$ at "
             f"$|\\ell| = {TSW_REACH}\\,r_s$, where the areal radius is ${a + TSW_REACH}\\,r_s$. Far out it falls "
             "off as $12r_s^2/\\ell^6$. The two sides are mirror images, and the curve turns at the throat "
             f"rather than peaking, since the areal radius has a kink there. The chart has no horizon: "
             f"$g^{{\\ell\\ell}} = 1 - r_s/(a + |\\ell|)$ is least $1 - r_s/a = {1 - rs / a:.1f}$ at the throat.",
+            "All of the matter is the shell at the throat, where $R$ is the distribution "
+            f"$-2(4a - 3r_s)\\delta(\\ell)/a^2$, which is ${tex_number(shell, 3)}\\,\\delta(\\ell)/r_s$ here, "
+            "with $\\delta$ the Dirac delta. It is negative at every throat outside the horizon, since "
+            "$a > r_s$ makes $4a - 3r_s$ positive.",
         ],
         "settings": f"$r_s = 1$, the unit of every length, and $a = {a}\\,r_s$, the throat radius of its "
                     "other drawings.",
