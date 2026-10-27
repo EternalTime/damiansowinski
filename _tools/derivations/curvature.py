@@ -13125,6 +13125,19 @@ def ab_metrics(ck, src):
     corners beyond it are null. The singularity UV = -1 is r = 0, the cone of the tachyon's line,
     marked as a curve on each side, and the horizons U = 0 and V = 0, where r = b, as lines.
     The spacetime is a vacuum, so the published Ricci scalar vanishes and K stands alone.
+
+    What the caption states is checked here: the published Ricci scalar vanishes; the declared
+    domain and the horizons are the published ones; K holds U and V in the product UV alone;
+    the published r of the Kruskal chart solves (r/b - 1)e^(r/b) = UV and carries the published
+    K = 12b^2/r^6, in sixty digits; r = b and K = 12/b^4 on the horizons, where the published
+    g_tt of the static chart vanishes and its g^rr changes sign; r falls below b where UV < 0,
+    where that g_tt keeps t a time, and rises above b where UV > 0, where the published
+    g_sigmasigma of the cone chart keeps sigma a time; the inertial chart's published K at the
+    event T, X, Y with sigma = sqrt(T^2 - X^2 - Y^2) is the Kruskal chart's at
+    UV = (sigma/b - 1)e^(sigma/b), so the singularity UV = -1 is the cone sigma = 0; K falls as
+    UV grows; K grows as 3/2b^4(1 + UV)^3 toward the singularity, measured at 1 + UV from 10^-6
+    to 10^-12; K is least on the square at the two corners U = V = 2 and -2; and the clip, found
+    by bisection in 1 + UV.
     """
     b = AB_B
     KRUSKAL = "a2_kruskal"
@@ -13142,6 +13155,88 @@ def ab_metrics(ck, src):
     chart = next(c for c in entry["coordinates"] if c["id"] == KRUSKAL)
     ck("ab_metrics the declared domain is the published one, UV > -1",
        chart["domains"][4] == "UV > -1 \\;\\text{(where } r > 0\\text{)}", f"{chart['domains'][4]}")
+    ck("ab_metrics the horizons marked are the published ones, UV = 0",
+       chart["domains"][5] == "UV = 0 \\;\\text{(the horizons)}", f"{chart['domains'][5]}")
+
+    # K holds U and V in their product alone, so its levels are the hyperbolae of constant UV.
+    Us, Vs = K.coords
+    t = sp.Symbol("t", positive=True)
+    ck("ab_metrics K holds U and V in the product UV alone",
+       sp.simplify(K.expr.subs({Us: t * Us, Vs: Vs / t}) - K.expr) == 0)
+
+    # The published radius of the hyperbolic planes, from g_chichi = r^2, solves its own equation
+    # and carries the published scalar.
+    gchi = nr_published(src, "ab_metrics", KRUSKAL, "metric_components", ["U", "V"], ["b"],
+                        indices=("\\chi", "\\chi"))
+    events = [(1.0, 1.0), (0.5, -0.5), (-2.0, 0.4), (1.0, -0.9), (2.0, -0.49), (3.0, 2.0), (-1.5, -1.5)]
+    worst_equation = worst_scalar = 0.0
+    for u, v in events:
+        radius = sp.sqrt(gchi.exact([u, v, b]))
+        product = sp.Float(u, 70) * sp.Float(v, 70)
+        worst_equation = max(worst_equation, abs(float((radius / b - 1) * sp.exp(radius / b) - product)))
+        worst_scalar = max(worst_scalar, abs(float(K.exact([u, v, b]) * radius ** 6 / (12 * b ** 2) - 1)))
+    ck("ab_metrics the published r solves (r/b - 1)e^(r/b) = UV, in sixty digits",
+       worst_equation < 1e-40, f"worst {worst_equation:.1e}")
+    ck("ab_metrics the published K is 12b^2/r^6 in that r, in sixty digits",
+       worst_scalar < AGREE, f"worst {worst_scalar:.1e}")
+
+    # The horizons: r = b and K = 12/b^4 along UV = 0, where the static chart's g_tt vanishes and
+    # its g^rr changes sign.
+    on_horizon = [(0.0, v) for v in (-2.0, -1.0, -0.3, 0.0, 0.7, 1.9)] + [(u, 0.0) for u in (-1.6, -0.4, 1.1, 2.0)]
+    radii = [float(sp.sqrt(gchi.exact([u, v, b]))) for u, v in on_horizon]
+    scalars = [float(K.exact([u, v, b])) for u, v in on_horizon]
+    ck("ab_metrics r = b and K = 12/b^4 on the horizons U = 0 and V = 0",
+       all(abs(r - b) < 1e-40 for r in radii) and all(abs(k - 12 / b ** 4) < 1e-40 for k in scalars),
+       f"r {min(radii)} to {max(radii)}, K {min(scalars)} to {max(scalars)}")
+    gtt = nr_published(src, "ab_metrics", "a2_static", "metric_components", ["r"], ["b"], indices=("t", "t"))
+    grr = nr_published(src, "ab_metrics", "a2_static", "inverse_metric_components", ["r"], ["b"], indices=("r", "r"))
+    ck("ab_metrics the static chart's published g_tt vanishes at r = b and its g^rr changes sign there",
+       abs(float(gtt.exact([b, b]))) < 1e-40 and float(grr(0.9 * b, b)) > 0 > float(grr(1.1 * b, b)),
+       f"g^rr {float(grr(0.9 * b, b)):.4f} and {float(grr(1.1 * b, b)):.4f}")
+    ck("ab_metrics t is a time where r < b, so the field there is static",
+       all(float(gtt(r, b)) < 0 for r in (0.05, 0.3, 0.6, 0.95)))
+    gsigma = nr_published(src, "ab_metrics", "a2_cone", "metric_components", ["sigma"], ["b"],
+                          indices=("\\sigma", "\\sigma"))
+    ck("ab_metrics sigma is a time where sigma > b, beyond the horizon",
+       all(float(gsigma(s, b)) < 0 for s in (1.05, 1.5, 2.0, 4.0)))
+    uv_of = {"below b": [(-1.0, 0.5), (0.4, -1.3), (-0.2, 1.7)], "above b": [(1.0, 1.0), (-2.0, -0.6), (1.3, 1.3)]}
+    ck("ab_metrics r lies below b where UV < 0 and above it where UV > 0",
+       all(float(sp.sqrt(gchi.exact([u, v, b]))) < b for u, v in uv_of["below b"])
+       and all(float(sp.sqrt(gchi.exact([u, v, b]))) > b for u, v in uv_of["above b"]))
+
+    # The inertial chart at the same event: sigma is the Kruskal chart's r, so the singularity is
+    # the cone sigma = 0 of the tachyon's line.
+    inertial = nr_published(src, "ab_metrics", "a2_cartesian", "kretschmann", ["T", "X", "Y"], ["b"])
+    worst_event = 0.0
+    for T, X, Y in ((2.0, 1.0, 0.0), (3.0, 0.5, 0.0), (4.0, 2.5, 0.0), (1.5, 0.2, 0.0), (3.0, 1.0, 1.0)):
+        sigma = sp.sqrt(sp.Float(T, 70) ** 2 - sp.Float(X, 70) ** 2 - sp.Float(Y, 70) ** 2)
+        product = (sigma / b - 1) * sp.exp(sigma / b)
+        there = K.expr.xreplace({Us: sp.Integer(1), Vs: product, K.params[0]: sp.Float(b, 70)}).evalf(60)
+        worst_event = max(worst_event, abs(float(inertial.exact([T, X, Y, b]) / there - 1)))
+    ck("ab_metrics the inertial chart's published K is the Kruskal chart's at UV = (sigma/b - 1)e^(sigma/b), "
+       "in sixty digits", worst_event < AGREE, f"worst {worst_event:.1e}")
+    at_cone = float(sp.sqrt(gchi.exact([1.0, -1.0, b])))
+    ck("ab_metrics the singularity UV = -1 is r = 0, the cone sigma = 0",
+       at_cone < 1e-60 and not np.isfinite(float(K(1.0, -1.0, b))), f"r = {at_cone:.1e} b")
+
+    # K falls as UV grows, so the colours cool from the singularity outward.
+    product = np.linspace(-1 + 1e-9, 4.0, 20001)
+    along = K(np.ones_like(product), product, b)
+    ck("ab_metrics K falls as UV grows, at every one of 20001 values from the singularity to UV = 4",
+       np.all(np.diff(along) < 0), f"from {along[0]:.4e} to {along[-1]:.6f}")
+
+    # Toward the singularity: 1 + UV = r^2/2b^2 + O(r^3), so K tends to 3/2b^4(1 + UV)^3.
+    def toward(power, digits=60):
+        """The published K at 1 + UV = 10^-power, read with the product exact."""
+        eps = sp.Rational(1, 10 ** power)
+        return eps, K.expr.xreplace({Us: sp.Integer(1), Vs: eps - 1, K.params[0]: sp.Float(b, digits + 10)}).evalf(digits)
+    ratios = []
+    for power in (6, 9, 12):
+        eps, value = toward(power)
+        ratios.append((power, float(value / (3 / (2 * b ** 4 * sp.Float(eps, 70) ** 3)) - 1)))
+    ck("ab_metrics K grows as 3/2b^4(1 + UV)^3 toward the singularity, measured at 1 + UV from 10^-6 to 10^-12",
+       all(abs(ratio) < 3 * 10.0 ** (-power / 2) for power, ratio in ratios),
+       ", ".join(f"10^-{power}: {ratio:.2e}" for power, ratio in ratios))
 
     domain = domain_function("ab_metrics", KRUSKAL, AB_DOMAIN, ["U", "V"], ["b"])
     nx, ny = AB_CELLS
@@ -13153,6 +13248,43 @@ def ab_metrics(ck, src):
     ck("ab_metrics K is finite and positive at every cell drawn, and nowhere else",
        np.array_equal(inside, np.isfinite(values)) and np.all(values[inside] > 0),
        f"from {np.min(values[inside]):.6g} to {np.max(values[inside]):.6g}")
+    # The cell centres are antisymmetric only to a part in 10^16 of the box, and K beside the
+    # singularity carries that error at four powers of 1 + UV, so the turned square is held to a
+    # part in 10^9 where the mirrored one is exact.
+    ck("ab_metrics the cells drawn are the same at V and U and at -U and -V",
+       np.array_equal(inside, inside.T) and np.array_equal(inside, inside[::-1, ::-1])
+       and np.allclose(values[inside], values.T[inside], rtol=1e-12, atol=0)
+       and np.allclose(values[inside], values[::-1, ::-1][inside], rtol=AGREE, atol=0),
+       f"{int(inside.sum())} drawn")
+
+    # Forty cells or more spread over the square, with the hottest cell and the two corners drawn
+    # among them, checked again in sixty digits.
+    rng = np.random.default_rng(1962)
+    hottest = np.unravel_index(np.nanargmax(np.where(inside, values, np.nan)), values.shape)
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]}
+                   | {(int(hottest[1]), int(hottest[0])), (0, 0), (nx - 1, ny - 1), (nx // 2, ny // 2)})
+    ck("ab_metrics forty cells or more are checked in sixty digits, the hottest cell and both corners among them",
+       len(picks) >= 40 and all(inside[j, i] for i, j in picks), f"{len(picks)} cells")
+    agrees(ck, "ab_metrics map", K, [[xs[i], ys[j], b] for i, j in picks], [values[j, i] for i, j in picks])
+
+    # The least value on the square, at the two corners where UV = 4, and the ends of the colours.
+    least = float(K.exact([u1, v1, b]))
+    ck("ab_metrics K is least on the square at the two corners U = V = 2 and -2, where it is 0.466991/b^4",
+       abs(least - 0.466991) < 5e-7 and least <= float(np.min(values[inside])), f"{least:.6f}")
+    ck("ab_metrics no cell falls below the bottom of the colours", np.min(values[inside]) > scale["from"],
+       f"least cell {np.min(values[inside]):.6f}")
+    lo, hi = 1e-6, 1.0
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if float(K(1.0, mid - 1.0, b)) > AB_TOP else (lo, mid)
+    clip_eps = 0.5 * (lo + hi)
+    clip_radius = float(sp.sqrt(gchi.exact([1.0, clip_eps - 1.0, b])))
+    ck("ab_metrics K passes the top of its colours where UV < -0.987330, inside r = 0.151309b",
+       abs(clip_eps - 1 + 0.987330) < 5e-7 and abs(clip_radius - 0.151309) < 5e-7
+       and abs(clip_radius - (12e-6) ** (1 / 6)) < 1e-12, f"UV = {clip_eps - 1:.6f}, r = {clip_radius:.6f}")
+    ck("ab_metrics no cell above the top of the colours lies outside that band",
+       np.all(U[inside & (values > AB_TOP)] * V[inside & (values > AB_TOP)] < clip_eps - 1),
+       f"{int((inside & (values > AB_TOP)).sum())} cells above it")
 
     rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]
     singular = [[[u, -1.0 / u] for u in np.linspace(-2.0, -0.5, 121)],
@@ -13168,11 +13300,27 @@ def ab_metrics(ck, src):
                   {"class": "horizon", "points": [[u0, 0.0], [u1, 0.0]]}],
         "legend": [["line", "singular", "the singularity $UV = -1$, where $r = 0$"],
                    ["line", "horizon", "the horizons $U = 0$ and $V = 0$, where $r = b$"]],
-        "caption": ["The Kretschmann scalar $K$ of Ehlers and Kundt's A II metric over Kruskal's plane of $U$ "
-                    "and $V$ ($b = 1$), each point a hyperbolic plane of radius $r$ and curvature $-1/r^2$, "
-                    "with $(r/b - 1)e^{r/b} = UV$. The field is a vacuum, so its Ricci scalar vanishes."],
+        "caption": [
+            "The Kretschmann scalar $K$ of Ehlers and Kundt's A II metric over Kruskal's plane of $U$ and $V$ "
+            "($b = 1$), each point a hyperbolic plane of radius $r$ and curvature $-1/r^2$, with "
+            "$(r/b - 1)e^{r/b} = UV$. A II is the field of a tachyon, Schwarzschild's mass boosted past the "
+            "speed of light, and it is a vacuum, so its Ricci scalar vanishes. $K = 12b^2/r^6$ is the law of "
+            "Schwarzschild's vacuum, with $b$ for the Schwarzschild radius and a hyperbolic plane for each sphere.",
+            "$K$ holds $U$ and $V$ in the product $UV$ alone, so its levels are the hyperbolae of constant $UV$ "
+            "and it falls as $UV$ grows. The horizons $U = 0$ and $V = 0$ carry $r = b$ and $K = 12/b^4$. Where "
+            "$UV > 0$ the radius is above $b$ and is itself a time, the interval "
+            "$\\sigma = \\sqrt{T^2 - X^2 - Y^2}$ from the tachyon's line in the inertial chart, where "
+            "$K = 12b^2/\\sigma^6$; where $UV < 0$ it is below $b$, the field is static and $Z$ is its time.",
+            "The singularity $UV = -1$ is $r = 0$, the cone $\\sigma = 0$ of the inertial chart, the shock that "
+            "closes on the tachyon's line and opens again. Toward it $K$ grows as $3/2b^4(1 + UV)^3$, so the "
+            "curvature rises without bound along the whole of that cone. Its least value on the square is "
+            f"${tex_number(least, 6)}/b^4$, at the two corners $U = V = \\pm 2$. Beyond $UV = -1$ the radius "
+            "has no real value, and the map leaves the other two corners blank.",
+        ],
         "settings": "$b = 1$, Ehlers and Kundt's constant, the unit of every length.",
-        "clip": "We colour $K\\,b^4$ on a logarithmic scale from $10^{-1}$ to $10^{6}$.",
+        "clip": ("We colour $K\\,b^4$ on a logarithmic scale from $10^{-1}$ to $10^{6}$ and give a value above it "
+                 f"the colour of its top: $K$ passes $10^{{6}}/b^4$ where $UV < {clip_eps - 1:.6f}$, inside "
+                 f"$r = {clip_radius:.6f}\\,b$, and no cell falls below $10^{{-1}}/b^4$."),
     }
     return [view]
 
