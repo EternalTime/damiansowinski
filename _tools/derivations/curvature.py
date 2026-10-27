@@ -10436,13 +10436,43 @@ TB_GAP = 1e-3                     # the curve starts this far in L from rho = 0,
                                   # a thousandth of a plot unit, so that it carries the throat's value to the
                                   # four figures the caption prints
 TB_K = {"kind": "log", "from": 1e-5, "to": 1e2}
+TB_FAR = 1e6                      # the radius, in L, at which the fall far out is measured
+TB_NEAR = Fraction(1, 5)          # rho = L/5, where the caption reads K within a percent of the throat's constant
+TB_CHARTS = (("isotropic", "rho", ["L"]), ("areal", "r", ["L"]), ("horizon", "w", ["L", "r"]),
+             ("throat", "r", ["L"]), ("throat_proper", "sigma", ["L"]))
 
 
 def three_brane_throat(ck, src):
     """The three-brane at L = 1, its Kretschmann scalar from the throat out to flat space.
 
     One panel of K against the isotropic chart's rho, from 0 to 4 L, the box of that chart's
-    spacetime diagram, on a logarithmic axis from 10^-5 to 10^2 L^-4.
+    spacetime diagram, on a logarithmic axis from 10^-5 to 10^2 L^-4. The chart publishes
+    K = 80 L^8 (12 rho^8 + L^8)/(rho^4 + L^4)^5, which runs between two limits the plot holds
+    together: toward rho = 0 the 1 in H = 1 + L^4/rho^4 drops out, the spheres close on the radius
+    L, and K closes on 80/L^4; far out it falls off as 960 L^8/rho^12 into flat space, and by the
+    edge of the plot it is within 2 percent of that form. In between it falls at every radius,
+    since in s = rho^4 its derivative carries the quadratic 36s^2 - 24s L^4 + 5L^8, whose
+    discriminant -144 L^8 leaves it no zero.
+
+    80/L^4 is the whole of the throat's own K: the `throat` and `throat_proper` charts publish that
+    constant at every radius, free of their coordinate, so it is drawn as a `reference` level
+    across the panel, the one landed class for a comparison the slice itself does not carry, as
+    Schwarzschild's K stands beside Bardeen's. The `throat` chart's r is this chart's rho with the
+    1 dropped from H, so the level stands over the same radius the curve does.
+
+    The published Ricci scalar vanishes in all five charts, so no panel draws it and the caption
+    states the vanishing in one sentence, as Visser's thin shell wormhole states its vacuum.
+
+    What the caption states is checked here: K is the published formula at every point drawn, in
+    sixty digits; its limit at the throat is 80/L^4, the constant the throat's two charts publish,
+    which the curve's first point carries to the figures the caption prints; it falls at every
+    radius; it is 79.37/L^4 at rho = L/5, within a percent of the throat's constant, 32.5/L^4 at
+    rho = L, and 5.612 x 10^-5/L^4 at the edge of the plot, within 2 percent of 960 L^8/rho^12,
+    which it falls off as far out; every value stays inside the panel; each point of the plot is a
+    5-sphere of areal radius (rho^4 + L^4)^(1/4), closing on L at the throat and growing outward;
+    the published g^rho-rho is positive at every rho drawn and vanishes at rho = 0 alone, the edge
+    of the axis, where sqrt(g_rho-rho) rises as L/rho and the horizon lies infinitely far down the
+    throat, so no horizon is marked; and every chart publishes R = 0.
     """
     name = "three_brane_throat"
     L = 1.0
@@ -10454,23 +10484,119 @@ def three_brane_throat(ck, src):
              "scale": TB_K, "ticks": value_ticks(TB_K)}
     params = {"L": L}
     K = nr_published(src, name, "isotropic", "kretschmann", ["rho"], ["L"])
-    curves = line_curves(ck, name, "K", "K", K, "\\rho", x_axis, TB_K, height, params,
-                         within=(TB_GAP, TB_REACH))
+    level = nr_published(src, name, "throat", "kretschmann", ["r"], ["L"])
+    proper = nr_published(src, name, "throat_proper", "kretschmann", ["sigma"], ["L"])
+    sphere = nr_published(src, name, "isotropic", "metric_components", ["rho"], ["L"],
+                          ("\\alpha", "\\alpha"))
+    g_rho = nr_published(src, name, "isotropic", "metric_components", ["rho"], ["L"],
+                         ("\\rho", "\\rho"))
+    g_up = nr_published(src, name, "isotropic", "inverse_metric_components", ["rho"], ["L"],
+                        ("\\rho", "\\rho"))
+    rho, (L_sym,) = K.coords[0], K.params
+    ck(f"{name} K is published in the radius and the one length alone",
+       K.expr.free_symbols == {rho, L_sym}, f"{sorted(map(str, K.expr.free_symbols))}")
+
+    reference = line_curves(ck, f"{name} the throat's constant", "K", "reference", level, "r", x_axis,
+                            TB_K, height, params, within=(TB_GAP, TB_REACH))
+    drawn = line_curves(ck, name, "K", "K", K, "\\rho", x_axis, TB_K, height, params,
+                        within=(TB_GAP, TB_REACH))
+    curves = reference + drawn
+    ck(f"{name} draws one curve of K and one level of the throat's constant",
+       len(drawn) == 1 and len(reference) == 1, f"{len(drawn)} and {len(reference)}")
+    up, down = beyond(K, x_axis, TB_K, [L], within=(TB_GAP, TB_REACH))
+    ck(f"{name} K stays inside its panel", not up and not down, f"{up} {down}")
+
+    # The throat's constant, the limit of the drawn K at rho = 0 and the whole of the K the throat's
+    # own two charts publish, which carry no coordinate of theirs in it.
     throat = 80 / L ** 4
+    ck(f"{name} the throat's two charts publish the one constant 80/L^4 at every radius",
+       sp.simplify(level.expr - 80 / level.params[0] ** 4) == 0
+       and sp.simplify(proper.expr - 80 / proper.params[0] ** 4) == 0
+       and not (level.expr.free_symbols | proper.expr.free_symbols) & {level.coords[0], proper.coords[0]},
+       f"{level.expr} and {proper.expr}")
+    ck(f"{name} K closes on the throat's 80/L^4 at rho = 0",
+       sp.simplify(sp.limit(K.expr, rho, 0, "+") - 80 / L_sym ** 4) == 0, f"{throat:.9g}")
+    ck(f"{name} the curve's first point carries the throat's 80/L^4 to the figures the caption prints",
+       float(f"{drawn[0]['points'][0][1]:.4g}") == float(f"{throat:.4g}"), f"{drawn[0]['points'][0][1]:.9g}")
+
+    # In s = rho^4 the published K is 80 L^8 (12s^2 + L^8)/(s + L^4)^5, whose derivative carries a
+    # quadratic of negative discriminant, so K falls at every radius without a turning point.
+    s = sp.Symbol("s", positive=True)
+    shape = 80 * L_sym ** 8 * (12 * s ** 2 + L_sym ** 8) / (s + L_sym ** 4) ** 5
+    quadratic = 36 * s ** 2 - 24 * s * L_sym ** 4 + 5 * L_sym ** 8
+    ck(f"{name} the published K in s = rho^4 is 80L^8(12s^2 + L^8)/(s + L^4)^5",
+       sp.simplify(K.expr.subs(rho, s ** sp.Rational(1, 4)) - shape) == 0)
+    ck(f"{name} dK/ds is -80L^8(36s^2 - 24sL^4 + 5L^8)/(s + L^4)^6",
+       sp.simplify(sp.diff(shape, s) + 80 * L_sym ** 8 * quadratic / (s + L_sym ** 4) ** 6) == 0)
+    ck(f"{name} that quadratic has the discriminant -144L^8 and no zero, so K falls at every radius",
+       sp.simplify(sp.discriminant(quadratic, s) + 144 * L_sym ** 8) == 0
+       and sp.solve(quadratic.subs(L_sym, 1), s) == [], f"{sp.discriminant(quadratic, s)}")
+    rhos = np.linspace(TB_GAP, TB_REACH, SAMPLES)
+    values = K(rhos, L)
+    ck(f"{name} K falls at every radius drawn", np.all(np.diff(values) < 0))
+
+    near = float(TB_NEAR)
+    at_near = float(K.exact([near, L]))
+    ck(f"{name} K is within a percent of the throat's constant at rho = L/5",
+       abs(at_near / throat - 1) < 0.01, f"{at_near:.9g}, {100 * (1 - at_near / throat):.2f} percent below")
+    at_one = float(K.exact([L, L]))
+    ck(f"{name} K is 32.5/L^4 at rho = L", abs(at_one / 32.5 - 1) < AGREE, f"{at_one:.9g}")
+    edge = float(K.exact([float(TB_REACH), L]))
+    far_edge = 960 * L ** 8 / TB_REACH ** 12
+    ck(f"{name} K falls off as 960L^8/rho^12 far out",
+       abs(float(K.exact([TB_FAR, L])) * TB_FAR ** 12 / (960 * L ** 8) - 1) < 1e-5,
+       f"{sp.limit(K.expr * rho ** 12, rho, sp.oo)}")
+    ck(f"{name} K is within 2 percent of that form at the edge of the plot",
+       abs(far_edge / edge - 1) < 0.02, f"{edge:.9g} against {far_edge:.9g}, {100 * (far_edge / edge - 1):.2f} percent")
+
+    ck(f"{name} each point of the plot is a 5-sphere of areal radius (rho^4 + L^4)^(1/4)",
+       sp.simplify(sphere.expr - sp.sqrt(rho ** 4 + L_sym ** 4)) == 0, f"{sphere.expr}")
+    ck(f"{name} the spheres close on the radius L at the throat and grow outward",
+       sp.simplify(sp.limit(sphere.expr, rho, 0, "+") - L_sym ** 2) == 0
+       and np.all(np.diff(sphere(rhos, L)) > 0))
+    ck(f"{name} has no horizon to mark, g^rho-rho positive at every rho drawn",
+       np.all(g_up(rhos, L) > 0) and not zeros(ck, f"{name} g^rho-rho", g_up, TB_GAP, TB_REACH, [L]),
+       f"least {float(g_up(TB_GAP, L)):.3g} at the start of the curve")
+    ck(f"{name} the horizon rho = 0 is the edge of the axis, where g^rho-rho vanishes",
+       sp.limit(g_up.expr, rho, 0, "+") == 0)
+    # g_rho-rho rises as L^2/rho^2 at the throat, so the proper distance to rho = 0 along a moment,
+    # the quadrature of its square root, diverges as L ln(1/rho).
+    ck(f"{name} the horizon lies infinitely far down the throat, g_rho-rho rising as L^2/rho^2",
+       sp.simplify(sp.limit(g_rho.expr * rho ** 2 / L_sym ** 2, rho, 0, "+") - 1) == 0, f"{g_rho.expr}")
+
+    vanishing = [nr_published(src, name, chart, "ricci_scalar", [coordinate], chart_params).expr
+                 for chart, coordinate, chart_params in TB_CHARTS]
+    ck(f"{name} every chart publishes R = 0, so no panel draws the Ricci scalar",
+       all(expr == 0 for expr in vanishing), f"{len(vanishing)} charts")
 
     return [{
         "id": "brane", "label": "the brane and its throat", "kind": "line", "system": "isotropic",
         "x": x_axis, "panels": [panel], "curves": curves, "marks": [],
-        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "reference", "$K = 80/L^4$, the throat alone"]],
         "caption": [
             "The Kretschmann scalar $K$ of the three-brane against the isotropic radius $\\rho$ across the "
-            "sheet, the same at every point of the sheet and of the 5-sphere, each point of the plot a "
-            "sphere of five dimensions of areal radius $(\\rho^4 + L^4)^{1/4}$.",
-            f"Toward $\\rho = 0$ it closes on the throat's ${tex_number(throat, 3)}/L^4$.",
+            "sheet, the same at every moment and at every point of the sheet and of the sphere, each point of "
+            "the plot a 5-sphere of areal radius $(\\rho^4 + L^4)^{1/4}$. The Ricci scalar $R$ vanishes here "
+            "and in every other chart, as the trace of the field equations asks of a self-dual 5-form in ten "
+            "dimensions.",
+            f"Toward $\\rho = 0$ the 1 in $H = 1 + L^4/\\rho^4$ drops out, the spheres close on the radius $L$, "
+            f"and $K$ closes on ${tex_number(throat, 3)}/L^4$: it is already "
+            f"${tex_number(at_near, 4)}/L^4$ at $\\rho = L/5$, within a percent of that constant. It falls at "
+            f"every radius, through ${tex_number(at_one, 3)}/L^4$ at $\\rho = L$, and far out it falls off as "
+            f"$960L^8/\\rho^{{12}}$ into the flat space the sheet sits in, which it is within 2 percent of by "
+            f"${tex_number(edge, 4)}/L^4$ at $\\rho = {TB_REACH}\\,L$. The horizon $\\rho = 0$ lies infinitely "
+            "far down the throat, at the edge of the axis, where $g^{\\rho\\rho} = \\rho^2/\\sqrt{\\rho^4 + L^4}$ "
+            "vanishes.",
+            f"The level across the plot is the throat's own $K = {tex_number(throat, 3)}/L^4$, the constant its "
+            "two charts publish at every radius, anti-de Sitter space of five dimensions times a sphere of "
+            "five, both of radius $L$.",
         ],
-        "settings": "$L = 1$, the unit of every length, the radius of the throat and of its sphere.",
+        "settings": "$L = 1$, the unit of every length, the radius of the throat and of its sphere, as its "
+                    "other drawings take it.",
         "clip": "We draw $K\\,L^4$ on a logarithmic scale from $10^{-5}$ to $10^2$; every value drawn lies "
-                "within it.",
+                f"within it, and the curve starts $10^{{{round(math.log10(TB_GAP))}}}\\,L$ from $\\rho = 0$, "
+                "which the chart leaves out.",
     }]
 
 
