@@ -11872,6 +11872,7 @@ def tov(ck, src):
 
 BM_REACH = 8                      # each plot runs from the centre out to 8 ell, the box of the embedding diagram
 BM_GAP = 0.004                    # the curve starts a quarter of a plot unit from the centre, where the stored scalar divides by the radius
+BM_FAR = 1e4                      # the radius at which the approach to the vacuum of the same mass is measured
 BM_K = {"kind": "log", "from": 1e-5, "to": 1e2}
 BM_ZEROS = {1: "one zero", 2: "two zeros", 3: "three zeros"}
 
@@ -11899,6 +11900,18 @@ def bartnik_mckinnon(ck, src):
 
     The published Ricci scalar vanishes on each solution: the Yang-Mills stress tensor is
     traceless, so the trace of the field equations leaves R = 0, and no panel draws it.
+
+    What the captions state is checked here: every value drawn is the published formula at its
+    point, in sixty digits; the centre holds de Sitter's 24/L^4 at L = 1/2b, which the regular
+    series makes 384 b^4, the greatest value of each curve; the published Ricci scalar vanishes
+    against the published K at every sample; the published g^rr is positive at every radius drawn,
+    so no horizon is marked, and its least value is the neck the embedding diagram climbs; K falls
+    at every radius, the fall steepening from the centre out to the power and radius each caption
+    prints, just inside the neck; the vacuum of the soliton's own mass stands above it at every
+    radius drawn, leaves the top of the panel where the caption says, and is approached far out,
+    the shortfall at the edge of the plot being the percentage the caption prints; and across the
+    three views the neck deepens and moves toward r = ell while the masses rise toward ell, the
+    limit the last caption names.
     """
     name = "bartnik_mckinnon"
     aspect = 1.5
@@ -11908,7 +11921,9 @@ def bartnik_mckinnon(ck, src):
     panel = {"id": "K", "name": "$K\\,\\ell^4$", "aspect": aspect, "scale": BM_K, "ticks": value_ticks(BM_K)}
     params = {"ell": 1.0}
     K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
-    views = []
+    ck(f"{name} the vacuum beside each soliton is Schwarzschild's 48M^2/r^6 at r_s = 2GM/c^2",
+       sp.simplify(K_s.expr - 12 * K_s.params[0] ** 2 / K_s.coords[0] ** 6) == 0, f"{K_s.expr}")
+    views, family = [], []
     for n in (1, 2, 3):
         soliton = nr.bm_soliton.soliton(n)
         facts = soliton.facts()
@@ -11949,6 +11964,52 @@ def bartnik_mckinnon(ck, src):
         ck(f"{at} the declared soliton carries the words the other drawings carry",
            n != 1 or bm_input(facts) == nr.BM_INPUT, bm_input(facts))
 
+        # The neck is the least of the published g^rr = 1 - 2m/r, the radius at which the embedding
+        # diagram's surface stands steepest.
+        neck = golden(lambda r: float(grr(r, 1.0)), 0.5, BM_REACH / 2)
+        dip, K_neck = float(grr(neck, 1.0)), float(K(neck, 1.0))
+        ck(f"{at} the least published g^rr is the neck the embedding diagram climbs",
+           abs(neck / facts["r_N_min"] - 1) < 1e-3 and abs(dip / facts["N_min"] - 1) < 1e-6,
+           f"g^rr = {dip:.6f} at r = {neck:.6f}")
+
+        def power(r, step=1e-5, fn=K):
+            """dln K/dln r at r, from the published formula at two radii a part in 1/step apart."""
+            h = step * r
+            return float(np.log(fn(r + h, 1.0) / fn(r - h, 1.0)) / np.log((r + h) / (r - h)))
+
+        steep = golden(power, neck / 2, neck)
+        fall = power(steep)
+        ck(f"{at} the power of the fall holds to the step it is measured over",
+           abs(power(steep, 1e-4) - fall) < 1e-3 and abs(power(steep, 1e-6) - fall) < 1e-6, f"r^{fall:.4f}")
+        ck(f"{at} K falls at every radius drawn", np.all(np.diff(values) < 0),
+           f"from {values[0]:.6g} to {values[-1]:.6g}")
+        ck(f"{at} the fall steepens from the centre out to the power the caption prints, just inside the neck",
+           np.all(np.diff([power(float(r)) for r in np.linspace(0.2, steep, 200)]) < 0)
+           and 0.8 * neck < steep < neck,
+           f"r^{fall:.4f} at r = {steep:.6f}, against the neck at r = {neck:.6f}")
+
+        # The vacuum of the soliton's own mass, which the energy of the field holds the soliton below.
+        vacuum = K_s(rs, 2 * mass)
+        edge, edge_vacuum = float(K.exact([BM_REACH, 1.0])), float(K_s.exact([BM_REACH, 2 * mass]))
+        short = 100 * (1 - edge / edge_vacuum)
+        ck(f"{at} the vacuum of its mass stands above it at every radius drawn",
+           np.all(values < vacuum), f"largest ratio {float(np.max(values / vacuum)):.6f}")
+        ck(f"{at} K approaches the vacuum's far out, short of it at the edge of the plot by the stated percentage",
+           abs(float(K.exact([BM_FAR, 1.0])) / float(K_s.exact([BM_FAR, 2 * mass])) - 1) < 1e-6,
+           f"{short:.2f} percent below at r = {BM_REACH}, within "
+           f"{abs(float(K(BM_FAR, 1.0)) / float(K_s(BM_FAR, 2 * mass)) - 1):.1e} of it at r = {BM_FAR:g}")
+        top = edge_cut(K_s, [2 * mass], BM_K, "top", BM_REACH, BM_GAP)
+        ck(f"{at} the vacuum's curve leaves the top of the panel where the caption says",
+           abs(float(K_s(top, 2 * mass)) / BM_K["to"] - 1) < 1e-9 and 2 * mass < BM_REACH,
+           f"r = {top:.6f}, its horizon at {2 * mass:.6f}")
+        # The last zero of the declared amplitude, bisected from the one its solution tabulates.
+        last = facts["nodes"][-1]
+        node = crossing(lambda r: float(soliton.w(r)[0]), 0.999 * last, 1.001 * last)
+        ck(f"{at} the declared amplitude has its {n} zeros, the last where the caption says",
+           abs(float(soliton.w(node)[0])) < 1e-9 and len(facts["nodes"]) == n and abs(node / last - 1) < 1e-3,
+           f"w = {float(soliton.w(node)[0]):.1e} at r = {node:.6f}, {len(facts['nodes'])} zeros")
+        family.append({"centre": centre, "neck": neck, "dip": dip, "K_neck": K_neck, "mass": mass})
+
         clip = ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10^{-5}$ to $10^2$; every value of the "
                 f"soliton's own $K$ lies within it, and its curve starts ${BM_GAP}\\,\\ell$ from the centre, "
                 "a quarter of a plot unit, where the stored formula's removable divisions by the radius stay "
@@ -11967,13 +12028,40 @@ def bartnik_mckinnon(ck, src):
                 "equations leaves $R = 0$.",
                 f"At the centre the mass function grows as $2b^2r^3$, so $1 - 2m/r$ opens as $1 - 4b^2r^2$ and "
                 f"$K$ takes de Sitter's $24/L^4$ at $L = 1/2b$: $384b^4/\\ell^4 = {tex_number(centre)}/\\ell^4$, "
-                "its greatest value, finite where the vacuum of the same mass diverges.",
+                "its greatest value, finite where the vacuum of the same mass diverges. "
+                f"The fall steepens from the centre outward to $r^{{{fall:.2f}}}$ at $r = {steep:.2f}\\,\\ell$, "
+                f"just inside the neck at $r = {neck:.2f}\\,\\ell$, where $g^{{rr}} = 1 - 2m/r$ dips to its least "
+                f"${tex_number(dip)}$ and $K = {tex_number(K_neck)}/\\ell^4$. "
+                "The soliton has no horizon: $g^{rr}$ stays positive at every radius."
+                + (" Each further zero deepens the neck and holds more of the curvature in it, and in the "
+                   "limit of infinitely many zeros the neck is the infinite throat of the extreme "
+                   "Reissner-Nordstr\u00f6m black hole, $1 - 2m/r = (1 - \\ell/r)^2$." if n == 3 else ""),
+                "The dashed curve is Schwarzschild's $K = 48M^2/r^6$ of the soliton's own mass, above the "
+                f"soliton's at every radius drawn and rising past the top of the panel inside "
+                f"$r = {top:.2f}\\,\\ell$; the vacuum of that mass would have its horizon at "
+                f"$2GM/c^2 = {2 * mass:.2f}\\,\\ell$, where the soliton has none. "
+                "The soliton's own $K$ approaches it outward as the Yang-Mills field dies away: at the edge "
+                f"of the plot, $r = {BM_REACH}\\,\\ell$, $K = {tex_number(edge, 4)}/\\ell^4$ is "
+                f"${short:.1f}$ percent below it, with the amplitude's last zero at ${node:.2f}\\,\\ell$"
+                + (", beyond the plot." if node > BM_REACH else "."),
             ],
             "settings": f"$\\ell = 1$, the unit of every length, and the vacuum beside the soliton at "
                         f"$r_s = 2GM/c^2 = {2 * mass:.2f}\\,\\ell$, the soliton's own mass.",
             "input": bm_input(facts),
             "clip": clip,
         })
+    # The ladder the last caption names: each added zero deepens the neck and draws it in toward
+    # r = ell, where the extreme Reissner-Nordstrom throat of that mass stands, and holds more of
+    # the curvature there, while the mass rises toward the same limit.
+    ck(f"{name} the neck deepens and moves in toward r = ell as zeros are added",
+       all(a["dip"] > b["dip"] and a["neck"] > b["neck"] > 1 for a, b in zip(family, family[1:])),
+       ", ".join(f"{f['dip']:.4f} at r = {f['neck']:.4f}" for f in family))
+    ck(f"{name} it holds more of the curvature, at the neck and at the centre, with every zero added",
+       all(a["K_neck"] < b["K_neck"] and a["centre"] < b["centre"] for a, b in zip(family, family[1:])),
+       ", ".join(f"{f['K_neck']:.4f} at the neck, {f['centre']:.4f} at the centre" for f in family))
+    ck(f"{name} the masses rise toward the ell of that extreme Reissner-Nordstrom throat",
+       all(a["mass"] < b["mass"] < 1 for a, b in zip(family, family[1:])),
+       ", ".join(f"{f['mass']:.4f}" for f in family))
     return views
 
 
