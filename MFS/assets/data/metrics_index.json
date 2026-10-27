@@ -304,7 +304,8 @@
     "version": "49cb1b3fdf7bc30c",
     "diagrams": "04a29fa582f0c7a2",
     "conformal": "acaf9c7da5b177a4",
-    "embedding": "b0d9da588a8a0e63"
+    "embedding": "b0d9da588a8a0e63",
+    "curvature": "15df5518b3325317"
   },
   {
     "id": "bell_szekeres",
