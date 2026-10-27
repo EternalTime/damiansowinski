@@ -10297,7 +10297,8 @@ def thin_shell_wormhole(ck, src):
 
     What the caption states is checked here: a lies outside r_s; the two sides carry one formula,
     whose limit at the throat is 12 r_s^2/a^6, which each curve's last point carries to the figures
-    the caption prints; K falls from the throat outward and stays inside its
+    the caption prints; its slope there jumps from 72 r_s^2/a^7 to minus it, the kink the areal
+    radius leaves in it; K falls from the throat outward and stays inside its
     panel; its value at the edge of the plot is 12 r_s^2/(a + 3r_s)^6 and it falls off far out as
     12 r_s^2/ell^6; the spheres are least at the throat; the published g^ell-ell is positive at
     every ell drawn, least 1 - r_s/a at the throat, so no horizon is marked; and the published Ricci
@@ -10338,6 +10339,11 @@ def thin_shell_wormhole(ck, src):
     ck(f"{name} the two sides of the throat carry one formula", sides[0] == sides[1], f"{sides[0]}")
     ck(f"{name} K at the throat is the limit 12r_s^2/a^6",
        sp.simplify(sp.limit(sides[0], u, 0, "+") - 12 * rs_sym ** 2 / a_sym ** 6) == 0, f"{throat:.9g}")
+    # dK/dell = sign d/du K(sign u) on the side ell = sign u, so the slope jumps across the throat.
+    slopes = [sign * sp.limit(sp.diff(K.expr.subs(ell, sign * u), u), u, 0, "+") for sign in (1, -1)]
+    kink = 72 * rs_sym ** 2 / a_sym ** 7
+    ck(f"{name} K has a kink at the throat, its slope jumping from 72r_s^2/a^7 to minus it",
+       sp.simplify(slopes[0] + kink) == 0 and sp.simplify(slopes[1] - kink) == 0, f"{slopes}")
 
     ends = [before[0]["points"][-1][1], beyond_throat[0]["points"][0][1]]
     ck(f"{name} each curve carries the throat's 12r_s^2/a^6 to the figures the caption prints",
@@ -10402,8 +10408,9 @@ def thin_shell_wormhole(ck, src):
             f"Toward the throat $K$ rises to its greatest value, $12r_s^2/a^6 = {tex_number(throat, 4)}/r_s^4$, "
             f"the spheres there being the least of the wormhole, and it falls to ${tex_number(edge, 4)}/r_s^4$ at "
             f"$|\\ell| = {TSW_REACH}\\,r_s$, where the areal radius is ${a + TSW_REACH}\\,r_s$. Far out it falls "
-            "off as $12r_s^2/\\ell^6$. The two sides are mirror images, and the curve turns at the throat "
-            f"rather than peaking, since the areal radius has a kink there. The chart has no horizon: "
+            "off as $12r_s^2/\\ell^6$. The two sides are mirror images, and $K$ has a kink at the throat, "
+            "where its slope jumps from $72r_s^2/a^7$ to minus it, since $r = a + |\\ell|$ has a kink there. "
+            "The chart has no horizon: "
             f"$g^{{\\ell\\ell}} = 1 - r_s/(a + |\\ell|)$ is least $1 - r_s/a = {1 - rs / a:.1f}$ at the throat.",
             "All of the matter is the shell at the throat, where $R$ is the distribution "
             f"$-2(4a - 3r_s)\\delta(\\ell)/a^2$, which is ${tex_number(shell, 3)}\\,\\delta(\\ell)/r_s$ here, "
