@@ -11868,6 +11868,115 @@ def tov(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Bartnik and McKinnon's solitons
+
+BM_REACH = 8                      # each plot runs from the centre out to 8 ell, the box of the embedding diagram
+BM_GAP = 0.004                    # the curve starts a quarter of a plot unit from the centre, where the stored scalar divides by the radius
+BM_K = {"kind": "log", "from": 1e-5, "to": 1e2}
+BM_ZEROS = {1: "one zero", 2: "two zeros", 3: "three zeros"}
+
+
+def bm_input(facts):
+    """The declared soliton as a view names it, written from the solved numbers themselves, so that
+    the view with one zero carries the words the spacetime diagrams and the embedding diagram carry."""
+    return (f"The soliton whose Yang-Mills amplitude $w$ has {BM_ZEROS[facts['n']]}, the solution of the "
+            "Einstein-Yang-Mills equations regular at the centre and flat far away that starts as "
+            f"$w = 1 - br^2/\\ell^2$ with $b = {facts['b']:.4f}$, found by numerical integration. Its mass is "
+            f"${facts['M']:.4f}\\,c^2\\ell/G$, and $\\sigma$ rises from ${facts['sigma0']:.4f}$ at the centre "
+            "to $1$ far away.")
+
+
+def bartnik_mckinnon(ck, src):
+    """The solitons with one, two and three zeros of the Yang-Mills amplitude, their Kretschmann
+    scalar against the areal radius, in units of ell.
+
+    A view for each soliton, as the embedding diagram draws them, over the same radial range
+    0 to 8 ell, on a logarithmic axis from 10^-5 to 10^2 ell^-4. The areal chart leaves sigma, m
+    and w free, and each view declares all three from bartnik_mckinnon.py's solution of the field
+    equations, the profiles the spacetime diagrams declare. Schwarzschild's K of the soliton's own
+    mass stands beside each curve, as the vacuum paraboloid of that mass stands beside each
+    embedding surface.
+
+    The published Ricci scalar vanishes on each solution: the Yang-Mills stress tensor is
+    traceless, so the trace of the field equations leaves R = 0, and no panel draws it.
+    """
+    name = "bartnik_mckinnon"
+    aspect = 1.5
+    height = PLOT_W / aspect
+    shape_checks(ck, name, [aspect])
+    x_axis = axis("$r/\\ell$", 0, BM_REACH)
+    panel = {"id": "K", "name": "$K\\,\\ell^4$", "aspect": aspect, "scale": BM_K, "ticks": value_ticks(BM_K)}
+    params = {"ell": 1.0}
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    views = []
+    for n in (1, 2, 3):
+        soliton = nr.bm_soliton.soliton(n)
+        facts = soliton.facts()
+        b, mass = facts["b"], facts["M"]
+        at = f"{name} with {BM_ZEROS[n]}"
+        # The chart leaves w free as well as sigma and m, and the figure declares every one of them.
+        functions = {k: v.replace(", 1)", f", {n})") for k, v in {**nr.BM_AREAL, "w": "bm_w(r, 1)"}.items()}
+        K = Published(src, name, "areal", "kretschmann", ["r"], ["ell"], functions=functions)
+        R = Published(src, name, "areal", "ricci_scalar", ["r"], ["ell"], functions=functions)
+        grr = Published(src, name, "areal", "inverse_metric_components", ["r"], ["ell"], ("r", "r"), functions)
+
+        reference = line_curves(ck, f"{at}, the vacuum of its mass", "K", "reference", K_s, "r", x_axis,
+                                BM_K, height, {"r_s": 2 * mass})
+        drawn = line_curves(ck, at, "K", "K", K, "r", x_axis, BM_K, height, params, within=(BM_GAP, BM_REACH))
+        ck(f"{at} draws one curve of K and one of the vacuum of its mass",
+           len(drawn) == 1 and len(reference) == 1, f"{len(drawn)} and {len(reference)}")
+        up, down = beyond(K, x_axis, BM_K, [1.0], within=(BM_GAP, BM_REACH))
+        ck(f"{at} K stays inside its panel", not up and not down, f"{up} {down}")
+
+        rs = np.linspace(BM_GAP, BM_REACH, SAMPLES)
+        values = K(rs, 1.0)
+        # The centre is a patch of constant curvature: m grows as 2 b^2 r^3, so N opens as
+        # 1 - 4 b^2 r^2 and K takes de Sitter's 24/L^4 with L = 1/2b.
+        centre = 384 * b ** 4
+        ck(f"{at} K at the centre is de Sitter's 24/L^4 with L = 1/2b, 384 b^4",
+           abs(float(K.exact([BM_GAP, 1.0])) / centre - 1) < 1e-4,
+           f"{centre:.9g} against {float(K(BM_GAP, 1.0)):.9g} at the start of the curve")
+        ck(f"{at} K is finite and positive at every sample and greatest at the centre",
+           np.all(np.isfinite(values) & (values > 0)) and float(np.argmax(values)) == 0,
+           f"from {values[0]:.6g} to {values[-1]:.6g}")
+        # The stress tensor of a Yang-Mills field is traceless, so the field equations leave R = 0.
+        ck(f"{at} the published Ricci scalar vanishes against the published K at every sample",
+           float(np.max(np.abs(R(rs, 1.0)) / values)) < 1e-9,
+           f"largest |R|/K {float(np.max(np.abs(R(rs, 1.0)) / values)):.1e}")
+        ck(f"{at} has no horizon, the published g^rr positive at every radius drawn",
+           np.all(grr(rs, 1.0) > 0) and not zeros(ck, f"{at} g^rr", grr, BM_GAP, BM_REACH, [1.0]),
+           f"least {float(np.min(grr(rs, 1.0))):.6f}")
+        ck(f"{at} the declared soliton carries the words the other drawings carry",
+           n != 1 or bm_input(facts) == nr.BM_INPUT, bm_input(facts))
+
+        clip = ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10^{-5}$ to $10^2$; every value of the "
+                f"soliton's own $K$ lies within it, and its curve starts ${BM_GAP}\\,\\ell$ from the centre, "
+                "a quarter of a plot unit, where the stored formula's removable divisions by the radius stay "
+                "away from zero.")
+        views.append({
+            "id": f"n{n}", "label": BM_ZEROS[n].capitalize(), "kind": "line", "system": "areal",
+            "x": x_axis, "panels": [panel], "curves": reference + drawn, "marks": [],
+            "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                       ["line", "reference", f"Schwarzschild's $K = 48M^2/r^6$ of the same mass, "
+                                             f"$2GM/c^2 = {2 * mass:.2f}\\,\\ell$"]],
+            "caption": [
+                f"The Kretschmann scalar $K$ of the soliton with {BM_ZEROS[n]} against the areal radius $r$ "
+                f"($b = {b:.4f}$, mass ${mass:.4f}\\,c^2\\ell/G$), the same at every $t$, $\\theta$, and "
+                "$\\phi$, each point of the plot a 2-sphere of areal radius $r$. The Ricci scalar $R$ "
+                "vanishes: the stress tensor of a Yang-Mills field is traceless, and the trace of the field "
+                "equations leaves $R = 0$.",
+                f"At the centre the mass function grows as $2b^2r^3$, so $1 - 2m/r$ opens as $1 - 4b^2r^2$ and "
+                f"$K$ takes de Sitter's $24/L^4$ at $L = 1/2b$: $384b^4/\\ell^4 = {tex_number(centre)}/\\ell^4$, "
+                "its greatest value, finite where the vacuum of the same mass diverges.",
+            ],
+            "settings": f"$\\ell = 1$, the unit of every length, and the vacuum beside the soliton at "
+                        f"$r_s = 2GM/c^2 = {2 * mass:.2f}\\,\\ell$, the soliton's own mass.",
+            "input": bm_input(facts),
+            "clip": clip,
+        })
+    return views
+
+
 # ---------------------------------------------------------------- the boson star
 
 def boson_star(ck, src):
@@ -12605,6 +12714,7 @@ def bonnor_magnetic_dipole(ck, src):
 DRAWN = {
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
+    "bartnik_mckinnon": bartnik_mckinnon,
     "bardeen_perturbations": bardeen_perturbations,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,

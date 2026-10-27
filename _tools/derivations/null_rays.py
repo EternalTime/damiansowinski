@@ -2277,6 +2277,9 @@ bm_d2m = _bm_function("bm_d2m", _bm_jet("d2m"))
 bm_dm = _bm_function("bm_dm", _bm_jet("dm"), lambda r, n: bm_d2m(r, n))
 bm_m = _bm_function("bm_m", _bm_jet("m"), lambda r, n: bm_dm(r, n),
                     "The mass function m(r)/ell of the soliton with n zeros, at r/ell.")
+bm_dw = _bm_function("bm_dw", _bm_jet("dw"))
+bm_w = _bm_function("bm_w", _bm_jet("w"), lambda r, n: bm_dw(r, n),
+                    "The Yang-Mills amplitude w(r) of the soliton with n zeros, at r/ell.")
 bm_d2delta = _bm_function("bm_d2delta", _bm_jet("d2delta"))
 bm_ddelta = _bm_function("bm_ddelta", _bm_jet("ddelta"), lambda r, n: bm_d2delta(r, n))
 bm_delta = _bm_function("bm_delta", _bm_jet("delta"), lambda r, n: bm_ddelta(r, n),
@@ -2519,7 +2522,7 @@ def _tilted_flow():
 # Functions a row's `functions` may name beside the elementary ones, each a sympy function
 # that carries its own derivative and its own numbers.
 DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__: f for f in (bm_m, bm_dm, bm_d2m, bm_delta, bm_ddelta, bm_d2delta, bm_N, bm_dN,
-                                                 bm_d2N, bm_k, bm_dk, bm_d2k, bm_r)},
+                                                 bm_d2N, bm_k, bm_dk, bm_d2k, bm_r, bm_w, bm_dw)},
                       "teo_rho": teo_rho, "teo_sigma": teo_sigma, "ori_mass_behind": ori_mass_behind,
                       "ori_influx_behind": ori_influx_behind, "ori_shell_behind": ori_shell_behind,
                       "hiscock_m_out": hiscock_m_out, "hiscock_dm_out": hiscock_dm_out,
