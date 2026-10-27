@@ -99,8 +99,8 @@ function walk(value, where, key, file) {
 }
 
 // A spacetime may have no null ray diagram, no conformal diagram and no curvature figure, so a
-// folder with no file for the one named is named in the output and passed over, and a name no
-// folder carries at all is the error.
+// folder holding no file for the metric named is reported and passed over, and a metric no
+// folder holds at all is the error.
 let read = 0;
 for (const folder of ['metrics', 'diagrams', 'conformal', 'curvature']) {
   const dir = path.join(DATA, folder);
