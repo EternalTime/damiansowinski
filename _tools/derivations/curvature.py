@@ -5315,6 +5315,131 @@ def khan_penrose(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- the Kantowski-Sachs cosmologies
+
+KS_ETA_END = 1.2                         # the existing embedding movie's last dust moment
+KS_K_SCALE = {"kind": "log", "from": 1.0, "to": 1e7}
+KS_R_SCALE = {"kind": "symlog", "from": 0.0, "to": 20.0, "linear": 0.01}
+
+
+def kantowski_sachs(ck, src):
+    """Kantowski-Sachs dust and the vacuum interior against proper time.
+
+    The dust model is the symmetric member at b_0 = 1 and kappa = 0, over the existing
+    embedding range |eta| <= 1.2. The vacuum interior has r_s = 1 and is shown from its
+    horizon to the same cycloidal proper time. Both native coordinates are mapped onto
+    proper time by the landed horizontal-coordinate format, and every curve is read from
+    the stored scalar formula. The Ricci scalar is zero in the vacuum and positive in dust.
+
+    The checks cover the cycloidal proper-time maps, the stored scalars, the horizon, the
+    time symmetry of the dust, the endpoint values and the stated scales. Every written
+    point is checked again in sixty digits before the figure is written.
+    """
+    name = "kantowski_sachs"
+    dust, vacuum = "dust", "schwarzschild_interior"
+    b0, kappa, rs = 1.0, 0.0, 1.0
+    eta_end = KS_ETA_END
+    tau_end = eta_end + math.sin(eta_end) * math.cos(eta_end)
+    x_axis = axis("$c\\tau$", -tau_end, tau_end)
+    panels = [
+        {"id": "K", "name": "$K\\,b_0^4,\\ K\\,r_s^4$", "aspect": 2,
+         "scale": KS_K_SCALE, "ticks": value_ticks(KS_K_SCALE)},
+        {"id": "R", "name": "$R\\,b_0^2", "aspect": 2,
+         "scale": KS_R_SCALE, "ticks": value_ticks(KS_R_SCALE)},
+    ]
+    shape_checks(ck, name, [2, 2])
+    K_dust = Published(src, name, dust, "kretschmann", ["eta"], ["b_0", "kappa"])
+    R_dust = Published(src, name, dust, "ricci_scalar", ["eta"], ["b_0", "kappa"])
+    K_vacuum = Published(src, name, vacuum, "kretschmann", ["T"], ["r_s"])
+    gTT_vacuum = Published(src, name, vacuum, "inverse_metric_components", ["T"], ["r_s"], ("T", "T"))
+
+    dust_tau = lambda eta: eta + np.sin(eta) * np.cos(eta)
+    vacuum_tau = lambda T: np.arccos(np.sqrt(T / rs)) + np.sqrt(T / rs) * np.sqrt(1 - T / rs)
+    dust_tau_expr = "eta + sin(eta)*cos(eta)"
+    vacuum_tau_expr = "acos(sqrt(T/r_s)) + sqrt(T/r_s)*sqrt(1 - T/r_s)"
+
+    def mapped_curve(panel, cls, published, coordinate, native, params, horizontal, expression, scale):
+        native = np.asarray(native, dtype=float)
+        values = published(native, *params.values())
+        x_values = horizontal(native)
+        p0, p1 = span(scale)
+        pos = position(scale, values)
+        X = PLOT_W * (x_values - x_axis["from"]) / (x_axis["to"] - x_axis["from"])
+        Y = (PLOT_W / 2) * (1 - (pos - p0) / (p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        points = [[float(x_values[k]) + 0.0, float(values[k]) + 0.0] for k in keep]
+        entry = curve_entry(panel, cls, published, coordinate, params, points)
+        entry["horizontal"] = {"expression": expression, "values": [float(native[k]) + 0.0 for k in keep]}
+        agrees(ck, f"{name} {cls} {coordinate}", published,
+               [[float(v), *params.values()] for v in entry["horizontal"]["values"]],
+               [p[1] for p in points])
+        ck(f"{name} {cls} {coordinate} stays inside its panel",
+           np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]),
+           f"{np.min(values):.8g} to {np.max(values):.8g}")
+        return entry
+
+    dust_eta = np.linspace(-eta_end, eta_end, SAMPLES)
+    vacuum_T = np.linspace(rs, rs * math.cos(eta_end) ** 2, SAMPLES)
+    params_dust = {"b_0": b0, "kappa": kappa}
+    params_vacuum = {"r_s": rs}
+    curves = [
+        mapped_curve("K", "K", K_dust, "eta", dust_eta, params_dust, dust_tau, dust_tau_expr, KS_K_SCALE),
+        mapped_curve("K", "reference", K_vacuum, "T", vacuum_T, params_vacuum, vacuum_tau, vacuum_tau_expr, KS_K_SCALE),
+        mapped_curve("R", "R", R_dust, "eta", dust_eta, params_dust, dust_tau, dust_tau_expr, KS_R_SCALE),
+    ]
+    ck(f"{name} the dust proper-time map is odd", np.allclose(dust_tau(-dust_eta), -dust_tau(dust_eta)))
+    ck(f"{name} the vacuum proper-time map runs from the horizon to the plotted endpoint",
+       abs(float(vacuum_tau(vacuum_T[0]))) < 1e-14 and abs(float(vacuum_tau(vacuum_T[-1])) - tau_end) < 1e-14)
+    ck(f"{name} the dust scalars are even in eta",
+       np.allclose(K_dust(dust_eta, b0, kappa), K_dust(-dust_eta, b0, kappa), rtol=1e-12)
+       and np.allclose(R_dust(dust_eta, b0, kappa), R_dust(-dust_eta, b0, kappa), rtol=1e-12))
+    ck(f"{name} the vacuum Ricci scalar vanishes", Published(src, name, vacuum, "ricci_scalar", ["T"], ["r_s"]).expr == 0)
+    ck(f"{name} the vacuum horizon is the marked zero of g^TT",
+       abs(float(gTT_vacuum.exact([rs, rs]))) < 1e-40)
+    dust_K_end = float(K_dust(eta_end, b0, kappa))
+    dust_R_end = float(R_dust(eta_end, b0, kappa))
+    vacuum_K_end = float(K_vacuum(vacuum_T[-1], rs))
+    dust_K_start = float(K_dust(0.0, b0, kappa))
+    dust_R_start = float(R_dust(0.0, b0, kappa))
+    vacuum_K_start = float(K_vacuum(rs, rs))
+    ck(f"{name} the endpoint values match the stored formulas",
+       abs(dust_K_start - 7) < AGREE and abs(dust_R_start - 1) < AGREE
+       and abs(vacuum_K_start - 12) < AGREE and abs(dust_K_end - 2292140.838455693) < 1e-6
+       and abs(dust_R_end - 14.193501539530194) < 1e-12
+       and abs(vacuum_K_end - 2341696.085115985) < 1e-6,
+       f"dust K,R = {dust_K_end:.9g}, {dust_R_end:.9g}; vacuum K = {vacuum_K_end:.9g}")
+
+    k_clip = ("We draw $K\\,b_0^4$ for dust and $K\\,r_s^4$ for the vacuum on a logarithmic scale from "
+              "$10^0$ to $10^7$; every drawn value lies within it.")
+    r_clip = ("We draw $R\\,b_0^2$ on a signed logarithmic scale, linear within $10^{-2}$ of zero, from "
+              "$0$ to $20$; every drawn value lies within it.")
+    return [{
+        "id": "proper_time", "label": "the vacuum and dust models", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [{"class": "horizon", "x": 0.0}],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "R", "$R$, the Ricci scalar"],
+                   ["line", "reference", "the vacuum interior of Schwarzschild's horizon"],
+                   ["line", "horizon", "$c\\tau = 0$, the vacuum horizon"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of Kantowski-Sachs against proper time $c\\tau$, "
+            "the vacuum interior of Schwarzschild's horizon overlaid with the homogeneous dust model, the same at "
+            "every $r$, $\\theta$, and $\\phi$. The dust model is symmetric about its moment of greatest sphere "
+            "radius, while the vacuum branch starts at the horizon and runs toward its singularity. The vacuum has "
+            "$R = 0$.",
+            f"At $c\\tau = 0$, dust has $K = 7/b_0^4$ and $R = 1/b_0^2$, while the vacuum has $K = 12/r_s^4$. "
+            f"At $|c\\tau| = {tau_end:.3f}$, the dust reaches $K = {tex_number(dust_K_end)}/b_0^4$ and "
+            f"$R = {tex_number(dust_R_end)}/b_0^2$ at $|\\eta| = {eta_end}$, while the vacuum reaches "
+            f"$K = {tex_number(vacuum_K_end)}/r_s^4$. The curves stop before the cigarlike singularities at "
+            "$|\\eta| = \\pi/2$.",
+        ],
+        "ricci_sentences": [[0, 0], [0, 2], [1, 0], [1, 1]],
+        "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$b_0 = r_s = 1$, each the unit of length, with $\\kappa = 0$ for the symmetric dust model; "
+                    "$c\\tau$ is proper time from the vacuum horizon or from the dust's greatest sphere radius.",
+        "clip": k_clip + " " + r_clip,
+    }]
+
+
 # ---------------------------------------------------------------- Kiselev's black hole
 
 KISELEV_W = Fraction(-2, 3)       # w, as every drawing of Kiselev's black hole takes it
@@ -12168,6 +12293,7 @@ DRAWN = {
     "kerr_newman": kerr_newman,
     "kerr_taub_nut": kerr_taub_nut,
     "khan_penrose": khan_penrose,
+    "kantowski_sachs": kantowski_sachs,
     "kiselev": kiselev,
     "levi_civita": levi_civita,
     "mass_inflation": mass_inflation,
