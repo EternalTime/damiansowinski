@@ -10277,25 +10277,102 @@ TSW_K = {"kind": "log", "from": 1e-3, "to": 1e1}
 def thin_shell_wormhole(ck, src):
     """Visser's thin shell wormhole at a = 5r_s/4, its Kretschmann scalar across the throat.
 
-    One panel of K against the chart through the throat's ell, from -3 r_s to 3 r_s, the box of
-    that chart's spacetime diagram, on a logarithmic axis from 10^-3 to 10 r_s^-4.
+    One panel of K against the ell of the chart through the throat, from -3 r_s to 3 r_s, the box
+    of that chart's spacetime diagram, on a logarithmic axis from 10^-3 to 10 r_s^-4. Off the
+    shell the spacetime is Schwarzschild's vacuum on either side, so the published K of the chart
+    through the throat, 12 r_s^2/(a + |ell|)^6, is the spherical chart's 12 r_s^2/r^6 at the areal
+    radius r = a + |ell|, which the checks hold it to on both sides; the stored formula carries the
+    clause for ell not zero, so each side's curve is its own, stopping TSW_GAP short of the throat,
+    and the throat itself is marked rather than drawn through.
+
+    What the caption states is checked here: a lies outside r_s; the two sides carry one formula,
+    whose limit at the throat is 12 r_s^2/a^6; K falls from the throat outward and stays inside its
+    panel; its value at the edge of the plot is 12 r_s^2/(a + 3r_s)^6 and it falls off far out as
+    12 r_s^2/ell^6; the spheres are least at the throat; and the published g^ell-ell is positive at
+    every ell drawn, least 1 - r_s/a at the throat, so no horizon is marked.
     """
     name = "thin_shell_wormhole"
     rs, a = 1.0, float(TSW_THROAT)
     aspect = 1.5
+    height = PLOT_W / aspect
     shape_checks(ck, name, [aspect])
     x_axis = axis("$\\ell/r_s$", -TSW_REACH, TSW_REACH)
     panel = {"id": "K", "name": "$K\\,r_s^4$", "aspect": aspect,
              "scale": TSW_K, "ticks": value_ticks(TSW_K)}
+    params = {"r_s": rs, "a": a}
+    K = nr_published(src, name, "throat", "kretschmann", ["ell"], ["r_s", "a"])
+    K_spherical = nr_published(src, name, "spherical", "kretschmann", ["r"], ["r_s", "a"])
+    gll = nr_published(src, name, "throat", "inverse_metric_components", ["ell"], ["r_s", "a"],
+                       ("\\ell", "\\ell"))
+    sphere = nr_published(src, name, "throat", "metric_components", ["ell"], ["r_s", "a"],
+                          ("\\theta", "\\theta"))
+    ck(f"{name} the throat lies outside the horizon", a > rs, f"a = {a}\u2009r_s")
+
+    before = line_curves(ck, f"{name} before the throat", "K", "K", K, "\\ell", x_axis, TSW_K, height,
+                         params, within=(-TSW_REACH, -TSW_GAP))
+    beyond_throat = line_curves(ck, f"{name} beyond the throat", "K", "K", K, "\\ell", x_axis, TSW_K,
+                                height, params, within=(TSW_GAP, TSW_REACH))
+    curves = before + beyond_throat
+    ck(f"{name} draws one curve on each side of the throat",
+       len(before) == 1 and len(beyond_throat) == 1, f"{len(before)} and {len(beyond_throat)}")
+
+    # The two sides of the throat carry one formula of |ell|, whose limit at the throat is the
+    # value every caption states, read without evaluating the stored K at the ell its clause leaves out.
+    ell, (rs_sym, a_sym) = K.coords[0], K.params
+    u = sp.Symbol("u", positive=True)
+    sides = [sp.simplify(K.expr.subs(ell, sign * u)) for sign in (1, -1)]
+    throat = 12 * rs ** 2 / a ** 6
+    ck(f"{name} the two sides of the throat carry one formula", sides[0] == sides[1], f"{sides[0]}")
+    ck(f"{name} K at the throat is the limit 12r_s^2/a^6",
+       sp.simplify(sp.limit(sides[0], u, 0, "+") - 12 * rs_sym ** 2 / a_sym ** 6) == 0, f"{throat:.9g}")
+
+    ells = np.linspace(TSW_GAP, TSW_REACH, SAMPLES)
+    values = K(ells, rs, a)
+    ck(f"{name} K is the spherical chart's at the areal radius a + |ell|",
+       np.allclose(values, K_spherical(a + ells, rs, a), rtol=1e-13, atol=0)
+       and np.allclose(K(-ells, rs, a), K_spherical(a + ells, rs, a), rtol=1e-13, atol=0))
+    ck(f"{name} K is the same on both sides of the throat",
+       np.allclose(K(-ells, rs, a), values, rtol=1e-13, atol=0))
+    ck(f"{name} K falls from the throat outward", np.all(np.diff(values) < 0))
+    edge = 12 * rs ** 2 / (a + TSW_REACH) ** 6
+    ck(f"{name} K at the edge of the plot is 12r_s^2/(a + 3r_s)^6",
+       abs(float(K.exact([float(TSW_REACH), rs, a])) / edge - 1) < AGREE, f"{edge:.9g}")
+    far = 1e6
+    ck(f"{name} K falls off as 12r_s^2/ell^6 far out",
+       abs(float(K.exact([far, rs, a])) * far ** 6 / (12 * rs ** 2) - 1) < 1e-5)
+    for where, within in (("before", (-TSW_REACH, -TSW_GAP)), ("beyond", (TSW_GAP, TSW_REACH))):
+        up, down = beyond(K, x_axis, TSW_K, [rs, a], within=within)
+        ck(f"{name} K stays inside its panel {where} the throat", not up and not down, f"{up} {down}")
+
+    both = np.concatenate([-ells[::-1], ells])
+    ck(f"{name} the spheres are least at the throat, of areal radius a",
+       abs(float(sphere.exact([0.0, rs, a])) - a ** 2) < AGREE and np.all(sphere(both, rs, a) > a ** 2))
+    ck(f"{name} has no horizon, g^ell-ell least 1 - r_s/a at the throat",
+       np.all(gll(both, rs, a) > 0) and abs(float(gll.exact([0.0, rs, a])) - (1 - rs / a)) < AGREE,
+       f"least {1 - rs / a:.3f}")
+
     return [{
         "id": "throat", "kind": "line", "x": x_axis, "panels": [panel],
-        "curves": [], "marks": [],
+        "curves": curves, "marks": [],
         "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
-        "caption": ["The Kretschmann scalar $K$ of Visser's thin shell wormhole across its throat "
-                    f"($a = {a}\\,r_s$)."],
+        "caption": [
+            f"The Kretschmann scalar $K$ of Visser's thin shell wormhole against $\\ell$ ($a = {a}\\,r_s$), "
+            "the same at every $t$, $\\theta$, and $\\phi$, with $\\ell < 0$ on one side of the throat and "
+            "$\\ell > 0$ on the other, each point of the plot a sphere of areal radius $a + |\\ell|$. "
+            "Off the shell the spacetime is Schwarzschild's vacuum, where "
+            "$K = 12r_s^2/(a + |\\ell|)^6$.",
+            f"$K$ is greatest at the throat, $12r_s^2/a^6 = {tex_number(throat, 4)}/r_s^4$, the spheres there "
+            f"being the least of the wormhole, and falls to ${tex_number(edge, 4)}/r_s^4$ at "
+            f"$|\\ell| = {TSW_REACH}\\,r_s$, where the areal radius is ${a + TSW_REACH}\\,r_s$. Far out it falls "
+            "off as $12r_s^2/\\ell^6$. The two sides are mirror images, and the curve turns at the throat "
+            f"rather than peaking, since the areal radius has a kink there. The chart has no horizon: "
+            f"$g^{{\\ell\\ell}} = 1 - r_s/(a + |\\ell|)$ is least $1 - r_s/a = {1 - rs / a:.1f}$ at the throat.",
+        ],
         "settings": f"$r_s = 1$, the unit of every length, and $a = {a}\\,r_s$, the throat radius of its "
                     "other drawings.",
-        "clip": "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10$.",
+        "clip": "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10$; every value drawn lies "
+                f"within it, and each side's curve stops ${TSW_GAP:g}\\,r_s$ short of the throat, where the "
+                "vacuum ends.",
     }]
 
 
