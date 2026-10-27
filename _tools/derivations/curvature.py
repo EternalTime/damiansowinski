@@ -13105,9 +13105,82 @@ def bonnor_magnetic_dipole(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Ehlers and Kundt's A- and B-metrics
+
+AB_B = 1.0                        # b in units of itself, as every drawing of the A- and B-metrics takes it
+AB_BOX = ((-2.0, 2.0), (-2.0, 2.0))   # U and V of A II's Kruskal chart, the square the horizons cross at the centre
+AB_CELLS = (200, 200)             # the cells of the map across and up, each a fiftieth of a unit of U and of V
+AB_SCALE = {"kind": "log", "from": 1e-1, "to": 1e6}   # the colours of K b^4
+AB_DOMAIN = "U*V > -1"            # the Kruskal chart's domain, where the radius of the hyperbolic planes is real
+AB_TOP = 1e6                      # where the clip says K leaves the colours
+
+
+def ab_metrics(ck, src):
+    """Ehlers and Kundt's A II metric at b = 1, its Kretschmann scalar over Kruskal's plane.
+
+    The Kruskal chart publishes K = 12b^2/r^6 in the radius r of the hyperbolic planes, which
+    solves (r/b - 1)e^(r/b) = UV, so K depends on the product UV alone and the map is a square
+    of 200 cells by 200 over |U|, |V| <= 2, coloured logarithmically from 10^-1 to 10^6 in units
+    of 1/b^4. The chart holds where UV > -1, which the map declares as its domain, and the two
+    corners beyond it are null. The singularity UV = -1 is r = 0, the cone of the tachyon's line,
+    marked as a curve on each side, and the horizons U = 0 and V = 0, where r = b, as lines.
+    The spacetime is a vacuum, so the published Ricci scalar vanishes and K stands alone.
+    """
+    b = AB_B
+    KRUSKAL = "a2_kruskal"
+    (u0, u1), (v0, v1) = AB_BOX
+    x_axis = axis("$U$", u0, u1)
+    y_axis = axis("$V$", v0, v1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "ab_metrics", [aspect])
+    scale = dict(AB_SCALE)
+
+    K = nr_published(src, "ab_metrics", KRUSKAL, "kretschmann", ["U", "V"], ["b"])
+    ricci = nr_published(src, "ab_metrics", KRUSKAL, "ricci_scalar", ["U", "V"], ["b"])
+    ck("ab_metrics the published Ricci scalar vanishes", ricci.expr == 0)
+    entry = json.loads((build.METRICS_DIR / "ab_metrics.json").read_text(encoding="utf-8"))
+    chart = next(c for c in entry["coordinates"] if c["id"] == KRUSKAL)
+    ck("ab_metrics the declared domain is the published one, UV > -1",
+       chart["domains"][4] == "UV > -1 \\;\\text{(where } r > 0\\text{)}", f"{chart['domains'][4]}")
+
+    domain = domain_function("ab_metrics", KRUSKAL, AB_DOMAIN, ["U", "V"], ["b"])
+    nx, ny = AB_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [b])
+    U, V = np.meshgrid(xs, ys)
+    inside = domain(U, V, b)
+    ck("ab_metrics no cell's centre lies within 10^-6 of the singularity",
+       np.min(np.abs(U * V + 1)) > 1e-6, f"nearest {np.min(np.abs(U * V + 1)):.2e}")
+    ck("ab_metrics K is finite and positive at every cell drawn, and nowhere else",
+       np.array_equal(inside, np.isfinite(values)) and np.all(values[inside] > 0),
+       f"from {np.min(values[inside]):.6g} to {np.max(values[inside]):.6g}")
+
+    rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]
+    singular = [[[u, -1.0 / u] for u in np.linspace(-2.0, -0.5, 121)],
+                [[u, -1.0 / u] for u in np.linspace(0.5, 2.0, 121)]]
+    view = {
+        "id": "extension", "label": "A II in Kruskal's chart", "kind": "map",
+        "system": KRUSKAL, "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,b^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "ab_metrics", "system": KRUSKAL, "scalar": "kretschmann", "x": "U", "y": "V",
+                "params": {"b": b}, "domain": AB_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "singular", "points": [[float(u), float(v)] for u, v in line]} for line in singular]
+               + [{"class": "horizon", "points": [[0.0, v0], [0.0, v1]]},
+                  {"class": "horizon", "points": [[u0, 0.0], [u1, 0.0]]}],
+        "legend": [["line", "singular", "the singularity $UV = -1$, where $r = 0$"],
+                   ["line", "horizon", "the horizons $U = 0$ and $V = 0$, where $r = b$"]],
+        "caption": ["The Kretschmann scalar $K$ of Ehlers and Kundt's A II metric over Kruskal's plane of $U$ "
+                    "and $V$ ($b = 1$), each point a hyperbolic plane of radius $r$ and curvature $-1/r^2$, "
+                    "with $(r/b - 1)e^{r/b} = UV$. The field is a vacuum, so its Ricci scalar vanishes."],
+        "settings": "$b = 1$, Ehlers and Kundt's constant, the unit of every length.",
+        "clip": "We colour $K\\,b^4$ on a logarithmic scale from $10^{-1}$ to $10^{6}$.",
+    }
+    return [view]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
+    "ab_metrics": ab_metrics,
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
     "bartnik_mckinnon": bartnik_mckinnon,
