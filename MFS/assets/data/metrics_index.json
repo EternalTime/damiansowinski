@@ -5716,7 +5716,8 @@
     "version": "4ca7972b1319ddec",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
-    "embedding": "c9905ef896f1be24"
+    "embedding": "c9905ef896f1be24",
+    "curvature": "7ef35299ad82cf00"
   },
   {
     "id": "vuorio_warped_ads",

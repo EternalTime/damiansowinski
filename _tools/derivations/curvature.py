@@ -10389,7 +10389,7 @@ def thin_shell_wormhole(ck, src):
        shell < 0 and 4 * a - 3 * rs > 0, f"{shell:.9g}/r_s")
 
     return [{
-        "id": "throat", "kind": "line", "x": x_axis, "panels": [panel],
+        "id": "throat", "label": "both sides of the throat", "kind": "line", "x": x_axis, "panels": [panel],
         "curves": curves, "marks": [{"class": "front", "x": 0.0}],
         "legend": [["line", "K", "$K$, the Kretschmann scalar"],
                    ["line", "front", "the shell at the throat, $\\ell = 0$"]],
