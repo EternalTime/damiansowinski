@@ -10534,6 +10534,11 @@ def three_brane_throat(ck, src):
     rhos = np.linspace(TB_GAP, TB_REACH, SAMPLES)
     values = K(rhos, L)
     ck(f"{name} K falls at every radius drawn", np.all(np.diff(values) < 0))
+    # K L^4 is a function of rho/L alone, so the one parameter fixes every length and a movie of it
+    # would redraw this curve in new units.
+    factor = sp.Symbol("lambda", positive=True)
+    ck(f"{name} K L^4 depends on rho/L alone, the length scaling of the one parameter",
+       sp.simplify(K.expr.subs({rho: factor * rho, L_sym: factor * L_sym}) * factor ** 4 - K.expr) == 0)
 
     near = float(TB_NEAR)
     at_near = float(K.exact([near, L]))
