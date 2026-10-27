@@ -1065,6 +1065,10 @@ sympy never reads the typesetting, so this is the check that catches a value tha
 
 `_tools/test_tex_check.py` runs it with the tests, and fails rather than skips where node or mathjax-full is missing, so a page whose mathematics would print as an error box cannot land.
 The script reads mathjax-full from `.node.noindex` unless given another folder, and `MFS_NODE` names another folder for the test.
+`--metric=<id>` holds those four folders to that one spacetime's own files, `node _tools/derivations/tex_check.cjs --metric=bardeen`, for a drawing that wants the strings it has just added set in a second.
+The name sits inside the flag, so no folder reads it as that prefix, which keeps its place as the first plain argument.
+It says which of the four folders has no file for the spacetime named, the ordinary case for one with no conformal diagram and no curvature figure, and exits non-zero on a name no folder carries at all, since a run that set nothing would read as a run that passed.
+On 27 October 2026 bardeen's 1673 strings were set in 0.6 seconds, where the whole collection's 353931 took 132.
 It does not load the `boldsymbol` package, so a vector is written `\mathbf{x}` when its letter is Latin and `\vec{\omega}` when it is Greek, which `\mathbf` leaves light.
 On 2 October 2026 it set all 157522 strings, each distinct one once.
 It does not read the embedding files yet, so a caption, setting or label of an embedding diagram that MathJax cannot set shows only on the page.
