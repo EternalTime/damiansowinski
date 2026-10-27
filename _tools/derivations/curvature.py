@@ -12013,7 +12013,8 @@ def bartnik_mckinnon(ck, src):
         clip = ("We draw $K\\,\\ell^4$ on a logarithmic scale from $10^{-5}$ to $10^2$; every value of the "
                 f"soliton's own $K$ lies within it, and its curve starts ${BM_GAP}\\,\\ell$ from the centre, "
                 "a quarter of a plot unit, where the stored formula's removable divisions by the radius stay "
-                "away from zero.")
+                f"away from zero. The vacuum's curve beside it passes the top of the panel inside "
+                f"$r = {top:.2f}\\,\\ell$ and is cut there.")
         views.append({
             "id": f"n{n}", "label": BM_ZEROS[n].capitalize(), "kind": "line", "system": "areal",
             "x": x_axis, "panels": [panel], "curves": reference + drawn, "marks": [],
@@ -12030,7 +12031,7 @@ def bartnik_mckinnon(ck, src):
                 f"$K$ takes de Sitter's $24/L^4$ at $L = 1/2b$: $384b^4/\\ell^4 = {tex_number(centre)}/\\ell^4$, "
                 "its greatest value, finite where the vacuum of the same mass diverges. "
                 f"The fall steepens from the centre outward to $r^{{{fall:.2f}}}$ at $r = {steep:.2f}\\,\\ell$, "
-                f"just inside the neck at $r = {neck:.2f}\\,\\ell$, where $g^{{rr}} = 1 - 2m/r$ dips to its least "
+                f"a little inside the neck at $r = {neck:.2f}\\,\\ell$, where $g^{{rr}} = 1 - 2m/r$ dips to its least "
                 f"${tex_number(dip)}$ and $K = {tex_number(K_neck)}/\\ell^4$. "
                 "The soliton has no horizon: $g^{rr}$ stays positive at every radius."
                 + (" Each further zero deepens the neck and holds more of the curvature in it, and in the "
@@ -12041,9 +12042,9 @@ def bartnik_mckinnon(ck, src):
                 f"$r = {top:.2f}\\,\\ell$; the vacuum of that mass would have its horizon at "
                 f"$2GM/c^2 = {2 * mass:.2f}\\,\\ell$, where the soliton has none. "
                 "The soliton's own $K$ approaches it outward as the Yang-Mills field dies away: at the edge "
-                f"of the plot, $r = {BM_REACH}\\,\\ell$, $K = {tex_number(edge, 4)}/\\ell^4$ is "
-                f"${short:.1f}$ percent below it, with the amplitude's last zero at ${node:.2f}\\,\\ell$"
-                + (", beyond the plot." if node > BM_REACH else "."),
+                f"of the plot, $r = {BM_REACH}\\,\\ell$, $K = {edge * 1e4:.3f}\\times10^{{-4}}/\\ell^4$ is "
+                f"${short:.1f}$ percent below it, with the amplitude's {'zero' if n == 1 else 'last zero'} "
+                f"at ${node:.2f}\\,\\ell$" + (", beyond the plot." if node > BM_REACH else "."),
             ],
             "settings": f"$\\ell = 1$, the unit of every length, and the vacuum beside the soliton at "
                         f"$r_s = 2GM/c^2 = {2 * mass:.2f}\\,\\ell$, the soliton's own mass.",
