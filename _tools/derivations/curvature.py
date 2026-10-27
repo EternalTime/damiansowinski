@@ -10429,6 +10429,51 @@ def thin_shell_wormhole(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the three-brane and its throat
+
+TB_REACH = 4                      # the plot runs over 0 <= rho <= 4 L, the box of the isotropic chart's spacetime diagram
+TB_GAP = 1e-3                     # the curve starts this far in L from rho = 0, the horizon the chart leaves out,
+                                  # a thousandth of a plot unit, so that it carries the throat's value to the
+                                  # four figures the caption prints
+TB_K = {"kind": "log", "from": 1e-5, "to": 1e2}
+
+
+def three_brane_throat(ck, src):
+    """The three-brane at L = 1, its Kretschmann scalar from the throat out to flat space.
+
+    One panel of K against the isotropic chart's rho, from 0 to 4 L, the box of that chart's
+    spacetime diagram, on a logarithmic axis from 10^-5 to 10^2 L^-4.
+    """
+    name = "three_brane_throat"
+    L = 1.0
+    aspect = 1.5
+    height = PLOT_W / aspect
+    shape_checks(ck, name, [aspect])
+    x_axis = axis("$\\rho/L$", 0, TB_REACH)
+    panel = {"id": "K", "name": "$K\\,L^4$", "aspect": aspect,
+             "scale": TB_K, "ticks": value_ticks(TB_K)}
+    params = {"L": L}
+    K = nr_published(src, name, "isotropic", "kretschmann", ["rho"], ["L"])
+    curves = line_curves(ck, name, "K", "K", K, "\\rho", x_axis, TB_K, height, params,
+                         within=(TB_GAP, TB_REACH))
+    throat = 80 / L ** 4
+
+    return [{
+        "id": "brane", "label": "the brane and its throat", "kind": "line", "system": "isotropic",
+        "x": x_axis, "panels": [panel], "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the three-brane against the isotropic radius $\\rho$ across the "
+            "sheet, the same at every point of the sheet and of the 5-sphere, each point of the plot a "
+            "sphere of five dimensions of areal radius $(\\rho^4 + L^4)^{1/4}$.",
+            f"Toward $\\rho = 0$ it closes on the throat's ${tex_number(throat, 3)}/L^4$.",
+        ],
+        "settings": "$L = 1$, the unit of every length, the radius of the throat and of its sphere.",
+        "clip": "We draw $K\\,L^4$ on a logarithmic scale from $10^{-5}$ to $10^2$; every value drawn lies "
+                "within it.",
+    }]
+
+
 # ---------------------------------------------------------------- the topological star
 
 TS_SHORT = Fraction(3, 4)         # the shorter radius over the longer, r_S = 3r_B/4 in the star and r_B = 3r_S/4 in the black string, as every drawing of each takes it
@@ -12479,6 +12524,7 @@ DRAWN = {
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
     "thin_shell_wormhole": thin_shell_wormhole,
+    "three_brane_throat": three_brane_throat,
     "topological_star": topological_star,
     "tolman_bondi": tolman_bondi,
     "tov": tov,
