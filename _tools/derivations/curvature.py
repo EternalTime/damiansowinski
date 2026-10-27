@@ -10266,6 +10266,39 @@ def simpson_visser(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Visser's thin shell wormhole
+
+TSW_THROAT = Fraction(5, 4)       # a in units of r_s, as every drawing of the wormhole takes it
+TSW_REACH = 3                     # the plot runs over |ell| <= 3 r_s, the box of the radial spacetime diagram
+TSW_GAP = 1e-3                    # each side's curve stops this far in r_s from the throat, where the vacuum ends
+TSW_K = {"kind": "log", "from": 1e-3, "to": 1e1}
+
+
+def thin_shell_wormhole(ck, src):
+    """Visser's thin shell wormhole at a = 5r_s/4, its Kretschmann scalar across the throat.
+
+    One panel of K against the chart through the throat's ell, from -3 r_s to 3 r_s, the box of
+    that chart's spacetime diagram, on a logarithmic axis from 10^-3 to 10 r_s^-4.
+    """
+    name = "thin_shell_wormhole"
+    rs, a = 1.0, float(TSW_THROAT)
+    aspect = 1.5
+    shape_checks(ck, name, [aspect])
+    x_axis = axis("$\\ell/r_s$", -TSW_REACH, TSW_REACH)
+    panel = {"id": "K", "name": "$K\\,r_s^4$", "aspect": aspect,
+             "scale": TSW_K, "ticks": value_ticks(TSW_K)}
+    return [{
+        "id": "throat", "kind": "line", "x": x_axis, "panels": [panel],
+        "curves": [], "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": ["The Kretschmann scalar $K$ of Visser's thin shell wormhole across its throat "
+                    f"($a = {a}\\,r_s$)."],
+        "settings": f"$r_s = 1$, the unit of every length, and $a = {a}\\,r_s$, the throat radius of its "
+                    "other drawings.",
+        "clip": "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10$.",
+    }]
+
+
 # ---------------------------------------------------------------- the topological star
 
 TS_SHORT = Fraction(3, 4)         # the shorter radius over the longer, r_S = 3r_B/4 in the star and r_B = 3r_S/4 in the black string, as every drawing of each takes it
@@ -12315,6 +12348,7 @@ DRAWN = {
     "swirling_universe_black_hole": swirling_universe_black_hole,
     "simpson_visser": simpson_visser,
     "taub_nut": taub_nut,
+    "thin_shell_wormhole": thin_shell_wormhole,
     "topological_star": topological_star,
     "tolman_bondi": tolman_bondi,
     "tov": tov,
