@@ -20,13 +20,29 @@
      _tools/setup-env.sh
      node _tools/derivations/tex_check.cjs
 
-   and exits non-zero, naming the file, the place and the string, if anything fails. */
+   and exits non-zero, naming the file, the place and the string, if anything fails.
+
+   `--metric=<id>` holds those four folders to that one spacetime's own files, for a drawing
+   that wants its own strings checked and not the whole collection's:
+
+     node _tools/derivations/tex_check.cjs --metric=bardeen
+
+   It names its metric inside the flag, so no folder can read it as the prefix above, it says
+   which of the four folders has no file for that spacetime, and it exits non-zero on a name no
+   folder carries, since a run that set nothing would read as a run that passed. */
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const {createRequire} = require('module');
 
-const prefix = process.argv[2] || path.join(__dirname, '..', '..', '.node.noindex');
+const args = process.argv.slice(2);
+const flag = args.filter(function(a) { return a.startsWith('--metric='); }).pop();
+const only = flag === undefined ? null : flag.slice('--metric='.length);
+if (only === '') {
+  console.error('--metric= names no spacetime');
+  process.exit(1);
+}
+const prefix = args.filter(function(a) { return a !== flag; })[0] || path.join(__dirname, '..', '..', '.node.noindex');
 const need = createRequire(path.join(path.resolve(prefix), 'node_modules', 'mathjax-full', 'package.json'));
 const {mathjax} = need('mathjax-full/js/mathjax.js');
 const {TeX} = need('mathjax-full/js/input/tex.js');
@@ -82,13 +98,26 @@ function walk(value, where, key, file) {
   }
 }
 
+// A spacetime may have no null ray diagram, no conformal diagram and no curvature figure, so a
+// folder with no file for the one named is said and passed over, and a name no folder carries at
+// all is the error.
+let read = 0;
 for (const folder of ['metrics', 'diagrams', 'conformal', 'curvature']) {
   const dir = path.join(DATA, folder);
   if (!fs.existsSync(dir)) continue;
-  for (const name of fs.readdirSync(dir).sort()) {
+  for (const name of only === null ? fs.readdirSync(dir).sort() : [only + '.json']) {
     if (!name.endsWith('.json') || / \d+\.json$/.test(name)) continue;
+    if (only !== null && !fs.existsSync(path.join(dir, name))) {
+      console.log(`${folder} has no file for ${only}`);
+      continue;
+    }
+    read++;
     walk(JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8')), '', '', folder + '/' + name);
   }
+}
+if (only !== null && read === 0) {
+  console.error(`no file in metrics, diagrams, conformal or curvature is ${only}.json`);
+  process.exit(1);
 }
 
 // A string is set once however many places print it: the components of a curvature repeat.
