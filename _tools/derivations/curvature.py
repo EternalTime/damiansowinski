@@ -10270,7 +10270,9 @@ def simpson_visser(ck, src):
 
 TSW_THROAT = Fraction(5, 4)       # a in units of r_s, as every drawing of the wormhole takes it
 TSW_REACH = 3                     # the plot runs over |ell| <= 3 r_s, the box of the radial spacetime diagram
-TSW_GAP = 1e-3                    # each side's curve stops this far in r_s from the throat, where the vacuum ends
+TSW_GAP = 1e-5                    # each side's curve stops this far in r_s from the throat, where the vacuum ends,
+                                  # a thousandth of a plot unit, so that it carries the throat's value to the
+                                  # four figures the caption prints
 TSW_K = {"kind": "log", "from": 1e-3, "to": 1e1}
 
 
@@ -10294,7 +10296,8 @@ def thin_shell_wormhole(ck, src):
     distributions.
 
     What the caption states is checked here: a lies outside r_s; the two sides carry one formula,
-    whose limit at the throat is 12 r_s^2/a^6; K falls from the throat outward and stays inside its
+    whose limit at the throat is 12 r_s^2/a^6, which each curve's last point carries to the figures
+    the caption prints; K falls from the throat outward and stays inside its
     panel; its value at the edge of the plot is 12 r_s^2/(a + 3r_s)^6 and it falls off far out as
     12 r_s^2/ell^6; the spheres are least at the throat; the published g^ell-ell is positive at
     every ell drawn, least 1 - r_s/a at the throat, so no horizon is marked; and the published Ricci
@@ -10335,6 +10338,10 @@ def thin_shell_wormhole(ck, src):
     ck(f"{name} the two sides of the throat carry one formula", sides[0] == sides[1], f"{sides[0]}")
     ck(f"{name} K at the throat is the limit 12r_s^2/a^6",
        sp.simplify(sp.limit(sides[0], u, 0, "+") - 12 * rs_sym ** 2 / a_sym ** 6) == 0, f"{throat:.9g}")
+
+    ends = [before[0]["points"][-1][1], beyond_throat[0]["points"][0][1]]
+    ck(f"{name} each curve carries the throat's 12r_s^2/a^6 to the figures the caption prints",
+       all(float(f"{v:.4g}") == float(f"{throat:.4g}") for v in ends), f"{ends}")
 
     ells = np.linspace(TSW_GAP, TSW_REACH, SAMPLES)
     values = K(ells, rs, a)
@@ -10392,8 +10399,8 @@ def thin_shell_wormhole(ck, src):
             "$\\ell > 0$ on the other, each point of the plot a sphere of areal radius $a + |\\ell|$. "
             "Off the shell the spacetime is Schwarzschild's vacuum, where "
             "$K = 12r_s^2/(a + |\\ell|)^6$ and the Ricci scalar $R$ vanishes.",
-            f"$K$ is greatest at the throat, $12r_s^2/a^6 = {tex_number(throat, 4)}/r_s^4$, the spheres there "
-            f"being the least of the wormhole, and falls to ${tex_number(edge, 4)}/r_s^4$ at "
+            f"Toward the throat $K$ rises to its greatest value, $12r_s^2/a^6 = {tex_number(throat, 4)}/r_s^4$, "
+            f"the spheres there being the least of the wormhole, and it falls to ${tex_number(edge, 4)}/r_s^4$ at "
             f"$|\\ell| = {TSW_REACH}\\,r_s$, where the areal radius is ${a + TSW_REACH}\\,r_s$. Far out it falls "
             "off as $12r_s^2/\\ell^6$. The two sides are mirror images, and the curve turns at the throat "
             f"rather than peaking, since the areal radius has a kink there. The chart has no horizon: "
@@ -10406,8 +10413,8 @@ def thin_shell_wormhole(ck, src):
         "settings": f"$r_s = 1$, the unit of every length, and $a = {a}\\,r_s$, the throat radius of its "
                     "other drawings.",
         "clip": "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-3}$ to $10$; every value drawn lies "
-                f"within it, and each side's curve stops ${TSW_GAP:g}\\,r_s$ short of the throat, where the "
-                "vacuum ends.",
+                f"within it, and each side's curve stops $10^{{{round(math.log10(TSW_GAP))}}}\\,r_s$ short of "
+                "the throat, where the vacuum ends.",
     }]
 
 
