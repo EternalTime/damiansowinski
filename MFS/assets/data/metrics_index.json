@@ -2485,7 +2485,8 @@
     "version": "ae9f9af5cfc74cfe",
     "diagrams": "90d54985332dcf14",
     "conformal": "47650710de79f09c",
-    "embedding": "3daf392852ed147c"
+    "embedding": "3daf392852ed147c",
+    "curvature": "85a9f8819b737f32"
   },
   {
     "id": "kaluza_klein_monopole",
