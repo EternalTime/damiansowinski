@@ -1472,13 +1472,13 @@ def black_saturn(ck, src):
                     "ring and at $\\kappa_1 \\le z \\le 1$ for the hole"]],
         "input": ("Elvang and Figueras's four functions as numbers, from the names Weyl's chart defines: "
                   "$e^{2V} = \\left(G_yH_x^2 - \\left(\\omega_\\psi + qH_y\\right)^2\\right)/H_xH_y$, "
-                  "$\\Omega = \\left(\\omega_\\psi + qH_y\\right)e^{-2V}/H_x$, $e^{2W} = G_y$ and "
+                  "$\\Omega = \\left(\\omega_\\psi + qH_y\\right)e^{-2V}/H_x$, $e^{2W} = G_y$, and "
                   "$e^{2\\nu} = k^2H_xP$, with their first and second derivatives along $r$ and $\\theta$."),
         "caption": [
             "The Kretschmann scalar $K$ of black Saturn, a black ring in balance around a spherical black hole "
             "with no angular momentum of its own, over the quarter plane of $r\\sin\\theta$ across and "
             "$r\\cos\\theta$ up ($\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, $\\kappa_3 = 3/7$, $\\beta = 0$), the "
-            "same at every $t$, $\\psi$ and $\\phi$. The spacetime is a vacuum, so its Ricci scalar vanishes. "
+            "same at every $t$, $\\psi$, and $\\phi$. The spacetime is a vacuum, so its Ricci scalar vanishes. "
             "The quarter plane is Weyl's meridian half plane folded along the axis $\\rho = 0$, which runs up "
             "the left edge, where $z = r^2/2L^2$ is positive, and along the bottom edge, where it is negative, "
             "with the plane $z = 0$ the diagonal. Far away the metric is flat space with $r$ the radius of its "
@@ -1503,7 +1503,7 @@ def black_saturn(ck, src):
             "figures.",
         ],
         "settings": ("$L = 1$, the unit of every length, with $\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, "
-                     "$\\kappa_3 = 3/7$ and $\\beta = 0$, the values of the embedding diagram: a ring in balance, "
+                     "$\\kappa_3 = 3/7$, and $\\beta = 0$, the values of the embedding diagram: a ring in balance, "
                      "with no conical membrane between it and the hole, around a hole with no angular momentum "
                      "of its own."),
         "clip": ("We colour $K\\,L^4$ on a signed logarithmic scale, linear within $0.01$ of zero, from "
