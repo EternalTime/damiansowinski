@@ -146,7 +146,7 @@ def weyl_jets(r, theta, module, one, zero):
     return square * sin * cos, square * (cos * cos - sin * sin) * (one / 2)
 
 
-# The last two points or grids the four functions were worked out at. One reading of the published
+# The last few points or grids the four functions were worked out at. One reading of the published
 # scalar asks for twenty-four of their values, and each costs the whole arithmetic, so the whole of
 # it is kept by the point it was done at.
 _LAST = {}
@@ -161,7 +161,8 @@ def values(parameters, r, theta, digits=None):
         r, theta = np.asarray(r, dtype=float), np.asarray(theta, dtype=float)
         key = (kappas, digits, r.shape, r.tobytes(), theta.shape, theta.tobytes())
     else:
-        key = (kappas, digits, repr(float(r)), repr(float(theta)))
+        # The whole of each number, since two points a difference apart are closer than a double.
+        key = (kappas, digits, repr(r), repr(theta))
     if key in _LAST:
         return _LAST[key]
     arrays, exact, _ = polar(*kappas)
@@ -172,7 +173,7 @@ def values(parameters, r, theta, digits=None):
         with mpmath.workdps(digits):
             rho, z = weyl_jets(mpmath.mpf(r), mpmath.mpf(theta), MPMATH, mpmath.mpf(1), mpmath.mpf(0))
             got = {name: dict(zip(ORDERS, f(rho, z).parts())) for name, f in exact.items()}
-    if len(_LAST) >= 2:
+    if len(_LAST) >= 4:
         _LAST.clear()
     _LAST[key] = got
     return got

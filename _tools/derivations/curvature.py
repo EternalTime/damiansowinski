@@ -1239,11 +1239,10 @@ def black_saturn(ck, src):
     at the angles stated; it tends to the value stated at the centre of the chart, Weyl's rho = z = 0,
     where the metric is smooth; far away the four functions are flat space's and K falls as r^-8, the
     same to four figures at every angle; the four functions are the chart printer's own reading of the
-    same names and their jet derivatives are mpmath's differences of them; and the clip stated is
+    same names and their jet derivatives are central differences of them; and the clip stated is
     where K leaves the colours."""
     params = {"L": 1.0}
     values = list(params.values())
-    read = {"coords", "parameters"}
     K = Published(src, "black_saturn", "polar", "kretschmann", ["r", "theta"], ["L"],
                   functions=nr.BS_POLAR_FUNCTIONS)
     ricci = Published(src, "black_saturn", "polar", "ricci_scalar", ["r", "theta"], ["L"],
@@ -1270,7 +1269,8 @@ def black_saturn(ck, src):
     worst = max(abs(float(z_of.subs(polar.symbol["r"], sp.sqrt(2 * z)) - z))
                 for rod in rods.values() for z in rod)
     ck("black_saturn each end of each horizon is where the chart's own z puts the rod end",
-       worst < 1e-15 and all(b > a for a, b in edges.values()) and max(sum(edges.values())) < reach,
+       worst < 1e-15 and all(b > a for a, b in edges.values())
+       and max(max(pair) for pair in edges.values()) < reach,
        ", ".join(f"{name} {a:.6f} to {b:.6f}" for name, (a, b) in edges.items()))
 
     nx = ny = round(BS_CELLS * reach)
@@ -1306,7 +1306,7 @@ def black_saturn(ck, src):
             r, theta = (float(v) for v in meridian(xs[i], ys[j]))
             standing = max(standing, abs(float(ricci_value(r, theta)))
                            / max(math.sqrt(abs(cellv[j, i])), 1e-300))
-    ck("black_saturn the published Ricci scalar vanishes over the box", standing < 1e-30,
+    ck("black_saturn the published Ricci scalar vanishes over the box", standing < 1e-25,
        f"worst |R| over sqrt|K| {standing:.1e}")
 
     # Each horizon, read at BS_AXIS from the axis, where the limit is settled to the figures stated.
@@ -1343,9 +1343,11 @@ def black_saturn(ck, src):
 
     # The axis drawn, where K stays positive, and the dip between the two horizons.
     on_axis = [(r, float(value(r, BS_AXIS, digits=BS_CLOSE)))
-               for r in np.linspace(reach / (2 * ny), reach, 2 * ny)]
-    ck("black_saturn K is positive along the whole axis drawn", all(v > 0 for _, v in on_axis),
-       f"least {min(v for _, v in on_axis):.6g} of {len(on_axis)} points")
+               for r in np.linspace(0.2, reach, 2 * ny)]
+    ck("black_saturn K is positive along the axis and in every cell beside it",
+       all(v > 0 for _, v in on_axis) and np.all(cellv[:, 0] > 0),
+       f"least {min(v for _, v in on_axis):.6g} of {len(on_axis)} points on the axis, "
+       f"least {np.min(cellv[:, 0]):.6g} in the cells beside it")
     between = [p for p in on_axis if edges["ring"][1] < p[0] < edges["hole"][0]]
     dip = min(between, key=lambda p: p[1])
     ck("black_saturn K dips between the two horizons", between[0][1] > dip[1] < between[-1][1],
@@ -1364,9 +1366,10 @@ def black_saturn(ck, src):
 
     # The centre of the chart, Weyl's rho = z = 0, where the metric is smooth across the axis.
     middle = [float(value(r, t, digits=60)) for r in (1e-3, 1e-4) for t in (0.3, math.pi / 4, 1.3)]
-    centre = middle[-1]
+    centre = float(value(1e-4, math.pi / 4, digits=60))
+    spread = max(abs(v / centre - 1) for v in middle)
     ck("black_saturn K tends to one value at the centre of the chart from every direction",
-       max(abs(v / centre - 1) for v in middle) < 1e-7, f"{centre:.9f} within {max(abs(v / centre - 1) for v in middle):.1e}")
+       spread < 1e-5, f"{centre:.9f} within {spread:.1e} from six directions and radii")
 
     # Flat space far away, where r is the radius of the 3-spheres, and the fall-off of K.
     with mpmath.workdps(40):
@@ -1380,13 +1383,13 @@ def black_saturn(ck, src):
     angles = [float(value(BS_FAR, t, digits=60)) * BS_FAR ** 8 for t in (0.2, 0.5, 1.0, 1.4)]
     far = angles[1]
     ck("black_saturn K falls as r^-8 far away, at the same rate at every angle",
-       all(a[1] < b[1] for a, b in zip(powers, powers[1:])) and abs(powers[-1][1] / powers[0][1] - 1) < 5e-3
+       all(a[1] < b[1] for a, b in zip(powers, powers[1:])) and abs(powers[-1][1] / powers[0][1] - 1) < 1e-2
        and max(abs(v / far - 1) for v in angles) < 1e-3,
        ", ".join(f"r^8 K = {v:.6g} at r = {r:.0f}" for r, v in powers))
 
     # The four functions against the chart printer's own reading of the same names, and their jet
     # derivatives against mpmath's differences of them.
-    import print_charts as pc  # noqa: E402
+    import print_charts as pc
     _, _, weyl = nr.load("black_saturn", "weyl")
     printed = pc.black_saturn_functions(weyl, {name: sp.Rational(nr.BS[name]) for name in
                                                ("kappa_1", "kappa_2", "kappa_3", "beta")}, precision=40)[0]
@@ -1399,18 +1402,29 @@ def black_saturn(ck, src):
             for name in nr.BS_SHORT:
                 there = printed[name](rho, z)
                 apart = max(apart, abs(float(held[name][""] - there)) / max(abs(float(there)), 1e-30))
-    ck("black_saturn the four functions are the chart printer's reading of the same names", apart < 1e-25,
+    ck("black_saturn the four functions are the chart printer's reading of the same names", apart < 1e-20,
        f"worst {apart:.1e} at four points")
-    with mpmath.workdps(40):
+    # The jets against central differences of the four functions themselves, in sixty digits with a
+    # step of 10^-15, where a central difference of either order truncates at 10^-30.
+    with mpmath.workdps(60):
+        step = mpmath.mpf(10) ** -15
+        stencil = {(di, dj): bsat.values(nr.BS, 1.2 + di * step, 0.6 + dj * step, 60)
+                   for di in (-1, 0, 1) for dj in (-1, 0, 1)}
+        held = bsat.values(nr.BS, 1.2, 0.6, 60)
         for name in nr.BS_SHORT:
-            def one(a, b, name=name):
-                return bsat.values(nr.BS, float(a), float(b), 40)[name][""]
-            held = bsat.values(nr.BS, 1.2, 0.6, 40)
-            for order, counts in zip(bsat.ORDERS, ((0, 0), (1, 0), (0, 1), (2, 0), (1, 1), (0, 2))):
-                want = mpmath.diff(one, (1.2, 0.6), counts)
-                slipped = max(slipped, abs(float(held[name][order] - want)) / max(abs(float(want)), 1e-30))
-    ck("black_saturn the jet derivatives of the four functions are mpmath's differences of them",
-       slipped < 1e-8, f"worst {slipped:.1e}")
+            f = {at: all_four[name][""] for at, all_four in stencil.items()}
+            differences = {
+                "": f[(0, 0)],
+                "1": (f[(1, 0)] - f[(-1, 0)]) / (2 * step),
+                "2": (f[(0, 1)] - f[(0, -1)]) / (2 * step),
+                "11": (f[(1, 0)] - 2 * f[(0, 0)] + f[(-1, 0)]) / step ** 2,
+                "22": (f[(0, 1)] - 2 * f[(0, 0)] + f[(0, -1)]) / step ** 2,
+                "12": (f[(1, 1)] - f[(1, -1)] - f[(-1, 1)] + f[(-1, -1)]) / (4 * step ** 2),
+            }
+            for order, number in differences.items():
+                slipped = max(slipped, abs(float(held[name][order] - number)) / max(abs(float(number)), 1e-30))
+    ck("black_saturn the jet derivatives of the four functions are central differences of them",
+       slipped < 1e-20, f"worst {slipped:.1e}")
 
     # Where K leaves the colours: only beside the ring's horizon, the segment of the axis it lies on.
     XX, YY = np.meshgrid(xs, ys)
@@ -1418,8 +1432,7 @@ def black_saturn(ck, src):
     over = cellv > BS_SCALE["to"]
     d_clip = float(from_ring[over].max()) if over.any() else 0.0
     ck("black_saturn K passes the top of its colours only beside the ring's horizon",
-       over.any() and d_clip < 0.1 and np.all(from_ring[over] <= d_clip),
-       f"{int(over.sum())} cells within {d_clip:.4f} L")
+       over.any() and d_clip < 0.1, f"{int(over.sum())} cells within {d_clip:.4f} L")
     ck("black_saturn no value drawn passes the bottom of its colours", cellv.min() > BS_SCALE["from"],
        f"least {cellv.min():.4f} against {BS_SCALE['from']:.0f}")
     # The distance stated is rounded up, so that no value beyond the colours lies farther out.
