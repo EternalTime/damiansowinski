@@ -12723,6 +12723,100 @@ def zipoy_voorhees(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Schwarzschild's black hole in a tidal field
+
+# The prolate, Schwarzschild's and the oblate q every drawing takes.
+DSCH_Q = (Fraction(-1, 12), Fraction(0), Fraction(1, 12))
+DSCH_REACH = 3                    # the box runs out to r sin theta = 3 m and up to r cos theta = 3 m, near the hole
+DSCH_CELLS = 20                   # the cells of the map to each m, across and up
+DSCH_MAP = {"kind": "log", "from": 1e-4, "to": 1e4}   # the colours of K m^4
+DSCH_DOMAIN = "r > 2*m"           # the spherical chart's domain, outside the horizon
+
+
+def distorted_schwarzschild(ck, src):
+    """Schwarzschild's black hole in a tidal field at m = 1, its Kretschmann scalar over the meridian
+    quarter plane of the spherical chart's r and theta, drawn as polar coordinates about r = 0, as a
+    movie of the prolate q = -1/12, Schwarzschild's q = 0 and the oblate q = 1/12.
+
+    R = 0 and K depends on r and theta alone, the same at theta and pi - theta. The chart covers
+    r > 2m, which the map declares as its domain, and the horizon r = 2m is marked. The potential
+    grows as q r^2, so K far out carries no physical meaning and the box stops at 3m. Checked here:
+    R = 0, the symmetry, Schwarzschild's 48 m^2/r^6 at q = 0, the horizon values 3/4 (1 - 12q)^2 e^(4q)
+    on the axis and 3/4 (1 + 3q)^2 e^(10q) on the equator, and every cell against the formula."""
+    m = 1.0
+    K = nr_published(src, "distorted_schwarzschild", "spherical", "kretschmann", ["r", "theta"], ["m", "q"])
+    ricci = nr_published(src, "distorted_schwarzschild", "spherical", "ricci_scalar", ["r", "theta"], ["m", "q"])
+    ck("distorted_schwarzschild publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+    domain = domain_function("distorted_schwarzschild", "spherical", DSCH_DOMAIN, ["r", "theta"], ["m", "q"])
+    for qf in DSCH_Q:
+        q = float(qf)
+        sym = max(abs(float(K(rr, t, m, q) / K(rr, math.pi - t, m, q)) - 1)
+                  for rr in (2.1, 3.0, 5.0) for t in (0.2, 0.7, 1.3))
+        ck(f"distorted_schwarzschild K is the same at theta and pi - theta at q = {q:g}", sym < 1e-12, f"{sym:.1e}")
+        d = 1e-7
+        axis_h = float(K(2 * m + d, 1e-6, m, q))
+        equator_h = float(K(2 * m + d, math.pi / 2, m, q))
+        want_a = 0.75 * (1 - 12 * q) ** 2 * math.exp(4 * q)
+        want_e = 0.75 * (1 + 3 * q) ** 2 * math.exp(10 * q)
+        ck(f"distorted_schwarzschild K on the horizon is 3/4 (1 - 12q)^2 e^(4q) on the axis and "
+           f"3/4 (1 + 3q)^2 e^(10q) on the equator at q = {q:g}",
+           abs(axis_h - want_a) < 1e-4 and abs(equator_h / want_e - 1) < 1e-5,
+           f"{axis_h:.6g} against {want_a:.6g}, {equator_h:.6g} against {want_e:.6g}")
+
+    x_axis, y_axis = axis("$r\\sin\\theta/m$", 0, DSCH_REACH), axis("$r\\cos\\theta/m$", 0, DSCH_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "distorted_schwarzschild map", [aspect])
+    nx = ny = DSCH_CELLS * DSCH_REACH
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    n = math.ceil((math.pi / 2) / (2 * math.acos(1 - TOLERANCE / (2 * m * per_unit)))) + 1
+    horizon = [[float(2 * m * math.sin(a)) + 0.0, float(2 * m * math.cos(a)) + 0.0]
+               for a in np.linspace(0, math.pi / 2, n)]
+    rng = np.random.default_rng(1966)
+    frames, lows, highs = [], [], []
+    for qf in DSCH_Q:
+        q = float(qf)
+        where = f"at q = {q:g}"
+        xs, ys, grid = cells(K, x_axis, y_axis, nx, ny, [m, q], frame="meridian")
+        X, Y = np.meshgrid(xs, ys)
+        R_, T_ = meridian(X, Y)
+        inside = domain(R_, T_, m, q)
+        ck(f"distorted_schwarzschild K is finite and positive at every cell drawn {where}",
+           np.all(np.isfinite(grid[inside])) and np.all(grid[inside] > 0),
+           f"from {np.min(grid[inside]):.3e} to {np.max(grid[inside]):.3e}")
+        lows.append(float(np.min(grid[inside])))
+        highs.append(float(np.max(grid[inside])))
+        if qf == 0:
+            worst = float(np.max(np.abs(grid[inside] * R_[inside] ** 6 / (48 * m ** 2) - 1)))
+            ck("distorted_schwarzschild at q = 0 every cell is Schwarzschild's 48 m^2/r^6", worst < 1e-12,
+               f"{worst:.1e}")
+        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200))
+                        if inside[j, i]})[:40]
+        agrees(ck, f"distorted_schwarzschild map {where}", K,
+               [[*map(float, meridian(xs[i], ys[j])), m, q] for i, j in picks], [grid[j, i] for i, j in picks])
+        rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(grid, inside)]
+        frames.append(({"label": f"$q = {tex_fraction(qf, '')}$" if qf else "$q = 0$", "value": q, "marks": []},
+                       {"metric": "distorted_schwarzschild", "system": "spherical", "scalar": "kretschmann", "x": "r",
+                        "y": "\\theta", "frame": "meridian", "params": {"m": m, "q": q}, "domain": DSCH_DOMAIN,
+                        "nx": nx, "ny": ny, "cells": rows}))
+    ck("distorted_schwarzschild every cell lies within the colours",
+       min(lows) >= DSCH_MAP["from"] and max(highs) <= DSCH_MAP["to"], f"{min(lows):.3e} to {max(highs):.3e}")
+    for k, (frame, grid) in enumerate(frames):
+        if k:
+            frame["map"] = grid
+    scale = dict(DSCH_MAP)
+    return [{
+        "id": "tidal", "label": "the meridian plane of $r$ and $\\theta$", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": frames[0][1], "marks": [{"class": "horizon", "points": horizon}],
+        "movie": {"variable": "$q$", "seconds": 3, "frames": [f for f, _ in frames]},
+        "legend": [["line", "horizon", "horizon $r = 2m$"]],
+        "caption": ["$K$ of a black hole in a tidal field, $R = 0$; far out the field is not physical."],
+        "settings": "$m = 1$; the spherical chart's $r, \\theta$.",
+        "clip": "$K\\,m^4$ on a log scale, $10^{-4}$ to $10^4$.",
+    }]
+
+
 # ---------------------------------------------------------------- Schwarzschild's black hole
 
 SCH_REACH = 6                     # the plot runs from the centre to r = 6 r_s, as the research list sets
@@ -14996,6 +15090,7 @@ DRAWN = {
     "damour_solodukhin": damour_solodukhin,
     "datt_ruban_t_models": datt_ruban_t_models,
     "dilaton_black_hole": dilaton_black_hole,
+    "distorted_schwarzschild": distorted_schwarzschild,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "einstein_rosen_bridge": einstein_rosen_bridge,
