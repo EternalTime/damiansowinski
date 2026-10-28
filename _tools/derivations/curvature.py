@@ -15851,7 +15851,7 @@ ER_CELLS = 16                     # the cells of the map to each m, across and u
 ER_MAP = {"kind": "log", "from": 1e-5, "to": 1e1}    # the colours of K m^4
 ER_LINE = {"kind": "log", "from": 1e-4, "to": 1e4}   # the axis of K m^4 on both line panels
 ER_DOMAIN = "r > 2*m"             # the spherical chart's domain, outside the singularity, or the horizon at q = 0
-ER_AXIS = 1e-5                    # the theta the axis curve is read at, where the published K is finite
+ER_AXIS = 1e-5                    # the theta the axis curve is read at, where the doubles hold the published K
 ER_NEAR = 2.02                    # the curves start at r = 2.02 m, outside which the doubles hold the published K to 10^-9
 
 
@@ -16001,8 +16001,8 @@ def erez_rosen(ck, src):
 KBR_SPIN = {"m": 1.0, "a": 0.8, "B": 0.25}       # as every drawing of the spinning hole takes it, nr.KBR
 KBR_STATIC = {"m": 1.0, "B": 0.25}               # as every drawing of the static hole takes it, nr.KBR_STATIC
 KBR_REACH = 20                    # the curves run out to r = 20 m, where K has settled near its far value
-KBR_LINE = {"kind": "symlog", "from": -1.0, "to": 10.0, "linear": 1e-2}   # the axis of K m^4 on both panels
-KBR_AXIS = 1e-5                   # the theta the axis curves are read at, where the published K is finite
+KBR_LINE = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 1e-2}   # the axis of K m^4 on both panels
+KBR_AXIS = 0.03                   # the theta the axis curves are read at, where the doubles hold the published K to 10^-9
 
 
 def kbr_horizon(m, a, B):
@@ -16019,13 +16019,13 @@ def kerr_bertotti_robinson(ck, src):
     Both charts publish R, which is zero in the static chart and zero on shell in the other, so the
     figure is K alone, read from the stored formulas, the Boyer-Lindquist one through its functions
     N, F, W, omega, P and Q as the reader writes them out. One view, a movie of two frames over a,
-    draws K m^4 from the outer horizon to r = 20 m on the axis, read at theta = 10^-5 where the
-    published formula is finite, and on the equator, on a signed logarithmic scale, with the
+    draws K m^4 from the outer horizon to r = 20 m on the axis, read at theta = 0.03 where the
+    doubles hold the published formula, and on the equator, on a signed logarithmic scale, with the
     constant K = 8B^4 of Bertotti and Robinson's universe of the same field, read from its own
     published K at b = 1/B, dashed on both panels.
 
     What the caption states is checked here: R vanishes; the static K at m = 0 is 8B^4; the
-    Boyer-Lindquist K at a = 0 is the static one; K at theta = 10^-5 is the axis's to the plotted
+    Boyer-Lindquist K at a = 0 is the static one; K at theta = 0.03 is the axis's to the plotted
     precision; the far values of K at r = 20 m on the axis and the equator; and that no curve leaves
     its panel."""
     name = "kerr_bertotti_robinson"
@@ -16047,9 +16047,13 @@ def kerr_bertotti_robinson(ck, src):
     same = max(abs(float(K_bl(rr, t, m, 0.0, B)) / float(K_st(rr, t, m, B)) - 1)
                for rr in (2.5, 6.0, 15.0) for t in (0.3, 1.1, math.pi / 2))
     ck(f"{name} the Boyer-Lindquist K at a = 0 is the static K", same < 1e-9, f"{same:.1e}")
-    near = max(abs(float(fn(rr, KBR_AXIS, *p)) / float(fn(rr, KBR_AXIS / 100, *p)) - 1)
-               for fn, p in ((K_st, static), (K_bl, spin)) for rr in (2.5, 5.0, 20.0))
-    ck(f"{name} K at theta = 10^-5 is the axis's to 10^-6", near < 1e-6, f"{near:.1e}")
+    # The axis curves, read at theta = 0.03, lie within the drawing's tolerance of K on the axis itself,
+    # which the Boyer-Lindquist K gives in sixty digits at theta = 10^-12.
+    p0, p1 = span(KBR_LINE)
+    near = max(abs(float(position(KBR_LINE, float(fn(rr, KBR_AXIS, *p))))
+                   - float(position(KBR_LINE, float(fn.exact([rr, 1e-12, *p]))))) * (PLOT_W / 2) / (p1 - p0)
+               for fn, p in ((K_st, static), (K_bl, spin)) for rr in (1.69, 2.2, 3.0, 8.0, 20.0))
+    ck(f"{name} K at theta = 0.03 is the axis's within the drawing's tolerance", near < TOLERANCE, f"{near:.1e} px")
 
     x_r = axis("$r/m$", 0, KBR_REACH)
     panels = [{"id": "axis", "name": "$K(r, 0)\\,m^4$", "aspect": 2, "scale": KBR_LINE, "ticks": value_ticks(KBR_LINE)},
@@ -16087,9 +16091,10 @@ def kerr_bertotti_robinson(ck, src):
         "curves": reference, "marks": [],
         "movie": {"variable": "$a$", "seconds": 3, "frames": movie},
         "legend": [["line", "K", "pink, $K$"], ["line", "reference", "dashes, $8B^4$"]],
-        "caption": ["The Kretschmann scalar $K$ on the axis and the equator."],
+        "caption": ["The Kretschmann scalar $K$ on the axis and equator stays near $8B^4$ far out; "
+                    "the Ricci scalar vanishes."],
         "settings": "$m=1$, $B=1/4$.",
-        "clip": "Signed log.",
+        "clip": "Signed log; axis at $\\theta=0.03$.",
     }
     return [line]
 
