@@ -14419,6 +14419,153 @@ BCD_SPHERES = {
     "sphere_1975": ("the sphere of 1975", "Bonnor and Wickramasuriya's sphere",
                     "Bonnor's sphere of 1965, of the same mass and radius"),
 }
+# The spheroid at a = m and u_0 = 1, the shape its other drawings take: the meridian section of
+# its own oblate spheroidal chart, from the central disc u = 0 to the surface and from the equator
+# to the pole, in cells a hundredth of a unit of u by a hundredth of a radian.
+BCD_SPHEROID = {"m": 1.0, "a": 1.0, "u_0": 1.0}
+BCD_SECTION = ((0.0, 1.0), (0.0, math.pi / 2))
+BCD_CELLS = (100, 157)
+BCD_SPHEROID_K = {"kind": "log", "from": 1e-6, "to": 10.0}      # the colours of K m^4 inside the spheroid
+BCD_SPHEROID_R = {"kind": "log", "from": 1e-5, "to": 1.0}       # the colours of R^mu_mu m^2 inside it
+# The latitude is ticked in eighths of pi, from the equator to the pole.
+BCD_LATITUDE = [{"at": float(k * math.pi / 8), "label": ["$0$", "$\\pi/8$", "$\\pi/4$", "$3\\pi/8$", "$\\pi/2$"][k]}
+                for k in range(5)]
+
+
+def bcd_spheroid(ck, src):
+    """The two maps of the spheroid's meridian section, its Kretschmann scalar and its density.
+
+    The spheroid is the one star of this spacetime that is not round, so both scalars are drawn
+    over the section inside its surface, in the chart's own u and theta: u labels the confocal
+    spheroids from the central disc to the surface and theta is the latitude, from the equator to
+    the pole, which the whole quarter section covers, since both scalars hold at theta and -theta.
+    The Ricci scalar is the density of the dust, 8 pi G rho/c^2, which vanishes as u^2 on the disc
+    while K vanishes as u^4.
+
+    What the captions state is checked here: every cell against the stored formula in sixty
+    digits, the Ricci scalar against minus the trace of the published Einstein tensor, the
+    reflection in the equator, the inverse fourth-power length scaling, the variation with both
+    coordinates, the values at the equator and the pole of the surface and the stored exterior's
+    there, the powers of u toward the disc and the limits along the equatorial plane at the rim,
+    the redshift of the disc from the published g_tt, the absence of a horizon, and the colour
+    limits with the strip beside the disc that passes the bottom one."""
+    name, system = "bonnor_charged_dust", "spheroid_interior"
+    names = list(BCD_SPHEROID)
+    at = list(BCD_SPHEROID.values())
+    K = Published(src, name, system, "kretschmann", ["u", "theta"], names)
+    R = Published(src, name, system, "ricci_scalar", ["u", "theta"], names)
+    gtt = Published(src, name, system, "metric_components", ["u", "theta"], names, ("t", "t"))
+    einstein = {i: Published(src, name, system, "einstein_tensor", ["u", "theta"], names, (i, i))
+                for i in ("t", "u", "\\theta", "\\phi")}
+    out_K = Published(src, name, "spheroid_exterior", "kretschmann", ["u", "theta"], names)
+    out_R = Published(src, name, "spheroid_exterior", "ricci_scalar", ["u", "theta"], names)
+    (u0, u1), (t0, t1) = BCD_SECTION
+    x_axis = {"name": "$u$", "from": u0, "to": u1, "ticks": nr.ticks(u0, u1, 6)}
+    y_axis = {"name": "$\\theta$", "from": t0, "to": t1, "ticks": BCD_LATITUDE}
+    nx, ny = BCD_CELLS
+    shape_checks(ck, f"{name} spheroid", [(u1 - u0) / (t1 - t0)])
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, at)
+    _, _, density = cells(R, x_axis, y_axis, nx, ny, at)
+    X, Y = np.meshgrid(xs, ys)
+    ck(f"{name} the spheroid's K and density are finite and positive in every cell",
+       np.all(np.isfinite(values)) and np.all(values > 0)
+       and np.all(np.isfinite(density)) and np.all(density > 0),
+       f"K {values.min():.6g} to {values.max():.6g}, density {density.min():.6g} to {density.max():.6g}")
+    indices = np.argwhere(np.ones_like(values, dtype=bool))
+    picks = indices[np.linspace(0, len(indices) - 1, 40).astype(int)]
+    for scalar, sampled in ((K, values), (R, density)):
+        agrees(ck, f"{name} the spheroid's {scalar.field}", scalar,
+               [[X[j, i], Y[j, i], *at] for j, i in picks], [sampled[j, i] for j, i in picks])
+    worst = 0.0
+    for u, theta in ((0.1, 0.2), (0.5, 0.9), (0.9, 0.1), (1.0, math.pi / 2), (0.7, math.pi / 4)):
+        trace = sum(float(einstein[i].exact([u, theta, *at])) for i in einstein)
+        published = float(R.exact([u, theta, *at]))
+        worst = max(worst, abs(published + trace) / max(abs(published), 1e-300))
+    ck(f"{name} the spheroid's Ricci scalar is the dust density, minus the trace of the published "
+       "Einstein tensor", worst < AGREE, f"worst {worst:.2e}")
+    ck(f"{name} the spheroid's K and density are reflected in the equator",
+       np.allclose(K(X, -Y, *at), values, rtol=1e-12, atol=0)
+       and np.allclose(R(X, -Y, *at), density, rtol=1e-12, atol=0))
+    ck(f"{name} the spheroid's K has inverse fourth-power length scaling",
+       abs(float(K.exact([0.6, 0.7, 2.0, 2.0, 1.0])) * 16 / float(K.exact([0.6, 0.7, *at])) - 1) < AGREE)
+    ck(f"{name} the spheroid's K varies with both u and the latitude",
+       np.all(np.ptp(values, axis=0) > 0) and np.all(np.ptp(values, axis=1) > 0))
+    ck(f"{name} the spheroid has no horizon", np.all(gtt(X, Y, *at) < 0), f"g_tt at most {gtt(X, Y, *at).max():.6g}")
+    ck(f"{name} the published Ricci scalar vanishes outside the spheroid", out_R.expr == 0)
+    surface = {}
+    for theta, where in ((0.0, "equator"), (math.pi / 2, "pole")):
+        surface[where] = (float(K.exact([u1, theta, *at])), float(R.exact([u1, theta, *at])),
+                          float(out_K.exact([u1, theta, *at])))
+    ck(f"{name} the spheroid's K and density on its surface fall from the equator to the pole",
+       surface["equator"][0] > surface["pole"][0] and surface["equator"][1] > surface["pole"][1],
+       f"K {surface['equator'][0]:.6g} to {surface['pole'][0]:.6g}")
+    ck(f"{name} the spheroid's K jumps down across its surface at the equator and at the pole",
+       all(surface[where][0] > 3 * surface[where][2] for where in surface),
+       f"to {surface['equator'][2]:.6g} and {surface['pole'][2]:.6g}")
+    powers = [(float(K.exact([u, 0.3, *at])) / u ** 4, float(R.exact([u, 0.3, *at])) / u ** 2)
+              for u in (1e-2, 1e-3, 1e-4)]
+    ck(f"{name} toward the disc the spheroid's density falls as u^2 and its K as u^4",
+       all(abs(a / b - 1) < 1e-4 for a, b in zip(powers[1], powers[2])), f"{powers[2]}")
+    rim = [(float(K.exact([u, 0.0, *at])), float(R.exact([u, 0.0, *at]))) for u in (1e-3, 1e-4, 1e-5)]
+    ck(f"{name} along the equatorial plane the spheroid's K and density hold finite limits at the rim",
+       all(abs(a / b - 1) < 1e-6 for a, b in zip(rim[1], rim[2])), f"{rim[2]}")
+    redshift = 1 / math.sqrt(-float(gtt.exact([0.0, 1.0, *at]))) - 1
+    ck(f"{name} the redshift of the spheroid's disc is 0.8670", abs(redshift - 0.8670) < 5e-5, f"{redshift}")
+    low = values < BCD_SPHEROID_K["from"]
+    bound = math.ceil(100 * X[low].max() + 50 * (u1 - u0) / nx) / 100
+    ck(f"{name} the spheroid's K passes the bottom of its colours beside the disc alone",
+       np.any(low) and np.all(X[low] < bound) and np.all(values <= BCD_SPHEROID_K["to"]),
+       f"{int(np.count_nonzero(low))} cells of {nx * ny}, all at u < {bound:.2f}")
+    ck(f"{name} the spheroid's density lies wholly inside its colours",
+       np.all(density >= BCD_SPHEROID_R["from"]) and np.all(density <= BCD_SPHEROID_R["to"]),
+       f"{density.min():.6g} to {density.max():.6g}")
+
+    def view(scalar, sampled, scale, label, colour, caption, clip):
+        return {
+            "id": "spheroid" if scalar is K else "spheroid_density", "label": label, "kind": "map",
+            "x": x_axis, "y": y_axis,
+            "colour": {"name": colour, "scale": scale, "ticks": value_ticks(scale)},
+            "map": {"metric": name, "system": system, "scalar": scalar.field, "x": "u", "y": "\\theta",
+                    "params": dict(BCD_SPHEROID), "nx": nx, "ny": ny,
+                    "cells": [[rounded(v) for v in row] for row in sampled]},
+            "marks": [], "legend": [], "caption": caption,
+            "settings": f"$m = 1$, the unit of every length, $a = m$, and $u_0 = 1$, so the redshift on the "
+                        f"disc $u = 0$ is ${redshift:.4f}$.",
+            "clip": clip,
+        }
+
+    section = ("The box is the star's meridian section in its own coordinates: $u$ labels the confocal "
+               "spheroids, from the central disc $u = 0$ to the surface $u = u_0$, and the latitude "
+               "$\\theta$ runs from the equator to the pole.")
+    regular = ("The spheroid has no horizon: $g_{tt} = -1/U^2$ never vanishes, and light from the disc "
+               f"arrives with the redshift ${redshift:.4f}$.")
+    return [
+        view(K, values, BCD_SPHEROID_K, "the spheroid's section", "$K\\,m^4$", [
+            "The Kretschmann scalar $K$ inside Bonnor and Wickramasuriya's spheroid of charged dust "
+            f"($a = m$, $u_0 = 1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $-\\theta$. {section}",
+            f"On the surface $K$ falls from ${surface['equator'][0]:.4f}/m^4$ at the equator to "
+            f"${surface['pole'][0]:.4f}/m^4$ at the pole, so the curvature of this star turns with latitude. "
+            f"Across the surface it drops to ${surface['equator'][2]:.4f}/m^4$ at the equator and "
+            f"${surface['pole'][2]:.4f}/m^4$ at the pole, where the dust ends and the charged vacuum begins.",
+            "Toward the central disc the density falls as $u^2$ and $K$ as $u^4$, so both vanish on the disc. "
+            f"Along the equatorial plane $K$ tends to ${rim[2][0]:.4f}/m^4$ at the rim $u = 0$, $\\theta = 0$, "
+            f"where the two limits meet. {regular}",
+        ], "We colour $K\\,m^4$ on a logarithmic scale from $10^{-6}$ to $10$, over the meridian section "
+           "inside the surface. Cells below the lower limit take the bottom colour, confined to "
+           f"$u < {bound:.2f}$ beside the central disc; no cell passes the top."),
+        view(R, density, BCD_SPHEROID_R, "the spheroid's density", "$R^\\mu{}_\\mu\\,m^2$", [
+            "The Ricci scalar $R^\\mu{}_\\mu$ inside Bonnor and Wickramasuriya's spheroid of charged dust "
+            f"($a = m$, $u_0 = 1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $-\\theta$. "
+            "It is the density of the dust, $R^\\mu{}_\\mu = 8\\pi G\\rho/c^2$, since the charge and its field "
+            f"carry no trace. {section}",
+            f"The density grows from the disc, where it vanishes as $u^2$, to the surface, and on the surface "
+            f"it falls from ${surface['equator'][1]:.4f}/m^2$ at the equator to ${surface['pole'][1]:.4f}/m^2$ "
+            f"at the pole: the dust of this star lies thickest about its rim. Along the equatorial plane it "
+            f"tends to ${rim[2][1]:.4f}/m^2$ at the rim $u = 0$, $\\theta = 0$.",
+            f"Outside the surface the dust ends and $R^\\mu{{}}_\\mu$ vanishes in the charged vacuum. {regular}",
+        ], "We colour $R^\\mu{}_\\mu\\,m^2$ on a logarithmic scale from $10^{-5}$ to $1$, over the meridian "
+           "section inside the surface, and every cell lies within it."),
+    ]
 
 
 def bonnor_charged_dust(ck, src):
@@ -14604,7 +14751,7 @@ def bonnor_charged_dust(ck, src):
                     + clip_R[len("We draw "):-len(", and every value drawn lies within it.")]
                     + ", and every value drawn lies within them.",
         })
-    return views
+    return views + bcd_spheroid(ck, src)
 
 
 # ---------------------------------------------------------------- the files
