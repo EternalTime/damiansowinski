@@ -6626,8 +6626,92 @@ IW_R = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 1e-4}
 
 def interstellar_wormhole(ck, src):
     """Interstellar's wormhole at rho = a = 1 and M = 1/2, its Kretschmann and Ricci scalars across
-    the whole wormhole, the cylinder between its two mouths and a flare beyond each."""
-    raise NotImplementedError
+    the whole wormhole, the cylinder between its two mouths and a flare beyond each.
+
+    The published scalars depend on ell alone, so a line shows their whole variation. The
+    proper_distance chart leaves r(ell) free, so the curves are read from the cylinder chart over
+    |ell| <= a and from the flare chart over a <= ell <= 6 rho. The flare chart covers the mouth
+    ell = a and beyond it alone, and the other flare is its mirror image, so its curves are the
+    same chart's at native ell from 6 rho down to a, drawn at -ell through `horizontal`. The two
+    mouths are marked with `front`, a surface where the curvature changes at once.
+    K is logarithmic from 10^-4 to 10^2 and R signed logarithmic from -10 to 10, linear within
+    10^-4; every curve lies wholly inside its panel.
+
+    What the caption states is checked here: the cylinder's K = 4/rho^4 and R = 2/rho^2; the
+    flare meets the cylinder at the mouth with r = rho; K and R jump there, to
+    128/pi^4 M^2 rho^2 + 4/rho^4 and 2/rho^2 - 16/pi^2 M rho, since r'' jumps from 0 to
+    2/pi M; and K falls from each mouth outward."""
+    name = "interstellar_wormhole"
+    rho, a, M = IW_RHO, IW_A, IW_M
+    x_axis = axis("$\\ell/\\rho$", -IW_REACH, IW_REACH)
+    panels = [{"id": "K", "name": "$K\\,\\rho^4$", "aspect": 2, "scale": IW_K, "ticks": value_ticks(IW_K)},
+              {"id": "R", "name": "$R\\,\\rho^2$", "aspect": 2, "scale": IW_R, "ticks": value_ticks(IW_R)}]
+    height = PLOT_W / 2
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    tube = {"rho": rho, "a": a}
+    flare = {"rho": rho, "a": a, "M": M}
+    published = {
+        ("cylinder", "K"): Published(src, name, "cylinder", "kretschmann", ["ell"], list(tube)),
+        ("cylinder", "R"): Published(src, name, "cylinder", "ricci_scalar", ["ell"], list(tube)),
+        ("flare", "K"): Published(src, name, "flare", "kretschmann", ["ell"], list(flare)),
+        ("flare", "R"): Published(src, name, "flare", "ricci_scalar", ["ell"], list(flare)),
+    }
+    sphere = Published(src, name, "flare", "metric_components", ["ell"], list(flare), ("\\theta", "\\theta"))
+    rho_s, a_s = published[("cylinder", "K")].params
+    ck(f"{name} the cylinder's K is 4/rho^4", sp.simplify(published[("cylinder", "K")].expr - 4 / rho_s ** 4) == 0)
+    ck(f"{name} the cylinder's R is 2/rho^2", sp.simplify(published[("cylinder", "R")].expr - 2 / rho_s ** 2) == 0)
+    ck(f"{name} the flare meets the cylinder at the mouth, r = rho",
+       abs(float(sphere.exact([a, rho, a, M])) - rho ** 2) < AGREE)
+    mouth_K = 128 / (math.pi ** 4 * M ** 2 * rho ** 2) + 4 / rho ** 4
+    mouth_R = 2 / rho ** 2 - 16 / (math.pi ** 2 * M * rho)
+    ck(f"{name} K jumps at the mouth from 4/rho^4 to 128/pi^4 M^2 rho^2 + 4/rho^4",
+       abs(float(published[("flare", "K")].exact([a, rho, a, M])) / mouth_K - 1) < AGREE, f"{mouth_K:.9g}")
+    ck(f"{name} R jumps at the mouth from 2/rho^2 to 2/rho^2 - 16/pi^2 M rho",
+       abs(float(published[("flare", "R")].exact([a, rho, a, M])) / mouth_R - 1) < AGREE, f"{mouth_R:.9g}")
+
+    def mirrored(cls, fn, scale):
+        """The far flare, the flare chart's scalar at native ell from the edge of the plot down to
+        the mouth, drawn at -ell."""
+        native = np.linspace(IW_REACH, a, SAMPLES)
+        values = fn(native, *flare.values())
+        p0, p1 = span(scale)
+        X = PLOT_W * (-native - x_axis["from"]) / (x_axis["to"] - x_axis["from"])
+        Y = height * (1 - (position(scale, values) - p0) / (p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        entry = curve_entry(cls, cls, fn, "\\ell", flare,
+                            [[float(-native[k]) + 0.0, float(values[k]) + 0.0] for k in keep])
+        entry["horizontal"] = {"expression": "-ell", "values": [float(native[k]) + 0.0 for k in keep]}
+        agrees(ck, f"{name} far flare {cls}", fn, [[v, *flare.values()] for v in entry["horizontal"]["values"]],
+               [p[1] for p in entry["points"]])
+        return entry
+
+    curves = []
+    for cls, scale in (("K", IW_K), ("R", IW_R)):
+        tube_fn, flare_fn = published[("cylinder", cls)], published[("flare", cls)]
+        far = mirrored(cls, flare_fn, scale)
+        middle = line_curves(ck, f"{name} cylinder", cls, cls, tube_fn, "\\ell", x_axis, scale, height, tube,
+                             within=(-a, a))
+        near = line_curves(ck, f"{name} near flare", cls, cls, flare_fn, "\\ell", x_axis, scale, height, flare,
+                           within=(a, IW_REACH))
+        ck(f"{name} {cls} draws one curve for each part of the wormhole", len(middle) == 1 and len(near) == 1)
+        for where, fn, params, within in (("cylinder", tube_fn, tube, (-a, a)),
+                                          ("flare", flare_fn, flare, (a, IW_REACH))):
+            up, down = beyond(fn, x_axis, scale, list(params.values()), within=within)
+            ck(f"{name} the {where}'s {cls} stays inside its panel", not up and not down, f"{up} {down}")
+        curves += [far] + middle + near
+    ells = np.linspace(a, IW_REACH, SAMPLES)
+    ck(f"{name} K falls from each mouth outward", np.all(np.diff(published[("flare", "K")](ells, *flare.values())) < 0))
+
+    k_clip, r_clip = "log.", "signed log."
+    caption = ("The Kretschmann scalar $K$ and the Ricci scalar $R$ of Interstellar's wormhole against $\\ell$. "
+               "$K$ pink, $R$ cyan; both jump at the mouths, the bars, where $r''$ does.")
+    return [{
+        "id": "wormhole", "label": "the whole wormhole", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [{"class": "front", "x": -a}, {"class": "front", "x": a}],
+        "legend": [], "caption": [caption], "ricci_sentences": [], "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$\\rho = a = 1$, $M = 1/2$.",
+        "clip": "Log; signed log, linear within $10^{-4}$.",
+    }]
 
 
 # ---------------------------------------------------------------- the Kantowski-Sachs cosmologies
