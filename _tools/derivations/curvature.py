@@ -11614,8 +11614,11 @@ def alcubierre(ck, src):
     the error of every point written is measured against a millionth of the greatest value its
     scalar reaches.
 
-    What the caption states is checked here: both scalars are even in x at this moment, since the
-    declared profile holds x and ct in x - x_s alone; every crossing marked lies on the sphere
+    What the caption states is checked here: both scalars are even in x - x_s at every moment,
+    since the declared profile holds x and ct in that combination alone, so the wall carries the
+    same curvature ahead of the ship and behind it, while the expansion v_s df/dx of the slices,
+    which the embedding diagram draws as a height, is odd in it; every crossing marked lies on the
+    sphere
     r_s = 1.000168 R, where the declared f is 1/v_s, the two crossings of a frame close as the cut
     moves off the path, and no cut beyond that sphere crosses it; on it K = 959.9/R^4 and
     R^mu_mu = 32.00/R^2 at the poles and 609.7/R^4 and 16.01/R^2 at the equator; along the path K
@@ -11718,11 +11721,17 @@ def alcubierre(ck, src):
     ck(f"{name} the two crossings close as the cut moves off the path", all(b < a for a, b in zip(gaps, gaps[1:])),
        f"{[round(g, 4) for g in gaps]}")
 
-    # Both scalars are even in x at ct = 0, since the profile holds x and ct in x - x_s alone.
+    # Both scalars are even in x - x_s, since the declared profile holds x and ct in that
+    # combination alone, while the expansion v_s df/dx of the slices is odd in it.
     along = np.linspace(ALC_GAP, ALC_REACH, 400)
-    ck(f"{name} both scalars are even in x at this moment",
-       all(np.allclose(fn(along, rho, 0.0, 0.0), fn(-along, rho, 0.0, 0.0), rtol=1e-12, atol=0)
-           for fn in (K, Ric) for rho in (0.0, 0.37, 1.0)))
+    ck(f"{name} both scalars are even in x - x_s, the same ahead of the ship and behind it",
+       all(np.allclose(fn(2 * t + along, rho, t, 0.0), fn(2 * t - along, rho, t, 0.0), rtol=1e-12, atol=0)
+           for fn in (K, Ric) for rho in (0.0, 0.37, 1.0) for t in (0.0, 0.3, -0.7)))
+    expansion = sp.lambdify((x_, y_), 2 * sp.diff(at_moment, x_), "numpy")
+    ck(f"{name} the expansion of the slices changes sign across the bubble",
+       np.allclose(expansion(along, 0.37), -expansion(-along, 0.37), rtol=1e-12, atol=0)
+       and float(expansion(1.0, 0.0)) < 0 < float(expansion(-1.0, 0.0)),
+       f"{float(expansion(-1.0, 0.0)):.6f} one R behind the ship")
 
     # The poles of that sphere, where the line along the path meets it, and its equator.
     pole_K, pole_R = float(K.exact([wall, 0, 0, 0])), float(Ric.exact([wall, 0, 0, 0]))
@@ -11785,8 +11794,8 @@ def alcubierre(ck, src):
     K_clip = "$K\\,R^4$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10^3$ to $10^4$"
     R_clip = ("$R^\\mu{}_\\mu\\,R^2$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10^2$ "
               "to $10^2$")
-    centre = (f" The two curves of each scalar at $\\rho = 0$ stop at $|x| = {ALC_GAP}\\,R$, where the published "
-              "formulas are $0/0$ at the ship.")
+    centre = (f" The two curves of each scalar at $\\rho = 0$ stop at $|x| = {ALC_GAP}\\,R$, since both scalars "
+              "are $0/0$ at the ship.")
     return [{
         "id": "along", "label": "along the path, $0 \\le \\rho \\le 3R/2$", "kind": "line", "x": x_axis,
         "panels": panels, "curves": [], "marks": [], "legend": legend,
@@ -11799,12 +11808,15 @@ def alcubierre(ck, src):
             f"staying below ${quiet_K:.2f}/R^4$ inside $r_s = R/2$. "
             f"$R^\\mu{{}}_\\mu$ stands in the same wall, ${float(R_path(peak_R)):.2f}/R^2$ at "
             f"$r_s = {peak_R:.3f}\\,R$ and below ${quiet_R:.3f}/R^2$ inside $r_s = R/2$. "
-            f"The published $g^{{xx}} = 1 - v_s^2f^2$ changes sign on the sphere $r_s = {wall:.6f}\\,R$, where the "
+            f"$g^{{xx}} = 1 - v_s^2f^2$ changes sign on the sphere $r_s = {wall:.6f}\\,R$, where the "
             "shift reaches the speed of light, and each cut that crosses it is marked there.",
             f"Along the path $K$ reaches a second peak, ${float(K_path(second_K)):.0f}/R^4$ at "
             f"$r_s = {second_K:.3f}\\,R$, with a layer between the two where it is negative. "
-            f"$R^\\mu{{}}_\\mu$ changes sign once along the path, at $r_s = {R_zeros[0]:.3f}\\,R$, and reaches "
-            f"${float(R_path(trough_R)):.1f}/R^2$ at $r_s = {trough_R:.3f}\\,R$. "
+            "$K$ is even in $x - x_s$, the same ahead of the ship and behind it, while the expansion of the "
+            "slices changes sign across the bubble. "
+            f"$R^\\mu{{}}_\\mu$ is even in $x - x_s$ as well, changing sign once along the path, at "
+            f"$r_s = {R_zeros[0]:.3f}\\,R$, and reaching ${float(R_path(trough_R)):.1f}/R^2$ at "
+            f"$r_s = {trough_R:.3f}\\,R$. "
             "$R^\\mu{}_\\mu$ is $-8\\pi G/c^4$ times the trace of the matter, whose energy density for the "
             "observers who ride the slices, $-v_s^2\\rho^2(\\partial f/\\partial r_s)^2c^4/32\\pi Gr_s^2$, is zero "
             "on the path and negative off it. "
@@ -11812,7 +11824,7 @@ def alcubierre(ck, src):
             "$R^\\mu{}_\\mu$ falls off as $e^{-2\\sigma r_s}$. "
             "A cut at $\\rho > R$ crosses that sphere nowhere, and the tail of the wall alone stands on it.",
         ],
-        "ricci_sentences": [[0, 2], [1, 1], [1, 2], [1, 4]],
+        "ricci_sentences": [[0, 2], [1, 2], [1, 3], [1, 5]],
         "per_scalar": scalar_clips(
             "We draw " + K_clip + ", and every value drawn in every frame lies within it." + centre,
             "We draw " + R_clip + ", and every value drawn in every frame lies within it." + centre),
