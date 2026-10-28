@@ -5621,6 +5621,100 @@ def hayward(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the global monopole
+
+GM_DELTA = Fraction(19, 100)      # Delta, the solid angle deficit, as every drawing of the monopole takes it
+GM_REACH = (0.5, 50.0)            # the plot runs over 0.5 <= r/r_s <= 50, as the research list sets
+GM_K = {"kind": "log", "from": 1e-10, "to": 1e3}   # the axis of K r_s^4
+GM_TICKS = ((0.5, "$0.5$"), (1, "$1$"), (5, "$5$"), (10, "$10$"), (50, "$50$"))
+
+
+def global_monopole(ck, src):
+    """The global monopole's Kretschmann scalar against r on logarithmic axes, at r_s = 1.
+
+    The static and both Eddington-Finkelstein charts publish the same K = (12 r_s^2 + 8 Delta r_s r
+    + 4 Delta^2 r^2)/r^6, a function of r alone, so one line view serves them all. The axis across
+    is log10(r/r_s), each curve declaring r beside its points through the landed horizontal
+    expression. The dashed comparisons are the same published K at Delta = 0, Schwarzschild's
+    12 r_s^2/r^6, and at r_s = 0, the monopole alone, 4 Delta^2/r^4; on these axes they are straight
+    lines of slopes -6 and -4, and K runs from the first to the second. The Ricci scalar 2 Delta/r^2
+    is the caption's, a single power of r.
+
+    What the caption states is checked here: the three charts publish the same K and R; the
+    horizon is the zero of g^rr at r_s/(1 - Delta); the two terms alone are equal at r = sqrt(3) r_s
+    /Delta; the local slope of K is within a tenth of -6 at the inner end and a quarter of -4 at the outer;
+    and every curve lies inside its panel."""
+    metric = "global_monopole"
+    delta = float(GM_DELTA)
+    names = ["\\Delta", "r_s"]
+    lo, hi = (math.log10(r) for r in GM_REACH)
+    x_axis = {"name": "$r/r_s$", "from": lo, "to": hi,
+              "ticks": [{"at": math.log10(r), "label": label} for r, label in GM_TICKS]}
+    K_ticks = [t for t in value_ticks(GM_K) if round(math.log10(t["at"])) % 2 == 0]
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 1, "scale": GM_K, "ticks": K_ticks}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = PLOT_W / panels[0]["aspect"]
+    K = nr_published(src, metric, "static", "kretschmann", ["r"], names)
+    R = nr_published(src, metric, "static", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, metric, "static", "inverse_metric_components", ["r"], names, ("r", "r"))
+    rs = np.geomspace(*GM_REACH, SAMPLES)
+
+    for system in ("eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            other = nr_published(src, metric, system, field, ["r"], names)
+            ck(f"{metric} {system} publishes the static chart's {field}",
+               np.allclose(other(rs, delta, 1.0), fn(rs, delta, 1.0), rtol=1e-14, atol=0))
+    ck(f"{metric} R is 2 Delta/r^2", np.allclose(R(rs, delta, 1.0), 2 * delta / rs ** 2, rtol=1e-14, atol=0))
+    found = zeros(ck, f"{metric} horizon", grr, *GM_REACH, [delta, 1.0])
+    r_h = 1 / (1 - delta)
+    ck(f"{metric} has its horizon at r_s/(1 - Delta)", len(found) == 1 and abs(found[0] - r_h) < 1e-12,
+       f"{found}")
+    ck(f"{metric} K at Delta = 0 is Schwarzschild's 12 r_s^2/r^6",
+       np.allclose(K(rs, 0.0, 1.0), 12 / rs ** 6, rtol=1e-14, atol=0))
+    ck(f"{metric} K at r_s = 0 is the monopole's 4 Delta^2/r^4",
+       np.allclose(K(rs, delta, 0.0), 4 * delta ** 2 / rs ** 4, rtol=1e-14, atol=0))
+    r_equal = math.sqrt(3) / delta
+    ck(f"{metric} the two terms alone are equal at r = sqrt(3) r_s/Delta",
+       abs(float(K.exact([r_equal, 0.0, 1.0]) / K.exact([r_equal, delta, 0.0])) - 1) < 1e-12, f"{r_equal:.4f}")
+    slope = lambda r: float((math.log(K(r * 1.0001, delta, 1.0)) - math.log(K(r / 1.0001, delta, 1.0)))
+                            / (2 * math.log(1.0001)))
+    ck(f"{metric} K falls within a tenth of r^-6 at the inner end", -6 < slope(GM_REACH[0]) < -5.9,
+       f"{slope(GM_REACH[0]):.4f}")
+    ck(f"{metric} K falls within a quarter of r^-4 at the outer end", -4.25 < slope(GM_REACH[1]) < -4,
+       f"{slope(GM_REACH[1]):.4f}")
+
+    def curve(cls, params):
+        values = K(rs, *params.values())
+        ck(f"{metric} {cls} at {params} stays inside its panel",
+           np.all(values >= GM_K["from"]) and np.all(values <= GM_K["to"]),
+           f"{np.min(values):.4g} to {np.max(values):.4g}")
+        xs = np.log10(rs)
+        p0, p1 = span(GM_K)
+        X = PLOT_W * (xs - lo) / (hi - lo)
+        Y = height * (1 - (position(GM_K, values) - p0) / (p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        entry = curve_entry("K", cls, K, "r", params, [[float(xs[k]) + 0.0, float(values[k]) + 0.0] for k in keep])
+        entry["horizontal"] = {"expression": "log(r)/log(10)", "values": [float(rs[k]) for k in keep]}
+        agrees(ck, f"{metric} {cls} at {params}", K, [[float(rs[k]), *params.values()] for k in keep],
+               [float(values[k]) for k in keep])
+        return entry
+
+    curves = [curve("reference", {"\\Delta": 0.0, "r_s": 1.0}),
+              curve("reference", {"\\Delta": delta, "r_s": 0.0}),
+              curve("K", {"\\Delta": delta, "r_s": 1.0})]
+
+    return [{
+        "id": "monopole", "label": "$\\Delta = 0.19$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [{"class": "horizon", "x": math.log10(found[0])}],
+        "legend": [["line", "K", "$K$"], ["line", "reference", "terms alone, dashed"],
+                   ["line", "horizon", "horizon"]],
+        "caption": ["$K$ in the static chart, Schwarzschild's $r^{-6}$ near the mass, the monopole's $r^{-4}$ far "
+                    "out."],
+        "settings": "$\\Delta = 0.19$, $r_s = 1$.",
+        "clip": "Log scales, nothing clipped.",
+    }]
+
+
 # ---------------------------------------------------------------- Gowdy's torus universe
 
 GOWDY_BOX = ((0, 2 * math.pi), (-2, 4))   # theta, and tau from -2 to 4, the box of the logarithmic chart's spacetime diagram
@@ -15807,6 +15901,7 @@ DRAWN = {
     "exponential_metric": exponential_metric,
     "erez_rosen": erez_rosen,
     "fisher_jnw": fisher_jnw,
+    "global_monopole": global_monopole,
     "gowdy": gowdy,
     "gravastar": gravastar,
     "gravitational_instantons": gravitational_instantons,
