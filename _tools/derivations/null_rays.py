@@ -232,6 +232,7 @@ import boson_star as bs  # noqa: E402
 import kodama_kink as kk  # noqa: E402
 import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
+import black_saturn as bsat  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
 import brane_wall_universe as bwu  # noqa: E402
 import build_mfs_data as build  # noqa: E402
@@ -2685,6 +2686,47 @@ for _function in _BOSON_FUNCTIONS.values():
     # Repeat the stored scalar arithmetic at high precision with the numerical profile held.
     _function._eval_evalf = lambda self, prec: sp.Float(float(self._imp_(float(self.args[0]))), prec)
 DECLARED_FUNCTIONS.update(_BOSON_FUNCTIONS)
+
+
+# Black Saturn's four functions on the polar chart at the parameters BS sets, which the chart
+# publishes its curvature in and leaves free: bs_V, bs_O, bs_W and bs_nu themselves, bs_V1 and
+# bs_V2 the derivatives along r and theta, and bs_V11, bs_V12 and bs_V22 the second ones.
+# black_saturn.py builds them from the names Weyl's chart defines and carries each derivative as a
+# jet, exact at the precision it is worked in, so the published scalars can be read as numbers
+# over a whole plane. BS_POLAR_FUNCTIONS is what a figure of those scalars declares.
+BS_SHORT = {"V": "bs_V", "Omega": "bs_O", "W": "bs_W", "nu": "bs_nu"}
+BS_POLAR_FUNCTIONS = {name: f"{short}(r, theta)" for name, short in BS_SHORT.items()}
+
+
+def _bs_value(name, order, r, theta, digits=None):
+    got = bsat.values(BS, r, theta, digits)[name][order]
+    if digits is not None:
+        return got
+    return np.broadcast_to(np.asarray(got, dtype=float), np.broadcast(np.asarray(r, dtype=float),
+                                                                     np.asarray(theta, dtype=float)).shape)
+
+
+def _bs_declare():
+    """Each of black Saturn's four functions and its first and second partial derivatives as a
+    sympy function of the polar chart's two coordinates, carrying its own derivatives and its own
+    numbers, as _nm_declare's do along one coordinate."""
+    made = {}
+    for name, short in BS_SHORT.items():
+        for order in bsat.ORDERS:
+            label = short + order
+            body = {"nargs": 2, "is_real": True, "_bs_name": name, "_bs_order": order,
+                    "_imp_": staticmethod(lambda r, theta, name=name, order=order: _bs_value(name, order, r, theta)),
+                    "_eval_evalf": lambda self, prec: sp.Float(
+                        _bs_value(self._bs_name, self._bs_order, float(self.args[0]), float(self.args[1]),
+                                  digits=mpmath.libmp.prec_to_dps(prec) + 10), prec)}
+            if len(order) < 2:
+                body["fdiff"] = lambda self, argindex=1, short=short, order=order: \
+                    made[short + "".join(sorted(order + str(argindex)))](*self.args)
+            made[label] = type(label, (sp.Function,), body)
+    return made
+
+
+DECLARED_FUNCTIONS.update(_bs_declare())
 
 
 def e12_tortoise(x):
