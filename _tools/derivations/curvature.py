@@ -6614,6 +6614,22 @@ def khan_penrose(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Interstellar's wormhole
+
+IW_RHO = 1.0                      # the cylinder's radius, the unit of every length
+IW_A = 1.0                        # half the cylinder's length, so the mouths are ell = +-1
+IW_M = 0.5                        # the flare's length, as the embedding, conformal and spacetime diagrams take it
+IW_REACH = 6                      # the plot runs over |ell| <= 6 rho
+IW_K = {"kind": "log", "from": 1e-4, "to": 1e2}
+IW_R = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 1e-4}
+
+
+def interstellar_wormhole(ck, src):
+    """Interstellar's wormhole at rho = a = 1 and M = 1/2, its Kretschmann and Ricci scalars across
+    the whole wormhole, the cylinder between its two mouths and a flare beyond each."""
+    raise NotImplementedError
+
+
 # ---------------------------------------------------------------- the Kantowski-Sachs cosmologies
 
 KS_ETA_END = 1.2                         # the existing embedding movie's last dust moment
@@ -16033,6 +16049,7 @@ DRAWN = {
     "hayward": hayward,
     "hiscock": hiscock,
     "interior_schwarzschild": interior_schwarzschild,
+    "interstellar_wormhole": interstellar_wormhole,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
     "kerr_taub_nut": kerr_taub_nut,
