@@ -5420,7 +5420,7 @@ def gravitational_instantons(ck, src):
                      (page, {"\\Lambda": 1.0, "\\nu": GI_NU}, None), (cp2, {"L": L}, None), "\\chi")
     page_view.update({
         "caption": ["The Kretschmann scalar $K$ of Page's space is $15.0\\Lambda^2$ on its bolts, $5.96\\Lambda^2$ "
-                    "midway. Its Ricci scalar $R$ is $4\\Lambda$."],
+                    "midway; $R=4\\Lambda$."],
         "legend": [["line", "K", "$K$, pink"], ["line", "reference", "complex projective plane, dashed"]],
         "settings": "$\\Lambda = 1$.",
         "clip": "Linear.",
