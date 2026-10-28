@@ -13453,8 +13453,8 @@ def ellis_bronnikov(ck, src):
 EM_REACH = 6                      # the plot runs from r = 0 to r = 6m in the isotropic chart
 EM_K = {"kind": "linear", "from": 0, "to": 0.8}
 EM_R = {"kind": "linear", "from": -0.6, "to": 0}
-EM_CAPTION = ("The Kretschmann scalar $K$ and the Ricci scalar $R$ of the exponential metric, isotropic $r$, $m=1$. "
-              "Pink $K$, cyan $R$; the bar is the throat; both peak on the squeezed far side $r<m$, then vanish.")
+EM_CAPTION = ("The Kretschmann scalar $K$ and the Ricci scalar $R$ of the exponential metric against isotropic $r$, "
+              "peaking on the squeezed far side $r<m$ and vanishing as $r\\to0$.")
 
 
 def exponential_metric(ck, src):
@@ -13505,9 +13505,10 @@ def exponential_metric(ck, src):
         ck(f"{name} {panel} stays inside its panel", not up and not down, f"{up} {down}")
     return [{
         "id": "throat", "label": "both sides of the throat", "kind": "line", "x": x_axis, "panels": panels,
-        "curves": curves, "marks": [{"class": "front", "x": 1.0}], "legend": [],
+        "curves": curves, "marks": [{"class": "front", "x": 1.0}],
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "front", "throat $r=m$"]],
         "caption": [EM_CAPTION], "ricci_sentences": [],
-        "per_scalar": scalar_clips("linear.", "linear."), "settings": "", "clip": "",
+        "per_scalar": scalar_clips("linear.", "linear."), "settings": "$m=1$.", "clip": "Linear.",
     }]
 
 
