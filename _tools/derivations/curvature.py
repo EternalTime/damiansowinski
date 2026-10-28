@@ -15628,8 +15628,8 @@ def erez_rosen(ck, src):
         "map": frames[0][1], "marks": [],
         "movie": {"variable": "$q$", "seconds": 3, "frames": [f for f, _ in frames]},
         "legend": [["line", "singular", "singularity"], ["line", "horizon", "horizon, $q=0$"]],
-        "caption": ["$K\\,m^4$ of the Erez-Rosen quadrupole on the polar meridian plane of $r$, $\\theta$ for "
-                    "$q$ -1/2, 0, 1; $R=0$."],
+        "caption": ["The Kretschmann scalar $K$ on the polar meridian plane of $r$, $\\theta$ for $q$ -1/2, 0, 1; "
+                    "the Ricci scalar vanishes."],
         "settings": "$m=1$.",
         "clip": "Log; capped at 10 by $r=2m$.",
     }
@@ -15669,7 +15669,7 @@ def erez_rosen(ck, src):
         "curves": reference, "marks": [],
         "movie": {"variable": "$q$", "seconds": 3, "frames": movie},
         "legend": [["line", "K", "pink, Erez-Rosen"], ["line", "reference", "dashes, Schwarzschild"]],
-        "caption": ["$K\\,m^4$ against $r$ on the axis and the equator for $q$ -1/2, 0, 1."],
+        "caption": ["The Kretschmann scalar $K$ on the axis and the equator for $q$ -1/2, 0, 1."],
         "settings": "$m=1$; axis at $\\theta=10^{-5}$.",
         "clip": "Log, from $r=2.02m$; the $q=1$ axis dips out.",
     }
