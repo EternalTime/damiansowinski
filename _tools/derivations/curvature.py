@@ -16758,6 +16758,79 @@ class SwappedPublished:
         return getattr(self.published, name)
 
 
+# ---------------------------------------------------------------- Bonnor's rotating dust
+
+BRD_BOX = ((0.0, 2.0), (-2.0, 2.0))                    # rho/a and z/a: the cloud, its torus and its fall-off
+BRD_CELLS = (100, 200)                                  # cells a fiftieth of a on a side
+BRD_DOMAIN = "rho**2 + z**2 >= 9/25"                    # the centre r < 3a/5, where both scalars run off every scale, left blank
+BRD_K = {"kind": "symlog", "from": -1e6, "to": 1e4, "linear": 1e-2}   # the colours of K a^4
+BRD_R = {"kind": "log", "from": 1e-3, "to": 1e3}                     # the colours of R a^2
+
+
+def bonnor_rotating_dust(ck, src):
+    """Bonnor's rotating dust cloud at a = 1, its Ricci scalar, the density of the dust, and its
+    Kretschmann scalar over the meridian plane of the cylindrical chart's rho and z.
+
+    Both scalars depend on rho and z alone. R is positive everywhere, since 4r^2 > 3rho^2; K takes
+    both signs, so it is coloured on a signed logarithmic scale. Near the centre both run off any
+    scale, through the factor exp(-a^4 rho^2 (rho^2 - 8z^2)/4r^8), so the disc r < 3a/5 is the map's
+    blank domain. The torus r^3 = a^2 rho, inside which the circles of phi are closed timelike
+    curves, is marked where it lies outside that disc. Checked here: R > 0 and K finite at every
+    cell drawn, both the same at z and -z, and the cells against the formula."""
+    a = 1.0
+    CYL = "cylindrical"
+    (x0, x1), (y0, y1) = BRD_BOX
+    x_axis, y_axis = axis("$\\rho/a$", x0, x1), axis("$z/a$", y0, y1)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "bonnor_rotating_dust", [aspect])
+    K = nr_published(src, "bonnor_rotating_dust", CYL, "kretschmann", ["rho", "z"], ["a"])
+    R = nr_published(src, "bonnor_rotating_dust", CYL, "ricci_scalar", ["rho", "z"], ["a"])
+    domain = domain_function("bonnor_rotating_dust", CYL, BRD_DOMAIN, ["rho", "z"], ["a"])
+    nx, ny = BRD_CELLS
+    rng = np.random.default_rng(1977)
+    n = 400
+    angles = np.linspace(0.0, math.pi, n)
+    torus = [[float(math.sin(t) ** 1.5), float(math.sqrt(math.sin(t)) * math.cos(t))] for t in angles
+             if math.sin(t) >= 9 / 25]
+    views = []
+    for scalar, fn, scale, name, vid, label in (
+            ("ricci_scalar", R, BRD_R, "$R\\,a^2$", "density", "the dust's density"),
+            ("kretschmann", K, BRD_K, "$K\\,a^4$", "kretschmann", "the Kretschmann scalar")):
+        xs, ys, values = cells(fn, x_axis, y_axis, nx, ny, [a])
+        X, Y = np.meshgrid(xs, ys)
+        inside = domain(X, Y, a)
+        ok = values[inside]
+        ck(f"bonnor_rotating_dust {scalar} is finite at every cell drawn", np.all(np.isfinite(ok)),
+           f"from {np.min(ok):.4e} to {np.max(ok):.4e}")
+        if scalar == "ricci_scalar":
+            ck("bonnor_rotating_dust R is positive at every cell drawn", np.all(ok > 0))
+        ck(f"bonnor_rotating_dust {scalar} is the same at z and -z",
+           np.allclose(values[inside], values[::-1][inside], rtol=1e-9, atol=0))
+        ck(f"bonnor_rotating_dust {scalar} lies within its colours", np.min(ok) >= scale["from"]
+           and np.max(ok) <= scale["to"], f"{np.min(ok):.4e} to {np.max(ok):.4e}")
+        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200))
+                        if inside[j, i]})[:40]
+        agrees(ck, f"bonnor_rotating_dust {scalar} map", fn, [[xs[i], ys[j], a] for i, j in picks],
+               [values[j, i] for i, j in picks])
+        rows = [[rounded(v) if keep else None for v, keep in zip(row, mask)] for row, mask in zip(values, inside)]
+        caption = ("The Ricci scalar $R$ of Bonnor's rotating dust, its density, over the meridian plane; "
+                   "the centre is blank." if scalar == "ricci_scalar" else
+                   "The Kretschmann scalar $K$ of Bonnor's rotating dust over the meridian plane; the centre "
+                   "is blank.")
+        views.append({
+            "id": vid, "label": label, "kind": "map", "x": x_axis, "y": y_axis,
+            "colour": {"name": name, "scale": dict(scale), "ticks": every_second(scale)},
+            "map": {"metric": "bonnor_rotating_dust", "system": CYL, "scalar": scalar, "x": "\\rho", "y": "z",
+                    "params": {"a": a}, "domain": BRD_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+            "marks": [{"class": "front", "points": torus}],
+            "legend": [["line", "front", "closed timelike curves inside"]],
+            "caption": [caption],
+            "settings": "$a = 1$, blank for $r < 3a/5$.",
+            "clip": "Signed log." if scalar == "kretschmann" else "Log.",
+        })
+    return views
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -16769,6 +16842,7 @@ DRAWN = {
     "black_saturn": black_saturn,
     "black_to_white_hole": black_to_white_hole,
     "bonnor_charged_dust": bonnor_charged_dust,
+    "bonnor_rotating_dust": bonnor_rotating_dust,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
