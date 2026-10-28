@@ -1468,49 +1468,13 @@ def black_saturn(ck, src):
                 "functions": dict(nr.BS_POLAR_FUNCTIONS), "nx": nx, "ny": ny,
                 "cells": [[rounded(v) for v in row] for row in cellv]},
         "marks": rods_drawn,
-        "legend": [["line", "horizon", "the two horizons, $\\rho = 0$ at $\\kappa_3 \\le z \\le \\kappa_2$ for the "
-                    "ring and at $\\kappa_1 \\le z \\le 1$ for the hole"]],
-        "input": ("Elvang and Figueras's four functions as numbers, from the names Weyl's chart defines: "
-                  "$e^{2V} = \\left(G_yH_x^2 - \\left(\\omega_\\psi + qH_y\\right)^2\\right)/H_xH_y$, "
-                  "$\\Omega = \\left(\\omega_\\psi + qH_y\\right)e^{-2V}/H_x$, $e^{2W} = G_y$, and "
-                  "$e^{2\\nu} = k^2H_xP$, with their first and second derivatives along $r$ and $\\theta$."),
+        "legend": [["line", "horizon", "horizons"]],
         "caption": [
-            "The Kretschmann scalar $K$ of black Saturn, a black ring in balance around a spherical black hole "
-            "with no angular momentum of its own, over the quarter plane of $r\\sin\\theta$ across and "
-            "$r\\cos\\theta$ up ($\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, $\\kappa_3 = 3/7$, $\\beta = 0$), the "
-            "same at every $t$, $\\psi$, and $\\phi$. The spacetime is a vacuum, so its Ricci scalar vanishes. "
-            "The quarter plane is Weyl's meridian half plane folded along the axis $\\rho = 0$, which runs up "
-            "the left edge, where $z = r^2/2L^2$ is positive, and along the bottom edge, where it is negative, "
-            "with the plane $z = 0$ the diagonal. Far away the metric is flat space with $r$ the radius of its "
-            "3-spheres, and close in neither coordinate is a distance: each horizon is a segment of that axis, "
-            f"the $S^1\\times S^2$ of the ring from $r = {edges['ring'][0]:.3f}\\,L$ to "
-            f"${edges['ring'][1]:.3f}\\,L$ and the $S^3$ of the hole from ${edges['hole'][0]:.3f}\\,L$ to "
-            f"${edges['hole'][1]:.3f}\\,L$, with the plane of the ring between them.",
-            f"$K$ is finite on both. On the ring's horizon $K\\,L^4$ falls from ${tex_number(ring_out)}$ at the "
-            f"outer edge $z = \\kappa_3$ to ${tex_number(ring_least[1])}$ at $r = {ring_least[0]:.3f}\\,L$ and "
-            f"rises to ${tex_number(ring_in)}$ at the inner edge $z = \\kappa_2$. On the hole's it falls from "
-            f"${hole_near:.0f}$ on the face turned toward the ring, $z = \\kappa_1$, to ${hole_far:.0f}$ on the "
-            "far one, $z = 1$, so the ring carries the stronger curvature everywhere along it. Along the axis "
-            f"between the two, $K\\,L^4$ dips to ${dip[1]:.0f}$ at $r = {dip[0]:.3f}\\,L$.",
-            f"$K$ is positive along the whole axis and negative inside one region off it, bounded by the two "
-            f"surfaces where it vanishes, which cross the circle $r = {BS_ZERO_CIRCLE}\\,L$ at "
-            f"$\\theta = {zeros[0]:.3f}$ and $\\theta = {zeros[1]:.3f}$; the least value drawn is "
-            f"${cellv.min():.1f}/L^4$ at $r = {least_r:.2f}\\,L$, $\\theta = {least_theta:.2f}$. Down the axis "
-            f"past the bottom of the box it settles to $K\\,L^4 = {centre:.2f}$ at the centre of the chart, "
-            f"Weyl's $\\rho = z = 0$, where the metric is smooth across the axis. Far from both horizons $K$ "
-            f"falls as $r^{{-8}}$, the rate of a vacuum in "
-            f"five dimensions, with $r^8K = {far:.1f}\\,L^4$ at $r = {BS_FAR:.0f}\\,L$ at every angle to four "
-            "figures.",
+            "The Kretschmann scalar of black Saturn, a black ring in balance around a black hole with no spin "
+            "of its own.",
         ],
-        "settings": ("$L = 1$, the unit of every length, with $\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, "
-                     "$\\kappa_3 = 3/7$, and $\\beta = 0$, the values of the embedding diagram: a ring in balance, "
-                     "with no conical membrane between it and the hole, around a hole with no angular momentum "
-                     "of its own."),
-        "clip": ("We colour $K\\,L^4$ on a signed logarithmic scale, linear within $0.01$ of zero, from "
-                 "$-10^{2}$ to $10^{4}$, and give a value beyond it the colour of the end it passes: "
-                 f"$K\\,L^4$ passes $10^{{4}}$ at {int(over.sum())} cells, each within ${d_stated:.2f}\\,L$ of "
-                 f"the ring's horizon, and the least value drawn, ${cellv.min():.1f}$, stays inside the "
-                 "other end."),
+        "settings": "$L = 1$, $\\kappa_i = 7/8,\\,9/16,\\,3/7$, $\\beta = 0$.",
+        "clip": "Signed log scale.",
     }
     return [view]
 
