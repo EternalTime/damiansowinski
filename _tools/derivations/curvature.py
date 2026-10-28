@@ -11577,6 +11577,277 @@ def van_den_broeck(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Alcubierre's warp drive
+
+# The drive every other drawing of it declares: Alcubierre's own profile at R = 1 and sigma = 4,
+# carried along x at v_s = 2, so that the centre of the bubble sits at x = 2ct.
+ALC_FUNCTIONS = {"v_s": "2", "f": nr._alcubierre_profile()}
+ALC_REACH = 3                     # x/R and rho/R, the box of the spacetime diagram and of the embedding's disc
+ALC_STEP = Fraction(1, 4)         # the step of rho from one frame of the movie to the next
+ALC_LAST = Fraction(3, 2)         # the last frame's rho, a cut wholly outside the wall
+ALC_GAP = 0.003                   # a quarter of a plot unit, how far from the ship a curve through it stops
+ALC_QUIET = 0.5                   # the radius inside which both scalars are small, in units of R
+ALC_K = {"kind": "symlog", "linear": 0.1, "from": -1e3, "to": 1e4}
+ALC_R = {"kind": "symlog", "linear": 0.1, "from": -1e2, "to": 1e2}
+ALC_INPUT = ("$v_s = 2$, and Alcubierre's own profile, $f = [\\tanh\\sigma(r_s + R) - "
+             "\\tanh\\sigma(r_s - R)]/(2\\tanh\\sigma R)$ with $R = 1$ and $\\sigma = 4$.")
+
+
+def alcubierre(ck, src):
+    """The wall of Alcubierre's bubble at one moment, its Kretschmann scalar and its Ricci scalar
+    on two cuts of the plane z = 0 through the bubble.
+
+    The Cartesian chart leaves both v_s and f free, and the figure declares the drive every other
+    drawing of it declares: v_s = 2 and Alcubierre's own tanh profile at R = 1 and sigma = 4, whose
+    bubble is centred on x = 2ct. Both scalars are read at ct = 0, where the ship sits at x = 0 and
+    the chart's y is the distance rho from its path. One movie draws them against x along the line
+    at rho = 0, R/4, ..., 3R/2, seven frames across the box of the spacetime diagram, and one still
+    view draws them against rho on the line through the ship across its path. Each stacks K on a
+    signed logarithmic axis, linear within 0.1 of zero, from -10^3 to 10^4, over R, written R^mu_mu
+    since R is the radius of the bubble, on one linear within 0.1 of zero from -10^2 to 10^2; both
+    scalars change sign and both are small inside the bubble, and every value drawn lies within its
+    panel. Each frame of the movie marks the changes of sign of the published g^xx = 1 - v_s^2f^2,
+    where the shift reaches the speed of light; a cut outside that sphere crosses it nowhere, and
+    across the path g^yy = 1, so nothing is marked there. The published formulas are 0/0 at the
+    ship, whose flat patch is their limit, so each curve through it stops a quarter of a plot unit
+    away. Both formulas cancel to a small value in the flat space on either side of the wall, so
+    the error of every point written is measured against a millionth of the greatest value its
+    scalar reaches.
+
+    What the caption states is checked here: both scalars are even in x at this moment, since the
+    declared profile holds x and ct in x - x_s alone; every crossing marked lies on the sphere
+    r_s = 1.000168 R, where the declared f is 1/v_s, the two crossings of a frame close as the cut
+    moves off the path, and no cut beyond that sphere crosses it; on it K = 959.9/R^4 and
+    R^mu_mu = 32.00/R^2 at the poles and 609.7/R^4 and 16.01/R^2 at the equator; along the path K
+    peaks at 1493/R^4 and again at 938/R^4 with a layer where it is negative between them, while
+    R^mu_mu peaks at 39.47/R^2 and changes sign once, at r_s = 1.087 R, reaching -30.8/R^2; across
+    the path R^mu_mu is positive at every rho drawn and K is negative inside rho = 0.884 R and
+    again beyond 1.119 R; inside r_s = R/2 both scalars are small; far outside the wall K falls off
+    as e^(-4 sigma r_s) and R^mu_mu as e^(-2 sigma r_s); and the published Einstein tensor has
+    trace -R^mu_mu, with the energy density of the observers who ride the slices,
+    -G^mu_nu n_mu n^nu/8 pi at n^mu = (1, v_s f, 0, 0), Alcubierre's own
+    -v_s^2 rho^2 (df/dr_s)^2/32 pi r_s^2, which vanishes on the path and is negative off it."""
+    name, system = "alcubierre", "cartesian"
+    coords, turned = ["x", "y", "t", "z"], ["y", "x", "t", "z"]
+    K = Published(src, name, system, "kretschmann", coords, [], functions=ALC_FUNCTIONS)
+    Ric = Published(src, name, system, "ricci_scalar", coords, [], functions=ALC_FUNCTIONS)
+    gxx = Published(src, name, system, "inverse_metric_components", coords, [], ("x", "x"), ALC_FUNCTIONS)
+    K_turned = Published(src, name, system, "kretschmann", turned, [], functions=ALC_FUNCTIONS)
+    R_turned = Published(src, name, system, "ricci_scalar", turned, [], functions=ALC_FUNCTIONS)
+    panels = [{"id": "K", "name": "$K\\,R^4$", "aspect": 2, "scale": ALC_K, "ticks": value_ticks(ALC_K)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,R^2$", "aspect": 2, "scale": ALC_R, "ticks": value_ticks(ALC_R)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    height = PLOT_W / 2
+    x_axis = axis("$x/R$", -ALC_REACH, ALC_REACH)
+    rho_axis = axis("$\\rho/R$", 0, ALC_REACH)
+    legend = [["line", "K", "$K$, the Kretschmann scalar"],
+              ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
+              ["line", "horizon", "$v_s f = 1$, where the shift reaches the speed of light"]]
+
+    # The declared profile at this moment, whose wall the curvature stands in.
+    t_, x_, y_, z_, u_ = sp.symbols("t x y z u", real=True)
+    at_moment = sp.sympify(ALC_FUNCTIONS["f"], locals={"t": t_, "x": x_, "y": y_, "z": z_}).subs({t_: 0, z_: 0})
+    shape = sp.lambdify((x_, y_), at_moment, "numpy")
+    slope = sp.lambdify(u_, sp.diff(at_moment.subs({y_: 0, x_: u_}), u_), "numpy")
+
+    # Along the path: the two peaks of K with a layer between them, and the one zero of R^mu_mu.
+    on_path = {"y": 0.0, "t": 0.0, "z": 0.0}
+    K_path, R_path = Held(K, on_path), Held(Ric, on_path)
+    first_K = golden(lambda v: -float(K_path(v)), 0.5, 1.05)
+    second_K = golden(lambda v: -float(K_path(v)), 1.15, 1.5)
+    peak_R = golden(lambda v: -float(R_path(v)), 0.5, 1.05)
+    trough_R = golden(lambda v: float(R_path(v)), 1.1, 1.5)
+    K_zeros = zeros(ck, f"{name} K along the path", K_path, ALC_GAP, ALC_REACH, [])
+    R_zeros = zeros(ck, f"{name} R^mu_mu along the path", R_path, ALC_GAP, ALC_REACH, [])
+    ck(f"{name} along the path K peaks twice with a layer where it is negative between them",
+       len(K_zeros) == 3 and abs(first_K - 0.941547) < 1e-4 and abs(second_K - 1.232350) < 1e-4
+       and float(K_path(first_K)) > float(K_path(second_K)) > 0
+       and all(float(K_path(v)) < 0 for v in (1.075, 1.0858, 1.1)),
+       f"peaks {float(K_path(first_K)):.6g} at {first_K:.6f} and {float(K_path(second_K)):.6g} at "
+       f"{second_K:.6f}, zeros at {[round(v, 6) for v in K_zeros]}")
+    ck(f"{name} along the path R^mu_mu changes sign once and is negative beyond it",
+       len(R_zeros) == 1 and abs(R_zeros[0] - 1.086706) < 1e-4
+       and all(float(R_path(v)) < 0 for v in (1.1, 1.5, 2.0, 3.0)),
+       f"zero at {R_zeros[0]:.6f}, peak {float(R_path(peak_R)):.6g} at {peak_R:.6f}, "
+       f"trough {float(R_path(trough_R)):.6g} at {trough_R:.6f}")
+    # The stored formulas cancel to a small value away from the wall, so the error of a point
+    # written is measured against a millionth of the greatest value its scalar reaches.
+    floors = {"K": abs(float(K_path(first_K))) / 1e6, "R": abs(float(R_path(peak_R))) / 1e6}
+
+    def written(at, panel, published, coordinate, drawn_axis, scale, within):
+        """The curves one scalar draws on a panel, every point written checked against the
+        published formula in sixty digits over that floor."""
+        lines = sampled(ck, f"{at} {panel}", published, drawn_axis, scale, height, [], within)
+        picked = [(x, v, float(published.exact([x]))) for x, v in spread(lines)]
+        worst = max(abs(exact - v) / max(abs(exact), floors[panel]) for _, v, exact in picked)
+        ck(f"{at} {panel} agrees with the published {published.field} in sixty digits", worst < AGREE,
+           f"worst {worst:.1e} at {len(picked)} points, over a floor of {floors[panel]:.3g}")
+        up, down = beyond(published, drawn_axis, scale, [], within)
+        ck(f"{at} {panel} lies within its panel at every sample", not up and not down, f"{up}, {down}")
+        return [curve_entry(panel, panel, published, coordinate, {}, line) for line in lines]
+
+    # The movie: the cut parallel to the ship's path, a frame for each distance from it.
+    frames = []
+    for k in range(int(ALC_LAST / ALC_STEP) + 1):
+        rho = float(ALC_STEP * k)
+        at = f"{name} the cut at rho = {rho:.2f} R"
+        cut = {"y": rho, "t": 0.0, "z": 0.0}
+        K_cut, R_cut, g_cut = Held(K, cut), Held(Ric, cut), Held(gxx, cut)
+        marks = [{"class": "horizon", "x": v}
+                 for v in zeros(ck, f"{at}: the published g^xx", g_cut, -ALC_REACH, ALC_REACH, [])]
+        pieces = [(-ALC_REACH, -ALC_GAP), (ALC_GAP, ALC_REACH)] if k == 0 else [(-ALC_REACH, ALC_REACH)]
+        curves = [curve for panel, published in (("K", K_cut), ("R", R_cut)) for within in pieces
+                  for curve in written(at, panel, published, "x", x_axis,
+                                       ALC_K if panel == "K" else ALC_R, within)]
+        frames.append({"label": f"$\\rho = {rho:.2f}\\,R$", "value": rho, "curves": curves, "marks": marks})
+    ck(f"{name} the formulas are 0/0 at the ship, so the first frame draws each scalar as two curves",
+       not np.isfinite(float(K(0.0, 0.0, 0.0, 0.0)))
+       and all(len([c for c in frames[0]["curves"] if c["class"] == cls]) == 2 for cls in ("K", "R")),
+       f"{len(frames[0]['curves'])} curves")
+
+    # The sphere where the shift reaches the speed of light, which every cut inside it crosses twice.
+    wall = frames[0]["marks"][-1]["x"]
+    ck(f"{name} the declared f is 1/v_s on the sphere the crossings lie on",
+       abs(2 * float(shape(wall, 0.0)) - 1) < 1e-12, f"r_s = {wall:.12f} R")
+    ck(f"{name} every crossing marked lies on that sphere",
+       all(abs(math.hypot(m["x"], f["value"]) - wall) < 1e-9 for f in frames for m in f["marks"]))
+    ck(f"{name} a cut inside that sphere crosses it twice and a cut outside it crosses it nowhere",
+       all(len(f["marks"]) == (2 if f["value"] < wall else 0) for f in frames),
+       f"{[len(f['marks']) for f in frames]}")
+    gaps = [f["marks"][1]["x"] - f["marks"][0]["x"] for f in frames if len(f["marks"]) == 2]
+    ck(f"{name} the two crossings close as the cut moves off the path", all(b < a for a, b in zip(gaps, gaps[1:])),
+       f"{[round(g, 4) for g in gaps]}")
+
+    # Both scalars are even in x at ct = 0, since the profile holds x and ct in x - x_s alone.
+    along = np.linspace(ALC_GAP, ALC_REACH, 400)
+    ck(f"{name} both scalars are even in x at this moment",
+       all(np.allclose(fn(along, rho, 0.0, 0.0), fn(-along, rho, 0.0, 0.0), rtol=1e-12, atol=0)
+           for fn in (K, Ric) for rho in (0.0, 0.37, 1.0)))
+
+    # The poles of that sphere, where the line along the path meets it, and its equator.
+    pole_K, pole_R = float(K.exact([wall, 0, 0, 0])), float(Ric.exact([wall, 0, 0, 0]))
+    edge_K, edge_R = float(K.exact([0, wall, 0, 0])), float(Ric.exact([0, wall, 0, 0]))
+    ck(f"{name} K and R^mu_mu on that sphere, at its poles and at its equator",
+       abs(pole_K - 959.9356578) < 1e-6 and abs(pole_R - 32) < 1e-7
+       and abs(edge_K - 609.6845209) < 1e-6 and abs(edge_R - 16.01474799) < 1e-7,
+       f"K {pole_K:.7f} and {edge_K:.7f}, R^mu_mu {pole_R:.8f} and {edge_R:.8f}")
+
+    # Across the path: the cut through the ship, along which the chart's y is the distance from it.
+    off_path = {"x": 0.0, "t": 0.0, "z": 0.0}
+    K_edge, R_edge = Held(K_turned, off_path), Held(R_turned, off_path)
+    drawn_across = (ALC_GAP, ALC_REACH)
+    curves_across = [curve for panel, published in (("K", K_edge), ("R", R_edge))
+                     for curve in written(f"{name} across the path", panel, published, "y", rho_axis,
+                                          ALC_K if panel == "K" else ALC_R, drawn_across)]
+    rhos = np.linspace(*drawn_across, SAMPLES)
+    across_zeros = zeros(ck, f"{name} K across the path", K_edge, ALC_GAP, ALC_REACH, [])
+    peak_edge = golden(lambda v: -float(R_edge(v)), 0.5, 1.5)
+    trough_edge = golden(lambda v: float(K_edge(v)), 0.5, 0.95)
+    ck(f"{name} across the path R^mu_mu is positive at every rho drawn", bool(np.all(R_edge(rhos) > 0)),
+       f"least {float(np.min(R_edge(rhos))):.4g}, greatest {float(R_edge(peak_edge)):.6g} at {peak_edge:.6f}")
+    ck(f"{name} across the path K is negative inside the wall and again beyond it",
+       len(across_zeros) == 2 and abs(across_zeros[0] - 0.884094) < 1e-4
+       and abs(across_zeros[1] - 1.119181) < 1e-4 and float(K_edge(trough_edge)) < 0
+       and all(float(K_edge(v)) < 0 for v in (1.2, 1.5, 2.0, 3.0)),
+       f"zeros at {[round(v, 6) for v in across_zeros]}, trough {float(K_edge(trough_edge)):.6g} at "
+       f"{trough_edge:.6f}")
+
+    # Inside half the bubble radius, over the whole disc of the plane drawn, and far outside the wall.
+    disc = np.linspace(ALC_GAP, ALC_QUIET, 400)
+    angles = np.linspace(0, math.pi, 721)
+    DISC, ANGLE = np.meshgrid(disc, angles)
+    quiet_K = float(np.max(np.abs(K(DISC * np.cos(ANGLE), DISC * np.sin(ANGLE), 0.0, 0.0))))
+    quiet_R = float(np.max(np.abs(Ric(DISC * np.cos(ANGLE), DISC * np.sin(ANGLE), 0.0, 0.0))))
+    ck(f"{name} inside r_s = R/2 both scalars are small", quiet_K < 10.2 and quiet_R < 0.312,
+       f"|K| up to {quiet_K:.6g}, |R^mu_mu| up to {quiet_R:.6g}")
+    falls = [(float(K_path(r)) / math.exp(-16 * r), float(R_path(r)) / math.exp(-8 * r)) for r in (2.0, 2.5, 3.0)]
+    ck(f"{name} far outside the wall K falls off as e^(-4 sigma r_s) and R^mu_mu as e^(-2 sigma r_s)",
+       all(abs(b[0] / a[0] - 1) < 1e-2 and abs(b[1] / a[1] - 1) < 1e-2 for a, b in zip(falls, falls[1:])),
+       f"{[(f'{a:.6g}', f'{b:.6g}') for a, b in falls]}")
+
+    # The matter: the trace of the published Einstein tensor, and the energy density the observers
+    # who ride the slices measure, whose n^mu = (1, v_s f, 0, 0) and n_mu = (-1, 0, 0, 0).
+    trace = [Published(src, name, system, "einstein_tensor", coords, [], (c, c), ALC_FUNCTIONS) for c in coords]
+    Gtt = Published(src, name, system, "einstein_tensor", coords, [], ("t", "t"), ALC_FUNCTIONS)
+    Gtx = Published(src, name, system, "einstein_tensor", coords, [], ("t", "x"), ALC_FUNCTIONS)
+    X, Y = np.meshgrid(np.linspace(-ALC_REACH, ALC_REACH, 121), np.linspace(ALC_GAP, ALC_REACH, 61))
+    ck(f"{name} the published Einstein tensor has trace -R^mu_mu",
+       np.allclose(sum(G(X, Y, 0.0, 0.0) for G in trace), -Ric(X, Y, 0.0, 0.0), rtol=1e-10, atol=1e-12))
+    density = -Gtt(X, Y, 0.0, 0.0) - 2 * shape(X, Y) * Gtx(X, Y, 0.0, 0.0)
+    alcubierres = -Y ** 2 * slope(np.hypot(X, Y)) ** 2 / (X ** 2 + Y ** 2)
+    on_the_path = float(-Gtt(1.0, 0.0, 0.0, 0.0) - 2 * float(shape(1.0, 0.0)) * float(Gtx(1.0, 0.0, 0.0, 0.0)))
+    ck(f"{name} the energy density of those observers is Alcubierre's own, zero on the path and negative off it",
+       np.allclose(density, alcubierres, rtol=1e-9, atol=1e-12) and bool(np.all(alcubierres < 0))
+       and on_the_path == 0,
+       f"least {float(np.min(alcubierres)) / (8 * math.pi):.6g} c^4/G, worst "
+       f"{float(np.max(np.abs(density - alcubierres))):.1e} from the published tensor")
+
+    K_clip = "$K\\,R^4$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10^3$ to $10^4$"
+    R_clip = ("$R^\\mu{}_\\mu\\,R^2$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10^2$ "
+              "to $10^2$")
+    centre = (f" The two curves of each scalar at $\\rho = 0$ stop at $|x| = {ALC_GAP}\\,R$, where the published "
+              "formulas are $0/0$ at the ship.")
+    return [{
+        "id": "along", "label": "along the path, $0 \\le \\rho \\le 3R/2$", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": [], "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Alcubierre's bubble along the line "
+            "parallel to the ship's path at the distance $\\rho$ from it ($v_s = 2$, $R = 1$, $\\sigma = 4$, "
+            "$ct = 0$, $0 \\le \\rho \\le 3R/2$). "
+            "The shape function leaves flat space inside the bubble and flat space outside it, so $K$ stands in the "
+            f"wall alone, reaching ${float(K_path(first_K)):.0f}/R^4$ at $r_s = {first_K:.3f}\\,R$ on the path and "
+            f"staying below ${quiet_K:.2f}/R^4$ inside $r_s = R/2$. "
+            f"$R^\\mu{{}}_\\mu$ stands in the same wall, ${float(R_path(peak_R)):.2f}/R^2$ at "
+            f"$r_s = {peak_R:.3f}\\,R$ and below ${quiet_R:.3f}/R^2$ inside $r_s = R/2$. "
+            f"The published $g^{{xx}} = 1 - v_s^2f^2$ changes sign on the sphere $r_s = {wall:.6f}\\,R$, where the "
+            "shift reaches the speed of light, and each cut that crosses it is marked there.",
+            f"Along the path $K$ reaches a second peak, ${float(K_path(second_K)):.0f}/R^4$ at "
+            f"$r_s = {second_K:.3f}\\,R$, with a layer between the two where it is negative. "
+            f"$R^\\mu{{}}_\\mu$ changes sign once along the path, at $r_s = {R_zeros[0]:.3f}\\,R$, and reaches "
+            f"${float(R_path(trough_R)):.1f}/R^2$ at $r_s = {trough_R:.3f}\\,R$. "
+            "$R^\\mu{}_\\mu$ is $-8\\pi G/c^4$ times the trace of the matter, whose energy density for the "
+            "observers who ride the slices, $-v_s^2\\rho^2(\\partial f/\\partial r_s)^2c^4/32\\pi Gr_s^2$, is zero "
+            "on the path and negative off it. "
+            "Far outside the wall $K$ falls off as $e^{-4\\sigma r_s}$. "
+            "$R^\\mu{}_\\mu$ falls off as $e^{-2\\sigma r_s}$. "
+            "A cut at $\\rho > R$ crosses that sphere nowhere, and the tail of the wall alone stands on it.",
+        ],
+        "ricci_sentences": [[0, 2], [1, 1], [1, 2], [1, 4]],
+        "per_scalar": scalar_clips(
+            "We draw " + K_clip + ", and every value drawn in every frame lies within it." + centre,
+            "We draw " + R_clip + ", and every value drawn in every frame lies within it." + centre),
+        "settings": "$R = 1$, the radius of the bubble and the unit of every length, $ct = 0$, and $\\rho$ in "
+                    "steps of $R/4$.",
+        "input": ALC_INPUT,
+        "clip": "We draw " + K_clip + " and " + R_clip + ", and every value drawn in every frame lies within its "
+                "panel." + centre,
+        "movie": {"variable": "$\\rho$", "seconds": 4, "frames": frames},
+    }, {
+        "id": "across", "label": "across the path", "kind": "line", "x": rho_axis,
+        "panels": panels, "curves": curves_across, "marks": [], "legend": legend[:2],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Alcubierre's bubble across the "
+            "ship's path, along $\\rho$ through the ship ($v_s = 2$, $R = 1$, $\\sigma = 4$, $ct = 0$, $x = x_s$). "
+            f"$K$ is ${edge_K:.1f}/R^4$ where this line meets the sphere $r_s = {wall:.6f}\\,R$, below the "
+            f"${pole_K:.1f}/R^4$ of its poles, and is negative inside $\\rho = {across_zeros[0]:.3f}\\,R$, down to "
+            f"${float(K_edge(trough_edge)):.0f}/R^4$ at $\\rho = {trough_edge:.3f}\\,R$. "
+            f"$R^\\mu{{}}_\\mu$ is positive at every $\\rho$ drawn, ${edge_R:.2f}/R^2$ on that sphere, half the "
+            f"${pole_R:.2f}/R^2$ of its poles, and greatest at ${float(R_edge(peak_edge)):.2f}/R^2$ at "
+            f"$\\rho = {peak_edge:.3f}\\,R$. "
+            f"$K$ is negative again beyond $\\rho = {across_zeros[1]:.3f}\\,R$, falling off far outside the wall "
+            "as $e^{-4\\sigma r_s}$. "
+            "$R^\\mu{}_\\mu$ falls off as $e^{-2\\sigma r_s}$.",
+        ],
+        "ricci_sentences": [[0, 2], [0, 4]],
+        "per_scalar": scalar_clips("We draw " + K_clip + ", and every value drawn lies within it.",
+                                   "We draw " + R_clip + ", and every value drawn lies within it."),
+        "settings": "$R = 1$, the radius of the bubble and the unit of every length, $ct = 0$, and $x = x_s$, "
+                    "the ship's own place.",
+        "input": ALC_INPUT,
+        "clip": "We draw " + K_clip + " and " + R_clip + ", and every value drawn lies within its panel.",
+    }]
+
+
 # ---------------------------------------------------------------- the Zipoy-Voorhees metric
 
 ZV_FIRST = Fraction(-1, 2)        # the first frame's q, the prolate field every other drawing takes
@@ -13371,6 +13642,7 @@ def ab_caption(inside_cone, axis_values):
 
 DRAWN = {
     "ab_metrics": ab_metrics,
+    "alcubierre": alcubierre,
     "bach_weyl_ring": bach_weyl_ring,
     "bardeen": bardeen,
     "bartnik_mckinnon": bartnik_mckinnon,
