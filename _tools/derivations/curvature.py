@@ -13936,14 +13936,14 @@ def black_to_white_hole(ck, src):
         "map": {"metric": name, "system": chart, "scalar": "kretschmann", "x": "r", "y": "t",
                 "params": {"r_s": r_s}, "domain": BW_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
         "marks": marks,
-        "legend": [["line", "horizon", "the apparent horizon $r = r_s$, from the shell up"]],
+        "legend": [["line", "horizon", "the apparent horizon $r = r_s$, from where the shell crosses it"]],
         "caption": bw_caption(ct_horizon, ct_E, ct_delta, at_horizon, at_E),
         "settings": "$r_s = 1$, the unit of every length and of $ct$, with the shell on $V_0 = 3/5$ "
                     "and $E$ at $r = r_s/2$.",
         "clip": f"We colour $K\\,r_s^4$ on a logarithmic scale from $10^{{-2}}$ to $10^{{3}}$, and every cell "
-                f"drawn lies inside it, from ${tex_number(coolest, 6)}$ at the right edge of the box to "
-                f"${tex_number(hottest, 6)}$ beside $E$. The chart holds outside the shell alone, which the map "
-                f"declares as its domain, so the cells inside the shell are left clear.",
+                f"drawn lies inside it, from ${tex_number(coolest, 6)}/r_s^4$ at the right edge of the box to "
+                f"${tex_number(hottest, 6)}/r_s^4$ beside $E$. The chart holds outside the shell alone, which the "
+                f"map declares as its domain, so the cells inside the shell are left clear.",
     }]
 
 
@@ -13956,8 +13956,8 @@ def bw_caption(ct_horizon, ct_E, ct_delta, at_horizon, at_E):
         "$\\theta$ and $\\phi$. Outside the shell the geometry is Schwarzschild's and $K = 12r_s^2/r^6$, so the "
         "levels of $K$ are the spheres of constant $r$ and the colours brighten inward. That region is a vacuum "
         "and its Ricci scalar vanishes.",
-        "Inside the shell space is flat, where $K$ vanishes and no chart of the exterior reaches, so those cells "
-        "are left clear and the edge of the colour is the shell itself, falling in at the speed of light. It "
+        "Inside the shell space is flat and $K$ vanishes there, a region this chart does not reach, so those "
+        "cells are left clear and the edge of the colour is the shell itself, falling in at the speed of light. It "
         f"passes the apparent horizon $r = r_s$ at $ct = {tex_number(ct_horizon, 6)}\\,r_s$, where "
         f"$K = {tex_number(at_horizon, 3)}/r_s^4$, and reaches $E$ at $ct = {tex_number(ct_E, 6)}\\,r_s$, where "
         f"$K = {tex_number(at_E, 3)}/r_s^4$, the largest curvature the classical region carries. Between those two "
