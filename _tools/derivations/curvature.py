@@ -7676,6 +7676,22 @@ def kerr(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- Kerr's black hole in Melvin's universe
+
+KM_A = Fraction(4, 5)             # a in units of m, as every drawing of the hole takes it
+KM_B = Fraction(1, 4)             # B in units of 1/m, as every drawing of the hole takes it
+KM_REACH = 10                     # the box runs out to 10 m and from -10 m to 10 m up, past the Melvin radius 2/B = 8 m
+KM_CELLS = 20                     # the cells of the map to each m, across and up
+KM_SCALE = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-6}   # the colours of K m^4 in both views
+
+
+def kerr_melvin(ck, src):
+    """Ernst and Wild's Kerr black hole in Melvin's universe at m = 1 and a = 4m/5, its Kretschmann
+    scalar over the meridian half plane of r and theta in the oblate frame about the ring, at
+    B = 1/(4m) and at B = 0, Kerr's own hole, beside it."""
+    return []
+
+
 # ---------------------------------------------------------------- the black hole in a swirling universe
 
 SWIRL_REACH = 3                   # the universe's line runs over 0 <= sqrt(j) rho <= 3
