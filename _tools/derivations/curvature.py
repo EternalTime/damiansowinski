@@ -14430,6 +14430,125 @@ BCD_SPHEROID_R = {"kind": "log", "from": 1e-5, "to": 1.0}       # the colours of
 # The latitude is ticked in eighths of pi, from the equator to the pole.
 BCD_LATITUDE = [{"at": float(k * math.pi / 8), "label": ["$0$", "$\\pi/8$", "$\\pi/4$", "$3\\pi/8$", "$\\pi/2$"][k]}
                 for k in range(5)]
+# Lemos and Weinberg's cloud: m/b, the redshift of its centre, through the whole numbers from the
+# b = m/2 of its other drawings to 20, and the radial box of its spacetime diagram.
+BCD_REDSHIFTS = [Fraction(z) for z in range(2, 21)]
+BCD_CLOUD_REACH = 4
+BCD_CLOUD_K = {"kind": "log", "from": 1e-3, "to": 1e2}         # the axis of K m^4 in every frame
+BCD_CLOUD_R = {"kind": "log", "from": 1e-6, "to": 1e1}         # the axis of R^mu_mu m^2 in every frame
+
+
+def bcd_cloud(ck, src):
+    """The cloud of Lemos and Weinberg as its core shrinks toward the extremal black hole.
+
+    The dust fills all of space, with the density nearly constant inside the core length b and
+    falling as r^-5 far outside it, so the movie steps b down from the m/2 of its other drawings,
+    through the whole numbers of m/b, the redshift of the centre, to 20. Both scalars are drawn
+    against r over the box of its spacetime diagram, 0 <= r <= 4m, K on a logarithmic axis from
+    10^-3 to 10^2 and R^mu_mu on one from 10^-6 to 10, where every frame lies whole.
+
+    What the caption states is checked here: at the centre K = 60m^2/(b + m)^6 and
+    R^mu_mu = 6m/(b + m)^3, the sphere of 1965's central values with b in place of r_0, both
+    growing with 1/b to the finite 60/m^4 and 6/m^2 as b falls to zero; the published g_tt at the
+    centre is -b^2/(b + m)^2, so the redshift of the centre is m/b and grows without bound; the
+    published g^rr and g_tt never vanish in any frame, so no horizon is marked, and g_tt falls to
+    zero at r = 0 only at b = 0, where the published K is the exterior chart's and the published
+    Ricci scalar vanishes; the density falls as 6mb^2/r^5 far out; both scalars fall at every
+    radius drawn; and every value lies inside its panel."""
+    name, system = "bonnor_charged_dust", "quasi_black_hole"
+    m = 1.0
+    x_axis = axis("$r/m$", 0, BCD_CLOUD_REACH)
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": BCD_CLOUD_K,
+               "ticks": value_ticks(BCD_CLOUD_K)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,m^2$", "aspect": 2, "scale": BCD_CLOUD_R,
+               "ticks": value_ticks(BCD_CLOUD_R)}]
+    shape_checks(ck, f"{name} cloud", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = Published(src, name, system, "kretschmann", ["r"], ["m", "b"])
+    R = Published(src, name, system, "ricci_scalar", ["r"], ["m", "b"])
+    gtt = Published(src, name, system, "metric_components", ["r"], ["m", "b"], ("t", "t"))
+    grr = Published(src, name, system, "inverse_metric_components", ["r"], ["m", "b"], ("r", "r"))
+    vacuum = Published(src, name, "exterior", "kretschmann", ["r"], ["m"])
+    r_sym, m_sym, b_sym = K.coords[0], *K.params
+    positive = sp.Symbol("r_positive", positive=True)
+    ck(f"{name} the cloud at b = 0 is the extremal hole, the exterior chart's K and no Ricci scalar",
+       sp.simplify(K.expr.subs(b_sym, 0).subs(r_sym, positive)
+                   - vacuum.expr.subs({vacuum.params[0]: m_sym, vacuum.coords[0]: positive})) == 0
+       and sp.simplify(R.expr.subs(b_sym, 0)) == 0)
+    ck(f"{name} the cloud's g_tt falls to zero at r = 0 only at b = 0, the horizon of that hole",
+       sp.limit(gtt.expr.subs(b_sym, 0), r_sym, 0, dir="+") == 0)
+    ck(f"{name} the cloud's g_tt at the centre is -b^2/(b + m)^2, so the redshift of the centre is m/b",
+       sp.simplify(gtt.expr.subs(r_sym, 0).subs(b_sym, sp.Symbol("b_positive", positive=True))
+                   + sp.Symbol("b_positive", positive=True) ** 2
+                   / (sp.Symbol("b_positive", positive=True) + m_sym) ** 2) == 0)
+    tail = [float(R.exact([x, m, 0.5])) * x ** 5 / (6 * m * 0.5 ** 2) for x in (1e3, 1e4, 1e5)]
+    ck(f"{name} the cloud's density falls as 6mb^2/r^5 far out",
+       all(abs(v - 1) < 1e-2 for v in tail) and abs(tail[2] - 1) < 1e-4, f"{tail}")
+    frames, centres = [], []
+    for value in BCD_REDSHIFTS:
+        b = float(m / value)
+        at = [m, b]
+        where = f"{name} the cloud at m/b = {int(value)}"
+        curves = (line_curves(ck, where, "K", "K", K, "r", x_axis, BCD_CLOUD_K, height["K"], {"m": m, "b": b})
+                  + line_curves(ck, where, "R", "R", R, "r", x_axis, BCD_CLOUD_R, height["R"], {"m": m, "b": b}))
+        rs = np.linspace(0, BCD_CLOUD_REACH, SAMPLES)
+        ck(f"{where} has no horizon", np.all(grr(rs, *at) > 0) and np.all(gtt(rs, *at) < 0))
+        ck(f"{where} draws both scalars falling at every radius",
+           np.all(np.diff(K(rs, *at)) < 0) and np.all(np.diff(R(rs, *at)) < 0))
+        centre = (float(K.exact([0.0] + at)), float(R.exact([0.0] + at)))
+        ck(f"{where} holds the central values 60m^2/(b + m)^6 and 6m/(b + m)^3",
+           abs(centre[0] / (60 * m ** 2 / (b + m) ** 6) - 1) < 1e-12
+           and abs(centre[1] / (6 * m / (b + m) ** 3) - 1) < 1e-12, f"{centre}")
+        centres.append(centre)
+        for panel, fn, scale in (("K", K, BCD_CLOUD_K), ("R", R, BCD_CLOUD_R)):
+            up, down = beyond(fn, x_axis, scale, at)
+            ck(f"{where} {panel} stays inside its panel", not up and not down, f"{up} {down}")
+        frames.append({"label": f"$b = {b:.3f}\\,m$", "value": float(value), "curves": curves, "marks": []})
+    ck(f"{name} the cloud's central K and density grow as its core shrinks",
+       all(b[0] > a[0] and b[1] > a[1] for a, b in zip(centres, centres[1:])),
+       f"K {centres[0][0]:.4f} to {centres[-1][0]:.4f}, density {centres[0][1]:.4f} to {centres[-1][1]:.4f}")
+    tiny = (float(K.exact([0.0, m, 1e-9])), float(R.exact([0.0, m, 1e-9])))
+    ck(f"{name} the cloud's central scalars stay finite as b falls to zero, at 60/m^4 and 6/m^2",
+       abs(tiny[0] / 60 - 1) < 1e-8 and abs(tiny[1] / 6 - 1) < 1e-8, f"{tiny}")
+    close = float(K.exact([2.0, m, float(m / BCD_REDSHIFTS[-1])])) / float(vacuum.exact([2.0, m]))
+    ck(f"{name} the cloud's K outside its core nears the extremal hole's",
+       abs(close - 1) < 1e-2, f"{close}")
+    clip_K = ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-3}$ to $10^{2}$, and every value drawn in "
+              "every frame lies within it.")
+    clip_R = ("We draw $R^\\mu{}_\\mu\\,m^2$ on a logarithmic scale from $10^{-6}$ to $10$, and every value "
+              "drawn in every frame lies within it.")
+    return [{
+        "id": "cloud", "label": "the cloud, its core shrinking", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": [], "marks": [],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
+                   ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Lemos and Weinberg's cloud of "
+            "charged dust against $r$ as its core shrinks ($b$ from $m/2$ to $m/20$), the same at every $t$, "
+            "$\\theta$, and $\\phi$. The dust fills all of space, so the cloud has no surface and no vacuum "
+            f"outside it. At the centre $K = 60m^2/(b + m)^6$, which grows from ${centres[0][0]:.4f}/m^4$ at "
+            f"$b = m/2$ to ${centres[-1][0]:.3f}/m^4$ at $b = m/20$, and to $60/m^4$ as $b$ falls to zero.",
+            "The Ricci scalar is the density of the dust, $R^\\mu{}_\\mu = 8\\pi G\\rho/c^2$, since the charge "
+            f"and its field carry no trace. At the centre it is $6m/(b + m)^3$, which grows from "
+            f"${centres[0][1]:.4f}/m^2$ to ${centres[-1][1]:.4f}/m^2$ over the frames, and to $6/m^2$ as $b$ "
+            "falls to zero. Far from the centre the density falls as $6mb^2/r^5$, so each frame's curve drops "
+            "lower as the core tightens.",
+            "Light from the centre arrives with the redshift $m/b$, which grows without bound as the core "
+            "shrinks while both scalars stay finite: the cloud becomes a quasiblack hole, as close to its own "
+            "horizon as one likes. At $b = 0$ the metric is the extremal Reissner-Nordstr\u00f6m black hole, whose "
+            "horizon is the sphere $r = 0$ of this chart, where $g_{tt}$ falls to zero. Outside the core each "
+            f"frame already follows that hole's field: at $r = 2m$ and $b = m/20$, $K$ is "
+            f"{abs(close - 1) * 100:.2f} parts in a hundred from the hole's $8m^2(m^2 + 6r^2)/(r + m)^8$.",
+        ],
+        "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
+        "per_scalar": scalar_clips(clip_K, clip_R),
+        "settings": "$m = 1$, the unit of every length, and $b$ from $m/2$ down to $m/20$, so that $m/b$, the "
+                    "redshift of the centre, runs through the whole numbers from 2 to 20.",
+        "clip": clip_K[:-len(", and every value drawn in every frame lies within it.")] + " and "
+                + clip_R[len("We draw "):-len(", and every value drawn in every frame lies within it.")]
+                + ", and every value drawn in every frame lies within them.",
+        "movie": {"variable": "$m/b$", "seconds": 8, "frames": frames},
+    }]
 
 
 def bcd_spheroid(ck, src):
@@ -14751,7 +14870,7 @@ def bonnor_charged_dust(ck, src):
                     + clip_R[len("We draw "):-len(", and every value drawn lies within it.")]
                     + ", and every value drawn lies within them.",
         })
-    return views + bcd_spheroid(ck, src)
+    return views + bcd_spheroid(ck, src) + bcd_cloud(ck, src)
 
 
 # ---------------------------------------------------------------- the files
