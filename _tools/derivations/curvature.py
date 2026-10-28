@@ -15996,6 +15996,104 @@ def erez_rosen(ck, src):
     return [plane, line]
 
 
+# ---------------------------------------------------------------- the Kerr-Bertotti-Robinson black hole
+
+KBR_SPIN = {"m": 1.0, "a": 0.8, "B": 0.25}       # as every drawing of the spinning hole takes it, nr.KBR
+KBR_STATIC = {"m": 1.0, "B": 0.25}               # as every drawing of the static hole takes it, nr.KBR_STATIC
+KBR_REACH = 20                    # the curves run out to r = 20 m, where K has settled near its far value
+KBR_LINE = {"kind": "symlog", "from": -1.0, "to": 10.0, "linear": 1e-2}   # the axis of K m^4 on both panels
+KBR_AXIS = 1e-5                   # the theta the axis curves are read at, where the published K is finite
+
+
+def kbr_horizon(m, a, B):
+    """The outer horizon r_+, the larger root of the chart's Delta, as its domains write it."""
+    i1, i2 = 1 - B * B * a * a / 2, 1 - B * B * a * a
+    return i1 * (m * i2 + math.sqrt(m * m * i2 - a * a * i1 * i1)) / (i1 * i1 - B * B * m * m * i2)
+
+
+def kerr_bertotti_robinson(ck, src):
+    """The Kerr-Bertotti-Robinson black hole at m = 1 and B = 1/4, its Kretschmann scalar on the
+    axis and on the equator against r, for a = 0 from the static chart and a = 4/5 from Podolsky
+    and Ovcharenko's Boyer-Lindquist chart.
+
+    Both charts publish R, which is zero in the static chart and zero on shell in the other, so the
+    figure is K alone, read from the stored formulas, the Boyer-Lindquist one through its functions
+    N, F, W, omega, P and Q as the reader writes them out. One view, a movie of two frames over a,
+    draws K m^4 from the outer horizon to r = 20 m on the axis, read at theta = 10^-5 where the
+    published formula is finite, and on the equator, on a signed logarithmic scale, with the
+    constant K = 8B^4 of Bertotti and Robinson's universe of the same field, read from its own
+    published K at b = 1/B, dashed on both panels.
+
+    What the caption states is checked here: R vanishes; the static K at m = 0 is 8B^4; the
+    Boyer-Lindquist K at a = 0 is the static one; K at theta = 10^-5 is the axis's to the plotted
+    precision; the far values of K at r = 20 m on the axis and the equator; and that no curve leaves
+    its panel."""
+    name = "kerr_bertotti_robinson"
+    K_st = nr_published(src, name, "static", "kretschmann", ["r", "theta"], ["m", "B"])
+    R_st = nr_published(src, name, "static", "ricci_scalar", ["r", "theta"], ["m", "B"])
+    K_bl = nr_published(src, name, "boyer_lindquist", "kretschmann", ["r", "theta"], ["m", "a", "B"])
+    R_bl = nr_published(src, name, "boyer_lindquist", "ricci_scalar", ["r", "theta"], ["m", "a", "B"])
+    K_br = nr_published(src, "bertotti_robinson", "static", "kretschmann", ["r"], ["b"])
+    spin, static = list(KBR_SPIN.values()), list(KBR_STATIC.values())
+    m, B = KBR_STATIC["m"], KBR_STATIC["B"]
+    ck(f"{name} the static chart publishes R = 0", R_st.expr == 0, f"{R_st.expr}")
+    worst = max(abs(float(R_bl.exact([rr, t, *spin]))) / float(K_bl(rr, t, *spin))
+                for rr, t in ((2.0, 0.4), (7.0, 1.3)))
+    ck(f"{name} the Boyer-Lindquist R vanishes beside K", worst < 1e-40, f"{worst:.1e}")
+    mm, bb = K_st.params
+    ck(f"{name} the static K at m = 0 is 8B^4", sp.simplify(K_st.expr.subs(mm, 0) - 8 * bb ** 4) == 0)
+    floor = 8 * B ** 4
+    ck(f"{name} Bertotti and Robinson's K at b = 1/B is 8B^4", abs(float(K_br(1.0, 1 / B)) / floor - 1) < 1e-14)
+    same = max(abs(float(K_bl(rr, t, m, 0.0, B)) / float(K_st(rr, t, m, B)) - 1)
+               for rr in (2.5, 6.0, 15.0) for t in (0.3, 1.1, math.pi / 2))
+    ck(f"{name} the Boyer-Lindquist K at a = 0 is the static K", same < 1e-9, f"{same:.1e}")
+    near = max(abs(float(fn(rr, KBR_AXIS, *p)) / float(fn(rr, KBR_AXIS / 100, *p)) - 1)
+               for fn, p in ((K_st, static), (K_bl, spin)) for rr in (2.5, 5.0, 20.0))
+    ck(f"{name} K at theta = 10^-5 is the axis's to 10^-6", near < 1e-6, f"{near:.1e}")
+
+    x_r = axis("$r/m$", 0, KBR_REACH)
+    panels = [{"id": "axis", "name": "$K(r, 0)\\,m^4$", "aspect": 2, "scale": KBR_LINE, "ticks": value_ticks(KBR_LINE)},
+              {"id": "plane", "name": "$K(r, \\pi/2)\\,m^4$", "aspect": 2, "scale": KBR_LINE,
+               "ticks": value_ticks(KBR_LINE)}]
+    shape_checks(ck, f"{name} line", [p["aspect"] for p in panels])
+    height = PLOT_W / 2
+    reference = []
+    for panel in ("axis", "plane"):
+        reference += line_curves(ck, f"{name} Bertotti and Robinson {panel}", panel, "reference", K_br, "r", x_r,
+                                 KBR_LINE, height, {"b": 1 / B})
+    movie, cuts = [], []
+    for system, fn, params in (("static", K_st, KBR_STATIC), ("boyer_lindquist", K_bl, KBR_SPIN)):
+        a = params.get("a", 0.0)
+        horizon = kbr_horizon(params["m"], a, params["B"])
+        within = (horizon, KBR_REACH)
+        values = list(params.values())
+        ends = {}
+        curves = []
+        for panel, theta in (("axis", KBR_AXIS), ("plane", math.pi / 2)):
+            held = Held(fn, {"\\theta": theta})
+            curves += line_curves(ck, f"{name} {panel} at a = {a:g}", panel, "K", held, "r", x_r, KBR_LINE, height,
+                                  params, within)
+            up, down = beyond(held, x_r, KBR_LINE, values, within)
+            cuts += [(a, panel, u) for u in up + down]
+            rs = np.linspace(horizon, KBR_REACH, SAMPLES)[1:]
+            vs = held(rs, *values)
+            ends[panel] = (float(vs[0]), float(vs[-1]), float(vs.min()), float(vs.max()))
+        ck(f"{name} K at a = {a:g} from r_+ = {horizon:.4f} m to r = 20 m on the axis and the equator", True,
+           f"{ends}")
+        movie.append({"label": f"$a = {a:g}$", "value": a, "curves": curves, "marks": []})
+    ck(f"{name} no curve leaves its panel", not cuts, f"{cuts}")
+    line = {
+        "id": "directions", "label": "the axis and the equator", "kind": "line", "x": x_r, "panels": panels,
+        "curves": reference, "marks": [],
+        "movie": {"variable": "$a$", "seconds": 3, "frames": movie},
+        "legend": [["line", "K", "pink, $K$"], ["line", "reference", "dashes, $8B^4$"]],
+        "caption": ["The Kretschmann scalar $K$ on the axis and the equator."],
+        "settings": "$m=1$, $B=1/4$.",
+        "clip": "Signed log.",
+    }
+    return [line]
+
+
 # ---------------------------------------------------------------- the files
 
 # ---------------------------------------------------------------- Chandrasekhar and Xanthopoulos's colliding waves
@@ -16137,6 +16235,7 @@ DRAWN = {
     "interstellar_wormhole": interstellar_wormhole,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
+    "kerr_bertotti_robinson": kerr_bertotti_robinson,
     "kerr_taub_nut": kerr_taub_nut,
     "khan_penrose": khan_penrose,
     "kantowski_sachs": kantowski_sachs,
