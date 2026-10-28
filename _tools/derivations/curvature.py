@@ -13448,6 +13448,66 @@ def ellis_bronnikov(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the exponential metric of Papapetrou and Yilmaz
+
+EM_REACH = 6                      # the plot runs from r = 0 to r = 6m in the isotropic chart
+EM_K = {"kind": "linear", "from": 0, "to": 0.8}
+EM_R = {"kind": "linear", "from": -0.6, "to": 0}
+EM_CAPTION = ("$K$ pink, $R$ cyan, of the exponential metric against isotropic $r$, $m=1$. The bar is the throat "
+              "$r=m$; the far side is squeezed into $r<m$, where both peak, then vanish as $r\\to0$.")
+
+
+def exponential_metric(ck, src):
+    """K and R against the isotropic radius at m = 1, across both sides of the throat r = m.
+
+    The isotropic chart is the one chart that covers both sides: the areal radius
+    r e^{m/r} is least at r = m and grows without bound both as r grows and as r falls to zero,
+    where the far side ends in a horizon of infinite area. Both scalars depend on r alone, so a
+    line shows their whole variation. K is linear from 0 to 0.8 and R linear from -0.6 to 0, and
+    both curves lie wholly within their panels; the sample at r = 0 itself, where the published
+    expressions are 0 times infinity, is dropped, and each curve runs from the next sample.
+
+    The checks hold the stored scalars to their closed forms, K positive and R negative at every
+    r drawn, the throat to the least areal sphere at r = m, the greatest K at r = 0.442m and the
+    least R at r = m/2 both on the far side, both scalars to zero as r falls to zero, and every
+    written value to the stored formula in sixty digits."""
+    name = "exponential_metric"
+    x_axis = axis("$r/m$", 0, EM_REACH)
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": EM_K, "ticks": value_ticks(EM_K)},
+              {"id": "R", "name": "$R\\,m^2$", "aspect": 2, "scale": EM_R, "ticks": value_ticks(EM_R)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    K = nr_published(src, name, "isotropic", "kretschmann", ["r"], ["m"])
+    R = nr_published(src, name, "isotropic", "ricci_scalar", ["r"], ["m"])
+    sphere = nr_published(src, name, "isotropic", "metric_components", ["r"], ["m"], ("\\theta", "\\theta"))
+    r, m = K.coords[0], K.params[0]
+    ck(f"{name} K is 4m^2(12r^2 - 16mr + 7m^2)e^(-4m/r)/r^8",
+       sp.simplify(K.expr - 4 * m ** 2 * (12 * r ** 2 - 16 * m * r + 7 * m ** 2) * sp.exp(-4 * m / r) / r ** 8) == 0)
+    ck(f"{name} R is -2m^2 e^(-2m/r)/r^4", sp.simplify(R.expr + 2 * m ** 2 * sp.exp(-2 * m / r) / r ** 4) == 0)
+    ck(f"{name} the areal sphere is least at the throat r = m",
+       sp.simplify(sp.diff(sphere.expr, r).subs(r, m)) == 0
+       and sp.limit(sphere.expr, r, 0, dir="+") == sp.oo and sp.limit(sphere.expr, r, sp.oo) == sp.oo)
+    ck(f"{name} both scalars vanish as r falls to zero",
+       sp.limit(K.expr.subs(m, 1), r, 0, dir="+") == 0 and sp.limit(R.expr.subs(m, 1), r, 0, dir="+") == 0)
+    xs = np.linspace(0, EM_REACH, SAMPLES)[1:]
+    k, v = K(xs, 1.0), R(xs, 1.0)
+    ck(f"{name} K is positive and R negative at every r drawn", np.all(k > 0) and np.all(v < 0))
+    ck(f"{name} the greatest K stands at r = 0.442m, on the far side",
+       abs(xs[np.argmax(k)] - 0.442) < 2e-3 and xs[np.argmax(k)] < 1, f"{xs[np.argmax(k)]:.4f}, {k.max():.4f}")
+    ck(f"{name} the least R stands at r = m/2, on the far side",
+       abs(xs[np.argmin(v)] - 0.5) < 2e-3, f"{xs[np.argmin(v)]:.4f}, {v.min():.4f}")
+    curves = []
+    for panel, fn, scale in (("K", K, EM_K), ("R", R, EM_R)):
+        curves += line_curves(ck, name, panel, panel, fn, "r", x_axis, scale, PLOT_W / 2, {"m": 1.0})
+        up, down = beyond(fn, x_axis, scale, [1.0], (xs[0], EM_REACH))
+        ck(f"{name} {panel} stays inside its panel", not up and not down, f"{up} {down}")
+    return [{
+        "id": "throat", "label": "both sides of the throat", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [{"class": "front", "x": 1.0}], "legend": [],
+        "caption": [EM_CAPTION], "ricci_sentences": [],
+        "per_scalar": scalar_clips("linear.", "linear."), "settings": "", "clip": "",
+    }]
+
+
 # ---------------------------------------------------------------- the polytropic star
 
 def tov(ck, src):
@@ -15587,6 +15647,7 @@ DRAWN = {
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "einstein_rosen_waves": einstein_rosen_waves,
     "ellis_bronnikov": ellis_bronnikov,
+    "exponential_metric": exponential_metric,
     "fisher_jnw": fisher_jnw,
     "gowdy": gowdy,
     "gravastar": gravastar,
