@@ -3698,6 +3698,56 @@ def damour_solodukhin(ck, src):
         "movie": {"variable": "$\\lambda$", "seconds": 5, "frames": frames},
     }
     return [still, movie_view]
+
+# ---------------------------------------------------------------- Datt and Ruban's T-models
+
+DR_MU = "1/pi"                    # mu on every shell, as the T-sphere movie takes it
+DR_K = {"kind": "log", "from": 1.0, "to": 1e9}
+DR_R = {"kind": "log", "from": 0.1, "to": 1e3}
+
+
+def datt_ruban_t_models(ck, src):
+    """Uniform dust in Ruban's chart, both scalars against eta from the bang to the crunch.
+
+    The dust is the T-sphere movie's, r_s = 1, epsilon = 1 and mu = 1/pi on every shell, so both
+    stored scalars depend on eta alone. The checks cover a > 0 across the range, the values
+    K = 7 and R = 1 at the greatest expansion eta = pi, and every written point in sixty digits.
+    """
+    name = "datt_ruban_t_models"
+    params = {"r_s": 1.0, "epsilon": 1.0}
+    functions = {"mu": DR_MU}
+    x_axis = axis("$\\eta$", 0, 2 * math.pi)
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": DR_K, "ticks": every_second(DR_K)},
+              {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2, "scale": DR_R, "ticks": value_ticks(DR_R)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    K = Published(src, name, "ruban", "kretschmann", ["eta"], list(params), functions=functions)
+    R = Published(src, name, "ruban", "ricci_scalar", ["eta"], list(params), functions=functions)
+    eta = np.linspace(0, 2 * math.pi, SAMPLES)[1:-1]
+    a = np.cos(eta / 2) / np.sin(eta / 2) * (1 - eta / math.pi) + 2 / math.pi
+    ck(f"{name} a stays positive across the range", np.all(a > 0), f"least a = {np.min(a):.6f}")
+    ck(f"{name} R is 2 mu csc^4(eta/2)/a",
+       np.allclose(R(eta, 1.0, 1.0), 2 / math.pi / np.sin(eta / 2) ** 4 / a, rtol=1e-12))
+    ck(f"{name} K = 7 and R = 1 at eta = pi",
+       abs(float(K(math.pi, 1.0, 1.0)) - 7) < AGREE and abs(float(R(math.pi, 1.0, 1.0)) - 1) < AGREE)
+    ck(f"{name} both scalars stay above their axes",
+       np.min(K(eta, 1.0, 1.0)) > DR_K["from"] and np.min(R(eta, 1.0, 1.0)) > DR_R["from"],
+       f"least K = {np.min(K(eta, 1.0, 1.0)):.6f}, least R = {np.min(R(eta, 1.0, 1.0)):.6f}")
+    curves = (line_curves(ck, name, "K", "K", K, "\\eta", x_axis, DR_K, PLOT_W / 2, params)
+              + line_curves(ck, name, "R", "R", R, "\\eta", x_axis, DR_R, PLOT_W / 2, params))
+    k_clip = "Log scale, clipped above $10^9$."
+    r_clip = "Log scale, clipped above $10^3$."
+    return [{
+        "id": "uniform_dust", "label": "uniform dust", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of uniform dust in Ruban's chart."],
+        "ricci_sentences": [],
+        "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$r_s = 1$, $\\epsilon = 1$, $\\mu = 1/\\pi$.",
+        "clip": k_clip + " " + r_clip,
+    }]
+
+
 # ---------------------------------------------------------------- the charged dilaton black hole
 
 DBH_RD = Fraction(1, 2)           # r_d in units of r_s, as every drawing of the black hole takes it
@@ -14944,6 +14994,7 @@ DRAWN = {
     "c_metric": c_metric,
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
+    "datt_ruban_t_models": datt_ruban_t_models,
     "dilaton_black_hole": dilaton_black_hole,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
