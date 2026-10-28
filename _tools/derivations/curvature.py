@@ -4230,9 +4230,10 @@ EIH_MOMENT = {"t": 0.0, "z": 0.0}  # the moment and the orbital plane the map is
 EIH_SCALE = {"kind": "log", "from": 1e-7, "to": 1e2}   # the colours of K m^4
 # The cells drawn, at least m from each body, inside which the first post-Newtonian field fails.
 EIH_DOMAIN = "((x - 10)**2 + y**2 >= 1) & ((x + 10)**2 + y**2 >= 1)"
-EIH_CAPTION = ("$K\\,m^4$ in the orbital plane at $t=0$, bodies of mass $m$ at $x=\\pm10m$; logarithmic, "
-               "$10^{-7}$ to $10^2$. $R$ vanishes off the bodies. "
-               "Clear: discs $r_a<m$, where first post-Newtonian order fails.")
+EIH_CAPTION = ("$K\\,m^4$ over the orbital plane; $R=0$ off the bodies. "
+               "Clear discs $r_a<m$: first post-Newtonian order fails.")
+EIH_SETTINGS = "$m=1$, bodies at $x=\\pm10m$, $t=z=0$."
+EIH_CLIP = "Logarithmic, $10^{-7}$ to $10^2$, no cell clipped."
 
 
 def eih_many_bodies(ck, src):
@@ -4297,7 +4298,7 @@ def eih_many_bodies(ck, src):
         "map": {"metric": name, "system": "harmonic", "scalar": "kretschmann", "x": "x", "y": "y",
                 "fixed": dict(plane.fixed), "params": {}, "functions": dict(pair),
                 "domain": EIH_DOMAIN, "nx": EIH_CELLS, "ny": EIH_CELLS, "cells": rows},
-        "marks": [], "legend": [], "caption": [EIH_CAPTION], "settings": "", "clip": "",
+        "marks": [], "legend": [], "caption": [EIH_CAPTION], "settings": EIH_SETTINGS, "clip": EIH_CLIP,
     }]
 
 
