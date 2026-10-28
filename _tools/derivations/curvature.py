@@ -2200,13 +2200,11 @@ def brill_waves(ck, src):
         "colour": colour, "map": frames[0]["map"], "marks": [],
         "movie": {"variable": "$a$", "seconds": 5,
                   "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
-        "legend": [["line", "horizon", "the apparent horizon, the outer minimal surface"]],
-        "caption": ["The Kretschmann scalar $K$ of Brill's wave over the meridional half plane of $\\rho$ and $z$ "
-                    "as its amplitude grows ($a$ from $11$ to $13$), the same at every $\\phi$ and at $z$ and $-z$."],
-        "settings": "$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$ and "
-                    "$r^2 = \\rho^2 + z^2$, and $a$ in steps of $1/4$ from $11$ to $13$.",
-        "input": brill_wave.INPUT,
-        "clip": "We colour $K\\,\\lambda^4$ on a logarithmic scale from $10^{-5}$ to $10^{3}$.",
+        "legend": [["line", "horizon", "apparent horizon"]],
+        "caption": ["The Kretschmann scalar $K$ of Brill's wave on the $(\\rho, z)$ half plane as its amplitude "
+                    "grows from $a = 11$ to $13$."],
+        "settings": "$\\lambda = 1$, $q = a\\rho^2e^{-\\rho^2-z^2}$.",
+        "clip": "Log scale of $K\\lambda^4$.",
     }
     K, R, xs, ys, grid = drawn(BWAVE_WEAK)
     ck(f"{name} at a = 4 no minimal surface surrounds the centre", brill_wave.wave(float(BWAVE_WEAK)).horizons() is None)
@@ -2216,12 +2214,10 @@ def brill_waves(ck, src):
                 "params": {}, "functions": brill_declared(BWAVE_WEAK), "nx": BWAVE_CELLS, "ny": BWAVE_CELLS,
                 "cells": [[rounded(v) for v in row] for row in grid]},
         "marks": [], "legend": [],
-        "caption": ["The Kretschmann scalar $K$ of a weak Brill wave ($a = 4$) over the meridional half plane of "
-                    "$\\rho$ and $z$, the same at every $\\phi$ and at $z$ and $-z$, too weak to close a horizon."],
-        "settings": "$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$, "
-                    "$r^2 = \\rho^2 + z^2$ and $a = 4$.",
-        "input": brill_wave.INPUT,
-        "clip": strong["clip"],
+        "caption": ["The Kretschmann scalar $K$ of a weak Brill wave, $a = 4$, on the $(\\rho, z)$ half plane, "
+                    "with no horizon."],
+        "settings": "$\\lambda = 1$, $q = a\\rho^2e^{-\\rho^2-z^2}$.",
+        "clip": "Log scale of $K\\lambda^4$.",
     }
     return [strong, weak]
 
