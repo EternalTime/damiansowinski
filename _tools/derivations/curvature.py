@@ -6133,6 +6133,8 @@ IS_SHELL_DOMAIN = "r >= israel_r_adv(v)"               # the ingoing chart's dom
 IS_SHELL_FUNCTIONS = {"R": "israel_r_adv(v)"}           # the shell's radius at the advanced time, as its diagram declares it
 
 
+
+
 def israel_shell(ck, src):
     """Israel's shell of dust falling from rest at infinity, mu = r_s/2 and r_s = 1, its Kretschmann
     scalar over the plane of the ingoing chart's v and r.
@@ -6168,6 +6170,7 @@ def israel_shell(ck, src):
         ck(f"{metric} {system} publishes K = {'0' if system == 'interior' else '12 r_s^2/r^6'}",
            sp.simplify(K_sys.expr - want) == 0, f"{K_sys.expr}")
 
+    K = nr_published(src, metric, IN, "kretschmann", ["r", "v"], names)
     K = nr_published(src, metric, IN, "kretschmann", ["r", "v"], names, functions=IS_SHELL_FUNCTIONS)
     grr = nr_published(src, metric, IN, "inverse_metric_components", ["r"], names, ("r", "r"))
     found = zeros(ck, f"{metric} horizon", grr, 0.1, r1, values)
@@ -6214,12 +6217,14 @@ def israel_shell(ck, src):
         "id": "shell", "label": "The falling shell", "system": IN, "kind": "map", "x": x_axis, "y": y_axis,
         "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": every_second(scale)},
         "map": {"metric": metric, "system": IN, "scalar": "kretschmann", "x": "r", "y": "v",
+                "params": dict(IS_SHELL), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
                 "params": dict(IS_SHELL), "functions": dict(IS_SHELL_FUNCTIONS), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
         "marks": [{"class": "front", "points": world},
                   {"class": "horizon", "points": [[1.0, 0.0], [1.0, float(v1)]]},
                   {"class": "singular", "points": [[0.0, v_end], [0.0, float(v1)]]}],
         "legend": [["line", "front", "the shell"], ["line", "horizon", "horizon"],
                    ["line", "singular", "singularity"]],
+        "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the falling shell, flat and blank inside; "
         "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the shell, flat and blank inside; "
                     "Ricci scalar 0."],
         "settings": "$r_s = 1$, $\\mu = r_s/2$.",
