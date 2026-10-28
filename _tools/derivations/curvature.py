@@ -873,7 +873,7 @@ BZ_FUNCTIONS = {
 }
 BZ_INPUT = ("The wave of two solitons on the Kasner universe that expands alike in two directions, "
             "$f = N/\\left(\\left(\\sinh^2\\tau + \\cosh^2\\xi\\right)\\sqrt{ct/w}\\right)$, "
-            "$e^{P} = \\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)/N$ and "
+            "$e^{P} = \\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)/N$, and "
             "$Q = -2\\sinh\\beta\\sinh\\xi/\\left(N + 2 + 2\\cosh\\beta\\cosh\\tau\\right)$, with "
             "$N = \\cosh^2\\beta\\sinh^2\\tau + \\sinh^2\\beta\\cosh^2\\xi$, written in $t$ and $z$ through "
             "$ct = w\\sinh\\tau\\cosh\\xi$ and $z = w\\cosh\\tau\\sinh\\xi$.")
@@ -1124,11 +1124,10 @@ def belinski_zakharov(ck, src):
         "movie": {"variable": "$\\tau$", "seconds": 12, "frames": frames},
         "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
         "caption": [
-            "The Kretschmann scalar $K$ of the same wave along $z$ at the thirty-six moments the ring of free "
-            "particles is drawn at, $\\tau$ from $0.25$ to $2$ in steps of $0.05$, which on $\\xi = 0$ is "
-            "$ct = w\\sinh\\tau$ ($w = 1$, $\\cosh\\beta = 5/4$), the same at every $x$ and $y$. The wave is a "
-            "vacuum, so its Ricci scalar vanishes, and the published $g^{zz}$ is positive at every $z$, so there "
-            "is no horizon to mark.",
+            "The Kretschmann scalar $K$ of the same wave along $z$ at the moments the ring of free particles is "
+            "drawn at, $\\tau$ from $0.25$ to $2$ in steps of $0.05$, which on $\\xi = 0$ is $ct = w\\sinh\\tau$ "
+            "($w = 1$, $\\cosh\\beta = 5/4$), the same at every $x$ and $y$. The wave is a vacuum, so its Ricci "
+            "scalar vanishes. It has no horizon: $g^{zz}$ stays positive at every $z$.",
             f"One hump stands about $z = 0$ while $ct < {crest_time:.3f}\\,w$. A crest parts from the axis "
             f"to each side there, and at $ct = {trough_time:.3f}\\,w$ a trough of negative $K$ opens behind each "
             "crest, after which the two pulses run out along $z = \\pm ct$ with the trough riding the cone and the "
