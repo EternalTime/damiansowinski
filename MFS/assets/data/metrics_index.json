@@ -3374,7 +3374,8 @@
     "version": "ccdcfda41b204a4d",
     "diagrams": "61f24374decb512d",
     "conformal": "9abec55e5dd88bb3",
-    "embedding": "584ceadf2e0c5a94"
+    "embedding": "584ceadf2e0c5a94",
+    "curvature": "22b04e30d2715ac2"
   },
   {
     "id": "btz_multi_holes_wormholes",
