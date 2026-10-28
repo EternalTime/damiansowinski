@@ -13303,12 +13303,13 @@ def ab_metrics(ck, src):
             # The neck leaves the box at T^2 = 9 - b^2, where its own X is 3b to the last digit,
             # so each point is held inside the box the page draws.
             reach = math.sqrt(9.0 - b * b)
-            edge = x_axis["to"]
+            side = x_axis["to"]
             for sign in (1.0, -1.0):
                 marks.append({"class": "horizon",
-                              "points": [[sign * min(edge, float(math.sqrt(b * b + t * t))), float(t)]
+                              "points": [[sign * min(side, float(math.sqrt(b * b + t * t))), float(t)]
                                          for t in np.linspace(-reach, reach, 241)]})
-        legend = [["line", "horizon", f"the {edge} $r = b$" if not inside_cone else "the horizon $\\sigma = b$"]]
+        legend = [["line", "horizon",
+                   "the horizon $\\sigma = b$" if inside_cone else "the neck $r = b$, where the metric goes on"]]
         if inside_cone:
             legend.insert(0, ["line", "singular", "the cone $T^2 = X^2$, the singularity $\\sigma = 0$"])
         bottom, top = round(math.log10(scale["from"])), round(math.log10(scale["to"]))
@@ -13346,7 +13347,7 @@ def ab_caption(inside_cone, axis_values):
             f"${tex_number(axis_values['inside'], 6)}/b^4$ at the top of the box.",
             "The cone $T^2 = X^2$ is the singularity $\\sigma = 0$, the shock that closes on the tachyon's line and "
             "opens again, and toward it $K$ grows as $12b^2/|T^2 - X^2|^3$, past every bound. The chart drawn here "
-            "reaches the hyperbola $\\sigma = b$, where $K = 12/b^4$ and the published $g^{ZZ}$ changes sign; "
+            "reaches the hyperbola $\\sigma = b$, where $K = 12/b^4$ and $g^{ZZ}$ changes sign; "
             "between that hyperbola and the cone the field is static, with $Z$ for its time, and the map leaves "
             "the band blank.",
         ]
@@ -13357,7 +13358,7 @@ def ab_caption(inside_cone, axis_values):
         "$K = 12b^2/r^6$ in the interval $r = \\sqrt{X^2 - T^2}$ from that line, so its levels are the hyperbolas "
         f"of constant $r$ and the colours cool away from the cone. On the axis $T = 0$ it is "
         f"${tex_number(axis_values['outside'], 6)}/b^4$ at $X = 3b$.",
-        "The map stops on the hyperbolas $r = b$, where $K = 12/b^4$ and the published $g^{ZZ}$ changes sign. "
+        "The map stops on the hyperbolas $r = b$, where $K = 12/b^4$ and $g^{ZZ}$ changes sign. "
         "That surface is the neck: the metric continues through it into a second region of the same shape, so "
         "the cone $T^2 = X^2$, where $r$ would vanish, is never reached from here, and the band about it is "
         "left blank. Its curvature belongs to A II, which the other view draws.",
