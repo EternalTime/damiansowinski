@@ -1814,9 +1814,10 @@ The print copy prints every view, a movie at its first frame, and a map and its 
 
 ### Which spacetimes
 
-Ehlers and Kundt's A II metric has one map at $b = 1$, the length its other drawings take, its $K$ over the square $|U|, |V| \le 2$ of the Kruskal chart in 200 cells across and 200 up, each a fiftieth of a unit on a side, coloured on a logarithmic scale from $10^{-1}$ to $10^6$, and it names that chart.
+Ehlers and Kundt's A II metric has one map at $b = 1$, the length its other drawings take, its $K$ over the square $|U|, |V| \le 2$ of the Kruskal chart in 200 cells across and 200 up, each a fiftieth of a unit on a side, coloured on a logarithmic scale from $10^{-1}$ to $10^3$, and it names that chart.
 The published $K = 12b^2/r^6$ holds the radius of the hyperbolic planes, which the chart defines by $(r/b - 1)e^{r/b} = UV$ through Lambert's function, so it holds $U$ and $V$ in their product alone and its levels are the hyperbolae of constant $UV$: the colours cool from the singularity outward, $K = 12/b^4$ along the horizons $U = 0$ and $V = 0$, and the least value on the square is $0.466991/b^4$, at the two corners where $UV = 4$.
-Toward the singularity $1 + UV$ is $r^2/2b^2$ to leading order, so $K$ grows as $3/2b^4(1 + UV)^3$ and passes the top of the colours inside $r = 0.151309\,b$, where $UV < -0.987330$, a band of 84 cells.
+Toward the singularity $1 + UV$ is $r^2/2b^2$ to leading order, so $K$ grows as $3/2b^4(1 + UV)^3$ and passes the top of the colours inside $r = 0.478480\,b$, where $UV < -0.841535$, a band of 1156 cells, 3.62 percent of the square drawn.
+The top is $10^3$ so that the $12/b^4$ of the horizons stands halfway up the ramp, which the research list of October 2026 asks for, and so that the band passing the top is eight cells wide beside the singularity, where a top of $10^6$ would hold its last three decades under the casing of the singular curve, narrower than one cell.
 The chart holds where $UV > -1$, which the map declares as its domain, and the 8068 cells of the two corners beyond it are null, where the plot's ground shows.
 The two branches of $UV = -1$ are drawn as `singular` curves and the two horizons as `horizon` lines, the landed classes for a map's singularity and its horizons.
 That singularity is $r = 0$, which the inertial chart reads as the cone $\sigma = 0$ of the tachyon's line, the shock of A II, so the map colours the curvature of the whole of that cone.

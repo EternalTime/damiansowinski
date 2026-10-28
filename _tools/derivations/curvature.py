@@ -13110,9 +13110,13 @@ def bonnor_magnetic_dipole(ck, src):
 AB_B = 1.0                        # b in units of itself, as every drawing of the A- and B-metrics takes it
 AB_BOX = ((-2.0, 2.0), (-2.0, 2.0))   # U and V of A II's Kruskal chart, the square the horizons cross at the centre
 AB_CELLS = (200, 200)             # the cells of the map across and up, each a fiftieth of a unit of U and of V
-AB_SCALE = {"kind": "log", "from": 1e-1, "to": 1e6}   # the colours of K b^4
+# The colours of K b^4. The top is 10^3 so that the 12/b^4 of the horizons stands halfway up the
+# ramp, which the research list of October 2026 asks to be visible, and so that the band passing
+# the top is eight cells wide beside the singularity; a top of 10^6 would hold its last three
+# decades inside the casing of the singular curve, under a cell wide.
+AB_SCALE = {"kind": "log", "from": 1e-1, "to": 1e3}
 AB_DOMAIN = "U*V > -1"            # the Kruskal chart's domain, where the radius of the hyperbolic planes is real
-AB_TOP = 1e6                      # where the clip says K leaves the colours
+AB_TOP = 1e3                      # where the clip says K leaves the colours
 
 
 def ab_metrics(ck, src):
@@ -13120,7 +13124,7 @@ def ab_metrics(ck, src):
 
     The Kruskal chart publishes K = 12b^2/r^6 in the radius r of the hyperbolic planes, which
     solves (r/b - 1)e^(r/b) = UV, so K depends on the product UV alone and the map is a square
-    of 200 cells by 200 over |U|, |V| <= 2, coloured logarithmically from 10^-1 to 10^6 in units
+    of 200 cells by 200 over |U|, |V| <= 2, coloured logarithmically from 10^-1 to 10^3 in units
     of 1/b^4. The chart holds where UV > -1, which the map declares as its domain, and the two
     corners beyond it are null. The singularity UV = -1 is r = 0, the cone of the tachyon's line,
     marked as a curve on each side, and the horizons U = 0 and V = 0, where r = b, as lines.
@@ -13273,18 +13277,24 @@ def ab_metrics(ck, src):
        abs(least - 0.466991) < 5e-7 and least <= float(np.min(values[inside])), f"{least:.6f}")
     ck("ab_metrics no cell falls below the bottom of the colours", np.min(values[inside]) > scale["from"],
        f"least cell {np.min(values[inside]):.6f}")
+    bottom, top = round(math.log10(scale["from"])), round(math.log10(scale["to"]))
     lo, hi = 1e-6, 1.0
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         lo, hi = (mid, hi) if float(K(1.0, mid - 1.0, b)) > AB_TOP else (lo, mid)
     clip_eps = 0.5 * (lo + hi)
     clip_radius = float(sp.sqrt(gchi.exact([1.0, clip_eps - 1.0, b])))
-    ck("ab_metrics K passes the top of its colours where UV < -0.987330, inside r = 0.151309b",
-       abs(clip_eps - 1 + 0.987330) < 5e-7 and abs(clip_radius - 0.151309) < 5e-7
-       and abs(clip_radius - (12e-6) ** (1 / 6)) < 1e-12, f"UV = {clip_eps - 1:.6f}, r = {clip_radius:.6f}")
-    ck("ab_metrics no cell above the top of the colours lies outside that band",
-       np.all(U[inside & (values > AB_TOP)] * V[inside & (values > AB_TOP)] < clip_eps - 1),
-       f"{int((inside & (values > AB_TOP)).sum())} cells above it")
+    ck("ab_metrics K passes the top of its colours where UV < -0.841535, inside r = 0.478480b",
+       abs(clip_eps - 1 + 0.841535) < 5e-7 and abs(clip_radius - 0.478480) < 5e-7
+       and abs(clip_radius - (12 / AB_TOP) ** (1 / 6)) < 1e-12, f"UV = {clip_eps - 1:.6f}, r = {clip_radius:.6f}")
+    clipped = int((inside & (values > AB_TOP)).sum())
+    ck("ab_metrics the cells above the top of the colours are the band along the singularity, 1156 of them",
+       clipped == 1156 and np.all(U[inside & (values > AB_TOP)] * V[inside & (values > AB_TOP)] < clip_eps - 1),
+       f"{clipped} cells, {100 * clipped / int(inside.sum()):.2f} percent of the square drawn")
+    ck("ab_metrics the 12/b^4 of the horizons stands between a third and two thirds up the ramp",
+       1 / 3 < (math.log10(12 / b ** 4) - math.log10(scale["from"]))
+       / (math.log10(scale["to"]) - math.log10(scale["from"])) < 2 / 3,
+       f"{100 * (math.log10(12) - math.log10(scale['from'])) / (math.log10(scale['to']) - math.log10(scale['from'])):.0f} percent")
 
     rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]
     singular = [[[u, -1.0 / u] for u in np.linspace(-2.0, -0.5, 121)],
@@ -13318,9 +13328,10 @@ def ab_metrics(ck, src):
             "has no real value, and the map leaves the other two corners blank.",
         ],
         "settings": "$b = 1$, Ehlers and Kundt's constant, the unit of every length.",
-        "clip": ("We colour $K\\,b^4$ on a logarithmic scale from $10^{-1}$ to $10^{6}$ and give a value above it "
-                 f"the colour of its top: $K$ passes $10^{{6}}/b^4$ where $UV < {clip_eps - 1:.6f}$, inside "
-                 f"$r = {clip_radius:.6f}\\,b$, and no cell falls below $10^{{-1}}/b^4$."),
+        "clip": (f"We colour $K\\,b^4$ on a logarithmic scale from $10^{{{bottom}}}$ to $10^{{{top}}}$ and give a "
+                 f"value above it the colour of its top: $K$ passes $10^{{{top}}}/b^4$ where "
+                 f"$UV < {clip_eps - 1:.6f}$, inside $r = {clip_radius:.6f}\\,b$, and no cell falls below "
+                 f"$10^{{{bottom}}}/b^4$."),
     }
     return [view]
 
