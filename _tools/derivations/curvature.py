@@ -14537,8 +14537,8 @@ def bcd_cloud(ck, src):
             "shrinks while both scalars stay finite: the cloud becomes a quasiblack hole, as close to its own "
             "horizon as one likes. At $b = 0$ the metric is the extremal Reissner-Nordstr\u00f6m black hole, whose "
             "horizon is the sphere $r = 0$ of this chart, where $g_{tt}$ falls to zero. Outside the core each "
-            f"frame already follows that hole's field: at $r = 2m$ and $b = m/20$, $K$ is "
-            f"{abs(close - 1) * 100:.2f} parts in a hundred from the hole's $8m^2(m^2 + 6r^2)/(r + m)^8$.",
+            f"frame already follows that hole's field: at $r = 2m$ and $b = m/20$, $K$ is within "
+            f"${abs(close - 1) * 100:.2f}$ parts in a hundred of the hole's $8m^2(m^2 + 6r^2)/(r + m)^8$.",
         ],
         "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
         "per_scalar": scalar_clips(clip_K, clip_R),
