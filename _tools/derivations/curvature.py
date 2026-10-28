@@ -12412,8 +12412,113 @@ HISCOCK_SCALE = {"kind": "symlog", "from": 0.0, "to": 1e4, "linear": 1e-6}   # t
 
 def hiscock(ck, src):
     """Hiscock's evaporating black hole at m_0 = 1, its Kretschmann scalar over the plane of each
-    chart's null time and r, stitched along the surface of pair creation."""
-    return []
+    chart's null time and r, stitched along the surface of pair creation.
+
+    Both charts publish K = 48m^2/r^6 and R = 0, so the figure is K alone, in two maps: the ingoing
+    chart over 0 <= r <= 6 m_0 and -2 <= v <= 10 m_0, in 120 cells across and 240 up, with m the
+    shell of light at v = 0 and the evaporation from v_1 = 2 to v_0 = 8 of every drawing, and the
+    outgoing chart over 0 <= r <= 16 m_0 and -20 <= u <= 12 m_0, in 128 across and 256 up, with
+    hiscock_m_out, the mass carried out from the surface of pair creation R = 3m. Each map declares
+    its chart's own domain, r <= R inside and r >= R and the shell outside, and the cells beyond it
+    stay clear, so the two maps meet along that surface. Both colour K m_0^4 on a signed
+    logarithmic scale, linear within 10^-6 of zero, from 0 to 10^4, since K vanishes in flat space
+    before the shell and after the last ray, and a value above it takes the colour of its top. The
+    apparent horizon, the zero of the ingoing g^rr, is marked as one curve; the outgoing chart lies
+    outside R > 2m and holds none.
+
+    What the captions state is checked here: R vanishes in both charts; K at every drawn cell is
+    48m^2/r^6 at that cell's m, zero before the shell and after the last ray, and finite; the map
+    agrees with the published formula in sixty digits; the two charts give the same K on the
+    surface of pair creation, where u = v - 18m; the zero of g^rr is r = 2m at every v the mass is
+    above zero, inside the surface; and K passes the top of its colours on the drawn cells."""
+    W0, W1 = nr.HISCOCK_V1, nr.HISCOCK_V0
+    times = {HISCOCK_IN: "v", HISCOCK_OUT: "u"}
+    mass = {HISCOCK_IN: nr.hiscock_mass, HISCOCK_OUT: nr.hiscock_out}
+
+    def read(system, field, indices=None):
+        return nr_published(src, "hiscock", system, field, [times[system], "r"], [], indices, HISCOCK_FUNCTIONS[system])
+
+    K, views = {}, []
+    for system in (HISCOCK_IN, HISCOCK_OUT):
+        t = times[system]
+        (r0, r1), (t0, t1) = HISCOCK_BOXES[system]
+        x_axis, y_axis = axis("$r/m_0$", r0, r1), axis(f"${t}/m_0$", t0, t1)
+        shape_checks(ck, f"hiscock {system}", [(r1 - r0) / (t1 - t0)])
+        ricci = read(system, "ricci_scalar")
+        ck(f"hiscock {system} the published Ricci scalar vanishes", ricci.expr == 0, f"{ricci.expr}")
+        K[system] = k = read(system, "kretschmann")
+        ts = np.linspace(t0, t1, SAMPLES)
+        ck(f"hiscock {system} the declared m against its closed form",
+           np.allclose(k(ts, 1.0), 48 * mass[system](ts) ** 2, rtol=1e-12, atol=1e-24))
+
+        nx, ny = HISCOCK_CELLS[system]
+        xs, ys, _ = cells(lambda X, Y: X, x_axis, y_axis, nx, ny, [])
+        X, Y = np.meshgrid(xs, ys)
+        values = k(Y, X)
+        inside = domain_function("hiscock", system, HISCOCK_DOMAINS[system], [t, "r"], [])(Y, X)
+        m_cells = mass[system](Y)
+        drawn = values[inside]
+        ck(f"hiscock {system} K is finite and at or above zero at every drawn cell",
+           np.all(np.isfinite(drawn)) and np.all(drawn >= 0), f"{int(inside.sum())} drawn, up to {np.max(drawn):.3e}")
+        ck(f"hiscock {system} K at every drawn cell is 48m^2/r^6 at that cell's m",
+           np.allclose(drawn, 48 * m_cells[inside] ** 2 / X[inside] ** 6, rtol=1e-12, atol=0))
+        flat = inside & (m_cells == 0)
+        ck(f"hiscock {system} K vanishes " + ("before the shell" if system == HISCOCK_IN else "after the last ray"),
+           flat.any() and np.all(values[flat] == 0)
+           and np.all((Y[flat] < 0) if system == HISCOCK_IN else (Y[flat] > W1)), f"{int(flat.sum())} cells")
+        ck(f"hiscock {system} K passes the top of its colours on drawn cells and no cell falls below its bottom",
+           np.any(drawn > HISCOCK_SCALE["to"]) and np.min(drawn) >= HISCOCK_SCALE["from"])
+        rng = np.random.default_rng(1981)
+        idx = np.argwhere(inside & (values < HISCOCK_SCALE["to"]))
+        picks = idx[rng.choice(len(idx), 40, replace=False)]
+        agrees(ck, f"hiscock {system} map", k, [[ys[j], xs[i]] for j, i in picks], [values[j, i] for j, i in picks])
+
+        marks, legend = [], []
+        if system == HISCOCK_IN:
+            grr = read(system, "inverse_metric_components", ("r", "r"))
+            track = np.linspace(1e-6, W1 - 1e-3, 1601)
+            sphere = []
+            for v in track:
+                z = _g_zeros(lambda r, at: grr(at, r), v, r1)
+                sphere.append(z)
+            ck("hiscock ingoing g^rr has one zero at every v the mass is above zero, r = 2m, inside the surface",
+               all(len(z) == 1 for z in sphere)
+               and np.allclose([z[0] for z in sphere], 2 * nr.hiscock_mass(track), rtol=1e-10, atol=1e-12)
+               and all(z[0] < (r1 if v < W0 else 3 * float(nr.hiscock_mass(v))) for z, v in zip(sphere, track)))
+            points = [[z[0], float(v)] for z, v in zip(sphere, track)]
+            height = PLOT_W / ((r1 - r0) / (t1 - t0))
+            Xp = PLOT_W * np.array([p[0] for p in points]) / (r1 - r0)
+            Yp = height * (1 - (np.array([p[1] for p in points]) - t0) / (t1 - t0))
+            marks = [{"class": "horizon", "points": [points[i] for i in thinned(Xp, Yp, TOLERANCE)]}]
+            legend = [["line", "horizon", "apparent horizon $r = 2m$"]]
+
+        views.append({
+            "id": system, "label": f"the plane of ${t}$ and $r$", "system": system, "kind": "map",
+            "x": x_axis, "y": y_axis,
+            "colour": {"name": "$K\\,m_0^4$", "scale": HISCOCK_SCALE, "ticks": every_second(HISCOCK_SCALE)},
+            "map": {"metric": "hiscock", "system": system, "scalar": "kretschmann", "x": "r", "y": t,
+                    "params": {}, "functions": dict(HISCOCK_FUNCTIONS[system]), "domain": HISCOCK_DOMAINS[system],
+                    "nx": nx, "ny": ny,
+                    "cells": [[rounded(c) if ok else None for c, ok in zip(row, keep)] for row, keep in zip(values, inside)]},
+            "marks": marks, "legend": legend,
+            "caption": ["Ingoing chart, clear past $r = 3m$ from $v_1$. $K = 0$ before the shell $v = 0$, infinite on "
+                        "$r = 0$ after it. $R = 0$." if system == HISCOCK_IN else
+                        "Outgoing chart, clear inside $r = 3m$ and the shell. $K$ falls with $m(u)$ to $0$ after the last "
+                        "ray $u_0 = 8$. $R = 0$."],
+            "settings": "$m_0 = 1$, $v_1 = 2$.",
+            "clip": "Signed log, clipped above $10^4$.",
+        })
+
+    # The stitch: on the surface of pair creation r = 3m the ray u = v - 18m leaves the ingoing chart.
+    vs = np.linspace(W0 + 1e-3, W1 - 1e-2, 601)
+    N = nr.hiscock_mass(vs)
+    us = vs - nr.HISCOCK_DELAY * N
+    inner, outer = K[HISCOCK_IN](vs, 3 * N), K[HISCOCK_OUT](us, 3 * N)
+    ck("hiscock the two charts give the same K on the surface of pair creation, where u = v - 18m",
+       np.allclose(inner, outer, rtol=1e-9, atol=0), f"{np.max(np.abs(inner / outer - 1)):.1e}")
+    ck("hiscock the outgoing chart's inner edge is the surface r = 3m from u_1 on",
+       np.allclose(nr.hiscock_edge(us), 3 * N, rtol=1e-9, atol=0))
+    return views
 
 
 # ---------------------------------------------------------------- Van Den Broeck's pocket
