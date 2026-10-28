@@ -4230,10 +4230,10 @@ EIH_MOMENT = {"t": 0.0, "z": 0.0}  # the moment and the orbital plane the map is
 EIH_SCALE = {"kind": "log", "from": 1e-7, "to": 1e2}   # the colours of K m^4
 # The cells drawn, at least m from each body, inside which the first post-Newtonian field fails.
 EIH_DOMAIN = "((x - 10)**2 + y**2 >= 1) & ((x + 10)**2 + y**2 >= 1)"
-EIH_CAPTION = ("$K\\,m^4$ over the orbital plane; $R=0$ off the bodies. "
-               "Clear discs $r_a<m$: first post-Newtonian order fails.")
+EIH_CAPTION = ("The Kretschmann scalar $K$ over the orbital plane; the Ricci scalar vanishes off the bodies, "
+               "and the discs $r_a<m$ are left clear.")
 EIH_SETTINGS = "$m=1$, bodies at $x=\\pm10m$, $t=z=0$."
-EIH_CLIP = "Logarithmic, $10^{-7}$ to $10^2$, no cell clipped."
+EIH_CLIP = "Log, $10^{-7}$ to $10^2$."
 
 
 def eih_many_bodies(ck, src):
@@ -4253,7 +4253,7 @@ def eih_many_bodies(ck, src):
     tends to 192m^2, one body of mass 2m; and every drawn cell lies inside the colours."""
     name = "eih_many_bodies"
     coords = ["x", "y", "t", "z"]
-    pair = {"U": nr.EIH_BINARY["U"]}
+    pair = dict(nr.EIH_BINARY)
     K = Published(src, name, "harmonic", "kretschmann", coords, [], functions=pair)
     Ric = Published(src, name, "harmonic", "ricci_scalar", coords, [], functions=pair)
     Ks = Published(src, name, "standard", "kretschmann", coords, [], functions=pair)

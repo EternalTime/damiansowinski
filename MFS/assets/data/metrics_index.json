@@ -639,7 +639,7 @@
     "diagrams": "ac2eb68ee92b57a6",
     "conformal": "7c7471759c5476fc",
     "embedding": "0453da68b24b7ab7",
-    "curvature": "5d3a15198b27ff7d"
+    "curvature": "117e026890ba6cc6"
   },
   {
     "id": "bonnor_magnetic_dipole",
@@ -1649,7 +1649,8 @@
     ],
     "version": "91af6aa316f3fcc6",
     "diagrams": "7c0ed7cc7e087f7f",
-    "embedding": "3f468d0fec878b32"
+    "embedding": "3f468d0fec878b32",
+    "curvature": "cbad1f48551b27a9"
   },
   {
     "id": "einstein_rosen_bridge",
