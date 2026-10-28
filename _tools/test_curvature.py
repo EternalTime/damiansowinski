@@ -71,12 +71,7 @@ class Evaluator:
                 expr = expr.subs(reader.parameters[name], rep).doit()
             expr = expr.subs(reader.c, 1)
             by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
-            # A parameter is a chart parameter, or a coordinate the figure holds at a number, as a
-            # map holds the moment and the plane it colours.
-            def named(p):
-                plain = reader._plain(p)
-                return reader.parameters.get(plain) or by_plain[plain]
-            symbols = [by_plain[reader._plain(c)] for c in coords] + [named(p) for p in params]
+            symbols = [by_plain[reader._plain(c)] for c in coords] + [reader.parameters[reader._plain(p)] for p in params]
             stray = expr.free_symbols - set(symbols)
             free = {f for f in reader.parameters.values() if isinstance(f, sp.Function)} & expr.atoms(sp.Function)
             if free:
@@ -367,14 +362,13 @@ class CurvatureShape(unittest.TestCase):
             else:
                 curve = next(c for c in view["curves"] if c["panel"] == "K")
                 curve["points"][0][1] = -1.0
-        # The ring's one view is a map on a logarithmic colour, which every figure has not.
-        self.assertIn("at or below zero", self.broken(negate, "bach_weyl_ring"))
+        self.assertIn("at or below zero", self.broken(negate))
 
     def test_a_map_read_in_a_frame_of_no_known_kind_is_refused(self):
         def reframed(data):
             view = next(v for v in data["views"] if v["kind"] == "map")
             view["map"]["frame"] = "polar"
-        self.assertIn("frame", self.broken(reframed, "bach_weyl_ring"))
+        self.assertIn("frame", self.broken(reframed))
 
     def test_a_map_read_about_a_ring_of_no_named_radius_is_refused(self):
         files = curvature_files()

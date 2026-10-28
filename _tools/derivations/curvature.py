@@ -177,9 +177,7 @@ class Published:
         expr = expr.subs(reader.c, 1)
         by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
         self.coords = [by_plain[name] for name in coords]
-        # A coordinate the figure holds at a number stands among the parameters it is read at, as
-        # a map holds the moment and the plane it colours.
-        self.params = [reader.parameters.get(name) or by_plain[name] for name in params]
+        self.params = [reader.parameters[name] for name in params]
         free = expr.atoms(sp.Function) & {f for f in reader.parameters.values() if isinstance(f, sp.Function)}
         if free:
             raise SystemExit(f"{metric_id}/{system_id}: the published {field} holds the free functions "
