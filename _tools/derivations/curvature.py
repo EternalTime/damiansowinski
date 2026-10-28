@@ -2204,7 +2204,7 @@ def brill_waves(ck, src):
         "caption": ["The Kretschmann scalar $K$ of Brill's wave on the $(\\rho, z)$ half plane as $a$ grows "
                     "from $11$ to $13$."],
         "settings": "$\\lambda = 1$, $q = a\\rho^2e^{-\\rho^2-z^2}$.",
-        "clip": "Log scale of $K\\lambda^4$.",
+        "clip": "Log, $K\\lambda^4$.",
     }
     K, R, xs, ys, grid = drawn(BWAVE_WEAK)
     ck(f"{name} at a = 4 no minimal surface surrounds the centre", brill_wave.wave(float(BWAVE_WEAK)).horizons() is None)
@@ -2217,7 +2217,7 @@ def brill_waves(ck, src):
         "caption": ["The Kretschmann scalar $K$ of a weak Brill wave, $a = 4$, on the $(\\rho, z)$ half plane, "
                     "with no horizon."],
         "settings": "$\\lambda = 1$, $q = a\\rho^2e^{-\\rho^2-z^2}$.",
-        "clip": "Log scale of $K\\lambda^4$.",
+        "clip": "Log, $K\\lambda^4$.",
     }
     return [strong, weak]
 
