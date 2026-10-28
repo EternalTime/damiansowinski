@@ -13453,8 +13453,8 @@ def ellis_bronnikov(ck, src):
 EM_REACH = 6                      # the plot runs from r = 0 to r = 6m in the isotropic chart
 EM_K = {"kind": "linear", "from": 0, "to": 0.8}
 EM_R = {"kind": "linear", "from": -0.6, "to": 0}
-EM_CAPTION = ("$K$ pink, $R$ cyan, of the exponential metric against isotropic $r$, $m=1$. The bar is the throat "
-              "$r=m$; the far side is squeezed into $r<m$, where both peak, then vanish as $r\\to0$.")
+EM_CAPTION = ("The Kretschmann scalar $K$ and the Ricci scalar $R$ of the exponential metric, isotropic $r$, $m=1$. "
+              "Pink $K$, cyan $R$; the bar is the throat; both peak on the squeezed far side $r<m$, then vanish.")
 
 
 def exponential_metric(ck, src):
@@ -13485,12 +13485,15 @@ def exponential_metric(ck, src):
     ck(f"{name} R is -2m^2 e^(-2m/r)/r^4", sp.simplify(R.expr + 2 * m ** 2 * sp.exp(-2 * m / r) / r ** 4) == 0)
     ck(f"{name} the areal sphere is least at the throat r = m",
        sp.simplify(sp.diff(sphere.expr, r).subs(r, m)) == 0
-       and sp.limit(sphere.expr, r, 0, dir="+") == sp.oo and sp.limit(sphere.expr, r, sp.oo) == sp.oo)
+       and sp.limit(sphere.expr.subs(m, 1), r, 0, dir="+") == sp.oo and sp.limit(sphere.expr.subs(m, 1), r, sp.oo) == sp.oo)
     ck(f"{name} both scalars vanish as r falls to zero",
        sp.limit(K.expr.subs(m, 1), r, 0, dir="+") == 0 and sp.limit(R.expr.subs(m, 1), r, 0, dir="+") == 0)
     xs = np.linspace(0, EM_REACH, SAMPLES)[1:]
     k, v = K(xs, 1.0), R(xs, 1.0)
-    ck(f"{name} K is positive and R negative at every r drawn", np.all(k > 0) and np.all(v < 0))
+    # Near r = 0 both fall below the smallest double, e^(-4m/r) underflowing to zero.
+    ck(f"{name} K is positive and R negative at every r drawn, as the double holds them",
+       np.all(k >= 0) and np.all(v <= 0) and np.all(k[xs > 0.05] > 0) and np.all(v[xs > 0.05] < 0)
+       and sp.discriminant(12 * r ** 2 - 16 * r + 7, r) < 0)
     ck(f"{name} the greatest K stands at r = 0.442m, on the far side",
        abs(xs[np.argmax(k)] - 0.442) < 2e-3 and xs[np.argmax(k)] < 1, f"{xs[np.argmax(k)]:.4f}, {k.max():.4f}")
     ck(f"{name} the least R stands at r = m/2, on the far side",
