@@ -5200,11 +5200,19 @@
 
           conventionSection(data, coord),
 
+          (coord.line_element ? [
+            '<div class="mfs-section">',
+              '<div class="mfs-section-label">line element</div>',
+              mathLine(coord.line_element),
+            '</div>'
+          ].join('') : ''),
+
           /* Each diagram stands beside the mathematics it draws, on the site alone, since the
              application keeps its Graphs together:
              the spacetime diagram and the conformal diagram after the coordinates, the plane
-             of two of them and the whole spacetime in them, and after the conventions, which
-             say what those coordinates and the parameters drawn at are; the embedding
+             of two of them and the whole spacetime in them, after the conventions, which
+             say what those coordinates and the parameters drawn at are, and after the line
+             element, which stands right under the conventions; the embedding
              diagram after the metric it embeds; and the curvature figure after the scalars it
              plots, its Ricci scalar after the Ricci scalar and its Kretschmann scalar after
              the Kretschmann scalar. The spacetime diagram and the conformal diagram both draw
@@ -5217,13 +5225,6 @@
             '<div class="mfs-section"><div class="mfs-placeholder">',
               'Differential geometry not yet complete. Come back soon.',
             '</div></div>'
-          ].join('') : ''),
-
-          (coord.line_element ? [
-            '<div class="mfs-section">',
-              '<div class="mfs-section-label">line element</div>',
-              mathLine(coord.line_element),
-            '</div>'
           ].join('') : ''),
 
           (coord.metric_components ? [
