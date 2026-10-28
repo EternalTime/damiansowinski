@@ -12502,11 +12502,11 @@ def hiscock(ck, src):
                     "nx": nx, "ny": ny,
                     "cells": [[rounded(c) if ok else None for c, ok in zip(row, keep)] for row, keep in zip(values, inside)]},
             "marks": marks, "legend": legend,
-            "caption": ["Ingoing chart, clear past $r=3m$ from $v_1$. $K=0$ before the shell $v=0$, infinite on $r=0$ "
-                        "after. $R=0$." if system == HISCOCK_IN else
-                        "Outgoing chart, clear inside $r = 3m$ and the shell. $K$ falls with $m(u)$ to $0$ after the last "
-                        "ray $u_0 = 8$. $R = 0$."],
-            "settings": "$m_0 = 1$, $v_1 = 2$.",
+            "caption": ["Ingoing chart, clear past $r=3m$ from $v_1$. $K=48m^2/r^6$: $0$ before the shell $v=0$, infinite "
+                        "on $r=0$ after. $R=0$." if system == HISCOCK_IN else
+                        "Outgoing chart, clear inside $r = 3m$ and the shell. $K=48m^2/r^6$ falls with $m(u)$ to $0$ after "
+                        "the last ray $u_0$. $R = 0$."],
+            "settings": "$m_0 = 1$, $v_1 = 2$." if system == HISCOCK_IN else "$m_0 = 1$, $u_0 = 8$.",
             "clip": "Signed log, clipped above $10^4$.",
         })
 
