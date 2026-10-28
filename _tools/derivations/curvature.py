@@ -5379,10 +5379,11 @@ def gravitational_instantons(ck, src):
     nut_bolt = line("nut_bolt", "Nut and bolt", "taub_nut", "$r/n$", n, GI_REACH, GI_LOG, "$K\\,n^4$",
                     (nut, {"n": n}, None), (bolt, {"n": n}, (2 * n, GI_REACH)), "r")
     nut_bolt.update({
-        "caption": ["$K$ of Taub-NUT, pink, $3/2n^4$ at its nut $r = n$, and of Taub-bolt, dashed, $5/3n^4$ "
-                    "at its bolt $r = 2n$; $R = 0$."],
+        "caption": ["The Kretschmann scalar $K$ is $3/2n^4$ at Taub-NUT's nut $r = n$ and $5/3n^4$ at Taub-bolt's "
+                    "bolt $r = 2n$. The Ricci scalar $R$ vanishes."],
+        "legend": [["line", "K", "Taub-NUT, pink"], ["line", "reference", "Taub-bolt, dashed"]],
         "settings": "$n = 1$.",
-        "clip": "$K\\,n^4$, log.",
+        "clip": "Log.",
     })
 
     # -- Euclidean Schwarzschild
@@ -5391,10 +5392,11 @@ def gravitational_instantons(ck, src):
     schwarzschild = line("schwarzschild", "Euclidean Schwarzschild", "schwarzschild", "$r/r_s$", n, GI_REACH,
                          GI_LOG, "$K\\,r_s^4$", (cigar, {"r_s": n}, None), (None, None, None), "r")
     schwarzschild.update({
-        "caption": ["$K = 12r_s^2/r^6$ of Euclidean Schwarzschild, pink, $12/r_s^4$ on its bolt $r = r_s$; "
-                    "$R = 0$."],
+        "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ of Euclidean Schwarzschild is $12/r_s^4$ on its bolt "
+                    "$r = r_s$. The Ricci scalar $R$ vanishes."],
+        "legend": [["line", "K", "$K$, pink"]],
         "settings": "$r_s = 1$.",
-        "clip": "$K\\,r_s^4$, log.",
+        "clip": "Log.",
     })
 
     # -- Page's space beside CP^2
@@ -5417,10 +5419,11 @@ def gravitational_instantons(ck, src):
     page_view = line("page", "Page's space", "page", "$\\chi$", 0.0, math.pi, GI_PAGE, "$K/\\Lambda^2$",
                      (page, {"\\Lambda": 1.0, "\\nu": GI_NU}, None), (cp2, {"L": L}, None), "\\chi")
     page_view.update({
-        "caption": ["$K$ of Page's space, pink, $15.0\\Lambda^2$ on both bolts, $5.96\\Lambda^2$ midway; "
-                    "$\\mathbb{CP}^2$'s $16\\Lambda^2/3$ dashed; $R = 4\\Lambda$."],
-        "settings": "$\\Lambda = 1$, $\\nu = 0.2817$.",
-        "clip": "$K/\\Lambda^2$, linear.",
+        "caption": ["The Kretschmann scalar $K$ of Page's space is $15.0\\Lambda^2$ on its bolts, $5.96\\Lambda^2$ "
+                    "midway. Its Ricci scalar $R$ is $4\\Lambda$."],
+        "legend": [["line", "K", "$K$, pink"], ["line", "reference", "complex projective plane, dashed"]],
+        "settings": "$\\Lambda = 1$.",
+        "clip": "Linear.",
     })
 
     # -- Two Gibbons-Hawking centres
@@ -5456,10 +5459,10 @@ def gravitational_instantons(ck, src):
                 "params": {}, "functions": dict(GI_CENTRES), "nx": nx, "ny": ny,
                 "cells": [[rounded(v) for v in row] for row in grid]},
         "marks": [], "legend": [],
-        "caption": ["$K$ of two Gibbons-Hawking centres at $z = \\pm 2n$, $27/8n^4$ at each; "
-                    "$R = 0$."],
+        "caption": ["The Kretschmann scalar $K$ of two Gibbons-Hawking centres at $z = \\pm 2n$ is $27/8n^4$ at "
+                    "each. The Ricci scalar $R$ vanishes."],
         "settings": "$n = 1$, $\\epsilon = 1$.",
-        "clip": "$K\\,n^4$, log.",
+        "clip": "Log, $10^{-4}$ to $10$.",
     }
     return [nut_bolt, schwarzschild, page_view, centres]
 
