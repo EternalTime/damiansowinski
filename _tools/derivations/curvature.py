@@ -16872,6 +16872,7 @@ def bonnor_rotating_dust(ck, src):
 
 BWU_PARAMS = {"ell": 1.0, "mu": 1.0, "k": 0.0}         # ell = 1, mu = ell^2 and k = 0, as every drawing takes them
 BWU_K = {"kind": "log", "from": 10.0, "to": 1e5}       # the axis of K ell^4
+BWU_FUNCTIONS = {"a": "bwu_a_static(t)"}              # the wall's radius at the static time, as its diagrams declare it
 
 
 def brane_wall_universe(ck, src):
@@ -16889,7 +16890,7 @@ def brane_wall_universe(ck, src):
     x_axis = axis("$r/\\ell$", 0.5, 3)
     panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": BWU_K, "ticks": value_ticks(BWU_K)}]
     shape_checks(ck, metric, [p["aspect"] for p in panels])
-    K = nr_published(src, metric, system, "kretschmann", ["r"], list(params))
+    K = nr_published(src, metric, system, "kretschmann", ["r"], list(params), functions=BWU_FUNCTIONS)
     R = nr_published(src, metric, system, "ricci_scalar", ["r"], list(params))
     grr = nr_published(src, metric, system, "inverse_metric_components", ["r"], list(params), ("r", "r"))
     r = K.coords[0]
