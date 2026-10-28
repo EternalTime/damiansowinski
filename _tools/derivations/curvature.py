@@ -6219,19 +6219,13 @@ def israel_shell(ck, src):
         "id": "shell", "label": "The falling shell", "system": IN, "kind": "map", "x": x_axis, "y": y_axis,
         "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": every_second(scale)},
         "map": {"metric": metric, "system": IN, "scalar": "kretschmann", "x": "r", "y": "v",
-                "params": dict(IS_SHELL), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
                 "params": dict(IS_SHELL), "functions": dict(IS_SHELL_FUNCTIONS), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
-
-
         "marks": [{"class": "front", "points": world},
                   {"class": "horizon", "points": [[1.0, 0.0], [1.0, float(v1)]]},
                   {"class": "singular", "points": [[0.0, v_end], [0.0, float(v1)]]}],
         "legend": [["line", "front", "the shell"], ["line", "horizon", "horizon"],
                    ["line", "singular", "singularity"]],
-        "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the falling shell, flat and blank inside; "
         "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the shell, flat and blank inside; "
-
-
                     "Ricci scalar 0."],
         "settings": "$r_s = 1$, $\\mu = r_s/2$.",
         "clip": f"Log, clipped above $10^{{{round(math.log10(scale['to']))}}}$.",
@@ -6827,6 +6821,7 @@ def interstellar_wormhole(ck, src):
         "caption": [caption], "ricci_sentences": [], "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$\\rho=a=1$, $M=1/2$.",
         "clip": "Log; signed log.",
+    }]
 
 
 # ---------------------------------------------------------------- the Kaluza-Klein black holes
@@ -7159,6 +7154,7 @@ def kastor_traschen(ck, src):
         "movie": {"variable": "$c\\tau$", "seconds": movie["seconds"],
                   "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
         "legend": [], "caption": [KT_CAPTION], "settings": KT_SETTINGS, "clip": KT_CLIP,
+    }]
 
 
 # ---------------------------------------------------------------- Kasner's universe with a magnetic field
