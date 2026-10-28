@@ -14405,6 +14405,208 @@ def bw_caption(ct_horizon, ct_E, ct_delta, at_horizon, at_E):
     ]
 
 
+# ---------------------------------------------------------------- Bonnor's stars of charged dust
+
+BCD_RADIUS = Fraction(2)          # r_0 in units of m, as every drawing of both spheres takes it
+BCD_REACH = 4 * BCD_RADIUS        # the plot runs from the centre to r = 4 r_0, as the research list asks
+BCD_K = {"kind": "log", "from": 1e-5, "to": 1.0}            # the axis of K m^4 on both spheres
+BCD_R = {"kind": "linear", "from": -0.05, "to": 0.25}       # the axis of R^mu_mu m^2 on both spheres
+# The two spheres, by the chart that holds each: its label, the name its own curve takes in a
+# caption, and the name the other sphere's comparison takes.
+BCD_SPHERES = {
+    "sphere_1965": ("the sphere of 1965", "Bonnor's sphere of 1965",
+                    "Bonnor and Wickramasuriya's sphere of the same mass and radius"),
+    "sphere_1975": ("the sphere of 1975", "Bonnor and Wickramasuriya's sphere",
+                    "Bonnor's sphere of 1965, of the same mass and radius"),
+}
+
+
+def bonnor_charged_dust(ck, src):
+    """Bonnor's stars of charged dust at m = 1, every grain held in equilibrium by its own charge.
+
+    Each sphere is drawn at r_0 = 2m, the radius its other drawings take, from the centre to
+    r = 4 r_0: its own interior chart from the centre to the surface and the isotropic exterior
+    from the surface out, each a stretch of the same class, with the other sphere's interior
+    dashed as a comparison. Both interiors and the exterior write the same isotropic r, so one
+    radius runs across the whole plot; the areal chart's R = r + m carries the same exterior K,
+    which is checked here. Two panels share the axis of r: K on a logarithmic axis from 10^-5 to
+    1 and R^mu_mu on a linear axis from -0.05 to 0.25, where the jump to the vacuum's zero at the
+    surface is drawn as it stands. The Ricci scalar is the dust density, 8 pi G rho/c^2, since
+    the charge and its field carry no trace, so it jumps at the surface with the density.
+
+    What the captions state is checked here: the published Ricci scalar is minus the trace of the
+    published Einstein tensor at every point drawn; at the centre of the sphere of 1965
+    K = 60m^2/(r_0 + m)^6 and R^mu_mu = 6m/(r_0 + m)^3, and at its surface
+    R^mu_mu = 6mr_0/(r_0 + m)^4; the sphere of 1975 carries the density the other way about, with
+    R^mu_mu = 48m/(2r_0 + 3m)^3 at the centre and 6m/(r_0 + m)^3 at the surface, the value at the
+    centre of the other; the exterior's K is 8m^2(6r_0^2 + m^2)/(r_0 + m)^8 at the surface and
+    falls off as 48m^2/R^6; both scalars jump at the surface, where the density falls to zero;
+    the published exterior Ricci scalar vanishes; the redshift of the centre is read from the
+    published g_tt; no horizon is marked, since the published g^rr and g_tt never vanish; and
+    every value drawn lies inside its panel."""
+    name = "bonnor_charged_dust"
+    m, r_0 = 1.0, float(BCD_RADIUS)
+    inside, outside = (0.0, r_0), (r_0, float(BCD_REACH))
+    x_axis = axis("$r/m$", 0, float(BCD_REACH))
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": BCD_K, "ticks": value_ticks(BCD_K)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,m^2$", "aspect": 2, "scale": BCD_R, "ticks": value_ticks(BCD_R)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    star = {}
+    for chart in BCD_SPHERES:
+        star[chart] = {field: Published(src, name, chart, field, ["r"], ["m", "r_0"])
+                       for field in ("kretschmann", "ricci_scalar")}
+        star[chart]["grr"] = Published(src, name, chart, "inverse_metric_components", ["r"], ["m", "r_0"], ("r", "r"))
+        star[chart]["gtt"] = Published(src, name, chart, "metric_components", ["r"], ["m", "r_0"], ("t", "t"))
+        star[chart]["einstein"] = {i: Published(src, name, chart, "einstein_tensor", ["r"], ["m", "r_0"], (i, i))
+                                   for i in ("t", "r", "\\theta", "\\phi")}
+    vacuum = {field: Published(src, name, "exterior", field, ["r"], ["m"])
+              for field in ("kretschmann", "ricci_scalar")}
+    vacuum["grr"] = Published(src, name, "exterior", "inverse_metric_components", ["r"], ["m"], ("r", "r"))
+    vacuum["gtt"] = Published(src, name, "exterior", "metric_components", ["r"], ["m"], ("t", "t"))
+    areal = Published(src, name, "exterior_areal", "kretschmann", ["R"], ["m"])
+
+    # The exterior's two charts carry one field: its areal radius is R = r + m, where the
+    # isotropic chart's K stands, so a plot in r alone holds the whole exterior.
+    r_sym, R_sym = vacuum["kretschmann"].coords[0], areal.coords[0]
+    joined = sp.simplify(areal.expr.subs({R_sym: r_sym + areal.params[0]}) - vacuum["kretschmann"].expr)
+    ck(f"{name} the areal chart's K at R = r + m is the isotropic chart's at r", joined == 0, str(joined))
+    ck(f"{name} the published exterior Ricci scalar vanishes in both charts",
+       vacuum["ricci_scalar"].expr == 0 and Published(src, name, "exterior_areal", "ricci_scalar", ["R"], ["m"]).expr == 0)
+    far = [float(areal.exact([x, m])) * x ** 6 / (48 * m ** 2) for x in (1e3, 1e5, 1e7)]
+    ck(f"{name} the exterior K falls off as 48m^2/R^6", all(abs(v - 1) < 2e-2 for v in far)
+       and abs(far[2] - 1) < 1e-6, f"{far}")
+    out_K = float(vacuum["kretschmann"].exact([r_0, m]))
+    ck(f"{name} the exterior K at the surface is 8m^2(6r_0^2 + m^2)/(r_0 + m)^8",
+       abs(out_K / float(8 * (6 * BCD_RADIUS ** 2 + 1) / (BCD_RADIUS + 1) ** 8) - 1) < 1e-12, f"{out_K}")
+    edge_K = float(vacuum["kretschmann"].exact([float(BCD_REACH), m]))
+    rs_out = np.linspace(*outside, SAMPLES)
+    ck(f"{name} the exterior has no horizon", np.all(vacuum["grr"](rs_out, m) > 0) and np.all(vacuum["gtt"](rs_out, m) < 0))
+
+    def density(chart):
+        """Minus the trace of the published Einstein tensor, 8 pi G rho/c^2 for dust whose charge
+        and field carry no trace, against the published Ricci scalar at points through the star."""
+        at = [m, r_0]
+        worst = 0.0
+        for r in (0.0, 0.4, 0.9, 1.3, 1.7, r_0):
+            trace = sum(float(star[chart]["einstein"][i].exact([r] + at)) for i in star[chart]["einstein"])
+            published = float(star[chart]["ricci_scalar"].exact([r] + at))
+            worst = max(worst, abs(published + trace) / max(abs(published), 1e-300))
+        return worst
+
+    views = []
+    for chart, (label, own, other) in BCD_SPHERES.items():
+        twin = next(c for c in BCD_SPHERES if c != chart)
+        at = [m, r_0]
+        K, R = star[chart]["kretschmann"], star[chart]["ricci_scalar"]
+        curves = (line_curves(ck, f"{name} {chart}", "K", "K", K, "r", x_axis, BCD_K, height["K"],
+                              {"m": m, "r_0": r_0}, inside)
+                  + line_curves(ck, f"{name} {chart}", "R", "R", R, "r", x_axis, BCD_R, height["R"],
+                                {"m": m, "r_0": r_0}, inside)
+                  + line_curves(ck, f"{name} {chart} outside", "K", "K", vacuum["kretschmann"], "r", x_axis,
+                                BCD_K, height["K"], {"m": m}, outside)
+                  + line_curves(ck, f"{name} {chart} outside", "R", "R", vacuum["ricci_scalar"], "r", x_axis,
+                                BCD_R, height["R"], {"m": m}, outside)
+                  + line_curves(ck, f"{name} {twin} beside it", "K", "reference", star[twin]["kretschmann"], "r",
+                                x_axis, BCD_K, height["K"], {"m": m, "r_0": r_0}, inside)
+                  + line_curves(ck, f"{name} {twin} beside it", "R", "reference", star[twin]["ricci_scalar"], "r",
+                                x_axis, BCD_R, height["R"], {"m": m, "r_0": r_0}, inside))
+        centre_K, surface_K = float(K.exact([0.0] + at)), float(K.exact([r_0] + at))
+        centre_R, surface_R = float(R.exact([0.0] + at)), float(R.exact([r_0] + at))
+        twin_R = [float(star[twin]["ricci_scalar"].exact([r] + at)) for r in (0.0, r_0)]
+        rs = np.linspace(*inside, SAMPLES)
+        ck(f"{name} {chart} has no horizon inside the star",
+           np.all(star[chart]["grr"](rs, *at) > 0) and np.all(star[chart]["gtt"](rs, *at) < 0))
+        worst_trace = density(chart)
+        ck(f"{name} {chart} R is the dust density, minus the trace of the published Einstein tensor",
+           worst_trace < AGREE, f"worst {worst_trace:.2e}")
+        ck(f"{name} {chart} R is positive through the star and jumps to the vacuum's zero at the surface",
+           np.all(star[chart]["ricci_scalar"](rs, *at) > 0) and surface_R > 0)
+        ck(f"{name} {chart} K jumps at the surface, where the density falls to zero",
+           abs(surface_K / out_K - 1) > 0.1, f"{surface_K} to {out_K}")
+        redshift = 1 / math.sqrt(-float(star[chart]["gtt"].exact([0.0] + at))) - 1
+        for panel, scalar, scale in (("K", K, BCD_K), ("R", R, BCD_R)):
+            for part, fn, within, values in (("", scalar, inside, at), (" outside", vacuum[
+                    "kretschmann" if panel == "K" else "ricci_scalar"], outside, [m]),
+                    (" beside it", star[twin]["kretschmann" if panel == "K" else "ricci_scalar"], inside, at)):
+                up, down = beyond(fn, x_axis, scale, values, within)
+                ck(f"{name} {chart} {panel}{part} stays inside its panel", not up and not down, f"{up} {down}")
+        if chart == "sphere_1965":
+            exact_centre_K = 60 / (BCD_RADIUS + 1) ** 6
+            exact_centre_R = 6 / (BCD_RADIUS + 1) ** 3
+            exact_surface_R = 6 * BCD_RADIUS / (BCD_RADIUS + 1) ** 4
+            ck(f"{name} {chart} K at the centre is 60m^2/(r_0 + m)^6",
+               abs(centre_K / float(exact_centre_K) - 1) < 1e-12, f"{centre_K}")
+            ck(f"{name} {chart} R at the centre is 6m/(r_0 + m)^3 and at the surface 6mr_0/(r_0 + m)^4",
+               abs(centre_R / float(exact_centre_R) - 1) < 1e-12
+               and abs(surface_R / float(exact_surface_R) - 1) < 1e-12, f"{centre_R}, {surface_R}")
+            ck(f"{name} {chart} both scalars fall from the centre to the surface",
+               centre_K > surface_K and centre_R > surface_R)
+            story = [
+                f"Inside the star $K$ falls from $60m^2/(r_0 + m)^6 = {centre_K:.4f}/m^4$ at the centre to "
+                f"${surface_K:.4f}/m^4$ at the surface, then jumps down to ${out_K:.4f}/m^4$ in the vacuum.",
+                f"The density falls from the centre to the surface: $R^\\mu{{}}_\\mu = 6m/(r_0 + m)^3 = "
+                f"{centre_R:.4f}/m^2$ at the centre and $6mr_0/(r_0 + m)^4 = {surface_R:.4f}/m^2$ at the surface, "
+                "and it jumps to zero in the vacuum outside.",
+                f"Bonnor and Wickramasuriya's sphere carries its density the other way about, "
+                f"${twin_R[0]:.4f}/m^2$ at the centre and ${twin_R[1]:.4f}/m^2$ at the surface.",
+            ]
+        else:
+            exact_centre_R = 48 / (2 * BCD_RADIUS + 3) ** 3
+            exact_surface_R = 6 / (BCD_RADIUS + 1) ** 3
+            ck(f"{name} {chart} R at the centre is 48m/(2r_0 + 3m)^3 and at the surface 6m/(r_0 + m)^3",
+               abs(centre_R / float(exact_centre_R) - 1) < 1e-12
+               and abs(surface_R / float(exact_surface_R) - 1) < 1e-12, f"{centre_R}, {surface_R}")
+            ck(f"{name} {chart} the value at its surface is the other sphere's at its centre",
+               abs(surface_R / twin_R[0] - 1) < 1e-12, f"{surface_R}, {twin_R[0]}")
+            ck(f"{name} {chart} both scalars rise from the centre to the surface",
+               surface_K > centre_K and surface_R > centre_R)
+            story = [
+                f"Inside the star $K$ rises from ${centre_K:.4f}/m^4$ at the centre to ${surface_K:.4f}/m^4$ at "
+                f"the surface, then jumps down to ${out_K:.4f}/m^4$ in the vacuum.",
+                f"The density rises from the centre to the surface: $R^\\mu{{}}_\\mu = 48m/(2r_0 + 3m)^3 = "
+                f"{centre_R:.4f}/m^2$ at the centre and $6m/(r_0 + m)^3 = {surface_R:.4f}/m^2$ at the surface, "
+                "and it jumps to zero in the vacuum outside.",
+                f"Bonnor's sphere of 1965 carries its density the other way about, ${twin_R[0]:.4f}/m^2$ at the "
+                f"centre and ${twin_R[1]:.4f}/m^2$ at the surface.",
+            ]
+        legend = [["line", "K", "$K$, the Kretschmann scalar"],
+                  ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
+                  ["line", "reference", other],
+                  ["line", "front", "the surface of the star, $r = r_0$"]]
+        clip_K = ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-5}$ to $1$, and every value drawn lies "
+                  "within it.")
+        clip_R = ("We draw $R^\\mu{}_\\mu\\,m^2$ on a linear scale from $-0.05$ to $0.25$, and every value drawn "
+                  "lies within it.")
+        views.append({
+            "id": chart, "label": label, "kind": "line", "x": x_axis, "panels": panels,
+            "curves": curves, "marks": [{"class": "front", "x": r_0}], "legend": legend,
+            "caption": [
+                f"The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{{}}_\\mu$ of {own} against $r$ "
+                f"($r_0 = 2m$), the same at every $t$, $\\theta$, and $\\phi$, inside the star and in the "
+                f"charged vacuum outside it, beside {other}. " + story[0]
+                + f" Outside, $K$ falls off as $48m^2/R^6$ in the areal radius $R = r + m$, to "
+                  f"${tex_number(edge_K)}/m^4$ at $r = 4r_0$.",
+                "The Ricci scalar is the density of the dust, $R^\\mu{}_\\mu = 8\\pi G\\rho/c^2$, since the "
+                "charge and its field carry no trace. " + story[1] + " " + story[2],
+                "The dust rests in equilibrium with no pressure, every grain held by its own charge, and the "
+                "star has no horizon: $g_{tt} = -1/U^2$ never vanishes, and the redshift of light from the "
+                f"centre is ${redshift:.4f}$. The interior and the exterior are drawn in the one isotropic "
+                "radius $r$, so each curve runs across the surface; the exterior's areal chart carries the "
+                "same $K$ at $R = r + m$. That exterior is the extremal Reissner-Nordström field of the "
+                "star's mass and charge.",
+            ],
+            "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
+            "per_scalar": scalar_clips(clip_K, clip_R),
+            "settings": f"$m = 1$, the unit of every length, and $r_0 = 2m$, so the redshift of the centre is "
+                        f"${redshift:.4f}$.",
+            "clip": clip_K[:-len(", and every value drawn lies within it.")] + " and "
+                    + clip_R[len("We draw "):-len(", and every value drawn lies within it.")]
+                    + ", and every value drawn lies within them.",
+        })
+    return views
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -14417,6 +14619,7 @@ DRAWN = {
     "belinski_zakharov": belinski_zakharov,
     "black_saturn": black_saturn,
     "black_to_white_hole": black_to_white_hole,
+    "bonnor_charged_dust": bonnor_charged_dust,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
