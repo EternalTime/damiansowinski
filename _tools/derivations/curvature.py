@@ -2129,16 +2129,10 @@ def brill_waves(ck, src):
     whole meridional half plane.
 
     What the captions state is checked here: the published R vanishes at every cell, measured
-    against the square root of K, which is the Hamiltonian constraint the solver holds; K is
-    4 R_ab R^ab, the identity of three dimensions with R = 0, read from the published Einstein
-    tensor; K is largest in the cell beside the centre in every frame, and the fall from there to
-    rho = lambda on the plane z = 0 steepens as the amplitude grows; K vanishes at one point of the
-    axis, where the slice is flat, falling as rho^2 across the axis and as the square of the
-    distance along it; the wave's mass is Brill's integral, and 4.67 lambda at a = 12, which
-    Alcubierre and others tabulate; far out the stored scalar is Schwarzschild's 24(GM/c^2)^2/R^6
-    over the areal radius R = r psi^2, which the closed form psi = 1 + GM/2c^2r and q = 0 give
-    exactly; a minimal surface surrounds the centre exactly while a > 11.82, and the curve it cuts
-    the half plane in leaves the axis and meets the plane z = 0 at right angles."""
+    against the square root of K, which is the Hamiltonian constraint the solver holds; forty cells
+    of each map agree with the stored scalar in sixty digits; K is largest in the cell beside the
+    centre in every frame; a minimal surface surrounds the centre exactly while a > 11.82, and the
+    outer one, the apparent horizon, is drawn as the curve it cuts the quarter plane in."""
     name = "brill_waves"
     x_axis = axis("$\\rho/\\lambda$", 0, BWAVE_REACH)
     y_axis = axis("$z/\\lambda$", 0, BWAVE_REACH)
@@ -2176,11 +2170,26 @@ def brill_waves(ck, src):
            f"{float(grid[0, 0]):.6g} at rho = z = {float(xs[0]):g}")
         return K, R, xs, ys, grid
 
+    def horizon(a, found):
+        """The apparent horizon at the amplitude a, the outer minimal surface, as the curve it cuts
+        the quarter plane in from the axis to the plane z = 0, or no mark where the wave has none."""
+        if found is None:
+            return []
+        path, end = brill_wave.wave(float(a)).curve(found[1])
+        line = path(np.linspace(0, end, BWAVE_POINTS))
+        ck(f"{name} at a = {float(a):g} the apparent horizon meets the plane z = 0 at right angles",
+           abs(math.cos(float(line[2][-1]))) < 1e-6, f"{math.cos(float(line[2][-1])):.1e}")
+        return [{"class": "horizon", "points": [[round(float(r), 6), round(abs(float(z)), 6)]
+                                                for r, z in zip(line[0], line[1])]}]
+
     values = [BWAVE_FIRST + k * BWAVE_STEP for k in range(int((BWAVE_LAST - BWAVE_FIRST) / BWAVE_STEP) + 1)]
     frames = []
     for a in values:
         K, R, xs, ys, grid = drawn(a)
-        frames.append({"label": f"$a = {float(a):.2f}$", "value": float(a), "marks": [],
+        found = brill_wave.wave(float(a)).horizons()
+        ck(f"{name} at a = {float(a):g} an apparent horizon exactly when a > 11.82", (found is not None) == (a > critical),
+           "none" if found is None else f"leaves the axis at z = {found[1]:.4f}")
+        frames.append({"label": f"$a = {float(a):.2f}$", "value": float(a), "marks": horizon(a, found),
                        "map": {"metric": name, "system": "cylindrical", "scalar": "kretschmann",
                                "x": "\\rho", "y": "z", "params": {}, "functions": brill_declared(a),
                                "nx": BWAVE_CELLS, "ny": BWAVE_CELLS,
@@ -2191,7 +2200,7 @@ def brill_waves(ck, src):
         "colour": colour, "map": frames[0]["map"], "marks": [],
         "movie": {"variable": "$a$", "seconds": 5,
                   "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
-        "legend": [],
+        "legend": [["line", "horizon", "the apparent horizon, the outer minimal surface"]],
         "caption": ["The Kretschmann scalar $K$ of Brill's wave over the meridional half plane of $\\rho$ and $z$ "
                     "as its amplitude grows ($a$ from $11$ to $13$), the same at every $\\phi$ and at $z$ and $-z$."],
         "settings": "$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$ and "
@@ -2199,7 +2208,22 @@ def brill_waves(ck, src):
         "input": brill_wave.INPUT,
         "clip": "We colour $K\\,\\lambda^4$ on a logarithmic scale from $10^{-5}$ to $10^{3}$.",
     }
-    return [strong]
+    K, R, xs, ys, grid = drawn(BWAVE_WEAK)
+    ck(f"{name} at a = 4 no minimal surface surrounds the centre", brill_wave.wave(float(BWAVE_WEAK)).horizons() is None)
+    weak = {
+        "id": "weak", "label": "A weak wave", "kind": "map", "x": x_axis, "y": y_axis, "colour": colour,
+        "map": {"metric": name, "system": "cylindrical", "scalar": "kretschmann", "x": "\\rho", "y": "z",
+                "params": {}, "functions": brill_declared(BWAVE_WEAK), "nx": BWAVE_CELLS, "ny": BWAVE_CELLS,
+                "cells": [[rounded(v) for v in row] for row in grid]},
+        "marks": [], "legend": [],
+        "caption": ["The Kretschmann scalar $K$ of a weak Brill wave ($a = 4$) over the meridional half plane of "
+                    "$\\rho$ and $z$, the same at every $\\phi$ and at $z$ and $-z$, too weak to close a horizon."],
+        "settings": "$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$, "
+                    "$r^2 = \\rho^2 + z^2$ and $a = 4$.",
+        "input": brill_wave.INPUT,
+        "clip": strong["clip"],
+    }
+    return [strong, weak]
 
 
 # ---------------------------------------------------------------- Born and Infeld's point charge
