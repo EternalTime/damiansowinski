@@ -15523,6 +15523,160 @@ def bonnor_charged_dust(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the Erez-Rosen quadrupole
+
+ER_Q = (Fraction(-1, 2), Fraction(0), Fraction(1))   # oblate, Schwarzschild's, prolate: the q every other drawing takes
+ER_REACH = 8                      # the box and the line run out to 8 m
+ER_CELLS = 16                     # the cells of the map to each m, across and up
+ER_MAP = {"kind": "log", "from": 1e-5, "to": 1e1}    # the colours of K m^4
+ER_LINE = {"kind": "log", "from": 1e-4, "to": 1e4}   # the axis of K m^4 on both line panels
+ER_DOMAIN = "r > 2*m"             # the spherical chart's domain, outside the singularity, or the horizon at q = 0
+ER_AXIS = 1e-5                    # the theta the axis curve is read at, where the published K is finite
+ER_NEAR = 2.02                    # the curves start at r = 2.02 m, outside which the doubles hold the published K to 10^-9
+
+
+def erez_rosen(ck, src):
+    """The Erez-Rosen quadrupole at m = 1, its Kretschmann scalar at q = -1/2, 0 and 1.
+
+    The spherical chart publishes K in r and theta through psi, written out in closed form, and
+    R = 0, so the figure is K alone. The first view is a movie of a map over the quarter plane
+    0 <= r sin theta, r cos theta <= 8 m with r and theta drawn as polar coordinates, since K is
+    the same at theta and pi - theta, coloured on a logarithmic scale from 10^-5 to 10, the cells
+    inside r = 2m null; r = 2m is marked as the singularity for q != 0 and as Schwarzschild's
+    horizon at q = 0. The second is a movie of K against r from 2m to 8m on the axis, read at
+    theta = 10^-5 where the published formula is finite, and on the equator, with Schwarzschild's
+    K of r_s = 2m dashed on both.
+
+    What the captions state is checked here: R = 0; K at q = 0 is Schwarzschild's; K at
+    theta = 10^-5 is the axis's to the plotted precision; the map's cells agree in sixty digits;
+    K diverges toward r = 2m for q != 0 on the axis and the equator at different rates; and the
+    clip stated is where K leaves the colours."""
+    name = "erez_rosen"
+    m = 1.0
+    K = nr_published(src, name, "spherical", "kretschmann", ["r", "theta"], ["m", "q"])
+    ricci = nr_published(src, name, "spherical", "ricci_scalar", ["r", "theta"], ["m", "q"])
+    ck(f"{name} publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r, th = K.coords
+    mm, qq = K.params
+    schwarzschild = K_s.expr.subs({K_s.params[0]: 2 * mm, K_s.coords[0]: r})
+    ck(f"{name} K at q = 0 is Schwarzschild's of r_s = 2m", sp.simplify(K.expr.subs(qq, 0) - schwarzschild) == 0)
+    ck(f"{name} K is the same at theta and pi - theta",
+       all(abs(float(K.exact([rr, t, m, q])) / float(K.exact([rr, math.pi - t, m, q])) - 1) < 1e-12
+           for rr in (2.3, 4.1) for t in (0.2, 1.1) for q in (-0.5, 1.0)))
+    domain = domain_function(name, "spherical", ER_DOMAIN, ["r", "theta"], ["m", "q"])
+    # The axis curve, read where the published formula is finite, is the axis's to the plotted precision.
+    near = max(abs(float(K.exact([rr, ER_AXIS, m, q])) / float(K.exact([rr, ER_AXIS / 100, m, q])) - 1)
+               for rr in (2.05, 3.0, 8.0) for q in (-0.5, 1.0))
+    ck(f"{name} K at theta = 10^-5 is the axis's to 10^-6", near < 1e-6, f"{near:.1e}")
+    # The divergence toward r = 2m, on the axis and on the equator, in sixty digits.
+    def power(theta, q, lengths):
+        logs = [float(sp.log(K.exact([2 * m + d, theta, m, q]))) for d in lengths]
+        return [(a - b) / math.log(d0 / d1) for a, b, d0, d1 in zip(logs, logs[1:], lengths, lengths[1:])]
+    rates = {(q, t): power(t, q, (1e-3, 1e-4) if t < 1e-3 else (1e-8, 1e-9, 1e-10))
+             for q in (-0.5, 1.0) for t in (ER_AXIS, math.pi / 2)}
+    ck(f"{name} K grows toward r = 2m on the equator for q != 0, and on the axis at q = -1/2 at another rate",
+       all(p < -1 for p in rates[(-0.5, ER_AXIS)] + rates[(-0.5, math.pi / 2)] + rates[(1.0, math.pi / 2)])
+       and abs(rates[(-0.5, ER_AXIS)][-1] - rates[(-0.5, math.pi / 2)][-1]) > 0.3, f"{rates}")
+
+    # The map.
+    x_axis, y_axis = axis("$r\\sin\\theta/m$", 0, ER_REACH), axis("$r\\cos\\theta/m$", 0, ER_REACH)
+    shape_checks(ck, f"{name} map", [(x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])])
+    nx = ny = ER_CELLS * ER_REACH
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    n = math.ceil((math.pi / 2) / (2 * math.acos(1 - TOLERANCE / (2 * m * per_unit)))) + 1
+    sphere = [[float(2 * m * math.sin(a)) + 0.0, float(2 * m * math.cos(a)) + 0.0] for a in np.linspace(0, math.pi / 2, n)]
+    rng = np.random.default_rng(1959)
+    frames, over = [], []
+    for qf in ER_Q:
+        q = float(qf)
+        where = f"at q = {q:g}"
+        xs, ys, grid = cells(K, x_axis, y_axis, nx, ny, [m, q], frame="meridian")
+        R_, T_ = meridian(*np.meshgrid(xs, ys))
+        inside = domain(R_, T_, m, q)
+        ck(f"{name} K is finite and positive at every cell drawn {where}",
+           np.all(np.isfinite(grid[inside])) and np.all(grid[inside] > 0),
+           f"from {np.min(grid[inside]):.3e} to {np.max(grid[inside]):.3e}")
+        drawn = [(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]]
+        picks = sorted(set(drawn[:40]) | {(0, int(np.flatnonzero(inside[:, 0])[0])),
+                                           (int(np.flatnonzero(inside[0])[0]), 0)})
+        agrees(ck, f"{name} map {where}", K, [[*map(float, meridian(xs[i], ys[j])), m, q] for i, j in picks],
+               [grid[j, i] for i, j in picks])
+        fx, fy, fine = cells(K, x_axis, y_axis, 4 * nx, 4 * ny, [m, q], frame="meridian")
+        FR, FT = meridian(*np.meshgrid(fx, fy))
+        fin = domain(FR, FT, m, q)
+        ck(f"{name} K stays above the bottom of its colours on a grid four times as fine {where}",
+           not np.any(fine[fin] < ER_MAP["from"]), f"least {np.min(fine[fin]):.3e}")
+        high = fin & ~(fine <= ER_MAP["to"])
+        over.append(float(FR[high].max() - 2 * m) if high.any() else 0.0)
+        marks = [{"class": "horizon" if qf == 0 else "singular", "points": sphere}]
+        frame = {"label": f"$q = {q:.2f}$", "value": q, "marks": marks}
+        rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(grid, inside)]
+        frames.append((frame, {"metric": name, "system": "spherical", "scalar": "kretschmann", "x": "r",
+                               "y": "\\theta", "frame": "meridian", "params": {"m": m, "q": q},
+                               "domain": ER_DOMAIN, "nx": nx, "ny": ny, "cells": rows}))
+    ck(f"{name} K passes the top of its colours within 0.5 m of r = 2m alone, and not at q = 0",
+       over[1] == 0.0 and 0 < max(over) < 0.5, f"{over}")
+    for k, (frame, grid) in enumerate(frames):
+        if k:
+            frame["map"] = grid
+    scale = dict(ER_MAP)
+    plane = {
+        "id": "meridian", "label": "the meridian plane of $r$ and $\\theta$", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": frames[0][1], "marks": [],
+        "movie": {"variable": "$q$", "seconds": 3, "frames": [f for f, _ in frames]},
+        "legend": [["line", "singular", "singularity"], ["line", "horizon", "horizon, $q=0$"]],
+        "caption": ["$K\\,m^4$ of the Erez-Rosen quadrupole on the polar meridian plane of $r$, $\\theta$ for "
+                    "$q$ -1/2, 0, 1; $R=0$."],
+        "settings": "$m=1$.",
+        "clip": "Log; capped at 10 by $r=2m$.",
+    }
+
+    # K against r on the axis and on the equator.
+    x_r = axis("$r/m$", 2, ER_REACH)
+    panels = [{"id": "axis", "name": "$K(r, 0)\\,m^4$", "aspect": 2, "scale": ER_LINE, "ticks": value_ticks(ER_LINE)},
+              {"id": "plane", "name": "$K(r, \\pi/2)\\,m^4$", "aspect": 2, "scale": ER_LINE,
+               "ticks": value_ticks(ER_LINE)}]
+    shape_checks(ck, f"{name} line", [p["aspect"] for p in panels])
+    height = PLOT_W / 2
+    on_axis, in_plane = Held(K, {"\\theta": ER_AXIS}), Held(K, {"\\theta": math.pi / 2})
+    reference = (line_curves(ck, f"{name} schwarzschild axis", "axis", "reference", K_s, "r", x_r, ER_LINE, height,
+                             {"r_s": 2 * m})
+                 + line_curves(ck, f"{name} schwarzschild plane", "plane", "reference", K_s, "r", x_r, ER_LINE, height,
+                               {"r_s": 2 * m}))
+    movie, cuts, dips = [], [], []
+    for qf in ER_Q:
+        q = float(qf)
+        params = {"m": m, "q": q}
+        within = (ER_NEAR * m, ER_REACH * m)
+        curves = (line_curves(ck, f"{name} axis at q = {q:g}", "axis", "K", on_axis, "r", x_r, ER_LINE, height, params,
+                              within)
+                  + line_curves(ck, f"{name} plane at q = {q:g}", "plane", "K", in_plane, "r", x_r, ER_LINE, height,
+                                params, within))
+        for fn in (on_axis, in_plane):
+            up, down = beyond(fn, x_r, ER_LINE, [m, q], within)
+            dips += [(q, fn is on_axis, a, b) for a, b in down]
+            cuts += up
+        movie.append({"label": f"$q = {q:.2f}$", "value": q, "curves": curves, "marks": []})
+    # Only the axis at q = 1 leaves its panel, below, about the zero of K there.
+    ck(f"{name} no curve passes the top of its panel", not cuts, f"{cuts}")
+    ck(f"{name} only the axis at q = 1 passes the bottom of its panel, once, beside r = 2.22 m",
+       len(dips) == 1 and dips[0][:2] == (1.0, True) and 2.2 < dips[0][2] <= dips[0][3] < 2.25, f"{dips}")
+    line = {
+        "id": "directions", "label": "the axis and the equator", "kind": "line", "x": x_r, "panels": panels,
+        "curves": reference, "marks": [],
+        "movie": {"variable": "$q$", "seconds": 3, "frames": movie},
+        "legend": [],
+        "caption": ["$K\\,m^4$ against $r$ on the axis and the equator for $q$ -1/2, 0, 1, pink; dashes "
+                    "Schwarzschild's."],
+        "settings": "$m=1$; axis at $\\theta=10^{-5}$.",
+        "clip": "Log, from $r=2.02m$; the $q=1$ axis dips out at its zero.",
+    }
+    return [plane, line]
+
+
 # ---------------------------------------------------------------- the files
 
 # ---------------------------------------------------------------- Chandrasekhar and Xanthopoulos's colliding waves
@@ -15652,6 +15806,7 @@ DRAWN = {
     "einstein_rosen_waves": einstein_rosen_waves,
     "ellis_bronnikov": ellis_bronnikov,
     "exponential_metric": exponential_metric,
+    "erez_rosen": erez_rosen,
     "fisher_jnw": fisher_jnw,
     "gowdy": gowdy,
     "gravastar": gravastar,
