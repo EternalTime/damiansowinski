@@ -4951,6 +4951,45 @@ def einstein_rosen_bridge(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Maldacena and Qi's eternal traversable wormhole
+
+ETW_PARAMS = {"L": 1.0, "\\phi_h": 1.0}   # as the spacetime diagrams declare them
+ETW_SCALE = {"kind": "linear", "from": 0.0, "to": 8.0}   # the axis of K L^4
+
+
+def eternal_traversable_wormhole(ck, src):
+    """K across the global strip 0 < sigma < pi, from one boundary to the other, a constant.
+
+    Two-dimensional anti-de Sitter space has K = 4/L^4 and R = -2/L^2 at every event, and in two
+    dimensions K = R^2 for any metric, so one dashed line carries both and R has no panel. The
+    checks hold each chart's stored K to 4/L^4 and R to -2/L^2 at every L, K to R^2, and every
+    sampled value to the stored formula and to the panel."""
+    metric = "eternal_traversable_wormhole"
+    params = ["L", "\\phi_h"]
+    for system, coords in (("global", ["t", "sigma"]), ("poincare", ["t_P", "z"]), ("thermal", ["t_R", "rho"])):
+        K = nr_published(src, metric, system, "kretschmann", coords, params)
+        R = nr_published(src, metric, system, "ricci_scalar", coords, params)
+        L = K.params[0]
+        ck(f"{metric} {system} K is 4/L^4", sp.simplify(K.expr - 4 / L ** 4) == 0, f"{K.expr}")
+        ck(f"{metric} {system} R is -2/L^2", sp.simplify(R.expr + 2 / L ** 2) == 0, f"{R.expr}")
+        ck(f"{metric} {system} K = R^2", sp.simplify(K.expr - R.expr ** 2) == 0)
+    K = nr_published(src, metric, "global", "kretschmann", ["sigma"], params)
+    x_axis = axis("$\\sigma$", 0.0, math.pi)
+    aspect = 2.0
+    shape_checks(ck, metric, [aspect])
+    panel = {"id": "K", "name": "$K\\,L^4$", "aspect": aspect, "scale": ETW_SCALE, "ticks": value_ticks(ETW_SCALE)}
+    curves = line_curves(ck, metric, "K", "reference", K, "\\sigma", x_axis, ETW_SCALE, PLOT_W / aspect, ETW_PARAMS)
+    above, below = beyond(K, x_axis, ETW_SCALE, list(ETW_PARAMS.values()))
+    ck(f"{metric} K stays inside its panel", not above and not below)
+    return [{
+        "id": "strip", "label": "Global chart", "kind": "line", "x": x_axis,
+        "panels": [panel], "curves": curves, "marks": [], "legend": [["line", "reference", "$K$, dashed"]],
+        "caption": ["The Kretschmann scalar $K$ is $4/L^4$ at every event, the square of the Ricci scalar $-2/L^2$."],
+        "settings": "$L = 1$, $\\phi_h = 1$.",
+        "clip": "Linear, all inside.",
+    }]
+
+
 # ---------------------------------------------------------------- Fisher, Janis, Newman and Winicour's scalar field
 
 FJNW_GAMMA = Fraction(1, 2)       # gamma, as every drawing of the spacetime takes it
@@ -16866,6 +16905,7 @@ DRAWN = {
     "ellis_bronnikov": ellis_bronnikov,
     "exponential_metric": exponential_metric,
     "erez_rosen": erez_rosen,
+    "eternal_traversable_wormhole": eternal_traversable_wormhole,
     "fisher_jnw": fisher_jnw,
     "global_monopole": global_monopole,
     "gowdy": gowdy,
