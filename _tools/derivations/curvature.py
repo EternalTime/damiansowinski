@@ -7756,9 +7756,9 @@ def kerr_melvin(ck, src):
     views = []
     for Bq, view_id, label, caption in (
             (KM_B, "field", "$B = 1/4m$",
-             "The Kretschmann scalar $K$ of Kerr's hole in Melvin's universe; Ricci scalar $R=0$. Up the axis $K$ nears Melvin's $20B^4$."),
+             "The Kretschmann scalar $K$ of Kerr's hole in Melvin's universe; the Ricci scalar vanishes. Up the axis it nears Melvin's $20B^4$."),
             (Fraction(0), "kerr", "$B = 0$",
-             "The Kretschmann scalar $K$ of the same hole with the field off, Kerr's black hole; Ricci scalar $R=0$.")):
+             "The Kretschmann scalar $K$ of the same hole with the field off, Kerr's black hole; the Ricci scalar vanishes.")):
         Bv = float(Bq)
         params = {"m": m, "a": a, "B": Bv}
         values = list(params.values())
@@ -7797,7 +7797,7 @@ def kerr_melvin(ck, src):
             "legend": [["line", "horizon", "the horizons"], ["point", "singular", "the ring"]],
             "caption": [caption],
             "settings": f"$m=1$, $a=4m/5$, {label.replace(' ', '')}.",
-            "clip": "Signed log, cut by the ring.",
+            "clip": "Signed log, ring clipped.",
         })
     return views
 
