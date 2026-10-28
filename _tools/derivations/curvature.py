@@ -980,7 +980,7 @@ def belinski_zakharov(ck, src):
     crest_level, trough_level = (crest_time / w) ** 2, (trough_time / w) ** 2
 
     reach = BZ_REACH
-    line_axis = axis("$z/w$", -reach, reach)
+    line_axis = axis("$z/w$", -reach, reach, 9)      # every second unit of w, as the map's axis is ticked
     line_scale = dict(BZ_LINE)
     height = PLOT_W / 2
     along = np.linspace(1e-6, reach, 20001)
@@ -1102,7 +1102,7 @@ def belinski_zakharov(ck, src):
             "$w/4$ ($w = 1$, $\\cosh\\beta = 5/4$), the same at every $x$ and $y$. The wave is a vacuum, so its "
             "Ricci scalar vanishes, and the published $g^{zz}$ is positive at every $z$, so there is no horizon to "
             "mark.",
-            f"One hump stands over the singularity while $ct < {crest_time:.3f}\\,w$. A crest parts from the axis "
+            f"One hump stands about $z = 0$ while $ct < {crest_time:.3f}\\,w$. A crest parts from the axis "
             f"to each side there, and at $ct = {trough_time:.3f}\\,w$ a trough of negative $K$ opens behind each "
             "crest, after which the two pulses run out along $z = \\pm ct$ with the trough riding the cone and the "
             "crest about $w$ beyond it.",
