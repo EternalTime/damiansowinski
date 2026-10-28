@@ -4816,6 +4816,56 @@ def einstein_cluster(ck, src):
     return [speed_view, uniform_view, core_view]
 
 
+# ---------------------------------------------------------------- the Einstein-Dirac-Maxwell wormhole
+
+EDM_PARAMS = {"r_0": 1.0, "Q_e": 0.5}   # as every drawing of the wormhole takes them, so M = 2r_0/5
+EDM_SCALE = {"kind": "log", "from": 1e-6, "to": 1e1}   # the axis of K r_0^4
+
+
+def einstein_dirac_maxwell_wormhole(ck, src):
+    """K through the throat in the Bronnikov-Kim chart, the one chart that covers both sides.
+
+    The areal radius is r_0 + u^2, so u is in units of sqrt(r_0) and runs over |u| <= 3, where
+    the areal radius is 10 r_0. R = 0 in every chart, so it has no panel. The checks hold R to
+    zero, K to being even in u, its value 43/8 at the throat and its fall as 2643/(200 u^12)
+    far out, its strict fall on each side, the nonzero lapse and positive g^uu, which mark no
+    horizon, and every sampled value to the stored formula and to the panel.
+    """
+    metric = "einstein_dirac_maxwell_wormhole"
+    K = nr_published(src, metric, "bronnikov_kim", "kretschmann", ["u"], ["r_0", "Q_e"])
+    R = nr_published(src, metric, "bronnikov_kim", "ricci_scalar", ["u"], ["r_0", "Q_e"])
+    guu = nr_published(src, metric, "bronnikov_kim", "inverse_metric_components", ["u"], ["r_0", "Q_e"], ("u", "u"))
+    gtt = nr_published(src, metric, "bronnikov_kim", "metric_components", ["u"], ["r_0", "Q_e"], ("t", "t"))
+    u = K.coords[0]
+    held = dict(zip(K.params, (sp.Integer(1), sp.Rational(1, 2))))
+    ck(f"{metric} R vanishes", R.expr == 0)
+    ck(f"{metric} K is even in u", sp.simplify(K.expr.subs(u, -u) - K.expr) == 0)
+    ck(f"{metric} K is 43/8 at the throat", sp.simplify(K.expr.subs(held).subs(u, 0) - sp.Rational(43, 8)) == 0)
+    ck(f"{metric} K falls as 2643/(200 u^12) far out",
+       sp.limit(sp.cancel(K.expr.subs(held)) * u ** 12, u, sp.oo) == sp.Rational(2643, 200))
+    values = list(EDM_PARAMS.values())
+    side = np.linspace(0, 3, SAMPLES)
+    ck(f"{metric} K falls strictly from the throat on each side",
+       np.all(np.diff(K(side, *values)) < 0) and np.all(np.diff(K(-side, *values)) < 0))
+    ck(f"{metric} g^uu is positive and g_tt nonzero at every u drawn",
+       np.all(guu(side, *values) > 0) and np.all(gtt(side, *values) < 0))
+    x_axis = axis("$u/\\sqrt{r_0}$", -3, 3)
+    aspect = 1.5
+    panel = {"id": "K", "name": "$K\\,r_0^4$", "aspect": aspect, "scale": EDM_SCALE, "ticks": value_ticks(EDM_SCALE)}
+    shape_checks(ck, metric, [aspect])
+    curves = line_curves(ck, metric, "K", "K", K, "u", x_axis, EDM_SCALE, PLOT_W / aspect, EDM_PARAMS)
+    above, below = beyond(K, x_axis, EDM_SCALE, values)
+    ck(f"{metric} K stays inside its panel", not above and not below)
+    return [{
+        "id": "throat", "label": "Through the throat", "kind": "line", "x": x_axis,
+        "panels": [panel], "curves": curves, "marks": [], "legend": [],
+        "caption": ["$K$, pink, against Bronnikov and Kim's $u$, log scale $10^{-6}$ to $10$; $R=0$. "
+                    "$K$ peaks at $43/(8r_0^4)$ at the throat $u=0$ and dies away alike on both sides."],
+        "settings": "$r_0=1$, $Q_e=1/2$, so $M=2/5$.",
+        "clip": "",
+    }]
+
+
 # ---------------------------------------------------------------- the neutral and charged bridges
 
 def einstein_rosen_bridge(ck, src):
@@ -15369,6 +15419,7 @@ DRAWN = {
     "eih_many_bodies": eih_many_bodies,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
+    "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "einstein_rosen_waves": einstein_rosen_waves,
     "ellis_bronnikov": ellis_bronnikov,
