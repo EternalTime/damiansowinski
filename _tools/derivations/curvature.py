@@ -7756,9 +7756,9 @@ def kerr_melvin(ck, src):
     views = []
     for Bq, view_id, label, caption in (
             (KM_B, "field", "$B = 1/4m$",
-             "The Kretschmann scalar $K$ of Kerr's black hole in Melvin's universe. The Ricci scalar vanishes."),
+             "The Kretschmann scalar $K$ of Kerr's hole in Melvin's universe; $R=0$. Up the axis $K$ nears Melvin's $20B^4$."),
             (Fraction(0), "kerr", "$B = 0$",
-             "The Kretschmann scalar $K$ of the same hole with the field off, Kerr's black hole.")):
+             "The Kretschmann scalar $K$ of the same hole with the field off, Kerr's black hole; $R=0$.")):
         Bv = float(Bq)
         params = {"m": m, "a": a, "B": Bv}
         values = list(params.values())
