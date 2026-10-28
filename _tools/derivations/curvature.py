@@ -12811,8 +12811,9 @@ def distorted_schwarzschild(ck, src):
         "map": frames[0][1], "marks": [{"class": "horizon", "points": horizon}],
         "movie": {"variable": "$q$", "seconds": 3, "frames": [f for f, _ in frames]},
         "legend": [["line", "horizon", "horizon $r = 2m$"]],
-        "caption": ["$K$ of a black hole in a tidal field, $R = 0$; far out the field is not physical."],
-        "settings": "$m = 1$; the spherical chart's $r, \\theta$.",
+        "caption": ["The Kretschmann scalar $K$ of a black hole in a tidal field, a vacuum; far out the field "
+                    "is not physical."],
+        "settings": "$m = 1$; spherical chart.",
         "clip": "$K\\,m^4$ on a log scale, $10^{-4}$ to $10^4$.",
     }]
 
