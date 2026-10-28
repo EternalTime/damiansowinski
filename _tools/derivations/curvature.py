@@ -87,6 +87,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE))
 
+import black_saturn as bsat  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
 import slices  # noqa: E402
@@ -1148,6 +1149,336 @@ def belinski_zakharov(ck, src):
                  "within the vertical limits."),
     }
     return [view, movie]
+
+
+# ---------------------------------------------------------------- black Saturn
+
+BS_REACH = Fraction(9, 5)         # the box runs out to 9L/5 across and up, which holds both horizons
+BS_CELLS = 40                     # the cells of the map to each L, across and up
+BS_DIGITS = 40                    # the digits each cell is worked out in
+BS_CLOSE = 50                     # the digits the values beside the axis itself are worked out in
+BS_AXIS = 1e-6                    # how near the axis theta = 0 a value on a horizon is read
+BS_SCALE = {"kind": "symlog", "from": -1e2, "to": 1e4, "linear": 1e-2}   # the colours of K L^4
+BS_ZERO_CIRCLE = 1.3              # the circle the two surfaces where K vanishes are found on, in L
+BS_FAR = 64.0                     # the radius the fall-off is read at, in L
+
+
+def bs_numbers(published, digits):
+    """A published scalar of black Saturn as a function of r, theta and L: the four functions its
+    chart leaves free put in as numbers through the declared bs_V, bs_O, bs_W and bs_nu, and the
+    rest of the stored expression worked out through mpmath in `digits` digits, or in the digits one
+    call asks for.
+
+    The chart degenerates on the axis rho = 0, where both horizons lie, and the stored scalar's
+    numerator is published as one sum of 481 terms, so beside the axis those terms reach 10^20 times
+    their sum and a double carries none of its digits."""
+    labels = {f"{short}{order}": (name, order)
+              for name, short in nr.BS_SHORT.items() for order in bsat.ORDERS}
+    calls = sorted({f for f in published.expr.atoms(sp.Function) if str(f.func) in labels}, key=str)
+    stand = {call: sp.Symbol(f"_{call.func}") for call in calls}
+    fn = sp.lambdify(list(published.coords) + list(published.params) + [stand[c] for c in calls],
+                     published.expr.xreplace(stand), "mpmath")
+
+    def value(r, theta, L=1.0, digits=digits):
+        with mpmath.workdps(digits):
+            held = bsat.values(nr.BS, r, theta, digits)
+            return fn(mpmath.mpf(r), mpmath.mpf(theta), mpmath.mpf(L),
+                      *[held[labels[str(c.func)][0]][labels[str(c.func)][1]] for c in calls])
+    return value
+
+
+def bs_grid(value, x_axis, y_axis, nx, ny):
+    """A scalar at the centres of an even grid of nx by ny cells over a map's box in the frame
+    "meridian", a row for each cell up, each cell worked out on its own."""
+    xs = x_axis["from"] + (np.arange(nx) + 0.5) * (x_axis["to"] - x_axis["from"]) / nx
+    ys = y_axis["from"] + (np.arange(ny) + 0.5) * (y_axis["to"] - y_axis["from"]) / ny
+    out = np.empty((ny, nx))
+    for j, y in enumerate(ys):
+        for i, x in enumerate(xs):
+            r, theta = meridian(float(x), float(y))
+            out[j, i] = float(value(float(r), float(theta)))
+    return xs, ys, out
+
+
+def bs_zero(value, radius, inside, outside):
+    """The angle on the circle of radius `radius` where K vanishes, between an angle where it is
+    negative and one where it is positive, by bisection in BS_CLOSE digits."""
+    lo, hi = inside, outside
+    for _ in range(40):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if value(radius, mid, digits=BS_CLOSE) < 0 else (lo, mid)
+    return 0.5 * (lo + hi)
+
+
+def black_saturn(ck, src):
+    """Elvang and Figueras's black Saturn at kappa = (7/8, 9/16, 3/7) and beta = 0, the values its
+    embedding diagram takes, its Kretschmann scalar over the polar chart's quarter plane.
+
+    The polar chart publishes K and R in its four free functions V, Omega, W and nu and their first
+    and second derivatives along r and theta, so the figure declares the four, which black_saturn.py
+    builds from the names Weyl's chart defines and carries as jets. The Saturn is a vacuum and its
+    published R vanishes, so the figure is K alone, a map in the frame "meridian": r sin theta across
+    and r cos theta up, theta running from 0 to pi/2, so the quarter plane is the whole meridian half
+    plane of Weyl's rho and z folded along the axis rho = 0, which runs up the left edge where
+    z = r^2/2L^2 is positive and along the bottom edge where it is negative, with the plane z = 0 the
+    diagonal. Both horizons are segments of that axis: the ring's, kappa_3 <= z <= kappa_2, and the
+    hole's, kappa_1 <= z <= 1, each marked where the chart's own z puts it. The box is
+    0 <= across, up <= 9L/5 in cells a fortieth of L on a side, coloured on a signed logarithmic
+    scale, linear within 10^-2 of zero, from -10^2 to 10^4 in units of 1/L^4, since K changes sign
+    between the two horizons. Every cell is worked out in forty digits, as bs_numbers says.
+
+    What the caption states is checked here: the drawn parameters hold the ring in balance with no
+    conical membrane, and beta = 0 leaves the hole no angular momentum of its own; the radius of each
+    end of each horizon is where the chart's own z = r^2/2L^2 at theta = 0 puts the rod end; the
+    published R vanishes over the whole box; forty digits are sixty at the cells nearest the axis,
+    the centre and the corners; K is finite at every cell and finite and positive along both horizons
+    and the whole axis drawn; on the ring's horizon it falls from the outer edge to its least and
+    rises to the inner edge, and on the hole's it falls from the face toward the ring to the far one,
+    the ring's least above the hole's greatest; it dips between them at the radius stated; it is
+    negative inside one region off the axis, whose two bounding surfaces cross the circle r = 1.3 L
+    at the angles stated; it tends to the value stated at the centre of the chart, Weyl's rho = z = 0,
+    where the metric is smooth; far away the four functions are flat space's and K falls as r^-8, the
+    same to four figures at every angle; the four functions are the chart printer's own reading of the
+    same names and their jet derivatives are mpmath's differences of them; and the clip stated is
+    where K leaves the colours."""
+    params = {"L": 1.0}
+    values = list(params.values())
+    read = {"coords", "parameters"}
+    K = Published(src, "black_saturn", "polar", "kretschmann", ["r", "theta"], ["L"],
+                  functions=nr.BS_POLAR_FUNCTIONS)
+    ricci = Published(src, "black_saturn", "polar", "ricci_scalar", ["r", "theta"], ["L"],
+                      functions=nr.BS_POLAR_FUNCTIONS)
+    value, ricci_value = bs_numbers(K, BS_DIGITS), bs_numbers(ricci, BS_DIGITS)
+    reach = float(BS_REACH)
+    x_axis, y_axis = axis("$r\\sin\\theta/L$", 0, reach), axis("$r\\cos\\theta/L$", 0, reach)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "black_saturn", [aspect])
+    scale = dict(BS_SCALE)
+
+    # The parameters every drawing of the Saturn takes, and the balance of the ring around the hole.
+    k1, k2, k3, beta = (Fraction(nr.BS[name]) for name in ("kappa_1", "kappa_2", "kappa_3", "beta"))
+    balance = (1 + k2 * beta) ** 2 * k1 * (1 - k2) * (1 - k3) * (k1 - k3) == (k1 - k2) ** 2
+    ck("black_saturn the drawn parameters hold the ring in balance around a hole at rest",
+       balance and beta == 0 and 0 < k3 <= k2 < k1 <= 1 and float(nr.BS["L"]) == 1.0,
+       f"kappa = ({k1}, {k2}, {k3}), beta = {beta}")
+
+    # Each horizon is the rod the chart's own domains put on the axis, in the radius its own z gives.
+    rods = {"ring": (k3, k2), "hole": (k1, Fraction(1))}
+    edges = {name: (math.sqrt(2 * float(a)), math.sqrt(2 * float(b))) for name, (a, b) in rods.items()}
+    _, _, polar = nr.load("black_saturn", "polar")
+    z_of = sp.sympify(polar.parameters["z"]).subs({polar.parameters["L"]: 1, polar.symbol["\\theta"]: 0})
+    worst = max(abs(float(z_of.subs(polar.symbol["r"], sp.sqrt(2 * z)) - z))
+                for rod in rods.values() for z in rod)
+    ck("black_saturn each end of each horizon is where the chart's own z puts the rod end",
+       worst < 1e-15 and all(b > a for a, b in edges.values()) and max(sum(edges.values())) < reach,
+       ", ".join(f"{name} {a:.6f} to {b:.6f}" for name, (a, b) in edges.items()))
+
+    nx = ny = round(BS_CELLS * reach)
+    xs, ys, cellv = bs_grid(value, x_axis, y_axis, nx, ny)
+    ck("black_saturn K is finite at every cell", np.all(np.isfinite(cellv)),
+       f"from {np.min(cellv):.6e} to {np.max(cellv):.6e} over {cellv.size} cells")
+
+    # Sixty digits at forty cells spread over the map, at the four corners, and at the cells beside
+    # each horizon, through the Reader's own arithmetic.
+    rng = np.random.default_rng(2007)
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(0, 0), (nx - 1, 0), (0, ny - 1), (nx - 1, ny - 1)}
+    picks |= {(0, int(round(BS_CELLS * y))) for a, b in edges.values() for y in (a, b)}
+    picks = sorted(picks)
+    points = [[float(v) for v in meridian(xs[i], ys[j])] + values for i, j in picks]
+    agrees(ck, "black_saturn map", K, points, [cellv[j, i] for i, j in picks])
+
+    # Forty digits against sixty at the cells where the arithmetic cancels hardest.
+    hardest = [(0, ny - 1), (0, 0), (nx - 1, 0), (nx - 1, ny - 1),
+               (0, int(round(BS_CELLS * edges["ring"][0]))), (0, int(round(BS_CELLS * edges["hole"][0])))]
+    loss = 0.0
+    for i, j in hardest:
+        r, theta = (float(v) for v in meridian(xs[i], ys[j]))
+        near, exact = value(r, theta, digits=BS_DIGITS), value(r, theta, digits=60)
+        loss = max(loss, abs(float(near) - float(exact)) / max(abs(float(exact)), 1e-300))
+    ck("black_saturn forty digits are sixty at the cells nearest the axis, the centre and the corners",
+       loss < 1e-20, f"worst {loss:.1e}")
+
+    # The published Ricci scalar vanishes over the whole box, beside the curvature K carries there.
+    standing = 0.0
+    for j in range(0, ny, 11):
+        for i in range(0, nx, 11):
+            r, theta = (float(v) for v in meridian(xs[i], ys[j]))
+            standing = max(standing, abs(float(ricci_value(r, theta)))
+                           / max(math.sqrt(abs(cellv[j, i])), 1e-300))
+    ck("black_saturn the published Ricci scalar vanishes over the box", standing < 1e-30,
+       f"worst |R| over sqrt|K| {standing:.1e}")
+
+    # Each horizon, read at BS_AXIS from the axis, where the limit is settled to the figures stated.
+    def along(name, count=19):
+        a, b = edges[name]
+        return [(a + k * (b - a) / count, float(value(a + k * (b - a) / count, BS_AXIS, digits=BS_CLOSE)))
+                for k in range(count + 1)]
+
+    def limit(r):
+        return [float(value(r, t, digits=BS_CLOSE)) for t in (BS_AXIS, BS_AXIS / 10)]
+
+    ring, hole = along("ring"), along("hole")
+    ck("black_saturn K is finite and positive along both horizons",
+       all(math.isfinite(v) and v > 0 for _, v in ring + hole),
+       f"ring {min(v for _, v in ring):.6g} to {max(v for _, v in ring):.6g}, "
+       f"hole {min(v for _, v in hole):.6g} to {max(v for _, v in hole):.6g}")
+    settled = max(abs(a - b) / abs(b) for r in (edges["ring"][0], edges["hole"][1], BS_ZERO_CIRCLE)
+                  for a, b in [limit(r)])
+    ck("black_saturn the values on the horizons are settled at the angle they are read at",
+       settled < 1e-4, f"worst {settled:.1e} between {BS_AXIS:.0e} and {BS_AXIS / 10:.0e}")
+    ring_out, ring_in = limit(edges["ring"][0])[1], limit(edges["ring"][1])[1]
+    hole_near, hole_far = limit(edges["hole"][0])[1], limit(edges["hole"][1])[1]
+    ring_least = min(ring, key=lambda p: p[1])
+    ck("black_saturn K on the ring's horizon falls from its outer edge to a least and rises to its inner one",
+       ring_out > ring_least[1] < ring_in and edges["ring"][0] < ring_least[0] < edges["ring"][1]
+       and all(a[1] > b[1] for a, b in zip(ring, ring[1:]) if b[0] < ring_least[0])
+       and all(a[1] < b[1] for a, b in zip(ring, ring[1:]) if a[0] > ring_least[0]),
+       f"{ring_out:.6g} to {ring_least[1]:.6g} at r = {ring_least[0]:.6f} to {ring_in:.6g}")
+    ck("black_saturn K on the hole's horizon falls from the face toward the ring to the far one",
+       all(a[1] > b[1] for a, b in zip(hole, hole[1:])) and hole_near > hole_far,
+       f"{hole_near:.6g} to {hole_far:.6g}")
+    ck("black_saturn the ring's least curvature is above the hole's greatest",
+       ring_least[1] > hole_near, f"{ring_least[1]:.6g} against {hole_near:.6g}")
+
+    # The axis drawn, where K stays positive, and the dip between the two horizons.
+    on_axis = [(r, float(value(r, BS_AXIS, digits=BS_CLOSE)))
+               for r in np.linspace(reach / (2 * ny), reach, 2 * ny)]
+    ck("black_saturn K is positive along the whole axis drawn", all(v > 0 for _, v in on_axis),
+       f"least {min(v for _, v in on_axis):.6g} of {len(on_axis)} points")
+    between = [p for p in on_axis if edges["ring"][1] < p[0] < edges["hole"][0]]
+    dip = min(between, key=lambda p: p[1])
+    ck("black_saturn K dips between the two horizons", between[0][1] > dip[1] < between[-1][1],
+       f"least {dip[1]:.6g} at r = {dip[0]:.4f}")
+
+    # The one region off the axis where K is negative, and the two surfaces bounding it.
+    least = np.unravel_index(np.argmin(cellv), cellv.shape)
+    least_r, least_theta = (float(v) for v in meridian(xs[least[1]], ys[least[0]]))
+    inside = float(value(BS_ZERO_CIRCLE, 0.5 * (least_theta + 0.25), digits=BS_CLOSE))
+    zeros = (bs_zero(value, BS_ZERO_CIRCLE, 0.25, 0.02), bs_zero(value, BS_ZERO_CIRCLE, 0.25, 0.9))
+    ck("black_saturn K is negative off the axis between the two surfaces where it vanishes",
+       cellv.min() < 0 and inside < 0 and zeros[0] < least_theta < zeros[1]
+       and all(abs(float(value(BS_ZERO_CIRCLE, t, digits=BS_CLOSE))) < 1e-9 for t in zeros),
+       f"least {cellv.min():.6g} at r = {least_r:.4f}, theta = {least_theta:.4f}; "
+       f"zeros at {zeros[0]:.6f} and {zeros[1]:.6f}")
+
+    # The centre of the chart, Weyl's rho = z = 0, where the metric is smooth across the axis.
+    middle = [float(value(r, t, digits=60)) for r in (1e-3, 1e-4) for t in (0.3, math.pi / 4, 1.3)]
+    centre = middle[-1]
+    ck("black_saturn K tends to one value at the centre of the chart from every direction",
+       max(abs(v / centre - 1) for v in middle) < 1e-7, f"{centre:.9f} within {max(abs(v / centre - 1) for v in middle):.1e}")
+
+    # Flat space far away, where r is the radius of the 3-spheres, and the fall-off of K.
+    with mpmath.workdps(40):
+        far_held = bsat.values(nr.BS, 1000.0, 0.7, 40)
+        flat = {"V": float(far_held["V"][""]) - math.log(1000 * math.sin(0.7)),
+                "W": float(far_held["W"][""]) - math.log(1000 * math.sin(0.7)),
+                "nu": float(far_held["nu"][""]) + math.log(1000.0), "Omega": float(far_held["Omega"][""])}
+    ck("black_saturn the four functions are flat space's far away", max(abs(v) for v in flat.values()) < 1e-4,
+       ", ".join(f"{name} off by {v:.1e}" for name, v in flat.items()))
+    powers = [(r, float(value(r, math.pi / 4, digits=60)) * r ** 8) for r in (BS_FAR / 2, BS_FAR, 2 * BS_FAR)]
+    angles = [float(value(BS_FAR, t, digits=60)) * BS_FAR ** 8 for t in (0.2, 0.5, 1.0, 1.4)]
+    far = angles[1]
+    ck("black_saturn K falls as r^-8 far away, at the same rate at every angle",
+       all(a[1] < b[1] for a, b in zip(powers, powers[1:])) and abs(powers[-1][1] / powers[0][1] - 1) < 5e-3
+       and max(abs(v / far - 1) for v in angles) < 1e-3,
+       ", ".join(f"r^8 K = {v:.6g} at r = {r:.0f}" for r, v in powers))
+
+    # The four functions against the chart printer's own reading of the same names, and their jet
+    # derivatives against mpmath's differences of them.
+    import print_charts as pc  # noqa: E402
+    _, _, weyl = nr.load("black_saturn", "weyl")
+    printed = pc.black_saturn_functions(weyl, {name: sp.Rational(nr.BS[name]) for name in
+                                               ("kappa_1", "kappa_2", "kappa_3", "beta")}, precision=40)[0]
+    apart, slipped = 0.0, 0.0
+    for r, theta in ((1.2, 0.6), (0.98, 0.05), (0.5, 1.2), (1.5, 0.3)):
+        with mpmath.workdps(40):
+            rho = mpmath.mpf(r) ** 2 * mpmath.sin(theta) * mpmath.cos(theta)
+            z = mpmath.mpf(r) ** 2 * (mpmath.cos(theta) ** 2 - mpmath.sin(theta) ** 2) / 2
+            held = bsat.values(nr.BS, r, theta, 40)
+            for name in nr.BS_SHORT:
+                there = printed[name](rho, z)
+                apart = max(apart, abs(float(held[name][""] - there)) / max(abs(float(there)), 1e-30))
+    ck("black_saturn the four functions are the chart printer's reading of the same names", apart < 1e-25,
+       f"worst {apart:.1e} at four points")
+    with mpmath.workdps(40):
+        for name in nr.BS_SHORT:
+            def one(a, b, name=name):
+                return bsat.values(nr.BS, float(a), float(b), 40)[name][""]
+            held = bsat.values(nr.BS, 1.2, 0.6, 40)
+            for order, counts in zip(bsat.ORDERS, ((0, 0), (1, 0), (0, 1), (2, 0), (1, 1), (0, 2))):
+                want = mpmath.diff(one, (1.2, 0.6), counts)
+                slipped = max(slipped, abs(float(held[name][order] - want)) / max(abs(float(want)), 1e-30))
+    ck("black_saturn the jet derivatives of the four functions are mpmath's differences of them",
+       slipped < 1e-8, f"worst {slipped:.1e}")
+
+    # Where K leaves the colours: only beside the ring's horizon, the segment of the axis it lies on.
+    XX, YY = np.meshgrid(xs, ys)
+    from_ring = np.hypot(XX, YY - np.clip(YY, *edges["ring"]))
+    over = cellv > BS_SCALE["to"]
+    d_clip = float(from_ring[over].max()) if over.any() else 0.0
+    ck("black_saturn K passes the top of its colours only beside the ring's horizon",
+       over.any() and d_clip < 0.1 and np.all(from_ring[over] <= d_clip),
+       f"{int(over.sum())} cells within {d_clip:.4f} L")
+    ck("black_saturn no value drawn passes the bottom of its colours", cellv.min() > BS_SCALE["from"],
+       f"least {cellv.min():.4f} against {BS_SCALE['from']:.0f}")
+    # The distance stated is rounded up, so that no value beyond the colours lies farther out.
+    d_stated = math.ceil(d_clip * 100) / 100
+    rods_drawn = [{"class": "horizon", "points": [[0.0, a], [0.0, b]]} for a, b in edges.values()]
+
+    view = {
+        "id": "meridian", "label": "the quarter plane of $r$ and $\\theta$", "kind": "map",
+        "system": "polar", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,L^4$", "scale": scale, "ticks": every_second(scale)},
+        "map": {"metric": "black_saturn", "system": "polar", "scalar": "kretschmann", "x": "r",
+                "y": "\\theta", "frame": "meridian", "params": params,
+                "functions": dict(nr.BS_POLAR_FUNCTIONS), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in cellv]},
+        "marks": rods_drawn,
+        "legend": [["line", "horizon", "the two horizons, $\\rho = 0$ at $\\kappa_3 \\le z \\le \\kappa_2$ for the "
+                    "ring and at $\\kappa_1 \\le z \\le 1$ for the hole"]],
+        "input": ("Elvang and Figueras's four functions as numbers, from the names Weyl's chart defines: "
+                  "$e^{2V} = \\left(G_yH_x^2 - \\left(\\omega_\\psi + qH_y\\right)^2\\right)/H_xH_y$, "
+                  "$\\Omega = \\left(\\omega_\\psi + qH_y\\right)e^{-2V}/H_x$, $e^{2W} = G_y$ and "
+                  "$e^{2\\nu} = k^2H_xP$, with their first and second derivatives along $r$ and $\\theta$."),
+        "caption": [
+            "The Kretschmann scalar $K$ of black Saturn, a black ring in balance around a spherical black hole "
+            "with no angular momentum of its own, over the quarter plane of $r\\sin\\theta$ across and "
+            "$r\\cos\\theta$ up ($\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, $\\kappa_3 = 3/7$, $\\beta = 0$), the "
+            "same at every $t$, $\\psi$ and $\\phi$. The spacetime is a vacuum, so its Ricci scalar vanishes. "
+            "The quarter plane is Weyl's meridian half plane folded along the axis $\\rho = 0$, which runs up "
+            "the left edge, where $z = r^2/2L^2$ is positive, and along the bottom edge, where it is negative, "
+            "with the plane $z = 0$ the diagonal. Far away the metric is flat space with $r$ the radius of its "
+            "3-spheres, and close in neither coordinate is a distance: each horizon is a segment of that axis, "
+            f"the $S^1\\times S^2$ of the ring from $r = {edges['ring'][0]:.3f}\\,L$ to "
+            f"${edges['ring'][1]:.3f}\\,L$ and the $S^3$ of the hole from ${edges['hole'][0]:.3f}\\,L$ to "
+            f"${edges['hole'][1]:.3f}\\,L$, with the plane of the ring between them.",
+            f"$K$ is finite on both. On the ring's horizon $K\\,L^4$ falls from ${tex_number(ring_out)}$ at the "
+            f"outer edge $z = \\kappa_3$ to ${tex_number(ring_least[1])}$ at $r = {ring_least[0]:.3f}\\,L$ and "
+            f"rises to ${tex_number(ring_in)}$ at the inner edge $z = \\kappa_2$. On the hole's it falls from "
+            f"${hole_near:.0f}$ on the face turned toward the ring, $z = \\kappa_1$, to ${hole_far:.0f}$ on the "
+            "far one, $z = 1$, so the ring carries the stronger curvature everywhere along it. Along the axis "
+            f"between the two, $K\\,L^4$ dips to ${dip[1]:.0f}$ at $r = {dip[0]:.3f}\\,L$.",
+            f"$K$ is positive along the whole axis and negative inside one region off it, bounded by the two "
+            f"surfaces where it vanishes, which cross the circle $r = {BS_ZERO_CIRCLE}\\,L$ at "
+            f"$\\theta = {zeros[0]:.3f}$ and $\\theta = {zeros[1]:.3f}$; the least value drawn is "
+            f"${cellv.min():.1f}/L^4$ at $r = {least_r:.2f}\\,L$, $\\theta = {least_theta:.2f}$. At the centre "
+            f"of the chart, Weyl's $\\rho = z = 0$, where the metric is smooth across the axis, "
+            f"$K\\,L^4 = {centre:.2f}$. Far from both horizons $K$ falls as $r^{{-8}}$, the rate of a vacuum in "
+            f"five dimensions, with $r^8K = {far:.1f}\\,L^4$ at $r = {BS_FAR:.0f}\\,L$ at every angle to four "
+            "figures.",
+        ],
+        "settings": ("$L = 1$, the unit of every length, with $\\kappa_1 = 7/8$, $\\kappa_2 = 9/16$, "
+                     "$\\kappa_3 = 3/7$ and $\\beta = 0$, the values of the embedding diagram: a ring in balance, "
+                     "with no conical membrane between it and the hole, around a hole with no angular momentum "
+                     "of its own."),
+        "clip": ("We colour $K\\,L^4$ on a signed logarithmic scale, linear within $0.01$ of zero, from "
+                 "$-10^{2}$ to $10^{4}$, and give a value beyond it the colour of the end it passes: "
+                 f"$K\\,L^4$ passes $10^{{4}}$ at {int(over.sum())} cells, each within ${d_stated:.2f}\\,L$ of "
+                 f"the ring's horizon, and the least value drawn, ${cellv.min():.1f}$, stays inside the "
+                 "other end."),
+    }
+    return [view]
 
 
 # ---------------------------------------------------------------- Bonnor and Vaidya's radiating star
@@ -13980,6 +14311,7 @@ DRAWN = {
     "bartnik_mckinnon": bartnik_mckinnon,
     "bardeen_perturbations": bardeen_perturbations,
     "belinski_zakharov": belinski_zakharov,
+    "black_saturn": black_saturn,
     "black_to_white_hole": black_to_white_hole,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,
