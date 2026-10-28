@@ -2673,7 +2673,8 @@
     "version": "b81012d201c71c19",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
-    "embedding": "c4aa8198bba8d575"
+    "embedding": "c4aa8198bba8d575",
+    "curvature": "58199d3cc326162d"
   },
   {
     "id": "kerr",
