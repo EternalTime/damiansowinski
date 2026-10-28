@@ -2201,8 +2201,8 @@ def brill_waves(ck, src):
         "movie": {"variable": "$a$", "seconds": 5,
                   "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
         "legend": [["line", "horizon", "apparent horizon"]],
-        "caption": ["The Kretschmann scalar $K$ of Brill's wave on the $(\\rho, z)$ half plane as its amplitude "
-                    "grows from $a = 11$ to $13$."],
+        "caption": ["The Kretschmann scalar $K$ of Brill's wave on the $(\\rho, z)$ half plane as $a$ grows "
+                    "from $11$ to $13$."],
         "settings": "$\\lambda = 1$, $q = a\\rho^2e^{-\\rho^2-z^2}$.",
         "clip": "Log scale of $K\\lambda^4$.",
     }
