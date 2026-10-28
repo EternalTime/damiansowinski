@@ -92,6 +92,7 @@ import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
 import slices  # noqa: E402
 import two_holes  # noqa: E402
+import bubbling_ads as ba  # noqa: E402
 
 CURVATURE_DIR = build.CURVATURE_DIR
 
@@ -13814,6 +13815,111 @@ def bonnor_magnetic_dipole(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Lin, Lunin and Maldacena's bubbling anti-de Sitter space
+
+BA_BOX = ((0, 3), (0, 1.5))       # r/L^2 and y/L^2: the ring and its white on both sides
+BA_CELLS = (200, 100)             # the cells of the map across and up, each 0.015 L^2 on a side
+BA_SCALE = {"kind": "log", "from": 10.0, "to": 1e4}      # the colours of K L^4
+
+
+def bubbling_ads(ck, src):
+    """The black ring of bubbling_ads.RING, the circles r = L^2 and sqrt(2) L^2 at L = 1, as the
+    conformal view "rings" draws it, its Kretschmann scalar over the half plane of r and y.
+
+    The rings chart leaves G and V free, and the map declares them as bubbling_ads.functions_text()
+    writes them, Lin, Lunin and Maldacena's closed form for concentric circles. The double
+    evaluation of the stored scalar loses its digits far out and toward y = 0, so every cell is
+    evaluated in sixty digits. Cell centres stand above y = 0, where the chart is singular.
+
+    The checks: the stored R vanishes; the global chart's K is 80/L^4 and the plane wave's 0; z is
+    -1/2 on the black ring and +1/2 on the white toward y = 0, where the 3-sphere of radius
+    sqrt(y) e^(G/2) shrinks on the black and the other on the white; K finite and settled toward
+    y = 0 inside the ring, outside it, on the axis and at both circles; K tending to 80/L^4 far
+    out; every cell finite and inside the colours, the least and the greatest beside a boundary of
+    the ring; K varying with both coordinates; and forty cells against the stored formula.
+    """
+    name, system = "bubbling_ads", "rings"
+    functions = ba.functions_text()
+    K = Published(src, name, system, "kretschmann", ["r", "y"], [], functions=functions)
+    R = Published(src, name, system, "ricci_scalar", ["r", "y"], [], functions=functions)
+    disc = Published(src, name, "global", "kretschmann", [], ["L"])
+    wave = Published(src, name, "plane_wave", "ricci_scalar", [], [])
+    wave_K = Published(src, name, "plane_wave", "kretschmann", [], [])
+    x_axis = axis("$r/L^2$", *BA_BOX[0], 7)
+    y_axis = axis("$y/L^2$", *BA_BOX[1], 4)
+    nx, ny = BA_CELLS
+    scale = BA_SCALE
+    shape_checks(ck, name, [(BA_BOX[0][1] - BA_BOX[0][0]) / (BA_BOX[1][1] - BA_BOX[1][0])])
+    high = sp.lambdify(K.coords, K.expr, "mpmath", cse=True)
+
+    def k(r, y):
+        with mpmath.workdps(60):
+            return float(high(mpmath.mpf(float(r)), mpmath.mpf(float(y))))
+
+    xs = x_axis["from"] + (np.arange(nx) + 0.5) * (x_axis["to"] - x_axis["from"]) / nx
+    ys = y_axis["from"] + (np.arange(ny) + 0.5) * (y_axis["to"] - y_axis["from"]) / ny
+    values = np.array([[k(x, y) for x in xs] for y in ys])
+    ck(f"{name} every cell is finite and inside the logarithmic limits",
+       np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]),
+       f"{np.min(values):.9g} to {np.max(values):.9g}")
+    least, most = np.unravel_index(np.argmin(values), values.shape), np.unravel_index(np.argmax(values), values.shape)
+    inner, outer = 1.0, math.sqrt(2)
+
+    def beside(j, i):
+        return ys[j] < 0.2 and min(abs(xs[i] - inner), abs(xs[i] - outer)) < outer - inner
+
+    ck(f"{name} the least and the greatest cell lie beside a boundary of the ring, low over the plane",
+       beside(*least) and beside(*most),
+       f"least {values[least]:.6g} at ({xs[least[1]]:.4f}, {ys[least[0]]:.4f}), "
+       f"greatest {values[most]:.6g} at ({xs[most[1]]:.4f}, {ys[most[0]]:.4f})")
+    picks = [(j, i) for j in np.linspace(0, ny - 1, 8).astype(int) for i in np.linspace(0, nx - 1, 5).astype(int)]
+    agrees(ck, name, K, [[xs[i], ys[j]] for j, i in picks], [values[j, i] for j, i in picks])
+    ricci = max(abs(float(R.exact([xs[i], ys[j]]))) for j, i in picks)
+    ck(f"{name} R vanishes", ricci < 1e-30, f"largest |R| {ricci:.1e} at the forty cells")
+    ck(f"{name} the single disc's K is 80/L^4 and the plane wave's R and K vanish",
+       sp.simplify(disc.expr - 80 / disc.params[0] ** 4) == 0 and wave.expr == 0 and wave_K.expr == 0,
+       f"{disc.expr}, {wave.expr}, {wave_K.expr}")
+    r, y = sp.symbols("r y", positive=True)
+    G, _ = ba.concentric_polar(r, y, ba.RING)
+    low = sp.Float(1e-12, 80)
+    colour = {R0: float((sp.tanh(G) / 2).subs({r: R0, y: low}).evalf(60)) for R0 in (0.5, 1.2, 2.0)}
+    ck(f"{name} z is +1/2 inside the ring, -1/2 on it and +1/2 outside it toward y = 0",
+       abs(colour[0.5] - 0.5) < 1e-9 and abs(colour[1.2] + 0.5) < 1e-9 and abs(colour[2.0] - 0.5) < 1e-9, f"{colour}")
+    radius = {R0: (float((y * sp.exp(G)).subs({r: R0, y: low}).evalf(60)), float((y * sp.exp(-G)).subs({r: R0, y: low}).evalf(60)))
+              for R0 in (0.5, 1.2, 2.0)}
+    ck(f"{name} the 3-sphere of radius sqrt(y) e^(G/2) shrinks on the black, the other on the white",
+       radius[1.2][0] < 1e-20 and radius[1.2][1] > 1e-2 and radius[0.5][1] < 1e-20 and radius[0.5][0] > 1e-2
+       and radius[2.0][1] < 1e-20 and radius[2.0][0] > 1e-2, f"{radius}")
+    edge = {}
+    for R0 in (0.0, 0.5, inner, 1.2, outer, 2.0):
+        a, b = k(R0 + 1e-30, 1e-6), k(R0 + 1e-30, 1e-9)
+        edge[R0] = b
+        ck(f"{name} K is finite and settled toward y = 0 at r = {R0:.4f} L^2",
+           math.isfinite(b) and abs(a / b - 1) < 1e-4, f"{a:.9g} at y = 1e-6, {b:.9g} at y = 1e-9")
+    bottom = [k(x, 1e-9) for x in xs]
+    peak = int(np.argmax(bottom))
+    ck(f"{name} K is greatest along y = 0 on the black ring",
+       inner < xs[peak] < outer, f"{bottom[peak]:.6g} at r = {xs[peak]:.4f}")
+    far = [k(0, 1e4), k(1e4, 1e4), k(1e4, 1e-3)]
+    ck(f"{name} K tends to 80/L^4 far from the ring", all(abs(v / 80 - 1) < 1e-3 for v in far), f"{far}")
+    ck(f"{name} K varies with both r and y", abs(edge[1.2] - edge[0.5]) > 1 and abs(k(1.2, 1) - edge[1.2]) > 1)
+    white = [[[0.0, 0.0], [inner, 0.0]], [[outer, 0.0], [float(BA_BOX[0][1]), 0.0]]]
+    return [{
+        "id": "rings", "label": "the half plane of $r$ and $y$", "system": system, "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,L^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": name, "system": system, "scalar": "kretschmann", "x": "r", "y": "y", "params": {},
+                "functions": dict(functions), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "front", "points": line} for line in white],
+        "legend": [["line", "front", "white of $y = 0$"]],
+        "caption": ["The ten-dimensional Kretschmann scalar $K$ of a black ring ($L^2 < r < \\sqrt{2}\\,L^2$), "
+                    "finite everywhere and $80/L^4$ far away."],
+        "settings": "$L = 1$.",
+        "clip": "Logarithmic, $10$ to $10^4$.",
+    }]
+
+
 # ---------------------------------------------------------------- Ehlers and Kundt's A- and B-metrics
 
 AB_B = 1.0                        # b in units of itself, as every drawing of the A- and B-metrics takes it
@@ -14319,6 +14425,7 @@ DRAWN = {
     "boson_star": boson_star,
     "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
+    "bubbling_ads": bubbling_ads,
     "c_metric": c_metric,
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
