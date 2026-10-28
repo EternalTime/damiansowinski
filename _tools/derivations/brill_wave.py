@@ -35,6 +35,10 @@ horizon. A curve shot from the axis at right angles closes into a surface when i
 plane z = 0 at right angles. Alcubierre and others find the first such surface at an amplitude
 between 11.81 and 11.82; critical() finds 11.82.
 
+Wave.field carries psi with its first and second derivatives in rho and z, the sum differentiated
+in r and mu and taken to rho and z by the chain rule, which the published curvature scalars of
+the slice are built from.
+
 It needs numpy and scipy and nothing else, so the tests run it as it stands.
 """
 import functools
@@ -67,6 +71,18 @@ def potential(a, rho, z):
     """V = (d_rho^2 q + d_z^2 q)/4, the potential of Brill's equation."""
     r2 = rho * rho + z * z
     return a / 4 * np.exp(-r2) * (2 - 12 * rho * rho + 4 * rho * rho * r2)
+
+
+def _legendre(mu, modes):
+    """P_l(mu), P_l'(mu) and P_l''(mu) for the even l = 0, 2, ..., 2(modes - 1), at an array of
+    mu, each column one l."""
+    out = [np.empty((len(mu), modes)) for _ in range(3)]
+    for k in range(modes):
+        c = np.zeros(2 * k + 1)
+        c[2 * k] = 1.0
+        for order, column in enumerate(out):
+            column[:, k] = legendre.legval(mu, legendre.legder(c, order) if order else c)
+    return out
 
 
 def _chebyshev(n):
@@ -130,6 +146,7 @@ class Wave:
                 A[i * n + nodes, i * n + nodes] = 1.0
         self.u = np.linalg.solve(A, b).reshape(modes, n)
         self.du = self.u @ D.T
+        self.d2u = self.du @ D.T
         self.mass = 2 * EDGE * self.u[0, 0]
         self.l = 2 * np.arange(modes)
         # P_l(0) for the even l.
@@ -181,6 +198,59 @@ class Wave:
             total = w.sum(axis=1, keepdims=True)
             f[~out], df[~out] = w @ self.u.T / total, w @ self.du.T / total
         return (1 + f @ self.at_equator).reshape(shape), (df @ self.at_equator).reshape(shape)
+
+    def _radial_all(self, r):
+        """u_l(r), u_l'(r) and u_l''(r) for every l at an array of radii, by the barycentric
+        formula on Chebyshev's points inside the edge and by the multipoles beyond it, where
+        u_l = u_l(EDGE) (EDGE/r)^(l + 1) gives u_l' = -(l + 1) u_l/r and
+        u_l'' = (l + 1)(l + 2) u_l/r^2."""
+        r = np.asarray(r, dtype=float)
+        f, df, d2f = (np.empty((len(r), self.modes)) for _ in range(3))
+        out = r >= EDGE
+        if out.any():
+            f[out] = self.u[:, 0] * (EDGE / r[out, None]) ** (self.l + 1)
+            df[out] = -(self.l + 1) * f[out] / r[out, None]
+            d2f[out] = (self.l + 1) * (self.l + 2) * f[out] / r[out, None] ** 2
+        if (~out).any():
+            d = r[~out, None] - self.r[None, :]
+            on = np.abs(d) < 1e-14
+            w = self.weights / np.where(on, 1.0, d)
+            w[on.any(axis=1)] = on[on.any(axis=1)]
+            total = w.sum(axis=1, keepdims=True)
+            f[~out], df[~out] = w @ self.u.T / total, w @ self.du.T / total
+            d2f[~out] = w @ self.d2u.T / total
+        return f, df, d2f
+
+    def field(self, rho, z):
+        """psi at (rho, z) with its first and second derivatives in rho and z, for arrays of
+        either: psi, d_rho psi, d_z psi, d_rho^2 psi, d_rho d_z psi and d_z^2 psi.
+
+        With S = sum u_l(r) P_l(mu), r = hypot(rho, z) and mu = z/r, psi = 1 + S and the chain
+        rule carries S_r, S_mu, S_rr, S_rmu and S_mumu to rho and z through d(r)/d(rho) = rho/r,
+        d(r)/dz = z/r, d(mu)/d(rho) = -rho z/r^3 and d(mu)/dz = rho^2/r^3, whose own derivatives
+        are z^2/r^3, rho^2/r^3 and -rho z/r^3 for r and z(3 rho^2 - r^2)/r^5,
+        rho(3z^2 - r^2)/r^5 and -3 rho^2 z/r^5 for mu."""
+        shape = np.broadcast_shapes(np.shape(rho), np.shape(z))
+        x = np.broadcast_to(np.asarray(rho, dtype=float), shape).ravel()
+        y = np.broadcast_to(np.asarray(z, dtype=float), shape).ravel()
+        r = np.hypot(x, y)
+        f, df, d2f = self._radial_all(r)
+        P, dP, d2P = _legendre(np.where(r > 0, y / np.where(r > 0, r, 1.0), 1.0), self.modes)
+        S_r, S_mu = (df * P).sum(axis=1), (f * dP).sum(axis=1)
+        S_rr, S_rmu, S_mumu = (d2f * P).sum(axis=1), (df * dP).sum(axis=1), (f * d2P).sum(axis=1)
+        r_x, r_y = x / r, y / r
+        mu_x, mu_y = -x * y / r ** 3, x * x / r ** 3
+        r_xx, r_xy, r_yy = y * y / r ** 3, -x * y / r ** 3, x * x / r ** 3
+        mu_xx, mu_xy, mu_yy = (y * (3 * x * x - r * r) / r ** 5, x * (3 * y * y - r * r) / r ** 5,
+                               -3 * x * x * y / r ** 5)
+        values = (1 + (f * P).sum(axis=1),
+                  S_r * r_x + S_mu * mu_x,
+                  S_r * r_y + S_mu * mu_y,
+                  S_rr * r_x ** 2 + 2 * S_rmu * r_x * mu_x + S_mumu * mu_x ** 2 + S_r * r_xx + S_mu * mu_xx,
+                  S_rr * r_x * r_y + S_rmu * (r_x * mu_y + r_y * mu_x) + S_mumu * mu_x * mu_y
+                  + S_r * r_xy + S_mu * mu_xy,
+                  S_rr * r_y ** 2 + 2 * S_rmu * r_y * mu_y + S_mumu * mu_y ** 2 + S_r * r_yy + S_mu * mu_yy)
+        return tuple(v.reshape(shape) for v in values)
 
     def brill_mass(self, n_r=400, n_mu=48):
         """Brill's integral for the mass, (1/2 pi) times the integral of (grad psi/psi)^2 over flat
@@ -293,6 +363,15 @@ class Wave:
 @functools.lru_cache(maxsize=None)
 def wave(a, nodes=NODES, modes=MODES):
     return Wave(a, nodes, modes)
+
+
+# The orders (i, j) of d_rho^i d_z^j psi that `field` returns, in its order.
+ORDERS = ((0, 0), (1, 0), (0, 1), (2, 0), (1, 1), (0, 2))
+
+
+def psi_derivative(rho, z, a, order):
+    """d_rho^i d_z^j psi of the wave of amplitude a at (rho, z), for the order (i, j)."""
+    return wave(float(a)).field(rho, z)[ORDERS.index(tuple(order))]
 
 
 def critical(lo=11.5, hi=12.2):
