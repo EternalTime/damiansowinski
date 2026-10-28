@@ -2863,7 +2863,8 @@
     "version": "c6f3f8d68fea752c",
     "diagrams": "751e7bb9426ca853",
     "conformal": "c948590fa4547aec",
-    "embedding": "d603369104ee5eab"
+    "embedding": "d603369104ee5eab",
+    "curvature": "9f4700ef9a56b4ac"
   },
   {
     "id": "kerr_newman",
