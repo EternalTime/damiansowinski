@@ -234,6 +234,7 @@ import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import black_saturn as bsat  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
+import brill_wave  # noqa: E402
 import brane_wall_universe as bwu  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import nm_disc  # noqa: E402
@@ -2727,6 +2728,44 @@ def _bs_declare():
 
 
 DECLARED_FUNCTIONS.update(_bs_declare())
+
+# The conformal factor of Brill's wave, which brill_wave solves from the Hamiltonian constraint for
+# each amplitude: bw_psi(rho, z, a) and the five derivatives in rho and z the published scalars of
+# the slice hold, named for the derivative each takes, as bw_psi_rz for d_rho d_z psi. The amplitude
+# is no parameter of the chart, so each figure writes it into the declared form as a number.
+def _bw_name(order):
+    i, j = order
+    return "bw_psi" + ("_" + "r" * i + "z" * j if i or j else "")
+
+
+def _bw_declare():
+    made = {}
+
+    def differentiated(order):
+        """The derivative of one of these functions in rho, argindex 1, and in z, argindex 2; the
+        amplitude it carries last is a number, so nothing differentiates it."""
+        i, j = order
+        higher = {1: _bw_name((i + 1, j)), 2: _bw_name((i, j + 1))}
+
+        def fdiff(self, argindex=1):
+            if argindex not in higher:
+                raise sp.ArgumentIndexError(self, argindex)
+            return made[higher[argindex]](*self.args)
+        return fdiff
+
+    for order in reversed(brill_wave.ORDERS):
+        body = {"nargs": 3, "is_real": True,
+                "_imp_": staticmethod(lambda rho, z, a, order=order: brill_wave.psi_derivative(rho, z, a, order)),
+                # The solution has the precision of the spectral solve; scalar arithmetic can then be
+                # repeated in sixty digits with those same values.
+                "_eval_evalf": lambda self, prec: sp.Float(float(self._imp_(*[float(v) for v in self.args])), prec)}
+        if sum(order) < 2:
+            body["fdiff"] = differentiated(order)
+        made[_bw_name(order)] = type(_bw_name(order), (sp.Function,), body)
+    return made
+
+
+DECLARED_FUNCTIONS.update(_bw_declare())
 
 
 def e12_tortoise(x):
