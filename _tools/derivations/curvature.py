@@ -7153,6 +7153,116 @@ def kastor_traschen(ck, src):
         "movie": {"variable": "$c\\tau$", "seconds": movie["seconds"],
                   "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
         "legend": [], "caption": [KT_CAPTION], "settings": KT_SETTINGS, "clip": KT_CLIP,
+
+
+# ---------------------------------------------------------------- Kasner's universe with a magnetic field
+
+KM_P3 = Fraction(6, 7)            # p_3, of the exponents (-2/7, 3/7, 6/7) every drawing of the universe takes
+KM_REACH = (1e-3, 1e3)            # t from 10^-3 to 10^3 in the unit of the powers, the knee at t = 1 mid-plot
+KM_K = {"kind": "log", "from": 1e-32, "to": 1e13}   # the axis of K c^4
+KM_ROSEN = {"kind": "linear", "from": 0.0, "to": 6000.0}   # the axis of K ell^4 in Rosen's chart
+# The curve stops a hundredth short of eta = pi, where K ell^4 is below 10^-24 and a double's
+# 1 + cos(eta) has lost every digit to cancellation.
+KM_ROSEN_END = math.pi - 1e-2
+
+
+def kasner_magnetic(ck, src):
+    """Kasner's universe with a magnetic field, its Kretschmann scalar against time in two charts.
+
+    Kasner's time publishes K as a function of t, p_3 and b alone, and Rosen's chart, the
+    axisymmetric member (0, 0, 1), as a function of eta alone, and both publish R = 0, so the figure
+    is K alone, one line view per chart. The first, at p_3 = 6/7 and b = 1, the values of the
+    embedding, draws log10 t across from 10^-3 to 10^3, each curve declaring t beside its points
+    through the landed horizontal expression, and K on a logarithmic axis from 10^-32 to 10^13; the
+    same published K at b = 0 is dashed beside it, Kasner's vacuum 16 p_3^2 (1 - p_3)/t^4, a straight
+    line of slope -4, which the field's K follows before the knee at b^2 t^(2 p_3) = 1 and leaves
+    after it for the slope -4(1 + 2 p_3) = -76/7 of the second Kasner epoch. The second draws K over
+    0 <= eta <= pi at ell = 1 on a linear axis, finite at the coordinate singularity eta = 0 and
+    falling to zero toward the infinite future.
+
+    What the captions state is checked here: both charts publish R = 0; K is positive at every t
+    drawn, the numerator's negative b^6 term never winning at these exponents; the b = 0 curve is
+    16 p_3^2 (1 - p_3)/t^4 exactly; the local slope of K is within a hundredth of -4 at t = 10^-3 and
+    of -76/7 at t = 10^3; K in Rosen's chart is 5120/ell^4 at eta = 0, zero at eta = pi and falls
+    between; and every curve lies inside its panel."""
+    metric = "kasner_magnetic"
+    p3, b = float(KM_P3), 1.0
+    names = ["p_3", "b"]
+    lo, hi = (math.log10(t) for t in KM_REACH)
+    x_axis = {"name": "$t$", "from": lo, "to": hi,
+              "ticks": [{"at": float(k), "label": decade(k)} for k in range(round(lo), round(hi) + 1)]}
+    K_ticks = [t for t in value_ticks(KM_K) if round(math.log10(t["at"])) % 10 == 0]
+    panels = [{"id": "K", "name": "$K\\,c^4$", "aspect": 1, "scale": KM_K, "ticks": K_ticks}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = PLOT_W / panels[0]["aspect"]
+    K = nr_published(src, metric, "kasner_time", "kretschmann", ["t"], names)
+    R = nr_published(src, metric, "kasner_time", "ricci_scalar", ["t"], names)
+    K_rosen = nr_published(src, metric, "rosen", "kretschmann", ["eta"], ["\\ell"])
+    R_rosen = nr_published(src, metric, "rosen", "ricci_scalar", ["eta"], ["\\ell"])
+    ts = np.geomspace(*KM_REACH, SAMPLES)
+
+    ck(f"{metric} both charts publish R = 0", R.expr == 0 and R_rosen.expr == 0)
+    ck(f"{metric} K is positive at every t drawn", np.all(K(ts, p3, b) > 0),
+       f"least {np.min(K(ts, p3, b)):.4g}")
+    vacuum = 16 * p3 ** 2 * (1 - p3)
+    ck(f"{metric} K at b = 0 is Kasner's 16 p_3^2 (1 - p_3)/t^4",
+       np.allclose(K(ts, p3, 0.0), vacuum / ts ** 4, rtol=1e-14, atol=0))
+    slope = lambda t: float((sp.log(K.exact([t * 1.0001, p3, b])) - sp.log(K.exact([t / 1.0001, p3, b])))
+                            / (2 * math.log(1.0001)))
+    late = -4 * (1 + 2 * p3)
+    ck(f"{metric} K falls within a hundredth of t^-4 at the early end", abs(slope(KM_REACH[0]) + 4) < 0.01,
+       f"{slope(KM_REACH[0]):.5f}")
+    ck(f"{metric} K falls within a hundredth of t^(-76/7) at the late end", abs(slope(KM_REACH[1]) - late) < 0.01,
+       f"{slope(KM_REACH[1]):.5f} against {late:.5f}")
+
+    def curve(cls, params):
+        values = K(ts, *params.values())
+        ck(f"{metric} {cls} at {params} stays inside its panel",
+           np.all(values >= KM_K["from"]) and np.all(values <= KM_K["to"]),
+           f"{np.min(values):.4g} to {np.max(values):.4g}")
+        xs = np.log10(ts)
+        p0, p1 = span(KM_K)
+        X = PLOT_W * (xs - lo) / (hi - lo)
+        Y = height * (1 - (position(KM_K, values) - p0) / (p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        entry = curve_entry("K", cls, K, "t", params, [[float(xs[k]) + 0.0, float(values[k]) + 0.0] for k in keep])
+        entry["horizontal"] = {"expression": "log(t)/log(10)", "values": [float(ts[k]) for k in keep]}
+        agrees(ck, f"{metric} {cls} at {params}", K, [[float(ts[k]), *params.values()] for k in keep],
+               [float(values[k]) for k in keep])
+        return entry
+
+    curves = [curve("reference", {"p_3": p3, "b": 0.0}), curve("K", {"p_3": p3, "b": b})]
+
+    eta_axis = axis("$\\eta$", 0.0, math.pi)
+    rosen_panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": KM_ROSEN,
+                     "ticks": value_ticks(KM_ROSEN)}]
+    shape_checks(ck, f"{metric} rosen", [p["aspect"] for p in rosen_panels])
+    etas = np.linspace(0.0, math.pi, SAMPLES)
+    rosen_values = K_rosen(etas, 1.0)
+    ck(f"{metric} Rosen's K is 5120/ell^4 at eta = 0 and zero at eta = pi",
+       abs(float(K_rosen.exact([0.0, 1.0])) - 5120) < 1e-40 and abs(float(K_rosen.exact([math.pi, 1.0]))) < 1e-40)
+    ck(f"{metric} Rosen's K falls from eta = 0 to eta = pi", np.all(np.diff(rosen_values) <= 0))
+    ck(f"{metric} Rosen's K stays inside its panel",
+       np.all(rosen_values >= KM_ROSEN["from"]) and np.all(rosen_values <= KM_ROSEN["to"]))
+    rosen_curves = line_curves(ck, f"{metric} rosen", "K", "K", K_rosen, "\\eta", eta_axis, KM_ROSEN,
+                               PLOT_W / rosen_panels[0]["aspect"], {"\\ell": 1.0}, (0.0, KM_ROSEN_END))
+
+    return [{
+        "id": "kasner_time", "label": "Kasner's time", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [],
+        "legend": [["line", "K", "$b = 1$"], ["line", "reference", "$b = 0$, dashed"]],
+        "caption": ["The Kretschmann scalar $K$, as $t^{-4}$ before $t = 1$ and $t^{-76/7}$ after. "
+                    "The Ricci scalar $R = 0$."],
+        "settings": "$p_3 = 6/7$, $b = 1$.",
+        "clip": "Log, none clipped.",
+    }, {
+        "id": "rosen", "label": "Rosen's chart", "kind": "line", "x": eta_axis, "panels": rosen_panels,
+        "curves": rosen_curves, "marks": [],
+        "legend": [["line", "K", "$K$"]],
+        "caption": ["The Kretschmann scalar $K$ at $p_3 = 1$, $5120/\\ell^4$ at $\\eta = 0$, falling to 0 at "
+                    "$\\eta = \\pi$."],
+        "settings": "$\\ell = 1$.",
+        "clip": "Linear, none clipped.",
     }]
 
 
@@ -16698,6 +16808,7 @@ DRAWN = {
     "khan_penrose": khan_penrose,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "kantowski_sachs": kantowski_sachs,
+    "kasner_magnetic": kasner_magnetic,
     "kastor_traschen": kastor_traschen,
     "kiselev": kiselev,
     "levi_civita": levi_civita,
