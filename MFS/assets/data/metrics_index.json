@@ -518,7 +518,7 @@
     "version": "e5658f970eff3005",
     "diagrams": "64069f5e3159e0e7",
     "embedding": "726e24d2db3acd3e",
-    "curvature": "dd314cad29206f82"
+    "curvature": "a20afe04d7fc58db"
   },
   {
     "id": "black_string",
@@ -639,7 +639,7 @@
     "diagrams": "ac2eb68ee92b57a6",
     "conformal": "7c7471759c5476fc",
     "embedding": "0453da68b24b7ab7",
-    "curvature": "e52a7c1a64db248a"
+    "curvature": "5d3a15198b27ff7d"
   },
   {
     "id": "bonnor_magnetic_dipole",
@@ -992,7 +992,8 @@
       "idealized model"
     ],
     "version": "6bfc060b31b6bbfe",
-    "embedding": "be58694ee9d966c0"
+    "embedding": "be58694ee9d966c0",
+    "curvature": "a594586a8e3812ff"
   },
   {
     "id": "brill_charged_taub_nut",
@@ -1124,7 +1125,8 @@
     "version": "cce9317edfd7ce53",
     "diagrams": "e8c5af81ff1b23c6",
     "conformal": "065779d03ab6d15d",
-    "embedding": "3437f058dfb1c91b"
+    "embedding": "3437f058dfb1c91b",
+    "curvature": "a98ece8b3bfa41c1"
   },
   {
     "id": "charged_shell",

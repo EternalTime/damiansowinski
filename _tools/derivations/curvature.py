@@ -1472,7 +1472,7 @@ def black_saturn(ck, src):
         "marks": rods_drawn,
         "legend": [["line", "horizon", "horizons"]],
         "caption": [
-            "The Kretschmann scalar of black Saturn, a black ring in balance around a black hole with no spin "
+            "The Kretschmann scalar $K$ of black Saturn, a black ring in balance around a black hole with no spin "
             "of its own.",
         ],
         "settings": "$L = 1$, $\\kappa_i = 7/8,\\,9/16,\\,3/7$, $\\beta = 0$.",
@@ -6101,6 +6101,9 @@ def domain_function(metric_id, system_id, text, coords, params):
     _, _, reader = nr.load(metric_id, system_id)
     names = {reader._plain(n): s for n, s in reader.symbol.items()}
     names.update(reader.parameters)
+    # lambda is a word of Python, so a domain spells that coordinate lamda, as sympy does.
+    if "lambda" in names:
+        names["lamda"] = names["lambda"]
     expr = sp.sympify(text, locals={**nr.DECLARED_FUNCTIONS, **names})
     symbols = [names[c] for c in coords] + [reader.parameters[p] for p in params]
     if expr.free_symbols - set(symbols):
@@ -14882,17 +14885,17 @@ BCD_REDSHIFTS = [Fraction(z) for z in range(2, 21)]
 BCD_CLOUD_REACH = 4
 # The whole of each view's text, its caption, within 200 characters.
 BCD_CAPTIONS = {
-    "sphere_1965": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the 1965 sphere and its vacuum. $K$ pink, the density "
-                   "cyan; the bar is its surface $r_0=2m$, the dashes the 1975 sphere.",
-    "sphere_1975": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bonnor and Wickramasuriya's sphere, growing outward. "
-                   "Pink $K$, cyan density; the bar is its surface, the dashes the 1965 sphere.",
-    "spheroid": "$K\\,m^4$ over the quarter meridian section of the one star here that is not round ($a=m$, "
+    "sphere_1965": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bonnor's sphere of 1965, "
+                   "beside the 1975 sphere.",
+    "sphere_1975": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bonnor and Wickramasuriya's sphere, "
+                   "beside the 1965 sphere.",
+    "spheroid": "The Kretschmann scalar $K$ over the quarter meridian section of the spheroid ($a=m$, "
                 "$u_0=1$), thickest at its rim; logarithmic, and 312 cells near the axis fall past the floor.",
     "spheroid_density": "The dust density $R^\\mu{}_\\mu\\,m^2$ over the same quarter section of the spheroid "
                         "($a=m$, $u_0=1$), falling from its rim to its pole; logarithmic, every cell inside the "
                         "colours.",
     "cloud": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the charged cloud as its redshift $m/b$ climbs 2 to "
-             "20. Pink $K$, cyan density, both finite: $60m^2/(b{+}m)^6$ and $6m/(b{+}m)^3$.",
+             "20, both finite: $60m^2/(b{+}m)^6$ and $6m/(b{+}m)^3$.",
 }
 BCD_CLOUD_K = {"kind": "log", "from": 1e-3, "to": 1e2}         # the axis of K m^4 in every frame
 BCD_CLOUD_R = {"kind": "log", "from": 1e-6, "to": 1e1}         # the axis of R^mu_mu m^2 in every frame
@@ -15229,10 +15232,110 @@ def bonnor_charged_dust(ck, src):
             "caption": [BCD_CAPTIONS[chart]], "ricci_sentences": [],
             "per_scalar": scalar_clips("log.", "linear."), "settings": "$m=1$.", "clip": "",
         })
-    return views + bcd_spheroid(ck, src) + bcd_cloud(ck, src)
+    views = views + bcd_spheroid(ck, src) + bcd_cloud(ck, src)
+    legends = {"sphere_1965": [["line", "K", "$K$"], ["line", "R", "$R^\\mu{}_\\mu$"], ["line", "reference", "1975 sphere"],
+                               ["line", "front", "surface"]],
+               "sphere_1975": [["line", "K", "$K$"], ["line", "R", "$R^\\mu{}_\\mu$"], ["line", "reference", "1965 sphere"],
+                               ["line", "front", "surface"]],
+               "cloud": [["line", "K", "$K$"], ["line", "R", "$R^\\mu{}_\\mu$"]]}
+    for view in views:
+        view["legend"] = view["legend"] or legends.get(view["id"], [])
+        view["settings"] = view["settings"] or ("$m = 1$, $r_0 = 2m$." if view["id"].startswith("sphere") else "$m = 1$.")
+        view["clip"] = view["clip"] or "Log."
+    return views
 
 
 # ---------------------------------------------------------------- the files
+
+# ---------------------------------------------------------------- Chandrasekhar and Xanthopoulos's colliding waves
+
+CX_ALPHA = math.asin(4 / 5)                                     # q = sin(alpha) = 4/5, p = 3/5, as the embedding views take
+CX_CELLS = (201, 100)                                           # lambda across and psi up
+CX_SCALE = {"kind": "symlog", "from": -1e4, "to": 1e5, "linear": 1.0}   # the colours of K m^4
+CX_DOMAIN = "Abs(lamda) <= psi"                                # the angular chart's domain, where both waves have passed
+
+
+def chandrasekhar_xanthopoulos(ck, src):
+    """Chandrasekhar and Xanthopoulos's colliding plane waves at m = 1 and q = 4/5, their
+    Kretschmann scalar over the plane of lambda and psi of the angular chart, where both waves
+    have passed.
+
+    The angular chart publishes K in psi and lambda alone and R = 0, so the figure is K alone: a
+    map over |lambda| <= pi/2, 0 <= psi <= pi/2 on a signed logarithmic scale, since Kerr's K
+    changes sign. The chart holds on the triangle |lambda| <= psi, which the map declares as its
+    domain; the fronts lambda = +-psi are marked. Checked here: R = 0, K finite at every cell
+    drawn, the symmetry in lambda, K = 48/(m^4 rho^6) on lambda = 0, and the cells against the
+    formula."""
+    m, alpha = 1.0, CX_ALPHA
+    ANG = "angular"
+    x_axis = {"name": "$\\lambda$", "from": -math.pi / 2, "to": math.pi / 2,
+              "ticks": [{"at": -math.pi / 2, "label": "$-\\pi/2$"}, {"at": -math.pi / 4, "label": "$-\\pi/4$"},
+                        {"at": 0.0, "label": "$0$"}, {"at": math.pi / 4, "label": "$\\pi/4$"},
+                        {"at": math.pi / 2, "label": "$\\pi/2$"}]}
+    y_axis = {"name": "$\\psi$", "from": 0.0, "to": math.pi / 2,
+              "ticks": [{"at": 0.0, "label": "$0$"}, {"at": math.pi / 4, "label": "$\\pi/4$"},
+                        {"at": math.pi / 2, "label": "$\\pi/2$"}]}
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "chandrasekhar_xanthopoulos", [aspect])
+    scale = dict(CX_SCALE)
+
+    K = nr_published(src, "chandrasekhar_xanthopoulos", ANG, "kretschmann", ["psi", "lambda"], ["m", "alpha"])
+    ricci = nr_published(src, "chandrasekhar_xanthopoulos", ANG, "ricci_scalar", ["psi", "lambda"], ["m", "alpha"])
+    ck("chandrasekhar_xanthopoulos the published Ricci scalar vanishes", ricci.expr == 0)
+    p = math.cos(alpha)
+    on_axis = max(abs(float(K(ps, 0.0, m, alpha)) * (1 - p * math.sin(ps)) ** 6 / 48 - 1)
+                  for ps in (0.0, 0.4, 0.9, 1.3, 1.55))
+    ck("chandrasekhar_xanthopoulos K = 48/(m^4 rho^6) on lambda = 0", on_axis < 1e-12, f"{on_axis:.1e}")
+
+    domain = domain_function("chandrasekhar_xanthopoulos", ANG, CX_DOMAIN, ["psi", "lambda"], ["m", "alpha"])
+    nx, ny = CX_CELLS
+    # The map's x is lambda and its y is psi, while the published scalar takes psi first.
+    swapped = SwappedPublished(K)
+    xs, ys, values = cells(swapped, x_axis, y_axis, nx, ny, [m, alpha])
+    X, Y = np.meshgrid(xs, ys)
+    inside = domain(Y, X, m, alpha)
+    ck("chandrasekhar_xanthopoulos K is finite at every cell drawn", np.all(np.isfinite(values[inside])),
+       f"from {np.min(values[inside]):.4e} to {np.max(values[inside]):.4e}")
+    ck("chandrasekhar_xanthopoulos the cells drawn are the same at -lambda", np.array_equal(inside, inside[:, ::-1])
+       and np.allclose(values[inside], values[:, ::-1][inside], rtol=1e-9, atol=0), f"{int(inside.sum())} drawn")
+    ck("chandrasekhar_xanthopoulos every cell lies within the colours",
+       np.min(values[inside]) > scale["from"] and np.max(values[inside]) < scale["to"])
+    rng = np.random.default_rng(1986)
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]})[:40]
+    agrees(ck, "chandrasekhar_xanthopoulos map", K, [[ys[j], xs[i], m, alpha] for i, j in picks],
+           [values[j, i] for i, j in picks])
+
+    rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]
+    view = {
+        "id": "interaction", "label": "the plane of $\\lambda$ and $\\psi$", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": every_second(scale)},
+        "map": {"metric": "chandrasekhar_xanthopoulos", "system": ANG, "scalar": "kretschmann", "x": "\\lambda",
+                "y": "\\psi", "params": {"m": m, "alpha": alpha}, "domain": CX_DOMAIN, "nx": nx, "ny": ny,
+                "cells": rows},
+        "marks": [{"class": "front", "points": [[0.0, 0.0], [math.pi / 2, math.pi / 2]]},
+                  {"class": "front", "points": [[0.0, 0.0], [-math.pi / 2, math.pi / 2]]}],
+        "legend": [["line", "front", "the wave fronts"]],
+        "caption": ["The Kretschmann scalar $K$ where both waves have passed, finite up to the horizon "
+                    "$\\psi = \\pi/2$."],
+        "settings": "$m = 1$, $q = 4/5$.",
+        "clip": "Signed log scale.",
+    }
+    return [view]
+
+
+class SwappedPublished:
+    """A published scalar of (psi, lambda, ...) read as one of (lambda, psi, ...), so a map can put
+    lambda across and psi up."""
+
+    def __init__(self, published):
+        self.published = published
+
+    def __call__(self, x, y, *params):
+        return self.published(y, x, *params)
+
+    def __getattr__(self, name):
+        return getattr(self.published, name)
+
 
 DRAWN = {
     "ab_metrics": ab_metrics,
@@ -15256,6 +15359,7 @@ DRAWN = {
     "brill_waves": brill_waves,
     "bubbling_ads": bubbling_ads,
     "c_metric": c_metric,
+    "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
     "datt_ruban_t_models": datt_ruban_t_models,

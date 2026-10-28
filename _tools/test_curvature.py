@@ -97,6 +97,9 @@ class Evaluator:
         names.update(reader.parameters)
         by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
         symbols = [by_plain[reader._plain(c)] for c in coords] + [reader.parameters[reader._plain(p)] for p in params]
+        # lambda is a word of Python, so a domain spells that coordinate lamda, as sympy does.
+        if "lambda" in names:
+            names["lamda"] = names["lambda"]
         expr = sp.sympify(text, locals={**self.nr.DECLARED_FUNCTIONS, **names})
         stray = expr.free_symbols - set(symbols)
         if stray:
