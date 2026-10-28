@@ -14663,7 +14663,7 @@ def bcd_spheroid(ck, src):
             "The Kretschmann scalar $K$ inside Bonnor and Wickramasuriya's spheroid of charged dust "
             f"($a = m$, $u_0 = 1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $-\\theta$. {section}",
             f"On the surface $K$ falls from ${surface['equator'][0]:.4f}/m^4$ at the equator to "
-            f"${surface['pole'][0]:.4f}/m^4$ at the pole, so the curvature of this star turns with latitude. "
+            f"${surface['pole'][0]:.4f}/m^4$ at the pole, so the curvature of this star changes with latitude. "
             f"Across the surface it drops to ${surface['equator'][2]:.4f}/m^4$ at the equator and "
             f"${surface['pole'][2]:.4f}/m^4$ at the pole, where the dust ends and the charged vacuum begins.",
             "Toward the central disc the density falls as $u^2$ and $K$ as $u^4$, so both vanish on the disc. "
