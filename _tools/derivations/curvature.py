@@ -3744,7 +3744,7 @@ def datt_ruban_t_models(ck, src):
         "ricci_sentences": [],
         "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$r_s = 1$, $\\epsilon = 1$, $\\mu = 1/\\pi$.",
-        "clip": k_clip + " " + r_clip,
+        "clip": "Log scales, clipped above $10^9$ and $10^3$.",
     }]
 
 
