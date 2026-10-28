@@ -14434,6 +14434,20 @@ BCD_LATITUDE = [{"at": float(k * math.pi / 8), "label": ["$0$", "$\\pi/8$", "$\\
 # b = m/2 of its other drawings to 20, and the radial box of its spacetime diagram.
 BCD_REDSHIFTS = [Fraction(z) for z in range(2, 21)]
 BCD_CLOUD_REACH = 4
+# The whole of each view's text, its caption, within 200 characters.
+BCD_CAPTIONS = {
+    "sphere_1965": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the 1965 sphere and its vacuum. $K$ pink, the density "
+                   "cyan; the bar is its surface $r_0=2m$, the dashes the 1975 sphere.",
+    "sphere_1975": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bonnor and Wickramasuriya's sphere, growing outward. "
+                   "Pink $K$, cyan density; the bar is its surface, the dashes the 1965 sphere.",
+    "spheroid": "$K\\,m^4$ over the quarter meridian section of the one star here that is not round ($a=m$, "
+                "$u_0=1$), thickest at its rim; logarithmic, and 312 cells near the axis fall past the floor.",
+    "spheroid_density": "The dust density $R^\\mu{}_\\mu\\,m^2$ over the same quarter section of the spheroid "
+                        "($a=m$, $u_0=1$), falling from its rim to its pole; logarithmic, every cell inside the "
+                        "colours.",
+    "cloud": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the charged cloud as its redshift $m/b$ climbs 2 to "
+             "20. Pink $K$, cyan density, both finite: $60m^2/(b{+}m)^6$ and $6m/(b{+}m)^3$.",
+}
 BCD_CLOUD_K = {"kind": "log", "from": 1e-3, "to": 1e2}         # the axis of K m^4 in every frame
 BCD_CLOUD_R = {"kind": "log", "from": 1e-6, "to": 1e1}         # the axis of R^mu_mu m^2 in every frame
 
@@ -14513,40 +14527,11 @@ def bcd_cloud(ck, src):
     close = float(K.exact([2.0, m, float(m / BCD_REDSHIFTS[-1])])) / float(vacuum.exact([2.0, m]))
     ck(f"{name} the cloud's K outside its core nears the extremal hole's",
        abs(close - 1) < 1e-2, f"{close}")
-    clip_K = ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-3}$ to $10^{2}$, and every value drawn in "
-              "every frame lies within it.")
-    clip_R = ("We draw $R^\\mu{}_\\mu\\,m^2$ on a logarithmic scale from $10^{-6}$ to $10$, and every value "
-              "drawn in every frame lies within it.")
     return [{
         "id": "cloud", "label": "the cloud, its core shrinking", "kind": "line", "x": x_axis, "panels": panels,
         "curves": [], "marks": [],
-        "legend": [["line", "K", "$K$, the Kretschmann scalar"],
-                   ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]],
-        "caption": [
-            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Lemos and Weinberg's cloud of "
-            "charged dust against $r$ as its core shrinks ($b$ from $m/2$ to $m/20$), the same at every $t$, "
-            "$\\theta$, and $\\phi$. The dust fills all of space, so the cloud has no surface and no vacuum "
-            f"outside it. At the centre $K = 60m^2/(b + m)^6$, which grows from ${centres[0][0]:.4f}/m^4$ at "
-            f"$b = m/2$ to ${centres[-1][0]:.3f}/m^4$ at $b = m/20$, and to $60/m^4$ as $b$ falls to zero.",
-            "The Ricci scalar is the density of the dust, $R^\\mu{}_\\mu = 8\\pi G\\rho/c^2$, since the charge "
-            f"and its field carry no trace. At the centre it is $6m/(b + m)^3$, which grows from "
-            f"${centres[0][1]:.4f}/m^2$ to ${centres[-1][1]:.4f}/m^2$ over the frames, and to $6/m^2$ as $b$ "
-            "falls to zero. Far from the centre the density falls as $6mb^2/r^5$, so each frame's curve drops "
-            "lower as the core tightens.",
-            "Light from the centre arrives with the redshift $m/b$, which grows without bound as the core "
-            "shrinks while both scalars stay finite: the cloud becomes a quasiblack hole, as close to its own "
-            "horizon as one likes. At $b = 0$ the metric is the extremal Reissner-Nordstr\u00f6m black hole, whose "
-            "horizon is the sphere $r = 0$ of this chart, where $g_{tt}$ falls to zero. Outside the core each "
-            f"frame already follows that hole's field: at $r = 2m$ and $b = m/20$, $K$ is within "
-            f"${abs(close - 1) * 100:.2f}$ parts in a hundred of the hole's $8m^2(m^2 + 6r^2)/(r + m)^8$.",
-        ],
-        "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
-        "per_scalar": scalar_clips(clip_K, clip_R),
-        "settings": "$m = 1$, the unit of every length, and $b$ from $m/2$ down to $m/20$, so that $m/b$, the "
-                    "redshift of the centre, runs through the whole numbers from 2 to 20.",
-        "clip": clip_K[:-len(", and every value drawn in every frame lies within it.")] + " and "
-                + clip_R[len("We draw "):-len(", and every value drawn in every frame lies within it.")]
-                + ", and every value drawn in every frame lies within them.",
+        "legend": [], "caption": [BCD_CAPTIONS["cloud"]], "ricci_sentences": [],
+        "per_scalar": scalar_clips("log.", "log."), "settings": "", "clip": "",
         "movie": {"variable": "$m/b$", "seconds": 8, "frames": frames},
     }]
 
@@ -14648,42 +14633,16 @@ def bcd_spheroid(ck, src):
                     "params": dict(BCD_SPHEROID), "nx": nx, "ny": ny,
                     "cells": [[rounded(v) for v in row] for row in sampled]},
             "marks": [], "legend": [], "caption": caption,
-            "settings": f"$m = 1$, the unit of every length, $a = m$, and $u_0 = 1$, so the redshift on the "
-                        f"disc $u = 0$ is ${redshift:.4f}$.",
-            "clip": clip,
+            "settings": "", "clip": clip,
         }
 
-    section = ("The box is the star's meridian section in its own coordinates: $u$ labels the confocal "
-               "spheroids, from the central disc $u = 0$ to the surface $u = u_0$, and the latitude "
-               "$\\theta$ runs from the equator to the pole.")
-    regular = ("The spheroid has no horizon: $g_{tt} = -1/U^2$ never vanishes, and light from the disc "
-               f"arrives with the redshift ${redshift:.4f}$.")
     return [
         view(K, values, BCD_SPHEROID_K, "the spheroid's section", "$K\\,m^4$", [
-            "The Kretschmann scalar $K$ inside Bonnor and Wickramasuriya's spheroid of charged dust "
-            f"($a = m$, $u_0 = 1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $-\\theta$. {section}",
-            f"On the surface $K$ falls from ${surface['equator'][0]:.4f}/m^4$ at the equator to "
-            f"${surface['pole'][0]:.4f}/m^4$ at the pole, so the curvature of this star changes with latitude. "
-            f"Across the surface it drops to ${surface['equator'][2]:.4f}/m^4$ at the equator and "
-            f"${surface['pole'][2]:.4f}/m^4$ at the pole, where the dust ends and the charged vacuum begins.",
-            "Toward the central disc the density falls as $u^2$ and $K$ as $u^4$, so both vanish on the disc. "
-            f"Along the equatorial plane $K$ tends to ${rim[2][0]:.4f}/m^4$ at the rim $u = 0$, $\\theta = 0$, "
-            f"where the two limits meet. {regular}",
-        ], "We colour $K\\,m^4$ on a logarithmic scale from $10^{-6}$ to $10$, over the meridian section "
-           "inside the surface. Cells below the lower limit take the bottom colour, confined to "
-           f"$u < {bound:.2f}$ beside the central disc; no cell passes the top."),
+            BCD_CAPTIONS["spheroid"],
+        ], ""),
         view(R, density, BCD_SPHEROID_R, "the spheroid's density", "$R^\\mu{}_\\mu\\,m^2$", [
-            "The Ricci scalar $R^\\mu{}_\\mu$ inside Bonnor and Wickramasuriya's spheroid of charged dust "
-            f"($a = m$, $u_0 = 1$), the same at every $t$ and $\\phi$ and at $\\theta$ and $-\\theta$. "
-            "It is the density of the dust, $R^\\mu{}_\\mu = 8\\pi G\\rho/c^2$, since the charge and its field "
-            f"carry no trace. {section}",
-            f"The density grows from the disc, where it vanishes as $u^2$, to the surface, and on the surface "
-            f"it falls from ${surface['equator'][1]:.4f}/m^2$ at the equator to ${surface['pole'][1]:.4f}/m^2$ "
-            f"at the pole: the dust of this star lies thickest about its rim. Along the equatorial plane it "
-            f"tends to ${rim[2][1]:.4f}/m^2$ at the rim $u = 0$, $\\theta = 0$.",
-            f"Outside the surface the dust ends and $R^\\mu{{}}_\\mu$ vanishes in the charged vacuum. {regular}",
-        ], "We colour $R^\\mu{}_\\mu\\,m^2$ on a logarithmic scale from $10^{-5}$ to $1$, over the meridian "
-           "section inside the surface, and every cell lies within it."),
+            BCD_CAPTIONS["spheroid_density"],
+        ], ""),
     ]
 
 
@@ -14808,15 +14767,6 @@ def bonnor_charged_dust(ck, src):
                and abs(surface_R / float(exact_surface_R) - 1) < 1e-12, f"{centre_R}, {surface_R}")
             ck(f"{name} {chart} both scalars fall from the centre to the surface",
                centre_K > surface_K and centre_R > surface_R)
-            story = [
-                f"Inside the star $K$ falls from $60m^2/(r_0 + m)^6 = {centre_K:.4f}/m^4$ at the centre to "
-                f"${surface_K:.4f}/m^4$ at the surface, then jumps down to ${out_K:.4f}/m^4$ in the vacuum.",
-                f"The density falls from the centre to the surface: $R^\\mu{{}}_\\mu = 6m/(r_0 + m)^3 = "
-                f"{centre_R:.4f}/m^2$ at the centre and $6mr_0/(r_0 + m)^4 = {surface_R:.4f}/m^2$ at the surface, "
-                "and it jumps to zero in the vacuum outside.",
-                f"Bonnor and Wickramasuriya's sphere carries its density the other way about, "
-                f"${twin_R[0]:.4f}/m^2$ at the centre and ${twin_R[1]:.4f}/m^2$ at the surface.",
-            ]
         else:
             exact_centre_R = 48 / (2 * BCD_RADIUS + 3) ** 3
             exact_surface_R = 6 / (BCD_RADIUS + 1) ** 3
@@ -14827,48 +14777,11 @@ def bonnor_charged_dust(ck, src):
                abs(surface_R / twin_R[0] - 1) < 1e-12, f"{surface_R}, {twin_R[0]}")
             ck(f"{name} {chart} both scalars rise from the centre to the surface",
                surface_K > centre_K and surface_R > centre_R)
-            story = [
-                f"Inside the star $K$ rises from ${centre_K:.4f}/m^4$ at the centre to ${surface_K:.4f}/m^4$ at "
-                f"the surface, then jumps down to ${out_K:.4f}/m^4$ in the vacuum.",
-                f"The density rises from the centre to the surface: $R^\\mu{{}}_\\mu = 48m/(2r_0 + 3m)^3 = "
-                f"{centre_R:.4f}/m^2$ at the centre and $6m/(r_0 + m)^3 = {surface_R:.4f}/m^2$ at the surface, "
-                "and it jumps to zero in the vacuum outside.",
-                f"Bonnor's sphere of 1965 carries its density the other way about, ${twin_R[0]:.4f}/m^2$ at the "
-                f"centre and ${twin_R[1]:.4f}/m^2$ at the surface.",
-            ]
-        legend = [["line", "K", "$K$, the Kretschmann scalar"],
-                  ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"],
-                  ["line", "reference", other],
-                  ["line", "front", "the surface of the star, $r = r_0$"]]
-        clip_K = ("We draw $K\\,m^4$ on a logarithmic scale from $10^{-5}$ to $1$, and every value drawn lies "
-                  "within it.")
-        clip_R = ("We draw $R^\\mu{}_\\mu\\,m^2$ on a linear scale from $-0.05$ to $0.25$, and every value drawn "
-                  "lies within it.")
         views.append({
             "id": chart, "label": label, "kind": "line", "x": x_axis, "panels": panels,
-            "curves": curves, "marks": [{"class": "front", "x": r_0}], "legend": legend,
-            "caption": [
-                f"The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{{}}_\\mu$ of {own} against $r$ "
-                f"($r_0 = 2m$), the same at every $t$, $\\theta$, and $\\phi$, inside the star and in the "
-                f"charged vacuum outside it, beside {other}. " + story[0]
-                + f" Outside, $K$ falls off as $48m^2/R^6$ in the areal radius $R = r + m$, to "
-                  f"${tex_number(edge_K)}/m^4$ at $r = 4r_0$.",
-                "The Ricci scalar is the density of the dust, $R^\\mu{}_\\mu = 8\\pi G\\rho/c^2$, since the "
-                "charge and its field carry no trace. " + story[1] + " " + story[2],
-                "The dust rests in equilibrium with no pressure, every grain held by its own charge, and the "
-                "star has no horizon: $g_{tt} = -1/U^2$ never vanishes, and the redshift of light from the "
-                f"centre is ${redshift:.4f}$. The interior and the exterior are drawn in the one isotropic "
-                "radius $r$, so each curve runs across the surface; the exterior's areal chart carries the "
-                "same $K$ at $R = r + m$. That exterior is the extremal Reissner-Nordström field of the "
-                "star's mass and charge.",
-            ],
-            "ricci_sentences": [[1, 0], [1, 1], [1, 2]],
-            "per_scalar": scalar_clips(clip_K, clip_R),
-            "settings": f"$m = 1$, the unit of every length, and $r_0 = 2m$, so the redshift of the centre is "
-                        f"${redshift:.4f}$.",
-            "clip": clip_K[:-len(", and every value drawn lies within it.")] + " and "
-                    + clip_R[len("We draw "):-len(", and every value drawn lies within it.")]
-                    + ", and every value drawn lies within them.",
+            "curves": curves, "marks": [{"class": "front", "x": r_0}], "legend": [],
+            "caption": [BCD_CAPTIONS[chart]], "ricci_sentences": [],
+            "per_scalar": scalar_clips("log.", "linear."), "settings": "", "clip": "",
         })
     return views + bcd_spheroid(ck, src) + bcd_cloud(ck, src)
 
