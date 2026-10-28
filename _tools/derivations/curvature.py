@@ -5303,6 +5303,167 @@ def gravastar(ck, src):
     return [view]
 
 
+# ---------------------------------------------------------------- the gravitational instantons
+
+GI_N = Fraction(1)                # n, and r_s, as every drawing of the instantons takes it
+GI_REACH = 8                      # the line views run out to r = 8n and 8 r_s
+GI_NU = 0.2817                    # Page's nu, the root his space takes, as its drawing does
+GI_LOG = {"kind": "log", "from": 1e-5, "to": 1e2}     # the axis of K n^4 and K r_s^4
+GI_PAGE = {"kind": "linear", "from": 0.0, "to": 16.0}  # the axis of K/Lambda^2
+GI_MAP = {"kind": "log", "from": 1e-4, "to": 1e1}     # the colours of K n^4
+GI_BOX = ((0, 4), (-4, 4))        # rho/n and z/n, the centres at z = -2n and 2n
+GI_CELLS = (80, 160)              # the cells of the map across and up, each a twentieth of n on a side
+# Gibbons and Hawking's potential of two centres at z = -2n and 2n with the constant 1, and its
+# twist, at n = 1, as the embedding diagram declares them on the axis.
+GI_CENTRES = {"V": "1 + 2/sqrt(rho**2 + (z + 2)**2) + 2/sqrt(rho**2 + (z - 2)**2)",
+              "omega": "2*(z + 2)/sqrt(rho**2 + (z + 2)**2) + 2*(z - 2)/sqrt(rho**2 + (z - 2)**2)"}
+
+
+def gravitational_instantons(ck, src):
+    """The gravitational instantons, each a Riemannian vacuum or Einstein space, whose curvature is
+    finite everywhere and greatest on its nut or bolt.
+
+    Three line views of K against the radius of each cohomogeneity-one chart, from its nut or bolt
+    out: self-dual Taub-NUT from its nut r = n with Taub-bolt from its bolt r = 2n dashed, both at
+    n = 1 in the same r; Euclidean Schwarzschild from its bolt r = r_s at r_s = 1; and Page's space
+    over its whole chi from one bolt to the other at Lambda = 1 and nu = 0.2817, with CP^2's
+    constant K at the same Lambda dashed. Each of these charts is in a radius alone, so the line
+    shows the whole variation. A map colours K over Gibbons and Hawking's (rho, z) for two centres
+    at z = -2n and 2n with the constant 1, the potential and twist declared as the embedding
+    diagram declares them on the axis. R = 0 in every chart drawn but Page's and CP^2's, where it
+    is 4 Lambda.
+
+    What the captions state is checked here: the published R vanishing on Taub-NUT, Taub-bolt and
+    Schwarzschild and on every cell of the map, which also checks the declared twist against the
+    potential; R = 4 Lambda on Page's space; K = 3/2n^4 at the nut, 5/3n^4 on the bolt of
+    Taub-bolt, 12/r_s^4 on Schwarzschild's bolt, each the greatest value drawn and falling outward;
+    Page's K greatest, 15.0 Lambda^2, on both bolts, least, 5.96 Lambda^2, midway between them at
+    chi = pi/2, and the same at chi and pi - chi; CP^2's K = 16 Lambda^2/3; the map's greatest
+    cell beside a centre and its value at each centre; and every curve and cell inside its axis."""
+    name, gi = "gravitational_instantons", "gravitational_instantons"
+    n = float(GI_N)
+    aspect = 2.0
+    shape_checks(ck, f"{name} line", [aspect])
+    height = PLOT_W / aspect
+
+    def line(vid, label, system, x_name, lo, hi, scale, panel_name, own, reference, coordinate):
+        x_axis = axis(x_name, lo, hi)
+        panel = {"id": "K", "name": panel_name, "aspect": aspect, "scale": scale, "ticks": value_ticks(scale)}
+        curves = []
+        for cls, (published, params, within) in (("reference", reference), ("K", own)):
+            if published is None:
+                continue
+            curves += line_curves(ck, f"{name} {vid}", "K", cls, published, coordinate, x_axis, scale, height,
+                                  params, within)
+            up, down = beyond(published, x_axis, scale, list(params.values()), within)
+            ck(f"{name} {vid} {cls} stays inside its panel", not up and not down, f"{up} {down}")
+        return {"id": vid, "label": label, "kind": "line", "x": x_axis, "panels": [panel], "curves": curves,
+                "marks": [], "legend": []}
+
+    def falls(published, lo, hi, params, value, where):
+        rs = np.linspace(lo, hi, SAMPLES)
+        ks = published(rs, *params)
+        at = float(published.exact([lo, *params]))
+        ck(f"{name} K is {where}", abs(at / value - 1) < 1e-12, f"{at:.15g}")
+        ck(f"{name} K falls from there outward at every r drawn", bool(np.all(np.diff(ks) < 0)))
+
+    # -- Taub-NUT and Taub-bolt
+    nut = nr_published(src, gi, "taub_nut", "kretschmann", ["r"], ["n"])
+    bolt = nr_published(src, gi, "taub_bolt", "kretschmann", ["r"], ["n"])
+    for system in ("taub_nut", "taub_bolt", "schwarzschild"):
+        p = "r_s" if system == "schwarzschild" else "n"
+        R = nr_published(src, gi, system, "ricci_scalar", ["r"], [p])
+        ck(f"{name} the published R vanishes on {system}", float(R(3.0, n)) == 0.0)
+    falls(nut, n, GI_REACH, [n], 1.5, "3/2n^4 at the nut r = n")
+    falls(bolt, 2 * n, GI_REACH, [n], 5 / 3, "5/3n^4 on the bolt r = 2n")
+    nut_bolt = line("nut_bolt", "Nut and bolt", "taub_nut", "$r/n$", n, GI_REACH, GI_LOG, "$K\\,n^4$",
+                    (nut, {"n": n}, None), (bolt, {"n": n}, (2 * n, GI_REACH)), "r")
+    nut_bolt.update({
+        "caption": ["$K$ of Taub-NUT, pink, $3/2n^4$ at its nut $r = n$, and of Taub-bolt, dashed, $5/3n^4$ "
+                    "at its bolt $r = 2n$; $R = 0$."],
+        "settings": "$n = 1$.",
+        "clip": "$K\\,n^4$, log.",
+    })
+
+    # -- Euclidean Schwarzschild
+    cigar = nr_published(src, gi, "schwarzschild", "kretschmann", ["r"], ["r_s"])
+    falls(cigar, n, GI_REACH, [n], 12.0, "12/r_s^4 on the bolt r = r_s")
+    schwarzschild = line("schwarzschild", "Euclidean Schwarzschild", "schwarzschild", "$r/r_s$", n, GI_REACH,
+                         GI_LOG, "$K\\,r_s^4$", (cigar, {"r_s": n}, None), (None, None, None), "r")
+    schwarzschild.update({
+        "caption": ["$K = 12r_s^2/r^6$ of Euclidean Schwarzschild, pink, $12/r_s^4$ on its bolt $r = r_s$; "
+                    "$R = 0$."],
+        "settings": "$r_s = 1$.",
+        "clip": "$K\\,r_s^4$, log.",
+    })
+
+    # -- Page's space beside CP^2
+    page = nr_published(src, gi, "page", "kretschmann", ["chi"], ["\\Lambda", "\\nu"])
+    page_R = nr_published(src, gi, "page", "ricci_scalar", ["chi"], ["\\Lambda", "\\nu"])
+    cp2 = nr_published(src, gi, "cp2_distance", "kretschmann", ["chi"], ["L"])
+    ck(f"{name} Page's published R is 4 Lambda", abs(float(page_R(1.0, 1.0, GI_NU)) - 4) < 1e-12)
+    L = math.sqrt(6)
+    ck(f"{name} CP^2's K is 16 Lambda^2/3 at L = sqrt(6/Lambda)", abs(float(cp2.exact([1.0, L])) / (16 / 3) - 1) < 1e-12)
+    chis = np.linspace(0, math.pi, SAMPLES)
+    ks = page(chis, 1.0, GI_NU)
+    ck(f"{name} Page's K is the same at chi and pi - chi", np.allclose(ks, ks[::-1], rtol=1e-12, atol=0))
+    top, low = float(page.exact([0.0, 1.0, GI_NU])), float(page.exact([math.pi / 2, 1.0, GI_NU]))
+    ck(f"{name} Page's K is greatest on the bolts, 15.0 Lambda^2", float(np.max(ks)) <= top * (1 + 1e-12)
+       and f"{top:.3g}" == "15", f"{top:.6g}")
+    ck(f"{name} Page's K is least midway, 5.96 Lambda^2", float(np.min(ks)) >= low * (1 - 1e-12)
+       and f"{low:.3g}" == "5.96", f"{low:.6g}")
+    ck(f"{name} Page's K falls from each bolt to chi = pi/2",
+       bool(np.all(np.diff(ks[:SAMPLES // 2 + 1]) < 0)))
+    page_view = line("page", "Page's space", "page", "$\\chi$", 0.0, math.pi, GI_PAGE, "$K/\\Lambda^2$",
+                     (page, {"\\Lambda": 1.0, "\\nu": GI_NU}, None), (cp2, {"L": L}, None), "\\chi")
+    page_view.update({
+        "caption": ["$K$ of Page's space, pink, $15.0\\Lambda^2$ on both bolts, $5.96\\Lambda^2$ midway; "
+                    "$\\mathbb{CP}^2$'s $16\\Lambda^2/3$ dashed; $R = 4\\Lambda$."],
+        "settings": "$\\Lambda = 1$, $\\nu = 0.2817$.",
+        "clip": "$K/\\Lambda^2$, linear.",
+    })
+
+    # -- Two Gibbons-Hawking centres
+    K = nr_published(src, gi, "multi_centre", "kretschmann", ["rho", "z"], [], functions=GI_CENTRES)
+    R = nr_published(src, gi, "multi_centre", "ricci_scalar", ["rho", "z"], [], functions=GI_CENTRES)
+    x_axis, y_axis = axis("$\\rho/n$", *GI_BOX[0]), axis("$z/n$", *GI_BOX[1])
+    shape_checks(ck, f"{name} map", [(x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])])
+    xs, ys, grid = cells(K, x_axis, y_axis, *GI_CELLS, [])
+    X, Y = np.meshgrid(xs, ys)
+    ck(f"{name} map every cell is a number inside its colours",
+       bool(np.all(np.isfinite(grid)) and np.all(grid > GI_MAP["from"]) and np.all(grid < GI_MAP["to"])),
+       f"{float(np.min(grid)):.4e} to {float(np.max(grid)):.4e}")
+    worst = float(np.max(np.abs(R(X, Y)) / grid))
+    ck(f"{name} map the published R vanishes at every cell", worst < 1e-10, f"worst {worst:.1e}")
+    ck(f"{name} map K is the same at z and -z", np.allclose(grid, grid[::-1], rtol=1e-9, atol=0))
+    rng = np.random.default_rng(1978)
+    nx, ny = GI_CELLS
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 36), rng.integers(0, ny, 36))}
+    j_top, i_top = np.unravel_index(int(np.argmax(grid)), grid.shape)
+    picks |= {(int(i_top), int(j_top)), (0, ny // 2), (nx - 1, 0), (nx - 1, ny - 1)}
+    picks = sorted(picks)
+    agrees(ck, f"{name} map", K, [[float(xs[i]), float(ys[j])] for i, j in picks], [grid[j, i] for i, j in picks])
+    ck(f"{name} map K is greatest in a cell beside a centre",
+       abs(xs[i_top]) < 0.05 and abs(abs(ys[j_top]) - 2) < 0.05, f"{float(grid[j_top, i_top]):.6g}")
+    centre = float(K.exact([1e-20, 2.0], digits=80))
+    near = float(K.exact([1e-8, 2.0 + 1e-8], digits=80))
+    ck(f"{name} map K at each centre is finite, {centre:.3g}/n^4", abs(near / centre - 1) < 1e-6
+       and centre >= float(np.max(grid)), f"{centre:.10g}")
+    centres = {
+        "id": "centres", "label": "Two centres", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,n^4$", "scale": dict(GI_MAP), "ticks": value_ticks(GI_MAP)},
+        "map": {"metric": gi, "system": "multi_centre", "scalar": "kretschmann", "x": "\\rho", "y": "z",
+                "params": {}, "functions": dict(GI_CENTRES), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in grid]},
+        "marks": [], "legend": [],
+        "caption": [f"$K$ of two Gibbons-Hawking centres at $z = \\pm 2n$, ${tex_number(centre)}/n^4$ at each; "
+                    "$R = 0$."],
+        "settings": "$n = 1$, $\\epsilon = 1$.",
+        "clip": "$K\\,n^4$, log.",
+    }
+    return [nut_bolt, schwarzschild, page_view, centres]
+
+
 # ---------------------------------------------------------------- Hayward's regular black hole
 
 HAYWARD_ELL = 12 / (7 * math.sqrt(7))   # l in units of m, as every drawing of Hayward's black hole takes it
@@ -15426,6 +15587,7 @@ DRAWN = {
     "fisher_jnw": fisher_jnw,
     "gowdy": gowdy,
     "gravastar": gravastar,
+    "gravitational_instantons": gravitational_instantons,
     "hayward": hayward,
     "interior_schwarzschild": interior_schwarzschild,
     "kerr": kerr,
