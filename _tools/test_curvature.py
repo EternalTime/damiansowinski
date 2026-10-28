@@ -71,7 +71,12 @@ class Evaluator:
                 expr = expr.subs(reader.parameters[name], rep).doit()
             expr = expr.subs(reader.c, 1)
             by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
-            symbols = [by_plain[reader._plain(c)] for c in coords] + [reader.parameters[reader._plain(p)] for p in params]
+            # A parameter is a chart parameter, or a coordinate the figure holds at a number, as a
+            # map holds the moment and the plane it colours.
+            def named(p):
+                plain = reader._plain(p)
+                return reader.parameters.get(plain) or by_plain[plain]
+            symbols = [by_plain[reader._plain(c)] for c in coords] + [named(p) for p in params]
             stray = expr.free_symbols - set(symbols)
             free = {f for f in reader.parameters.values() if isinstance(f, sp.Function)} & expr.atoms(sp.Function)
             if free:
