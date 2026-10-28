@@ -1634,6 +1634,9 @@ Its stored scalars depend on $r$ alone, so a line plot shows their whole variati
 Its two panels use a logarithmic scale for $K\ell^4$ from $10^{-3}$ to $10^2$ and a signed logarithmic scale for $R\ell^2$ from $-10$ to zero, linear within $10^{-3}$; both curves lie within their panels.
 The generator checks every sampled value in sixty digits against the stored formula, the proper radial distance and the minimum sphere at the throat, the finite extrema $K = 12/\ell^4$ and $R = -2/\ell^2$ there, the symmetry of both curves, their monotone approach to zero, their length scaling, and the falloffs $12\ell^4/r^8$ and $-2\ell^2/r^4$.
 
+The `exponential_metric` figure plots both scalars against the isotropic radius over $0 \le r/m \le 6$ at $m = 1$, the one chart that covers both sides of the throat $r = m$, which a bar marks.
+The far side $r < m$ reaches a horizon of infinite area at $r = 0$, squeezed into a short interval of $r$, where both scalars peak and then vanish; its two panels are linear, $K m^4$ from 0 to 0.8 and $R m^2$ from $-0.6$ to zero, and both curves lie within them.
+
 The boson star has one line view of the heaviest ground state, with central field amplitude $\sigma(0) = 0.271$, total mass $M = 0.633$ and frequency $\omega = 0.853\,\mu c$, in the same units $G = c = \mu = 1$ and over the same range $0 \le \mu r \le 20$ as its areal spacetime diagram.
 Its two panels draw $K/\mu^4$ logarithmically from $10^{-7}$ to $10^{-1}$ and $R/\mu^2$ on a signed logarithmic scale from zero to $10^{-1}$, linear within $10^{-4}$ of zero; both curves lie wholly within their panels, each twice as wide as tall.
 The declared functions `boson_a` and `boson_alpha` carry the existing numerical star's metric profiles and their first two derivatives into the stored scalar formulas.
