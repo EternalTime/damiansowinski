@@ -6130,6 +6130,7 @@ IS_SHELL_BOX = ((0, 4), (-4, 2))                       # r/r_s and v/r_s: the sh
 IS_SHELL_CELLS = (160, 240)                            # the cells of the map across and up, each a fortieth of r_s on a side
 IS_SHELL_SCALE = {"kind": "log", "from": 1e-3, "to": 1e6}   # the colours of K r_s^4
 IS_SHELL_DOMAIN = "r >= israel_r_adv(v)"               # the ingoing chart's domain, outside the shell
+IS_SHELL_FUNCTIONS = {"R": "israel_r_adv(v)"}           # the shell's radius at the advanced time, as its diagram declares it
 
 
 def israel_shell(ck, src):
@@ -6167,7 +6168,7 @@ def israel_shell(ck, src):
         ck(f"{metric} {system} publishes K = {'0' if system == 'interior' else '12 r_s^2/r^6'}",
            sp.simplify(K_sys.expr - want) == 0, f"{K_sys.expr}")
 
-    K = nr_published(src, metric, IN, "kretschmann", ["r", "v"], names)
+    K = nr_published(src, metric, IN, "kretschmann", ["r", "v"], names, functions=IS_SHELL_FUNCTIONS)
     grr = nr_published(src, metric, IN, "inverse_metric_components", ["r"], names, ("r", "r"))
     found = zeros(ck, f"{metric} horizon", grr, 0.1, r1, values)
     ck(f"{metric} the one zero of g^rr is r = r_s", len(found) == 1 and abs(found[0] - 1) < 1e-12, f"{found}")
@@ -6213,7 +6214,7 @@ def israel_shell(ck, src):
         "id": "shell", "label": "The falling shell", "system": IN, "kind": "map", "x": x_axis, "y": y_axis,
         "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": every_second(scale)},
         "map": {"metric": metric, "system": IN, "scalar": "kretschmann", "x": "r", "y": "v",
-                "params": dict(IS_SHELL), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+                "params": dict(IS_SHELL), "functions": dict(IS_SHELL_FUNCTIONS), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
         "marks": [{"class": "front", "points": world},
                   {"class": "horizon", "points": [[1.0, 0.0], [1.0, float(v1)]]},
                   {"class": "singular", "points": [[0.0, v_end], [0.0, float(v1)]]}],
