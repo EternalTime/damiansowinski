@@ -1454,8 +1454,9 @@ def black_saturn(ck, src):
        over.any() and d_clip < 0.1, f"{int(over.sum())} cells within {d_clip:.4f} L")
     ck("black_saturn no value drawn passes the bottom of its colours", cellv.min() > BS_SCALE["from"],
        f"least {cellv.min():.4f} against {BS_SCALE['from']:.0f}")
-    # The distance stated is rounded up, so that no value beyond the colours lies farther out.
-    d_stated = math.ceil(d_clip * 100) / 100
+    # The distance stated is rounded up, so that no value beyond the colours lies farther out, with
+    # the rounding of the distance itself taken off it first.
+    d_stated = math.ceil(d_clip * 100 - 1e-9) / 100
     rods_drawn = [{"class": "horizon", "points": [[0.0, a], [0.0, b]]} for a, b in edges.values()]
 
     view = {
@@ -1494,9 +1495,10 @@ def black_saturn(ck, src):
             f"$K$ is positive along the whole axis and negative inside one region off it, bounded by the two "
             f"surfaces where it vanishes, which cross the circle $r = {BS_ZERO_CIRCLE}\\,L$ at "
             f"$\\theta = {zeros[0]:.3f}$ and $\\theta = {zeros[1]:.3f}$; the least value drawn is "
-            f"${cellv.min():.1f}/L^4$ at $r = {least_r:.2f}\\,L$, $\\theta = {least_theta:.2f}$. At the centre "
-            f"of the chart, Weyl's $\\rho = z = 0$, where the metric is smooth across the axis, "
-            f"$K\\,L^4 = {centre:.2f}$. Far from both horizons $K$ falls as $r^{{-8}}$, the rate of a vacuum in "
+            f"${cellv.min():.1f}/L^4$ at $r = {least_r:.2f}\\,L$, $\\theta = {least_theta:.2f}$. Down the axis "
+            f"past the bottom of the box it settles to $K\\,L^4 = {centre:.2f}$ at the centre of the chart, "
+            f"Weyl's $\\rho = z = 0$, where the metric is smooth across the axis. Far from both horizons $K$ "
+            f"falls as $r^{{-8}}$, the rate of a vacuum in "
             f"five dimensions, with $r^8K = {far:.1f}\\,L^4$ at $r = {BS_FAR:.0f}\\,L$ at every angle to four "
             "figures.",
         ],
