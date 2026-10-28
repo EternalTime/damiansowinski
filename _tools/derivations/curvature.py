@@ -11603,8 +11603,9 @@ def alcubierre(ck, src):
 
     The Cartesian chart leaves both v_s and f free, and the figure declares the drive every other
     drawing of it declares: v_s = 2 and Alcubierre's own tanh profile at R = 1 and sigma = 4, whose
-    bubble is centred on x = 2ct. Both scalars hold the chart's t and z at ct = 0 and z = 0 among
-    the parameters they are read at, so each map colours one moment of the plane of the path: the
+    bubble is centred on x = 2ct. Each map holds the chart's t and z at ct = 0 and z = 0 in its
+    grid's fixed, as Ehlers and Kundt's maps hold their Y, so it colours one moment of the plane
+    of the path: the
     half plane of x - x_s, which at ct = 0 is x, and the distance rho from the path, which at z = 0
     is y, out to 5R/2 each way, in cells a fiftieth of R on a side, 250 across and 125 up. The
     scalars are axisymmetric about the path and the same at y and -y, which is checked, so that
@@ -11640,15 +11641,12 @@ def alcubierre(ck, src):
     on the path and is negative off it."""
     name, system = "alcubierre", "cartesian"
     coords = ["x", "y", "t", "z"]
-    held = ["t", "z"]
     K = Published(src, name, system, "kretschmann", coords, [], functions=ALC_FUNCTIONS)
     Ric = Published(src, name, system, "ricci_scalar", coords, [], functions=ALC_FUNCTIONS)
     gxx = Published(src, name, system, "inverse_metric_components", coords, [], ("x", "x"), ALC_FUNCTIONS)
-    # The same two scalars with the moment and the plane among the parameters they are read at, as
-    # a map holds a coordinate it does not draw.
-    K_plane = Published(src, name, system, "kretschmann", ["x", "y"], held, functions=ALC_FUNCTIONS)
-    R_plane = Published(src, name, system, "ricci_scalar", ["x", "y"], held, functions=ALC_FUNCTIONS)
-    moment = [ALC_MOMENT[c] for c in held]
+    # The same two scalars with the moment and the plane held off the box, as Ehlers and Kundt's
+    # maps hold their Y, each map writing them into its grid as a curve writes its own.
+    K_plane, R_plane = HeldSlice(K, ALC_MOMENT), HeldSlice(Ric, ALC_MOMENT)
     height = PLOT_W / 2
     box = float(ALC_PLANE)
     x_plane, rho_plane = axis("$x/R$", -box, box), axis("$\\rho/R$", 0, box)
@@ -11729,7 +11727,7 @@ def alcubierre(ck, src):
     rows, extremes = {}, {}
     for panel, published in (("K", K_plane), ("R", R_plane)):
         nx, ny = int(2 * ALC_CELLS * box), int(ALC_CELLS * box)
-        xs, ys, values = cells(published, x_plane, rho_plane, nx, ny, moment)
+        xs, ys, values = cells(published, x_plane, rho_plane, nx, ny, [])
         X, Y = np.meshgrid(xs, ys)
         scale = ALC_K if panel == "K" else ALC_R
         ck(f"{name} every cell of the {panel} map is a number", bool(np.all(np.isfinite(values))))
@@ -11740,7 +11738,7 @@ def alcubierre(ck, src):
         picks = {(int(i), int(j)) for i, j in zip(np.linspace(0, len(xs) - 1, 40), np.linspace(0, len(ys) - 1, 40))}
         crest = min(int(len(xs) * (0.5 + first_K / (2 * box))), len(xs) - 1)
         picks.update((i, j) for i in (len(xs) // 2 - 1, len(xs) // 2, crest) for j in (0, 1, ALC_CELLS // 2))
-        worst = max(abs(float(published.exact([float(xs[i]), float(ys[j])] + moment)) - values[j, i])
+        worst = max(abs(float(published.exact([float(xs[i]), float(ys[j])])) - values[j, i])
                     / max(abs(values[j, i]), floors[panel]) for i, j in sorted(picks))
         ck(f"{name} the {panel} map agrees with the published {published.field} in sixty digits",
            worst < AGREE, f"worst {worst:.1e} at {len(picks)} cells, over a floor of {floors[panel]:.3g}")
@@ -11906,7 +11904,7 @@ def alcubierre(ck, src):
             "colour": {"name": unit, "scale": scale,
                        "ticks": every_second(scale) if panel == "K" else value_ticks(scale)},
             "map": {"metric": name, "system": system, "scalar": published.field, "x": "x", "y": "y",
-                    "params": dict(ALC_MOMENT), "functions": dict(ALC_FUNCTIONS),
+                    "fixed": dict(published.fixed), "params": {}, "functions": dict(ALC_FUNCTIONS),
                     "nx": int(2 * ALC_CELLS * box), "ny": int(ALC_CELLS * box), "cells": rows[panel]},
             "marks": [{"class": "horizon", "points": circle}],
             "legend": [["line", "horizon", "$v_s f = 1$, where the shift reaches the speed of light"]],
