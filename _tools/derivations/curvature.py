@@ -4975,6 +4975,8 @@ def eternal_traversable_wormhole(ck, src):
         ck(f"{metric} {system} K = R^2", sp.simplify(K.expr - R.expr ** 2) == 0)
     K = nr_published(src, metric, "global", "kretschmann", ["sigma"], params)
     x_axis = axis("$\\sigma$", 0.0, math.pi)
+    x_axis["ticks"] = [{"at": 0.0, "label": "$0$"}, {"at": math.pi / 2, "label": "$\\pi/2$"},
+                       {"at": math.pi, "label": "$\\pi$"}]
     aspect = 2.0
     shape_checks(ck, metric, [aspect])
     panel = {"id": "K", "name": "$K\\,L^4$", "aspect": aspect, "scale": ETW_SCALE, "ticks": value_ticks(ETW_SCALE)}
