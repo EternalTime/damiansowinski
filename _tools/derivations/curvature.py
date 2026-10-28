@@ -6123,6 +6123,109 @@ def interior_schwarzschild(ck, src):
     return [still, compact]
 
 
+# ---------------------------------------------------------------- Israel's collapsing shell of dust
+
+IS_SHELL = {"r_s": 1.0, "\\mu": 0.5}                  # the shell that falls from rest at infinity, as every drawing takes it
+IS_SHELL_BOX = ((0, 4), (-4, 2))                       # r/r_s and v/r_s: the shell from r = 3.65 r_s to the centre and on
+IS_SHELL_CELLS = (160, 240)                            # the cells of the map across and up, each a fortieth of r_s on a side
+IS_SHELL_SCALE = {"kind": "log", "from": 1e-3, "to": 1e6}   # the colours of K r_s^4
+IS_SHELL_DOMAIN = "r >= israel_r_adv(v)"               # the ingoing chart's domain, outside the shell
+
+
+def israel_shell(ck, src):
+    """Israel's shell of dust falling from rest at infinity, mu = r_s/2 and r_s = 1, its Kretschmann
+    scalar over the plane of the ingoing chart's v and r.
+
+    The ingoing chart publishes K = 12 r_s^2/r^6 outside the shell, r >= R(v), with R(v) the shell
+    of null_rays.israel_r_adv, and the flat interior publishes K = 0; the map declares the ingoing
+    chart's domain, so a cell inside the shell is null, and the caption states that it is flat. The
+    curvature at an r appears once the shell has passed it: the horizon r = r_s forms in the flat
+    interior and stands outside once the shell crosses it at v = 0, and the singularity r = 0 once
+    the shell arrives at v = 0.522 r_s. The shell itself is a delta function in the Ricci tensor,
+    seen by neither scalar, so it is marked as its world line; every chart publishes R = 0.
+
+    What the caption states is checked here: R = 0 in all three charts, K = 0 in the interior and
+    12 r_s^2/r^6 in both exterior charts; every drawn cell is 12/r^6 and lies within the colours
+    from below; the horizon is the one zero of the published g^rr, at r_s; the shell crosses r_s at
+    v = 0 and reaches r = 0 at V_END; and K passes the top of the colours only inside the radius
+    where 12/r^6 reaches it."""
+    metric, IN = "israel_shell", "exterior_ingoing"
+    names, values = list(IS_SHELL), list(IS_SHELL.values())
+    (r0, r1), (v0, v1) = IS_SHELL_BOX
+    nx, ny = IS_SHELL_CELLS
+    scale = IS_SHELL_SCALE
+    x_axis, y_axis = axis("$r/r_s$", r0, r1), axis("$v/r_s$", v0, v1)
+    aspect = (r1 - r0) / (v1 - v0)
+    shape_checks(ck, metric, [aspect])
+
+    for system, coords in (("interior", ["T", "r"]), ("exterior", ["t", "r"]), (IN, ["v", "r"])):
+        ricci = nr_published(src, metric, system, "ricci_scalar", coords, names)
+        ck(f"{metric} {system} publishes R = 0", ricci.expr == 0, f"{ricci.expr}")
+        K_sys = nr_published(src, metric, system, "kretschmann", coords, names)
+        rs_sym = K_sys.params[0] if K_sys.params else None
+        want = 0 if system == "interior" else 12 * rs_sym ** 2 / K_sys.coords[1] ** 6
+        ck(f"{metric} {system} publishes K = {'0' if system == 'interior' else '12 r_s^2/r^6'}",
+           sp.simplify(K_sys.expr - want) == 0, f"{K_sys.expr}")
+
+    K = nr_published(src, metric, IN, "kretschmann", ["r", "v"], names)
+    grr = nr_published(src, metric, IN, "inverse_metric_components", ["r"], names, ("r", "r"))
+    found = zeros(ck, f"{metric} horizon", grr, 0.1, r1, values)
+    ck(f"{metric} the one zero of g^rr is r = r_s", len(found) == 1 and abs(found[0] - 1) < 1e-12, f"{found}")
+
+    shell = nr.ishell.radius_at_advanced
+    v_end = nr.ishell.V_END
+    ck(f"{metric} the shell crosses r_s at v = 0 and reaches r = 0 at v = {v_end:.4f} r_s",
+       abs(float(shell(0.0)) - 1) < 1e-12 and float(shell(v_end - 1e-9)) < 1e-3 and float(shell(v_end)) == 0,
+       f"R(0) = {float(shell(0.0)):.15f}")
+    ck(f"{metric} the shell enters the box inside its right edge", float(shell(v0)) < r1, f"R({v0}) = {float(shell(v0)):.4f}")
+
+    domain = domain_function(metric, IN, IS_SHELL_DOMAIN, ["r", "v"], [])
+    xs, ys, grid = cells(K, x_axis, y_axis, nx, ny, values)
+    X, Y = np.meshgrid(xs, ys)
+    inside = domain(X, Y)
+    ck(f"{metric} the domain is outside the shell, r >= R(v)", np.array_equal(inside, X >= shell(Y)),
+       f"{int(inside.sum())} drawn, {int((~inside).sum())} null")
+    drawn = grid[inside]
+    ck(f"{metric} every cell drawn is 12/r^6", np.allclose(drawn, 12 / X[inside] ** 6, rtol=1e-14, atol=0))
+    ck(f"{metric} no cell drawn falls below the bottom of its colours", float(np.min(drawn)) >= scale["from"],
+       f"least {float(np.min(drawn)):.4e}")
+    rng = np.random.default_rng(1959)
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]}
+                   | {(0, ny - 1), (nx - 1, 0)})
+    ck(f"{metric} forty cells or more are checked in sixty digits", len(picks) >= 40, f"{len(picks)} cells")
+    agrees(ck, f"{metric} map", K, [[xs[i], ys[j], *values] for i, j in picks], [grid[j, i] for i, j in picks])
+    cut = (12 / scale["to"]) ** (1 / 6)
+    above = X[inside & (grid > scale["to"])]
+    ck(f"{metric} K passes the top of its colours only inside r = {cut:.3f} r_s", above.size > 0 and float(above.max()) < cut,
+       f"{float(above.max()):.4f}")
+
+    # The shell's world line r = R(v), thinned in the plot's own units, and the singularity once it arrives.
+    vs = np.linspace(v0, v_end, SAMPLES)
+    rs = shell(vs)
+    height = PLOT_W / aspect
+    keep = thinned(PLOT_W * (rs - r0) / (r1 - r0), height * (1 - (vs - v0) / (v1 - v0)), TOLERANCE)
+    world = [[float(rs[k]) + 0.0, float(vs[k]) + 0.0] for k in keep]
+    ck(f"{metric} the shell's world line lies inside the box", all(r0 <= x <= r1 and v0 <= y <= v1 for x, y in world),
+       f"{len(world)} points")
+
+    rows = [[rounded(c) if ok else None for c, ok in zip(row, keep_row)] for row, keep_row in zip(grid, inside)]
+    return [{
+        "id": "shell", "label": "The falling shell", "system": IN, "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,r_s^4$", "scale": scale, "ticks": every_second(scale)},
+        "map": {"metric": metric, "system": IN, "scalar": "kretschmann", "x": "r", "y": "v",
+                "params": dict(IS_SHELL), "domain": IS_SHELL_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "front", "points": world},
+                  {"class": "horizon", "points": [[1.0, 0.0], [1.0, float(v1)]]},
+                  {"class": "singular", "points": [[0.0, v_end], [0.0, float(v1)]]}],
+        "legend": [["line", "front", "the shell"], ["line", "horizon", "horizon"],
+                   ["line", "singular", "singularity"]],
+        "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the falling shell, flat and blank inside; "
+                    "Ricci scalar 0."],
+        "settings": "$r_s = 1$, $\\mu = r_s/2$.",
+        "clip": f"Log, clipped above $10^{{{round(math.log10(scale['to']))}}}$.",
+    }]
+
+
 # ---------------------------------------------------------------- the Einstein-Rosen waves
 
 ER_BOX = ((0, 10), (-8, 8))       # rho/a and ct/a: the pulse coming in, on the axis, and going out, as the research list sets
@@ -16580,6 +16683,7 @@ DRAWN = {
     "hiscock": hiscock,
     "interior_schwarzschild": interior_schwarzschild,
     "interstellar_wormhole": interstellar_wormhole,
+    "israel_shell": israel_shell,
     "kerr": kerr,
     "kerr_melvin": kerr_melvin,
     "kerr_newman": kerr_newman,
