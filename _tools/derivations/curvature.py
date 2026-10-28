@@ -13747,6 +13747,116 @@ def ab_caption(inside_cone, axis_values):
     ]
 
 
+# ---------------------------------------------------------------- the black hole fireworks
+
+BW_V0 = Fraction(3, 5)        # the shell falls in along Kruskal's V = V_0, as every drawing of the bounce takes it
+BW_E = Fraction(1, 2)         # E, the point of the shell at r = r_s/2, where the quantum region begins
+BW_DELTA = Fraction(7, 6)     # Delta, the point of the surface of time symmetry the quantum region reaches
+BW_RS = 1.0                   # r_s, the unit of every length and of ct
+# The box: r over the radial range of the ingoing Painleve-Gullstrand spacetime diagram, and ct up
+# to the moment the shell reaches E, the highest a horizontal edge can stand while every point of
+# the box outside the shell is classical.
+BW_R = (0.0, 3.0)
+BW_BOTTOM = -2.8
+BW_CELLS = (300, 162)
+# K r_s^4 runs from 12/3^6 at the right edge of the box up toward 768 at E, the corner of the
+# region drawn, so these colours hold every cell.
+BW_SCALE = {"kind": "log", "from": 1e-2, "to": 1e3}
+# Outside the shell, where the chart holds: the ingoing time at the radius r stands above the
+# shell's own, bw_shell_time below.
+BW_DOMAIN = "t >= 2*r_s*log(Rational(3, 5)/(sqrt(r/r_s) + 1)) + 2*sqrt(r*r_s) - r"
+
+
+def bw_shell_time(r, r_s=BW_RS):
+    """The ingoing Painleve-Gullstrand time at which the shell passes the radius r, the closed form
+    BW_DOMAIN decides by: 2 r_s ln(V_0/(sqrt(r/r_s) + 1)) + 2 sqrt(r r_s) - r, which falls with r,
+    as black_to_white_hole.py's shell_painleve_time writes it at r_s = 1."""
+    r = np.asarray(r, dtype=float)
+    return 2 * r_s * np.log(float(BW_V0) / (np.sqrt(r / r_s) + 1)) + 2 * np.sqrt(r * r_s) - r
+
+
+def black_to_white_hole(ck, src):
+    """Haggard and Rovelli's black hole fireworks at r_s = 1, V_0 = 3/5 and E at r = r_s/2, its
+    Kretschmann scalar outside the falling shell over the plane of r and the ingoing
+    Painleve-Gullstrand time, the chart that covers the flap before the bounce.
+
+    One map of 300 cells by 162 over 0 <= r <= 3 r_s, the radial range of that chart's spacetime
+    diagram, and ct from -2.8 r_s up to the moment the shell reaches E, colouring K r_s^4
+    logarithmically from 10^-2 to 10^3. The exterior publishes K = 12 r_s^2/r^6, a function of the
+    radius alone, so the levels are the spheres of constant r and what the map carries is where in
+    the spacetime that curvature stands: the shell's own world line bounds the colour, which
+    brightens along it as the shell falls, and the region inside the shell, where the flat interior
+    chart publishes K = 0, is left clear by the declared domain.
+
+    The top edge is the Painleve-Gullstrand time of E, the last moment whose whole slice outside
+    the shell is classical: a hair above it the slice crosses the edge of the quantum region, which
+    has no metric and is left undrawn, so no cell of the map falls in it.
+    """
+    import black_to_white_hole as bw
+
+    name, chart = "black_to_white_hole", "painleve_gullstrand_ingoing"
+    r_s = BW_RS
+    K = Published(src, name, chart, "kretschmann", ["r", "t"], ["r_s"])
+    R = Published(src, name, chart, "ricci_scalar", ["r", "t"], ["r_s"])
+    grr = Published(src, name, chart, "inverse_metric_components", ["r", "t"], ["r_s"], ("r", "r"))
+    flat_K = Published(src, name, "interior", "kretschmann", [], [])
+    flat_R = Published(src, name, "interior", "ricci_scalar", [], [])
+
+    # The published scalar: 12 r_s^2/r^6 outside the shell, nothing of the time, and no curvature
+    # at all inside it.
+    radius, time = K.coords
+    rs_sym = K.params[0]
+    same = sp.simplify(K.expr - 12 * rs_sym ** 2 / radius ** 6)
+    ck("black_to_white_hole the published K outside the shell is 12 r_s^2/r^6", same == 0, f"{same}")
+    ck("black_to_white_hole the published K holds no time, so its levels are the spheres of constant r",
+       time not in K.expr.free_symbols, f"{K.expr}")
+    ck("black_to_white_hole the exterior is a vacuum, with a vanishing published Ricci scalar", R.expr == 0, f"{R.expr}")
+    ck("black_to_white_hole the flat interior publishes a vanishing K and a vanishing Ricci scalar",
+       flat_K.expr == 0 and flat_R.expr == 0, f"K = {flat_K.expr}, R = {flat_R.expr}")
+
+    # The two moments the caption names, from the closed form the domain decides by, and the
+    # construction's own Painleve-Gullstrand time of the shell behind it.
+    ct_E = float(bw_shell_time(float(BW_E) * r_s))
+    ct_horizon = float(bw_shell_time(r_s))
+    probe = np.linspace(0.01 * r_s, 8.0 * r_s, 1999)
+    ck("black_to_white_hole the shell's closed form is the construction's own ingoing time",
+       float(np.max(np.abs(bw_shell_time(probe) - bw.shell_painleve_time(probe / r_s) * r_s))) < 1e-12,
+       f"worst {float(np.max(np.abs(bw_shell_time(probe) - bw.shell_painleve_time(probe / r_s) * r_s))):.1e}")
+    ck("black_to_white_hole the shell falls, its time falling with the radius it passes",
+       bool(np.all(np.diff(bw_shell_time(probe)) < 0)), f"ct = {ct_horizon:.6f} r_s at r_s, {ct_E:.6f} r_s at E")
+
+    x_axis = axis("$r/r_s$", BW_R[0], BW_R[1])
+    y_axis = axis("$ct/r_s$", BW_BOTTOM, ct_E)
+    shape_checks(ck, "black_to_white_hole falling", [(BW_R[1] - BW_R[0]) / (ct_E - BW_BOTTOM)])
+    nx, ny = BW_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [r_s])
+    grid_r, grid_t = np.meshgrid(xs, ys)
+    domain = domain_function(name, chart, BW_DOMAIN, ["r", "t"], ["r_s"])
+    drawn = domain(grid_r, grid_t, r_s)
+
+    ck("black_to_white_hole K is finite and positive at every cell drawn",
+       np.all(np.isfinite(values[drawn])) and np.all(values[drawn] > 0),
+       f"{int(drawn.sum())} cells of {nx * ny} from {np.min(values[drawn]):.6g} to {np.max(values[drawn]):.6g}")
+    ck("black_to_white_hole every cell drawn lies inside its colours",
+       BW_SCALE["from"] < np.min(values[drawn]) and np.max(values[drawn]) < BW_SCALE["to"],
+       f"from {np.min(values[drawn]):.6g} to {np.max(values[drawn]):.6g}")
+
+    rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, drawn)]
+    marks = [{"class": "horizon", "points": [[r_s, ct_horizon], [r_s, ct_E]]}]
+    return [{
+        "id": "falling", "label": "the plane of $r$ and $ct$ outside the shell", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,r_s^4$", "scale": dict(BW_SCALE), "ticks": value_ticks(dict(BW_SCALE))},
+        "map": {"metric": name, "system": chart, "scalar": "kretschmann", "x": "r", "y": "t",
+                "params": {"r_s": r_s}, "domain": BW_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+        "marks": marks,
+        "legend": [["line", "horizon", "the apparent horizon $r = r_s$, from the crossing of the shell up"]],
+        "caption": ["The Kretschmann scalar $K$ of a shell of light falling into a black hole."],
+        "settings": f"$r_s = 1$, the unit of every length and of $ct$, with $V_0 = 3/5$ and $E$ at $r = r_s/2$.",
+        "clip": "We colour $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$.",
+    }]
+
+
 # ---------------------------------------------------------------- the files
 
 DRAWN = {
@@ -13757,6 +13867,7 @@ DRAWN = {
     "bartnik_mckinnon": bartnik_mckinnon,
     "bardeen_perturbations": bardeen_perturbations,
     "belinski_zakharov": belinski_zakharov,
+    "black_to_white_hole": black_to_white_hole,
     "bonnor_magnetic_dipole": bonnor_magnetic_dipole,
     "bonnor_vaidya": bonnor_vaidya,
     "born_infeld_charge": born_infeld_charge,
