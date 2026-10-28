@@ -6712,6 +6712,129 @@ def interstellar_wormhole(ck, src):
         "caption": [caption], "ricci_sentences": [], "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$\\rho=a=1$, $M=1/2$.",
         "clip": "Log; signed log.",
+
+
+# ---------------------------------------------------------------- the Kaluza-Klein black holes
+
+KK_REACH = (0.2, 20.0)            # the plot runs over 0.2 <= r/r_s <= 20, as the research list sets
+KK_CHARGE = {"electric": 2.0, "magnetic": 2.0, "dyonic": 3.0, "einstein": 2.0}   # q or p in units of r_s, as every drawing takes it
+KK_FIVE = {"kind": "symlog", "from": -1e2, "to": 1e8, "linear": 1e-7}    # the axis of the five-dimensional K r_s^4
+KK_K = {"kind": "log", "from": 1e-7, "to": 1e5}                          # the axis of the Einstein metric's K r_s^4
+KK_R = {"kind": "symlog", "from": -1e2, "to": 1e-2, "linear": 1e-6}      # the axis of its R r_s^2
+KK_TICKS = ((0.2, "$0.2$"), (0.5, "$0.5$"), (1, "$1$"), (2, "$2$"), (5, "$5$"), (10, "$10$"), (20, "$20$"))
+
+
+def kaluza_klein_black_hole(ck, src):
+    """The Kaluza-Klein black holes' curvature against the radius on a logarithmic axis, at r_s = 1.
+
+    The first view draws the five-dimensional K of the electric hole (q = 2 r_s), the magnetic
+    (p = 2 r_s) and the dyon (p = 3 r_s, against its rho) together, on a signed logarithmic axis,
+    since the dyon's K changes sign twice; the dyon's is the view's own curve and its horizons
+    rho = (p -+ r_s)/2 = r_s and 2 r_s are marked, the first also the horizon of the other two,
+    which are dashed. Every five-dimensional R vanishes. The second view draws the Einstein
+    metric's K and R, the hole's four-dimensional metric, whose R does not vanish, with its horizon
+    at r_s. The axis across is log10(r/r_s), each curve declaring its coordinate beside its points
+    through the landed horizontal expression.
+
+    What the captions state is checked here: the electric K is 12 r_s^2/r^6 at every q, its
+    Eddington-Finkelstein chart's the same; the five-dimensional R vanishes in every chart; the
+    Einstein metric's Eddington-Finkelstein chart publishes its K and R; the horizons are the zeros
+    of g^rr; R changes sign at the horizon alone; the dyon's K changes sign at the two roots of
+    its numerator; and every curve lies inside its panel."""
+    metric = "kaluza_klein_black_hole"
+    lo, hi = (math.log10(r) for r in KK_REACH)
+    x_axis = {"name": "$r/r_s$", "from": lo, "to": hi,
+              "ticks": [{"at": math.log10(r), "label": label} for r, label in KK_TICKS]}
+    rs = np.geomspace(*KK_REACH, SAMPLES)
+    charges = {"electric": "q", "magnetic": "p", "dyonic": "p", "einstein": "q"}
+    coordinate = {"electric": "r", "magnetic": "r", "dyonic": "rho", "einstein": "r"}
+
+    def read(system, field, indices=None):
+        return nr_published(src, metric, system, field, [coordinate[system]], ["r_s", charges[system]], indices)
+
+    def params(system):
+        return {"r_s": 1.0, charges[system]: KK_CHARGE[system]}
+
+    for system in ("electric", "magnetic", "dyonic"):
+        ck(f"{metric} {system} R vanishes", read(system, "ricci_scalar").expr == 0)
+    K_e = read("electric", "kretschmann")
+    for q in (1.0, 1.5, 2.0, 5.0):
+        ck(f"{metric} electric K is 12 r_s^2/r^6 at q = {q}",
+           np.allclose(K_e(rs, 1.0, q), 12 / rs ** 6, rtol=1e-14, atol=0))
+    for system, other in (("electric", "eddington_finkelstein_ingoing"), ("einstein", "einstein_eddington_finkelstein")):
+        for field in ("kretschmann", "ricci_scalar"):
+            theirs = nr_published(src, metric, other, field, ["r"], ["r_s", charges[system]])
+            ck(f"{metric} {other} publishes the {system} chart's {field}",
+               np.allclose(theirs(rs, *params(system).values()), read(system, field)(rs, *params(system).values()),
+                           rtol=1e-14, atol=0))
+
+    def horizons(system):
+        name = "\\rho" if coordinate[system] == "rho" else "r"
+        g = read(system, "inverse_metric_components", (name, name))
+        return zeros(ck, f"{metric} {system} horizons", g, *KK_REACH, list(params(system).values()))
+    for system, expected in (("electric", [1.0]), ("magnetic", [1.0]), ("dyonic", [1.0, 2.0]), ("einstein", [1.0])):
+        found = horizons(system)
+        ck(f"{metric} {system} has its horizons at {expected} r_s",
+           len(found) == len(expected) and all(abs(a - b) < 1e-12 for a, b in zip(found, expected)), f"{found}")
+
+    K_d = read("dyonic", "kretschmann")
+    p = KK_CHARGE["dyonic"]
+    # The dyon's numerator 96 rho^2 p^2 - 96 rho p^3 + 96 rho p r_s^2 + 21 (p^2 - r_s^2)^2 at r_s = 1.
+    roots = sorted(np.roots([96 * p ** 2, -96 * p ** 3 + 96 * p, 21 * (p ** 2 - 1) ** 2]).real)
+    found = zeros(ck, f"{metric} dyonic K", K_d, *KK_REACH, [1.0, p])
+    ck(f"{metric} dyonic K changes sign at the roots of its numerator",
+       len(found) == 2 and all(abs(a - b) < 1e-9 for a, b in zip(found, roots)), f"{found} {roots}")
+    R_E = read("einstein", "ricci_scalar")
+    ck(f"{metric} einstein R changes sign at the horizon alone",
+       zeros(ck, f"{metric} einstein R", R_E, *KK_REACH, [1.0, KK_CHARGE["einstein"]]) == [1.0])
+
+    def curve(system, field, panel, cls, scale, height):
+        fn = read(system, field)
+        values = fn(rs, *params(system).values())
+        ck(f"{metric} {system} {field} stays inside its panel",
+           np.all(np.isfinite(values)) and np.all(values >= scale["from"]) and np.all(values <= scale["to"]),
+           f"{np.min(values):.4g} to {np.max(values):.4g}")
+        xs = np.log10(rs)
+        p0, p1 = span(scale)
+        X = PLOT_W * (xs - lo) / (hi - lo)
+        Y = height * (1 - (position(scale, values) - p0) / (p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        entry = curve_entry(panel, cls, fn, "\\rho" if coordinate[system] == "rho" else "r", params(system),
+                            [[float(xs[k]) + 0.0, float(values[k]) + 0.0] for k in keep])
+        entry["horizontal"] = {"expression": f"log({coordinate[system]})/log(10)", "values": [float(rs[k]) for k in keep]}
+        agrees(ck, f"{metric} {system} {field}", fn, [[float(rs[k]), *params(system).values()] for k in keep],
+               [float(values[k]) for k in keep])
+        return entry
+
+    five_panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 1, "scale": KK_FIVE, "ticks": every_second(KK_FIVE)}]
+    shape_checks(ck, f"{metric} five", [p["aspect"] for p in five_panels])
+    five = [curve("electric", "kretschmann", "K", "reference", KK_FIVE, PLOT_W),
+            curve("magnetic", "kretschmann", "K", "reference", KK_FIVE, PLOT_W),
+            curve("dyonic", "kretschmann", "K", "K", KK_FIVE, PLOT_W)]
+    four_panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": KK_K, "ticks": every_second(KK_K)},
+                   {"id": "R", "name": "$R\\,r_s^2$", "aspect": 2, "scale": KK_R, "ticks": every_second(KK_R)}]
+    shape_checks(ck, f"{metric} einstein", [p["aspect"] for p in four_panels])
+    four = [curve("einstein", "kretschmann", "K", "K", KK_K, PLOT_W / 2),
+            curve("einstein", "ricci_scalar", "R", "R", KK_R, PLOT_W / 2)]
+
+    k_clip, r_clip = "Log, none cut.", "Signed log, linear within $10^{-6}$; none cut."
+    return [{
+        "id": "five", "label": "five dimensions", "kind": "line", "x": x_axis, "panels": five_panels,
+        "curves": five, "marks": [{"class": "horizon", "x": math.log10(r)} for r in (1.0, 2.0)],
+        "legend": [["line", "K", "dyon"], ["line", "reference", "electric, magnetic"], ["line", "horizon", "horizon"]],
+        "caption": ["The Kretschmann scalar $K$, the dyon's against $\\rho$; electric $K=12r_s^2/r^6$ at any $q$, "
+                    "the Ricci scalar vanishes."],
+        "settings": "$r_s=1$, $q=p=2$, dyon $p=3$.",
+        "clip": "Signed log, linear within $10^{-7}$; none cut.",
+    }, {
+        "id": "einstein", "label": "Einstein metric", "kind": "line", "x": x_axis, "panels": four_panels,
+        "curves": four, "marks": [{"class": "horizon", "x": 0.0}],
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "horizon", "horizon"]],
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the electric hole's Einstein metric."],
+        "ricci_sentences": [],
+        "per_scalar": scalar_clips(k_clip, r_clip),
+        "settings": "$r_s=1$, $q=2$.",
+        "clip": "Log, signed log within $10^{-6}$; none cut.",
     }]
 
 
@@ -16379,6 +16502,7 @@ DRAWN = {
     "kerr_bertotti_robinson": kerr_bertotti_robinson,
     "kerr_taub_nut": kerr_taub_nut,
     "khan_penrose": khan_penrose,
+    "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "kantowski_sachs": kantowski_sachs,
     "kiselev": kiselev,
     "levi_civita": levi_civita,
