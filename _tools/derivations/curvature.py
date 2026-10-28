@@ -13791,6 +13791,17 @@ def black_to_white_hole(ck, src):
     The top edge is the Painleve-Gullstrand time of E, the last moment whose whole slice outside
     the shell is classical: a hair above it the slice crosses the edge of the quantum region, which
     has no metric and is left undrawn, so no cell of the map falls in it.
+
+    What the caption states is checked here: the exterior publishes K = 12 r_s^2/r^6 and R = 0 and
+    the flat interior publishes K = R = 0; the shell's closed form is black_to_white_hole.py's own
+    ingoing time, falling with the radius; K = 12/r_s^4 at r_s and 768/r_s^4 at E in sixty digits,
+    with the brightest and the dimmest cell drawn and the value at the right edge of the box; the
+    declared domain holds exactly where Kruskal's V >= V_0, and every cell it draws lies in region
+    II, with no cell centre on the shell itself; the top edge is the last classical moment, since a
+    hair above it the slice leaves region II at E; the edge of the quantum region runs from E out to
+    Delta, at r = 7 r_s/6, where the surface of time symmetry carries the flap after the bounce; the
+    published g^rr changes sign at r = r_s alone, so every sphere drawn inside it is trapped; K
+    falls with the radius at every cell; and forty cells or more again in sixty digits.
     """
     import black_to_white_hole as bw
 
@@ -13825,6 +13836,20 @@ def black_to_white_hole(ck, src):
     ck("black_to_white_hole the shell falls, its time falling with the radius it passes",
        bool(np.all(np.diff(bw_shell_time(probe)) < 0)), f"ct = {ct_horizon:.6f} r_s at r_s, {ct_E:.6f} r_s at E")
 
+    # The curvature at the two radii the caption names, in sixty digits from the published formula.
+    at_E = float(K.exact([float(BW_E) * r_s, ct_E, r_s]))
+    at_horizon = float(K.exact([r_s, ct_horizon, r_s]))
+    ck("black_to_white_hole K is 12/r_s^4 at the apparent horizon and 768/r_s^4 at E, in sixty digits",
+       abs(at_horizon / (12 / r_s ** 4) - 1) < AGREE and abs(at_E / (768 / r_s ** 4) - 1) < AGREE,
+       f"{at_horizon:.8g} at r_s and {at_E:.8g} at r_s/2")
+
+    # The published g^rr changes sign at the apparent horizon alone, so every sphere drawn inside
+    # it is trapped.
+    horizons = zeros(ck, "black_to_white_hole the published g^rr", Held(grr, {"t": ct_E}),
+                     1e-6 * r_s, BW_R[1] * r_s, [r_s])
+    ck("black_to_white_hole the published g^rr changes sign at r = r_s alone on the range drawn",
+       len(horizons) == 1 and abs(horizons[0] - r_s) < 1e-12, f"{horizons}")
+
     x_axis = axis("$r/r_s$", BW_R[0], BW_R[1])
     y_axis = axis("$ct/r_s$", BW_BOTTOM, ct_E)
     shape_checks(ck, "black_to_white_hole falling", [(BW_R[1] - BW_R[0]) / (ct_E - BW_BOTTOM)])
@@ -13834,12 +13859,73 @@ def black_to_white_hole(ck, src):
     domain = domain_function(name, chart, BW_DOMAIN, ["r", "t"], ["r_s"])
     drawn = domain(grid_r, grid_t, r_s)
 
+    # The domain is the region outside the shell, which Kruskal's V reads as V >= V_0, and the
+    # construction holds every cell drawn inside region II, below the quantum region.
+    kruskal_U, kruskal_V = bw.painleve_UV(grid_t / r_s, grid_r / r_s)
+    ck("black_to_white_hole the declared domain holds exactly where Kruskal's V is above the shell's",
+       np.array_equal(drawn, kruskal_V >= float(BW_V0)),
+       f"{int(drawn.sum())} cells drawn, nearest centre {float(np.min(np.abs(kruskal_V - float(BW_V0)))):.2e} in V")
+    ck("black_to_white_hole no cell centre stands within a thousandth of a cell of the shell",
+       float(np.min(np.abs(grid_t - bw_shell_time(grid_r)))) > 1e-5 * r_s,
+       f"nearest {float(np.min(np.abs(grid_t - bw_shell_time(grid_r)))):.2e} r_s, a cell being "
+       f"{(ct_E - BW_BOTTOM) / ny:.5f} r_s tall")
+    inside_two = bw.region_two(kruskal_U[drawn], kruskal_V[drawn])
+    ck("black_to_white_hole every cell drawn lies in region II, outside the shell and below the quantum region",
+       float(np.min(inside_two)) > 0, f"worst margin {float(np.min(inside_two)):.2e}")
+
+    # The top edge is the last moment of this chart whose whole slice outside the shell is
+    # classical: at it every point outside the shell is in region II, and a hair above it the slice
+    # leaves region II at E, where the quantum region begins.
+    slice_r = np.linspace(float(BW_E) * r_s, 8.0 * r_s, 1501)
+    slice_r = slice_r[bw_shell_time(slice_r) <= ct_E]
+    margins = []
+    for top in (ct_E, ct_E + 1e-9 * r_s):
+        U, V = bw.painleve_UV(np.full(slice_r.shape, top / r_s), slice_r / r_s)
+        margins.append(float(np.min(bw.region_two(U, V))))
+    ck("black_to_white_hole the top edge is the last moment whose slice outside the shell is classical",
+       margins[0] >= 0 > margins[1], f"margin {margins[0]:.1e} at the edge and {margins[1]:.1e} a hair above it")
+
+    # The edge of the quantum region, from E out to Delta on the surface of time symmetry.
+    ct_delta = float(bw.edge_painleve_time(np.array([float(BW_DELTA)]))[0]) * r_s
+    delta = float(BW_DELTA) * r_s
+    symmetry = (r_s * math.log(delta / r_s - 1) - 2 * r_s * math.log(math.sqrt(delta / r_s) + 1)
+                + 2 * math.sqrt(delta * r_s))
+    ck("black_to_white_hole Delta stands at r = 7 r_s/6 on the surface of time symmetry",
+       abs(ct_delta - symmetry) < 1e-12 and ct_E < ct_delta,
+       f"ct = {ct_delta:.6f} r_s against {symmetry:.6f} r_s from U + V = 0")
+    edge = float(np.min(bw.edge_painleve_time(np.linspace(float(BW_E), float(BW_DELTA), 801)))) * r_s
+    ck("black_to_white_hole the edge of the quantum region stands at or above the top of the box at every radius",
+       edge >= ct_E - 1e-12 * r_s, f"least {edge:.6f} r_s, at E, against a top edge of {ct_E:.6f} r_s")
+
     ck("black_to_white_hole K is finite and positive at every cell drawn",
        np.all(np.isfinite(values[drawn])) and np.all(values[drawn] > 0),
        f"{int(drawn.sum())} cells of {nx * ny} from {np.min(values[drawn]):.6g} to {np.max(values[drawn]):.6g}")
     ck("black_to_white_hole every cell drawn lies inside its colours",
        BW_SCALE["from"] < np.min(values[drawn]) and np.max(values[drawn]) < BW_SCALE["to"],
        f"from {np.min(values[drawn]):.6g} to {np.max(values[drawn]):.6g}")
+    ck("black_to_white_hole K falls with the radius along every row of cells drawn",
+       all(bool(np.all(np.diff(row[keep]) < 0)) for row, keep in zip(values, drawn) if int(keep.sum()) > 1),
+       f"{int(np.sum(drawn.sum(axis=1) > 1))} rows")
+    ck("black_to_white_hole every sphere drawn inside the apparent horizon is trapped",
+       bool(np.all(grr(grid_r[drawn & (grid_r < r_s)], ct_E, r_s) < 0)),
+       f"{int(np.sum(drawn & (grid_r < r_s)))} cells inside r_s")
+
+    # The brightest and the dimmest cell drawn, and the value at the right edge of the box.
+    brightest = np.unravel_index(int(np.argmax(np.where(drawn, values, -np.inf))), values.shape)
+    dimmest = np.unravel_index(int(np.argmin(np.where(drawn, values, np.inf))), values.shape)
+    hottest, coolest = float(values[brightest]), float(values[dimmest])
+    at_edge = float(K.exact([BW_R[1] * r_s, ct_E, r_s]))
+    ck("black_to_white_hole the brightest cell drawn stands beside E and the dimmest at the right edge",
+       abs(xs[brightest[1]] - 0.515 * r_s) < 0.01 * r_s and abs(xs[dimmest[1]] - 2.995 * r_s) < 0.01 * r_s,
+       f"{hottest:.6g} at r = {xs[brightest[1]]:.3f} r_s and {coolest:.6g} at r = {xs[dimmest[1]]:.3f} r_s")
+
+    # Forty cells or more, spread over the region drawn, checked again in sixty digits.
+    rng = np.random.default_rng(1407)
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 300), rng.integers(0, ny, 300))
+                    if drawn[j, i]})
+    ck("black_to_white_hole forty cells or more are checked in sixty digits", len(picks) >= 40, f"{len(picks)} cells")
+    agrees(ck, "black_to_white_hole map", K, [[xs[i], ys[j], r_s] for i, j in picks],
+           [values[j, i] for i, j in picks])
 
     rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, drawn)]
     marks = [{"class": "horizon", "points": [[r_s, ct_horizon], [r_s, ct_E]]}]
@@ -13850,11 +13936,38 @@ def black_to_white_hole(ck, src):
         "map": {"metric": name, "system": chart, "scalar": "kretschmann", "x": "r", "y": "t",
                 "params": {"r_s": r_s}, "domain": BW_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
         "marks": marks,
-        "legend": [["line", "horizon", "the apparent horizon $r = r_s$, from the crossing of the shell up"]],
-        "caption": ["The Kretschmann scalar $K$ of a shell of light falling into a black hole."],
-        "settings": f"$r_s = 1$, the unit of every length and of $ct$, with $V_0 = 3/5$ and $E$ at $r = r_s/2$.",
-        "clip": "We colour $K\\,r_s^4$ on a logarithmic scale from $10^{-2}$ to $10^{3}$.",
+        "legend": [["line", "horizon", "the apparent horizon $r = r_s$, from the shell up"]],
+        "caption": bw_caption(ct_horizon, ct_E, ct_delta, at_horizon, at_E),
+        "settings": "$r_s = 1$, the unit of every length and of $ct$, with the shell on $V_0 = 3/5$ "
+                    "and $E$ at $r = r_s/2$.",
+        "clip": f"We colour $K\\,r_s^4$ on a logarithmic scale from $10^{{-2}}$ to $10^{{3}}$, and every cell "
+                f"drawn lies inside it, from ${tex_number(coolest, 6)}$ at the right edge of the box to "
+                f"${tex_number(hottest, 6)}$ beside $E$. The chart holds outside the shell alone, which the map "
+                f"declares as its domain, so the cells inside the shell are left clear.",
     }]
+
+
+def bw_caption(ct_horizon, ct_E, ct_delta, at_horizon, at_E):
+    """The caption of the fireworks figure, the plane of r and the ingoing Painleve-Gullstrand time
+    outside the falling shell."""
+    return [
+        "The Kretschmann scalar $K$ of a shell of light falling into a black hole, over the plane of $r$ and the "
+        "ingoing Painlev\u00e9-Gullstrand time ($r_s = 1$, $V_0 = 3/5$, $E$ at $r = r_s/2$), the same at every "
+        "$\\theta$ and $\\phi$. Outside the shell the geometry is Schwarzschild's and $K = 12r_s^2/r^6$, so the "
+        "levels of $K$ are the spheres of constant $r$ and the colours brighten inward. That region is a vacuum "
+        "and its Ricci scalar vanishes.",
+        "Inside the shell space is flat, where $K$ vanishes and no chart of the exterior reaches, so those cells "
+        "are left clear and the edge of the colour is the shell itself, falling in at the speed of light. It "
+        f"passes the apparent horizon $r = r_s$ at $ct = {tex_number(ct_horizon, 6)}\\,r_s$, where "
+        f"$K = {tex_number(at_horizon, 3)}/r_s^4$, and reaches $E$ at $ct = {tex_number(ct_E, 6)}\\,r_s$, where "
+        f"$K = {tex_number(at_E, 3)}/r_s^4$, the largest curvature the classical region carries. Between those two "
+        "moments every sphere outside the shell and inside $r_s$ is trapped.",
+        "The box stops at the moment the shell reaches $E$, the last moment of this chart whose whole slice "
+        "outside the shell is classical. Above that moment lies the quantum region, which has no metric, and its "
+        f"edge runs from $E$ out to $\\Delta$, at $r = 7r_s/6$ and $ct = {tex_number(ct_delta, 6)}\\,r_s$. Beyond "
+        "$\\Delta$ the surface of time symmetry carries the flap after the bounce, the mirror image of this one, "
+        "where the shell comes back out of a white hole with the same $K$ at the same radius.",
+    ]
 
 
 # ---------------------------------------------------------------- the files
