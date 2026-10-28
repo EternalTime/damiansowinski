@@ -362,13 +362,14 @@ class CurvatureShape(unittest.TestCase):
             else:
                 curve = next(c for c in view["curves"] if c["panel"] == "K")
                 curve["points"][0][1] = -1.0
-        self.assertIn("at or below zero", self.broken(negate))
+        # The ring's one view is a map on a logarithmic colour, which every figure has not.
+        self.assertIn("at or below zero", self.broken(negate, "bach_weyl_ring"))
 
     def test_a_map_read_in_a_frame_of_no_known_kind_is_refused(self):
         def reframed(data):
             view = next(v for v in data["views"] if v["kind"] == "map")
             view["map"]["frame"] = "polar"
-        self.assertIn("frame", self.broken(reframed))
+        self.assertIn("frame", self.broken(reframed, "bach_weyl_ring"))
 
     def test_a_map_read_about_a_ring_of_no_named_radius_is_refused(self):
         files = curvature_files()
