@@ -6219,7 +6219,7 @@ def israel_shell(ck, src):
                   {"class": "singular", "points": [[0.0, v_end], [0.0, float(v1)]]}],
         "legend": [["line", "front", "the shell"], ["line", "horizon", "horizon"],
                    ["line", "singular", "singularity"]],
-        "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the falling shell, flat and blank inside; "
+        "caption": ["The Kretschmann scalar $K = 12r_s^2/r^6$ outside the shell, flat and blank inside; "
                     "Ricci scalar 0."],
         "settings": "$r_s = 1$, $\\mu = r_s/2$.",
         "clip": f"Log, clipped above $10^{{{round(math.log10(scale['to']))}}}$.",
