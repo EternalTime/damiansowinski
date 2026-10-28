@@ -15668,9 +15668,8 @@ def erez_rosen(ck, src):
         "id": "directions", "label": "the axis and the equator", "kind": "line", "x": x_r, "panels": panels,
         "curves": reference, "marks": [],
         "movie": {"variable": "$q$", "seconds": 3, "frames": movie},
-        "legend": [],
-        "caption": ["$K\\,m^4$ against $r$ on the axis and the equator for $q$ -1/2, 0, 1, pink; dashes "
-                    "Schwarzschild's."],
+        "legend": [["line", "K", "pink, Erez-Rosen"], ["line", "reference", "dashes, Schwarzschild"]],
+        "caption": ["$K\\,m^4$ against $r$ on the axis and the equator for $q$ -1/2, 0, 1."],
         "settings": "$m=1$; axis at $\\theta=10^{-5}$.",
         "clip": "Log, from $r=2.02m$; the $q=1$ axis dips out at its zero.",
     }
