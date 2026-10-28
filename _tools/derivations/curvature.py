@@ -4133,6 +4133,95 @@ def dilaton_black_hole(ck, src):
     return [einstein, strings["string_magnetic"], strings["string_electric"], movie]
 
 
+# ---------------------------------------------------------------- the Eguchi-Hanson space
+
+EH_REACH = 3                      # r/a out to 3, and rho and |z| out to 3a, as the research list sets
+EH_CELLS = 20                     # the cells of the map to each a, across and up
+EH_LINE = {"kind": "log", "from": 1e-4, "to": 1e3}   # K a^4 along r
+EH_MAP = {"kind": "log", "from": 1e-2, "to": 1e3}    # K a^4 over the half plane
+
+
+def eguchi_hanson(ck, src):
+    """The Eguchi-Hanson space at a = 1, as its embedding takes it: K against r/a from the bolt
+    r = a to 3a, and K over the half plane of the two-centre chart's rho and z, with the bolt,
+    rho = 0 between the centres z = +-a, marked.
+
+    The space is Riemannian, so neither view has a time. The stored Ricci scalar vanishes in all
+    three charts. K = 384a^8/r^12 peaks on the bolt at 384/a^4, as the Kahler chart's K does at
+    rho = 0 and the two-centre chart's on the segment between the centres, where R_1 + R_2 = 2a;
+    the two-centre K depends on R_1 + R_2 alone, so its level sets are confocal ellipses about the
+    centres. g^rr vanishes at the bolt, the left end of the line view. The checks cover these
+    values, the clips and every written point and cell in sixty digits."""
+    name = "eguchi_hanson"
+    a = 1.0
+    params = {"a": a}
+    K_r = Published(src, name, "eguchi_hanson", "kretschmann", ["r"], ["a"])
+    K_k = Published(src, name, "kahler", "kretschmann", ["rho"], ["a"])
+    K_2 = Published(src, name, "two_centre", "kretschmann", ["rho", "z"], ["a"])
+    grr = Published(src, name, "eguchi_hanson", "inverse_metric_components", ["r"], ["a"], ("r", "r"))
+    for system, coords in (("eguchi_hanson", ["r"]), ("kahler", ["rho"]), ("two_centre", ["rho", "z"])):
+        ck(f"{name} the {system} chart's Ricci scalar vanishes",
+           Published(src, name, system, "ricci_scalar", coords, ["a"]).expr == 0)
+    bolt = [float(K_r.exact([a, a])), float(K_k.exact([0.0, a]))] + \
+           [float(K_2.exact([0.0, z, a])) for z in (-0.9, -0.3, 0.0, 0.5, 0.99)]
+    ck(f"{name} K is 384/a^4 on the bolt in all three charts", all(abs(v / 384 - 1) < 1e-40 for v in bolt),
+       f"{bolt}")
+    ck(f"{name} g^rr vanishes at the bolt r = a", abs(float(grr.exact([a, a]))) < 1e-40)
+    rng = np.random.default_rng(1978)
+    worst = 0.0
+    for s in rng.uniform(2.1, 8, 6):
+        on = [float(K_2.exact([math.sqrt(1 - (2 / s) ** 2) * s / 2 * math.sin(t), s / 2 * math.cos(t), a]))
+              for t in np.linspace(0.1, math.pi - 0.1, 7)]
+        worst = max(worst, max(on) / min(on) - 1)
+    ck(f"{name} the two-centre K is constant on each ellipse with foci z = +-a, to the doubles of its points",
+       worst < 1e-13, f"{worst:.1e}")
+
+    x_axis = axis("$r/a$", a, EH_REACH * a)
+    panels = [{"id": "K", "name": "$K\\,a^4$", "aspect": 2, "scale": EH_LINE, "ticks": value_ticks(EH_LINE)}]
+    shape_checks(ck, f"{name} line", [p["aspect"] for p in panels])
+    curves = line_curves(ck, f"{name} radial", "K", "K", K_r, "r", x_axis, EH_LINE, PLOT_W / 2, params)
+    up, down = beyond(K_r, x_axis, EH_LINE, [a])
+    end = float(K_r.exact([EH_REACH * a, a]))
+    ck(f"{name} the radial curve stays inside its panel", not up and not down and EH_LINE["from"] < end,
+       f"{end:.6e} at r = 3a")
+    radial = {
+        "id": "radial", "label": "the radius $r$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$"]],
+        "caption": ["$K = 384a^8/r^{12}$ from the bolt $r = a$ outward; the Ricci scalar vanishes."],
+        "settings": "$a = 1$, Eguchi-Hanson chart.",
+        "clip": "Log scale $10^{-4}$ to $10^3$, none cut.",
+    }
+
+    x_map, y_map = axis("$\\rho/a$", 0.0, EH_REACH * a), axis("$z/a$", -EH_REACH * a, EH_REACH * a)
+    aspect = (x_map["to"] - x_map["from"]) / (y_map["to"] - y_map["from"])
+    shape_checks(ck, f"{name} map", [aspect])
+    nx, ny = EH_CELLS * EH_REACH, 2 * EH_CELLS * EH_REACH
+    xs, ys, values = cells(K_2, x_map, y_map, nx, ny, [a])
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(0, ny // 2), (0, ny // 2 - 1), (nx - 1, 0), (nx - 1, ny - 1)}
+    picks = sorted(picks)
+    agrees(ck, f"{name} map", K_2, [[xs[i], ys[j], a] for i, j in picks], [values[j, i] for i, j in picks])
+    corner = float(K_2.exact([x_map["to"], y_map["to"], a]))
+    ck(f"{name} every cell is inside its colours, least at the far corners",
+       np.all(np.isfinite(values)) and EH_MAP["from"] < corner <= np.min(values) and np.max(values) < 384 < EH_MAP["to"],
+       f"from {np.min(values):.4e} to {np.max(values):.4f}, {corner:.4e} at the corners")
+    half_plane = {
+        "id": "half_plane", "label": "the half plane of $\\rho$ and $z$", "kind": "map", "x": x_map, "y": y_map,
+        "colour": {"name": "$K\\,a^4$", "scale": EH_MAP, "ticks": value_ticks(EH_MAP)},
+        "map": {"metric": name, "system": "two_centre", "scalar": "kretschmann", "x": "\\rho", "y": "z",
+                "params": dict(params), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "front", "points": [[0.0, -a], [0.0, a]]}],
+        "legend": [["line", "front", "the bolt, between the centres"]],
+        "caption": ["The Kretschmann scalar $K$ is constant on ellipses with foci $z = \\pm a$; the Ricci scalar "
+                    "vanishes."],
+        "settings": "$a = 1$, two-centre chart.",
+        "clip": "Log scale $10^{-2}$ to $10^3$, none cut.",
+    }
+    return [radial, half_plane]
+
+
 # ---------------------------------------------------------------- Einstein's static field of 1912
 
 E1912_REACH = 6                   # the plot runs from the centre to r = 6 m, the reach of the embedding diagram
@@ -15092,6 +15181,7 @@ DRAWN = {
     "datt_ruban_t_models": datt_ruban_t_models,
     "dilaton_black_hole": dilaton_black_hole,
     "distorted_schwarzschild": distorted_schwarzschild,
+    "eguchi_hanson": eguchi_hanson,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "einstein_rosen_bridge": einstein_rosen_bridge,

@@ -1516,7 +1516,8 @@
       "idealized model"
     ],
     "version": "b0c56b0311d76519",
-    "embedding": "4717367b2f2467bd"
+    "embedding": "4717367b2f2467bd",
+    "curvature": "78b88ccb72d3404e"
   },
   {
     "id": "einstein_cluster",
