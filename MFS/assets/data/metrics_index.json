@@ -2598,7 +2598,8 @@
     ],
     "version": "9036853a4eb4381e",
     "diagrams": "487e58f217c89feb",
-    "embedding": "779744327513578c"
+    "embedding": "779744327513578c",
+    "curvature": "a6ea8bad838cbf55"
   },
   {
     "id": "kasner_scalar",

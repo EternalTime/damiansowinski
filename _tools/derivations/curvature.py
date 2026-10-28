@@ -7251,8 +7251,8 @@ def kasner_magnetic(ck, src):
         "id": "kasner_time", "label": "Kasner's time", "kind": "line", "x": x_axis, "panels": panels,
         "curves": curves, "marks": [],
         "legend": [["line", "K", "$b = 1$"], ["line", "reference", "$b = 0$, dashed"]],
-        "caption": ["The Kretschmann scalar $K$, as $t^{-4}$ before $t = 1$ and $t^{-76/7}$ after. "
-                    "The Ricci scalar $R = 0$."],
+        "caption": ["The Kretschmann scalar $K$: $t^{-4}$ before $t = 1$, $t^{-76/7}$ after. "
+                    "The Ricci scalar vanishes."],
         "settings": "$p_3 = 6/7$, $b = 1$.",
         "clip": "Log, none clipped.",
     }, {
