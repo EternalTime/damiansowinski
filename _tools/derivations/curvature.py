@@ -6704,13 +6704,13 @@ def interstellar_wormhole(ck, src):
 
     k_clip, r_clip = "log.", "signed log."
     caption = ("The Kretschmann scalar $K$ and the Ricci scalar $R$ of Interstellar's wormhole against $\\ell$. "
-               "$K$ pink, $R$ cyan; both jump at the mouths, the bars, where $r''$ does.")
+               "$K$ pink and $R$ cyan jump with $r''$ at the mouths, the bars.")
     return [{
         "id": "wormhole", "label": "the whole wormhole", "kind": "line", "x": x_axis,
         "panels": panels, "curves": curves, "marks": [{"class": "front", "x": -a}, {"class": "front", "x": a}],
         "legend": [], "caption": [caption], "ricci_sentences": [], "per_scalar": scalar_clips(k_clip, r_clip),
-        "settings": "$\\rho = a = 1$, $M = 1/2$.",
-        "clip": "Log; signed log, linear within $10^{-4}$.",
+        "settings": "$\\rho=a=1$, $M=1/2$.",
+        "clip": "Log; signed log.",
     }]
 
 
