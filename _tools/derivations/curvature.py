@@ -16002,7 +16002,7 @@ KBR_SPIN = {"m": 1.0, "a": 0.8, "B": 0.25}       # as every drawing of the spinn
 KBR_STATIC = {"m": 1.0, "B": 0.25}               # as every drawing of the static hole takes it, nr.KBR_STATIC
 KBR_REACH = 20                    # the curves run out to r = 20 m, where K has settled near its far value
 KBR_LINE = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 1e-2}   # the axis of K m^4 on both panels
-KBR_NEAR = 1e-3                   # the curves start 10^-3 m outside the horizon, where the published K is 0/0
+KBR_NEAR = 0.02                   # the curves start half a pixel outside the horizon, where the published K is 0/0 in doubles
 KBR_AXIS = 0.05                   # the theta the axis curves are read at, where the doubles hold the published K to 10^-9
 
 
@@ -16092,7 +16092,7 @@ def kerr_bertotti_robinson(ck, src):
         "curves": reference, "marks": [],
         "movie": {"variable": "$a$", "seconds": 3, "frames": movie},
         "legend": [["line", "K", "pink, $K$"], ["line", "reference", "dashes, $8B^4$"]],
-        "caption": ["The Kretschmann scalar $K$ on the axis and equator stays near $8B^4$ far out; "
+        "caption": ["The Kretschmann scalar $K$ on axis and equator stays near $8B^4$ far out; "
                     "the Ricci scalar vanishes."],
         "settings": "$m=1$, $B=1/4$.",
         "clip": "Signed log; axis at $\\theta=0.05$.",
