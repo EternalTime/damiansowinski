@@ -848,6 +848,9 @@ def bach_weyl_ring(ck, src):
 BZ_BOX = ((-6, 6), (0, 6))        # z/w and ct/w: the box of Belinski and Zakharov's chart's spacetime diagram
 BZ_CELLS = (240, 120)             # the cells of the map across and up, each a twentieth of w on a side
 BZ_SCALE = {"kind": "symlog", "from": -10.0, "to": 1e4, "linear": 1e-4}      # the colours of K w^4
+BZ_REACH = 8                      # the movie's half width in w, wide enough to hold both crests at ct = 6w
+BZ_LINE = {"kind": "symlog", "from": -10.0, "to": 1e3, "linear": 1e-4}      # the movie's axis of K w^4
+BZ_FRAMES = [Fraction(k, 4) for k in range(1, 25)]            # ct/w, from a quarter of w to 6w
 # The wave of two solitons in Belinski and Zakharov's chart, at w = 1 and cosh beta = 5/4, the wave
 # and the constants every other drawing of this spacetime takes. The pole coordinates carry
 # ct = w sinh tau cosh xi and z = w cosh tau sinh xi, so cosh^2 tau is the root above 1 of
@@ -874,10 +877,18 @@ BZ_INPUT = ("The wave of two solitons on the Kasner universe that expands alike 
 def bz_pole(ct, z, w=1.0):
     """The pole coordinates tau and xi of the event (ct, z) of Belinski and Zakharov's chart, the
     one root cosh^2 tau above 1 of A^2 - (1 + (ct)^2/w^2 - z^2/w^2)A - z^2/w^2 = 0 and the xi that
-    z = w cosh tau sinh xi gives with it."""
+    z = w cosh tau sinh xi carries with it."""
     u, v = (np.asarray(ct, dtype=float) / w) ** 2, (np.asarray(z, dtype=float) / w) ** 2
     a = (np.sqrt((u - v - 1) ** 2 + 4 * u) + u - v + 1) / 2
     return np.arccosh(np.sqrt(a)), np.arcsinh(np.asarray(z, dtype=float) / (w * np.sqrt(a)))
+
+
+def bz_locus(ct, s, w=1.0):
+    """Where the level sinh^2 tau/cosh^2 xi = s of the pole coordinates stands at the time ct, on
+    z > 0: cosh^2 xi = sinh^2 tau/s makes ct = w sinh^2 tau/sqrt(s), so sinh^2 tau = ct sqrt(s)/w
+    and z = w cosh tau sqrt(sinh^2 tau/s - 1). The level reaches the axis z = 0 at ct = w sqrt(s)."""
+    sinh2 = ct * math.sqrt(s) / w
+    return w * math.sqrt(1 + sinh2) * math.sqrt(sinh2 / s - 1)
 
 
 def belinski_zakharov(ck, src):
@@ -932,16 +943,117 @@ def belinski_zakharov(ck, src):
     picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 30), rng.integers(0, ny, 30))}
                    | {(0, 0), (nx - 1, 0), (nx // 2, ny - 1), (nx - 1, ny - 1)})
     agrees(ck, "belinski_zakharov map", K, [[xs[i], ys[j], w] for i, j in picks], [values[j, i] for i, j in picks])
-    ck("belinski_zakharov K is the same at z and -z, the symmetry that sends xi and y to minus themselves",
+    ck("belinski_zakharov K is the same at z and -z, the symmetry that carries xi and y to minus themselves",
        np.allclose(values, values[:, ::-1], rtol=1e-9, atol=1e-12))
 
-    greatest, least = float(np.max(values)), float(np.min(values))
+    least = float(np.min(values))
     over = values > scale["to"]
     rows = sorted({int(j) for j in np.flatnonzero(np.any(over, axis=1))})
     passes = (3 / (4 * math.sinh(beta) ** 4) / scale["to"]) ** (1 / 3)
     ck("belinski_zakharov K passes the top of its colours in the row of cells nearest the singularity alone",
        rows == [0] and bool(np.all(over[0])), f"rows {rows}, below ct = {passes:.4f} w")
     ck("belinski_zakharov no cell falls below the bottom of its colours", least > scale["from"], f"least {least:.4f}")
+
+    # The scaled scalar K w^4 (ct/w)^3 is a function of sinh^2 tau/cosh^2 xi alone, so the whole
+    # pattern keeps its shape and falls as the inverse cube of ct as it runs out.
+    worst = 0.0
+    for s in (0.05, 0.2, 1.0, 5.0):
+        # cosh xi = m holds the level, since cosh^2 xi = sinh^2 tau/s.
+        along_level = []
+        for m in (1.2, 2.0, 4.0):
+            tau, xi = math.asinh(math.sqrt(s) * m), math.acosh(m)
+            scaled = float(pole_K.exact([tau, xi, w, beta])) * w ** 4 * (math.sinh(tau) * math.cosh(xi)) ** 3
+            along_level.append(scaled)
+        worst = max(worst, max(abs(v / along_level[0] - 1) for v in along_level))
+    ck("belinski_zakharov K w^4 (ct/w)^3 is a function of sinh^2 tau/cosh^2 xi alone",
+       worst < 1e-12, f"worst {worst:.1e} across four levels at three times each")
+
+    # That function's two turning points stand on the axis z = 0, where the level is (ct/w)^2: the
+    # crest of each pulse parts from the axis at the first and the trough opens at the second.
+    def on_axis(ct):
+        return float(K(0.0, ct, w)) * (ct / w) ** 3
+
+    crest_time = golden(lambda ct: -on_axis(ct), 0.2 * w, 0.6 * w)
+    trough_time = golden(on_axis, 0.6 * w, 2.0 * w)
+    crest_value = float(K.exact([0.0, crest_time, w])) * (crest_time / w) ** 3
+    trough_value = float(K.exact([0.0, trough_time, w])) * (trough_time / w) ** 3
+    crest_level, trough_level = (crest_time / w) ** 2, (trough_time / w) ** 2
+
+    reach = BZ_REACH
+    line_axis = axis("$z/w$", -reach, reach)
+    line_scale = dict(BZ_LINE)
+    height = PLOT_W / 2
+    along = np.linspace(1e-6, reach, 20001)
+
+    def pulse(ct):
+        """Where K is greatest and where it is least on z > 0 at one time, and the two values,
+        each refined from the finest sample by the golden section."""
+        here = Held(K, {"t": ct})
+        vs = here(along, w)
+        out = []
+        for sign in (1.0, -1.0):
+            k = int(np.argmax(sign * vs))
+            lo, hi = along[max(k - 1, 0)], along[min(k + 1, len(along) - 1)]
+            at = golden(lambda z: -sign * float(here(z, w)), lo, hi)
+            out.append((at, float(here.exact([at, w]))))
+        return out
+
+    worst_value, worst_place = 0.0, 0.0
+    for ct in (1.0, 2.0, 3.0, 4.5, 6.0):
+        (crest_at, crest_here), (trough_at, trough_here) = pulse(ct)
+        worst_value = max(worst_value, abs(crest_here * (ct / w) ** 3 / crest_value - 1),
+                          abs(trough_here * (ct / w) ** 3 / trough_value - 1))
+        worst_place = max(worst_place, abs(crest_at / bz_locus(ct, crest_level, w) - 1),
+                          abs(trough_at / bz_locus(ct, trough_level, w) - 1))
+    ck("belinski_zakharov the crest and the trough of the pulse fall as the inverse cube of ct",
+       worst_value < 1e-9, f"worst {worst_value:.1e} at five times, crest {crest_value:.10f}, trough {trough_value:.10f}")
+    ck("belinski_zakharov the crest and the trough stand on their own level of sinh^2 tau/cosh^2 xi",
+       worst_place < 1e-7, f"worst {worst_place:.1e}, crest at {crest_level:.6f}, trough at {trough_level:.6f}")
+
+    # The two Kasner universes the pulses run between, their constants in f differing by coth^2 beta.
+    ahead, behind = 3 / (4 * math.sinh(beta) ** 4), 3 / (4 * math.cosh(beta) ** 4)
+    outside = float(K.exact([3e4 * w, 1e4 * w, w])) * 1e12
+    inside = float(K.exact([0.0, 1e4 * w, w])) * 1e12
+    early = [float(K.exact([z * w, 1e-5 * w, w])) * 1e-15 for z in (0.0, 2.0, 6.0)]
+    ck("belinski_zakharov K w^4 approaches 3(w/ct)^3/4sinh^4 beta ahead of the pulses, which is 64/27",
+       abs(outside / ahead - 1) < 1e-5 and abs(ahead - Fraction(64, 27)) < 1e-12
+       and all(abs(v / ahead - 1) < 1e-8 for v in early), f"{outside:.8f} against {ahead:.8f}")
+    ck("belinski_zakharov K w^4 approaches 3(w/ct)^3/4cosh^4 beta behind them, which is 192/625",
+       abs(inside / behind - 1) < 1e-4 and abs(behind - Fraction(192, 625)) < 1e-12,
+       f"{inside:.8f} against {behind:.8f}")
+    ck("belinski_zakharov the two Kasner constants stand in the ratio tanh^4 beta, which is 81/625",
+       abs(behind / ahead - math.tanh(beta) ** 4) < 1e-12
+       and abs(math.tanh(beta) ** 4 - Fraction(81, 625)) < 1e-12, f"{behind / ahead:.8f}")
+
+    # Where the pulse stands at the last frame, and where its crest leaves the map's box.
+    last = BZ_FRAMES[-1]
+    (crest_last, _), (trough_last, _) = pulse(float(last))
+    crossings = zeros(ck, "belinski_zakharov K at the last frame", Held(K, {"t": float(last)}), 1e-6, reach, [w])
+    ck("belinski_zakharov K changes sign twice on z > 0 at the last frame, about the trough on the cone",
+       len(crossings) == 2 and crossings[0] < trough_last < crossings[1] < crest_last, f"{crossings}")
+    leaves = golden(lambda ct: abs(bz_locus(ct, crest_level, w) - z1), 3.0 * w, 6.0 * w)
+    ck("belinski_zakharov the crest leaves the box by its side",
+       abs(bz_locus(leaves, crest_level, w) - z1) < 1e-9, f"at ct = {leaves:.4f} w")
+
+    grr = nr_published(src, "belinski_zakharov", CANON, "inverse_metric_components", ["z", "t"], ["w"],
+                       ("z", "z"), BZ_FUNCTIONS)
+    positive = all(np.all(grr(np.linspace(-reach, reach, 2001), ct, w) > 0) for ct in (0.05, 1.0, 3.0, 6.0))
+    ck("belinski_zakharov the published g^zz is positive at every z drawn, so no horizon is marked", positive)
+
+    def frame_label(ct):
+        return f"$ct/w = {float(ct):.3f}$"
+
+    frames, highest, lowest = [], -math.inf, math.inf
+    for ct in BZ_FRAMES:
+        here = Held(K, {"t": float(ct)})
+        curves = line_curves(ck, f"belinski_zakharov at ct = {float(ct):.2f} w", "K", "K", here, "z",
+                             line_axis, line_scale, height, {"w": w})
+        above, below = beyond(here, line_axis, line_scale, [w])
+        ck(f"belinski_zakharov the frame at ct = {float(ct):.2f} w lies wholly inside its panel",
+           not above and not below and len(curves) == 1)
+        values_here = [v for curve in curves for _, v in curve["points"]]
+        highest, lowest = max(highest, max(values_here)), min(lowest, min(values_here))
+        frames.append({"label": frame_label(ct), "value": float(ct), "curves": curves, "marks": []})
 
     view = {
         "id": "plane", "label": "the plane of $z$ and $ct$", "kind": "map", "x": x_axis, "y": y_axis,
@@ -956,6 +1068,20 @@ def belinski_zakharov(ck, src):
             "($w = 1$, $\\cosh\\beta = 5/4$), the same at every $x$ and $y$. The wave is a vacuum, so its Ricci "
             "scalar vanishes. $K$ is the same at $z$ and $-z$, the symmetry that carries $\\xi$ and $y$ to minus "
             "themselves.",
+            "Two pulses leave the singularity $t = 0$ as one and run apart along the light cone $z = \\pm ct$, the "
+            "diagonals of the box. Each is a trough of negative $K$ riding the cone with a crest of positive $K$ "
+            f"about $w$ outside it: at $ct = 6\\,w$, $K$ vanishes at $z = {crossings[0]:.3f}\\,w$ and "
+            f"${crossings[1]:.3f}\\,w$, is least at ${trough_last:.3f}\\,w$ and greatest at ${crest_last:.3f}\\,w$. "
+            f"Each crest passes out of the box by its side at $ct = {leaves:.2f}\\,w$, with the trough behind it "
+            "running on to the corner.",
+            "Far ahead of the pulses and far behind them the geometry is the Kasner universe the solitons were "
+            "added to, which expands alike in $x$ and $y$: $K\\,w^4$ approaches "
+            "$\\tfrac{3}{4}\\sinh^{-4}\\beta\\,(w/ct)^3 = \\tfrac{64}{27}(w/ct)^3$ outside the cone and "
+            "$\\tfrac{3}{4}\\cosh^{-4}\\beta\\,(w/ct)^3 = \\tfrac{192}{625}(w/ct)^3$ inside it, in the ratio "
+            "$\\tanh^4\\beta = 81/625$. Between them $K\\,w^4(ct/w)^3$ is a function of "
+            "$\\sinh^2\\tau/\\cosh^2\\xi$ alone, with $ct = w\\sinh\\tau\\cosh\\xi$ and "
+            "$z = w\\cosh\\tau\\sinh\\xi$, so the whole pattern keeps its shape and falls as the inverse cube of "
+            "$ct$ as it runs out.",
         ],
         "settings": "$w = 1$, the unit of every length, and $\\cosh\\beta = 5/4$, which is $\\beta = \\ln 2$.",
         "input": BZ_INPUT,
@@ -964,7 +1090,37 @@ def belinski_zakharov(ck, src):
                  f"$ct = {passes:.4f}\\,w$, the row of cells nearest the singularity. The least value coloured is "
                  f"${least:.3f}/w^4$."),
     }
-    return [view]
+    movie = {
+        "id": "pulses", "label": "$K$ along $z$ as $t$ advances", "kind": "line", "x": line_axis,
+        "panels": [{"id": "K", "name": "$K\\,w^4$", "aspect": 2, "scale": line_scale,
+                    "ticks": every_second(line_scale)}],
+        "curves": [], "marks": [],
+        "movie": {"variable": "$ct/w$", "seconds": 10, "frames": frames},
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": [
+            "The Kretschmann scalar $K$ of the same wave along $z$ as $ct$ runs from $w/4$ to $6\\,w$ in steps of "
+            "$w/4$ ($w = 1$, $\\cosh\\beta = 5/4$), the same at every $x$ and $y$. The wave is a vacuum, so its "
+            "Ricci scalar vanishes, and the published $g^{zz}$ is positive at every $z$, so there is no horizon to "
+            "mark.",
+            f"One hump stands over the singularity while $ct < {crest_time:.3f}\\,w$. A crest parts from the axis "
+            f"to each side there, and at $ct = {trough_time:.3f}\\,w$ a trough of negative $K$ opens behind each "
+            "crest, after which the two pulses run out along $z = \\pm ct$ with the trough riding the cone and the "
+            "crest about $w$ beyond it.",
+            "Each pulse keeps its shape as it goes and falls as the inverse cube of $ct$: "
+            f"$K\\,w^4(ct/w)^3$ is ${crest_value:.4f}$ at every crest and ${trough_value:.4f}$ at every trough. "
+            "Ahead of the pulses $K\\,w^4$ approaches $\\tfrac{64}{27}(w/ct)^3$ and behind them "
+            "$\\tfrac{192}{625}(w/ct)^3$, the two Kasner universes the wave stands between, whose constants in "
+            "$f$ differ by $\\coth^2\\beta$.",
+        ],
+        "settings": ("$w = 1$, the unit of every length, and $\\cosh\\beta = 5/4$, which is $\\beta = \\ln 2$, with "
+                     "$ct/w = k/4$ for $k = 1, \\ldots, 24$."),
+        "input": BZ_INPUT,
+        "clip": ("We draw $K\\,w^4$ on a signed logarithmic scale, linear within $10^{-4}$ of zero, from $-10$ to "
+                 f"$10^{{3}}$, over $-8 \\le z/w \\le 8$, wide enough to hold both crests at every frame. The "
+                 f"greatest value drawn is ${tex_number(highest, 4)}/w^4$ and the least ${lowest:.4f}/w^4$, so "
+                 "every frame lies wholly within the vertical limits."),
+    }
+    return [view, movie]
 
 
 # ---------------------------------------------------------------- Bonnor and Vaidya's radiating star
