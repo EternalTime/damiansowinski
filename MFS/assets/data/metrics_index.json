@@ -1830,7 +1830,8 @@
     "version": "72505c35f8fc9403",
     "diagrams": "650c940a33d88a1c",
     "conformal": "c0043e438cd296ac",
-    "embedding": "d1d99538ce0bd31c"
+    "embedding": "d1d99538ce0bd31c",
+    "curvature": "aaddbb8acd5f36c2"
   },
   {
     "id": "fisher_jnw",
