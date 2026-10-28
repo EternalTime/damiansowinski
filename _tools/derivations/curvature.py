@@ -6822,10 +6822,9 @@ def kaluza_klein_black_hole(ck, src):
         "id": "five", "label": "five dimensions", "kind": "line", "x": x_axis, "panels": five_panels,
         "curves": five, "marks": [{"class": "horizon", "x": math.log10(r)} for r in (1.0, 2.0)],
         "legend": [["line", "K", "dyon"], ["line", "reference", "electric, magnetic"], ["line", "horizon", "horizon"]],
-        "caption": ["The Kretschmann scalar $K$, the dyon's against $\\rho$; electric $K=12r_s^2/r^6$ at any $q$, "
-                    "the Ricci scalar vanishes."],
+        "caption": ["The Kretschmann scalar $K$, electric $12r_s^2/r^6$ at any $q$, dyon's in $\\rho$; Ricci scalar zero."],
         "settings": "$r_s=1$, $q=p=2$, dyon $p=3$.",
-        "clip": "Signed log, linear within $10^{-7}$; none cut.",
+        "clip": "Signed log within $10^{-7}$; none cut.",
     }, {
         "id": "einstein", "label": "Einstein metric", "kind": "line", "x": x_axis, "panels": four_panels,
         "curves": four, "marks": [{"class": "horizon", "x": 0.0}],
@@ -6834,7 +6833,7 @@ def kaluza_klein_black_hole(ck, src):
         "ricci_sentences": [],
         "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$r_s=1$, $q=2$.",
-        "clip": "Log, signed log within $10^{-6}$; none cut.",
+        "clip": "Log, signed within $10^{-6}$; none cut.",
     }]
 
 
