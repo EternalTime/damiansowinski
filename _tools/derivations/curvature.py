@@ -16868,6 +16868,54 @@ def bonnor_rotating_dust(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- the braneworld universe
+
+BWU_PARAMS = {"ell": 1.0, "mu": 1.0, "k": 0.0}         # ell = 1, mu = ell^2 and k = 0, as every drawing takes them
+BWU_K = {"kind": "log", "from": 10.0, "to": 1e5}       # the axis of K ell^4
+
+
+def brane_wall_universe(ck, src):
+    """The bulk's Kretschmann scalar against the areal radius of the static chart, at ell = 1,
+    mu = ell^2 and k = 0, the parameters of the spacetime's other drawings.
+
+    The static chart's K = 72 mu^2/r^8 + 40/ell^4 depends on r alone, so one line over
+    0.5 <= r/ell <= 3, from inside the horizon to past the embedding's outer circle, shows its
+    whole variation; the gaussian_normal chart's K is the same scalar read through A and N. The
+    horizon r_h = ell is the zero of the published g^rr. The Ricci scalar is the constant
+    -20/ell^2 and has no panel. Checked here: K's closed form, the constant R, the horizon, the
+    fall of K toward 40/ell^4, and every sample inside its panel."""
+    metric, system = "brane_wall_universe", "static"
+    params = dict(BWU_PARAMS)
+    x_axis = axis("$r/\\ell$", 0.5, 3)
+    panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": BWU_K, "ticks": value_ticks(BWU_K)}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    K = nr_published(src, metric, system, "kretschmann", ["r"], list(params))
+    R = nr_published(src, metric, system, "ricci_scalar", ["r"], list(params))
+    grr = nr_published(src, metric, system, "inverse_metric_components", ["r"], list(params), ("r", "r"))
+    r = K.coords[0]
+    ell, mu, _ = K.params
+    ck(f"{metric} K is 72 mu^2/r^8 + 40/ell^4", sp.simplify(K.expr - (72 * mu ** 2 / r ** 8 + 40 / ell ** 4)) == 0)
+    ck(f"{metric} R is -20/ell^2", sp.simplify(R.expr + 20 / ell ** 2) == 0)
+    horizons = zeros(ck, f"{metric} horizons", grr, 0.5, 3, list(params.values()))
+    ck(f"{metric} has its one horizon at r = ell", len(horizons) == 1 and abs(horizons[0] - 1) < 1e-12, str(horizons))
+    rs = np.linspace(0.5, 3, SAMPLES)
+    values = K(rs, *params.values())
+    ck(f"{metric} K falls toward 40/ell^4", np.all(np.diff(values) < 0) and np.all(values > 40))
+    up, down = beyond(K, x_axis, BWU_K, list(params.values()))
+    ck(f"{metric} K stays inside its panel", not up and not down)
+    curves = line_curves(ck, metric, "K", "K", K, "r", x_axis, BWU_K, PLOT_W / 2, params)
+    return [{
+        "id": system, "system": system, "label": "$\\mu = \\ell^2$, $k = 0$",
+        "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [{"class": "horizon", "x": h} for h in horizons],
+        "legend": [["line", "K", "Kretschmann scalar"], ["line", "horizon", "horizon"]],
+        "caption": ["The Kretschmann scalar $K$ of the static bulk against $r$, falling to $40/\\ell^4$; "
+                    "the Ricci scalar is $-20/\\ell^2$."],
+        "settings": "$\\ell = 1$, $\\mu = \\ell^2$, $k = 0$.",
+        "clip": "Log, 10 to $10^5$.",
+    }]
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -16885,6 +16933,7 @@ DRAWN = {
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
     "bowers_liang": bowers_liang,
+    "brane_wall_universe": brane_wall_universe,
     "boson_star": boson_star,
     "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
