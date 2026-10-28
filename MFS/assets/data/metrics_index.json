@@ -1801,7 +1801,8 @@
     "version": "9be95c7fb723dcdc",
     "diagrams": "94462e128eea5d3d",
     "conformal": "73d1aa078d3b894f",
-    "embedding": "e21547bef3d58f8e"
+    "embedding": "e21547bef3d58f8e",
+    "curvature": "1d97050b338abfa0"
   },
   {
     "id": "exponential_metric",
