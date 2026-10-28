@@ -12403,7 +12403,8 @@ def vaidya(ck, src):
 # chart inside the surface of pair creation, null_rays.HISCOCK_EDGE, and hiscock_m_out in the
 # outgoing chart outside it, null_rays.hiscock_r_out.
 HISCOCK_IN, HISCOCK_OUT = "ingoing", "outgoing"
-HISCOCK_FUNCTIONS = {HISCOCK_IN: {"m": nr.HISCOCK_MASS}, HISCOCK_OUT: {"m": "hiscock_m_out(u)"}}
+HISCOCK_FUNCTIONS = {HISCOCK_IN: {"m": nr.HISCOCK_MASS, "R": nr.HISCOCK_EDGE},
+                     HISCOCK_OUT: {"m": "hiscock_m_out(u)", "R": "hiscock_r_out(u)"}}
 HISCOCK_DOMAINS = {HISCOCK_IN: f"r <= {nr.HISCOCK_EDGE}", HISCOCK_OUT: "r >= hiscock_r_out(u)"}
 HISCOCK_BOXES = {HISCOCK_IN: ((0, 6), (-2, 10)), HISCOCK_OUT: ((0, 16), (-20, 12))}   # r/m_0, and v/m_0 or u/m_0
 HISCOCK_CELLS = {HISCOCK_IN: (120, 240), HISCOCK_OUT: (128, 256)}
