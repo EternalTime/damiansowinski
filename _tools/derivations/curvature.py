@@ -14897,7 +14897,7 @@ def bcd_cloud(ck, src):
         "id": "cloud", "label": "the cloud, its core shrinking", "kind": "line", "x": x_axis, "panels": panels,
         "curves": [], "marks": [],
         "legend": [], "caption": [BCD_CAPTIONS["cloud"]], "ricci_sentences": [],
-        "per_scalar": scalar_clips("log.", "log."), "settings": "", "clip": "",
+        "per_scalar": scalar_clips("log.", "log."), "settings": "$m=1$", "clip": "",
         "movie": {"variable": "$m/b$", "seconds": 8, "frames": frames},
     }]
 
@@ -14999,7 +14999,7 @@ def bcd_spheroid(ck, src):
                     "params": dict(BCD_SPHEROID), "nx": nx, "ny": ny,
                     "cells": [[rounded(v) for v in row] for row in sampled]},
             "marks": [], "legend": [], "caption": caption,
-            "settings": "", "clip": clip,
+            "settings": "$m=1$.", "clip": clip,
         }
 
     return [
@@ -15147,7 +15147,7 @@ def bonnor_charged_dust(ck, src):
             "id": chart, "label": label, "kind": "line", "x": x_axis, "panels": panels,
             "curves": curves, "marks": [{"class": "front", "x": r_0}], "legend": [],
             "caption": [BCD_CAPTIONS[chart]], "ricci_sentences": [],
-            "per_scalar": scalar_clips("log.", "linear."), "settings": "", "clip": "",
+            "per_scalar": scalar_clips("log.", "linear."), "settings": "$m=1$.", "clip": "",
         })
     return views + bcd_spheroid(ck, src) + bcd_cloud(ck, src)
 
