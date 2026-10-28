@@ -13108,232 +13108,260 @@ def bonnor_magnetic_dipole(ck, src):
 # ---------------------------------------------------------------- Ehlers and Kundt's A- and B-metrics
 
 AB_B = 1.0                        # b in units of itself, as every drawing of the A- and B-metrics takes it
-AB_BOX = ((-2.0, 2.0), (-2.0, 2.0))   # U and V of A II's Kruskal chart, the square the horizons cross at the centre
-AB_CELLS = (200, 200)             # the cells of the map across and up, each a fiftieth of a unit of U and of V
-# The colours of K b^4. The top is 10^3 so that the 12/b^4 of the horizons stands halfway up the
-# ramp, which the research list of October 2026 asks to be visible, and so that the band passing
-# the top is eight cells wide beside the singularity; a top of 10^6 would hold its last three
-# decades inside the casing of the singular curve, under a cell wide.
-AB_SCALE = {"kind": "log", "from": 1e-1, "to": 1e3}
-AB_DOMAIN = "U*V > -1"            # the Kruskal chart's domain, where the radius of the hyperbolic planes is real
-AB_TOP = 1e3                      # where the clip says K leaves the colours
+# The boxes of the two inertial spacetime diagrams, X across and T up, which the research list of
+# October 2026 asks this figure to match, and the cells of each map, a thirty-third of b on a side.
+AB_INSIDE_BOX = ((-3.0, 3.0), (0.0, 6.0))
+AB_OUTSIDE_BOX = ((-3.0, 3.0), (-3.0, 3.0))
+AB_CELLS = (200, 200)
+# The colours of K b^4. Each map holds every drawn cell inside its scale: inside the cone K runs
+# from 12/b^4 at the horizon down to 12/6^6 b^4 at the top of the box, and outside it from 12/b^4
+# at the neck down to 12/3^6 b^4 at the corners.
+AB_INSIDE_SCALE = {"kind": "log", "from": 1e-4, "to": 1e2}
+AB_OUTSIDE_SCALE = {"kind": "log", "from": 1e-2, "to": 1e2}
+AB_INSIDE_DOMAIN = "T**2 - X**2 > b**2"     # A II's inertial chart on the plane Y = 0, beyond the horizon
+AB_OUTSIDE_DOMAIN = "X**2 - T**2 > b**2"    # B I's inertial chart on the plane Y = 0, beyond the neck
+
+
+class HeldSlice:
+    """A published value of a chart in three coordinates, drawn on the plane of the first two with
+    the third held at the number the figure states, as the Kretschmann scalar of Ehlers and Kundt's
+    inertial charts is drawn on the plane of X and T at Y = 0. `Held` does the same for a curve,
+    which holds every coordinate but one; a map draws two, so the held one stands last."""
+
+    def __init__(self, published, name, value):
+        self.published, self.name, self.value = published, name, float(value)
+        self.metric, self.system, self.field = published.metric, published.system, published.field
+        self.functions = published.functions
+
+    def __call__(self, x, y, *params):
+        return self.published(x, y, self.value, *params)
+
+    def exact(self, values, digits=60):
+        return self.published.exact([values[0], values[1], self.value, *values[2:]], digits)
 
 
 def ab_metrics(ck, src):
-    """Ehlers and Kundt's A II metric at b = 1, its Kretschmann scalar over Kruskal's plane.
+    """Ehlers and Kundt's A II and B I at b = 1, their Kretschmann scalar on the inertial plane.
 
-    The Kruskal chart publishes K = 12b^2/r^6 in the radius r of the hyperbolic planes, which
-    solves (r/b - 1)e^(r/b) = UV, so K depends on the product UV alone and the map is a square
-    of 200 cells by 200 over |U|, |V| <= 2, coloured logarithmically from 10^-1 to 10^3 in units
-    of 1/b^4. The chart holds where UV > -1, which the map declares as its domain, and the two
-    corners beyond it are null. The singularity UV = -1 is r = 0, the cone of the tachyon's line,
-    marked as a curve on each side, and the horizons U = 0 and V = 0, where r = b, as lines.
-    The spacetime is a vacuum, so the published Ricci scalar vanishes and K stands alone.
+    The two inertial charts publish K = 12b^2/sigma^6 and 12b^2/r^6 in the interval from the
+    tachyon's line, sigma = sqrt(T^2 - X^2 - Y^2) inside its cone and r = sqrt(X^2 + Y^2 - T^2)
+    outside it, so each is a function of T, X and Y, and the figure draws the plane Y = Z = 0,
+    which the settings and the caption of each view state. Two maps of 200 cells by 200 over the
+    boxes of the two inertial spacetime diagrams, X from -3b to 3b with T from 0 to 6b inside the
+    cone and from -3b to 3b outside it, colour K b^4 logarithmically from 10^-4 to 10^2 and from
+    10^-2 to 10^2, and every drawn cell lies inside its scale.
 
-    What the caption states is checked here: the published Ricci scalar vanishes; the declared
-    domain and the horizons are the published ones; K holds U and V in the product UV alone;
-    the published r of the Kruskal chart solves (r/b - 1)e^(r/b) = UV and carries the published
-    K = 12b^2/r^6, in sixty digits; r = b and K = 12/b^4 on the horizons, where the published
-    g_tt of the static chart vanishes and its g^rr changes sign; r falls below b where UV < 0,
-    where that g_tt keeps t a time, and rises above b where UV > 0, where the published
-    g_sigmasigma of the cone chart keeps sigma a time; the inertial chart's published K at the
-    event T, X, Y with sigma = sqrt(T^2 - X^2 - Y^2) is the Kruskal chart's at
-    UV = (sigma/b - 1)e^(sigma/b), so the singularity UV = -1 is the cone sigma = 0; K falls as
-    UV grows; K grows as 3/2b^4(1 + UV)^3 toward the singularity, measured at 1 + UV from 10^-6
-    to 10^-12; K is least on the square at the two corners U = V = 2 and -2; and the clip, found
-    by bisection in 1 + UV.
+    Each chart carries one side of the cone alone, sigma > b and r > b, which the maps declare as
+    their domains, so the band |T^2 - X^2| < b^2 about the cone is null in both and the clip and
+    the caption of each view say where its region stops and why. That band is A II's static region
+    0 < r < b, whose chart publishes no T or X, and K runs through it from 12/b^4 at the horizon up
+    without bound on the cone T^2 = X^2, which is marked on the map inside the cone, where it is
+    the singularity sigma = 0.
+
+    What the captions state is checked here: both charts publish R = 0; each published K is
+    12b^2 over the sixth power of its interval, and on Y = 0 is 12b^2/|T^2 - X^2|^3; the declared
+    domains are the published ones; each chart's published g^ZZ changes sign at its horizon, where
+    K tends to 12/b^4; K is the same at X and -X and, inside the cone, at the same sigma on every
+    ray; the value on the axis at each end of each box; K diverging on the cone as 12b^2/|T^2 -
+    X^2|^3 and passing every bound, measured at |T^2 - X^2| from 10^-4 to 10^-12; A II's K at an
+    event against the Kruskal chart's at UV = (sigma/b - 1)e^(sigma/b), which carries the cone to
+    the singularity UV = -1 of that chart; and that no cell of either map leaves its colours.
     """
     b = AB_B
-    KRUSKAL = "a2_kruskal"
-    (u0, u1), (v0, v1) = AB_BOX
-    x_axis = axis("$U$", u0, u1)
-    y_axis = axis("$V$", v0, v1)
-    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
-    shape_checks(ck, "ab_metrics", [aspect])
-    scale = dict(AB_SCALE)
-
-    K = nr_published(src, "ab_metrics", KRUSKAL, "kretschmann", ["U", "V"], ["b"])
-    ricci = nr_published(src, "ab_metrics", KRUSKAL, "ricci_scalar", ["U", "V"], ["b"])
-    ck("ab_metrics the published Ricci scalar vanishes", ricci.expr == 0)
+    INSIDE, OUTSIDE = "a2_cartesian", "b1_cartesian"
     entry = json.loads((build.METRICS_DIR / "ab_metrics.json").read_text(encoding="utf-8"))
-    chart = next(c for c in entry["coordinates"] if c["id"] == KRUSKAL)
-    ck("ab_metrics the declared domain is the published one, UV > -1",
-       chart["domains"][4] == "UV > -1 \\;\\text{(where } r > 0\\text{)}", f"{chart['domains'][4]}")
-    ck("ab_metrics the horizons marked are the published ones, UV = 0",
-       chart["domains"][5] == "UV = 0 \\;\\text{(the horizons)}", f"{chart['domains'][5]}")
+    charts = {c["id"]: c for c in entry["coordinates"]}
+    ck("ab_metrics the declared domains are the published ones, the cone and the horizon of each chart",
+       charts[INSIDE]["domains"][4] == "T^2 > X^2 + Y^2 \\;\\text{(inside the cone)}"
+       and charts[INSIDE]["domains"][5] == "\\sigma = b \\;\\text{(the horizon)}"
+       and charts[OUTSIDE]["domains"][4] == "X^2 + Y^2 > T^2 + b^2 \\;\\text{(outside the cone, } r > b\\text{)}",
+       f"{charts[INSIDE]['domains'][4:]} and {charts[OUTSIDE]['domains'][4]}")
 
-    # K holds U and V in their product alone, so its levels are the hyperbolae of constant UV.
-    Us, Vs = K.coords
-    t = sp.Symbol("t", positive=True)
-    ck("ab_metrics K holds U and V in the product UV alone",
-       sp.simplify(K.expr.subs({Us: t * Us, Vs: Vs / t}) - K.expr) == 0)
+    published, held, ricci = {}, {}, {}
+    for system in (INSIDE, OUTSIDE):
+        published[system] = nr_published(src, "ab_metrics", system, "kretschmann", ["X", "T", "Y"], ["b"])
+        held[system] = HeldSlice(published[system], "Y", 0.0)
+        ricci[system] = nr_published(src, "ab_metrics", system, "ricci_scalar", ["X", "T", "Y"], ["b"])
+    ck("ab_metrics both inertial charts publish a vanishing Ricci scalar",
+       ricci[INSIDE].expr == 0 and ricci[OUTSIDE].expr == 0)
 
-    # The published radius of the hyperbolic planes, from g_chichi = r^2, solves its own equation
-    # and carries the published scalar.
-    gchi = nr_published(src, "ab_metrics", KRUSKAL, "metric_components", ["U", "V"], ["b"],
-                        indices=("\\chi", "\\chi"))
-    events = [(1.0, 1.0), (0.5, -0.5), (-2.0, 0.4), (1.0, -0.9), (2.0, -0.49), (3.0, 2.0), (-1.5, -1.5)]
-    worst_equation = worst_scalar = 0.0
-    for u, v in events:
-        radius = sp.sqrt(gchi.exact([u, v, b]))
-        product = sp.Float(u, 70) * sp.Float(v, 70)
-        worst_equation = max(worst_equation, abs(float((radius / b - 1) * sp.exp(radius / b) - product)))
-        worst_scalar = max(worst_scalar, abs(float(K.exact([u, v, b]) * radius ** 6 / (12 * b ** 2) - 1)))
-    ck("ab_metrics the published r solves (r/b - 1)e^(r/b) = UV, in sixty digits",
-       worst_equation < 1e-40, f"worst {worst_equation:.1e}")
-    ck("ab_metrics the published K is 12b^2/r^6 in that r, in sixty digits",
-       worst_scalar < AGREE, f"worst {worst_scalar:.1e}")
+    # Each published K is 12b^2 over the sixth power of the interval from the tachyon's line, and
+    # on the plane Y = 0 that interval is |T^2 - X^2|.
+    Xs, Ts, Ys = published[INSIDE].coords
+    bs = published[INSIDE].params[0]
+    interval = {INSIDE: Ts ** 2 - Xs ** 2 - Ys ** 2, OUTSIDE: Xs ** 2 + Ys ** 2 - Ts ** 2}
+    for system in (INSIDE, OUTSIDE):
+        same = sp.simplify(published[system].expr - 12 * bs ** 2 / interval[system] ** 3)
+        ck(f"ab_metrics the published K of {system} is 12b^2 over the sixth power of its interval", same == 0, f"{same}")
+        # On the plane Y = 0 that interval is |T^2 - X^2|, each chart on the side of the cone it holds.
+        signed = (Ts ** 2 - Xs ** 2) if system == INSIDE else (Xs ** 2 - Ts ** 2)
+        flat = sp.simplify(published[system].expr.subs(Ys, 0) - 12 * bs ** 2 / signed ** 3)
+        ck(f"ab_metrics on Y = 0 the published K of {system} is 12b^2/|T^2 - X^2|^3 on the side it holds",
+           flat == 0, f"{flat}")
 
-    # The horizons: r = b and K = 12/b^4 along UV = 0, where the static chart's g_tt vanishes and
-    # its g^rr changes sign.
-    on_horizon = [(0.0, v) for v in (-2.0, -1.0, -0.3, 0.0, 0.7, 1.9)] + [(u, 0.0) for u in (-1.6, -0.4, 1.1, 2.0)]
-    radii = [float(sp.sqrt(gchi.exact([u, v, b]))) for u, v in on_horizon]
-    scalars = [float(K.exact([u, v, b])) for u, v in on_horizon]
-    ck("ab_metrics r = b and K = 12/b^4 on the horizons U = 0 and V = 0",
-       all(abs(r - b) < 1e-40 for r in radii) and all(abs(k - 12 / b ** 4) < 1e-40 for k in scalars),
-       f"r {min(radii)} to {max(radii)}, K {min(scalars)} to {max(scalars)}")
-    gtt = nr_published(src, "ab_metrics", "a2_static", "metric_components", ["r"], ["b"], indices=("t", "t"))
-    grr = nr_published(src, "ab_metrics", "a2_static", "inverse_metric_components", ["r"], ["b"], indices=("r", "r"))
-    ck("ab_metrics the static chart's published g_tt vanishes at r = b and its g^rr changes sign there",
-       abs(float(gtt.exact([b, b]))) < 1e-40 and float(grr(0.9 * b, b)) > 0 > float(grr(1.1 * b, b)),
-       f"g^rr {float(grr(0.9 * b, b)):.4f} and {float(grr(1.1 * b, b)):.4f}")
-    ck("ab_metrics t is a time where r < b, so the field there is static",
-       all(float(gtt(r, b)) < 0 for r in (0.05, 0.3, 0.6, 0.95)))
-    gsigma = nr_published(src, "ab_metrics", "a2_cone", "metric_components", ["sigma"], ["b"],
-                          indices=("\\sigma", "\\sigma"))
-    ck("ab_metrics sigma is a time where sigma > b, beyond the horizon",
-       all(float(gsigma(s, b)) < 0 for s in (1.05, 1.5, 2.0, 4.0)))
-    uv_of = {"below b": [(-1.0, 0.5), (0.4, -1.3), (-0.2, 1.7)], "above b": [(1.0, 1.0), (-2.0, -0.6), (1.3, 1.3)]}
-    ck("ab_metrics r lies below b where UV < 0 and above it where UV > 0",
-       all(float(sp.sqrt(gchi.exact([u, v, b]))) < b for u, v in uv_of["below b"])
-       and all(float(sp.sqrt(gchi.exact([u, v, b]))) > b for u, v in uv_of["above b"]))
+    # Each chart's own horizon, where its published g^ZZ changes sign and K tends to 12/b^4.
+    for system, inside_sign in ((INSIDE, 1), (OUTSIDE, -1)):
+        gzz = nr_published(src, "ab_metrics", system, "inverse_metric_components", ["X", "T", "Y"], ["b"],
+                           indices=("Z", "Z"))
+        near, far = (0.5 * b, 2.0 * b) if inside_sign > 0 else (0.5 * b, 2.0 * b)
+        # Points at an interval of 0.5b and 2b from the line, inside the cone and outside it.
+        pts = [(0.0, near, 0.0), (0.0, far, 0.0)] if inside_sign > 0 else [(near, 0.0, 0.0), (far, 0.0, 0.0)]
+        values = [float(gzz(*p, b)) for p in pts]
+        ck(f"ab_metrics the published g^ZZ of {system} changes sign across its horizon",
+           values[0] < 0 < values[1], f"{values}")
+        edge = [float(held[system].exact([0.0, s, b] if inside_sign > 0 else [s, 0.0, b]))
+                for s in (b * (1 + 1e-6), b * (1 + 1e-9))]
+        ck(f"ab_metrics K tends to 12/b^4 at the horizon of {system}",
+           all(abs(v / (12 / b ** 4) - 1) < 1e-5 for v in edge), f"{edge}")
 
-    # The inertial chart at the same event: sigma is the Kruskal chart's r, so the singularity is
-    # the cone sigma = 0 of the tachyon's line.
-    inertial = nr_published(src, "ab_metrics", "a2_cartesian", "kretschmann", ["T", "X", "Y"], ["b"])
-    worst_event = 0.0
-    for T, X, Y in ((2.0, 1.0, 0.0), (3.0, 0.5, 0.0), (4.0, 2.5, 0.0), (1.5, 0.2, 0.0), (3.0, 1.0, 1.0)):
-        sigma = sp.sqrt(sp.Float(T, 70) ** 2 - sp.Float(X, 70) ** 2 - sp.Float(Y, 70) ** 2)
-        product = (sigma / b - 1) * sp.exp(sigma / b)
-        there = K.expr.xreplace({Us: sp.Integer(1), Vs: product, K.params[0]: sp.Float(b, 70)}).evalf(60)
-        worst_event = max(worst_event, abs(float(inertial.exact([T, X, Y, b]) / there - 1)))
-    ck("ab_metrics the inertial chart's published K is the Kruskal chart's at UV = (sigma/b - 1)e^(sigma/b), "
-       "in sixty digits", worst_event < AGREE, f"worst {worst_event:.1e}")
-    at_cone = float(sp.sqrt(gchi.exact([1.0, -1.0, b])))
-    ck("ab_metrics the singularity UV = -1 is r = 0, the cone sigma = 0",
-       at_cone < 1e-60 and not np.isfinite(float(K(1.0, -1.0, b))), f"r = {at_cone:.1e} b")
+    views = []
+    for system, box, scale, domain_text, label, name in (
+            (INSIDE, AB_INSIDE_BOX, AB_INSIDE_SCALE, AB_INSIDE_DOMAIN, "inside the cone", "inside"),
+            (OUTSIDE, AB_OUTSIDE_BOX, AB_OUTSIDE_SCALE, AB_OUTSIDE_DOMAIN, "outside the cone", "outside")):
+        (x0, x1), (y0, y1) = box
+        x_axis = axis("$X/b$", x0, x1)
+        y_axis = axis("$T/b$", y0, y1)
+        shape_checks(ck, f"ab_metrics {name}", [(x1 - x0) / (y1 - y0)])
+        nx, ny = AB_CELLS
+        xs, ys, values = cells(held[system], x_axis, y_axis, nx, ny, [b])
+        X, T = np.meshgrid(xs, ys)
+        domain = domain_function("ab_metrics", system, domain_text, ["X", "T"], ["b"])
+        drawn = domain(X, T, b)
+        # Cell centres fall on the cone itself, where the scalar has no value; the domain leaves
+        # every one of them null, and no centre lies on the hyperbola the domain decides by.
+        gap = float(np.min(np.abs(np.abs(T ** 2 - X ** 2) - b ** 2)))
+        ck(f"ab_metrics {name} no cell's centre lies on the hyperbola the domain decides by", gap > 1e-4,
+           f"nearest {gap:.2e}, and {int(np.sum(np.abs(T) == np.abs(X)))} centres on the cone, all of them null")
+        ck(f"ab_metrics {name} K is finite and positive at every cell drawn",
+           np.all(np.isfinite(values[drawn])) and np.all(values[drawn] > 0),
+           f"{int(drawn.sum())} cells from {np.min(values[drawn]):.6g} to {np.max(values[drawn]):.6g}")
+        ck(f"ab_metrics {name} the cells drawn are the same at X and -X",
+           np.array_equal(drawn, drawn[:, ::-1]) and np.allclose(values[drawn], values[:, ::-1][drawn], rtol=1e-12),
+           f"{int(drawn.sum())} drawn")
+        ck(f"ab_metrics {name} every cell drawn lies inside its colours",
+           scale["from"] < np.min(values[drawn]) and np.max(values[drawn]) < scale["to"],
+           f"from {np.min(values[drawn]):.6g} to {np.max(values[drawn]):.6g}")
 
-    # K falls as UV grows, so the colours cool from the singularity outward.
-    product = np.linspace(-1 + 1e-9, 4.0, 20001)
-    along = K(np.ones_like(product), product, b)
-    ck("ab_metrics K falls as UV grows, at every one of 20001 values from the singularity to UV = 4",
-       np.all(np.diff(along) < 0), f"from {along[0]:.4e} to {along[-1]:.6f}")
+        # Forty cells or more, spread over the region drawn, checked again in sixty digits.
+        rng = np.random.default_rng(1962)
+        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 300), rng.integers(0, ny, 300))
+                        if drawn[j, i]})
+        ck(f"ab_metrics {name} forty cells or more are checked in sixty digits", len(picks) >= 40, f"{len(picks)} cells")
+        agrees(ck, f"ab_metrics {name} map", held[system], [[xs[i], ys[j], b] for i, j in picks],
+               [values[j, i] for i, j in picks])
+        rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, drawn)]
+        views.append((system, name, label, x_axis, y_axis, scale, domain_text, nx, ny, rows, xs, ys, values, drawn))
 
-    # Toward the singularity: 1 + UV = r^2/2b^2 + O(r^3), so K tends to 3/2b^4(1 + UV)^3.
-    def toward(power, digits=60):
-        """The published K at 1 + UV = 10^-power, read with the product exact."""
-        eps = sp.Rational(1, 10 ** power)
-        return eps, K.expr.xreplace({Us: sp.Integer(1), Vs: eps - 1, K.params[0]: sp.Float(b, digits + 10)}).evalf(digits)
-    ratios = []
-    for power in (6, 9, 12):
-        eps, value = toward(power)
-        ratios.append((power, float(value / (3 / (2 * b ** 4 * sp.Float(eps, 70) ** 3)) - 1)))
-    ck("ab_metrics K grows as 3/2b^4(1 + UV)^3 toward the singularity, measured at 1 + UV from 10^-6 to 10^-12",
-       all(abs(ratio) < 3 * 10.0 ** (-power / 2) for power, ratio in ratios),
-       ", ".join(f"10^-{power}: {ratio:.2e}" for power, ratio in ratios))
+    # The axis of each box, where the caption states a value, and the divergence on the cone.
+    axis_values = {}
+    for system, name, point in ((INSIDE, "inside", (0.0, 6.0)), (INSIDE, "inside_three", (0.0, 3.0)),
+                                (OUTSIDE, "outside", (3.0, 0.0))):
+        axis_values[name] = float(held[system].exact([point[0], point[1], b]))
+    ck("ab_metrics the stated values on the axis of each box",
+       abs(axis_values["inside"] - 12 / 6 ** 6) < 1e-12 and abs(axis_values["inside_three"] - 12 / 3 ** 6) < 1e-12
+       and abs(axis_values["outside"] - 12 / 3 ** 6) < 1e-12,
+       f"{axis_values['inside']:.8g} at T = 6b, {axis_values['inside_three']:.8g} at T = 3b, "
+       f"{axis_values['outside']:.8g} at X = 3b")
+    tails = []
+    for power in (4, 8, 12):
+        gap = sp.Rational(1, 10 ** power)                 # T^2 - X^2 at the gap, with T = 1
+        value = published[INSIDE].expr.xreplace({Ts: sp.Integer(1), Xs: sp.sqrt(1 - gap), Ys: sp.Integer(0),
+                                                 bs: sp.Float(b, 70)}).evalf(60)
+        tails.append((power, float(value * sp.Float(gap, 70) ** 3 / (12 * b ** 2))))
+    ck("ab_metrics K grows as 12b^2/|T^2 - X^2|^3 toward the cone, measured at |T^2 - X^2| from 10^-4 to 10^-12",
+       all(abs(ratio - 1) < 1e-30 for _, ratio in tails),
+       ", ".join(f"10^-{power}: {ratio}" for power, ratio in tails))
 
-    domain = domain_function("ab_metrics", KRUSKAL, AB_DOMAIN, ["U", "V"], ["b"])
-    nx, ny = AB_CELLS
-    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [b])
-    U, V = np.meshgrid(xs, ys)
-    inside = domain(U, V, b)
-    ck("ab_metrics no cell's centre lies within 10^-6 of the singularity",
-       np.min(np.abs(U * V + 1)) > 1e-6, f"nearest {np.min(np.abs(U * V + 1)):.2e}")
-    ck("ab_metrics K is finite and positive at every cell drawn, and nowhere else",
-       np.array_equal(inside, np.isfinite(values)) and np.all(values[inside] > 0),
-       f"from {np.min(values[inside]):.6g} to {np.max(values[inside]):.6g}")
-    # The cell centres are antisymmetric only to a part in 10^16 of the box, and K beside the
-    # singularity carries that error at four powers of 1 + UV, so the turned square is held to a
-    # part in 10^9 where the mirrored one is exact.
-    ck("ab_metrics the cells drawn are the same at V and U and at -U and -V",
-       np.array_equal(inside, inside.T) and np.array_equal(inside, inside[::-1, ::-1])
-       and np.allclose(values[inside], values.T[inside], rtol=1e-12, atol=0)
-       and np.allclose(values[inside], values[::-1, ::-1][inside], rtol=AGREE, atol=0),
-       f"{int(inside.sum())} drawn")
+    # The cone is the singularity UV = -1 of A II's Kruskal chart, which carries the band the
+    # inertial chart stops at: sigma = b(1 + W(e^-1 UV)) runs from b at UV = 0 down to 0 at UV = -1.
+    kruskal = nr_published(src, "ab_metrics", "a2_kruskal", "kretschmann", ["U", "V"], ["b"])
+    Us, Vs = kruskal.coords
+    worst = 0.0
+    for T, X in ((2.0, 1.0), (3.0, 0.5), (4.0, 2.5), (1.5, 0.2)):
+        sigma = sp.sqrt(sp.Float(T, 70) ** 2 - sp.Float(X, 70) ** 2)
+        there = kruskal.expr.xreplace({Us: sp.Integer(1), Vs: (sigma / b - 1) * sp.exp(sigma / b),
+                                       kruskal.params[0]: sp.Float(b, 70)}).evalf(60)
+        worst = max(worst, abs(float(held[INSIDE].exact([X, T, b]) / there - 1)))
+    ck("ab_metrics the inertial K inside the cone is the Kruskal chart's at UV = (sigma/b - 1)e^(sigma/b), "
+       "in sixty digits", worst < AGREE, f"worst {worst:.1e}")
+    at_cone = float(sp.sqrt(nr_published(src, "ab_metrics", "a2_kruskal", "metric_components", ["U", "V"], ["b"],
+                                         indices=("\\chi", "\\chi")).exact([1.0, -1.0, b])))
+    ck("ab_metrics the cone sigma = 0 is the singularity UV = -1 of the Kruskal chart, which holds the band",
+       at_cone < 1e-60, f"r = {at_cone:.1e} b")
 
-    # Forty cells or more spread over the square, with the hottest cell and the two corners drawn
-    # among them, checked again in sixty digits.
-    rng = np.random.default_rng(1962)
-    hottest = np.unravel_index(np.nanargmax(np.where(inside, values, np.nan)), values.shape)
-    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]}
-                   | {(int(hottest[1]), int(hottest[0])), (0, 0), (nx - 1, ny - 1), (nx // 2, ny // 2)})
-    ck("ab_metrics forty cells or more are checked in sixty digits, the hottest cell and both corners among them",
-       len(picks) >= 40 and all(inside[j, i] for i, j in picks), f"{len(picks)} cells")
-    agrees(ck, "ab_metrics map", K, [[xs[i], ys[j], b] for i, j in picks], [values[j, i] for i, j in picks])
+    out = []
+    for system, name, label, x_axis, y_axis, scale, domain_text, nx, ny, rows, xs, ys, values, drawn in views:
+        inside_cone = system == INSIDE
+        edge = "horizon" if inside_cone else "neck"
+        marks = []
+        if inside_cone:
+            marks.append({"class": "singular", "points": [[0.0, 0.0], [3.0, 3.0]]})
+            marks.append({"class": "singular", "points": [[0.0, 0.0], [-3.0, 3.0]]})
+            marks.append({"class": "horizon",
+                          "points": [[float(x), float(math.sqrt(b * b + x * x))] for x in np.linspace(-3.0, 3.0, 241)]})
+        else:
+            # The neck leaves the box at T^2 = 9 - b^2, where its own X is 3b to the last digit,
+            # so each point is held inside the box the page draws.
+            reach = math.sqrt(9.0 - b * b)
+            edge = x_axis["to"]
+            for sign in (1.0, -1.0):
+                marks.append({"class": "horizon",
+                              "points": [[sign * min(edge, float(math.sqrt(b * b + t * t))), float(t)]
+                                         for t in np.linspace(-reach, reach, 241)]})
+        legend = [["line", "horizon", f"the {edge} $r = b$" if not inside_cone else "the horizon $\\sigma = b$"]]
+        if inside_cone:
+            legend.insert(0, ["line", "singular", "the cone $T^2 = X^2$, the singularity $\\sigma = 0$"])
+        bottom, top = round(math.log10(scale["from"])), round(math.log10(scale["to"]))
+        out.append({
+            "id": name, "label": label, "kind": "map", "system": system, "x": x_axis, "y": y_axis,
+            "colour": {"name": "$K\\,b^4$", "scale": dict(scale), "ticks": value_ticks(dict(scale))},
+            "map": {"metric": "ab_metrics", "system": system, "scalar": "kretschmann", "x": "X", "y": "T",
+                    "params": {"b": b}, "domain": domain_text, "nx": nx, "ny": ny, "cells": rows},
+            "marks": marks,
+            "legend": legend,
+            "caption": ab_caption(inside_cone, axis_values),
+            "settings": "$b = 1$, Ehlers and Kundt's constant, the unit of every length, on the plane $Y = Z = 0$.",
+            "clip": (f"We colour $K\\,b^4$ on a logarithmic scale from $10^{{{bottom}}}$ to $10^{{{top}}}$, and every "
+                     f"cell drawn lies inside it. The chart covers "
+                     + ("$\\sigma > b$ alone, so the map stops on the hyperbola $\\sigma = b$ and leaves the band "
+                        "$|T^2 - X^2| < b^2$ about the cone blank, where $K$ runs from $12/b^4$ up without bound."
+                        if inside_cone else
+                        "$r > b$ alone, so the map stops on the hyperbolas $r = b$ and leaves the band "
+                        "$|T^2 - X^2| < b^2$ about the cone blank, which this chart does not reach.")),
+        })
+    return out
 
-    # The least value on the square, at the two corners where UV = 4, and the ends of the colours.
-    least = float(K.exact([u1, v1, b]))
-    ck("ab_metrics K is least on the square at the two corners U = V = 2 and -2, where it is 0.466991/b^4",
-       abs(least - 0.466991) < 5e-7 and least <= float(np.min(values[inside])), f"{least:.6f}")
-    ck("ab_metrics no cell falls below the bottom of the colours", np.min(values[inside]) > scale["from"],
-       f"least cell {np.min(values[inside]):.6f}")
-    bottom, top = round(math.log10(scale["from"])), round(math.log10(scale["to"]))
-    lo, hi = 1e-6, 1.0
-    for _ in range(200):
-        mid = 0.5 * (lo + hi)
-        lo, hi = (mid, hi) if float(K(1.0, mid - 1.0, b)) > AB_TOP else (lo, mid)
-    clip_eps = 0.5 * (lo + hi)
-    clip_radius = float(sp.sqrt(gchi.exact([1.0, clip_eps - 1.0, b])))
-    ck("ab_metrics K passes the top of its colours where UV < -0.841535, inside r = 0.478480b",
-       abs(clip_eps - 1 + 0.841535) < 5e-7 and abs(clip_radius - 0.478480) < 5e-7
-       and abs(clip_radius - (12 / AB_TOP) ** (1 / 6)) < 1e-12, f"UV = {clip_eps - 1:.6f}, r = {clip_radius:.6f}")
-    clipped = int((inside & (values > AB_TOP)).sum())
-    ck("ab_metrics the cells above the top of the colours are the band along the singularity, 1156 of them",
-       clipped == 1156 and np.all(U[inside & (values > AB_TOP)] * V[inside & (values > AB_TOP)] < clip_eps - 1),
-       f"{clipped} cells, {100 * clipped / int(inside.sum()):.2f} percent of the square drawn")
-    ck("ab_metrics the 12/b^4 of the horizons stands between a third and two thirds up the ramp",
-       1 / 3 < (math.log10(12 / b ** 4) - math.log10(scale["from"]))
-       / (math.log10(scale["to"]) - math.log10(scale["from"])) < 2 / 3,
-       f"{100 * (math.log10(12) - math.log10(scale['from'])) / (math.log10(scale['to']) - math.log10(scale['from'])):.0f} percent")
 
-    rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]
-    singular = [[[u, -1.0 / u] for u in np.linspace(-2.0, -0.5, 121)],
-                [[u, -1.0 / u] for u in np.linspace(0.5, 2.0, 121)]]
-    view = {
-        "id": "extension", "label": "A II in Kruskal's chart", "kind": "map",
-        "system": KRUSKAL, "x": x_axis, "y": y_axis,
-        "colour": {"name": "$K\\,b^4$", "scale": scale, "ticks": value_ticks(scale)},
-        "map": {"metric": "ab_metrics", "system": KRUSKAL, "scalar": "kretschmann", "x": "U", "y": "V",
-                "params": {"b": b}, "domain": AB_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
-        "marks": [{"class": "singular", "points": [[float(u), float(v)] for u, v in line]} for line in singular]
-               + [{"class": "horizon", "points": [[0.0, v0], [0.0, v1]]},
-                  {"class": "horizon", "points": [[u0, 0.0], [u1, 0.0]]}],
-        "legend": [["line", "singular", "the singularity $UV = -1$, where $r = 0$"],
-                   ["line", "horizon", "the horizons $U = 0$ and $V = 0$, where $r = b$"]],
-        "caption": [
-            "The Kretschmann scalar $K$ of Ehlers and Kundt's A II metric over Kruskal's plane of $U$ and $V$ "
-            "($b = 1$), each point a hyperbolic plane of radius $r$ and curvature $-1/r^2$, with "
-            "$(r/b - 1)e^{r/b} = UV$. A II is the field of a tachyon, Schwarzschild's mass boosted past the "
-            "speed of light, and it is a vacuum, so its Ricci scalar vanishes. $K = 12b^2/r^6$ is the law of "
-            "Schwarzschild's vacuum, with $b$ for the Schwarzschild radius and a hyperbolic plane for each sphere.",
-            "$K$ holds $U$ and $V$ in the product $UV$ alone, so its levels are the hyperbolae of constant $UV$ "
-            "and it falls as $UV$ grows. The horizons $U = 0$ and $V = 0$ carry $r = b$ and $K = 12/b^4$. Where "
-            "$UV > 0$ the radius is above $b$ and is itself a time, the interval "
-            "$\\sigma = \\sqrt{T^2 - X^2 - Y^2}$ from the tachyon's line in the inertial chart, where "
-            "$K = 12b^2/\\sigma^6$; where $UV < 0$ it is below $b$, the field is static and $Z$ is its time.",
-            "The singularity $UV = -1$ is $r = 0$, the cone $\\sigma = 0$ of the inertial chart, the shock that "
-            "closes on the tachyon's line and opens again. Toward it $K$ grows as $3/2b^4(1 + UV)^3$, so the "
-            "curvature rises without bound along the whole of that cone. Its least value on the square is "
-            f"${tex_number(least, 6)}/b^4$, at the two corners $U = V = \\pm 2$. Beyond $UV = -1$ the radius "
-            "has no real value, and the map leaves the other two corners blank.",
-        ],
-        "settings": "$b = 1$, Ehlers and Kundt's constant, the unit of every length.",
-        "clip": (f"We colour $K\\,b^4$ on a logarithmic scale from $10^{{{bottom}}}$ to $10^{{{top}}}$ and give a "
-                 f"value above it the colour of its top: $K$ passes $10^{{{top}}}/b^4$ where "
-                 f"$UV < {clip_eps - 1:.6f}$, inside $r = {clip_radius:.6f}\\,b$, and no cell falls below "
-                 f"$10^{{{bottom}}}/b^4$."),
-    }
-    return [view]
+def ab_caption(inside_cone, axis_values):
+    """The caption of one view of the A- and B-metrics figure, the plane of $X$ and $T$ at Y = Z = 0."""
+    if inside_cone:
+        return [
+            "The Kretschmann scalar $K$ of Ehlers and Kundt's A II metric on the inertial plane of $X$ and $T$ "
+            "($b = 1$, $Y = 0$, $Z = 0$), inside the future cone of the tachyon's line, which crosses the plane "
+            "at the origin. A II is the field of a tachyon, Schwarzschild's mass boosted past the speed of light, "
+            "and it is a vacuum, so its Ricci scalar vanishes.",
+            "$K = 12b^2/\\sigma^6$ in the interval $\\sigma = \\sqrt{T^2 - X^2}$ from that line, so its levels are "
+            "the hyperbolas of constant $\\sigma$ and the colours cool away from the cone. On the axis $X = 0$ it is "
+            f"${tex_number(axis_values['inside_three'], 6)}/b^4$ at $T = 3b$ and "
+            f"${tex_number(axis_values['inside'], 6)}/b^4$ at the top of the box.",
+            "The cone $T^2 = X^2$ is the singularity $\\sigma = 0$, the shock that closes on the tachyon's line and "
+            "opens again, and toward it $K$ grows as $12b^2/|T^2 - X^2|^3$, past every bound. The chart drawn here "
+            "reaches the hyperbola $\\sigma = b$, where $K = 12/b^4$ and the published $g^{ZZ}$ changes sign; "
+            "between that hyperbola and the cone the field is static, with $Z$ for its time, and the map leaves "
+            "the band blank.",
+        ]
+    return [
+        "The Kretschmann scalar $K$ of Ehlers and Kundt's B I metric on the inertial plane of $X$ and $T$ "
+        "($b = 1$, $Y = 0$, $Z = 0$), outside the cone of the tachyon's line, which crosses the plane at the "
+        "origin. B I is the other half of the tachyon's field, and it is a vacuum, so its Ricci scalar vanishes.",
+        "$K = 12b^2/r^6$ in the interval $r = \\sqrt{X^2 - T^2}$ from that line, so its levels are the hyperbolas "
+        f"of constant $r$ and the colours cool away from the cone. On the axis $T = 0$ it is "
+        f"${tex_number(axis_values['outside'], 6)}/b^4$ at $X = 3b$.",
+        "The map stops on the hyperbolas $r = b$, where $K = 12/b^4$ and the published $g^{ZZ}$ changes sign. "
+        "That surface is the neck: the metric continues through it into a second region of the same shape, so "
+        "the cone $T^2 = X^2$, where $r$ would vanish, is never reached from here, and the band about it is "
+        "left blank. Its curvature belongs to A II, which the other view draws.",
+    ]
 
 
 # ---------------------------------------------------------------- the files
