@@ -1153,8 +1153,11 @@ def belinski_zakharov(ck, src):
 
 # ---------------------------------------------------------------- black Saturn
 
-BS_REACH = Fraction(9, 5)         # the box runs out to 9L/5 across and up, which holds both horizons
-BS_CELLS = 40                     # the cells of the map to each L, across and up
+# r sin theta and r cos theta in L: the box holds both horizons, the plane of the ring between
+# them and the fall-off above the hole, and every cell of it stands 0.016 of a radian from the axis
+# theta = 0 and L/3 from the chart's centre, as bs_numbers says a double needs.
+BS_BOX = ((Fraction(0), Fraction(9, 5)), (Fraction(3, 10), Fraction(9, 5)))
+BS_CELLS = (30, 25)               # the cells of the map across and up, each 3L/50 on a side
 BS_DIGITS = 40                    # the digits each cell is worked out in
 BS_CLOSE = 50                     # the digits the values beside the axis itself are worked out in
 BS_AXIS = 1e-6                    # how near the axis theta = 0 a value on a horizon is read
@@ -1170,8 +1173,11 @@ def bs_numbers(published, digits):
     call asks for.
 
     The chart degenerates on the axis rho = 0, where both horizons lie, and the stored scalar's
-    numerator is published as one sum of 481 terms, so beside the axis those terms reach 10^20 times
-    their sum and a double carries none of its digits."""
+    numerator is published as one sum of 481 terms, so beside the axis those terms run past 10^308
+    and a double makes them infinite. Weyl's chart, whose numerator is published factored, goes the
+    same way at the same places, within 0.05 L^2 of the axis above the hole, so the box keeps its
+    cells out where a double reads the stored scalar too, and this arithmetic settles the digits a
+    cell is written with."""
     labels = {f"{short}{order}": (name, order)
               for name, short in nr.BS_SHORT.items() for order in bsat.ORDERS}
     calls = sorted({f for f in published.expr.atoms(sp.Function) if str(f.func) in labels}, key=str)
@@ -1223,9 +1229,11 @@ def black_saturn(ck, src):
     z = r^2/2L^2 is positive and along the bottom edge where it is negative, with the plane z = 0 the
     diagonal. Both horizons are segments of that axis: the ring's, kappa_3 <= z <= kappa_2, and the
     hole's, kappa_1 <= z <= 1, each marked where the chart's own z puts it. The box is
-    0 <= across, up <= 9L/5 in cells a fortieth of L on a side, coloured on a signed logarithmic
-    scale, linear within 10^-2 of zero, from -10^2 to 10^4 in units of 1/L^4, since K changes sign
-    between the two horizons. Every cell is worked out in forty digits, as bs_numbers says.
+    0 <= across <= 9L/5 and 3L/10 <= up <= 9L/5 in cells three fiftieths of L on a side, coloured on
+    a signed logarithmic scale, linear within 10^-2 of zero, from -10^2 to 10^4 in units of 1/L^4,
+    since K changes sign between the two horizons. Every cell is worked out in forty digits, as
+    bs_numbers says, and the box holds every one of them where a double reads the stored scalar to
+    six figures as well, which the checker asks of every cell on disk.
 
     What the caption states is checked here: the drawn parameters hold the ring in balance with no
     conical membrane, and beta = 0 leaves the hole no angular momentum of its own; the radius of each
@@ -1248,8 +1256,9 @@ def black_saturn(ck, src):
     ricci = Published(src, "black_saturn", "polar", "ricci_scalar", ["r", "theta"], ["L"],
                       functions=nr.BS_POLAR_FUNCTIONS)
     value, ricci_value = bs_numbers(K, BS_DIGITS), bs_numbers(ricci, BS_DIGITS)
-    reach = float(BS_REACH)
-    x_axis, y_axis = axis("$r\\sin\\theta/L$", 0, reach), axis("$r\\cos\\theta/L$", 0, reach)
+    (x0, x1), (y0, y1) = (tuple(float(end) for end in pair) for pair in BS_BOX)
+    x_axis, y_axis = axis("$r\\sin\\theta/L$", x0, x1), axis("$r\\cos\\theta/L$", y0, y1)
+    nx, ny = BS_CELLS
     aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
     shape_checks(ck, "black_saturn", [aspect])
     scale = dict(BS_SCALE)
@@ -1270,27 +1279,38 @@ def black_saturn(ck, src):
                 for rod in rods.values() for z in rod)
     ck("black_saturn each end of each horizon is where the chart's own z puts the rod end",
        worst < 1e-15 and all(b > a for a, b in edges.values())
-       and max(max(pair) for pair in edges.values()) < reach,
+       and y0 < min(min(pair) for pair in edges.values())
+       and max(max(pair) for pair in edges.values()) < y1,
        ", ".join(f"{name} {a:.6f} to {b:.6f}" for name, (a, b) in edges.items()))
 
-    nx = ny = round(BS_CELLS * reach)
     xs, ys, cellv = bs_grid(value, x_axis, y_axis, nx, ny)
     ck("black_saturn K is finite at every cell", np.all(np.isfinite(cellv)),
        f"from {np.min(cellv):.6e} to {np.max(cellv):.6e} over {cellv.size} cells")
 
+    # The checker reads every cell again in floating point, so each must be within six significant
+    # figures of what a double makes of the stored scalar at its centre.
+    XX, YY = np.meshgrid(xs, ys)
+    double = K(*meridian(XX, YY), *values)
+    off = float(np.max(np.abs(double - cellv) / np.maximum(np.abs(cellv), 1e-300)))
+    ck("black_saturn every cell is what a double makes of the stored scalar, to six figures",
+       np.all(np.isfinite(double)) and off < 1e-7, f"worst {off:.1e}")
+
     # Sixty digits at forty cells spread over the map, at the four corners, and at the cells beside
     # each horizon, through the Reader's own arithmetic.
     rng = np.random.default_rng(2007)
+
+    def row_of(height):
+        return min(ny - 1, max(0, int(round((height - y0) * ny / (y1 - y0) - 0.5))))
     picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
     picks |= {(0, 0), (nx - 1, 0), (0, ny - 1), (nx - 1, ny - 1)}
-    picks |= {(0, int(round(BS_CELLS * y))) for a, b in edges.values() for y in (a, b)}
+    picks |= {(0, row_of(y)) for a, b in edges.values() for y in (a, b)}
     picks = sorted(picks)
     points = [[float(v) for v in meridian(xs[i], ys[j])] + values for i, j in picks]
     agrees(ck, "black_saturn map", K, points, [cellv[j, i] for i, j in picks])
 
     # Forty digits against sixty at the cells where the arithmetic cancels hardest.
     hardest = [(0, ny - 1), (0, 0), (nx - 1, 0), (nx - 1, ny - 1),
-               (0, int(round(BS_CELLS * edges["ring"][0]))), (0, int(round(BS_CELLS * edges["hole"][0])))]
+               (0, row_of(edges["ring"][0])), (0, row_of(edges["hole"][0]))]
     loss = 0.0
     for i, j in hardest:
         r, theta = (float(v) for v in meridian(xs[i], ys[j]))
@@ -1301,8 +1321,8 @@ def black_saturn(ck, src):
 
     # The published Ricci scalar vanishes over the whole box, beside the curvature K carries there.
     standing = 0.0
-    for j in range(0, ny, 11):
-        for i in range(0, nx, 11):
+    for j in range(0, ny, 6):
+        for i in range(0, nx, 6):
             r, theta = (float(v) for v in meridian(xs[i], ys[j]))
             standing = max(standing, abs(float(ricci_value(r, theta)))
                            / max(math.sqrt(abs(cellv[j, i])), 1e-300))
@@ -1343,7 +1363,7 @@ def black_saturn(ck, src):
 
     # The axis drawn, where K stays positive, and the dip between the two horizons.
     on_axis = [(r, float(value(r, BS_AXIS, digits=BS_CLOSE)))
-               for r in np.linspace(0.2, reach, 2 * ny)]
+               for r in np.linspace(0.2, x1, 2 * ny)]
     ck("black_saturn K is positive along the axis and in every cell beside it",
        all(v > 0 for _, v in on_axis) and np.all(cellv[:, 0] > 0),
        f"least {min(v for _, v in on_axis):.6g} of {len(on_axis)} points on the axis, "
@@ -1427,7 +1447,6 @@ def black_saturn(ck, src):
        slipped < 1e-20, f"worst {slipped:.1e}")
 
     # Where K leaves the colours: only beside the ring's horizon, the segment of the axis it lies on.
-    XX, YY = np.meshgrid(xs, ys)
     from_ring = np.hypot(XX, YY - np.clip(YY, *edges["ring"]))
     over = cellv > BS_SCALE["to"]
     d_clip = float(from_ring[over].max()) if over.any() else 0.0
