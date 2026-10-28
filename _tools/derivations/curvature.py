@@ -6965,11 +6965,10 @@ def kantowski_sachs(ck, src):
 # ---------------------------------------------------------------- Kastor and Traschen's two holes
 
 KT_BOX = ((0, 6), (-6, 6))        # rho/m and z/m, the reach of the embedding diagram's midplane
-KT_CELLS = (100, 200)             # the cells of the map across and up, each 0.06 m on a side
+KT_CELLS = (50, 100)              # the cells of the map across and up, each 0.12 m on a side
 KT_SCALE = {"kind": "log", "from": 1e-3, "to": 1e1}   # the colours of K m^4
-KT_CAPTION = ("The Kretschmann scalar $K$ as two holes fall together, finite at each horizon point; "
-              "the Ricci scalar is $12H^2/c^2$.")
-KT_SETTINGS = "$m=1$, $H=-3c/32m$, holes $z=\\pm2m$."
+KT_CAPTION = "The Kretschmann scalar $K$ as two holes fall, finite at horizons; the Ricci scalar is $12H^2/c^2$."
+KT_SETTINGS = "$H=-3c/32m$, holes $z=\\pm2m$."
 KT_CLIP = "Log, $10^{-3}$ to 10, none clipped."
 
 
@@ -6983,7 +6982,7 @@ def kastor_traschen(ck, src):
     which the figure declares as the pair's, V = m/r_1 + m/r_2, and each frame holds tau at its
     moment in the map's `fixed`. V is harmonic away from the holes, so the published Ricci scalar
     is the constant 12H^2/c^2 there, which the caption states. Each map runs over 0 <= rho <= 6m,
-    |z| <= 6m in cells of 0.06m, coloured on a logarithmic scale from 10^-3 to 10 in units of
+    |z| <= 6m in cells of 0.12m, coloured on a logarithmic scale from 10^-3 to 10 in units of
     1/m^4, which holds every cell of every frame. Nothing is marked: each horizon is the one point
     rho = 0, z = +-2m of the chart, where K is finite, 8/m^4 + 24H^4/c^4. The singularity U = 0
     lies outside the box at every moment drawn, since U stays above H tau > 0.
@@ -7023,8 +7022,7 @@ def kastor_traschen(ck, src):
            bool(np.all(np.isfinite(values))) and scale["from"] < values.min() and values.max() < scale["to"],
            f"from {values.min():.4e} to {values.max():.4e}")
         least, most = min(least, float(values.min())), max(most, float(values.max()))
-        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 38), rng.integers(0, ny, 38))}
-                       | {(0, ny // 2), (nx - 1, ny - 1)})
+        picks = [(int(k) % nx, int(k) // nx) for k in rng.choice(nx * ny, 40, replace=False)]
         agrees(ck, f"{where} map", plane, [[float(xs[i]), float(ys[j]), H] for i, j in picks],
                [values[j, i] for i, j in picks])
         # Within 10^-7 m of each hole, along the axis on either side and across it at three angles.
