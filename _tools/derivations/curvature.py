@@ -5339,7 +5339,7 @@ def gravitational_instantons(ck, src):
     Taub-bolt, 12/r_s^4 on Schwarzschild's bolt, each the greatest value drawn and falling outward;
     Page's K greatest, 15.0 Lambda^2, on both bolts, least, 5.96 Lambda^2, midway between them at
     chi = pi/2, and the same at chi and pi - chi; CP^2's K = 16 Lambda^2/3; the map's greatest
-    cell beside a centre and its value at each centre; and every curve and cell inside its axis."""
+    cell beside a centre and K = 27/8n^4 at each centre; and every curve and cell inside its axis."""
     name, gi = "gravitational_instantons", "gravitational_instantons"
     n = float(GI_N)
     aspect = 2.0
@@ -5365,7 +5365,7 @@ def gravitational_instantons(ck, src):
         ks = published(rs, *params)
         at = float(published.exact([lo, *params]))
         ck(f"{name} K is {where}", abs(at / value - 1) < 1e-12, f"{at:.15g}")
-        ck(f"{name} K falls from there outward at every r drawn", bool(np.all(np.diff(ks) < 0)))
+        ck(f"{name} K falls outward from where it is {where}", bool(np.all(np.diff(ks) < 0)))
 
     # -- Taub-NUT and Taub-bolt
     nut = nr_published(src, gi, "taub_nut", "kretschmann", ["r"], ["n"])
@@ -5447,8 +5447,8 @@ def gravitational_instantons(ck, src):
        abs(xs[i_top]) < 0.05 and abs(abs(ys[j_top]) - 2) < 0.05, f"{float(grid[j_top, i_top]):.6g}")
     centre = float(K.exact([1e-20, 2.0], digits=80))
     near = float(K.exact([1e-8, 2.0 + 1e-8], digits=80))
-    ck(f"{name} map K at each centre is finite, {centre:.3g}/n^4", abs(near / centre - 1) < 1e-6
-       and centre >= float(np.max(grid)), f"{centre:.10g}")
+    ck(f"{name} map K at each centre is 27/8n^4, above every cell", abs(centre / 3.375 - 1) < 1e-12
+       and abs(near / centre - 1) < 1e-6 and centre >= float(np.max(grid)), f"{centre:.15g}")
     centres = {
         "id": "centres", "label": "Two centres", "kind": "map", "x": x_axis, "y": y_axis,
         "colour": {"name": "$K\\,n^4$", "scale": dict(GI_MAP), "ticks": value_ticks(GI_MAP)},
@@ -5456,7 +5456,7 @@ def gravitational_instantons(ck, src):
                 "params": {}, "functions": dict(GI_CENTRES), "nx": nx, "ny": ny,
                 "cells": [[rounded(v) for v in row] for row in grid]},
         "marks": [], "legend": [],
-        "caption": [f"$K$ of two Gibbons-Hawking centres at $z = \\pm 2n$, ${tex_number(centre)}/n^4$ at each; "
+        "caption": ["$K$ of two Gibbons-Hawking centres at $z = \\pm 2n$, $27/8n^4$ at each; "
                     "$R = 0$."],
         "settings": "$n = 1$, $\\epsilon = 1$.",
         "clip": "$K\\,n^4$, log.",
