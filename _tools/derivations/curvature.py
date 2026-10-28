@@ -7688,8 +7688,118 @@ KM_SCALE = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-6}   # the c
 def kerr_melvin(ck, src):
     """Ernst and Wild's Kerr black hole in Melvin's universe at m = 1 and a = 4m/5, its Kretschmann
     scalar over the meridian half plane of r and theta in the oblate frame about the ring, at
-    B = 1/(4m) and at B = 0, Kerr's own hole, beside it."""
-    return []
+    B = 1/(4m) and at B = 0, Kerr's own hole, beside it.
+
+    The Boyer-Lindquist chart publishes K as a function of r and theta alone, the same at every t
+    and phi, through N, F, P, omega and Delta written out, so each view is a map in the frame
+    "oblate" about the ring r = 0, theta = pi/2, as Kerr's figure draws it: sqrt(r^2 + a^2) sin theta
+    across and r cos theta up, over 0 <= across <= 10 m and |up| <= 10 m, past the Melvin radius
+    2/B = 8 m, in cells a twentieth of m on a side, both coloured on one signed logarithmic scale
+    from -10^3 to 10^3 in units of 1/m^4, linear within 10^-6, since K changes sign near the hole and
+    diverges at the ring. The horizons r_+ and r_-, the zeros of the published g^rr, are marked as
+    half ellipses and the ring as a point. Within m of the axis the published terms cancel to a few
+    digits in doubles, so those cells are read in thirty. The published R is the general expression for this form
+    of the line element and vanishes for the electrovacuum, so the figure is K alone.
+
+    What the captions state is checked here: R vanishes, in sixty digits at twenty points; K at
+    B = 0 is Kerr's published scalar at the same m and a; every cell is read in sixty digits at
+    forty points, the four about the ring among them; the map is the same above and below the
+    equator; the horizons on rays and across every point marked; and the clip stated is where |K|
+    leaves the colours."""
+    m, a = 1.0, float(KM_A)
+    names = ["m", "a", "B"]
+
+    def read(field, indices=None):
+        return nr_published(src, "kerr_melvin", "boyer_lindquist", field, ["r", "theta"], names, indices)
+
+    K, ricci, grr = read("kretschmann"), read("ricci_scalar"), read("inverse_metric_components", ("r", "r"))
+    K_kerr = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["G", "M", "a"])
+    precise = sp.lambdify(K.coords + K.params, K.expr, "mpmath", cse=True)
+    rp, rm = m + math.sqrt(m * m - a * a), m - math.sqrt(m * m - a * a)
+    rng = np.random.default_rng(1976)
+    spread_ = list(zip(rng.uniform(0.05, KM_REACH, 20), rng.uniform(0.05, math.pi - 0.05, 20)))
+    worst = max(abs(float(ricci.exact([rv, tv, m, a, float(KM_B)]))) for rv, tv in spread_)
+    ck("kerr_melvin R vanishes, in sixty digits at twenty points", worst < 1e-40, f"worst {worst:.1e}")
+    off = max(abs(float(K.exact([rv, tv, m, a, 0.0])) / float(K_kerr.exact([rv, tv, 1.0, m, a])) - 1)
+              for rv, tv in spread_[:10])
+    ck("kerr_melvin K at B = 0 is Kerr's published scalar at the same m and a", off < 1e-40, f"worst {off:.1e}")
+
+    x_axis = axis("$\\sqrt{r^2 + a^2}\\,\\sin\\theta/m$", 0, KM_REACH, 3)
+    y_axis = axis("$r\\cos\\theta/m$", -KM_REACH, KM_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "kerr_melvin", [aspect])
+    nx, ny = KM_CELLS * KM_REACH, 2 * KM_CELLS * KM_REACH
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+
+    # The horizons, on rays across the box and across every point marked; they do not depend on B.
+    rays_ok = []
+    for angle in np.linspace(0, math.pi, 13):
+        hz = zeros(ck, f"kerr_melvin g^rr at theta = {angle:.4f}", lambda x, *p, t=angle: grr(x, t, m, a, float(KM_B)),
+                   0.0, 4.0, [])
+        rays_ok.append(len(hz) == 2 and abs(hz[0] - rm) < 1e-12 and abs(hz[1] - rp) < 1e-12)
+    ck("kerr_melvin has its horizons at r_- and r_+ on every ray", all(rays_ok), f"{rm:.6f}, {rp:.6f}")
+
+    def drawn(radius):
+        t = np.linspace(0, math.pi, SAMPLES)
+        Xc, Yc = np.sqrt(radius ** 2 + a * a) * np.sin(t), radius * np.cos(t)
+        keep = thinned(Xc * per_unit, Yc * per_unit, TOLERANCE)
+        return [[float(Xc[k]) + 0.0, float(Yc[k]) + 0.0] for k in keep]
+    horizons = [drawn(v) for v in (rp, rm)]
+    flips = []
+    for line in horizons:
+        for px, py in line:
+            rv, tv = (float(v) for v in oblate(px, py, a))
+            flips.append(float(grr(rv * (1 - 1e-7), tv, m, a, float(KM_B)))
+                         * float(grr(rv * (1 + 1e-7), tv, m, a, float(KM_B))) < 0)
+    ck("kerr_melvin g^rr changes sign across every point of both horizons marked", all(flips), f"{len(flips)} points")
+
+    views = []
+    for Bq, view_id, label, caption in (
+            (KM_B, "field", "$B = 1/4m$",
+             "The Kretschmann scalar $K$ of Kerr's black hole in Melvin's universe. The Ricci scalar vanishes."),
+            (Fraction(0), "kerr", "$B = 0$",
+             "The Kretschmann scalar $K$ of the same hole with the field off, Kerr's black hole.")):
+        Bv = float(Bq)
+        params = {"m": m, "a": a, "B": Bv}
+        values = list(params.values())
+        xs, ys, cellv = cells(K, x_axis, y_axis, nx, ny, values, frame="oblate", focus=a)
+        # Within m of the axis the published terms cancel to a few digits in doubles, so the cells
+        # there are read again in thirty.
+        for i in range(KM_CELLS):
+            for j in range(ny):
+                rv, tv = (float(v) for v in oblate(xs[i], ys[j], a))
+                with mpmath.workdps(30):
+                    cellv[j, i] = float(precise(*(mpmath.mpf(v) for v in [rv, tv] + values)))
+        ck(f"kerr_melvin {view_id} K is finite at every cell", np.all(np.isfinite(cellv)),
+           f"from {np.min(cellv):.4e} to {np.max(cellv):.4e}")
+        # To 10^-7, finer than the six figures written: far from the hole the doubles keep fewer than nine.
+        ck(f"kerr_melvin {view_id} the map is the same above and below the equator",
+           np.allclose(cellv, cellv[::-1], rtol=1e-7, atol=1e-15))
+        ring_i, mid = round(a * KM_CELLS), ny // 2
+        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                       | {(ring_i - 1, mid - 1), (ring_i, mid - 1), (ring_i - 1, mid), (ring_i, mid)}
+                       | {(0, 0), (nx - 1, 0), (0, ny - 1), (nx - 1, ny - 1)})
+        points = [[float(v) for v in oblate(xs[i], ys[j], a)] + values for i, j in picks]
+        agrees(ck, f"kerr_melvin {view_id} map", K, points, [cellv[j, i] for i, j in picks])
+        X, Y = np.meshgrid(xs, ys)
+        beyond_ = ~(np.abs(cellv) <= KM_SCALE["to"])
+        d_clip = float(np.hypot(X - a, Y)[beyond_].max()) if beyond_.any() else 0.0
+        ck(f"kerr_melvin {view_id} |K| passes 10^3/m^4 only beside the ring", 0 < d_clip < 0.5,
+           f"within {d_clip:.4f} of the ring")
+        views.append({
+            "id": view_id, "label": label, "system": "boyer_lindquist", "kind": "map", "x": x_axis, "y": y_axis,
+            "colour": {"name": "$K\\,m^4$", "scale": dict(KM_SCALE), "ticks": value_ticks(KM_SCALE)},
+            "map": {"metric": "kerr_melvin", "system": "boyer_lindquist", "scalar": "kretschmann", "x": "r",
+                    "y": "\\theta", "frame": "oblate", "focus": "a", "params": params, "nx": nx, "ny": ny,
+                    "cells": [[rounded(v) for v in row] for row in cellv]},
+            "marks": [{"class": "horizon", "points": line} for line in horizons]
+                     + [{"class": "singular", "at": [a, 0.0]}],
+            "legend": [["line", "horizon", "the horizons"], ["point", "singular", "the ring"]],
+            "caption": [caption],
+            "settings": f"$m=1$, $a=4m/5$, {label.replace(' ', '')}.",
+            "clip": "Signed log, $\\pm10^3$, cut at the ring.",
+        })
+    return views
 
 
 # ---------------------------------------------------------------- the black hole in a swirling universe
@@ -16264,6 +16374,7 @@ DRAWN = {
     "interior_schwarzschild": interior_schwarzschild,
     "interstellar_wormhole": interstellar_wormhole,
     "kerr": kerr,
+    "kerr_melvin": kerr_melvin,
     "kerr_newman": kerr_newman,
     "kerr_bertotti_robinson": kerr_bertotti_robinson,
     "kerr_taub_nut": kerr_taub_nut,
