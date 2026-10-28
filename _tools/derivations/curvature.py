@@ -7159,13 +7159,13 @@ def kastor_traschen(ck, src):
 
 # ---------------------------------------------------------------- Kasner's universe with a magnetic field
 
-KM_P3 = Fraction(6, 7)            # p_3, of the exponents (-2/7, 3/7, 6/7) every drawing of the universe takes
-KM_REACH = (1e-3, 1e3)            # t from 10^-3 to 10^3 in the unit of the powers, the knee at t = 1 mid-plot
-KM_K = {"kind": "log", "from": 1e-32, "to": 1e13}   # the axis of K c^4
-KM_ROSEN = {"kind": "linear", "from": 0.0, "to": 6000.0}   # the axis of K ell^4 in Rosen's chart
+KMAG_P3 = Fraction(6, 7)            # p_3, of the exponents (-2/7, 3/7, 6/7) every drawing of the universe takes
+KMAG_REACH = (1e-3, 1e3)            # t from 10^-3 to 10^3 in the unit of the powers, the knee at t = 1 mid-plot
+KMAG_K = {"kind": "log", "from": 1e-32, "to": 1e13}   # the axis of K c^4
+KMAG_ROSEN = {"kind": "linear", "from": 0.0, "to": 6000.0}   # the axis of K ell^4 in Rosen's chart
 # The curve stops a hundredth short of eta = pi, where K ell^4 is below 10^-24 and a double's
 # 1 + cos(eta) has lost every digit to cancellation.
-KM_ROSEN_END = math.pi - 1e-2
+KMAG_ROSEN_END = math.pi - 1e-2
 
 
 def kasner_magnetic(ck, src):
@@ -7188,20 +7188,20 @@ def kasner_magnetic(ck, src):
     of -76/7 at t = 10^3; K in Rosen's chart is 5120/ell^4 at eta = 0, zero at eta = pi and falls
     between; and every curve lies inside its panel."""
     metric = "kasner_magnetic"
-    p3, b = float(KM_P3), 1.0
+    p3, b = float(KMAG_P3), 1.0
     names = ["p_3", "b"]
-    lo, hi = (math.log10(t) for t in KM_REACH)
+    lo, hi = (math.log10(t) for t in KMAG_REACH)
     x_axis = {"name": "$t$", "from": lo, "to": hi,
               "ticks": [{"at": float(k), "label": decade(k)} for k in range(round(lo), round(hi) + 1)]}
-    K_ticks = [t for t in value_ticks(KM_K) if round(math.log10(t["at"])) % 10 == 0]
-    panels = [{"id": "K", "name": "$K\\,c^4$", "aspect": 1, "scale": KM_K, "ticks": K_ticks}]
+    K_ticks = [t for t in value_ticks(KMAG_K) if round(math.log10(t["at"])) % 10 == 0]
+    panels = [{"id": "K", "name": "$K\\,c^4$", "aspect": 1, "scale": KMAG_K, "ticks": K_ticks}]
     shape_checks(ck, metric, [p["aspect"] for p in panels])
     height = PLOT_W / panels[0]["aspect"]
     K = nr_published(src, metric, "kasner_time", "kretschmann", ["t"], names)
     R = nr_published(src, metric, "kasner_time", "ricci_scalar", ["t"], names)
     K_rosen = nr_published(src, metric, "rosen", "kretschmann", ["eta"], ["\\ell"])
     R_rosen = nr_published(src, metric, "rosen", "ricci_scalar", ["eta"], ["\\ell"])
-    ts = np.geomspace(*KM_REACH, SAMPLES)
+    ts = np.geomspace(*KMAG_REACH, SAMPLES)
 
     ck(f"{metric} both charts publish R = 0", R.expr == 0 and R_rosen.expr == 0)
     ck(f"{metric} K is positive at every t drawn", np.all(K(ts, p3, b) > 0),
@@ -7212,20 +7212,20 @@ def kasner_magnetic(ck, src):
     slope = lambda t: float((sp.log(K.exact([t * 1.0001, p3, b])) - sp.log(K.exact([t / 1.0001, p3, b])))
                             / (2 * math.log(1.0001)))
     late = -4 * (1 + 2 * p3)
-    ck(f"{metric} K falls within a hundredth of t^-4 at the early end", abs(slope(KM_REACH[0]) + 4) < 0.01,
-       f"{slope(KM_REACH[0]):.5f}")
-    ck(f"{metric} K falls within a hundredth of t^(-76/7) at the late end", abs(slope(KM_REACH[1]) - late) < 0.01,
-       f"{slope(KM_REACH[1]):.5f} against {late:.5f}")
+    ck(f"{metric} K falls within a hundredth of t^-4 at the early end", abs(slope(KMAG_REACH[0]) + 4) < 0.01,
+       f"{slope(KMAG_REACH[0]):.5f}")
+    ck(f"{metric} K falls within a hundredth of t^(-76/7) at the late end", abs(slope(KMAG_REACH[1]) - late) < 0.01,
+       f"{slope(KMAG_REACH[1]):.5f} against {late:.5f}")
 
     def curve(cls, params):
         values = K(ts, *params.values())
         ck(f"{metric} {cls} at {params} stays inside its panel",
-           np.all(values >= KM_K["from"]) and np.all(values <= KM_K["to"]),
+           np.all(values >= KMAG_K["from"]) and np.all(values <= KMAG_K["to"]),
            f"{np.min(values):.4g} to {np.max(values):.4g}")
         xs = np.log10(ts)
-        p0, p1 = span(KM_K)
+        p0, p1 = span(KMAG_K)
         X = PLOT_W * (xs - lo) / (hi - lo)
-        Y = height * (1 - (position(KM_K, values) - p0) / (p1 - p0))
+        Y = height * (1 - (position(KMAG_K, values) - p0) / (p1 - p0))
         keep = thinned(X, Y, TOLERANCE)
         entry = curve_entry("K", cls, K, "t", params, [[float(xs[k]) + 0.0, float(values[k]) + 0.0] for k in keep])
         entry["horizontal"] = {"expression": "log(t)/log(10)", "values": [float(ts[k]) for k in keep]}
@@ -7236,8 +7236,8 @@ def kasner_magnetic(ck, src):
     curves = [curve("reference", {"p_3": p3, "b": 0.0}), curve("K", {"p_3": p3, "b": b})]
 
     eta_axis = axis("$\\eta$", 0.0, math.pi)
-    rosen_panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": KM_ROSEN,
-                     "ticks": value_ticks(KM_ROSEN)}]
+    rosen_panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": KMAG_ROSEN,
+                     "ticks": value_ticks(KMAG_ROSEN)}]
     shape_checks(ck, f"{metric} rosen", [p["aspect"] for p in rosen_panels])
     etas = np.linspace(0.0, math.pi, SAMPLES)
     rosen_values = K_rosen(etas, 1.0)
@@ -7245,9 +7245,9 @@ def kasner_magnetic(ck, src):
        abs(float(K_rosen.exact([0.0, 1.0])) - 5120) < 1e-40 and abs(float(K_rosen.exact([math.pi, 1.0]))) < 1e-40)
     ck(f"{metric} Rosen's K falls from eta = 0 to eta = pi", np.all(np.diff(rosen_values) <= 0))
     ck(f"{metric} Rosen's K stays inside its panel",
-       np.all(rosen_values >= KM_ROSEN["from"]) and np.all(rosen_values <= KM_ROSEN["to"]))
-    rosen_curves = line_curves(ck, f"{metric} rosen", "K", "K", K_rosen, "\\eta", eta_axis, KM_ROSEN,
-                               PLOT_W / rosen_panels[0]["aspect"], {"\\ell": 1.0}, (0.0, KM_ROSEN_END))
+       np.all(rosen_values >= KMAG_ROSEN["from"]) and np.all(rosen_values <= KMAG_ROSEN["to"]))
+    rosen_curves = line_curves(ck, f"{metric} rosen", "K", "K", K_rosen, "\\eta", eta_axis, KMAG_ROSEN,
+                               PLOT_W / rosen_panels[0]["aspect"], {"\\ell": 1.0}, (0.0, KMAG_ROSEN_END))
 
     return [{
         "id": "kasner_time", "label": "Kasner's time", "kind": "line", "x": x_axis, "panels": panels,
