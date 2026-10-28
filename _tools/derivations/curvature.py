@@ -12397,6 +12397,25 @@ def vaidya(ck, src):
     return out
 
 
+# ---------------------------------------------------------------- Hiscock's evaporating black hole
+
+# The hole of every drawing of the spacetime, at m_0 = 1: null_rays.HISCOCK_MASS in the ingoing
+# chart inside the surface of pair creation, null_rays.HISCOCK_EDGE, and hiscock_m_out in the
+# outgoing chart outside it, null_rays.hiscock_r_out.
+HISCOCK_IN, HISCOCK_OUT = "ingoing", "outgoing"
+HISCOCK_FUNCTIONS = {HISCOCK_IN: {"m": nr.HISCOCK_MASS}, HISCOCK_OUT: {"m": "hiscock_m_out(u)"}}
+HISCOCK_DOMAINS = {HISCOCK_IN: f"r <= {nr.HISCOCK_EDGE}", HISCOCK_OUT: "r >= hiscock_r_out(u)"}
+HISCOCK_BOXES = {HISCOCK_IN: ((0, 6), (-2, 10)), HISCOCK_OUT: ((0, 16), (-20, 12))}   # r/m_0, and v/m_0 or u/m_0
+HISCOCK_CELLS = {HISCOCK_IN: (120, 240), HISCOCK_OUT: (128, 256)}
+HISCOCK_SCALE = {"kind": "symlog", "from": 0.0, "to": 1e4, "linear": 1e-6}   # the colours of K m_0^4
+
+
+def hiscock(ck, src):
+    """Hiscock's evaporating black hole at m_0 = 1, its Kretschmann scalar over the plane of each
+    chart's null time and r, stitched along the surface of pair creation."""
+    return []
+
+
 # ---------------------------------------------------------------- Van Den Broeck's pocket
 
 VDB_L0 = 4                        # l_0 in units of R, as every drawing of the pocket takes it
@@ -15906,6 +15925,7 @@ DRAWN = {
     "gravastar": gravastar,
     "gravitational_instantons": gravitational_instantons,
     "hayward": hayward,
+    "hiscock": hiscock,
     "interior_schwarzschild": interior_schwarzschild,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
