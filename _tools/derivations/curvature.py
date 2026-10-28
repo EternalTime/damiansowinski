@@ -5708,8 +5708,8 @@ def global_monopole(ck, src):
         "curves": curves, "marks": [{"class": "horizon", "x": math.log10(found[0])}],
         "legend": [["line", "K", "$K$"], ["line", "reference", "terms alone, dashed"],
                    ["line", "horizon", "horizon"]],
-        "caption": ["$K$ in the static chart, Schwarzschild's $r^{-6}$ near the mass, the monopole's $r^{-4}$ far "
-                    "out."],
+        "caption": ["The Kretschmann scalar $K$ in the static chart, Schwarzschild's $r^{-6}$ near the mass, the "
+                    "monopole's $r^{-4}$ far out."],
         "settings": "$\\Delta = 0.19$, $r_s = 1$.",
         "clip": "Log, none clipped.",
     }]
