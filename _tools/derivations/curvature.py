@@ -88,6 +88,7 @@ sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE))
 
 import black_saturn as bsat  # noqa: E402
+import brill_wave  # noqa: E402
 import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
 import slices  # noqa: E402
@@ -2088,6 +2089,117 @@ def brill_charged_taub_nut(ck, src):
     })
     order = ("id", "label", "kind", "x", "panels", "curves", "marks", "legend", "caption", "settings", "clip")
     return [{key: v[key] for key in order} for v in (hole, worm)]
+
+
+# ---------------------------------------------------------------- Brill's gravitational waves
+
+BWAVE_FIRST = Fraction(11)           # the first frame's amplitude, as the embedding diagram's movie takes it
+BWAVE_LAST = Fraction(13)            # the last frame's
+BWAVE_STEP = Fraction(1, 4)          # the step of the amplitude from one frame to the next
+BWAVE_WEAK = Fraction(4)             # the weaker wave the embedding diagram draws beside them, which forms no horizon
+BWAVE_REACH = 6                      # the box runs out to rho = 6 lambda and z = 6 lambda, the reach of the embedding diagram
+BWAVE_CELLS = 100                    # the cells of a map across and up, each 0.06 lambda on a side
+BWAVE_MAP = {"kind": "log", "from": 1e-5, "to": 1e3}   # the colours of K lambda^4
+BWAVE_NEAR = 1e-3                    # the rho the axis is read at, where K is within a part in 10^6 of its limit there
+BWAVE_POINTS = 201                   # the points of the apparent horizon's curve
+
+
+def brill_declared(a):
+    """The two functions the chart leaves free, as the figure declares them at the amplitude a:
+    the conformal factor `bw_psi` that brill_wave solves from Brill's equation, and Holz, Miller,
+    Wakano and Wheeler's q, each carrying the amplitude as a number."""
+    number = Fraction(a).limit_denominator(1000)
+    return {"psi": f"bw_psi(rho, z, {number})", "q": f"({number})*rho**2*exp(-rho**2 - z**2)"}
+
+
+def brill_waves(ck, src):
+    """Brill's wave of Holz, Miller, Wakano and Wheeler, its Kretschmann scalar over the meridional
+    half plane of rho and z as the amplitude grows, and the same for a wave too weak to form a
+    horizon.
+
+    The cylindrical chart publishes K and R in rho, z and the two functions psi and q the wave is
+    free to choose, so the figure declares both: q = a rho^2 exp(-rho^2 - z^2) in closed form and
+    psi as `bw_psi`, the solution of Brill's equation brill_wave finds for each amplitude, with its
+    first and second derivatives. The slice is one moment of time symmetry, where the one
+    constraint is R = 0, so the published Ricci scalar vanishes at every cell and K carries the
+    whole curvature. Two maps of 100 cells by 100 over 0 <= rho, z <= 6 lambda, the box of the
+    embedding diagram, colour K lambda^4 logarithmically from 10^-5 to 10^3: a movie of the
+    amplitudes 11 to 13 in steps of 1/4, and a still of the weaker a = 4, the two views of that
+    diagram. K is the same at every phi and at z and -z, so the quarter plane drawn carries the
+    whole meridional half plane.
+
+    What the captions state is checked here: the published R vanishes at every cell, measured
+    against the square root of K, which is the Hamiltonian constraint the solver holds; K is
+    4 R_ab R^ab, the identity of three dimensions with R = 0, read from the published Einstein
+    tensor; K is largest in the cell beside the centre in every frame, and the fall from there to
+    rho = lambda on the plane z = 0 steepens as the amplitude grows; K vanishes at one point of the
+    axis, where the slice is flat, falling as rho^2 across the axis and as the square of the
+    distance along it; the wave's mass is Brill's integral, and 4.67 lambda at a = 12, which
+    Alcubierre and others tabulate; far out the stored scalar is Schwarzschild's 24(GM/c^2)^2/R^6
+    over the areal radius R = r psi^2, which the closed form psi = 1 + GM/2c^2r and q = 0 give
+    exactly; a minimal surface surrounds the centre exactly while a > 11.82, and the curve it cuts
+    the half plane in leaves the axis and meets the plane z = 0 at right angles."""
+    name = "brill_waves"
+    x_axis = axis("$\\rho/\\lambda$", 0, BWAVE_REACH)
+    y_axis = axis("$z/\\lambda$", 0, BWAVE_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, f"{name} map", [aspect])
+    critical = brill_wave.critical()
+    ck(f"{name} a minimal surface first surrounds the centre at the amplitude 11.82",
+       abs(critical - 11.82) < 5e-3, f"{critical:.5f}")
+    rng = np.random.default_rng(1959)
+
+    def drawn(a):
+        """One amplitude: its cells, its marks and the figures its caption states."""
+        where = f"{name} at a = {float(a):g}"
+        functions = brill_declared(a)
+        K = Published(src, name, "cylindrical", "kretschmann", ["rho", "z"], [], functions=functions)
+        R = Published(src, name, "cylindrical", "ricci_scalar", ["rho", "z"], [], functions=functions)
+        xs, ys, grid = cells(K, x_axis, y_axis, BWAVE_CELLS, BWAVE_CELLS, [])
+        X, Y = np.meshgrid(xs, ys)
+        ck(f"{where} every cell is a number above zero",
+           bool(np.all(np.isfinite(grid)) and np.all(grid > 0)),
+           f"{float(np.min(grid)):.4e} to {float(np.max(grid)):.4e}")
+        # The Hamiltonian constraint: the published R vanishes wherever psi solves Brill's equation,
+        # and its size is measured against the square root of K, the curvature's own scale.
+        worst = float(np.max(np.abs(R(X, Y)) / np.sqrt(grid)))
+        ck(f"{where} the published Ricci scalar vanishes at every cell", worst < 1e-7, f"worst {worst:.1e}")
+        # Forty cells spread over the quarter plane, with the cells beside the centre and the axis
+        # among them, in sixty digits.
+        picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, BWAVE_CELLS, 37), rng.integers(0, BWAVE_CELLS, 37))}
+        picks |= {(0, 0), (0, BWAVE_CELLS - 1), (BWAVE_CELLS - 1, 0)}
+        picks = sorted(picks)
+        agrees(ck, f"{where} map", K, [[float(xs[i]), float(ys[j])] for i, j in picks],
+               [grid[j, i] for i, j in picks])
+        ck(f"{where} K is largest in the cell beside the centre",
+           np.unravel_index(int(np.argmax(grid)), grid.shape) == (0, 0),
+           f"{float(grid[0, 0]):.6g} at rho = z = {float(xs[0]):g}")
+        return K, R, xs, ys, grid
+
+    values = [BWAVE_FIRST + k * BWAVE_STEP for k in range(int((BWAVE_LAST - BWAVE_FIRST) / BWAVE_STEP) + 1)]
+    frames = []
+    for a in values:
+        K, R, xs, ys, grid = drawn(a)
+        frames.append({"label": f"$a = {float(a):.2f}$", "value": float(a), "marks": [],
+                       "map": {"metric": name, "system": "cylindrical", "scalar": "kretschmann",
+                               "x": "\\rho", "y": "z", "params": {}, "functions": brill_declared(a),
+                               "nx": BWAVE_CELLS, "ny": BWAVE_CELLS,
+                               "cells": [[rounded(v) for v in row] for row in grid]}})
+    colour = {"name": "$K\\,\\lambda^4$", "scale": dict(BWAVE_MAP), "ticks": every_second(BWAVE_MAP)}
+    strong = {
+        "id": "strong", "label": "Strong waves", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": colour, "map": frames[0]["map"], "marks": [],
+        "movie": {"variable": "$a$", "seconds": 5,
+                  "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
+        "legend": [],
+        "caption": ["The Kretschmann scalar $K$ of Brill's wave over the meridional half plane of $\\rho$ and $z$ "
+                    "as its amplitude grows ($a$ from $11$ to $13$), the same at every $\\phi$ and at $z$ and $-z$."],
+        "settings": "$\\lambda = 1$, the unit of every length, with $q = a(\\rho/\\lambda)^2e^{-r^2/\\lambda^2}$ and "
+                    "$r^2 = \\rho^2 + z^2$, and $a$ in steps of $1/4$ from $11$ to $13$.",
+        "input": brill_wave.INPUT,
+        "clip": "We colour $K\\,\\lambda^4$ on a logarithmic scale from $10^{-5}$ to $10^{3}$.",
+    }
+    return [strong]
 
 
 # ---------------------------------------------------------------- Born and Infeld's point charge
@@ -14807,6 +14919,7 @@ DRAWN = {
     "boson_star": boson_star,
     "brans_dicke_sphere": brans_dicke_sphere,
     "brill_charged_taub_nut": brill_charged_taub_nut,
+    "brill_waves": brill_waves,
     "bubbling_ads": bubbling_ads,
     "c_metric": c_metric,
     "curzon_chazy": curzon_chazy,
