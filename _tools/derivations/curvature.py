@@ -181,7 +181,7 @@ class Published:
         by_plain = {reader._plain(name): symbol for name, symbol in reader.symbol.items()}
         self.coords = [by_plain[name] for name in coords]
         self.params = [reader.parameters[name] for name in params]
-        free = expr.atoms(sp.Function) & {f for f in reader.parameters.values() if isinstance(f, sp.Function)}
+        free = expr.atoms(sp.Function) & {f for f in reader.parameters.values() if isinstance(f, sp.core.function.AppliedUndef)}
         if free:
             raise SystemExit(f"{metric_id}/{system_id}: the published {field} holds the free functions "
                              f"{sorted(map(str, free))}, which the figure does not declare")
