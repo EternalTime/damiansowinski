@@ -6962,6 +6962,93 @@ def kantowski_sachs(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Kastor and Traschen's two holes
+
+KT_BOX = ((0, 6), (-6, 6))        # rho/m and z/m, the reach of the embedding diagram's midplane
+KT_CELLS = (100, 200)             # the cells of the map across and up, each 0.06 m on a side
+KT_SCALE = {"kind": "log", "from": 1e-3, "to": 1e1}   # the colours of K m^4
+KT_CAPTION = ("The Kretschmann scalar $K$ as two holes fall together, finite at each horizon point; "
+              "the Ricci scalar is $12H^2/c^2$.")
+KT_SETTINGS = "$m=1$, $H=-3c/32m$, holes $z=\\pm2m$."
+KT_CLIP = "Log, $10^{-3}$ to 10, none clipped."
+
+
+def kastor_traschen(ck, src):
+    """Kastor and Traschen's two holes, each of mass parameter m = 1, at z = +-2m on the axis,
+    falling together at H = -3c/(32m), the pair every drawing of the spacetime declares: a movie
+    of their Kretschmann scalar over the half plane of rho and z on the moments c tau of the
+    embedding diagram's midplane movie, from -8m to -m.
+
+    The cylindrical chart publishes K in tau, rho, z and the derivatives of the free potential V,
+    which the figure declares as the pair's, V = m/r_1 + m/r_2, and each frame holds tau at its
+    moment in the map's `fixed`. V is harmonic away from the holes, so the published Ricci scalar
+    is the constant 12H^2/c^2 there, which the caption states. Each map runs over 0 <= rho <= 6m,
+    |z| <= 6m in cells of 0.06m, coloured on a logarithmic scale from 10^-3 to 10 in units of
+    1/m^4, which holds every cell of every frame. Nothing is marked: each horizon is the one point
+    rho = 0, z = +-2m of the chart, where K is finite, 8/m^4 + 24H^4/c^4. The singularity U = 0
+    lies outside the box at every moment drawn, since U stays above H tau > 0.
+
+    Checked here: the published Ricci scalar is 12H^2 off the holes, in sixty digits; the moments
+    are the embedding movie's; every cell is finite and inside the colours; forty cells of every
+    frame agree with the stored scalar in sixty digits; and K tends to 8/m^4 + 24H^4/c^4 toward each
+    horizon point in every frame, from along the axis and from across it."""
+    name = "kastor_traschen"
+    H = -3 / 32
+    pair = {"V": nr.KT_TWO_CYLINDRICAL}
+    K = Published(src, name, "cylindrical", "kretschmann", ["rho", "z", "tau"], ["H"], functions=pair)
+    ricci = Published(src, name, "cylindrical", "ricci_scalar", ["rho", "z", "tau"], ["H"], functions=pair)
+    embedding = json.loads((build.EMBEDDING_DIR / f"{name}.json").read_text())["views"]
+    movie = next(v for v in embedding if v["id"] == "two_holes")["movie"]
+    moments = [f["value"] for f in movie["frames"]]
+    ck(f"{name} the moments run from c tau = -8m to -m, as the embedding movie's",
+       moments[0] == -8.0 and moments[-1] == -1.0 and all(b > a for a, b in zip(moments, moments[1:])), f"{len(moments)}")
+    rng = np.random.default_rng(1993)
+    points = [(float(r), float(z), float(t)) for r, z, t in zip(rng.uniform(0.05, 6, 16), rng.uniform(-6, 6, 16),
+                                                                 rng.uniform(-8, -1, 16))]
+    worst = max(abs(float(ricci.exact([*p, H])) / (12 * H * H) - 1) for p in points)
+    ck(f"{name} the published Ricci scalar is 12H^2/c^2 off the holes, in sixty digits", worst < 1e-40,
+       f"worst {worst:.1e}")
+
+    (r0, r1), (z0, z1) = KT_BOX
+    x_axis, y_axis = axis("$\\rho/m$", r0, r1), axis("$z/m$", z0, z1)
+    shape_checks(ck, f"{name} map", [(x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])])
+    scale = dict(KT_SCALE)
+    nx, ny = KT_CELLS
+    frames, least, most = [], math.inf, 0.0
+    for frame, tau in zip(movie["frames"], moments):
+        where = f"{name} at c tau = {tau:.2f}m"
+        plane = HeldSlice(K, {"\\tau": tau})
+        xs, ys, values = cells(plane, x_axis, y_axis, nx, ny, [H])
+        ck(f"{where} every cell is finite and inside the colours",
+           bool(np.all(np.isfinite(values))) and scale["from"] < values.min() and values.max() < scale["to"],
+           f"from {values.min():.4e} to {values.max():.4e}")
+        least, most = min(least, float(values.min())), max(most, float(values.max()))
+        picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 38), rng.integers(0, ny, 38))}
+                       | {(0, ny // 2), (nx - 1, ny - 1)})
+        agrees(ck, f"{where} map", plane, [[float(xs[i]), float(ys[j]), H] for i, j in picks],
+               [values[j, i] for i, j in picks])
+        # Within 10^-7 m of each hole, along the axis on either side and across it at three angles.
+        near = [float(plane.exact([max(1e-7 * math.sin(a), 1e-12), s * 2 + 1e-7 * math.cos(a), H]))
+                for s in (1, -1) for a in (0.0, math.pi / 6, math.pi / 2, 5 * math.pi / 6, math.pi)]
+        ck(f"{where} K tends to 8/m^4 + 24H^4/c^4 toward each horizon point",
+           all(abs(k / (8 + 24 * H ** 4) - 1) < 1e-6 for k in near),
+           f"{min(near):.7f} to {max(near):.7f}")
+        frames.append({"label": frame["label"], "value": tau, "marks": [],
+                       "map": {"metric": name, "system": "cylindrical", "scalar": "kretschmann",
+                               "x": "\\rho", "y": "z", "fixed": dict(plane.fixed), "params": {"H": H},
+                               "functions": dict(pair), "nx": nx, "ny": ny,
+                               "cells": [[rounded(v) for v in row] for row in values]}})
+    ck(f"{name} the caption's numbers hold", 12 * H * H == 27 / 256, f"K from {least:.4e} to {most:.4e}")
+    return [{
+        "id": "falling", "label": "Two holes", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": frames[0]["map"], "marks": [],
+        "movie": {"variable": "$c\\tau$", "seconds": movie["seconds"],
+                  "frames": [{k: v for k, v in f.items() if k != "map" or i} for i, f in enumerate(frames)]},
+        "legend": [], "caption": [KT_CAPTION], "settings": KT_SETTINGS, "clip": KT_CLIP,
+    }]
+
+
 # ---------------------------------------------------------------- Kiselev's black hole
 
 KISELEV_W = Fraction(-2, 3)       # w, as every drawing of Kiselev's black hole takes it
@@ -16503,6 +16590,7 @@ DRAWN = {
     "khan_penrose": khan_penrose,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "kantowski_sachs": kantowski_sachs,
+    "kastor_traschen": kastor_traschen,
     "kiselev": kiselev,
     "levi_civita": levi_civita,
     "mass_inflation": mass_inflation,
