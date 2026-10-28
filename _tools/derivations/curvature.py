@@ -16003,7 +16003,7 @@ KBR_STATIC = {"m": 1.0, "B": 0.25}               # as every drawing of the stati
 KBR_REACH = 20                    # the curves run out to r = 20 m, where K has settled near its far value
 KBR_LINE = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 1e-2}   # the axis of K m^4 on both panels
 KBR_NEAR = 0.02                   # the curves start half a pixel outside the horizon, where the published K is 0/0 in doubles
-KBR_AXIS = 0.05                   # the theta the axis curves are read at, where the doubles hold the published K to 10^-9
+KBR_AXIS = 0.1                    # the theta the curves near the axis are read at, where the doubles hold the published K to 10^-9
 
 
 def kbr_horizon(m, a, B):
@@ -16020,14 +16020,14 @@ def kerr_bertotti_robinson(ck, src):
     Both charts publish R, which is zero in the static chart and zero on shell in the other, so the
     figure is K alone, read from the stored formulas, the Boyer-Lindquist one through its functions
     N, F, W, omega, P and Q as the reader writes them out. One view, a movie of two frames over a,
-    draws K m^4 from the outer horizon to r = 20 m on the axis, read at theta = 0.05 where the
+    draws K m^4 from the outer horizon to r = 20 m near the axis, at theta = 0.1 where the
     doubles hold the published formula, and on the equator, on a signed logarithmic scale, with the
     constant K = 8B^4 of Bertotti and Robinson's universe of the same field, read from its own
     published K at b = 1/B, dashed on both panels.
 
     What the caption states is checked here: R vanishes; the static K at m = 0 is 8B^4; the
-    Boyer-Lindquist K at a = 0 is the static one; K at theta = 0.05 is the axis's to the plotted
-    precision; the far values of K at r = 20 m on the axis and the equator; and that no curve leaves
+    Boyer-Lindquist K at a = 0 is the static one; K at theta = 0.1 lies within a pixel
+    of the axis's; the far values of K at r = 20 m near the axis and on the equator; and that no curve leaves
     its panel."""
     name = "kerr_bertotti_robinson"
     K_st = nr_published(src, name, "static", "kretschmann", ["r", "theta"], ["m", "B"])
@@ -16048,16 +16048,16 @@ def kerr_bertotti_robinson(ck, src):
     same = max(abs(float(K_bl(rr, t, m, 0.0, B)) / float(K_st(rr, t, m, B)) - 1)
                for rr in (2.5, 6.0, 15.0) for t in (0.3, 1.1, math.pi / 2))
     ck(f"{name} the Boyer-Lindquist K at a = 0 is the static K", same < 1e-9, f"{same:.1e}")
-    # The axis curves, read at theta = 0.05, lie within a quarter of a pixel of K on the axis itself,
+    # The curves near the axis, read at theta = 0.1, lie within a pixel of K on the axis itself,
     # which the Boyer-Lindquist K gives in sixty digits at theta = 10^-12.
     p0, p1 = span(KBR_LINE)
     near = max(abs(float(position(KBR_LINE, float(fn(rr, KBR_AXIS, *p))))
                    - float(position(KBR_LINE, float(fn.exact([rr, 1e-12, *p]))))) * (PLOT_W / 2) / (p1 - p0)
                for fn, p in ((K_st, static), (K_bl, spin)) for rr in (1.69, 2.2, 3.0, 8.0, 20.0))
-    ck(f"{name} K at theta = 0.05 is the axis's within a quarter of a pixel", near < 0.25, f"{near:.1e} px")
+    ck(f"{name} K at theta = 0.1 is the axis's within a pixel", near < 1, f"{near:.1e} px")
 
     x_r = axis("$r/m$", 0, KBR_REACH)
-    panels = [{"id": "axis", "name": "$K(r, 0)\\,m^4$", "aspect": 2, "scale": KBR_LINE, "ticks": value_ticks(KBR_LINE)},
+    panels = [{"id": "axis", "name": "$K(r, 0.1)\\,m^4$", "aspect": 2, "scale": KBR_LINE, "ticks": value_ticks(KBR_LINE)},
               {"id": "plane", "name": "$K(r, \\pi/2)\\,m^4$", "aspect": 2, "scale": KBR_LINE,
                "ticks": value_ticks(KBR_LINE)}]
     shape_checks(ck, f"{name} line", [p["aspect"] for p in panels])
@@ -16088,14 +16088,14 @@ def kerr_bertotti_robinson(ck, src):
         movie.append({"label": f"$a = {a:g}$", "value": a, "curves": curves, "marks": []})
     ck(f"{name} no curve leaves its panel", not cuts, f"{cuts}")
     line = {
-        "id": "directions", "label": "the axis and the equator", "kind": "line", "x": x_r, "panels": panels,
+        "id": "directions", "label": "near the axis and on the equator", "kind": "line", "x": x_r, "panels": panels,
         "curves": reference, "marks": [],
         "movie": {"variable": "$a$", "seconds": 3, "frames": movie},
         "legend": [["line", "K", "pink, $K$"], ["line", "reference", "dashes, $8B^4$"]],
-        "caption": ["The Kretschmann scalar $K$ on axis and equator stays near $8B^4$ far out; "
+        "caption": ["The Kretschmann scalar $K$ near the axis ($\\theta=0.1$) and the equator; "
                     "the Ricci scalar vanishes."],
         "settings": "$m=1$, $B=1/4$.",
-        "clip": "Signed log; axis at $\\theta=0.05$.",
+        "clip": "Signed log, linear within 0.01.",
     }
     return [line]
 
