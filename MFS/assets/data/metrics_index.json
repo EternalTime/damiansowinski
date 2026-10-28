@@ -1421,7 +1421,8 @@
     "version": "2769c04e78d35ef4",
     "diagrams": "3293440e9059a970",
     "conformal": "49c40202992137c1",
-    "embedding": "a0dc24d8631c665d"
+    "embedding": "a0dc24d8631c665d",
+    "curvature": "47866bd648d822b3"
   },
   {
     "id": "double_kerr",
