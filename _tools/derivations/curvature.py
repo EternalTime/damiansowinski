@@ -4859,8 +4859,8 @@ def einstein_dirac_maxwell_wormhole(ck, src):
     return [{
         "id": "throat", "label": "Through the throat", "kind": "line", "x": x_axis,
         "panels": [panel], "curves": curves, "marks": [], "legend": [["line", "K", "$K$"]],
-        "caption": ["$K$, pink, against Bronnikov and Kim's $u$; $R=0$. "
-                    "It peaks at $43/(8r_0^4)$ at the throat $u=0$ and dies on both sides."],
+        "caption": ["Pink scalar $K$ against Bronnikov and Kim's $u$, peaking at $43/(8r_0^4)$ at the throat $u=0$, "
+                    "dying either side; scalar $R$ zero."],
         "settings": "$r_0=1$, $Q_e=1/2$, so $M=2/5$.",
         "clip": "Log, $10^{-6}$ to $10$, all inside.",
     }]
