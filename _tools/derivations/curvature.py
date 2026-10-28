@@ -13454,7 +13454,7 @@ EM_REACH = 6                      # the plot runs from r = 0 to r = 6m in the is
 EM_K = {"kind": "linear", "from": 0, "to": 0.8}
 EM_R = {"kind": "linear", "from": -0.6, "to": 0}
 EM_CAPTION = ("The Kretschmann scalar $K$ and the Ricci scalar $R$ of the exponential metric against isotropic $r$, "
-              "peaking on the squeezed far side $r<m$ and vanishing as $r\\to0$.")
+              "peaking on the squeezed side $r<m$, zero as $r\\to0$.")
 
 
 def exponential_metric(ck, src):
