@@ -16003,6 +16003,8 @@ KBR_STATIC = {"m": 1.0, "B": 0.25}               # as every drawing of the stati
 KBR_REACH = 20                    # the curves run out to r = 20 m, where K has settled near its far value
 KBR_LINE = {"kind": "symlog", "from": -10.0, "to": 10.0, "linear": 1e-2}   # the axis of K m^4 on both panels
 KBR_NEAR = 0.02                   # the curves start half a pixel outside the horizon, where the published K is 0/0 in doubles
+KBR_FAR = (1e4, 1e5)              # the radii, in m, the far value of K in each direction is read at and checked against
+KBR_DIGITS = 200                  # the digits those far values are worked out in, past the cancellation of the powers of r
 KBR_AXIS = 0.1                    # the theta the curves near the axis are read at, where the doubles hold the published K to 10^-9
 
 
@@ -16021,12 +16023,15 @@ def kerr_bertotti_robinson(ck, src):
     figure is K alone, read from the stored formulas, the Boyer-Lindquist one through its functions
     N, F, W, omega, P and Q as the reader writes them out. One view, a movie of two frames over a,
     draws K m^4 from the outer horizon to r = 20 m near the axis, at theta = 0.1 where the
-    doubles hold the published formula, and on the equator, on a signed logarithmic scale, with the
-    constant K = 8B^4 of Bertotti and Robinson's universe of the same field, read from its own
-    published K at b = 1/B, dashed on both panels.
+    doubles hold the published formula, and on the equator, on a signed logarithmic scale. Far
+    from the hole K tends to a constant of its own in each direction, the stored K read in sixty
+    digits at r = 10^4 m, which agrees with its value at 10^5 m, and each frame dashes that limit on
+    its panel as the constant K = 8/b^4 of Bertotti and Robinson's universe, read from its own
+    published K at the b that gives it. At a = 0 the limits are 8B^4(1 - B^2m^2)^2 on the equator
+    and 8B^4(1 + B^2m^2)^4 + 48B^12m^8 on the axis, the static K's own limits as r grows.
 
-    What the caption states is checked here: R vanishes; the static K at m = 0 is 8B^4; the
-    Boyer-Lindquist K at a = 0 is the static one; K at theta = 0.1 lies within a pixel
+    What the caption states is checked here: R vanishes; the Boyer-Lindquist K at a = 0 is the
+    static one; the far limits; K at theta = 0.1 lies within a pixel
     of the axis's; the far values of K at r = 20 m near the axis and on the equator; and that no curve leaves
     its panel."""
     name = "kerr_bertotti_robinson"
@@ -16041,10 +16046,12 @@ def kerr_bertotti_robinson(ck, src):
     worst = max(abs(float(R_bl.exact([rr, t, *spin]))) / float(K_bl(rr, t, *spin))
                 for rr, t in ((2.0, 0.4), (7.0, 1.3)))
     ck(f"{name} the Boyer-Lindquist R vanishes beside K", worst < 1e-40, f"{worst:.1e}")
-    mm, bb = K_st.params
-    ck(f"{name} the static K at m = 0 is 8B^4", sp.simplify(K_st.expr.subs(mm, 0) - 8 * bb ** 4) == 0)
-    floor = 8 * B ** 4
-    ck(f"{name} Bertotti and Robinson's K at b = 1/B is 8B^4", abs(float(K_br(1.0, 1 / B)) / floor - 1) < 1e-14)
+    # At a = 0 the far limits on the equator and on the axis are the static K's own as r grows.
+    for theta, limit in ((math.pi / 2, 8 * B ** 4 * (1 - B * B * m * m) ** 2),
+                         (0.0, 8 * B ** 4 * (1 + B * B * m * m) ** 4 + 48 * B ** 12 * m ** 8)):
+        far = float(K_st.exact([KBR_FAR[1], theta, *static], KBR_DIGITS))
+        ck(f"{name} the static K at theta = {theta:.4f} tends to {limit / B ** 4:.4f} B^4", abs(far / limit - 1) < 1e-4,
+           f"{far / B ** 4:.6f} B^4 at r = 10^5 m")
     same = max(abs(float(K_bl(rr, t, m, 0.0, B)) / float(K_st(rr, t, m, B)) - 1)
                for rr in (2.5, 6.0, 15.0) for t in (0.3, 1.1, math.pi / 2))
     ck(f"{name} the Boyer-Lindquist K at a = 0 is the static K", same < 1e-9, f"{same:.1e}")
@@ -16062,10 +16069,6 @@ def kerr_bertotti_robinson(ck, src):
                "ticks": value_ticks(KBR_LINE)}]
     shape_checks(ck, f"{name} line", [p["aspect"] for p in panels])
     height = PLOT_W / 2
-    reference = []
-    for panel in ("axis", "plane"):
-        reference += line_curves(ck, f"{name} Bertotti and Robinson {panel}", panel, "reference", K_br, "r", x_r,
-                                 KBR_LINE, height, {"b": 1 / B})
     movie, cuts = [], []
     for system, fn, params in (("static", K_st, KBR_STATIC), ("boyer_lindquist", K_bl, KBR_SPIN)):
         a = params.get("a", 0.0)
@@ -16083,15 +16086,20 @@ def kerr_bertotti_robinson(ck, src):
             rs = np.linspace(*within, SAMPLES)
             vs = held(rs, *values)
             ends[panel] = (float(vs[0]), float(vs[-1]), float(vs.min()), float(vs.max()))
+            limit, further = (float(fn.exact([rr, theta, *values], KBR_DIGITS)) for rr in KBR_FAR)
+            ck(f"{name} {panel} at a = {a:g} has a far limit of {limit / B ** 4:.4f} B^4", abs(limit / further - 1) < 1e-3,
+               f"{further / B ** 4:.6f} B^4 at r = 10^5 m")
+            curves += line_curves(ck, f"{name} {panel} limit at a = {a:g}", panel, "reference", K_br, "r", x_r,
+                                  KBR_LINE, height, {"b": (8 / limit) ** 0.25})
         ck(f"{name} K at a = {a:g} from r_+ = {horizon:.4f} m to r = 20 m on the axis and the equator", True,
            f"{ends}")
         movie.append({"label": f"$a = {a:g}$", "value": a, "curves": curves, "marks": []})
     ck(f"{name} no curve leaves its panel", not cuts, f"{cuts}")
     line = {
         "id": "directions", "label": "near the axis and on the equator", "kind": "line", "x": x_r, "panels": panels,
-        "curves": reference, "marks": [],
+        "curves": [], "marks": [],
         "movie": {"variable": "$a$", "seconds": 3, "frames": movie},
-        "legend": [["line", "K", "pink, $K$"], ["line", "reference", "dashes, $8B^4$"]],
+        "legend": [["line", "K", "pink, $K$"], ["line", "reference", "dashes, each direction's limit"]],
         "caption": ["The Kretschmann scalar $K$ near the axis ($\\theta=0.1$) and the equator; "
                     "the Ricci scalar vanishes."],
         "settings": "$m=1$, $B=1/4$.",
