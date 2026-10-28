@@ -13123,21 +13123,22 @@ AB_OUTSIDE_DOMAIN = "X**2 - T**2 > b**2"    # B I's inertial chart on the plane 
 
 
 class HeldSlice:
-    """A published value of a chart in three coordinates, drawn on the plane of the first two with
-    the third held at the number the figure states, as the Kretschmann scalar of Ehlers and Kundt's
-    inertial charts is drawn on the plane of X and T at Y = 0. `Held` does the same for a curve,
-    which holds every coordinate but one; a map draws two, so the held one stands last."""
+    """A published value of a chart in more coordinates than a map draws, with the others held at
+    the numbers `fixed` gives them, by the names the chart spells them with, as the Kretschmann
+    scalar of Ehlers and Kundt's inertial charts is drawn on the plane of X and T at Y = 0. `Held`
+    does the same for a curve, which draws one coordinate; a map draws two, so the held ones stand
+    after them, and the map writes them into its grid as a curve writes its own."""
 
-    def __init__(self, published, name, value):
-        self.published, self.name, self.value = published, name, float(value)
+    def __init__(self, published, fixed):
+        self.published, self.fixed = published, {name: float(v) for name, v in fixed.items()}
         self.metric, self.system, self.field = published.metric, published.system, published.field
         self.functions = published.functions
 
     def __call__(self, x, y, *params):
-        return self.published(x, y, self.value, *params)
+        return self.published(x, y, *self.fixed.values(), *params)
 
     def exact(self, values, digits=60):
-        return self.published.exact([values[0], values[1], self.value, *values[2:]], digits)
+        return self.published.exact([values[0], values[1], *self.fixed.values(), *values[2:]], digits)
 
 
 def ab_metrics(ck, src):
@@ -13180,7 +13181,7 @@ def ab_metrics(ck, src):
     published, held, ricci = {}, {}, {}
     for system in (INSIDE, OUTSIDE):
         published[system] = nr_published(src, "ab_metrics", system, "kretschmann", ["X", "T", "Y"], ["b"])
-        held[system] = HeldSlice(published[system], "Y", 0.0)
+        held[system] = HeldSlice(published[system], {"Y": 0.0})
         ricci[system] = nr_published(src, "ab_metrics", system, "ricci_scalar", ["X", "T", "Y"], ["b"])
     ck("ab_metrics both inertial charts publish a vanishing Ricci scalar",
        ricci[INSIDE].expr == 0 and ricci[OUTSIDE].expr == 0)
@@ -13317,7 +13318,8 @@ def ab_metrics(ck, src):
             "id": name, "label": label, "kind": "map", "system": system, "x": x_axis, "y": y_axis,
             "colour": {"name": "$K\\,b^4$", "scale": dict(scale), "ticks": value_ticks(dict(scale))},
             "map": {"metric": "ab_metrics", "system": system, "scalar": "kretschmann", "x": "X", "y": "T",
-                    "params": {"b": b}, "domain": domain_text, "nx": nx, "ny": ny, "cells": rows},
+                    "fixed": dict(held[system].fixed), "params": {"b": b}, "domain": domain_text,
+                    "nx": nx, "ny": ny, "cells": rows},
             "marks": marks,
             "legend": legend,
             "caption": ab_caption(inside_cone, axis_values),

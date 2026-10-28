@@ -5,7 +5,7 @@
 
 Every value a curvature figure carries is evaluated again here from the metric file it names,
 the published `kretschmann` or `ricci_scalar` read through the checker's Reader at the point,
-the other coordinates a curve holds fixed and the parameters the file gives, with each function
+the other coordinates a curve or a map holds fixed and the parameters the file gives, with each function
 the chart leaves free put in as the closed form the file declares for it, and held to the
 number written: a curve's value to the last few digits of a double, a map's cell to the six
 significant figures it is written to. A map that declares the domain of its chart leaves null
@@ -177,8 +177,9 @@ class CurvatureValues(unittest.TestCase):
                     if grid is None:
                         continue
                     where = f"curvature/{name}.json {view['id']}{place}"
-                    params = list(grid["params"])
-                    fn = self.evaluate(grid["metric"], grid["system"], grid["scalar"], [grid["x"], grid["y"]], params,
+                    params, fixed = list(grid["params"]), grid.get("fixed", {})
+                    fn = self.evaluate(grid["metric"], grid["system"], grid["scalar"],
+                                       [grid["x"], grid["y"]] + list(fixed), params,
                                        functions=grid.get("functions"))
                     nx, ny = grid["nx"], grid["ny"]
                     xs = x["from"] + (np.arange(nx) + 0.5) * (x["to"] - x["from"]) / nx
@@ -197,7 +198,7 @@ class CurvatureValues(unittest.TestCase):
                         r2 = np.where(s >= 0, (s + q) / 2, 2 * f * f * Y * Y / np.where(s >= 0, 1, q - s))
                         X, Y = np.sqrt(r2), np.arctan2(X * np.sqrt(r2), Y * np.sqrt(r2 + f * f))
                     values = [grid["params"][p] for p in params]
-                    expected = fn(X, Y, *values)
+                    expected = fn(X, Y, *fixed.values(), *values)
                     written = np.array([[np.nan if v is None else v for v in row] for row in grid["cells"]], dtype=float)
                     drawn = ~np.isnan(written)
                     if "domain" in grid:
