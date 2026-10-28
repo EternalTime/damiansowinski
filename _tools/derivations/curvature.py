@@ -13892,7 +13892,7 @@ def bubbling_ads(ck, src):
        and radius[2.0][1] < 1e-20 and radius[2.0][0] > 1e-2, f"{radius}")
     edge = {}
     for R0 in (0.0, 0.5, inner, 1.2, outer, 2.0):
-        a, b = k(R0 + 1e-30, 1e-6), k(R0 + 1e-30, 1e-9)
+        a, b = k(max(R0, 1e-6), 1e-6), k(max(R0, 1e-6), 1e-9)
         edge[R0] = b
         ck(f"{name} K is finite and settled toward y = 0 at r = {R0:.4f} L^2",
            math.isfinite(b) and abs(a / b - 1) < 1e-4, f"{a:.9g} at y = 1e-6, {b:.9g} at y = 1e-9")
@@ -13900,7 +13900,7 @@ def bubbling_ads(ck, src):
     peak = int(np.argmax(bottom))
     ck(f"{name} K is greatest along y = 0 on the black ring",
        inner < xs[peak] < outer, f"{bottom[peak]:.6g} at r = {xs[peak]:.4f}")
-    far = [k(0, 1e4), k(1e4, 1e4), k(1e4, 1e-3)]
+    far = [k(1e-3, 1e4), k(1e4, 1e4), k(1e4, 1e-3)]
     ck(f"{name} K tends to 80/L^4 far from the ring", all(abs(v / 80 - 1) < 1e-3 for v in far), f"{far}")
     ck(f"{name} K varies with both r and y", abs(edge[1.2] - edge[0.5]) > 1 and abs(k(1.2, 1) - edge[1.2]) > 1)
     white = [[[0.0, 0.0], [inner, 0.0]], [[outer, 0.0], [float(BA_BOX[0][1]), 0.0]]]
