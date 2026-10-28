@@ -1823,7 +1823,7 @@ Both scalars are even in $x - x_s$, so the wall carries the same curvature ahead
 The chart publishes both scalars as functions of $x - x_s$, $y$ and $z$ for an arbitrary profile, and a map's two axes are chart coordinates, which the reader of a map holds to by refusing a scalar that depends on $t$ or $z$ beside them, so the plane $z = 0$ at one moment is drawn as the family of its cuts the movie steps through.
 The movie shows what one cut cannot: the two peaks of the wall closing on each other as the cut moves off the path, and the shell about $r_s = R$ that holds the whole curvature of the rigid bubble.
 The still view holds that shell's equator, where $K$ is $609.7/R^4$ against the $959.9/R^4$ of its poles and $R^\mu{}_\mu$ is $16.01/R^2$ against $32.00/R^2$, and where $R^\mu{}_\mu$ is positive at every $\rho$ drawn.
-The file is 125 KB, and 39.8 KB as the server compresses it.
+The file is 125 KB, and 39.9 KB as the server compresses it.
 
 Ehlers and Kundt's A II and B I have two maps at $b = 1$, the length their other drawings take, of $K$ on the inertial plane of $X$ and $T$ at $Y = Z = 0$, over the boxes of the two inertial spacetime diagrams: inside the future cone of the tachyon's line, $|X| \le 3b$ with $0 \le T \le 6b$, and outside that cone, $|X|, |T| \le 3b$, each of 200 cells by 200 and each naming its own chart.
 The inertial charts write $K$ as $12b^2/\sigma^6$ and $12b^2/r^6$ in the interval from that line, $\sigma = \sqrt{T^2 - X^2 - Y^2}$ and $r = \sqrt{X^2 + Y^2 - T^2}$, so each is a function of $T$, $X$ and $Y$, and the generator evaluates every cell at $Y = 0$, which the map writes into its grid as `fixed`, so that the checker reads every cell back, and which the settings and the caption of each view state for the reader.
