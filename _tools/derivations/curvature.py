@@ -5711,7 +5711,7 @@ def global_monopole(ck, src):
         "caption": ["$K$ in the static chart, Schwarzschild's $r^{-6}$ near the mass, the monopole's $r^{-4}$ far "
                     "out."],
         "settings": "$\\Delta = 0.19$, $r_s = 1$.",
-        "clip": "Log scales, nothing clipped.",
+        "clip": "Log, none clipped.",
     }]
 
 
