@@ -4222,6 +4222,84 @@ def eguchi_hanson(ck, src):
     return [radial, half_plane]
 
 
+# ---------------------------------------------------------------- Einstein, Infeld and Hoffmann's two bodies
+
+EIH_BOX = 20                      # x/m and y/m run from -20 to 20, both bodies and the far fall-off
+EIH_CELLS = 200                   # the cells of the map across and up, each a fifth of m on a side
+EIH_MOMENT = {"t": 0.0, "z": 0.0}  # the moment and the orbital plane the map is read at
+EIH_SCALE = {"kind": "log", "from": 1e-7, "to": 1e2}   # the colours of K m^4
+# The cells drawn, at least m from each body, inside which the first post-Newtonian field fails.
+EIH_DOMAIN = "((x - 10)**2 + y**2 >= 1) & ((x + 10)**2 + y**2 >= 1)"
+EIH_CAPTION = ("$K\\,m^4$ in the orbital plane at $t=0$, bodies of mass $m$ at $x=\\pm10m$; logarithmic, "
+               "$10^{-7}$ to $10^2$. $R$ vanishes off the bodies. Clear: discs $r_a<m$, where first post-Newtonian order fails.")
+
+
+def eih_many_bodies(ck, src):
+    """The binary every other drawing of the spacetime declares, two bodies of mass m = 1 at
+    x = +-10m on a circular orbit, its Kretschmann scalar over the orbital plane z = 0 at t = 0.
+
+    The published K is a quadratic in the second derivatives of U = m/r_1 + m/r_2 alone, the same
+    in both gauges, and the published Ricci scalar is -2 Laplacian(U), which vanishes off the
+    bodies. The orbit only turns the map rigidly, so one moment holds it. The map runs over
+    |x|, |y| <= 20m in cells a fifth of m on a side, coloured on a logarithmic scale from 10^-7 to
+    10^2 in units of 1/m^4, and the cells within m of a body are left clear, since there K grows
+    as 48m^2/r_a^6 and the first post-Newtonian field holds no longer.
+
+    Checked here: the published Ricci scalar vanishes in the plane, in sixty digits; the two
+    gauges publish the same K; at the midpoint K = 3/15625m^4, from U_xx = 4m/1000m^3 and
+    U_yy = U_zz = -2m/1000m^3; beside a body K tends to one body's 48m^2/r_a^6; far out K r^6
+    tends to 192m^2, one body of mass 2m; and every drawn cell lies inside the colours."""
+    name = "eih_many_bodies"
+    coords = ["x", "y", "t", "z"]
+    pair = {"U": nr.EIH_BINARY["U"]}
+    K = Published(src, name, "harmonic", "kretschmann", coords, [], functions=pair)
+    Ric = Published(src, name, "harmonic", "ricci_scalar", coords, [], functions=pair)
+    Ks = Published(src, name, "standard", "kretschmann", coords, [], functions=pair)
+    plane, ricci = HeldSlice(K, EIH_MOMENT), HeldSlice(Ric, EIH_MOMENT)
+    rng = np.random.default_rng(1938)
+    points = [(float(x), float(y)) for x, y in rng.uniform(-20, 20, (16, 2)) if min(
+        math.hypot(x - 10, y), math.hypot(x + 10, y)) > 0.5]
+    worst = max(abs(float(ricci.exact([x, y]))) for x, y in points)
+    ck(f"{name} the published Ricci scalar vanishes in the orbital plane, in sixty digits", worst < 1e-40,
+       f"worst {worst:.1e}")
+    worst = max(abs(float(Ks.exact([x, y, 0.0, 0.0]) / K.exact([x, y, 0.0, 0.0])) - 1) for x, y in points)
+    ck(f"{name} the two gauges publish the same K", worst < 1e-40, f"worst {worst:.1e}")
+    midpoint = float(plane.exact([0.0, 0.0]))
+    ck(f"{name} K at the midpoint is 3/15625m^4", abs(midpoint * 15625 / 3 - 1) < 1e-20, f"{midpoint}")
+    near = [float(plane.exact([10 + d, 0.0])) * d ** 6 / 48 for d in (1e-3, 1e-4)]
+    ck(f"{name} beside a body K tends to one body's 48m^2/r_a^6", all(abs(q - 1) < 1e-2 for q in near), f"{near}")
+    far = [float(plane.exact([r * math.cos(a), r * math.sin(a)])) * r ** 6 / 192 for r in (1e6, 1e7)
+           for a in (0.0, 0.7, math.pi / 2)]
+    ck(f"{name} K r^6 tends to 192m^2 far out, one body of mass 2m", all(abs(q - 1) < 1e-4 for q in far), f"{far}")
+
+    box = float(EIH_BOX)
+    x_axis, y_axis = axis("$x/m$", -box, box), axis("$y/m$", -box, box)
+    shape_checks(ck, f"{name} map", [(x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])])
+    scale = dict(EIH_SCALE)
+    xs, ys, values = cells(plane, x_axis, y_axis, EIH_CELLS, EIH_CELLS, [])
+    X, Y = np.meshgrid(xs, ys)
+    keep = domain_function(name, "harmonic", EIH_DOMAIN, ["x", "y"], [])(X, Y)
+    ck(f"{name} the cells left clear are those within m of a body",
+       np.array_equal(keep, (np.hypot(X - 10, Y) >= 1) & (np.hypot(X + 10, Y) >= 1)), f"{int((~keep).sum())} clear")
+    kept = values[keep]
+    ck(f"{name} K is finite and positive at every cell drawn", np.all(np.isfinite(kept)) and np.all(kept > 0),
+       f"from {kept.min():.4e} to {kept.max():.4e}")
+    ck(f"{name} every cell drawn lies inside the colours", scale["from"] < kept.min() and kept.max() < scale["to"],
+       f"from {kept.min():.4e} to {kept.max():.4e}")
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, EIH_CELLS, 40), rng.integers(0, EIH_CELLS, 40))
+                    if keep[j, i]} | {(0, 0), (EIH_CELLS - 1, EIH_CELLS - 1)})
+    agrees(ck, f"{name} map", plane, [[xs[i], ys[j]] for i, j in picks], [values[j, i] for i, j in picks])
+    rows = [[rounded(v) if ok else None for v, ok in zip(row, inside)] for row, inside in zip(values, keep)]
+    return [{
+        "id": "plane", "label": "the orbital plane", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": name, "system": "harmonic", "scalar": "kretschmann", "x": "x", "y": "y",
+                "fixed": dict(plane.fixed), "params": {}, "functions": dict(pair),
+                "domain": EIH_DOMAIN, "nx": EIH_CELLS, "ny": EIH_CELLS, "cells": rows},
+        "marks": [], "legend": [], "caption": [EIH_CAPTION], "settings": "", "clip": "",
+    }]
+
+
 # ---------------------------------------------------------------- Einstein's static field of 1912
 
 E1912_REACH = 6                   # the plot runs from the centre to r = 6 m, the reach of the embedding diagram
@@ -15182,6 +15260,7 @@ DRAWN = {
     "dilaton_black_hole": dilaton_black_hole,
     "distorted_schwarzschild": distorted_schwarzschild,
     "eguchi_hanson": eguchi_hanson,
+    "eih_many_bodies": eih_many_bodies,
     "einstein_1912_static": einstein_1912_static,
     "einstein_cluster": einstein_cluster,
     "einstein_rosen_bridge": einstein_rosen_bridge,
