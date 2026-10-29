@@ -6238,6 +6238,18 @@ class Slices(unittest.TestCase):
                 return (r + 3 * math.log(abs(1 - 7 * r / 12)) - 1.2 * math.log(abs(1 - 7 * r / 6))
                         + 0.2 * math.log(1 + 7 * r / 4))
             return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key.startswith("regular_black_hole_pure_gravity/eddington_finkelstein"):
+            # At r_0 = 1 and l = 12/25, 1/f = 1 + r^2/((r^2 - 16/25)(r^2 - 9/25)), and
+            # r_* = r + (10/7) ln|(r - 4/5)/(r + 4/5)| - (15/14) ln|(r - 3/5)/(r + 3/5)|, which vanishes at r = 0.
+            # Static t = 0 is v = r_* and u = -r_*, outside r_+ and inside r_-, drawn against v - r and u + r
+            # or against v and u.
+            sign = 1 if "ingoing" in key else -1
+            finkelstein = key.endswith("finkelstein")
+
+            def rstar(r):
+                return (r + 10 / 7 * math.log(abs((r - 0.8) / (r + 0.8)))
+                        - 15 / 14 * math.log(abs((r - 0.6) / (r + 0.6))))
+            return (lambda X: sign * (rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
         if key in ("hayward/evaporating/history", "mass_inflation/ingoing/tail"):
             # A slice of constant v - r, level against v - r.
             return (lambda X: t), list(self.reach(surface))
@@ -7699,7 +7711,7 @@ class Slices(unittest.TestCase):
                         # outgoing chart's view, whose exterior is the one above the white hole.
                         height = math.pi if mark["view"] == "inside" else 2 * math.pi if view["id"] == "outgoing" else 0.0
                         self.assertTrue(all(abs(T - height) < 2e-4 for _, T in points), where)
-                    elif metric_id == "hayward" and mark["view"] == "inside":
+                    elif metric_id in ("hayward", "regular_black_hole_pure_gravity") and mark["view"] == "inside":
                         # Through the inner bifurcation point above the exteriors on the static and ingoing
                         # views, and through the one below them on the outgoing view, whose chart covers it.
                         height = -math.pi if view["id"] == "outgoing" else math.pi
