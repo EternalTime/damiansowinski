@@ -383,7 +383,7 @@ If a sentence only reads with the break in it, rewrite the sentence rather than 
 
 A hyphen stays only where it is part of a spelling.
 That means a pair of names, such as Reissner-Nordstrom, Kerr-Newman or Lanczos-van Stockum, and an established term, such as anti-de Sitter, pp-wave or Taub-NUT.
-An established term goes on that list, `HYPHENATED_TERMS` in `_tools/test_build_mfs_data.py`, only where its standard spelling carries the hyphen, as the no-boundary proposal and e-foldings do, as the main firstmate ruled on 3 October 2026; a sphere or a geometry of so many dimensions is written with its numeral, 3-sphere, 4-sphere or 3-geometry, which the rule reads as a designation.
+An established term goes on that list, `HYPHENATED_TERMS` in `_tools/voice.py`, only where its standard spelling carries the hyphen, as the no-boundary proposal and e-foldings do, as the main firstmate ruled on 3 October 2026; a sphere or a geometry of so many dimensions is written with its numeral, 3-sphere, 4-sphere or 3-geometry, which the rule reads as a designation.
 An ordinary English compound is rewritten so that the hyphen is not needed.
 Minus signs inside the LaTeX fields are mathematics and are left alone.
 
@@ -417,7 +417,7 @@ A history takes his narrative register and names the people who did the work, wi
 None of them casts a paper, a result, a field or a drawing as the actor, stages a reveal, as "what carries the curvature is the Kretschmann scalar" did, closes on an epigram, explains what is not drawn, says what a thing is not in order to say what it is, or leans on an absolute for emphasis.
 A figure of speech never stands in for the claim it points at: "so the spacetime does not stand on its own" became "so anti-de Sitter space is not globally hyperbolic", as the captain asked on 28 September 2026.
 
-`VOICE` and the class `Voice` in `_tools/test_build_mfs_data.py` hold the rules a pattern can catch over every one of those texts, with mathematics and quotations taken out first, since a quotation is its speaker's own words.
+`VOICE` in `_tools/voice.py` and the class `Voice` in `_tools/test_build_mfs_data.py` hold the rules a pattern can catch over every one of those texts, with mathematics and quotations taken out first, since a quotation is its speaker's own words.
 They are tested to catch the phrases the captain flagged and to pass plain physics, so a new rule goes into the table together with an example of each kind.
 The same class holds every hyphen to joining two names, a name and a word, or a designation, or to one of the few established terms it lists, so an English compound such as "future directed" is written without one.
 Labels and legends name things rather than state them, and stand outside these rules.
@@ -577,7 +577,7 @@ Where the coordinate that ends leaves less width than the feature needs height, 
 The audit of 2 October 2026 measured 577 views and figures and found 53 outside the limits, the worst at 1:36; each was given a new window.
 
 A caption opens with a noun phrase naming its plane: the two coordinates drawn, with the value of every coordinate held fixed in parentheses, as "The plane of $t$ and $r$ ($\theta = \pi/2$, $\phi = 0$)".
-It never opens "This is", and nothing in it "stands for" anything; `CAPTION_VOICE` in `_tools/test_build_mfs_data.py` holds every caption, note and restriction band on the site to that.
+It never opens "This is", and nothing in it "stands for" anything; `CAPTION_VOICE` in `_tools/voice.py` holds every caption, note and restriction band on the site to that.
 It says what the drawing shows, and where the feature a reader comes looking for lies off the plane, it says where that feature is, as the Ellis-Bronnikov caption places the throat in $g_{\theta\theta}$ and the Gödel caption places the closed timelike curves.
 A caption never stops at saying what a diagram leaves out.
 A view of rays that leave the plane names the surface they lie on and the coordinate left out of the drawing, as "The equatorial plane ($\theta = \pi/2$) drawn in $t$ and $r$, with $\phi$ left out".
