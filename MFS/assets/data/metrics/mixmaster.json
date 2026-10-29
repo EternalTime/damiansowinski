@@ -53,6 +53,11 @@
       "id": "kasner_scalar",
       "kind": "family",
       "text": "A massless scalar field stops the Mixmaster oscillations after a finite number, and the universe then runs to its singularity as this one does, shrinking along all three axes [belinskii1973]."
+    },
+    {
+      "id": "holographic_superconductor",
+      "kind": "family",
+      "text": "The inside of a holographic superconductor, which can also run through a sequence of Kasner epochs. The charge of its scalar field sets off each transition, and the sequence is endless only at a discrete set of temperatures [hartnoll2021diving]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "gowdy2014",
     "belinskii1978bianchi",
     "eguchihanson1979",
-    "belinskii1973"
+    "belinskii1973",
+    "hartnoll2021diving"
   ],
   "coordinates": [
     {

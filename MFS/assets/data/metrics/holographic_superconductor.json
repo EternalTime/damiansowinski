@@ -41,10 +41,56 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. No component assumes a field equation.",
-  "history": "HISTORY PLACEHOLDER.",
-  "related": [],
+  "history": "In January 2008, at Princeton, Steven Gubser coupled a charged scalar field to gravity with a negative cosmological constant and concluded that \"black holes can superconduct\" [gubser2008breaking]. A charged black hole in anti-de Sitter space that is cold enough grows a condensate of the field slightly outside its horizon, which breaks the symmetry of the field's phase as the condensate of a superconductor does [gubser2008breaking]. Sean Hartnoll, Christopher Herzog, and Gary Horowitz built it into a holographic superconductor that March, a field theory in two dimensions of space that condenses below a critical temperature $T_c$ and whose DC conductivity \"becomes infinite\" [hartnoll2008, hartnoll2008holographic]. Its black hole has a flat plane for a horizon, and the scalar field hangs just outside it as a lump, held in place by the pull of anti-de Sitter space toward its interior and pushed out by the electric repulsion of the horizon [hartnoll2008holographic, hartnoll2021diving].¶Where does a fall through that horizon end? Without the scalar field the black hole is the planar Reissner-Nordström-anti-de Sitter solution, whose inside holds an inner Cauchy horizon and a timelike singularity [hartnoll2021diving], and at a Cauchy horizon \"the predictability of the classical dynamics breaks down\" [hartnoll2020abhor]. The first answer came in June 2020 from Hartnoll, Horowitz, Jorrit Kruthoff, and Jorge Santos, for a neutral scalar field switched on at the boundary: the inner horizon is gone, and a spacelike Kasner singularity stands in its place [hartnoll2020abhor]. The field \"triggers a rapid collapse of the Einstein-Rosen bridge at the would-be Cauchy horizon\", the bridge being the wormhole that joins the two sides of the black hole [hartnoll2020abhor]. That August the four of them turned to the charged field of the superconductor, whose effect on the inside of the black hole, they wrote, \"has not been systematically studied\" [hartnoll2021diving].¶A charged field brings a new ingredient: several terms of its field equations divide by $f$, which vanishes on every horizon [hartnoll2021diving]. For the fields to stay smooth there, the electric potential $\\Phi$ has to vanish on every horizon [hartnoll2021diving]. Stretching $z$ by a constant factor leaves the action unchanged, and the conserved quantity that comes with it, which Gubser and Abhinav Nellore had written down in 2009, then takes the value $e^{-\\chi/2}f'/z^2$ on each horizon [hartnoll2021diving, gubser2009ground]. Since $f'$ is negative on an outer horizon and positive on an inner one, the two values cannot agree, so a charged condensate leaves no inner horizon [hartnoll2021diving]. Rong-Gen Cai, Li Li, and Run-Qiu Yang extended the proof that September to spherical horizons, to any potential for the scalar field, and to any asymptotic boundary [cai2021noinner].¶Just below $T_c$ the inside stays close to Reissner-Nordström-anti-de Sitter all the way down to where that hole has its inner horizon [hartnoll2021diving]. There the Einstein-Rosen bridge collapses: over a short range of $z$, $g_{tt}$ drops to a value that is \"nonzero but exponentially small\" [hartnoll2021diving]. The scalar field then oscillates rapidly, and the four authors identified these oscillations as the Josephson effect, since the condensate sets the stiffness of the superfluid and a winding of its phase along $t$ makes that stiffness oscillate in time [hartnoll2021diving]. When the oscillations die away the geometry is a Kasner universe holding a scalar field, $ds^2 = -d\\tau^2 + \\tau^{2p_t}dt^2 + \\tau^{2p_x}\\left(dx^2 + dy^2\\right)$ up to constants, with $p_t + 2p_x = 1$ [hartnoll2021diving, kasner1921, belinskii1973]. The exponent $p_t$ lies between $-1/3$ and $1$ and depends on the temperature, and where it is positive the direction along $t$ keeps shrinking all the way to the singularity [hartnoll2021diving].¶Where $p_t$ is negative, $g_{tt}$ grows, and after many e-foldings of that expansion the universe passes to a second Kasner epoch with $p_t \\to -p_t/(2p_t + 1)$, which the authors named a Kasner inversion [hartnoll2021diving]. The Einstein-Rosen bridge, stretched until then, contracts toward the singularity, and the same map carries Kasner's universe with a magnetic field from its early exponents to its late ones [hartnoll2021diving, kastor2015]. Near $p_t = -1/3$ the inversion is so sudden that it sets off fresh Josephson oscillations, which can leave $p_t$ negative and set up another inversion [hartnoll2021diving]. At a discrete set of temperatures $T_n$ that accumulate at $T_c$ the inversions never end, and near them the final exponent depends on the temperature in a way the authors call \"fractal-like\" [hartnoll2021diving]. How deep do they go? At $T/T_c \\approx 0.8846244786$ they saw \"evidence of a second inversion developing\" near $z \\approx 1.71 \\times 10^{20322}$ [hartnoll2021diving].¶Does the last Kasner epoch survive a less symmetric beginning? Marc Henneaux answered with cosmological billiards: for anisotropic and inhomogeneous beginnings too the interior \"ultimately settles down to a final Kasner regime\" [henneaux2022final]. On the mathematical side, Maxime Van de Moortel proved the collapse of the Einstein-Rosen bridge as a theorem for a scalar field without charge, under the name \"violent nonlinear collapse\" [vandemoortel2024violent]. With Warren Li he proved the charged case, the one of the holographic superconductor, and found the collapse, the oscillations, and \"a transition from an unstable Kasner metric to a different stable Kasner metric\", which they call a Kasner bounce [li2025kasner]. Óscar Dias, Horowitz, and Santos found the same sequence inside charged black holes with scalar hair whose space is asymptotically flat [dias2021inside]. Yan Liu and Hong-Da Lyu added the newest piece in October 2026: near $T_c$ the zero mode of the scalar field at the onset of the condensate fixes the width of the collapse and the phase of the Josephson oscillations, and with them the oscillations of the first Kasner exponent [liu2026critical].",
+  "related": [
+    {
+      "id": "reissner_nordstrom_ads",
+      "kind": "family",
+      "text": "The charged black hole of anti-de Sitter space with no hair. Above the critical temperature its planar form is the normal state of the superconductor, and inside it has the inner Cauchy horizon that the condensate removes [hartnoll2021diving]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "limit",
+      "text": "The limit near the singularity. Once the scalar field stops oscillating, the inside is Kasner's universe with a massless scalar field, two equal exponents $p_x$ and $p_t + 2p_x = 1$ [hartnoll2021diving, belinskii1973]."
+    },
+    {
+      "id": "kasner_magnetic",
+      "kind": "family",
+      "text": "Kasner's universe with a magnetic field, which passes from one Kasner epoch to the next by the same map, $p \\to -p/(1 + 2p)$ for the exponent along the field. Inside the superconductor the electric field does the same along $t$ [kastor2015, hartnoll2021diving]."
+    },
+    {
+      "id": "mixmaster",
+      "kind": "family",
+      "text": "The vacuum universe that bounces from one Kasner epoch to the next without end. Inside the superconductor each bounce is a Kasner inversion set off by the electric field, and the bounces run on without end only at a discrete set of temperatures [hartnoll2021diving]."
+    },
+    {
+      "id": "mass_inflation",
+      "kind": "family",
+      "text": "Another fate for the inner horizon of a charged black hole, where radiation falling in inflates the mass and the curvature without limit [poisson1989]. Inside the holographic superconductor the charged condensate removes the inner horizon [hartnoll2021diving]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "family",
+      "text": "The black holes of anti-de Sitter space with flat horizons. Given a charge and a charged scalar field, the flat one grows hair below a critical temperature and becomes the black hole of the holographic superconductor [hartnoll2008holographic]."
+    }
+  ],
   "references": [
-    "hartnoll2021diving"
+    "gubser2008breaking",
+    "hartnoll2008",
+    "hartnoll2008holographic",
+    "hartnoll2021diving",
+    "hartnoll2020abhor",
+    "gubser2009ground",
+    "cai2021noinner",
+    "kasner1921",
+    "belinskii1973",
+    "kastor2015",
+    "henneaux2022final",
+    "vandemoortel2024violent",
+    "li2025kasner",
+    "dias2021inside",
+    "liu2026critical",
+    "poisson1989"
   ],
   "coordinates": [
     {

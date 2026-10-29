@@ -47,6 +47,11 @@
       "id": "bianchi",
       "kind": "generalisation",
       "text": "This universe is Bianchi type I, flat space with three scale factors, holding a uniform magnetic field along one of its axes [jacobs1969]."
+    },
+    {
+      "id": "holographic_superconductor",
+      "kind": "family",
+      "text": "The inside of a holographic superconductor, where an electric field carries the Kasner exponent along $t$ through the same map, $p_t \\to -p_t/(2p_t + 1)$, which its discoverers call a Kasner inversion [hartnoll2021diving]."
     }
   ],
   "references": [
@@ -62,7 +67,8 @@
     "harrison1968",
     "bkl1970",
     "leblanc1997",
-    "barrow1997"
+    "barrow1997",
+    "hartnoll2021diving"
   ],
   "coordinates": [
     {

@@ -98,6 +98,11 @@
       "id": "super_entropic",
       "kind": "family",
       "text": "A rotating hole of anti-de Sitter space whose horizon is a sphere with its poles cut out, and looks like the hyperbolic plane near each of them [gnecchi2014]."
+    },
+    {
+      "id": "holographic_superconductor",
+      "kind": "family",
+      "text": "The flat black hole given a charge and a charged scalar condensate below a critical temperature, the holographic superconductor, whose inside has no inner horizon and ends at a spacelike Kasner singularity [hartnoll2021diving]."
     }
   ],
   "references": [
@@ -129,7 +134,8 @@
     "aminneborg1998",
     "maldacena1998",
     "kraus1999",
-    "gnecchi2014"
+    "gnecchi2014",
+    "hartnoll2021diving"
   ],
   "coordinates": [
     {

@@ -67,6 +67,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "The isotropic member, $q^2 = 2/3$, as loop quantum cosmology has it, with a bounce in place of the big bang. Ashtekar and Wilson-Ewing carried the same quantum geometry to the anisotropic universes [ashtekar2009bianchi]."
+    },
+    {
+      "id": "holographic_superconductor",
+      "kind": "limit_source",
+      "text": "A black hole whose inside ends as this universe with $p_2 = p_3$. Inside the holographic superconductor the scalar field oscillates and then settles into this limit near the singularity [hartnoll2021diving]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "frenkel2020",
     "janis1968",
     "jacobs1969",
-    "ashtekar2009bianchi"
+    "ashtekar2009bianchi",
+    "hartnoll2021diving"
   ],
   "coordinates": [
     {

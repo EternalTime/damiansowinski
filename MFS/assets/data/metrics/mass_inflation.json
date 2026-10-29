@@ -90,6 +90,11 @@
       "id": "quantum_oppenheimer_snyder",
       "kind": "family",
       "text": "A quantum relative with an inner horizon too. In the quantum collapse of dust of Husain, Kelly, Santacruz, and Wilson-Ewing there is no mass inflation at the inner horizons [husain2022]."
+    },
+    {
+      "id": "holographic_superconductor",
+      "kind": "family",
+      "text": "The inside of a charged black hole of anti-de Sitter space with charged scalar hair, which has no inner horizon. The charged condensate removes it, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "chan1996",
     "yurtsever1993",
     "delacruz1967",
-    "husain2022"
+    "husain2022",
+    "hartnoll2021diving"
   ],
   "coordinates": [
     {

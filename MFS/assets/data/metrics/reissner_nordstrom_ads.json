@@ -73,6 +73,11 @@
       "id": "freund_rubin",
       "kind": "family",
       "text": "Anti-de Sitter space of four dimensions times a 7-sphere. Charged black holes of anti-de Sitter space solve the gauged supergravity of that compactification, their charge coming from a rotation in the directions of the sphere [chamblin1999, awada1983]."
+    },
+    {
+      "id": "holographic_superconductor",
+      "kind": "family",
+      "text": "Its planar form with charged scalar hair, grown below a critical temperature. The condensate removes the inner Cauchy horizon, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "kehle2020",
     "mann1997negative",
     "brill1997",
-    "awada1983"
+    "awada1983",
+    "hartnoll2021diving"
   ],
   "coordinates": [
     {
