@@ -1217,6 +1217,8 @@ KDS_SPLIT = 2.0
 SEB = {"ell": 1, "m": 2}
 KDS_AXIS = {"theta": "0", "phi": "0"}
 KDS_KERR_AXIS = {"theta": "0", "tildephi": "0"}
+# The eye of the storm at m = 1, a = 3m/5 and ell = m/5: horizons r_- = 0.4349m and r_+ = 1.5151m.
+EOS = {"m": 1, "a": "3/5", "ell": "1/5"}
 # Chandrasekhar and Xanthopoulos's waves as their diagrams draw them: p = 3/5 and q = 4/5, so that
 # Kerr's spin is a = 4m/5 and its inner horizon, where the waves end, is at r = 2m/5.
 CX_WAVES = {"m": 1, "alpha": "atan(4/3)"}
@@ -4640,6 +4642,17 @@ DIAGRAMS = [
             {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, {"theta": "pi/2"}, to_display=POLAR,
             cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True,
             mark_gtt="the ergosurfaces"),
+    Diagram("eye_of_the_storm", "boyer_lindquist", "radial", "$t$ and $r$ on the axis", ("t", "r"),
+            (0, 4, -2, 2), "$r/m$", "$ct/m$", EOS, {"theta": "0", "phi": "0"}, orient="ingoing"),
+    Diagram("eye_of_the_storm", "boyer_lindquist", "principal", "principal null rays, $t$ and $r$",
+            ("t", "r"), (0.1, 4.1, -2, 2), "$r/m$", "$ct/m$", EOS, {"theta": "pi/2"}, orient="ingoing",
+            principal=True, leaves=("phi",), mark_gtt="the outer ergosurface", cone=PRINCIPAL_CONE),
+    Diagram("eye_of_the_storm", "boyer_lindquist", "above", "principal null rays from above",
+            ("\\phi", "r"), (-3, 3, -3, 3), "$r\\cos\\phi/m$", "$r\\sin\\phi/m$", EOS, {"theta": "pi/2"},
+            to_display=POLAR, cones=(0, 0), principal=True, leaves=("t",), ring=12, inside=True,
+            mark_gtt="the ergosurfaces"),
+    Diagram("eye_of_the_storm", "kerr_ingoing", "axis", "the axis", ("v", "r"), (0, 4, -2, 2),
+            "$r/m$", "$(v - r)/m$", EOS, {"theta": "0", "tildephi": "0"}, to_display=FINKELSTEIN_IN, tau="v - r"),
     Diagram("kasner", "cartesian", "tx", "$t$ and $x$", ("t", "x"), (-1, 1, 0, 2), "$x$", "$ct$",
             {"p_1": "-2/7", "p_2": "3/7", "p_3": "6/7"}, {"y": "0", "z": "0"},
             families=SIDEWAYS,
@@ -10703,6 +10716,41 @@ CAPTIONS = {
         "horizon at a finite angle. The dotted circles are the ergosurfaces, "
         "$r = GM/c^2 \\pm \\sqrt{(GM/c^2)^2 - r_Q^2}$ on the equator, and between the outer one "
         "and $r_+$ nothing, light included, can keep $\\phi$ fixed.",
+    ],
+    ("eye_of_the_storm", "boyer_lindquist", "radial"): [
+        "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.6\\,m$ and $\\ell = 0.2\\,m$. "
+        "The curves drawn are null, and on the axis they are null geodesics, the paths light takes. $g^{rr}$ vanishes at "
+        "the roots of $\\Delta = r^2 + a^2 - 2mr\\,e^{-\\ell/r}$, $r_- = 0.435\\,m$ and $r_+ = 1.515\\,m$, inside Kerr's "
+        "$0.2$ and $1.8\\,m$; the cones close at both, and between them they point to smaller $r$.",
+        "Inside $r_-$ the cones open again, and toward $r = 0$, the centre of the disk, $\\Delta/(r^2 + a^2) \\to 1$: the "
+        "rays run at 45° as they do in flat space, and the Kretschmann scalar falls to zero.",
+    ],
+    ("eye_of_the_storm", "boyer_lindquist", "principal"): [
+        "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for $a = 0.6\\,m$ and "
+        "$\\ell = 0.2\\,m$. Its rays are the principal null congruence, the light rays that run straight in and straight "
+        "out, turning as they go at $d\\phi/dr = \\pm a/\\Delta$; the curves drawn are their projections, "
+        "$d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$, the same at every $\\theta$.",
+        "Each cone is the future cone of the principal plane, its edges the two principal directions. The cones close "
+        "at $r_+ = 1.515\\,m$ and $r_- = 0.435\\,m$. The dotted line is the outer ergosurface, where $g_{tt} = 0$, at "
+        "$1.788\\,m$ on the equator, inside which $\\partial_t$ is spacelike.",
+    ],
+    ("eye_of_the_storm", "boyer_lindquist", "above"): [
+        "The equatorial plane ($\\theta = \\pi/2$) seen from above, along the axis, with $r$ and $\\phi$ drawn as polar "
+        "coordinates and $t$ left out, for $a = 0.6\\,m$ and $\\ell = 0.2\\,m$. Its rays are the principal null "
+        "congruence, each turning at $d\\phi/dr = \\pm a/\\Delta$, so both families wind the way the hole turns, and "
+        "far out the turning dies away as $a/r^2$.",
+        "The rays wind onto the horizon $r_+ = 1.515\\,m$ without end, since $\\phi$ runs to infinity there; along an "
+        "ingoing ray $\\tilde\\phi = \\phi + \\int a\\,dr/\\Delta$ stays fixed. The dotted circles are the "
+        "ergosurfaces, $1.788$ and $0.056\\,m$ on the equator.",
+    ],
+    ("eye_of_the_storm", "kerr_ingoing", "axis"): [
+        "The plane of $v$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.6\\,m$ and $\\ell = 0.2\\,m$ "
+        "with $v - r$ as the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2(r^2 + a^2)/\\Delta$, so it stands vertical at $r_- = 0.435\\,m$ and $r_+ = 1.515\\,m$: each "
+        "horizon is an outgoing ray that stays where it is.",
+        "The chart crosses $r_+$ into the black hole, where both edges of every future cone point to smaller $r$. "
+        "Inside $r_-$ the cones open again, and an ingoing ray reaches $r = 0$, the centre of the disk, in a finite $v$, "
+        "where the outgoing rays leave at 45° as in flat space.",
     ],
     ("kasner", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$). Along $x$ the scale factor $t^{-2/7}$ "
