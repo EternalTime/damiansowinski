@@ -6034,7 +6034,7 @@ def _scalar_field_black_hole_captions():
         ],
         ("scalar_field_black_hole", "weyl", "axis"): [
             f"The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of {hole}, on the axis beyond the rod. There "
-            "$x = z/m$, $y = 1$ and $\\gamma = 0$, so a ray has $c\\,dt/dz = \\pm(z + m)/(z - m)$, and every rotation "
+            "$x = z/m$, $y = 1$, and $\\gamma = 0$, so a ray has $c\\,dt/dz = \\pm(z + m)/(z - m)$, and every rotation "
             "about the axis fixes the plane, so the rays are null geodesics.",
             "The cones close toward the end $z = m$ of the rod, the pole of the horizon, as Schwarzschild's do, and "
             "far out along the axis the Kretschmann scalar tends to $12b^4$, its value on the axis of the universe "

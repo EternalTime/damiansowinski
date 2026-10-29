@@ -1867,7 +1867,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "02bfac09c7db2ca8",
+    "version": "f827c3bcec544df0",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46",
@@ -4715,9 +4715,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9e60d33c390cdb88",
-    "diagrams": "3b7836091b511a52",
-    "conformal": "c3fbf584810e0a0e",
+    "version": "8e42cf7a0d3ac2d7",
+    "diagrams": "4ab734ce2ff4da65",
+    "conformal": "b7f985612e7adadb",
+    "embedding": "48330de47b7eda59",
     "curvature": "54286353a8682151"
   },
   {

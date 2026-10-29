@@ -3491,6 +3491,14 @@ FLAT = {
        lambda system=system, plane=plane, shape=shape: distorted_hole(system, plane, shape)
        for system in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
        for shape in ("oblate", "prolate")},
+    # The black hole in a scalar universe: its equatorial plane at t = 0 lies on the equatorial planes,
+    # over the r it reaches, with rho = sqrt(r^2 - 2mr) in Weyl's chart; it does not meet the axis.
+    ("scalar_field_black_hole", "spherical", "equator"): lambda: one(
+        "scalar_field_black_hole", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("scalar_field_black_hole", "spherical", "axis"): lambda: [],
+    ("scalar_field_black_hole", "weyl", "axis"): lambda: [],
+    ("scalar_field_black_hole", "weyl", "equator"): lambda: one(
+        "scalar_field_black_hole", lambda m: along(0.0, *(math.sqrt(r * r - 2 * r) for r in m.reach("spherical", "r")))),
     # Erez and Rosen's equatorial plane at t = 0 for each deformation, the same way.
     **{("erez_rosen", "spherical", f"equator_{shape}"): lambda shape=shape: one(
         "erez_rosen", lambda m: along(0.0, *m.reach("spherical", "r")), view_id=shape)
@@ -3664,6 +3672,8 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("scalar_field_black_hole", "scalar_universe"): "the universe with no black hole, m = 0, another spacetime than the hole whose equator is embedded",
+    ("scalar_field_black_hole", "scalar_universe", "radial"): "the universe with no black hole, m = 0, another spacetime than the hole whose equator is embedded",
     ("bardeen_perturbations", "longitudinal_curved", "well"): "a closed universe of dust, another spacetime than the flat universe whose moment is embedded",
     ("bubbling_ads", "rings"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",
     ("bubbling_ads", "rings", "ring_axis"): "the black ring, another member of the family than the black disc whose plane of droplets is embedded",

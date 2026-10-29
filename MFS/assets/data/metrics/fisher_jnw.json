@@ -78,7 +78,7 @@
     {
       "id": "scalar_field_black_hole",
       "kind": "family",
-      "text": "Schwarzschild's hole in a scalar field that grows along one axis. Its horizon stays regular, which the no-hair theorems allow because the spacetime is not asymptotically flat [herdeiro2025]."
+      "text": "Schwarzschild's hole in a scalar field that grows along one axis. Its horizon stays regular, which the no hair theorems allow because the spacetime is not asymptotically flat [herdeiro2025]."
     }
   ],
   "references": [

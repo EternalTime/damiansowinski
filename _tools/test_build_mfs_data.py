@@ -5115,6 +5115,8 @@ class Slices(unittest.TestCase):
               # The black ring and the black half plane of bubbling anti-de Sitter space, other members of the
               # family than the black disc whose plane of droplets is embedded.
               "bubbling_ads/rings/ring_axis", "bubbling_ads/plane_wave/axis", "conformal bubbling_ads/rings",
+              # The universe with no black hole, another spacetime than the hole whose equator is embedded.
+              "scalar_field_black_hole/scalar_universe/radial", "conformal scalar_field_black_hole/scalar_universe",
               # The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
               # moments of constant t embedded, moments of the vacuum outside it.
               "quantum_oppenheimer_snyder/interior_comoving/through",
@@ -5640,6 +5642,9 @@ class Slices(unittest.TestCase):
                        for place, join in (("", "/"), ("conformal ", "_"))
                        for s in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
                        for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
+                    # The black hole in a scalar universe: its equatorial plane does not meet the axis.
+                    **{f"{place}scalar_field_black_hole/{s}{join}axis": {"equator"}
+                       for place, join in (("", "/"), ("conformal ", "_")) for s in ("spherical", "weyl")},
                     # Bonnor's two spheres, Lemos and Weinberg's cloud and the spheroid are four stars of one
                     # line element, each chart's drawings marking its own; the exterior is drawn with the sphere
                     # of 1975, and the spheroid's equatorial plane meets its axis inside the spheroid alone.

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 192,
+  "count": 193,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -15410,6 +15410,11 @@
           "id": "curzon_chazy",
           "kind": "family",
           "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Here the potential is that of Schwarzschild's rod plus a quadrupole that grows with distance [bicak2000, frolovshoom2007]."
+        },
+        {
+          "id": "scalar_field_black_hole",
+          "kind": "family",
+          "text": "Schwarzschild's rod of Weyl's class with a growing dipole of a massless scalar field laid over it. Its horizon stays regular too, and its surroundings never flatten out [herdeiro2025]."
         }
       ],
       "references": [
@@ -15425,7 +15430,8 @@
         "geroch1982",
         "binnington2009",
         "abdolrahimi2015",
-        "bicak2000"
+        "bicak2000",
+        "herdeiro2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/distorted_schwarzschild.json",
@@ -19950,6 +19956,11 @@
           "id": "brans_dicke_sphere",
           "kind": "conformal",
           "text": "Fisher's metric divided by a scalar field. In Brans's constants $C$ and $\\lambda$, with $\\phi/\\phi_0 = f^{C/2\\lambda}$ and $\\gamma = (C + 2)/2\\lambda$, the metric $g_{\\mu\\nu}\\phi_0/\\phi$ solves the vacuum equations of Brans and Dicke's theory, where freely falling bodies follow its geodesics [dicke1962, faraoni2018]."
+        },
+        {
+          "id": "scalar_field_black_hole",
+          "kind": "family",
+          "text": "Schwarzschild's hole in a scalar field that grows along one axis. Its horizon stays regular, which the no hair theorems allow because the spacetime is not asymptotically flat [herdeiro2025]."
         }
       ],
       "references": [
@@ -19980,7 +19991,8 @@
         "makukov2018",
         "belinskii1973",
         "dicke1962",
-        "faraoni2018"
+        "faraoni2018",
+        "herdeiro2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -38444,6 +38456,11 @@
           "id": "swirling_universe_black_hole",
           "kind": "family",
           "text": "The turning counterpart of Melvin's universe, made out of flat space by Ehlers's transformation in the magnetic form Ernst gave Harrison's, with Schwarzschild's hole set inside it [astorino2022swirling]."
+        },
+        {
+          "id": "scalar_field_black_hole",
+          "kind": "family",
+          "text": "The scalar counterpart of Ernst's hole: Schwarzschild's hole in a massless scalar field whose gradient points along the axis, in a universe built after Melvin's [cardoso2025]."
         }
       ],
       "references": [
@@ -38477,7 +38494,8 @@
         "kastor2015",
         "rosen1962",
         "astorino2025",
-        "astorino2022swirling"
+        "astorino2022swirling",
+        "cardoso2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -51362,6 +51380,283 @@
       ]
     },
     {
+      "id": "scalar_field_black_hole",
+      "name": "A Black Hole in a Universe Filled by a Scalar Field",
+      "short_name": "Scalar Schwarzschild-Melvin",
+      "description": "Schwarzschild's black hole in a massless scalar field whose gradient far away points along one axis, the scalar counterpart of Ernst's black hole in Melvin's magnetic universe. Somasri Sen and Narayan Banerjee wrote the metric down in 2001, and Vitor Cardoso and José Natário found it again in 2024. The field is smooth on the horizon, and the curvature grows without bound far from the axis.",
+      "tags": [
+        "black hole",
+        "black hole hair",
+        "scalar hair",
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "dark matter",
+        "static",
+        "stationary",
+        "axisymmetric",
+        "Weyl class",
+        "harmonic function",
+        "mass",
+        "horizon",
+        "event horizon",
+        "Killing horizon",
+        "curvature singularity",
+        "naked singularity",
+        "timelike singularity",
+        "not asymptotically flat",
+        "no-hair theorem",
+        "Petrov type I",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass parameter $m = GM/c^2$ is a length and the gradient $b$ an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "Switch the field off, $b = 0$, and the metric is Schwarzschild's, with $r_s = 2m$."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "Ernst's black hole in Melvin's magnetic universe, whose scalar twin this is. Cardoso and Natário built the scalar universe and its black hole after Melvin's and Ernst's [cardoso2025]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "Schwarzschild's hole with a scalar field that dies away with distance, which turns the horizon into a singularity. A field that grows along the axis leaves it regular [sen2001, herdeiro2025]."
+        },
+        {
+          "id": "distorted_schwarzschild",
+          "kind": "family",
+          "text": "Schwarzschild's rod of Weyl's class with a growing quadrupole of distant matter laid over it, in a vacuum. Here the growing term is a dipole of a scalar field [herdeiro2025]."
+        }
+      ],
+      "references": [
+        "ernst1976b",
+        "melvin1964",
+        "cardoso2025",
+        "chase1970",
+        "bekenstein1972",
+        "herdeiro2025",
+        "sen2001",
+        "eris1977",
+        "buchdahl1959reciprocal",
+        "weyl1917",
+        "lim2026",
+        "stelea2025",
+        "barrientos2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/scalar_field_black_hole.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2m \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the black hole"
+            },
+            {
+              "symbol": "b",
+              "description": "Gradient of the scalar field far out along the axis, an inverse length; the field is $\\varphi = \\sqrt{c^4/4\\pi G}\\,b\\left(r - m\\right)\\cos\\theta$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$, and $b = 0$ is Schwarzschild's metric"
+            },
+            {
+              "symbol": "F = e^{-b^2\\left(r^2 - 2mr\\right)\\sin^2\\theta}",
+              "description": "The factor that shrinks distances along $r$ and $\\theta$, equal to 1 on the axis and on the horizon"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Somasri Sen and Narayan Banerjee and of Vitor Cardoso and José Natário, Schwarzschild's at $b = 0$, with $t$ carrying dimensions of time and $r$ a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + F\\left(\\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2d\\theta^2\\right) + r^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{F}{1 - \\dfrac{2m}{r}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "Fr^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2b^2\\left(r^2 - 2m\\,r + m^2\\sin^2\\theta\\right)}{r^2\\,F}",
+          "kretschmann": "K = \\dfrac{48m^2 + 16b^2m\\,r\\left(3r^2\\sin^2\\theta - 2r^2 - 9m\\,r\\sin^2\\theta + 4m\\,r + 4m^2\\sin^2\\theta\\right) + 4b^4r^2\\left(r^2 - 2m\\,r + m^2\\sin^2\\theta\\right)\\left(3r^2 - 6m\\,r - 4m\\,r\\sin^2\\theta + 11m^2\\sin^2\\theta\\right)}{r^6F^2}"
+        },
+        {
+          "id": "weyl",
+          "name": "Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho = 0,\\; |z| \\le m \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the black hole"
+            },
+            {
+              "symbol": "b",
+              "description": "Gradient of the scalar field, an inverse length; the field is $\\varphi = \\sqrt{c^4/4\\pi G}\\,bz$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$, and $b = 0$ is Schwarzschild's metric"
+            },
+            {
+              "symbol": "x = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} + \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}",
+              "description": "The prolate spheroidal radial coordinate, half the sum of the distances from the two ends of the rod $\\rho = 0$, $|z| \\le m$, over $m$"
+            },
+            {
+              "symbol": "y = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} - \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}",
+              "description": "The prolate spheroidal angular coordinate, half the difference of the same two distances, over $m$"
+            },
+            {
+              "symbol": "\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{x - 1}{x + 1}\\right)",
+              "description": "Weyl's first function, the potential of Schwarzschild's rod; it solves Laplace's equation, $\\partial_\\rho^2\\psi + \\dfrac{1}{\\rho}\\partial_\\rho\\psi + \\partial_z^2\\psi = 0$"
+            },
+            {
+              "symbol": "\\gamma = \\dfrac{1}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right) - \\dfrac{b^2\\rho^2}{2}",
+              "description": "Weyl's second function, fixed by $\\psi$ and the field through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2 - b^2\\right)$ and $\\partial_z\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi$; the term $-b^2\\rho^2/2$ is the field's"
+            }
+          ],
+          "convention": "We use Weyl's canonical coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths; the horizon is the rod $\\rho = 0$, $|z| \\le m$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + e^{-2\\psi}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{-2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = 2b^2e^{-2\\gamma + 2\\psi}",
+          "kretschmann": "K = \\dfrac{4e^{-4\\gamma + 4\\psi}\\left(4\\rho^4\\left(\\partial_\\rho\\psi\\right)^6 - 12\\rho^3\\left(\\partial_\\rho\\psi\\right)^5 + 12\\rho^4\\left(\\partial_\\rho\\psi\\right)^4\\left(\\partial_z\\psi\\right)^2 - 8b^2\\,\\rho^4\\left(\\partial_\\rho\\psi\\right)^4 + 16\\rho^2\\left(\\partial_\\rho\\psi\\right)^4 - 24\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\left(\\partial_z\\psi\\right)^2 + 8\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\,\\partial_z^2\\psi + 16b^2\\,\\rho^3\\left(\\partial_\\rho\\psi\\right)^3 - 12\\rho\\left(\\partial_\\rho\\psi\\right)^3 + 12\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^4 + 12\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^2 - 24\\rho^3\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi - 12\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi + 4b^4\\,\\rho^4\\left(\\partial_\\rho\\psi\\right)^2 - 8b^2\\,\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 + 4\\left(\\partial_\\rho\\psi\\right)^2 - 12\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^4 - 24\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + 24\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi - 8b^2\\,\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 4\\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi - 4b^4\\,\\rho^3\\,\\partial_\\rho\\psi + 4\\rho^4\\left(\\partial_z\\psi\\right)^6 + 8b^2\\,\\rho^4\\left(\\partial_z\\psi\\right)^4 + 12\\rho^2\\left(\\partial_z\\psi\\right)^4 + 8\\rho^3\\left(\\partial_z\\psi\\right)^3\\,\\partial_\\rho\\partial_z\\psi + 12\\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + 4b^4\\,\\rho^4\\left(\\partial_z\\psi\\right)^2 + 8b^2\\,\\rho^2\\left(\\partial_z\\psi\\right)^2 + 8b^2\\,\\rho^3\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + 4\\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + 4\\rho^2\\left(\\partial_z^2\\psi\\right)^2 + 4b^2\\,\\rho^2\\,\\partial_z^2\\psi + 3b^4\\,\\rho^2\\right)}{\\rho^2}"
+        },
+        {
+          "id": "scalar_universe",
+          "name": "Scalar Universe",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Gradient of the scalar field, an inverse length; the field is $\\varphi = \\sqrt{c^4/4\\pi G}\\,bz$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$, and $b = 0$ is flat space"
+            }
+          ],
+          "convention": "We use cylindrical coordinates $(t, \\rho, \\phi, z)$ about the axis the field points along, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths, for the universe with no black hole, $m = 0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + e^{-b^2\\rho^2}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{-b^2\\rho^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{-b^2\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 2b^2e^{b^2\\,\\rho^2}",
+          "kretschmann": "K = 12b^4e^{2b^2\\,\\rho^2}"
+        }
+      ]
+    },
+    {
       "id": "schrodinger_spacetime",
       "name": "Schrödinger Spacetime",
       "short_name": "Schrödinger Spacetime",
@@ -52380,6 +52675,11 @@
           "id": "swirling_universe_black_hole",
           "kind": "generalisation",
           "text": "Schwarzschild's black hole set in a universe whose frame dragging turns one way above the equator and the other way below it. At $j = 0$ it is Schwarzschild's [astorino2022swirling]."
+        },
+        {
+          "id": "scalar_field_black_hole",
+          "kind": "generalisation",
+          "text": "Schwarzschild's hole in a universe filled by a massless scalar field whose gradient points along one axis. At $b = 0$ its metric is Schwarzschild's [cardoso2025]."
         }
       ],
       "references": [
@@ -52511,7 +52811,8 @@
         "james2015",
         "compere2016final",
         "haggard2015fireworks",
-        "astorino2022swirling"
+        "astorino2022swirling",
+        "cardoso2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

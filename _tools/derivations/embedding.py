@@ -15266,6 +15266,87 @@ def distorted_schwarzschild(ck, src):
     return views
 
 
+SFBH_PARAMS = {"m": 1, "b": "1/3"}
+
+
+def scalar_field_black_hole(ck, src):
+    """The black hole in a scalar universe at m = 1 and b = 1/3, in the spherical chart: the
+    equatorial plane at t = 0.
+
+    On the equator F = e^{-b^2 (r^2 - 2mr)}, the circle of radius r has the radius rho = r on the
+    surface, Schwarzschild's, and g_rr = F/(1 - 2m/r). The slice runs through the throat r = 2m,
+    the bifurcation surface, into a second exterior, as Flamm's paraboloid does. Near the horizon
+    g_rr > 1 and the surface stands in flat space; F falls away as a Gaussian, g_rr = 1 at
+    r = 3.79 m, found here, where the surface lies level, and beyond it the circles grow faster
+    than the distance out to them, which is checked, so the slice is drawn on in three dimensional
+    Minkowski space, climbing at dZ/dr = sqrt(1 - g_rr), as the black hole in a tidal field's
+    oblate plane is; inside the level circle no surface of Minkowski space carries it, which is
+    checked as well."""
+    name = "black hole in a scalar universe"
+    top = 6.0
+    unit = "$m = 1$, the unit of every length"
+    fixed_at = {"t": 0, **EQUATOR}
+    sl = Slice(src, "scalar_field_black_hole", "spherical", "r", "\\phi", fixed_at, SFBH_PARAMS)
+    msl = Slice(src, "scalar_field_black_hole", "spherical", "r", "\\phi", fixed_at, SFBH_PARAMS, space="minkowski")
+    rh = sl.horizons()[0]
+    ck.add(f"{name}: the horizon on the equator is at r = 2m", abs(rh - 2.0), 1e-12)
+    lo, hi = 2.5, 4.0
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if float(sl.defect_at(np.array([mid]))[0]) > 0 else (lo, mid)
+    level = 0.5 * (lo + hi)
+    ck.add(f"{name}: the surface lies level where F = 1 - 2m/r, at r = 3.79 m",
+           abs(math.exp(-(level ** 2 - 2 * level) / 9) - (1 - 2 / level)), 1e-12)
+    ck.stops(f"{name}, beyond the level circle in flat space", sl, np.linspace(level, top, 402)[1:])
+    inward = np.linspace(rh, level, 402)[1:-1]
+    ck.add(f"{name}: between the throat and the level circle no surface in Minkowski space carries the slice, "
+           "(drho/dr)^2 - g_rr < 0", float(max(0.0, np.max(-msl.defect_at(inward)))), 0.0)
+    if not np.all(msl.defect_at(inward) > 0):
+        ck.items[-1]["ok"] = False
+    size = 2 * top
+    throat_text = "the throat $r = 2m$, the equator of the horizon, where the other exterior begins"
+    join = f"at $r = {level:.2f}\\,m$ the surface lies level, in flat space nearer the horizon and in Minkowski space beyond"
+    edge = "the sheet runs on toward the singularity at $r \\to \\infty$"
+    near = Piece("exterior", "sheet", sl, rh, level, 0.0, 1, (("throat", throat_text), ("join", join)),
+                 [(rh, "horizon", "$r = 2m$"), (3.0, "r", None), (level, "space", None)], size)
+    out = Piece("exterior_minkowski", "sheet", msl, level, top, near.at(level)[1], 1, (("join", join), ("edge", edge)),
+                [(4.0, "r", None), (5.0, "r", None), (top, "r", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rh, level, 0.0, -1, (("throat", "the throat $r = 2m$"), ("join", join)),
+                [(3.0, "r2", None), (level, "space", None)], size)
+    far_out = Piece("other_exterior_minkowski", "sheet2", msl, level, top, far.at(level)[1], -1,
+                    (("join", join), ("edge", edge)), [(4.0, "r2", None), (5.0, "r2", None), (top, "r2", None)], size)
+    pieces = [near, out, far, far_out]
+    for a, b in ((near, out), (far, far_out)):
+        # The level circle is a root found in floats, where a tangent taken as a limit has no sign
+        # to its square root, so the join is held by the slope of each profile's last chord.
+        ends = [abs(piece.z[i] - piece.z[j]) / abs(piece.rho[i] - piece.rho[j])
+                for piece, (i, j) in ((a, (-1, -2)), (b, (0, 1)))]
+        ck.add(f"{name}, {a.id} in flat space and {b.id} in Minkowski space lie level where they meet", max(ends), 0.05)
+        pa, pb = a.data()["points"][-1], b.data()["points"][0]
+        ck.add(f"{name}, {a.id} and {b.id} as written: one point at the level circle",
+               max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(a.decimals, b.decimals))
+    for piece in pieces:
+        space = "in Minkowski space" if piece.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {piece.id} {space}", piece)
+        ck.radius(f"{name}, {piece.id}, rho = r", piece, lambda r: np.asarray(r, float), size)
+    ck.join(f"{name}, the two sheets at the throat", near, rh, far, rh)
+    ck.add(f"{name}: the throat has radius 2m", abs(near.at(rh)[0] - 2.0), 1e-6)
+    surface = Surface(pieces)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rh), "$r = 2m$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(level), f"${level:.2f}\\,m$")
+    ring_label(fig, [0, 0, 0], *out.at(top), "$6\\,m$")
+    fig.legend("fill", "cover", "the exterior $r > 2m$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$ and $6\\,m$")
+    fig.legend("line", "space", f"$r = {level:.2f}\\,m$, where the surface lies level: flat space inside, Minkowski space beyond")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = 2m$, of radius $2\\,m$, where the slice crosses the horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = (f"$b = 1/3$ and {unit}. Every length along the surface beyond $r = {level:.2f}\\,m$ is measured with "
+                "$dX^2 + dY^2 - dZ^2$.")
+    return [view("equator", "The equatorial plane", "$m$", [surface], fig.done(), settings=settings)]
+
+
 TAUB = (1, sp.Rational(1, 2))   # m and l of Taub's universe, as Taub-NUT's spacetime diagram declares
 
 
@@ -17692,6 +17773,7 @@ DRAWN = {
     "zipoy_voorhees": zipoy_voorhees,
     "erez_rosen": erez_rosen,
     "distorted_schwarzschild": distorted_schwarzschild,
+    "scalar_field_black_hole": scalar_field_black_hole,
     "robinson_trautman": robinson_trautman,
     "supertranslation_hair": supertranslation_hair,
     "bondi_sachs": bondi_sachs,
@@ -18922,6 +19004,16 @@ CAPTIONS = {
         "$\\tfrac{81}{64}\\cdot 2\\pi\\ell$, Emparan's excess of angle $(1 + m^2/b^2)^2$, so the tip is a cone in "
         "Minkowski space, $dX^2 + dY^2 - dZ^2$. Farther out the surface stands in flat space and widens as Flamm's "
         "paraboloid does; the same plane at every moment is the same surface.",
+    ],
+    ("scalar_field_black_hole", "equator"): [
+        "The equatorial plane of the black hole in a scalar universe at one moment ($b = 1/3$, $m = 1$), drawn as a "
+        "surface with every distance along it the metric distance. The circle of radius $r$ has Schwarzschild's "
+        "circumference $2\\pi r$, and the distance out to it carries the factor $\\sqrt{F}$, $F = e^{-b^2(r^2 - 2mr)}$, "
+        "which falls away as a Gaussian.",
+        "The throat $r = 2m$ is the equator of the horizon, a circle of radius $2m$, and the surface runs through it "
+        "into the other exterior. It lies level at $r = 3.79\\,m$, and beyond that circle the circles grow faster than "
+        "the distance out to them, so the surface is drawn on in Minkowski space, $dX^2 + dY^2 - dZ^2$; the same plane "
+        "at every moment is the same surface.",
     ],
     ("distorted_schwarzschild", "oblate"): [
         "The equatorial plane of the black hole in a tidal field at one moment ($q = 1/12$, $m = 1$), drawn as a "

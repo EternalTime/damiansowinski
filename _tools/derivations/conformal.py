@@ -21134,6 +21134,7 @@ def scalar_field_black_hole(ck, src):
     params = {"m": 1, "b": "1/3"}
     hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
     exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    equator_moment = slices.moments("scalar_field_black_hole", "equator")[0]
     for plane in ("equator", "axis"):
         T = ScalarFieldTower(plane)
         where = f"{name}, {'the axis' if plane == 'axis' else 'the equatorial plane'}"
@@ -21251,6 +21252,11 @@ def scalar_field_black_hole(ck, src):
             v.legend("cover", f"the region that $t$ and {which} cover")
             v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
             v.legend("t", "$ct$ constant, in units of $m$")
+            if plane == "equator":
+                lo, hi = equator_moment.reach("spherical", "r")
+                # The moment crosses the horizon at the bifurcation point, where r_* is infinite, so it
+                # is traced from a hair outside it.
+                v.slice(equator_moment, [through_bifurcation(T, ("I'", "I"), hi, lo + 1e-12)])
             v.set(restriction=f"The plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
                               "each point in the diagram a single event.",
                   settings="$b = 1/3$ and $m = 1$, the unit of every length; the surface gravity is "
@@ -21281,7 +21287,7 @@ def scalar_field_black_hole(ck, src):
     v = View("scalar_universe", "The universe", [-0.6, reach + 0.6, -PI - 0.25, PI + 0.25], "scalar_universe")
     v.fill("region", band)
     v.fill("cover", band)
-    grid(v, "r", upq, (0.5, 1, 2), S_ALL)
+    grid(v, "r", upq, (0.5, 1, 2), S_ALL, first=False)
     grid(v, "t", upq, (-2, -1, -0.5, 0, 0.5, 1, 2), spread(0, np.inf, 500, 12), first=True)
     v.line("centre", [[[0, -PI], [0, PI]]])
     v.curve("singular", ep, eq, zig=True)
