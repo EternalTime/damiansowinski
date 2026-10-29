@@ -1,5 +1,5 @@
 {
-  "version": "7a8b861a7e12ae9e",
+  "version": "c6efe0b423fdd711",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -32407,6 +32407,50 @@
         "eprint": "gr-qc/9705010",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/9705010"
+      }
+    },
+    "bonnor1967oscillating": {
+      "type": "article",
+      "fields": {
+        "title": "Exact Solutions for Oscillating Spheres in General Relativity",
+        "author": "Bonnor, W. B. and Faulkes, M. C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "137",
+        "number": "3",
+        "pages": "239--251",
+        "year": "1967",
+        "doi": "10.1093/mnras/137.3.239",
+        "url": "https://doi.org/10.1093/mnras/137.3.239"
+      }
+    },
+    "thompson1967": {
+      "type": "article",
+      "fields": {
+        "title": "Time-Dependent Internal Solutions for Spherically Symmetrical Bodies in General Relativity: {I}. Adiabatic Collapse",
+        "author": "Thompson, I. H. and Whitrow, G. J.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "136",
+        "number": "2",
+        "pages": "207--217",
+        "year": "1967",
+        "doi": "10.1093/mnras/136.2.207",
+        "url": "https://doi.org/10.1093/mnras/136.2.207"
+      }
+    },
+    "sussman2000stephani": {
+      "type": "article",
+      "fields": {
+        "title": "Towards a Physical Interpretation for the {Stephani} Universes",
+        "author": "Sussman, Roberto A.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "32",
+        "number": "8",
+        "pages": "1527--1557",
+        "year": "2000",
+        "doi": "10.1023/A:1001934118532",
+        "eprint": "gr-qc/9908019",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1001934118532"
       }
     }
   }

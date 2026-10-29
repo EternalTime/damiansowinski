@@ -3284,6 +3284,12 @@ FLAT = {
     ("nariai", "global", "circle"): lambda: _nariai("global"),
     ("interior_schwarzschild", "spherical", "radial"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("interior_schwarzschild", "spherical", "through"): lambda: one("interior_schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    # Bonnor and Faulkes's sphere at its largest, t = 0 in the comoving chart and tau = 0 in the
+    # central one, the same moment since t is a function of tau alone with both zero there, and
+    # the vacuum's t = 0, Flamm's slice, outside it.
+    ("oscillating_sphere", "comoving", "through"): lambda: one("oscillating_sphere", lambda m: along(0.0, *m.reach("comoving", "r"))),
+    ("oscillating_sphere", "central_time", "through"): lambda: one("oscillating_sphere", lambda m: along(0.0, *m.reach("comoving", "r"))),
+    ("oscillating_sphere", "exterior_schwarzschild", "radial"): lambda: one("oscillating_sphere", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # On the axis the moment meets the plane of t and r off its equator, along the whole axis
     # outside r_+; on the equator it is the equator itself.
     ("kerr", "boyer_lindquist", "radial"): lambda: one("kerr", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),

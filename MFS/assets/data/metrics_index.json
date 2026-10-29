@@ -708,6 +708,33 @@
     "curvature": "6385f179ed6281b5"
   },
   {
+    "id": "oscillating_sphere",
+    "name": "Bonnor-Faulkes",
+    "tags": [
+      "perfect fluid",
+      "gravitational collapse",
+      "bounce",
+      "shear-free",
+      "stellar interior",
+      "matched solution",
+      "quasar",
+      "isotropic coordinates",
+      "mass",
+      "time-dependent",
+      "spherically symmetric",
+      "curvature singularity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "8eaaef78645655d6",
+    "diagrams": "f065886408ac8e94",
+    "embedding": "24542ca0b095480d",
+    "curvature": "56bb21ef08d250d4"
+  },
+  {
     "id": "bonnor_vaidya",
     "name": "Bonnor-Vaidya",
     "tags": [
@@ -1990,7 +2017,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "2066be1fc2a8f512",
+    "version": "403832007a53a5e1",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -4137,7 +4164,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c263e49651916987",
+    "version": "0cef73f2b2a85b46",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6",
@@ -4914,7 +4941,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "eda43df22b4e2d37",
+    "version": "97e14e2c93a4a3e1",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -4940,7 +4967,7 @@
       "hydrostatic equilibrium",
       "gravitational redshift"
     ],
-    "version": "c5b9b7f39ef1363e",
+    "version": "19af092e13680ed5",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978",

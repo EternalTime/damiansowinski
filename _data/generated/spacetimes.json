@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 197,
+  "count": 198,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -8473,6 +8473,260 @@
           ],
           "ricci_scalar": "R = \\dfrac{a^4\\left(4 - 3\\sin^2\\theta\\right)e^{-a^4\\left(9\\sin^2\\theta - 8\\right)\\sin^2\\theta/(8r^4)}}{r^6}",
           "kretschmann": "K = \\dfrac{a^4\\left(27a^8\\sin^8\\theta - 108a^8\\sin^6\\theta + 144a^8\\sin^4\\theta - 64a^8\\sin^2\\theta - 324a^4\\,r^4\\sin^6\\theta + 948a^4\\,r^4\\sin^4\\theta - 720a^4\\,r^4\\sin^2\\theta + 128a^4\\,r^4 + 288r^8\\sin^2\\theta - 432r^8\\right)e^{-a^4\\left(9\\sin^2\\theta - 8\\right)\\sin^2\\theta/(4r^4)}}{4r^{16}}"
+        }
+      ]
+    },
+    {
+      "id": "oscillating_sphere",
+      "name": "Bonnor-Faulkes Oscillating Sphere",
+      "short_name": "Bonnor-Faulkes",
+      "description": "A ball of perfect fluid of uniform density whose pressure vanishes at its surface, joined to Schwarzschild's vacuum outside, that can collapse, turn round, or oscillate for ever. Held still it is Schwarzschild's interior; with the pressure gone it is a ball of falling dust.",
+      "tags": [
+        "perfect fluid",
+        "gravitational collapse",
+        "bounce",
+        "shear-free",
+        "stellar interior",
+        "matched solution",
+        "quasar",
+        "isotropic coordinates",
+        "mass",
+        "time-dependent",
+        "spherically symmetric",
+        "curvature singularity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and $m = GM/c^2$ is the mass of the sphere as a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "interior_schwarzschild",
+          "kind": "special_case",
+          "text": "Held still, with $F = 1$ and two relations among the constants, the sphere is Schwarzschild's static star of uniform density in isotropic coordinates [bonnor1967oscillating]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The same kind of ball with its pressure taken away, falling freely. Send $L$ to infinity here and the pressure vanishes, leaving dust from a flat Friedmann universe [bonnor1967oscillating]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside the sphere, joined to the fluid at a moving surface where the pressure vanishes [bonnor1967oscillating]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "Friedmann's universes are conformally flat too. Among the Stephani universes they are the ones whose fluid falls freely [sussman2000stephani]."
+        }
+      ],
+      "references": [
+        "thompson1967",
+        "bonnor1967oscillating",
+        "sussman2000stephani"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oscillating_sphere.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving Isotropic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "Dimensionless constant ($\\alpha > 0$); held still, the sphere is Schwarzschild's interior with $0 < \\alpha < 1$"
+            },
+            {
+              "symbol": "L",
+              "description": "Length setting the fall of the pressure from the centre to the surface"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass of the sphere as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Comoving coordinate radius of the surface, where the pressure vanishes"
+            },
+            {
+              "symbol": "F = F(t)",
+              "description": "Dimensionless function of time ($F > 0$) obeying $\\dot{F}^2 = \\dfrac{2mY_0^3}{\\alpha^3r_0^3F^{3\\alpha+1}} - \\dfrac{1}{\\alpha L^2}\\left(\\dfrac{1}{F^{\\alpha}} - \\dfrac{1 - \\alpha}{F^{2\\alpha}}\\right)$, with $Y_0$ the value of $Y$ at $r = r_0$; $F = 1$ is the static sphere"
+            },
+            {
+              "symbol": "Y = F^{\\alpha} - 1 + \\alpha + \\dfrac{\\alpha r^2}{4L^2}",
+              "description": "Function of $t$ and $r$ whose inverse square scales the spatial metric"
+            },
+            {
+              "symbol": "Z = F^{\\alpha} - 1 + \\alpha^2 + \\dfrac{\\alpha(1 + \\alpha)r^2}{4L^2}",
+              "description": "Function of $t$ and $r$, the lapse being $Z/Y$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, and the sphere is the ball $r \\le r_0$. We take components in the chart $x^0 = ct$, a dot on $F$ is $\\dot{F} = dF/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{Z^2}{Y^2}c^2dt^2 + \\dfrac{\\alpha^2F^{2\\alpha + 2}}{Y^2}\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{Z^2}{Y^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{F^2\\,F^{2\\alpha}\\alpha^2}{Y^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{F^2\\,F^{2\\alpha}\\,r^2\\,\\alpha^2}{Y^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{F^2\\,F^{2\\alpha}\\,r^2\\,\\alpha^2\\sin^2\\theta}{Y^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\left(\\dfrac{3\\dot{F}^2}{F^2} + \\dfrac{3\\left(F^{\\alpha} - 1 + \\alpha\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right) + 3\\left(\\dfrac{Y}{Z}\\left(\\dfrac{2\\ddot{F}}{F} - \\dfrac{2\\dot{F}^2}{F^2} - \\dfrac{\\alpha + 2}{\\alpha L^2F^{\\alpha + 2}} + \\dfrac{2\\left(1 - \\alpha^2\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right)\\right)",
+          "kretschmann": "K = \\dfrac{8}{3}\\left(\\dfrac{3\\dot{F}^2}{F^2} + \\dfrac{3\\left(F^{\\alpha} - 1 + \\alpha\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right)^2 + 4\\left(\\dfrac{3\\dot{F}^2}{F^2} + \\dfrac{3\\left(F^{\\alpha} - 1 + \\alpha\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right)\\left(\\dfrac{Y}{Z}\\left(\\dfrac{2\\ddot{F}}{F} - \\dfrac{2\\dot{F}^2}{F^2} - \\dfrac{\\alpha + 2}{\\alpha L^2F^{\\alpha + 2}} + \\dfrac{2\\left(1 - \\alpha^2\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right)\\right) + 3\\left(\\dfrac{Y}{Z}\\left(\\dfrac{2\\ddot{F}}{F} - \\dfrac{2\\dot{F}^2}{F^2} - \\dfrac{\\alpha + 2}{\\alpha L^2F^{\\alpha + 2}} + \\dfrac{2\\left(1 - \\alpha^2\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right)\\right)^2"
+        },
+        {
+          "id": "central_time",
+          "name": "Central Proper Time",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in [0, r_0]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "B = B(\\tau)",
+              "description": "Dimensionless function of time, with $\\dot{B} \\neq 0$"
+            },
+            {
+              "symbol": "C = C(\\tau)",
+              "description": "Function of time, an inverse area"
+            }
+          ],
+          "convention": "We use comoving coordinates $(\\tau, r, \\theta, \\phi)$, with $\\tau$ the proper time at the centre $r = 0$ and $r$ a length, and the sphere is the ball $r \\le r_0$. We take components in the chart $x^0 = c\\tau$, a dot on $B$ or $C$ is a derivative with respect to $c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(\\dfrac{1 + r^2\\dot{C}/\\dot{B}}{1 + r^2C/B}\\right)^2c^2d\\tau^2 + \\dfrac{1}{\\left(B + Cr^2\\right)^2}\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{B^2\\left(r^2\\,\\dot{C} + \\dot{B}\\right)^2}{\\left(B + C\\,r^2\\right)^2\\,\\dot{B}^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{\\left(B + C\\,r^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{\\left(B + C\\,r^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{\\left(B + C\\,r^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\left(\\dfrac{3\\dot{B}^2}{B^2} + 12BC\\right) + 3\\left(-\\dfrac{B + Cr^2}{\\dot{B} + \\dot{C}r^2}\\left(\\dfrac{2\\dot{B}\\ddot{B}}{B^2} - \\dfrac{2\\dot{B}^3}{B^3} + 4\\dot{B}C + 4B\\dot{C}\\right)\\right)",
+          "kretschmann": "K = \\dfrac{8}{3}\\left(\\dfrac{3\\dot{B}^2}{B^2} + 12BC\\right)^2 + 4\\left(\\dfrac{3\\dot{B}^2}{B^2} + 12BC\\right)\\left(-\\dfrac{B + Cr^2}{\\dot{B} + \\dot{C}r^2}\\left(\\dfrac{2\\dot{B}\\ddot{B}}{B^2} - \\dfrac{2\\dot{B}^3}{B^3} + 4\\dot{B}C + 4B\\dot{C}\\right)\\right) + 3\\left(-\\dfrac{B + Cr^2}{\\dot{B} + \\dot{C}r^2}\\left(\\dfrac{2\\dot{B}\\ddot{B}}{B^2} - \\dfrac{2\\dot{B}^3}{B^3} + 4\\dot{B}C + 4B\\dot{C}\\right)\\right)^2"
+        },
+        {
+          "id": "exterior_schwarzschild",
+          "name": "Schwarzschild Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [\\zeta, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the sphere as a length, $m = GM/c^2$"
+            }
+          ],
+          "convention": "We use Schwarzschild coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ the areal radius, and $\\zeta$ is the areal radius of the surface of the sphere. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{2m}{r}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2}{r^6}"
         }
       ]
     },
@@ -21538,6 +21792,11 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "Put this universe on a wall in anti-de Sitter space of five dimensions and its Friedmann equation gains a term in $\\rho^2$ and one that falls off like radiation [binetruy2000brane, mukohyama2000]."
+        },
+        {
+          "id": "oscillating_sphere",
+          "kind": "family",
+          "text": "A ball of fluid whose density is uniform while its pressure varies with radius, conformally flat as a Friedmann universe is [sussman2000stephani]."
         }
       ],
       "references": [
@@ -21610,7 +21869,8 @@
         "cai2014",
         "ashtekar2006improved",
         "binetruy2000brane",
-        "mukohyama2000"
+        "mukohyama2000",
+        "sussman2000stephani"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -44994,6 +45254,11 @@
           "id": "black_to_white_hole",
           "kind": "family",
           "text": "Barceló, Carballo-Rubio, and Garay let this ball of dust bounce at the Planck density and climb back out through a white hole [barcelo2014mutiny]."
+        },
+        {
+          "id": "oscillating_sphere",
+          "kind": "family",
+          "text": "A ball of uniform density with pressure inside it, which can collapse, turn round, or oscillate for ever [bonnor1967oscillating]."
         }
       ],
       "references": [
@@ -45019,7 +45284,8 @@
         "lindquist1957",
         "ruban1968",
         "lewandowski2023",
-        "barcelo2014mutiny"
+        "barcelo2014mutiny",
+        "bonnor1967oscillating"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -53924,6 +54190,11 @@
           "id": "buchdahl_sphere",
           "kind": "generalisation",
           "text": "A static star of fluid with no surface that fills all of space. Its metric is Schwarzschild's in isotropic coordinates with $r^2$ raised to $r^2 + R^2$, so at $R = 0$ it is Schwarzschild's vacuum [buchdahl1964]."
+        },
+        {
+          "id": "oscillating_sphere",
+          "kind": "composite",
+          "text": "A ball of fluid of uniform density with pressure, joined to this vacuum at a moving surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever [bonnor1967oscillating]."
         }
       ],
       "references": [
@@ -54057,7 +54328,8 @@
         "haggard2015fireworks",
         "astorino2022swirling",
         "cardoso2025",
-        "buchdahl1964"
+        "buchdahl1964",
+        "bonnor1967oscillating"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -54335,6 +54607,11 @@
           "id": "buchdahl_sphere",
           "kind": "family",
           "text": "The relativistic polytrope of index five, found in 1964 as the second polytrope with an exact relativistic counterpart after this star of index zero [buchdahl1964]."
+        },
+        {
+          "id": "oscillating_sphere",
+          "kind": "generalisation",
+          "text": "The same ball of uniform density set moving, its pressure still vanishing at the surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever, and that the static star is stable to such motions unless it is too compact [bonnor1967oscillating]."
         }
       ],
       "references": [
@@ -54358,7 +54635,8 @@
         "wahlquist1968",
         "bonnor1975",
         "bowers1974",
-        "buchdahl1964"
+        "buchdahl1964",
+        "bonnor1967oscillating"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
