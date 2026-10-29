@@ -5792,6 +5792,21 @@ DIAGRAMS = [
             "$r/m$", "$(cu + r)/m$", {}, EQUATOR, to_display=FINKELSTEIN_OUT, orient="outgoing",
             fronts=RT_FRONTS, input=RT_INPUT, singular_runs=True,
             lines=(("shell", "x0", "0", "the first front, $u = 0$"),)),
+    # Newman and Tamburino's spherical class at A_0 = 1 and b = 1/2 on the line x = 1, y = 0, where
+    # s = 1 and a = A = 1 + cu/2: the rays of constant u are the geodesic rays of the class, and each
+    # comes out of r = |a|, where L and the Kretschmann scalar diverge. The other family obeys
+    # dr/d(cu) = g_uu/2 and is turned out of the plane by Gamma^x_uu, so it is drawn as null curves.
+    # The window keeps to cu > -2, where A is above zero: at A = 0 every term of the metric is 0/0.
+    Diagram("newman_tamburino", "spherical", "line", "the line $x = 1$", ("u", "r"), (0, 4, 2.5, 6.5),
+            "$r/A_0$", "$(cu + r)/A_0$", {"A_0": 1, "b": "1/2"}, {"x": "1", "y": "0"}, to_display=FINKELSTEIN_OUT,
+            orient="outgoing", where="r - Abs(A_0 + b*u)*sqrt(x**2 + y**2)",
+            singular_zero="r - Abs(A_0 + b*u)*sqrt(x**2 + y**2)", ends_on_singular=True),
+    # Newman and Tamburino's cylindrical limit at ell = 1 on the line x = 1, y = 0: the rays of
+    # constant u are the geodesic rays of the class, and the other family obeys dr/d(cu) =
+    # ln(r^2 x^4/ell^2)/(2x^2), which Gamma^x_uu turns out of the plane, so it is drawn as null curves.
+    Diagram("newman_tamburino", "cylindrical", "line", "the line $x = 1$", ("u", "r"), (0, 4, 0, 4),
+            "$r/\\ell$", "$(cu + r)/\\ell$", {"ell": 1}, {"x": "1", "y": "0"}, to_display=FINKELSTEIN_OUT,
+            orient="outgoing", mark_gtt="where $\\partial_u$ is null, $r = \\ell$"),
     # Bondi's chart for the declared burst, on the equator and on the axis: sigma is even about the
     # equator and vanishes on the axis, so U and every Gamma^theta of the plane vanish on both and
     # the null curves drawn are null geodesics. The expansion in 1/r is for large r, so the views
@@ -12753,6 +12768,17 @@ CAPTIONS = {
         "from the first front on, and inside it they gain $r$ and every future cone points to larger $r$, a "
         "white hole with $r = 0$ in its past. By $cu = 3m$ the fronts are round to within $0.2\\%$, and "
         "this plane and the axis's are both Schwarzschild's in outgoing coordinates.",
+    ],
+    ("newman_tamburino", "spherical", "line"): [
+        "The plane of $u$ and $r$ ($x = 1$, $y = 0$) with $cu + r$ upward, so the shearing rays, $u$ constant, "
+        "run at 45°. Each comes out of $r = |a|$, $a = A_0 + b\\,cu$ here, where the Kretschmann scalar diverges. "
+        "The other family is null curves that $\\Gamma^x{}_{uu}$ turns out of the plane.",
+    ],
+    ("newman_tamburino", "cylindrical", "line"): [
+        "The plane of $u$ and $r$ ($x = 1$, $y = 0$) with $cu + r$ upward, so the shearing rays, $u$ "
+        "constant, run at 45°. The other family, null curves that $\\Gamma^x{}_{uu}$ turns out of the plane, "
+        "obeys $dr/d(cu) = \\ln(r/\\ell)$: inside $r = \\ell$ it falls to $r = 0$, where the Kretschmann "
+        "scalar diverges.",
     ],
     ("bondi_sachs", "bondi", "equator"): [
         "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) outside the world tube "

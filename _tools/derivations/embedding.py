@@ -10905,6 +10905,36 @@ def minkowski(ck, src):
                  settings="$\\ell$, any length, the unit of every length, since flat space has none of its own.")]
 
 
+def newman_tamburino(ck, src):
+    """A wave front of Newman and Tamburino's cylindrical limit, the surface of x and y at one u and
+    at r = ell, ell = 1: its metric r^2 dx^2 + x^2 dy^2 is ell^2 dx^2 + x^2 dy^2 there, so with y/ell
+    as the angle, rho = ell x and the surface is the plane in polar coordinates, y running once
+    round over 2 pi ell. Every front of the chart is flat, the plane in rho = r x and the angle y/r.
+    The centre x = 0 is where the curvature diverges. Drawn out to x = 4, as the curvature map runs.
+    The fronts of the spherical class are curved by an amount that changes with direction about
+    x = y = 0, so none is a surface of revolution."""
+    sl = Slice(src, "newman_tamburino", "cylindrical", "x", "y", {"u": 0, "r": 1}, {"ell": 1})
+    ck.plane("Newman-Tamburino, the front r = ell of the cylindrical limit", sl, np.linspace(1e-3, 20, 400))
+    top = 4.0
+    size = 2 * top
+    plane = Piece("front", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the line $x = 0$, where the curvature diverges"),
+                   ("edge", "the front runs on to $x \\to \\infty$")),
+                  [(v, "r", None) for v in (1.0, 2.0, 3.0, top)], size)
+    ck.isometry("Newman-Tamburino, the front", plane)
+    ck.radius("Newman-Tamburino, the front rho = ell x", plane, lambda v: v, size)
+    ck.form("Newman-Tamburino, the front z = 0", plane, np.zeros_like, size)
+    surface = Surface([plane])
+    fig = figure_of([surface], {"sheet": "cover"}, size, FLAT_CAMERA)
+    ring_label(fig, [0, 0, 0], *plane.at(1.0), "$x = 1$")
+    ring_label(fig, [0, 0, 0], *plane.at(top), "$4$")
+    fig.legend("fill", "cover", "the front $r = \\ell$")
+    fig.legend("line", "r", "$x$ constant, at $1$ to $4$")
+    fig.legend("line", "meridian", "$y$ constant, every $15°$ of $y/\\ell$")
+    return [view("front", "A wave front", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, any $u$.")]
+
+
 def krasnikov(ck, src):
     """How far the tube tips the light cone, 1 - k, drawn as a height over the plane of the tube's
     axis, phi = 0 and pi, at ct = 5, a unit after the ship reached the far end of the tube the
@@ -17931,6 +17961,7 @@ DRAWN = {
     "petrov_homogeneous": petrov_homogeneous,
     "ozsvath_dust": ozsvath_dust,
     "minkowski": minkowski,
+    "newman_tamburino": newman_tamburino,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
     "eih_many_bodies": eih_many_bodies,
@@ -20523,6 +20554,11 @@ CAPTIONS = {
         "At these values the circle at the surface has radius $6.0054\\,m$, and the whole surface lies within "
         "$m/50$ of Flamm's. The faint surface inside $R$ is the vacuum paraboloid, down to its throat at "
         "$r = 2m$, which the star replaces.",
+    ],
+    ("newman_tamburino", "front"): [
+        "A wave front of the cylindrical limit ($r = \\ell$), with $y/\\ell$ once round. Its metric "
+        "$\\ell^2dx^2 + x^2dy^2$ is the flat plane in polar coordinates, as every front's is. The curvature "
+        "diverges at the centre $x = 0$.",
     ],
     ("minkowski", "plane"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Minkowski space at one moment of $t$, drawn as a "

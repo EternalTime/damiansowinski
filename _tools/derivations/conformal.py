@@ -136,7 +136,7 @@ NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "
              "ozsvath_dust",
              # Bonnor and Faulkes's oscillating sphere: an interior whose metric depends on t and r, as
              # Tolman and Bondi's does, with F(t) known only numerically, so no compactification is drawn.
-             "oscillating_sphere"}
+             "oscillating_sphere", "newman_tamburino"}
 
 
 # ---------------------------------------------------------------- the drawing
