@@ -16381,6 +16381,89 @@ def einstein_rosen_waves(ck, src):
     return views
 
 
+def twisting_cylindrical_waves(ck, src):
+    """The half plane of fixed phi and z, totally geodesic, whose metric is
+    e^{2(gamma - psi)}(-c^2dt^2 + drho^2) in the cylindrical chart and -e^{2(gamma - psi)} du dv in
+    the null chart whatever omega is, so for every wave the causal structure of the half plane is
+    Minkowski's half diamond, p, q = arctan((ct -+ rho)/a), with the axis rho = 0 on X = 0. The maps
+    are checked with random values of psi, omega and gamma at every sample, and with the pulse of
+    Piran, Safier, and Katz at a = 1 and alpha = 2, whose published Kretschmann scalar is checked to
+    settle to a finite value on the axis."""
+    numeric = ["psi", "omega", "gamma"]
+
+    def any_wave(x0, x1):
+        values = {}
+        for name in numeric:
+            w = ck.rng.uniform(-3, 3, np.shape(x0))
+            values[name] = (w, 0 * w, 0 * w)
+        return values
+    cyl = Plane(src, "twisting_cylindrical_waves", "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"},
+                numeric=numeric)
+    ck.chart("two polarisations cylindrical, for any wave", cyl, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20),
+             lambda t, r: (1, 0), any_wave)
+    pulse = nr._psk_pulse("t", "rho")
+    wave = Plane(src, "twisting_cylindrical_waves", "cylindrical", ("t", "\\rho"), {"phi": "0", "z": "0"},
+                 functions=pulse)
+    ck.chart("two polarisations cylindrical, the pulse", wave, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20),
+             lambda t, r: (1, 0))
+    _, entry, reader = nr.load("twisting_cylindrical_waves", "cylindrical")
+    src.note("twisting_cylindrical_waves", "cylindrical", ["kretschmann"])
+    K = reader(nr.strip_lhs(entry["kretschmann"]))
+    for name, text in pulse.items():
+        K = K.replace(reader.parameters[name].func, nr._as_lambda(reader, name, text)).doit()
+    K = sp.lambdify((reader.symbol["t"], reader.symbol["\\rho"]), K.subs({reader.c: 1, reader.symbol["\\phi"]: 0,
+                                                                        reader.symbol["z"]: 0}), "numpy")
+    t_axis = ck.uniform(-5, 5, 50)
+    ck.settles("two polarisations: the axis rho = 0 is regular for the pulse",
+               K(t_axis, np.full(50, 1e-3)), K(t_axis, np.full(50, 1e-4)))
+
+    def null_map(u, w):
+        return np.arctan(np.asarray(u, dtype=float)), np.arctan(np.asarray(w, dtype=float))
+    null = Plane(src, "twisting_cylindrical_waves", "null", ("u", "v"), {"phi": "0", "z": "0"}, numeric=numeric)
+    u = ck.uniform(-20, 20)
+    ck.chart("two polarisations null, for any wave", null, null_map, u, u + ck.uniform(0.01, 30), lambda u, w: (1, 1),
+             any_wave)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, RS = (-4, -2, -1, 0, 1, 2, 4), (0.5, 1, 2, 4)
+    restriction = ("The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in the diagram a "
+                   "circle around the axis times a line along it.")
+    moments = slices.moments("twisting_cylindrical_waves")
+    views = []
+    for system in ("cylindrical", "null"):
+        v = View(system, {"cylindrical": "Cylindrical", "null": "Null"}[system], box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        if system == "cylindrical":
+            grid(v, "r", lambda r, t: mink_pq(t, r), RS, S_ALL)
+            grid(v, "t", mink_pq, TS, S_POS)
+            v.legend("cover", "the whole spacetime")
+            v.legend("r", "$\\rho/a$ constant")
+            v.legend("t", "$ct$ constant")
+        else:
+            for c in TS:
+                s = np.linspace(c, 60, 400)
+                v.curve("null", *null_map(np.full_like(s, c), s))
+                s = np.linspace(-60, c, 400)
+                v.curve("null", *null_map(s, np.full_like(s, c)))
+            v.legend("cover", "the whole spacetime")
+            v.legend("null", "$u$ and $v$ constant, every one a light ray")
+        triangle_edges(v, centre="$\\rho = 0$" if system == "cylindrical" else "$u = v$")
+        v.segment("cone", (-HALF, 0), (0, 0))
+        v.segment("cone", (0, 0), (0, HALF))
+        v.point("mark", (0, 0))
+        rays = "$\\rho = |ct|$" if system == "cylindrical" else "$v = 0$ and $u = 0$"
+        v.legend("cone", f"the rays {rays}")
+        v.legend("mark", "the pulse on the axis")
+        v.legend("centre", "the axis, where $\\gamma = \\omega = 0$")
+        v.set(restriction=restriction, input=nr.PSK_INPUT)
+        for m in moments:
+            r = np.linspace(*m.reach("cylindrical", "\\rho"), 2)
+            v.slice(m, [mink_pq(np.full_like(r, m.time), r)])
+        views.append(v)
+    return views
+
+
 def gowdy(ck, src):
     """The torus universe on its plane of the time and theta, sigma and delta held fixed, each point
     an orbit of the two Killing vectors, a 2-torus of area 4 pi^2 L^2 t.
@@ -26629,6 +26712,7 @@ DRAWN = {
     "wormhole_time_machine": wormhole_time_machine,
     "ori_time_machine": ori_time_machine,
     "einstein_rosen_waves": einstein_rosen_waves, "gowdy": gowdy, "belinski_zakharov": belinski_zakharov,
+    "twisting_cylindrical_waves": twisting_cylindrical_waves,
     "nariai": nariai, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
     "majumdar_papapetrou": majumdar_papapetrou,
@@ -30150,6 +30234,15 @@ CAPTIONS = {
         "The same half plane in the null chart ($u = ct - \\rho$, $v = ct + \\rho$), where the metric on it is "
         "$-e^{2(\\gamma - \\psi)}du\\,dv$. The lines of constant $u$ and of constant $v$ are light rays, the 45° "
         "lines of the triangle, with $p = \\arctan(u/a)$ and $q = \\arctan(v/a)$, and the axis is the line $u = v$.",
+    ],
+    ("twisting_cylindrical_waves", "cylindrical"): [
+        "Fixed $\\phi$ and $z$, where the metric is $e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$ for any "
+        "$\\omega$, so $p, q = \\arctan((ct \\mp \\rho)/a)$ bring it into Minkowski's half diamond.",
+        "The pulse's $\\omega$ is unbounded on $\\mathscr{I}^\\pm$.",
+    ],
+    ("twisting_cylindrical_waves", "null"): [
+        "The same half plane in the null chart, where the metric is $-e^{2(\\gamma - \\psi)}du\\,dv$, with "
+        "$p = \\arctan(u/a)$ and $q = \\arctan(v/a)$; the axis is $u = v$.",
     ],
     ("belinski_zakharov", "canonical"): [
         "The plane of $t$ and $z$ of the wave of two solitons at fixed $x$ and $y$, totally geodesic. The metric "

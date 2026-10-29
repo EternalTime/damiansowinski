@@ -14347,6 +14347,83 @@ def einstein_rosen_waves(ck, src):
                         "moment."])]
 
 
+def twisting_cylindrical_waves(ck, src):
+    """The pulse of Piran, Safier, and Katz at a = 1 and alpha = 2 as it crosses the axis, at the
+    moments ct = 0 to 5a/4 of the cylindrical chart, on the plane z = 0: g_rhorho = e^{2(gamma - psi)}
+    and g_phiphi = rho^2 e^{-2psi} + e^{2psi} omega^2, so the circle at rho has the radius
+    sqrt(g_phiphi). psi, omega and gamma enter as numbers, with their rho derivatives taken in sympy,
+    and the pulse is checked to make every published Einstein component vanish. On the axis
+    gamma = omega = 0 and d_rho psi = 0, so the surface starts level; far out psi -> 0, gamma -> ln 2
+    and omega tends to a constant, a cone of deficit pi. The pulse is even in t; from ct = 1.36a on,
+    the circles near the axis grow faster than the distance out to them, which is checked, and every
+    moment drawn is checked to embed whole."""
+    tt, rr = sp.symbols("t rho", real=True)
+    pulse = {k: sp.sympify(v, locals={"t": tt, "rho": rr}) for k, v in nr._psk_pulse("t", "rho").items()}
+    as_num = {k: (sp.lambdify((tt, rr), e, "numpy"), sp.lambdify((tt, rr), sp.diff(e, rr), "numpy"))
+              for k, e in pulse.items()}
+
+    # The published Einstein tensor, mixed, with the pulse, at points all over the plane.
+    src.note("twisting_cylindrical_waves", "cylindrical", ["einstein_tensor"])
+    _, entry, R = nr.load("twisting_cylindrical_waves", "cylindrical")
+    points = np.random.default_rng(7).uniform([-8, 0.05], [8, 12], (400, 2))
+    worst = 0.0
+    for c in entry["einstein_tensor"]["variants"]["ul"]["nonzero"]:
+        e = R(c["value"]).subs(R.c, 1)
+        for name, text in nr._psk_pulse("t", "rho").items():
+            e = e.replace(R.parameters[name].func, nr._as_lambda(R, name, text)).doit()
+        f = sp.lambdify((R.symbol["t"], R.symbol["\\rho"]), e, "numpy")
+        worst = max(worst, float(np.max(np.abs(f(points[:, 0], points[:, 1])))))
+    ck.add("two polarisations: the pulse makes every published G^mu_nu vanish", worst, 1e-9)
+
+    def slice_at(T):
+        numeric = {k: (lambda x, f=f, T=T: f(T, x), lambda x, df=df, T=T: df(T, x)) for k, (f, df) in as_num.items()}
+        return Slice(src, "twisting_cylindrical_waves", "cylindrical", "\\rho", "\\phi", {"t": T, "z": 0},
+                     numeric=numeric)
+
+    # From ct = 1.36 a on, a band about the axis does not embed; at ct = 1.35 a every circle does.
+    ck.stops("two polarisations, ct = 1.37 a, near the axis", slice_at(1.37), np.linspace(0.01, 0.14, 40))
+    late = slice_at(1.35).defect_at(np.linspace(0.01, 10, 2000))
+    ck.add("two polarisations, ct = 1.35 a, embeds whole", max(0.0, -float(np.min(late))), 0.0)
+
+    top = 10.0
+    size = 2 * top
+    far = as_num["gamma"][0](1.0, 1e6), as_num["psi"][0](1.0, 1e6), as_num["omega"][0](1.0, 1e6)
+    ck.add("two polarisations: far out gamma -> ln 2, psi -> 0 and omega -> sqrt(3)(2 + sqrt(3))",
+           max(abs(far[0] - np.log(2)), abs(far[1]), abs(far[2] - np.sqrt(3) * (2 + np.sqrt(3)))), 1e-4)
+
+    def radius(T, x):
+        return np.sqrt(x ** 2 * np.exp(-2 * as_num["psi"][0](T, x))
+                       + np.exp(2 * as_num["psi"][0](T, x)) * as_num["omega"][0](T, x) ** 2)
+
+    def moment(T):
+        where = f"two polarisations, ct = {T:g} a"
+        sl = slice_at(T)
+        whole = Piece("whole", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("axis", "the axis $\\rho = 0$, where the surface starts level"),
+                       ("edge", "the surface runs on toward the cone of deficit angle $2\\pi(1 - 1/\\alpha)$, "
+                                "to $\\rho \\to \\infty$")),
+                      [(r, "r", None) for r in (2.0, 4.0, 6.0, 8.0)] + [(top, "chartedge", None)], size,
+                      digits=ER_DIGITS)
+        ck.isometry(where, whole)
+        ck.radius(f"{where}, sqrt(g_phiphi)", whole, lambda x, T=T: radius(T, x), size)
+        return Surface([whole], label=f"$ct = {T:g}\\,a$", time=T)
+
+    times, keys = movie_values([0.0, 0.5, 1.0, 1.25], 0.05)
+    frames = [moment(T) for T in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the plane $z = 0$")
+    fig.legend("line", "r", "$\\rho = 2a$ to $8a$, every $2a$")
+    fig.legend("line", "chartedge", "$\\rho = 10\\,a$, the edge")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("pulse", "The pulse at the axis", "$a$", surfaces, fig.done(),
+                 movie=movie(frames, "$ct$", [f.time for f in frames]),
+                 settings="$\\alpha = 2$, lengths in units of $a$.",
+                 input=nr.PSK_INPUT,
+                 stops=["From $ct = 1.36\\,a$ on, the circles near the axis grow faster than the distance out to "
+                        "them, and no surface of revolution in flat space carries that part of the moment."])]
+
+
 GOWDY_MOMENTS = (0.25, 0.5, 1.0, 2.0, 3.0)     # the areal time t
 
 
@@ -17998,6 +18075,7 @@ DRAWN = {
     "c_metric": c_metric,
     "super_entropic": super_entropic,
     "einstein_rosen_waves": einstein_rosen_waves,
+    "twisting_cylindrical_waves": twisting_cylindrical_waves,
     "gowdy": gowdy,
     "nariai": nariai,
     "global_monopole": global_monopole,
@@ -19518,6 +19596,11 @@ CAPTIONS = {
         "As the pulse goes out it leaves the space behind it flat about the axis, where $\\psi$ and $\\gamma$ fall "
         "toward zero. Far ahead of it $\\psi \\to 0$ and $\\gamma \\to C^2/a^2$, and the surface becomes a cone of "
         "deficit angle $2\\pi(1 - e^{-C^2/a^2})$, $228°$ at $C = a$.",
+    ],
+    ("twisting_cylindrical_waves", "pulse"): [
+        "Space at $z = 0$ as a pulse of Piran, Safier, and Katz crosses the axis ($ct = 0$ to $5a/4$), each moment "
+        "keeping its metric distances, the circle at $\\rho$ of radius $\\sqrt{\\rho^2e^{-2\\psi} + e^{2\\psi}\\omega^2}$.",
+        "Far out, a cone of deficit $2\\pi(1 - 1/\\alpha)$.",
     ],
     ("gowdy", "torus"): [
         "The torus of $\\theta$ and $\\sigma$ ($\\delta = 0$) of a polarised wave once round the universe, from "

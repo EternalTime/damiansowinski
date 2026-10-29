@@ -687,6 +687,34 @@ ER_INPUT = ("The pulse of Weber, Wheeler, and Bonnor, of width $a$: $\\psi = \\s
             "spacetime's own field equations.")
 ER_SOLVES = (("t", "t"), ("t", "\\rho"), ("\\phi", "\\phi"), ("z", "z"))
 
+def _psk_pulse(t, rho):
+    """The pulse of Piran, Safier, and Katz at a = 1 and alpha = 2, psi, omega and gamma as strings
+    in the plain names of a chart whose ct and rho are the expressions t and rho, from d'Inverno,
+    Dubal and Sarkies's (17) to (22), arXiv:gr-qc/0002057, with u = ct - rho and v = ct + rho. Its
+    omega carries the constant that makes it vanish on the axis, where lambda_u lambda_v = 1."""
+    u, v = f"(({t}) - ({rho}))", f"(({t}) + ({rho}))"
+    lu, lv = f"(sqrt(1 + {u}**2) - {u})", f"(sqrt(1 + {v}**2) + {v})"
+    p, s = f"({lu}*{lv})", f"({lu} + {lv})"
+    xi = f"(1 + {p} + sqrt(3)*sqrt({p}))"
+    top = f"(4*(1 - {p})**2 + {s}**2)"
+    return {"psi": f"log({top}/(4*{xi}**2 + ({lu} - {lv})**2))/2",
+            "omega": f"sqrt(3)*(2 + sqrt(3)) - sqrt(3)*{xi}*{s}**2/(sqrt({p})*{top})",
+            "gamma": f"log({top}/((1 + {lu}**2)*(1 + {lv}**2)))/2"}
+
+
+PSK_INPUT = ("The pulse of Piran, Safier, and Katz, of width $a$ and strength $\\alpha$: "
+             "$e^{2\\psi} = \\left(\\alpha^2(1 - \\lambda_u\\lambda_v)^2 + (\\lambda_u + \\lambda_v)^2\\right)/"
+             "\\left(\\alpha^2\\Xi^2 + (\\lambda_u - \\lambda_v)^2\\right)$, "
+             "$e^{2\\gamma} = \\left(\\alpha^2(1 - \\lambda_u\\lambda_v)^2 + (\\lambda_u + \\lambda_v)^2\\right)/"
+             "\\left((1 + \\lambda_u^2)(1 + \\lambda_v^2)\\right)$ and "
+             "$\\omega = 2\\beta(\\alpha + \\alpha\\beta)a - \\alpha\\beta\\,\\Xi(\\lambda_u + \\lambda_v)^2a/"
+             "\\left(\\sqrt{\\lambda_u\\lambda_v}\\left(\\alpha^2(1 - \\lambda_u\\lambda_v)^2 + (\\lambda_u + \\lambda_v)^2\\right)\\right)$, "
+             "with $\\beta = \\sqrt{\\alpha^2 - 1}/\\alpha$, $\\Xi = 1 + \\lambda_u\\lambda_v + 2\\beta\\sqrt{\\lambda_u\\lambda_v}$, "
+             "$a\\lambda_u = \\sqrt{a^2 + u^2} - u$ and $a\\lambda_v = \\sqrt{a^2 + v^2} + v$, "
+             "at $\\alpha = 2$, checked to solve this spacetime's own field equations.")
+PSK_SOLVES = (("t", "t"), ("t", "\\rho"), ("\\phi", "\\phi"), ("\\phi", "z"), ("z", "z"))
+
+
 def _gowdy_wave(t):
     """A polarised Gowdy wave on the torus, as strings in the plain names of a chart whose areal
     time is the expression t: Q = 0, P = A Y_0(t) cos(theta) and
@@ -4982,6 +5010,20 @@ DIAGRAMS = [
                      "inside the crest of the pulse"),),
             points=(("mark", ("0", "0"), "the event on the axis where the pulse is greatest, $\\psi = 2C/a$"),),
             input=ER_INPUT),
+    # The pulse of Piran, Safier, and Katz: the plane of t and rho is conformally flat for every
+    # pair of polarisations, so its rays are at 45 degrees; the pulse is symmetric in time and
+    # crosses the axis at ct = 0.
+    Diagram("twisting_cylindrical_waves", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 10, -1, 9),
+            "$\\rho/a$", "$ct/a$", {}, {"phi": "0", "z": "0"}, functions=_psk_pulse("t", "rho"), solves=PSK_SOLVES,
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the rays $\\rho = |ct|$"),),
+            points=(("mark", ("0", "0"), "the pulse on the axis, $t = 0$"),),
+            input=PSK_INPUT),
+    Diagram("twisting_cylindrical_waves", "null", "radial", "$t$ and $\\rho$", ("u", "v"), (0, 10, -1, 9),
+            "$(v - u)/2a$", "$(u + v)/2a$", {}, {"phi": "0", "z": "0"}, to_display=NULL_TO_TR, tau="u + v",
+            functions=_psk_pulse("(u + v)/2", "(v - u)/2"),
+            marked=(("shell", {"x0": "0", "r": "0"}, "both", "the rays $u = 0$ and $v = 0$"),),
+            points=(("mark", ("0", "0"), "the pulse on the axis, $u = v = 0$"),),
+            input=PSK_INPUT),
     # Gowdy's torus: the plane of the time and theta is conformally flat in the areal time, so its
     # rays are at 45 degrees for every wave, and in tau = -ln t they are theta -+ e^{-tau} = const.
     Diagram("gowdy", "areal", "plane", "$t$ and $\\theta$", ("t", "\\theta"), (0, 2 * math.pi, 0, 2 * math.pi),
@@ -11519,6 +11561,16 @@ CAPTIONS = {
         "The pulse comes in with its crest just outside the ray $v = 0$, is greatest on the axis at $u = v = 0$, "
         "and goes out with its crest just outside $u = 0$.",
     ],
+    ("twisting_cylindrical_waves", "cylindrical", "radial"): [
+        "A pulse of Piran, Safier, and Katz ($\\alpha = 2$) on the plane of $t$ and $\\rho$. Its metric there, "
+        "$e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$ whatever $\\omega$ is, keeps the rays at 45° and in the plane.",
+        "The pulse is deepest on the axis at $t = 0$ ($\\psi = -1.32$) and leaves just inside $\\rho = |ct|$.",
+    ],
+    ("twisting_cylindrical_waves", "null", "radial"): [
+        "The same plane in the null chart, against $(v - u)/2 = \\rho$ and $(u + v)/2 = ct$. Only $g_{uv}$ is "
+        "nonzero on it, so the rays are the lines of constant $u$ and of constant $v$.",
+        "The pulse is deepest on the axis at $u = v = 0$ and leaves just inside $u = 0$.",
+    ],
     ("gowdy", "areal", "plane"): [
         "The plane of $t$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of a polarised wave on the torus, the "
         "edges $\\theta = 0$ and $\\theta = 2\\pi$ one line. The metric on it is "
@@ -17406,6 +17458,8 @@ CLOSED_FORMS = {
          lambda t, x: t - np.sign(x) * _edm_rstar(1 / (1 - x ** 2)), lambda t, x: np.abs(x) < 0.995),
     ("einstein_rosen_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
     ("einstein_rosen_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
+    ("twisting_cylindrical_waves", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
+    ("twisting_cylindrical_waves", "null", "radial"): (lambda u, v: v, lambda u, v: u, None),
     # With m = 1, z_* = z e^(2/z) - 2 Ei(2/z) on the axis and rho_* the integral of e^(2/s - 1/(2 s^2)) in the plane.
     ("double_kerr", "weyl", "axis"): (lambda t, z: t + _double_kerr_star("axis")(z),
                                       lambda t, z: t - _double_kerr_star("axis")(z), _double_kerr_off_poles),

@@ -3101,6 +3101,10 @@ FLAT = {
         "einstein_rosen_waves", lambda m: along(m.time, *m.reach("cylindrical", "\\rho"))),
     ("einstein_rosen_waves", "null", "radial"): lambda: one(
         "einstein_rosen_waves", lambda m: [[(m.time - r, m.time + r) for r in m.reach("cylindrical", "\\rho")]]),
+    ("twisting_cylindrical_waves", "cylindrical", "radial"): lambda: one(
+        "twisting_cylindrical_waves", lambda m: along(m.time, *m.reach("cylindrical", "\\rho"))),
+    ("twisting_cylindrical_waves", "null", "radial"): lambda: one(
+        "twisting_cylindrical_waves", lambda m: [[(m.time - r, m.time + r) for r in m.reach("cylindrical", "\\rho")]]),
     ("de_sitter", "static_spherical", "radial"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "static_spherical", "through"): lambda: one("de_sitter", lambda m: along(0.0, *m.reach("static_spherical", "r"))),
     ("de_sitter", "flat_slicing", "tx"): _ds_flat,
