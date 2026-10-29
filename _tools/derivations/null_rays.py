@@ -508,6 +508,7 @@ class Diagram:
     fronts: dict = None             # declared Robinson-Trautman initial data, {"epsilon": ...}; see FrontSolver
     boson: dict = None              # a declared boson star, {"sigma_c": ...}; see boson_star.Star
     kink: dict = None               # a declared kink of Kodama's, {"f": ...}; see kodama_kink.Kink
+    oscillation: dict = None        # Bonnor and Faulkes's sphere, {"alpha", "r_0", "m"} with L = 1; see OscillationSolver
     any_factor: str = None          # a declared conformal factor the drawing holds for every value of
     edge_horizon: bool = False      # the edge of `where` is a horizon, where g^rr vanishes, and is marked
                                     # as one; see Plot.zero_set_on_the_edge
@@ -548,6 +549,10 @@ class Diagram:
                                     # momentum"
 
 
+# Bonnor and Faulkes's oscillation (4.7), in units of L.
+OSC_DECLARED = {"alpha": "7/10", "r_0": "2/3", "m": "0.1084"}
+OSC_INPUT = ("Bonnor and Faulkes's oscillation, $\\alpha = 0.7$, $r_0 = 2L/3$, and $m = 0.1084L$, with $F$ solved "
+             "from their equation for $\\dot{F}^2$ from its largest value, $1.1972$, at the time zero.")
 # Coleman and De Luccia's two bubbles, thin walled, in units of the curvature radius l: rho(xi) of
 # the wall chart on both sides of the wall, continuous, with rho' dropping across it.
 CDL_INTO_FLAT = "Piecewise((xi, xi < Rational(4, 5)), (sin(xi - Rational(4, 5) + asin(Rational(4, 5))), True))"
@@ -5484,6 +5489,20 @@ DIAGRAMS = [
             input="Dust released from rest at $\\tau = 0$ with $a = a_m$, $a(\\tau)$ solved from this "
                   "spacetime's own $G^\\chi{}_\\chi = 0$, and $\\chi_0 = \\pi/4$, so that the star starts "
                   "at twice its Schwarzschild radius."),
+    # Bonnor and Faulkes's oscillation (4.7), L = 1, from the moment of greatest size at t = 0, in
+    # each chart through the centre, and the vacuum outside the largest areal radius the surface reaches.
+    Diagram("oscillating_sphere", "comoving", "through", "through the centre", ("t", "r"),
+            (0, 2 / 3, 0, 4 / 3), "$r/L$", "$ct/L$", {"alpha": "7/10", "L": 1, "m": "0.1084", "r_0": "2/3"}, EQUATOR,
+            mirror=True, families=SIDEWAYS, areal=True, oscillation=OSC_DECLARED,
+            lines=(("surface", "r", "2/3", "the surface, $r = r_0$"),), input=OSC_INPUT),
+    Diagram("oscillating_sphere", "central_time", "through", "through the centre", ("\\tau", "r"),
+            (0, 2 / 3, 0, 4 / 3), "$r/L$", "$c\\tau/L$", {}, EQUATOR, tau="tau",
+            mirror=True, families=SIDEWAYS, areal=True, oscillation=OSC_DECLARED,
+            lines=(("surface", "r", "2/3", "the surface, $r = r_0$"),), input=OSC_INPUT),
+    Diagram("oscillating_sphere", "exterior_schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0.7, 2.7, 0, 2),
+            "$r/L$", "$ct/L$", {"m": "0.1084"}, EQUATOR, areal=True,
+            input="The vacuum outside $r = 0.7L$, beyond the largest areal radius, $0.695L$, that the surface of "
+                  "the sphere of $\\alpha = 0.7$, $r_0 = 2L/3$, and $m = 0.1084L$ reaches."),
     Diagram("oppenheimer_snyder", "exterior_schwarzschild", "radial", "$t$ and $r$", ("t", "r"), (0, 3, 0, 6),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1}, EQUATOR, orient="ingoing", areal=True, surface="2",
             input="The surface released from rest at $r = 2r_s$ at $t = 0$, the star of the interior "
@@ -12451,6 +12470,18 @@ CAPTIONS = {
         "Novikov called T. The surface of the core comes out of it at $ct = 3.67\\,r_s$, two thirds of $r_s$ after "
         "the core's own bang, and the edge of the vacuole at $ct = 0.67\\,r_s$.",
     ],
+    ("oscillating_sphere", "comoving", "through"): [
+        "The line through the centre of the oscillating sphere ($\\theta = \\pi/2$) in its comoving coordinates, "
+        "from its largest size at $t = 0$, as it begins to shrink.",
+    ],
+    ("oscillating_sphere", "central_time", "through"): [
+        "The line through the centre of the oscillating sphere ($\\theta = \\pi/2$), timed by the clock at the "
+        "centre, from its largest size at $\\tau = 0$.",
+    ],
+    ("oscillating_sphere", "exterior_schwarzschild", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in Schwarzschild's vacuum outside the "
+        "oscillating sphere, which stays inside $r = 0.695L$.",
+    ],
     ("oppenheimer_snyder", "exterior_schwarzschild", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the collapsing "
         "star, where the metric is Schwarzschild's. The surface falls freely from rest at $r = 2r_s$ at "
@@ -13248,6 +13279,79 @@ class DustSolver:
         return y[2 * i], y[2 * i + 1], np.asarray(acc[i], dtype=float) * np.ones_like(y[0])
 
 
+class OscillationSolver:
+    """Bonnor and Faulkes's sphere, their (2.8) with L = 1 and the chart's x^0 = ct, c = 1:
+    Fdot^2 = Q(F) = 2m Y_0^3/(alpha^3 r_0^3 F^(3 alpha + 1)) - (F^-alpha - (1 - alpha) F^(-2 alpha))/alpha,
+    so Fddot = Q'(F)/2, integrated from the largest F, where Q = 0 and the sphere is at rest, at
+    t = 0, back and forward through the turning points. In the comoving chart it gives F(t); in
+    the central chart it gives B(tau) = (F^alpha - 1 + alpha)/(alpha F^(alpha + 1)) and
+    C(tau) = 1/(4 F^(alpha + 1)), their (7.4), with dt/dtau = (F^alpha - 1 + alpha)/(F^alpha - 1 + alpha^2),
+    their (7.2), and tau = 0 at the largest F."""
+
+    def __init__(self, system_id, declared):
+        from scipy.optimize import brentq
+        al, r0, m = (float(number(declared[k])) for k in ("alpha", "r_0", "m"))
+        self.alpha = al
+        Fs = sp.Symbol("F", positive=True)
+        Y0 = Fs ** al - 1 + al + al * r0 ** 2 / 4
+        Q = 2 * m * Y0 ** 3 / (al ** 3 * r0 ** 3 * Fs ** (3 * al + 1)) - (Fs ** -al - (1 - al) * Fs ** (-2 * al)) / al
+        self.Q = sp.lambdify(Fs, Q, "numpy")
+        self.dQ = sp.lambdify(Fs, sp.diff(Q, Fs) / 2, "numpy")
+        grid = np.linspace(1.0, 3.0, 4001)
+        q = self.Q(grid)
+        i = int(np.argmax((q[:-1] > 0) & (q[1:] <= 0)))
+        self.F_max = brentq(self.Q, grid[i], grid[i + 1], xtol=1e-15)
+        self.central = system_id == "central_time"
+        self.funcs = ("B", "C") if self.central else ("F",)
+        speed = lambda F: (F ** al - 1 + al) / (F ** al - 1 + al ** 2)
+
+        def rhs(_, y):
+            F, Fd = y
+            k = speed(F) if self.central else 1.0
+            return [Fd * k, self.dQ(F) * k]
+        self.back = solve_ivp(rhs, (0, -40), [self.F_max, 0.0], rtol=1e-11, atol=1e-13, dense_output=True)
+        self.fwd = solve_ivp(rhs, (0, 40), [self.F_max, 0.0], rtol=1e-11, atol=1e-13, dense_output=True)
+        self.t_ref = 0.0
+        self.speed = speed
+
+    def state(self, t):
+        t = np.asarray(t, dtype=float)
+        y = np.full((2,) + t.shape, np.nan)
+        back, fwd = t <= 0, t > 0
+        if back.any():
+            y[:, back] = self.back.sol(t[back])
+        if fwd.any():
+            y[:, fwd] = self.fwd.sol(t[fwd])
+        return y
+
+    def at(self, name, x0, r):
+        return self.values(name, x0)
+
+    def values(self, name, t):
+        """(f, f dot, f double dot) of F in t, or of B or C in tau, at chart times."""
+        F, Fd = self.state(t)
+        Fdd = self.dQ(F)
+        if not self.central:
+            return F, Fd, Fdd
+        al = self.alpha
+        k = self.speed(F)
+        # dk/dF of k = (F^alpha - 1 + alpha)/(F^alpha - 1 + alpha^2), whose numerator less its
+        # denominator is alpha - alpha^2.
+        dk = -al * F ** (al - 1) * (al - al ** 2) / (F ** al - 1 + al ** 2) ** 2
+        dF = Fd * k                                   # dF/dtau
+        ddF = Fdd * k * k + Fd * dk * dF              # d^2F/dtau^2
+        if name == "B":
+            # B = (F^-1 + (alpha - 1) F^(-alpha - 1))/alpha.
+            f = (1 / F + (al - 1) * F ** (-al - 1)) / al
+            f1 = (-1 / F ** 2 - (al - 1) * (al + 1) * F ** (-al - 2)) / al
+            f2 = (2 / F ** 3 + (al - 1) * (al + 1) * (al + 2) * F ** (-al - 3)) / al
+        else:
+            f = 1 / (4 * F ** (al + 1))
+            f1 = -(al + 1) / (4 * F ** (al + 2))
+            f2 = (al + 1) * (al + 2) / (4 * F ** (al + 3))
+        return f, f1 * dF, f2 * dF ** 2 + f1 * ddF
+
+
 class StarSolver:
     """A static star of fluid, its redshift and mass functions solved for a declared polytrope
     from an entry's own published Einstein tensor, G = c = M_sun = 1.
@@ -13659,6 +13763,7 @@ class Chart:
                        else star_solver(spec.metric, spec.system, spec.star) if spec.star
                        else boson_solver(spec.system, spec.boson) if spec.boson
                        else kink_solver(spec.system, spec.kink) if spec.kink
+                       else OscillationSolver(spec.system, spec.oscillation) if spec.oscillation
                        else front_solver(spec.fronts, float(number(spec.fixed["theta"]))) if spec.fronts else None)
 
         def prep(expr):
