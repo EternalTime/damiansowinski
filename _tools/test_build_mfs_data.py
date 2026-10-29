@@ -122,7 +122,7 @@ CAPTION_VOICE = (
 # "non-singular" and "time-like", which plain English writes as one word or two.
 HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor",
                     "three-brane", "three-branes", "no-boundary", "e-folding", "e-foldings", "s-wave",
-                    "super-entropic"}
+                    "super-entropic", "quasi-topological"}
 
 
 def refused_hyphens(text):
