@@ -17286,6 +17286,43 @@ def bonnor_charged_dust(ck, src):
     return views
 
 
+def ozsvath_dust(ck, src):
+    """The torus theta = pi/2 of one moment of the class I chart, at L = 1 and beta = pi/6: on it
+    g_psipsi = L^2 (2 - cos^2 beta) = L^2 (1 + sin^2 beta) and g_phiphi = L^2 (1 + epsilon cos 2psi),
+    with no cross term, so it is a surface of revolution about the circles of phi, whose radius
+    swells and shrinks twice as psi turns through 2 pi. It is drawn over one period of that
+    swelling, psi from 0 to pi; psi runs to 4 pi, so the whole torus is four such pieces end to end
+    with the last circle the first. At beta = 0 the radius is L at every psi and the torus is the
+    flat torus in Einstein's sphere of radius 2L, which is checked."""
+    size = 2.0
+    params = {"L": 1, "beta": math.pi / 6}
+    eps = math.sin(math.pi / 6) / math.sqrt(2)
+    sl = Slice(src, "ozsvath_dust", "class_one", "\\psi", "\\phi", {"t": 0, "theta": "pi/2"}, params)
+    marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", "$\\psi = \\pi/2$"), (3 * math.pi / 4, "r", None)]
+    tube = Piece("torus", "sheet", sl, 0.0, math.pi, 0.0, 1,
+                 (("edge", "the widest circle, $\\psi = 0$"), ("edge", "the widest circle again, $\\psi = \\pi$")),
+                 marks, size)
+    ck.isometry("Ozsvath dust, the torus of class I", tube)
+    ck.radius("Ozsvath dust, the torus rho = L sqrt(1 + epsilon cos 2psi)", tube,
+              lambda psi: np.sqrt(1 + eps * np.cos(2 * np.asarray(psi, dtype=float))), size)
+    ck.form("Ozsvath dust, the torus z = int sqrt(g_psipsi - (drho/dpsi)^2)", tube,
+            lambda psi: np.array([quad(lambda q: math.sqrt(1 + math.sin(math.pi / 6) ** 2
+                                                            - (eps * math.sin(2 * q)) ** 2 / (1 + eps * math.cos(2 * q))),
+                                       0.0, float(x))[0] for x in np.atleast_1d(psi)]), size)
+    still = Slice(src, "ozsvath_dust", "class_one", "\\psi", "\\phi", {"t": 0, "theta": "pi/2"}, {"L": 1, "beta": 0})
+    sample = np.linspace(0.0, math.pi, 61)
+    ck.add("Ozsvath dust: at beta = 0 the torus is flat, rho = L at every psi",
+           float(np.max(np.abs(still.rho_at(sample) - 1.0))), 1e-12)
+    surface = Surface([tube])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *tube.at(math.pi / 2), "$\\psi = \\pi/2$")
+    fig.legend("fill", "cover", "one period, $0 \\le \\psi \\le \\pi$")
+    fig.legend("line", "r", "$\\psi$ constant, every $\\pi/4$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("torus", "The torus $\\theta = \\pi/2$", "$L$", [surface], fig.done(),
+                 settings="$L = 1$, $\\beta = \\pi/6$.")]
+
+
 STATED = {}
 
 
@@ -17830,6 +17867,7 @@ DRAWN = {
     "randall_sundrum": randall_sundrum,
     "lifshitz_spacetime": lifshitz_spacetime,
     "petrov_homogeneous": petrov_homogeneous,
+    "ozsvath_dust": ozsvath_dust,
     "minkowski": minkowski,
     "anti_de_sitter": anti_de_sitter,
     "malament_hogarth": malament_hogarth,
@@ -18738,6 +18776,11 @@ CAPTIONS = {
         "two points is $\\pi\\ell/2$, from the observer to the rim, which is the observer's horizon $r = \\ell$ of "
         "the static chart at this moment. The whole of space is the three dimensional version, a ball whose "
         "boundary sphere is glued to itself in the same way.",
+    ],
+    ("ozsvath_dust", "torus"): [
+        "The torus $\\theta = \\pi/2$ of class I at $t = 0$, in flat space, every distance the metric distance. "
+        "Its circles of $\\phi$, of radius $L\\sqrt{1 + \\epsilon\\cos 2\\psi}$, swell and shrink twice per turn of $\\psi$, "
+        "and the piece repeats four times round. At $\\beta = 0$ the torus is flat.",
     ],
     ("einstein_static", "sphere"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Einstein static universe at one moment of $t$, "

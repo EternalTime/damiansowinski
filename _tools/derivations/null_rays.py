@@ -5220,6 +5220,20 @@ DIAGRAMS = [
               periodic=("\\phi",))
       for view, name, at, width, tau in (("surface", "r = R", "1", 1.0, "t + phi"), ("band", "r = 3R", "3", 3.0, "phi"),
                                          ("beyond", "r = 12R", "12", 12.0, "-t"))],
+    # Ozsvath's homogeneous dust, in units of each chart's length: class I on the equator theta = pi/2
+    # in t and psi over one period of psi, at beta = pi/6; classes II and III and Farnsworth and
+    # Kerr's form on the plane of the dust's time and the next coordinate of the group, at
+    # gamma = 3 pi/8, s = 1/2 and tanh v = 1/2, each oriented by its time line as Godel's plane is.
+    Diagram("ozsvath_dust", "class_one", "tpsi", "$t$ and $\\psi$", ("t", "\\psi"),
+            (-2 * math.pi, 2 * math.pi, -2 * math.pi, 2 * math.pi), "$\\psi$", "$ct/L$",
+            {"L": 1, "beta": math.pi / 6}, {"theta": "pi/2", "phi": "0"}, families=SIDEWAYS, cones=(5, 5),
+            periodic=("\\psi",)),
+    Diagram("ozsvath_dust", "class_two", "xy", "$x$ and $y$", ("x", "y"), (-2, 2, -2, 2), "$y$", "$x$",
+            {"a": 1, "gamma": 3 * math.pi / 8}, {"z": "0", "u": "0"}, orient="vector", families=SIDEWAYS),
+    Diagram("ozsvath_dust", "class_three", "xy", "$x$ and $y$", ("x", "y"), (-2, 2, -2, 2), "$y$", "$x$",
+            {"a": 1, "s": 0.5}, {"z": "0", "u": "0"}, orient="vector", families=SIDEWAYS),
+    Diagram("ozsvath_dust", "farnsworth_kerr", "tx", "$t$ and $x$", ("t", "x"), (-2, 2, -2, 2), "$x$", "$t$",
+            {"a": 1, "v": math.atanh(0.5)}, {"y": "0", "u": "0"}, orient="vector", families=SIDEWAYS),
     # The Curzon-Chazy particle on its two totally geodesic planes, the axis and the plane z = 0, in
     # each chart: on the axis the cones close toward R = 0, and in the plane they open.
     Diagram("curzon_chazy", "weyl", "axis", "$t$ and $z$ on the axis", ("t", "z"), (0, 4, -2, 2),
@@ -10903,6 +10917,26 @@ CAPTIONS = {
         "exponents lie on the Kasner circle.",
         "Along $x$ the cones therefore close toward $t = 0$, as in Kasner's contracting direction, "
         "and open again later as $a_1$ turns round.",
+    ],
+    ("ozsvath_dust", "class_one", "tpsi"): [
+        "The plane of $t$ and $\\psi$ ($\\theta = \\pi/2$, $\\phi = 0$, $\\beta = \\pi/6$), one period of $\\psi$ "
+        "with its edges one line. Every Christoffel symbol with both lower indices in the plane vanishes, so the "
+        "lines are null geodesics. The cross term $2L\\cos\\beta\\,c\\,dt\\,d\\psi$ tilts every cone toward $+\\psi$.",
+    ],
+    ("ozsvath_dust", "class_two", "xy"): [
+        "The plane of $x$ and $y$ ($z = u = 0$, $\\gamma = 3\\pi/8$), oriented by $\\partial_x$. Its metric is "
+        "$a^2\\left(-(1 + 2s^2)\\,dx^2 + (1 + s\\cos 2x)\\,dy^2\\right)$, so the cones widen and narrow twice "
+        "as $x$ turns through $2\\pi$. Light sent along these curves is turned into $z$ and $u$.",
+    ],
+    ("ozsvath_dust", "class_three", "xy"): [
+        "The plane of $x$ and $y$ ($z = u = 0$, $s = 1/2$), oriented by $\\partial_x$, the dust's direction. Its "
+        "metric is $a^2\\left(-2\\,dx^2 + (1 + s\\cos 2x)\\,dy^2\\right)$, so the cones widen and narrow twice as "
+        "$x$ turns through $2\\pi$, a shear Gödel's universe lacks. Light sent along them is turned into $z$.",
+    ],
+    ("ozsvath_dust", "farnsworth_kerr", "tx"): [
+        "The plane of $t$ and $x$ ($y = u = 0$, $\\tanh v = 1/2$), oriented by $\\partial_t$, the dust's "
+        "direction. Its metric is $a^2\\left(-2\\,dt^2 + (1 + \\tanh v\\cos 2t)\\,dx^2\\right)$, class III's "
+        "plane again. Light sent along these curves is turned into $y$.",
     ],
     ("godel", "cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$). The Gödel universe has no time function: "

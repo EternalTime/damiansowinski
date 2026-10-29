@@ -1361,6 +1361,8 @@ The black string has three views: across the string, the equator of $t = 0$ at o
 Hartle and Thorne's star, at $R = 6\,m$, $a = m/4$ and $q = 4a^2$, is the equator of a moment of their $t$ from the surface out to $3R$, where the dragging term drops out and the slice is $(1 + j_2)dr^2/F + r^2(1 - k_2)d\phi^2$: each circle is checked against $r\sqrt{1 - k_2}$ from `nr.ht_functions`, the same slice without rotation against Flamm's paraboloid, and the two to lie within $m/50$ of each other, with the vacuum paraboloid drawn on inside $R$ as under the other stars; a moment of the Painlevé-Gullstrand time is flat, which the view states and the script checks, and the moment is marked on Hartle and Thorne's equatorial drawings alone, which `HIDDEN` records.
 FRW is its closed universe of dust at five moments, played as a movie with a frame about every $0.1$ of $ct$, $a = 1 - \cos\eta$ as its conformal diagram declares, checked to make the published $G^r{}_r$ vanish; its flat slices are planes and its open slices have no surface of revolution in flat space, and no surface at all as a whole, which the view states under `stops` and the script checks at the scale factors of dust.
 
+Ozsváth's homogeneous universes of dust have one surface, class I's torus $\theta = \pi/2$ at $t = 0$, $L = 1$ and $\beta = \pi/6$, with $g_{\psi\psi} = L^2(1 + \sin^2\beta)$ and $g_{\phi\phi} = L^2(1 + \epsilon\cos 2\psi)$, a surface of revolution drawn over one period of its swelling, $0 \le \psi \le \pi$, of the four round the torus; the generator checks it flat at $\beta = 0$, where the universe is Einstein's static one, and the other charts' diagrams state that it is a moment of class I.
+
 ### The file, which the application reads
 
 The application downloads the file for a spacetime whose index entry carries `embedding`, the stamp of the whole file, which changes when the file does and not otherwise.
@@ -1772,6 +1774,11 @@ The `bubbling_ads` figure colours the rings chart's ten-dimensional $K$ over $0 
 Its declared $G$ and $V$ are Lin, Lunin and Maldacena's closed form for concentric circles from `bubbling_ads.functions_text()`, and every one of its 200 by 100 cells is evaluated in sixty digits, since the double evaluation loses digits far out and toward $y = 0$, where the chart is singular.
 Its colours run logarithmically from $10$ to $10^4$ for $K\,L^4$, and the white of the plane $y = 0$ is drawn along the bottom edge.
 The generator checks the vanishing $R$, the single disc's $K = 80/L^4$ and the plane wave's $K = 0$, the colouring and the shrinking spheres toward $y = 0$, $K$ finite there on the axis, the ring and its edges, its approach to $80/L^4$ far out, and the scale.
+
+The `ozsvath_dust` figure has two line views whose across axis is a parameter of the chart and no coordinate, since each of Ozsváth's universes is homogeneous and its scalars are the same at every event: class I against $\beta$ over $|\beta| < \pi/4$ at $L = 1$, and class II against $\gamma$ over $\pi/4 < \gamma < \pi/2$ at $a = 1$, the ranges of positive density, each curve's `coordinate` naming the parameter.
+`Published` takes the parameter as the first of its arguments when the figure names no coordinate.
+$K$ vanishes with the density at $\beta = \pm\pi/4$ and at $\gamma = \pi/4$, where no relative error is defined, so both are sampled to within a thousandth of those ends.
+The generator checks every sample in sixty digits, class I's closed forms, Einstein's static universe at $\beta = 0$, and class II's ends against class III's $K = 3/a^4$ and $R = -1/a^2$, which hold at every $s$.
 
 ### The three shapes
 

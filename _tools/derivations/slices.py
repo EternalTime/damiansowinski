@@ -3336,6 +3336,9 @@ FLAT = {
     ("kantowski_sachs", "schwarzschild_interior", "Tr"): lambda: _kantowski_sachs("schwarzschild_interior"),
     # Godel's t_x = 2t + sqrt(2)(2 arctan(e^(-2r) tan(phi/2)) - phi) and e^x = cosh 2r + cos(phi) sinh 2r
     # put the plane y = 0 at phi = 0 and pi, where t_x = 2t and x = +-2r.
+    # Ozsvath's class I: the embedded torus theta = pi/2 at t = 0 meets the plane of t and psi on its
+    # equator in the line t = 0, drawn over the period psi from 0 to pi that the embedding draws.
+    ("ozsvath_dust", "class_one", "tpsi"): lambda: one("ozsvath_dust", lambda m: along(0.0, 0.0, math.pi)),
     ("godel", "cartesian", "tx"): lambda: one("godel", lambda m: across(0.0, 0.0, 2 * m.reach("cylindrical", "r")[1])),
     ("godel", "cylindrical", "inside"): lambda: one("godel", _godel_cylinder(math.asinh(1.0) / 2)),
     ("stockum_dust", "cylindrical", "inside"): lambda: one("stockum_dust", _godel_cylinder(0.5)),
@@ -3894,6 +3897,8 @@ HIDDEN = {
        for view in ("upright", "diagonal", "sideways", "inverted")},
     **{("petrov_homogeneous", "cylinder", view): "the embedded plane of r and z meets this cylinder in the one event t = 0, phi = 0"
        for view in ("surface", "band", "beyond")},
+    **{("ozsvath_dust", system, view): "the embedded torus is a moment of class I, a different universe of the family"
+       for system, view in (("class_two", "xy"), ("class_three", "xy"), ("farnsworth_kerr", "tx"))},
     ("petrov_homogeneous", "petrov", "turning"): "the embedded plane of r and z meets the slice z = 0 in the line t = 0, phi = 0, which the figure draws as its axis",
     **{("lewis", system, "inside"): "inside r = ell the circles are closed timelike curves; the embedding begins at ell"
        for system in ("lewis", "canonical")},

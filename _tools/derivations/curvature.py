@@ -17490,6 +17490,92 @@ def eye_of_the_storm(ck, src):
     }]
 
 
+def ozsvath_dust(ck, src):
+    """Ozsvath's homogeneous universes of dust, their Kretschmann and Ricci scalars against the angle
+    that fixes the anisotropy, since every scalar is the same at every event of each universe.
+
+    Class I is drawn against beta over the range of positive density, -pi/4 to pi/4, at L = 1, and
+    class II against gamma from pi/4 to pi/2, at a = 1; the across axis is a parameter of the chart,
+    which Published takes as the first of its arguments. Class III's scalars, R = -1/a^2 and
+    K = 3/a^4, hold at every s and are where class II's end at gamma = pi/2.
+
+    Checks hold every sample to the stored scalar in sixty digits; class I's K to
+    3 cos^2(2 beta)/L^4 (1 + cos^2 beta)^2, zero at the edges where the density vanishes, and its
+    R to (1 + 2 cos^2 beta)/L^2 (1 + cos^2 beta), with Einstein's static universe of radius 2L at
+    beta = 0, R = 3/2L^2 and K = 3/4L^4; class II's ends to K = 0 at gamma = pi/4 and to class III's
+    stored K and R at gamma = pi/2; and every curve to its panel."""
+    views = []
+    specs = (("class_one", "beta", "L", (-math.pi / 4, math.pi / 4), "$\\beta$",
+              {"kind": "linear", "from": 0, "to": 1}, {"kind": "linear", "from": 1.25, "to": 1.5}),
+             ("class_two", "gamma", "a", (math.pi / 4, math.pi / 2), "$\\gamma$",
+              {"kind": "linear", "from": 0, "to": 3.5}, {"kind": "linear", "from": -1.5, "to": -0.75}))
+    three_K = nr_published(src, "ozsvath_dust", "class_three", "kretschmann", [], ["s", "a"])
+    three_R = nr_published(src, "ozsvath_dust", "class_three", "ricci_scalar", [], ["s", "a"])
+    ck("ozsvath_dust class III has K = 3/a^4 and R = -1/a^2 at every s",
+       sp.simplify(three_K.expr - 3 / three_K.params[1] ** 4) == 0
+       and sp.simplify(three_R.expr + 1 / three_R.params[1] ** 2) == 0)
+    for system, angle, length, (lo, hi), name, K_scale, R_scale in specs:
+        x_axis = axis(name, lo, hi)
+        unit = "L" if length == "L" else "a"
+        panels = [{"id": "K", "name": f"$K\\,{unit}^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+                  {"id": "R", "name": f"$R\\,{unit}^2$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+        shape_checks(ck, f"ozsvath_dust {system}", [p["aspect"] for p in panels])
+        K = nr_published(src, "ozsvath_dust", system, "kretschmann", [], [angle, length])
+        R = nr_published(src, "ozsvath_dust", system, "ricci_scalar", [], [angle, length])
+        b, ell = K.params
+        if system == "class_one":
+            ck("ozsvath_dust class I K is 3 cos^2(2 beta)/L^4 (1 + cos^2 beta)^2",
+               sp.simplify(K.expr - 3 * sp.cos(2 * b) ** 2 / (ell ** 4 * (1 + sp.cos(b) ** 2) ** 2)) == 0)
+            ck("ozsvath_dust class I R is (1 + 2 cos^2 beta)/L^2 (1 + cos^2 beta)",
+               sp.simplify(R.expr - (1 + 2 * sp.cos(b) ** 2) / (ell ** 2 * (1 + sp.cos(b) ** 2))) == 0)
+            ck("ozsvath_dust class I at beta = 0 is Einstein's static universe of radius 2L, R = 3/2L^2, K = 3/4L^4",
+               sp.simplify(R.expr.subs(b, 0) - sp.Rational(3, 2) / ell ** 2) == 0
+               and sp.simplify(K.expr.subs(b, 0) - sp.Rational(3, 4) / ell ** 4) == 0)
+            ck("ozsvath_dust class I K vanishes at beta = +-pi/4, where the density does",
+               all(sp.simplify(K.expr.subs(b, e)) == 0 for e in (-sp.pi / 4, sp.pi / 4)))
+        else:
+            ck("ozsvath_dust class II K vanishes at gamma = pi/4, where the density does",
+               sp.simplify(K.expr.subs(b, sp.pi / 4)) == 0)
+            ck("ozsvath_dust class II at gamma = pi/2 has class III's K and R",
+               sp.simplify(K.expr.subs(b, sp.pi / 2) - 3 / ell ** 4) == 0
+               and sp.simplify(R.expr.subs(b, sp.pi / 2) + 1 / ell ** 2) == 0)
+        # K vanishes at the edges of positive density, where no relative error is defined, so the
+        # curves are sampled to within a thousandth of them.
+        within = (lo + 1e-3, hi - 1e-3) if system == "class_one" else (lo + 1e-3, hi)
+        xs = np.linspace(*within, SAMPLES)
+        curves = []
+        for pid, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+            agrees(ck, f"ozsvath_dust {system} all {SAMPLES} {pid} samples", fn, [[x, 1] for x in xs], fn(xs, 1))
+            curves += line_curves(ck, f"ozsvath_dust {system}", pid, pid, fn, "\\" + angle, x_axis, scale,
+                                  PLOT_W / 2, {length: 1}, within)
+            ck(f"ozsvath_dust {system} {pid} stays inside its panel", not any(beyond(fn, x_axis, scale, [1], within)))
+        k_clip = f"$K\\,{unit}^4$ linear, every value within it."
+        r_clip = f"$R\\,{unit}^2$ linear, every value within it."
+        if system == "class_one":
+            ck("ozsvath_dust class I R is 4/3L^2 at beta = +-pi/4",
+               sp.simplify(R.expr.subs(b, sp.pi / 4) - sp.Rational(4, 3) / ell ** 2) == 0)
+            label = "class I against $\\beta$"
+            caption = ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of class I against $\\beta$, the same "
+                       "at every event. $K$ is $3/4L^4$ at Einstein's static universe, $\\beta = 0$, and vanishes "
+                       "with the density at $\\beta = \\pm\\pi/4$.",
+                       "$R = 4\\Lambda + 8\\pi G\\rho/c^2$ falls from $3/2L^2$ to $4/3L^2$ there."]
+            settings = "$L = 1$."
+        else:
+            ck("ozsvath_dust class II R is -4/3a^2 at gamma = pi/4",
+               sp.simplify(R.expr.subs(b, sp.pi / 4) + sp.Rational(4, 3) / ell ** 2) == 0)
+            label = "class II against $\\gamma$"
+            caption = ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of class II against $\\gamma$, the same "
+                       "at every event. $K$ vanishes with the density at $\\gamma = \\pi/4$ and is class III's $3/a^4$ "
+                       "at $\\gamma = \\pi/2$.",
+                       "$R$ rises from $-4/3a^2$ to class III's $-1/a^2$."]
+            settings = "$a = 1$."
+        views.append({"id": system, "label": label, "kind": "line", "x": x_axis, "panels": panels, "curves": curves,
+                      "marks": [], "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
+                      "caption": caption, "ricci_sentences": [[1, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
+                      "settings": settings, "clip": k_clip + " " + r_clip})
+    return views
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -17529,6 +17615,7 @@ DRAWN = {
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "einstein_rosen_waves": einstein_rosen_waves,
     "ellis_bronnikov": ellis_bronnikov,
+    "ozsvath_dust": ozsvath_dust,
     "exponential_metric": exponential_metric,
     "erez_rosen": erez_rosen,
     "eternal_traversable_wormhole": eternal_traversable_wormhole,
