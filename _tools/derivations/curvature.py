@@ -11104,6 +11104,86 @@ def nordstrom_scalar(ck, src):
 # ---------------------------------------------------------------- the Oppenheimer-Snyder dust ball
 
 
+def oscillating_sphere(ck, src):
+    """Bonnor and Faulkes's oscillating sphere, their (4.7) with L = 1, at its largest, F = 1.1972,
+    where Fdot = 0, the moment the embedding diagram draws: K and R against areal radius inside
+    the fluid and in Schwarzschild's vacuum outside it.
+
+    The comoving chart's stored scalars are read with F declared as its second-order jet about
+    t = 0, F_max + (Fddot/2) t^2, Fddot = Q'(F_max)/2 from (2.8), and drawn at t = 0 in r, which is
+    mapped to the areal radius r/(B + Cr^2). The vacuum is read from the exterior chart of the same
+    file from the surface's areal radius zeta to 2L. Checks: the jet's F is a turning point; the
+    stored R inside is X - 3p with X = 8 pi G rho/c^2 and p = 8 pi G p/c^4 from Bonnor and Faulkes's
+    (2.4) and (2.5); the pressure vanishes at the surface, so there R inside is X and K inside is
+    5X^2/3; the vacuum has R = 0 and K = 48m^2/r^6; and every value drawn lies within its scale."""
+    from scipy.optimize import brentq
+    metric = "oscillating_sphere"
+    al, r0, m = 0.7, 2 / 3, 0.1084
+
+    def Q(F):
+        Y0 = F ** al - 1 + al + al * r0 ** 2 / 4
+        return 2 * m * Y0 ** 3 / (r0 ** 3 * al ** 3 * F ** (3 * al + 1)) - (F ** -al - (1 - al) * F ** (-2 * al)) / al
+    F = brentq(Q, 1.05, 1.4, xtol=1e-15)
+    h = 1e-6
+    Fdd = (Q(F + h) - Q(F - h)) / (4 * h)
+    ck("oscillating sphere F_max is a turning point of (2.8)", abs(Q(F)) < 1e-12 and abs(F - 1.1972) < 5e-5)
+    Y0 = F ** al - 1 + al + al * r0 ** 2 / 4
+    B, C = (F ** al - 1 + al) / (al * F ** (al + 1)), 1 / (4 * F ** (al + 1))
+    zeta = al * r0 * F ** (al + 1) / Y0
+    ck("oscillating sphere surface areal radius is (2.13)", abs(r0 / (B + C * r0 * r0) - zeta) < 1e-12)
+    x = axis("$r/L$", 0, 2)
+    scales = {"K": {"kind": "log", "from": 1e-3, "to": 1e2},
+              "R": {"kind": "symlog", "from": -10, "to": 10, "linear": 0.1}}
+    panels = [{"id": p, "name": "$K\\,L^4$" if p == "K" else "$R\\,L^2$",
+               "aspect": 2, "scale": scales[p], "ticks": value_ticks(scales[p])} for p in ("K", "R")]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    params = {"alpha": al, "L": 1.0, "m": m, "r_0": r0}
+    functions = {"F": f"({F!r}) + ({Fdd / 2!r})*t**2"}
+    vacuum = {p: nr_published(src, metric, "exterior_schwarzschild", field, ["r"], ["m"])
+              for field, p in SCALARS.items()}
+    curves, values = [], {}
+    for field, p in SCALARS.items():
+        published = Held(nr_published(src, metric, "comoving", field, ["r", "t"], list(params), functions=functions),
+                         {"t": 0})
+        native_x = axis("$r$", 0, r0)
+        pieces = line_curves(ck, "oscillating sphere fluid", p, p, published, "r", native_x, scales[p], PLOT_W / 2, params)
+        for piece in pieces:
+            native = [point[0] for point in piece["points"]]
+            piece["horizontal"] = {"expression": f"r/(({B!r}) + ({C!r})*r**2)", "values": native}
+            piece["points"] = [[float(c / (B + C * c * c)), v] for c, (_, v) in zip(native, piece["points"])]
+        curves += pieces
+        curves += line_curves(ck, "oscillating sphere vacuum", p, p, vacuum[p], "r", x, scales[p], PLOT_W / 2,
+                              {"m": m}, within=(zeta, 2))
+        values[p] = (float(published(0, *params.values())), float(published(r0, *params.values())))
+    X = 3 * (F ** al - 1 + al) / (al * F ** (2 * al + 2))
+    rho = 6 * m * Y0 ** 3 / (r0 ** 3 * al ** 3 * F ** (3 * al + 3))
+    ck("oscillating sphere density at rest is (2.4)", abs(X - rho) < 1e-9)
+    p0 = 6 * m * Y0 ** 2 * r0 ** 2 / (4 * r0 ** 3 * al * (F ** al - 1 + al ** 2) * F ** (2 * al + 3))
+    ck("oscillating sphere R at the centre is X - 3p of (2.4) and (2.5)", abs(values["R"][0] - (X - 3 * p0)) < 1e-9)
+    ck("oscillating sphere R at the surface is X, where p = 0", abs(values["R"][1] - X) < 1e-9)
+    ck("oscillating sphere K at the surface is 5X^2/3", abs(values["K"][1] - 5 * X * X / 3) < 1e-9)
+    ck("oscillating sphere vacuum K is 48m^2/r^6 and R vanishes",
+       abs(float(vacuum["K"](zeta, m)) - 48 * m * m / zeta ** 6) < 1e-12 and vacuum["R"].expr == 0)
+    outside = 48 * m * m / zeta ** 6
+    return [{"id": "largest", "label": "At its largest", "kind": "line", "x": x, "panels": panels,
+             "curves": curves, "marks": [{"class": "front", "x": zeta}],
+             "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                        ["line", "front", "the surface"]],
+             "caption": [
+                 "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the sphere at its largest. "
+                 f"$K$ falls from ${values['K'][0]:.2f}/L^4$ at the centre to ${values['K'][1]:.2f}/L^4$ at the surface and "
+                 f"${outside:.2f}/L^4$ outside.",
+                 f"$R$ rises from ${values['R'][0]:.2f}/L^2$ to ${values['R'][1]:.2f}/L^2$ at the surface and is zero "
+                 "outside."],
+             "ricci_sentences": [[1, 0]],
+             "per_scalar": scalar_clips(
+                 "We draw $K\\,L^4$ on a logarithmic scale from $10^{-3}$ to $10^{2}$, and every value lies within it.",
+                 "We draw $R\\,L^2$ on a signed logarithmic scale, linear within $0.1$ of zero, from $-10$ to $10$, "
+                 "and every value lies within it."),
+             "settings": "$L = 1$, $\\alpha = 0.7$, $r_0 = 2L/3$, $m = 0.1084L$.",
+             "clip": "Every value lies within the scales."}]
+
+
 def oppenheimer_snyder(ck, src):
     """The dust ball released at radius 2 r_s, on the embedding movie's proper-time frames.
 
@@ -15283,6 +15363,7 @@ RICCI_BESIDE = {
     ("kiselev", "hole"): "",
     ("kiselev", "state"): "",
     ("oppenheimer_snyder", "collapse"): "",
+    ("oscillating_sphere", "largest"): "",
     ("quantum_oppenheimer_snyder", "hole"): "",
     ("simpson_visser", "bounce"): "",
     ("simpson_visser", "null"): "",
@@ -17654,6 +17735,7 @@ DRAWN = {
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "nordstrom_scalar": nordstrom_scalar,
     "oppenheimer_snyder": oppenheimer_snyder,
+    "oscillating_sphere": oscillating_sphere,
     "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "rn_metric": rn_metric,
