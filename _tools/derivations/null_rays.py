@@ -1545,6 +1545,10 @@ FJNW_HARMONIC = {"m": "1/2", "k": 1}
 # Kasner's universe with a scalar field with all three exponents positive: they sum to 1 and their
 # squares to 1 - q^2 = 69/169. The vacuum of five dimensions that reduces to it has
 # s_5 = 2q/(sqrt(6) - q) and s_i = (sqrt(6) p_i - q)/(sqrt(6) - q), about (-0.234, -0.009, 0.327, 0.916).
+HS_KASNER = {"p_t": "1/2", "p_x": "1/4"}
+HS_KASNER_INPUT = "Exponents $p_t = 1/2$ and $p_x = 1/4$, so that $p_t + 2p_x = 1$."
+HS_INVERSION = {"beta": "1/2", "ell": 1}
+HS_INVERSION_INPUT = "$\\beta = 1/2$, so that $p_t$ goes from $-1/5$ to $1/3$, and $\\ell = 1$."
 KASNER_SCALAR = {"p_1": "2/13", "p_2": "4/13", "p_3": "7/13", "q": "10/13"}
 KASNER_SCALAR_FIVE = {"s_1": "(2*sqrt(6) - 10)/(13*sqrt(6) - 10)", "s_2": "(4*sqrt(6) - 10)/(13*sqrt(6) - 10)",
                       "s_3": "(7*sqrt(6) - 10)/(13*sqrt(6) - 10)", "s_5": "20/(13*sqrt(6) - 10)"}
@@ -4661,6 +4665,20 @@ DIAGRAMS = [
             KASNER_SCALAR_FIVE, {"y": "0", "z": "0", "w": "0"}, tau="T", families=SIDEWAYS, input=KASNER_SCALAR_FIVE_INPUT),
     Diagram("kasner_scalar", "kaluza_klein", "Tw", "$T$ and $w$", ("T", "w"), (-1.2, 1.2, 0, 2.4), "$w$", "$cT$",
             KASNER_SCALAR_FIVE, {"x": "0", "y": "0", "z": "0"}, tau="T", families=SIDEWAYS, input=KASNER_SCALAR_FIVE_INPUT),
+    # Inside a holographic superconductor: the final Kasner epoch at p_t = 1/2 and the Kasner inversion
+    # at beta = 1/2, each drawn with the singularity at the top, since tau and rho both fall toward it.
+    Diagram("holographic_superconductor", "kasner", "taut", "$\\tau$ and $t$", ("\\tau", "t"), (-1, 1, -2, 0),
+            "$ct$", "$-c\\tau$", HS_KASNER, {"x": "0", "y": "0"}, to_display=((0, 1), (-1, 0)), tau="-tau",
+            families=SIDEWAYS, input=HS_KASNER_INPUT),
+    Diagram("holographic_superconductor", "kasner", "taux", "$\\tau$ and $x$", ("\\tau", "x"), (-1, 1, -2, 0),
+            "$x$", "$-c\\tau$", HS_KASNER, {"t": "0", "y": "0"}, to_display=((0, 1), (-1, 0)), tau="-tau",
+            families=SIDEWAYS, input=HS_KASNER_INPUT),
+    Diagram("holographic_superconductor", "inversion", "rhot", "$\\rho$ and $t$", ("\\rho", "t"), (-2, 2, -4, 0),
+            "$ct/\\ell$", "$-\\rho$", HS_INVERSION, {"x": "0", "y": "0"}, to_display=((0, 1), (-1, 0)), tau="-rho",
+            families=SIDEWAYS, input=HS_INVERSION_INPUT),
+    Diagram("holographic_superconductor", "inversion", "rhox", "$\\rho$ and $x$", ("\\rho", "x"), (-2, 2, -4, 0),
+            "$x/\\ell$", "$-\\rho$", HS_INVERSION, {"t": "0", "y": "0"}, to_display=((0, 1), (-1, 0)), tau="-rho",
+            families=SIDEWAYS, input=HS_INVERSION_INPUT),
     # Kasner's universe with a magnetic field: an axis across the field and the axis along it in
     # Kasner's time, and the same two in Rosen's time for the axisymmetric universe, whose chart
     # ends at eta = pi.
@@ -10723,6 +10741,26 @@ CAPTIONS = {
         "chart, where the length along $z$, $\\sin\\eta$, goes to zero. Near $\\eta = 0$ the plane is flat, "
         "$-\\ell^2d\\eta^2/16 + \\eta^2dz^2$, the coordinates of Milne's universe, and a ray reaches "
         "$\\eta = 0$ only at unbounded $z$.",
+    ],
+    ("holographic_superconductor", "kasner", "taut"): [
+        "The plane of $\\tau$ and $t$ ($x = y = 0$) in the last Kasner epoch, with the singularity $\\tau = 0$ at "
+        "the top. The length along $t$, $\\tau^{1/2}$, shrinks toward it, so the cones open out: "
+        "$dt/d\\tau = \\pm\\tau^{-1/2}$, and $t \\pm 2\\sqrt{\\tau}$ is constant along a ray.",
+    ],
+    ("holographic_superconductor", "kasner", "taux"): [
+        "The plane of $\\tau$ and $x$ ($t = y = 0$) in the last Kasner epoch. The length along $x$, "
+        "$\\tau^{1/4}$, shrinks more slowly than the one along $t$, and $x \\pm (4/3)\\,\\tau^{3/4}$ is "
+        "constant along a ray.",
+    ],
+    ("holographic_superconductor", "inversion", "rhot"): [
+        "The plane of $\\rho$ and $t$ ($x = y = 0$) through the Kasner inversion, with the singularity "
+        "$\\rho = 0$ at the top. The length along $t$ grows until $\\rho = 1$, where the cones are narrowest, "
+        "and shrinks after it: $dt/d\\rho = \\pm\\ell(1 + \\sqrt{\\rho})^2/\\sqrt{\\rho}$.",
+    ],
+    ("holographic_superconductor", "inversion", "rhox"): [
+        "The plane of $\\rho$ and $x$ ($t = y = 0$) through the Kasner inversion. Along $x$ the cones are "
+        "$dx/d\\rho = \\pm\\ell/\\sqrt{\\rho}$ at every $\\beta$, and $x \\pm 2\\ell\\sqrt{\\rho}$ is "
+        "constant along a ray.",
     ],
     ("kasner_scalar", "synchronous", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$, $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$), the axis "
@@ -17341,6 +17379,15 @@ CLOSED_FORMS = {
     ("kasner_magnetic", "rosen", "etaz"):
         (lambda eta, z: z + _rosen_z(eta), lambda eta, z: z - _rosen_z(eta),
          lambda eta, z: (eta > 0.02) & (eta < 3.0)),
+    ("holographic_superconductor", "kasner", "taut"):
+        (lambda tau, t: t - 2 * np.sqrt(tau), lambda tau, t: t + 2 * np.sqrt(tau), lambda tau, t: tau > 1e-3),
+    ("holographic_superconductor", "kasner", "taux"):
+        (lambda tau, x: x - 4 / 3 * tau ** 0.75, lambda tau, x: x + 4 / 3 * tau ** 0.75, lambda tau, x: tau > 1e-3),
+    ("holographic_superconductor", "inversion", "rhot"):
+        (lambda r, t: t - 2 * np.sqrt(r) - 2 * r - 2 / 3 * r ** 1.5, lambda r, t: t + 2 * np.sqrt(r) + 2 * r + 2 / 3 * r ** 1.5,
+         lambda r, t: r > 1e-3),
+    ("holographic_superconductor", "inversion", "rhox"):
+        (lambda r, x: x - 2 * np.sqrt(r), lambda r, x: x + 2 * np.sqrt(r), lambda r, x: r > 1e-3),
     ("kasner_scalar", "synchronous", "tx"):
         (lambda t, x: x + t ** (11 / 13) * 13 / 11, lambda t, x: x - t ** (11 / 13) * 13 / 11, lambda t, x: t > 1e-3),
     ("kasner_scalar", "synchronous", "tz"):
