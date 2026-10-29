@@ -101,6 +101,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "Ehlers's transformation in its magnetic form sets Schwarzschild's hole in a swirling universe, which a double Wick rotation turns into Taub-NUT space with a flat base [astorino2022swirling]."
+    },
+    {
+      "id": "newman_tamburino",
+      "kind": "programme",
+      "text": "The vacuum fields with shearing, untwisted rays that Newman and Tamburino found a year before this one [newman1962tamburino]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "ellis1974",
     "collins1974",
     "clement2016",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "newman1962tamburino"
   ],
   "coordinates": [
     {

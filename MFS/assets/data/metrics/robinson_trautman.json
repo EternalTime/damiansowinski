@@ -75,6 +75,11 @@
       "id": "bondi_sachs",
       "kind": "generalisation",
       "text": "The general form of a radiating metric on its outgoing light cones, with the shear of the rays left free. Robinson and Trautman's spacetimes are its members without shear [bondi1962, sachs1962]."
+    },
+    {
+      "id": "newman_tamburino",
+      "kind": "family",
+      "text": "The same untwisted, spreading rays allowed to shear, every such vacuum found by Ezra Newman and Louis Tamburino in 1962 [newman1962tamburino]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "bicak1999",
     "podolsky1999expanding",
     "bondi1962",
-    "sachs1962"
+    "sachs1962",
+    "newman1962tamburino"
   ],
   "coordinates": [
     {
