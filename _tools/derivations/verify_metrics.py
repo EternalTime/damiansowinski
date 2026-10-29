@@ -1380,6 +1380,17 @@ DIMENSIONS = {
         "\\tau": "T", "r": "L", "\\theta": "1", "\\psi": "1", "r_s": "L", "a": "L", "\\Lambda": "1/L**2",
         "\\Xi": "1", "\\rho": "L", "\\Delta_r": "L**2", "\\Delta_\\theta": "1",
     },
+    # Kerr-anti-de Sitter spun up to a = ell. The anti-de Sitter radius ell and the mass parameter m
+    # are lengths, Sigma, Delta, Q and P areas, and the azimuth psi a pure number. In the
+    # Carter-Plebanski chart q and p are lengths, tau a time, and sigma = -psi/ell an inverse length.
+    ("super_entropic", "hennigar_kubiznak_mann"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\psi": "1", "\\ell": "L", "m": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("super_entropic", "carter_plebanski"): {
+        "\\tau": "T", "q": "L", "p": "L", "\\sigma": "1/L", "\\ell": "L", "m": "L",
+        "Q": "L**2", "P": "L**2",
+    },
     # Kerr's black hole with a NUT parameter. The mass enters as the length m = GM/c^2, as on the
     # Taub-NUT page, and a and l are lengths. Sigma and Delta are areas and chi a length. The Kerr
     # times v and u are lengths. In Plebanski and Demianski's chart q and p are lengths, tau is a

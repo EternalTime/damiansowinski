@@ -33177,6 +33177,140 @@ def brane_wall_universe_check(chart, system):
 CHARTS["brane_wall_universe"] = [lambda s=s: brane_wall_universe(s) for s in BWU_CHARTS]
 
 
+# -- Super-entropic black holes ----------------------------------------------------------
+
+SEB_CHARTS = ["hennigar_kubiznak_mann", "carter_plebanski"]
+SEB_PARAMETERS = {
+    "hennigar_kubiznak_mann": ["\\ell", "m", "\\Sigma = r^2 + \\ell^2\\cos^2\\theta",
+                               "\\Delta = \\left(\\ell + \\dfrac{r^2}{\\ell}\\right)^2 - 2mr"],
+    "carter_plebanski": ["\\ell", "m", "Q = \\left(\\ell + \\dfrac{q^2}{\\ell}\\right)^2 - 2mq",
+                         "P = \\dfrac{\\left(\\ell^2 - p^2\\right)^2}{\\ell^2}"],
+}
+
+
+class SuperEntropicForms(KerrDeSitterForms):
+    """How a value of the super-entropic black hole is written: Kerr-de Sitter's factoring, with
+    the names the chart defines. In the chart of Hennigar, Kubiznak and Mann a factor that is a
+    multiple of Sigma or of ell^2 Delta is written by its name; in the Carter-Plebanski chart, which
+    has no angle, a multiple of ell^2 Q is. A sum left over is written in the shortest of: as it
+    stands, in the sine, and grouped by the powers of m, each coefficient factored."""
+
+    def __init__(self, reader, system):
+        self.system = system
+        self.L = sp.Integer(0)
+        self.ell, self.m = reader.parameters["ell"], reader.parameters["m"]
+        self.C = sp.Symbol("SEB_cos")
+        ell, m, C = self.ell, self.m, self.C
+        if system == "hennigar_kubiznak_mann":
+            self.r, self.theta = reader.symbol["r"], reader.symbol["\\theta"]
+            self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+            self.Sigma, self.Delta = sp.Symbol("Sigma", positive=True), sp.Symbol("Delta")
+            r = self.r
+            self.named = [(self.Sigma, r ** 2 + ell ** 2 * C ** 2),
+                          (ell ** 2 * self.Delta, sp.expand((ell ** 2 + r ** 2) ** 2 - 2 * m * ell ** 2 * r))]
+        else:
+            self.r = reader.symbol["q"]
+            # No angle: the sine and cosine stand for symbols the values never hold.
+            self.s, self.c = sp.Symbol("SEB_sin"), sp.Symbol("SEB_cosine")
+            self.Q = sp.Symbol("Q")
+            q = self.r
+            self.named = [(ell ** 2 * self.Q, sp.expand((ell ** 2 + q ** 2) ** 2 - 2 * m * ell ** 2 * q))]
+
+    def printer(self):
+        if self.system == "hennigar_kubiznak_mann":
+            return {"lead": [self.r, self.ell, self.c, self.s], "rising": [self.m], "flip": False,
+                    "factors": [self.ell, self.m, self.r, self.Sigma, self.Delta]}
+        return {"lead": [self.r, self.ell], "rising": [self.m], "flip": False,
+                "factors": [self.ell, self.m, self.r, self.Q]}
+
+    def regrouped(self, base, depth):
+        candidates = [base, self.in_sine(base)]
+        if depth == 0 and base.has(self.m):
+            polynomial = sp.Poly(base, self.m)
+            if len(polynomial.terms()) > 1:
+                candidates.append(self.summed([(self.product(coefficient, 1), self.m ** k)
+                                               for (k,), coefficient in polynomial.terms()]))
+        return min(candidates, key=lambda e: len(str(e)))
+
+
+def super_entropic_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of its
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    if system == "hennigar_kubiznak_mann":
+        return ("ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(" + c + "dt - \\ell\\sin^2\\theta\\,d\\psi\\right)^2"
+                " + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\dfrac{\\Sigma}{\\sin^2\\theta}d\\theta^2"
+                " + \\dfrac{\\sin^4\\theta}{\\Sigma}\\left(\\ell\\," + c + "dt - \\left(r^2 + \\ell^2\\right)d\\psi\\right)^2")
+    return ("ds^2 = -\\dfrac{Q}{q^2 + p^2}\\left(" + c + "d\\tau + \\left(\\ell^2 - p^2\\right)d\\sigma\\right)^2"
+            " + \\dfrac{q^2 + p^2}{Q}dq^2 + \\dfrac{q^2 + p^2}{P}dp^2"
+            " + \\dfrac{P}{q^2 + p^2}\\left(" + c + "d\\tau + \\left(\\ell^2 + q^2\\right)d\\sigma\\right)^2")
+
+
+def super_entropic(system):
+    """Kerr-anti-de Sitter spun up to a = ell, in two charts: the one of Hennigar, Kubiznak and
+    Mann, Phys. Rev. Lett. 115, 031101 (2015), their (8) and (9) with q = 0, which is Carter's
+    chart of Kerr-anti-de Sitter after psi = phi/Xi and the limit a -> ell; and Carter and
+    Plebanski's form as Klemm, Phys. Rev. D 89, 084007 (2014), writes it, his (1) with
+    P(p) = (p^2 - ell^2)^2/ell^2 and zero charges, after his shift tau -> tau + ell^2 sigma. The two
+    are related by Hennigar, Kubiznak and Mann's (11), tau = t, q = r, p = ell cos(theta) and
+    sigma = -psi/ell. super_entropic_check holds each chart to R_mu_nu = -(3/ell^2) g_mu_nu and the
+    first to being the second pulled back. The Kretschmann scalar is Kerr-anti-de Sitter's at
+    a = ell, Kerr's with r_s = 2m plus anti-de Sitter's 24/ell^4. super_entropic.md beside this file
+    is the derivation."""
+    parameters = SEB_PARAMETERS[system]
+    if system == "hennigar_kubiznak_mann":
+        coords, name = ["t", "r", "\\theta", "\\psi"], "Hennigar-Kubizňák-Mann"
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (r_+, \\infty)", "\\theta \\in (0, \\pi)",
+                   "\\psi \\in [0, \\mu)", "\\Delta = 0 \\;\\text{(the horizons } r_- \\text{ and } r_+\\text{)}"]
+        kretschmann = ("\\dfrac{48m^2\\left(r^2 - \\ell^2\\cos^2\\theta\\right)\\left(\\Sigma^2 - 16\\ell^2r^2\\cos^2\\theta\\right)}"
+                       "{\\Sigma^6} + \\dfrac{24}{\\ell^4}")
+    else:
+        coords, name = ["\\tau", "q", "p", "\\sigma"], "Carter-Plebański"
+        domains = ["\\tau \\in (-\\infty, \\infty)", "q \\in (q_+, \\infty)", "p \\in (-\\ell, \\ell)",
+                   "\\sigma \\in [0, \\mu/\\ell)", "Q = 0 \\;\\text{(the horizons)}"]
+        kretschmann = ("\\dfrac{48m^2\\left(q^2 - p^2\\right)\\left(\\left(q^2 + p^2\\right)^2 - 16p^2q^2\\right)}"
+                       "{\\left(q^2 + p^2\\right)^6} + \\dfrac{24}{\\ell^4}")
+    forms = SuperEntropicForms(vm.Reader(coords, parameters, ()), system)
+    return {
+        "metric_id": "super_entropic",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": super_entropic_line(system, "c\\,")},
+        "chart_line_element": super_entropic_line(system, ""),
+        "printer": forms.printer(),
+        "pretty": forms.pretty,
+        "bracketed": forms.pretty,
+        "check": lambda chart: super_entropic_check(chart, system),
+        "ricci_scalar": "-\\dfrac{12}{\\ell^2}",
+        "kretschmann": kretschmann,
+    }
+
+
+def super_entropic_check(chart, system):
+    g, geo = chart.geo.g, chart.geo
+    ell = chart.reader.parameters["ell"]
+    ricci = geo.ricci_ll()
+    for i in range(4):
+        for j in range(4):
+            if vm.norm(ricci[i][j] + 3 * g[i, j] / ell ** 2) != 0:
+                raise AssertionError(f"super_entropic/{system}: R_mu_nu is not -(3/ell^2) g_mu_nu in slot {i}{j}")
+    if system != "hennigar_kubiznak_mann":
+        return
+    # (tau, q, p, sigma) = (t, r, ell cos(theta), -psi/ell), so d(source)/d(chart) is diagonal.
+    spec = super_entropic("carter_plebanski")
+    source = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    t, r, theta, psi = chart.symbols
+    at = dict(zip(source.symbols, (t, r, ell * sp.cos(theta), -psi / ell)))
+    jacobian = sp.diag(1, 1, -ell * sp.sin(theta), -1 / ell)
+    pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError(f"super_entropic/{system}: the Carter-Plebanski chart pulled back misses slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["super_entropic"] = [lambda s=s: super_entropic(s) for s in SEB_CHARTS]
+
+
 def write(spec):
     start = time.time()
     chart = cp.Chart(spec["system"]["coords"], spec.get("chart_parameters", spec["system"]["parameters"]),
