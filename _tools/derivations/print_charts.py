@@ -21,8 +21,8 @@ string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, fre
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
-maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm
-and buchdahl_sphere, and Godel's cylindrical chart.
+maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm,
+buchdahl_sphere and ozsvath_dust, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -51,7 +51,7 @@ misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, pet
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md,
 eternal_traversable_wormhole.md, interstellar_wormhole.md,
-supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md and buchdahl_sphere.md beside this file.
+supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md, buchdahl_sphere.md and ozsvath_dust.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -34239,6 +34239,118 @@ def buchdahl_sphere_check(chart):
 
 
 CHARTS["buchdahl_sphere"] = buchdahl_sphere
+
+
+# -- Ozsvath's homogeneous universes of dust -------------------------------------------
+
+OZSVATH_CHARTS = ("class_one", "class_two", "class_three", "farnsworth_kerr")
+
+
+def ozsvath_dust(system):
+    """Four charts of the dust universes with a cosmological constant whose group of motions has
+    four parameters and carries any event to any other:
+
+    class_one        class I on SU(2) times the line of t, built from Costa and Natario's family
+                     D = diag(a, b, a - b) (their Theorem 4.3(3)) with b/a = (1 + epsilon)/2,
+                     epsilon = sin(beta)/sqrt(2) and L^2 = 2/(a^2(1 - epsilon^2)), the axis of the
+                     twist put on the third Euler form, so that no root of a parameter is printed;
+    class_two        class II, eq. (48) of Saez, Mengual and Ferrando with s = sin(gamma)/sqrt(2),
+                     so that lambda = sqrt(1 - 2s^2) is cos(gamma);
+    class_three      class III, the same at lambda = 0, which is Godel's universe at s = 0;
+    farnsworth_kerr  class III again, eq. (3) of Wylleman with A = 1/a and tanh v = s.
+
+    ozsvath_dust_check holds each chart to dust and a cosmological constant at the density and the
+    constant its parameters name; ozsvath_dust.md beside this file derives them."""
+    sigma = "d\\psi + \\cos\\theta\\,d\\phi"
+    w1, w2, w3 = ("dx - \\sinh y\\,dz", "\\cos x\\,dy - \\sin x\\cosh y\\,dz", "\\sin x\\,dy + \\cos x\\cosh y\\,dz")
+
+    def smf(tilted):
+        tail = "\\left(du + \\lambda\\left(" + w1 + "\\right)\\right)^2" if tilted else "du^2"
+        return ("ds^2 = a^2\\left(-2\\left(" + w1 + "\\right)^2 + \\left(1 + s\\right)\\left(" + w2 + "\\right)^2"
+                " + \\left(1 - s\\right)\\left(" + w3 + "\\right)^2 + " + tail + "\\right)")
+    reals = "(-\\infty, \\infty)"
+    flat = ["x \\in " + reals, "y \\in " + reals, "z \\in " + reals, "u \\in " + reals]
+    charts = {
+        "class_one": {
+            "name": "Class I", "coords": ["t", "\\theta", "\\phi", "\\psi"],
+            "parameters": ["L", "\\beta", "\\epsilon = \\dfrac{\\sin\\beta}{\\sqrt{2}}"],
+            "domains": ["t \\in " + reals, "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)", "\\psi \\in [0, 4\\pi)",
+                        "\\theta = 0, \\pi \\;\\text{(the poles of the Euler angles, where the chart fails)}"],
+            "line": ("ds^2 = -\\left(c\\,dt + L\\cos\\beta\\left(" + sigma + "\\right)\\right)^2 + L^2"
+                     "\\left(2\\left(" + sigma + "\\right)^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2"
+                     " - \\epsilon\\cos\\left(2\\psi\\right)\\left(d\\theta^2 - \\sin^2\\theta\\,d\\phi^2\\right)"
+                     " - 2\\epsilon\\sin\\left(2\\psi\\right)\\sin\\theta\\,d\\theta\\,d\\phi\\right)")},
+        "class_two": {"name": "Class II", "coords": ["x", "y", "z", "u"], "domains": flat,
+                      "parameters": ["a", "\\gamma", "s = \\dfrac{\\sin\\gamma}{\\sqrt{2}}", "\\lambda = \\cos\\gamma"],
+                      "line": smf(True)},
+        "class_three": {"name": "Class III", "coords": ["x", "y", "z", "u"], "domains": flat,
+                        "parameters": ["a", "s"], "line": smf(False)},
+        "farnsworth_kerr": {
+            "name": "Farnsworth-Kerr", "coords": ["t", "x", "y", "u"], "parameters": ["a", "v"],
+            "domains": ["t \\in " + reals, "x \\in " + reals, "y \\in " + reals, "u \\in " + reals],
+            "line": ("ds^2 = a^2\\left(du^2 - 2\\left(dt + e^x\\,dy\\right)^2"
+                     " + \\left(1 + \\tanh v\\right)\\left(\\cos t\\,dx + \\sin t\\,e^x\\,dy\\right)^2"
+                     " + \\left(1 - \\tanh v\\right)\\left(-\\sin t\\,dx + \\cos t\\,e^x\\,dy\\right)^2\\right)")},
+    }
+    chart = charts[system]
+    probe = vm.Reader(chart["coords"], chart["parameters"], ())
+    scale = probe.parameters["L" if system == "class_one" else "a"]
+    return {
+        "metric_id": "ozsvath_dust",
+        "system": {"id": system, "name": chart["name"], "coords": chart["coords"], "domains": chart["domains"],
+                   "parameters": chart["parameters"], "line_element": chart["line"]},
+        "chart_line_element": chart["line"].replace("c\\,dt", "dt"),
+        "printer": {"lead": [scale]},
+        # The checker hands sinh y, cosh y and tanh v back as exponentials, which hyperbolic rewrites.
+        **({"pretty": cp.hyperbolic(probe.symbol["y"])} if system == "class_three" else {}),
+        **(ozsvath_class_two_printing(probe) if system == "class_two" else {}),
+        **({"pretty": cp.hyperbolic(probe.parameters["v"])} if system == "farnsworth_kerr" else {}),
+        "check": lambda built, system=system: ozsvath_dust_check(built, system),
+    }
+
+
+def ozsvath_class_two_printing(probe):
+    """Class II printed in Saez, Mengual and Ferrando's s and lambda: each value is rewritten in
+    sinh y and cosh y, then sin(gamma) = sqrt(2) s and cos(gamma) = lambda, reduced by
+    lambda^2 = 1 - 2s^2 and factored. The Reader reads s and lambda back by their definitions."""
+    S, LAM = sp.symbols("_s _lambda", real=True)
+    gamma = probe.parameters["gamma"]
+    hyperbolic = cp.hyperbolic(probe.symbol["y"])
+
+    def pretty(value):
+        x = hyperbolic(value).subs({sp.sin(gamma): sp.sqrt(2) * S, sp.cos(gamma): LAM})
+        num, den = sp.fraction(sp.together(x))
+        num, den = (sp.reduced(sp.expand(q), [LAM ** 2 + 2 * S ** 2 - 1], LAM, S)[1] for q in (num, den))
+        return sp.factor(num) / sp.factor(den)
+    return {"pretty": pretty, "printer": {"lead": [probe.parameters["a"]], "overrides": {S: "s", LAM: "\\lambda"}}}
+
+
+def ozsvath_dust_check(chart, system):
+    """R^mu_nu = kappa rho (u^mu u_nu + delta/2) + Lambda delta for dust of density rho, kappa = 8 pi G/c^2:
+    so R^mu_nu - (Lambda + kappa rho/2) delta has rank one and trace -kappa rho. The density and the
+    constant each chart's parameters name are those of ozsvath_dust.md Step 2."""
+    p = chart.reader.parameters
+    if system == "class_one":
+        L, beta = p["L"], p["beta"]
+        lam, krho = 1 / (2 * L ** 2 * (1 + sp.cos(beta) ** 2)), sp.cos(2 * beta) / (L ** 2 * (1 + sp.cos(beta) ** 2))
+    elif system == "class_two":
+        a, gamma = p["a"], p["gamma"]
+        lam, krho = -1 / (2 * a ** 2 * (1 + sp.cos(gamma) ** 2)), -sp.cos(2 * gamma) / (a ** 2 * (1 + sp.cos(gamma) ** 2))
+    else:
+        a = p["a"]
+        lam, krho = -1 / (2 * a ** 2), 1 / a ** 2
+    ricci = sp.Matrix(chart.geo.ricci_ll())
+    mixed = chart.geo.ginv * ricci
+    n = mixed - (lam + krho / 2) * sp.eye(4)
+    flat = vm.norm
+    if flat(n.trace() + krho) != 0:
+        raise AssertionError(f"ozsvath_dust/{system}: the trace misses -kappa rho")
+    for (i, j), (k, l) in itertools.combinations(itertools.product(range(4), repeat=2), 2):
+        if i < k and j != l and flat(n[i, j] * n[k, l] - n[i, l] * n[k, j]) != 0:
+            raise AssertionError(f"ozsvath_dust/{system}: R - (Lambda + kappa rho/2) is not of rank one")
+
+
+CHARTS["ozsvath_dust"] = [lambda s=s: ozsvath_dust(s) for s in OZSVATH_CHARTS]
 
 
 def step(seconds, where, name):

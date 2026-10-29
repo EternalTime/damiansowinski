@@ -2161,6 +2161,20 @@ DIMENSIONS = {
         "v": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "\\ell": "L",
         "\\Sigma": "L**2", "\\Delta": "L**2",
     },
+    # Ozsvath's homogeneous dust: class I has a time t and the length L, the other charts are
+    # dimensionless, Wylleman's t among them, with the length a carrying the scale.
+    ("ozsvath_dust", "class_one"): {
+        "t": "T", "\\theta": "1", "\\phi": "1", "\\psi": "1", "L": "L", "\\beta": "1", "\\epsilon": "1",
+    },
+    ("ozsvath_dust", "class_two"): {
+        "x": "1", "y": "1", "z": "1", "u": "1", "a": "L", "\\gamma": "1", "s": "1", "\\lambda": "1",
+    },
+    ("ozsvath_dust", "class_three"): {
+        "x": "1", "y": "1", "z": "1", "u": "1", "a": "L", "s": "1",
+    },
+    ("ozsvath_dust", "farnsworth_kerr"): {
+        "t": "1", "x": "1", "y": "1", "u": "1", "a": "L", "v": "1",
+    },
     ("hayward", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },
