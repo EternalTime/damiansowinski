@@ -1125,6 +1125,19 @@ DIMENSIONS = {
     ("oppenheimer_snyder", "exterior_schwarzschild"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L",
     },
+    # Bonnor and Faulkes's sphere: alpha and F(t) are pure numbers, and so are Y and Z, since
+    # r^2/4L^2 is; the mass m = GM/c^2 and the surface r_0 are lengths. Thompson and Whitrow's
+    # B is a pure number and C an inverse area, so that B + Cr^2 is one.
+    ("oscillating_sphere", "comoving"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1",
+        "\\alpha": "1", "L": "L", "m": "L", "r_0": "L", "F": "1", "Y": "1", "Z": "1",
+    },
+    ("oscillating_sphere", "central_time"): {
+        "\\tau": "T", "r": "L", "\\theta": "1", "\\phi": "1", "B": "1", "C": "1/L^2",
+    },
+    ("oscillating_sphere", "exterior_schwarzschild"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L",
+    },
     # The semiclosed world is the same construction with the surface past the equator of the three
     # sphere. Its conformal time eta is an angle, with the cycloid written out in a_m, and the
     # isotropic radius is a length.

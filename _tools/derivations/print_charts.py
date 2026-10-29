@@ -34353,6 +34353,229 @@ def ozsvath_dust_check(chart, system):
 CHARTS["ozsvath_dust"] = [lambda s=s: ozsvath_dust(s) for s in OZSVATH_CHARTS]
 
 
+# -- Bonnor and Faulkes's oscillating sphere ----------------------------------------------
+
+OSC_CHARTS = ["comoving", "central_time", "exterior_schwarzschild"]
+OSC_SPHERE = "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)"
+OSC_Y = "Y = F^{\\alpha} - 1 + \\alpha + \\dfrac{\\alpha r^2}{4L^2}"
+OSC_Z = "Z = F^{\\alpha} - 1 + \\alpha^2 + \\dfrac{\\alpha(1 + \\alpha)r^2}{4L^2}"
+OSC_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+# The density X = 8 pi G rho/c^2, the same at every r for any F, and Q, with the pressure
+# 8 pi G p/c^4 = -X - Q, in each chart; the Weyl tensor vanishes, so R = 4X + 3Q and
+# K = 2R_abR^ab - R^2/3 = 8X^2/3 + 4XQ + 3Q^2. oscillating_sphere.md derives both.
+OSC_X = {"comoving": ("\\dfrac{3\\dot{F}^2}{F^2} + \\dfrac{3\\left(F^{\\alpha} - 1 + \\alpha\\right)}"
+                      "{\\alpha L^2F^{2\\alpha + 2}}"),
+         "central_time": "\\dfrac{3\\dot{B}^2}{B^2} + 12BC"}
+OSC_Q = {"comoving": ("\\dfrac{Y}{Z}\\left(\\dfrac{2\\ddot{F}}{F} - \\dfrac{2\\dot{F}^2}{F^2} - \\dfrac{\\alpha + 2}"
+                      "{\\alpha L^2F^{\\alpha + 2}} + \\dfrac{2\\left(1 - \\alpha^2\\right)}{\\alpha L^2F^{2\\alpha + 2}}\\right)"),
+         "central_time": ("-\\dfrac{B + Cr^2}{\\dot{B} + \\dot{C}r^2}\\left(\\dfrac{2\\dot{B}\\ddot{B}}{B^2}"
+                          " - \\dfrac{2\\dot{B}^3}{B^3} + 4\\dot{B}C + 4B\\dot{C}\\right)")}
+
+
+def oscillating_sphere_scalars(system):
+    X, Q = "\\left(" + OSC_X[system] + "\\right)", "\\left(" + OSC_Q[system] + "\\right)"
+    return {"ricci_scalar": "4" + X + " + 3" + Q,
+            "kretschmann": "\\dfrac{8}{3}" + X + "^2 + 4" + X + Q + " + 3" + Q + "^2"}
+# Points of the parameters at which the checks compare: the first near Bonnor and Faulkes's oscillation
+# (4.7), alpha = 0.7, r_0^2/L^2 = 4/9, m = 0.1084L, and both with Fdot^2 > 0 under (2.8).
+OSC_POINTS = [{"alpha": sp.Rational(7, 10), "L": sp.Rational(3, 2), "m": sp.Rational(13, 80), "r_0": 1,
+               "r": sp.Rational(2, 5), "F": sp.Rational(21, 20)},
+              {"alpha": sp.Rational(1, 2), "L": sp.Rational(5, 2), "m": sp.Rational(1, 5), "r_0": sp.Rational(6, 5),
+               "r": sp.Rational(9, 10), "F": sp.Rational(9, 10)}]
+
+
+def oscillating_sphere(system):
+    """The sphere of uniform density of W. B. Bonnor and M. C. Faulkes, MNRAS 137, 239 (1967), and
+    its exterior, each in a chart they give.
+
+    comoving                their (2.3) with signature reversed and t a time: comoving isotropic
+                            coordinates, the lapse Z/Y and the spatial metric alpha^2 F^(2 alpha + 2)/Y^2
+                            times flat space, with Y and Z their (2.7) and F(t) free;
+    central_time            their (7.1), Thompson and Whitrow's form with f = 1/r, in which tau is the
+                            proper time at the centre and B(tau), C(tau) are free;
+    exterior_schwarzschild  their (2.10), outside the surface r = zeta.
+
+    oscillating_sphere_check holds the comoving chart to the perfect fluid of their (2.4) to (2.6)
+    under their (2.8), and the central chart to the comoving one under their (7.2) and (7.4), at the
+    points OSC_POINTS, and oscillating_sphere.md beside this file records both."""
+    def check(chart):
+        return oscillating_sphere_check(chart, system)
+
+    if system == "comoving":
+        coords = ["t", "r", "\\theta", "\\phi"]
+        parameters = ["\\alpha", "L", "m", "r_0", "F = F(t)", OSC_Y, OSC_Z]
+        probe = vm.Reader(coords, parameters, ())
+        line = "-\\dfrac{Z^2}{Y^2}c^2dt^2 + \\dfrac{\\alpha^2F^{2\\alpha + 2}}{Y^2}" + OSC_SPHERE
+        return {
+            "metric_id": "oscillating_sphere",
+            "system": {"id": system, "name": "Comoving Isotropic", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, r_0]"] + OSC_ANGLES,
+                       "parameters": parameters, "line_element": "ds^2 = " + line},
+            "chart_line_element": "ds^2 = " + line.replace("c^2dt^2", "dt^2"),
+            "printer": {"dotted": ["F"], "lead": [probe.parameters["F"], probe.symbol["r"]]},
+            **oscillating_sphere_scalars(system),
+            "scalar_check": oscillating_sphere_scalar_check,
+            "check": check,
+        }
+    if system == "central_time":
+        coords = ["\\tau", "r", "\\theta", "\\phi"]
+        parameters = ["B = B(\\tau)", "C = C(\\tau)"]
+        probe = vm.Reader(coords, parameters, ())
+        lapse = "\\left(\\dfrac{1 + r^2\\dot{C}/\\dot{B}}{1 + r^2C/B}\\right)^2"
+        line = "-" + lapse + "c^2d\\tau^2 + \\dfrac{1}{\\left(B + Cr^2\\right)^2}" + OSC_SPHERE
+        return {
+            "metric_id": "oscillating_sphere",
+            "system": {"id": system, "name": "Central Proper Time", "coords": coords,
+                       "domains": ["\\tau \\in (-\\infty, \\infty)", "r \\in [0, r_0]"] + OSC_ANGLES,
+                       "parameters": parameters, "line_element": "ds^2 = " + line},
+            "chart_line_element": "ds^2 = " + line.replace("c^2d\\tau^2", "d\\tau^2"),
+            "printer": {"dotted": ["B", "C"], "lead": [probe.parameters["B"], probe.parameters["C"], probe.symbol["r"]]},
+            **oscillating_sphere_scalars(system),
+            "scalar_check": oscillating_sphere_scalar_check,
+            "check": check,
+        }
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["m"]
+    probe = vm.Reader(coords, parameters, ())
+    f = "\\left(1 - \\dfrac{2m}{r}\\right)"
+    sphere = " + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    return {
+        "metric_id": "oscillating_sphere",
+        "system": {"id": system, "name": "Schwarzschild Exterior", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in [\\zeta, \\infty)"] + OSC_ANGLES,
+                   "parameters": parameters,
+                   "line_element": "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}}" + sphere},
+        "chart_line_element": "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r}}" + sphere,
+        "printer": {"lead": [probe.symbol["r"], probe.parameters["m"]], "factors": [probe.parameters["m"], probe.symbol["r"]],
+                    "flip": False},
+        "components": {"metric_components": {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"},
+                       "inverse_metric_components": {("t", "t"): "-" + f + "^{-1}", ("r", "r"): f[6:-7]}},
+        "kretschmann": "\\dfrac{48m^2}{r^6}",
+        "check": check,
+    }
+
+
+def oscillating_sphere_scalar_check(chart, field, difference):
+    """A scalar written by hand against the computed one, with the held names written out, at the
+    points OSC_POINTS and at free rates of the chart's functions of time."""
+    reader = chart.reader
+    tau = chart.symbols[0]
+    value = sp.sympify(difference).subs(reader.held).doit() if reader.held else sp.sympify(difference)
+    functions = sorted({f for f in value.atoms(AppliedUndef)}, key=str)
+    for point in OSC_POINTS:
+        at = value
+        for f in functions:
+            name = f.func.__name__
+            for k, rate in ((2, sp.Rational(-2, 9)), (1, sp.Rational(1, 7))):
+                at = at.subs(sp.Derivative(f, (tau, k)), rate * (1 if name != "C" else sp.Rational(1, 3)))
+            at = at.subs(f, point["F"] if name == "F" else (sp.Rational(4, 5) if name == "B" else sp.Rational(1, 5)))
+        numbers = {s: point[n] for n, s in reader.parameters.items() if n in point and not isinstance(s, AppliedUndef)}
+        numbers[chart.symbols[1]] = point["r"]
+        numbers[chart.symbols[2]] = sp.Rational(7, 10)
+        number = sp.N(at.subs(numbers), 40)
+        if not number.is_number or abs(number) > 1e-30:
+            raise AssertionError(f"oscillating_sphere: the {field} written by hand misses the computed one ({number})")
+
+
+def oscillating_sphere_at(value, t, F, point, rates, theta, held=None):
+    """A value at one point: the held names Y and Z written out, then F and its derivatives along t
+    replaced by numbers, highest first."""
+    value = sp.sympify(value)
+    if held:
+        value = value.subs(held).doit()
+    for k in sorted(rates, reverse=True):
+        value = value.subs(sp.Derivative(F, (t, k)), rates[k])
+    return sp.N(value.subs(F, point["F"]).subs(theta, sp.Rational(7, 10)), 40)
+
+
+def oscillating_sphere_check(chart, system):
+    """Each chart at the points OSC_POINTS, never symbolically.
+
+    comoving: for any F the Einstein tensor is a perfect fluid at rest in the chart, G^t_r = 0 and
+    G^r_r = G^theta_theta, and the Weyl tensor vanishes; under (2.8), Fdot^2 = 2m Y_0^3/(alpha^3 r_0^3
+    F^(3 alpha + 1)) - (F^-alpha - (1 - alpha) F^(-2 alpha))/(alpha L^2), and its derivative, the density
+    is (2.4), 8 pi G rho/c^2 = 6m Y_0^3/(r_0^3 alpha^3 F^(3 alpha + 3)), the same at every r, and the
+    pressure (2.5), 8 pi G p/c^4 = 6m Y_0^2 (r_0^2 - r^2)/(4L^2 r_0^3 alpha Z F^(2 alpha + 3)), zero at r_0.
+    central_time: with B = (F^alpha - 1 + alpha)/(alpha F^(alpha + 1)), C = 1/(4L^2 F^(alpha + 1)) and
+    dt/dtau = (F^alpha - 1 + alpha)/(F^alpha - 1 + alpha^2), (7.2) and (7.4), the chart is the comoving
+    one, slot by slot. exterior_schwarzschild: the Ricci tensor vanishes."""
+    geo = chart.geo
+    reader = chart.reader
+    if system == "exterior_schwarzschild":
+        r, m = chart.symbols[1], reader.parameters["m"]
+        for at in (3, 7):
+            for i in range(4):
+                for j in range(4):
+                    if abs(sp.N(geo.ricci_ll()[i][j].subs({r: at, m: 1, chart.symbols[2]: sp.Rational(7, 10)}))) > 1e-30:
+                        raise AssertionError("oscillating_sphere: the exterior is not vacuum")
+        return
+    spec = oscillating_sphere("comoving")
+    comoving = chart if system == "comoving" else cp.Chart(spec["system"]["coords"], spec["system"]["parameters"],
+                                                           spec["chart_line_element"])
+    cr = comoving.reader
+    t, r, theta = comoving.symbols[0], comoving.symbols[1], comoving.symbols[2]
+    al, L, m, r0, F = (cr.parameters[n] for n in ("alpha", "L", "m", "r_0", "F"))
+    Y = F ** al - 1 + al + al * r ** 2 / (4 * L ** 2)
+    Z = F ** al - 1 + al ** 2 + al * (1 + al) * r ** 2 / (4 * L ** 2)
+    Y0 = Y.subs(r, r0)
+    for point in OSC_POINTS:
+        numbers = {al: point["alpha"], L: point["L"], m: point["m"], r0: point["r_0"], r: point["r"]}
+        if system == "comoving":
+            g, ginv = geo.g, geo.ginv
+            G = geo.einstein_ll()
+            mixed = [[sum(ginv[i, s] * G[s][j] for s in range(4)) for j in range(4)] for i in range(4)]
+            free = {1: sp.Rational(1, 7), 2: sp.Rational(-2, 9)}
+            for label, value in (("G^t_r", mixed[0][1]), ("G^r_r - G^theta_theta", mixed[1][1] - mixed[2][2])):
+                if abs(oscillating_sphere_at(value, t, F, point, free, theta, cr.held).subs(numbers)) > 1e-30:
+                    raise AssertionError(f"oscillating_sphere: {label} does not vanish for a free F")
+            W = geo.weyl_llll()
+            for ix in [(0, 1, 0, 1), (0, 2, 0, 2), (1, 2, 1, 2), (2, 3, 2, 3), (0, 2, 1, 2)]:
+                if abs(oscillating_sphere_at(W[ix[0]][ix[1]][ix[2]][ix[3]], t, F, point, free, theta, cr.held).subs(numbers)) > 1e-30:
+                    raise AssertionError(f"oscillating_sphere: the Weyl tensor does not vanish in slot {ix}")
+            square = (2 * m * Y0 ** 3 / (r0 ** 3 * al ** 3 * F ** (3 * al + 1))
+                      - (F ** -al - (1 - al) * F ** (-2 * al)) / (al * L ** 2))
+            fd2 = sp.N(square.subs(numbers).subs(F, point["F"]), 40)
+            if fd2 <= 0:
+                raise AssertionError(f"oscillating_sphere: the point {point} is not one the sphere passes through")
+            rates = {1: sp.sqrt(fd2), 2: sp.N((sp.diff(square, F) / 2).subs(numbers).subs(F, point["F"]), 40)}
+            rho = 6 * m * Y0 ** 3 / (r0 ** 3 * al ** 3 * F ** (3 * al + 3))
+            p = 6 * m * Y0 ** 2 * (r0 ** 2 - r ** 2) / (4 * L ** 2 * r0 ** 3 * al * Z * F ** (2 * al + 3))
+            for label, value in (("the density (2.4)", -mixed[0][0] - rho), ("the pressure (2.5)", mixed[1][1] - p),
+                                 ("the pressure (2.5) across", mixed[2][2] - p)):
+                if abs(oscillating_sphere_at(value, t, F, point, rates, theta, cr.held).subs(numbers)) > 1e-30:
+                    raise AssertionError(f"oscillating_sphere: the chart misses {label}")
+        else:
+            tau = chart.symbols[0]
+            B, C = reader.parameters["B"], reader.parameters["C"]
+            Bv = (F ** al - 1 + al) / (al * F ** (al + 1))
+            Cv = 1 / (4 * L ** 2 * F ** (al + 1))
+            speed = (F ** al - 1 + al) / (F ** al - 1 + al ** 2)          # dt/dtau, (7.2)
+            # d/dtau of a function of t is speed times d/dt; F's rates at the point are free.
+            rates = {1: sp.Rational(1, 7), 2: sp.Rational(-2, 9)}
+            values = {}
+            for name, val in (("B", Bv), ("C", Cv)):
+                first = speed * sp.diff(val, t)
+                second = speed * sp.diff(first, t)
+                values[name] = [oscillating_sphere_at(e.subs(numbers), t, F, point, rates, theta) for e in (val, first, second)]
+            sub = {}
+            for name, fn in (("B", B), ("C", C)):
+                sub[sp.Derivative(fn, (tau, 2))] = values[name][2]
+                sub[sp.Derivative(fn, tau)] = values[name][1]
+            sub.update({B: values["B"][0], C: values["C"][0]})
+            for i in range(4):
+                mine = chart.geo.g[i, i]
+                for k, v in sub.items():
+                    mine = mine.subs(k, v)
+                mine = sp.N(mine.subs({r: point["r"], chart.symbols[1]: point["r"], chart.symbols[2]: sp.Rational(7, 10)}), 40)
+                theirs = comoving.geo.g[i, i] * (speed ** 2 if i == 0 else 1)
+                theirs = oscillating_sphere_at(theirs, t, F, point, rates, theta, cr.held).subs(numbers)
+                if abs(mine - theirs) > 1e-30:
+                    raise AssertionError(f"oscillating_sphere: the central chart misses the comoving one in slot {i}")
+
+
+CHARTS["oscillating_sphere"] = [lambda s=s: oscillating_sphere(s) for s in OSC_CHARTS]
+
+
 def step(seconds, where, name):
     """A step of the printing under the clock when a budget is given, so that one which runs past it
     stops the script naming the chart and the step rather than leaving it to hang."""
@@ -34413,7 +34636,12 @@ def scalars(spec, chart, math):
     """The Ricci scalar and the Kretschmann scalar, written by hand where the chart gives them so."""
     for field in ("ricci_scalar", "kretschmann"):
         computed = chart.geo.ricci_scalar() if field == "ricci_scalar" else chart.geo.kretschmann()
-        if field in spec:
+        if field in spec and "scalar_check" in spec:
+            # A chart whose held names hide a relation among them, as Bonnor and Faulkes's Y and Z hold
+            # F^alpha, compares a scalar written by hand with the names written out, at points.
+            spec["scalar_check"](chart, field, chart.reader(spec[field]) - chart.named_time(computed))
+            math[field] = ("R = " if field == "ricci_scalar" else "K = ") + spec[field]
+        elif field in spec:
             math[field] = ("R = " if field == "ricci_scalar" else "K = ") + chart.check(spec[field], computed)
         elif field == "kretschmann" and "kretschmann_where" in spec:
             # A square of a delta is no distribution, so the scalar is stated where the kink is not.
