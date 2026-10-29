@@ -5,7 +5,7 @@ schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
 kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
-damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, fisher_jnw,
+damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, regular_black_hole_pure_gravity, fisher_jnw,
 black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos, kundt_waves,
 schrodinger_spacetime,
@@ -9041,6 +9041,137 @@ def hayward_check(chart):
 
 
 CHARTS["hayward"] = [lambda s=s: hayward(s) for s in HAYWARD_CHARTS]
+
+
+# -- Regular black holes from pure gravity ------------------------------------------------
+
+RBHPG_CHARTS = ("spherical", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
+
+
+def regular_black_hole_pure_gravity(system_id):
+    """Bueno, Cano and Hennigar's regular black hole of five dimensions, the vacuum solution of
+    Einstein gravity with the whole tower of quasi-topological densities at the couplings
+    alpha_n = alpha^(n-1): f = 1 - m r^2/(r^4 + alpha m), their f at D = 5, written in two lengths,
+    Tangherlini's r_0 with r_0^2 = m = 8GM/(3 pi c^2) and the core's l with l^2 = alpha, so that
+    f = 1 - r_0^2 r^2/(r^4 + l^2 r_0^2). The static chart and the two Eddington-Finkelstein
+    charts built on its tortoise coordinate, dr_*/dr = 1/f. Every value is printed around
+    r^4 + l^2 r_0^2 and r^4 - r_0^2 r^2 + l^2 r_0^2, the denominator and the numerator of f, so
+    that each chart is Tangherlini's at l = 0 term by term. regular_black_hole_pure_gravity_check
+    holds each chart to their field equation, to de Sitter space at the centre, to Tangherlini's
+    published metric far away and at l = 0, and the general-D function at D = 4 to Hayward's."""
+    f = "\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)"
+    bare = "1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}"
+    sphere = (" + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2"
+              " + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)")
+    angles = ["\\psi", "\\theta", "\\phi"]
+    domains = ["r \\in [0, \\infty)", "\\psi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
+               "r = r_+ \;\\text{(the outer horizon)}", "r = r_- \;\\text{(the inner horizon)}"]
+    parameters = ["r_0", "\\ell"]
+    if system_id == "spherical":
+        coords = ["t", "r"] + angles
+        name = "Hyperspherical, Five Dimensions"
+        line = "ds^2 = -" + f + "c^2dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        chart_line = "ds^2 = -" + f + "dt^2 + \\dfrac{dr^2}{" + bare + "}" + sphere
+        metric = {("t", "t"): "-" + f, ("r", "r"): f + "^{-1}"}
+        inverse = {("t", "t"): "-" + f + "^{-1}", ("r", "r"): bare}
+    else:
+        null, sign = ("u", "-") if system_id == "eddington_finkelstein_outgoing" else ("v", "+")
+        coords = [null, "r"] + angles
+        name = ("Outgoing" if null == "u" else "Ingoing") + " Eddington-Finkelstein, Five Dimensions"
+        line = "ds^2 = -" + f + "d" + null + "^2 " + sign + " 2\\,d" + null + "\\,dr" + sphere
+        chart_line = line
+        one = "-1" if null == "u" else "1"
+        metric = {(null, null): "-" + f, (null, "r"): one, ("r", null): one}
+        inverse = {(null, "r"): one, ("r", null): one, ("r", "r"): bare}
+    probe = vm.Reader(coords, parameters, ())
+    r, r0, ell = probe.symbol["r"], probe.parameters["r_0"], probe.parameters["ell"]
+    return {
+        "metric_id": "regular_black_hole_pure_gravity",
+        "system": {"id": system_id, "name": name, "coords": coords,
+                   "domains": [coords[0] + " \\in (-\\infty, \\infty)"] + domains,
+                   "parameters": parameters, "line_element": line},
+        "chart_line_element": chart_line,
+        # A product is written as the line element writes it, the lengths before the radius,
+        # l^2 r_0^2 and r_0^2 r^2, and a sum by falling powers of r.
+        "printer": {"lead": [r, r0, ell], "factors": [ell, r0, r], "flip": False},
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": lambda chart: regular_black_hole_pure_gravity_check(chart, system_id),
+    }
+
+
+def regular_black_hole_pure_gravity_check(chart, system_id):
+    """Bueno, Cano and Hennigar's field equation for a static, spherically symmetric metric of the
+    quasi-topological theories, h(psi) = m/r^(D-1) with psi = (1 - f)/r^2, their (4) and (5), is
+    at alpha_n = alpha^(n-1) the geometric series h = psi/(1 - alpha psi); the chart's g^rr is
+    held to it at D = 5. At the centre f = 1 - r^2/l^2 + O(r^6), de Sitter space of radius l for
+    every mass; far away f = 1 - r_0^2/r^2 + O(1/r^6), Tangherlini's; at l -> 0 the static chart is
+    Tangherlini's published chart with r_h = r_0. Their f for general D, 1 - m r^2/(r^(D-1) + alpha m),
+    is at D = 4 Hayward's published F with m = 2 m_Hayward and alpha = l^2. The horizons are the
+    roots of r^4 - r_0^2 r^2 + l^2 r_0^2, and the surface gravity there is (r_+^2 - 2 l^2)/r_+^3,
+    which is their temperature T = (r_+^2 - 2 alpha)/(2 pi r_+^3) at D = 5 times 2 pi. Each
+    Eddington-Finkelstein chart is the static one pulled back along ct = v - r_* or u + r_*."""
+    geo, g = chart.geo, chart.geo.g
+    n = 5
+    r = chart.reader.symbol["r"]
+    r0, ell = chart.reader.parameters["r_0"], chart.reader.parameters["ell"]
+    f = sp.together(geo.ginv[1, 1])
+    psi = (1 - f) / r ** 2
+    if sp.simplify(psi / (1 - ell ** 2 * psi) - r0 ** 2 / r ** 4) != 0:
+        raise AssertionError(f"regular_black_hole_pure_gravity: the {system_id} chart misses h(psi) = m/r^4 "
+                             "with h = psi/(1 - alpha psi)")
+    if sp.series(f, r, 0, 6).removeO() != 1 - r ** 2 / ell ** 2:
+        raise AssertionError("regular_black_hole_pure_gravity: f is not 1 - r^2/l^2 + O(r^6) at the centre")
+    if sp.limit((f - 1 + r0 ** 2 / r ** 2) * r ** 5, r, sp.oo) != 0:
+        raise AssertionError("regular_black_hole_pure_gravity: f is not 1 - r_0^2/r^2 + O(1/r^6) far away")
+    rp = sp.Symbol("rp", positive=True)
+    # On the outer horizon r_0^2 = r_+^4/(r_+^2 - l^2).
+    on = {r0: rp ** 2 / sp.sqrt(rp ** 2 - ell ** 2)}
+    if sp.simplify(f.subs(r, rp).subs(on)) != 0:
+        raise AssertionError("regular_black_hole_pure_gravity: f does not vanish where r_0^2 = r_+^4/(r_+^2 - l^2)")
+    if sp.simplify(sp.diff(f, r).subs(r, rp).subs(on) / 2 - (rp ** 2 - 2 * ell ** 2) / rp ** 3) != 0:
+        raise AssertionError("regular_black_hole_pure_gravity: the surface gravity is not (r_+^2 - 2 l^2)/r_+^3")
+    D, mass, alpha, x = sp.symbols("D mass alpha x", positive=True)
+    general = 1 - mass * x ** 2 / (x ** (D - 1) + alpha * mass)
+    if sp.simplify(general.subs({D: 5, mass: r0 ** 2, alpha: ell ** 2, x: r}) - f) != 0:
+        raise AssertionError("regular_black_hole_pure_gravity: the chart is not their f at D = 5")
+    published = next(c for c in json.loads((METRICS / "hayward.json").read_text(encoding="utf-8"))["coordinates"]
+                     if c["id"] == "static")
+    reader = vm.Reader(published["coords"], [p["symbol"] for p in published["parameters"]], ())
+    F = reader(next(e["value"] for e in published["inverse_metric_components"] if e["indices"] == ["r", "r"]))
+    hay = {reader.symbol["r"]: x, reader.parameters["m"]: mass / 2, reader.parameters["ell"]: sp.sqrt(alpha)}
+    if sp.simplify(general.subs(D, 4) - F.subs(hay, simultaneous=True)) != 0:
+        raise AssertionError("regular_black_hole_pure_gravity: their f at D = 4 is not Hayward's published F")
+    if system_id == "spherical":
+        if vm.norm(g[0, 0] + f) != 0 or vm.norm(g[1, 1] - 1 / f) != 0:
+            raise AssertionError("regular_black_hole_pure_gravity: the static chart is not -f c^2dt^2 + dr^2/f")
+        tang = next(c for c in json.loads((METRICS / "tangherlini.json").read_text(encoding="utf-8"))["coordinates"]
+                    if c["id"] == "spherical")
+        treader = vm.Reader(tang["coords"], [p["symbol"] for p in tang["parameters"]], ())
+        there = {tuple(e["indices"]): e["value"] for e in tang["metric_components"]}
+        same = dict(zip((treader.symbol[c] for c in tang["coords"]), chart.symbols))
+        same[treader.parameters["r_h"]] = r0
+        for i in range(n):
+            text = there.get((chart.coords_tex[i], chart.coords_tex[i]), "0")
+            if sp.simplify(g[i, i].subs(ell, 0) - treader(text).subs(same, simultaneous=True)) != 0:
+                raise AssertionError("regular_black_hole_pure_gravity: the static chart at l = 0 is not Tangherlini's "
+                                     f"published metric in slot {chart.coords_tex[i]}{chart.coords_tex[i]}")
+        return
+    spec = regular_black_hole_pure_gravity("spherical")
+    static = cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+    at = dict(zip(static.symbols[1:], chart.symbols[1:]))
+    at.update({static.reader.parameters[k]: chart.reader.parameters[k] for k in ("r_0", "ell")})
+    old = static.geo.g.subs(at, simultaneous=True)
+    J = sp.eye(n)
+    J[0, 1] = (1 if chart.coords_tex[0] == "u" else -1) / (-old[0, 0])
+    pulled = J.T * old * J
+    for i in range(n):
+        for j in range(i, n):
+            if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                raise AssertionError("regular_black_hole_pure_gravity: the static chart pulled back misses the "
+                                     f"{chart.coords_tex[0]} chart in slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["regular_black_hole_pure_gravity"] = [lambda s=s: regular_black_hole_pure_gravity(s) for s in RBHPG_CHARTS]
 
 
 # -- Bonnor and Vaidya's charged radiating star ------------------------------------------

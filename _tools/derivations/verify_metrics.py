@@ -2132,6 +2132,19 @@ DIMENSIONS = {
     ("hayward", "evaporating"): {
         "v": "L", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },
+    # Bueno, Cano and Hennigar's regular black hole of five dimensions quotes its mass parameter
+    # m = 8GM/(3 pi c^2), an area, as Tangherlini's radius r_0 with r_0^2 = m, and the coupling
+    # alpha of the quasi-topological tower, an area, as the core's length l with l^2 = alpha; the
+    # Eddington-Finkelstein times u = ct - r_* and v = ct + r_* are lengths.
+    ("regular_black_hole_pure_gravity", "spherical"): {
+        "t": "T", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L",
+    },
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing"): {
+        "v": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L",
+    },
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing"): {
+        "u": "L", "r": "L", "\\psi": "1", "\\theta": "1", "\\phi": "1", "r_0": "L", "\\ell": "L",
+    },
     # Mass inflation: the charged Vaidya metric in advanced time, a length, with the mass function
     # and the charge lengths too; the double null chart, where the areal radius r is a function of
     # the two null coordinates and sigma a pure number; and Brady and Smith's chart of advanced time
