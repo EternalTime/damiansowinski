@@ -14408,7 +14408,7 @@ def twisting_cylindrical_waves(ck, src):
         ck.radius(f"{where}, sqrt(g_phiphi)", whole, lambda x, T=T: radius(T, x), size)
         return Surface([whole], label=f"$ct = {T:g}\\,a$", time=T)
 
-    times, keys = movie_values([0.0, 0.5, 1.0, 1.25], 0.05)
+    times, keys = movie_values([0.0, 0.5, 1.0, 1.25], 0.04)
     frames = [moment(T) for T in times]
     surfaces = [frames[i] for i in keys]
     fig = movie_figure(frames, {"sheet": "cover"}, size)

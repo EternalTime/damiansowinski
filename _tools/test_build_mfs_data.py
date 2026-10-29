@@ -3249,6 +3249,7 @@ class StacksAndMovies(unittest.TestCase):
               ("milne", "hyperboloids"): "$ct$",
               ("coleman_de_luccia", "hyperboloids"): "$c\\tau$",
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
+              ("twisting_cylindrical_waves", "pulse"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
               ("supertranslation_hair", "shells"): "$\\rho$",
@@ -5041,7 +5042,7 @@ class Slices(unittest.TestCase):
                          + (X + k * (eta + 0.5 * R * (eta + math.sin(eta)))) / 2)
                 return math.pi + 2 + math.log(2) - 2 * log_V + X
             return u_plus_r, ends
-        if key.startswith("einstein_rosen_waves/"):
+        if key.startswith(("einstein_rosen_waves/", "twisting_cylindrical_waves/")):
             # A moment ct = T, drawn against rho and ct in both charts, out to the embedding's reach.
             return (lambda X: t), list(self.reach(surface))
         if key == "senovilla/cylindrical/radial":
@@ -5872,7 +5873,8 @@ class Slices(unittest.TestCase):
                             s = np.clip(((X - a[:, 0]) * d[:, 0] + (T - a[:, 1]) * d[:, 1]) / np.maximum((d * d).sum(1), 1e-300), 0, 1)
                             gap = np.hypot(a[:, 0] + s * d[:, 0] - X, a[:, 1] + s * d[:, 1] - T)
                             self.assertLess(float(np.min(gap)), 2e-4, f"{where} at {(X, T)}")
-                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "gowdy", "senovilla"):
+                    elif metric_id in ("malament_hogarth", "einstein_rosen_waves", "twisting_cylindrical_waves", "gowdy",
+                                       "senovilla"):
                         lo, hi = self.reach(surface)
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2
