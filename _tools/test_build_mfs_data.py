@@ -3854,7 +3854,8 @@ class StacksAndMovies(unittest.TestCase):
     STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
               "big_rip": 1.0,
-              "maximally_supersymmetric_plane_wave": 0.8}   # the height of a unit of time
+              "maximally_supersymmetric_plane_wave": 0.8,
+              "holographic_superconductor": 1.0}   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
