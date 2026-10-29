@@ -2149,6 +2149,67 @@ def interior_schwarzschild(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 1.5\\,r_s$.")]
 
 
+# Bonnor and Faulkes's oscillation (4.7) in units of L: alpha = 0.7, r_0^2/L^2 = 4/9, m = 0.1084 L.
+OSC_ALPHA, OSC_R0, OSC_M = 0.7, 2.0 / 3.0, 0.1084
+
+
+def oscillating_sphere_rate(F, alpha=OSC_ALPHA, r0=OSC_R0, m=OSC_M):
+    """Fdot^2 from Bonnor and Faulkes's (2.8), with L = 1."""
+    Y0 = F ** alpha - 1 + alpha + alpha * r0 ** 2 / 4
+    return 2 * m * Y0 ** 3 / (r0 ** 3 * alpha ** 3 * F ** (3 * alpha + 1)) - (F ** -alpha - (1 - alpha) * F ** (-2 * alpha)) / alpha
+
+
+def oscillating_sphere(ck, src):
+    """Bonnor and Faulkes's oscillating sphere, their (4.7), at its largest, where Fdot = 0 and the
+    moment of constant t is time symmetric. Inside, the published comoving chart at that F: the
+    spatial metric is (B + C r^2)^-2 times flat space, with B = (F^alpha - 1 + alpha)/(alpha F^(alpha + 1))
+    and C = 1/(4L^2 F^(alpha + 1)), a cap of a sphere of radius 1/(2 sqrt(BC)) out to r_0. Outside it is
+    Flamm's paraboloid from the schwarzschild entry at r_s = 2m, from the areal radius of the surface
+    zeta = alpha r_0 F^(alpha + 1)/Y_0, their (2.13). A time symmetric moment of a fluid at rest meets the
+    vacuum's with one tangent, cos^2 chi_0 = 1 - 2m/zeta, which is checked."""
+    from scipy.optimize import brentq
+    F = brentq(oscillating_sphere_rate, 1.05, 1.4, xtol=1e-15)
+    ck.add("oscillating sphere: Fdot^2 of (2.8) vanishes at the largest F", abs(oscillating_sphere_rate(F)), 1e-12)
+    ck.add("oscillating sphere: the largest F is Bonnor and Faulkes's 1.20", abs(round(F, 2) - 1.20), 1e-9)
+    a, r0, m = OSC_ALPHA, OSC_R0, OSC_M
+    Y0 = F ** a - 1 + a + a * r0 ** 2 / 4
+    zeta = a * r0 * F ** (a + 1) / Y0
+    B, C = (F ** a - 1 + a) / (a * F ** (a + 1)), 1 / (4 * F ** (a + 1))
+    radius = 1 / (2 * math.sqrt(B * C))
+    ck.add("oscillating sphere: the cap meets the paraboloid with one tangent, cos^2 chi_0 = 1 - 2m/zeta",
+           abs((1 - (zeta / radius) ** 2) - (1 - 2 * m / zeta)), 1e-12)
+    top = 2.0
+    size = 2 * top
+    inner = Slice(src, "oscillating_sphere", "comoving", "r", "\\phi", {"t": 0, **EQUATOR},
+                  {"alpha": "7/10", "L": "1", "m": repr(m), "r_0": "2/3"}, {"F": repr(F)})
+    outer = Slice(src, "schwarzschild", "spherical", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": repr(2 * m)})
+    ext = Piece("exterior", "sheet", outer, zeta, top, 0.0, 1,
+                (("join", "the surface of the sphere, $r = \\zeta$"), ("edge", "the paraboloid runs on to $r \\to \\infty$")),
+                [(zeta, "surface", None), (1.0, "r", None), (top, "r", None)], size)
+    star = Piece("star", "star", inner, 0.0, r0, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the cap is smooth"), ("join", "the surface $r = r_0$")),
+                 [(r0 / 3, "r", None), (2 * r0 / 3, "r", None)], size)
+    star.z = star.z + (ext.z[0] - star.z[-1])
+    surface = Surface([star, ext])
+    ck.isometry("oscillating sphere, the fluid", star)
+    ck.isometry("oscillating sphere, the exterior", ext)
+    ck.join("oscillating sphere, the fluid meets the exterior", star, r0, ext, zeta)
+    ck.form("oscillating sphere, the fluid is a cap of a sphere of radius 1/(2 sqrt(BC))", star,
+            lambda r: star.z[0] + radius - np.sqrt(radius ** 2 - (r / (B + C * r * r)) ** 2), size)
+    ck.form("oscillating sphere, the exterior is Flamm's", ext,
+            lambda r: 2 * np.sqrt(2 * m * (r - 2 * m)) - 2 * np.sqrt(2 * m * (zeta - 2 * m)), size)
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *ext.at(zeta), "$\\zeta$", dx=10)
+    ring_label(fig, [0, 0, 0], *ext.at(top), "$2L$")
+    fig.legend("fill", "star", "the fluid, $r \\le r_0$")
+    fig.legend("fill", "cover", "the vacuum")
+    fig.legend("line", "r", "$r$ constant")
+    fig.legend("line", "surface", "the surface, areal radius $\\zeta$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("largest", "The sphere at its largest", "$L$", [surface], fig.done(),
+                 settings=f"$L = 1$, $\\alpha = 0.7$, $r_0 = 2L/3$, $m = 0.1084L$, $F = {F:.4f}$.")]
+
+
 EC_V, EC_R = 0.5, 3.0                    # the speed and the radius, in r_s, of the two clusters with a surface
 # The cluster with no surface is the one the spacetime diagrams declare.
 EC_CORE, EC_CORE_INPUT = nr.EC_CORE, nr.EC_CORE_INPUT
@@ -17833,6 +17894,7 @@ DRAWN = {
     "penrose_impulsive_wave": penrose_impulsive_wave,
     "bonnor_vaidya": bonnor_vaidya,
     "oppenheimer_snyder": oppenheimer_snyder,
+    "oscillating_sphere": oscillating_sphere,
     "semiclosed_world": semiclosed_world,
     "datt_ruban_t_models": datt_ruban_t_models,
     "white_hole": white_hole,
@@ -18283,6 +18345,10 @@ CAPTIONS = {
         "circle with one tangent plane, and the surface is smooth across the surface of the star. The "
         "vacuum paraboloid would run on down to a throat at $r_s$. The star, at $R = 1.5\\,r_s$, ends it "
         "above there, and its circles shrink to a point at the centre.",
+    ],
+    ("oscillating_sphere", "largest"): [
+        "The equatorial plane of the sphere at its largest ($\\dot{F} = 0$), every distance along it the metric "
+        "distance: a cap of a sphere inside, Flamm's paraboloid outside, meeting with one tangent.",
     ],
     ("bowers_liang", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 9r_s/8$), drawn as a "
