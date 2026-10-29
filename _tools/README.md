@@ -1537,12 +1537,12 @@ It starts Chrome with `_tools/chrome.mjs`, as `page_timing.mjs` does, and export
 Each diagram stands beside the mathematics it draws, on the site alone: the application keeps them together in its Graphs section, between its Maths and its References.
 The sections of a spacetime's page stand in this order, each where the spacetime has it:
 
-    history, coordinates, conventions, spacetime diagram, conformal diagram,
-    line element, metric, embedding diagram, inverse metric, Christoffel symbols, Riemann tensor,
+    history, coordinates, conventions, line element, spacetime diagram,
+    conformal diagram, metric, embedding diagram, inverse metric, Christoffel symbols, Riemann tensor,
     Ricci tensor, Ricci scalar, Ricci scalar diagram, Kretschmann scalar, Kretschmann scalar diagram,
     Einstein tensor, Weyl tensor, geodesics, related spacetimes, references
 
-The spacetime diagram and the conformal diagram follow the coordinates, since they draw a plane of two of them and the whole spacetime in them, and they follow the conventions too, which stand right under the coordinates and say what the coordinates and the parameters drawn at are.
+The spacetime diagram and the conformal diagram follow the coordinates, since they draw a plane of two of them and the whole spacetime in them, and they follow the conventions too, which stand right under the coordinates and say what the coordinates and the parameters drawn at are, and the line element, which stands right under the conventions.
 The embedding diagram follows the metric it embeds.
 The spacetime diagram and the conformal diagram each draw the slice the embedding diagram is cut from, so the reader meets the line and then, further on, the surface cut along it.
 A curvature figure stands after the scalars it plots: what it draws of the Ricci scalar after the Ricci scalar, under the heading "Ricci scalar diagram", and the rest after the Kretschmann scalar, under the heading "Kretschmann scalar diagram", each named as the other diagrams are; "Curvature figures" below defines it.

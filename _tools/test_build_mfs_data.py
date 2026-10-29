@@ -8052,7 +8052,7 @@ class Relations(unittest.TestCase):
 class SectionOrder(unittest.TestCase):
     """The sections of a spacetime's page stand in the order _tools/README.md gives under "Where the
     diagrams stand", each diagram beside the mathematics it draws: the spacetime diagram and the
-    conformal diagram after the coordinates and their conventions, the embedding diagram after the
+    conformal diagram after the coordinates, their conventions and the line element, the embedding diagram after the
     metric, and the curvature figure's Ricci scalar after the Ricci scalar and its Kretschmann scalar
     after the Kretschmann scalar. The contents beside the page and its print copy read the page as
     drawn, so they follow it."""
@@ -8061,9 +8061,9 @@ class SectionOrder(unittest.TestCase):
         ("history", 'mfs-section-label">history<'),
         ("coordinates", 'mfs-section-label">coordinates<'),
         ("conventions", "conventionSection(data, coord),"),
+        ("line element", 'mfs-section-label">line element<'),
         ("spacetime diagram", "diagramSection(data.id, coord.id)"),
         ("conformal diagram", "conformalSection(data.id, hasCoords ? coord.id : null),"),
-        ("line element", 'mfs-section-label">line element<'),
         ("metric", 'mfs-section-label">metric<'),
         ("embedding diagram", "embeddingSection(data.id, hasCoords ? coord.id : null),"),
         ("inverse metric", 'mfs-section-label">inverse metric<'),
