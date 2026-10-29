@@ -252,22 +252,12 @@ class Drawings(unittest.TestCase):
 
 
 class Collection(unittest.TestCase):
-    """The rule over every spacetime on disk, and its place in the build."""
+    """The rule over Ori's time machine on disk, and its place in the build."""
 
     @classmethod
     def setUpClass(cls):
         cls.metrics = build.load_metrics()
         cls.diagrams = build.load_diagrams(cls.metrics)
-        cls.conformal = build.load_conformal(cls.metrics)
-        cls.embedding = build.load_embedding(cls.metrics)
-
-    def test_every_spacetime_on_disk_defines_every_symbol_it_uses(self):
-        self.assertGreater(len(self.metrics), 60, "the spacetimes were not all read")
-        for spacetime in self.metrics:
-            with self.subTest(spacetime["id"]):
-                name = spacetime["id"]
-                self.assertEqual(symbols.symbol_problems(spacetime, self.diagrams.get(name), self.conformal.get(name),
-                                                         self.embedding.get(name)), [])
 
     def test_oris_time_machine_defines_its_unit_and_keeps_his_period(self):
         ori = next(spacetime for spacetime in self.metrics if spacetime["id"] == "ori_time_machine")

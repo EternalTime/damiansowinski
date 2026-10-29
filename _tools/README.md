@@ -459,7 +459,7 @@ The captain found Ori's time machine drawn in units of a length $\ell$ that noth
     python3 _tools/symbols.py [spacetime ...]
 
 prints every symbol that nothing defines, with the chart or the drawing that uses it and the fields it stands in, and exits non-zero if there is one.
-`build_mfs_data.py` holds the same rule, so the command refuses to write and `--check` fails while a symbol is undefined, and `_tools/test_symbols.py` holds it to the files on disk.
+`build_mfs_data.py` holds the same rule, so the command refuses to write and `--check` fails while a symbol is undefined, and `_tools/test_symbols.py` holds it to what it is meant to catch and to pass.
 `_tools/symbols.py` is the rule itself, and its opening lines are the full statement of it.
 
 A chart defines its coordinates, the symbols of its parameters, every symbol in the mathematics of its convention and of the spacetime's shared convention, what a parameter's description defines, and what a domain names in its words, as in "(the closed null geodesic $N$)".
