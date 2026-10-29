@@ -1213,6 +1213,8 @@ RNADS_TIME_OUT = "u - atan(r) + sqrt(2)*atan(r/sqrt(2))"
 KDS = {"r_s": 1, "a": "9/20", "Lambda": "1/5"}
 KADS = {"r_s": 2, "a": "1/2", "Lambda": -3}
 KDS_SPLIT = 2.0
+# The super-entropic black hole at m = 2 ell, where Delta = (r - ell)(r^3 + ell r^2 + 3ell^2 r - ell^3)/ell^2.
+SEB = {"ell": 1, "m": 2}
 KDS_AXIS = {"theta": "0", "phi": "0"}
 KDS_KERR_AXIS = {"theta": "0", "tildephi": "0"}
 # Chandrasekhar and Xanthopoulos's waves as their diagrams draw them: p = 3/5 and q = 4/5, so that
@@ -4569,6 +4571,15 @@ DIAGRAMS = [
             "$r/r_s$", "$c\\tau/r_s$", KDS, {"theta": "0", "psi": "0"}, tau="tau"),
     Diagram("kerr_de_sitter", "kerr_schild", "axis_ads", "$\\Lambda < 0$, the axis", ("\\tau", "r"), (0, 3, -1.5, 1.5),
             "$r/\\ell$", "$c\\tau/\\ell$", KADS, {"theta": "0", "psi": "0"}, tau="tau"),
+    # Super-entropic black holes. The axis is not part of the spacetime, so no plane of t and r holds
+    # its rays; both charts draw the principal null congruence on the equator, at m = 2 ell, where the
+    # event horizon is r_+ = ell.
+    Diagram("super_entropic", "hennigar_kubiznak_mann", "principal", "Principal null rays", ("t", "r"),
+            (0.5, 3.5, -1.5, 1.5), "$r/\\ell$", "$ct/\\ell$", SEB, {"theta": "pi/2"}, orient="ingoing",
+            principal=True, leaves=("psi",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
+    Diagram("super_entropic", "carter_plebanski", "principal", "Principal null rays", ("\\tau", "q"),
+            (0.5, 3.5, -1.5, 1.5), "$q/\\ell$", "$c\\tau/\\ell$", SEB, {"p": "0"}, orient="ingoing", tau="tau",
+            principal=True, leaves=("sigma",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
     # Kerr-Taub-NUT. With a Misner string on each half of the axis the Boyer-Lindquist chart has no
     # plane of t and r that holds its rays, so it draws the principal null congruence on the equator,
     # in t and r and from above. The chart with one string draws the regular half of the axis, and
@@ -10494,6 +10505,14 @@ CAPTIONS = {
     ],
     ("kerr_de_sitter", "kerr_schild", "axis_ads"): [
         "The plane of $\\tau$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $r_s = 2\\ell$ and $a = \\ell/2$, with $\\Lambda = -3/\\ell^2$. On the axis the ingoing rays have $d(c\\tau)/dr = -1/(1 + r^2/\\ell^2)$, as in anti-de Sitter space, whatever the mass, since the null vector of the Kerr-Schild form is tangent to them. The outgoing rays stand vertical at $r_- = 0.137\\,\\ell$ and $r_+ = 0.859\\,\\ell$, and the chart runs through both.",
+    ],
+    ("super_entropic", "hennigar_kubiznak_mann", "principal"): [
+        "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\psi$ left out, for $m = 2\\ell$, where $r_+ = \\ell$. Its rays are the principal null congruence, the light rays that run straight in and straight out: the two null directions of the plane of $\\partial_r$ and $(r^2 + \\ell^2)\\,\\partial_t + \\ell\\,\\partial_\\psi$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\psi/dr = \\pm\\ell/\\Delta$, and the curves drawn are the rays' projections, $d(ct)/dr = \\pm(r^2 + \\ell^2)/\\Delta$, the same at every $\\theta$.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at $r_+ = \\ell$ and point to smaller $r$ inside it. Far out $d(ct)/dr \\to \\pm\\ell^2/r^2$, so a ray reaches the boundary in a finite $t$. The dotted line is the ergosurface, $\\Delta = \\ell^2\\sin^4\\theta$, at $r = 1.180\\,\\ell$ on the equator, and between it and $r_+$ nothing, light included, can keep $\\psi$ fixed.",
+    ],
+    ("super_entropic", "carter_plebanski", "principal"): [
+        "The equatorial plane ($p = 0$) drawn in $\\tau$ and $q$, with $\\sigma$ left out, for $m = 2\\ell$, where $q_+ = \\ell$. Its rays are the principal null congruence: the two null directions of the plane of $\\partial_q$ and $(q^2 + \\ell^2)\\,\\partial_\\tau - \\partial_\\sigma$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\sigma/dq = \\mp 1/Q$, and the curves drawn are the rays' projections, $d(c\\tau)/dq = \\pm(q^2 + \\ell^2)/Q$, the same at every $p$.",
+        "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at $q_+ = \\ell$ and point to smaller $q$ inside it. The dotted line is the ergosurface, $Q = P$, at $q = 1.180\\,\\ell$ on the equator, and between it and $q_+$ nothing, light included, can keep $\\sigma$ fixed.",
     ],
     ("kerr_taub_nut", "boyer_lindquist", "principal"): [
         "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for $a = m$ and $l = 5m/4$. Its rays are the principal null congruence, the light rays that run straight in and straight out: the two null directions of the plane of $\\partial_r$ and $(r^2 + a^2 + l^2)\\,\\partial_t + a\\,\\partial_\\phi$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\phi/dr = \\pm a/\\Delta$, and the curves drawn are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2 + l^2)/\\Delta$, the same at every $\\theta$.",

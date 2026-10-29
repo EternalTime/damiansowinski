@@ -17019,6 +17019,103 @@ def brane_wall_universe(ck, src):
     }]
 
 
+
+# ---------------------------------------------------------------- super-entropic black holes
+
+SEB_PARAMS = {"ell": 1.0, "m": 2.0}   # m = 2 ell, where the event horizon is r_+ = ell, as the other drawings take it
+SEB_REACH = 3.0                       # the box runs out to 3 ell and from -3 ell to 3 ell up
+SEB_CELLS = 40                        # the cells of the map to each ell, across and up
+SEB_SCALE = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1.0}   # the colours of K ell^4
+SEB_DOMAIN = "r > ell"                # the chart's domain, outside the event horizon r_+ = ell at m = 2 ell
+
+
+def super_entropic(ck, src):
+    """The super-entropic black hole at ell = 1 and m = 2 ell, where the event horizon is r_+ = ell,
+    its Kretschmann scalar over the meridian half plane of the chart of Hennigar, Kubiznak and Mann,
+    r sin(theta) across and r cos(theta) up, outside the horizon.
+
+    The chart publishes K = 48 m^2 (r^2 - ell^2 cos^2 theta)(Sigma^2 - 16 ell^2 r^2 cos^2 theta)/Sigma^6
+    + 24/ell^4, a function of r and theta alone, the same at every t and psi, and R = -12/ell^2, a
+    constant, so the figure is K alone. The chart covers r > r_+, which the map declares as its
+    domain, so the cells inside the horizon are null; the axis theta = 0, pi is no part of the
+    spacetime, and every cell's centre lies off it. K changes sign, so it is coloured on a signed
+    logarithmic scale, linear within 1/ell^4 of zero, from -10^3 to 10^3. The horizon, the zero of
+    the published g^rr, is marked.
+
+    Checked here: K's closed form and R; the horizon at r = ell on every ray; K the same at theta
+    and pi - theta; K = 216/ell^4 on the equator of the horizon; K negative on the horizon between
+    the angles found, least there at -68.5/ell^4, and positive on the equator; K within 5 percent of
+    24/ell^4, anti-de Sitter's, at r = 3 ell; forty cells in sixty digits; and every cell inside
+    the colours."""
+    metric, system = "super_entropic", "hennigar_kubiznak_mann"
+    params = dict(SEB_PARAMS)
+    values, names = list(params.values()), list(params)
+    K = nr_published(src, metric, system, "kretschmann", ["r", "theta"], names)
+    R = nr_published(src, metric, system, "ricci_scalar", ["r", "theta"], names)
+    grr = nr_published(src, metric, system, "inverse_metric_components", ["r", "theta"], names, ("r", "r"))
+    r, th = K.coords
+    ell, mm = K.params
+    sigma = r ** 2 + ell ** 2 * sp.cos(th) ** 2
+    closed = (48 * mm ** 2 * (r ** 2 - ell ** 2 * sp.cos(th) ** 2) * (sigma ** 2 - 16 * ell ** 2 * r ** 2 * sp.cos(th) ** 2)
+              / sigma ** 6 + 24 / ell ** 4)
+    ck(f"{metric} K is 48 m^2 (r^2 - ell^2 cos^2)(Sigma^2 - 16 ell^2 r^2 cos^2)/Sigma^6 + 24/ell^4",
+       sp.simplify(K.expr - closed) == 0)
+    ck(f"{metric} R is -12/ell^2", sp.simplify(R.expr + 12 / ell ** 2) == 0, f"{R.expr}")
+    ck(f"{metric} K is the same at theta and pi - theta", sp.simplify(K.expr.subs(th, sp.pi - th) - K.expr) == 0)
+    rays = [zeros(ck, f"{metric} g^rr at theta = {t:.4f}", lambda x, *p, t=t: grr(x, t, *values), 0.6, SEB_REACH, [])
+            for t in np.linspace(0.05, math.pi - 0.05, 13)]
+    ck(f"{metric} g^rr changes sign at r = ell alone on every ray outside r = 0.6 ell",
+       all(len(z) == 1 and abs(z[0] - 1) < 1e-12 for z in rays), f"{rays[0]}")
+    equator = float(K.exact([1.0, math.pi / 2] + values))
+    ck(f"{metric} K on the equator of the horizon is 216/ell^4", abs(equator - 216) < 1e-9, f"{equator}")
+    t_ = np.linspace(1e-3, math.pi / 2, SAMPLES)
+    on_h = K(np.ones_like(t_), t_, *values)
+    least, where = float(on_h.min()), float(t_[on_h.argmin()])
+    ck(f"{metric} K is least on the horizon at -68.5/ell^4", abs(least + 68.5) < 0.05, f"{least:.4f} at {where:.4f}")
+    neg = zeros(ck, f"{metric} K along the horizon", lambda t, *p: K(np.ones_like(np.asarray(t, dtype=float)), t,
+                                                                     *values), 1e-3, math.pi / 2, [])
+    ck(f"{metric} K is negative on the horizon from 35.5 to 72.7 degrees from the axis alone",
+       len(neg) == 2 and abs(math.degrees(neg[0]) - 35.49) < 0.01 and abs(math.degrees(neg[1]) - 72.72) < 0.01
+       and float(K.exact([1.0, (neg[0] + neg[1]) / 2] + values)) < 0, f"{[math.degrees(z) for z in neg]}")
+    far = [float(K.exact([SEB_REACH, t] + values)) / 24 - 1 for t in (0.05, math.pi / 4, math.pi / 2)]
+    ck(f"{metric} K is within 5 percent of 24/ell^4 at r = 3 ell", max(map(abs, far)) < 0.05, f"{far}")
+
+    x_axis, y_axis = axis("$r\\sin\\theta/\\ell$", 0, SEB_REACH), axis("$r\\cos\\theta/\\ell$", -SEB_REACH, SEB_REACH, 8)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, metric, [aspect])
+    nx, ny = round(SEB_CELLS * SEB_REACH), round(2 * SEB_CELLS * SEB_REACH)
+    xs, ys, cellv = cells(K, x_axis, y_axis, nx, ny, values, frame="meridian")
+    X, Y = np.meshgrid(xs, ys)
+    RR, TT = meridian(X, Y)
+    domain = domain_function(metric, system, SEB_DOMAIN, ["r", "theta"], names)
+    inside = domain(RR, TT, *values)
+    ck(f"{metric} K is finite at every cell outside the horizon", np.all(np.isfinite(cellv[inside])))
+    ck(f"{metric} every cell lies inside the colours", np.all(np.abs(cellv[inside]) <= SEB_SCALE["to"]),
+       f"from {np.min(cellv[inside]):.3f} to {np.max(cellv[inside]):.3f}")
+    rng = np.random.default_rng(2014)
+    picks = [(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 200), rng.integers(0, ny, 200)) if inside[j, i]][:40]
+    points = [[float(RR[j, i]), float(TT[j, i])] + values for i, j in picks]
+    agrees(ck, f"{metric} map", K, points, [cellv[j, i] for i, j in picks])
+    rows = [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(cellv, inside)]
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    n = math.ceil(math.pi / (2 * math.acos(1 - TOLERANCE / (2 * per_unit)))) + 1
+    t = np.linspace(0, math.pi, n)
+    horizon = [[float(np.sin(v)) + 0.0, float(np.cos(v)) + 0.0] for v in t]
+    return [{
+        "id": "meridian", "system": system, "label": "The meridian half plane", "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,\\ell^4$", "scale": SEB_SCALE, "ticks": value_ticks(SEB_SCALE)},
+        "map": {"metric": metric, "system": system, "scalar": "kretschmann", "x": "r", "y": "\\theta",
+                "frame": "meridian", "params": params, "domain": SEB_DOMAIN, "nx": nx, "ny": ny, "cells": rows},
+        "marks": [{"class": "horizon", "points": horizon}],
+        "legend": [["line", "horizon", "horizon"]],
+        "caption": ["The Kretschmann scalar $K$ outside the horizon: $216/\\ell^4$ on its equator, negative "
+                    "$35°$ to $73°$ from the axis, and $24/\\ell^4$ far out."],
+        "settings": "$\\ell = 1$, $m = 2\\ell$.",
+        "clip": "Symlog, $\\pm 10^3$.",
+    }]
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -17101,6 +17198,7 @@ DRAWN = {
     "senovilla": senovilla,
     "swirling_universe_black_hole": swirling_universe_black_hole,
     "simpson_visser": simpson_visser,
+    "super_entropic": super_entropic,
     "taub_nut": taub_nut,
     "thin_shell_wormhole": thin_shell_wormhole,
     "three_brane_throat": three_brane_throat,

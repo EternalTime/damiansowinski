@@ -15461,6 +15461,53 @@ def c_metric(ck, src):
     return views
 
 
+
+def super_entropic(ck, src):
+    """The horizon of the super-entropic black hole at one moment, as Gnecchi, Hristov, Klemm,
+    Toldo and Vaughan, JHEP 01 (2014) 127, their (3.44) and (3.45) and figure 1, and Hennigar,
+    Kubiznak, Mann and Musoke, JHEP 06 (2015) 096, their (2.13) to (2.15) and figure 1, drew it:
+    the surface r = r_+, t = 0 of the chart of Hennigar, Kubiznak and Mann, at the values of the
+    first figure, ell = 1, r_+^2 = 5 ell^2 and the period mu = 2 pi, so that m = (ell^2 + r_+^2)^2/2 r_+ ell^2
+    = 18 ell/sqrt(5). A circle of constant theta has radius rho = sqrt(g_psipsi), which with
+    2 m r_+ ell^2 = (ell^2 + r_+^2)^2 is rho = 6 sin^2(theta)/sqrt(5 + cos^2(theta)). The profile rises from
+    a cusp, where rho falls as theta^2 and z grows as -ln(theta), to the widest circle
+    rho = 6/sqrt(5) on the equator, and falls to the other cusp, since near each pole the horizon
+    is a quotient of the hyperbolic plane of curvature -1/(ell^2 + r_+^2), as on a pseudosphere.
+    The poles are no part of the spacetime, and the profile is drawn for 0.2 <= theta <= pi - 0.2,
+    which holds cos(0.2) = 98.0 percent of the area. The whole horizon has the area
+    2 mu (ell^2 + r_+^2) of Hennigar, Kubiznak and Mann, 24 pi here, and the band's is checked
+    against 24 pi cos(0.2)."""
+    params = {"ell": 1, "m": "18/sqrt(5)"}
+    mu, cut, rp2 = 2 * math.pi, 0.2, 5.0
+    hz = Slice(src, "super_entropic", "hennigar_kubiznak_mann", "\\theta", "\\psi", {"t": 0, "r": "sqrt(5)"}, params)
+    size = 2 * 6 / math.sqrt(5)
+    ends = (("edge", "the cusp toward the pole $\\theta = 0$, which runs on without end and is no part of the "
+                     "spacetime"),
+            ("edge", "the cusp toward the pole $\\theta = \\pi$"))
+    marks = [(math.pi / 4, "r", None), (math.pi / 2, "r", "$\\theta = \\pi/2$"), (3 * math.pi / 4, "r", None)]
+    horizon = Piece("horizon", "sheet", hz, cut, math.pi - cut, 0.0, -1, ends, marks, size)
+    ck.isometry("super-entropic horizon", horizon)
+    ck.radius("super-entropic horizon, rho = 6 sin^2(theta)/sqrt(5 + cos^2(theta))", horizon,
+              lambda th: 6 * np.sin(th) ** 2 / np.sqrt(rp2 + np.cos(th) ** 2), size)
+    pts = np.array(horizon.data()["points"])
+    ds = np.hypot(np.diff(pts[:, 1]), np.diff(pts[:, 2]))
+    area = float(np.sum(2 * math.pi * 0.5 * (pts[1:, 1] + pts[:-1, 1]) * ds))
+    want = 2 * mu * (1 + rp2) * math.cos(cut)
+    ck.add("super-entropic horizon: the band's area is 2 mu (ell^2 + r_+^2) cos(0.2), of the whole 2 mu (ell^2 + r_+^2)",
+           abs(area - want) / want, 1e-4)
+    ck.add("super-entropic horizon: the circle on the equator has radius 6/sqrt(5)",
+           abs(float(hz.rho_at(math.pi / 2)) - 6 / math.sqrt(5)), 1e-12)
+    surface = Surface([horizon])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *horizon.at(math.pi / 2), "$\\theta = \\pi/2$")
+    fig.legend("fill", "cover", "the event horizon $r = r_+$ at one moment, between $\\theta = 0.2$ and $\\pi - 0.2$")
+    fig.legend("line", "r", "$\\theta$ constant, at $\\pi/4$, $\\pi/2$ and $3\\pi/4$")
+    fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
+    settings = ("$\\ell = 1$, the unit of every length, $m = 18\\ell/\\sqrt{5}$, where the event horizon is "
+                "$r_+ = \\sqrt{5}\\,\\ell$, and the period of $\\psi$ is $\\mu = 2\\pi$, the values of the figure of "
+                "Gnecchi, Hristov, Klemm, Toldo, and Vaughan.")
+    return [view("horizon", "The event horizon", "$\\ell$", [surface], fig.done(), settings=settings)]
+
 NARIAI_MOMENTS = (-1.5, -0.75, 0.0, 0.75, 1.5)     # ct in units of 1/sqrt(Lambda)
 
 
@@ -17597,6 +17644,7 @@ DRAWN = {
     "unruh_acoustic_hole": unruh_acoustic_hole,
     "btz_shock_wave": btz_shock_wave,
     "c_metric": c_metric,
+    "super_entropic": super_entropic,
     "einstein_rosen_waves": einstein_rosen_waves,
     "gowdy": gowdy,
     "nariai": nariai,
@@ -17877,6 +17925,15 @@ CAPTIONS = {
         "black hole, the same surface turned over, and closes in on that black hole's horizon. Each throat is "
         "the bifurcation sphere of a black hole horizon, through which the extension of Jerry Griffiths, Pavel "
         "Krtouš, and Jiří Podolský continues into a further exterior.",
+    ],
+    ("super_entropic", "horizon"): [
+        "The event horizon $r = r_+$ at one moment of $t$ ($r_+ = \\sqrt{5}\\,\\ell$, $\\mu = 2\\pi$), drawn as a surface "
+        "in flat space with every distance along it the metric distance. Its metric is "
+        "$\\Sigma\\,d\\theta^2/\\sin^2\\theta + (\\ell^2 + r_+^2)^2\\sin^4\\theta\\,d\\psi^2/\\Sigma$, so the circle of "
+        "latitude $\\theta$ has radius $6\\ell\\sin^2\\theta/\\sqrt{5 + \\cos^2\\theta}$, widest on the equator.",
+        "Toward each pole the horizon approaches the hyperbolic plane and runs out in a cusp to infinite distance, "
+        "while its area stays finite, $2\\mu(\\ell^2 + r_+^2) = 24\\pi\\ell^2$ in all. The band drawn, "
+        "$0.2 \\le \\theta \\le \\pi - 0.2$, holds $98\\%$ of it, and the poles themselves are no part of the spacetime.",
     ],
     ("c_metric", "horizon"): [
         "The black hole horizon $r = 2m$ at one moment of $t$, its bifurcation sphere ($\\alpha m = 1/6$, "
