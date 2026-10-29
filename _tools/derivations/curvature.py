@@ -4213,7 +4213,7 @@ def eguchi_hanson(ck, src):
         "legend": [["line", "front", "the bolt, between the centres"]],
         "caption": ["The Kretschmann scalar $K$ is constant on ellipses with foci $z = \\pm a$; the Ricci scalar "
                     "vanishes."],
-        "settings": "$a = 1$, two-centre chart.",
+        "settings": "$a = 1$, chart of two centres.",
         "clip": "Log scale $10^{-2}$ to $10^3$, none cut.",
     }
     return [radial, half_plane]
@@ -10421,7 +10421,7 @@ def morris_thorne(ck, src):
             "$K = 12b_0^4/(l^2 + b_0^2)^4$, falling as $12b_0^4/l^8$ far from the throat.",
             "$R = -2b_0^2/(l^2 + b_0^2)^2$, falling in magnitude as $2b_0^2/l^4$ far from the throat.",
             "The Ellis-Bronnikov wormhole has this same geometry when the redshift vanishes and the "
-            "shape function is $b_0^2$ divided by the areal radius, so its figure draws these same curves.",
+            "shape function is $b_0^2$ divided by the areal radius, so its scalars follow these same curves.",
         ],
         "ricci_sentences": [[2, 0], [4, 0]], "per_scalar": scalar_clips(k_clip, r_clip),
         "settings": "$b_0 = 1$, the throat radius and unit of length, with $|l| \\le \\sqrt{24}\\,b_0$.",
@@ -14451,7 +14451,7 @@ def ellis_bronnikov(ck, src):
             "every $t$, $\\theta$, and $\\phi$. At the throat $K$ is finite and greatest, $12/\\ell^4$, "
             "and falls symmetrically on either side, approaching $12\\ell^4/r^8$ far out. "
             "The Morris-Thorne wormhole has this same geometry when its redshift vanishes and its "
-            "shape function is $\\ell^2$ divided by the areal radius, so its figure draws these same curves.",
+            "shape function is $\\ell^2$ divided by the areal radius, so its scalars follow these same curves.",
             "$R$ is negative at every $r$, least at the throat, $-2/\\ell^2$, and rises symmetrically "
             "toward zero on either side, approaching $-2\\ell^2/r^4$ far out.",
         ],
@@ -15044,7 +15044,7 @@ def levi_civita(ck, src):
         "caption": [
             "The Kretschmann scalar $K$ of the static cylinder against Weyl's radius $\\rho$ as the mass "
             "parameter $\\sigma$ runs from $1/40$ to $19/40$ in steps of $1/40$ ($C = 1$), the same at every "
-            "$t$, $\\phi$ and $z$. The spacetime is flat at $\\sigma = 0$ and $\\sigma = 1/2$. "
+            "$t$, $\\phi$, and $z$. The spacetime is flat at $\\sigma = 0$ and $\\sigma = 1/2$. "
             "Its Ricci scalar vanishes for every $\\sigma$.",
             "$K$ grows without bound toward the axis and falls toward zero at large $\\rho$ in every member "
             "drawn. The radial power $4(4\\sigma^2 - 2\\sigma + 1)$ is least at $\\sigma = 1/4$, where "
@@ -15654,7 +15654,7 @@ def bubbling_ads(ck, src):
                 "cells": [[rounded(v) for v in row] for row in values]},
         "marks": [{"class": "front", "points": line} for line in white],
         "legend": [["line", "front", "white of $y = 0$"]],
-        "caption": ["The ten-dimensional Kretschmann scalar $K$ of a black ring ($L^2 < r < \\sqrt{2}\\,L^2$), "
+        "caption": ["The Kretschmann scalar $K$ of a black ring in ten dimensions ($L^2 < r < \\sqrt{2}\\,L^2$), "
                     "finite everywhere and $80/L^4$ far away."],
         "settings": "$L = 1$.",
         "clip": "Logarithmic, $10$ to $10^4$.",
