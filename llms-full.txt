@@ -2059,6 +2059,18 @@ Schwarzschild's black hole with its second exterior folded onto the first: the K
 - chart Schwarzschild Exterior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Isotropic: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -\left(\dfrac{4\rho - r_s}{4\rho + r_s}\right)^2c^2dt^2 + \left(1 + \dfrac{r_s}{4\rho}\right)^4\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### A Black Hole in a Universe Filled by a Scalar Field
+
+Schwarzschild's black hole in a massless scalar field whose gradient far away points along one axis, the scalar counterpart of Ernst's black hole in Melvin's magnetic universe. Somasri Sen and Narayan Banerjee wrote the metric down in 2001, and Vitor Cardoso and José Natário found it again in 2024. The field is smooth on the horizon, and the curvature grows without bound far from the axis.
+
+- id: `scalar_field_black_hole`
+- tags: black hole, black hole hair, scalar hair, scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, dark matter, static, stationary, axisymmetric, Weyl class, harmonic function, mass, horizon, event horizon, Killing horizon, curvature singularity, naked singularity, timelike singularity, not asymptotically flat, no-hair theorem, Petrov type I, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/scalar_field_black_hole.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + F\left(\dfrac{dr^2}{1 - \dfrac{2m}{r}} + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2$$
+- chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
+- chart Scalar Universe: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -c^2dt^2 + e^{-b^2\rho^2}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2$$
+
 ### Schrödinger Spacetime
 
 Anti-de Sitter space with one term added to its metric, which cuts its symmetries down to those of the free Schrödinger equation: Galilean boosts, a scaling under which time goes as the square of length, and a conserved mass. Dam Thanh Son, and Koushik Balasubramanian and John McGreevy, proposed it in 2008 as the gravitational dual of cold atoms at unitarity. Every event on a surface of constant time has the same future.

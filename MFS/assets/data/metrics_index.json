@@ -1422,7 +1422,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "2769c04e78d35ef4",
+    "version": "7c8925b84f027b69",
     "diagrams": "3293440e9059a970",
     "conformal": "49c40202992137c1",
     "embedding": "a0dc24d8631c665d",
@@ -1867,7 +1867,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9d35572725aa9a41",
+    "version": "02bfac09c7db2ca8",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46",
@@ -3542,7 +3542,7 @@
       "idealized model",
       "black hole pair creation"
     ],
-    "version": "e506a6b050b784eb",
+    "version": "9d907e6f052d1bcc",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "86969fc37532f407",
@@ -4683,6 +4683,44 @@
     "embedding": "fabbc86e0024f31d"
   },
   {
+    "id": "scalar_field_black_hole",
+    "name": "Scalar Schwarzschild-Melvin",
+    "tags": [
+      "black hole",
+      "black hole hair",
+      "scalar hair",
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "Einstein-scalar",
+      "dark matter",
+      "static",
+      "stationary",
+      "axisymmetric",
+      "Weyl class",
+      "harmonic function",
+      "mass",
+      "horizon",
+      "event horizon",
+      "Killing horizon",
+      "curvature singularity",
+      "naked singularity",
+      "timelike singularity",
+      "not asymptotically flat",
+      "no-hair theorem",
+      "Petrov type I",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "9e60d33c390cdb88",
+    "diagrams": "3b7836091b511a52",
+    "conformal": "c3fbf584810e0a0e",
+    "curvature": "54286353a8682151"
+  },
+  {
     "id": "schrodinger_spacetime",
     "name": "Schrödinger Spacetime",
     "tags": [
@@ -4740,7 +4778,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "d70abc79dd63bc5a",
+    "version": "262c68a365e8c9dc",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",

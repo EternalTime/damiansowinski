@@ -62,6 +62,11 @@
       "id": "curzon_chazy",
       "kind": "family",
       "text": "Another member of Weyl's class, built on the Newtonian potential of a point. Here the potential is that of Schwarzschild's rod plus a quadrupole that grows with distance [bicak2000, frolovshoom2007]."
+    },
+    {
+      "id": "scalar_field_black_hole",
+      "kind": "family",
+      "text": "Schwarzschild's rod of Weyl's class with a growing dipole of a massless scalar field laid over it. Its horizon stays regular too, and its surroundings never flatten out [herdeiro2025]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "geroch1982",
     "binnington2009",
     "abdolrahimi2015",
-    "bicak2000"
+    "bicak2000",
+    "herdeiro2025"
   ],
   "coordinates": [
     {

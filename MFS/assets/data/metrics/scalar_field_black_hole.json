@@ -11,6 +11,7 @@
     "massless scalar field",
     "minimally coupled scalar field",
     "Einstein-scalar",
+    "dark matter",
     "static",
     "stationary",
     "axisymmetric",
@@ -34,9 +35,44 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "The mass parameter $m = GM/c^2$ is a length and the gradient $b$ an inverse length. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
-  "history": "",
-  "related": [],
-  "references": [],
+  "history": "A black hole can sit inside a field that fills the whole universe [ernst1976b]. Frederick Ernst's does: his metric of 1976 places Schwarzschild's hole in Mael Melvin's magnetic universe, a bundle of parallel field lines held together by their own gravity [ernst1976b, melvin1964]. Far from the hole the field points along one axis, and the spacetime is not asymptotically flat [cardoso2025]. What becomes of the picture when the field is the plainest kind of matter, a massless scalar field?¶A black hole alone in a universe that flattens out far away cannot carry a nontrivial massless scalar field that is smooth on its horizon, by the no-hair theorems of J. E. Chase and Jacob Bekenstein [chase1970, bekenstein1972, herdeiro2025]. Somasri Sen and Narayan Banerjee put that rule to the test on the charged, spinning hole of Kerr and Newman, which they dressed with a scalar field by a procedure close to that of A. Eriş and Metin Gürses from 1977 [sen2001, eris1977]. Two of their solutions turned the would-be horizon into a singularity, and the third, a field growing along the axis as $(r - m)\\cos\\theta$, left it regular [sen2001]. They judged that it \"could not really be considered as a serious counter example due to its pathological behaviour at $r \\rightarrow \\infty$\", where the spacetime is not asymptotically flat and the field grows without bound [sen2001]. Without spin or charge, their third solution of 2001 is Schwarzschild's hole in a universe filled by a scalar field [sen2001].¶The same metric came back in October 2024, when Vitor Cardoso and José Natário went looking for a scalar counterpart of Ernst's hole [cardoso2025]. They started from Hans Buchdahl's static solutions with a scalar field, from 1959, and with the field growing linearly along the axis the metric is free of $z$ only if a clock at rest ticks at the same rate everywhere [cardoso2025, buchdahl1959reciprocal]. That is their scalar counterpart of Melvin's universe, $ds^2 = -c^2dt^2 + e^{-b^2\\rho^2}(d\\rho^2 + dz^2) + \\rho^2d\\phi^2$, in which the gradient of the field is least on the axis and grows as $e^{b^2\\rho^2/2}$ away from it [cardoso2025]. Spatial infinity lies a finite distance from the axis and light gets there in a finite time, so the universe is not globally hyperbolic [cardoso2025]. Following Ernst's lead, and \"after some experimenting\", they then put Schwarzschild's hole inside it [cardoso2025].¶Thirteen days later Carlos Herdeiro showed that the solution belongs to a family built on Hermann Weyl's construction of 1917 [herdeiro2025, weyl1917]. In Weyl's coordinates a static, axisymmetric metric with a massless scalar field is fixed by two harmonic functions in a flat space of three dimensions, one for gravity and one for the field, and the two add their parts to the last metric function independently [herdeiro2025]. Schwarzschild's hole is the potential of a rod of length $2m$ on the axis, and the field $\\varphi \\propto z$ is a growing dipole laid over it [herdeiro2025]. The field changes Weyl's second function by $-b^2\\rho^2/2$ and leaves the first alone [herdeiro2025]. The surface gravity of the horizon, which Yen-Kheng Lim worked out in 2026, is Schwarzschild's, $c^2/4m$, whatever the strength of the field [lim2026].¶Is the scalar universe as tame as Melvin's? Herdeiro found that it is not: away from the axis the curvature grows without bound as $r \\to \\infty$, light reaches that edge after a finite affine distance, and no horizon hides it [herdeiro2025]. Out along the equator $F$ falls away as a Gaussian, and a ray of light from near the hole reaches $r \\to \\infty$ within a finite coordinate time [lim2026]. Lim drew the causal structure as a Kruskal diagram whose far edges are timelike singularities [lim2026]. On the axis $F = 1$, and along it the metric is Schwarzschild's, $-(1 - 2m/r)c^2dt^2 + dr^2/(1 - 2m/r)$ [cardoso2025]. Light has a single circular orbit, the ring $r = 3m$ in the equatorial plane [herdeiro2025].¶Cristian Stelea, Marina-Aura Dariescu, and Vitalie Lungu set the hole accelerating, spinning, and charged in 2025, and pointed out that the spinning version was already among Sen and Banerjee's solutions [stelea2025]. Melvin's magnetic field went back on top of the scalar one with José Barrientos, Fabrizio Canfora, Adolfo Cisterna, Keanu Müller, and Anibal Neira in 2026, so that a single hole sits in both [barrientos2026]. Cardoso and Natário suggest the spacetime may be \"especially appealing in the context of dark matter models with a scalar or axionic degree of freedom\" [cardoso2025]. Herdeiro reads it as \"a proxy to explore scalar-BH interactions\" near the hole, \"possibly considering a large distance cut-off to remove the singularity at infinity\" [herdeiro2025].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "Switch the field off, $b = 0$, and the metric is Schwarzschild's, with $r_s = 2m$."
+    },
+    {
+      "id": "melvin",
+      "kind": "family",
+      "text": "Ernst's black hole in Melvin's magnetic universe, whose scalar twin this is. Cardoso and Natário built the scalar universe and its black hole after Melvin's and Ernst's [cardoso2025]."
+    },
+    {
+      "id": "fisher_jnw",
+      "kind": "family",
+      "text": "Schwarzschild's hole with a scalar field that dies away with distance, which turns the horizon into a singularity. A field that grows along the axis leaves it regular [sen2001, herdeiro2025]."
+    },
+    {
+      "id": "distorted_schwarzschild",
+      "kind": "family",
+      "text": "Schwarzschild's rod of Weyl's class with a growing quadrupole of distant matter laid over it, in a vacuum. Here the growing term is a dipole of a scalar field [herdeiro2025]."
+    }
+  ],
+  "references": [
+    "ernst1976b",
+    "melvin1964",
+    "cardoso2025",
+    "chase1970",
+    "bekenstein1972",
+    "herdeiro2025",
+    "sen2001",
+    "eris1977",
+    "buchdahl1959reciprocal",
+    "weyl1917",
+    "lim2026",
+    "stelea2025",
+    "barrientos2026"
+  ],
   "coordinates": [
     {
       "id": "spherical",

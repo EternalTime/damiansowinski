@@ -92,6 +92,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "The turning counterpart of Melvin's universe, made out of flat space by Ehlers's transformation in the magnetic form Ernst gave Harrison's, with Schwarzschild's hole set inside it [astorino2022swirling]."
+    },
+    {
+      "id": "scalar_field_black_hole",
+      "kind": "family",
+      "text": "The scalar counterpart of Ernst's hole: Schwarzschild's hole in a massless scalar field whose gradient points along the axis, in a universe built after Melvin's [cardoso2025]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "kastor2015",
     "rosen1962",
     "astorino2025",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "cardoso2025"
   ],
   "coordinates": [
     {
