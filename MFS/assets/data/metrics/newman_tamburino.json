@@ -1,0 +1,96 @@
+{
+  "id": "newman_tamburino",
+  "name": "The Newman-Tamburino Metrics",
+  "short_name": "Newman-Tamburino",
+  "description": "The vacuum fields whose light rays spread apart and shear without twisting, every one of which Ezra Newman and Louis Tamburino found in 1962. They come in two classes, a spherical one that changes with the retarded time and a cylindrical one, and both are algebraically general.",
+  "tags": [
+    "vacuum",
+    "Petrov type I",
+    "null congruence",
+    "twist-free",
+    "expanding",
+    "retarded time",
+    "self-similar",
+    "curvature singularity",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Both charts are null charts built on the rays, $\\partial_r$ along each ray with $r$ its affine parameter, and $u$ a retarded time labelling the null hypersurfaces the rays lie in.",
+  "history": "",
+  "related": [],
+  "references": [],
+  "coordinates": [
+    {
+      "id": "spherical",
+      "name": "Spherical class",
+      "coords": [
+        "u",
+        "r",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (|a|, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "b",
+          "description": "Dimensionless rate at which $A$ changes with the retarded time; at $b = 0$ the metric does not depend on $u$"
+        },
+        {
+          "symbol": "A_0",
+          "description": "A length, the value of $A$ at $u = 0$"
+        },
+        {
+          "symbol": "A = A_0 + b\\,c\\,u",
+          "description": "A length, linear in the retarded time"
+        },
+        {
+          "symbol": "s = \\sqrt{x^2 + y^2}",
+          "description": "Dimensionless distance from the line $x = y = 0$ in the coordinates of a wave front"
+        },
+        {
+          "symbol": "a = A\\,s",
+          "description": "A length, the value of $r$ at which each ray ends"
+        },
+        {
+          "symbol": "L = \\tfrac{1}{2}\\ln\\dfrac{r + a}{r - a}",
+          "description": "Dimensionless, real wherever $r > |a|$"
+        }
+      ],
+      "convention": "We use the coordinates of Ezra Newman and Louis Tamburino as John Steele writes them, $(u, r, x, y)$, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, and $x$ and $y$ pure numbers on each wave front, $\\zeta = x + iy$. We take components in the chart $x^0 = cu$ and flip Steele's signature. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = -\\dfrac{2L\\left(a\\,r\\,s^2 - L\\left((r + a)^2x^2 + (r - a)^2y^2\\right)\\right)}{a^2s}c^2du^2 - 2c\\,du\\,dr - \\dfrac{2x\\left(L(r + a)^2 - a\\,r\\right)}{a\\,s^2}c\\,du\\,dx - \\dfrac{2y\\left(L(r - a)^2 - a\\,r\\right)}{a\\,s^2}c\\,du\\,dy + \\dfrac{(r + a)^2}{2s^3}dx^2 + \\dfrac{(r - a)^2}{2s^3}dy^2"
+    },
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical limit",
+      "coords": [
+        "u",
+        "r",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "x \\in (0, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "A length that sets the unit of $r$ inside the logarithm; rescaling $u$, $r$, $x$ and $y$ together changes it, so every value of $\\ell$ is the same spacetime"
+        }
+      ],
+      "convention": "We use the coordinates John Steele writes for the limit of the cylindrical class, $(u, r, x, y)$, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, $x$ a pure number and $y$ a length. We write his constant $b$ as $b = -\\ln\\ell^2$, take components in the chart $x^0 = cu$ and flip his signature. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{\\ln\\left(r^2x^4/\\ell^2\\right)}{x^2}c^2du^2 - 2c\\,du\\,dr - \\dfrac{4r}{x}c\\,du\\,dx + r^2dx^2 + x^2dy^2"
+    }
+  ]
+}
