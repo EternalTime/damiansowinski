@@ -3882,6 +3882,238 @@ def hayward_left_centre(v, r, h=0.004):
     return v0
 
 
+RBHPG_ELL2 = 144 / 625              # ell^2 in units of r_0^2, ell = 12 r_0/25
+
+
+def regular_black_hole_pure_gravity(ck, src):
+    """Bueno, Cano and Hennigar's regular black hole of five dimensions, at r_0 = 1 and l = 12/25,
+    where r^4 - r_0^2 r^2 + l^2 r_0^2 = (r^2 - 16/25)(r^2 - 9/25): 1/f is 1 plus four simple
+    poles, so it is a Tower of those four roots, the two negative ones among them, whose tortoise
+    coordinate vanishes at r = 0. It is drawn as Hayward's is, the same tower with the centre
+    r = 0 on the vertical lines X = +-pi/2, where the published Kretschmann scalar is 40/l^4, de
+    Sitter space's in five dimensions: the black hole above and the white hole below one pair of
+    exteriors, an inner region beyond each, and the next white hole, black hole and exteriors where
+    the drawing fades. The static chart covers I, II and III; the ingoing chart I, II and III';
+    the outgoing chart I, IV and the inner region below it. Each is checked against its own
+    published metric in each cell and to be continuous across both horizons."""
+    name = "Regular black hole from pure gravity"
+    params = {"r_0": 1, "ell": "12/25"}
+    pl = Plane(src, "regular_black_hole_pure_gravity", "spherical", ("t", "r"), nr.TANGHERLINI_FIVE, params)
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    roots = sorted(sp.solve(sp.numer(sp.together(pl.gi[1, 1])), pl.x1), reverse=True)
+    T = Tower(-pl.g[0, 0], pl.x1, roots)
+    rp, rm = T.rf[:2]
+    ck.limit(f"{name}: the roots of the published g^rr are +-4r_0/5 and +-3r_0/5", T.rf, [0.8, 0.6, -0.6, -0.8], 1e-12)
+    ck.limit(f"{name}: the surface gravities are 7/(20 r_0) and 7/(15 r_0)", [float(k) for k in T.kappa[:2]], [7 / 20, 7 / 15], 1e-12)
+
+    def cell(c, k=0):
+        """The map of a cell k periods up the tower."""
+        return lambda t, r: tuple(x + k * PI for x in T.pq(c, t, r))
+    span = 15
+    for c, lo, hi, future in (("I", rp + 1e-3, 20, (1, 0)), ("II", rm + 1e-3, rp - 1e-3, (0, -1)),
+                              ("III", 1e-3, rm - 1e-3, (-1, 0)), ("III'", 1e-3, rm - 1e-3, (-1, 0)),
+                              ("IV", rm + 1e-3, rp - 1e-3, (0, 1)), ("I'", rp + 1e-3, 20, (-1, 0))):
+        ck.chart(f"{name} static, cell {c}", pl, cell(c), ck.uniform(-span, span), ck.uniform(lo, hi),
+                 lambda t, r, future=future: future)
+    # Inside r_- the future is toward smaller t in every copy of both inner cells, as in the tower's III.
+    for c in ("III", "III'"):
+        ck.chart(f"{name} static, cell {c} a period down", pl, cell(c, -1), ck.uniform(-span, span),
+                 ck.uniform(1e-3, rm - 1e-3), lambda t, r: (-1, 0))
+    ts = np.array([-6.0, 0.0, 6.0])
+    p, q = T.pq("III", ts, np.zeros(3))
+    ck.limit(f"{name}: r = 0 lies on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-12)
+    ck.settles(f"{name}: the Kretschmann scalar settles at the centre",
+               pl.kretschmann(np.zeros(3), np.full(3, 1e-3)), pl.kretschmann(np.zeros(3), np.full(3, 1e-4)))
+    ck.limit(f"{name}: the Kretschmann scalar at the centre is de Sitter's 40/ell^4",
+             pl.kretschmann(0.0, 1e-5), [40 / RBHPG_ELL2 ** 2], 1e-6)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons",
+              pl.kretschmann(np.zeros(2), np.array([rp, rm])))
+
+    # The Eddington-Finkelstein charts through the three cells each covers.
+    def ingoing(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(w.shape), np.empty(w.shape)
+        for mask, c, t in ((r > rp, "I", w - rs), ((r < rp) & (r > rm), "II", w - rs), (r < rm, "III'", rs - w)):
+            if mask.any():
+                p[mask], q[mask] = T.pq(c, t[mask], r[mask])
+        return p, q
+
+    def outgoing(w, r):
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(w.shape), np.empty(w.shape)
+        for mask, c, t, k in ((r > rp, "I", w + rs, 0), ((r < rp) & (r > rm), "IV", w + rs, 0),
+                              (r < rm, "III'", -w - rs, -1)):
+            if mask.any():
+                p[mask], q[mask] = cell(c, k)(t[mask], r[mask])
+        return p, q
+    planes = {"ingoing": Plane(src, "regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", ("v", "r"),
+                              nr.TANGHERLINI_FIVE, params),
+              "outgoing": Plane(src, "regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", ("u", "r"),
+                               nr.TANGHERLINI_FIVE, params)}
+    for way, fmap, future in (("ingoing", ingoing, (1, -60)), ("outgoing", outgoing, (1, 60))):
+        for part, lo, hi in (("outside r+", rp + 1e-3, 20), ("between the horizons", rm + 1e-3, rp - 1e-3),
+                             ("inside r-", 1e-3, rm - 1e-3)):
+            ck.chart(f"{name} {way}, {part}", planes[way], fmap, ck.uniform(-span, span), ck.uniform(lo, hi),
+                     lambda w, r, future=future: future)
+    w = np.array([-3.0, 0.0, 2.5])
+    for way, fmap in (("ingoing", ingoing), ("outgoing", outgoing)):
+        # Across r_+ the map is smooth. Across r_- it is continuous and no more: the ray's own
+        # coordinate closes on its limit as (r - r_-)^(k+/k-), the power 2/5, so the two sides are
+        # compared 1e-12 from the horizon, where they stand 3e-5 apart.
+        for root, text, off, tol in ((rp, "r+", 1e-9, 1e-6), (rm, "r-", 1e-12, 1e-4)):
+            ck.limit(f"{name} {way}: the map is continuous across {text}",
+                     fmap(w, np.full(3, root + off)), fmap(w, np.full(3, root - off)), tol)
+    ck.limit(f"{name}: an ingoing ray keeps q = arctan e^(k v) through all three cells",
+             ingoing(np.full(3, 0.7), np.array([3.0, 1.2, 0.4]))[1], [float(np.arctan(np.exp(T.kp * 0.7)))] * 3, 1e-12)
+    ck.limit(f"{name}: an outgoing ray keeps p = -arctan e^(-k u) through all three cells",
+             outgoing(np.full(3, 0.7), np.array([3.0, 1.2, 0.4]))[0], [-float(np.arctan(np.exp(-T.kp * 0.7)))] * 3, 1e-12)
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(2.0 + T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+    ck.limit(f"{name}: the outgoing and static coordinates put one event at one point",
+             outgoing(2.0 - T.rstar(3.0), 3.0), T.pq("I", 2.0, 3.0), 1e-12)
+
+    box = [-PI - 0.45, PI + 0.45, -2 * PI - 0.1, 2 * PI + 0.1]
+    T0, T1 = box[2], box[3]
+    polygons = dict(CELL_POLYGON)
+    polygons["III"] = [(0, HALF), (HALF, HALF), (HALF, PI)]
+    polygons["III'"] = [(HALF, 0), (HALF, HALF), (PI, HALF)]
+    # The cells the drawing holds, as (cell, periods up): one pair of exteriors about T = 0 with the
+    # black hole and an inner region on each side above, the white hole and the same below, and the
+    # next white hole, black hole and exteriors beyond, cut at the top and the bottom of the box.
+    CELLS = [("I", 0), ("I'", 0), ("II", 0), ("IV", 0), ("III", 0), ("III'", 0), ("III", -1), ("III'", -1),
+             ("IV", 1), ("II", -1), ("I", 1), ("I'", 1), ("I", -1), ("I'", -1)]
+
+    def polygon(c, k):
+        return clip_polygon([point(pp + k * PI, qq + k * PI) for pp, qq in polygons[c]], T0, T1)
+
+    def clipped(p, q):
+        X, Tm = xt(p, q)
+        bad = (Tm < T0) | (Tm > T1)
+        return np.where(bad, np.nan, p), np.where(bad, np.nan, q)
+
+    def segment(v, cls, a, b, k):
+        """The straight line between two corners of a cell k periods up, cut to the box."""
+        (xa, ta), (xb, tb) = point(a[0] + k * PI, a[1] + k * PI), point(b[0] + k * PI, b[1] + k * PI)
+        if ta > tb:
+            (xa, ta), (xb, tb) = (xb, tb), (xa, ta)
+        lo, hi = max(ta, T0), min(tb, T1)
+        if lo >= hi and ta != tb:
+            return
+        if ta != tb:
+            xa, xb = (xa + (xb - xa) * (lo - ta) / (tb - ta), xa + (xb - xa) * (hi - ta) / (tb - ta))
+            ta, tb = lo, hi
+        v.line(cls, [[[xa, ta], [xb, tb]]])
+
+    def edges(v):
+        for c, k in CELLS:
+            if c == "I":
+                segment(v, "scri", (-HALF, 0), (-HALF, HALF), k)
+                segment(v, "scri", (-HALF, HALF), (0, HALF), k)
+                segment(v, "horizon", (0, 0), (0, HALF), k)
+                segment(v, "horizon", (-HALF, 0), (0, 0), k)
+            elif c == "I'":
+                segment(v, "scri", (0, -HALF), (HALF, -HALF), k)
+                segment(v, "scri", (HALF, -HALF), (HALF, 0), k)
+                segment(v, "horizon", (0, 0), (HALF, 0), k)
+                segment(v, "horizon", (0, -HALF), (0, 0), k)
+            elif c in ("II", "IV"):
+                sign = 1 if c == "II" else -1
+                for a, b in (((0, 0), (HALF, 0)), ((HALF, 0), (HALF, HALF)), ((HALF, HALF), (0, HALF)), ((0, HALF), (0, 0))):
+                    segment(v, "horizon", (sign * a[0], sign * a[1]), (sign * b[0], sign * b[1]), k)
+            elif c == "III":
+                segment(v, "centre", (0, HALF), (HALF, PI), k)
+            else:
+                segment(v, "centre", (HALF, 0), (PI, HALF), k)
+
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 3, 0, rm, xmax=HALF), [0, rm])
+    radii = {"I": rI, "I'": rI, "II": rII, "IV": rII, "III": rIII, "III'": rIII}
+    ranges = {"I": (rp, np.inf), "I'": (rp, np.inf), "II": (rm, rp), "IV": (rm, rp), "III": (0, rm), "III'": (0, rm)}
+    tt = spread(-np.inf, np.inf, 500, 10)
+
+    def labels(v):
+        for sx in (1, -1):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * PI, 4), 0.0]})
+            v.label_xt([sx * PI, 0], "$i^0$", "l" if sx > 0 else "r", dx=6 * sx)
+            for dT, text, anchor, dy in ((HALF, "$i^+$", "b", -2), (-HALF, "$i^-$", "t", 2)):
+                v.layers.append({"kind": "point", "class": "infinity", "at": [round(sx * HALF, 4), round(dT, 4)]})
+                v.label_xt([sx * HALF, dT], text, anchor + ("l" if sx > 0 else "r"), dx=5 * sx, dy=dy)
+            v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-3)
+            v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=3)
+            # Above the moment t = 0, which runs through the middle of the exterior.
+            v.label_xt([sx * HALF, 0.3], "exterior", cls="region")
+            for up in (1, -1):
+                v.label_xt([sx * HALF, up * (PI + 0.7)], "$r = 0$", "l" if sx > 0 else "r", dx=8 * sx)
+                v.label_xt([sx * 0.9, up * (PI + 0.2)], "$r < r_-$", cls="region")
+        v.label_xt([0, HALF + 0.1], "black hole", cls="region")
+        v.label_xt([0, -HALF - 0.1], "white hole", cls="region")
+        v.label_xt([Q4, Q4], "$r_+$", "tl", "small", dx=5, dy=1)
+        v.label_xt([Q4, 3 * Q4], "$r_-$", "bl", "small", dx=5, dy=-1)
+
+    outside = slices.moments("regular_black_hole_pure_gravity", "outside")[0]
+    inside = slices.moments("regular_black_hole_pure_gravity", "inside")[0]
+
+    def through(cells, k, far, near):
+        """The moment t = 0 from r = far in the first cell to the bifurcation sphere r = near and
+        on to r = far in the second, k periods up."""
+        p, q = through_bifurcation(T, cells, far, near)
+        return p + k * PI, q + k * PI
+    out_line = through(("I'", "I"), 0, *outside.reach("spherical", "r")[::-1])
+    in_reach = inside.reach("spherical", "r")
+
+    views = []
+    for vid, label, system, cover, k_inside in (
+            ("static", "Hyperspherical", "spherical", (("I", 0), ("II", 0), ("III", 0)), 0),
+            ("ingoing", "Ingoing Eddington-Finkelstein", "eddington_finkelstein_ingoing",
+             (("I", 0), ("II", 0), ("III'", 0)), 0),
+            ("outgoing", "Outgoing Eddington-Finkelstein", "eddington_finkelstein_outgoing",
+             (("I", 0), ("IV", 0), ("III'", -1)), -1)):
+        v = View(vid, label, box, system)
+        for c, k in CELLS:
+            v.fill("region", polygon(c, k))
+        for c, k in cover:
+            v.fill("cover", polygon(c, k))
+        for c, k in CELLS:
+            for r in radii[c]:
+                v.curve("r", *clipped(*cell(c, k)(tt, np.full_like(tt, r))))
+        if vid == "static":
+            for c, k in CELLS:
+                rr = spread(*ranges[c], 600, 16)
+                for t0 in times:
+                    v.curve("t", *clipped(*cell(c, k)(np.full_like(rr, t0), rr)))
+            v.legend("cover", "one exterior, one region between the horizons, and one inside $r_-$, which $t$ and "
+                              "$r$ cover")
+            v.legend("t", "$t$ constant")
+        else:
+            fmap, coordinate, kind = (ingoing, "v", "an ingoing") if vid == "ingoing" else (outgoing, "u", "an outgoing")
+            for r0 in (0.0, rm, rp):
+                rr = spread(r0, rm if r0 == 0.0 else rp if r0 == rm else np.inf, 400, 14)
+                for w in (-12, -8, -4, 0, 4, 8, 12):
+                    v.curve("null", *fmap(np.full_like(rr, w), rr))
+            v.legend("cover", f"the exterior, the {'black' if vid == 'ingoing' else 'white'} hole, and the region "
+                              f"inside $r_-$ that ${coordinate}$ and $r$ cover")
+            v.legend("null", f"${coordinate}$ constant, {kind} light ray")
+        edges(v)
+        labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9})
+        v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                      "in units of $r_0$")
+        v.legend("horizon", "the horizons $r_+ = 4r_0/5$ and $r_- = 3r_0/5$")
+        v.legend("centre", "$r = 0$, a regular centre, where the Kretschmann scalar is $40/\\ell^4$")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+        v.set(settings="$\\ell = 12r_0/25$, so that $r_+ = 4r_0/5$, $r_- = 3r_0/5$, and $\\kappa_-/\\kappa_+ = 4/3$; "
+                       "$\\psi = \\theta = \\pi/2$.")
+        v.slice(outside, [out_line])
+        v.slice(inside, [through(("III'", "III"), k_inside, *in_reach)])
+        views.append(v)
+
+    return views
+
+
 def hayward(ck, src):
     """Hayward's regular black hole, in two diagrams.
 
@@ -25927,7 +26159,7 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
+    "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
@@ -27742,6 +27974,33 @@ CAPTIONS = {
         "between the horizons, and a region inside $r_-$. Between the horizons their $t$ alone "
         "cannot tell the black hole from the white hole, and we take the region to be the black "
         "hole an infalling observer enters.",
+    ],
+    ("regular_black_hole_pure_gravity", "static"): [
+        "The regular black hole from pure gravity, maximally extended ($\\ell = 12r_0/25$), each point in the diagram "
+        "a 3-sphere of radius $r$. The extension is Reissner-Nordström's tower, which repeats up and down without "
+        "end, with a regular centre where that tower has its singularity. Its tortoise coordinate is "
+        "$r_* = r + \\frac{10r_0}{7}\\ln\\left|\\frac{r - r_+}{r + r_+}\\right| - \\frac{15r_0}{14}\\ln\\left|\\frac{r - r_-}{r + r_-}\\right|$, "
+        "with $\\kappa_+ = 7/20r_0$ and $\\kappa_- = 7/15r_0$, so that $r_*(0) = 0$.",
+        "We place every region by the Kruskal coordinate of the outer horizon, $p = \\pm\\arctan "
+        "e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with $u, v = ct \\mp r_*$, and a region one "
+        "period up the tower by the same map moved by $\\pi$ in both $p$ and $q$. This puts the centre $r = 0$ "
+        "on the vertical lines $X = \\pm\\pi/2$, each running from the $i^+$ of one exterior to the $i^-$ of the "
+        "next. The map is smooth across $r_+$ and continuous across $r_-$.",
+        "The coordinates $t$ and $r$ cover one region of each kind: an exterior, a region between the horizons, "
+        "and a region inside $r_-$. Between the horizons their $t$ alone cannot tell the black hole from the "
+        "white hole, and we take the region to be the black hole an infalling observer enters.",
+    ],
+    ("regular_black_hole_pure_gravity", "ingoing"): [
+        "The same tower ($\\ell = 12r_0/25$) with the regions that $v$ and $r$ cover tinted: an exterior, the "
+        "black hole, and the region inside $r_-$ beyond it, each point in the diagram a 3-sphere of radius $r$. "
+        "An ingoing light ray, $v$ constant, crosses $r_+$ and $r_-$ and reaches the centre $r = 0$ at a finite "
+        "value of its affine parameter, which is $r$ itself.",
+    ],
+    ("regular_black_hole_pure_gravity", "outgoing"): [
+        "The same tower ($\\ell = 12r_0/25$) with the regions that $u$ and $r$ cover tinted: an exterior, the "
+        "white hole, and the region inside $r_-$ in its past, each point in the diagram a 3-sphere of radius "
+        "$r$. An outgoing light ray, $u$ constant, leaves the centre $r = 0$, crosses $r_-$ and $r_+$, and "
+        "reaches $\\mathscr{I}^+$.",
     ],
     ("hayward", "static"): [
         "Hayward's black hole, maximally extended ($\\ell = 0.648\\,m$), each point in the diagram a 2-sphere "
