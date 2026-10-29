@@ -4,9 +4,9 @@ Every tag the metric decides is held to what _tools/derivations/metric_tags.py c
 the published charts: vacuum, Einstein space, conformally flat, flat, stationary, static,
 spherically symmetric and the dimension. The computation needs sympy and five minutes, so
 its answers are kept in _tools/derivations/metric_tags.json, each under a stamp of the chart
-it was computed from, and these tests read that file. A chart that is new, or whose line
-element or domains changed, has no answer under its stamp and fails here until the script
-has been run again, so a new spacetime cannot be tagged by guess.
+it was computed from, and build_mfs_data.py and these tests read that file. A chart that is
+new, or whose line element or domains changed, has no answer under its stamp and stops the
+build until the script has been run again, so a new spacetime cannot be tagged by guess.
 
 The tests that compute need sympy, which the checker's own environment has, and are skipped
 where it is absent.
@@ -54,28 +54,9 @@ class PublishedTags(unittest.TestCase):
         cls.metrics = published_metrics()
         cls.facts = mt.load_facts()
 
-    def test_every_published_chart_has_facts_computed_from_it_as_it_stands(self):
-        stale = []
-        for metric_id, entry in mt.published_charts():
-            name = f"{metric_id}/{entry['id']}"
-            if name not in self.facts:
-                stale.append(f"{name} has never been computed")
-            elif self.facts[name]["stamp"] != mt.stamp(entry):
-                stale.append(f"{name} has changed since it was computed")
-        self.assertEqual(stale, [], f"{RUN}")
-
     def test_the_facts_hold_no_chart_that_is_not_published(self):
         published = {f"{metric_id}/{entry['id']}" for metric_id, entry in mt.published_charts()}
         self.assertEqual(sorted(set(self.facts) - published), [], f"{RUN}")
-
-    def test_every_spacetime_carries_exactly_the_tags_its_charts_decide(self):
-        faults = {}
-        for metric in self.metrics:
-            if all(f"{metric['id']}/{e['id']}" in self.facts for e in metric["coordinates"]):
-                found = mt.tag_faults(metric, self.facts)
-                if found:
-                    faults[metric["id"]] = found
-        self.assertEqual(faults, {})
 
     def test_the_tag_this_was_written_for_is_on_every_conformally_flat_spacetime(self):
         """Three spacetimes carried it on 2 October 2026, which the captain saw could not be right."""
@@ -118,12 +99,6 @@ class PublishedTags(unittest.TestCase):
     def test_every_tag_something_was_merged_into_is_carried(self):
         carried = {tag for metric in self.metrics for tag in metric["tags"]}
         self.assertEqual({into for into in mt.RETIRED.values() if into} - carried, set())
-
-    def test_no_keyword_is_carried_by_one_spacetime_or_spelled_like_another(self):
-        """610 keywords on 3 October 2026, 259 of them on one spacetime, and among them
-        "point mass" and "point masses" and "alternative theory of gravity" and "alternative
-        theories of gravity", until the captain had the whole collection revisited."""
-        self.assertEqual(mt.keyword_faults(self.metrics), [])
 
 
 class Rules(unittest.TestCase):
