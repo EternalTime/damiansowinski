@@ -131,6 +131,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "A black hole in a swirling universe. Set in that universe, the rotating C-metric loses both of its conical singularities, the spin of the hole against the swirl supplying the acceleration [astorino2022removal]."
+    },
+    {
+      "id": "super_entropic",
+      "kind": "family",
+      "text": "Kerr-anti-de Sitter spun up to $a = \\ell$, whose horizon is noncompact with finite area, as an accelerating hole's becomes when its conical deficit reaches $2\\pi$ [appels2020]."
     }
   ],
   "references": [
@@ -166,7 +171,8 @@
     "emparan2000branes2",
     "emparan2020qbtz",
     "strominger2017superrotations",
-    "astorino2022removal"
+    "astorino2022removal",
+    "appels2020"
   ],
   "coordinates": [
     {

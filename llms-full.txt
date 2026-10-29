@@ -2248,6 +2248,17 @@ A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multipli
 - chart Schwarzschild Time: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_s}{r}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = \dfrac{\left(v - r\right)^4}{\eta_0^4}\left(-\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Super-Entropic Black Holes
+
+Kerr's black hole in anti-de Sitter space spun up to $a = \ell$, where its boundary turns at the speed of light, which Robie Hennigar, Robert Mann, and David Kubizňák reached in 2014 and named for an entropy larger than its thermodynamic volume seemed to allow. Its horizon is a sphere with both poles cut out, noncompact and of finite area.
+
+- id: `super_entropic`
+- tags: rotating, rotating black hole, black hole, anti-de Sitter, AdS/CFT, black hole thermodynamics, black hole entropy, horizon, event horizon, horizon topology, extremal, supergravity, separable, exact solution, idealized model, Einstein space, cosmological constant, negative cosmological constant, stationary, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/super_entropic.json
+- chart Hennigar-Kubizňák-Mann: coordinates $(t, r, \theta, \psi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(c\,dt - \ell\sin^2\theta\,d\psi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \dfrac{\Sigma}{\sin^2\theta}d\theta^2 + \dfrac{\sin^4\theta}{\Sigma}\left(\ell\,c\,dt - \left(r^2 + \ell^2\right)d\psi\right)^2$$
+- chart Carter-Plebański: coordinates $(\tau, q, p, \sigma)$, $$ds^2 = -\dfrac{Q}{q^2 + p^2}\left(c\,d\tau + \left(\ell^2 - p^2\right)d\sigma\right)^2 + \dfrac{q^2 + p^2}{Q}dq^2 + \dfrac{q^2 + p^2}{P}dp^2 + \dfrac{P}{q^2 + p^2}\left(c\,d\tau + \left(\ell^2 + q^2\right)d\sigma\right)^2$$
+
 ### Flat Space with Supertranslation Hair
 
 Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.

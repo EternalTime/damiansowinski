@@ -1092,7 +1092,7 @@
       "stationary",
       "black hole pair creation"
     ],
-    "version": "32f05a17802b87b2",
+    "version": "46927f44aad1bd50",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef",
@@ -2830,7 +2830,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "61ea85df072620c4",
+    "version": "aec80add45612d85",
     "diagrams": "7dc03a9eedf6e5a2",
     "conformal": "4f803c414fba5da6",
     "embedding": "f1315ee1ffa48ebb"
@@ -5158,6 +5158,36 @@
     "embedding": "8003002e86c3bf6e"
   },
   {
+    "id": "super_entropic",
+    "name": "Super-Entropic Black Hole",
+    "tags": [
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "horizon",
+      "event horizon",
+      "horizon topology",
+      "extremal",
+      "supergravity",
+      "separable",
+      "exact solution",
+      "idealized model",
+      "Einstein space",
+      "cosmological constant",
+      "negative cosmological constant",
+      "stationary",
+      "four-dimensional"
+    ],
+    "version": "14489fd3960cadcc",
+    "diagrams": "7cc5e2d03ca3e40a",
+    "embedding": "0942323987a38028",
+    "curvature": "4808af17a81a82e5"
+  },
+  {
     "id": "supertranslation_hair",
     "name": "Supertranslation Hair",
     "tags": [
@@ -5539,7 +5569,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "b15bd4c98a71e9ea",
+    "version": "896dd777afa52d0b",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"

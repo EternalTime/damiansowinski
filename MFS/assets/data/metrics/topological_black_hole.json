@@ -93,6 +93,11 @@
       "id": "brane_wall_universe",
       "kind": "family",
       "text": "One dimension up, the same holes border a moving wall that carries a universe whose space has the curvature of the horizon's [kraus1999, birmingham1999]."
+    },
+    {
+      "id": "super_entropic",
+      "kind": "family",
+      "text": "A rotating hole of anti-de Sitter space whose horizon is a sphere with its poles cut out, and looks like the hyperbolic plane near each of them [gnecchi2014]."
     }
   ],
   "references": [
@@ -123,7 +128,8 @@
     "hruska2019",
     "aminneborg1998",
     "maldacena1998",
-    "kraus1999"
+    "kraus1999",
+    "gnecchi2014"
   ],
   "coordinates": [
     {

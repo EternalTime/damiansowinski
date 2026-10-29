@@ -121,7 +121,8 @@ CAPTION_VOICE = (
 # as a designation, and needs no entry. The rule is for compounds such as "future-directed",
 # "non-singular" and "time-like", which plain English writes as one word or two.
 HYPHENATED_TERMS = {"anti-de", "anti-trapped", "plane-fronted", "pp-wave", "pp-waves", "scalar-tensor",
-                    "three-brane", "three-branes", "no-boundary", "e-folding", "e-foldings", "s-wave"}
+                    "three-brane", "three-branes", "no-boundary", "e-folding", "e-foldings", "s-wave",
+                    "super-entropic"}
 
 
 def refused_hyphens(text):

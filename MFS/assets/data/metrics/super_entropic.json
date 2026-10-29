@@ -2,13 +2,61 @@
   "id": "super_entropic",
   "name": "Super-Entropic Black Holes",
   "short_name": "Super-Entropic Black Hole",
-  "description": "",
-  "tags": [],
+  "description": "Kerr's black hole in anti-de Sitter space spun up to $a = \\ell$, where its boundary turns at the speed of light, which Robie Hennigar, Robert Mann, and David Kubizňák reached in 2014 and named for an entropy larger than its thermodynamic volume seemed to allow. Its horizon is a sphere with both poles cut out, noncompact and of finite area.",
+  "tags": [
+    "rotating",
+    "rotating black hole",
+    "black hole",
+    "anti-de Sitter",
+    "AdS/CFT",
+    "black hole thermodynamics",
+    "black hole entropy",
+    "horizon",
+    "event horizon",
+    "horizon topology",
+    "extremal",
+    "supergravity",
+    "separable",
+    "exact solution",
+    "idealized model",
+    "Einstein space",
+    "cosmological constant",
+    "negative cosmological constant",
+    "stationary",
+    "four-dimensional"
+  ],
   "signature": "(-,+,+,+)",
   "convention": "The anti-de Sitter radius $\\ell$ and the mass parameter $m$ are lengths, with $\\Lambda = -3/\\ell^2$, and the azimuthal coordinate is periodic with period $\\mu$, a pure number. We keep factors of $c$ explicit.",
-  "history": "",
-  "related": [],
-  "references": [],
+  "history": "A black hole spinning in anti-de Sitter space can only go so fast [hawking1999rotation]. Its rotation parameter $a$ has to stay below the radius $\\ell$ of the space: at $a = \\ell$ the Einstein universe on the boundary turns at the speed of light, and Carter's metric becomes singular [hawking1999rotation]. Stephen Hawking, Christopher Hunter and Marika Taylor-Robinson found in 1998 that the action of the hole diverges at that edge, as the partition function of the conformal field theory on the boundary does, and they expected it to be an interesting limit in which to study Yang-Mills theory at large $N$ [hawking1999rotation]. In flat space of six dimensions or more a black hole can spin without bound, and Roberto Emparan and Robert Myers watched its horizon flatten into a pancake and then into an unstable black membrane [emparan2003]. Marco Caldarelli, Emparan and María Rodríguez pushed Kerr-anti-de Sitter to $a \\to \\ell$ while zooming in on its pole, keeping the horizon finite, and arrived at \"a rotating black hyperboloid membrane\" [caldarelli2008].¶The whole spacetime at the limit appeared in November 2013, among the rotating black holes of gauged supergravity [gnecchi2014]. Alessandra Gnecchi, Kiril Hristov, Dietmar Klemm, Chiara Toldo and Owen Vaughan built those holes from Carter and Plebański's metric, whose horizons are shaped by a quartic $P(p)$, and looked at the case where its two positive roots meet [gnecchi2014]. The horizon then becomes \"a sphere with two punctures on the place of the two poles\", with \"a cylindrical topology but finite area\", and the boundary rotates at the speed of light, as Kerr-anti-de Sitter's does at $a = \\ell$ [gnecchi2014]. Near each puncture the horizon approaches the hyperbolic plane, so it runs off to infinity in a cusp, and they drew it in flat space as a surface of revolution with two horns [gnecchi2014]. It was, in their words, \"the first instance of a black hole with noncompact horizon, but still finite entropy\" [gnecchi2014]. Two months later Klemm worked the same holes out in Einstein's theory with a Maxwell field and a cosmological constant, and showed that near the punctures they coincide with the zoomed limit of Caldarelli and his collaborators [klemm2014].¶Robie Hennigar, Robert Mann and David Kubizňák got there from Kerr-anti-de Sitter itself, in November 2014 [hennigar2015prl]. Carter's metric blows up at $a = \\ell$ because its azimuth enters as $d\\phi/\\Xi$, with $\\Xi = 1 - a^2/\\ell^2$ [hennigar2015prl, hennigar2015jhep]. They wrote $\\psi = \\phi/\\Xi$ first and let $a \\to \\ell$ afterwards, and every term of the metric stayed finite [hennigar2015prl]. The new angle, whose period $2\\pi/\\Xi$ had run off to infinity, now covered the whole line, so they rolled it up again with a period $\\mu$ of their own choosing [hennigar2015prl, hennigar2015jhep]. One change of coordinates, $p = \\ell\\cos\\theta$ and $\\sigma = -\\psi/\\ell$, carries their metric into the one of Klemm and his collaborators, and in units with $G = c = 1$ the mass $M = \\mu m/2\\pi$ and the angular momentum $J = M\\ell$ of the hole are tied together [hennigar2015prl].¶Why super-entropic? With the cosmological constant read as a pressure, a black hole in anti-de Sitter space acquires a thermodynamic volume $V$, the quantity paired with that pressure [cvetic2011]. Mirjam Cvetič, Gary Gibbons, David Kubizňák and Christopher Pope conjectured in 2011 that the entropy inside a horizon of a given volume is largest for Schwarzschild-anti-de Sitter, which they had found to hold for a wide variety of black holes [cvetic2011]. It is the reverse of the isoperimetric inequality of Euclid's space, where the round sphere has the least area that can enclose a given volume [appels2020]. The super-entropic hole has $V = r_+A/3$ and breaks the inequality at every value of its parameters, which made it \"the first counterexample to this conjecture\" and gave it its name [hennigar2015prl]. Hennigar, Mann and Kubizňák proposed keeping the conjecture for horizons that are compact [hennigar2015prl].¶In November 2019 Michael Appels, Leopoldo Cuspinera, Ruth Gregory, Pavel Krtouš and Kubizňák asked whether the entropy is really too large [appels2020]. At $a = \\ell$ the angular momentum and the pressure are no longer independent, so the first law fixes the thermodynamic quantities only up to a whole family of consistent choices [appels2020]. Some members of that family break the reverse isoperimetric inequality and some obey it, which led them to doubt that the hole is super-entropic at all [appels2020]. They reached noncompact horizons from accelerating black holes as well, by opening the conical deficit on an axis all the way to $2\\pi$, where the limit is smooth, and those holes obey the inequality [appels2020].¶Each pole lies at an infinite distance from every point of the horizon between them, and no light ray from inside the spacetime reaches the axis in a finite affine parameter, so Hennigar, Kubizňák, Mann and Nathan Musoke cut the axis out of the spacetime [hennigar2015jhep]. On the boundary the rolled up angle becomes a null coordinate, and Klemm compared it to \"something we are used to from discrete light cone quantization\" [klemm2014, hennigar2015jhep]. A horizon exists for $m \\ge 8\\ell/3\\sqrt{3}$, extremal at equality, and its area $2\\mu(\\ell^2 + r_+^2)$ is finite though the horizon is not compact [hennigar2015prl, hennigar2015jhep]. Geodesics separate through a Carter constant, which comes from a closed conformal Killing-Yano form the hole inherits from Kerr-anti-de Sitter [hennigar2015prl, hennigar2015jhep]. Yu Chen and Edward Teo named this hole, with its two cusps, the black spindle in 2016, and the one with a single puncture, from the family of Plebański and Demiański, the black bottle [chen2016bottle].",
+  "related": [
+    {
+      "id": "kerr_de_sitter",
+      "kind": "limit_source",
+      "text": "Kerr-anti-de Sitter is where this hole comes from, in the limit $a \\to \\ell$ taken after the angle is rescaled to $\\psi = \\phi/\\Xi$ [hennigar2015prl]. Taken in Carter's coordinates as they stand, the limit is singular."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "family",
+      "text": "Black holes of anti-de Sitter space with hyperbolic horizons. Near each of its punctures this hole's horizon looks like their hyperbolic plane [gnecchi2014]."
+    },
+    {
+      "id": "c_metric",
+      "kind": "family",
+      "text": "An accelerating black hole, whose conical deficit opened all the way to $2\\pi$ gives a noncompact horizon of finite area as well [appels2020]."
+    }
+  ],
+  "references": [
+    "hawking1999rotation",
+    "emparan2003",
+    "caldarelli2008",
+    "gnecchi2014",
+    "klemm2014",
+    "hennigar2015prl",
+    "hennigar2015jhep",
+    "cvetic2011",
+    "appels2020",
+    "chen2016bottle"
+  ],
   "coordinates": [
     {
       "id": "hennigar_kubiznak_mann",
@@ -44,7 +92,7 @@
           "description": "A quartic in $r$ whose two positive roots $r_- \\le r_+$ are the horizons, which exist for $m \\ge 8\\ell/(3\\sqrt{3})$"
         }
       ],
-      "convention": "We use the coordinates $(t, r, \\theta, \\psi)$ of Hennigar, Kubizňák, and Mann, with $t$ carrying dimensions of time and $\\psi$ periodic in $\\mu$, and write $\\Sigma$ and $\\Delta$ as the parameters define them. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use the coordinates $(t, r, \\theta, \\psi)$ of Hennigar, Kubizňák, and Mann, with $t$ carrying dimensions of time and $\\psi$ periodic in $\\mu$, and write $\\Sigma$ and $\\Delta$ as the parameters define them, with $r_- \\le r_+$ the two positive roots of $\\Delta$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(c\\,dt - \\ell\\sin^2\\theta\\,d\\psi\\right)^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\dfrac{\\Sigma}{\\sin^2\\theta}d\\theta^2 + \\dfrac{\\sin^4\\theta}{\\Sigma}\\left(\\ell\\,c\\,dt - \\left(r^2 + \\ell^2\\right)d\\psi\\right)^2",
       "metric_components": [
         {
@@ -4022,7 +4070,7 @@
           "description": "The quartic in $p$ with a double root at each pole, $p = \\pm\\ell$"
         }
       ],
-      "convention": "We use the coordinates $(\\tau, q, p, \\sigma)$ of Carter and Plebański's metric as Klemm writes it, with $\\tau$ carrying dimensions of time, $q$ and $p$ lengths, and $\\sigma$ an inverse length periodic in $\\mu/\\ell$, and write $Q$ and $P$ as the parameters define them. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+      "convention": "We use the coordinates $(\\tau, q, p, \\sigma)$ of Carter and Plebański's metric as Klemm writes it, with $\\tau$ carrying dimensions of time, $q$ and $p$ lengths, and $\\sigma$ an inverse length periodic in $\\mu/\\ell$, and write $Q$ and $P$ as the parameters define them, with $q_+$ the largest root of $Q$. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
       "line_element": "ds^2 = -\\dfrac{Q}{q^2 + p^2}\\left(c\\,d\\tau + \\left(\\ell^2 - p^2\\right)d\\sigma\\right)^2 + \\dfrac{q^2 + p^2}{Q}dq^2 + \\dfrac{q^2 + p^2}{P}dp^2 + \\dfrac{P}{q^2 + p^2}\\left(c\\,d\\tau + \\left(\\ell^2 + q^2\\right)d\\sigma\\right)^2",
       "metric_components": [
         {
