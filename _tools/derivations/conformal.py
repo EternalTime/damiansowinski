@@ -21075,6 +21075,276 @@ class DistortedTower(Tower):
         return p, np.arctan(-self.B / np.tan(p))
 
 
+class ScalarFieldTower(Tower):
+    """The tower of one plane of the black hole in a scalar universe at m = 1 and b = 1/3, in the
+    areal r of the spherical chart. On the axis F = 1 and the plane is Schwarzschild's; on the
+    equatorial plane the metric is (1 - 2m/r) times (-c^2 dt^2 + dr_*^2) with
+    dr_*/dr = sqrt(F) r/(r - 2m), F = e^{-b^2 (r^2 - 2mr)}, whose one simple pole, at the horizon,
+    has residue 2m on both planes: the surface gravity is Schwarzschild's, k = 1/4m, whatever b is.
+    The tortoise coordinate is null_rays.py's, shifted to vanish at the singularity r = 0, so that
+    r = 0 lies on T = +-pi/2. On the equator F falls away as a Gaussian, r_* tends to a finite R as
+    r -> infinity, and that edge lies on tan p tan q = -B with B = exp(2kR)."""
+
+    def __init__(self, plane):
+        self.kp = 0.25
+        self.rf = [2.0]
+        if plane == "equator":
+            zero = float(nr._sfbh_equator(np.array([0.0]))[0])
+            self._star = lambda r: nr._sfbh_equator(r) - zero
+            self.far = float(self._star(np.array([60.0]))[0])
+            self.B = math.exp(2 * self.kp * self.far)
+        else:
+            self._star = lambda r: nr._rstar(np.asarray(r, float), [2]) - 2 * math.log(2)
+            self.far = self.B = None
+
+    def rstar(self, r):
+        return self._star(r)
+
+    def boundary(self, n=400):
+        """r -> infinity in cell I: tan p tan q = -B, from (X, T) = (pi/2, -pi/2) to (pi/2, pi/2)."""
+        p = -HALF / (1 + np.exp(np.linspace(-14, 14, n)))
+        return p, np.arctan(-self.B / np.tan(p))
+
+
+SFBH_UNIVERSE_SCALE = 2.0   # p, q = arctan(2(ct -+ rho_*)b), so that the band is no taller than twice its width
+
+
+def scalar_field_black_hole(ck, src):
+    """The black hole in a scalar universe at m = 1 and b = 1/3 on its two totally geodesic planes of
+    t and one radial coordinate, the axis and the equatorial plane, in the spherical chart and in
+    Weyl's, and the universe with no black hole at b = 1 on its plane z = 0.
+
+    On the axis F = 1 and the plane is Schwarzschild's, drawn as Kruskal and Szekeres's hexagon. On the
+    equator dr_*/dr = sqrt(F) r/(r - 2m) has the one pole r = 2m of residue 2m, so Kruskal's
+    U = -exp(-k u), V = exp(k v) with k = 1/4m run through the horizon, as Lim finds (2026), and the
+    cells I, II, IV and I' of a tower of one root draw it. Inside the horizon r runs to 0, where
+    r_* = 0 and the Kretschmann scalar diverges, so the singularity is the pair of lines T = +-pi/2.
+    Outside, F falls as e^{-b^2 r^2}, r_* tends to a finite R, and the edge r -> infinity is the
+    timelike curve tan p tan q = -exp(2kR), where the Kretschmann scalar grows without bound and which
+    light reaches after a finite affine distance, d lambda = e^{-b^2(r^2 - 2mr)/2} dr/E, Herdeiro's
+    naked singularity (2024). Weyl's chart draws the exterior with r = z + m on the axis and
+    r = m + sqrt(m^2 + rho^2) in the equatorial plane. The universe's plane has
+    -c^2 dt^2 + e^{-b^2 rho^2} drho^2 = -c^2 dt^2 + drho_*^2 with rho_* = sqrt(pi/2) erf(b rho/sqrt 2)/b,
+    a band of width sqrt(pi/2)/b, which p, q = arctan(2(ct -+ rho_*)b) draw between the axis and the
+    timelike edge rho -> infinity."""
+    name = "black hole in a scalar universe"
+    views = []
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    RS = (2.1, 2.5, 3, 4, 6)
+    params = {"m": 1, "b": "1/3"}
+    hexagon = [[PI, 0], [HALF, HALF], [-HALF, HALF], [-PI, 0], [-HALF, -HALF], [HALF, -HALF]]
+    exterior = [[0, 0], [HALF, -HALF], [PI, 0], [HALF, HALF]]
+    for plane in ("equator", "axis"):
+        T = ScalarFieldTower(plane)
+        where = f"{name}, {'the axis' if plane == 'axis' else 'the equatorial plane'}"
+        sph = Plane(src, "scalar_field_black_hole", "spherical", ("t", "r"),
+                    {**EQUATOR, "phi": "0"} if plane == "equator" else {"theta": "0", "phi": "0"}, params)
+
+        def pq(cell):
+            return lambda t, r: T.pq(cell, t, r)
+        ck.chart(f"{where}, spherical, exterior", sph, pq("I"), ck.uniform(-15, 15, 400), ck.uniform(2.002, 8, 400),
+                 lambda t, r: (1, 0))
+        ck.chart(f"{where}, spherical, black hole", sph, pq("II"), ck.uniform(-15, 15, 400),
+                 ck.uniform(0.02, 1.998, 400), lambda t, r: (0, -1))
+        ck.chart(f"{where}, spherical, white hole", sph, pq("IV"), ck.uniform(-15, 15, 400),
+                 ck.uniform(0.02, 1.998, 400), lambda t, r: (0, 1))
+        ck.chart(f"{where}, spherical, other exterior", sph, pq("I'"), ck.uniform(-15, 15, 400),
+                 ck.uniform(2.002, 8, 400), lambda t, r: (-1, 0))
+        K = sph.kretschmann
+        ck.diverges(f"{where}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+        at_horizon = 0.75 * (1 - 4 / 27 + 1 / 81) if plane == "equator" else 0.75
+        ck.limit(f"{where}: the Kretschmann scalar at the horizon is (3/4)(1 - 4 beta/3 + beta^2)/m^4, "
+                 "beta = b^2 m^2 sin^2(theta)", K(np.zeros(2), np.array([2 - 1e-6, 2 + 1e-6])), [at_horizon] * 2, 1e-4)
+        ck.limit(f"{where}: r_* vanishes at the singularity r = 0", T.rstar(np.array([0.0])), [0.0], 1e-9)
+        p, qq = T.pq("II", np.array([-5.0, 0, 5]), np.full(3, 1e-9))
+        ck.limit(f"{where}: r -> 0 in the black hole lands on T = pi/2", p + qq, [HALF] * 3)
+        wplane = ("\\rho", {"phi": "0", "z": "0"}, lambda r: 1 + np.sqrt(1 + np.asarray(r, float) ** 2), 0.05) \
+            if plane == "equator" else ("z", {"rho": "0", "phi": "0"}, lambda r: np.asarray(r, float) + 1, 1.002)
+        wl = Plane(src, "scalar_field_black_hole", "weyl", ("t", wplane[0]), wplane[1], params,
+                   kretschmann_fixed={"rho": "1e-12"} if plane == "axis" else None)
+        ck.chart(f"{where}, weyl, exterior", wl, lambda t, r: T.pq("I", t, wplane[2](r)), ck.uniform(-15, 15, 400),
+                 ck.uniform(wplane[3], 6, 400), lambda t, r: (1, 0))
+        ck.chart(f"{where}, weyl, other exterior", wl, lambda t, r: T.pq("I'", t, wplane[2](r)),
+                 ck.uniform(-15, 15, 400), ck.uniform(wplane[3], 6, 400), lambda t, r: (-1, 0))
+        timelike = plane == "equator"
+        if timelike:
+            ck.limit(f"{where}: r_* tends to R = {T.far:.4f} m as r -> infinity", T.rstar(np.array([200.0])),
+                     [T.far], 1e-9)
+            ck.diverges(f"{where}: the Kretschmann scalar grows without bound as r -> infinity", K(0, 20.0), K(0, 30.0))
+            p, qq = T.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 200.0))
+            ck.limit(f"{where}: r -> infinity lands on tan p tan q = -B", np.tan(p) * np.tan(qq), [-T.B] * 3, 1e-6)
+            bp, bq = T.boundary()
+            right = [point(a, b) for a, b in zip(bp, bq)]
+            left = [[-xx, tt] for xx, tt in right[::-1]]
+            whole, cover = right + left, [[0, 0]] + right
+            reach = 2 * np.arctan(np.sqrt(T.B))
+            box = [-max(reach, HALF) - 0.3, max(reach, HALF) + 0.3, -HALF - 0.25, HALF + 0.25]
+        else:
+            p, qq = T.pq("I", np.array([0.0]), np.array([60.0]))
+            ck.limit(f"{where}: r -> infinity at t = 0 lands on i0, (X, T) = (pi, 0)", point(p[0], qq[0]), [PI, 0], 1e-3)
+            whole, cover = hexagon, exterior
+            box = [-PI - 0.25, PI + 0.25, -HALF - 0.25, HALF + 0.25]
+
+        def edges(v, edge, far_name):
+            if timelike:
+                v.curve("singular", bp, bq, zig=True)
+                v.curve("singular", -bq, -bp, zig=True)
+                at = min(right, key=lambda pt: abs(pt[1] - 1.2))
+                v.label_xt(at, f"${far_name} \\to \\infty$", "l", "small", dx=6)
+                v.label_xt([-at[0], at[1]], f"${far_name} \\to \\infty$", "r", "small", dx=-6)
+                mid = 0.5 * reach
+                v.label_xt([mid, -0.45], "exterior", cls="region")
+                v.label_xt([-mid, -0.45], "exterior", cls="region")
+            else:
+                v.line("scri", [[[PI, 0], [HALF, HALF]], [[PI, 0], [HALF, -HALF]],
+                                [[-PI, 0], [-HALF, HALF]], [[-PI, 0], [-HALF, -HALF]]])
+                for at in ((PI, 0), (-PI, 0), (HALF, HALF), (HALF, -HALF), (-HALF, HALF), (-HALF, -HALF)):
+                    v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+                v.label_xt([PI, 0], "$i^0$", "l", dx=6)
+                v.label_xt([-PI, 0], "$i^0$", "r", dx=-6)
+                for sx in (1, -1):
+                    v.label_xt([sx * HALF, HALF], "$i^+$", "b", dy=-6)
+                    v.label_xt([sx * HALF, -HALF], "$i^-$", "t", dy=6)
+                    v.label_xt([sx * 3 * Q4, Q4], "$\\mathscr{I}^+$", "bl" if sx > 0 else "br", dx=4 * sx, dy=-4)
+                    v.label_xt([sx * 3 * Q4, -Q4], "$\\mathscr{I}^-$", "tl" if sx > 0 else "tr", dx=4 * sx, dy=4)
+                v.legend("scri", "null infinity of the plane, $\\mathscr{I}^\\pm$")
+                v.label_xt([HALF, -0.95], "exterior", cls="region")
+                v.label_xt([-HALF, 0], "exterior", cls="region")
+            v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+            v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+            v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+            v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+            v.label_xt([-Q4, Q4], f"${edge}$", "tr", "small", dx=-6, dy=2)
+            v.label_xt([0, 1.15], "black hole", cls="region")
+            v.label_xt([0, -1.15], "white hole", cls="region")
+            v.legend("horizon", f"the horizon ${edge}$")
+            if timelike:
+                v.legend("singular", f"$r = 0$ and the edge ${far_name} \\to \\infty$, where the Kretschmann scalar "
+                                     "grows without bound")
+            else:
+                v.legend("singular", "$r = 0$, where the Kretschmann scalar diverges")
+
+        t = spread(-np.inf, np.inf, 500, 9)
+        for system in ("spherical", "weyl"):
+            if system == "spherical":
+                ra, edge, named, of_r = "r", "r = 2m", (lambda r: f"{r:g}\\,m"), (lambda r: r)
+                on_plane = "$\\theta = \\pi/2$" if plane == "equator" else "$\\theta = 0$"
+            elif plane == "axis":
+                ra, edge, named, of_r = "z", "z = m", (lambda r: f"{r - 1:g}\\,m"), (lambda r: r)
+                on_plane = "$\\rho = 0$"
+            else:
+                ra, edge, of_r = "\\rho", "\\rho = 0", (lambda r: r)
+                named = lambda r: f"{math.sqrt(r * r - 2 * r):.3g}\\,m"  # noqa: E731
+                on_plane = "$z = 0$"
+            label = "The axis" if plane == "axis" else "The equatorial plane"
+            v = View(f"{system}_{plane}", label, box, system)
+            v.fill("region", whole)
+            v.fill("cover", cover)
+            for rr in RS:
+                v.curve("r", *T.pq("I", t, np.full_like(t, rr)))
+            xx = spread(2, np.inf, 500, 14) if not timelike else 2 + np.geomspace(1e-12, 60, 600)
+            for tt in TS:
+                v.curve("t", *T.pq("I", np.full_like(xx, tt), xx))
+            edges(v, edge, ra if system == "spherical" or plane == "axis" else "\\rho")
+            label_on(v, T.pq("I", 0.0, 3.0), f"${ra} = {named(3.0)}$")
+            which = f"${ra}$ beyond the horizon" if ra != "\\rho" else "$\\rho > 0$"
+            v.legend("cover", f"the region that $t$ and {which} cover")
+            v.legend("r", f"${ra}$ constant, at " + ", ".join(f"${named(r)}$" for r in RS[:-1]) + f" and ${named(RS[-1])}$")
+            v.legend("t", "$ct$ constant, in units of $m$")
+            v.set(restriction=f"The plane of $t$ and ${ra}$ at {on_plane} and fixed $\\phi$ only, totally geodesic, "
+                              "each point in the diagram a single event.",
+                  settings="$b = 1/3$ and $m = 1$, the unit of every length; the surface gravity is "
+                           "$\\kappa = 1/4m$ in units of $c^2$.")
+            views.append(v)
+
+    # The universe with no black hole at b = 1.
+    lam = SFBH_UNIVERSE_SCALE
+    uni = Plane(src, "scalar_field_black_hole", "scalar_universe", ("t", "\\rho"), {"phi": "0", "z": "0"}, {"b": 1})
+
+    def upq(t, r):
+        s = nr._sfbh_universe(r)
+        return np.arctan(lam * (np.asarray(t, float) - s)), np.arctan(lam * (np.asarray(t, float) + s))
+    ck.chart("scalar universe, the plane z = 0", uni, upq, ck.uniform(-15, 15, 400), ck.uniform(0.01, 6, 400),
+             lambda t, r: (1, 0))
+    R = math.sqrt(math.pi / 2)
+    ck.limit("scalar universe: rho_* tends to sqrt(pi/2)/b as rho -> infinity", nr._sfbh_universe(np.array([40.0])),
+             [R], 1e-12)
+    KU = uni.kretschmann
+    ck.limit("scalar universe: the Kretschmann scalar on the axis is 12 b^4", KU(np.zeros(1), np.full(1, 1e-9)), [12.0],
+             1e-6)
+    ck.diverges("scalar universe: the Kretschmann scalar grows without bound as rho -> infinity", KU(0, 3.0), KU(0, 4.0))
+    s = spread(-np.inf, np.inf, 600, 9)
+    ep, eq = np.arctan(lam * (s - R)), np.arctan(lam * (s + R))
+    edge = [point(a, b) for a, b in zip(ep, eq)]
+    band = [[0, -PI]] + edge + [[0, PI]]
+    reach = 2 * math.atan(lam * R)
+    v = View("scalar_universe", "The universe", [-0.6, reach + 0.6, -PI - 0.25, PI + 0.25], "scalar_universe")
+    v.fill("region", band)
+    v.fill("cover", band)
+    grid(v, "r", upq, (0.5, 1, 2), S_ALL)
+    grid(v, "t", upq, (-2, -1, -0.5, 0, 0.5, 1, 2), spread(0, np.inf, 500, 12), first=True)
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    v.curve("singular", ep, eq, zig=True)
+    for at, text, anchor, dy in (((0, PI), "$i^+$", "b", -6), ((0, -PI), "$i^-$", "t", 6)):
+        v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+        v.label_xt(at, text, anchor, dy=dy)
+    v.label_xt([0, 0.25], "$\\rho = 0$", "r", dx=-6)
+    v.label_xt(min(edge, key=lambda pt: abs(pt[1] - 1.2)), "$\\rho \\to \\infty$", "l", "small", dx=6)
+    v.legend("cover", "the whole plane, which $t$ and $\\rho$ cover")
+    v.legend("r", "$\\rho$ constant, at $1/2b$, $1/b$ and $2/b$")
+    v.legend("t", "$ct$ constant, in units of $1/b$")
+    v.legend("centre", "the axis $\\rho = 0$")
+    v.legend("singular", "the edge $\\rho \\to \\infty$, timelike, where the Kretschmann scalar grows without bound")
+    v.set(restriction="The half plane of fixed $\\phi$ and $z$ only, totally geodesic, each point in the diagram a "
+                      "single event.",
+          settings="$b = 1$, with $\\rho_* = \\sqrt{\\pi/2}\\,\\mathrm{erf}(b\\rho/\\sqrt{2})/b$ and the scale of "
+                   "$p = \\arctan(2(ct - \\rho_*)b)$ and $q = \\arctan(2(ct + \\rho_*)b)$.")
+    views.append(v)
+    return views
+
+
+def _scalar_field_black_hole_captions():
+    """The captions of the black hole in a scalar universe on its axis and its equatorial plane, in the
+    spherical chart and Weyl's, and of the universe with no black hole."""
+    hole = "the black hole in a scalar universe ($b = 1/3$, $m = 1$)"
+    kruskal = ("With $r_*$ the tortoise coordinate of the plane and $\\kappa = 1/4m$, the maps "
+               "$u = -\\arctan e^{-\\kappa(ct - r_*)}$ and $v = \\arctan e^{\\kappa(ct + r_*)}$, the arctangents of "
+               "Kruskal's coordinates, run through the horizon and bring the plane into ")
+    drawn = ", drawn with $T = u + v$ up and $X = v - u$ across."
+    out = {}
+    for system in ("spherical", "weyl"):
+        if system == "spherical":
+            ra_axis = ra_plane = "r"
+            fixed_axis, fixed_plane, h_axis, h_plane = "$\\theta = 0$", "$\\theta = \\pi/2$", "r = 2m", "r = 2m"
+        else:
+            ra_axis, ra_plane = "z", "\\rho"
+            fixed_axis, fixed_plane, h_axis, h_plane = "$\\rho = 0$", "$z = 0$", "z = m", "\\rho = 0"
+        out[f"{system}_axis"] = [
+            f"The plane of $t$ and ${ra_axis}$ ({fixed_axis}, $\\phi$ fixed) of {hole}. On the axis $F = 1$ and the "
+            f"plane is Schwarzschild's. {kruskal}Kruskal and Szekeres's hexagon{drawn}",
+            f"The horizon ${h_axis}$ is regular, the pair of null lines through the centre, the singularity $r = 0$ is "
+            "spacelike, and the far edges are the null infinity of the plane, toward which the Kretschmann scalar "
+            "falls to zero.",
+        ]
+        out[f"{system}_equator"] = [
+            f"The plane of $t$ and ${ra_plane}$ ({fixed_plane}, $\\phi$ fixed) of {hole}. {kruskal}Kruskal and "
+            f"Szekeres's diagram with its null infinity replaced by a timelike edge{drawn}",
+            f"The horizon ${h_plane}$ is regular, with Schwarzschild's surface gravity $\\kappa$, and the singularity "
+            "$r = 0$ is spacelike. Out in the plane $F$ falls away as a Gaussian and $r_*$ tends to a finite value, so "
+            "the edge $r \\to \\infty$ is timelike: light reaches it in a finite time $t$ and after a finite affine "
+            "distance, and the Kretschmann scalar grows without bound toward it, a singularity no horizon hides.",
+        ]
+    out["scalar_universe"] = [
+        "The half plane of $t$ and $\\rho$ ($z = 0$, $\\phi$ fixed) of the universe with no black hole ($b = 1$). The "
+        "metric on it is $-c^2dt^2 + d\\rho_*^2$ in $\\rho_* = \\sqrt{\\pi/2}\\,\\mathrm{erf}(b\\rho/\\sqrt{2})/b$, which "
+        "runs only to $\\sqrt{\\pi/2}/b$, and $p, q = \\arctan(2(ct \\mp \\rho_*)b)$ bring the band into a lens, with "
+        "the axis on its left edge, drawn with $T = p + q$ up and $X = q - p$ across.",
+        "The far edge $\\rho \\to \\infty$ is timelike: light leaving the axis reaches it in a finite time and after a "
+        "finite affine distance, and the Kretschmann scalar, $12b^4e^{2b^2\\rho^2}$, grows without bound toward it.",
+    ]
+    return out
+
+
 DS_CONFORMAL = (("oblate", "1/12", 1 / 12), ("prolate", "-1/12", -1 / 12))
 DS_CONFORMAL_CHARTS = ("prolate_spheroidal", "spherical", "weyl")
 
@@ -26194,7 +26464,7 @@ DRAWN = {
     "majumdar_papapetrou": majumdar_papapetrou,
     "kastor_traschen": kastor_traschen,
     "robinson_trautman": robinson_trautman,
-    "melvin": melvin, "senovilla": senovilla, "swirling_universe_black_hole": swirling_universe_black_hole,
+    "melvin": melvin, "scalar_field_black_hole": scalar_field_black_hole, "senovilla": senovilla, "swirling_universe_black_hole": swirling_universe_black_hole,
     "thin_shell_wormhole": thin_shell_wormhole,
     "teo_wormhole": teo_wormhole,
     "israel_wilson_perjes": israel_wilson_perjes,
@@ -26417,6 +26687,7 @@ CAPTIONS = {
     **{("erez_rosen", view): text for view, text in _erez_rosen_captions().items()},
     **{("distorted_schwarzschild", view): text
        for view, text in _distorted_schwarzschild_captions().items()},
+    **{("scalar_field_black_hole", view): text for view, text in _scalar_field_black_hole_captions().items()},
     ("neugebauer_meinel", "weyl_axis"): [
         "The axis $\\rho = 0$ of the disc of $\\mu = 3$, from far below it to far above, each point in the diagram a "
         "single event. The metric on it is $-e^{2U}c^2dt^2 + e^{-2U}dz^2$, and with $z_* = \\int_0^z e^{-2U}dz$ the maps "
