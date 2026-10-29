@@ -17225,6 +17225,113 @@ def scalar_field_black_hole(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Inside a holographic superconductor
+
+HS_BETA = Fraction(1, 2)          # the inversion drawn, p_t from -1/5 to 1/3
+HS_REACH = (1e-6, 1e6)            # the reach of rho, six decades on either side of the inversion
+HS_K = {"kind": "log", "from": 1e-36, "to": 1e18}                      # the axis of K ell^4
+HS_R = {"kind": "symlog", "from": -1e10, "to": 0, "linear": 1e-30}     # the axis of R ell^2
+
+
+def holographic_superconductor(ck, src):
+    """The Kasner inversion of Hartnoll, Horowitz, Kruthoff and Santos, its Kretschmann and Ricci
+    scalars against rho.
+
+    The inversion chart publishes K and R as functions of rho, beta and ell alone, so one line view
+    draws both, log10 rho across from 10^-6 to 10^6, each curve declaring rho beside its points
+    through the landed horizontal expression, at beta = 1/2, which carries the Kasner exponent p_t
+    from -1/5 where rho >> 1 to 1/3 where rho << 1, and ell = 1. The singularity is at rho = 0, so
+    time runs from right to left. K stands on a logarithmic axis from 10^-36 to 10^18 and R on a
+    signed one from -10^10 to zero, linear within 10^-30, both ticked at every tenth decade. The same
+    published K at beta = 1 is dashed beside it, the exact Einstein-Maxwell universe with a
+    constant scalar field that the authors' (41) writes and credit to Datta, whose R vanishes and
+    whose K tends to the finite 20/ell^4 at rho = 0, where the Kasner exponent reaches p_t = 1, a
+    regular horizon. The planar chart's scalars hold the free f and chi, and the final Kasner
+    chart's are one power of tau, so neither is drawn.
+
+    What the captions state is checked here: K at beta = 1/2 is positive and R negative at every
+    rho drawn; the local slope of K is within a hundredth of -2 beta - 4 = -5 at rho = 10^6 and of
+    2 beta - 4 = -3 at rho = 10^-6, which are tau^-4 in the proper time of each Kasner epoch, since
+    tau goes as rho^(1 + beta/2) on the one side and rho^(1 - beta/2) on the other; the published R
+    is -(1 - beta^2) rho^(beta - 2)/2 ell^2 (1 + rho^beta)^2; at beta = 1 R vanishes and K is
+    (12 rho^2 - 24 rho + 20)/ell^4 (1 + rho)^8, 20/ell^4 at rho = 0; and every curve lies inside
+    its panel."""
+    metric, system = "holographic_superconductor", "inversion"
+    beta = float(HS_BETA)
+    names = ["\\beta", "\\ell"]
+    lo, hi = (math.log10(r) for r in HS_REACH)
+    x_axis = {"name": "$\\rho$", "from": lo, "to": hi,
+              "ticks": [{"at": float(k), "label": decade(k)} for k in range(round(lo), round(hi) + 1, 2)]}
+    K_ticks = [t for t in value_ticks(HS_K) if round(math.log10(t["at"])) % 10 == 0]
+    R_ticks = [t for t in value_ticks(HS_R) if t["at"] == 0 or round(math.log10(-t["at"])) % 10 == 0]
+    panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": HS_K, "ticks": K_ticks},
+              {"id": "R", "name": "$R\\,\\ell^2$", "aspect": 2, "scale": HS_R, "ticks": R_ticks}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, metric, system, "kretschmann", ["rho"], names)
+    R = nr_published(src, metric, system, "ricci_scalar", ["rho"], names)
+    rhos = np.geomspace(*HS_REACH, SAMPLES)
+
+    ck(f"{metric} K is positive and R negative at every rho drawn at beta = 1/2",
+       np.all(K(rhos, beta, 1.0) > 0) and np.all(R(rhos, beta, 1.0) < 0),
+       f"K least {np.min(K(rhos, beta, 1.0)):.4g}, R greatest {np.max(R(rhos, beta, 1.0)):.4g}")
+
+    def slope(r):
+        step = 1.0001
+        return float((sp.log(K.exact([r * step, beta, 1.0])) - sp.log(K.exact([r / step, beta, 1.0])))
+                     / (2 * math.log(step)))
+    early, late = -2 * beta - 4, 2 * beta - 4
+    ck(f"{metric} K falls within a hundredth of rho^(-2 beta - 4) = rho^-5 at rho = 10^6",
+       abs(slope(HS_REACH[1]) - early) < 0.01, f"{slope(HS_REACH[1]):.5f}")
+    ck(f"{metric} K falls within a hundredth of rho^(2 beta - 4) = rho^-3 at rho = 10^-6",
+       abs(slope(HS_REACH[0]) - late) < 0.01, f"{slope(HS_REACH[0]):.5f}")
+    ck(f"{metric} the proper time goes as rho^(1 + beta/2) and rho^(1 - beta/2), so both slopes are tau^-4",
+       abs(early / (1 + beta / 2) + 4) < 1e-12 and abs(late / (1 - beta / 2) + 4) < 1e-12)
+    rng = np.random.default_rng(2020)
+    points = 10.0 ** rng.uniform(lo, hi, 20)
+    b = sp.Rational(HS_BETA)
+    worst = max(abs(float(R.exact([r, b, 1]) / (-(1 - b ** 2) * sp.Float(r, 60) ** (b - 2)
+                                               / (2 * (1 + sp.Float(r, 60) ** b) ** 2))) - 1) for r in points)
+    ck(f"{metric} R is -(1 - beta^2) rho^(beta - 2)/2 ell^2 (1 + rho^beta)^2", worst < 1e-40, f"worst {worst:.1e}")
+    datta = max(abs(float(K.exact([r, 1, 1]) / ((12 * sp.Float(r, 60) ** 2 - 24 * sp.Float(r, 60) + 20)
+                                                / (1 + sp.Float(r, 60)) ** 8)) - 1) for r in points)
+    ck(f"{metric} at beta = 1 R vanishes and K is (12 rho^2 - 24 rho + 20)/(1 + rho)^8, 20 at rho = 0",
+       all(float(R.exact([r, 1, 1])) == 0 for r in points) and datta < 1e-40
+       and abs(float(K.exact([1e-30, 1, 1])) - 20) < 1e-20, f"worst {datta:.1e}")
+
+    def curve(panel, published, scale, cls, b_value):
+        values = published(rhos, b_value, 1.0)
+        ck(f"{metric} {panel} {cls} at beta = {b_value} stays inside its panel",
+           np.all(values >= scale["from"]) and np.all(values <= scale["to"]),
+           f"{np.min(values):.4g} to {np.max(values):.4g}")
+        xs = np.log10(rhos)
+        p0, p1 = span(scale)
+        X = PLOT_W * (xs - lo) / (hi - lo)
+        Y = height[panel] * (1 - (position(scale, values) - p0) / (p1 - p0))
+        keep = thinned(X, Y, TOLERANCE)
+        entry = curve_entry(panel, cls, published, "\\rho", {"\\beta": b_value, "\\ell": 1.0},
+                            [[float(xs[k]) + 0.0, float(values[k]) + 0.0] for k in keep])
+        entry["horizontal"] = {"expression": "log(rho)/log(10)", "values": [float(rhos[k]) for k in keep]}
+        agrees(ck, f"{metric} {panel} {cls} at beta = {b_value}", published,
+               [[float(rhos[k]), b_value, 1.0] for k in keep], [float(values[k]) for k in keep])
+        return entry
+
+    curves = [curve("K", K, HS_K, "reference", 1.0), curve("K", K, HS_K, "K", beta),
+              curve("R", R, HS_R, "R", beta)]
+    return [{
+        "id": "inversion", "label": "Kasner inversion", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [],
+        "legend": [["line", "K", "$\\beta = 1/2$"], ["line", "R", "$\\beta = 1/2$"],
+                   ["line", "reference", "$\\beta = 1$"]],
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the inversion. Early "
+                    "$K \\propto \\rho^{-5}$, late $\\rho^{-3}$."],
+        "ricci_sentences": [],
+        "per_scalar": scalar_clips("Log, none clipped.", "Signed log, none clipped."),
+        "settings": "$\\ell = 1$.",
+        "clip": "Log, signed log, none clipped.",
+    }]
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -17274,6 +17381,7 @@ DRAWN = {
     "hayward": hayward,
     "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity,
     "hiscock": hiscock,
+    "holographic_superconductor": holographic_superconductor,
     "interior_schwarzschild": interior_schwarzschild,
     "interstellar_wormhole": interstellar_wormhole,
     "israel_shell": israel_shell,
