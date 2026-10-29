@@ -156,6 +156,11 @@
       "id": "brane_wall_universe",
       "kind": "family",
       "text": "Put this universe on a wall in anti-de Sitter space of five dimensions and its Friedmann equation gains a term in $\\rho^2$ and one that falls off like radiation [binetruy2000brane, mukohyama2000]."
+    },
+    {
+      "id": "oscillating_sphere",
+      "kind": "family",
+      "text": "A ball of fluid whose density is uniform while its pressure varies with radius, conformally flat as a Friedmann universe is [sussman2000stephani]."
     }
   ],
   "references": [
@@ -228,7 +233,8 @@
     "cai2014",
     "ashtekar2006improved",
     "binetruy2000brane",
-    "mukohyama2000"
+    "mukohyama2000",
+    "sussman2000stephani"
   ],
   "coordinates": [
     {

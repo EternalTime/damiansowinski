@@ -112,6 +112,11 @@
       "id": "black_to_white_hole",
       "kind": "family",
       "text": "Barceló, Carballo-Rubio, and Garay let this ball of dust bounce at the Planck density and climb back out through a white hole [barcelo2014mutiny]."
+    },
+    {
+      "id": "oscillating_sphere",
+      "kind": "family",
+      "text": "A ball of uniform density with pressure inside it, which can collapse, turn round, or oscillate for ever [bonnor1967oscillating]."
     }
   ],
   "references": [
@@ -137,7 +142,8 @@
     "lindquist1957",
     "ruban1968",
     "lewandowski2023",
-    "barcelo2014mutiny"
+    "barcelo2014mutiny",
+    "bonnor1967oscillating"
   ],
   "coordinates": [
     {

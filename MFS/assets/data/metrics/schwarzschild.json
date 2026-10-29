@@ -504,6 +504,11 @@
       "id": "buchdahl_sphere",
       "kind": "generalisation",
       "text": "A static star of fluid with no surface that fills all of space. Its metric is Schwarzschild's in isotropic coordinates with $r^2$ raised to $r^2 + R^2$, so at $R = 0$ it is Schwarzschild's vacuum [buchdahl1964]."
+    },
+    {
+      "id": "oscillating_sphere",
+      "kind": "composite",
+      "text": "A ball of fluid of uniform density with pressure, joined to this vacuum at a moving surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever [bonnor1967oscillating]."
     }
   ],
   "references": [
@@ -637,7 +642,8 @@
     "haggard2015fireworks",
     "astorino2022swirling",
     "cardoso2025",
-    "buchdahl1964"
+    "buchdahl1964",
+    "bonnor1967oscillating"
   ],
   "coordinates": [
     {

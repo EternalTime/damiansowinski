@@ -88,6 +88,11 @@
       "id": "buchdahl_sphere",
       "kind": "family",
       "text": "The relativistic polytrope of index five, found in 1964 as the second polytrope with an exact relativistic counterpart after this star of index zero [buchdahl1964]."
+    },
+    {
+      "id": "oscillating_sphere",
+      "kind": "generalisation",
+      "text": "The same ball of uniform density set moving, its pressure still vanishing at the surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever, and that the static star is stable to such motions unless it is too compact [bonnor1967oscillating]."
     }
   ],
   "references": [
@@ -111,7 +116,8 @@
     "wahlquist1968",
     "bonnor1975",
     "bowers1974",
-    "buchdahl1964"
+    "buchdahl1964",
+    "bonnor1967oscillating"
   ],
   "coordinates": [
     {
