@@ -5508,6 +5508,107 @@ def gravitational_instantons(ck, src):
     return [nut_bolt, schwarzschild, page_view, centres]
 
 
+# ---------------------------------------------------------------- the regular black hole from pure gravity
+
+RBHPG_ELL = 12 / 25          # l in units of r_0, as every drawing of the hole takes it
+RBHPG_REACH = 2              # the plot runs from the centre to r = 2 r_0, the box of its spacetime diagrams
+
+
+def regular_black_hole_pure_gravity(ck, src):
+    """Bueno, Cano and Hennigar's regular black hole of five dimensions at r_0 = 1, its
+    Kretschmann and Ricci scalars against r, read from the static chart, beside Tangherlini's of
+    the same mass, read from tangherlini.json at r_h = r_0. Every chart publishes the same K and
+    R, functions of r, r_0 and l alone. Two panels share the axis of r from 0 to 2 r_0, the box of
+    the spacetime diagrams: K on a logarithmic axis from 10^-1 to 10^3 and R on a signed one,
+    linear within 10^-3 of zero, from -2 to 10^2. The horizons are the zeros of the published g^rr.
+
+    Checked here: the three charts publish the same K and R; the horizons are 3r_0/5 and 4r_0/5;
+    K at the centre is 40/l^4 and R there 20/l^2, de Sitter space's of radius l in five
+    dimensions; R vanishes at r^4 = 5 l^2 r_0^2/3 alone, between the horizons, and is least,
+    -1/(4 l^2), at r^4 = 3 l^2 r_0^2, outside r_+; far out K approaches Tangherlini's
+    72 r_0^4/r^8 and R falls off as -12 l^2 r_0^4/r^8; and only Tangherlini's K leaves its panel,
+    at the top about the centre."""
+    metric = "regular_black_hole_pure_gravity"
+    ell = RBHPG_ELL
+    params = {"r_0": 1.0, "\\ell": ell}
+    values = [1.0, ell]
+    names = ["r_0", "\\ell"]
+    x_axis = axis("$r/r_0$", 0, RBHPG_REACH)
+    K_scale = {"kind": "log", "from": 1e-1, "to": 1e3}
+    R_scale = {"kind": "symlog", "from": -2, "to": 1e2, "linear": 1e-3}
+    panels = [{"id": "K", "name": "$K\\,r_0^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,r_0^2$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    K = nr_published(src, metric, "spherical", "kretschmann", ["r"], names)
+    R = nr_published(src, metric, "spherical", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, metric, "spherical", "inverse_metric_components", ["r"], names, ("r", "r"))
+    K_t = nr_published(src, "tangherlini", "spherical", "kretschmann", ["r"], ["r_h"])
+    R_t = nr_published(src, "tangherlini", "spherical", "ricci_scalar", ["r"], ["r_h"])
+    rs = np.linspace(0, RBHPG_REACH, SAMPLES)
+    for system in ("eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"):
+        for field, fn in (("kretschmann", K), ("ricci_scalar", R)):
+            other = nr_published(src, metric, system, field, ["r"], names)
+            ck(f"{metric} {system} publishes the static chart's {field}",
+               np.allclose(other(rs, *values), fn(rs, *values), rtol=1e-14, atol=0))
+    marks = [{"class": "horizon", "x": x} for x in zeros(ck, f"{metric} horizons", grr, 0, RBHPG_REACH, values)]
+    found = [m["x"] for m in marks]
+    ck(f"{metric} has its two horizons at 3r_0/5 and 4r_0/5",
+       len(found) == 2 and abs(found[0] - 0.6) < 1e-12 and abs(found[1] - 0.8) < 1e-12, f"{found}")
+    r_minus, r_plus = found
+    centre_K, centre_R = float(K.exact([0, *values])), float(R.exact([0, *values]))
+    ck(f"{metric} K at the centre is 40/l^4", abs(centre_K * ell ** 4 / 40 - 1) < 1e-12, f"{centre_K}")
+    ck(f"{metric} R at the centre is 20/l^2", abs(centre_R * ell ** 2 / 20 - 1) < 1e-12, f"{centre_R}")
+    sign_change = zeros(ck, f"{metric} R", R, 0, RBHPG_REACH, values)
+    r_zero = (5 * ell ** 2 / 3) ** 0.25
+    ck(f"{metric} R vanishes at r^4 = 5 l^2 r_0^2/3 alone, between the horizons",
+       len(sign_change) == 1 and abs(sign_change[0] - r_zero) < 1e-12 and r_minus < r_zero < r_plus,
+       f"{sign_change}")
+    r_least = (3 * ell ** 2) ** 0.25
+    R_least = float(R.exact([r_least, *values]))
+    fine = np.linspace(0, RBHPG_REACH, 400001)
+    ck(f"{metric} R is least, -1/(4 l^2), at r^4 = 3 l^2 r_0^2, outside r_+",
+       abs(R_least * 4 * ell ** 2 + 1) < 1e-12 and r_least > r_plus
+       and R_least <= float(np.min(R(fine, *values))) + 1e-15
+       and abs(fine[int(np.argmin(R(fine, *values)))] - r_least) < 2e-5, f"r = {r_least:.6f}, R = {R_least:.6f}")
+    ck("Tangherlini's published K at r_h = r_0 is 72 r_0^4/r^8",
+       all(abs(float(K_t.exact([r, 1.0])) * r ** 8 / 72 - 1) < 1e-12 for r in (0.3, 1.0, 2.0)))
+    for far in (1e3, 1e4):
+        ck(f"{metric} K approaches Tangherlini's 72 r_0^4/r^8 at r = {far:g} r_0",
+           abs(float(K.exact([far, *values])) * far ** 8 / 72 - 1) < 1e-5)
+        ck(f"{metric} R falls off as -12 l^2 r_0^4/r^8 at r = {far:g} r_0",
+           abs(float(R.exact([far, *values])) * far ** 8 / (-12 * ell ** 2) - 1) < 1e-5)
+    reference = {"r_h": 1.0}
+    curves = (line_curves(ck, f"{metric} Tangherlini", "K", "reference", K_t, "r", x_axis, K_scale, height["K"],
+                          reference)
+              + line_curves(ck, f"{metric} Tangherlini", "R", "reference", R_t, "r", x_axis, R_scale, height["R"],
+                            reference)
+              + line_curves(ck, metric, "K", "K", K, "r", x_axis, K_scale, height["K"], params)
+              + line_curves(ck, metric, "R", "R", R, "r", x_axis, R_scale, height["R"], params))
+    for name, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+        up, down = beyond(fn, x_axis, scale, values)
+        ck(f"{metric} {name} stays inside its panel", not up and not down, f"{up} {down}")
+    up, down = beyond(K_t, x_axis, K_scale, [1.0])
+    ck("Tangherlini's K leaves the top of its panel once, at the centre, and never the bottom",
+       len(up) == 1 and up[0][0] == 0 and not down, f"{up} {down}")
+    up, down = beyond(R_t, x_axis, R_scale, [1.0])
+    ck("Tangherlini's R stays inside its panel", not up and not down)
+    return [{
+        "id": "hole", "label": "$\\ell = 12r_0/25$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": marks,
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "reference", "Tangherlini"],
+                   ["line", "horizon", "horizon"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the hole against $r$, beside Tangherlini's. "
+            "$K(0) = 40/\\ell^4$. $R(0) = 20/\\ell^2$.",
+        ],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": scalar_clips("Log.", "Signed log.", reference="Tangherlini's $R = 0$"),
+        "settings": "$\\ell = 12r_0/25$.",
+        "clip": "Log; signed log.",
+    }]
+
+
 # ---------------------------------------------------------------- Hayward's regular black hole
 
 HAYWARD_ELL = 12 / (7 * math.sqrt(7))   # l in units of m, as every drawing of Hayward's black hole takes it
@@ -15108,6 +15209,7 @@ RICCI_BESIDE = {
     ("fisher_jnw", "growing"): "",
     ("gravastar", "gravastar"): "",
     ("hayward", "hole"): "Schwarzschild's $R = 0$",
+    ("regular_black_hole_pure_gravity", "hole"): "Tangherlini's $R = 0$",
     ("kiselev", "hole"): "",
     ("kiselev", "state"): "",
     ("oppenheimer_snyder", "collapse"): "",
@@ -16964,6 +17066,7 @@ DRAWN = {
     "gravastar": gravastar,
     "gravitational_instantons": gravitational_instantons,
     "hayward": hayward,
+    "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity,
     "hiscock": hiscock,
     "interior_schwarzschild": interior_schwarzschild,
     "interstellar_wormhole": interstellar_wormhole,
