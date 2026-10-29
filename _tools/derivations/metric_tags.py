@@ -322,6 +322,10 @@ REGIONS = {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
     },
+    "oscillating_sphere": {
+        "regions": [["comoving", "central_time"], ["exterior_schwarzschild"]],
+        "why": "the ball of fluid and the vacuum outside it are two regions of one spacetime",
+    },
     "quantum_oppenheimer_snyder": {
         "regions": [["interior_comoving"],
                     ["static", "painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"]],

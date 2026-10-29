@@ -14,10 +14,12 @@
     "isotropic coordinates",
     "mass",
     "time-dependent",
+    "spherically symmetric",
     "curvature singularity",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
+    "four-dimensional",
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
