@@ -157,6 +157,7 @@ import json
 import re
 import signal
 import sys
+import time
 from pathlib import Path
 
 import sympy as sp
@@ -3568,21 +3569,38 @@ class Timeout(Exception):
 
 
 class budget:
-    """Abandon a computation that runs past `seconds` rather than let it hang."""
+    """Abandon a computation that runs past `seconds` rather than let it hang, naming it as `what`.
 
-    def __init__(self, seconds):
+    Budgets nest: one opened inside another hands the outer one back its handler and what is left
+    of its time on leaving, and passes the alarm on when the outer one falls due first. A budget
+    that has run out fires again every second until its block is left, so an except that swallows
+    the first Timeout cannot hold it off."""
+
+    def __init__(self, seconds, what="sympy"):
         self.seconds = seconds
+        self.what = what
 
     def __enter__(self):
+        self._outer = signal.getsignal(signal.SIGALRM)
+        self._outer_left = signal.getitimer(signal.ITIMER_REAL)[0]
+        self._entered = time.monotonic()
         signal.signal(signal.SIGALRM, self._fire)
-        signal.setitimer(signal.ITIMER_REAL, self.seconds)
+        first = min(self.seconds, self._outer_left) if self._outer_left else self.seconds
+        signal.setitimer(signal.ITIMER_REAL, first, 1)
 
     def __exit__(self, *_):
         signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, self._outer)
+        if self._outer_left:
+            # An outer budget already spent has fired, and fires again in a second if that was swallowed.
+            left = self._outer_left - (time.monotonic() - self._entered)
+            signal.setitimer(signal.ITIMER_REAL, left if left > 0 else 1, 1)
         return False
 
-    def _fire(self, *_):
-        raise Timeout(f"sympy did not finish inside {self.seconds}s")
+    def _fire(self, *frame):
+        if time.monotonic() - self._entered >= self.seconds - 0.01 or not callable(self._outer):
+            raise Timeout(f"{self.what} did not finish inside {self.seconds}s")
+        self._outer(*frame)
 
 
 def matching_brace(text, opening):

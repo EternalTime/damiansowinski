@@ -23,7 +23,7 @@ jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
 maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor and eye_of_the_storm, and Godel's cylindrical chart.
 
-    .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]...
+    .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
 
 Each chart below names its coordinates, its parameters, the line element it publishes, the
@@ -36,6 +36,10 @@ chart's own among them, and the description of each parameter stay in the metric
 carried over untouched, and a parameter the file does not yet describe, or a chart it does not
 yet give a convention, stops the script rather than being written without one. The Ricci scalar and the Kretschmann scalar are written by hand where a structured form
 reads better than an expanded one, and each of those is checked against sympy here too.
+
+Pass --budget <seconds> to give each step of a chart that many seconds, its own check among them: a
+step that runs past it stops the script naming the chart and the step, before anything of that
+chart is written. Without it no step is timed.
 
 The derivations these charts rest on, and the reason each was chosen, are in tov.md,
 malament_hogarth.md, mixmaster.md, lentz.md, godel.md, btz.md, schwarzschild_de_sitter.md,
@@ -52,6 +56,7 @@ btz_shock_wave.md beside this file records the charts of the shock wave in the B
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
 """
 import argparse
+import contextlib
 import fcntl
 import itertools
 import json
@@ -34102,18 +34107,53 @@ def eye_of_the_storm_check(chart, system):
 CHARTS["eye_of_the_storm"] = [lambda s=s: eye_of_the_storm(s) for s in EOS_CHARTS]
 
 
-def write(spec):
+def step(seconds, where, name):
+    """A step of the printing under the clock when a budget is given, so that one which runs past it
+    stops the script naming the chart and the step rather than leaving it to hang."""
+    return contextlib.nullcontext() if seconds is None else vm.budget(seconds, f"{where}: the step {name!r}")
+
+
+def write(spec, seconds=None):
     start = time.time()
-    chart = cp.Chart(spec["system"]["coords"], spec.get("chart_parameters", spec["system"]["parameters"]),
-                     spec["chart_line_element"],
-                     spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"), spec.get("reduce"),
-                     vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])),
-                     vm.HELD.get((spec["metric_id"], spec["system"]["id"]), ()),
-                     (spec["metric_id"], spec["system"]["id"]) in vm.IMPULSES)
+    where = f"{spec['metric_id']}/{spec['system']['id']}"
+    with step(seconds, where, "chart"):
+        chart = cp.Chart(spec["system"]["coords"], spec.get("chart_parameters", spec["system"]["parameters"]),
+                         spec["chart_line_element"],
+                         spec["printer"], spec.get("pretty"), spec.get("time"), spec.get("bracketed"),
+                         spec.get("reduce"), vm.ORDERS.get((spec["metric_id"], spec["system"]["id"])),
+                         vm.HELD.get((spec["metric_id"], spec["system"]["id"]), ()),
+                         (spec["metric_id"], spec["system"]["id"]) in vm.IMPULSES)
     if "check" in spec:
-        spec["check"](chart)
-    math = chart.mathematics()
-    # A component written by hand replaces the printed one, checked against the same value.
+        with step(seconds, where, "check"):
+            spec["check"](chart)
+    with step(seconds, where, "mathematics"):
+        math = chart.mathematics()
+    with step(seconds, where, "components"):
+        components(spec, chart, math)
+    with step(seconds, where, "scalars"):
+        scalars(spec, chart, math)
+    if "rewrite" in spec:
+        with step(seconds, where, "rewrite"):
+            math = rewritten(math, spec["rewrite"], chart)
+    if "after" in spec:
+        # A chart whose values hold only on a surface of its parameters states them there.
+        with step(seconds, where, "after"):
+            math = spec["after"](math, chart)
+    if "geodesics" in spec:
+        with step(seconds, where, "geodesics"):
+            geodesics(spec, chart, math)
+
+    path = METRICS / f"{spec['metric_id']}.json"
+    # Charts of one spacetime may be printed in processes of their own, so the file is read, changed
+    # and written under a lock. Only the wait for the lock is under the clock, so a file is never left half written.
+    with open(Path(tempfile.gettempdir()) / f"mfs-print-{spec['metric_id']}.lock", "w") as lock:
+        with step(seconds, where, "lock"):
+            fcntl.flock(lock, fcntl.LOCK_EX)
+        store(spec, math, path, start)
+
+
+def components(spec, chart, math):
+    """A component written by hand replaces the printed one, checked against the same value."""
     tensors = {"metric_components": chart.geo.g, "inverse_metric_components": chart.geo.ginv}
     for field, by_hand in spec.get("components", {}).items():
         for entry in math[field]:
@@ -34121,6 +34161,10 @@ def write(spec):
             if text is not None:
                 i, j = (spec["system"]["coords"].index(x) for x in entry["indices"])
                 entry["value"] = chart.check(text, tensors[field][i, j])
+
+
+def scalars(spec, chart, math):
+    """The Ricci scalar and the Kretschmann scalar, written by hand where the chart gives them so."""
     for field in ("ricci_scalar", "kretschmann"):
         computed = chart.geo.ricci_scalar() if field == "ricci_scalar" else chart.geo.kretschmann()
         if field in spec:
@@ -34137,25 +34181,15 @@ def write(spec):
             math[field] = "K = " + chart.text(computed)
     if spec.get("bare_scalar"):
         math["ricci_scalar"] = math["ricci_scalar"].removeprefix("R = ")
-    if "rewrite" in spec:
-        math = rewritten(math, spec["rewrite"], chart)
-    if "after" in spec:
-        # A chart whose values hold only on a surface of its parameters states them there.
-        math = spec["after"](math, chart)
-    if "geodesics" in spec:
-        # Each equation written by hand is read back against the one printed from the Christoffel symbols.
-        # Both are printed texts, so both already carry a named time as c times it.
-        for text, printed in zip(spec["geodesics"], math["geodesics"], strict=True):
-            if vm.norm(chart.reader(text.partition("=")[0]) - chart.reader(printed.partition("=")[0])) != 0:
-                raise AssertionError(f"the geodesic {text!r} does not read back as {printed!r}")
-        math["geodesics"] = list(spec["geodesics"])
 
-    path = METRICS / f"{spec['metric_id']}.json"
-    # Charts of one spacetime may be printed in processes of their own, so the file is read, changed
-    # and written under a lock.
-    with open(Path(tempfile.gettempdir()) / f"mfs-print-{spec['metric_id']}.lock", "w") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
-        store(spec, math, path, start)
+
+def geodesics(spec, chart, math):
+    """Each equation written by hand, read back against the one printed from the Christoffel symbols.
+    Both are printed texts, so both already carry a named time as c times it."""
+    for text, printed in zip(spec["geodesics"], math["geodesics"], strict=True):
+        if vm.norm(chart.reader(text.partition("=")[0]) - chart.reader(printed.partition("=")[0])) != 0:
+            raise AssertionError(f"the geodesic {text!r} does not read back as {printed!r}")
+    math["geodesics"] = list(spec["geodesics"])
 
 
 def store(spec, math, path, start):
@@ -34197,16 +34231,22 @@ def main():
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
     parser.add_argument("--system", action="append", default=[],
                         help="print only this chart of the spacetimes named, repeatable")
+    parser.add_argument("--budget", type=float, default=None,
+                        help="seconds any one step of a chart may take, its check among them; none by default")
     chosen = parser.parse_args()
-    for metric_id in chosen.metric or sorted(CHARTS):
-        print(metric_id, flush=True)
-        # A spacetime with several charts printed by machine lists one builder per chart, or has
-        # one builder that returns every chart, when the charts are checked against each other.
-        for build in CHARTS[metric_id] if isinstance(CHARTS[metric_id], list) else [CHARTS[metric_id]]:
-            specs = build()
-            for spec in specs if isinstance(specs, list) else [specs]:
-                if not chosen.system or spec["system"]["id"] in chosen.system:
-                    write(spec)
+    try:
+        for metric_id in chosen.metric or sorted(CHARTS):
+            print(metric_id, flush=True)
+            # A spacetime with several charts printed by machine lists one builder per chart, or has
+            # one builder that returns every chart, when the charts are checked against each other.
+            for build in CHARTS[metric_id] if isinstance(CHARTS[metric_id], list) else [CHARTS[metric_id]]:
+                with step(chosen.budget, metric_id, "build"):
+                    specs = build()
+                for spec in specs if isinstance(specs, list) else [specs]:
+                    if not chosen.system or spec["system"]["id"] in chosen.system:
+                        write(spec, chosen.budget)
+    except vm.Timeout as error:
+        raise SystemExit(f"{error}; nothing of that chart was written") from None
 
 
 if __name__ == "__main__":
