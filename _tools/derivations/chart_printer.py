@@ -250,7 +250,8 @@ class Printer:
             base, exponent = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
             if isinstance(base, sp.exp):
                 numerator.append((sp.exp(base.args[0] * exponent), sp.Integer(1)))
-            elif exponent.is_negative:
+            elif exponent.is_negative or (not exponent.is_Number and exponent.could_extract_minus_sign()):
+                # A power with a parameter in it, as F^{-\alpha - 1}, goes below the line by its sign.
                 denominator.append((base, -exponent))
             else:
                 numerator.append((base, exponent))
@@ -439,6 +440,9 @@ class Printer:
 
 
 def _num(n):
+    if not sp.sympify(n).is_Number:
+        # An exponent holding a parameter, as the 2\alpha + 2 of F^{2\alpha + 2}.
+        return sp.latex(sp.sympify(n), order="lex").replace(" \\", "\\")
     n = sp.Rational(n)
     return str(n.p) if n.q == 1 else f"{n.p}/{n.q}"
 
