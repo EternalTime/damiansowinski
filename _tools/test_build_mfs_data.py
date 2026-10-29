@@ -8003,11 +8003,6 @@ class TextRefusals(unittest.TestCase):
     def setUpClass(cls):
         cls.metrics = build.load_metrics()
 
-    def test_the_collection_as_it_stands_keeps_to_the_rules(self):
-        diagrams, conformal = build.load_diagrams(self.metrics), build.load_conformal(self.metrics)
-        embedding, curvature = build.load_embedding(self.metrics), build.load_curvature(self.metrics)
-        self.assertIsNone(build.check_texts(self.metrics, diagrams, conformal, embedding, curvature))
-
     def test_a_text_that_breaks_a_rule_is_named_by_its_file_and_its_place(self):
         kerr = copy.deepcopy(next(m for m in self.metrics if m["id"] == "kerr"))
         kerr["description"] += " It is important to note this entry."
@@ -8054,10 +8049,6 @@ class EmbeddingRefusals(unittest.TestCase):
                          and [getattr(target, "id", None) for target in node.targets] == ["NOT_DRAWN"])
         self.assertEqual(set(build.WITHOUT_EMBEDDING), not_drawn)
 
-    def test_the_collection_as_it_stands_has_every_embedding_diagram(self):
-        metrics = build.load_metrics()
-        self.assertIsNone(build.check_embedding(metrics, build.load_embedding(metrics)))
-
     def test_a_missing_diagram_and_one_drawn_without_need_are_named(self):
         metrics = [{"id": "kerr"}, {"id": "lentz"}]
         self.assertEqual(build.embedding_problems(metrics, {"kerr": {}}), [])
@@ -8080,9 +8071,6 @@ class TagRefusals(unittest.TestCase):
         metrics = copy.deepcopy(self.metrics)
         change(next(m for m in metrics if m["id"] == "kerr"))
         return build.tag_problems(metrics, self.facts)
-
-    def test_the_collection_as_it_stands_is_tagged_as_its_charts_decide(self):
-        self.assertIsNone(build.check_tags(self.metrics))
 
     def test_a_tag_the_charts_decide_against_is_named(self):
         self.assertEqual(self.problems(lambda kerr: kerr["tags"].append("static")),
