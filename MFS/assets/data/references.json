@@ -1,5 +1,5 @@
 {
-  "version": "27c4fbdf1b36e864",
+  "version": "8c94411b52756b52",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -31922,6 +31922,177 @@
         "eprint": "2601.19858",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1140/epjc/s10052-026-15937-0"
+      }
+    },
+    "hartnoll2021diving": {
+      "type": "article",
+      "fields": {
+        "title": "Diving into a holographic superconductor",
+        "author": "Hartnoll, Sean A. and Horowitz, Gary T. and Kruthoff, Jorrit and Santos, Jorge E.",
+        "journal": "SciPost Physics",
+        "volume": "10",
+        "number": "1",
+        "pages": "009",
+        "year": "2021",
+        "doi": "10.21468/SciPostPhys.10.1.009",
+        "eprint": "2008.12786",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.21468/SciPostPhys.10.1.009"
+      }
+    },
+    "gubser2008breaking": {
+      "type": "article",
+      "fields": {
+        "title": "Breaking an {Abelian} gauge symmetry near a black hole horizon",
+        "author": "Gubser, Steven S.",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "6",
+        "pages": "065034",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.065034",
+        "eprint": "0801.2977",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.78.065034"
+      }
+    },
+    "hartnoll2008holographic": {
+      "type": "article",
+      "fields": {
+        "title": "Holographic superconductors",
+        "author": "Hartnoll, Sean A. and Herzog, Christopher P. and Horowitz, Gary T.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "12",
+        "pages": "015",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/12/015",
+        "eprint": "0810.1563",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2008/12/015"
+      }
+    },
+    "hartnoll2020abhor": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational duals to the grand canonical ensemble abhor {Cauchy} horizons",
+        "author": "Hartnoll, Sean A. and Horowitz, Gary T. and Kruthoff, Jorrit and Santos, Jorge E.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "10",
+        "pages": "102",
+        "year": "2020",
+        "doi": "10.1007/JHEP10(2020)102",
+        "eprint": "2006.10056",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP10(2020)102"
+      }
+    },
+    "gubser2009ground": {
+      "type": "article",
+      "fields": {
+        "title": "Ground states of holographic superconductors",
+        "author": "Gubser, Steven S. and Nellore, Abhinav",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "10",
+        "pages": "105007",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.105007",
+        "eprint": "0908.1972",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.80.105007"
+      }
+    },
+    "cai2021noinner": {
+      "type": "article",
+      "fields": {
+        "title": "No inner-horizon theorem for black holes with charged scalar hairs",
+        "author": "Cai, Rong-Gen and Li, Li and Yang, Run-Qiu",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "3",
+        "pages": "263",
+        "year": "2021",
+        "doi": "10.1007/JHEP03(2021)263",
+        "eprint": "2009.05520",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2021)263"
+      }
+    },
+    "henneaux2022final": {
+      "type": "article",
+      "fields": {
+        "title": "The final {Kasner} regime inside black holes with scalar or vector hair",
+        "author": "Henneaux, Marc",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "3",
+        "pages": "062",
+        "year": "2022",
+        "doi": "10.1007/JHEP03(2022)062",
+        "eprint": "2202.04155",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2022)062"
+      }
+    },
+    "vandemoortel2024violent": {
+      "type": "article",
+      "fields": {
+        "title": "Violent nonlinear collapse in the interior of charged hairy black holes",
+        "author": "Van de Moortel, Maxime",
+        "journal": "Archive for Rational Mechanics and Analysis",
+        "volume": "248",
+        "number": "5",
+        "pages": "89",
+        "year": "2024",
+        "doi": "10.1007/s00205-024-02038-z",
+        "eprint": "2109.10932",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s00205-024-02038-z"
+      }
+    },
+    "li2025kasner": {
+      "type": "article",
+      "fields": {
+        "title": "Kasner bounces and fluctuating collapse inside hairy black holes with charged matter",
+        "author": "Li, Warren and Van de Moortel, Maxime",
+        "journal": "Annals of PDE",
+        "volume": "11",
+        "number": "1",
+        "pages": "3",
+        "year": "2025",
+        "doi": "10.1007/s40818-024-00192-x",
+        "eprint": "2302.00046",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s40818-024-00192-x"
+      }
+    },
+    "dias2021inside": {
+      "type": "article",
+      "fields": {
+        "title": "Inside an asymptotically flat hairy black hole",
+        "author": "Dias, {\\'O}scar J. C. and Horowitz, Gary T. and Santos, Jorge E.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "12",
+        "pages": "179",
+        "year": "2021",
+        "doi": "10.1007/JHEP12(2021)179",
+        "eprint": "2110.06225",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP12(2021)179"
+      }
+    },
+    "liu2026critical": {
+      "type": "misc",
+      "fields": {
+        "title": "From critical zero modes to interior dynamics in holographic superconductors",
+        "author": "Liu, Yan and Lyu, Hong-Da",
+        "year": "2026",
+        "eprint": "2610.05208",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2610.05208"
       }
     }
   }

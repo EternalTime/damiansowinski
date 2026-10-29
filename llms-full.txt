@@ -1113,6 +1113,18 @@ A black hole that forms and then radiates itself away, built by William Hiscock 
 - chart Outgoing Vaidya: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Flat Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(v - u)^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Inside a Holographic Superconductor
+
+The inside of a planar charged black hole of anti-de Sitter space that has grown charged scalar hair below a critical temperature, the gravitational dual of a superconductor. It has no inner horizon: the Einstein-Rosen bridge collapses, the scalar field oscillates, and the spacetime ends at a spacelike Kasner singularity, sometimes after one or more Kasner inversions.
+
+- id: `holographic_superconductor`
+- tags: holography, AdS/CFT, anti-de Sitter, negative cosmological constant, cosmological constant, charged black hole, black hole, black brane, planar symmetry, black hole interior, scalar hair, black hole hair, complex scalar field, scalar field, electric charge, electromagnetic field, Einstein-Maxwell, Kasner, BKL, spacelike singularity, curvature singularity, Cauchy horizon, inner horizon, strong cosmic censorship, Einstein-Rosen bridge, event horizon, horizon, numerical solution, static, stationary, four-dimensional, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/holographic_superconductor.json
+- chart Planar: coordinates $(t, z, x, y)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-f\,e^{-\chi}c^2dt^2 + \dfrac{dz^2}{f} + dx^2 + dy^2\right)$$
+- chart Final Kasner Epoch: coordinates $(\tau, t, x, y)$, $$ds^2 = -c^2d\tau^2 + \tau^{2p_t}c^2dt^2 + \tau^{2p_x}\left(dx^2 + dy^2\right)$$
+- chart Kasner Inversion: coordinates $(\rho, t, x, y)$, $$ds^2 = -\dfrac{\ell^2\left(1 + \rho^\beta\right)^2}{\rho^\beta}d\rho^2 + \dfrac{\rho^\beta}{\left(1 + \rho^\beta\right)^2}c^2dt^2 + \rho^{1 - \beta}\left(1 + \rho^\beta\right)^2\left(dx^2 + dy^2\right)$$
+
 ### Hotta-Tanaka Shock Wave
 
 The gravitational field of two massless particles in de Sitter space, the Schwarzschild-de Sitter black hole boosted to the speed of light with its energy held fixed. Spacetime is de Sitter on either side of a single null cone, a cosmological horizon, which carries an impulsive gravitational wave on a sphere of constant area with one particle at each pole.

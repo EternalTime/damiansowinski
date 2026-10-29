@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 193,
+  "count": 194,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -25592,6 +25592,292 @@
       ]
     },
     {
+      "id": "holographic_superconductor",
+      "name": "Inside a Holographic Superconductor",
+      "short_name": "Holographic Superconductor",
+      "description": "The inside of a planar charged black hole of anti-de Sitter space that has grown charged scalar hair below a critical temperature, the gravitational dual of a superconductor. It has no inner horizon: the Einstein-Rosen bridge collapses, the scalar field oscillates, and the spacetime ends at a spacelike Kasner singularity, sometimes after one or more Kasner inversions.",
+      "tags": [
+        "holography",
+        "AdS/CFT",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "charged black hole",
+        "black hole",
+        "black brane",
+        "planar symmetry",
+        "black hole interior",
+        "scalar hair",
+        "black hole hair",
+        "complex scalar field",
+        "scalar field",
+        "electric charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "Kasner",
+        "BKL",
+        "spacelike singularity",
+        "curvature singularity",
+        "Cauchy horizon",
+        "inner horizon",
+        "strong cosmic censorship",
+        "Einstein-Rosen bridge",
+        "event horizon",
+        "horizon",
+        "numerical solution",
+        "static",
+        "stationary",
+        "four-dimensional",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. No component assumes a field equation.",
+      "related": [
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "family",
+          "text": "The charged black hole of anti-de Sitter space with no hair. Above the critical temperature its planar form is the normal state of the superconductor, and inside it has the inner Cauchy horizon that the condensate removes [hartnoll2021diving]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "limit",
+          "text": "The limit near the singularity. Once the scalar field stops oscillating, the inside is Kasner's universe with a massless scalar field, two equal exponents $p_x$ and $p_t + 2p_x = 1$ [hartnoll2021diving, belinskii1973]."
+        },
+        {
+          "id": "kasner_magnetic",
+          "kind": "family",
+          "text": "Kasner's universe with a magnetic field, which passes from one Kasner epoch to the next by the same map, $p \\to -p/(1 + 2p)$ for the exponent along the field. Inside the superconductor the electric field does the same along $t$ [kastor2015, hartnoll2021diving]."
+        },
+        {
+          "id": "mixmaster",
+          "kind": "family",
+          "text": "The vacuum universe that bounces from one Kasner epoch to the next without end. Inside the superconductor each bounce is a Kasner inversion set off by the electric field, and the bounces run on without end only at a discrete set of temperatures [hartnoll2021diving]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "Another fate for the inner horizon of a charged black hole, where radiation falling in inflates the mass and the curvature without limit [poisson1989]. Inside the holographic superconductor the charged condensate removes the inner horizon [hartnoll2021diving]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The black holes of anti-de Sitter space with flat horizons. Given a charge and a charged scalar field, the flat one grows hair below a critical temperature and becomes the black hole of the holographic superconductor [hartnoll2008holographic]."
+        }
+      ],
+      "references": [
+        "gubser2008breaking",
+        "hartnoll2008",
+        "hartnoll2008holographic",
+        "hartnoll2021diving",
+        "hartnoll2020abhor",
+        "gubser2009ground",
+        "cai2021noinner",
+        "kasner1921",
+        "belinskii1973",
+        "kastor2015",
+        "henneaux2022final",
+        "vandemoortel2024violent",
+        "li2025kasner",
+        "dias2021inside",
+        "liu2026critical",
+        "poisson1989"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/holographic_superconductor.json",
+      "charts": [
+        {
+          "id": "planar",
+          "name": "Planar",
+          "coordinates": [
+            "t",
+            "z",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z = 0 \\;\\text{(the boundary)}",
+            "z \\to \\infty \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "f = f(z)",
+              "description": "Blackening function, a pure number, with $f \\to 1$ at the boundary; it vanishes on the event horizon and is negative inside it"
+            },
+            {
+              "symbol": "\\chi = \\chi(z)",
+              "description": "Function in the lapse, a pure number, with $\\chi \\to 0$ at the boundary"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, x, y)$, with $t$ carrying dimensions of time and $z$, $x$, and $y$ lengths, and inside the event horizon, where $f < 0$, $z$ is the time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-f\\,e^{-\\chi}c^2dt^2 + \\dfrac{dz^2}{f} + dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2\\,f\\,e^{-\\chi}}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{L^2}{z^2\\,f}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{L^2}{z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 6z\\,f\\,\\partial_z\\chi - 12z\\,\\partial_z f + 24f}{2L^2}",
+          "kretschmann": "K = \\dfrac{z^4\\,f^2\\left(\\partial_z\\chi\\right)^4 - 4z^4\\,f^2\\left(\\partial_z\\chi\\right)^2\\,\\partial_z^2\\chi + 4z^4\\,f^2\\left(\\partial_z^2\\chi\\right)^2 - 6z^4\\,f\\,\\partial_z f\\left(\\partial_z\\chi\\right)^3 + 12z^4\\,f\\,\\partial_z f\\,\\partial_z\\chi\\,\\partial_z^2\\chi + 4z^4\\,f\\left(\\partial_z\\chi\\right)^2\\,\\partial_z^2 f - 8z^4\\,f\\,\\partial_z^2 f\\,\\partial_z^2\\chi + 9z^4\\left(\\partial_z f\\right)^2\\left(\\partial_z\\chi\\right)^2 - 12z^4\\,\\partial_z f\\,\\partial_z\\chi\\,\\partial_z^2 f + 4z^4\\left(\\partial_z^2 f\\right)^2 + 4z^3\\,f^2\\left(\\partial_z\\chi\\right)^3 - 8z^3\\,f^2\\,\\partial_z\\chi\\,\\partial_z^2\\chi - 20z^3\\,f\\,\\partial_z f\\left(\\partial_z\\chi\\right)^2 + 16z^3\\,f\\,\\partial_z f\\,\\partial_z^2\\chi + 8z^3\\,f\\,\\partial_z\\chi\\,\\partial_z^2 f + 24z^3\\left(\\partial_z f\\right)^2\\,\\partial_z\\chi - 16z^3\\,\\partial_z f\\,\\partial_z^2 f + 20z^2\\,f^2\\left(\\partial_z\\chi\\right)^2 - 16z^2\\,f^2\\,\\partial_z^2\\chi - 56z^2\\,f\\,\\partial_z f\\,\\partial_z\\chi + 16z^2\\,f\\,\\partial_z^2 f + 32z^2\\left(\\partial_z f\\right)^2 + 48z\\,f^2\\,\\partial_z\\chi - 96z\\,f\\,\\partial_z f + 96f^2}{4L^4}"
+        },
+        {
+          "id": "kasner",
+          "name": "Final Kasner Epoch",
+          "coordinates": [
+            "\\tau",
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (0, \\infty)",
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\tau \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "p_t",
+              "description": "Kasner exponent along $t$, with $-1/3 \\le p_t \\le 1$"
+            },
+            {
+              "symbol": "p_x",
+              "description": "Kasner exponent along $x$ and $y$, with $p_t + 2p_x = 1$; the scalar field is $\\varphi = -p_\\varphi\\ln\\tau$, with $p_\\varphi^2 + p_t^2 + 2p_x^2 = 1$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, t, x, y)$, with $\\tau$ the proper time left before the singularity and $t$ both carrying dimensions of time, and $x$ and $y$ lengths, and evaluate the powers of $\\tau$ with $\\tau$ in a fixed unit of time. We take components in the chart $x^0 = c\\tau$, $x^1 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -c^2d\\tau^2 + \\tau^{2p_t}c^2dt^2 + \\tau^{2p_x}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\tau^{2p_t}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\tau^{2p_x}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\tau^{2p_x}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2p_t^2 + 4p_t\\,p_x - 2p_t + 6p_x^2 - 4p_x}{c^2\\,\\tau^2}",
+          "kretschmann": "K = \\dfrac{4p_t^4 - 8p_t^3 + 8p_t^2\\,p_x^2 + 4p_t^2 + 12p_x^4 - 16p_x^3 + 8p_x^2}{c^4\\,\\tau^4}"
+        },
+        {
+          "id": "inversion",
+          "name": "Kasner Inversion",
+          "coordinates": [
+            "\\rho",
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\rho \\in (0, \\infty)",
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\rho \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\beta",
+              "description": "Pure number with $0 < \\beta \\le 1$, which sets the Kasner exponent along $t$: $-\\beta/(2 + \\beta)$ where $\\rho \\gg 1$ and $\\beta/(2 - \\beta)$ where $\\rho \\ll 1$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "A length, which sets the proper time the inversion takes"
+            }
+          ],
+          "convention": "We use coordinates $(\\rho, t, x, y)$, with $\\rho$ a pure number that falls toward the singularity at $\\rho = 0$, $t$ carrying dimensions of time, and $x$ and $y$ lengths. We take components in the chart $x^1 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}d\\rho^2 + \\dfrac{\\rho^\\beta}{\\left(1 + \\rho^\\beta\\right)^2}c^2dt^2 + \\rho^{1 - \\beta}\\left(1 + \\rho^\\beta\\right)^2\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "-\\dfrac{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}"
+            },
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\rho^\\beta}{\\left(1 + \\rho^\\beta\\right)^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\left(1 + \\rho^\\beta\\right)^2\\,\\rho^{1 - \\beta}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\left(1 + \\rho^\\beta\\right)^2\\,\\rho^{1 - \\beta}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\left(1 - \\beta^2\\right)\\rho^{\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^2}",
+          "kretschmann": "K = \\dfrac{\\left(\\left(1 + \\beta\\right)^2\\left(7\\beta^2 + 2\\beta + 3\\right)\\rho^{4\\beta} - 4\\left(1 + \\beta\\right)\\left(11\\beta^3 + 5\\beta^2 - \\beta - 3\\right)\\rho^{3\\beta} + 2\\left(61\\beta^4 - 30\\beta^2 + 9\\right)\\rho^{2\\beta} + 4\\left(1 - \\beta\\right)\\left(11\\beta^3 - 5\\beta^2 - \\beta + 3\\right)\\rho^\\beta + \\left(1 - \\beta\\right)^2\\left(7\\beta^2 - 2\\beta + 3\\right)\\right)\\rho^{2\\beta - 4}}{4\\ell^4\\left(1 + \\rho^\\beta\\right)^8}"
+        }
+      ]
+    },
+    {
       "id": "hotta_tanaka",
       "name": "Hotta-Tanaka Shock Wave",
       "short_name": "Hotta-Tanaka",
@@ -28785,6 +29071,11 @@
           "id": "bianchi",
           "kind": "generalisation",
           "text": "This universe is Bianchi type I, flat space with three scale factors, holding a uniform magnetic field along one of its axes [jacobs1969]."
+        },
+        {
+          "id": "holographic_superconductor",
+          "kind": "family",
+          "text": "The inside of a holographic superconductor, where an electric field carries the Kasner exponent along $t$ through the same map, $p_t \\to -p_t/(2p_t + 1)$, which its discoverers call a Kasner inversion [hartnoll2021diving]."
         }
       ],
       "references": [
@@ -28800,7 +29091,8 @@
         "harrison1968",
         "bkl1970",
         "leblanc1997",
-        "barrow1997"
+        "barrow1997",
+        "hartnoll2021diving"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_magnetic.json",
@@ -29002,6 +29294,11 @@
           "id": "lqc_bounce",
           "kind": "family",
           "text": "The isotropic member, $q^2 = 2/3$, as loop quantum cosmology has it, with a bounce in place of the big bang. Ashtekar and Wilson-Ewing carried the same quantum geometry to the anisotropic universes [ashtekar2009bianchi]."
+        },
+        {
+          "id": "holographic_superconductor",
+          "kind": "limit_source",
+          "text": "A black hole whose inside ends as this universe with $p_2 = p_3$. Inside the holographic superconductor the scalar field oscillates and then settles into this limit near the singularity [hartnoll2021diving]."
         }
       ],
       "references": [
@@ -29018,7 +29315,8 @@
         "frenkel2020",
         "janis1968",
         "jacobs1969",
-        "ashtekar2009bianchi"
+        "ashtekar2009bianchi",
+        "hartnoll2021diving"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
@@ -37493,6 +37791,11 @@
           "id": "quantum_oppenheimer_snyder",
           "kind": "family",
           "text": "A quantum relative with an inner horizon too. In the quantum collapse of dust of Husain, Kelly, Santacruz, and Wilson-Ewing there is no mass inflation at the inner horizons [husain2022]."
+        },
+        {
+          "id": "holographic_superconductor",
+          "kind": "family",
+          "text": "The inside of a charged black hole of anti-de Sitter space with charged scalar hair, which has no inner horizon. The charged condensate removes it, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
         }
       ],
       "references": [
@@ -37518,7 +37821,8 @@
         "chan1996",
         "yurtsever1993",
         "delacruz1967",
-        "husain2022"
+        "husain2022",
+        "hartnoll2021diving"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
@@ -40602,6 +40906,11 @@
           "id": "kasner_scalar",
           "kind": "family",
           "text": "A massless scalar field stops the Mixmaster oscillations after a finite number, and the universe then runs to its singularity as this one does, shrinking along all three axes [belinskii1973]."
+        },
+        {
+          "id": "holographic_superconductor",
+          "kind": "family",
+          "text": "The inside of a holographic superconductor, which can also run through a sequence of Kasner epochs. The charge of its scalar field sets off each transition, and the sequence is endless only at a discrete set of temperatures [hartnoll2021diving]."
         }
       ],
       "references": [
@@ -40626,7 +40935,8 @@
         "gowdy2014",
         "belinskii1978bianchi",
         "eguchihanson1979",
-        "belinskii1973"
+        "belinskii1973",
+        "hartnoll2021diving"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json",
@@ -49811,6 +50121,11 @@
           "id": "freund_rubin",
           "kind": "family",
           "text": "Anti-de Sitter space of four dimensions times a 7-sphere. Charged black holes of anti-de Sitter space solve the gauged supergravity of that compactification, their charge coming from a rotation in the directions of the sphere [chamblin1999, awada1983]."
+        },
+        {
+          "id": "holographic_superconductor",
+          "kind": "family",
+          "text": "Its planar form with charged scalar hair, grown below a critical temperature. The condensate removes the inner Cauchy horizon, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
         }
       ],
       "references": [
@@ -49829,7 +50144,8 @@
         "kehle2020",
         "mann1997negative",
         "brill1997",
-        "awada1983"
+        "awada1983",
+        "hartnoll2021diving"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_ads.json",
@@ -61522,6 +61838,11 @@
           "id": "super_entropic",
           "kind": "family",
           "text": "A rotating hole of anti-de Sitter space whose horizon is a sphere with its poles cut out, and looks like the hyperbolic plane near each of them [gnecchi2014]."
+        },
+        {
+          "id": "holographic_superconductor",
+          "kind": "family",
+          "text": "The flat black hole given a charge and a charged scalar condensate below a critical temperature, the holographic superconductor, whose inside has no inner horizon and ends at a spacelike Kasner singularity [hartnoll2021diving]."
         }
       ],
       "references": [
@@ -61553,7 +61874,8 @@
         "aminneborg1998",
         "maldacena1998",
         "kraus1999",
-        "gnecchi2014"
+        "gnecchi2014",
+        "hartnoll2021diving"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",

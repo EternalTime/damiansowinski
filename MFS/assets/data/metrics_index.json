@@ -2291,6 +2291,49 @@
     "curvature": "bc013e26573c54a1"
   },
   {
+    "id": "holographic_superconductor",
+    "name": "Holographic Superconductor",
+    "tags": [
+      "holography",
+      "AdS/CFT",
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "charged black hole",
+      "black hole",
+      "black brane",
+      "planar symmetry",
+      "black hole interior",
+      "scalar hair",
+      "black hole hair",
+      "complex scalar field",
+      "scalar field",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "Kasner",
+      "BKL",
+      "spacelike singularity",
+      "curvature singularity",
+      "Cauchy horizon",
+      "inner horizon",
+      "strong cosmic censorship",
+      "Einstein-Rosen bridge",
+      "event horizon",
+      "horizon",
+      "numerical solution",
+      "static",
+      "stationary",
+      "four-dimensional",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "552d174b0fabc606",
+    "diagrams": "ae5c84627b483a55",
+    "curvature": "132fe3163a85f889"
+  },
+  {
     "id": "hotta_tanaka",
     "name": "Hotta-Tanaka",
     "tags": [
@@ -2598,7 +2641,7 @@
       "idealized model",
       "BKL"
     ],
-    "version": "9036853a4eb4381e",
+    "version": "71fb63c566828613",
     "diagrams": "487e58f217c89feb",
     "embedding": "779744327513578c",
     "curvature": "a6ea8bad838cbf55"
@@ -2632,7 +2675,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "9cd85b52dafecacd",
+    "version": "e4c02d96a63bf55e",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
@@ -3450,7 +3493,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "78c9cf9bc0d5f351",
+    "version": "b308d4a90555cbb7",
     "diagrams": "b56d3fe3ca86d14a",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12",
@@ -3713,7 +3756,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "f2910139c33aff14",
+    "version": "49374e8093b1ba17",
     "embedding": "1762ae2364403f3b"
   },
   {
@@ -4525,7 +4568,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "62f2c8a9fc4f0b65",
+    "version": "fa4715cd89b09e55",
     "diagrams": "84d8aa4c800066d0",
     "conformal": "df06b8d369f90c16",
     "embedding": "b5e538549e42926e"
@@ -5608,7 +5651,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "896dd777afa52d0b",
+    "version": "bc62dd6a2a6cf6a6",
     "diagrams": "70598c77af726b80",
     "conformal": "243a2de40edb7f43",
     "embedding": "930f06c7003fad35"
