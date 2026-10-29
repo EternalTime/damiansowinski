@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 199,
+  "count": 200,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -14136,6 +14136,235 @@
       ]
     },
     {
+      "id": "twisting_cylindrical_waves",
+      "name": "Cylindrical Waves with Two Polarisations",
+      "short_name": "Cylindrical Waves with Two Polarisations",
+      "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Einstein and Rosen with the second polarisation switched on. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.",
+      "tags": [
+        "vacuum",
+        "gravitational wave",
+        "cylindrical symmetry",
+        "exact solution",
+        "time-dependent",
+        "radiating",
+        "nonlinear",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "special_case",
+          "text": "The waves with one polarisation. With $\\omega = 0$ the metric is Einstein and Rosen's, and $\\psi$ obeys the linear wave equation of flat space [bicak2000]."
+        },
+        {
+          "id": "kerr",
+          "kind": "dual",
+          "text": "Kerr's metric continued by $t \\to iz$, $z \\to it$, and $a \\to ia$ and given new coordinates is the pulse of Piran, Safier and Katz, which has no singularities [piran1986, dinverno2000]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "dual",
+          "text": "The same field equations on a torus in time. The complex change $t \\to iz$, $\\rho \\to it$, $\\phi \\to iy$, $\\omega \\to -i\\omega$ carries every cylindrical wave to a universe of Gowdy's kind, Halilsoy's standing wave to one on $T^3$ [glod2022]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "The wave that stands still: with $\\omega = 0$ and $\\psi$ a multiple of $\\ln\\rho$ the metric is Levi-Civita's field of a line of mass [levicivita1919]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The waves gone quiet. With $\\psi = \\omega = \\gamma = 0$, or $\\alpha = 1$ in the pulse of Piran, Safier and Katz, the metric is Minkowski's in cylindrical coordinates [dinverno2000]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "Belinski and Zakharov's inverse scattering builds cylindrical solitons with both polarisations, and Akira Tomimatsu followed the turning of their polarisation in 1989 [tomizawa2014]."
+        }
+      ],
+      "references": [
+        "bicak2000",
+        "kompaneets1958",
+        "jordan1960",
+        "halilsoy1988",
+        "piran1985",
+        "piransafier1985",
+        "bronnikov2020",
+        "tomizawa2014",
+        "piran1986",
+        "dinverno2000",
+        "glod2022",
+        "levicivita1919"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/twisting_cylindrical_waves.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\gamma = \\omega = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(t,\\rho)",
+              "description": "Amplitude of the first polarisation, a dimensionless function of $t$ and $\\rho$, with $e^{2\\psi} = g_{zz}$; the spacetime is a vacuum exactly where $\\partial_t^2\\psi = \\partial_\\rho^2\\psi + \\partial_\\rho\\psi/\\rho + e^{4\\psi}\\left(\\left(\\partial_t\\omega\\right)^2 - \\left(\\partial_\\rho\\omega\\right)^2\\right)/2\\rho^2$, $\\omega$ solves the equation beside it and $\\gamma$ the two beside that"
+            },
+            {
+              "symbol": "\\omega = \\omega(t,\\rho)",
+              "description": "Amplitude of the second polarisation, a function of $t$ and $\\rho$ with the dimensions of length, with $e^{2\\psi}\\omega = g_{\\phi z}$, solving $\\partial_t^2\\omega = \\partial_\\rho^2\\omega - \\partial_\\rho\\omega/\\rho + 4\\left(\\partial_\\rho\\psi\\,\\partial_\\rho\\omega - \\partial_t\\psi\\,\\partial_t\\omega\\right)$; with $\\omega = 0$ the waves are Einstein and Rosen's"
+            },
+            {
+              "symbol": "\\gamma = \\gamma(t,\\rho)",
+              "description": "Dimensionless function of $t$ and $\\rho$ fixed by $\\psi$ and $\\omega$ through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 + \\left(\\partial_t\\psi\\right)^2\\right) + e^{4\\psi}\\left(\\left(\\partial_\\rho\\omega\\right)^2 + \\left(\\partial_t\\omega\\right)^2\\right)/4\\rho$ and $\\partial_t\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_t\\psi + e^{4\\psi}\\partial_\\rho\\omega\\,\\partial_t\\omega/2\\rho$, and zero on a regular axis"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time, $\\rho$ a length fixed by $g_{\\phi\\phi}\\,g_{zz} - g_{\\phi z}^2 = \\rho^2$, and $z$ a length along the axis. We take components in the chart $x^0 = ct$, so $\\partial_t\\psi = c^{-1}\\partial\\psi/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = e^{2(\\gamma - \\psi)}\\left(-c^2dt^2 + d\\rho^2\\right) + \\rho^2e^{-2\\psi}d\\phi^2 + e^{2\\psi}\\left(dz + \\omega\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2\\gamma - 2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(\\omega^2e^{4\\psi} + \\rho^2\\right)e^{-2\\psi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "z"
+              ],
+              "value": "\\omega\\,e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\phi"
+              ],
+              "value": "\\omega\\,e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4\\rho^2\\,\\partial_t^2\\gamma - 4\\rho^2\\,\\partial_\\rho^2\\gamma - 4\\rho^2\\,\\partial_t^2\\psi + 4\\rho^2\\,\\partial_\\rho^2\\psi + e^{4\\psi}\\left(\\partial_t\\omega\\right)^2 - e^{4\\psi}\\left(\\partial_\\rho\\omega\\right)^2 + 4\\rho^2\\left(\\partial_t\\psi\\right)^2 + 4\\rho\\,\\partial_\\rho\\psi - 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\right)e^{2\\psi - 2\\gamma}}{2\\rho^2}",
+          "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(\\partial_\\rho^2\\psi - \\partial_t^2\\psi - \\partial_\\rho^2\\gamma + \\partial_t^2\\gamma\\right)^2 + \\left(\\dfrac{4\\rho^2\\,\\partial_t^2\\psi - 3e^{4\\psi}\\left(\\partial_t\\omega\\right)^2 - 4\\rho\\,\\partial_\\rho\\psi + 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 - 4\\rho^2\\,\\partial_t\\gamma\\,\\partial_t\\psi + 4\\rho\\,\\partial_\\rho\\gamma - 4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi}{4\\rho^2}\\right)^2 + 2\\left(\\dfrac{\\left(\\partial_\\rho\\gamma\\,\\partial_\\rho\\omega + \\partial_t\\gamma\\,\\partial_t\\omega - \\partial_\\rho\\psi\\,\\partial_\\rho\\omega - 5\\partial_t\\psi\\,\\partial_t\\omega - \\partial_t^2\\omega\\right)e^{2\\psi}}{2\\rho}\\right)^2 + \\left(\\dfrac{4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi + 4\\rho^2\\,\\partial_t\\gamma\\,\\partial_t\\psi - 4\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 - 8\\rho^2\\left(\\partial_t\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_t\\omega\\right)^2 - 4\\rho^2\\,\\partial_t^2\\psi}{4\\rho^2}\\right)^2 + \\left(\\dfrac{4\\rho^2\\,\\partial_\\rho^2\\psi - 3e^{4\\psi}\\left(\\partial_\\rho\\omega\\right)^2 + 4\\rho^2\\left(\\partial_t\\psi\\right)^2 + 4\\rho\\,\\partial_\\rho\\psi - 4\\rho^2\\,\\partial_t\\gamma\\,\\partial_t\\psi + 4\\rho\\,\\partial_\\rho\\gamma - 4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi}{4\\rho^2}\\right)^2 + 2\\left(\\dfrac{\\left(\\rho\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\omega + \\rho\\,\\partial_t\\gamma\\,\\partial_t\\omega - 5\\rho\\,\\partial_\\rho\\psi\\,\\partial_\\rho\\omega - \\rho\\,\\partial_t\\psi\\,\\partial_t\\omega + \\partial_\\rho\\omega - \\rho\\,\\partial_\\rho^2\\omega\\right)e^{2\\psi}}{2\\rho^2}\\right)^2 + \\left(\\dfrac{4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_\\rho\\psi + 4\\rho^2\\,\\partial_t\\gamma\\,\\partial_t\\psi - 8\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 - 4\\rho^2\\left(\\partial_t\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_\\rho\\omega\\right)^2 - 4\\rho^2\\,\\partial_\\rho^2\\psi}{4\\rho^2}\\right)^2 + \\left(\\dfrac{4\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 - 4\\rho\\,\\partial_\\rho\\psi - 4\\rho^2\\left(\\partial_t\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_\\rho\\omega\\right)^2 - e^{4\\psi}\\left(\\partial_t\\omega\\right)^2}{4\\rho^2}\\right)^2 - 2\\left(\\dfrac{\\left(\\partial_t\\omega + 2\\rho\\,\\partial_t\\psi\\,\\partial_\\rho\\omega - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_t\\omega\\right)e^{2\\psi}}{2\\rho^2}\\right)^2 - 2\\left(\\dfrac{4\\rho^2\\,\\partial_t\\partial_\\rho\\psi - 3e^{4\\psi}\\partial_\\rho\\omega\\,\\partial_t\\omega + 4\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_t\\psi + 4\\rho\\,\\partial_t\\gamma - 4\\rho^2\\,\\partial_t\\gamma\\,\\partial_\\rho\\psi - 4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_t\\psi}{4\\rho^2}\\right)^2 - 2\\left(\\dfrac{\\left(\\rho\\,\\partial_\\rho\\gamma\\,\\partial_t\\omega + \\rho\\,\\partial_t\\gamma\\,\\partial_\\rho\\omega - 4\\rho\\,\\partial_\\rho\\psi\\,\\partial_t\\omega - 2\\rho\\,\\partial_t\\psi\\,\\partial_\\rho\\omega + \\partial_t\\omega - \\rho\\,\\partial_t\\partial_\\rho\\omega\\right)e^{2\\psi}}{2\\rho^2}\\right)^2 - 2\\left(\\dfrac{\\left(\\partial_\\rho\\gamma\\,\\partial_t\\omega + \\partial_t\\gamma\\,\\partial_\\rho\\omega - 2\\partial_\\rho\\psi\\,\\partial_t\\omega - 4\\partial_t\\psi\\,\\partial_\\rho\\omega - \\partial_t\\partial_\\rho\\omega\\right)e^{2\\psi}}{2\\rho}\\right)^2 - 2\\left(\\dfrac{4\\rho^2\\,\\partial_\\rho\\gamma\\,\\partial_t\\psi + 4\\rho^2\\,\\partial_t\\gamma\\,\\partial_\\rho\\psi - 12\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_t\\psi + e^{4\\psi}\\partial_\\rho\\omega\\,\\partial_t\\omega - 4\\rho^2\\,\\partial_t\\partial_\\rho\\psi}{4\\rho^2}\\right)^2\\right)"
+        },
+        {
+          "id": "null",
+          "name": "Null",
+          "coordinates": [
+            "u",
+            "v",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in [u, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "\\gamma = \\omega = 0 \\;\\text{at}\\; v = u \\;\\text{(a regular axis)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(u,v)",
+              "description": "Amplitude of the first polarisation, a dimensionless function of $u$ and $v$, with $e^{2\\psi} = g_{zz}$; the spacetime is a vacuum exactly where $2(v - u)\\,\\partial_u\\partial_v\\psi = \\partial_v\\psi - \\partial_u\\psi + 4e^{4\\psi}\\partial_u\\omega\\,\\partial_v\\omega/(v - u)$, $\\omega$ solves the equation beside it and $\\gamma$ the two beside that"
+            },
+            {
+              "symbol": "\\omega = \\omega(u,v)",
+              "description": "Amplitude of the second polarisation, a function of $u$ and $v$ with the dimensions of length, with $e^{2\\psi}\\omega = g_{\\phi z}$, solving $2(v - u)\\,\\partial_u\\partial_v\\omega = \\partial_u\\omega - \\partial_v\\omega - 4(v - u)\\left(\\partial_u\\psi\\,\\partial_v\\omega + \\partial_v\\psi\\,\\partial_u\\omega\\right)$"
+            },
+            {
+              "symbol": "\\gamma = \\gamma(u,v)",
+              "description": "Dimensionless function of $u$ and $v$ fixed by $\\psi$ and $\\omega$ through $\\partial_u\\gamma = -(v - u)\\left(\\partial_u\\psi\\right)^2 - e^{4\\psi}\\left(\\partial_u\\omega\\right)^2/(v - u)$ and $\\partial_v\\gamma = (v - u)\\left(\\partial_v\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_v\\omega\\right)^2/(v - u)$, and zero on a regular axis"
+            }
+          ],
+          "convention": "We use the retarded coordinate $u = ct - \\rho$ and the advanced coordinate $v = ct + \\rho$ of the cylindrical chart, both lengths, and $z$ a length along the axis. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -e^{2(\\gamma - \\psi)}du\\,dv + \\dfrac{(v - u)^2}{4}e^{-2\\psi}d\\phi^2 + e^{2\\psi}\\left(dz + \\omega\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{e^{2\\gamma - 2\\psi}}{2}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{e^{2\\gamma - 2\\psi}}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4\\omega^2e^{4\\psi} + \\left(v - u\\right)^2\\right)e^{-2\\psi}}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "z"
+              ],
+              "value": "\\omega\\,e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\phi"
+              ],
+              "value": "\\omega\\,e^{2\\psi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\psi}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\left(2\\left(v - u\\right)^2\\,\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\partial_v\\psi - \\left(v - u\\right)\\partial_u\\psi + 2e^{4\\psi}\\partial_v\\omega\\,\\partial_u\\omega - 2\\left(v - u\\right)^2\\,\\partial_u\\partial_v\\psi + 2\\left(v - u\\right)^2\\,\\partial_u\\partial_v\\gamma\\right)e^{2\\psi - 2\\gamma}}{\\left(v - u\\right)^2}",
+          "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(4\\partial_u\\partial_v\\psi - 4\\partial_u\\partial_v\\gamma\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)^2\\,\\partial_u^2\\psi + 2\\left(v - u\\right)^2\\,\\partial_u\\partial_v\\psi + \\left(v - u\\right)^2\\,\\partial_v^2\\psi - 3e^{4\\psi}\\left(\\partial_u\\omega\\right)^2 - 6e^{4\\psi}\\partial_v\\omega\\,\\partial_u\\omega - 3e^{4\\psi}\\left(\\partial_v\\omega\\right)^2 + 2\\left(v - u\\right)\\partial_u\\psi + \\left(v - u\\right)^2\\left(\\partial_u\\psi\\right)^2 - 2\\left(v - u\\right)\\partial_v\\psi - 2\\left(v - u\\right)^2\\,\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)^2\\left(\\partial_v\\psi\\right)^2 - 2\\left(v - u\\right)\\partial_u\\gamma - 2\\left(v - u\\right)^2\\,\\partial_u\\gamma\\,\\partial_u\\psi + 2\\left(v - u\\right)\\partial_v\\gamma - 2\\left(v - u\\right)^2\\,\\partial_v\\gamma\\,\\partial_v\\psi}{\\left(v - u\\right)^2}\\right)^2 + 2\\left(\\dfrac{\\left(2\\partial_v\\gamma\\,\\partial_v\\omega + 2\\partial_u\\gamma\\,\\partial_u\\omega - 6\\partial_v\\psi\\,\\partial_v\\omega - 4\\partial_v\\psi\\,\\partial_u\\omega - 4\\partial_u\\psi\\,\\partial_v\\omega - 6\\partial_u\\psi\\,\\partial_u\\omega - \\partial_v^2\\omega - 2\\partial_u\\partial_v\\omega - \\partial_u^2\\omega\\right)e^{2\\psi}}{v - u}\\right)^2 + \\left(\\dfrac{2\\left(v - u\\right)^2\\,\\partial_v\\gamma\\,\\partial_v\\psi + 2\\left(v - u\\right)^2\\,\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(v - u\\right)^2\\left(\\partial_v\\psi\\right)^2 - 2\\left(v - u\\right)^2\\,\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(v - u\\right)^2\\left(\\partial_u\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_v\\omega\\right)^2 + 2e^{4\\psi}\\partial_v\\omega\\,\\partial_u\\omega + e^{4\\psi}\\left(\\partial_u\\omega\\right)^2 - \\left(v - u\\right)^2\\,\\partial_v^2\\psi - 2\\left(v - u\\right)^2\\,\\partial_u\\partial_v\\psi - \\left(v - u\\right)^2\\,\\partial_u^2\\psi}{\\left(v - u\\right)^2}\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)^2\\,\\partial_u^2\\psi - 2\\left(v - u\\right)^2\\,\\partial_u\\partial_v\\psi + \\left(v - u\\right)^2\\,\\partial_v^2\\psi - 3e^{4\\psi}\\left(\\partial_u\\omega\\right)^2 + 6e^{4\\psi}\\partial_v\\omega\\,\\partial_u\\omega - 3e^{4\\psi}\\left(\\partial_v\\omega\\right)^2 - 2\\left(v - u\\right)\\partial_u\\psi + \\left(v - u\\right)^2\\left(\\partial_u\\psi\\right)^2 + 2\\left(v - u\\right)\\partial_v\\psi + 2\\left(v - u\\right)^2\\,\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)^2\\left(\\partial_v\\psi\\right)^2 - 2\\left(v - u\\right)\\partial_u\\gamma - 2\\left(v - u\\right)^2\\,\\partial_u\\gamma\\,\\partial_u\\psi + 2\\left(v - u\\right)\\partial_v\\gamma - 2\\left(v - u\\right)^2\\,\\partial_v\\gamma\\,\\partial_v\\psi}{\\left(v - u\\right)^2}\\right)^2 + 2\\left(\\dfrac{\\left(2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\omega + 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\omega - 6\\left(v - u\\right)\\partial_v\\psi\\,\\partial_v\\omega + 4\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\omega + 4\\left(v - u\\right)\\partial_u\\psi\\,\\partial_v\\omega - 6\\left(v - u\\right)\\partial_u\\psi\\,\\partial_u\\omega + 2\\partial_v\\omega - 2\\partial_u\\omega - \\left(v - u\\right)\\partial_v^2\\omega + 2\\left(v - u\\right)\\partial_u\\partial_v\\omega - \\left(v - u\\right)\\partial_u^2\\omega\\right)e^{2\\psi}}{\\left(v - u\\right)^2}\\right)^2 + \\left(\\dfrac{2\\left(v - u\\right)^2\\,\\partial_v\\gamma\\,\\partial_v\\psi + 2\\left(v - u\\right)^2\\,\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(v - u\\right)^2\\left(\\partial_v\\psi\\right)^2 + 2\\left(v - u\\right)^2\\,\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(v - u\\right)^2\\left(\\partial_u\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_v\\omega\\right)^2 - 2e^{4\\psi}\\partial_v\\omega\\,\\partial_u\\omega + e^{4\\psi}\\left(\\partial_u\\omega\\right)^2 - \\left(v - u\\right)^2\\,\\partial_v^2\\psi + 2\\left(v - u\\right)^2\\,\\partial_u\\partial_v\\psi - \\left(v - u\\right)^2\\,\\partial_u^2\\psi}{\\left(v - u\\right)^2}\\right)^2 + \\left(\\dfrac{4\\left(v - u\\right)^2\\,\\partial_v\\psi\\,\\partial_u\\psi + 2\\left(v - u\\right)\\partial_v\\psi - 2\\left(v - u\\right)\\partial_u\\psi + 4e^{4\\psi}\\partial_v\\omega\\,\\partial_u\\omega}{\\left(v - u\\right)^2}\\right)^2 - 2\\left(\\dfrac{2\\left(\\partial_u\\omega + \\partial_v\\omega + 2\\left(v - u\\right)\\partial_u\\psi\\,\\partial_v\\omega - 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\omega\\right)e^{2\\psi}}{\\left(v - u\\right)^2}\\right)^2 - 2\\left(\\dfrac{2\\left(v - u\\right)^2\\,\\partial_v\\gamma\\,\\partial_v\\psi - 2\\left(v - u\\right)\\partial_v\\gamma - 2\\left(v - u\\right)^2\\,\\partial_u\\gamma\\,\\partial_u\\psi - 2\\left(v - u\\right)\\partial_u\\gamma - \\left(v - u\\right)^2\\left(\\partial_v\\psi\\right)^2 + \\left(v - u\\right)^2\\left(\\partial_u\\psi\\right)^2 + 3e^{4\\psi}\\left(\\partial_v\\omega\\right)^2 - 3e^{4\\psi}\\left(\\partial_u\\omega\\right)^2 - \\left(v - u\\right)^2\\,\\partial_v^2\\psi + \\left(v - u\\right)^2\\,\\partial_u^2\\psi}{\\left(v - u\\right)^2}\\right)^2 - 2\\left(\\dfrac{\\left(2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\omega - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\omega - 6\\left(v - u\\right)\\partial_v\\psi\\,\\partial_v\\omega - 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\omega + 2\\left(v - u\\right)\\partial_u\\psi\\,\\partial_v\\omega + 6\\left(v - u\\right)\\partial_u\\psi\\,\\partial_u\\omega + 2\\partial_v\\omega + 2\\partial_u\\omega - \\left(v - u\\right)\\partial_v^2\\omega + \\left(v - u\\right)\\partial_u^2\\omega\\right)e^{2\\psi}}{\\left(v - u\\right)^2}\\right)^2 - 2\\left(\\dfrac{\\left(2\\partial_v\\gamma\\,\\partial_v\\omega - 2\\partial_u\\gamma\\,\\partial_u\\omega - 6\\partial_v\\psi\\,\\partial_v\\omega + 2\\partial_v\\psi\\,\\partial_u\\omega - 2\\partial_u\\psi\\,\\partial_v\\omega + 6\\partial_u\\psi\\,\\partial_u\\omega - \\partial_v^2\\omega + \\partial_u^2\\omega\\right)e^{2\\psi}}{v - u}\\right)^2 - 2\\left(\\dfrac{2\\left(v - u\\right)^2\\,\\partial_v\\gamma\\,\\partial_v\\psi - 2\\left(v - u\\right)^2\\,\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(v - u\\right)^2\\left(\\partial_v\\psi\\right)^2 + 3\\left(v - u\\right)^2\\left(\\partial_u\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_v\\omega\\right)^2 - e^{4\\psi}\\left(\\partial_u\\omega\\right)^2 - \\left(v - u\\right)^2\\,\\partial_v^2\\psi + \\left(v - u\\right)^2\\,\\partial_u^2\\psi}{\\left(v - u\\right)^2}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
       "id": "damour_solodukhin",
       "name": "Damour-Solodukhin Wormhole",
       "short_name": "Damour-Solodukhin",
@@ -18978,6 +19207,11 @@
       "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
       "related": [
         {
+          "id": "twisting_cylindrical_waves",
+          "kind": "generalisation",
+          "text": "Einstein and Rosen's waves with the second polarisation let in, through the term $e^{2\\psi}\\omega$ joining $d\\phi$ to $dz$, found by Kompaneets and by Ehlers [kompaneets1958, bicak2000]. A wave crossing another turns its polarisation [piran1985]."
+        },
+        {
           "id": "pp_wave",
           "kind": "family",
           "text": "Exact gravitational waves with plane fronts. Einstein and Rosen concluded in 1936 that plane waves could not exist, since they could not avoid singularities in the metric [kennefick2005]."
@@ -23727,6 +23961,11 @@
           "id": "small_universes",
           "kind": "family",
           "text": "Friedmann's flat universe on the same 3-torus, with matter and no waves. With matter added, the Gowdy universes that are the same at every point include it [martinbenito2011]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "dual",
+          "text": "The same field equations around an axis. A complex change of coordinates carries every cylindrical wave with both polarisations to a universe of Gowdy's kind, Halilsoy's standing wave to the torus $T^3$ [glod2022]."
         }
       ],
       "references": [
@@ -23755,7 +23994,8 @@
         "ruiz1992",
         "chinea1992",
         "belinskii1978",
-        "martinbenito2011"
+        "martinbenito2011",
+        "glod2022"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -25037,6 +25277,11 @@
           "id": "myers_perry",
           "kind": "family",
           "text": "Pomeransky derived the Myers-Perry black hole of five dimensions as two solitons, his test of the method in $D$ dimensions with $D - 2$ commuting Killing vectors [pomeransky2006]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "family",
+          "text": "Their inverse scattering applied around an axis gives cylindrical solitons with both polarisations, whose polarisation turns as they travel [tomizawa2014]."
         }
       ],
       "references": [
@@ -25056,7 +25301,8 @@
         "boyd1991",
         "belinski2001",
         "pomeransky2006",
-        "elvang2007"
+        "elvang2007",
+        "tomizawa2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/belinski_zakharov.json",
@@ -30835,6 +31081,11 @@
           "id": "eye_of_the_storm",
           "kind": "generalisation",
           "text": "Kerr's black hole with its mass switched off toward the centre as $me^{-\\ell/r}$, which takes the ring singularity away. At $\\ell = 0$ it is Kerr's metric [simpson2022eye]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "dual",
+          "text": "Kerr's metric with $t \\to iz$, $z \\to it$, and $a \\to ia$, given new coordinates, is a cylindrical pulse of gravitational waves with both polarisations, and it has no singularities [piran1986, dinverno2000]."
         }
       ],
       "references": [
@@ -30906,7 +31157,9 @@
         "herdeiro2014",
         "james2015",
         "astorino2022swirling",
-        "simpson2022eye"
+        "simpson2022eye",
+        "piran1986",
+        "dinverno2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -35568,6 +35821,11 @@
           "id": "swirling_universe_black_hole",
           "kind": "family",
           "text": "A universe that turns one way above a plane and the other way below it, and far from its axis approaches a turning form of Levi-Civita's cylinder at $\\sigma = 1/4$ [astorino2022swirling]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "generalisation",
+          "text": "Levi-Civita's field set waving with both polarisations. With $\\omega = 0$ and $\\psi$ a multiple of $\\ln\\rho$ the cylindrical waves of Kompaneets, Jordan and Ehlers stand still as this field."
         }
       ],
       "references": [
@@ -40215,6 +40473,11 @@
           "id": "swirling_universe_black_hole",
           "kind": "generalisation",
           "text": "Flat space put through Ehlers's transformation in its magnetic form, which makes a vacuum universe that turns one way above a plane and the other way below it, with a black hole set inside [astorino2022swirling]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "generalisation",
+          "text": "Cylindrical gravitational waves with both polarisations. With $\\psi = \\omega = \\gamma = 0$ their metric is Minkowski's in cylindrical coordinates."
         }
       ],
       "references": [

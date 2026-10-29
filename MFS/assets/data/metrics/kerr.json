@@ -240,7 +240,7 @@
     {
       "id": "twisting_cylindrical_waves",
       "kind": "dual",
-      "text": "Kerr's metric with $t \\to iz$, $z \\to it$ and $a \\to ia$, given new coordinates, is a cylindrical pulse of gravitational waves with both polarisations, and it has no singularities [piran1986, dinverno2000]."
+      "text": "Kerr's metric with $t \\to iz$, $z \\to it$, and $a \\to ia$, given new coordinates, is a cylindrical pulse of gravitational waves with both polarisations, and it has no singularities [piran1986, dinverno2000]."
     }
   ],
   "references": [

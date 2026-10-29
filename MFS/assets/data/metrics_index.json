@@ -1321,6 +1321,28 @@
     "curvature": "b13644c5a96f00ca"
   },
   {
+    "id": "twisting_cylindrical_waves",
+    "name": "Cylindrical Waves with Two Polarisations",
+    "tags": [
+      "vacuum",
+      "gravitational wave",
+      "cylindrical symmetry",
+      "exact solution",
+      "time-dependent",
+      "radiating",
+      "nonlinear",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "da4cd0c388a8025c",
+    "diagrams": "99c3458f20f3b69a",
+    "conformal": "8868c8b173cd5e27",
+    "embedding": "54d3ac1624dd55dd",
+    "curvature": "68ddd3897040fe31"
+  },
+  {
     "id": "damour_solodukhin",
     "name": "Damour-Solodukhin",
     "tags": [
@@ -1761,7 +1783,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9ab3a30f6eabd56d",
+    "version": "71019edb6e8830a4",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902",
@@ -2182,7 +2204,7 @@
       "BKL",
       "torus"
     ],
-    "version": "14a500898dddd9e8",
+    "version": "8ca0b151054c86d6",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "f0d7a1bdcd0620df",
@@ -2271,7 +2293,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a1d84826576ba82c",
+    "version": "15f5a78c6be9dedb",
     "diagrams": "9f49d55edfa17437",
     "conformal": "06e065e27b7e360f",
     "embedding": "ad3b787488c249a5",
@@ -2846,7 +2868,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "0f6d4dacb411c640",
+    "version": "dc145f08fd5f5f9f",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -3312,7 +3334,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e1c63070e2df51a5",
+    "version": "cf43b0dfbf8a9095",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
@@ -3734,7 +3756,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "7b72a5a6957c5c49",
+    "version": "a009df036a1fb63e",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"

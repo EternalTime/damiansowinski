@@ -706,11 +706,11 @@ PSK_INPUT = ("The pulse of Piran, Safier, and Katz, of width $a$ and strength $\
              "$e^{2\\psi} = \\left(\\alpha^2(1 - \\lambda_u\\lambda_v)^2 + (\\lambda_u + \\lambda_v)^2\\right)/"
              "\\left(\\alpha^2\\Xi^2 + (\\lambda_u - \\lambda_v)^2\\right)$, "
              "$e^{2\\gamma} = \\left(\\alpha^2(1 - \\lambda_u\\lambda_v)^2 + (\\lambda_u + \\lambda_v)^2\\right)/"
-             "\\left((1 + \\lambda_u^2)(1 + \\lambda_v^2)\\right)$ and "
+             "\\left((1 + \\lambda_u^2)(1 + \\lambda_v^2)\\right)$, and "
              "$\\omega = 2\\beta(\\alpha + \\alpha\\beta)a - \\alpha\\beta\\,\\Xi(\\lambda_u + \\lambda_v)^2a/"
              "\\left(\\sqrt{\\lambda_u\\lambda_v}\\left(\\alpha^2(1 - \\lambda_u\\lambda_v)^2 + (\\lambda_u + \\lambda_v)^2\\right)\\right)$, "
              "with $\\beta = \\sqrt{\\alpha^2 - 1}/\\alpha$, $\\Xi = 1 + \\lambda_u\\lambda_v + 2\\beta\\sqrt{\\lambda_u\\lambda_v}$, "
-             "$a\\lambda_u = \\sqrt{a^2 + u^2} - u$ and $a\\lambda_v = \\sqrt{a^2 + v^2} + v$, "
+             "$a\\lambda_u = \\sqrt{a^2 + u^2} - u$, and $a\\lambda_v = \\sqrt{a^2 + v^2} + v$, "
              "at $\\alpha = 2$, checked to solve this spacetime's own field equations.")
 PSK_SOLVES = (("t", "t"), ("t", "\\rho"), ("\\phi", "\\phi"), ("\\phi", "z"), ("z", "z"))
 

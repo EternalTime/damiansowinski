@@ -712,6 +712,17 @@ A static, axially symmetric vacuum field whose Weyl potential is Newton's potent
 - chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{-2m/R}c^2dt^2 + e^{2m/R}\left(e^{-m^2\rho^2/R^4}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{-2m/r}c^2dt^2 + e^{2m/r}\left(e^{-m^2\sin^2\theta/r^2}\left(dr^2 + r^2d\theta^2\right) + r^2\sin^2\theta\,d\phi^2\right)$$
 
+### Cylindrical Waves with Two Polarisations
+
+Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Einstein and Rosen with the second polarisation switched on. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.
+
+- id: `twisting_cylindrical_waves`
+- tags: vacuum, gravitational wave, cylindrical symmetry, exact solution, time-dependent, radiating, nonlinear, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/twisting_cylindrical_waves.json
+- chart Cylindrical: coordinates $(t, \rho, \phi, z)$, $$ds^2 = e^{2(\gamma - \psi)}\left(-c^2dt^2 + d\rho^2\right) + \rho^2e^{-2\psi}d\phi^2 + e^{2\psi}\left(dz + \omega\,d\phi\right)^2$$
+- chart Null: coordinates $(u, v, \phi, z)$, $$ds^2 = -e^{2(\gamma - \psi)}du\,dv + \dfrac{(v - u)^2}{4}e^{-2\psi}d\phi^2 + e^{2\psi}\left(dz + \omega\,d\phi\right)^2$$
+
 ### Damour-Solodukhin Wormhole
 
 Schwarzschild's metric with a small constant $\lambda^2$ added to $-g_{tt}$, which Thibault Damour and Sergey Solodukhin wrote down in 2007. The horizon becomes the throat of a static wormhole joining two asymptotically flat regions, and for small $\lambda$ an observer needs a time of order $(r_s/c)\ln(1/\lambda^2)$ to tell it from a black hole.
