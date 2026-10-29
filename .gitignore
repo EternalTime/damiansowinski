@@ -21,3 +21,6 @@ __pycache__
 # The test environment _tools/setup-env.sh builds
 /.venv.noindex/
 /.node.noindex/
+
+# The logs of _tools/check_spacetime.py, one folder per spacetime
+/.check.noindex/

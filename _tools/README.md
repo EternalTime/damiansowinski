@@ -17,6 +17,15 @@ The page turns those brackets into numbered links by looking the key up in `refe
 A reason a reference is there, such as a novel beside the papers, goes in that prose; the `.bib` entries carry no annotations.
 `godel` and `morris_thorne` are worked examples.
 
+What is said of one spacetime alone stays with it.
+Its notes, the derivations and the choices behind its drawings, go in `_tools/derivations/<id>.md`, its exceptions to the tests every spacetime is held to in `_tools/derivations/exceptions/<id>.json`, as "Exceptions" under "Where the diagrams stand" says, and its own tests in `_tools/test_<id>.py`.
+
+Once the spacetime is written and drawn, one command checks its page:
+
+    .venv.noindex/bin/python _tools/check_spacetime.py <id>
+
+It runs that page's checks in order and stops at the first that fails, naming the step and the section of this file that explains it, and "Checking" below lists the steps.
+
 ### Tags
 
 The search list finds a spacetime by its tags, so a tag has to be on every spacetime it is true of.
@@ -513,9 +522,32 @@ An index entry's `diagrams`, `conformal`, `embedding` and `curvature` are the sa
 
 reports whether the published files are still what the folder says they should be, and changes nothing.
 
+One spacetime's page is checked by one command, in the environment of the next section:
+
+    .venv.noindex/bin/python _tools/check_spacetime.py kerr
+
+It runs these steps in order and stops at the first that fails:
+
+1. `_tools/environment.py`, then `_tools/test_derivations_source.py`;
+2. `_tools/derivations/verify_metrics.py --metric kerr`, every chart of the spacetime;
+3. `null_rays.py`, `conformal.py`, `embedding.py` and `curvature.py` in `_tools/derivations`, each with `--verify --metric kerr`;
+4. `_tools/derivations/tex_check.cjs --metric=kerr`;
+5. `_tools/build_mfs_data.py --check`, then `_tools/build_agent_data.py --check`, which read the whole collection;
+6. the classes of `_tools/test_build_mfs_data.py` that test the drawings, `Diagrams`, `Figures`, `ConformalDiagrams`, `EmbeddingDiagrams`, `Slices`, `StacksAndMovies` and `TimeSlicedViewsAreMovies`, with `MFS_SPACETIME=kerr`;
+7. `_tools/test_kerr.py`, the spacetime's own tests, where it has the file.
+
+Each step's output goes to `.check.noindex/kerr/<step>.log` at the top of the checkout, which every run empties first and git ignores; the folder's name ends in `.noindex` so Spotlight leaves it alone.
+A failed step is named with the section of this file that explains it and the last lines of its log, and the run ends on one line saying how many steps passed.
+A drawing program refuses a spacetime it draws nothing of its kind for, as `curvature.py` refuses most of them; that step counts as not drawn, with the refusal in its log, where no file of that kind is published, and as a failure where one is.
+A step whose command is missing stops the run before any step runs, naming the step and what it could not find.
+
+    .venv.noindex/bin/python _tools/check_spacetime.py kerr --texts
+
+runs only the build's rules for text, over the spacetime's metric file and every text in another metric file on why that one is related to it, through the functions `build_mfs_data.py` calls, in a second.
+
     .venv.noindex/bin/python -m unittest discover -s _tools
 
-runs the tests, which include that check and the TeX check under "Conformal diagrams" below.
+runs every test, the build's check and the TeX check under "Conformal diagrams" below among them, and is what a change passes before it lands on `main`.
 They run in the environment of the next section and nowhere else.
 
     MFS_SPACETIME=kerr .venv.noindex/bin/python -m unittest discover -s _tools -p test_build_mfs_data.py
@@ -594,6 +626,10 @@ A caption is prose in the register of the conventions and histories beside it, a
 It says what a thing is and does, plainly, as "each point in the diagram a single event", and never defines it by a contrast with what it is not, as the captain asked on 29 September 2026: no "X rather than Y", "instead of", "not a X but Y", "is X, not Y" or "less X, more Y" anywhere a reader of the spacetimes page sees, in a history, a convention, a description, a caption, a note, a restriction band or the page's own words.
 `build_mfs_data.py` holds every text of the data to that through `text_problems`, `Contrast` in `_tools/test_build_mfs_data.py` holds the page's own words to it, and a sentence of the page where such a phrase states physics plainly may stand only as a named entry of its `ALLOWED`, with the reason.
 It gives the physics of a surface, and the reader sees how the figure lays it out; it ends on a fact, so the lines inside Vaidya's shell crowd toward it because of the slope of $q$.
+
+The text beside a figure is held to 400 characters, a soft limit: its caption, its clip note, the words of its legend and its settings, added together as the file writes them.
+`length` in `_tools/derivations/view_text.py` counts them one way for every drawing program, the legend of a view of the null rays being the names of its two families of rays, its cones where it draws any and one entry for each kind of marker.
+`null_rays.py`, `conformal.py`, `embedding.py` and `curvature.py` each warn of a view past the limit, naming it and its count, and write it all the same.
 
 ### Labels are TeX
 
@@ -912,7 +948,7 @@ It needs the same environment as `null_rays.py` and takes a few seconds for the 
     python3 _tools/build_mfs_data.py
 
 `--metric <metric_id>` redraws one spacetime, and `--verify` prints every check and writes nothing.
-A drawing added with `--metric` alone never runs the others, so run the whole collection once before a commit: a new function spliced into the end of its neighbour takes that neighbour's `return views`, and the redraw of everything is what fails.
+A drawing added with `--metric` alone never runs the others, so it never finds a new function spliced into the end of its neighbour, which takes that neighbour's `return views`; the check of the source below finds it.
 `_tools/test_derivations_source.py` reads the scripts without running them and holds every drawing to a closing `return` and every module in `_tools/derivations` to one definition of each top-level function and class, since Python keeps the later of two in silence.
 
 Every map drawn is checked by the function that draws with it, at random points of the region it covers, against the published metric and inverse metric: lines of constant drawn null coordinate are light rays, the two families are distinct, the future is up, and the published inverse on the surface is the inverse of the published metric there.
