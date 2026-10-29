@@ -38,10 +38,6 @@ from voice import (CAPTION_VOICE, CONTRAST, COST, GIVES, MACHINERY, MACHINERY_OU
 # _tools/README.md carries the rule this stands for.
 DASHES = "\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
 
-# The fields written in sentences. The LaTeX and structural fields are mathematics
-# and are left out on purpose, since a minus sign belongs in them.
-PROSE_FIELDS = ("name", "short_name", "description", "history", "convention")
-
 # The templates and pages whose words reach a reader, beside the generated files, and the
 # data the site hands to agents.
 TEMPLATES = ("_layouts/*.html", "_includes/*.html", "_includes/*.txt", "MFS/*.markdown", "*.markdown", "llms*.txt",
@@ -52,23 +48,11 @@ def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def prose(metric):
-    """Yield every sentence carrying field of a metric, each with the name of its place."""
-    for field in PROSE_FIELDS:
-        if metric.get(field):
-            yield field, metric[field]
-    for entry in metric.get("related") or []:
-        if isinstance(entry, dict) and entry.get("text"):
-            yield f"related[{entry.get('id')}].text", entry["text"]
-    for position, system in enumerate(metric.get("coordinates") or []):
-        where = f"coordinates[{system.get('id') or position}]"
-        if system.get("name"):
-            yield f"{where}.name", system["name"]
-        if system.get("convention"):
-            yield f"{where}.convention", system["convention"]
-        for parameter in system.get("parameters") or []:
-            if parameter.get("description"):
-                yield f"{where}.parameters[{parameter.get('symbol')}].description", parameter["description"]
+prose = build.metric_prose
+diagram_prose = build.diagram_prose
+conformal_prose = build.conformal_prose
+embedding_prose = build.embedding_prose
+curvature_prose = build.curvature_prose
 
 
 def load_folder(files):
@@ -86,24 +70,6 @@ def diagram_files():
 
 def conformal_files():
     return {p.stem: read(p) for p in sorted(build.CONFORMAL_DIR.glob("*.json"))}
-
-
-def conformal_prose(name, conformal):
-    """Yield every field of a conformal diagram file a reader sees, each with its place."""
-    for view in conformal["views"]:
-        where = f"conformal/{name}.json {view['id']}"
-        yield f"{where}.label", view["label"]
-        for position, paragraph in enumerate(view["caption"]):
-            yield f"{where}.caption[{position}]", paragraph
-        for field in ("restriction", "settings", "input"):
-            if view.get(field):
-                yield f"{where}.{field}", view[field]
-        for position, (_, _, text) in enumerate(view["legend"]):
-            yield f"{where}.legend[{position}]", text
-        for position, label in enumerate(view["labels"]):
-            yield f"{where}.labels[{position}]", label["text"]
-        for position, mark in enumerate(view.get("slices", [])):
-            yield f"{where}.slices[{position}].label", mark["label"]
 
 
 def embedding_files():
@@ -164,116 +130,8 @@ def grid_height(piece, X, Y, reach=1e-6):
     return best and best[1]
 
 
-def embedding_prose(name, data):
-    """Yield every field of an embedding diagram file a reader sees, each with its place."""
-    for position, text in enumerate(data.get("stops", [])):
-        yield f"embedding/{name}.json stops[{position}]", text
-    for view in data["views"]:
-        where = f"embedding/{name}.json {view['id']}"
-        yield f"{where}.label", view["label"]
-        yield f"{where}.unit", view["unit"]
-        for position, paragraph in enumerate(view["caption"]):
-            yield f"{where}.caption[{position}]", paragraph
-        for field in ("settings", "input", "height"):
-            if view.get(field):
-                yield f"{where}.{field}", view[field]
-        for position, text in enumerate(view.get("stops", [])):
-            yield f"{where}.stops[{position}]", text
-        for position, (_, _, text) in enumerate(view["figure"]["legend"]):
-            yield f"{where}.figure.legend[{position}]", text
-        for position, label in enumerate(view["figure"]["labels"]):
-            yield f"{where}.figure.labels[{position}]", label["text"]
-        for position, shade in enumerate(view.get("shades", [])):
-            yield f"{where}.shades[{position}].legend", shade["legend"][2]
-            yield f"{where}.shades[{position}].caption", shade["caption"]
-        frames = view.get("movie", {}).get("frames", [])
-        if frames:
-            yield f"{where}.movie.variable", view["movie"]["variable"]
-        for number, surface in [(f"surfaces[{k}]", x) for k, x in enumerate(view["surfaces"])] + \
-                [(f"movie.frames[{k}]", x) for k, x in enumerate(frames)]:
-            at = f"{where}.{number}"
-            if surface.get("label"):
-                yield f"{at}.label", surface["label"]
-            for k, curve in enumerate(surface.get("curves", [])):
-                if curve.get("label"):
-                    yield f"{at}.curves[{k}].label", curve["label"]
-            for piece in surface["pieces"]:
-                for end in ("start", "end", "edge"):
-                    if piece.get(end, {}).get("text"):
-                        yield f"{at}.{piece['id']}.{end}", piece[end]["text"]
-            for ring in surface["rings"]:
-                if ring.get("label"):
-                    yield f"{at}.rings[{ring['piece']} {ring['x']}]", ring["label"]
-
-
 def curvature_files():
     return {p.stem: read(p) for p in sorted(build.CURVATURE_DIR.glob("*.json"))}
-
-
-def curvature_prose(name, data):
-    """Yield every field of a curvature figure file a reader sees, each with its place."""
-    for view in data["views"]:
-        where = f"curvature/{name}.json {view['id']}"
-        yield f"{where}.label", view["label"]
-        for position, paragraph in enumerate(view["caption"]):
-            yield f"{where}.caption[{position}]", paragraph
-        for field in ("settings", "input", "clip"):
-            if view.get(field):
-                yield f"{where}.{field}", view[field]
-        for position, (_, _, text) in enumerate(view["legend"]):
-            yield f"{where}.legend[{position}]", text
-        for scalar, place in (view.get("per_scalar") or {}).items():
-            yield f"{where}.per_scalar.{scalar}.clip", place["clip"]
-            for position, (_, _, text) in enumerate(place["legend"]):
-                yield f"{where}.per_scalar.{scalar}.legend[{position}]", text
-        for field in ("x", "y", "colour"):
-            if view.get(field):
-                yield f"{where}.{field}.name", view[field]["name"]
-        for panel in view.get("panels", []):
-            yield f"{where}.panels[{panel['id']}].name", panel["name"]
-        movie = view.get("movie")
-        if movie:
-            yield f"{where}.movie.variable", movie["variable"]
-            for position, frame in enumerate(movie["frames"]):
-                yield f"{where}.movie.frames[{position}].label", frame["label"]
-
-
-def diagram_prose(name, diagram):
-    """Yield every sentence carrying field of a diagram file, each with the name of its place:
-    its flat views and its figures in three dimensions."""
-    for system, views in diagram["systems"].items():
-        for view in views:
-            where = f"diagrams/{name}.json {system}/{view['id']}"
-            yield f"{where}.label", view["label"]
-            for position, family in enumerate(view["families"]):
-                yield f"{where}.families[{position}]", family
-            for position, paragraph in enumerate(view["caption"]):
-                yield f"{where}.caption[{position}]", paragraph
-            if view.get("input"):
-                yield f"{where}.input", view["input"]
-            if view.get("cone"):
-                yield f"{where}.cone", view["cone"]
-            for position, marker in enumerate(view["markers"]):
-                if marker.get("legend"):
-                    yield f"{where}.markers[{position}].legend", marker["legend"]
-            for position, mark in enumerate(view.get("slices", [])):
-                yield f"{where}.slices[{position}].label", mark["label"]
-    for system, figures in diagram.get("projections", {}).items():
-        for figure in figures:
-            where = f"diagrams/{name}.json {system}/{figure['id']}"
-            yield f"{where}.label", figure["label"]
-            for position, paragraph in enumerate(figure["caption"]):
-                yield f"{where}.caption[{position}]", paragraph
-            for field in ("settings", "input"):
-                if figure.get(field):
-                    yield f"{where}.{field}", figure[field]
-            for position, (_, _, text) in enumerate(figure["legend"]):
-                yield f"{where}.legend[{position}]", text
-            for position, label in enumerate(figure["labels"]):
-                yield f"{where}.labels[{position}]", label["text"]
-            for position, mark in enumerate(figure.get("slices", [])):
-                yield f"{where}.slices[{position}].label", mark["label"]
-
 
 
 BARDEEN_G2 = 1 / 9                # g^2 in r_s^2, as every diagram of Bardeen's black hole takes it
@@ -8250,6 +8108,117 @@ class Dollars(unittest.TestCase):
         self.assertIn("has an unbalanced $", said.getvalue())
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
+
+
+class TextRefusals(unittest.TestCase):
+    """The build refuses a text a reader sees that breaks a rule of voice.py, naming its place."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.metrics = build.load_metrics()
+
+    def test_the_collection_as_it_stands_keeps_to_the_rules(self):
+        diagrams, conformal = build.load_diagrams(self.metrics), build.load_conformal(self.metrics)
+        embedding, curvature = build.load_embedding(self.metrics), build.load_curvature(self.metrics)
+        self.assertIsNone(build.check_texts(self.metrics, diagrams, conformal, embedding, curvature))
+
+    def test_a_text_that_breaks_a_rule_is_named_by_its_file_and_its_place(self):
+        kerr = copy.deepcopy(next(m for m in self.metrics if m["id"] == "kerr"))
+        kerr["description"] += " It is important to note this entry."
+        kerr["related"][0]["text"] = "A well-known limit."
+        with self.assertRaises(build.DataError) as caught:
+            build.check_texts([kerr], {}, {}, {}, {})
+        said = str(caught.exception)
+        self.assertIn("kerr.json: description has a word for the collection's machinery: 'entry'", said)
+        self.assertIn(f"kerr.json: related {kerr['related'][0]['id']} has a compound spelled with a hyphen: "
+                      "'well-known'", said)
+
+    def test_a_caption_is_held_to_the_caption_rules_and_a_label_is_not(self):
+        data = {"views": [{"id": "v", "label": "This is a label", "caption": ["This is the plane of $t$ and $r$."],
+                           "legend": [], "labels": []}]}
+        problems = build.text_problems(build.drawing_texts(build.conformal_prose, "x", data))
+        self.assertEqual(problems, ["conformal/x.json v.caption[0] has a sentence opening \"This is\" in place of a "
+                                    "noun phrase: 'This is'"])
+
+    def test_a_history_may_say_published_and_no_other_field_may(self):
+        metric = {"id": "x", "history": "Einstein published it in 1915.", "description": "Einstein published it."}
+        problems = build.text_problems(build.metric_texts(metric))
+        self.assertEqual(problems, ["x.json: description has a word for the collection's machinery: 'published'"])
+
+    def test_one_spacetime_is_held_by_its_own_file_and_every_text_relating_another_to_it(self):
+        metrics = copy.deepcopy(self.metrics)
+        kerr = next(m for m in metrics if m["id"] == "kerr")
+        other = next(m for m in metrics if m["id"] == kerr["related"][0]["id"])
+        entry = next(e for e in other["related"] if e["id"] == "kerr")
+        entry["text"] = "A well-known limit."
+        far = next(m for m in metrics if m["id"] not in ("kerr", other["id"]) and
+                   all(e["id"] != "kerr" for e in m["related"]))
+        far["description"] += " Shown above."
+        self.assertEqual(build.spacetime_text_problems("kerr", self.metrics), [])
+        self.assertEqual(build.spacetime_text_problems("kerr", metrics),
+                         [f"{other['id']}.json: related kerr has a compound spelled with a hyphen: 'well-known'"])
+
+
+class EmbeddingRefusals(unittest.TestCase):
+    """The build refuses a spacetime with no embedding diagram unless it is named as drawn without one."""
+
+    def test_the_spacetimes_without_one_are_those_embedding_py_does_not_draw(self):
+        tree = ast.parse((build.ROOT / "_tools" / "derivations" / "embedding.py").read_text(encoding="utf-8"))
+        not_drawn = next(ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign)
+                         and [getattr(target, "id", None) for target in node.targets] == ["NOT_DRAWN"])
+        self.assertEqual(set(build.WITHOUT_EMBEDDING), not_drawn)
+
+    def test_the_collection_as_it_stands_has_every_embedding_diagram(self):
+        metrics = build.load_metrics()
+        self.assertIsNone(build.check_embedding(metrics, build.load_embedding(metrics)))
+
+    def test_a_missing_diagram_and_one_drawn_without_need_are_named(self):
+        metrics = [{"id": "kerr"}, {"id": "lentz"}]
+        self.assertEqual(build.embedding_problems(metrics, {"kerr": {}}), [])
+        self.assertEqual(build.embedding_problems(metrics, {}), [
+            "kerr.json has no embedding diagram, embedding/kerr.json; draw it with "
+            "_tools/derivations/embedding.py --metric kerr"])
+        self.assertEqual(build.embedding_problems(metrics, {"kerr": {}, "lentz": {}}), [
+            "embedding/lentz.json draws a spacetime WITHOUT_EMBEDDING names as drawn without one"])
+
+
+class TagRefusals(unittest.TestCase):
+    """The build refuses tags that disagree with _tools/derivations/metric_tags.json."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.metrics = build.load_metrics()
+        cls.facts = build.metric_tags.load_facts()
+
+    def problems(self, change):
+        metrics = copy.deepcopy(self.metrics)
+        change(next(m for m in metrics if m["id"] == "kerr"))
+        return build.tag_problems(metrics, self.facts)
+
+    def test_the_collection_as_it_stands_is_tagged_as_its_charts_decide(self):
+        self.assertIsNone(build.check_tags(self.metrics))
+
+    def test_a_tag_the_charts_decide_against_is_named(self):
+        self.assertEqual(self.problems(lambda kerr: kerr["tags"].append("static")),
+                         ["kerr.json: tags carries 'static', which its charts decide it has not"])
+
+    def test_a_retired_tag_is_named(self):
+        self.assertIn("kerr.json: tags carries 'vacuum solution', which was merged into 'vacuum'",
+                      self.problems(lambda kerr: kerr["tags"].append("vacuum solution")))
+
+    def test_a_tag_one_spacetime_alone_carries_is_named(self):
+        self.assertEqual(self.problems(lambda kerr: kerr["tags"].append("made up keyword")),
+                         ["metrics: tags 'made up keyword' is carried by kerr alone"])
+
+    def test_a_chart_changed_since_its_facts_were_computed_is_named(self):
+        def change(kerr):
+            kerr["coordinates"][0]["line_element"] += " "
+        self.assertEqual(self.problems(change), [
+            f"kerr.json: the chart {self.metrics_chart()!r} has changed since its facts were computed; "
+            f"{build.TAG_RUN}"])
+
+    def metrics_chart(self):
+        return next(m for m in self.metrics if m["id"] == "kerr")["coordinates"][0]["id"]
 
 
 class Aspect(unittest.TestCase):

@@ -21,7 +21,9 @@ It refuses any of them drawn from components its metric no longer publishes, and
 each file's version into the index beside the metric's own.
 
 It also refuses a symbol that a chart's mathematics or a drawing uses and nothing defines;
-symbols.py, beside this file, holds that rule.
+symbols.py, beside this file, holds that rule. It refuses a text a reader sees that breaks a rule
+of voice.py, beside this file, a spacetime with no embedding diagram that is not named as drawn
+without one, and tags that disagree with _tools/derivations/metric_tags.json.
 """
 
 import argparse
@@ -35,6 +37,11 @@ import unicodedata
 from pathlib import Path
 
 from symbols import symbol_problems
+from voice import text_problems
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "derivations"))
+import metric_tags  # noqa: E402
+sys.path.pop(0)
 
 ROOT = Path(__file__).resolve().parent.parent
 METRICS_DIR = ROOT / "MFS" / "assets" / "data" / "metrics"
@@ -1304,6 +1311,272 @@ def check_symbols(metrics, diagrams, conformal, embedding, curvature=None):
         raise DataError("\n".join(problems))
 
 
+# The fields of a metric file written in sentences. The LaTeX and structural fields are
+# mathematics and are left out on purpose, since a minus sign belongs in them.
+PROSE_FIELDS = ("name", "short_name", "description", "history", "convention")
+
+# The rules of voice.py every text a reader sees is held to, the sentences beside them held to
+# the captain's voice and to the hyphen rule, and a drawing's sentences to the caption rules too.
+# A history tells of papers that were published and printed, so it may say so.
+PROSE_RULES = ("machinery", "machinery outside a history", "gives", "contrast", "cost")
+HISTORY_RULES = ("machinery", "gives", "contrast", "cost")
+SENTENCE_RULES = ("voice", "hyphens")
+DRAWN_SENTENCE = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|clip|restriction|stops\[\d+\]|start|end|edge)$"
+                            r"| stops\[")
+
+
+def metric_prose(metric):
+    """Yield every sentence carrying field of a metric, each with the name of its place."""
+    for field in PROSE_FIELDS:
+        if metric.get(field):
+            yield field, metric[field]
+    for entry in metric.get("related") or []:
+        if isinstance(entry, dict) and entry.get("text"):
+            yield f"related[{entry.get('id')}].text", entry["text"]
+    for position, system in enumerate(metric.get("coordinates") or []):
+        where = f"coordinates[{system.get('id') or position}]"
+        if system.get("name"):
+            yield f"{where}.name", system["name"]
+        if system.get("convention"):
+            yield f"{where}.convention", system["convention"]
+        for parameter in system.get("parameters") or []:
+            if parameter.get("description"):
+                yield f"{where}.parameters[{parameter.get('symbol')}].description", parameter["description"]
+
+
+def diagram_prose(name, diagram):
+    """Yield every sentence carrying field of a diagram file, each with the name of its place:
+    its flat views and its figures in three dimensions."""
+    for system, views in diagram["systems"].items():
+        for view in views:
+            where = f"diagrams/{name}.json {system}/{view['id']}"
+            yield f"{where}.label", view["label"]
+            for position, family in enumerate(view["families"]):
+                yield f"{where}.families[{position}]", family
+            for position, paragraph in enumerate(view["caption"]):
+                yield f"{where}.caption[{position}]", paragraph
+            if view.get("input"):
+                yield f"{where}.input", view["input"]
+            if view.get("cone"):
+                yield f"{where}.cone", view["cone"]
+            for position, marker in enumerate(view["markers"]):
+                if marker.get("legend"):
+                    yield f"{where}.markers[{position}].legend", marker["legend"]
+            for position, mark in enumerate(view.get("slices", [])):
+                yield f"{where}.slices[{position}].label", mark["label"]
+    for system, figures in diagram.get("projections", {}).items():
+        for figure in figures:
+            where = f"diagrams/{name}.json {system}/{figure['id']}"
+            yield f"{where}.label", figure["label"]
+            for position, paragraph in enumerate(figure["caption"]):
+                yield f"{where}.caption[{position}]", paragraph
+            for field in ("settings", "input"):
+                if figure.get(field):
+                    yield f"{where}.{field}", figure[field]
+            for position, (_, _, text) in enumerate(figure["legend"]):
+                yield f"{where}.legend[{position}]", text
+            for position, label in enumerate(figure["labels"]):
+                yield f"{where}.labels[{position}]", label["text"]
+            for position, mark in enumerate(figure.get("slices", [])):
+                yield f"{where}.slices[{position}].label", mark["label"]
+
+
+def conformal_prose(name, conformal):
+    """Yield every field of a conformal diagram file a reader sees, each with its place."""
+    for view in conformal["views"]:
+        where = f"conformal/{name}.json {view['id']}"
+        yield f"{where}.label", view["label"]
+        for position, paragraph in enumerate(view["caption"]):
+            yield f"{where}.caption[{position}]", paragraph
+        for field in ("restriction", "settings", "input"):
+            if view.get(field):
+                yield f"{where}.{field}", view[field]
+        for position, (_, _, text) in enumerate(view["legend"]):
+            yield f"{where}.legend[{position}]", text
+        for position, label in enumerate(view["labels"]):
+            yield f"{where}.labels[{position}]", label["text"]
+        for position, mark in enumerate(view.get("slices", [])):
+            yield f"{where}.slices[{position}].label", mark["label"]
+
+
+def embedding_prose(name, data):
+    """Yield every field of an embedding diagram file a reader sees, each with its place."""
+    for position, text in enumerate(data.get("stops", [])):
+        yield f"embedding/{name}.json stops[{position}]", text
+    for view in data["views"]:
+        where = f"embedding/{name}.json {view['id']}"
+        yield f"{where}.label", view["label"]
+        yield f"{where}.unit", view["unit"]
+        for position, paragraph in enumerate(view["caption"]):
+            yield f"{where}.caption[{position}]", paragraph
+        for field in ("settings", "input", "height"):
+            if view.get(field):
+                yield f"{where}.{field}", view[field]
+        for position, text in enumerate(view.get("stops", [])):
+            yield f"{where}.stops[{position}]", text
+        for position, (_, _, text) in enumerate(view["figure"]["legend"]):
+            yield f"{where}.figure.legend[{position}]", text
+        for position, label in enumerate(view["figure"]["labels"]):
+            yield f"{where}.figure.labels[{position}]", label["text"]
+        for position, shade in enumerate(view.get("shades", [])):
+            yield f"{where}.shades[{position}].legend", shade["legend"][2]
+            yield f"{where}.shades[{position}].caption", shade["caption"]
+        frames = view.get("movie", {}).get("frames", [])
+        if frames:
+            yield f"{where}.movie.variable", view["movie"]["variable"]
+        for number, surface in [(f"surfaces[{k}]", x) for k, x in enumerate(view["surfaces"])] + \
+                [(f"movie.frames[{k}]", x) for k, x in enumerate(frames)]:
+            at = f"{where}.{number}"
+            if surface.get("label"):
+                yield f"{at}.label", surface["label"]
+            for k, curve in enumerate(surface.get("curves", [])):
+                if curve.get("label"):
+                    yield f"{at}.curves[{k}].label", curve["label"]
+            for piece in surface["pieces"]:
+                for end in ("start", "end", "edge"):
+                    if piece.get(end, {}).get("text"):
+                        yield f"{at}.{piece['id']}.{end}", piece[end]["text"]
+            for ring in surface["rings"]:
+                if ring.get("label"):
+                    yield f"{at}.rings[{ring['piece']} {ring['x']}]", ring["label"]
+
+
+def curvature_prose(name, data):
+    """Yield every field of a curvature figure file a reader sees, each with its place."""
+    for view in data["views"]:
+        where = f"curvature/{name}.json {view['id']}"
+        yield f"{where}.label", view["label"]
+        for position, paragraph in enumerate(view["caption"]):
+            yield f"{where}.caption[{position}]", paragraph
+        for field in ("settings", "input", "clip"):
+            if view.get(field):
+                yield f"{where}.{field}", view[field]
+        for position, (_, _, text) in enumerate(view["legend"]):
+            yield f"{where}.legend[{position}]", text
+        for scalar, place in (view.get("per_scalar") or {}).items():
+            yield f"{where}.per_scalar.{scalar}.clip", place["clip"]
+            for position, (_, _, text) in enumerate(place["legend"]):
+                yield f"{where}.per_scalar.{scalar}.legend[{position}]", text
+        for field in ("x", "y", "colour"):
+            if view.get(field):
+                yield f"{where}.{field}.name", view[field]["name"]
+        for panel in view.get("panels", []):
+            yield f"{where}.panels[{panel['id']}].name", panel["name"]
+        movie = view.get("movie")
+        if movie:
+            yield f"{where}.movie.variable", movie["variable"]
+            for position, frame in enumerate(movie["frames"]):
+                yield f"{where}.movie.frames[{position}].label", frame["label"]
+
+
+def related_texts(metric, about=None):
+    """Each text of one metric file on why another spacetime, or the one named `about`, is related
+    to it, with its place and the rules it is held to."""
+    return [(f"{metric['id']}.json: related {entry['id']}", entry["text"], PROSE_RULES + SENTENCE_RULES)
+            for entry in metric.get("related") or []
+            if isinstance(entry, dict) and isinstance(entry.get("text"), str) and about in (None, entry.get("id"))]
+
+
+def metric_texts(metric):
+    """Each text of one metric file a reader sees, with its place and the rules it is held to:
+    every field written in sentences, every paragraph of its history and every chart's convention
+    as the reader meets it, and every text on why another spacetime is related to it."""
+    name = f"{metric['id']}.json"
+    texts = [(f"{name}: {field}", value, HISTORY_RULES if field == "history" else PROSE_RULES)
+             for field, value in metric_prose(metric) if not field.startswith("related[")]
+    texts += [(f"{name}: history paragraph {number}", paragraph, SENTENCE_RULES)
+              for number, paragraph in prose_paragraphs(metric.get("history") or "")]
+    texts += [(f"{name}: convention of {chart_id}", convention, SENTENCE_RULES)
+              for chart_id, convention in chart_conventions(metric)]
+    return texts + related_texts(metric)
+
+
+def drawing_texts(walk, name, data):
+    """Each text of one drawing file a reader sees, with its place and the rules it is held to:
+    its sentences, the captions, notes, restriction bands and sentences stated in place of a
+    drawing, to the captain's voice and the caption rules as well."""
+    return [(where, value, PROSE_RULES + (SENTENCE_RULES + ("caption",) if DRAWN_SENTENCE.search(where) else ()))
+            for where, value in walk(name, data)]
+
+
+def spacetime_text_problems(metric_id, metrics):
+    """What breaks a rule of voice.py in the texts of one spacetime: its metric file, and every
+    text in another on why that one is related to it."""
+    texts = [text for metric in metrics if metric["id"] == metric_id for text in metric_texts(metric)]
+    texts += [text for metric in metrics if metric["id"] != metric_id for text in related_texts(metric, metric_id)]
+    return text_problems(texts)
+
+
+def check_texts(metrics, diagrams, conformal, embedding, curvature):
+    """Refuse a text a reader sees that breaks a rule of voice.py, naming every one at once."""
+    texts = [text for metric in metrics for text in metric_texts(metric)]
+    for walk, files in ((diagram_prose, diagrams), (conformal_prose, conformal), (embedding_prose, embedding),
+                        (curvature_prose, curvature)):
+        texts += [text for name, data in sorted(files.items()) for text in drawing_texts(walk, name, data)]
+    problems = text_problems(texts)
+    if problems:
+        raise DataError("\n".join(problems))
+
+
+# The spacetimes drawn without an embedding diagram, which _tools/derivations/embedding.py names
+# in its own NOT_DRAWN; the tests hold the two equal. Every other spacetime has a file.
+WITHOUT_EMBEDDING = frozenset({"lentz"})
+
+
+def embedding_problems(metrics, embedding):
+    """Each spacetime with no embedding diagram file that WITHOUT_EMBEDDING does not name, and each
+    it names that has one."""
+    problems = []
+    for metric in metrics:
+        name = metric["id"]
+        if name not in embedding and name not in WITHOUT_EMBEDDING:
+            problems.append(f"{name}.json has no embedding diagram, embedding/{name}.json; draw it with "
+                            f"_tools/derivations/embedding.py --metric {name}")
+        if name in embedding and name in WITHOUT_EMBEDDING:
+            problems.append(f"embedding/{name}.json draws a spacetime WITHOUT_EMBEDDING names as drawn without one")
+    return problems
+
+
+def check_embedding(metrics, embedding):
+    """Refuse a spacetime without an embedding diagram unless it is named as drawn without one."""
+    problems = embedding_problems(metrics, embedding)
+    if problems:
+        raise DataError("\n".join(problems))
+
+
+TAG_RUN = "run .venv.noindex/bin/python _tools/derivations/metric_tags.py"
+
+
+def tag_problems(metrics, facts):
+    """Each way the tags of the metric files disagree with the facts their charts decide, which
+    _tools/derivations/metric_tags.json holds, or carry a retired tag, a tag one spacetime alone
+    carries, or two tags spelled alike. A chart with no facts under its stamp is named, since its
+    spacetime's tags cannot be held to them."""
+    problems = []
+    for metric in metrics:
+        name = f"{metric['id']}.json"
+        stale = []
+        for chart in metric.get("coordinates") or []:
+            key = f"{metric['id']}/{chart['id']}"
+            if key not in facts:
+                stale.append(f"{name}: the chart {chart['id']!r} has no facts in "
+                             f"_tools/derivations/metric_tags.json; {TAG_RUN}")
+            elif facts[key]["stamp"] != metric_tags.stamp(chart):
+                stale.append(f"{name}: the chart {chart['id']!r} has changed since its facts were computed; {TAG_RUN}")
+        problems += stale
+        if not stale:
+            problems += [f"{name}: tags {fault}" for fault in metric_tags.tag_faults(metric, facts)]
+    problems += [f"metrics: tags {fault}" for fault in metric_tags.keyword_faults(metrics)]
+    return problems
+
+
+def check_tags(metrics):
+    """Refuse tags that disagree with what the charts decide, naming every one at once."""
+    problems = tag_problems(metrics, metric_tags.load_facts())
+    if problems:
+        raise DataError("\n".join(problems))
+
+
 # A `$` opens or closes mathematics wherever the page sets a text, so one left over, as the
 # `$` after "axis" in a Kastor-Traschen parameter was on 2 October 2026, turns the words after
 # it into mathematics and prints the mathematics after them as its source. No text holds a
@@ -1401,14 +1674,17 @@ def main(argv=None):
         check_prose_shape(metrics)
         check_conventions(metrics)
         check_relations(metrics)
+        check_tags(metrics)
         diagrams = load_diagrams(metrics)
         check_aspects(diagrams)
         conformal = load_conformal(metrics)
         embedding = load_embedding(metrics)
+        check_embedding(metrics, embedding)
         curvature = load_curvature(metrics)
         check_slices(diagrams, conformal, embedding)
         check_shades(conformal, embedding)
         check_symbols(metrics, diagrams, conformal, embedding, curvature)
+        check_texts(metrics, diagrams, conformal, embedding, curvature)
         outputs = {
             INDEX_FILE: serialise(build_index(metrics, diagrams, conformal, embedding, curvature)),
             REFERENCES_FILE: serialise(references),
