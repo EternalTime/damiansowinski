@@ -271,7 +271,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b5a2a1c26ada0443",
+    "version": "6d4ce7f67cc7835b",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572",
@@ -1837,6 +1837,43 @@
     "curvature": "009ff57df2364612"
   },
   {
+    "id": "eye_of_the_storm",
+    "name": "Eye of the Storm",
+    "tags": [
+      "regular black hole",
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "stationary",
+      "axisymmetric",
+      "angular momentum",
+      "mass",
+      "no singularity",
+      "ergoregion",
+      "frame dragging",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "Cauchy horizon",
+      "asymptotically flat",
+      "energy conditions",
+      "energy condition violation",
+      "anisotropic",
+      "separable",
+      "black hole mimicker",
+      "black hole shadow",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model",
+      "Einstein equations"
+    ],
+    "version": "5bccf7f051104c10",
+    "diagrams": "df994dd93e437b51",
+    "conformal": "c278958d595c6a20",
+    "embedding": "42786aab3975f902",
+    "curvature": "5466f0c23c30d8fb"
+  },
+  {
     "id": "fisher_jnw",
     "name": "Fisher-Janis-Newman-Winicour",
     "tags": [
@@ -2244,7 +2281,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "82c5488c49732720",
+    "version": "924fe1d444252257",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3",
@@ -2752,7 +2789,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "7fecab9b0845dd89",
+    "version": "0f6d4dacb411c640",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -2946,7 +2983,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b63624f58e240968",
+    "version": "e36038fab317c0fd",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652",
@@ -5106,7 +5143,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "c198e3aacfe39288",
+    "version": "ad73291e1b761afa",
     "diagrams": "b272a6aeea9e0b62",
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001",

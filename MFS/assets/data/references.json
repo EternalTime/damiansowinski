@@ -1,5 +1,5 @@
 {
-  "version": "8c94411b52756b52",
+  "version": "e3bded186da31c67",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -32093,6 +32093,81 @@
         "eprint": "2610.05208",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2610.05208"
+      }
+    },
+    "simpson2022eye": {
+      "type": "article",
+      "fields": {
+        "title": "The eye of the storm: a regular {Kerr} black hole",
+        "author": "Simpson, Alex and Visser, Matt",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2022",
+        "number": "03",
+        "pages": "011",
+        "year": "2022",
+        "doi": "10.1088/1475-7516/2022/03/011",
+        "eprint": "2111.12329",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2022/03/011"
+      }
+    },
+    "ghosh2015": {
+      "type": "article",
+      "fields": {
+        "title": "A nonsingular rotating black hole",
+        "author": "Ghosh, Sushant G.",
+        "journal": "The European Physical Journal C",
+        "volume": "75",
+        "number": "11",
+        "pages": "532",
+        "year": "2015",
+        "doi": "10.1140/epjc/s10052-015-3740-y",
+        "eprint": "1408.5668",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-015-3740-y"
+      }
+    },
+    "simpson2019minkowski": {
+      "type": "article",
+      "fields": {
+        "title": "Regular Black Holes with Asymptotically {Minkowski} Cores",
+        "author": "Simpson, Alex and Visser, Matt",
+        "journal": "Universe",
+        "volume": "6",
+        "number": "1",
+        "pages": "8",
+        "year": "2019",
+        "doi": "10.3390/universe6010008",
+        "eprint": "1911.01020",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/universe6010008"
+      }
+    },
+    "culetu2013": {
+      "type": "misc",
+      "fields": {
+        "title": "On a regular modified {Schwarzschild} spacetime",
+        "author": "Culetu, Hristu",
+        "year": "2013",
+        "eprint": "1305.5964",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1305.5964"
+      }
+    },
+    "kumar2020testing": {
+      "type": "article",
+      "fields": {
+        "title": "Testing Rotating Regular Metrics as Candidates for Astrophysical Black Holes",
+        "author": "Kumar, Rahul and Kumar, Amit and Ghosh, Sushant G.",
+        "journal": "The Astrophysical Journal",
+        "volume": "896",
+        "number": "1",
+        "pages": "89",
+        "year": "2020",
+        "doi": "10.3847/1538-4357/ab8c4a",
+        "eprint": "2006.09869",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3847/1538-4357/ab8c4a"
       }
     }
   }
