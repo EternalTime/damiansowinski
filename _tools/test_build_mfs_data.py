@@ -3895,7 +3895,7 @@ class StacksAndMovies(unittest.TestCase):
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
-              ("hotta_tanaka", "ring"): "$\\tau$",
+              ("hotta_tanaka", "ring"): "$\\tau$", ("holographic_superconductor", "ring"): "$-\\rho$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
               ("black_string", "ripple"): "$v$"}
 
