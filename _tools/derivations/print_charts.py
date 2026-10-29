@@ -2957,6 +2957,7 @@ CHARTS = {"tov": tov, "malament_hogarth": malament_hogarth, "mixmaster": mixmast
           "schwarzschild_de_sitter": [lambda s=s: schwarzschild_de_sitter(s) for s in SDS_CHARTS],
           "milne": [lambda s=s: milne(s) for s in ("comoving_hyperbolic", "comoving_spherical", "logarithmic_time", "inertial")],
           "einstein_rosen_waves": [lambda s=s: einstein_rosen(s) for s in ("cylindrical", "null")],
+          "twisting_cylindrical_waves": [lambda s=s: twisting_cylindrical_waves(s) for s in ("cylindrical", "null")],
           "nariai": [lambda s=s: nariai(s) for s in ("static", "global", "conformal")],
           "aichelburg_sexl": [lambda s=s: aichelburg_sexl(s) for s in AS_CHARTS],
           "hotta_tanaka": [lambda s=s: hotta_tanaka(s) for s in HT_CHARTS],
@@ -3138,6 +3139,219 @@ def einstein_rosen_pullback(chart):
                 raise AssertionError(f"einstein_rosen_waves: the pullback of the cylindrical metric misses the "
                                      f"null chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
 
+
+
+
+# -- Cylindrical waves with two polarisations ---------------------------------------------
+
+TC_PARAMETERS = {"cylindrical": ["\\psi = \\psi(t,\\rho)", "\\omega = \\omega(t,\\rho)", "\\gamma = \\gamma(t,\\rho)"],
+                 "null": ["\\psi = \\psi(u,v)", "\\omega = \\omega(u,v)", "\\gamma = \\gamma(u,v)"]}
+
+
+def twisting_cylindrical_waves(system):
+    """The cylindrical waves of Kompaneets (Sov. Phys. JETP 7, 659, 1958) and of Jordan, Ehlers
+    and Kundt (1960), Einstein and Rosen's metric with the cross term e^{2 psi}(dz + omega dphi)^2
+    of the second polarisation, in the form of Bicak's (66), arXiv:gr-qc/0004016, with psi, omega
+    and gamma free functions of t and rho, and in the null chart u = ct - rho, v = ct + rho, both
+    lengths. No component assumes a field equation; twisting_check holds the field equations each
+    chart's parameters state to making every Ricci component vanish, and the null chart to being
+    the cylindrical metric pulled back."""
+    parameters = TC_PARAMETERS[system]
+    block = " + e^{2\\psi}\\left(dz + \\omega\\,d\\phi\\right)^2"
+    if system == "cylindrical":
+        coords = ["t", "\\rho", "\\phi", "z"]
+
+        def line(c2):
+            return (f"ds^2 = e^{{2(\\gamma - \\psi)}}\\left(-{c2}dt^2 + d\\rho^2\\right)"
+                    f" + \\rho^2e^{{-2\\psi}}d\\phi^2" + block)
+        spec_line, chart_line = line("c^2"), line("")
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)",
+                   "\\gamma = \\omega = 0 \;\\text{at}\; \\rho = 0 \;\\text{(a regular axis)}"]
+        name = "Cylindrical"
+    else:
+        coords = ["u", "v", "\\phi", "z"]
+        spec_line = chart_line = ("ds^2 = -e^{2(\\gamma - \\psi)}du\\,dv"
+                                  " + \\dfrac{(v - u)^2}{4}e^{-2\\psi}d\\phi^2" + block)
+        domains = ["u \\in (-\\infty, \\infty)", "v \\in [u, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)",
+                   "\\gamma = \\omega = 0 \;\\text{at}\; v = u \;\\text{(a regular axis)}"]
+        name = "Null"
+    probe = vm.Reader(coords, parameters, ())
+    x, y = probe.symbol[coords[0]], probe.symbol[coords[1]]
+    psi, om, gam = (probe.parameters[n] for n in ("psi", "omega", "gamma"))
+    D = sp.Derivative
+    lead = [gam, psi, om]
+    for f in (gam, psi, om):
+        lead += [D(f, y), D(f, x)]
+    for f in (psi, om, gam):
+        lead += [D(f, (y, 2)), D(f, x, y), D(f, (x, 2))]
+    if system == "cylindrical":
+        lead.append(probe.symbol["\\rho"])
+        overrides, width = {}, {}
+    else:
+        # Twice the radius, v - u, is printed whole wherever it stands, and never as v and u apart.
+        W = sp.Symbol("W", positive=True)
+        lead.append(W)
+        overrides, width = {W: "\\left(v - u\\right)"}, {y: x + W}
+    return {
+        "metric_id": "twisting_cylindrical_waves",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": spec_line},
+        "chart_line_element": chart_line,
+        "printer": {"lead": lead, "overrides": overrides, "factors": list(overrides) + lead},
+        "pretty": lambda value: sp.powsimp(sp.factor(outside_functions(sp.sympify(value), width)), combine="exp"),
+        "rewrite": ER_REWRITES,
+        "kretschmann_text": twisting_kretschmann,
+        "check": twisting_check,
+    }
+
+
+def twisting_frame(chart):
+    """The orthonormal frame e^{psi - gamma} d_t, e^{psi - gamma} d_rho, (e^psi/rho)(d_phi - omega d_z),
+    e^{-psi} d_z, with d_t = d_u + d_v and d_rho = d_v - d_u in the null chart, and the radius."""
+    psi, om, gam = (chart.reader.parameters[n] for n in ("psi", "omega", "gamma"))
+    a, b = chart.symbols[:2]
+    if chart.coords_tex[0] == "t":
+        rho, plane = b, [[1, 0], [0, 1]]
+    else:
+        rho, plane = (b - a) / 2, [[1, 1], [-1, 1]]
+    lapse = sp.exp(psi - gam)
+    return [[lapse * plane[0][0], lapse * plane[0][1], 0, 0], [lapse * plane[1][0], lapse * plane[1][1], 0, 0],
+            [0, 0, sp.exp(psi) / rho, -om * sp.exp(psi) / rho], [0, 0, 0, sp.exp(-psi)]], rho
+
+
+def twisting_kretschmann(chart):
+    """K over the frame components of Riemann on the six bivectors, each e^{2(psi - gamma)} times a
+    bracket: K = 4 sum_P s_P R_PP^2 + 8 sum_{P<Q} s_P s_Q R_PQ^2, with s_P = -1 on a bivector
+    holding the time leg, so K = 4e^{4(psi - gamma)} times the brackets squared with those signs."""
+    riemann = chart.geo.riemann_llll()
+    psi, gam = chart.reader.parameters["psi"], chart.reader.parameters["gamma"]
+    frame, _ = twisting_frame(chart)
+
+    def component(A, B, C, E):
+        total = 0
+        for i in range(4):
+            for j in range(4):
+                for k in range(4):
+                    for m in range(4):
+                        w = frame[A][i] * frame[B][j] * frame[C][k] * frame[E][m]
+                        if w != 0:
+                            total += w * vm._at(riemann, (i, j, k, m))
+        return vm.norm(sp.expand(total * sp.exp(2 * gam - 2 * psi)))
+
+    pairs = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
+    plus, minus = [], []
+    for n, P in enumerate(pairs):
+        for Q in pairs[n:]:
+            value = component(*P, *Q)
+            if value == 0:
+                continue
+            text = chart.text(value)
+            if text.startswith("-"):
+                text = chart.text(-value)
+            weight = 1 if P == Q else 2
+            sign = (-1 if 0 in P else 1) * (-1 if 0 in Q else 1)
+            term = ("2" if weight == 2 else "") + "\\left(" + text + "\\right)^2"
+            (plus if sign > 0 else minus).append(term)
+    body = " + ".join(plus) + "".join(" - " + term for term in minus)
+    return "4e^{4\\psi - 4\\gamma}\\left(" + body + "\\right)"
+
+
+def twisting_vacuum(chart):
+    """The field equations each chart's parameters state: the two wave equations as replacements
+    for the second derivatives of psi and omega along the time, or across u and v, and both first
+    derivatives of gamma."""
+    psi, om, gam = (chart.reader.parameters[n] for n in ("psi", "omega", "gamma"))
+    x, y = chart.symbols[:2]
+    D = sp.Derivative
+    e = sp.exp(4 * psi)
+    if chart.coords_tex[0] == "t":
+        rho = y
+        waves = {D(psi, (x, 2)): D(psi, (y, 2)) + D(psi, y) / rho + e * (D(om, x) ** 2 - D(om, y) ** 2) / (2 * rho ** 2),
+                 D(om, (x, 2)): D(om, (y, 2)) - D(om, y) / rho + 4 * (D(psi, y) * D(om, y) - D(psi, x) * D(om, x))}
+        first = {y: rho * (D(psi, y) ** 2 + D(psi, x) ** 2) + e * (D(om, y) ** 2 + D(om, x) ** 2) / (4 * rho),
+                 x: 2 * rho * D(psi, y) * D(psi, x) + e * D(om, y) * D(om, x) / (2 * rho)}
+        return waves, first, (x, 2)
+    w = y - x
+    waves = {D(psi, x, y): (D(psi, y) - D(psi, x) + 4 * e * D(om, x) * D(om, y) / w) / (2 * w),
+             D(om, x, y): (D(om, x) - D(om, y) - 4 * w * (D(psi, x) * D(om, y) + D(psi, y) * D(om, x))) / (2 * w)}
+    first = {x: -w * D(psi, x) ** 2 - e * D(om, x) ** 2 / w, y: w * D(psi, y) ** 2 + e * D(om, y) ** 2 / w}
+    return waves, first, None
+
+
+def twisting_on_shell(chart, value):
+    """`value` where the chart's field equations hold: gamma's derivatives replaced by the
+    constraints and their derivatives, then the wave equations used until no derivative they
+    replace is left."""
+    psi, om, gam = (chart.reader.parameters[n] for n in ("psi", "omega", "gamma"))
+    x, y = chart.symbols[:2]
+    D = sp.Derivative
+    waves, first, _ = twisting_vacuum(chart)
+    value = sp.sympify(value).subs({D(gam, (x, 2)): sp.diff(first[x], x), D(gam, (y, 2)): sp.diff(first[y], y),
+                                    D(gam, x, y): sp.diff(first[x], y)}).doit()
+    value = value.subs({D(gam, x): first[x], D(gam, y): first[y]}).doit()
+    cylindrical = chart.coords_tex[0] == "t"
+    for _ in range(6):
+        higher = {}
+        for d in value.atoms(D):
+            counts = dict(d.variable_count)
+            for target, replacement in waves.items():
+                if d.expr != target.expr:
+                    continue
+                if cylindrical and counts.get(x, 0) >= 2:
+                    rest = [(v, n - (2 if v == x else 0)) for v, n in d.variable_count]
+                elif not cylindrical and counts.get(x, 0) >= 1 and counts.get(y, 0) >= 1:
+                    rest = [(v, n - 1) for v, n in d.variable_count]
+                else:
+                    continue
+                rest = [(v, n) for v, n in rest if n]
+                higher[d] = sp.diff(replacement, *rest) if rest else replacement
+        if not higher:
+            break
+        value = value.subs(higher).doit()
+    return value
+
+
+def twisting_check(chart):
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if not gowdy_vanishes(twisting_on_shell(chart, ricci[i][j])):
+                raise AssertionError(f"twisting_cylindrical_waves: the stated field equations leave "
+                                     f"R_{chart.coords_tex[i]}{chart.coords_tex[j]} standing")
+    psi, om, gam = (chart.reader.parameters[n] for n in ("psi", "omega", "gamma"))
+    g = chart.geo.g
+    # With omega = 0 the metric is Einstein and Rosen's in the same chart.
+    system = "cylindrical" if chart.coords_tex[0] == "t" else "null"
+    er = cp.Chart(chart.coords_tex, ER_PARAMETERS[system], einstein_rosen(system)["chart_line_element"])
+    same = {er.reader.parameters["psi"]: psi, er.reader.parameters["gamma"]: gam}
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(g[a, b].subs(om, 0) - er.geo.g[a, b].subs(same)) != 0:
+                raise AssertionError("twisting_cylindrical_waves: omega = 0 is not Einstein and Rosen's metric "
+                                     f"in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+    if system == "cylindrical":
+        return
+    source_spec = twisting_cylindrical_waves("cylindrical")
+    source = cp.Chart(source_spec["system"]["coords"], source_spec["system"]["parameters"],
+                      source_spec["chart_line_element"])
+    u, v = chart.symbols[:2]
+    P, Q, O = sp.symbols("P Q O")
+    values = {source.reader.parameters["psi"]: P, source.reader.parameters["gamma"]: Q,
+              source.reader.parameters["omega"]: O}
+    target = {psi: P, gam: Q, om: O}
+    t, rho = source.symbols[:2]
+    jacobian = sp.Matrix([[sp.Rational(1, 2), sp.Rational(1, 2), 0, 0], [-sp.Rational(1, 2), sp.Rational(1, 2), 0, 0],
+                          [0, 0, 1, 0], [0, 0, 0, 1]])
+    at = {t: (u + v) / 2, rho: (v - u) / 2}
+    at.update(dict(zip(source.symbols[2:], chart.symbols[2:])))
+    pulled = jacobian.T * source.geo.g.subs(values).subs(at) * jacobian
+    for a in range(4):
+        for b in range(a, 4):
+            if vm.norm(pulled[a, b] - g[a, b].subs(target)) != 0:
+                raise AssertionError(f"twisting_cylindrical_waves: the pullback of the cylindrical metric misses "
+                                     f"the null chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
 
 
 # -- Melvin ------------------------------------------------------------------------------

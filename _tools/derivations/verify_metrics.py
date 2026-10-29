@@ -321,6 +321,14 @@ DIMENSIONS = {
     ("einstein_rosen_waves", "null"): {
         "u": "L", "v": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
     },
+    # The second polarisation omega multiplies dphi beside dz, so it is a length; psi and gamma are as
+    # Einstein and Rosen's.
+    ("twisting_cylindrical_waves", "cylindrical"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\omega": "L", "\\gamma": "1",
+    },
+    ("twisting_cylindrical_waves", "null"): {
+        "u": "L", "v": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\omega": "L", "\\gamma": "1",
+    },
     # Gowdy's coordinates are all pure numbers, the areal time among them, and the one length L
     # multiplies the whole line element, so no coordinate is a time the chart multiplies by c.
     ("gowdy", "areal"): {

@@ -1,0 +1,92 @@
+{
+  "id": "twisting_cylindrical_waves",
+  "name": "Cylindrical Waves with Two Polarisations",
+  "short_name": "Cylindrical Waves with Two Polarisations",
+  "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Einstein and Rosen with the second polarisation switched on. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.",
+  "tags": [
+    "vacuum",
+    "gravitational wave",
+    "cylindrical symmetry",
+    "exact solution",
+    "time-dependent",
+    "radiating",
+    "nonlinear",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "",
+  "related": [],
+  "references": [],
+  "coordinates": [
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "\\gamma = \\omega = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi = \\psi(t,\\rho)",
+          "description": "Amplitude of the first polarisation, a dimensionless function of $t$ and $\\rho$, with $e^{2\\psi} = g_{zz}$; the spacetime is a vacuum exactly where $\\partial_t^2\\psi = \\partial_\\rho^2\\psi + \\partial_\\rho\\psi/\\rho + e^{4\\psi}\\left(\\left(\\partial_t\\omega\\right)^2 - \\left(\\partial_\\rho\\omega\\right)^2\\right)/2\\rho^2$, $\\omega$ solves the equation beside it and $\\gamma$ the two beside that"
+        },
+        {
+          "symbol": "\\omega = \\omega(t,\\rho)",
+          "description": "Amplitude of the second polarisation, a function of $t$ and $\\rho$ with the dimensions of length, with $e^{2\\psi}\\omega = g_{\\phi z}$, solving $\\partial_t^2\\omega = \\partial_\\rho^2\\omega - \\partial_\\rho\\omega/\\rho + 4\\left(\\partial_\\rho\\psi\\,\\partial_\\rho\\omega - \\partial_t\\psi\\,\\partial_t\\omega\\right)$; with $\\omega = 0$ the waves are Einstein and Rosen's"
+        },
+        {
+          "symbol": "\\gamma = \\gamma(t,\\rho)",
+          "description": "Dimensionless function of $t$ and $\\rho$ fixed by $\\psi$ and $\\omega$ through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 + \\left(\\partial_t\\psi\\right)^2\\right) + e^{4\\psi}\\left(\\left(\\partial_\\rho\\omega\\right)^2 + \\left(\\partial_t\\omega\\right)^2\\right)/4\\rho$ and $\\partial_t\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_t\\psi + e^{4\\psi}\\partial_\\rho\\omega\\,\\partial_t\\omega/2\\rho$, and zero on a regular axis"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time, $\\rho$ a length fixed by $g_{\\phi\\phi}\\,g_{zz} - g_{\\phi z}^2 = \\rho^2$, and $z$ a length along the axis. We take components in the chart $x^0 = ct$, so $\\partial_t\\psi = c^{-1}\\partial\\psi/\\partial t$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = e^{2(\\gamma - \\psi)}\\left(-c^2dt^2 + d\\rho^2\\right) + \\rho^2e^{-2\\psi}d\\phi^2 + e^{2\\psi}\\left(dz + \\omega\\,d\\phi\\right)^2"
+    },
+    {
+      "id": "null",
+      "name": "Null",
+      "coords": [
+        "u",
+        "v",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in [u, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "\\gamma = \\omega = 0 \\;\\text{at}\\; v = u \\;\\text{(a regular axis)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi = \\psi(u,v)",
+          "description": "Amplitude of the first polarisation, a dimensionless function of $u$ and $v$, with $e^{2\\psi} = g_{zz}$; the spacetime is a vacuum exactly where $2(v - u)\\,\\partial_u\\partial_v\\psi = \\partial_v\\psi - \\partial_u\\psi + 4e^{4\\psi}\\partial_u\\omega\\,\\partial_v\\omega/(v - u)$, $\\omega$ solves the equation beside it and $\\gamma$ the two beside that"
+        },
+        {
+          "symbol": "\\omega = \\omega(u,v)",
+          "description": "Amplitude of the second polarisation, a function of $u$ and $v$ with the dimensions of length, with $e^{2\\psi}\\omega = g_{\\phi z}$, solving $2(v - u)\\,\\partial_u\\partial_v\\omega = \\partial_u\\omega - \\partial_v\\omega - 4(v - u)\\left(\\partial_u\\psi\\,\\partial_v\\omega + \\partial_v\\psi\\,\\partial_u\\omega\\right)$"
+        },
+        {
+          "symbol": "\\gamma = \\gamma(u,v)",
+          "description": "Dimensionless function of $u$ and $v$ fixed by $\\psi$ and $\\omega$ through $\\partial_u\\gamma = -(v - u)\\left(\\partial_u\\psi\\right)^2 - e^{4\\psi}\\left(\\partial_u\\omega\\right)^2/(v - u)$ and $\\partial_v\\gamma = (v - u)\\left(\\partial_v\\psi\\right)^2 + e^{4\\psi}\\left(\\partial_v\\omega\\right)^2/(v - u)$, and zero on a regular axis"
+        }
+      ],
+      "convention": "We use the retarded coordinate $u = ct - \\rho$ and the advanced coordinate $v = ct + \\rho$ of the cylindrical chart, both lengths, and $z$ a length along the axis. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -e^{2(\\gamma - \\psi)}du\\,dv + \\dfrac{(v - u)^2}{4}e^{-2\\psi}d\\phi^2 + e^{2\\psi}\\left(dz + \\omega\\,d\\phi\\right)^2"
+    }
+  ]
+}
