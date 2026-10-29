@@ -44,3 +44,4 @@ It diverges only where $\Sigma = 0$, at $r = 0$ on the equator, which lies insid
 Both charts cover the region outside the event horizon $r_+$, the largest root of $\Delta$.
 The poles $\theta = 0, \pi$, where $p = \pm\ell$, are left out: Hennigar, Kubizňák, Mann and Musoke show that no null geodesic from the bulk reaches them in a finite affine parameter and that they lie at infinite proper distance along every slice of constant $t$ and $r$ (their section II.B, footnote 1, and II.C), so $\theta$ runs over the open interval $(0, \pi)$.
 Horizons exist for $m \ge m_0 = 2r_0(r_0^2/\ell^2 + 1)$ with $r_0 = \ell/\sqrt{3}$, their (2.6) and (2.7) at $q = 0$, which is $m_0 = 8\ell/(3\sqrt{3})$; at $m = m_0$ the two roots meet and the hole is extremal.
+No conformal diagram is drawn, and `conformal.py` lists the spacetime in `NOT_DRAWN`: the horizon is not compact, with a puncture at each pole, so there is no single conformal picture of it to draw.

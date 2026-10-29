@@ -1,6 +1,7 @@
 # Inside a holographic superconductor
 
 The three charts of `holographic_superconductor` are written by `print_charts.py`, and this note records the source of each and what is checked.
+No conformal diagram is drawn, and `conformal.py` lists the spacetime in `NOT_DRAWN`: the page is about the interior, and its final Kasner epoch and the Kasner inversion are already drawn as spacetime diagrams.
 
 ## Sources
 
