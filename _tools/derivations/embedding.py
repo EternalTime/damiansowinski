@@ -439,10 +439,11 @@ class Slice:
 
             def near(e):
                 exact = self.exact[root]
-                if self._radical(e):
-                    # A metric with a square root in it is no rational function of u, so it is
-                    # evaluated at root + u in sixty digits, the root itself taken to seventy,
-                    # which keeps what cancels at the root to far below any u the quadrature asks for.
+                if self._radical(e) or e.has(sp.exp):
+                    # A metric with a square root or an exponential in it, as the eye of the storm's
+                    # e^{-ell/r}, is no rational function of u, so it is evaluated at root + u in sixty
+                    # digits, the root itself taken to seventy, which keeps what cancels at the root to
+                    # far below any u the quadrature asks for.
                     f = sp.lambdify(self.x, e, "mpmath")
                     with mpmath.workdps(70):
                         x0 = mpmath.mpf(str(exact.evalf(70)))
@@ -3748,6 +3749,42 @@ def kerr_newman(ck, src):
     return [view("equator", "The equator", "$GM/c^2$", [surface], fig.done(),
                  settings="$G = c = M = 1$, so that $GM/c^2$ is the unit of every length, $a = 0.6\\,GM/c^2$ and "
                           f"$r_Q = 0.5\\,GM/c^2$, so that $r_+ = {rp:.3f}\\,GM/c^2$ and $r_E = {ergo:.3f}\\,GM/c^2$.")]
+
+
+def eye_of_the_storm(ck, src):
+    """The equatorial slice of constant Boyer-Lindquist t outside r+, at m = 1, a = 3m/5 and
+    ell = m/5, the parameters of every drawing of the eye of the storm. g_tphi drops out at constant
+    t, so rho = sqrt(g_phiphi), the circumference radius, and g_rr = r^2/Delta on the equator with
+    Delta = r^2 + a^2 - 2mr e^{-ell/r}. Delta is no algebraic function of r, so the horizon is found
+    as the zero of 1/g_rr in eighty digits, r+ = 1.5151m; there r+^2 + a^2 = 2m r+ e^{-ell/r+}, so
+    the throat's circumference radius is 2m e^{-ell/r+}, which is checked, below Kerr's 2m. The
+    slice runs through the bifurcation sphere into a second exterior, as Kerr's does, and the edge
+    of the ergoregion, where g_tt = r^2 - 2mr e^{-ell/r} vanishes on the equator, is marked."""
+    name = "Eye of the storm"
+    sl = Slice(src, "eye_of_the_storm", "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, nr.EOS)
+    rp = sl.horizon_between(1.4, 1.6)
+    ck.add(f"{name}: the outer horizon is the larger root of the published g^rr, 1.5151 m", abs(rp - 1.5150508), 1e-6)
+    ergo = float(mpmath.findroot(lambda r: r - 2 * mpmath.e ** (-mpmath.mpf(1) / (5 * r)), 1.79))
+    ck.add(f"{name}: g_tt vanishes on the equator at r = 1.7884 m", abs(ergo - 1.7883879), 1e-6)
+    top, radii = 8.0, (3.0, 4.0, 5.0, 6.0, 7.0)
+    size = 2 * float(sl.rho_at(top))
+    near, far = two_sheets(ck, name, sl, rp, top, radii, size, [(rp, "horizon", "$r = r_+$"), (ergo, "ergo", None)])
+    throat = 2 * math.exp(-0.2 / rp)
+    ck.add(f"{name}: the throat's circumference radius is 2m e^(-ell/r+) = {throat:.4f} m", abs(near.at(rp)[0] - throat), 1e-6)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(ergo), "$r_E$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$8\\,m$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$, $6$, $7$ and $8\\,m$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "ergo", f"the edge of the ergoregion, $r_E = {ergo:.3f}\\,m$ on the equator")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = GM/c^2 = 1$, the unit of every length, $a = 0.6\\,m$ and $\\ell = 0.2\\,m$, so that "
+                          f"$r_+ = {rp:.3f}\\,m$ and $r_E = {ergo:.3f}\\,m$.")]
 
 
 # Kerr-Taub-NUT as every one of its diagrams draws it: Kerr's limiting spin a = m with a twist
@@ -17738,6 +17775,7 @@ DRAWN = {
     "maitra_dust": maitra_dust,
     "kerr": kerr,
     "kerr_newman": kerr_newman,
+    "eye_of_the_storm": eye_of_the_storm,
     "kerr_bertotti_robinson": kerr_bertotti_robinson,
     "kerr_de_sitter": kerr_de_sitter,
     "kerr_taub_nut": kerr_taub_nut,
@@ -18596,6 +18634,16 @@ CAPTIONS = {
         "momentum, whose throat has the radius $2GM/c^2 = 1.866/\\mu$: three quarters of the hairy hole's mass is in "
         "the field outside its horizon, and its horizon has a ninth of the area of Kerr's. The two surfaces climb alike "
         "far out, where only the mass and the angular momentum are felt.",
+    ],
+    ("eye_of_the_storm", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the eye of the storm at one moment of Boyer-Lindquist $t$, drawn "
+        "as a surface in flat space with every distance along it the metric distance. The rotation's $g_{t\\phi}$ drops "
+        "out at constant $t$, and the circles have circumference $2\\pi\\sqrt{r^2 + a^2 + 2ma^2e^{-\\ell/r}/r}$, the "
+        "drawing's distance from the axis. The slice passes through the bifurcation sphere at $r_+$, its throat, into a "
+        "second exterior, as Kerr's does.",
+        "At the horizon $r_+^2 + a^2 = 2mr_+e^{-\\ell/r_+}$, so the throat's circumference radius is $2me^{-\\ell/r_+}$, "
+        "$1.753\\,m$ here, below Kerr's $2m$. The dotted circle is the edge of the ergoregion, where $g_{tt} = 0$ on "
+        "the equator, inside which nothing can stand still against the rotation.",
     ],
     ("kerr_newman", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged rotating black hole at one moment of "

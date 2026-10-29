@@ -2040,6 +2040,87 @@ def bardeen_rstar(r):
     return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
 
 
+# The eye of the storm as its diagrams draw it: m = 1, a = 3m/5 and ell = m/5.
+EOS_A, EOS_ELL = 0.6, 0.2
+EOS_HORIZONS = (0.4348787520714397, 1.5150508229447324)     # r_- and r_+, the zeros of Delta
+
+
+def eos_f(r):
+    """The eye of the storm's Delta/(r^2 + a^2), -g_tt on the axis, which tends to 1 at r = 0."""
+    return 1 - 2 * r * math.exp(-EOS_ELL / r) / (r * r + EOS_A ** 2) if r > 0 else 1.0
+
+
+@functools.lru_cache(maxsize=None)
+def _eos_smooth():
+    """What is left of 1/f on the eye of the storm's axis once its two poles are taken out, and its
+    integral from 0, summed as Bardeen's is. A pole at r_i has the residue (r_i^2 + a^2)/Delta'(r_i),
+    Delta' = 2r - 2m e^{-ell/r}(1 + ell/r); within a twentieth of m of a horizon the remainder is
+    worked in forty digits."""
+    import mpmath
+    with mpmath.workdps(40):
+        a2, ell = mpmath.mpf(9) / 25, mpmath.mpf(1) / 5
+
+        def delta(x):
+            return x * x + a2 - 2 * x * mpmath.e ** (-ell / x)
+
+        def f(x):
+            return delta(x) / (x * x + a2) if x > 0 else mpmath.mpf(1)
+        roots = [mpmath.findroot(delta, ri) for ri in EOS_HORIZONS]
+        exact = [(ri, (ri * ri + a2) / (2 * ri - 2 * mpmath.e ** (-ell / ri) * (1 + ell / ri))) for ri in roots]
+    poles = [(float(ri), float(a)) for ri, a in exact]
+
+    def smooth(x):
+        if min(abs(x - ri) for ri, _ in poles) > 0.05:
+            return 1 / eos_f(x) - sum(a / (x - ri) for ri, a in poles)
+        with mpmath.workdps(40):
+            x = mpmath.mpf(x)
+            return float(1 / f(x) - sum(a / (x - ri) for ri, a in exact))
+
+    nodes, weights = np.polynomial.legendre.leggauss(12)
+
+    def panel(a, b, of=smooth):
+        half, mid = 0.5 * (b - a), 0.5 * (a + b)
+        return half * sum(w * of(mid + half * n) for n, w in zip(nodes, weights))
+
+    def in_log(u):
+        return smooth(math.exp(u)) * math.exp(u)
+    edges = [0.1 * k for k in range(81)]
+    sums = np.concatenate([[0.0], np.cumsum([panel(a, b) for a, b in zip(edges, edges[1:])])])
+    logs = [math.log(8.0) + 0.5 * k for k in range(61)]
+    tails = sums[-1] + np.concatenate([[0.0], np.cumsum([panel(a, b, in_log) for a, b in zip(logs, logs[1:])])])
+
+    def integral(x):
+        if x <= 8.0:
+            k = min(int(x / 0.1), 80)
+            return float(sums[k]) + (panel(0.1 * k, x) if x > 0.1 * k else 0.0)
+        u = math.log(x)
+        k = min(int((u - logs[0]) / 0.5), 60)
+        return float(tails[k]) + (panel(logs[k], u, in_log) if u > logs[k] else 0.0)
+    return integral, poles
+
+
+def eos_rstar(r):
+    """The eye of the storm's tortoise coordinate on its axis, dr_*/dr = (r^2 + a^2)/Delta, zero at
+    r = 0: the logarithms of its two poles and the integral of the smooth remainder."""
+    integral, poles = _eos_smooth()
+
+    def one(x):
+        if math.isinf(x):
+            return math.inf
+        with np.errstate(divide="ignore"):
+            return integral(x) + sum(a * float(np.log(abs(1 - x / ri))) for ri, a in poles)
+    return np.array([one(float(x)) for x in np.atleast_1d(np.asarray(r, dtype=float))]).reshape(np.shape(r))
+
+
+def _eos_ingoing():
+    """The moment t = 0 of the embedding's equator outside r_+, carried to the ingoing chart's axis
+    as v = r_*, which runs off toward the horizon."""
+    m, = moments("eye_of_the_storm")
+    lo, hi = m.reach("boyer_lindquist", "r")
+    r = near(lo, hi)
+    return [Mark(m, [np.column_stack([eos_rstar(r), r])])]
+
+
 def _bardeen(view, sign=0):
     """The moment t = 0 of Bardeen's black hole, outside r_+ or inside r_-: along r in its static
     chart (sign 0), and in its ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*, which
@@ -3211,6 +3292,10 @@ FLAT = {
     ("kerr_newman", "boyer_lindquist", "radial"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "principal"): lambda: one("kerr_newman", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
     ("kerr_newman", "boyer_lindquist", "above"): lambda: kerr_above("kerr_newman"),
+    ("eye_of_the_storm", "boyer_lindquist", "radial"): lambda: one("eye_of_the_storm", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
+    ("eye_of_the_storm", "boyer_lindquist", "principal"): lambda: one("eye_of_the_storm", lambda m: along(0.0, *m.reach("boyer_lindquist", "r"))),
+    ("eye_of_the_storm", "boyer_lindquist", "above"): lambda: kerr_above("eye_of_the_storm"),
+    ("eye_of_the_storm", "kerr_ingoing", "axis"): _eos_ingoing,
     # Podolsky and Ovcharenko's spinning hole: the moment t = 0 meets each plane of t and r of the
     # Boyer-Lindquist chart along t = 0 outside r_+.
     **{("kerr_bertotti_robinson", "boyer_lindquist", view): lambda: one(

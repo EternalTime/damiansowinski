@@ -17332,6 +17332,90 @@ def holographic_superconductor(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the eye of the storm
+
+EOS_PARAMS = {"m": 1.0, "a": 0.6, "ell": 0.2}           # m = 1, a = 3m/5 and ell = m/5, as every drawing takes them
+EOS_K = {"kind": "symlog", "from": -1e3, "to": 1e7, "linear": 1e-3}    # the axis of K m^4
+EOS_R = {"kind": "symlog", "from": 0.0, "to": 1e4, "linear": 1e-3}     # the axis of R m^2
+
+
+def eye_of_the_storm(ck, src):
+    """The eye of the storm's Kretschmann and Ricci scalars against r on the axis and on the
+    equator, at m = 1, a = 3m/5 and ell = m/5, the parameters of its other drawings.
+
+    The Boyer-Lindquist chart publishes K and R in r and theta alone, the same at every t and phi,
+    and the ingoing chart publishes the same two, so one figure serves both: two panels over
+    0 <= r/m <= 4, each holding a curve at theta = 0 and one at theta = pi/2, with the horizons r_-
+    and r_+, the zeros of the published g^rr, marked. Checked here: R is Simpson and Visser's
+    2 m ell^2 e^{-ell/r}/(r^3 Sigma) and K their (3.3); both charts publish the same scalars; at
+    ell = 0 K is Kerr's published scalar; both scalars fall to zero toward r = 0 on both curves, in
+    sixty digits; R is positive everywhere; the horizons are the zeros of Delta on both curves; and
+    every sample lies inside its panel."""
+    metric, system = "eye_of_the_storm", "boyer_lindquist"
+    params = dict(EOS_PARAMS)
+    values = list(params.values())
+    x_axis = axis("$r/m$", 0, 4)
+    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": EOS_K, "ticks": value_ticks(EOS_K)},
+              {"id": "R", "name": "$R\\,m^2$", "aspect": 2, "scale": EOS_R, "ticks": value_ticks(EOS_R)}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    names = ["m", "a", "\\ell"]
+    K = nr_published(src, metric, system, "kretschmann", ["r", "theta"], names)
+    R = nr_published(src, metric, system, "ricci_scalar", ["r", "theta"], names)
+    grr = nr_published(src, metric, system, "inverse_metric_components", ["r", "theta"], names, ("r", "r"))
+    r, th = K.coords
+    mm, aa, ll = K.params
+    sigma = r ** 2 + aa ** 2 * sp.cos(th) ** 2
+    E = sp.exp(-ll / r)
+    ck(f"{metric} R is 2 m ell^2 e^(-ell/r)/(r^3 Sigma)", sp.simplify(R.expr - 2 * mm * ll ** 2 * E / (r ** 3 * sigma)) == 0)
+    Xi, ar = ll * sigma / (2 * r ** 3), (aa / r) ** 2 * sp.cos(th) ** 2
+    source = 48 * r ** 6 * (mm * E) ** 2 / sigma ** 6 * (
+        1 - 15 * ar + 15 * ar ** 2 - ar ** 3 + sp.Rational(4, 3) * Xi ** 4 - sp.Rational(16, 3) * Xi ** 3
+        + 8 * Xi ** 2 * (1 - ar) - 4 * Xi * (1 - 6 * ar + ar ** 2))
+    ck(f"{metric} K is Simpson and Visser's (3.3)", sp.simplify(K.expr - source) == 0)
+    for field, mine in (("kretschmann", K), ("ricci_scalar", R)):
+        other = nr_published(src, metric, "kerr_ingoing", field, ["r", "theta"], names)
+        swap = dict(zip(other.coords, mine.coords))
+        swap.update(dict(zip(other.params, mine.params)))
+        ck(f"{metric} the ingoing chart publishes the same {field}", sp.simplify(other.expr.xreplace(swap) - mine.expr) == 0)
+    K_kerr = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["M", "a", "G"])
+    kerr = K_kerr.expr.xreplace({K_kerr.coords[0]: r, K_kerr.coords[1]: th, K_kerr.params[0]: mm,
+                                 K_kerr.params[1]: aa, K_kerr.params[2]: 1})
+    ck(f"{metric} K at ell = 0 is Kerr's published scalar", sp.simplify(K.expr.subs(ll, 0) - kerr) == 0)
+    held = {"axis": {"\\theta": 0.0}, "equator": {"\\theta": math.pi / 2}}
+    height = PLOT_W / 2
+    curves, horizons = [], None
+    for cls, fixed in held.items():
+        Kc, Rc, gc = Held(K, fixed), Held(R, fixed), Held(grr, fixed)
+        for name, scalar in (("K", Kc), ("R", Rc)):
+            small = [abs(float(scalar.exact([x, *values]))) for x in (0.005, 0.0025, 0.001)]
+            ck(f"{metric} {name} on the {cls} falls to zero toward r = 0",
+               small[0] > small[1] > small[2] and small[2] < 1e-12, f"{small}")
+        ck(f"{metric} R on the {cls} is positive at every r drawn",
+           all(float(Rc.exact([x, *values])) > 0 for x in np.linspace(0, 4, 401)[1:]))
+        found = zeros(ck, f"{metric} g^rr on the {cls}", gc, 1e-3, 4, values)
+        ck(f"{metric} g^rr on the {cls} vanishes at r_- = 0.4349 m and r_+ = 1.5151 m",
+           len(found) == 2 and abs(found[0] - 0.4348787520714) < 1e-10 and abs(found[1] - 1.5150508229447) < 1e-10,
+           f"{found}")
+        horizons = found
+        for name, scalar, scale in (("K", Kc, EOS_K), ("R", Rc, EOS_R)):
+            up, down = beyond(scalar, x_axis, scale, values, (1e-3, 4))
+            ck(f"{metric} {name} on the {cls} stays inside its panel", not up and not down, f"{up} {down}")
+            curves += line_curves(ck, f"{metric} {cls}", name, cls, scalar, "r", x_axis, scale, height, params,
+                                  within=(1e-3, 4))
+    return [{
+        "id": system, "system": system, "label": "$a = 0.6\\,m$, $\\ell = 0.2\\,m$",
+        "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [{"class": "horizon", "x": h} for h in horizons],
+        "legend": [["line", "axis", "axis"], ["line", "equator", "equator"], ["line", "horizon", "horizons"]],
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the eye of the storm, falling to zero at "
+                    "the centre."],
+        "ricci_sentences": [],
+        "per_scalar": scalar_clips("Signed log, $-10^3$ to $10^7$.", "Signed log, 0 to $10^4$."),
+        "settings": "$m = 1$, $a = 0.6\\,m$, $\\ell = 0.2\\,m$.",
+        "clip": "Signed log scales.",
+    }]
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -17388,6 +17472,7 @@ DRAWN = {
     "kerr": kerr,
     "kerr_melvin": kerr_melvin,
     "kerr_newman": kerr_newman,
+    "eye_of_the_storm": eye_of_the_storm,
     "kerr_bertotti_robinson": kerr_bertotti_robinson,
     "kerr_taub_nut": kerr_taub_nut,
     "khan_penrose": khan_penrose,

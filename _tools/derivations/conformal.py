@@ -3264,6 +3264,125 @@ def bardeen(ck, src):
     return views
 
 
+class EyeOfTheStormTower(Tower):
+    """A Tower for the eye of the storm's axis, f = Delta/(r^2 + a^2) with Delta = r^2 + a^2 -
+    2mr e^{-ell/r}, at m = 1, a = 3/5 and ell = 1/5, which is no rational function of r. Its two
+    simple poles of 1/f are taken out and the rest integrated, slices.eos_rstar, as Bardeen's are;
+    the roots, residues and surface gravities are taken in forty digits from the published g^rr."""
+
+    def __init__(self, f, r):
+        self.f_sym = f
+        value, slope = sp.lambdify(r, f, "mpmath"), sp.lambdify(r, sp.diff(f, r), "mpmath")
+        with mpmath.workdps(40):
+            exact = [mpmath.findroot(value, (x - 0.01, x + 0.01), solver="anderson") for x in slices.EOS_HORIZONS[::-1]]
+            self.rf = [float(x) for x in exact]
+            self.Af = [float(1 / slope(x)) for x in exact]
+        self.kappa = [abs(1 / (2 * a)) for a in self.Af]
+        self.kp = self.kappa[0]
+        assert self.Af[0] > 0 > self.Af[1], "the outer horizon is not where f rises through zero"
+
+    def rstar(self, r):
+        return slices.eos_rstar(r)
+
+
+def eye_of_the_storm(ck, src):
+    """The eye of the storm on its symmetry axis theta = 0, at m = 1, a = 3m/5 and ell = m/5, where the
+    published metric is -f c^2dt^2 + dr^2/f with f = Delta/(r^2 + a^2), g_tt g_rr = -1 checked. f has
+    two simple zeros, r_+ = 1.5151 and r_- = 0.4349 m, and tends to 1 at r = 0, the centre of the
+    disk, where the published Kretschmann scalar falls to zero: so the axis is Bardeen's tower, each
+    cell inside r_- closed by a regular centre, and with r >= 0 nothing lies beyond it. The centre is
+    where the axis passes through the disk from theta = 0 to theta = pi, the same surface turned
+    over, so the drawing of r >= 0 on one half of the axis is the whole of it. The ingoing Kerr
+    chart's v runs on across both horizons, as Bardeen's ingoing chart does."""
+    name = "Eye of the storm axis"
+    pl = Plane(src, "eye_of_the_storm", "boyer_lindquist", ("t", "r"), {"phi": "0"}, nr.EOS, axis=("theta", "0"))
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    T = EyeOfTheStormTower(-pl.g[0, 0], pl.x1)
+    rp, rm = T.rf
+    tower_checks(ck, name, pl, T, 0.01, 15)
+    ck.limit(f"{name}: the horizons are the zeros of the published g^rr, 1.5151 and 0.4349 m", [rp, rm],
+             slices.EOS_HORIZONS[::-1], 1e-12)
+    p, q = T.pq("III", np.array([-6.0, 0, 6]), np.full(3, 1e-12))
+    ck.limit(f"{name}: r -> 0 lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-9)
+    K = pl.kretschmann
+    ck.limit(f"{name}: the Kretschmann scalar falls to zero at the centre r = 0", K(np.zeros(2), np.array([2e-3, 1e-3])),
+             [0.0, 0.0], 1e-12)
+    ck.finite(f"{name}: the Kretschmann scalar is finite at both horizons", K(np.zeros(2), np.array([rp, rm])))
+
+    def ingoing(w, r):
+        """(p, q) of the ingoing chart's (v, r) on the axis: I and II with t = v - r*, III' with t' = r* - v."""
+        w, r = np.broadcast_arrays(np.asarray(w, dtype=float), np.asarray(r, dtype=float))
+        rs = T.rstar(r)
+        p, q = np.empty(r.shape), np.empty(r.shape)
+        for cell, sel, t in (("I", r > rp, w - rs), ("II", (r <= rp) & (r >= rm), w - rs), ("III'", r < rm, rs - w)):
+            if sel.any():
+                u, v = t[sel] - rs[sel], t[sel] + rs[sel]
+                G = T.G
+                p[sel], q[sel] = {"I": (-G(u), G(-v)), "II": (G(u), G(-v)), "III'": (np.pi - G(-v), G(u))}[cell]
+        return p, q
+    ein = Plane(src, "eye_of_the_storm", "kerr_ingoing", ("v", "r"), {"tildephi": "0"}, nr.EOS, axis=("theta", "0"))
+    for lo, hi, where in ((rp + 1e-3, 40, "outside r+"), (rm + 1e-3, rp - 1e-3, "between the horizons"),
+                          (0.01, rm - 1e-3, "inside r-")):
+        ck.chart(f"{name}, ingoing Kerr chart, {where}", ein, ingoing, ck.uniform(-15, 15), ck.uniform(lo, hi),
+                 lambda w, r: (1, -60))
+    ck.limit(f"{name}: an ingoing ray keeps its q across both horizons",
+             ingoing(np.full(3, 0.7), np.array([2.0, 0.9, 0.2]))[1], [float(T.G(-0.7))] * 3, 1e-12)
+
+    D = TowerDrawing(T, True, 0.0, regular=True)
+    box = [-PI - 0.45, PI + 0.45, -PI - 0.1, 3 * PI + 0.1]
+    times = [c / T.kp for c in (-1.6, -0.6, 0, 0.6, 1.6)]
+    rI = nice_all(even_radii(T, "I", 4, rp, np.inf), [rp])
+    rII = nice_all(even_radii(T, "II", 4, rm, rp), [rm, rp])
+    rIII = nice_all(even_radii(T, "III", 3, 0, rm, xmax=HALF), [0, rm])
+    grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
+
+    def finish(v):
+        D.labels(v)
+        v.set(fade={"top": 0.9, "bottom": 0.9},
+              restriction="The symmetry axis $\\theta = 0$ only. At $r = 0$ it passes through the centre of the disk "
+                          "onto the axis $\\theta = \\pi$, the same surface again, so $r \\ge 0$ is the whole of it.")
+        v.legend("horizon", f"the horizons on the axis, $r_+ = {rp:.3f}$ and $r_- = {rm:.3f}\\,m$")
+        v.legend("centre", "$r = 0$, the centre of the disk, where the curvature falls to zero")
+        v.legend("scri", "null infinity $\\mathscr{I}^\\pm$")
+
+    views = []
+    v = View("axis", "Symmetry axis", box, "boyer_lindquist")
+    D.draw(v, grids, cover=[("I", False), ("II", False), ("III", False)])
+    finish(v)
+    v.legend("cover", "one exterior, one region between the horizons and one inside $r_-$, which $t$ and $r$ cover")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                  "in units of $m$")
+    v.legend("t", "$ct$ constant")
+    views.append(v)
+
+    t = spread(-np.inf, np.inf, 500, 10)
+    rr = np.concatenate([spread(0, rm, 300, 14), spread(rm, rp, 300, 14), spread(rp, np.inf, 300, 14)])
+    rays = (-4, -2, 0, 2, 4)
+    v = View("ingoing", "Ingoing Kerr", box, "kerr_ingoing")
+    for cell, up in TOWER:
+        v.fill("region", D.polygon(cell, up))
+    for cell, up in [("I", False), ("II", False), ("III'", False)]:
+        v.fill("cover", D.polygon(cell, up))
+    for r in rI + rII + rIII:
+        v.curve("r", *ingoing(t, np.full_like(t, r)))
+    for w in rays:
+        v.curve("null", *ingoing(np.full_like(rr, float(w)), rr))
+    for cell, up in TOWER:
+        D.edges(v, cell, up)
+    finish(v)
+    v.legend("cover", "the region that $v$ and $r$ cover")
+    v.legend("r", f"$r$ constant: {listed(rI)} outside, {listed(rII)} between, {listed(rIII)} inside $r_-$, "
+                  "in units of $m$")
+    v.legend("null", "$v$ constant, an ingoing light ray, at " + listed(rays) + " in units of $m$")
+    views.append(v)
+    m = slices.moments("eye_of_the_storm")[0]
+    low = through_bifurcation(T, ("I'", "I"), *m.reach("boyer_lindquist", "r")[::-1])
+    for view in views:
+        view.set(settings=f"$a = 0.6\\,m$ and $\\ell = 0.2\\,m$, so that $r_+ = {rp:.3f}\\,m$ and $r_- = {rm:.3f}\\,m$.")
+        view.slice(m, [low])
+    return views
+
+
 # ---------------------------------------------------------------- the quantum Oppenheimer-Snyder black hole
 
 class QuantumOSTower(Tower):
@@ -26436,7 +26555,7 @@ DRAWN = {
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
-    "kerr": kerr, "kerr_newman": kerr_newman, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
+    "kerr": kerr, "kerr_newman": kerr_newman, "eye_of_the_storm": eye_of_the_storm, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
@@ -28195,6 +28314,28 @@ CAPTIONS = {
         "the lens between the surface and its centre $\\chi = 0$, which runs from $i^-$ to $i^+$.",
         "Someone who stays in the lower exterior sees the ball sink behind $r_+$ and never sees the bounce, and "
         "someone in the upper exterior sees the white hole, and the dust coming out of it.",
+    ],
+    ("eye_of_the_storm", "axis"): [
+        "The rotation axis of the eye of the storm ($\\theta = 0$), maximally extended, drawn for $a = 0.6\\,m$ and "
+        "$\\ell = 0.2\\,m$. On the axis the metric is $-f\\,c^2dt^2 + dr^2/f$ with $f = \\Delta/(r^2 + a^2)$, which "
+        "vanishes at the horizons $r_\\pm$ and tends to $1$ at $r = 0$, the centre of the disk. So the axis is a "
+        "tower of regions that repeats up and down without end, as Bardeen's regular black hole's does, and every "
+        "region inside $r_-$ ends on the centre, where Kerr's would run on through the disk to negative $r$.",
+        "The tortoise coordinate $r_*$, with $dr_*/dr = 1/f$ and $r_*(0) = 0$, has a logarithm at each horizon, "
+        "and we integrate the rest of it numerically. We place every region by the Kruskal coordinate of the "
+        "outer horizon, $p = \\pm\\arctan e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with "
+        "$u, v = ct \\mp r_*$, and the regions above the inner horizon are the reflection of those below. The map "
+        "is smooth across $r_+$, continuous across $r_-$, and puts the centre on the vertical lines "
+        "$X = \\pm\\pi/2$, where it is timelike.",
+        "The coordinates $t$ and $r$ cover one region of each kind. A light ray that reaches the centre passes "
+        "through the disk onto the other half of the axis, the same geometry turned over, and leaves through the "
+        "horizons above into the next exterior up the tower.",
+    ],
+    ("eye_of_the_storm", "ingoing"): [
+        "The same tower, with the region that the ingoing Kerr coordinates $v$ and $r$ cover tinted. The "
+        "advanced time $v = ct + r_*$ is constant along each ingoing light ray of the axis, which runs from "
+        "$\\mathscr{I}^-$ across $r_+$, through the black hole, across $r_-$, and on to the centre $r = 0$, "
+        "which it reaches at a finite $v$.",
     ],
     ("bardeen", "tower"): [
         "Bardeen's regular black hole, maximally extended, each point in the diagram a 2-sphere of radius $r$. "
