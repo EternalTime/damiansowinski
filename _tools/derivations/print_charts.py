@@ -3167,7 +3167,7 @@ def twisting_cylindrical_waves(system):
         spec_line, chart_line = line("c^2"), line("")
         domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
                    "z \\in (-\\infty, \\infty)",
-                   "\\gamma = \\omega = 0 \;\\text{at}\; \\rho = 0 \;\\text{(a regular axis)}"]
+                   "\\gamma = \\omega = 0 \\;\\text{at}\\; \\rho = 0 \\;\\text{(a regular axis)}"]
         name = "Cylindrical"
     else:
         coords = ["u", "v", "\\phi", "z"]
@@ -3175,7 +3175,7 @@ def twisting_cylindrical_waves(system):
                                   " + \\dfrac{(v - u)^2}{4}e^{-2\\psi}d\\phi^2" + block)
         domains = ["u \\in (-\\infty, \\infty)", "v \\in [u, \\infty)", "\\phi \\in [0, 2\\pi)",
                    "z \\in (-\\infty, \\infty)",
-                   "\\gamma = \\omega = 0 \;\\text{at}\; v = u \;\\text{(a regular axis)}"]
+                   "\\gamma = \\omega = 0 \\;\\text{at}\\; v = u \\;\\text{(a regular axis)}"]
         name = "Null"
     probe = vm.Reader(coords, parameters, ())
     x, y = probe.symbol[coords[0]], probe.symbol[coords[1]]

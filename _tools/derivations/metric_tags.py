@@ -495,6 +495,10 @@ OVERRULED = {
     ("einstein_rosen_waves", "vacuum"): (
         True, "psi and gamma are left free in both charts; the waves are the solutions of "
               "the vacuum equations, a wave equation for psi and a quadrature for gamma"),
+    ("twisting_cylindrical_waves", "vacuum"): (
+        True, "psi, omega and gamma are left free in both charts; the waves are the solutions of the "
+              "vacuum equations, two coupled wave equations for psi and omega and a quadrature for gamma, "
+              "which print_charts.py holds to a vanishing Ricci tensor"),
     ("belinski_zakharov", "vacuum"): (
         True, "f, P and Q are left free in the canonical chart; Belinski and Zakharov's solitons are the "
               "solutions of the vacuum equations its parameters state, as the pole chart's wave is"),
