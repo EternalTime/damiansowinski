@@ -522,7 +522,7 @@ They run in the environment of the next section and nowhere else.
     MFS_SPACETIME=kerr .venv.noindex/bin/python -m unittest discover -s _tools -p test_build_mfs_data.py
 
 runs the tests of `_tools/test_build_mfs_data.py` over the files of that spacetime alone, or of several named with commas between them, so a new spacetime is checked without reading every other spacetime's results.
-The build's own check still runs over the whole collection, a test of another named spacetime is passed over, and a name with no metric file stops the run.
+The build's own check still runs over the whole collection, a test of another named spacetime and the tests of the page's own sources are passed over, and a name with no metric file stops the run.
 Unset, every spacetime is checked.
 The check covers the symbols as well: "Every symbol is defined" above says what it refuses.
 

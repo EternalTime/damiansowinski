@@ -3,7 +3,8 @@
 
     .venv.noindex/bin/python -m unittest discover -s _tools
 
-MFS_SPACETIME checks the files of one spacetime alone, or of several named with commas between them:
+MFS_SPACETIME checks the files of one spacetime alone, or of several named with commas between
+them, and passes over the tests of the page's own sources, which a new spacetime does not touch:
 
     MFS_SPACETIME=kerr .venv.noindex/bin/python -m unittest discover -s _tools -p test_build_mfs_data.py
 """
@@ -93,6 +94,11 @@ def chosen(name):
 def checks(*names):
     """Pass over a test of the spacetimes `names` alone when MFS_SPACETIME chooses none of them."""
     return unittest.skipUnless(any(map(chosen, names)), f"checks {', '.join(names)} alone")
+
+
+# The tests of the page's own sources, its layout, stylesheets and scripts, which a new spacetime
+# does not touch, passed over when MFS_SPACETIME chooses spacetimes.
+page_source = unittest.skipIf(CHOSEN, "holds the page's own sources, which a spacetime's files do not touch")
 
 
 def found(test, things, what):
@@ -507,6 +513,7 @@ class Index(unittest.TestCase):
         return load_folder(files)
 
 
+@page_source
 class ListOrder(unittest.TestCase):
     """The search list reads in alphabetical order of the names it shows."""
 
@@ -949,6 +956,7 @@ def page_rules():
     return page, rules
 
 
+@page_source
 class WrittenAreas(unittest.TestCase):
     """Every written area of the spacetimes page is set in the font of the history's prose,
     as the captain asked on 28 September 2026: "every written area must use the same font as
@@ -1076,6 +1084,7 @@ class WrittenAreas(unittest.TestCase):
         self.assertEqual(self.resolved("#mfs-print-root", "font-family", printed=True), "'EB Garamond', serif")
 
 
+@page_source
 class DividedWords(unittest.TestCase):
     """hyphenateWords() in _layouts/mfs.html divides a word of the prose wider than its line, and
     leaves whole all mathematics MathJax has yet to set, which MathJax finds only with both its
@@ -1105,6 +1114,7 @@ class DividedWords(unittest.TestCase):
         self.assertRegex(self.body, r"if \(tex\.some\(function\(t\) \{ return at < t\[1\] && to > t\[0\]; \}\)\) continue;")
 
 
+@page_source
 class FixedSizes(unittest.TestCase):
     """The spacetime's name, the word above it and every button keep one size in px at any
     text size, the size each had before the prose grew with the reader's text, and the prose's
@@ -1301,6 +1311,7 @@ class Anchors(unittest.TestCase):
                         self.assertIn(anchor, known)
 
 
+@page_source
 class NoGlow(unittest.TestCase):
     """Nothing on the spacetimes page glows, and a button chosen or pressed turns pink, as the
     captain asked on 29 September 2026: "Get rid of the glow on the pressed button in MFS.
@@ -1396,6 +1407,7 @@ class NoGlow(unittest.TestCase):
                 self.assertEqual(max(places), pressed)
 
 
+@page_source
 class CyanNotTeal(unittest.TestCase):
     """The spacetimes page is drawn in VoidFlux's cyans, #29a3c3 and #37dfff, where the rest of
     the site keeps its teal, as the captain asked on 30 September 2026: mfs.css sets them for the
@@ -4363,6 +4375,7 @@ class TurningLightConeFigures(unittest.TestCase):
                                  "maximally_supersymmetric_plane_wave/focus", "swirling_universe_black_hole/ergo"} if chosen(key.split("/")[0])})
 
 
+@page_source
 class TurningUnderTheHand(unittest.TestCase):
     """The page turns every figure by one hand, MfsTurn.dragged(), keyed() and turned(), which
     _tools/turn_check.cjs drags across a surface of revolution, a height over a plane and a
@@ -7856,6 +7869,7 @@ class Relations(unittest.TestCase):
         self.assertIn("mfs-section-label\">Related Spacetimes<", page)
 
 
+@page_source
 class SectionOrder(unittest.TestCase):
     """The sections of a spacetime's page stand in the order _tools/README.md gives under "Where the
     diagrams stand", each diagram beside the mathematics it draws: the spacetime diagram and the
