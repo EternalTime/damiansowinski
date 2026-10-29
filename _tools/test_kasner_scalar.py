@@ -93,7 +93,8 @@ class Drawings(unittest.TestCase):
         answers = {"kasner": ("special_case", "generalisation"), "frw": ("special_case", "generalisation"),
                    "bianchi": ("generalisation", "special_case"), "mixmaster": ("family", "family"),
                    "fisher_jnw": ("family", "family"), "kasner_magnetic": ("family", "family"),
-                   "lqc_bounce": ("family", "family")}
+                   "lqc_bounce": ("family", "family"),
+                   "holographic_superconductor": ("limit_source", "limit")}
         mine = {r["id"]: r["kind"] for r in load("metrics")["related"]}
         self.assertEqual(mine, {k: v[0] for k, v in answers.items()})
         for other, (_, kind) in answers.items():

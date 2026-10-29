@@ -3460,7 +3460,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
+        flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "holographic_superconductor", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
                 "chandrasekhar_xanthopoulos", "belinski_zakharov", "big_rip", "maximally_supersymmetric_plane_wave"}
         # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
         # twice and joined at its rim; the moments either side of it are the cones it opens into.
@@ -3598,7 +3598,8 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic", "bianchi", "pp_wave",
+                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic",
+                          "holographic_superconductor", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
                           "belinski_zakharov", "moving_mirror", "big_rip", "maximally_supersymmetric_plane_wave"})
@@ -5166,6 +5167,9 @@ class Slices(unittest.TestCase):
               # Rosen's chart draws the axisymmetric universe, exponents (0, 0, 1); the ring embedded is
               # of the universe that starts at (-2/7, 3/7, 6/7).
               "kasner_magnetic/rosen/etax", "kasner_magnetic/rosen/etaz",
+              # The final Kasner epoch of the holographic superconductor, another solution than the
+              # Kasner inversion, whose moments are embedded.
+              "holographic_superconductor/kasner/taut", "holographic_superconductor/kasner/taux",
               # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
               "hiscock/ingoing/shells",
               # The flat model of the whimper, another spacetime than Farnsworth's dust, whose surface of
@@ -6440,6 +6444,9 @@ class Slices(unittest.TestCase):
             path = next(c for c in surface["curves"] if c["class"] == "path")
             grid = next(p for p in surface["pieces"] if "grid" in p)["grid"]
             return (lambda X: 5.0), [grid["u"][0] - path["points"][0][0], grid["u"][-1] - path["points"][0][0]]
+        if key.startswith("holographic_superconductor/inversion/"):
+            # A moment of the inversion is the line rho = -u, drawn at the height -rho, its time u.
+            return (lambda X: t), None
         if key == "kasner_scalar/logarithmic/taux":
             # A moment of t against x and -tau = ln t.
             return (lambda X: math.log(t)), None

@@ -79,7 +79,8 @@ class Drawings(unittest.TestCase):
 
     def test_each_relation_is_answered(self):
         answers = {"kasner": ("special_case", "generalisation"), "melvin": ("dual", "dual"),
-                   "kasner_scalar": ("family", "family"), "bianchi": ("generalisation", "special_case")}
+                   "kasner_scalar": ("family", "family"), "bianchi": ("generalisation", "special_case"),
+                   "holographic_superconductor": ("family", "family")}
         mine = {r["id"]: r["kind"] for r in load("metrics")["related"]}
         self.assertEqual(mine, {k: v[0] for k, v in answers.items()})
         for other, (_, kind) in answers.items():
