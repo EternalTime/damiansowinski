@@ -8,6 +8,7 @@
     "rotating",
     "rotating black hole",
     "black hole",
+    "stationary",
     "axisymmetric",
     "angular momentum",
     "mass",
@@ -4120,7 +4121,7 @@
           "description": "Kerr's $\\Delta$ with the mass suppressed, an area whose roots $r_- \\le r_+$ are the horizons"
         }
       ],
-      "convention": "We use the ingoing coordinates of Kerr's own paper, which Ghosh wrote for this metric, with $dv = c\\,dt + \\left(r^2 + a^2\\right)dr/\\Delta$ and $d\\tilde\\phi = d\\phi + a\\,dr/\\Delta$, so $v$ is a length and every ingoing principal null ray is a line of constant $v$, $\\theta$ and $\\tilde\\phi$. The chart runs through both horizons. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "convention": "We use the ingoing coordinates of Kerr's own paper, which Ghosh wrote for this metric, with $dv = c\\,dt + \\left(r^2 + a^2\\right)dr/\\Delta$ and $d\\tilde\\phi = d\\phi + a\\,dr/\\Delta$, so $v$ is a length and every ingoing principal null ray is a line of constant $v$, $\\theta$, and $\\tilde\\phi$. The chart runs through both horizons, the roots $r_- \\le r_+$ of $\\Delta$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
       "line_element": "ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right)^2 + 2\\,dr\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right) + \\Sigma\\,d\\theta^2 + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(\\left(r^2 + a^2\\right)d\\tilde\\phi - a\\,dv\\right)^2",
       "metric_components": [
         {

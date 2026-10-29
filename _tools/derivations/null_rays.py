@@ -10720,8 +10720,8 @@ CAPTIONS = {
     ("eye_of_the_storm", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.6\\,m$ and $\\ell = 0.2\\,m$. "
         "The curves drawn are null, and on the axis they are null geodesics, the paths light takes. $g^{rr}$ vanishes at "
-        "the roots of $\\Delta = r^2 + a^2 - 2mr\\,e^{-\\ell/r}$, $r_- = 0.435\\,m$ and $r_+ = 1.515\\,m$, inside Kerr's "
-        "$0.2$ and $1.8\\,m$; the cones close at both, and between them they point to smaller $r$.",
+        "$r_- = 0.435\\,m$ and $r_+ = 1.515\\,m$, the roots of $\\Delta = r^2 + a^2 - 2mr\\,e^{-\\ell/r}$, which lie "
+        "inside Kerr's horizons at $0.2$ and $1.8\\,m$. The cones close at both, and between them they point to smaller $r$.",
         "Inside $r_-$ the cones open again, and toward $r = 0$, the centre of the disk, $\\Delta/(r^2 + a^2) \\to 1$: the "
         "rays run at 45° as they do in flat space, and the Kretschmann scalar falls to zero.",
     ],

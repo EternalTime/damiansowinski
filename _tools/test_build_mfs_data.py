@@ -430,6 +430,39 @@ def qos_lead(r, n=2000):
     return h / 3 * (g(0) + g(top) + sum((4 if k % 2 else 2) * g(k * h) for k in range(1, n)))
 
 
+def eos_rstar(r):
+    """The eye of the storm's tortoise coordinate on its axis at m = 1, a = 3/5 and ell = 1/5,
+    dr_*/dr = (r^2 + a^2)/Delta with Delta = r^2 + a^2 - 2r e^(-ell/r), zero at r = 0, without numpy:
+    the horizons found by bisection, the logarithm of each, and the integral of what is left by
+    Gauss and Legendre's rule of five points on panels that end on the horizons."""
+    a2, ell = 0.36, 0.2
+
+    def delta(x):
+        return x * x + a2 - 2 * x * math.exp(-ell / x)
+
+    def root(lo, hi):
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if (delta(mid) > 0) == (delta(lo) > 0) else (lo, mid)
+        return 0.5 * (lo + hi)
+    poles = [(ri, (ri * ri + a2) / (2 * ri - 2 * math.exp(-ell / ri) * (1 + ell / ri)))
+             for ri in (root(0.3, 0.9), root(1.0, 1.8))]
+    nodes = (0.0, 0.5384693101056831, -0.5384693101056831, 0.906179845938664, -0.906179845938664)
+    weights = (0.5688888888888889, 0.47862867049936647, 0.47862867049936647, 0.23692688505618908, 0.23692688505618908)
+
+    def smooth(x):
+        return (x * x + a2) / delta(x) - sum(c / (x - ri) for ri, c in poles)
+    cuts = sorted({0.0, r} | {ri for ri, _ in poles if ri < r})
+    total = 0.0
+    for lo, hi in zip(cuts, cuts[1:]):
+        panels = max(1, math.ceil((hi - lo) / 0.05))
+        width = (hi - lo) / panels
+        for k in range(panels):
+            mid = lo + (k + 0.5) * width
+            total += 0.5 * width * sum(w * smooth(mid + 0.5 * width * n) for n, w in zip(nodes, weights))
+    return total + sum(c * math.log(abs(1 - r / ri)) for ri, c in poles)
+
+
 def bardeen_rstar(r):
     """Bardeen's tortoise coordinate, dr_*/dr = 1/f and r_* = 0 at the centre, without numpy: the
     logarithm of each horizon, ln|1 - r/r_i|/f'(r_i), and the integral from 0 of what is left of
@@ -6116,6 +6149,10 @@ class Slices(unittest.TestCase):
             if "painleve" in key:
                 return (lambda X: qos_rstar(X) - qos_lead(X)), list(self.reach(surface))
             return (lambda X: sign * (qos_rstar(X) - (X if finkelstein else 0))), list(self.reach(surface))
+        if key == "eye_of_the_storm/kerr_ingoing/axis":
+            # At m = 1, a = 3m/5 and ell = m/5 the moment t = 0 outside r_+ is v = r_* on the axis,
+            # drawn against v - r, running off toward the horizon.
+            return (lambda X: eos_rstar(X) - X), list(self.reach(surface))
         if key.startswith("bardeen/eddington_finkelstein"):
             # At r_s = 1 and g = 1/3 the static t = 0 is v = r_* and u = -r_*, with dr_*/dr = 1/f and
             # r_* = 0 at the centre, drawn against v - r and u + r or against v and u. It runs off

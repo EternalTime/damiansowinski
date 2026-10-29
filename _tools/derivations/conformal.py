@@ -28318,13 +28318,13 @@ CAPTIONS = {
     ("eye_of_the_storm", "axis"): [
         "The rotation axis of the eye of the storm ($\\theta = 0$), maximally extended, drawn for $a = 0.6\\,m$ and "
         "$\\ell = 0.2\\,m$. On the axis the metric is $-f\\,c^2dt^2 + dr^2/f$ with $f = \\Delta/(r^2 + a^2)$, which "
-        "vanishes at the horizons $r_\\pm$ and tends to $1$ at $r = 0$, the centre of the disk. So the axis is a "
+        "vanishes at the horizons $r_-$ and $r_+$ and tends to $1$ at $r = 0$, the centre of the disk. So the axis is a "
         "tower of regions that repeats up and down without end, as Bardeen's regular black hole's does, and every "
         "region inside $r_-$ ends on the centre, where Kerr's would run on through the disk to negative $r$.",
         "The tortoise coordinate $r_*$, with $dr_*/dr = 1/f$ and $r_*(0) = 0$, has a logarithm at each horizon, "
         "and we integrate the rest of it numerically. We place every region by the Kruskal coordinate of the "
         "outer horizon, $p = \\pm\\arctan e^{-\\kappa_+ u}$ and $q = \\pm\\arctan e^{\\kappa_+ v}$ with "
-        "$u, v = ct \\mp r_*$, and the regions above the inner horizon are the reflection of those below. The map "
+        "$u, v = ct \\mp r_*$ and $\\kappa_+$ the surface gravity of $r_+$, and the regions above the inner horizon are the reflection of those below. The map "
         "is smooth across $r_+$, continuous across $r_-$, and puts the centre on the vertical lines "
         "$X = \\pm\\pi/2$, where it is timelike.",
         "The coordinates $t$ and $r$ cover one region of each kind. A light ray that reaches the centre passes "
@@ -28333,7 +28333,7 @@ CAPTIONS = {
     ],
     ("eye_of_the_storm", "ingoing"): [
         "The same tower, with the region that the ingoing Kerr coordinates $v$ and $r$ cover tinted. The "
-        "advanced time $v = ct + r_*$ is constant along each ingoing light ray of the axis, which runs from "
+        "advanced time $v = ct + r_*$, with $dr_*/dr = (r^2 + a^2)/\\Delta$ on the axis, is constant along each ingoing light ray of the axis, which runs from "
         "$\\mathscr{I}^-$ across $r_+$, through the black hole, across $r_-$, and on to the centre $r = 0$, "
         "which it reaches at a finite $v$.",
     ],
