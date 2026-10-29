@@ -2372,6 +2372,45 @@ def tolman_vii(ck, src):
                  settings="$r_s = 1$, the unit of every length, and $R = 2\\,r_s$, so $\\beta = 1/4$.")]
 
 
+def buchdahl_sphere(ck, src):
+    """Buchdahl's fluid sphere with r_s = R, so f_c = 1/4 and q_c = 1/3, as the spacetime diagrams
+    draw it. The slice t = 0 of the equator is (1 + f)^4 (dr^2 + r^2 dphi^2), so its circles have
+    rho = r (1 + f)^2 and the surface climbs at dz/dr = sqrt((1 + f)^4 - (drho/dr)^2), with
+    drho/dr = (1 + f)((1 + f) - 2 r^2 f/(r^2 + R^2)) by f' = -r f/(r^2 + R^2); the profile is checked
+    against that slope by quadrature. There is no surface of the star: the fluid runs on to
+    infinity, and the bowl opens into a sheet that nears Flamm's paraboloid of the mass r_s far out."""
+    top = 5.0
+    size = 2 * top
+    sl = Slice(src, "buchdahl_sphere", "isotropic", "r", "\\phi", {"t": 0, **EQUATOR}, {"r_s": 1, "R": 1})
+    star = Piece("star", "star", sl, 0.0, top, 0.0, 1,
+                 (("axis", "the centre $r = 0$, where the surface is smooth"),
+                  ("edge", "the fluid and the surface run on to $r \\to \\infty$")),
+                 [(r, "r", None) for r in (0.5, 1.0, 2.0, 3.0, 4.0)] + [(top, "r", None)], size)
+    surface = Surface([star])
+    ck.isometry("Buchdahl's sphere", star)
+
+    def climb(r):
+        f = 0.25 / math.sqrt(r * r + 1.0)
+        turn = (1 + f) * ((1 + f) - 2 * r * r * f / (r * r + 1.0))
+        return math.sqrt(max((1 + f) ** 4 - turn ** 2, 0.0))
+
+    def bowl(r):
+        return np.array([quad(climb, 0.0, float(x), epsabs=1e-12, epsrel=1e-12)[0] for x in np.ravel(r)]
+                        ).reshape(np.shape(r))
+    ck.form("Buchdahl's sphere, dz/dr = sqrt((1 + f)^4 - (drho/dr)^2)", star, bowl, size)
+    ck.radius("Buchdahl's sphere, rho = r(1 + f)^2", star,
+              lambda r: r * (1 + 0.25 / np.sqrt(r * r + 1.0)) ** 2, size)
+
+    fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+    ring_label(fig, [0, 0, 0], *star.at(1.0), "$r = R$", dx=10)
+    ring_label(fig, [0, 0, 0], *star.at(top), "$5\\,r_s$")
+    fig.legend("fill", "star", "the fluid")
+    fig.legend("line", "r", "$r$ constant, from $0.5$ to $5\\,r_s$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("star", "The equator of the star", "$r_s$", [surface], fig.done(),
+                 settings="$r_s = 1$, the unit of every length, and $R = r_s$, so $f = 1/4$ at the centre.")]
+
+
 def bowers_liang(ck, src):
     """Bowers and Liang's anisotropic star at Schwarzschild's limit, R = 9 r_s/8, with Q = 1/4,
     as the spacetime diagrams and the conformal diagram draw it. The density is uniform, so
@@ -17715,6 +17754,7 @@ DRAWN = {
     "gravastar": gravastar,
     "tolman_vii": tolman_vii,
     "bowers_liang": bowers_liang,
+    "buchdahl_sphere": buchdahl_sphere,
     "misner_zapolsky": misner_zapolsky,
     "bonnor_charged_dust": bonnor_charged_dust,
     "tov": tov,
@@ -18295,6 +18335,11 @@ CAPTIONS = {
         "radius $1.87\\,m$. From the ring outward it is the surface $\\theta = 0$, which climbs through the rest "
         "of the spheroid to its surface $u = u_0$, at the circumference radius $2.63\\,m$, and on into the "
         "exterior with no break in slope.",
+    ],
+    ("buchdahl_sphere", "star"): [
+        "The equator at one moment of $t$ ($R = r_s$), each distance along the surface the metric distance. "
+        "Its circles have circumference $2\\pi r(1 + f)^2$, and it rises from a level centre into a sheet "
+        "that nears Flamm's paraboloid of the same mass.",
     ],
     ("tolman_vii", "star"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the star at one moment of $t$ ($R = 2\\,r_s$), drawn as a "

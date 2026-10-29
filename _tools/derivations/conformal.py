@@ -12152,6 +12152,45 @@ def misner_zapolsky(ck, src):
 
 # ---------------------------------------------------------------- Bowers and Liang's anisotropic star
 
+def buchdahl_sphere(ck, src):
+    """Buchdahl's fluid sphere at R = r_s, as its other diagrams draw it. One chart covers the whole
+    spacetime, with no surface: the tortoise coordinate r* = int_0^r (1 + f)^3/(1 - f) dr, which is
+    sqrt(g_rr/(-g_tt)), runs from 0 at the centre to infinity, growing as r + r_s ln r far out, and
+    p, q = arctan((t -+ r*)/(2 r_s)) give Minkowski's triangle with the centre its left edge."""
+    plane = Plane(src, "buchdahl_sphere", "isotropic", ("t", "r"), EQUATOR, {"r_s": 1, "R": 1})
+    speed = sp.lambdify(plane.x1, sp.sqrt(plane.g[1, 1] / (-plane.g[0, 0])), "numpy")
+    rq = np.concatenate([np.linspace(0, 10, 200001)[:-1], 10 + np.geomspace(1e-6, 1e8, 400001) - 1e-6])
+    rsq = cumulative_trapezoid(speed(rq), rq, initial=0)
+
+    def rstar(r):
+        return np.interp(np.asarray(r, dtype=float), rq, rsq)
+
+    def star(t, r):
+        return mink_pq(t, rstar(r), 2.0)
+    ck.chart("Buchdahl's sphere", plane, star, ck.uniform(-20, 20), ck.uniform(0.01, 60), lambda t, r: (1, 0))
+    ck.finite("Buchdahl's sphere: r = 0 is a regular centre", plane.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+
+    v = View("isotropic", "Isotropic (Buchdahl)", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "spherical")
+    v.fill("region", TRIANGLE)
+    for r in (0.5, 1.0, 2.0, 6.0):
+        v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))
+    rr = np.concatenate([np.linspace(0, 1, 60)[:-1], 1 + np.exp(np.linspace(-6, 8, 200)) - np.exp(-6)])
+    for t in (-6, -3, -1.5, 0, 1.5, 3, 6):
+        v.curve("t", *star(np.full_like(rr, t), rr))
+    triangle_edges(v)
+    label_on(v, star(0, 1.0), "$r = R$")
+    v.label_xt([0.35, 0.0], "fluid", cls="region")
+    v.legend("r", "$r$ constant, $0.5$ to $6\\,r_s$")
+    v.legend("t", "$t$ constant")
+    v.legend("centre", "$r = 0$, a regular centre")
+    v.set(settings="$R = r_s$, so $f = 1/4$ at the centre.")
+    moment = slices.moments("buchdahl_sphere")[0]
+    lo, hi = moment.reach("isotropic", "r")
+    rr = np.concatenate([np.linspace(lo, 1, 40), 1 + np.geomspace(1e-6, hi - 1, 200)])
+    v.slice(moment, [star(0 * rr, rr)])
+    return [v]
+
+
 def bowers_liang(ck, src):
     """Bowers and Liang's star with Q = 1/4, r <= R, joined at Schwarzschild's limit R = 9 r_s/8
     to the Schwarzschild exterior of the schwarzschild entry. g_tt is continuous at R, checked,
@@ -26569,6 +26608,7 @@ DRAWN = {
     "cosmic_string": cosmic_string, "spinning_string": spinning_string,
     "point_particle_2plus1": point_particle_2plus1,
     "interior_schwarzschild": interior_schwarzschild, "gravastar": gravastar, "frw": frw,
+    "buchdahl_sphere": buchdahl_sphere,
     "einstein_cluster": einstein_cluster,
     "lindquist_wheeler_lattice": lindquist_wheeler_lattice,
     "semiclosed_world": semiclosed_world,
@@ -29476,6 +29516,10 @@ CAPTIONS = {
         "$\\ell\\chi_0 + r - \\ell\\tan\\chi_0$; the edge of the core, $r = \\ell\\tan\\chi_0$, is "
         "where the circumferences inside and outside agree. In $\\rho$ the metric on the whole "
         "half plane is $-c^2dt^2 + d\\rho^2$.",
+    ],
+    ("buchdahl_sphere", "isotropic"): [
+        "Buchdahl's fluid sphere ($R = r_s$), each point a 2-sphere, with fluid in the whole triangle and no "
+        "horizon. With $r_* = \\int_0^r (1 + f)^3/(1 - f)\\,dr$, $p, q = \\arctan((ct \\mp r_*)/2r_s)$.",
     ],
     ("interior_schwarzschild", "spherical"): [
         "A static star of uniform density, the interior solution for $r \\le R$ joined at "

@@ -4467,6 +4467,14 @@ DIAGRAMS = [
     Diagram("tolman_vii", "spherical", "through", "through the centre", ("t", "r"),
             (0, 2, -2, 2), "$x/r_s$", "$ct/r_s$", TOLMAN_VII_STAR, EQUATOR,
             mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
+    # Buchdahl's fluid sphere at R = r_s, f = 1/4 at the centre, which is q_c = 1/3, inside Buchdahl's
+    # own bound q_c <= 1; the coordinate speed of light (1 - f)/(1 + f)^3 runs from 0.38 at the centre
+    # to 0.79 at r = 4 r_s.
+    Diagram("buchdahl_sphere", "isotropic", "radial", "$t$ and $r$", ("t", "r"),
+            (0, 4, -2, 2), "$r/r_s$", "$ct/r_s$", {"r_s": 1, "R": 1}, EQUATOR, areal=True),
+    Diagram("buchdahl_sphere", "isotropic", "through", "through the centre", ("t", "r"),
+            (0, 3, -3, 3), "$x/r_s$", "$ct/r_s$", {"r_s": 1, "R": 1}, EQUATOR,
+            mirror=True, families=SIDEWAYS, cones=(4, 8), areal=True),
     # Bowers and Liang's star with Q = 1/4 at R = 9 r_s/8, where -g_tt runs from 0.018 at the centre
     # to 1/9 at the surface and light moves at about dr/d(ct) = 0.13 throughout, so each view is
     # twice as tall as it is wide, the limit, to show the lean of its cones.
@@ -10440,6 +10448,16 @@ CAPTIONS = {
         "The line through the centre of the star in the plane $\\theta = \\pi/2$ ($R = 2\\,r_s$): $x = r$ "
         "on the right is $\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the "
         "centre smoothly, and the cones are narrowest there.",
+    ],
+    ("buchdahl_sphere", "isotropic", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for a star with $R = r_s$, so $f = 1/4$ "
+        "at the centre. Light moves at $dr/d(ct) = (1 - f)/(1 + f)^3$, which is $0.38$ at the centre and $0.79$ "
+        "at $r = 4\\,r_s$, so the cones open outward. The fluid has no surface and the cones never close.",
+    ],
+    ("buchdahl_sphere", "isotropic", "through"): [
+        "The line through the centre in the plane $\\theta = \\pi/2$ ($R = r_s$): $x = r$ on the right is "
+        "$\\phi = 0$ and $x = -r$ on the left is $\\phi = \\pi$. Rays cross the centre smoothly, where the cones "
+        "are narrowest.",
     ],
     ("bowers_liang", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "
