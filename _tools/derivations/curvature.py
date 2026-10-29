@@ -6458,6 +6458,121 @@ ER_INPUT = ("The pulse of Weber, Wheeler, and Bonnor, of width $a$: $\\psi = \\s
             "$w = a^2 + \\rho^2 - c^2t^2$, and $D_\\pm^2 = w^2 \\pm 4a^2c^2t^2$, at $C = a$.")
 
 
+TC_BOX = ((0, 10), (-8, 8))       # rho/a and ct/a: the pulse coming in, crossing the axis and going out
+TC_CELLS = (160, 256)             # the cells of the map across and up, each a sixteenth of a on a side
+TC_SCALE = {"kind": "symlog", "from": -0.1, "to": 0.1, "linear": 1e-6}   # the colours of K a^4
+
+
+def twisting_cylindrical_waves(ck, src):
+    """The pulse of Piran, Safier, and Katz at a = 1 and alpha = 2, its Kretschmann scalar over the
+    plane of rho and ct of the cylindrical chart, coming in, crossing the axis and going out.
+
+    The cylindrical chart publishes K in rho and the derivatives of its free functions psi, omega and
+    gamma, which the figure declares as the pulse the spacetime's other drawings take; the published
+    Ricci scalar vanishes on the pulse, so the figure is K alone, a map over 0 <= rho <= 10a and
+    -8a <= ct <= 8a in cells a sixteenth of a on a side, coloured on a signed logarithmic scale from
+    -0.1 to 0.1 in units of 1/a^4, linear within 10^-6 of zero, since K changes sign. K is finite, so
+    no horizon or singularity is marked.
+
+    What the caption states is checked here, in sixty digits: the pulse solves the published
+    Einstein components and the published R vanishes on it; K is the same at t and -t; on the axis
+    at t = 0 K takes the value stated, the greatest on the map; on the axis K falls to zero at the
+    |ct| stated, found by bisection, and is negative beyond it to the |ct| stated; at ct = 4a, 6a and
+    8a K is least on a band inside the light cone; and K stays inside its colours."""
+    S = "cylindrical"
+    pulse = nr._psk_pulse("t", "rho")
+    (r0, r1), (t0, t1) = TC_BOX
+    x_axis, y_axis = axis("$\\rho/a$", r0, r1), axis("$ct/a$", t0, t1)
+    shape_checks(ck, "twisting_cylindrical_waves", [(x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])])
+    scale = dict(TC_SCALE)
+
+    def read(field, indices=None):
+        return nr_published(src, "twisting_cylindrical_waves", S, field, ["rho", "t"], [], indices, pulse)
+
+    K, ricci = read("kretschmann"), read("ricci_scalar")
+    rng = np.random.default_rng(1958)
+    sample = [[float(r), float(t)] for r, t in zip(rng.uniform(0.05, r1, 12), rng.uniform(t0, t1, 12))]
+    scale_K = max(abs(float(K.exact(p))) for p in sample)
+    worst = max(abs(float(ricci.exact(p))) for p in sample)
+    ck("twisting_cylindrical_waves the published Ricci scalar vanishes on the pulse", worst < 1e-40 * max(scale_K, 1.0),
+       f"{worst:.1e}")
+    worst = max(abs(float(read("einstein_tensor", ij).exact(p))) for ij in nr.PSK_SOLVES for p in sample)
+    ck("twisting_cylindrical_waves the pulse solves the published G^t_t, G^t_rho, G^phi_phi, G^phi_z and G^z_z",
+       worst < 1e-40, f"{worst:.1e}")
+
+    nx, ny = TC_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [])
+    ck("twisting_cylindrical_waves K is finite at every cell", np.all(np.isfinite(values)),
+       f"from {np.min(values):.3e} to {np.max(values):.3e}")
+    picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+    picks |= {(i, j) for i in (0, 1) for j in (ny // 2 - 1, ny // 2)}
+    picks = sorted(picks)
+    agrees(ck, "twisting_cylindrical_waves map", K, [[xs[i], ys[j]] for i, j in picks], [values[j, i] for i, j in picks])
+    ck("twisting_cylindrical_waves K is the same at t and -t, cell for cell",
+       np.allclose(values, values[::-1], rtol=1e-9, atol=0))
+    worst = max(abs(float(K.exact([r, t]) / K.exact([r, -t])) - 1) for r, t in sample)
+    ck("twisting_cylindrical_waves K is the same at t and -t in sixty digits", worst < 1e-50, f"worst {worst:.1e}")
+
+    # On the axis, approached at rho = 10^-8 a, where the published form is 0/0 on rho = 0 itself.
+    near = 1e-8
+    focus = float(K.exact([near, 0.0]))
+    # The fine grid starts a 32nd of a out, where floating point still holds the published form.
+    fine_r = np.linspace(1 / 32, r1, 801)
+    fine_t = np.linspace(t0, t1, 1601)
+    FX, FY = np.meshgrid(fine_r, fine_t)
+    fine = K(FX, FY)
+    ck("twisting_cylindrical_waves K is greatest on the axis at t = 0", float(np.max(fine)) <= focus * (1 + 1e-9),
+       f"{focus:.6e} against {float(np.max(fine)):.6e}")
+    lo, hi = 0.5, 1.5
+    ck("twisting_cylindrical_waves K changes sign on the axis between ct = a/2 and 3a/2",
+       float(K.exact([near, lo])) > 0 > float(K.exact([near, hi])))
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if float(K.exact([near, mid])) > 0 else (lo, mid)
+    tz = 0.5 * (lo + hi)
+    ck("twisting_cylindrical_waves K is negative on the axis from t_z to |ct| = 3.5a",
+       all(float(K.exact([near, t])) < 0 for t in np.linspace(tz + 1e-3, 3.5, 60)))
+    lo2, hi2 = 3.5, 4.0
+    ck("twisting_cylindrical_waves K turns positive again on the axis before ct = 4a",
+       float(K.exact([near, lo2])) < 0 < float(K.exact([near, hi2])))
+    for _ in range(60):
+        mid = 0.5 * (lo2 + hi2)
+        lo2, hi2 = (mid, hi2) if float(K.exact([near, mid])) < 0 else (lo2, mid)
+    t_back = 0.5 * (lo2 + hi2)
+    band = []
+    for T in (4.0, 6.0, 8.0):
+        r = np.linspace(0.01, r1, 4000)
+        k = K(r, np.full_like(r, T))
+        band.append(T - float(r[np.argmin(k)]))
+        ck(f"twisting_cylindrical_waves at ct = {T:g}a K is least inside the light cone, and negative there",
+           0 < band[-1] < 1.5 and float(np.min(k)) < 0, f"{band[-1]:.3f}a inside")
+    lowest = float(np.min(fine))
+    ck("twisting_cylindrical_waves K stays inside its colours", TC_SCALE["from"] < lowest and focus < TC_SCALE["to"],
+       f"from {lowest:.4e} to {focus:.4e}")
+    bottom = np.unravel_index(np.argmin(fine), fine.shape)
+    r_min, t_min = float(FX[bottom]), abs(float(FY[bottom]))
+
+    view = {
+        "id": "pulse", "label": "the plane of $\\rho$ and $ct$", "system": S, "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,a^4$", "scale": scale, "ticks": value_ticks(scale)},
+        "map": {"metric": "twisting_cylindrical_waves", "system": S, "scalar": "kretschmann", "x": "\\rho", "y": "t",
+                "params": {}, "functions": dict(pulse), "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [],
+        "legend": [],
+        "caption": [
+            "The Kretschmann scalar $K$ of a pulse of Piran, Safier, and Katz over the plane of $\\rho$ and $ct$, even "
+            f"in $t$: greatest on the axis at $t = 0$, ${tex_number(focus)}/a^4$, and negative there from "
+            f"$|ct| = {tz:.2f}\\,a$ to ${t_back:.2f}\\,a$.",
+        ],
+        "settings": "$\\alpha = 2$, lengths in units of $a$.",
+        "input": nr.PSK_INPUT,
+        "clip": ("Signed logarithmic colours of $K\\,a^4$, from $-0.1$ to $0.1$, linear within $10^{-6}$ of zero; "
+                 f"$K$ is least, ${tex_number(lowest)}/a^4$, near the axis at $|ct| = {t_min:.2f}\\,a$."),
+    }
+    return [view]
+
+
 def golden(fn, lo, hi, steps=80):
     """Where fn is least between lo and hi, by the golden section."""
     ratio = (math.sqrt(5) - 1) / 2
@@ -17838,6 +17953,7 @@ DRAWN = {
     "einstein_dirac_maxwell_wormhole": einstein_dirac_maxwell_wormhole,
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "einstein_rosen_waves": einstein_rosen_waves,
+    "twisting_cylindrical_waves": twisting_cylindrical_waves,
     "ellis_bronnikov": ellis_bronnikov,
     "ozsvath_dust": ozsvath_dust,
     "exponential_metric": exponential_metric,
