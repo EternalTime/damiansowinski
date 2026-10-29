@@ -4121,6 +4121,29 @@
     "embedding": "1bebbd3e461aed13"
   },
   {
+    "id": "newman_tamburino",
+    "name": "Newman-Tamburino",
+    "tags": [
+      "vacuum",
+      "Petrov type I",
+      "null congruence",
+      "twist-free",
+      "expanding",
+      "retarded time",
+      "self-similar",
+      "curvature singularity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "23dc737931a599b9",
+    "diagrams": "f9d88c69ecb3758a",
+    "embedding": "23da0d71ec10300b",
+    "curvature": "0d39271760ddb811"
+  },
+  {
     "id": "nordstrom_scalar",
     "name": "Nordström Scalar Gravity",
     "tags": [
@@ -4794,7 +4817,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "65af0562b5e9c86f",
+    "version": "4d989a7b8c4d807f",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -5491,7 +5514,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "40eea395e368777b",
+    "version": "2e103d2745185e6b",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078",
     "curvature": "67bff764e3e14927"

@@ -1827,6 +1827,17 @@ A disc of dust turning rigidly about its axis and held up by rotation alone, the
 - chart Oblate Spheroidal: coordinates $(t, \xi, \eta, \phi)$, $$ds^2 = -e^{2\nu}c^2dt^2 + \rho_0^2\left(1 + \xi^2\right)\left(1 - \eta^2\right)e^{-2\nu}\left(d\phi - \omega\,c\,dt\right)^2 + \rho_0^2\left(\xi^2 + \eta^2\right)e^{2\alpha}\left(\dfrac{d\xi^2}{1 + \xi^2} + \dfrac{d\eta^2}{1 - \eta^2}\right)$$
 - chart The Black Hole Limit: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2\left(\left(r + m\right)^2 + m^2\cos^2\theta\right)}{\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta}c^2dt^2 + \dfrac{\left(\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta\right)\sin^2\theta}{\left(r + m\right)^2 + m^2\cos^2\theta}\left(d\phi - \dfrac{2m^2\left(r + m\right)}{\left(\left(r + m\right)^2 + m^2\right)^2 - m^2r^2\sin^2\theta}c\,dt\right)^2 + \dfrac{\left(r + m\right)^2 + m^2\cos^2\theta}{r^2}\left(dr^2 + r^2d\theta^2\right)$$
 
+### The Newman-Tamburino Metrics
+
+The vacuum fields whose light rays spread apart and shear without twisting, every one of which Ezra Newman and Louis Tamburino found in 1962. They come in two classes, a spherical one that changes with the retarded time and a cylindrical one, and both are algebraically general.
+
+- id: `newman_tamburino`
+- tags: vacuum, Petrov type I, null congruence, twist-free, expanding, retarded time, self-similar, curvature singularity, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/newman_tamburino.json
+- chart Spherical class: coordinates $(u, r, x, y)$, $$ds^2 = -\dfrac{2L\left(a\,r\,s^2 - L\left((r + a)^2x^2 + (r - a)^2y^2\right)\right)}{a^2s}c^2du^2 - 2c\,du\,dr - \dfrac{2x\left(L(r + a)^2 - a\,r\right)}{a\,s^2}c\,du\,dx - \dfrac{2y\left(L(r - a)^2 - a\,r\right)}{a\,s^2}c\,du\,dy + \dfrac{(r + a)^2}{2s^3}dx^2 + \dfrac{(r - a)^2}{2s^3}dy^2$$
+- chart Cylindrical limit: coordinates $(u, r, x, y)$, $$ds^2 = \dfrac{\ln\left(r^2x^4/\ell^2\right)}{x^2}c^2du^2 - 2c\,du\,dr - \dfrac{4r}{x}c\,du\,dx + r^2dx^2 + x^2dy^2$$
+
 ### Nordström's Scalar Theory of Gravity
 
 Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.

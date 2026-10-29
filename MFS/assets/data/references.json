@@ -1,5 +1,5 @@
 {
-  "version": "c6efe0b423fdd711",
+  "version": "ee4fb5a2d657cde7",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -32451,6 +32451,112 @@
         "eprint": "gr-qc/9908019",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1023/A:1001934118532"
+      }
+    },
+    "newman1962tamburino": {
+      "type": "article",
+      "fields": {
+        "title": "Empty Space Metrics Containing Hypersurface Orthogonal Geodesic Rays",
+        "author": "Newman, Ezra T. and Tamburino, Louis A.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "3",
+        "number": "5",
+        "pages": "902--907",
+        "year": "1962",
+        "doi": "10.1063/1.1724304",
+        "url": "https://doi.org/10.1063/1.1724304"
+      }
+    },
+    "degroote2008spherical": {
+      "type": "article",
+      "fields": {
+        "title": "{Newman-Tamburino} solutions with an aligned {Maxwell} field",
+        "author": "De Groote, Liselotte and Van den Bergh, Norbert",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "16",
+        "pages": "165007",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/16/165007",
+        "eprint": "0802.1141",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/25/16/165007"
+      }
+    },
+    "steele2004": {
+      "type": "article",
+      "fields": {
+        "title": "Symmetries in some {Newman-Tamburino} metrics",
+        "author": "Steele, John D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "14",
+        "pages": "3587--3591",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/14/018",
+        "eprint": "gr-qc/0403031",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/21/14/018"
+      }
+    },
+    "collinson1967": {
+      "type": "article",
+      "fields": {
+        "title": "Null Tetrad Approach to Motions in Empty Space-Time",
+        "author": "Collinson, C. D. and French, D. C.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "8",
+        "number": "4",
+        "pages": "701--708",
+        "year": "1967",
+        "doi": "10.1063/1.1705267",
+        "url": "https://doi.org/10.1063/1.1705267"
+      }
+    },
+    "degroote2008cylindrical": {
+      "type": "article",
+      "fields": {
+        "title": "Complete integration of the aligned {Newman-Tamburino-Maxwell} solutions",
+        "author": "De Groote, Liselotte and Van den Bergh, Norbert",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "16",
+        "pages": "165008",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/16/165008",
+        "eprint": "0804.1029",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/25/16/165008"
+      }
+    },
+    "unti1966": {
+      "type": "article",
+      "fields": {
+        "title": "Theorem on Gravitational Fields with Geodesic Rays",
+        "author": "Unti, T. W. J. and Torrence, R. J.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "7",
+        "number": "3",
+        "pages": "535--538",
+        "year": "1966",
+        "doi": "10.1063/1.1704963",
+        "url": "https://doi.org/10.1063/1.1704963"
+      }
+    },
+    "brink2013": {
+      "type": "article",
+      "fields": {
+        "title": "Avenues for analytic exploration in axisymmetric spacetimes: Foundations and the triad formalism",
+        "author": "Brink, Jeandrew and Zimmerman, Aaron and Hinderer, Tanja",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "4",
+        "pages": "044039",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.88.044039",
+        "eprint": "1303.1919",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.88.044039"
       }
     }
   }

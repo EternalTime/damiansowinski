@@ -830,6 +830,8 @@
     ["near_horizon_extreme_kerr", "vuorio_warped_ads"],
     ["neugebauer_meinel", "oppenheimer_snyder"],
     ["neugebauer_meinel", "stockum_dust"],
+    ["newman_tamburino", "robinson_trautman"],
+    ["newman_tamburino", "taub_nut"],
     ["nordstrom_scalar", "ppn_metric"],
     ["nordstrom_scalar", "rn_metric"],
     ["nordstrom_scalar", "schwarzschild"],

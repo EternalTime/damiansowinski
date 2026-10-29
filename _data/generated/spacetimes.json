@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 198,
+  "count": 199,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -44823,6 +44823,247 @@
       ]
     },
     {
+      "id": "newman_tamburino",
+      "name": "The Newman-Tamburino Metrics",
+      "short_name": "Newman-Tamburino",
+      "description": "The vacuum fields whose light rays spread apart and shear without twisting, every one of which Ezra Newman and Louis Tamburino found in 1962. They come in two classes, a spherical one that changes with the retarded time and a cylindrical one, and both are algebraically general.",
+      "tags": [
+        "vacuum",
+        "Petrov type I",
+        "null congruence",
+        "twist-free",
+        "expanding",
+        "retarded time",
+        "self-similar",
+        "curvature singularity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Both charts are null charts built on the rays, $\\partial_r$ along each ray with $r$ its affine parameter, and $u$ a retarded time labelling the null hypersurfaces the rays lie in.",
+      "related": [
+        {
+          "id": "robinson_trautman",
+          "kind": "family",
+          "text": "The same untwisted, spreading rays with the shear switched off, every such vacuum found by Robinson and Trautman [robinson1962]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "programme",
+          "text": "Newman and Tamburino's next vacuum, found with Theodore Unti a year later [nut1963]."
+        }
+      ],
+      "references": [
+        "robinson1960",
+        "robinson1962",
+        "steele2004",
+        "newman1962tamburino",
+        "newman1962",
+        "newman1961",
+        "degroote2008spherical",
+        "collinson1967",
+        "degroote2008cylindrical",
+        "unti1966",
+        "brink2013",
+        "nut1963"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/newman_tamburino.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical class",
+          "coordinates": [
+            "u",
+            "r",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (|a|, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Dimensionless rate at which $A$ changes with the retarded time; at $b = 0$ the metric does not depend on $u$"
+            },
+            {
+              "symbol": "A_0",
+              "description": "A length, the value of $A$ at $u = 0$"
+            },
+            {
+              "symbol": "A = A_0 + b\\,c\\,u",
+              "description": "A length, linear in the retarded time"
+            },
+            {
+              "symbol": "s = \\sqrt{x^2 + y^2}",
+              "description": "Dimensionless distance from the line $x = y = 0$ in the coordinates of a wave front"
+            },
+            {
+              "symbol": "a = A\\,s",
+              "description": "A length, the value of $r$ at which each ray ends"
+            },
+            {
+              "symbol": "L = \\dfrac{1}{2}\\ln\\left(\\dfrac{r + a}{r - a}\\right)",
+              "description": "Dimensionless, real wherever $r > |a|$"
+            }
+          ],
+          "convention": "We use the coordinates of Ezra Newman and Louis Tamburino as John Steele writes them, $(u, r, x, y)$, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, and $x$ and $y$ pure numbers on each wave front, $\\zeta = x + iy$. We take components in the chart $x^0 = cu$ and flip Steele's signature. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{2L\\left(a\\,r\\,s^2 - L\\left((r + a)^2x^2 + (r - a)^2y^2\\right)\\right)}{a^2s}c^2du^2 - 2c\\,du\\,dr - \\dfrac{2x\\left(L(r + a)^2 - a\\,r\\right)}{a\\,s^2}c\\,du\\,dx - \\dfrac{2y\\left(L(r - a)^2 - a\\,r\\right)}{a\\,s^2}c\\,du\\,dy + \\dfrac{(r + a)^2}{2s^3}dx^2 + \\dfrac{(r - a)^2}{2s^3}dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{2L\\left(r^2\\,L\\,x^2 + r^2\\,L\\,y^2 + 2r\\,L\\,a\\,x^2 - 2r\\,L\\,a\\,y^2 - r\\,a\\,x^2 - r\\,a\\,y^2 + L\\,a^2\\,x^2 + L\\,a^2\\,y^2\\right)}{a^2\\,\\sqrt{x^2 + y^2}}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "-\\dfrac{x\\left(r^2\\,L + 2r\\,L\\,a - r\\,a + L\\,a^2\\right)}{a\\left(x^2 + y^2\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "-\\dfrac{x\\left(r^2\\,L + 2r\\,L\\,a - r\\,a + L\\,a^2\\right)}{a\\left(x^2 + y^2\\right)}"
+            },
+            {
+              "indices": [
+                "u",
+                "y"
+              ],
+              "value": "-\\dfrac{y\\left(r^2\\,L - 2r\\,L\\,a - r\\,a + L\\,a^2\\right)}{a\\left(x^2 + y^2\\right)}"
+            },
+            {
+              "indices": [
+                "y",
+                "u"
+              ],
+              "value": "-\\dfrac{y\\left(r^2\\,L - 2r\\,L\\,a - r\\,a + L\\,a^2\\right)}{a\\left(x^2 + y^2\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\left(r + a\\right)^2}{2\\left(x^2 + y^2\\right)^{3/2}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(r - a\\right)^2}{2\\left(x^2 + y^2\\right)^{3/2}}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{64r^2\\,a^2\\left(4L\\,x^4 - 4L\\,y^4 + 18x^2\\,y^2 + 4b\\,x^4 - 4b\\,y^4 - 3x^4 - 3y^4\\right)}{\\left(r - a\\right)^4\\left(r + a\\right)^4\\left(x^2 + y^2\\right)}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical limit",
+          "coordinates": [
+            "u",
+            "r",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A length that sets the unit of $r$ inside the logarithm; rescaling $u$, $r$, $x$ and $y$ together changes it, so every value of $\\ell$ is the same spacetime"
+            }
+          ],
+          "convention": "We use the coordinates John Steele writes for the limit of the cylindrical class, $(u, r, x, y)$, with the retarded time $u$ carrying dimensions of time, $r$ an affine length along the rays, $x$ a pure number and $y$ a length. We write his constant $b$ as $b = -\\ln\\ell^2$, take components in the chart $x^0 = cu$ and flip his signature. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\ln\\left(r^2x^4/\\ell^2\\right)}{x^2}c^2du^2 - 2c\\,du\\,dr - \\dfrac{4r}{x}c\\,du\\,dx + r^2dx^2 + x^2dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{\\ln\\left(\\dfrac{r^2\\,x^4}{\\ell^2}\\right)}{x^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "-\\dfrac{2r}{x}"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "-\\dfrac{2r}{x}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "x^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = -\\dfrac{16\\ln\\left(\\dfrac{r^2\\,x^4}{\\ell^2}\\right) - 48}{r^4\\,x^4}"
+        }
+      ]
+    },
+    {
       "id": "nordstrom_scalar",
       "name": "Nordström's Scalar Theory of Gravity",
       "short_name": "Nordström Scalar Gravity",
@@ -52442,6 +52683,11 @@
           "id": "bondi_sachs",
           "kind": "generalisation",
           "text": "The general form of a radiating metric on its outgoing light cones, with the shear of the rays left free. Robinson and Trautman's spacetimes are its members without shear [bondi1962, sachs1962]."
+        },
+        {
+          "id": "newman_tamburino",
+          "kind": "family",
+          "text": "The same untwisted, spreading rays allowed to shear, every such vacuum found by Ezra Newman and Louis Tamburino in 1962 [newman1962tamburino]."
         }
       ],
       "references": [
@@ -52474,7 +52720,8 @@
         "bicak1999",
         "podolsky1999expanding",
         "bondi1962",
-        "sachs1962"
+        "sachs1962",
+        "newman1962tamburino"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/robinson_trautman.json",
@@ -60109,6 +60356,11 @@
           "id": "swirling_universe_black_hole",
           "kind": "family",
           "text": "Ehlers's transformation in its magnetic form sets Schwarzschild's hole in a swirling universe, which a double Wick rotation turns into Taub-NUT space with a flat base [astorino2022swirling]."
+        },
+        {
+          "id": "newman_tamburino",
+          "kind": "programme",
+          "text": "The vacuum fields with shearing, untwisted rays that Newman and Tamburino found a year before this one [newman1962tamburino]."
         }
       ],
       "references": [
@@ -60140,7 +60392,8 @@
         "ellis1974",
         "collins1974",
         "clement2016",
-        "astorino2022swirling"
+        "astorino2022swirling",
+        "newman1962tamburino"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
