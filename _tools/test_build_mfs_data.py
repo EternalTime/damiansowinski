@@ -2,6 +2,10 @@
 """Tests for the MFS data generator.
 
     .venv.noindex/bin/python -m unittest discover -s _tools
+
+MFS_SPACETIME checks the files of one spacetime alone, or of several named with commas between them:
+
+    MFS_SPACETIME=kerr .venv.noindex/bin/python -m unittest discover -s _tools -p test_build_mfs_data.py
 """
 
 import ast
@@ -14,6 +18,7 @@ import itertools
 import json
 import cmath
 import math
+import os
 import re
 import shutil
 import subprocess
@@ -64,16 +69,103 @@ def load_folder(files):
             return build.load_metrics()
 
 
-def diagram_files():
-    return {p.stem: read(p) for p in sorted(build.DIAGRAMS_DIR.glob("*.json"))}
+def spacetimes_named(value):
+    """The spacetimes a value of MFS_SPACETIME names, refusing a name with no metric file, which
+    would check nothing and pass."""
+    names = frozenset(name.strip() for name in value.split(",") if name.strip())
+    unknown = names - {p.stem for p in build.METRICS_DIR.glob("*.json")}
+    if unknown:
+        raise ValueError(f"MFS_SPACETIME names {', '.join(sorted(unknown))}, which has no file in "
+                         f"{build.METRICS_DIR.relative_to(build.ROOT)}")
+    return names
+
+
+# The spacetimes MFS_SPACETIME names, so that a worker adding one checks its own files alone. Empty,
+# as when it is unset, it chooses every spacetime, and a run checks everything.
+CHOSEN = spacetimes_named(os.environ.get("MFS_SPACETIME", ""))
+
+
+def chosen(name):
+    """Whether this run checks the spacetime `name`."""
+    return not CHOSEN or name in CHOSEN
+
+
+def checks(*names):
+    """Pass over a test of the spacetimes `names` alone when MFS_SPACETIME chooses none of them."""
+    return unittest.skipUnless(any(map(chosen, names)), f"checks {', '.join(names)} alone")
+
+
+def found(test, things, what):
+    """Fail a test that found no `what` to check, or pass over it where the spacetimes MFS_SPACETIME
+    chooses have none."""
+    if not things:
+        if CHOSEN:
+            test.skipTest(f"{', '.join(sorted(CHOSEN))} has no {what}")
+        test.fail(f"no {what} was found, so nothing was checked")
+
+
+def counted(test, count, least, what):
+    """Hold a sweep over every spacetime to having checked more than `least` of `what`, or one over
+    the spacetimes MFS_SPACETIME chooses to having checked any, passing over it where they have none."""
+    if CHOSEN:
+        found(test, count, what)
+    else:
+        test.assertGreater(count, least, f"the {what} were not all checked")
+
+
+def chosen_entries(table, spacetime=lambda key: key):
+    """The entries of a table kept by spacetime, as `spacetime` reads one from a key, that this run
+    checks."""
+    return {key: value for key, value in table.items() if chosen(spacetime(key))}
+
+
+def chosen_metrics():
+    """The metric files of the spacetimes this run checks."""
+    return [metric for metric in build.load_metrics() if chosen(metric["id"])]
+
+
+def folder_files(folder, every=False):
+    """The parsed files of one folder by spacetime, of the spacetimes this run checks, or of every
+    one for a test that takes them as the input it spoils."""
+    return {p.stem: read(p) for p in sorted(folder.glob("*.json")) if every or chosen(p.stem)}
+
+
+def diagram_files(every=False):
+    return folder_files(build.DIAGRAMS_DIR, every)
 
 
 def conformal_files():
-    return {p.stem: read(p) for p in sorted(build.CONFORMAL_DIR.glob("*.json"))}
+    return folder_files(build.CONFORMAL_DIR)
 
 
 def embedding_files():
-    return {p.stem: read(p) for p in sorted(build.EMBEDDING_DIR.glob("*.json"))}
+    return folder_files(build.EMBEDDING_DIR)
+
+
+class NamedFiles(dict):
+    """The parsed files of one folder by spacetime, each read the first time a test names it,
+    whichever spacetimes MFS_SPACETIME chooses."""
+
+    def __init__(self, folder):
+        super().__init__()
+        self.folder = folder
+
+    def __missing__(self, name):
+        self[name] = read(self.folder / f"{name}.json")
+        return self[name]
+
+
+def diagram_file(name):
+    """One spacetime's diagram file, whichever spacetimes this run checks."""
+    return read(build.DIAGRAMS_DIR / f"{name}.json")
+
+
+def conformal_file(name):
+    return read(build.CONFORMAL_DIR / f"{name}.json")
+
+
+def embedding_file(name):
+    return read(build.EMBEDDING_DIR / f"{name}.json")
 
 
 def grid_nodes(piece):
@@ -131,7 +223,7 @@ def grid_height(piece, X, Y, reach=1e-6):
 
 
 def curvature_files():
-    return {p.stem: read(p) for p in sorted(build.CURVATURE_DIR.glob("*.json"))}
+    return folder_files(build.CURVATURE_DIR)
 
 
 BARDEEN_G2 = 1 / 9                # g^2 in r_s^2, as every diagram of Bardeen's black hole takes it
@@ -327,8 +419,8 @@ class PublishedFilesAreCurrent(unittest.TestCase):
 
 class Index(unittest.TestCase):
     def setUp(self):
-        self.metrics = build.load_metrics()
-        self.index = read(build.INDEX_FILE)
+        self.metrics = chosen_metrics()
+        self.index = [entry for entry in read(build.INDEX_FILE) if chosen(entry["id"])]
 
     def test_one_entry_per_file_and_no_more(self):
         self.assertEqual(
@@ -337,7 +429,7 @@ class Index(unittest.TestCase):
         )
         self.assertEqual(
             sorted(e["id"] for e in self.index),
-            sorted(p.stem for p in build.METRICS_DIR.glob("*.json")),
+            sorted(p.stem for p in build.METRICS_DIR.glob("*.json") if chosen(p.stem)),
         )
 
     def test_entry_carries_the_search_fields_and_a_stamp(self):
@@ -355,7 +447,7 @@ class Index(unittest.TestCase):
 
     def test_a_spacetime_with_diagrams_carries_their_stamp(self):
         diagrams = diagram_files()
-        self.assertTrue(diagrams, "no diagram file was found, so nothing was checked")
+        found(self, diagrams, "diagram file")
         stamped = {e["id"]: e["diagrams"] for e in self.index if "diagrams" in e}
         self.assertEqual(set(stamped), set(diagrams))
         for metric_id, diagram in diagrams.items():
@@ -363,7 +455,7 @@ class Index(unittest.TestCase):
 
     def test_a_spacetime_with_a_conformal_diagram_carries_its_stamp(self):
         conformal = conformal_files()
-        self.assertTrue(conformal, "no conformal diagram file was found, so nothing was checked")
+        found(self, conformal, "conformal diagram file")
         stamped = {e["id"]: e["conformal"] for e in self.index if "conformal" in e}
         self.assertEqual(set(stamped), set(conformal))
         for metric_id, data in conformal.items():
@@ -371,7 +463,7 @@ class Index(unittest.TestCase):
 
     def test_a_spacetime_with_an_embedding_diagram_carries_its_stamp(self):
         embedding = embedding_files()
-        self.assertTrue(embedding, "no embedding diagram file was found, so nothing was checked")
+        found(self, embedding, "embedding diagram file")
         stamped = {e["id"]: e["embedding"] for e in self.index if "embedding" in e}
         self.assertEqual(set(stamped), set(embedding))
         for metric_id, data in embedding.items():
@@ -379,7 +471,7 @@ class Index(unittest.TestCase):
 
     def test_a_spacetime_with_a_curvature_figure_carries_its_stamp(self):
         curvature = curvature_files()
-        self.assertTrue(curvature, "no curvature figure file was found, so nothing was checked")
+        found(self, curvature, "curvature figure file")
         stamped = {e["id"]: e["curvature"] for e in self.index if "curvature" in e}
         self.assertEqual(set(stamped), set(curvature))
         for metric_id, data in curvature.items():
@@ -462,7 +554,7 @@ class Stamps(unittest.TestCase):
 class Prose(unittest.TestCase):
     def test_no_metric_on_disk_carries_a_dash_in_its_prose(self):
         fields = [(f"{m['id']}.json: {field}", value)
-                  for m in build.load_metrics() for field, value in prose(m)]
+                  for m in chosen_metrics() for field, value in prose(m)]
         self.assert_no_dashes(fields)
 
     def test_no_diagram_on_disk_carries_a_dash_in_its_prose(self):
@@ -504,7 +596,7 @@ class Prose(unittest.TestCase):
         # A \u escaped twice in the JSON reaches the page as the six characters of the
         # escape, as the î of Lemaître did in the Tolman-Bondi conventions, since neither
         # TeX nor the page reads it. The character itself is what the files carry.
-        for metric in build.load_metrics():
+        for metric in chosen_metrics():
             for field, value in prose(metric):
                 self.assertNotRegex(value, r"\\u[0-9a-fA-F]{4}",
                                     f"{metric['id']}.json: {field} spells a character as an escape")
@@ -527,7 +619,7 @@ class Prose(unittest.TestCase):
                         one = {"systems": {}, part: {system: [view]}}
                         for field, value in diagram_prose(name, one):
                             self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
-        self.assertTrue(views)
+        found(self, views, "view of a spacetime diagram")
 
     def test_no_template_hands_a_noun_back_to_what_gives_it(self):
         """A reader is told the metric distance, never the distance the metric gives. The build
@@ -575,7 +667,7 @@ class Prose(unittest.TestCase):
             self.assertFalse(caught(text, history), text)
 
     def assert_no_dashes(self, fields):
-        self.assertTrue(fields, "no prose was read, so nothing was checked")
+        found(self, fields, "prose")
         for where, value in fields:
             for character in value:
                 if character in DASHES:
@@ -733,13 +825,13 @@ class NoCost(unittest.TestCase):
         # holds only the fields written in sentences to the rule.
         for folder in (build.METRICS_DIR, build.DIAGRAMS_DIR, build.CONFORMAL_DIR, build.EMBEDDING_DIR,
                        build.CURVATURE_DIR):
-            for path in sorted(folder.glob("*.json")):
+            for path in sorted(p for p in folder.glob("*.json") if chosen(p.stem)):
                 fields += strings(read(path), path.name)
         return fields
 
     def test_no_text_a_reader_sees_says_cost(self):
         fields = self.texts()
-        self.assertGreater(len(fields), 10000, "the texts were not all read")
+        counted(self, len(fields), 10000, "texts")
         for where, value in fields:
             found = re.search(COST, value)
             self.assertIsNone(found, f"{where} has {found and found.group(0)!r}; state what is required, "
@@ -1446,7 +1538,10 @@ class Diagrams(unittest.TestCase):
     def setUp(self):
         self.metrics = build.load_metrics()
         self.diagrams = diagram_files()
-        self.assertTrue(self.diagrams, "no diagram file was found, so nothing was checked")
+        self.named = NamedFiles(build.DIAGRAMS_DIR)
+        # The file the rule tests spoil, the first by name whichever spacetimes this run checks.
+        self.first = min(p.stem for p in build.DIAGRAMS_DIR.glob("*.json"))
+        found(self, self.diagrams, "diagram file")
 
     def test_every_view_was_drawn_from_what_its_metric_publishes(self):
         by_id = {m["id"]: m for m in self.metrics}
@@ -1459,7 +1554,7 @@ class Diagrams(unittest.TestCase):
                     self.assertEqual(
                         build.diagram_source_version(systems[system_id], view["source"]["fields"]),
                         view["source"]["version"], f"{metric_id}/{system_id}/{view['id']}")
-        self.assertEqual(set(build.load_diagrams(self.metrics)), set(self.diagrams))
+        self.assertEqual({name for name in build.load_diagrams(self.metrics) if chosen(name)}, set(self.diagrams))
         self.assertTrue(views)
 
     def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
@@ -1476,7 +1571,7 @@ class Diagrams(unittest.TestCase):
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
     def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
-        metric_id = sorted(self.diagrams)[0]
+        metric_id = self.first
         changed = copy.deepcopy(self.metrics)
         for metric in changed:
             if metric["id"] == metric_id:
@@ -1543,8 +1638,8 @@ class Diagrams(unittest.TestCase):
             self.assertIn("draws nothing", str(raised.exception))
 
     def metric_with_a_changed_component(self):
-        metric_id = sorted(self.diagrams)[0]
-        system_id = next(iter(self.diagrams[metric_id]["systems"]))
+        metric_id = self.first
+        system_id = next(iter(self.named[metric_id]["systems"]))
         changed = copy.deepcopy(self.metrics)
         for metric in changed:
             if metric["id"] == metric_id:
@@ -1569,7 +1664,7 @@ class Figures(unittest.TestCase):
         self.diagrams = diagram_files()
         self.figures = [(name, system, figure) for name, diagram in self.diagrams.items()
                         for system, figures in diagram.get("projections", {}).items() for figure in figures]
-        self.assertTrue(self.figures, "no figure was found, so nothing was checked")
+        found(self, self.figures, "figure in three dimensions")
 
     def test_every_figure_draws_inside_its_box_and_names_only_what_it_draws(self):
         for name, system, figure in self.figures:
@@ -1639,6 +1734,7 @@ class Figures(unittest.TestCase):
         self.assertTrue(by_id)
 
 
+@checks("kerr", "kerr_newman")
 class StatedHorizons(unittest.TestCase):
     """Every horizon radius a Kerr or Kerr-Newman text prints is the root of Delta = r^2 - 2GMr/c^2
     + a^2 + r_Q^2 at the spin and charge its diagrams are drawn for, rounded once from that root,
@@ -1650,7 +1746,7 @@ class StatedHorizons(unittest.TestCase):
     def parameters(self, name):
         """The values every diagram view of `name` is drawn for, which must agree."""
         stated = set()
-        for views in diagram_files()[name]["systems"].values():
+        for views in diagram_file(name)["systems"].values():
             for view in views:
                 values = {m[1]: Fraction(int(m[2]), int(m[3])) if m[2] else Fraction(int(m[4]))
                           for m in re.finditer(self.PARAMETER.format("G|M|a|r_Q"), view["settings"])}
@@ -1663,9 +1759,9 @@ class StatedHorizons(unittest.TestCase):
     def test_every_printed_horizon_radius_is_the_root_rounded_once(self):
         texts = {"kerr": [], "kerr_newman": []}
         for name in texts:
-            texts[name] += diagram_prose(name, diagram_files()[name])
-            texts[name] += conformal_prose(name, conformal_files()[name])
-            texts[name] += embedding_prose(name, embedding_files()[name])
+            texts[name] += diagram_prose(name, diagram_file(name))
+            texts[name] += conformal_prose(name, conformal_file(name))
+            texts[name] += embedding_prose(name, embedding_file(name))
         found = []
         for name, fields in texts.items():
             a, r_Q = self.parameters(name)
@@ -1687,6 +1783,7 @@ class StatedHorizons(unittest.TestCase):
                                 for name, field, sign in found), view)
 
 
+@checks("szekeres")
 class SzekeresAxis(unittest.TestCase):
     """The marked ray on each half of the axis of Szekeres's cloud, from the numbers in the file:
     inside the cloud it obeys c dt = (dR/dr +- R S'/S) dr, the upper sign toward theta = 0, with
@@ -1713,7 +1810,7 @@ class SzekeresAxis(unittest.TestCase):
         return t
 
     def test_the_marked_ray_is_null_in_the_cloud_and_the_horizon_outside(self):
-        views = {view["id"]: view for view in diagram_files()["szekeres"]["systems"]["axisymmetric"]}
+        views = {view["id"]: view for view in diagram_file("szekeres")["systems"]["axisymmetric"]}
         self.assertEqual(set(views), {"north", "south"})
         for half, sign in (("north", 1), ("south", -1)):
             view = views[half]
@@ -1733,6 +1830,7 @@ class SzekeresAxis(unittest.TestCase):
             self.assertIn({"north": "$ct = -0.81\\,r_b$", "south": "$ct = -0.12\\,r_b$"}[half], " ".join(view["caption"]))
 
 
+@checks("string_wave")
 class StringWaveRing(unittest.TestCase):
     """The ring of free particles on the cone of the travelling wave on a string, from the numbers
     in the file: at b = 1/2 and ell = 1 the isotropic chart's geodesics across the string are
@@ -1773,7 +1871,7 @@ class StringWaveRing(unittest.TestCase):
         return out
 
     def setUp(self):
-        self.view, = embedding_files()["string_wave"]["views"]
+        self.view, = embedding_file("string_wave")["views"]
         self.frames = {frame["value"]: frame for frame in self.view["movie"]["frames"]}
 
     def test_every_marked_particle_is_where_its_geodesic_puts_it_on_the_cone(self):
@@ -1806,6 +1904,7 @@ class StringWaveRing(unittest.TestCase):
         self.assertLess(max(radii(2.5)), max(radii(1.0)) - 0.3)
 
 
+@checks("coleman_de_luccia")
 class ColemanDeLucciaBubble(unittest.TestCase):
     """Coleman and De Luccia's bubble, from the numbers in its files alone, in units of the curvature
     radius l. With their rho_0 = l a decay into flat space has its wall at rho_bar = 4/5 and a decay
@@ -1815,9 +1914,9 @@ class ColemanDeLucciaBubble(unittest.TestCase):
     NAME = "coleman_de_luccia"
 
     def setUp(self):
-        self.embedding = {v["id"]: v for v in embedding_files()[self.NAME]["views"]}
-        self.diagrams = diagram_files()[self.NAME]["systems"]
-        self.conformal = {v["id"]: v for v in conformal_files()[self.NAME]["views"]}
+        self.embedding = {v["id"]: v for v in embedding_file(self.NAME)["views"]}
+        self.diagrams = diagram_file(self.NAME)["systems"]
+        self.conformal = {v["id"]: v for v in conformal_file(self.NAME)["views"]}
 
     def view(self, system, view):
         return next(v for v in self.diagrams[system] if v["id"] == view)
@@ -1924,6 +2023,7 @@ class ColemanDeLucciaBubble(unittest.TestCase):
                     self.assertAlmostEqual(math.tan(p) * math.tan(q), -0.25, delta=5e-3)
 
 
+@checks("near_horizon_extreme_kerr")
 class ExtremeKerrThroat(unittest.TestCase):
     """The throat of the extreme Kerr black hole, from the numbers in its files alone, at r_0 = 1.
     On the equator of Bardeen and Horowitz's global chart the metric is
@@ -1936,8 +2036,8 @@ class ExtremeKerrThroat(unittest.TestCase):
     NAME = "near_horizon_extreme_kerr"
 
     def setUp(self):
-        self.embedding = {v["id"]: v for v in embedding_files()[self.NAME]["views"]}
-        self.diagrams = diagram_files()[self.NAME]
+        self.embedding = {v["id"]: v for v in embedding_file(self.NAME)["views"]}
+        self.diagrams = diagram_file(self.NAME)
 
     @staticmethod
     def meridian(a, b, n=400):
@@ -2036,7 +2136,8 @@ class ConformalDiagrams(unittest.TestCase):
     def setUp(self):
         self.metrics = build.load_metrics()
         self.conformal = conformal_files()
-        self.assertTrue(self.conformal, "no conformal diagram file was found, so nothing was checked")
+        self.named = NamedFiles(build.CONFORMAL_DIR)
+        found(self, self.conformal, "conformal diagram file")
 
     def test_every_file_was_drawn_from_what_its_metrics_publish(self):
         by_id = {m["id"]: m for m in self.metrics}
@@ -2046,7 +2147,7 @@ class ConformalDiagrams(unittest.TestCase):
                 system = next(s for s in by_id[source["metric"]]["coordinates"] if s["id"] == source["system"])
                 self.assertEqual(build.diagram_source_version(system, source["fields"]), source["version"],
                                  f"{metric_id} from {source['metric']}/{source['system']}")
-        self.assertEqual(set(build.load_conformal(self.metrics)), set(self.conformal))
+        self.assertEqual({name for name in build.load_conformal(self.metrics) if chosen(name)}, set(self.conformal))
 
     def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
         # The interior Schwarzschild star is drawn with schwarzschild.json's exterior, so a
@@ -2068,7 +2169,7 @@ class ConformalDiagrams(unittest.TestCase):
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
         with self.assertRaises(build.DataError) as raised:
-            self.load_folder({"interior_schwarzschild.json": self.conformal["interior_schwarzschild"]}, changed)
+            self.load_folder({"interior_schwarzschild.json": self.named["interior_schwarzschild"]}, changed)
         self.assertIn("schwarzschild.json", str(raised.exception))
 
     def test_r_equals_zero_and_the_region_inside_it_stand_apart(self):
@@ -2091,7 +2192,7 @@ class ConformalDiagrams(unittest.TestCase):
                                  - abs(inner["at"][0] * scale + inner["dx"]) - 1.9 * size)
                         self.assertTrue(lines >= 0 or along >= size,
                                         f"{metric_id}/{view['id']}: $r = 0$ and $r < r_-$ are {along:.1f} apart on one line")
-        self.assertTrue(seen, "no tower with r = 0 outside a region r < r_- was found, so nothing was checked")
+        found(self, seen, "tower with r = 0 outside a region r < r_-")
 
     def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
         changed = copy.deepcopy(self.metrics)
@@ -2101,7 +2202,7 @@ class ConformalDiagrams(unittest.TestCase):
                 system["domains"] = (system.get("domains") or []) + ["x \\in \\mathbb{R}"]
                 for parameter in system.get("parameters", []):
                     parameter["description"] = parameter.get("description", "") + " Reworded."
-        self.assertEqual(set(build.load_conformal(changed)), set(self.conformal))
+        self.assertEqual({name for name in build.load_conformal(changed) if chosen(name)}, set(self.conformal))
 
     def test_a_file_without_a_metric_or_a_source_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
@@ -2118,7 +2219,7 @@ class ConformalDiagrams(unittest.TestCase):
 
     def test_a_file_that_draws_nothing_is_refused(self):
         """A spacetime with no conformal diagram has no file, rather than one the page would find empty."""
-        kerr = self.conformal["kerr"]
+        kerr = self.named["kerr"]
         for data in (dict(kerr, views=[]), {key: value for key, value in kerr.items() if key != "views"}):
             with self.assertRaises(build.DataError) as raised:
                 self.load_folder({"kerr.json": data}, self.metrics)
@@ -2130,11 +2231,13 @@ class ConformalDiagrams(unittest.TestCase):
                 self.assertTrue(view["caption"], f"{metric_id} {view['id']}")
                 self.assertTrue(opens_with_a_noun_phrase(view["caption"][0]), f"{metric_id} {view['id']}")
 
+    @checks(*SLICES)
     def test_the_spacetimes_drawn_on_a_slice_say_so_on_the_diagram(self):
         """A view of a surface that is not the whole spacetime carries its restriction, and the
         three spacetimes with no faithful picture of the whole carry it on every view."""
-        self.assertLessEqual(self.SLICES, set(self.conformal))
-        for metric_id in self.SLICES:
+        slices = set(filter(chosen, self.SLICES))
+        self.assertLessEqual(slices, set(self.conformal))
+        for metric_id in slices:
             for view in self.conformal[metric_id]["views"]:
                 self.assertTrue(view.get("restriction"), f"{metric_id} {view['id']}")
                 self.assertRegex(view["restriction"], r"only", f"{metric_id} {view['id']}")
@@ -2187,14 +2290,16 @@ class EmbeddingDiagrams(unittest.TestCase):
     def setUp(self):
         self.metrics = build.load_metrics()
         self.embedding = embedding_files()
-        self.assertTrue(self.embedding, "no embedding diagram file was found, so nothing was checked")
+        self.named = NamedFiles(build.EMBEDDING_DIR)
+        found(self, self.embedding, "embedding diagram file")
 
+    @checks("btz")
     def test_btz_is_one_surface_through_both_exteriors(self):
         """The BTZ moment t = 0 as the file holds it: each exterior a piece in flat space from the
         throat r_+ = l to sqrt(2) l and a piece in Minkowski space beyond, rho = r throughout, the
         two parts of each exterior meeting level in one circle marked `space`, and the two
         exteriors meeting at the throat."""
-        views = self.embedding["btz"]["views"]
+        views = self.named["btz"]["views"]
         self.assertEqual(len(views), 1)
         surface = views[0]["surfaces"][0]
         pieces = {p["id"]: p for p in surface["pieces"]}
@@ -2218,6 +2323,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual(pieces["exterior"]["points"][0][1:], pieces["other_exterior"]["points"][0][1:])
         self.assertEqual(pieces["exterior"]["start"]["kind"], "throat")
 
+    @checks("spinning_string")
     def test_the_spinning_string_leaves_the_axis_along_the_light_cone_and_ends_on_its_cone(self):
         """The spinning string's moment t = 0 as the file holds it, at b = 0.9 and a = 0.9: a piece
         in Minkowski space from the null circle, where it runs along the light cone, to the level
@@ -2226,7 +2332,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         proper distance sqrt(g_RR) dR of the published metric, g_RR = R^2/(b^2 (R^2 + a^2))."""
         a = b = 0.9
         level = a * b / math.sqrt(1 - b * b)
-        surface, = self.embedding["spinning_string"]["views"][0]["surfaces"]
+        surface, = self.named["spinning_string"]["views"][0]["surfaces"]
         near, far = surface["pieces"]
         self.assertEqual(near.get("space"), "minkowski")
         self.assertNotIn("space", far)
@@ -2257,7 +2363,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 system = next(s for s in by_id[source["metric"]]["coordinates"] if s["id"] == source["system"])
                 self.assertEqual(build.diagram_source_version(system, source["fields"]), source["version"],
                                  f"{metric_id} from {source['metric']}/{source['system']}")
-        self.assertEqual(set(build.load_embedding(self.metrics)), set(self.embedding))
+        self.assertEqual({name for name in build.load_embedding(self.metrics) if chosen(name)}, set(self.embedding))
 
     def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
         # The star is drawn with schwarzschild.json's exterior, so a change there stops it too.
@@ -2279,7 +2385,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         for path, text in before.items():
             self.assertEqual(path.read_text(encoding="utf-8"), text)
         with self.assertRaises(build.DataError) as raised:
-            self.load_folder({"interior_schwarzschild.json": self.embedding["interior_schwarzschild"]}, changed)
+            self.load_folder({"interior_schwarzschild.json": self.named["interior_schwarzschild"]}, changed)
         self.assertIn("schwarzschild.json", str(raised.exception))
 
     def test_a_change_that_draws_nothing_leaves_the_diagrams_standing(self):
@@ -2290,7 +2396,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 system["domains"] = (system.get("domains") or []) + ["x \\in \\mathbb{R}"]
                 for parameter in system.get("parameters", []):
                     parameter["description"] = parameter.get("description", "") + " Reworded."
-        self.assertEqual(set(build.load_embedding(changed)), set(self.embedding))
+        self.assertEqual({name for name in build.load_embedding(changed) if chosen(name)}, set(self.embedding))
 
     def test_a_file_without_a_metric_or_a_source_or_a_surface_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
@@ -2300,7 +2406,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         with self.assertRaises(build.DataError) as raised:
             self.load_folder({"x.json": {"metric": "x", "source": [], "views": []}}, [metric])
         self.assertIn("drawn from", str(raised.exception))
-        flamm = self.embedding["schwarzschild"]
+        flamm = self.named["schwarzschild"]
         for data in (dict(flamm, views=[]), dict(flamm, views=[dict(flamm["views"][0], surfaces=[])])):
             with self.assertRaises(build.DataError) as raised:
                 self.load_folder({"schwarzschild.json": data}, self.metrics)
@@ -2309,12 +2415,12 @@ class EmbeddingDiagrams(unittest.TestCase):
     def test_every_spacetime_draws_and_a_file_that_draws_nothing_says_why(self):
         # Every spacetime but Lentz's has a surface drawn, and none says beside its views that it
         # draws nothing.
-        self.assertEqual(set(self.embedding), {m["id"] for m in self.metrics} - {"lentz"})
+        self.assertEqual(set(self.embedding), {m["id"] for m in self.metrics if chosen(m["id"])} - {"lentz"})
         for name, data in self.embedding.items():
             self.assertTrue(data["views"], name)
             self.assertNotIn("stops", data, f"{name} keeps what it does not draw in its views")
         # A file with no surface to draw says why in sentences, and a file with views may not.
-        flamm = self.embedding["schwarzschild"]
+        flamm = self.named["schwarzschild"]
         stated = {"metric": "schwarzschild", "source": flamm["source"], "views": [], "stops": ["Nothing to draw."]}
         self.assertEqual(set(self.load_folder({"schwarzschild.json": stated}, self.metrics)), {"schwarzschild"})
         with self.assertRaises(build.DataError) as raised:
@@ -2361,12 +2467,12 @@ class EmbeddingDiagrams(unittest.TestCase):
                             z = z0 if r1 == r0 else z0 + (z1 - z0) * (r - r0) / (r1 - r0)
                             self.assertLess(abs(Z - z), 1e-4, f"{where} at {r}")
                         marked += 1
-        self.assertTrue(marked, "no curve or point was found, so nothing was checked")
+        found(self, marked, "curve or point marked on a surface")
 
     def test_a_piece_that_doubles_back_or_crosses_the_axis_is_refused(self):
         for spoil, words in ((lambda points: points.reverse() or points.insert(1, points[0]), "one way"),
                              (lambda points: points[3].__setitem__(1, -0.5), "below the axis")):
-            data = copy.deepcopy(self.embedding["schwarzschild"])
+            data = copy.deepcopy(self.named["schwarzschild"])
             spoil(data["views"][0]["surfaces"][0]["pieces"][0]["points"])
             with self.assertRaises(build.DataError) as raised:
                 self.load_folder({"schwarzschild.json": data}, self.metrics)
@@ -2375,7 +2481,7 @@ class EmbeddingDiagrams(unittest.TestCase):
     def test_no_file_writes_a_negative_zero(self):
         # Rounding a small negative number leaves -0.0, which a client would print as "-0".
         # The match alone is reported, since the file is too long to print.
-        for path in sorted(build.EMBEDDING_DIR.glob("*.json")):
+        for path in sorted(p for p in build.EMBEDDING_DIR.glob("*.json") if chosen(p.stem)):
             text = path.read_text(encoding="utf-8")
             found = re.search(r"(?<![\d.])-0(\.0*)?(?![\d.eE])", text)
             self.assertIsNone(found and text[max(found.start() - 40, 0):found.end() + 10], path.name)
@@ -2429,11 +2535,12 @@ class EmbeddingDiagrams(unittest.TestCase):
                             self.assertIn(ring["class"], allowed[kinds[ring["piece"]]],
                                           f"{name} {view['id']} ring {ring['class']} on {ring['piece']}")
 
+    @checks("teo_wormhole")
     def test_teos_equator_is_flamms_paraboloid_and_his_throat_a_dumbbell(self):
         """Teo's eq. (27), z = +-2 sqrt(b_0 (r - b_0)) on the equator for every spin, and the
         throat's circles of radius b_0 (1 + cos^2 theta) sin theta at a = 1/4, the same on either
         side of its equator, from the numbers written and nothing else."""
-        views = {view["id"]: view["surfaces"][0] for view in self.embedding["teo_wormhole"]["views"]}
+        views = {view["id"]: view["surfaces"][0] for view in self.named["teo_wormhole"]["views"]}
         sides = {p["id"]: p["points"] for p in views["equator"]["pieces"]}
         for sign, pid in ((1, "near"), (-1, "far")):
             for r, rho, z in sides[pid]:
@@ -2447,11 +2554,17 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertLess(abs(throat[0][2] + throat[-1][2]), 2e-6)
         self.assertGreater(max(rho for _, rho, _ in throat), 1.08)
 
+    @checks("bardeen", "bertotti_robinson", "black_string", "cosmic_string", "de_sitter", "einstein_static",
+            "ellis_bronnikov", "frw", "global_monopole", "godel", "gravastar", "hayward", "interior_schwarzschild",
+            "israel_shell", "kaluza_klein_monopole", "kantowski_sachs", "kerr", "kerr_newman", "mass_inflation",
+            "morris_thorne", "myers_perry", "nariai", "oppenheimer_snyder", "photon_rocket",
+            "point_particle_2plus1", "rn_metric", "schwarzschild", "som_raychaudhuri", "stockum_dust",
+            "string_black_hole", "tangherlini", "taub_nut", "tolman_bondi", "tov", "vaidya", "van_den_broeck")
     def test_the_surfaces_are_the_ones_known_in_closed_form(self):
         """Flamm's paraboloid, the interior Schwarzschild cap, the catenoid, the cone, Gott's cap
         and the sphere, from the numbers written and nothing else, to their rounding."""
         def piece(metric_id, piece_id, number=0, view=0):
-            surface = self.embedding[metric_id]["views"][view]["surfaces"][number]
+            surface = self.named[metric_id]["views"][view]["surfaces"][number]
             points = next(p for p in surface["pieces"] if p["id"] == piece_id)["points"]
             return [tuple(point) for point in points]
 
@@ -2476,7 +2589,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         # has the radius r_s (1 + a cos(2 pi z/10)), the ripple starts at a = 0.02 and grows as
         # exp(0.0633 v), Gregory and Laflamme's rate at that wavelength, and every chord of the profile
         # is as long as the step along z it spans, since the mode has no component along z.
-        ripple = self.embedding["black_string"]["views"][1]
+        ripple = self.named["black_string"]["views"][1]
         self.assertEqual(ripple["id"], "ripple")
         for surface in ripple["surfaces"]:
             points = [tuple(point) for point in surface["pieces"][0]["points"]]
@@ -2622,7 +2735,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         def hayward_mass(v):
             a, b = min(max(v, 0.0), 2.0), min(max(v, 4.0), 8.0)
             return math.sin(math.pi * a / 4) ** 2 * math.cos(math.pi * (b - 4) / 8) ** 2
-        frames = self.embedding["hayward"]["views"][2]["movie"]["frames"]
+        frames = self.named["hayward"]["views"][2]["movie"]["frames"]
         self.assertEqual((frames[0]["value"], frames[-1]["value"]), (-6.0, 8.0))
         trapped = 0
         for frame in frames:
@@ -2644,7 +2757,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         # r^2 - 2m r + r_q^2, which move from 0.78 and 1.18 m_0 to 0.72 and 1.28 m_0.
         def tail_mass(v):
             return 1 - (10 / max(v, 10.0)) ** 11 / 50
-        frames = self.embedding["mass_inflation"]["views"][0]["movie"]["frames"]
+        frames = self.named["mass_inflation"]["views"][0]["movie"]["frames"]
         self.assertEqual((frames[0]["value"], frames[-1]["value"]), (7.5, 16.5))
         for frame in frames:
             T, points = frame["value"], frame["pieces"][0]["points"]
@@ -2680,7 +2793,7 @@ class EmbeddingDiagrams(unittest.TestCase):
             near(z, -math.cos(chi), f"Einstein static z at {chi}")
         # Vaidya's slices of constant v - r: a flat disc inside the shell, and outside it Flamm's
         # paraboloid moved in by r_s, z = 2 sqrt(r), from the shell at z = 0 or from the axis.
-        for number, surface in enumerate(self.embedding["vaidya"]["views"][0]["surfaces"]):
+        for number, surface in enumerate(self.named["vaidya"]["views"][0]["surfaces"]):
             ids = [p["id"] for p in surface["pieces"]]
             # The rim of the drawing, r = 4 r_s, stands at z = 0 at every moment.
             if "inside" in ids:
@@ -2697,7 +2810,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near(z, 2 * math.sqrt(r) - 4, f"Vaidya z at {r}")
         # Israel's shell of dust on the same slices: a flat disc inside the shell, whose radius is the
         # shell's on that slice, and z = 2 sqrt(r) outside it; the shell is one circle from both sides.
-        for number, surface in enumerate(self.embedding["israel_shell"]["views"][0]["surfaces"]):
+        for number, surface in enumerate(self.named["israel_shell"]["views"][0]["surfaces"]):
             ids = [p["id"] for p in surface["pieces"]]
             if "inside" in ids:
                 inside = piece("israel_shell", "inside", number)
@@ -2716,14 +2829,14 @@ class EmbeddingDiagrams(unittest.TestCase):
         # The photon rocket's slices of constant cu + r at theta = pi/2: before the light of the burn
         # reaches them, z^2 = 8 m_0 r, and once it has passed the rim, z^2 = 8 m r with m = m_0 e^(-6/5),
         # the mass the burn leaves; the rim r = 12 m_0 stands at z = 0.
-        rocket = self.embedding["photon_rocket"]["views"][0]["surfaces"]
+        rocket = self.named["photon_rocket"]["views"][0]["surfaces"]
         for number, mass in ((0, 1.0), (len(rocket) - 1, math.exp(-1.2))):
             for r, rho, z in piece("photon_rocket", "whole", number):
                 near(rho, r, f"photon rocket rho at {r}")
                 near(z, 2 * math.sqrt(2 * mass) * (math.sqrt(r) - math.sqrt(12)), f"photon rocket z at {r}")
         # Oppenheimer-Snyder's dust is a cap of a sphere of radius a out to chi0 = pi/4 at every
         # moment, and at the release, the first moment, the outside is Flamm's paraboloid.
-        for number in range(len(self.embedding["oppenheimer_snyder"]["views"][0]["surfaces"])):
+        for number in range(len(self.named["oppenheimer_snyder"]["views"][0]["surfaces"])):
             dust = piece("oppenheimer_snyder", "dust", number)
             a = dust[-1][1] / math.sin(math.pi / 4)
             for chi, rho, z in dust:
@@ -2735,7 +2848,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertEqual(release[-1][2], 0, "the rim of the drawing stands at z = 0")
         # Tolman-Bondi's cloud at its release: every shell at its label, R = r, and outside it
         # Flamm's paraboloid of 2GM/c^2 = r_b/2 from the surface, drawn twice as tall.
-        vertical = self.embedding["tolman_bondi"]["views"][0]["vertical"]
+        vertical = self.named["tolman_bondi"]["views"][0]["vertical"]
         cloud, outside = piece("tolman_bondi", "cloud"), piece("tolman_bondi", "exterior")
         for r, rho, z in cloud + outside:
             near(rho, r, f"Tolman-Bondi release rho at {r}")
@@ -2846,7 +2959,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         self.assertAlmostEqual(outside[0][0], math.tan(math.acos(0.75)), places=12)
         near(planet[-1][1], outside[0][1], "the planet's edge and the cone's are one circle")
         near(planet[-1][2], outside[0][2], "at one height")
-        for number in range(len(self.embedding["frw"]["views"][0]["surfaces"])):
+        for number in range(len(self.named["frw"]["views"][0]["surfaces"])):
             hemisphere = piece("frw", "near", number)
             a = -hemisphere[0][2]
             for sign, pid in ((-1, "near"), (1, "far")):
@@ -2854,11 +2967,13 @@ class EmbeddingDiagrams(unittest.TestCase):
                     near(rho, a * r, f"sphere rho at {r}")
                     near(z, sign * a * math.sqrt(max(1 - r * r, 0)), f"sphere z at {r}")
 
+    @checks("aichelburg_sexl", "anti_de_sitter", "bianchi", "kasner", "light_beam", "malament_hogarth", "milne",
+            "minkowski", "mixmaster", "natario", "pp_wave")
     def test_the_eleven_drawn_last_are_the_surfaces_known_in_closed_form(self):
         """The plane, the hyperboloid, the tube of the Malament-Hogarth toy, Taub's round
         moment, and the flat planes with what is marked on them, from the numbers written."""
         def view(metric_id):
-            return self.embedding[metric_id]["views"][0]
+            return self.named[metric_id]["views"][0]
 
         def piece(surface, piece_id):
             return [tuple(point) for point in next(p for p in surface["pieces"] if p["id"] == piece_id)["points"]]
@@ -2917,7 +3032,7 @@ class EmbeddingDiagrams(unittest.TestCase):
         # Kasner's ring at t: the ellipse reaching t^(-2/7) along x and t^(6/7) along z. The dust's
         # and the wave's rings are ellipses on the axes, and the wave's last a segment on x.
         def rings(metric_id):
-            return next(v for v in self.embedding[metric_id]["views"] if v["id"] == "ring")
+            return next(v for v in self.named[metric_id]["views"] if v["id"] == "ring")
         for surface in rings("kasner")["surfaces"]:
             t = surface["time"]
             for X, Y, Z in surface["curves"][0]["points"]:
@@ -3019,11 +3134,12 @@ class EmbeddingDiagrams(unittest.TestCase):
                                      f"{name} {view['id']} paints {selector}, which is not styled in print")
 
     def grid(self, metric_id):
-        view = self.embedding[metric_id]["views"][0]
+        view = self.named[metric_id]["views"][0]
         piece = view["surfaces"][0]["pieces"][0]
         self.assertIn("grid", piece, metric_id)
         return view, piece
 
+    @checks("alcubierre")
     def test_alcubierre_draws_the_expansion_as_a_height(self):
         """theta = v_s (x - x_s)/r_s df/dr_s of the observers who ride the slices, with v_s = 2 and
         Alcubierre's profile at R = 1 and sigma = 4, drawn as the height theta R^2/4c over the plane
@@ -3080,6 +3196,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                             f"the circle v_s f = 1 at {X}, {Y}")
         self.assertIn("4c/R", view["height"])
 
+    @checks("natario")
     def test_natario_draws_the_energy_density_as_a_height(self):
         """epsilon = -c^4 K_ij K^ij/16 pi G of the observers who ride the slices, with the zero
         expansion field of Natario's drive for Alcubierre's profile at R = 1 and sigma = 4, n = f/2
@@ -3208,15 +3325,16 @@ class EmbeddingDiagrams(unittest.TestCase):
         third of its width, and drawn twice as tall each moment stands in relief of at least 0.6 of
         its width; the dish of Szekeres's cloud is 4/15 deep at ct = 0 and is drawn three times as deep."""
         scaled = {name: view for name, data in self.embedding.items() for view in data["views"] if "vertical" in view}
-        self.assertEqual(set(scaled), {"tolman_bondi", "szekeres"})
-        self.assertEqual(scaled["szekeres"]["vertical"], 3)
-        release = scaled["szekeres"]["surfaces"][1]
-        self.assertEqual(release["time"], 0)
-        for r, rho, z in release["pieces"][0]["points"]:
-            self.assertAlmostEqual(rho, r, 6, f"Szekeres at ct = 0, rho at {r}")
-            self.assertAlmostEqual(z / 3, 2 * r ** 3 / 3 - 2 * r ** 5 / 5 - 4 / 15, 6, f"Szekeres at ct = 0, z at {r}")
-        for surface in scaled["szekeres"]["surfaces"]:
-            self.assertTrue(all(P[2] == 0 for P in surface["pieces"][1]["points"]), "Szekeres's exterior is a plane")
+        self.assertEqual(set(scaled), set(filter(chosen, {"tolman_bondi", "szekeres"})))
+        if "szekeres" in scaled:
+            self.assertEqual(scaled["szekeres"]["vertical"], 3)
+            release = scaled["szekeres"]["surfaces"][1]
+            self.assertEqual(release["time"], 0)
+            for r, rho, z in release["pieces"][0]["points"]:
+                self.assertAlmostEqual(rho, r, 6, f"Szekeres at ct = 0, rho at {r}")
+                self.assertAlmostEqual(z / 3, 2 * r ** 3 / 3 - 2 * r ** 5 / 5 - 4 / 15, 6, f"Szekeres at ct = 0, z at {r}")
+            for surface in scaled["szekeres"]["surfaces"]:
+                self.assertTrue(all(P[2] == 0 for P in surface["pieces"][1]["points"]), "Szekeres's exterior is a plane")
         for name, view in scaled.items():
             self.assertIsInstance(view["vertical"], int, name)
             self.assertGreater(view["vertical"], 1, name)
@@ -3226,17 +3344,19 @@ class EmbeddingDiagrams(unittest.TestCase):
             for view in data["views"]:
                 if "vertical" not in view:
                     self.assertNotIn("vertical scale", " ".join(view["caption"]), view["id"])
-        view = scaled["tolman_bondi"]
-        self.assertEqual(view["vertical"], 2)
-        for surface in view["surfaces"]:
-            points = [P for piece in surface["pieces"] for P in piece["points"]]
-            width = 2 * max(P[1] for P in points)
-            relief = (max(P[2] for P in points) - min(P[2] for P in points)) / width
-            self.assertGreaterEqual(relief, 0.6, f"Tolman-Bondi at ct = {surface['time']}")
-            cloud = next(piece for piece in surface["pieces"] if piece["id"] == "cloud")["points"]
-            self.assertGreaterEqual((cloud[-1][2] - cloud[0][2]) / (2 * cloud[-1][1]), 0.55,
-                                    f"Tolman-Bondi's cloud at ct = {surface['time']}")
+        if "tolman_bondi" in scaled:
+            view = scaled["tolman_bondi"]
+            self.assertEqual(view["vertical"], 2)
+            for surface in view["surfaces"]:
+                points = [P for piece in surface["pieces"] for P in piece["points"]]
+                width = 2 * max(P[1] for P in points)
+                relief = (max(P[2] for P in points) - min(P[2] for P in points)) / width
+                self.assertGreaterEqual(relief, 0.6, f"Tolman-Bondi at ct = {surface['time']}")
+                cloud = next(piece for piece in surface["pieces"] if piece["id"] == "cloud")["points"]
+                self.assertGreaterEqual((cloud[-1][2] - cloud[0][2]) / (2 * cloud[-1][1]), 0.55,
+                                        f"Tolman-Bondi's cloud at ct = {surface['time']}")
 
+    @checks("krasnikov")
     def test_krasnikov_draws_how_far_the_tube_tips_the_light_cone_as_a_height(self):
         """1 - k, twice the published g_tx, of the tube the spacetime diagram declares, at
         ct = 5 rho_0, drawn over the plane of the tube's axis: 0 outside the tube, 1 where k = 0
@@ -3284,15 +3404,15 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic",
+                         set(filter(chosen, {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic",
                           "holographic_superconductor", "bianchi", "pp_wave",
                           "aichelburg_sexl", "khan_penrose",
                           "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov", "moving_mirror", "big_rip", "maximally_supersymmetric_plane_wave"})
+                          "belinski_zakharov", "moving_mirror", "big_rip", "maximally_supersymmetric_plane_wave"})))
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
-            data = copy.deepcopy(self.embedding["krasnikov"])
+            data = copy.deepcopy(self.named["krasnikov"])
             change(data["views"][0]["surfaces"][0]["pieces"][0])
             with self.assertRaises(build.DataError) as raised:
                 self.load_folder({"krasnikov.json": data}, self.metrics)
@@ -3316,12 +3436,13 @@ _turn_check = None
 
 def turn_check(test):
     """One run of the page's own turning geometry in Node over every published figure that
-    turns, _tools/turn_check.cjs, shared by every test that reads it."""
+    turns of the spacetimes this run checks, _tools/turn_check.cjs, shared by every test that
+    reads it."""
     global _turn_check
     if shutil.which("node") is None:
         test.skipTest("Node is not installed, so the page's geometry cannot be run")
     if _turn_check is None:
-        run = subprocess.run(["node", str(build.ROOT / "_tools" / "turn_check.cjs")],
+        run = subprocess.run(["node", str(build.ROOT / "_tools" / "turn_check.cjs"), *sorted(CHOSEN)],
                              capture_output=True, text=True, timeout=600)
         test.assertEqual(run.returncode, 0, run.stderr[-2000:])
         _turn_check = json.loads(run.stdout)
@@ -3338,7 +3459,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
     def setUp(self):
         self.embedding = embedding_files()
         self.views = [(name, view) for name, data in self.embedding.items() for view in data["views"]]
-        self.assertTrue(self.views)
+        found(self, self.views, "embedding view")
 
     def check(self):
         return turn_check(self)
@@ -3394,7 +3515,7 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
                 self.assertIn(layer.get("flat", False), (False, True), where)
         # Only a cone laid flat lies in the plane of the page: the cosmic string's and the point particle's.
         flat = {name for name, view in self.views if any(layer.get("flat") for layer in view["figure"]["layers"])}
-        self.assertEqual(flat, {"cosmic_string", "point_particle_2plus1"})
+        self.assertEqual(flat, set(filter(chosen, {"cosmic_string", "point_particle_2plus1"})))
 
     def test_a_label_that_names_a_circle_stands_beside_its_end(self):
         # The end of a circle on the page is (+-rho, z cos e) from where the axis meets z = 0, the
@@ -3456,7 +3577,8 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
         # and turned all the way round it keeps to its box, the Krasnikov tube's rectangle drawn
         # smaller where it would stand wider or taller than it was published.
         heights = {v["metric"]: v["height"] for v in self.check()["views"] if "height" in v}
-        self.assertEqual(set(heights), {"alcubierre", "krasnikov", "natario", "tippett_tsang", "moving_mirror"})
+        self.assertEqual(set(heights), set(filter(chosen, {"alcubierre", "krasnikov", "natario", "tippett_tsang",
+                                                          "moving_mirror"})))
         for metric_id, h in heights.items():
             for side in ("above", "below"):
                 seen = h[side]
@@ -3467,7 +3589,8 @@ class TurningEmbeddingDiagrams(unittest.TestCase):
             self.assertGreater(h["low"]["far"], 0.02 * (h["low"]["far"] + h["low"]["seen"]),
                                f"{metric_id} from just above the plane: the relief hides none of the grid")
             self.assertLessEqual(h["turned"]["outside"], 1e-9, f"{metric_id} turned: drawn outside the box")
-        self.assertLess(heights["krasnikov"]["turned"]["scale"], 1)
+        if "krasnikov" in heights:
+            self.assertLess(heights["krasnikov"]["turned"]["scale"], 1)
 
     def test_from_straight_above_the_upper_sheet_hides_the_lower_and_from_below_the_reverse(self):
         # Schwarzschild's circles run from 1.5 to 6 r_s on each sheet. Looking down the axis every
@@ -3504,15 +3627,15 @@ class StacksAndMovies(unittest.TestCase):
     diagrams that change through a run of moments played as movies, as the captain asked on 30
     September 2026, from the numbers written and nothing else."""
 
-    STACKS = {"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
+    STACKS = chosen_entries({"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
               "big_rip": 1.0,
               "maximally_supersymmetric_plane_wave": 0.8,
-              "holographic_superconductor": 1.0}   # the height of a unit of time
+              "holographic_superconductor": 1.0})   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
-    MOVIES = {("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
+    MOVIES = chosen_entries({("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("lqc_bounce", "universe"): "$t$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
@@ -3551,13 +3674,14 @@ class StacksAndMovies(unittest.TestCase):
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$", ("holographic_superconductor", "ring"): "$-\\rho$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
-              ("black_string", "ripple"): "$v$"}
+              ("black_string", "ripple"): "$v$"}, lambda key: key[0])
 
     def setUp(self):
         self.embedding = embedding_files()
+        self.named = NamedFiles(build.EMBEDDING_DIR)
 
     def views(self, metric_id):
-        return {v["id"]: v for v in self.embedding[metric_id]["views"]}
+        return {v["id"]: v for v in self.named[metric_id]["views"]}
 
     def movies(self):
         """Every view with a movie, by its spacetime and view."""
@@ -3565,7 +3689,7 @@ class StacksAndMovies(unittest.TestCase):
 
     def test_the_stacks_come_first_with_their_flat_rings_beside_them(self):
         for metric_id in self.STACKS:
-            self.assertEqual([v["id"] for v in self.embedding[metric_id]["views"]], ["tube", "ring"], metric_id)
+            self.assertEqual([v["id"] for v in self.named[metric_id]["views"]], ["tube", "ring"], metric_id)
         stacked = {name for name, data in self.embedding.items() for v in data["views"]
                    for s in v["surfaces"] for p in s["pieces"] if p.get("grid", {}).get("frame") == "ellipses"}
         self.assertEqual(stacked, set(self.STACKS))
@@ -3602,12 +3726,14 @@ class StacksAndMovies(unittest.TestCase):
             # The world lines of the twelve marked particles, every 30 degrees round the ring.
             self.assertEqual(grid["lines"], [{"class": "worldline", "u": [], "v": list(range(0, 360, 30))}], metric_id)
         # Kasner's rows reach t^p_1 along x and t^p_3 along z; the wave's close on a segment at the focus.
-        kasner = self.views("kasner")["tube"]["surfaces"][0]["pieces"][0]["grid"]
-        for u, a, b in zip(kasner["u"], kasner["a"], kasner["b"]):
-            self.assertAlmostEqual(a, u ** (-2 / 7), delta=1e-6)
-            self.assertAlmostEqual(b, u ** (6 / 7), delta=1e-6)
-        wave = self.views("pp_wave")["tube"]["surfaces"][0]["pieces"][0]["grid"]
-        self.assertEqual(wave["b"][-1], 0)
+        if chosen("kasner"):
+            kasner = self.views("kasner")["tube"]["surfaces"][0]["pieces"][0]["grid"]
+            for u, a, b in zip(kasner["u"], kasner["a"], kasner["b"]):
+                self.assertAlmostEqual(a, u ** (-2 / 7), delta=1e-6)
+                self.assertAlmostEqual(b, u ** (6 / 7), delta=1e-6)
+        if chosen("pp_wave"):
+            wave = self.views("pp_wave")["tube"]["surfaces"][0]["pieces"][0]["grid"]
+            self.assertEqual(wave["b"][-1], 0)
 
     def test_every_moment_label_of_a_stack_follows_its_ring_and_the_axis_is_named(self):
         for metric_id in self.STACKS:
@@ -3625,7 +3751,7 @@ class StacksAndMovies(unittest.TestCase):
     def test_the_movies_are_these(self):
         self.assertEqual({key: v["movie"]["variable"] for key, v in self.movies().items()}, self.MOVIES)
         self.assertEqual({name for (name, _), v in self.movies().items() if v["movie"].get("turns") is False},
-                         {"frw", "milne", "coleman_de_luccia"})
+                         set(filter(chosen, {"frw", "milne", "coleman_de_luccia"})))
 
     def test_every_movie_runs_through_its_frames_in_order_and_holds_its_moments(self):
         for (metric_id, view_id), view in self.movies().items():
@@ -3650,6 +3776,7 @@ class StacksAndMovies(unittest.TestCase):
                 self.assertEqual(frame.get("dots"), surface.get("dots"), where)
             self.assertEqual((values[0], values[-1]), (view["surfaces"][0]["time"], view["surfaces"][-1]["time"]), where)
 
+    @checks("frw")
     def test_the_closed_universe_plays_every_frame_as_its_sphere(self):
         # At ct = eta - sin(eta) the equator is the sphere of radius a = 1 - cos(eta).
         view = self.views("frw")["closed"]
@@ -3662,6 +3789,7 @@ class StacksAndMovies(unittest.TestCase):
                     self.assertLess(abs(rho - a * r), 1e-5, f"ct = {frame['value']}")
                     self.assertLess(abs(z - sign * a * math.sqrt(max(1 - r * r, 0))), 1e-5, f"ct = {frame['value']}")
 
+    @checks("malament_hogarth", "oppenheimer_snyder", "vaidya", "israel_shell", "charged_shell", "tolman_bondi")
     def test_each_movie_with_a_rim_holds_it_still_while_the_rest_moves(self):
         # The flat plane beyond the Malament-Hogarth ball, the clocks released at 4 r_s outside
         # the collapsing dust, Vaidya's r = 4 r_s and the clocks released at 2.5 r_b outside
@@ -3669,13 +3797,14 @@ class StacksAndMovies(unittest.TestCase):
         # Malament-Hogarth well only deepens as the removed event nears.
         for metric_id, piece in (("malament_hogarth", "flat"), ("oppenheimer_snyder", "exterior"), ("vaidya", None),
                                  ("israel_shell", None), ("charged_shell", None), ("tolman_bondi", "exterior")):
-            view = self.embedding[metric_id]["views"][0]
+            view = self.named[metric_id]["views"][0]
             for frame in view["movie"]["frames"]:
                 outer = frame["pieces"][-1] if piece is None else next(p for p in frame["pieces"] if p["id"] == piece)
                 self.assertEqual(outer["points"][-1][2], 0, f"{metric_id} at {frame['value']}")
-        depths = [-f["pieces"][0]["points"][0][2] for f in self.embedding["malament_hogarth"]["views"][0]["movie"]["frames"]]
+        depths = [-f["pieces"][0]["points"][0][2] for f in self.named["malament_hogarth"]["views"][0]["movie"]["frames"]]
         self.assertTrue(all(b >= a for a, b in zip(depths, depths[1:])), "the Malament-Hogarth well rises")
 
+    @checks("cosmic_string")
     def test_the_cone_unrolls_without_stretching_to_the_deficit_angle(self):
         view = self.views("cosmic_string")["unroll"]
         frames = view["movie"]["frames"]
@@ -3712,7 +3841,7 @@ class StacksAndMovies(unittest.TestCase):
         # player carry a word for another.
         for key, view in self.movies().items():
             self.assertLessEqual(set(view["movie"]), {"variable", "seconds", "frames", "turns"}, str(key))
-        view = copy.deepcopy(next(v for v in self.embedding["cosmic_string"]["views"] if "movie" in v))
+        view = copy.deepcopy(next(v for v in self.named["cosmic_string"]["views"] if "movie" in v))
         build.check_movie("cosmic_string", view)
         for loop in ("once", "pingpong", "restart"):
             view["movie"]["loop"] = loop
@@ -3742,7 +3871,7 @@ class StacksAndMovies(unittest.TestCase):
         return json.loads(run.stdout)
 
     def test_the_cosmic_string_turns_round_at_each_end_without_a_stutter(self):
-        movie = next(v for v in self.embedding["cosmic_string"]["views"] if "movie" in v)["movie"]
+        movie = next(v for v in self.named["cosmic_string"]["views"] if "movie" in v)["movie"]
         n, step = len(movie["frames"]), 1000 * movie["seconds"] / (len(movie["frames"]) - 1)
         # At the middle of each step: 0, 1, ..., n - 2, n - 1, n - 2, ..., 1, 0, 1, ..., each end once.
         [shown] = self.frames_shown([movie], [(j + 0.5) * step for j in range(4 * (n - 1) + 1)])
@@ -3761,6 +3890,7 @@ class StacksAndMovies(unittest.TestCase):
     def test_every_movie_plays_forward_then_back_and_never_jumps_to_its_start(self):
         movies = {key: v["movie"] for key, v in self.movies().items()}
         self.assertEqual(set(movies), set(self.MOVIES))
+        found(self, movies, "movie")
         # Three passes and a little more, forward, back and forward again, every 7 milliseconds.
         times = list(range(0, 3 * 1000 * max(m["seconds"] for m in movies.values()) + 2000, 7))
         for (name, movie), shown in zip(movies.items(), self.frames_shown(list(movies.values()), times)):
@@ -3825,6 +3955,7 @@ class StacksAndMovies(unittest.TestCase):
         # after its last.
         movies = {key: v["movie"] for key, v in self.movies().items()}
         self.assertEqual(set(movies), set(self.MOVIES))
+        found(self, movies, "movie")
         ms = 3 * 1000 * max(m["seconds"] for m in movies.values()) + 2000
         stood = 4321
         straight = self.frames_played(list(movies.values()), ms)
@@ -3857,7 +3988,7 @@ class StacksAndMovies(unittest.TestCase):
         # A curvature figure's movie is played by the same player, by the same rule.
         movies = {(name, v["id"]): v["movie"] for name, data in curvature_files().items()
                   for v in data["views"] if "movie" in v}
-        self.assertTrue(movies, "no curvature figure holds a movie, so none was played")
+        found(self, movies, "curvature figure holding a movie")
         ms = 3 * 1000 * max(m["seconds"] for m in movies.values()) + 2000
         for (name, movie), played in zip(movies.items(), self.frames_played(list(movies.values()), ms)):
             n = len(movie["frames"])
@@ -3892,7 +4023,6 @@ class SteadyMovieLabels(unittest.TestCase):
     def setUp(self):
         self.movies = {(name, v["id"]): v for name, data in embedding_files().items()
                        for v in data["views"] if "movie" in v}
-        self.assertTrue(self.movies)
 
     def steady(self, lists):
         """MfsTurn.steady() of each list of labels, run in Node as the page runs it."""
@@ -3916,6 +4046,7 @@ class SteadyMovieLabels(unittest.TestCase):
         # A curvature figure's movie names its frames by the same rule.
         labels.update({("curvature", name, v["id"]): [f["label"] for f in v["movie"]["frames"]]
                        for name, data in curvature_files().items() for v in data["views"] if "movie" in v})
+        found(self, self.movies, "movie")
         for (key, plain), made in zip(labels.items(), self.steady(list(labels.values()))):
             self.assertEqual(len(made), len(plain), key)
             boxes, shown = set(), [collections.Counter(), collections.Counter()]
@@ -3968,6 +4099,7 @@ class SteadyMovieLabels(unittest.TestCase):
 
     def test_the_label_stands_at_one_place_whatever_the_frame(self):
         # One label names the frame, and the figure places it, never a frame.
+        found(self, self.movies, "movie")
         for key, view in self.movies.items():
             named = [L for L in view["figure"]["labels"] if L.get("frame")]
             self.assertEqual(len(named), 1, key)
@@ -4028,12 +4160,13 @@ class TimeSlicedViewsAreMovies(unittest.TestCase):
 
     def setUp(self):
         self.embedding = embedding_files()
+        self.named = NamedFiles(build.EMBEDDING_DIR)
         self.views = [(name, view) for name, data in self.embedding.items() for view in data["views"]]
 
     def test_every_view_of_more_than_one_moment_is_a_movie(self):
         sliced = {(name, view["id"]) for name, view in self.views
                   if len(view["surfaces"]) > 1 or any("time" in s for s in view["surfaces"])}
-        self.assertTrue(sliced)
+        found(self, sliced, "view of more than one moment")
         self.assertEqual({key for key in sliced if key not in StacksAndMovies.MOVIES}, set())
         for name, view in self.views:
             if (name, view["id"]) in sliced:
@@ -4069,7 +4202,7 @@ class TimeSlicedViewsAreMovies(unittest.TestCase):
         self.assertIn("(movie ? MOVIE_PLAY : '')", page, "the page gives a movie no button")
 
     def test_the_build_refuses_moments_that_are_not_a_movie(self):
-        view = copy.deepcopy(next(v for v in self.embedding["tolman_bondi"]["views"] if v["id"] == "cloud"))
+        view = copy.deepcopy(next(v for v in self.named["tolman_bondi"]["views"] if v["id"] == "cloud"))
         build.check_moments("tolman_bondi", view)
         still = {k: v for k, v in view.items() if k != "movie"}
         with self.assertRaises(build.DataError) as raised:
@@ -4097,7 +4230,7 @@ class TimeSlicedViewsAreMovies(unittest.TestCase):
             build.check_moments("tolman_bondi", unordered)
         # One moment is no sequence, with a movie, as the cosmic string's cone, or without.
         for metric_id in ("cosmic_string", "schwarzschild"):
-            for one in self.embedding[metric_id]["views"]:
+            for one in self.named[metric_id]["views"]:
                 build.check_moments(metric_id, one)
 
     def test_the_script_cannot_draw_moments_as_separate_pictures(self):
@@ -4141,18 +4274,18 @@ class TurningLightConeFigures(unittest.TestCase):
     def setUp(self):
         self.figures = {f"{name}/{figure['id']}": figure for name, data in diagram_files().items()
                         for figures in data.get("projections", {}).values() for figure in figures if "turn" in figure}
-        self.assertTrue(self.figures)
+        found(self, self.figures, "figure of light cones that turns")
 
     def test_every_figure_of_light_cones_turns(self):
         checked = {f"{v['metric']}/{v['view']}" for v in turn_check(self)["figures"]}
         self.assertEqual(checked, set(self.figures))
-        self.assertEqual(checked, {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
+        self.assertEqual(checked, {key for key in {"alcubierre/bubble", "godel/tipping", "gott_time_machine/loop", "kerr/dragging", "kerr_de_sitter/dragging",
                                    "kerr_newman/dragging", "kerr_taub_nut/dragging", "kerr_melvin/dragging", "kundt_waves/fronts",
                                    "near_horizon_extreme_kerr/dragging", "point_particle_2plus1/wedge",
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
                                    "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl",
-                                   "vuorio_warped_ads/tipping"})
+                                   "vuorio_warped_ads/tipping"} if chosen(key.split("/")[0])})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -4225,9 +4358,9 @@ class TurningLightConeFigures(unittest.TestCase):
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
         # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out, and so
         # are the ergoregions of the swirling universe and of the black hole in it.
-        self.assertEqual(still, {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
+        self.assertEqual(still, {key for key in {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
                                  "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube",
-                                 "maximally_supersymmetric_plane_wave/focus", "swirling_universe_black_hole/ergo"})
+                                 "maximally_supersymmetric_plane_wave/focus", "swirling_universe_black_hole/ergo"} if chosen(key.split("/")[0])})
 
 
 class TurningUnderTheHand(unittest.TestCase):
@@ -4542,6 +4675,7 @@ def bv_radius(v, p):
     return None
 
 
+@checks("bonnor_vaidya")
 class BonnorVaidyaShell(unittest.TestCase):
     """The published drawings of Bonnor and Vaidya's charged shell against its closed forms."""
 
@@ -4642,6 +4776,7 @@ class BonnorVaidyaShell(unittest.TestCase):
         self.assertTrue(all(abs(X - math.pi) < 2e-4 for X, _ in singular))
 
 
+@checks("roberts")
 class RobertsCollapse(unittest.TestCase):
     """The published drawings of Roberts's collapse against its closed forms: where the apparent
     horizon and the singularity stand in each chart, and the shape of each embedded moment."""
@@ -5486,7 +5621,7 @@ class Slices(unittest.TestCase):
                      and m not in self.HIDDEN_MOMENTS.get(where, set())]
             self.assertEqual(marks, every, where)
             drawn += len(marks)
-        self.assertGreater(drawn, 100)
+        counted(self, drawn, 100, "slices marked on a drawing")
 
     def test_every_slice_is_stamped_with_the_surface_it_marks(self):
         for metric_id, where, view in self.drawings():
@@ -6680,7 +6815,7 @@ class Slices(unittest.TestCase):
                                 X = X0 + u[0] * (X1 - X0)
                                 at_reach = ends is not None and any(abs(X - e) < 1.5e-4 * (X1 - X0) for e in ends)
                                 self.assertTrue(edge or at_reach, f"{key} {mark['label']} stops at {u}")
-        self.assertGreater(checked, 200)
+        counted(self, checked, 200, "slices on a spacetime diagram")
 
     def sv_inside_r(self, surface):
         """The r of a moment of the black bounce between its horizons, a = r_s/2: its cylinder's radius is
@@ -7450,7 +7585,8 @@ class ShadedRegions(unittest.TestCase):
 
     def setUp(self):
         self.conformal, self.embedding = conformal_files(), embedding_files()
-        self.view = self.embedding["einstein_static"]["views"][0]
+        self.static = conformal_file("einstein_static")
+        self.view = embedding_file("einstein_static")["views"][0]
         self.shades = {sh["view"]: sh for sh in self.view.get("shades", [])}
 
     @staticmethod
@@ -7463,9 +7599,10 @@ class ShadedRegions(unittest.TestCase):
         return (min(xs), max(xs)) if xs else None
 
     def test_each_region_drawn_inside_the_strip_has_its_shade(self):
-        views = [v["id"] for v in self.conformal["einstein_static"]["views"] if not v.get("system")]
-        self.assertEqual(views, ["minkowski", "de_sitter", "anti_de_sitter"])
-        self.assertEqual(list(self.shades), views)
+        if chosen("einstein_static"):
+            views = [v["id"] for v in self.static["views"] if not v.get("system")]
+            self.assertEqual(views, ["minkowski", "de_sitter", "anti_de_sitter"])
+            self.assertEqual(list(self.shades), views)
         # Only the Einstein static universe's sphere is shaded, and every shade names a view its
         # spacetime's conformal diagram draws.
         for name, data in self.embedding.items():
@@ -7476,12 +7613,13 @@ class ShadedRegions(unittest.TestCase):
                 for shade in view.get("shades", []):
                     self.assertIn(shade["view"], conformal, name)
 
+    @checks("einstein_static")
     def test_the_shaded_region_matches_each_map_at_several_eta(self):
         for vid, shade in self.shades.items():
             times = [T for T, *_ in shade["reach"]]
             self.assertGreaterEqual(len(set(times)), 13, vid)
             self.assertIn(shade["T"], times, vid)
-            cover = [L for L in next(v for v in self.conformal["einstein_static"]["views"] if v["id"] == vid)["layers"]
+            cover = [L for L in next(v for v in self.static["views"] if v["id"] == vid)["layers"]
                      if L["kind"] == "fill" and L["class"] == "cover"]
             self.assertEqual(len(cover), 1, vid)
             for T, lo, hi in shade["reach"]:
@@ -7498,6 +7636,7 @@ class ShadedRegions(unittest.TestCase):
                 self.assertAlmostEqual(lo, drawn[0], delta=1e-4, msg=where)
                 self.assertAlmostEqual(hi, drawn[1], delta=1e-4, msg=where)
 
+    @checks("einstein_static")
     def test_the_shade_drawn_is_the_region_at_the_moment_drawn(self):
         surface = self.view["surfaces"][0]
         for vid, shade in self.shades.items():
@@ -7519,10 +7658,12 @@ class ShadedRegions(unittest.TestCase):
         self.assertEqual((self.shades["de_sitter"]["from"], self.shades["de_sitter"]["to"]), (0, math.pi))
         self.assertEqual((self.shades["anti_de_sitter"]["from"], self.shades["anti_de_sitter"]["to"]), (0, math.pi / 2))
 
+    @checks("einstein_static")
     def test_the_caption_says_the_moment_shaded(self):
         for vid, shade in self.shades.items():
             self.assertIn("pink, $\\eta = 0$", shade["caption"], vid)
 
+    @checks("einstein_static")
     def test_the_page_turns_the_shade_as_it_was_published(self):
         views = {(v["metric"], v["view"]): v for v in turn_check(self)["views"]}
         v = views[("einstein_static", self.view["id"])]
@@ -7791,7 +7932,7 @@ class CurvatureCaptionSplit(unittest.TestCase):
                 if "reference" in legend and legend["reference"].endswith("$R = 0$"):
                     self.assertIn(legend["reference"], ricci, f"{name} {view['id']}")
                 opened += 1
-        self.assertTrue(opened)
+        found(self, opened, "curvature view of both scalars")
 
     def test_no_sentence_of_a_place_names_the_other_scalar_but_as_a_relation(self):
         # Every sentence of a two-scalar view's caption stands with one scalar: one under the
@@ -7826,7 +7967,7 @@ class CurvatureCaptionSplit(unittest.TestCase):
         counting = re.search(r"      function cvSentences\([\s\S]*?\n      \}\n", page)
         self.assertIsNotNone(counting, "no cvSentences()")
         paragraphs = [p for data in curvature_files().values() for view in data["views"] for p in view["caption"]]
-        self.assertTrue(paragraphs)
+        found(self, paragraphs, "curvature caption")
         script = (counting.group(0) + "const texts = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
                   "console.log(JSON.stringify(texts.map(cvSentences)));")
         run = subprocess.run(["node", "-e", script], input=json.dumps(paragraphs), capture_output=True, text=True,
@@ -7856,7 +7997,7 @@ class CurvatureCaptionSplit(unittest.TestCase):
                 else:
                     self.assertFalse("ricci_sentences" in view, f"{name} {view['id']} draws one scalar")
                     self.assertFalse("per_scalar" in view, f"{name} {view['id']} draws one scalar")
-        self.assertTrue(both, "no view draws both scalars, so nothing was checked")
+        found(self, both, "curvature view of both scalars")
 
     def test_a_split_that_loses_or_repeats_a_sentence_is_refused(self):
         view = {"kind": "line", "panels": [{"id": "K"}, {"id": "R"}],
@@ -7942,7 +8083,7 @@ class Citations(unittest.TestCase):
         """The page numbers a citation by its place in `references`, so [1] is the first one read:
         the history's citations in order, then those of the related spacetimes, which stand
         right after it."""
-        for metric in build.load_metrics():
+        for metric in chosen_metrics():
             read = [metric.get("history") or ""] + [entry["text"] for entry in metric.get("related") or []]
             self.assertEqual(metric.get("references", []), build.cited_keys(" ".join(read)), metric["id"])
 
@@ -8137,7 +8278,7 @@ class Aspect(unittest.TestCase):
         self.assertIn("4.00:1", wide)
 
     def test_a_diagram_outside_the_limits_stops_the_build_and_leaves_the_files_alone(self):
-        diagrams = copy.deepcopy(diagram_files())
+        diagrams = copy.deepcopy(diagram_files(every=True))
         name = sorted(diagrams)[0]
         view = next(iter(diagrams[name]["systems"].values()))[0]
         view["box"], view["mirror"] = [0, 1, 0, 3], False
@@ -8152,6 +8293,7 @@ class Aspect(unittest.TestCase):
             self.assertEqual(path.read_text(encoding="utf-8"), text)
 
 
+@checks("einstein_rosen_bridge")
 class EinsteinRosenHorizons(unittest.TestCase):
     """Every view of the Einstein-Rosen bridge whose plotted region holds a horizon marks it. The
     bridge is the horizon of Schwarzschild's metric, and of Reissner and Nordström's for the
@@ -8165,7 +8307,7 @@ class EinsteinRosenHorizons(unittest.TestCase):
                 "charged_spherical": ("grr", (1 + math.sqrt(1 + 4 * 3 / 4)) / 2), "charged_bridge": ("throat", 0.0)}
 
     def setUp(self):
-        self.views = [(system, view) for system, views in diagram_files()["einstein_rosen_bridge"]["systems"].items()
+        self.views = [(system, view) for system, views in diagram_file("einstein_rosen_bridge")["systems"].items()
                       for view in views]
 
     def test_every_chart_is_known_to_the_test(self):
@@ -8196,13 +8338,14 @@ class EinsteinRosenHorizons(unittest.TestCase):
         self.assertAlmostEqual(self.HORIZONS["charged_spherical"][1], 1.5)
 
 
+@checks("wormhole_time_machine")
 class WormholeTrip(unittest.TestCase):
     """The round trip of the wormhole time machine's right mouth, as its figure in three
     dimensions publishes it in (Z, X, T) with c = 1: the physics the figure states, held to the
     numbers on disk."""
 
     def setUp(self):
-        figure = diagram_files()["wormhole_time_machine"]["projections"]["lorentz"][0]
+        figure = diagram_file("wormhole_time_machine")["projections"]["lorentz"][0]
         self.lines = {}
         for line in figure["turn"]["lines"]:
             self.lines.setdefault(line["class"], []).append(line["points"])
@@ -8251,6 +8394,7 @@ class WormholeTrip(unittest.TestCase):
             self.assertAlmostEqual(self.interval(a, b), 0.0, delta=1e-4)
 
 
+@checks("kastor_traschen")
 class KastorTraschen(unittest.TestCase):
     """Kastor and Traschen's published diagrams against their metric, from the numbers in the files:
     two holes of m = 1 at z = +-2 with H = -3/32, where U = H tau + 2/sqrt(x^2 + 4) on the midplane,
@@ -8325,6 +8469,7 @@ class KastorTraschen(unittest.TestCase):
             self.assertAlmostEqual(z, throat(r) - throat(points[0][0]), delta=2e-4)
 
 
+@checks("som_raychaudhuri")
 class SomRaychaudhuri(unittest.TestCase):
     """Som and Raychaudhuri's published diagrams against their metric, from the numbers in the
     files, in units of r_c = c/Omega: on the cylinder of t and phi at radius r the null curves are
@@ -8392,12 +8537,13 @@ class SomRaychaudhuri(unittest.TestCase):
                 self.assertAlmostEqual((-(dT + X * dY - Y * dX) ** 2 + dX * dX + dY * dY) / size, 0.0, delta=2e-4)
 
 
+@checks("siklos")
 class SiklosWaves(unittest.TestCase):
     """The published diagrams of Siklos's waves, held to the metric from the numbers written and
     nothing else, in units of L."""
 
     def test_the_wave_front_is_the_hyperbolic_plane_and_its_curves_are_horocycles(self):
-        view, = embedding_files()["siklos"]["views"]
+        view, = embedding_file("siklos")["views"]
         surface, = view["surfaces"]
         sheet = surface["pieces"][0]
         for r, rho, z in sheet["points"]:
@@ -8433,7 +8579,7 @@ class SiklosWaves(unittest.TestCase):
                 "kaigorodov_homogeneous": lambda U, Z: (-U * math.exp(5 * Z), star(math.exp(2 * Z))),
                 "kaigorodov_kundt": lambda V, x: (V * x * x / math.sqrt(2), star(x)),
                 "kaigorodov_poincare": lambda t, z: (t, zstar(z))}
-        systems = diagram_files()["siklos"]["systems"]
+        systems = diagram_file("siklos")["systems"]
         checked = 0
         for system, of in kept.items():
             view, = systems[system]
@@ -8460,7 +8606,7 @@ class SiklosWaves(unittest.TestCase):
         self.assertGreater(checked, 40)
 
     def test_kaigorodovs_conformal_diagram_is_a_triangle_between_a_boundary_and_a_singularity(self):
-        views = conformal_files()["siklos"]["views"]
+        views = conformal_file("siklos")["views"]
         self.assertEqual([v["id"] for v in views], ["kaigorodov", "kaigorodov_poincare", "kaigorodov_horospheric",
                                                      "kaigorodov_homogeneous", "kaigorodov_kundt"])
         for view in views:

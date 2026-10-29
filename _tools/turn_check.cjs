@@ -3,9 +3,9 @@
    against every published embedding figure and every published figure of light cones, for the
    tests in test_build_mfs_data.py to hold.
 
-     node _tools/turn_check.cjs
+     node _tools/turn_check.cjs [id ...]
 
-   prints one JSON object. For every embedding view it gives, at the figure's own camera, the
+   prints one JSON object, of the spacetimes named, or of every one when none is. For every embedding view it gives, at the figure's own camera, the
    length of every line class and the area of every fill class as the page would draw them beside
    the published ones, and how far each label lands from its published place; at a sweep of other
    cameras, the scale, how far any drawn point or label falls outside the box, and any number
@@ -37,6 +37,8 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const turn = require(path.join(root, 'MFS', 'assets', 'turn.js'));
 const dir = path.join(root, 'MFS', 'assets', 'data', 'embedding');
+const chosen = new Set(process.argv.slice(2));
+const measured = file => !chosen.size || chosen.has(path.basename(file, '.json'));
 
 function length(lines) {
   let s = 0;
@@ -131,7 +133,7 @@ function heights(M, view, a0, e0) {
 }
 
 const out = { views: [] };
-for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
+for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json') && measured(f)).sort()) {
   const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
   for (const view of data.views) {
     const M = turn.prepare(view), fig = view.figure, a0 = fig.camera.azimuth, e0 = fig.camera.elevation;
@@ -286,7 +288,9 @@ for (const file of fs.readdirSync(diagrams).filter(f => f.endsWith('.json')).sor
   for (const [system, views] of Object.entries(data.projections || {})) {
     for (const fig of views) {
       if (!fig.turn) continue;
+      // Every figure is kept for the hand below, which drags one of each kind whichever are measured.
       figures[`${data.metric}/${fig.id}`] = fig;
+      if (!measured(file)) continue;
       const M = turn.prepare(fig), a0 = fig.camera.azimuth, e0 = fig.camera.elevation;
       const at = turn.draw(M, a0, e0, false);
       const order = fig.layers.length === at.layers.length &&
