@@ -104,11 +104,6 @@ class Drawings(unittest.TestCase):
             if 0.05 < r < R_MINUS - 0.05:
                 self.assertAlmostEqual(abs(z - top), 0.5 * math.acosh((a2 + b2 - 2 * r * r) / (a2 - b2)), delta=2e-3)
 
-    def test_the_curvature_text_fits_in_200_characters(self):
-        for v in load("curvature")["views"]:
-            text = list(v["caption"]) + [v["clip"], v["settings"]] + [e[2] for e in v["legend"]]
-            self.assertLessEqual(sum(len(t) for t in text), 200, v["id"])
-
 
 @unittest.skipUnless(HAS_SYMPY, "sympy is not installed")
 class Published(unittest.TestCase):

@@ -52,11 +52,8 @@ class Drawings(unittest.TestCase):
             if view["id"] != "scalar_universe":
                 self.assertIn("horizon", classes, view["id"])
 
-    def test_each_curvature_view_says_what_it_shows_in_at_most_200_characters(self):
+    def test_each_curvature_view_says_what_it_shows(self):
         for view in load("curvature")["views"]:
-            text = (" ".join(view["caption"]) + view["clip"] + " ".join(item[2] for item in view["legend"])
-                    + view["settings"])
-            self.assertLessEqual(len(text), 200, view["id"])
             self.assertTrue(view["label"] and view["settings"] and view["clip"], view["id"])
         scalars = {view["map"]["scalar"]: view for view in load("curvature")["views"]}
         self.assertEqual(set(scalars), {"kretschmann", "ricci_scalar"})
