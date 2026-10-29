@@ -5090,6 +5090,26 @@ DIAGRAMS = [
     Diagram("melvin", "ernst", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
             "$r/r_s$", "$ct/r_s$", {"r_s": 1, "B": "1/2"}, EQUATOR, orient="ingoing",
             lines=(("surface", "r", "4", "$r = 2/B$, the widest circle of the equator"),)),
+    # The black hole in a scalar universe at m = 1 and b = 1/3 on its two totally geodesic planes in
+    # each chart that holds the hole: the axis, where F = 1 and the metric is Schwarzschild's, and the
+    # equatorial plane, where the factor e^{-b^2 (r^2 - 2mr)} opens the cones outward. The spherical
+    # chart is drawn on through the horizon with the future taken from the ingoing rays, as
+    # Schwarzschild's own chart is; Weyl's chart ends on the horizon, the end z = m of the rod on the
+    # axis and the point rho = 0 of the equatorial plane. The universe with no black hole is drawn
+    # at b = 1 on its plane z = 0.
+    *[Diagram("scalar_field_black_hole", "spherical", plane, name, ("t", "r"), (0, 6, -3, 3), "$r/m$", "$ct/m$",
+              {"m": 1, "b": "1/3"}, fixed, orient="ingoing")
+      for plane, name, fixed in (("equator", "The equatorial plane", {**EQUATOR}),
+                                 ("axis", "The axis", {"theta": "0", "phi": "0"}))],
+    Diagram("scalar_field_black_hole", "weyl", "equator", "The equatorial plane", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/m$", "$ct/m$", {"m": 1, "b": "1/3"}, {"phi": "0", "z": "0"},
+            lines=(("surface", "r", "0", "the horizon, $\\rho = 0$"),)),
+    Diagram("scalar_field_black_hole", "weyl", "axis", "The axis", ("t", "z"), (1, 3, -1, 1),
+            "$z/m$", "$ct/m$", {"m": 1, "b": "1/3"}, {"rho": "0", "phi": "0"},
+            kretschmann_fixed={"rho": "1e-12"},
+            lines=(("surface", "r", "1", "the horizon, the end $z = m$ of the rod"),)),
+    Diagram("scalar_field_black_hole", "scalar_universe", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 3, -1.5, 1.5),
+            "$b\\rho$", "$bct$", {"b": 1}, {"phi": "0", "z": "0"}),
     # Astorino, Martelli and Vigano's hole in a swirling universe: on the equator the dragging vanishes
     # and the plane of t and r is (1 + j^2 r^4) times Schwarzschild's, at j = 1/(16 m^2), where the
     # widest circle of the equator is at r = 4m; and the swirling universe's plane z = 0, where the
@@ -5972,6 +5992,59 @@ def _bonnor_dipole_captions():
             f"The two black holes are the edges {strut[3]}, where the cones close. Light sent along the strut from "
             f"{strut[4]} takes an infinite time $t$ to reach either hole, and the distance to each is infinite as "
             "well, the length of the throat of an extremal black hole.",
+        ],
+    }
+
+
+def _scalar_field_black_hole_captions():
+    """The captions of the black hole in a scalar universe, at m = 1 and b = 1/3, on its axis and
+    its equatorial plane in the spherical chart and in Weyl's, and of the universe with no black
+    hole on its plane z = 0."""
+    hole = "the black hole in a scalar universe ($b = 1/3$, $m = 1$)"
+    inside = ("Inside $r = 2m$ the same components give cones on their side; we take the future from the ingoing "
+              "rays, as for Schwarzschild's chart, which makes that region the black hole, and the Kretschmann "
+              "scalar diverges at $r = 0$.")
+    return {
+        ("scalar_field_black_hole", "spherical", "equator"): [
+            f"The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of {hole}. On it "
+            "$F = e^{-b^2(r^2 - 2mr)}$, a ray has $c\\,dt/dr = \\pm\\sqrt{F}/(1 - 2m/r)$, and the reflection "
+            "$\\theta \\to \\pi - \\theta$ fixes the plane, so the rays are null geodesics.",
+            "Near the horizon $F$ is close to 1 and the cones close as Schwarzschild's do. Farther out $F$ falls "
+            "away as a Gaussian, the cones open wider with every step outward, and a ray leaving $r = 3m$ outward "
+            "reaches $r = \\infty$ within a coordinate time of $3.85m/c$. The Kretschmann scalar is $0.648/m^4$ on "
+            "the horizon and grows without bound as $r \\to \\infty$.",
+            inside,
+        ],
+        ("scalar_field_black_hole", "spherical", "axis"): [
+            f"The plane of $t$ and $r$ ($\\theta = 0$, $\\phi = 0$) of {hole}. On the axis $F = 1$ and the metric "
+            "is Schwarzschild's, $-(1 - 2m/r)c^2dt^2 + dr^2/(1 - 2m/r)$, so a ray has $c\\,dt/dr = \\pm 1/(1 - 2m/r)$, "
+            "and every rotation about the axis fixes the plane, so the rays are null geodesics.",
+            "The gradient of the field points along this line, and on it the cones and the Kretschmann scalar, "
+            "$48m^2/r^6$, are Schwarzschild's.",
+            inside,
+        ],
+        ("scalar_field_black_hole", "weyl", "equator"): [
+            f"The plane of $t$ and $\\rho$ ($z = 0$, $\\phi = 0$) of {hole}. In the plane $x = \\sqrt{{1 + \\rho^2/m^2}}$ "
+            "and $y = 0$, a ray has $c\\,dt/d\\rho = \\pm e^{\\gamma - 2\\psi}$, and the reflection $z \\to -z$ fixes "
+            "the plane, so the rays are null geodesics.",
+            "The whole equator of the horizon is the one point $\\rho = 0$ of the plane, where the cones close as "
+            "$c\\,dt/d\\rho = \\pm 4m/\\rho$. Farther out the field's term $-b^2\\rho^2/2$ in $\\gamma$ opens them "
+            "wider with every step, and the Kretschmann scalar is $0.648/m^4$ at $\\rho = 0$.",
+        ],
+        ("scalar_field_black_hole", "weyl", "axis"): [
+            f"The plane of $t$ and $z$ ($\\rho = 0$, $\\phi = 0$) of {hole}, on the axis beyond the rod. There "
+            "$x = z/m$, $y = 1$ and $\\gamma = 0$, so a ray has $c\\,dt/dz = \\pm(z + m)/(z - m)$, and every rotation "
+            "about the axis fixes the plane, so the rays are null geodesics.",
+            "The cones close toward the end $z = m$ of the rod, the pole of the horizon, as Schwarzschild's do, and "
+            "on this line the Kretschmann scalar is Schwarzschild's, $48m^2/(z + m)^6$.",
+        ],
+        ("scalar_field_black_hole", "scalar_universe", "radial"): [
+            "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of the universe with no black hole ($b = 1$). The "
+            "metric on it is $-c^2dt^2 + e^{-b^2\\rho^2}d\\rho^2$, so a ray has $c\\,dt/d\\rho = \\pm e^{-b^2\\rho^2/2}$, "
+            "and the reflection $z \\to -z$ fixes the plane, so the rays are null geodesics.",
+            "The cones open wider with every step from the axis, and a ray leaving the axis reaches $\\rho = \\infty$ "
+            "within a coordinate time of $\\sqrt{\\pi/2}/(bc)$. The Kretschmann scalar, $12b^4e^{2b^2\\rho^2}$, is "
+            "least on the axis and grows without bound away from it.",
         ],
     }
 
@@ -11823,6 +11896,7 @@ CAPTIONS = {
         "geodesics. The cones close at the horizon $r = r_s$, and inside it every cone points to $r = 0$, where the "
         "Kretschmann scalar diverges.",
     ],
+    **_scalar_field_black_hole_captions(),
     ("swirling_universe_black_hole", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the black hole in a swirling universe "
         "($j = 1/(16m^2)$). On the equator the dragging rate $d\\phi/d(ct) = -4j(r - 2m)\\cos\\theta$ vanishes, and "
@@ -15415,6 +15489,40 @@ def _rstar(r, horizons):
     return out
 
 
+def _sfbh_equator(r):
+    """r_* on the equator of the black hole in a scalar universe at m = 1, b = 1/3:
+    dr_*/dr = sqrt(F) r/(r - 2) with F = e^{-b^2 (r^2 - 2r)}, written as 2 ln|r - 2| plus the
+    quadrature of (sqrt(F) r - 2)/(r - 2), which is finite at the horizon."""
+    b2 = 1 / 9
+
+    def one(x):
+        smooth = quad(lambda s: (np.exp(-b2 * (s * s - 2 * s) / 2) * s - 2) / (s - 2), 2, x,
+                      epsabs=1e-13, epsrel=1e-13, limit=200)[0]
+        return smooth + 2 * math.log(abs(x - 2))
+    return np.vectorize(one, otypes=[float])(np.asarray(r, float))
+
+
+def _sfbh_weyl_equator(rho):
+    """rho_* in the equatorial plane of Weyl's chart of the same black hole: drho_*/drho =
+    e^{gamma - 2 psi} = e^{-b^2 rho^2/2} (x + 1)^2/(x rho) with x = sqrt(1 + rho^2), written as
+    4 ln(rho) plus the quadrature of what is left, which is finite at rho = 0."""
+    b2 = 1 / 9
+
+    def rate(s):
+        x = math.sqrt(1 + s * s)
+        return math.exp(-b2 * s * s / 2) * (x + 1) ** 2 / (x * s) - 4 / s
+
+    def one(p):
+        return quad(rate, 0, p, epsabs=1e-13, epsrel=1e-13, limit=200)[0] + 4 * math.log(p)
+    return np.vectorize(one, otypes=[float])(np.asarray(rho, float))
+
+
+def _sfbh_universe(rho):
+    """rho_* in the universe with no black hole at b = 1: the integral of e^{-rho^2/2},
+    sqrt(pi/2) erf(rho/sqrt(2))."""
+    return math.sqrt(math.pi / 2) * scipy_erf(np.asarray(rho, float) / math.sqrt(2))
+
+
 def _curzon_axis(z):
     """z_* on the axis of the Curzon-Chazy particle at m = 1, dz_*/dz = e^(2/z)."""
     z = np.asarray(z, float)
@@ -17091,6 +17199,18 @@ CLOSED_FORMS = {
        for view in ("cell", "images")},
     ("melvin", "ernst", "radial"):
         (lambda t, r: t + _rstar(r, [1]), lambda t, r: t - _rstar(r, [1]), lambda t, r: np.abs(r - 1) > 0.05),
+    # The black hole in a scalar universe at m = 1, b = 1/3, compared a tenth of m from the horizon.
+    ("scalar_field_black_hole", "spherical", "equator"):
+        (lambda t, r: t + _sfbh_equator(r), lambda t, r: t - _sfbh_equator(r), lambda t, r: np.abs(r - 2) > 0.1),
+    ("scalar_field_black_hole", "spherical", "axis"):
+        (lambda t, r: t + _rstar(r, [2]), lambda t, r: t - _rstar(r, [2]), lambda t, r: np.abs(r - 2) > 0.1),
+    ("scalar_field_black_hole", "weyl", "equator"):
+        (lambda t, p: t + _sfbh_weyl_equator(p), lambda t, p: t - _sfbh_weyl_equator(p), lambda t, p: p > 0.05),
+    ("scalar_field_black_hole", "weyl", "axis"):
+        (lambda t, z: t + z + 2 * np.log(np.abs(z - 1)), lambda t, z: t - z - 2 * np.log(np.abs(z - 1)),
+         lambda t, z: z > 1.1),
+    ("scalar_field_black_hole", "scalar_universe", "radial"):
+        (lambda t, p: t + _sfbh_universe(p), lambda t, p: t - _sfbh_universe(p), None),
     ("swirling_universe_black_hole", "spherical", "radial"):
         (lambda t, r: t + _rstar(r, [2]), lambda t, r: t - _rstar(r, [2]), lambda t, r: np.abs(r - 2) > 0.1),
     ("swirling_universe_black_hole", "cylindrical", "radial"): (lambda t, r: t + r, lambda t, r: t - r, None),
