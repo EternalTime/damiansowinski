@@ -58,9 +58,6 @@ write() refuses to write while any of these fails:
   physics   each spacetime's function checks what its caption states, as that function's
             docstring says.
 
-_tools/test_curvature.py holds every value on disk to the published formula again, from the
-numbers in the files and the metric files alone.
-
 
 Which spacetimes
 ----------------
@@ -6655,8 +6652,7 @@ KP_TOP = 1e9                                                # where the clip say
 
 def domain_function(metric_id, system_id, text, coords, params):
     """The domain a map declares for its chart, a closed form in sympy's spelling of the chart's
-    coordinates and parameters, as a numpy function true where the chart holds, read as
-    _tools/test_curvature.py reads it."""
+    coordinates and parameters, as a numpy function true where the chart holds."""
     _, _, reader = nr.load(metric_id, system_id)
     names = {reader._plain(n): s for n, s in reader.symbol.items()}
     names.update(reader.parameters)
