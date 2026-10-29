@@ -529,43 +529,13 @@ class Prose(unittest.TestCase):
                             self.assertNotRegex(value, r"(?i)\bblocks?\b", field)
         self.assertTrue(views)
 
-    def test_no_prose_names_the_collection_or_the_page(self):
-        """A reader is told about the spacetime, never about the collection that holds it."""
-        fields = [(f"{m['id']}.json: {field}", field, value)
-                  for m in build.load_metrics() for field, value in prose(m)]
-        fields += [(field, field, value) for name, diagram in diagram_files().items()
-                   for field, value in diagram_prose(name, diagram)]
-        fields += [(field, field, value) for name, data in conformal_files().items()
-                   for field, value in conformal_prose(name, data)]
-        fields += [(field, field, value) for name, data in embedding_files().items()
-                   for field, value in embedding_prose(name, data)]
-        fields += [(field, field, value) for name, data in curvature_files().items()
-                   for field, value in curvature_prose(name, data)]
-        self.assertTrue(fields, "no prose was read, so nothing was checked")
-        for where, field, value in fields:
-            for pattern in MACHINERY:
-                self.assertNotRegex(value, pattern, where)
-            if field != "history":
-                # A history tells of papers that were published and printed.
-                for pattern in MACHINERY_OUTSIDE_A_HISTORY:
-                    self.assertNotRegex(value, pattern, where)
-
-    def test_no_prose_or_template_hands_a_noun_back_to_what_gives_it(self):
-        """A reader is told the metric distance, never the distance the metric gives."""
-        fields = [(f"{m['id']}.json: {field}", value)
-                  for m in build.load_metrics() for field, value in prose(m)]
-        fields += [(field, value) for name, diagram in diagram_files().items()
-                   for field, value in diagram_prose(name, diagram)]
-        fields += [(field, value) for name, data in conformal_files().items()
-                   for field, value in conformal_prose(name, data)]
-        fields += [(field, value) for name, data in embedding_files().items()
-                   for field, value in embedding_prose(name, data)]
-        fields += [(field, value) for name, data in curvature_files().items()
-                   for field, value in curvature_prose(name, data)]
+    def test_no_template_hands_a_noun_back_to_what_gives_it(self):
+        """A reader is told the metric distance, never the distance the metric gives. The build
+        holds the data's prose to it; the templates and pages are held here."""
         templates = sorted({p for pattern in TEMPLATES for p in build.ROOT.glob(pattern)})
         self.assertTrue(templates, "no template was read, so none was checked")
-        fields += [(str(p.relative_to(build.ROOT)), " ".join(p.read_text(encoding="utf-8").split()))
-                   for p in templates]
+        fields = [(str(p.relative_to(build.ROOT)), " ".join(p.read_text(encoding="utf-8").split()))
+                  for p in templates]
         for where, value in fields:
             self.assertNotRegex(value, GIVES, where)
             self.assertNotRegex(value, METRIC_GIVES, where)
@@ -617,28 +587,6 @@ class Prose(unittest.TestCase):
                     )
 
 
-def voiced_prose():
-    """Yield every text held to the captain's voice, each with its place: the paragraphs of every
-    history and convention, and every caption, note, restriction band and sentence stated in place
-    of a drawing, and every sentence on why a spacetime is related to another. Labels and legends
-    name things and are not sentences."""
-    for metric in build.load_metrics():
-        for number, paragraph in build.prose_paragraphs(metric.get("history") or ""):
-            yield f"{metric['id']}.json: history paragraph {number}", paragraph
-        for chart_id, convention in build.chart_conventions(metric):
-            yield f"{metric['id']}.json: convention of {chart_id}", convention
-        for entry in metric.get("related") or []:
-            yield f"{metric['id']}.json: related {entry['id']}", entry["text"]
-    sentences = re.compile(r"\.(?:caption\[\d+\]|input|settings|height|clip|restriction|stops\[\d+\]|start|end|edge)$")
-    fields = [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
-    fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
-    fields += [field for name, data in embedding_files().items() for field in embedding_prose(name, data)]
-    fields += [field for name, data in curvature_files().items() for field in curvature_prose(name, data)]
-    for where, value in fields:
-        if sentences.search(where) or " stops[" in where:
-            yield where, value
-
-
 def opens_with_a_noun_phrase(caption):
     """Whether a caption opens with a noun phrase naming what is drawn, as "The plane of $t$ and
     $r$ ($\\theta = \\pi/2$, $\\phi = 0$)" does: it starts with a capital, never with "This", and
@@ -650,26 +598,8 @@ def opens_with_a_noun_phrase(caption):
 
 
 class Voice(unittest.TestCase):
-    """Every history, convention and caption keeps to the rules of the captain's voice that a
-    pattern can hold."""
-
-    def test_every_voiced_text_keeps_to_the_rules(self):
-        fields = list(voiced_prose())
-        self.assertGreater(len(fields), 600, "the voiced prose was not all read")
-        for where, value in fields:
-            text = without_mathematics_or_quotations(value)
-            for rule, pattern in VOICE:
-                found = re.search(pattern, text)
-                self.assertIsNone(found, f"{where} has {rule}: {found and text[max(0, found.start() - 40):found.end() + 40]!r}")
-
-    def test_every_caption_is_a_compact_noun_phrase(self):
-        fields = [(where, value) for where, value in voiced_prose() if ".json: " not in where]
-        self.assertGreater(len(fields), 300, "the captions were not all read")
-        for where, value in fields:
-            text = without_mathematics_or_quotations(value)
-            for rule, pattern in CAPTION_VOICE:
-                found = re.search(pattern, text)
-                self.assertIsNone(found, f"{where} has {rule}: {found and text[max(0, found.start() - 40):found.end() + 40]!r}")
+    """The rules of the captain's voice that a pattern can hold catch what they are for and leave
+    plain physics alone; the build holds every history, convention and caption to them."""
 
     def test_the_caption_rules_catch_the_old_openings_and_leave_the_compact_ones(self):
         def caught(text):
@@ -695,11 +625,6 @@ class Voice(unittest.TestCase):
         self.assertTrue(opens_with_a_noun_phrase("The plane of $t$ and $x$ ($y = z = 0$). The metric on it is flat."))
         self.assertTrue(opens_with_a_noun_phrase("The static chart along a line through the observer: $x = r$ on the "
                                                  "right is $\\phi = 0$."))
-
-    def test_every_hyphen_joins_names_or_an_established_term(self):
-        for where, value in voiced_prose():
-            for word in refused_hyphens(value):
-                self.fail(f"{where} spells {word!r} with a hyphen; rewrite the compound without it")
 
     def test_the_hyphen_rule_keeps_the_names_of_physics_and_refuses_english_compounds(self):
         for text in ("the no-boundary proposal of Hartle and Hawking", "half a 4-sphere", "for a 3-geometry",
@@ -761,21 +686,16 @@ class Contrast(unittest.TestCase):
         return " ".join(text.split()) + " | " + " | ".join(strings)
 
     def texts(self):
-        fields = [(f"{m['id']}.json: {field}", value) for m in build.load_metrics() for field, value in prose(m)]
-        fields += [field for name, diagram in diagram_files().items() for field in diagram_prose(name, diagram)]
-        fields += [field for name, data in conformal_files().items() for field in conformal_prose(name, data)]
-        fields += [field for name, data in embedding_files().items() for field in embedding_prose(name, data)]
-        fields += [field for name, data in curvature_files().items() for field in curvature_prose(name, data)]
-        fields += [("_layouts/mfs.html", self.layout_text()), ("MFS/index.markdown",
-                    (build.ROOT / "MFS" / "index.markdown").read_text(encoding="utf-8"))]
-        return fields
+        """The words of the page a reader sees; the build holds every text of the data to the rule."""
+        return [("_layouts/mfs.html", self.layout_text()),
+                ("MFS/index.markdown", (build.ROOT / "MFS" / "index.markdown").read_text(encoding="utf-8"))]
 
     def caught(self, text):
         return [m.group(0) for m in re.finditer(CONTRAST, without_mathematics_or_quotations(text))]
 
-    def test_no_text_a_reader_sees_defines_a_thing_by_what_it_is_not(self):
+    def test_no_text_of_the_page_defines_a_thing_by_what_it_is_not(self):
         fields = self.texts()
-        self.assertGreater(len(fields), 1000, "the texts were not all read")
+        self.assertTrue(all(value.strip() for _, value in fields), "the page was not all read")
         for where, value in fields:
             for phrase in self.caught(value):
                 with self.subTest(where, phrase=phrase):
@@ -809,6 +729,8 @@ class NoCost(unittest.TestCase):
 
     def texts(self):
         fields = Contrast().texts()
+        # Every string of every file, labels, legends and mathematics among them, where the build
+        # holds only the fields written in sentences to the rule.
         for folder in (build.METRICS_DIR, build.DIAGRAMS_DIR, build.CONFORMAL_DIR, build.EMBEDDING_DIR,
                        build.CURVATURE_DIR):
             for path in sorted(folder.glob("*.json")):
@@ -847,11 +769,6 @@ class HistoryShape(unittest.TestCase):
 
     def history(self, *counts):
         return "¶".join(self.paragraph(count) for count in counts)
-
-    def test_every_history_on_disk_keeps_its_shape(self):
-        metrics = build.load_metrics()
-        self.assertTrue(all(m.get("history") for m in metrics), "a metric has no history")
-        self.assertIsNone(build.check_prose_shape(metrics))
 
     def test_sentences_are_counted_as_a_reader_counts_them(self):
         cases = {
@@ -1434,27 +1351,6 @@ class ConventionShape(unittest.TestCase):
     @staticmethod
     def sentences(count):
         return " ".join(f"Coordinate {n} is a length." for n in range(count))
-
-    def test_every_convention_on_disk_keeps_the_rule(self):
-        for metric in build.load_metrics():
-            with self.subTest(metric["id"]):
-                self.assertEqual(build.convention_problems(metric), [])
-
-    def test_every_chart_on_disk_carries_its_own_convention(self):
-        charts = [(m["id"], c) for m in build.load_metrics() for c in m["coordinates"]]
-        self.assertGreater(len(charts), 40, "the charts were not all read")
-        for metric_id, chart in charts:
-            with self.subTest(f"{metric_id}/{chart['id']}"):
-                self.assertTrue(chart.get("convention", "").strip())
-
-    def test_no_convention_on_disk_runs_past_five_sentences_or_says_what_the_captain_named(self):
-        for metric in build.load_metrics():
-            for chart_id, text in build.chart_conventions(metric):
-                with self.subTest(f"{metric['id']}/{chart_id}"):
-                    self.assertLessEqual(len(build.sentences(text)), 5)
-                    for phrase in ("cost", "nowhere does the geometry break", "standing objection",
-                                   "the Riemann tensor with the traces removed", "slots"):
-                        self.assertNotIn(phrase, text.lower())
 
     def test_the_reader_sees_the_charts_text_then_the_shared_text(self):
         metric = self.metric("We keep factors of $c$ explicit.",
@@ -7669,9 +7565,6 @@ class Relations(unittest.TestCase):
     def problems(self, metrics):
         return build.relation_problems(metrics)
 
-    def test_the_collection_as_it_stands_holds_together(self):
-        self.assertEqual(self.problems(build.load_metrics()), [])
-
     def test_every_spacetime_on_disk_lists_at_least_one_related_spacetime(self):
         for metric in build.load_metrics():
             self.assertTrue(metric.get("related"), metric["id"])
@@ -8045,10 +7938,6 @@ class Bibliography(unittest.TestCase):
 
 
 class Citations(unittest.TestCase):
-    def test_the_collection_as_it_stands_resolves(self):
-        entries = build.build_references()["entries"]
-        self.assertIsNone(build.check_citations(build.load_metrics(), entries))
-
     def test_every_metric_lists_its_references_in_the_order_its_prose_first_cites_them(self):
         """The page numbers a citation by its place in `references`, so [1] is the first one read:
         the history's citations in order, then those of the related spacetimes, which stand
@@ -8079,9 +7968,6 @@ class Citations(unittest.TestCase):
 
 
 class Dollars(unittest.TestCase):
-    def test_the_collection_as_it_stands_balances(self):
-        self.assertIsNone(build.check_dollars())
-
     def test_a_stray_dollar_is_caught_and_balanced_mathematics_is_not(self):
         for text in ("holes at the points $z = z_i$ of the axis$, harmonic away from them",
                      "a mass $m and a charge",
@@ -8230,14 +8116,6 @@ class Aspect(unittest.TestCase):
     @staticmethod
     def file(box, mirror=False, part="systems"):
         return {"metric": "x", part: {"chart": [{"id": "view", "box": box, "mirror": mirror}]}}
-
-    def test_every_diagram_on_disk_is_between_one_to_two_and_two_to_one(self):
-        diagrams = diagram_files()
-        self.assertTrue(diagrams, "no diagram file was found, so nothing was checked")
-        problems = [problem for name, data in sorted(diagrams.items()) for problem in build.aspect_problems(name, data)]
-        self.assertEqual(problems, [])
-        self.assertIsNone(build.check_aspects(diagrams))
-        self.assertTrue(any(data.get("projections") for data in diagrams.values()), "no figure was checked")
 
     def test_the_aspect_is_the_width_of_the_box_over_its_height(self):
         self.assertEqual(build.view_aspect({"box": [0, 6, -3, 3], "mirror": False}), 1)
