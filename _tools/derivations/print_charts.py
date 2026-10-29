@@ -3313,31 +3313,57 @@ def twisting_on_shell(chart, value):
     return value
 
 
+def twisting_at_points(value, chart, seed):
+    """`value` at three random points of the jet: the chart's two coordinates, psi, omega and gamma
+    and every derivative of them left standing set to random rationals, so that a value of the
+    field equations' consequences is exactly zero there, and anything else is not."""
+    rng = random.Random(seed)
+    value = sp.sympify(value)
+    jet = sorted(value.atoms(sp.Derivative), key=sp.default_sort_key)
+    jet += sorted(value.atoms(sp.core.function.AppliedUndef), key=sp.default_sort_key)
+    for _ in range(3):
+        at = {d: sp.Rational(rng.randint(-40, 40), 17) for d in jet}
+        point = value.xreplace(at)
+        point = point.xreplace({chart.symbols[0]: sp.Rational(rng.randint(-40, 40), 13),
+                                chart.symbols[1]: sp.Rational(rng.randint(60, 140), 13)})
+        if abs(sp.N(point, 50)) > sp.Float(10) ** -40:
+            return False
+    return True
+
+
 def twisting_check(chart):
-    ricci = chart.geo.ricci_ll()
     for i in range(4):
         for j in range(i, 4):
-            if not gowdy_vanishes(twisting_on_shell(chart, ricci[i][j])):
+            if not twisting_at_points(twisting_on_shell(chart, chart.geo.ricci_ll()[i][j]), chart, 1958 + 4 * i + j):
                 raise AssertionError(f"twisting_cylindrical_waves: the stated field equations leave "
                                      f"R_{chart.coords_tex[i]}{chart.coords_tex[j]} standing")
     psi, om, gam = (chart.reader.parameters[n] for n in ("psi", "omega", "gamma"))
     g = chart.geo.g
-    # With omega = 0 the metric is Einstein and Rosen's in the same chart.
+    rng = random.Random(1960)
+    P, Q, O = sp.symbols("P Q O")
+    # With omega = 0 the metric is Einstein and Rosen's in the same chart, compared at points.
     system = "cylindrical" if chart.coords_tex[0] == "t" else "null"
     er = cp.Chart(chart.coords_tex, ER_PARAMETERS[system], einstein_rosen(system)["chart_line_element"])
-    same = {er.reader.parameters["psi"]: psi, er.reader.parameters["gamma"]: gam}
+    mine = {psi: P, gam: Q, om: 0}
+    theirs = {er.reader.parameters["psi"]: P, er.reader.parameters["gamma"]: Q}
+
+    def points():
+        for _ in range(3):
+            yield {P: sp.Rational(rng.randint(-30, 30), 11), Q: sp.Rational(rng.randint(-30, 30), 11),
+                   O: sp.Rational(rng.randint(-30, 30), 11), chart.symbols[0]: sp.Rational(rng.randint(-30, 30), 7),
+                   chart.symbols[1]: sp.Rational(rng.randint(40, 90), 7)}
     for a in range(4):
         for b in range(a, 4):
-            if vm.norm(g[a, b].subs(om, 0) - er.geo.g[a, b].subs(same)) != 0:
-                raise AssertionError("twisting_cylindrical_waves: omega = 0 is not Einstein and Rosen's metric "
-                                     f"in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+            for at in points():
+                if abs(sp.N((g[a, b].subs(mine) - er.geo.g[a, b].subs(theirs)).subs(at), 50)) > sp.Float(10) ** -40:
+                    raise AssertionError("twisting_cylindrical_waves: omega = 0 is not Einstein and Rosen's metric "
+                                         f"in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
     if system == "cylindrical":
         return
     source_spec = twisting_cylindrical_waves("cylindrical")
     source = cp.Chart(source_spec["system"]["coords"], source_spec["system"]["parameters"],
                       source_spec["chart_line_element"])
     u, v = chart.symbols[:2]
-    P, Q, O = sp.symbols("P Q O")
     values = {source.reader.parameters["psi"]: P, source.reader.parameters["gamma"]: Q,
               source.reader.parameters["omega"]: O}
     target = {psi: P, gam: Q, om: O}
@@ -3349,9 +3375,11 @@ def twisting_check(chart):
     pulled = jacobian.T * source.geo.g.subs(values).subs(at) * jacobian
     for a in range(4):
         for b in range(a, 4):
-            if vm.norm(pulled[a, b] - g[a, b].subs(target)) != 0:
-                raise AssertionError(f"twisting_cylindrical_waves: the pullback of the cylindrical metric misses "
-                                     f"the null chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+            for point in points():
+                point[v] = point[u] + abs(point[v])
+                if abs(sp.N((pulled[a, b] - g[a, b].subs(target)).subs(point), 50)) > sp.Float(10) ** -40:
+                    raise AssertionError(f"twisting_cylindrical_waves: the pullback of the cylindrical metric misses "
+                                         f"the null chart in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
 
 
 # -- Melvin ------------------------------------------------------------------------------
