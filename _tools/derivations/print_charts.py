@@ -16,7 +16,7 @@ born_infeld_charge, penrose_impulsive_wave, exponential_metric, bondi_sachs, pet
 rp3_geon, kopczynski_trautman, brill_waves, ab_metrics, datt_ruban_t_models, kasner_scalar,
 moving_mirror, gravitational_instantons, small_universes, misner_zapolsky, distorted_schwarzschild,
 cremmer_scherk, brans_dicke_sphere, bonnor_charged_dust, maitra_dust, eih_many_bodies,
-tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin,
+tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin, scalar_field_black_hole,
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
@@ -7842,7 +7842,136 @@ def scalar_field_black_hole_check(chart):
         raise AssertionError("scalar_field_black_hole: at b = 0 the metric is not Schwarzschild's, or flat space")
 
 
+SFBH_W_PSI = "\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{x - 1}{x + 1}\\right)"
+SFBH_W_GAMMA = "\\gamma = \\dfrac{1}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right) - \\dfrac{b^2\\rho^2}{2}"
+def sfbh_weyl_parameters():
+    """Weyl's chart names the prolate spheroidal x and y as the black hole in a tidal field does."""
+    return ["m", "b", DS_W_X, DS_W_Y, SFBH_W_PSI, SFBH_W_GAMMA]
+
+
+def scalar_field_black_hole_weyl():
+    """The black hole in Weyl's canonical chart, as Herdeiro builds it (2024): psi is the
+    potential of Schwarzschild's rod rho = 0, |z| <= m, and gamma is the rod's plus
+    -b^2 rho^2/2, the quadrature of the field b z, which is harmonic in the flat space of rho,
+    phi and z. psi and gamma are held as functions (vm.HELD), as the black hole in a tidal
+    field holds them, and `reduce` writes gamma's derivatives by the quadrature with the field,
+    d_rho gamma = rho((d_rho psi)^2 - (d_z psi)^2 - b^2) and d_z gamma = 2 rho d_rho psi d_z psi,
+    and psi's second derivative along rho by Laplace's equation."""
+    D = sp.Derivative
+    coords = ["t", "\\rho", "\\phi", "z"]
+
+    def line(c2):
+        return (f"ds^2 = -e^{{2\\psi}}{c2}dt^2 + e^{{-2\\psi}}\\left(e^{{2\\gamma}}\\left(d\\rho^2 + dz^2\\right)"
+                " + \\rho^2d\\phi^2\\right)")
+    probe = vm.Reader(coords, sfbh_weyl_parameters(), (), held=MM_HELD)
+    a, z = probe.symbol["\\rho"], probe.symbol["z"]
+    psi, gam = probe.parameters["psi"], probe.parameters["gamma"]
+    lead = [gam, psi]
+    for g in (gam, psi):
+        lead += [D(g, a), D(g, z)]
+    for g in (gam, psi):
+        lead += [D(g, (a, 2)), D(g, a, z), D(g, (z, 2))]
+    lead += [probe.parameters["b"], a]
+    named, overrides = distorted_weyl_exponentials([probe.symbol[name] for name in coords], lead, psi, gam)
+    return {
+        "metric_id": "scalar_field_black_hole",
+        "system": {"id": "weyl", "name": "Weyl", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                               "z \\in (-\\infty, \\infty)",
+                               "\\rho = 0,\\; |z| \\le m \\;\\text{(the horizon)}"],
+                   "parameters": sfbh_weyl_parameters(), "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": lead, "factors": lead + list(overrides), "overrides": overrides},
+        "pretty": distorted_weyl_pretty(named),
+        "reduce": scalar_field_black_hole_weyl_reduce(a, z, psi, gam, probe.parameters["b"]),
+        "check": scalar_field_black_hole_weyl_check,
+        "after": scalar_field_black_hole_weyl_zeros,
+    }
+
+
+def scalar_field_black_hole_weyl_zeros(math, chart):
+    """A component that vanishes only where the field equations hold, as R_tt does, is built
+    standing and written as zero: it is left out, as every vanishing component is."""
+    for field, block in math.items():
+        if isinstance(block, dict) and "variants" in block:
+            for variant in block["variants"].values():
+                variant["nonzero"] = [entry for entry in variant["nonzero"] if entry["value"] != "0"]
+    return math
+
+
+def scalar_field_black_hole_weyl_reduce(rho, z, psi, gam, b):
+    """`value` where the field equations hold in Weyl's chart: gamma's derivatives by the
+    quadrature with the field b z and that quadrature's derivatives, then psi's second
+    derivative along rho, and its derivatives, by Laplace's equation."""
+    D = sp.Derivative
+    gx, gy = morgan_morgan_quadrature(rho, z, D(psi, rho), D(psi, z), False)
+    gx -= b ** 2 * rho
+    second = morgan_morgan_laplace(rho, z, psi, False)
+    pxx = second[D(psi, (rho, 2))]
+
+    def reduce(value):
+        value = sp.sympify(value)
+        value = value.subs({D(gam, (rho, 2)): sp.diff(gx, rho), D(gam, (z, 2)): sp.diff(gy, z),
+                            D(gam, rho, z): sp.diff(gx, z)}).doit()
+        value = value.subs({D(gam, rho): gx, D(gam, z): gy}).doit()
+        value = value.subs({D(psi, (rho, 3)): sp.diff(pxx, rho), D(psi, (rho, 2), z): sp.diff(pxx, z)}).doit()
+        return value.subs(second).doit()
+    return reduce
+
+
+def scalar_field_black_hole_weyl_check(chart):
+    """Weyl's chart: where Laplace's equation and the quadrature hold, the Ricci tensor is
+    2 d phi d phi for the field phi = b z, which is R_zz = 2 b^2 alone; the quadrature is
+    integrable there; and at six random points, in forty digits, psi solves Laplace's equation,
+    gamma the quadrature, gamma vanishes on the axis beyond the rod, and the chart is the
+    spherical chart carried by rho = sqrt(r^2 - 2mr) sin(theta) and z = (r - m) cos(theta)."""
+    D = sp.Derivative
+    t, rho, ph, z = chart.symbols
+    P = chart.reader.parameters
+    psi, gam, b, m = P["psi"], P["gamma"], P["b"], P["m"]
+    on_shell = scalar_field_black_hole_weyl_reduce(rho, z, psi, gam, b)
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            source = 2 * b ** 2 if (i, j) == (3, 3) else 0
+            if not gowdy_vanishes(on_shell(ricci[i][j]) - source):
+                raise AssertionError(f"scalar_field_black_hole: the field equations leave R_{chart.coords_tex[i]}"
+                                     f"{chart.coords_tex[j]} other than 2 d phi d phi in Weyl's chart")
+    gx, gy = morgan_morgan_quadrature(rho, z, D(psi, rho), D(psi, z), False)
+    gx -= b ** 2 * rho
+    if not gowdy_vanishes((sp.diff(gx, z) - sp.diff(gy, rho)).subs(morgan_morgan_laplace(rho, z, psi, False)).doit()):
+        raise AssertionError("scalar_field_black_hole: the quadrature for gamma is not integrable on Laplace's equation")
+    Psi, Gam = chart.reader.held[psi], chart.reader.held[gam]
+    r, th = sp.symbols("SFBHr SFBHth", positive=True)
+    carried = {rho: sp.sqrt(r ** 2 - 2 * m * r) * sp.sin(th), z: (r - m) * sp.cos(th)}
+    spherical = {"g_tt": -sp.exp(2 * Psi) + (1 - 2 * m / r),
+                 "conformal factor": sp.exp(2 * Gam - 2 * Psi) * (r ** 2 - 2 * m * r + m ** 2 * sp.sin(th) ** 2)
+                 - r ** 2 * sp.exp(-b ** 2 * (r ** 2 - 2 * m * r) * sp.sin(th) ** 2),
+                 "g_phiphi": rho ** 2 * sp.exp(-2 * Psi) - r ** 2 * sp.sin(th) ** 2}
+    checks = {"Laplace's equation": sp.diff(rho * sp.diff(Psi, rho), rho) / rho + sp.diff(Psi, z, 2),
+              "the quadrature along rho": sp.diff(Gam, rho) - (rho * (sp.diff(Psi, rho) ** 2 - sp.diff(Psi, z) ** 2)
+                                                               - b ** 2 * rho),
+              "the quadrature along z": sp.diff(Gam, z) - 2 * rho * sp.diff(Psi, rho) * sp.diff(Psi, z)}
+    rng = random.Random(7)
+    for _ in range(6):
+        mv, bv = sp.Rational(rng.randint(5, 20), 10), sp.Rational(rng.randint(1, 30), 100)
+        at = {m: mv, b: bv, rho: sp.Rational(rng.randint(1, 40), 10), z: sp.Rational(rng.randint(-40, 40), 10)}
+        for label, value in checks.items():
+            if abs(sp.N(value.subs(at), 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"scalar_field_black_hole: Weyl's chart misses {label}")
+        rv, tv = 2 * mv + sp.Rational(rng.randint(1, 40), 10), sp.Rational(rng.randint(1, 30), 10)
+        point = {r: rv, th: tv, m: mv, b: bv}
+        for label, value in spherical.items():
+            value = value.subs(carried).subs(point)
+            if abs(sp.N(value, 40)) > sp.Float("1e-30"):
+                raise AssertionError(f"scalar_field_black_hole: Weyl's chart is not the spherical chart carried, {label}")
+        beyond = {m: mv, b: bv, rho: 0, z: mv + sp.Rational(rng.randint(1, 40), 10)}
+        if abs(sp.N(sp.limit(Gam.subs({m: mv, b: bv, z: beyond[z]}), rho, 0), 40)) > sp.Float("1e-30"):
+            raise AssertionError("scalar_field_black_hole: gamma does not vanish on the axis beyond the rod")
+
+
 CHARTS["scalar_field_black_hole"] = [lambda s=s: scalar_field_black_hole(s) for s in ("spherical", "scalar_universe")]
+CHARTS["scalar_field_black_hole"].insert(1, scalar_field_black_hole_weyl)
 
 
 # -- Roberts's scalar field collapse -------------------------------------------------------

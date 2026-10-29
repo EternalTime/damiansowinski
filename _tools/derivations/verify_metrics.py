@@ -486,6 +486,10 @@ DIMENSIONS = {
     ("scalar_field_black_hole", "scalar_universe"): {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "b": "1/L",
     },
+    ("scalar_field_black_hole", "weyl"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "b": "1/L", "x": "1", "y": "1", "\\psi": "1",
+        "\\gamma": "1",
+    },
     # m is half the mass as a length and b the dipole moment over the mass, a length; P, Q, Y
     # and Z are Bonnor's four polynomials, each an area.
     ("bonnor_magnetic_dipole", "spheroidal"): {
@@ -2535,6 +2539,8 @@ HELD = {
     ("distorted_schwarzschild", "prolate_spheroidal"): ("U", "V"),
     ("distorted_schwarzschild", "spherical"): ("U", "V"),
     ("distorted_schwarzschild", "weyl"): ("psi", "gamma"),
+    # Weyl's psi and gamma for the black hole in a scalar universe, held as the tidal field's are.
+    ("scalar_field_black_hole", "weyl"): ("psi", "gamma"),
     # Wahlquist's h_1 and h_2, and Mars's U and V, each a function of one coordinate that holds
     # that coordinate bare beside its sine, so that its derivatives are algebraic in the function.
     ("wahlquist", "wahlquist"): ("h_1", "h_2"),
@@ -2694,6 +2700,14 @@ RATES = {
         "psi": {"\\rho": "\\dfrac{\\rho\\,x}{m^2\\left(x^2 - 1\\right)\\left(x^2 - y^2\\right)} - \\dfrac{3q\\rho}{2m^2}",
                 "z": "\\dfrac{y}{m\\left(x^2 - y^2\\right)} + \\dfrac{3q\\,z}{m^2}"},
         "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
+    # The black hole in a scalar universe in Weyl's chart: psi is Schwarzschild's rod, whose slopes are
+    # rational in rho, z, x and y, and gamma's slopes are the quadrature with the field b z.
+    ("scalar_field_black_hole", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{\\rho\\,x}{m^2\\left(x^2 - 1\\right)\\left(x^2 - y^2\\right)}",
+                "z": "\\dfrac{y}{m\\left(x^2 - y^2\\right)}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2 - b^2\\right)",
                   "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
     },
     # N' = Q r_s r Z^(Q - 1)/R^3 with Z^Q = N P, and P = Z^Q/N.

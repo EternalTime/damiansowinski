@@ -2147,6 +2147,2069 @@
       ]
     },
     {
+      "id": "weyl",
+      "name": "Weyl",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)",
+        "\\rho = 0,\\; |z| \\le m \\;\\text{(the horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass parameter, a length, $m = GM/c^2$ with $M$ the mass of the black hole"
+        },
+        {
+          "symbol": "b",
+          "description": "Gradient of the scalar field, an inverse length; the field is $\\varphi = \\sqrt{c^4/4\\pi G}\\,bz$, with $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$, and $b = 0$ is Schwarzschild's metric"
+        },
+        {
+          "symbol": "x = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} + \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}",
+          "description": "The prolate spheroidal radial coordinate, half the sum of the distances from the two ends of the rod $\\rho = 0$, $|z| \\le m$, over $m$"
+        },
+        {
+          "symbol": "y = \\dfrac{\\sqrt{\\rho^2 + \\left(z + m\\right)^2} - \\sqrt{\\rho^2 + \\left(z - m\\right)^2}}{2m}",
+          "description": "The prolate spheroidal angular coordinate, half the difference of the same two distances, over $m$"
+        },
+        {
+          "symbol": "\\psi = \\dfrac{1}{2}\\ln\\left(\\dfrac{x - 1}{x + 1}\\right)",
+          "description": "Weyl's first function, the potential of Schwarzschild's rod; it solves Laplace's equation, $\\partial_\\rho^2\\psi + \\dfrac{1}{\\rho}\\partial_\\rho\\psi + \\partial_z^2\\psi = 0$"
+        },
+        {
+          "symbol": "\\gamma = \\dfrac{1}{2}\\ln\\left(\\dfrac{x^2 - 1}{x^2 - y^2}\\right) - \\dfrac{b^2\\rho^2}{2}",
+          "description": "Weyl's second function, fixed by $\\psi$ and the field through $\\partial_\\rho\\gamma = \\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2 - b^2\\right)$ and $\\partial_z\\gamma = 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi$; the term $-b^2\\rho^2/2$ is the field's"
+        }
+      ],
+      "convention": "We use Weyl's canonical coordinates $(t, \\rho, \\phi, z)$, with $t$ carrying dimensions of time and $\\rho$ and $z$ lengths; the horizon is the rod $\\rho = 0$, $|z| \\le m$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -e^{2\\psi}c^2dt^2 + e^{-2\\psi}\\left(e^{2\\gamma}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{2\\psi}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "e^{2\\gamma - 2\\psi}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{2\\gamma - 2\\psi}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\rho^2e^{-2\\psi}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-2\\psi}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "e^{-2\\gamma + 2\\psi}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{-2\\gamma + 2\\psi}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{e^{2\\psi}}{\\rho^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\partial_\\rho\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\partial_\\rho\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\partial_\\rho\\psi"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\left(\\partial_\\rho\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2 + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "\\left(\\partial_\\rho\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2 + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\left(\\partial_\\rho\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2 + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\left(\\partial_\\rho\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2 + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\left(\\partial_z\\psi - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\left(\\partial_z\\psi - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\left(\\partial_z\\psi - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\partial_z\\psi - 2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\rho\\,e^{-2\\gamma}\\left(\\rho\\,\\partial_\\rho\\psi - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1 - \\rho\\,\\partial_\\rho\\psi}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{1 - \\rho\\,\\partial_\\rho\\psi}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\gamma}\\partial_z\\psi"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-e^{2\\psi}\\partial_\\rho\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\partial_\\rho\\psi"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\partial_\\rho\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-e^{2\\psi}\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z"
+                ],
+                "value": "-e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "e^{2\\gamma - 2\\psi}\\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "e^{2\\gamma - 2\\psi}\\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-e^{2\\gamma - 2\\psi}\\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "e^{2\\gamma - 2\\psi}\\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\rho\\,e^{-2\\psi}\\left(\\rho\\,\\partial_\\rho\\psi - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho\\,e^{-2\\psi}\\left(\\rho\\,\\partial_\\rho\\psi - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\rho\\,e^{-2\\psi}\\left(\\rho\\,\\partial_\\rho\\psi - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\partial_z\\psi"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\partial_z\\psi"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi}{\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi}{\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\rho\\,e^{-2\\gamma}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\rho\\,e^{-2\\gamma}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{e^{-2\\gamma + 4\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{-2\\gamma + 4\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\gamma}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho^2e^{-2\\gamma}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{-2\\gamma + 4\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{-2\\gamma + 4\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\rho\\left(\\partial_\\rho\\psi\\right)^3 + 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\,\\partial_\\rho\\psi - 2\\left(\\partial_z\\psi\\right)^2 - \\partial_z^2\\psi - b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\rho\\left(\\partial_\\rho\\psi\\right)^3 + 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\,\\partial_\\rho\\psi - 2\\left(\\partial_z\\psi\\right)^2 - \\partial_z^2\\psi - b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-e^{-2\\gamma + 4\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\rho\\,e^{-2\\gamma}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\rho\\,e^{-2\\gamma}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{e^{2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{e^{2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\rho\\,e^{-2\\gamma + 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\rho\\,e^{-2\\gamma + 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\rho\\,e^{-2\\gamma + 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\rho\\,e^{-2\\gamma + 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "e^{2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-e^{2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + b^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{e^{2\\gamma - 2\\psi}\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\rho\\,e^{-2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\rho\\,e^{-2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\rho\\,e^{-2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\rho\\,e^{-2\\psi}\\left(\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho^2\\,\\partial_\\rho\\psi + \\partial_\\rho\\psi + \\rho\\left(\\partial_z\\psi\\right)^2 + \\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2b^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2b^2e^{-2\\gamma + 2\\psi}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2b^2e^{-4\\gamma + 4\\psi}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 2b^2e^{-2\\gamma + 2\\psi}",
+      "kretschmann": "K = \\dfrac{4e^{-4\\gamma + 4\\psi}\\left(4\\rho^4\\left(\\partial_\\rho\\psi\\right)^6 - 12\\rho^3\\left(\\partial_\\rho\\psi\\right)^5 + 12\\rho^4\\left(\\partial_\\rho\\psi\\right)^4\\left(\\partial_z\\psi\\right)^2 - 8b^2\\,\\rho^4\\left(\\partial_\\rho\\psi\\right)^4 + 16\\rho^2\\left(\\partial_\\rho\\psi\\right)^4 - 24\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\left(\\partial_z\\psi\\right)^2 + 8\\rho^3\\left(\\partial_\\rho\\psi\\right)^3\\,\\partial_z^2\\psi + 16b^2\\,\\rho^3\\left(\\partial_\\rho\\psi\\right)^3 - 12\\rho\\left(\\partial_\\rho\\psi\\right)^3 + 12\\rho^4\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^4 + 12\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\left(\\partial_z\\psi\\right)^2 - 24\\rho^3\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi - 12\\rho^2\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi + 4b^4\\,\\rho^4\\left(\\partial_\\rho\\psi\\right)^2 - 8b^2\\,\\rho^2\\left(\\partial_\\rho\\psi\\right)^2 + 4\\left(\\partial_\\rho\\psi\\right)^2 - 12\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^4 - 24\\rho^3\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + 24\\rho^2\\,\\partial_\\rho\\psi\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi - 8b^2\\,\\rho^3\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + 4\\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi - 4b^4\\,\\rho^3\\,\\partial_\\rho\\psi + 4\\rho^4\\left(\\partial_z\\psi\\right)^6 + 8b^2\\,\\rho^4\\left(\\partial_z\\psi\\right)^4 + 12\\rho^2\\left(\\partial_z\\psi\\right)^4 + 8\\rho^3\\left(\\partial_z\\psi\\right)^3\\,\\partial_\\rho\\partial_z\\psi + 12\\rho^2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi + 4b^4\\,\\rho^4\\left(\\partial_z\\psi\\right)^2 + 8b^2\\,\\rho^2\\left(\\partial_z\\psi\\right)^2 + 8b^2\\,\\rho^3\\,\\partial_z\\psi\\,\\partial_\\rho\\partial_z\\psi + 4\\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + 4\\rho^2\\left(\\partial_z^2\\psi\\right)^2 + 4b^2\\,\\rho^2\\,\\partial_z^2\\psi + 3b^4\\,\\rho^2\\right)}{\\rho^2}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "b^2e^{-2\\gamma + 4\\psi}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-b^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "b^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-b^2\\,\\rho^2e^{-2\\gamma}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-b^2e^{-2\\gamma + 2\\psi}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-b^2e^{-2\\gamma + 2\\psi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-b^2e^{-2\\gamma + 2\\psi}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "b^2e^{-2\\gamma + 2\\psi}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "b^2e^{-2\\gamma}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-b^2e^{-4\\gamma + 4\\psi}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "b^2e^{-4\\gamma + 4\\psi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{b^2e^{-2\\gamma + 4\\psi}}{\\rho^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\left(3\\partial_\\rho\\psi\\,\\partial_z\\psi - 3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi + \\rho\\left(\\partial_z\\psi\\right)^3 + b^2\\,\\rho\\,\\partial_z\\psi + \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho\\,e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\rho\\,e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + \\dfrac{2b^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + \\dfrac{2b^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + \\dfrac{2b^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\left(\\rho\\left(\\partial_\\rho\\psi\\right)^3 - \\left(\\partial_\\rho\\psi\\right)^2 - 3\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\,\\partial_\\rho\\psi + 2\\left(\\partial_z\\psi\\right)^2 + \\partial_z^2\\psi + \\dfrac{2b^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{e^{-2\\gamma + 4\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{-2\\gamma + 4\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho^2e^{-2\\gamma}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-2\\gamma + 4\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\rho\\,e^{-2\\gamma}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho\\,e^{-2\\gamma}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{e^{2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{e^{2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "z"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "z",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho\\,e^{-2\\gamma + 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\rho\\,e^{-2\\gamma + 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho\\,e^{-2\\gamma + 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\rho\\,e^{-2\\gamma + 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^3 - 3\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho\\,\\partial_\\rho\\psi + 6\\left(\\partial_z\\psi\\right)^2 + 3\\partial_z^2\\psi + 2b^2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "-\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho^2e^{-2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z\\psi - 3\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\left(\\partial_z\\psi\\right)^3 - b^2\\,\\rho\\,\\partial_z\\psi - \\partial_\\rho\\partial_z\\psi\\right)"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "\\dfrac{e^{2\\gamma - 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "z",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{e^{2\\gamma - 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "\\rho",
+                  "z"
+                ],
+                "value": "-\\dfrac{e^{2\\gamma - 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\rho",
+                  "z",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{e^{2\\gamma - 2\\psi}\\left(3\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + b^2\\,\\rho\\right)}{3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\rho\\,e^{-2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\rho\\,e^{-2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\rho\\,e^{-2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\rho\\,e^{-2\\psi}\\left(3\\rho^2\\left(\\partial_\\rho\\psi\\right)^3 - 6\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 9\\rho^2\\,\\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - 3b^2\\,\\rho^2\\,\\partial_\\rho\\psi + 3\\partial_\\rho\\psi + 3\\rho\\left(\\partial_z\\psi\\right)^2 + 3\\rho\\,\\partial_z^2\\psi + b^2\\,\\rho\\right)}{3}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + 2\\partial_\\rho\\psi\\,\\dot{t}\\dot{\\rho} + 2\\partial_z\\psi\\,\\dot{t}\\dot{z} = 0",
+        "\\ddot{\\rho} + e^{-2\\gamma + 4\\psi}\\partial_\\rho\\psi\\,\\dot{t}^2 + \\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\right)\\dot{\\rho}^2 + 2\\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi\\,\\dot{\\rho}\\dot{z} + \\rho\\,e^{-2\\gamma}\\left(\\rho\\,\\partial_\\rho\\psi - 1\\right)\\dot{\\phi}^2 - \\left(\\rho\\left(\\partial_\\rho\\psi\\right)^2 - \\partial_\\rho\\psi - \\rho\\left(\\partial_z\\psi\\right)^2 - b^2\\,\\rho\\right)\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2 - 2\\rho\\,\\partial_\\rho\\psi}{\\rho}\\dot{\\rho}\\dot{\\phi} - 2\\partial_z\\psi\\,\\dot{\\phi}\\dot{z} = 0",
+        "\\ddot{z} + e^{-2\\gamma + 4\\psi}\\partial_z\\psi\\,\\dot{t}^2 - \\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi\\,\\dot{\\rho}^2 + \\left(2\\rho\\left(\\partial_\\rho\\psi\\right)^2 - 2\\partial_\\rho\\psi - 2\\rho\\left(\\partial_z\\psi\\right)^2 - 2b^2\\,\\rho\\right)\\dot{\\rho}\\dot{z} + \\rho^2e^{-2\\gamma}\\partial_z\\psi\\,\\dot{\\phi}^2 + \\left(2\\rho\\,\\partial_\\rho\\psi - 1\\right)\\partial_z\\psi\\,\\dot{z}^2 = 0"
+      ]
+    },
+    {
       "id": "scalar_universe",
       "name": "Scalar Universe",
       "coords": [
