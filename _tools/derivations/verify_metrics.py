@@ -19,6 +19,7 @@ UNCHECKED with the reason. The script exits non-zero if anything disagreed.
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py
 
 Pass --system <metric_id>/<system_id> to check one system, repeatable.
+Pass --metric <metric_id> to check every system that metric publishes, repeatable.
 Pass --budget <seconds> to change the per tensor time budget, which defaults to 120.
 Pass --dimensions-only to run the dimensional pass alone and skip the sympy algebra.
 
@@ -4988,24 +4989,38 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--system", action="append", default=[],
                         help="check only <metric_id>/<system_id>, repeatable")
+    parser.add_argument("--metric", action="append", default=[],
+                        help="check every system of <metric_id>, repeatable")
     parser.add_argument("--budget", type=float, default=DEFAULT_BUDGET_SECONDS,
                         help="seconds sympy may spend on one tensor")
     parser.add_argument("--dimensions-only", action="store_true",
                         help="run the dimensional pass alone and skip the sympy algebra")
     arguments = parser.parse_args()
 
+    metrics = [json.loads(path.read_text(encoding="utf-8"))
+               for path in sorted(METRICS_DIR.glob("*.json"))
+               if not CONFLICT_COPY.search(path.stem)]
+    # --metric names a spacetime and stands for --system on each chart it publishes, so a
+    # chart added later is checked without an edit here.
+    selected = list(arguments.system)
+    charts = {metric["id"]: [f"{metric['id']}/{entry['id']}" for entry in metric.get("coordinates", [])]
+              for metric in metrics}
+    for metric_id in arguments.metric:
+        if metric_id not in charts:
+            parser.error(f"--metric {metric_id}: no metric with that id in {METRICS_DIR}")
+        if not charts[metric_id]:
+            parser.error(f"--metric {metric_id}: the metric publishes no coordinate systems")
+        selected += charts[metric_id]
+
     report = Report()
     files = 0
     against = "for dimensional balance" if arguments.dimensions_only else "against sympy"
     print(f"Checking every published coordinate system {against}, in the x^0 = cT chart.\n")
-    for path in sorted(METRICS_DIR.glob("*.json")):
-        if CONFLICT_COPY.search(path.stem):
-            continue
+    for metric in metrics:
         files += 1
-        metric = json.loads(path.read_text(encoding="utf-8"))
         for entry in metric.get("coordinates", []):
             name = f"{metric['id']}/{entry['id']}"
-            if arguments.system and name not in arguments.system:
+            if selected and name not in selected:
                 continue
             check_system(report, metric["id"], entry, arguments.budget,
                          arguments.dimensions_only)
