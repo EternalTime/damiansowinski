@@ -9065,7 +9065,7 @@ def regular_black_hole_pure_gravity(system_id):
               " + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)")
     angles = ["\\psi", "\\theta", "\\phi"]
     domains = ["r \\in [0, \\infty)", "\\psi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)",
-               "r = r_+ \;\\text{(the outer horizon)}", "r = r_- \;\\text{(the inner horizon)}"]
+               "r = r_+ \\;\\text{(the outer horizon)}", "r = r_- \\;\\text{(the inner horizon)}"]
     parameters = ["r_0", "\\ell"]
     if system_id == "spherical":
         coords = ["t", "r"] + angles
