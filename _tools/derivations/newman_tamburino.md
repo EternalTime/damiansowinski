@@ -57,3 +57,7 @@ It diverges where $r \to |a|$, the end of every ray.
 
 At a random point of each chart the Weyl scalars in a null tetrad built on $\ell = \partial_r$ have $\Psi_0 = 0$, $\Psi_1 \neq 0$ and $I^3 \neq 27J^2$, with $I = \Psi_0\Psi_4 - 4\Psi_1\Psi_3 + 3\Psi_2^2$ and $J$ the determinant of the Weyl scalars' Hankel matrix: both are of type I, with $\partial_r$ a principal null direction that is not repeated.
 In the cylindrical limit $\Psi_4$ vanishes in that tetrad as well, and its Kretschmann scalar is $K = 16\left(3 - \ln(r^2x^4/\ell^2)\right)/(r^4x^4)$, which vanishes on the surface $r\,x^2 = e^{3/2}\ell$ and changes sign there.
+
+## Step 6. No conformal diagram
+
+The page draws no conformal diagram, since neither class has a known maximal extension or a pair of null coordinates that bring its ends to a finite place, and the metrics depend on more than two coordinates, so no plane of them carries the whole causal structure; `newman_tamburino` stands in `NOT_DRAWN` in `conformal.py`.
