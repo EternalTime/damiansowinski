@@ -357,6 +357,11 @@ REGIONS = {
         "why": "vacuum_core leaves f free; the core is a vacuum where f is harmonic in x "
                "and y, as the other two charts take it",
     },
+    "newman_tamburino": {
+        "regions": [["spherical"], ["cylindrical"]],
+        "why": "the spherical class and the limit of the cylindrical class are two spacetimes, the second "
+               "with two Killing vectors, d_u and d_y, which the first lacks (Steele 2004, section 2)",
+    },
     "plebanski_hacyan": {
         "regions": [["sphere", "sphere_rindler"], ["plane", "plane_null", "plane_static"],
                     ["anti_nariai", "anti_nariai_static"]],

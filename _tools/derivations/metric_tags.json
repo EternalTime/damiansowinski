@@ -10944,6 +10944,41 @@
   ],
   "sphere": null
  },
+ "newman_tamburino/cylindrical": {
+  "stamp": "bce77c0ddaa362a7",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "newman_tamburino/spherical": {
+  "stamp": "d11068eca99f8435",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [],
+  "sphere": null
+ },
  "nordstrom_scalar/conformal": {
   "stamp": "dc0ebeccd53d79a5",
   "relations": {},

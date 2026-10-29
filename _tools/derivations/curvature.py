@@ -17657,7 +17657,150 @@ def ozsvath_dust(ck, src):
     return views
 
 
+
+NT_CYL_SCALE = {"kind": "symlog", "from": -10.0, "to": 1e4, "linear": 1e-2}   # the colours of K ell^4
+NT_CYL_CELLS = (160, 160)
+
+
+def newman_tamburino_cylindrical(ck, src):
+    """Newman and Tamburino's cylindrical limit at ell = 1, its Kretschmann scalar over the
+    quarter plane of r and x, 0 < r/ell <= 4 and 0 < x <= 4, in 160 by 160 cells.
+
+    The chart publishes K = -(16 ln(r^2 x^4/ell^2) - 48)/(r^4 x^4), the same at every u and y, and
+    R = 0, so the figure is K alone. It is coloured on a signed logarithmic scale from -10 to 10^4,
+    linear within 10^-2 of zero, a value above it taking the colour of the top, and the curve
+    r x^2 = e^{3/2} ell, where K vanishes and changes sign, is marked. Checked here: the published
+    Ricci scalar vanishes; K is 16(3 - ln(r^2 x^4/ell^2))/(r^4 x^4); K is finite at every cell,
+    positive inside the marked curve and negative beyond it; K vanishes on the curve; no cell falls
+    below the bottom of the colours and some pass their top; and the map agrees with the published
+    formula in sixty digits at forty cells."""
+    metric, system = "newman_tamburino", "cylindrical"
+    x_axis, y_axis = axis("$r/\\ell$", 0, 4), axis("$x$", 0, 4)
+    shape_checks(ck, f"{metric} {system}", [1.0])
+    ricci = nr_published(src, metric, system, "ricci_scalar", ["r", "x"], ["\\ell"])
+    ck(f"{metric} {system} the published Ricci scalar vanishes", ricci.expr == 0, f"{ricci.expr}")
+    K = nr_published(src, metric, system, "kretschmann", ["r", "x"], ["\\ell"])
+    r, x = K.coords
+    ell, = K.params
+    closed = 16 * (3 - sp.log(r ** 2 * x ** 4 / ell ** 2)) / (r ** 4 * x ** 4)
+    ck(f"{metric} {system} K is 16(3 - ln(r^2 x^4/ell^2))/(r^4 x^4)",
+       sp.simplify(sp.expand_log(K.expr - closed, force=True)) == 0)
+    nx, ny = NT_CYL_CELLS
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, [1.0])
+    X, Y = np.meshgrid(xs, ys)
+    ck(f"{metric} {system} K is finite at every cell", bool(np.all(np.isfinite(values))))
+    inside = X * Y ** 2 < math.exp(1.5)
+    ck(f"{metric} {system} K is positive inside r x^2 = e^(3/2) ell and negative beyond it",
+       bool(np.all(values[inside] > 0) and np.all(values[~inside] < 0)))
+    zero = [float(K(np.array([1.0 * k]), np.array([math.sqrt(math.exp(1.5) / k)]), 1.0)[0]) for k in (1, 2, 3, 4)]
+    ck(f"{metric} {system} K vanishes on r x^2 = e^(3/2) ell", max(abs(z) for z in zero) < 1e-12, f"{zero}")
+    ck(f"{metric} {system} K stays above the bottom of its colours and passes their top",
+       float(np.min(values)) > NT_CYL_SCALE["from"] and float(np.max(values)) > NT_CYL_SCALE["to"],
+       f"{np.min(values):.3e} {np.max(values):.3e}")
+    rng = np.random.default_rng(1962)
+    picks = [(int(rng.integers(ny)), int(rng.integers(nx))) for _ in range(40)]
+    agrees(ck, f"{metric} {system} map", K, [[xs[i], ys[j], 1.0] for j, i in picks], [values[j, i] for j, i in picks])
+    rs = np.linspace(math.exp(1.5) / 16, 4.0, 400)
+    curve = [[float(v), float(math.sqrt(math.exp(1.5) / v))] for v in rs]
+    return [{
+        "id": system, "label": "the quarter plane of $r$ and $x$", "system": system, "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,\\ell^4$", "scale": NT_CYL_SCALE, "ticks": every_second(NT_CYL_SCALE)},
+        "map": {"metric": metric, "system": system, "scalar": "kretschmann", "x": "r", "y": "x",
+                "params": {"ell": 1}, "functions": {}, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in values]},
+        "marks": [{"class": "zero", "points": curve}],
+        "legend": [["line", "zero", "$K = 0$, on $r\\,x^2 = e^{3/2}\\ell$"]],
+        "caption": ["The Kretschmann scalar $K$ of the cylindrical limit, the same at every $u$ and $y$, diverging "
+                    "toward $r = 0$ and $x = 0$ and negative beyond the marked curve. $R = 0$."],
+        "settings": "$\\ell = 1$, the unit of $r$.",
+        "clip": "Signed log, $-10$ to $10^4$.",
+    }]
+
+
+
+NT_SPH_SCALE = {"kind": "symlog", "from": -1e4, "to": 0.1, "linear": 1e-3}   # the colours of K A_0^4
+NT_SPH_CELLS = (160, 160)
+NT_SPH_PARAMS = {"A_0": 1.0, "b": 0.5}          # as the spacetime diagram of the spherical class takes them
+
+
+def newman_tamburino_spherical(ck, src):
+    """Newman and Tamburino's spherical class at A_0 = 1 and b = 1/2, its Kretschmann scalar over the
+    plane of r and cu on the line x = 1, y = 0 of its spacetime diagram, 0 < r/A_0 <= 4 and
+    -1 <= cu/A_0 <= 3, in 160 by 160 cells, where s = 1 and a = A = 1 + cu/2.
+
+    The chart publishes K = -64 r^2 a^2 (4(L + b)(x^4 - y^4) + 18 x^2 y^2 - 3(x^4 + y^4))/((r - a)^4 (r + a)^4 s^2)
+    and R = 0. On the line it is -64 r^2 a^2 (4L + 4b - 3)/(r^2 - a^2)^4, which vanishes where L = 3/4 - b,
+    r = a coth(1/4) here, and diverges toward r = |a|, the end of every ray, where the map's domain
+    stops. Coloured on a signed logarithmic scale from -10^4 to 0.1, linear within 10^-3 of zero.
+    Checked here: the published Ricci scalar vanishes; K on the line is that closed form; it is
+    negative inside r = a coth(1/4) and positive beyond it at every drawn cell; it vanishes on that
+    curve; and the map agrees with the published formula in sixty digits at forty cells."""
+    metric, system = "newman_tamburino", "spherical"
+    x_axis, y_axis = axis("$r/A_0$", 0, 4), axis("$cu/A_0$", -1, 3)
+    shape_checks(ck, f"{metric} {system}", [1.0])
+    names = ["A_0", "b"]
+    ricci = nr_published(src, metric, system, "ricci_scalar", ["r", "u", "x", "y"], names)
+    ck(f"{metric} {system} the published Ricci scalar vanishes", ricci.expr == 0, f"{ricci.expr}")
+    published = nr_published(src, metric, system, "kretschmann", ["r", "u", "x", "y"], names)
+    r, u, x, y = published.coords
+    A0, b = published.params
+    a = A0 + b * u
+    L = sp.log((r + a) / (r - a)) / 2
+    closed = -64 * r ** 2 * a ** 2 * (4 * L + 4 * b - 3) / (r ** 2 - a ** 2) ** 4
+    line = published.expr.subs({x: 1, y: 0})
+    pts = [(sp.Rational(5, 2), sp.Rational(1, 3)), (sp.Rational(7, 2), -sp.Rational(1, 2)), (3, 2)]
+    worst = max(abs(sp.N((line - closed).subs({r: p, u: q, A0: 1, b: sp.Rational(1, 2)}), 40)
+                    / sp.N(closed.subs({r: p, u: q, A0: 1, b: sp.Rational(1, 2)}), 40)) for p, q in pts)
+    ck(f"{metric} {system} K on x = 1, y = 0 is -64 r^2 a^2 (4L + 4b - 3)/(r^2 - a^2)^4", worst < 1e-30, f"{worst}")
+    K = HeldSlice(published, {"x": 1.0, "y": 0.0})
+    nx, ny = NT_SPH_CELLS
+    values_ = list(NT_SPH_PARAMS.values())
+    xs, ys, values = cells(K, x_axis, y_axis, nx, ny, values_)
+    X, Y = np.meshgrid(xs, ys)
+    domain_text = "r > Abs(A_0 + b*u)"
+    inside = domain_function(metric, system, domain_text, ["r", "u"], names)(X, Y, *values_)
+    A = 1 + Y / 2
+    zero_r = A / math.tanh(0.25)
+    drawn = values[inside]
+    ck(f"{metric} {system} K is finite at every drawn cell", bool(np.all(np.isfinite(drawn))))
+    ck(f"{metric} {system} K is negative inside r = a coth(1/4) and positive beyond it",
+       bool(np.all(values[inside & (X < zero_r)] < 0) and np.all(values[inside & (X > zero_r)] > 0)))
+    on = [float(K(np.array([(1 + q / 2) / math.tanh(0.25)]), np.array([q]), *values_)[0]) for q in (-1.0, -0.6, -0.2)]
+    ck(f"{metric} {system} K vanishes on r = a coth(1/4)", max(abs(z) for z in on) < 1e-12, f"{on}")
+    ck(f"{metric} {system} K passes the bottom of its colours toward r = |a| and stays below their top",
+       float(np.min(drawn)) < NT_SPH_SCALE["from"] and float(np.max(drawn)) < NT_SPH_SCALE["to"],
+       f"{np.min(drawn):.3e} {np.max(drawn):.3e}")
+    rng = np.random.default_rng(1962)
+    idx = np.argwhere(inside)
+    picks = idx[rng.choice(len(idx), 40, replace=False)]
+    agrees(ck, f"{metric} {system} map", K, [[xs[i], ys[j], *values_] for j, i in picks], [values[j, i] for j, i in picks])
+    us = np.linspace(-1.0, 2 * (4 * math.tanh(0.25) - 1), 300)
+    curve = [[float((1 + v / 2) / math.tanh(0.25)), float(v)] for v in us]
+    edge = [[float(1 + v / 2), float(v)] for v in np.linspace(-1.0, 3.0, 300)]
+    return [{
+        "id": system, "label": "the plane of $u$ and $r$", "system": system, "kind": "map",
+        "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,A_0^4$", "scale": NT_SPH_SCALE, "ticks": every_second(NT_SPH_SCALE)},
+        "map": {"metric": metric, "system": system, "scalar": "kretschmann", "x": "r", "y": "u",
+                "fixed": {"x": 1, "y": 0}, "params": {"A_0": 1, "b": 0.5}, "domain": domain_text,
+                "functions": {}, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) if ok else None for v, ok in zip(row, keep)] for row, keep in zip(values, inside)]},
+        "marks": [{"class": "zero", "points": curve}, {"class": "singular", "points": edge}],
+        "legend": [["line", "zero", "$K = 0$"], ["line", "singular", "$r = |a|$, where every ray ends"]],
+        "caption": ["The Kretschmann scalar $K$ of the spherical class on the line $x = 1$, $y = 0$, diverging "
+                    "toward $r = |a|$, $a = A_0 + b\\,cu$ here. $R = 0$."],
+        "settings": "$A_0 = 1$, $b = 1/2$.",
+        "clip": "Signed log, $-10^4$ to $0.1$.",
+    }]
+
+
+def newman_tamburino(ck, src):
+    """Both charts' maps of the Kretschmann scalar, the spherical class's and the cylindrical limit's."""
+    return newman_tamburino_spherical(ck, src) + newman_tamburino_cylindrical(ck, src)
+
 DRAWN = {
+    "newman_tamburino": newman_tamburino,
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
     "bach_weyl_ring": bach_weyl_ring,
