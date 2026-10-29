@@ -18,7 +18,9 @@ each file's version into the index. Pass
 rays against closed forms the drawing never uses instead of writing anything, with --metric
 checking only those spacetimes' closed forms. --slices
 rewrites only the slices below, from the embedding files as they stand, tracing no ray,
-which is what to run after an embedding diagram moves its moments.
+which is what to run after an embedding diagram moves its moments. --captions rewrites only
+the captions, from the tables as they stand, tracing no ray and leaving every other value of
+every view as the file holds it, which is what to run after a caption changes.
 
 
 The null condition
@@ -15465,11 +15467,7 @@ def rewrite_slices(metric_ids=None):
         path = DIAGRAMS_DIR / f"{metric_id}.json"
         data = json.loads(path.read_text(encoding="utf-8"))
         for spec in specs:
-            view = next(v for v in data["systems"][spec.system] if v["id"] == spec.view)
-            if (list(view["box"]) != list(spec.box) or view["mirror"] != spec.mirror
-                    or view["settings"] != settings(spec, load(spec.metric, spec.system)[1])):
-                raise SystemExit(f"{key(spec)}: the file was drawn with another box or other values; "
-                                 "redraw it whole")
+            view = drawn_view(data, spec)
             view.pop("slices", None)
             marks = view_slices(spec, view["markers"])
             if marks:
@@ -15481,6 +15479,38 @@ def rewrite_slices(metric_ids=None):
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
                         encoding="utf-8")
         print(f"wrote the slices of {path.relative_to(build.ROOT)}")
+
+
+def rewrite_captions(metric_ids=None):
+    """Only the captions of every diagram file, from the tables as they stand, without tracing a
+    ray again: every other value of every view, the rays among them, is written back as it was read."""
+    import projections as pj
+    for metric_id, (specs, figures) in by_metric().items():
+        if metric_ids and metric_id not in metric_ids:
+            continue
+        path = DIAGRAMS_DIR / f"{metric_id}.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for spec in specs:
+            drawn_view(data, spec)["caption"] = CAPTIONS[(spec.metric, spec.system, spec.view)]
+        for spec in figures:
+            drawn_view(data, spec, "projections")["caption"] = pj.CAPTIONS[(spec.metric, spec.system, spec.view)]
+        path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
+                        encoding="utf-8")
+        print(f"wrote the captions of {path.relative_to(build.ROOT)}")
+
+
+def drawn_view(data, spec, group="systems"):
+    """The view of a diagram file that a row drew, refused when the file was drawn with another
+    box or other values than the row now gives, since then only a whole redraw can match them."""
+    view = next((v for v in data.get(group, {}).get(spec.system, []) if v["id"] == spec.view), None)
+    if view is None:
+        raise SystemExit(f"{key(spec)}: the file has no such view; redraw it whole")
+    flat = group == "systems"
+    if ((flat and (list(view["box"]) != list(spec.box) or view["mirror"] != spec.mirror))
+            or view["settings"] != settings(spec, load(spec.metric, spec.system)[1])):
+        raise SystemExit(f"{key(spec)}: the file was drawn with another box or other values; "
+                         "redraw it whole")
+    return view
 
 
 def by_metric():
@@ -18319,7 +18349,11 @@ def main(argv=None):
                         help="check the rays against closed forms instead of writing")
     parser.add_argument("--slices", action="store_true",
                         help="rewrite only the slices of the embedding diagrams, tracing no ray")
+    parser.add_argument("--captions", action="store_true",
+                        help="rewrite only the captions, tracing no ray")
     args = parser.parse_args(argv)
+    if args.captions and (args.verify or args.slices):
+        parser.error("--captions rewrites the captions alone and takes no --verify or --slices")
     unknown = set(args.metric) - set(by_metric())
     if unknown:
         parser.error(f"no diagram is drawn for {sorted(unknown)}")
@@ -18327,6 +18361,9 @@ def main(argv=None):
         return 1 if verify(set(args.metric)) else 0
     if args.slices:
         rewrite_slices(set(args.metric))
+        return 0
+    if args.captions:
+        rewrite_captions(set(args.metric))
         return 0
     write(set(args.metric))
     return 0
