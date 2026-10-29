@@ -91,7 +91,7 @@
           "description": "Buchdahl's function, a pure number, largest at the centre, $f_c = r_s/(4R)$, and approaching Schwarzschild's $r_s/(4r)$ far from it; the ratio of pressure to energy density is $p/(\\rho c^2) = f/(3(1 - f))$"
         }
       ],
-      "convention": "We use Buchdahl's isotropic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$, $r_s$ and $R$ of length; $r$ is not the areal radius, which is $r(1 + f)^2$. Components are taken in the chart $x^0 = ct$, and his signature $(+,-,-,-)$ is turned around.",
+      "convention": "We use Buchdahl's isotropic coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$, $r_s$, and $R$ of length; $r$ is not the areal radius, which is $r(1 + f)^2$. Components are taken in the chart $x^0 = ct$, and his signature $(+,-,-,-)$ is turned around.",
       "line_element": "ds^2 = -\\dfrac{\\left(1 - f\\right)^2}{\\left(1 + f\\right)^2}c^2dt^2 + \\left(1 + f\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {

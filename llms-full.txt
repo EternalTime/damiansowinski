@@ -617,6 +617,16 @@ Every smooth solution of type IIB supergravity in ten dimensions that keeps half
 - chart Global (the disc): coordinates $(t, \rho, \alpha, \beta, \gamma, \theta, \psi, \kappa, \xi, \omega)$, $$ds^2 = L^2\left(-\cosh^2\rho\,dt^2 + d\rho^2 + \sinh^2\rho\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\,d\gamma^2\right)\right) + d\theta^2 + \cos^2\theta\,d\psi^2 + \sin^2\theta\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\,d\omega^2\right)\right)\right)$$
 - chart Plane Wave (the half plane): coordinates $(t, x, r_1, \alpha, \beta, \gamma, r_2, \kappa, \xi, \omega)$, $$ds^2 = -2\,dt\,dx - \left(r_1^2 + r_2^2\right)dt^2 + dr_1^2 + r_1^2\left(d\alpha^2 + \sin^2\alpha\left(d\beta^2 + \sin^2\beta\,d\gamma^2\right)\right) + dr_2^2 + r_2^2\left(d\kappa^2 + \sin^2\kappa\left(d\xi^2 + \sin^2\xi\,d\omega^2\right)\right)$$
 
+### Buchdahl's Fluid Sphere
+
+A static star of perfect fluid in closed form whose density falls from the centre outward and reaches zero only at infinity, so the fluid fills all of space and the mass is finite. Hans Buchdahl found it in 1964 as the relativistic counterpart of the Newtonian polytrope of index five.
+
+- id: `buchdahl_sphere`
+- tags: perfect fluid, static, stationary, spherically symmetric, stellar interior, hydrostatic equilibrium, equation of state, isotropic coordinates, regular centre, no horizon, dark matter, gravitational lensing, photon sphere, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/buchdahl_sphere.json
+- chart Isotropic (Buchdahl): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\left(1 - f\right)^2}{\left(1 + f\right)^2}c^2dt^2 + \left(1 + f\right)^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### C-Metric Accelerating Black Holes
 
 An exact vacuum solution describing two black holes that accelerate away from each other, driven by a cosmic string or a strut along their axis of symmetry. With the acceleration set to zero it is the Schwarzschild black hole.

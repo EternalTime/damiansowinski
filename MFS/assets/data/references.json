@@ -1,5 +1,5 @@
 {
-  "version": "e3bded186da31c67",
+  "version": "7a276913aef08e19",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -32168,6 +32168,140 @@
         "eprint": "2006.09869",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.3847/1538-4357/ab8c4a"
+      }
+    },
+    "buchdahl1964": {
+      "type": "article",
+      "fields": {
+        "title": "A Relativistic Fluid Sphere Resembling the {Emden} Polytrope of Index 5",
+        "author": "Buchdahl, H. A.",
+        "journal": "The Astrophysical Journal",
+        "volume": "140",
+        "pages": "1512--1516",
+        "year": "1964",
+        "doi": "10.1086/148055",
+        "url": "https://doi.org/10.1086/148055"
+      }
+    },
+    "melrose2012": {
+      "type": "article",
+      "fields": {
+        "title": "Hans Adolph {Buchdahl} 1919--2010",
+        "author": "Melrose, D. B.",
+        "journal": "Historical Records of Australian Science",
+        "volume": "23",
+        "number": "2",
+        "pages": "159--175",
+        "year": "2012",
+        "doi": "10.1071/HR12009",
+        "url": "https://doi.org/10.1071/HR12009"
+      }
+    },
+    "plummer1911": {
+      "type": "article",
+      "fields": {
+        "title": "On the Problem of Distribution in Globular Star Clusters",
+        "author": "Plummer, H. C.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "71",
+        "number": "5",
+        "pages": "460--470",
+        "year": "1911",
+        "doi": "10.1093/mnras/71.5.460",
+        "url": "https://doi.org/10.1093/mnras/71.5.460"
+      }
+    },
+    "buchdahl1978": {
+      "type": "article",
+      "fields": {
+        "title": "Remark on the Polytrope of Index 5",
+        "author": "Buchdahl, H. A.",
+        "journal": "Australian Journal of Physics",
+        "volume": "31",
+        "pages": "115--116",
+        "year": "1978",
+        "doi": "10.1071/PH780115",
+        "url": "https://doi.org/10.1071/PH780115"
+      }
+    },
+    "rosquist1999": {
+      "type": "article",
+      "fields": {
+        "title": "Exact relativistic stellar models with liquid surface: {I}. Generalizing {Buchdahl}'s $n = 1$ polytrope",
+        "author": "Rosquist, Kjell",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "6",
+        "pages": "1755--1771",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/6/310",
+        "eprint": "gr-qc/9809055",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/6/310"
+      }
+    },
+    "heinzle2002": {
+      "type": "article",
+      "fields": {
+        "title": "(In)finiteness of spherically symmetric static perfect fluids",
+        "author": "Heinzle, J. Mark",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "11",
+        "pages": "2835--2851",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/11/307",
+        "eprint": "gr-qc/0204034",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/19/11/307"
+      }
+    },
+    "andersson2019": {
+      "type": "article",
+      "fields": {
+        "title": "On the Asymptotic Behavior of Static Perfect Fluids",
+        "author": "Andersson, Lars and Burtscher, Annegret Y.",
+        "journal": "Annales Henri Poincar\\'e",
+        "volume": "20",
+        "number": "3",
+        "pages": "813--857",
+        "year": "2019",
+        "doi": "10.1007/s00023-018-00758-z",
+        "eprint": "1801.06614",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s00023-018-00758-z"
+      }
+    },
+    "igata2022": {
+      "type": "article",
+      "fields": {
+        "title": "Periapsis shifts in dark matter distribution with a dense core",
+        "author": "Igata, Takahisa and Takamori, Yohsuke",
+        "journal": "Physical Review D",
+        "volume": "105",
+        "number": "12",
+        "pages": "124029",
+        "year": "2022",
+        "doi": "10.1103/PhysRevD.105.124029",
+        "eprint": "2202.03114",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.105.124029"
+      }
+    },
+    "igata2025": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational lensing and accretion disk imaging of a {Buchdahl} dense core",
+        "author": "Igata, Takahisa and Omamiuda, Motoki and Takamori, Yohsuke",
+        "journal": "Physical Review D",
+        "volume": "111",
+        "number": "8",
+        "pages": "084062",
+        "year": "2025",
+        "doi": "10.1103/PhysRevD.111.084062",
+        "eprint": "2502.11755",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.111.084062"
       }
     }
   }

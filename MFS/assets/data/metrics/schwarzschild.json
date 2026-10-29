@@ -499,6 +499,11 @@
       "id": "scalar_field_black_hole",
       "kind": "generalisation",
       "text": "Schwarzschild's hole in a universe filled by a massless scalar field whose gradient points along one axis. At $b = 0$ its metric is Schwarzschild's [cardoso2025]."
+    },
+    {
+      "id": "buchdahl_sphere",
+      "kind": "generalisation",
+      "text": "A static star of fluid with no surface that fills all of space. Its metric is Schwarzschild's in isotropic coordinates with $r^2$ raised to $r^2 + R^2$, so at $R = 0$ it is Schwarzschild's vacuum [buchdahl1964]."
     }
   ],
   "references": [
@@ -631,7 +636,8 @@
     "compere2016final",
     "haggard2015fireworks",
     "astorino2022swirling",
-    "cardoso2025"
+    "cardoso2025",
+    "buchdahl1964"
   ],
   "coordinates": [
     {

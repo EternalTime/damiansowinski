@@ -53,6 +53,11 @@
       "id": "misner_zapolsky",
       "kind": "family",
       "text": "Tolman's fifth and sixth solutions at $n = 1/2$, stars whose density and pressure are infinite at the centre in the ratio that holds for radiation. Grown without limit, both approach one metric, which he suggested \"might be called the blackbody radiation solution\" [tolman1939]."
+    },
+    {
+      "id": "buchdahl_sphere",
+      "kind": "family",
+      "text": "Another static star of fluid in closed form whose density falls outward. Buchdahl's never reaches zero density, and its fluid fills all of space with a finite mass [buchdahl1964]."
     }
   ],
   "references": [
@@ -64,7 +69,8 @@
     "neary2001",
     "jiang2019",
     "einstein1939",
-    "tolman1934"
+    "tolman1934",
+    "buchdahl1964"
   ],
   "coordinates": [
     {

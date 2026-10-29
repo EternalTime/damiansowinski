@@ -83,6 +83,11 @@
       "id": "bowers_liang",
       "kind": "special_case",
       "text": "A star of uniform density with two pressures, where $m = Mr^3/R^3$ with $M$ the mass and $R$ the radius of the star. Its equation of equilibrium has one term more, $2(p_\\perp - p_r)/r$, with $p_r$ the pressure along the radius and $p_\\perp$ the pressure across it [bowers1974]."
+    },
+    {
+      "id": "buchdahl_sphere",
+      "kind": "special_case",
+      "text": "A solution in closed form for an equation of state that is nearly $p \\propto \\rho^{6/5}$, the relativistic polytrope of index five, whose fluid runs to infinity with a finite mass [buchdahl1964]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "liebling2023",
     "bartnik1988",
     "volkov1999",
-    "bowers1974"
+    "bowers1974",
+    "buchdahl1964"
   ],
   "coordinates": [
     {

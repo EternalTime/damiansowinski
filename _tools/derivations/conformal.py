@@ -12170,7 +12170,7 @@ def buchdahl_sphere(ck, src):
     ck.chart("Buchdahl's sphere", plane, star, ck.uniform(-20, 20), ck.uniform(0.01, 60), lambda t, r: (1, 0))
     ck.finite("Buchdahl's sphere: r = 0 is a regular centre", plane.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
 
-    v = View("isotropic", "Isotropic (Buchdahl)", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "spherical")
+    v = View("isotropic", "Isotropic (Buchdahl)", [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25], "isotropic")
     v.fill("region", TRIANGLE)
     for r in (0.5, 1.0, 2.0, 6.0):
         v.curve("r", *star(S_ALL, np.full_like(S_ALL, r)))

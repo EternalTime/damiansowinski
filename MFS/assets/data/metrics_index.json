@@ -1065,6 +1065,36 @@
     "curvature": "81362e4dac6cd326"
   },
   {
+    "id": "buchdahl_sphere",
+    "name": "Buchdahl's Fluid Sphere",
+    "tags": [
+      "perfect fluid",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "stellar interior",
+      "hydrostatic equilibrium",
+      "equation of state",
+      "isotropic coordinates",
+      "regular centre",
+      "no horizon",
+      "dark matter",
+      "gravitational lensing",
+      "photon sphere",
+      "mass",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "2b196c039adf3b3f",
+    "diagrams": "f22ea0dd9b361d6c",
+    "conformal": "804501ee6749f574",
+    "embedding": "1eff4ec665a7b80c",
+    "curvature": "b90660cee7e65a2f"
+  },
+  {
     "id": "c_metric",
     "name": "C-Metric",
     "tags": [
@@ -4860,7 +4890,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "262c68a365e8c9dc",
+    "version": "eda43df22b4e2d37",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -4886,7 +4916,7 @@
       "hydrostatic equilibrium",
       "gravitational redshift"
     ],
-    "version": "4205dd6e3f00b2a4",
+    "version": "c5b9b7f39ef1363e",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978",
@@ -5600,7 +5630,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4714d7493e0b8dc5",
+    "version": "a133910a18b2090f",
     "diagrams": "54dd0e9e7887701d",
     "conformal": "0f87c7ddfbce658d",
     "embedding": "80461874aabb5765"
@@ -5648,7 +5678,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "47d7ba06b49c53f9",
+    "version": "eb1553f795e08d84",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89",

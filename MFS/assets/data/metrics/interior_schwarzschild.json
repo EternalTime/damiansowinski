@@ -83,6 +83,11 @@
       "id": "bowers_liang",
       "kind": "generalisation",
       "text": "Schwarzschild's star with a pressure across the radius that differs from the pressure along it. With the sideways pressure the greater it stays in equilibrium inside $R = \\frac{9}{8}r_s$, and at Bowers and Liang's exponent $Q = 1/2$ it is Schwarzschild's [bowers1974]."
+    },
+    {
+      "id": "buchdahl_sphere",
+      "kind": "family",
+      "text": "The relativistic polytrope of index five, found in 1964 as the second polytrope with an exact relativistic counterpart after this star of index zero [buchdahl1964]."
     }
   ],
   "references": [
@@ -105,7 +110,8 @@
     "whittaker1968",
     "wahlquist1968",
     "bonnor1975",
-    "bowers1974"
+    "bowers1974",
+    "buchdahl1964"
   ],
   "coordinates": [
     {
