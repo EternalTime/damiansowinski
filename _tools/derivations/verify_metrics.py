@@ -477,6 +477,15 @@ DIMENSIONS = {
         "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "m": "L", "q": "1", "x": "1", "y": "1", "\\psi": "1",
         "\\gamma": "1",
     },
+    # Sen and Banerjee's black hole in a scalar universe, found again by Cardoso and Natario: m = GM/c^2
+    # is a length and the gradient b of the field an inverse length, so b r and b rho are pure numbers,
+    # and so is F, the factor e^{-b^2 (r^2 - 2mr) sin^2(theta)} the spherical chart names.
+    ("scalar_field_black_hole", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "b": "1/L", "F": "1",
+    },
+    ("scalar_field_black_hole", "scalar_universe"): {
+        "t": "T", "\\rho": "L", "\\phi": "1", "z": "L", "b": "1/L",
+    },
     # m is half the mass as a length and b the dipole moment over the mass, a length; P, Q, Y
     # and Z are Bonnor's four polynomials, each an area.
     ("bonnor_magnetic_dipole", "spheroidal"): {

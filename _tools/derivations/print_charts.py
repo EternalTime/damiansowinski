@@ -7687,6 +7687,164 @@ def fisher_jnw_check(chart, system):
 CHARTS["fisher_jnw"] = [lambda s=s: fisher_jnw(s) for s in FJNW_CHARTS]
 
 
+# -- A black hole in a universe filled by a scalar field ----------------------------------
+
+SFBH_F = "F = e^{-b^2\\left(r^2 - 2mr\\right)\\sin^2\\theta}"
+
+
+def scalar_field_black_hole(system):
+    """Schwarzschild's black hole in a massless scalar field whose gradient points along the axis
+    far away, Sen and Banerjee's third set (2.33) and (2.34) at a = e = 0 (2001), found again by
+    Cardoso and Natario (2024), in their chart,
+    ds^2 = -f c^2 dt^2 + F(dr^2/f + r^2 dtheta^2) + r^2 sin^2(theta) dphi^2, f = 1 - 2m/r,
+    F = e^{-b^2 (r^2 - 2mr) sin^2(theta)}, with the field b(r - m) cos(theta) in units of
+    sqrt(c^4/4 pi G); and Cardoso and Natario's universe with no black hole, m = 0, in its
+    cylindrical chart, ds^2 = -c^2 dt^2 + e^{-b^2 rho^2}(drho^2 + dz^2) + rho^2 dphi^2, with the
+    field b z. Every value of the first is printed as a rational function times a power of F,
+    and of the second times a power of e^{-b^2 rho^2}. scalar_field_black_hole_check holds each to
+    the field equations, and scalar_field_black_hole.md beside this file is the derivation."""
+    if system == "spherical":
+        coords, parameters, name = ["t", "r", "\\theta", "\\phi"], ["m", "b", SFBH_F], "Spherical"
+
+        def line(c2):
+            return (f"ds^2 = -\\left(1 - \\dfrac{{2m}}{{r}}\\right){c2}dt^2"
+                    " + F\\left(\\dfrac{dr^2}{1 - \\dfrac{2m}{r}} + r^2d\\theta^2\\right) + r^2\\sin^2\\theta\\,d\\phi^2")
+        probe = vm.Reader(coords, parameters, ())
+        r, th = probe.symbol["r"], probe.symbol["\\theta"]
+        m, b = probe.parameters["m"], probe.parameters["b"]
+        exponent = -b ** 2 * (r ** 2 - 2 * m * r) * sp.sin(th) ** 2
+        F = sp.Symbol("F", positive=True)
+        lead = [r, m, b, F, sp.cos(th), sp.sin(th)]
+        domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+                   "\\phi \\in [0, 2\\pi)", "r = 2m \\;\\text{(the horizon)}"]
+        metric = {("t", "t"): "-\\left(1 - \\dfrac{2m}{r}\\right)", ("r", "r"): "\\dfrac{F}{1 - \\dfrac{2m}{r}}",
+                  ("\\theta", "\\theta"): "Fr^2", ("\\phi", "\\phi"): "r^2\\sin^2\\theta"}
+        inverse = {("t", "t"): "-\\dfrac{1}{1 - \\dfrac{2m}{r}}", ("r", "r"): "\\dfrac{1 - \\dfrac{2m}{r}}{F}",
+                   ("\\theta", "\\theta"): "\\dfrac{1}{Fr^2}", ("\\phi", "\\phi"): "\\dfrac{1}{r^2\\sin^2\\theta}"}
+    else:
+        coords, parameters, name = ["t", "\\rho", "\\phi", "z"], ["b"], "Scalar Universe"
+
+        def line(c2):
+            return f"ds^2 = -{c2}dt^2 + e^{{-b^2\\rho^2}}\\left(d\\rho^2 + dz^2\\right) + \\rho^2d\\phi^2"
+        probe = vm.Reader(coords, parameters, ())
+        rho, b = probe.symbol["\\rho"], probe.parameters["b"]
+        exponent = -b ** 2 * rho ** 2
+        F = sp.Symbol("SFBHE", positive=True)
+        lead = [b, rho, F]
+        domains = ["t \\in (-\\infty, \\infty)", "\\rho \\in [0, \\infty)", "\\phi \\in [0, 2\\pi)",
+                   "z \\in (-\\infty, \\infty)"]
+        metric = {("\\rho", "\\rho"): "e^{-b^2\\rho^2}", ("z", "z"): "e^{-b^2\\rho^2}"}
+        inverse = {("\\rho", "\\rho"): "e^{b^2\\rho^2}", ("z", "z"): "e^{b^2\\rho^2}"}
+
+    # sympy hands e^{kE} back split along the terms of the exponent E, so each part is taken as a
+    # positive symbol of its own, the two are put back together as F, and nothing else is left.
+    terms = sp.Add.make_args(sp.expand(exponent))
+    parts = [sp.Symbol(f"SFBHP{i}", positive=True) for i in range(len(terms))]
+
+    def pretty(value):
+        # Every exponential a value carries is a whole power of F, or of e^{-b^2 rho^2}, which
+        # is taken as a positive symbol while the rest is factored.
+        value = sp.sympify(value)
+        swap = {}
+        for e in value.atoms(sp.exp):
+            for part, term in zip(parts, terms):
+                k = sp.cancel(e.args[0] / term)
+                if k.is_Integer:
+                    swap[e] = part ** k
+                    break
+            else:
+                raise AssertionError(f"scalar_field_black_hole: {e} is no whole power of the chart's exponential")
+        value = sp.factor(value.xreplace(swap).subs(parts[0], F / sp.Mul(*parts[1:])))
+        if value.free_symbols & set(parts):
+            raise AssertionError(f"scalar_field_black_hole: {value} holds the exponent's terms apart")
+        if system == "spherical":
+            # Factored as the black hole in a tidal field is: in r/m and cos(theta), with
+            # (1 - cos(theta))(1 + cos(theta)) written sin^2(theta), F standing as a factor. A factor
+            # linear in r is written with r first, r - 2m and r - m, and the two factors of
+            # (r - m)^2 - m^2 cos^2(theta) are written as one, r^2 - 2mr + m^2 sin^2(theta), the
+            # product of the distances from the two ends of Schwarzschild's rod in Weyl's chart.
+            c, rest = trig(value)
+            powers = {}
+            for f in sp.Mul.make_args(rest):
+                base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+                if base.is_Add and k.is_Integer and sp.Poly(base, r).degree() == 1 and sp.Poly(base, r).LC().could_extract_minus_sign():
+                    base, c = -base, c * (-1) ** k
+                powers[base] = powers.get(base, 0) + k
+            ends = [next((base for base in powers if sp.expand(base - end) == 0), None)
+                    for end in (r - m + m * sp.cos(th), r - m - m * sp.cos(th))]
+            if None not in ends and powers[ends[0]] == powers[ends[1]]:
+                k = powers.pop(ends[0])
+                powers.pop(ends[1])
+                powers[ROD] = powers.get(ROD, 0) + k
+            return _keep_coeff(c, sp.Mul(*[base ** k for base, k in powers.items()]))
+        c, rest = value.as_coeff_Mul()
+        return _keep_coeff(c, rest.replace(lambda p: p == F or (p.is_Pow and p.base == F),
+                                          lambda p: sp.exp(exponent * (1 if p == F else p.exp))))
+
+    printer = {"lead": lead}
+    if system == "spherical":
+        # Sums run down the powers of r, products are written b^2 m r as the line element writes
+        # them, and a sign is left where pretty puts it, in front, so r - 2m is never 2m - r.
+        printer.update({"factors": [b, m, r, F, sp.cos(th), sp.sin(th)], "flip": False})
+        trig = distorted_spherical_factors(r, th, m)
+        ROD = sp.Symbol("SFBHROD", positive=True)
+        printer["named"] = {ROD: "r^2 - 2m\\,r + m^2\\sin^2\\theta"}
+    return {
+        "metric_id": "scalar_field_black_hole",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": scalar_field_black_hole_check,
+        **({"kretschmann": SFBH_KRETSCHMANN} if system == "spherical" else {}),
+    }
+
+
+# The Kretschmann scalar of the spherical chart by powers of b, so that b = 0 is Schwarzschild's
+# 48 m^2/r^6 at a glance; the second bracket of the b^4 part is the product of the distances
+# from the two ends of Schwarzschild's rod.
+SFBH_KRETSCHMANN = (
+    "\\dfrac{48m^2 + 16b^2m\\,r\\left(3r^2\\sin^2\\theta - 2r^2 - 9m\\,r\\sin^2\\theta + 4m\\,r + 4m^2\\sin^2\\theta\\right)"
+    " + 4b^4r^2\\left(r^2 - 2m\\,r + m^2\\sin^2\\theta\\right)"
+    "\\left(3r^2 - 6m\\,r - 4m\\,r\\sin^2\\theta + 11m^2\\sin^2\\theta\\right)}{r^6F^2}")
+
+
+def scalar_field_black_hole_check(chart):
+    """The Ricci tensor is 2 d phi d phi for the field phi = b(r - m) cos(theta), or b z in the
+    universe with no black hole, in every slot; the field solves the wave equation; and with the
+    field switched off, b = 0, the metric is Schwarzschild's with r_s = 2m, or flat space."""
+    x = chart.symbols
+    P = chart.reader.parameters
+    b = P["b"]
+    if chart.coords_tex[1] == "r":
+        r, th, m = x[1], x[2], P["m"]
+        field = b * (r - m) * sp.cos(th)
+        off = sp.diag(-(1 - 2 * m / r), 1 / (1 - 2 * m / r), r ** 2, r ** 2 * sp.sin(th) ** 2)
+    else:
+        field = b * x[3]
+        off = sp.diag(-1, 1, x[1] ** 2, 1)
+    g, ginv = chart.geo.g, chart.geo.ginv
+    ricci = chart.geo.ricci_ll()
+    for a, c in vm._indices(4, 2):
+        if vm.norm(vm._at(ricci, (a, c)) - 2 * sp.diff(field, x[a]) * sp.diff(field, x[c])) != 0:
+            raise AssertionError(f"scalar_field_black_hole: R_ab is not 2 d_a phi d_b phi in slot "
+                                 f"{chart.coords_tex[a]}{chart.coords_tex[c]}")
+    # sqrt(-g) is r^2 F sin(theta), or rho e^{-b^2 rho^2}, each positive on the chart.
+    root = sp.sin(x[2]) * g[2, 2] if chart.coords_tex[1] == "r" else x[1] * g[1, 1]
+    if vm.norm(root ** 2 + g.det()) != 0:
+        raise AssertionError("scalar_field_black_hole: the root of -g is not the one written")
+    wave = sum(sp.diff(root * ginv[a, a] * sp.diff(field, x[a]), x[a]) for a in range(4))
+    if vm.norm(wave) != 0:
+        raise AssertionError("scalar_field_black_hole: the field does not solve the wave equation")
+    if any(vm.norm(g[a, c].subs(b, 0) - off[a, c]) != 0 for a in range(4) for c in range(4)):
+        raise AssertionError("scalar_field_black_hole: at b = 0 the metric is not Schwarzschild's, or flat space")
+
+
+CHARTS["scalar_field_black_hole"] = [lambda s=s: scalar_field_black_hole(s) for s in ("spherical", "scalar_universe")]
+
+
 # -- Roberts's scalar field collapse -------------------------------------------------------
 
 ROBERTS_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
