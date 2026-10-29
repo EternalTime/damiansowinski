@@ -247,6 +247,7 @@ import ori_shell  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import slices  # noqa: E402
 import verify_metrics as vm  # noqa: E402
+import view_text  # noqa: E402
 
 DIAGRAMS_DIR = build.DIAGRAMS_DIR
 BASE_FIELDS = ["coords", "parameters", "metric_components", "inverse_metric_components",
@@ -15476,6 +15477,7 @@ def rewrite_slices(metric_ids=None):
             views = data["projections"][spec.system]
             i = next(i for i, v in enumerate(views) if v["id"] == spec.view)
             views[i] = pj.draw(spec)
+            view_text.warn(f"{metric_id} diagrams {spec.system}", [views[i]])
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
                         encoding="utf-8")
         print(f"wrote the slices of {path.relative_to(build.ROOT)}")
@@ -15548,6 +15550,8 @@ def write(metric_ids=None):
         data = {"metric": metric_id, "systems": systems}
         if projections:
             data["projections"] = projections
+        for system, views in [*systems.items(), *projections.items()]:
+            view_text.warn(f"{metric_id} diagrams {system}", views)
         path = DIAGRAMS_DIR / f"{metric_id}.json"
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n",
                         encoding="utf-8")

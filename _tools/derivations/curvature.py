@@ -90,6 +90,7 @@ import build_mfs_data as build  # noqa: E402
 import null_rays as nr  # noqa: E402
 import slices  # noqa: E402
 import two_holes  # noqa: E402
+import view_text  # noqa: E402
 import bubbling_ads as ba  # noqa: E402
 
 CURVATURE_DIR = build.CURVATURE_DIR
@@ -16175,7 +16176,7 @@ BCD_LATITUDE = [{"at": float(k * math.pi / 8), "label": ["$0$", "$\\pi/8$", "$\\
 # b = m/2 of its other drawings to 20, and the radial box of its spacetime diagram.
 BCD_REDSHIFTS = [Fraction(z) for z in range(2, 21)]
 BCD_CLOUD_REACH = 4
-# The whole of each view's text, its caption, within 200 characters.
+# The whole of each view's text, its caption, within view_text.LIMIT characters.
 BCD_CAPTIONS = {
     "sphere_1965": "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Bonnor's sphere of 1965, "
                    "beside the 1975 sphere.",
@@ -17569,6 +17570,7 @@ def main(argv=None):
                 path.unlink()
                 print(f"removed {path.relative_to(build.ROOT)}")
     for metric_id, data in files.items():
+        view_text.warn(f"{metric_id} curvature", data["views"])
         path = CURVATURE_DIR / f"{metric_id}.json"
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
         print(f"wrote {path.relative_to(build.ROOT)}")

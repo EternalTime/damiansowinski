@@ -115,6 +115,7 @@ import nm_disc  # noqa: E402
 import null_rays as nr  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import verify_metrics as vm  # noqa: E402
+import view_text  # noqa: E402
 
 CONFORMAL_DIR = build.CONFORMAL_DIR
 BASE_FIELDS = ("coords", "parameters", "metric_components", "inverse_metric_components")
@@ -30952,6 +30953,7 @@ def main(argv=None):
                 path.unlink()
                 print(f"removed {path.relative_to(build.ROOT)}")
     for metric_id, data in files.items():
+        view_text.warn(f"{metric_id} conformal", data["views"])
         path = CONFORMAL_DIR / f"{metric_id}.json"
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
         print(f"wrote {path.relative_to(build.ROOT)}")

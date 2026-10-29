@@ -127,6 +127,7 @@ import brill_wave  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
 import null_rays as nr  # noqa: E402
 import quantum_os as qos  # noqa: E402
+import view_text  # noqa: E402
 import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
 from projections import Camera  # noqa: E402
@@ -20984,6 +20985,7 @@ def main(argv=None):
                 path.unlink()
                 print(f"removed {path.relative_to(build.ROOT)}")
     for metric_id, data in files.items():
+        view_text.warn(f"{metric_id} embedding", data["views"])
         path = EMBEDDING_DIR / f"{metric_id}.json"
         path.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
         print(f"wrote {path.relative_to(build.ROOT)}")
