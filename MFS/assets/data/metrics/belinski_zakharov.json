@@ -67,6 +67,11 @@
       "id": "myers_perry",
       "kind": "family",
       "text": "Pomeransky derived the Myers-Perry black hole of five dimensions as two solitons, his test of the method in $D$ dimensions with $D - 2$ commuting Killing vectors [pomeransky2006]."
+    },
+    {
+      "id": "twisting_cylindrical_waves",
+      "kind": "family",
+      "text": "Their inverse scattering applied around an axis gives cylindrical solitons with both polarisations, whose polarisation turns as they travel [tomizawa2014]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "boyd1991",
     "belinski2001",
     "pomeransky2006",
-    "elvang2007"
+    "elvang2007",
+    "tomizawa2014"
   ],
   "coordinates": [
     {

@@ -84,6 +84,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "A universe that turns one way above a plane and the other way below it, and far from its axis approaches a turning form of Levi-Civita's cylinder at $\\sigma = 1/4$ [astorino2022swirling]."
+    },
+    {
+      "id": "twisting_cylindrical_waves",
+      "kind": "generalisation",
+      "text": "Levi-Civita's field set waving with both polarisations. With $\\omega = 0$ and $\\psi$ a multiple of $\\ln\\rho$ the cylindrical waves of Kompaneets, Jordan and Ehlers stand still as this field."
     }
   ],
   "references": [

@@ -73,6 +73,11 @@
       "id": "small_universes",
       "kind": "family",
       "text": "Friedmann's flat universe on the same 3-torus, with matter and no waves. With matter added, the Gowdy universes that are the same at every point include it [martinbenito2011]."
+    },
+    {
+      "id": "twisting_cylindrical_waves",
+      "kind": "dual",
+      "text": "The same field equations around an axis. A complex change of coordinates carries every cylindrical wave with both polarisations to a universe of Gowdy's kind, Halilsoy's standing wave to the torus $T^3$ [glod2022]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "ruiz1992",
     "chinea1992",
     "belinskii1978",
-    "martinbenito2011"
+    "martinbenito2011",
+    "glod2022"
   ],
   "coordinates": [
     {

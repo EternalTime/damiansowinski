@@ -288,6 +288,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "generalisation",
       "text": "Flat space put through Ehlers's transformation in its magnetic form, which makes a vacuum universe that turns one way above a plane and the other way below it, with a black hole set inside [astorino2022swirling]."
+    },
+    {
+      "id": "twisting_cylindrical_waves",
+      "kind": "generalisation",
+      "text": "Cylindrical gravitational waves with both polarisations. With $\\psi = \\omega = \\gamma = 0$ their metric is Minkowski's in cylindrical coordinates."
     }
   ],
   "references": [

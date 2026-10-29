@@ -236,6 +236,11 @@
       "id": "eye_of_the_storm",
       "kind": "generalisation",
       "text": "Kerr's black hole with its mass switched off toward the centre as $me^{-\\ell/r}$, which takes the ring singularity away. At $\\ell = 0$ it is Kerr's metric [simpson2022eye]."
+    },
+    {
+      "id": "twisting_cylindrical_waves",
+      "kind": "dual",
+      "text": "Kerr's metric with $t \\to iz$, $z \\to it$ and $a \\to ia$, given new coordinates, is a cylindrical pulse of gravitational waves with both polarisations, and it has no singularities [piran1986, dinverno2000]."
     }
   ],
   "references": [
@@ -307,7 +312,9 @@
     "herdeiro2014",
     "james2015",
     "astorino2022swirling",
-    "simpson2022eye"
+    "simpson2022eye",
+    "piran1986",
+    "dinverno2000"
   ],
   "coordinates": [
     {
