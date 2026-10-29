@@ -271,7 +271,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6e964bc8836e7eb7",
+    "version": "b5a2a1c26ada0443",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572",
@@ -852,7 +852,7 @@
       "idealized model",
       "alternative theories of gravity"
     ],
-    "version": "5c13a99906ea9270",
+    "version": "8139f62e08066e6b",
     "diagrams": "aad81dc2048a0547",
     "conformal": "6c5c22a5247f56a8",
     "embedding": "d857ba18e7d9066a",
@@ -2244,7 +2244,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "a94d001abff2509e",
+    "version": "82c5488c49732720",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3",
@@ -4422,6 +4422,39 @@
     "embedding": "69d23ef08a8a8c79"
   },
   {
+    "id": "regular_black_hole_pure_gravity",
+    "name": "Regular Black Hole from Pure Gravity",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "hyperspherical symmetry",
+      "five-dimensional",
+      "higher dimensions",
+      "regular black hole",
+      "black hole",
+      "mass",
+      "de Sitter core",
+      "regular centre",
+      "no singularity",
+      "horizon",
+      "inner horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "asymptotically flat",
+      "alternative theories of gravity",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "ead0210cd169550e",
+    "diagrams": "f63b64b6804356d9",
+    "conformal": "4af782afff090dfb",
+    "embedding": "9492d060e8b36e34",
+    "curvature": "7f5516c8ad3bf890"
+  },
+  {
     "id": "rn_metric",
     "name": "Reissner-Nordström",
     "tags": [
@@ -4836,7 +4869,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "7539aa25e2016977",
+    "version": "0341d68c59c92e8d",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"

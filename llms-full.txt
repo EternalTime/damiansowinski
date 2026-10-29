@@ -1975,6 +1975,18 @@ A flat wall with three dimensions of space in anti-de Sitter space of five dimen
 - chart Poincaré, One Side: coordinates $(t, x_1, x_2, x_3, z)$, $$ds^2 = \dfrac{-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dz^2}{k^2z^2}$$
 - chart Two Walls: coordinates $(t, x_1, x_2, x_3, \phi)$, $$ds^2 = e^{-2kr_c|\phi|}\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + r_c^2d\phi^2$$
 
+### Regular Black Hole from Pure Gravity
+
+Sean Hayward's regular black hole as a vacuum solution of gravity alone, in five dimensions or more: Einstein's theory with an infinite tower of quasi-topological curvature terms, which Pablo Bueno, Pablo A. Cano and Robie A. Hennigar summed in 2024. Every finite piece of the tower leaves a singularity, and the whole tower leaves a de Sitter core.
+
+- id: `regular_black_hole_pure_gravity`
+- tags: static, stationary, spherically symmetric, hyperspherical symmetry, five-dimensional, higher dimensions, regular black hole, black hole, mass, de Sitter core, regular centre, no singularity, horizon, inner horizon, white hole, maximal extension, causal structure, asymptotically flat, alternative theories of gravity, exact solution, Lorentzian, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/regular_black_hole_pure_gravity.json
+- chart Hyperspherical, Five Dimensions: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^2r^2}{r^4 + \ell^2r_0^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_0^2r^2}{r^4 + \ell^2r_0^2}} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein, Five Dimensions: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^2r^2}{r^4 + \ell^2r_0^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing Eddington-Finkelstein, Five Dimensions: coordinates $(u, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_0^2r^2}{r^4 + \ell^2r_0^2}\right)du^2 - 2\,du\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+
 ### Reissner-Nordström Charged Black Hole
 
 The unique static, spherically symmetric vacuum solution to the Einstein-Maxwell equations describing the spacetime exterior to a charged mass that does not rotate.

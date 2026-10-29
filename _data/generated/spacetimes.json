@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 190,
+  "count": 191,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3266,6 +3266,11 @@
           "id": "quantum_oppenheimer_snyder",
           "kind": "family",
           "text": "A black hole with an outer and an inner horizon that loop quantum gravity puts outside a bouncing ball of dust. Kelly, Santacruz, and Wilson-Ewing set its two horizons beside Bardeen's [kelly2020]."
+        },
+        {
+          "id": "regular_black_hole_pure_gravity",
+          "kind": "family",
+          "text": "Hayward's metric in five dimensions or more as a vacuum solution of gravity alone. Other couplings of the same theory give metrics close to Bardeen's [bueno2025regular]."
         }
       ],
       "references": [
@@ -3293,7 +3298,8 @@
         "carballorubio2021",
         "hoffmann1935",
         "gibbonsrasheed1995",
-        "kelly2020"
+        "kelly2020",
+        "bueno2025regular"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -9394,6 +9400,11 @@
           "id": "born_infeld_charge",
           "kind": "family",
           "text": "String theory's correction to Maxwell's field, beside its correction to Einstein's gravity. The metric of Born and Infeld's point charge has a radical of the same kind, the square root of $r^4$ plus a constant, and David Wiltshire solved for both corrections together in 1988 [gibbonsrasheed1995, wiltshire1988]."
+        },
+        {
+          "id": "regular_black_hole_pure_gravity",
+          "kind": "family",
+          "text": "Gauss-Bonnet's term continued into an infinite tower of quasi-topological ones. The whole tower turns the centre into de Sitter space, with finite curvature [bueno2025regular]."
         }
       ],
       "references": [
@@ -9418,7 +9429,8 @@
         "cai2002",
         "kobayashi2005",
         "gibbonsrasheed1995",
-        "wiltshire1988"
+        "wiltshire1988",
+        "bueno2025regular"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boulware_deser.json",
@@ -24985,6 +24997,11 @@
           "id": "lqc_bounce",
           "kind": "family",
           "text": "A universe whose big bang gives way to a bounce in loop quantum cosmology [ashtekar2006bounce]."
+        },
+        {
+          "id": "regular_black_hole_pure_gravity",
+          "kind": "generalisation",
+          "text": "The same metric function in $D \\ge 5$ dimensions, where it solves Einstein's theory with an infinite tower of quasi-topological curvature terms and no matter at all [bueno2025regular]."
         }
       ],
       "references": [
@@ -25010,7 +25027,8 @@
         "carballorubio2021",
         "lewandowski2023",
         "haggard2015fireworks",
-        "ashtekar2006bounce"
+        "ashtekar2006bounce",
+        "bueno2025regular"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -49072,6 +49090,302 @@
       ]
     },
     {
+      "id": "regular_black_hole_pure_gravity",
+      "name": "Regular Black Hole from Pure Gravity",
+      "short_name": "Regular Black Hole from Pure Gravity",
+      "description": "Sean Hayward's regular black hole as a vacuum solution of gravity alone, in five dimensions or more: Einstein's theory with an infinite tower of quasi-topological curvature terms, which Pablo Bueno, Pablo A. Cano and Robie A. Hennigar summed in 2024. Every finite piece of the tower leaves a singularity, and the whole tower leaves a de Sitter core.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "hyperspherical symmetry",
+        "five-dimensional",
+        "higher dimensions",
+        "regular black hole",
+        "black hole",
+        "mass",
+        "de Sitter core",
+        "regular centre",
+        "no singularity",
+        "horizon",
+        "inner horizon",
+        "white hole",
+        "maximal extension",
+        "causal structure",
+        "asymptotically flat",
+        "alternative theories of gravity",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The mass $M$ enters through $r_0^2 = m = 8GM/(3\\pi c^2)$, with $G$ Newton's constant in five dimensions, and the coupling of the tower through $\\ell^2 = \\alpha$. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "hayward",
+          "kind": "special_case",
+          "text": "The same metric function at $D = 4$, where Hayward wrote it down by hand and general relativity needs matter to hold it up [bueno2025regular, hayward2006]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "special_case",
+          "text": "The black hole at $\\ell = 0$, where the tower is gone and the singularity is back, with $r_h = r_0$."
+        },
+        {
+          "id": "boulware_deser",
+          "kind": "family",
+          "text": "The tower stopped after its first term, the Gauss-Bonnet one. Its Kretschmann scalar still diverges at the centre, as every finite piece of the tower's does [bueno2025regular]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "The first regular black hole. Other choices of the couplings give metrics close to Bardeen's in five dimensions and more, again with no matter [bueno2025regular]."
+        }
+      ],
+      "references": [
+        "bueno2025regular",
+        "hayward2006",
+        "oliva2010",
+        "myers2010",
+        "bueno2020qtg",
+        "kunstatter2016",
+        "bueno2025dynamical",
+        "bueno2026four",
+        "borissova2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/regular_black_hole_pure_gravity.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Hyperspherical, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the outer horizon)}",
+            "r = r_- \\;\\text{(the inner horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Mass as Tangherlini's radius, $r_0^2 = m = 8GM/(3\\pi c^2)$, with $G$ Newton's constant in five dimensions"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Length of the de Sitter core, $\\ell^2 = \\alpha$ the coupling of the quasi-topological tower, with $f \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$, with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$. For $r_0 > 2\\ell$ the horizons $r_- < r_+$ are the two positive roots of $r^4 - r_0^2r^2 + \\ell^2r_0^2$, $r_\\pm^2 = \\tfrac{1}{2}\\left(r_0^2 \\pm r_0\\sqrt{r_0^2 - 4\\ell^2}\\right)$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}} + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4\\ell^2\\,r_0^4\\left(3r^4 - 5\\ell^2\\,r_0^2\\right)}{\\left(r^4 + \\ell^2\\,r_0^2\\right)^3}",
+          "kretschmann": "K = \\dfrac{8r_0^4\\left(9r^{16} - 30\\ell^2\\,r_0^2\\,r^{12} + 78\\ell^4\\,r_0^4\\,r^8 - 6\\ell^6\\,r_0^6\\,r^4 + 5\\ell^8\\,r_0^8\\right)}{\\left(r^4 + \\ell^2\\,r_0^2\\right)^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein, Five Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the outer horizon)}",
+            "r = r_- \\;\\text{(the inner horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Mass as Tangherlini's radius, $r_0^2 = m = 8GM/(3\\pi c^2)$, with $G$ Newton's constant in five dimensions"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Length of the de Sitter core, $\\ell^2 = \\alpha$ the coupling of the quasi-topological tower, with $f \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\psi, \\theta, \\phi)$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - r_0^2r^2/(r^4 + \\ell^2r_0^2)\\right)^{-1}$ and $r_* = 0$ at $r = 0$. For $r_0 > 2\\ell$ the horizons $r_- < r_+$ are the two positive roots of $r^4 - r_0^2r^2 + \\ell^2r_0^2$, $r_\\pm^2 = \\tfrac{1}{2}\\left(r_0^2 \\pm r_0\\sqrt{r_0^2 - 4\\ell^2}\\right)$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4\\ell^2\\,r_0^4\\left(3r^4 - 5\\ell^2\\,r_0^2\\right)}{\\left(r^4 + \\ell^2\\,r_0^2\\right)^3}",
+          "kretschmann": "K = \\dfrac{8r_0^4\\left(9r^{16} - 30\\ell^2\\,r_0^2\\,r^{12} + 78\\ell^4\\,r_0^4\\,r^8 - 6\\ell^6\\,r_0^6\\,r^4 + 5\\ell^8\\,r_0^8\\right)}{\\left(r^4 + \\ell^2\\,r_0^2\\right)^6}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein, Five Dimensions",
+          "coordinates": [
+            "u",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the outer horizon)}",
+            "r = r_- \\;\\text{(the inner horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Mass as Tangherlini's radius, $r_0^2 = m = 8GM/(3\\pi c^2)$, with $G$ Newton's constant in five dimensions"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Length of the de Sitter core, $\\ell^2 = \\alpha$ the coupling of the quasi-topological tower, with $f \\approx 1 - r^2/\\ell^2$ near the centre; $\\kappa_\\pm$ are the surface gravities of the horizons $r_\\pm$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\psi, \\theta, \\phi)$, with the retarded time $u = ct - r_*$ a length, where $dr_*/dr = \\left(1 - r_0^2r^2/(r^4 + \\ell^2r_0^2)\\right)^{-1}$ and $r_* = 0$ at $r = 0$. For $r_0 > 2\\ell$ the horizons $r_- < r_+$ are the two positive roots of $r^4 - r_0^2r^2 + \\ell^2r_0^2$, $r_\\pm^2 = \\tfrac{1}{2}\\left(r_0^2 \\pm r_0\\sqrt{r_0^2 - 4\\ell^2}\\right)$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{r_0^2r^2}{r^4 + \\ell^2r_0^2}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4\\ell^2\\,r_0^4\\left(3r^4 - 5\\ell^2\\,r_0^2\\right)}{\\left(r^4 + \\ell^2\\,r_0^2\\right)^3}",
+          "kretschmann": "K = \\dfrac{8r_0^4\\left(9r^{16} - 30\\ell^2\\,r_0^2\\,r^{12} + 78\\ell^4\\,r_0^4\\,r^8 - 6\\ell^6\\,r_0^6\\,r^4 + 5\\ell^8\\,r_0^8\\right)}{\\left(r^4 + \\ell^2\\,r_0^2\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "rn_metric",
       "name": "Reissner-Nordström Charged Black Hole",
       "short_name": "Reissner-Nordström",
@@ -53256,6 +53570,11 @@
           "id": "topological_star",
           "kind": "family",
           "text": "A star with no horizon built from Tangherlini's black hole: give it a circle, exchange the circle with time, and hold the resulting bubble open with flux. With four large dimensions it is the topological star of five [bah2021]."
+        },
+        {
+          "id": "regular_black_hole_pure_gravity",
+          "kind": "generalisation",
+          "text": "Tangherlini's hole of five dimensions with an infinite tower of curvature terms added to the action. The tower brings a length $\\ell$ and a regular centre, and at $\\ell = 0$ the metric is Tangherlini's [bueno2025regular]."
         }
       ],
       "references": [
@@ -53281,7 +53600,8 @@
         "boulware1985",
         "elvang2007",
         "horowitz1996",
-        "bah2021"
+        "bah2021",
+        "bueno2025regular"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",

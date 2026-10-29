@@ -95,6 +95,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "A universe whose big bang gives way to a bounce in loop quantum cosmology [ashtekar2006bounce]."
+    },
+    {
+      "id": "regular_black_hole_pure_gravity",
+      "kind": "generalisation",
+      "text": "The same metric function in $D \\ge 5$ dimensions, where it solves Einstein's theory with an infinite tower of quasi-topological curvature terms and no matter at all [bueno2025regular]."
     }
   ],
   "references": [
@@ -120,7 +125,8 @@
     "carballorubio2021",
     "lewandowski2023",
     "haggard2015fireworks",
-    "ashtekar2006bounce"
+    "ashtekar2006bounce",
+    "bueno2025regular"
   ],
   "coordinates": [
     {

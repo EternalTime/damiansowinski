@@ -75,6 +75,11 @@
       "id": "topological_star",
       "kind": "family",
       "text": "A star with no horizon built from Tangherlini's black hole: give it a circle, exchange the circle with time, and hold the resulting bubble open with flux. With four large dimensions it is the topological star of five [bah2021]."
+    },
+    {
+      "id": "regular_black_hole_pure_gravity",
+      "kind": "generalisation",
+      "text": "Tangherlini's hole of five dimensions with an infinite tower of curvature terms added to the action. The tower brings a length $\\ell$ and a regular centre, and at $\\ell = 0$ the metric is Tangherlini's [bueno2025regular]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "boulware1985",
     "elvang2007",
     "horowitz1996",
-    "bah2021"
+    "bah2021",
+    "bueno2025regular"
   ],
   "coordinates": [
     {
