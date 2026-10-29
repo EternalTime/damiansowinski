@@ -4208,7 +4208,10 @@ class StacksAndMovies(unittest.TestCase):
         for (name, movie), played in zip(movies.items(), self.frames_played(list(movies.values()), ms)):
             n = len(movie["frames"])
             up, down = list(range(n)), list(range(n - 2, 0, -1))
-            self.assertEqual(played, (up + down + up + down)[1:len(played) + 1], str(name))
+            # The run lasts three passes of the longest movie, so a shorter one goes up and down as
+            # many times over as fit, every one of them the same cycle.
+            cycles = len(played) // len(up + down) + 2
+            self.assertEqual(played, ((up + down) * cycles)[1:len(played) + 1], str(name))
             self.assertGreaterEqual(len(played), 3 * (n - 1), str(name))
 
     def test_the_page_plays_a_movie_and_holds_it_still_for_a_reader_who_asks(self):
