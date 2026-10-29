@@ -55,6 +55,11 @@
       "id": "bianchi",
       "kind": "family",
       "text": "Petrov's group holds groups of Bianchi's types I and VII. They act on surfaces with a time direction in them, and a Bianchi cosmology's group acts on space [gibbons2008petrov, terzis2009]."
+    },
+    {
+      "id": "ozsvath_dust",
+      "kind": "family",
+      "text": "Ozsváth's universes of dust are of the same kind: four motions carry any event to any other in exactly one way, with dust and a cosmological constant where Petrov has empty space."
     }
   ],
   "references": [

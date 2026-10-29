@@ -2,13 +2,56 @@
   "id": "ozsvath_dust",
   "name": "Ozsváth's Homogeneous Universes of Dust",
   "short_name": "Ozsváth Dust",
-  "description": "",
-  "tags": [],
+  "description": "István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Einstein's static universe, class III, which holds Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.",
+  "tags": [
+    "dust",
+    "rotating",
+    "cosmology",
+    "homogeneous",
+    "stationary",
+    "cosmological constant",
+    "anisotropic",
+    "Bianchi classification",
+    "three sphere",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
   "signature": "(-,+,+,+)",
-  "convention": "The matter is dust of density $\\rho$ with four-velocity $u^\\mu$, held up by a cosmological constant $\\Lambda$: $G_{\\mu\\nu} + \\Lambda g_{\\mu\\nu} = (8\\pi G/c^2)\\rho\\,u_\\mu u_\\nu$ with $u_\\mu u^\\mu = -1$. Each chart's lengths carry the scale, and we keep $c$ explicit where a coordinate is a time. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
-  "history": "",
-  "related": [],
-  "references": [],
+  "convention": "The matter is dust of density $\\rho$ with four velocity $u^\\mu$, $u_\\mu u^\\mu = -1$, held up by a cosmological constant $\\Lambda$, $G_{\\mu\\nu} + \\Lambda g_{\\mu\\nu} = (8\\pi G/c^2)\\rho\\,u_\\mu u_\\nu$, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. Each chart's length carries the scale, with $c$ explicit where a coordinate is a time.",
+  "history": "Einstein's static universe of 1917 and Gödel's rotating universe of 1949 are both made of dust held up by a cosmological constant, and in both of them every event looks exactly like every other [einstein1917, godel1949]. Einstein's has seven independent motions carrying events into events, and Gödel's has five [saez2024]. Are there any more universes of dust like that?¶There are, and the first of them were István Ozsváth's, worked out with spinors and set down in twenty one pages of the Journal of Mathematical Physics for April 1965 [ozsvath1965]. Each of his universes keeps the property with just four motions, enough to carry any event to any other in exactly one way [krasinski1998rotating, saez2024]. A year and a half later David L. Farnsworth and Roy P. Kerr showed that the ones whose group of motions is unimodular are exactly Ozsváth's classes I, II, and III [farnsworth1966, saez2024]. The rest of Ozsváth's universes, whose group is not unimodular, fall into three classes of their own [saez2024].¶Class III is the family that holds Gödel's universe. Picture Gödel's dust, every grain turning about its neighbours at the same rate, and then stretch its space along one direction of the plane in which it turns and squeeze it along the other. The dust now shears as well as turns, its rotation still points the same way everywhere and never changes, and the shear vanishes only for Gödel's own member [krasinski1998two, wylleman2010]. Every member keeps Gödel's balance between the dust and the cosmological constant, $\\Lambda = -4\\pi G\\rho/c^2$, however hard it is squeezed. In Lode Wylleman's line element of 2010 the squeeze is a single number $v$, with Gödel at $v = 0$ [wylleman2010].¶Class I lives on a three sphere and needs a positive cosmological constant [saez2024, costa2005]. João Costa and José Natário met it again in 2005, among the stationary universes whose space is a group, beside Einstein's universe and Gödel's [costa2005]. The chart here is built from their family, and at $\\beta = 0$ its anisotropy vanishes, its Weyl tensor with it, and the universe is Einstein's static one, of radius $2L$. So the two older universes are both members, Gödel's in class III and Einstein's in class I. In class II the line element tilts the direction of $u$ toward the motion of the dust, and at $s^2 = 1/2$, where the tilt $\\lambda = \\sqrt{1 - 2s^2}$ vanishes, it becomes class III; its Weyl tensor is of Petrov type I, and class III's of type D [saez2024].¶Classes II and III got a paper of their own from Ozsváth in 1970 [ozsvath1970]. The family went into the standard catalogue of exact solutions, and there classes II and III were printed with two of their three forms exchanged [stephani2003, saez2024]. The slip surfaced in 2024, when Juan Antonio Sáez, Salvador Mengual, and Joan Josep Ferrando found that the printed line element holds no perfect fluid, and put the forms back [saez2024].¶They found something more: neither class has a moment of space that is the same at every point, which, they note, contradicts Ozsváth's paper and the catalogue [saez2024]. How can a universe look the same from every event and still have no such moment? Every group of three of its motions sweeps events along timelike surfaces, so no slice of constant time is carried into itself [saez2024]. Class I does have such moments, each one a three sphere [saez2024].",
+  "related": [
+    {
+      "id": "godel",
+      "kind": "special_case",
+      "text": "Class III at $s = 0$ is Gödel's universe, the one member whose dust turns without shearing [krasinski1998two]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "special_case",
+      "text": "Class I at $\\beta = 0$ is Einstein's static universe, a three sphere of radius $2L$ that never changes."
+    },
+    {
+      "id": "petrov_homogeneous",
+      "kind": "family",
+      "text": "Petrov's vacuum is the empty one of its kind: there too four motions carry any event to any other in exactly one way."
+    }
+  ],
+  "references": [
+    "einstein1917",
+    "godel1949",
+    "saez2024",
+    "ozsvath1965",
+    "krasinski1998rotating",
+    "farnsworth1966",
+    "krasinski1998two",
+    "wylleman2010",
+    "costa2005",
+    "ozsvath1970",
+    "stephani2003"
+  ],
   "coordinates": [
     {
       "id": "class_one",
@@ -37,10 +80,10 @@
         },
         {
           "symbol": "\\epsilon = \\dfrac{\\sin\\beta}{\\sqrt{2}}",
-          "description": "Anisotropy of the three-sphere across the axis $d\\psi + \\cos\\theta\\,d\\phi$, a number"
+          "description": "Anisotropy of the three sphere across the axis $d\\psi + \\cos\\theta\\,d\\phi$, a number"
         }
       ],
-      "convention": "The space is a three-sphere in Euler angles $(\\theta, \\phi, \\psi)$, with $t$ carrying dimensions of time, and we take components in the chart $x^0 = ct$. The line element is left invariant on the group $SU(2)$ times the line of $t$, built from the family of Costa and Natário with $D = \\mathrm{diag}(a, b, a - b)$ at $b/a = (1 + \\epsilon)/2$ and $L^2 = 2/a^2\\left(1 - \\epsilon^2\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "The space is a three sphere in Euler angles $(\\theta, \\phi, \\psi)$ and $t$ carries dimensions of time, with components taken in the chart $x^0 = ct$, so that a dot on $t$ in the geodesic equations means $d(ct)/d\\lambda$. The line element is left invariant on the group $SU(2)$ times the line of $t$.",
       "line_element": "ds^2 = -\\left(c\\,dt + L\\cos\\beta\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)\\right)^2 + L^2\\left(2\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2 - \\epsilon\\cos\\left(2\\psi\\right)\\left(d\\theta^2 - \\sin^2\\theta\\,d\\phi^2\\right) - 2\\epsilon\\sin\\left(2\\psi\\right)\\sin\\theta\\,d\\theta\\,d\\phi\\right)",
       "metric_components": [
         {
@@ -5413,14 +5456,14 @@
         },
         {
           "symbol": "s = \\dfrac{\\sin\\gamma}{\\sqrt{2}}",
-          "description": "Anisotropy of the plane of $y$ and $z$, the $\\hat s$ of Sáez, Mengual and Ferrando, with $1/4 < s^2 < 1/2$"
+          "description": "Anisotropy of the plane of $y$ and $z$, the $\\hat s$ of Sáez, Mengual, and Ferrando, with $1/4 < s^2 < 1/2$"
         },
         {
           "symbol": "\\lambda = \\cos\\gamma",
           "description": "Tilt of the line of $u$ toward $dx - \\sinh y\\,dz$, their $\\lambda = \\sqrt{1 - 2s^2}$"
         }
       ],
-      "convention": "The coordinates $(x, y, z, u)$ are dimensionless and $a$ carries the length, as in eq. (48) of Sáez, Mengual and Ferrando, whose $\\hat a$ and $\\hat s$ are our $a$ and $s$, and $s = \\sin\\gamma/\\sqrt{2}$ makes their $\\lambda = \\sqrt{1 - 2s^2}$ the cosine of $\\gamma$. The forms $dx - \\sinh y\\,dz$, $\\cos x\\,dy - \\sin x\\cosh y\\,dz$ and $\\sin x\\,dy + \\cos x\\cosh y\\,dz$ are left invariant on the group of Bianchi type VIII, and the chart covers its universal cover. The dust moves along a timelike direction tilted toward $\\partial_u$.",
+      "convention": "The coordinates $(x, y, z, u)$ are dimensionless and $a$ carries the length, as in equation (48) of Sáez, Mengual, and Ferrando, on the universal cover of the group of Bianchi type VIII, whose invariant forms are $dx - \\sinh y\\,dz$, $\\cos x\\,dy - \\sin x\\cosh y\\,dz$, and $\\sin x\\,dy + \\cos x\\cosh y\\,dz$. The dust moves along a timelike direction tilted toward $\\partial_u$.",
       "line_element": "ds^2 = a^2\\left(-2\\left(dx - \\sinh y\\,dz\\right)^2 + \\left(1 + s\\right)\\left(\\cos x\\,dy - \\sin x\\cosh y\\,dz\\right)^2 + \\left(1 - s\\right)\\left(\\sin x\\,dy + \\cos x\\cosh y\\,dz\\right)^2 + \\left(du + \\lambda\\left(dx - \\sinh y\\,dz\\right)\\right)^2\\right)",
       "metric_components": [
         {
@@ -10792,7 +10835,7 @@
           "description": "Anisotropy of the rotating plane, with $s^2 < 1$; at $s = 0$ the metric is Gödel's universe"
         }
       ],
-      "convention": "The coordinates $(x, y, z, u)$ are dimensionless and $a$ carries the length, as in eq. (48) of Sáez, Mengual and Ferrando at $\\lambda = 0$. The forms are those of the class II chart, on the universal cover of the group of Bianchi type VIII, and $\\partial_u$ is covariantly constant. The dust moves along $\\partial_x$ divided by $\\sqrt{2}\\,a$.",
+      "convention": "The coordinates $(x, y, z, u)$ are dimensionless and $a$ carries the length, as in the class II chart with no tilt, on the universal cover of the group of Bianchi type VIII. The dust moves along $\\partial_x/\\sqrt{2}\\,a$, and $\\partial_u$ is covariantly constant.",
       "line_element": "ds^2 = a^2\\left(-2\\left(dx - \\sinh y\\,dz\\right)^2 + \\left(1 + s\\right)\\left(\\cos x\\,dy - \\sin x\\cosh y\\,dz\\right)^2 + \\left(1 - s\\right)\\left(\\sin x\\,dy + \\cos x\\cosh y\\,dz\\right)^2 + du^2\\right)",
       "metric_components": [
         {
@@ -13143,7 +13186,7 @@
           "description": "Anisotropy, with $\\tanh v$ the $s$ of the class III chart; at $v = 0$ the metric is Gödel's universe"
         }
       ],
-      "convention": "The coordinates $(t, x, y, u)$ are dimensionless, $t$ among them, and $a$ carries the length; the line element is eq. (3) of Wylleman with $A = 1/a$. The dust moves along $\\partial_t$ divided by $\\sqrt{2}\\,a$, and $\\partial_u$ is covariantly constant.",
+      "convention": "The coordinates $(t, x, y, u)$ are dimensionless, $t$ among them, and $a$ carries the length, as in Wylleman's equation (3) with $A = 1/a$. The dust moves along $\\partial_t/\\sqrt{2}\\,a$, and $\\partial_u$ is covariantly constant.",
       "line_element": "ds^2 = a^2\\left(du^2 - 2\\left(dt + e^x\\,dy\\right)^2 + \\left(1 + \\tanh v\\right)\\left(\\cos t\\,dx + \\sin t\\,e^x\\,dy\\right)^2 + \\left(1 - \\tanh v\\right)\\left(-\\sin t\\,dx + \\cos t\\,e^x\\,dy\\right)^2\\right)",
       "metric_components": [
         {

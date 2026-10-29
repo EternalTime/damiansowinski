@@ -76,6 +76,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "Another universe that turns, a vacuum whose frame dragging runs one way above a plane and the other way below it [astorino2022swirling]."
+    },
+    {
+      "id": "ozsvath_dust",
+      "kind": "generalisation",
+      "text": "Ozsváth's class III stretches Gödel's universe along one direction of the plane in which its dust turns and squeezes it along the other, so the dust shears as it turns [wylleman2010]. At $s = 0$ it is Gödel's universe again."
     }
   ],
   "references": [
@@ -108,7 +113,8 @@
     "chan2024",
     "reboucas2009",
     "gurses2010",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "wylleman2010"
   ],
   "coordinates": [
     {

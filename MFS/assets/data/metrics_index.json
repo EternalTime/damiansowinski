@@ -1606,7 +1606,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "eca0a02c52c597e8",
+    "version": "6c082b9fd6571d3b",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -2068,7 +2068,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "4f62d57efec794df",
+    "version": "1e41831bc42aad63",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -4168,6 +4168,30 @@
     "embedding": "7b305003632e43d9"
   },
   {
+    "id": "ozsvath_dust",
+    "name": "Ozsváth Dust",
+    "tags": [
+      "dust",
+      "rotating",
+      "cosmology",
+      "homogeneous",
+      "stationary",
+      "cosmological constant",
+      "anisotropic",
+      "Bianchi classification",
+      "three sphere",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "c0dc3edc9c2dd7a2",
+    "diagrams": "6df66ba5ae37d825",
+    "embedding": "c799f9df36961c5c",
+    "curvature": "fb6ffbffc349dcee"
+  },
+  {
     "id": "ppn_metric",
     "name": "Parametrised Post-Newtonian",
     "tags": [
@@ -4278,7 +4302,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c1ec74eec726e715",
+    "version": "cffe30324a93a648",
     "diagrams": "382c56b4dcf64971",
     "embedding": "9f6d91cb4fe80ffb"
   },

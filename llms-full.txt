@@ -1851,6 +1851,19 @@ Amos Ori's vacuum time machine core of 2005: a plane fronted gravitational wave 
 - chart Spacelike Foliation: coordinates $(t, x, y, z)$, $$ds^2 = dx^2 + dy^2 - 2\,dz\,dt + \left(e\left(x^2 + y^2\right) - t\right)dz^2 + 2\left(\left(2e - a\right)x\,dx + \left(2e + a\right)y\,dy\right)dz$$
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = \dfrac{2a\left(x^2 - y^2\right)}{u^2}du^2 - 2\,du\,dv + dx^2 + dy^2$$
 
+### Ozsváth's Homogeneous Universes of Dust
+
+István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Einstein's static universe, class III, which holds Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.
+
+- id: `ozsvath_dust`
+- tags: dust, rotating, cosmology, homogeneous, stationary, cosmological constant, anisotropic, Bianchi classification, three sphere, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ozsvath_dust.json
+- chart Class I: coordinates $(t, \theta, \phi, \psi)$, $$ds^2 = -\left(c\,dt + L\cos\beta\left(d\psi + \cos\theta\,d\phi\right)\right)^2 + L^2\left(2\left(d\psi + \cos\theta\,d\phi\right)^2 + d\theta^2 + \sin^2\theta\,d\phi^2 - \epsilon\cos\left(2\psi\right)\left(d\theta^2 - \sin^2\theta\,d\phi^2\right) - 2\epsilon\sin\left(2\psi\right)\sin\theta\,d\theta\,d\phi\right)$$
+- chart Class II: coordinates $(x, y, z, u)$, $$ds^2 = a^2\left(-2\left(dx - \sinh y\,dz\right)^2 + \left(1 + s\right)\left(\cos x\,dy - \sin x\cosh y\,dz\right)^2 + \left(1 - s\right)\left(\sin x\,dy + \cos x\cosh y\,dz\right)^2 + \left(du + \lambda\left(dx - \sinh y\,dz\right)\right)^2\right)$$
+- chart Class III: coordinates $(x, y, z, u)$, $$ds^2 = a^2\left(-2\left(dx - \sinh y\,dz\right)^2 + \left(1 + s\right)\left(\cos x\,dy - \sin x\cosh y\,dz\right)^2 + \left(1 - s\right)\left(\sin x\,dy + \cos x\cosh y\,dz\right)^2 + du^2\right)$$
+- chart Farnsworth-Kerr: coordinates $(t, x, y, u)$, $$ds^2 = a^2\left(du^2 - 2\left(dt + e^x\,dy\right)^2 + \left(1 + \tanh v\right)\left(\cos t\,dx + \sin t\,e^x\,dy\right)^2 + \left(1 - \tanh v\right)\left(-\sin t\,dx + \cos t\,e^x\,dy\right)^2\right)$$
+
 ### Parametrised Post-Newtonian Metric
 
 The weak gravitational field of a slowly moving body with a number in front of every term, so that each metric theory of gravity is a set of numbers and each experiment in the solar system measures a combination of them. General relativity is the point $\beta = \gamma = 1$, where the metric is Schwarzschild's far from the horizon.
