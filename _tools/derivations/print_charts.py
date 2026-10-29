@@ -21,7 +21,7 @@ string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, fre
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
-maximally_supersymmetric_plane_wave, kodama_kink and bardeen_perturbations, and Godel's cylindrical chart.
+maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations and holographic_superconductor, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -33596,6 +33596,257 @@ def super_entropic_check(chart, system):
 
 
 CHARTS["super_entropic"] = [lambda s=s: super_entropic(s) for s in SEB_CHARTS]
+
+
+# -- Inside a holographic superconductor ------------------------------------------------
+
+HS_CHARTS = ("planar", "kasner", "inversion")
+HS_FLAT = ["x \\in (-\\infty, \\infty)", "y \\in (-\\infty, \\infty)"]
+
+
+def rho_beta_powers(rho, beta, state):
+    """A pretty printer for a chart whose every value is a rational function of rho and rho^beta,
+    as the Kasner inversion of Hartnoll, Horowitz, Kruthoff and Santos is. Each power of rho is
+    split into its part in beta and its rational rest, rho^{a beta + b} = W^a rho^b with W standing
+    for rho^beta, the value is factored as a rational function of rho and W, and the monomial in
+    front is handed to the printer as a placeholder whose text is rho with its whole exponent,
+    above the line, or below it with the signs turned where every term of the exponent is
+    negative. Inside a bracket each power W^k is written rho^{k beta}."""
+    W = sp.Symbol("RHOBETA", positive=True)
+    table = {}
+
+    def placeholder(text):
+        symbol = table.setdefault(text, sp.Symbol(f"RHOPOWER{len(table)}", positive=True))
+        state["printer"].overrides[symbol] = text
+        return symbol
+
+    def split(e):
+        exponent = sp.expand(e.exp)
+        a = exponent.coeff(beta)
+        return W ** a * rho ** sp.expand(exponent - a * beta)
+
+    def pretty(value):
+        value = sp.sympify(value).replace(lambda e: e.is_Pow and e.base == rho and e.exp.has(beta), split)
+        value = sp.powdenest(sp.expand_power_base(value, force=True), force=True)
+        if value.has(beta) and any(p.base == rho and p.exp.has(beta) for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"{value} is not rational in rho and rho^beta")
+        value = sp.factor(sp.cancel(sp.together(value)))
+        a, b, out = sp.Integer(0), sp.Integer(0), sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base == W:
+                a += k
+            elif base == rho:
+                b += k
+            elif base.is_Add and base.has(W):
+                inner = sp.Integer(0)
+                for term in sp.Add.make_args(sp.expand(base)):
+                    j = sp.degree(term, W)
+                    text = "\\rho^\\beta" if j == 1 else "\\rho^{" + str(j) + "\\beta}"
+                    inner += term.subs(W, 1) * (placeholder(text) if j else 1)
+                out *= inner ** k
+            else:
+                out *= f
+        exponent = sp.expand(a * beta + b)
+        if not exponent.has(beta):
+            return out * rho ** exponent
+        printer = state["printer"]
+        negative = all(term.as_coeff_Mul()[0].is_negative for term in sp.Add.make_args(exponent))
+        shown, side = (-exponent, -1) if negative else (exponent, 1)
+        text = "\\rho^\\beta" if shown == beta else "\\rho^{" + printer.positive_first(shown) + "}"
+        return out * placeholder(text) ** side
+
+    return pretty
+
+
+def holographic_superconductor(system):
+    """The inside of the planar charged black hole of anti-de Sitter space with charged scalar
+    hair, as Hartnoll, Horowitz, Kruthoff and Santos, SciPost Phys. 10, 009 (2021), describe it, in
+    the three charts of their paper.
+
+    planar     their (2), (L^2/z^2)(-f e^{-chi} c^2dt^2 + dz^2/f + dx^2 + dy^2) with the anti-de
+               Sitter radius L they set to one restored, f and chi free functions of z; the
+               ansatz of Hartnoll, Herzog and Horowitz, JHEP 12, 015 (2008), (3.1), with z = L^2/r;
+    kasner     their (36), the Kasner universe the interior ends in, -c^2dtau^2 + tau^{2p_t}c^2dt^2
+               + tau^{2p_x}(dx^2 + dy^2), whose exponents are printed free and obey p_x = (1 - p_t)/2,
+               with their constants c_t and c_x taken into t, x and y;
+    inversion  their (39) and (40), g dt^2 - dr^2/g + h(dx^2 + dy^2), with rho = r/r_o and their
+               constants g_o and E_o taken into t, x and y, which leaves the one length ell =
+               r_o^{1+beta}/g_o; the exact solution of the Einstein-Maxwell equations with a
+               massless scalar field that carries the Kasner exponent p_t = -beta/(2 + beta) at
+               rho >> 1 to beta/(2 - beta) at rho << 1, their (38).
+
+    No value assumes a field equation. holographic_superconductor_check holds the planar chart to
+    their (8) and (9), the Kasner chart to the stress of their massless scalar, and the inversion
+    chart to the Einstein-Maxwell equations with the scalar field and the electric field of their
+    (39); holographic_superconductor.md beside this file is the derivation."""
+    D = sp.Derivative
+    if system == "planar":
+        coords, parameters = ["t", "z", "x", "y"], ["L", "f = f(z)", "\\chi = \\chi(z)"]
+
+        def line(c2):
+            return ("ds^2 = \\dfrac{L^2}{z^2}\\left(-f\\,e^{-\\chi}" + c2 + "dt^2 + \\dfrac{dz^2}{f} + dx^2 + dy^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        z, L = probe.symbol["z"], probe.parameters["L"]
+        f, chi = probe.parameters["f"], probe.parameters["chi"]
+        lead = [L, z, f, chi, D(f, z), D(chi, z), D(f, (z, 2)), D(chi, (z, 2))]
+        return {
+            "metric_id": "holographic_superconductor",
+            "system": {"id": system, "name": "Planar", "coords": coords,
+                       "domains": ["t \\in (-\\infty, \\infty)", "z \\in (0, \\infty)"] + HS_FLAT
+                                  + ["z = 0 \\;\\text{(the boundary)}", "z \\to \\infty \\;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2")},
+            "chart_line_element": line("\\,"),
+            "printer": {"lead": lead, "factors": lead},
+            "pretty": lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine="exp"),
+            "check": lambda chart: holographic_superconductor_check(chart, system),
+        }
+    if system == "kasner":
+        coords, parameters = ["\\tau", "t", "x", "y"], ["p_t", "p_x"]
+        state = {}
+
+        def line(c2, tau):
+            return (f"ds^2 = -{c2}d\\tau^2 + {tau}^{{2p_t}}{c2}dt^2 + {tau}^{{2p_x}}\\left(dx^2 + dy^2\\right)")
+        probe = vm.Reader(coords, parameters, ())
+        tau, p, px = probe.symbol["\\tau"], probe.parameters["p_t"], probe.parameters["p_x"]
+
+        def check(chart):
+            state["printer"] = chart.printer
+            holographic_superconductor_check(chart, system)
+        return {
+            "metric_id": "holographic_superconductor",
+            "system": {"id": system, "name": "Final Kasner Epoch", "coords": coords,
+                       "domains": ["\\tau \\in (0, \\infty)", "t \\in (-\\infty, \\infty)"] + HS_FLAT
+                                  + ["\\tau \\to 0 \\;\\text{(the singularity)}"],
+                       "parameters": parameters, "line_element": line("c^2", "\\tau")},
+            "chart_line_element": line("", "\\left(\\dfrac{\\tau}{c}\\right)"),
+            "time": "\\tau",
+            "printer": {"lead": [p, px, tau], "factors": [p, px, probe.c, tau]},
+            "pretty": time_powers(tau, "\\tau", probe.c, state),
+            "components": {
+                "metric_components": {("t", "t"): "\\tau^{2p_t}", ("x", "x"): "\\tau^{2p_x}",
+                                      ("y", "y"): "\\tau^{2p_x}"},
+                "inverse_metric_components": {("t", "t"): "\\tau^{-2p_t}", ("x", "x"): "\\tau^{-2p_x}",
+                                              ("y", "y"): "\\tau^{-2p_x}"}},
+            "check": check,
+        }
+    coords, parameters = ["\\rho", "t", "x", "y"], ["\\beta", "\\ell"]
+
+    def line(c2):
+        return ("ds^2 = -\\dfrac{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}d\\rho^2"
+                " + \\dfrac{\\rho^\\beta}{\\left(1 + \\rho^\\beta\\right)^2}" + c2 + "dt^2"
+                " + \\rho^{1 - \\beta}\\left(1 + \\rho^\\beta\\right)^2\\left(dx^2 + dy^2\\right)")
+    probe = vm.Reader(coords, parameters, ())
+    rho, beta, ell = probe.symbol["\\rho"], probe.parameters["beta"], probe.parameters["ell"]
+    state = {}
+
+    def check(chart):
+        state["printer"] = chart.printer
+        holographic_superconductor_check(chart, system)
+    return {
+        "metric_id": "holographic_superconductor",
+        "system": {"id": system, "name": "Kasner Inversion", "coords": coords,
+                   "domains": ["\\rho \\in (0, \\infty)", "t \\in (-\\infty, \\infty)"] + HS_FLAT
+                              + ["\\rho \\to 0 \\;\\text{(the singularity)}"],
+                   "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [ell, beta, rho], "factors": [ell, beta, rho]},
+        "pretty": rho_beta_powers(rho, beta, state),
+        # Each scalar grouped by the powers of rho^beta, whose coefficients turn into each other
+        # under beta -> -beta, as the chart does under rho^beta -> rho^{-beta}.
+        "ricci_scalar": "-\\dfrac{\\left(1 - \\beta^2\\right)\\rho^{\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^2}",
+        "kretschmann": ("\\dfrac{\\left(\\left(1 + \\beta\\right)^2\\left(7\\beta^2 + 2\\beta + 3\\right)\\rho^{4\\beta}"
+                        " - 4\\left(1 + \\beta\\right)\\left(11\\beta^3 + 5\\beta^2 - \\beta - 3\\right)\\rho^{3\\beta}"
+                        " + 2\\left(61\\beta^4 - 30\\beta^2 + 9\\right)\\rho^{2\\beta}"
+                        " + 4\\left(1 - \\beta\\right)\\left(11\\beta^3 - 5\\beta^2 - \\beta + 3\\right)\\rho^\\beta"
+                        " + \\left(1 - \\beta\\right)^2\\left(7\\beta^2 - 2\\beta + 3\\right)\\right)\\rho^{2\\beta - 4}}"
+                        "{4\\ell^4\\left(1 + \\rho^\\beta\\right)^8}"),
+        "check": check,
+    }
+
+
+def holographic_superconductor_check(chart, system):
+    """Each chart against the field equations of Hartnoll, Horowitz, Kruthoff and Santos, with
+    their action R + 6 - F^2/4 - |D phi|^2 - m^2 phi^2 and so G_ab - 3 g_ab = T_ab/2 at L = 1.
+
+    planar: for any f and chi, G^t_t - G^z_z = -(z f/L^2) chi', so the difference of the two
+    equations is their (8), and L^2 (G^t_t + G^z_z) = -2 e^{chi/2} z^4 (e^{-chi/2} f/z^3)', the
+    left side of their (9) over -2; with the charged scalar phi and the potential Phi of their
+    (4) the equations G_ab - 3 g_ab/L^2 = T_ab/2 at L = 1 are then their (8) and (9) exactly.
+    kasner: R_ab = d_a phi d_b phi with phi = -p_phi ln tau and p_phi^2 = (1 - p_t)(1 + 3p_t)/2,
+    their (36) on the two conditions below it, p_t + 2p_x = 1 and p_phi^2 + p_t^2 + 2p_x^2 = 1, the field equations without the potential, the
+    charge and the cosmological constant they drop near the singularity.
+    inversion: R_ab = d_a phi d_b phi + (F_ac F_b^c - g_ab F^2/4)/2 with phi = sqrt((1 - beta^2)/2)
+    ln rho and F_{rho t} = 2 beta/h, h = rho^{1 - beta}(1 + rho^beta)^2: their (39) and dPhi/dr =
+    E_o/h in the variables of this chart, the massless neutral scalar coupled to the Maxwell field
+    with no cosmological constant that they say the inversion solves."""
+    geo = chart.geo
+    g, ginv = geo.g, geo.ginv
+    n = len(chart.symbols)
+    if system == "planar":
+        t, z = chart.symbols[:2]
+        L = chart.reader.parameters["L"]
+        f, chi = chart.reader.parameters["f"], chart.reader.parameters["chi"]
+        mixed = geo.raise_indices(geo.einstein_ll(), 2, (0,))
+        Gtt, Gzz = vm._at(mixed, (0, 0)), vm._at(mixed, (1, 1))
+        if vm.norm(Gtt - Gzz + z * f * sp.diff(chi, z) / L ** 2) != 0:
+            raise AssertionError("holographic_superconductor: G^t_t - G^z_z is not -(z f/L^2) chi'")
+        nine = -2 * sp.exp(chi / 2) * z ** 4 * sp.diff(sp.exp(-chi / 2) * f / z ** 3, z)
+        if vm.norm(L ** 2 * (Gtt + Gzz) - nine) != 0:
+            raise AssertionError("holographic_superconductor: G^t_t + G^z_z is not the left side of (9)")
+        # The whole set at L = 1, with the charged scalar and the potential of their (4).
+        q, m2 = sp.symbols("q m2")
+        phi, Phi = sp.Function("phi")(z), sp.Function("Phi")(z)
+        one = {L: 1}
+        g1, ginv1 = g.subs(one), ginv.subs(one)
+        G1 = geo.einstein_ll()
+        G1 = sp.Matrix(n, n, lambda a, b: vm._at(G1, (a, b)).subs(one))
+        Dphi = [-sp.I * q * Phi * phi, sp.diff(phi, z), 0, 0]
+        Dbar = [sp.I * q * Phi * phi, sp.diff(phi, z), 0, 0]
+        kinetic = sum(ginv1[a, b] * Dphi[a] * Dbar[b] for a in range(n) for b in range(n))
+        F = sp.zeros(n)
+        F[1, 0], F[0, 1] = sp.diff(Phi, z), -sp.diff(Phi, z)
+        F2 = sum(ginv1[a, c] * ginv1[b, d] * F[a, b] * F[c, d]
+                 for a in range(n) for b in range(n) for c in range(n) for d in range(n))
+        T = sp.Matrix(n, n, lambda a, b: Dphi[a] * Dbar[b] + Dphi[b] * Dbar[a] - g1[a, b] * (kinetic + m2 * phi ** 2)
+                      + sum(F[a, c] * F[b, d] * ginv1[c, d] for c in range(n) for d in range(n)) - g1[a, b] * F2 / 4)
+        E = ginv1 * (G1 - 3 * g1 - T / 2)
+        eight = sp.diff(chi, z) / z - (q ** 2 * sp.exp(chi) / f ** 2 * phi ** 2 * Phi ** 2 + sp.diff(phi, z) ** 2)
+        nine = (4 * sp.exp(chi / 2) * z ** 4 * sp.diff(sp.exp(-chi / 2) * f / z ** 3, z)
+                - (2 * m2 * phi ** 2 + z ** 4 * sp.exp(chi) * sp.diff(Phi, z) ** 2 - 12))
+        if sp.simplify(E[0, 0] - E[1, 1] + z ** 2 * f * eight) != 0:
+            raise AssertionError("holographic_superconductor: the planar chart misses their (8)")
+        if sp.simplify(E[0, 0] + E[1, 1] + nine / 2) != 0:
+            raise AssertionError("holographic_superconductor: the planar chart misses their (9)")
+        return
+    ricci = geo.ricci_ll()
+    if system == "kasner":
+        tau = chart.symbols[0]
+        p, px = chart.reader.parameters["p_t"], chart.reader.parameters["p_x"]
+        on = {px: (1 - p) / 2}
+        ricci = [[vm._at(ricci, (a, b)).subs(on) for b in range(n)] for a in range(n)]
+        dphi = [sp.sqrt((1 - p) * (1 + 3 * p) / 2) / tau, 0, 0, 0]
+        stress = sp.Matrix(n, n, lambda a, b: dphi[a] * dphi[b])
+    else:
+        rho = chart.symbols[0]
+        beta = chart.reader.parameters["beta"]
+        h = rho ** (1 - beta) * (1 + rho ** beta) ** 2
+        dphi = [sp.sqrt((1 - beta ** 2) / 2) / rho, 0, 0, 0]
+        F = sp.zeros(n)
+        F[0, 1], F[1, 0] = 2 * beta / h, -2 * beta / h
+        F2 = sum(ginv[a, c] * ginv[b, d] * F[a, b] * F[c, d]
+                 for a in range(n) for b in range(n) for c in range(n) for d in range(n))
+        stress = sp.Matrix(n, n, lambda a, b: dphi[a] * dphi[b]
+                           + (sum(F[a, c] * F[b, d] * ginv[c, d] for c in range(n) for d in range(n))
+                              - g[a, b] * F2 / 4) / 2)
+    for a in range(n):
+        for b in range(n):
+            if vm.norm(vm._at(ricci, (a, b)) - stress[a, b]) != 0:
+                raise AssertionError(f"holographic_superconductor: the {system} chart misses its field equations "
+                                     f"in slot {chart.coords_tex[a]}{chart.coords_tex[b]}")
+
+
+CHARTS["holographic_superconductor"] = [lambda s=s: holographic_superconductor(s) for s in HS_CHARTS]
 
 
 def write(spec):

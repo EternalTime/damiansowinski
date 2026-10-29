@@ -76,11 +76,1356 @@
         }
       ],
       "convention": "We use coordinates $(t, z, x, y)$, with $t$ carrying dimensions of time and $z$, $x$, and $y$ lengths, and inside the event horizon, where $f < 0$, $z$ is the time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
-      "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-fe^{-\\chi}c^2dt^2 + \\dfrac{dz^2}{f} + dx^2 + dy^2\\right)"
+      "line_element": "ds^2 = \\dfrac{L^2}{z^2}\\left(-f\\,e^{-\\chi}c^2dt^2 + \\dfrac{dz^2}{f} + dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{L^2\\,f\\,e^{-\\chi}}{z^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{L^2}{z^2\\,f}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{L^2}{z^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{L^2}{z^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{z^2e^{\\chi}}{L^2\\,f}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{z^2\\,f}{L^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{z^2}{L^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{z^2}{L^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{2z\\,f}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{2z\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\,\\partial_z f + 2f}{2z\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{f}{z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{f}{z}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{z}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(z\\,\\partial_z f + 2f\\right)}{2z^3\\,f^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2}{z^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2}{z^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2}{z^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2}{z^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2}{z^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2}{z^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f}{4z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f}{4z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{f\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f\\right)e^{-\\chi}}{4z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f\\right)e^{-\\chi}}{4z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{z\\,\\partial_z f - 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\,\\partial_z f - 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{z\\,\\partial_z f - 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\,\\partial_z f - 2f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2f - z\\,\\partial_z f}{2z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2f - z\\,\\partial_z f}{2z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2f - z\\,\\partial_z f}{2z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2f - z\\,\\partial_z f}{2z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{f}{z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{f}{z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{f}{z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{f}{z^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f\\right)e^{-\\chi}}{4z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f\\right)e^{-\\chi}}{4z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f\\right)e^{-\\chi}}{4z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 4z\\,\\partial_z f + 4f\\right)e^{-\\chi}}{4z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(z\\,\\partial_z f - 2f\\right)}{2z^4\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2\\,f}{z^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2\\,f}{z^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2\\,f}{z^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2\\,f}{z^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 6z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f\\right)e^{-\\chi}}{4z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - 2z\\,\\partial_z f + 6f}{2z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - 2z\\,\\partial_z f + 6f}{2z^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 6z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4L^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - 2z\\,\\partial_z f + 6f}{2L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{z\\,f\\,\\partial_z\\chi - 2z\\,\\partial_z f + 6f}{2L^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{z^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 6z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f\\right)e^{\\chi}}{4L^4\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{z^2\\,f\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 2z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f\\right)}{4L^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{z^2\\left(z\\,f\\,\\partial_z\\chi - 2z\\,\\partial_z f + 6f\\right)}{2L^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{z^2\\left(z\\,f\\,\\partial_z\\chi - 2z\\,\\partial_z f + 6f\\right)}{2L^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 6z\\,f\\,\\partial_z\\chi - 12z\\,\\partial_z f + 24f}{2L^2}",
+      "kretschmann": "K = \\dfrac{z^4\\,f^2\\left(\\partial_z\\chi\\right)^4 - 4z^4\\,f^2\\left(\\partial_z\\chi\\right)^2\\,\\partial_z^2\\chi + 4z^4\\,f^2\\left(\\partial_z^2\\chi\\right)^2 - 6z^4\\,f\\,\\partial_z f\\left(\\partial_z\\chi\\right)^3 + 12z^4\\,f\\,\\partial_z f\\,\\partial_z\\chi\\,\\partial_z^2\\chi + 4z^4\\,f\\left(\\partial_z\\chi\\right)^2\\,\\partial_z^2 f - 8z^4\\,f\\,\\partial_z^2 f\\,\\partial_z^2\\chi + 9z^4\\left(\\partial_z f\\right)^2\\left(\\partial_z\\chi\\right)^2 - 12z^4\\,\\partial_z f\\,\\partial_z\\chi\\,\\partial_z^2 f + 4z^4\\left(\\partial_z^2 f\\right)^2 + 4z^3\\,f^2\\left(\\partial_z\\chi\\right)^3 - 8z^3\\,f^2\\,\\partial_z\\chi\\,\\partial_z^2\\chi - 20z^3\\,f\\,\\partial_z f\\left(\\partial_z\\chi\\right)^2 + 16z^3\\,f\\,\\partial_z f\\,\\partial_z^2\\chi + 8z^3\\,f\\,\\partial_z\\chi\\,\\partial_z^2 f + 24z^3\\left(\\partial_z f\\right)^2\\,\\partial_z\\chi - 16z^3\\,\\partial_z f\\,\\partial_z^2 f + 20z^2\\,f^2\\left(\\partial_z\\chi\\right)^2 - 16z^2\\,f^2\\,\\partial_z^2\\chi - 56z^2\\,f\\,\\partial_z f\\,\\partial_z\\chi + 16z^2\\,f\\,\\partial_z^2 f + 32z^2\\left(\\partial_z f\\right)^2 + 48z\\,f^2\\,\\partial_z\\chi - 96z\\,f\\,\\partial_z f + 96f^2}{4L^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(z\\,\\partial_z f - 3f\\right)e^{-\\chi}}{z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 3f}{z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 4z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 4z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4z^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3f - z\\,\\partial_z f}{L^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 3f}{L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 4z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 4z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f}{4L^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{z^2\\left(z\\,\\partial_z f - 3f\\right)e^{\\chi}}{L^4\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{z^2\\,f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 3f\\right)}{L^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{z^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 4z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f\\right)}{4L^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{z^2\\left(z^2\\,f\\left(\\partial_z\\chi\\right)^2 - 2z^2\\,f\\,\\partial_z^2\\chi - 3z^2\\,\\partial_z f\\,\\partial_z\\chi + 2z^2\\,\\partial_z^2 f + 4z\\,f\\,\\partial_z\\chi - 8z\\,\\partial_z f + 12f\\right)}{4L^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f}{12f}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f}{12f}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(\\dfrac{f\\,\\partial_z^2\\chi}{12} - \\dfrac{f\\left(\\partial_z\\chi\\right)^2}{24} + \\dfrac{\\partial_z f\\,\\partial_z\\chi}{8} - \\dfrac{\\partial_z^2 f}{12}\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{12}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{12}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f}{24f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f}{24f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f}{24f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f}{24f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(\\dfrac{f\\left(\\partial_z\\chi\\right)^2}{12} - \\dfrac{f\\,\\partial_z^2\\chi}{6} - \\dfrac{\\partial_z f\\,\\partial_z\\chi}{4} + \\dfrac{\\partial_z^2 f}{6}\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(\\dfrac{f\\left(\\partial_z\\chi\\right)^2}{12} - \\dfrac{f\\,\\partial_z^2\\chi}{6} - \\dfrac{\\partial_z f\\,\\partial_z\\chi}{4} + \\dfrac{\\partial_z^2 f}{6}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(\\dfrac{f\\left(\\partial_z\\chi\\right)^2}{12} - \\dfrac{f\\,\\partial_z^2\\chi}{6} - \\dfrac{\\partial_z f\\,\\partial_z\\chi}{4} + \\dfrac{\\partial_z^2 f}{6}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(\\dfrac{f\\left(\\partial_z\\chi\\right)^2}{12} - \\dfrac{f\\,\\partial_z^2\\chi}{6} - \\dfrac{\\partial_z f\\,\\partial_z\\chi}{4} + \\dfrac{\\partial_z^2 f}{6}\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{12z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{12z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{12z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{12z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2\\,f\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)e^{-\\chi}}{24z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{24z^2\\,f}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{12z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{12z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{12z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{L^2\\left(f\\left(\\partial_z\\chi\\right)^2 - 2f\\,\\partial_z^2\\chi - 3\\partial_z f\\,\\partial_z\\chi + 2\\partial_z^2 f\\right)}{12z^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f}{z\\,f}\\dot{t}\\dot{z} = 0",
+        "\\ddot{z} - \\dfrac{f\\left(z\\,f\\,\\partial_z\\chi - z\\,\\partial_z f + 2f\\right)e^{-\\chi}}{2z}\\dot{t}^2 - \\dfrac{z\\,\\partial_z f + 2f}{2z\\,f}\\dot{z}^2 + \\dfrac{f}{z}\\dot{x}^2 + \\dfrac{f}{z}\\dot{y}^2 = 0",
+        "\\ddot{x} - \\dfrac{2}{z}\\dot{z}\\dot{x} = 0",
+        "\\ddot{y} - \\dfrac{2}{z}\\dot{z}\\dot{y} = 0"
+      ]
     },
     {
       "id": "kasner",
-      "name": "Final Kasner epoch",
+      "name": "Final Kasner Epoch",
       "coords": [
         "\\tau",
         "t",
@@ -97,15 +1442,1348 @@
       "parameters": [
         {
           "symbol": "p_t",
-          "description": "Kasner exponent along $t$, with $-1/3 \\le p_t \\le 1$; the exponent along $x$ and $y$ is $(1 - p_t)/2$, and the scalar field is $\\varphi = -p_\\varphi\\ln\\tau$ with $p_\\varphi^2 = (1 - p_t)(1 + 3p_t)/2$"
+          "description": "Kasner exponent along $t$, with $-1/3 \\le p_t \\le 1$"
+        },
+        {
+          "symbol": "p_x",
+          "description": "Kasner exponent along $x$ and $y$, with $p_t + 2p_x = 1$; the scalar field is $\\varphi = -p_\\varphi\\ln\\tau$, with $p_\\varphi^2 + p_t^2 + 2p_x^2 = 1$"
         }
       ],
       "convention": "We use coordinates $(\\tau, t, x, y)$, with $\\tau$ the proper time left before the singularity and $t$ both carrying dimensions of time, and $x$ and $y$ lengths, and evaluate the powers of $\\tau$ with $\\tau$ in a fixed unit of time. We take components in the chart $x^0 = c\\tau$, $x^1 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
-      "line_element": "ds^2 = -c^2d\\tau^2 + \\tau^{2p_t}c^2dt^2 + \\tau^{1 - p_t}\\left(dx^2 + dy^2\\right)"
+      "line_element": "ds^2 = -c^2d\\tau^2 + \\tau^{2p_t}c^2dt^2 + \\tau^{2p_x}\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\tau^{2p_t}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\tau^{2p_x}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\tau^{2p_x}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\tau^{-2p_t}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\tau^{-2p_x}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\tau^{-2p_x}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\,\\tau^{2p_t - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t}{c\\,\\tau}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_t}{c\\,\\tau}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x}{c\\,\\tau}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x}{c\\,\\tau}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x}{c\\,\\tau}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x}{c\\,\\tau}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_t\\,\\tau^{2p_t - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\,\\tau^{2p_t - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_t\\,\\tau^{2p_t - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\left(p_t - 1\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_t\\left(p_t - 1\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\left(p_x - 1\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(p_x - 1\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\left(p_x - 1\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(p_x - 1\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\left(p_t - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_t\\left(p_t - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\left(p_x - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(p_x - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\left(p_x - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(p_x - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x^2\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_x^2\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_x^2\\,\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x^2\\,\\tau^{2p_x - 2}}{c^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\left(1 - p_t\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_t\\left(1 - p_t\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_t\\left(1 - p_t\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_t\\left(1 - p_t\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x\\left(1 - p_x\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\,p_x\\,\\tau^{2p_t + 2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x^2\\,\\tau^{4p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{p_x^2\\,\\tau^{4p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{p_x^2\\,\\tau^{4p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x^2\\,\\tau^{4p_x - 2}}{c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2p_x - 2p_x^2 + p_t - p_t^2}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\left(p_t + 2p_x - 1\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\left(p_t + 2p_x - 1\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\left(p_t + 2p_x - 1\\right)\\tau^{2p_x - 2}}{c^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_t^2 - p_t + 2p_x^2 - 2p_x}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\left(p_t + 2p_x - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\left(p_t + 2p_x - 1\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\left(p_t + 2p_x - 1\\right)}{c^2\\,\\tau^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2p_x - 2p_x^2 + p_t - p_t^2}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_t\\left(p_t + 2p_x - 1\\right)}{c^2\\,\\tau^{2p_t + 2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x\\left(p_t + 2p_x - 1\\right)}{c^2\\,\\tau^{2p_x + 2}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x\\left(p_t + 2p_x - 1\\right)}{c^2\\,\\tau^{2p_x + 2}}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2p_t^2 + 4p_t\\,p_x - 2p_t + 6p_x^2 - 4p_x}{c^2\\,\\tau^2}",
+      "kretschmann": "K = \\dfrac{4p_t^4 - 8p_t^3 + 8p_t^2\\,p_x^2 + 4p_t^2 + 12p_x^4 - 16p_x^3 + 8p_x^2}{c^4\\,\\tau^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x\\left(2p_t + p_x\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_x\\left(2 - 3p_x\\right)\\tau^{2p_t - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_x - p_x^2 + p_t - p_t\\,p_x - p_t^2\\right)\\tau^{2p_x - 2}}{c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_x - p_x^2 + p_t - p_t\\,p_x - p_t^2\\right)\\tau^{2p_x - 2}}{c^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{p_x\\left(2p_t + p_x\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_x\\left(2 - 3p_x\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x - p_x^2 + p_t - p_t\\,p_x - p_t^2}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x - p_x^2 + p_t - p_t\\,p_x - p_t^2}{c^2\\,\\tau^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{p_x\\left(2p_t + p_x\\right)}{c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{p_x\\left(2 - 3p_x\\right)}{c^2\\,\\tau^{2p_t + 2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{p_x - p_x^2 + p_t - p_t\\,p_x - p_t^2}{c^2\\,\\tau^{2p_x + 2}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{p_x - p_x^2 + p_t - p_t\\,p_x - p_t^2}{c^2\\,\\tau^{2p_x + 2}}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)}{3c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)}{3c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)}{6c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)}{6c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)}{6c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)}{6c^2\\,\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{3c^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "t",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "\\tau",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\tau",
+                  "t",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{2p_t + 2p_x - 2}}{6c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{4p_x - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{4p_x - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{4p_x - 2}}{3c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(p_t - 1\\right)\\left(p_t - p_x\\right)\\tau^{4p_x - 2}}{3c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + \\dfrac{p_t\\,\\tau^{2p_t - 1}}{c}\\dot{t}^2 + \\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}\\dot{x}^2 + \\dfrac{p_x\\,\\tau^{2p_x - 1}}{c}\\dot{y}^2 = 0",
+        "\\ddot{t} + \\dfrac{2p_t}{c\\,\\tau}\\dot{\\tau}\\dot{t} = 0",
+        "\\ddot{x} + \\dfrac{2p_x}{c\\,\\tau}\\dot{\\tau}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2p_x}{c\\,\\tau}\\dot{\\tau}\\dot{y} = 0"
+      ]
     },
     {
       "id": "inversion",
-      "name": "Kasner inversion",
+      "name": "Kasner Inversion",
       "coords": [
         "\\rho",
         "t",
@@ -130,7 +2808,1352 @@
         }
       ],
       "convention": "We use coordinates $(\\rho, t, x, y)$, with $\\rho$ a pure number that falls toward the singularity at $\\rho = 0$, $t$ carrying dimensions of time, and $x$ and $y$ lengths. We take components in the chart $x^1 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
-      "line_element": "ds^2 = -\\dfrac{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}d\\rho^2 + \\dfrac{\\rho^\\beta}{\\left(1 + \\rho^\\beta\\right)^2}c^2dt^2 + \\rho^{1 - \\beta}\\left(1 + \\rho^\\beta\\right)^2\\left(dx^2 + dy^2\\right)"
+      "line_element": "ds^2 = -\\dfrac{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}d\\rho^2 + \\dfrac{\\rho^\\beta}{\\left(1 + \\rho^\\beta\\right)^2}c^2dt^2 + \\rho^{1 - \\beta}\\left(1 + \\rho^\\beta\\right)^2\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "-\\dfrac{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}"
+        },
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\rho^\\beta}{\\left(1 + \\rho^\\beta\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\left(1 + \\rho^\\beta\\right)^2\\,\\rho^{1 - \\beta}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\left(1 + \\rho^\\beta\\right)^2\\,\\rho^{1 - \\beta}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "-\\dfrac{\\rho^\\beta}{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\left(1 + \\rho^\\beta\\right)^2}{\\rho^\\beta}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{\\rho^{\\beta - 1}}{\\left(1 + \\rho^\\beta\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{\\rho^{\\beta - 1}}{\\left(1 + \\rho^\\beta\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\rho^{2\\beta - 1}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^5}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\ell^2\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\ell^2\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\rho\\left(1 + \\rho^\\beta\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\ell^2\\,\\beta\\left(1 + \\rho^\\beta\\right)\\left(1 - \\rho^\\beta\\right)}{2\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)\\rho^{\\beta - 1}}{2\\left(1 + \\rho^\\beta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)\\rho^{\\beta - 1}}{2\\left(1 + \\rho^\\beta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)\\rho^{\\beta - 1}}{2\\left(1 + \\rho^\\beta\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\dfrac{1}{2} + \\dfrac{\\rho^\\beta}{2}\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\dfrac{1}{2} + \\dfrac{\\rho^\\beta}{2}\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\dfrac{1}{2} + \\dfrac{\\rho^\\beta}{2}\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\dfrac{1}{2} + \\dfrac{\\rho^\\beta}{2}\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\dfrac{1}{2} + \\dfrac{\\rho^\\beta}{2}\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\dfrac{1}{2} + \\dfrac{\\rho^\\beta}{2}\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{\\rho^\\beta}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(\\rho^{2\\beta} - 1 + \\beta + \\beta\\,\\rho^{2\\beta} - 4\\beta\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\beta\\left(\\rho^{2\\beta} - 1 + \\beta + \\beta\\,\\rho^{2\\beta} - 4\\beta\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(\\rho^{2\\beta} - 1 + \\beta + \\beta\\,\\rho^{2\\beta} - 4\\beta\\,\\rho^\\beta\\right)}{2\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\beta\\left(\\rho^{2\\beta} - 1 + \\beta + \\beta\\,\\rho^{2\\beta} - 4\\beta\\,\\rho^\\beta\\right)}{2\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4\\beta^2\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} + \\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{4\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{2\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{2\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{2\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{2\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(4\\beta\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} - \\beta + 1 - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\beta\\left(4\\beta\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} - \\beta + 1 - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(4\\beta\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} - \\beta + 1 - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\beta\\left(4\\beta\\,\\rho^\\beta - \\beta\\,\\rho^{2\\beta} - \\beta + 1 - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{4} + \\dfrac{\\rho^\\beta}{2} + \\dfrac{1}{4} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} - \\beta^2\\,\\rho^\\beta}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\rho^{\\beta - 1}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)^2}{4\\ell^2\\,\\rho^\\beta}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - \\beta^2 - \\beta^2\\,\\rho^{2\\beta}}{2\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta^2\\,\\rho^{3\\beta - 2}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta^2\\,\\rho^{\\beta - 1}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta^2\\,\\rho^{\\beta - 1}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\beta^2\\,\\rho^{2\\beta} + \\beta^2 - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta^2\\,\\rho^{2\\beta - 2}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta^2\\,\\rho^{2\\beta - 2}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta^2\\,\\rho^{2\\beta - 2}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - \\beta^2 - \\beta^2\\,\\rho^{2\\beta}\\right)\\rho^{2\\beta - 2}}{2\\ell^4\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\beta^2\\,\\rho^{\\beta - 2}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\beta^2\\,\\rho^{3\\beta - 3}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\beta^2\\,\\rho^{3\\beta - 3}}{\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{\\left(1 - \\beta^2\\right)\\rho^{\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^2}",
+      "kretschmann": "K = \\dfrac{\\left(\\left(1 + \\beta\\right)^2\\left(7\\beta^2 + 2\\beta + 3\\right)\\rho^{4\\beta} - 4\\left(1 + \\beta\\right)\\left(11\\beta^3 + 5\\beta^2 - \\beta - 3\\right)\\rho^{3\\beta} + 2\\left(61\\beta^4 - 30\\beta^2 + 9\\right)\\rho^{2\\beta} + 4\\left(1 - \\beta\\right)\\left(11\\beta^3 - 5\\beta^2 - \\beta + 3\\right)\\rho^\\beta + \\left(1 - \\beta\\right)^2\\left(7\\beta^2 - 2\\beta + 3\\right)\\right)\\rho^{2\\beta - 4}}{4\\ell^4\\left(1 + \\rho^\\beta\\right)^8}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)}{4\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - \\beta^2 - \\beta^2\\,\\rho^{2\\beta} - 6\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)}{4\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)\\rho^{\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)\\rho^{\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)\\rho^{\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - \\beta^2 - \\beta^2\\,\\rho^{2\\beta} - 6\\beta^2\\,\\rho^\\beta\\right)\\rho^{\\beta - 2}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)\\rho^{2\\beta - 2}}{4\\ell^4\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - \\beta^2 - \\beta^2\\,\\rho^{2\\beta} - 6\\beta^2\\,\\rho^\\beta}{4\\ell^2\\,\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)\\rho^{2\\beta - 3}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta\\right)\\left(\\beta\\,\\rho^\\beta - \\beta - 1 - \\rho^\\beta\\right)\\rho^{2\\beta - 3}}{4\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{6\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{6\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}}{12\\rho^2\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta\\right)\\rho^{2\\beta - 2}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^6}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho\\left(1 + \\rho^\\beta\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{6\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{6\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{6\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 2}}{6\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{\\dfrac{\\rho^{2\\beta}}{12} + \\dfrac{\\rho^\\beta}{6} + \\dfrac{1}{12} - \\dfrac{\\beta}{4} + \\dfrac{\\beta\\,\\rho^{2\\beta}}{4} + \\dfrac{\\beta^2}{6} + \\dfrac{\\beta^2\\,\\rho^{2\\beta}}{6} - \\dfrac{2\\beta^2\\,\\rho^\\beta}{3}}{\\rho^{\\beta + 1}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(8\\beta^2\\,\\rho^\\beta - 2\\beta^2\\,\\rho^{2\\beta} - 2\\beta^2 - 3\\beta\\,\\rho^{2\\beta} + 3\\beta - 1 - 2\\rho^\\beta - \\rho^{2\\beta}\\right)\\rho^{\\beta - 1}}{12\\ell^2\\left(1 + \\rho^\\beta\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho^\\beta}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\rho^{2\\beta} + 2\\rho^\\beta + 1 - 3\\beta + 3\\beta\\,\\rho^{2\\beta} + 2\\beta^2 + 2\\beta^2\\,\\rho^{2\\beta} - 8\\beta^2\\,\\rho^\\beta}{6\\ell^2\\,\\rho^\\beta}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\rho} + \\dfrac{\\beta\\left(\\rho^\\beta - 1\\right)}{2\\rho\\left(1 + \\rho^\\beta\\right)}\\dot{\\rho}^2 + \\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)\\rho^{2\\beta - 1}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^5}\\dot{t}^2 + \\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\ell^2\\left(1 + \\rho^\\beta\\right)}\\dot{x}^2 + \\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{2\\ell^2\\left(1 + \\rho^\\beta\\right)}\\dot{y}^2 = 0",
+        "\\ddot{t} + \\dfrac{\\beta\\left(1 - \\rho^\\beta\\right)}{\\rho\\left(1 + \\rho^\\beta\\right)}\\dot{\\rho}\\dot{t} = 0",
+        "\\ddot{x} + \\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{\\rho\\left(1 + \\rho^\\beta\\right)}\\dot{\\rho}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{\\beta\\,\\rho^\\beta - \\beta + 1 + \\rho^\\beta}{\\rho\\left(1 + \\rho^\\beta\\right)}\\dot{\\rho}\\dot{y} = 0"
+      ]
     }
   ]
 }

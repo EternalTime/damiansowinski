@@ -2405,6 +2405,20 @@ DIMENSIONS = {
         "t": "T", "w": "L", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L", "\\mu": "L**2", "k": "1",
         "a": "L", "Q": "1", "A": "L", "N": "1",
     },
+    # Inside a holographic superconductor: the anti-de Sitter radius L, the radial z and the planar
+    # x and y are lengths and t a time, and the blackening function f and chi are pure numbers. The
+    # final Kasner chart reads its powers of the proper time tau with tau in a fixed unit, as
+    # Kasner's chart does, and its t is a time; the inversion chart's rho and beta are pure numbers
+    # and ell a length.
+    ("holographic_superconductor", "planar"): {
+        "t": "T", "z": "L", "x": "L", "y": "L", "L": "L", "f": "1", "\\chi": "1",
+    },
+    ("holographic_superconductor", "kasner"): {
+        "\\tau": "T", "t": "T", "x": "L", "y": "L", "p_t": "1", "p_x": "1",
+    },
+    ("holographic_superconductor", "inversion"): {
+        "\\rho": "1", "t": "T", "x": "L", "y": "L", "\\beta": "1", "\\ell": "L",
+    },
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
