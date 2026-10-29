@@ -3239,6 +3239,12 @@ FLAT = {
         "kasner_scalar", lambda m: across(kasner_scalar_five(m.time), 0.0, BIG)),
     ("kasner_magnetic", "kasner_time", "tx"): lambda: one("kasner_magnetic", lambda m: across(m.time, 0.0, BIG)),
     ("kasner_magnetic", "kasner_time", "tz"): lambda: one("kasner_magnetic", lambda m: across(m.time, 0.0, BIG)),
+    # Inside a holographic superconductor: a moment of the inversion is the line rho = -u, its time
+    # u = -rho, on both planes of the inversion chart.
+    ("holographic_superconductor", "inversion", "rhot"): lambda: one(
+        "holographic_superconductor", lambda m: across(-m.time, 0.0, BIG)),
+    ("holographic_superconductor", "inversion", "rhox"): lambda: one(
+        "holographic_superconductor", lambda m: across(-m.time, 0.0, BIG)),
     ("bianchi", "type_i_cartesian", "tx"): lambda: one("bianchi", lambda m: across(m.time, 0.0, BIG)),
     ("kantowski_sachs", "comoving", "tr"): lambda: _kantowski_sachs("comoving"),
     ("kantowski_sachs", "dust", "etar"): lambda: _kantowski_sachs("dust"),
@@ -3681,6 +3687,8 @@ HIDDEN = {
     ("kerr_bertotti_robinson", "static", "radial"): "the hole with no spin, a = 0, another member of the family than the spinning hole whose equator is embedded",
     ("tilted_universes", "flat_model", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
     ("tilted_universes", "inertial", "model"): "the flat model, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded",
+    ("holographic_superconductor", "kasner", "taut"): "the final Kasner epoch, another solution than the inversion whose moments are embedded",
+    ("holographic_superconductor", "kasner", "taux"): "the final Kasner epoch, another solution than the inversion whose moments are embedded",
     ("kasner_magnetic", "rosen", "etax"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
     ("kasner_magnetic", "rosen", "etaz"): "the axisymmetric universe, exponents (0, 0, 1), another spacetime than the one embedded",
     ("datt_ruban_t_models", "comoving", "tube"): "a tube of dust that runs on in both directions, another spacetime than the T-sphere embedded",

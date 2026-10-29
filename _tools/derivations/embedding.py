@@ -11515,6 +11515,66 @@ def kasner_magnetic(ck, src):
                  input=given)]
 
 
+def holographic_superconductor(ck, src):
+    """The plane of t and x of the Kasner inversion at rho = 4, 2, 1, 1/2 and 1/4, at beta = 1/2 and
+    ell = 1, the values its spacetime diagrams declare, each flat,
+    rho^beta/(1 + rho^beta)^2 dt^2 + rho^(1 - beta)(1 + rho^beta)^2 dx^2, with the ring of particles
+    at rest on t^2 + x^2 = l^2, which the published Christoffel symbols keep at rest, since they have
+    no Gamma^t_rho rho or Gamma^x_rho rho: the ellipse of semi-axes rho^(beta/2) l/(1 + rho^beta)
+    along t and rho^((1 - beta)/2)(1 + rho^beta) l along x. Time runs toward the singularity at
+    rho = 0, so the movie and the stack run in u = -rho, and the length along t, the length of the
+    Einstein-Rosen bridge, is greatest at rho = 1, where the inversion turns it round."""
+    metric, system = "holographic_superconductor", "inversion"
+    gamma, _ = published_christoffel(src, metric, system)
+    ck.exact(f"{metric}: no published Gamma^t_rho rho or Gamma^x_rho rho, so particles at rest in the chart stay there",
+             not any(ix[1:] == ("\\rho", "\\rho") and ix[0] != "\\rho" for ix in gamma))
+    params = {"beta": "1/2", "ell": 1}
+
+    def axes(u):
+        r = -np.asarray(u, dtype=float)
+        return np.sqrt(r) ** 0.5 / (1 + np.sqrt(r)), r ** 0.25 * (1 + np.sqrt(r))
+    named = ("4", "2", "1", "1/2", "1/4")
+    keys_u = [-float(sp.Rational(s)) for s in named]
+    moments, keys = ring_moments(keys_u, 0.05,
+                                 lambda k: (f"$\\rho = {named[k]}$", keys_u[k], {"rho": named[k], "y": 0}, None),
+                                 lambda u: (f"$\\rho = {-u:g}$", u, {"rho": repr(-u), "y": 0}, None))
+    frames = ring_sequence(ck, src, "Kasner inversion", metric, system, moments, 5.0, params, axes=("t", "x"))
+    surfaces = [frames[i] for i in keys]
+    for s, (_, u, _, _) in zip(frames, moments):
+        P = s.curves[0].points
+        a = np.linspace(0, 2 * math.pi, 361)
+        along_t, along_x = axes(u)
+        want = np.column_stack([along_t * np.cos(a), along_x * np.sin(a)])
+        ck.add(f"Kasner inversion, rho = {-u}: the ellipse of semi-axes rho^(1/4)/(1 + rho^(1/2)) and "
+               "rho^(1/4)(1 + rho^(1/2))", float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+    ck.add("Kasner inversion: the length along t is greatest at rho = 1",
+           abs(max(np.linspace(-4, -0.25, 1501), key=lambda u: axes(u)[0]) + 1.0), 3e-3)
+
+    def plane(u, a, b):
+        sl = FlatPlane(src, metric, system, "t", "x", {"rho": repr(-float(u)), "y": 0}, params)
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = stack(ck, "Kasner inversion", surfaces, axes, 1.0, plane, 10.0,
+                 "the ring's world tube runs on before $\\rho = 4$ and after $\\rho = 1/4$")
+    tube_fig = stack_figure(tube, 10.0, "$-\\rho$", [
+        ("fill", "cover", "the ring at every moment from $\\rho = 4$ to $\\rho = 1/4$, each at the height of $-\\rho$"),
+        ("line", "particles", "the ring at the five moments of the flat view, twelve of its particles marked"),
+        ("line", "worldline", "the world lines of the twelve particles, at rest in the chart"),
+        ("line", "axis", "the axis of time, through the centre of the ring")])
+    fig, played = ring_movie(frames, 10.0, "$-\\rho$")
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "a ring of particles at rest in the chart on $c^2t^2 + x^2 = \\ell^2$, with twelve "
+                                    "of them marked: an ellipse reaching $\\rho^{1/4}\\ell/(1 + \\sqrt{\\rho})$ along $t$ and "
+                                    "$\\rho^{1/4}(1 + \\sqrt{\\rho})\\,\\ell$ along $x$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = ("$\\beta = 1/2$ and $\\ell = 1$, with $\\ell$ the radius of the ring in the chart's coordinates, "
+                "the unit of every length.")
+    given = "$\\beta = 1/2$, so that $p_t$ goes from $-1/5$ to $1/3$, as in the spacetime diagrams."
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings, input=given,
+                 height="$-\\rho$, a height of $\\ell$ for each unit of $\\rho$"),
+            view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
+
+
 def bianchi(ck, src):
     """The plane y = 0 at four moments of the dust the spacetime diagram declares, solved from
     this spacetime's own G^x_x = G^y_y = G^z_z = 0 by null_rays.DustSolver: flat at each,
@@ -17701,6 +17761,7 @@ DRAWN = {
     "big_rip": big_rip,
     "kasner_scalar": kasner_scalar,
     "kasner_magnetic": kasner_magnetic,
+    "holographic_superconductor": holographic_superconductor,
     "bianchi": bianchi,
     "pp_wave": pp_wave, "khan_penrose": khan_penrose, "bell_szekeres": bell_szekeres,
     "chandrasekhar_xanthopoulos": chandrasekhar_xanthopoulos,
@@ -20358,6 +20419,12 @@ CAPTIONS = {
         "$z$, its cross section widens until $t = 1$ and narrows afterward, and across the field it narrows "
         "until $t = 5^{-7/12}$, about $0.39$, and then widens.",
     ],
+    ("holographic_superconductor", "tube"): [
+        "The world tube of a ring of particles at rest in the chart through the Kasner inversion ($\\beta = 1/2$), "
+        "each moment from $\\rho = 4$ to $\\rho = 1/4$ an ellipse at the height of $-\\rho$. Along $t$ its cross "
+        "section widens until $\\rho = 1$ and narrows afterward, the Einstein-Rosen bridge stretching and then "
+        "contracting toward the singularity, and along $x$ it narrows throughout.",
+    ],
     ("kasner_scalar", "tube"): [
         "The world tube of a ring of particles at rest in the chart ($(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, "
         "$q = 10/13$), each moment from $t = 1/4$ to $t = 2$ an ellipse at the height of its time. Its cross "
@@ -20541,6 +20608,15 @@ CAPTIONS = {
         "contracts while $y$ and $z$ expand, so toward the singularity at $t = 0$ every sphere of particles is drawn "
         "out into a needle along $x$. Edward Kasner found the solution in 1921: its exponents sum to $1$, so volumes "
         "grow as $t$, and the vacuum field equations require their squares to sum to $1$ as well.",
+    ],
+    ("holographic_superconductor", "ring"): [
+        "The plane of $t$ and $x$ ($y = 0$) of the Kasner inversion as $\\rho$ falls from $4$ to $1/4$, each moment "
+        "drawn as a surface in flat space with every distance along it the metric distance. At every moment the "
+        "plane is flat, Euclid's plane with its axes scaled, and the uneven expansion shows in a ring of particles "
+        "at rest in the chart.",
+        "Along $t$ the ring reaches $\\rho^{1/4}\\ell/(1 + \\sqrt{\\rho})$, greatest, $\\ell/2$, at $\\rho = 1$, "
+        "where the stretching of the Einstein-Rosen bridge turns into its contraction toward the singularity. "
+        "Along $x$ it reaches $\\rho^{1/4}(1 + \\sqrt{\\rho})\\,\\ell$, which shrinks throughout.",
     ],
     ("kasner_magnetic", "ring"): [
         "The plane $y = 0$ of Kasner's universe with a magnetic field along $z$ as $t$ runs from $1/4$ to $2$, each "
