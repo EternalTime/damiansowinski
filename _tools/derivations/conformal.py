@@ -133,7 +133,10 @@ NOT_DRAWN = {"godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "
              "misner_brill_lindquist", "brill_waves",
              "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous", "eih_many_bodies",
              "kerr_bertotti_robinson", "bardeen_perturbations", "super_entropic", "holographic_superconductor",
-             "ozsvath_dust"}
+             "ozsvath_dust",
+             # Bonnor and Faulkes's oscillating sphere: an interior whose metric depends on t and r, as
+             # Tolman and Bondi's does, with F(t) known only numerically, so no compactification is drawn.
+             "oscillating_sphere"}
 
 
 # ---------------------------------------------------------------- the drawing
