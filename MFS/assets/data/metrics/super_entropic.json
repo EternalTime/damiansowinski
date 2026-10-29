@@ -1,0 +1,60 @@
+{
+  "id": "super_entropic",
+  "name": "Super-Entropic Black Holes",
+  "short_name": "Super-Entropic Black Hole",
+  "description": "",
+  "tags": [],
+  "signature": "(-,+,+,+)",
+  "convention": "The anti-de Sitter radius $\\ell$ and the mass parameter $m$ are lengths, with $\\Lambda = -3/\\ell^2$, and the azimuthal coordinate is periodic with period $\\mu$, a pure number. We keep factors of $c$ explicit.",
+  "history": "",
+  "related": [],
+  "references": [],
+  "coordinates": [
+    {
+      "id": "hennigar_kubiznak_mann",
+      "name": "Hennigar-Kubizňák-Mann",
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The anti-de Sitter radius, a length, with $\\Lambda = -3/\\ell^2$; it is also the rotation parameter, since the hole spins at $a = \\ell$"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, a length; the mass is $M = \\mu m c^2/(2\\pi G)$ and the angular momentum $J = M\\ell c$"
+        },
+        {
+          "symbol": "\\Sigma = r^2 + \\ell^2\\cos^2\\theta",
+          "description": "Equal to $r^2 + \\ell^2$ near the poles and to $r^2$ on the equator"
+        },
+        {
+          "symbol": "\\Delta = \\left(\\ell + \\dfrac{r^2}{\\ell}\\right)^2 - 2mr",
+          "description": "A quartic in $r$ whose two positive roots $r_- \\le r_+$ are the horizons, which exist for $m \\ge 8\\ell/(3\\sqrt{3})$"
+        }
+      ],
+      "convention": "We use the coordinates $(t, r, \\theta, \\psi)$ of Hennigar, Kubizňák, and Mann, with $t$ carrying dimensions of time and $\\psi$ periodic in $\\mu$, and write $\\Sigma$ and $\\Delta$ as the parameters define them. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "carter_plebanski",
+      "name": "Carter-Plebański",
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The anti-de Sitter radius, a length, with $\\Lambda = -3/\\ell^2$"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter, a length; the mass is $M = \\mu m c^2/(2\\pi G)$"
+        },
+        {
+          "symbol": "Q = \\left(\\ell + \\dfrac{q^2}{\\ell}\\right)^2 - 2mq",
+          "description": "The quartic in $q$ whose largest root $q_+$ is the event horizon"
+        },
+        {
+          "symbol": "P = \\dfrac{\\left(\\ell^2 - p^2\\right)^2}{\\ell^2}",
+          "description": "The quartic in $p$ with a double root at each pole, $p = \\pm\\ell$"
+        }
+      ],
+      "convention": "We use the coordinates $(\\tau, q, p, \\sigma)$ of Carter and Plebański's metric as Klemm writes it, with $\\tau$ carrying dimensions of time, $q$ and $p$ lengths, and $\\sigma$ an inverse length periodic in $\\mu/\\ell$, and write $Q$ and $P$ as the parameters define them. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$."
+    }
+  ]
+}
