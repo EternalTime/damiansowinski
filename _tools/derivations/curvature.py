@@ -8873,11 +8873,12 @@ def kerr_taub_nut(ck, src):
 
 
 def tex_fraction(value, unit):
-    """A fraction of a unit as the captions write it, as 5m/4, m/2, -m/4 or 3m/2."""
+    """A fraction of a unit as the captions write it, as 5m/4, m/2, -m/4 or 3m/2, and of no unit
+    as -1/12."""
     value = Fraction(value)
     sign = "-" if value < 0 else ""
     n, d = abs(value.numerator), value.denominator
-    top = unit if n == 1 else f"{n}{unit}"
+    top = unit if n == 1 and unit else f"{n}{unit}"
     return sign + (top if d == 1 else f"{top}/{d}")
 
 
