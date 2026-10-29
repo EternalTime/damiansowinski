@@ -2027,6 +2027,11 @@ DIMENSIONS = {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L", "A": "L", "B": "1", "C": "1", "Z": "1",
         "\\psi": "1",
     },
+    # Buchdahl's fluid sphere: r_s = 2GM/c^2 and the core radius R = k^(-1/2) are lengths, and his
+    # f = r_s/(4 sqrt(r^2 + R^2)) is a pure number.
+    ("buchdahl_sphere", "isotropic"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "R": "L", "f": "1",
+    },
     # The mass function is folded into a length, m = GM(r)/c^2, as Oppenheimer and Volkoff
     # folded it into their u, so 1 - 2m/r is dimensionless and the redshift function, sitting
     # in an exponential, is dimensionless too.
@@ -2544,6 +2549,8 @@ HELD = {
     # and whose derivative along r is algebraic.
     ("tolman_vii", "spherical"): ("psi",),
     ("tolman_vii", "tolman"): ("psi",),
+    # Buchdahl's f, held so that every value is a rational function of f, r and R.
+    ("buchdahl_sphere", "isotropic"): ("f",),
     # Z = g^rr of Tolman's solution V at n = 1/2 holds r^(7/3), and its slope is (7Z - 4)/(3r).
     ("misner_zapolsky", "tolman_v"): ("Z",),
     # Bowers and Liang's N and P hold a power Q of Z and of 1 - r_s/R, and each has an algebraic
@@ -2739,6 +2746,9 @@ RATES = {
     # N' = Q r_s r Z^(Q - 1)/R^3 with Z^Q = N P, and P = Z^Q/N.
     ("bowers_liang", "areal"): {"N": {"r": "\\dfrac{Q r_s r N P}{R^3 Z}"},
                                 "P": {"r": "-\\dfrac{Q r_s r P\\left(P + 2\\right)}{R^3 Z}"}},
+    # Buchdahl's f = r_s/(4 sqrt(r^2 + R^2)): its slope fixes it up to the factor r_s, and the field
+    # equations hold for every value of that factor, so no value holds a relation the rate leaves out.
+    ("buchdahl_sphere", "isotropic"): {"f": {"r": "-\\dfrac{r f}{r^2 + R^2}"}},
     # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
     **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
        for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},

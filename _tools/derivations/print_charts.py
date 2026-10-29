@@ -21,7 +21,8 @@ string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, fre
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
-maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor and eye_of_the_storm, and Godel's cylindrical chart.
+maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm
+and buchdahl_sphere, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -50,7 +51,7 @@ misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, pet
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md,
 eternal_traversable_wormhole.md, interstellar_wormhole.md,
-supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md and kodama_kink.md beside this file.
+supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md and buchdahl_sphere.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -34105,6 +34106,139 @@ def eye_of_the_storm_check(chart, system):
 
 
 CHARTS["eye_of_the_storm"] = [lambda s=s: eye_of_the_storm(s) for s in EOS_CHARTS]
+
+
+# -- Buchdahl's fluid sphere ------------------------------------------------------------
+
+BUCHDAHL_F = "f = \\dfrac{r_s}{4\\sqrt{r^2 + R^2}}"
+BUCHDAHL_RATE = "-\\dfrac{r f}{r^2 + R^2}"
+
+
+def buchdahl_sphere():
+    """Buchdahl's relativistic polytrope of index 5 in his isotropic coordinates, the one chart
+    its literature writes (ApJ 140, 1512, 1964, his (2.1), (2.2) and (2.8)): g_tt = -(1 - f)^2/(1 + f)^2
+    and the space (1 + f)^4 times the flat metric, with his f = a(1 + k r^2)^(-1/2)/(2c^2) written
+    f = r_s/(4 sqrt(r^2 + R^2)) through his (2.14), M = a/(G sqrt k), and R = k^(-1/2), the core
+    radius of Igata, Omamiuda and Takamori (PRD 111, 084062, 2025, their (2) and (14)).
+
+    f is held as a function of r with its slope f' = -r f/(r^2 + R^2), vm.HELD and vm.RATES, which
+    fixes it up to the constant factor r_s, so every value is a rational function of f, r and R and
+    r_s stands only in f. buchdahl_sphere_check holds the chart to Buchdahl's pressure and density
+    before anything is written, and buchdahl_sphere.md is the derivation."""
+    coords = ["t", "r", "\\theta", "\\phi"]
+    parameters = ["r_s", "R", BUCHDAHL_F]
+    line = ("ds^2 = -\\dfrac{\\left(1 - f\\right)^2}{\\left(1 + f\\right)^2}{c}dt^2"
+            " + \\left(1 + f\\right)^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)")
+    key = ("buchdahl_sphere", "isotropic")
+    probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+    r, R, f = probe.symbol["r"], probe.parameters["R"], probe.parameters["f"]
+    # 1 - f and 1 + f, the two factors of g_tt, each written whole and as the line element writes it.
+    less, more = sp.Symbol("_less", positive=True), sp.Symbol("_more", positive=True)
+    # 1 - 2f, which changes sign where p = rho c^2/3 and so where the Ricci scalar does.
+    half = sp.Symbol("_half")
+    # 3 - 4f, which changes sign where p = rho c^2, the edge of the dominant energy condition.
+    dominant = sp.Symbol("_dominant")
+
+    def whole(number, powers):
+        out = number
+        for base, k in powers.items():
+            if sp.expand(base - (f - 1)) == 0:
+                base, out = less, out * (-1) ** k
+            elif sp.expand(base - (1 - f)) == 0:
+                base = less
+            elif sp.expand(base - (f + 1)) == 0:
+                base = more
+            elif sp.expand(base + f + 1) == 0:
+                base, out = more, out * (-1) ** k
+            elif sp.expand(base - (2 * f - 1)) == 0:
+                base, out = half, out * (-1) ** k
+            elif sp.expand(base - (4 * f - 3)) == 0:
+                base, out = dominant, out * (-1) ** k
+            out *= base ** k
+        return out
+
+    def pretty(value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        return whole(*_factor_powers(sp.factor(value)))
+
+    def collect(polynomial, printer):
+        """A sum grouped by its powers of r and R, each coefficient a product in 1 - f and 1 + f."""
+        polynomial = sp.expand(polynomial.xreplace({less: 1 - f, more: 1 + f, half: 1 - 2 * f, dominant: 3 - 4 * f}))
+        if not polynomial.has(r) or not polynomial.has(R):
+            return printer.sum_of(polynomial)
+        # f is a function of r while the tensors are built, so r and R are read off with f held apart.
+        plain = sp.Symbol("_f")
+        terms = sp.Poly(polynomial.xreplace({f: plain}), r, R).terms()
+        out = []
+        for (i, j), coefficient in sorted(terms, key=lambda term: (-term[0][0], term[0][1])):
+            coefficient = coefficient.xreplace({plain: f})
+            number, body = whole(*_factor_powers(sp.factor(coefficient))), sp.Integer(1)
+            number, body = sp.Mul(*[x for x in sp.Mul.make_args(number) if x.is_Number]), \
+                sp.Mul(*[x for x in sp.Mul.make_args(number) if not x.is_Number])
+            out.append((number, body * r ** i * R ** j))
+        return cp.Sum(out)
+
+    return {
+        "metric_id": "buchdahl_sphere",
+        "system": {"id": "isotropic", "name": "Isotropic (Buchdahl)", "coords": coords,
+                   "domains": ["t \\in (-\\infty, \\infty)", "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]",
+                               "\\phi \\in [0, 2\\pi)", "r_s < 4R \\;\\text{(no horizon, } f < 1\\text{)}"],
+                   "parameters": parameters, "line_element": line.replace("{c}", "c^2")},
+        "chart_line_element": line.replace("{c}", ""),
+        "printer": {"lead": [r, R, f, less, more, half, dominant],
+                    "factors": [f, r, R, half, dominant, less, more], "flip": False,
+                    "named": {less: "1 - f", more: "1 + f", half: "1 - 2f", dominant: "3 - 4f"}, "collect": collect},
+        "pretty": pretty,
+        "reduce": lambda value: vm.norm(probe.by_rates(value)),
+        "check": buchdahl_sphere_check,
+    }
+
+
+def buchdahl_sphere_check(chart):
+    """The chart against Buchdahl's paper, at points, before anything is written. The slope `reduce`
+    writes for f is the derivative of its definition. The matter is a perfect fluid at rest,
+    G^r_r = G^theta_theta = G^phi_phi, with his (2.9) and (2.10) in these names: 8 pi G rho/c^2 =
+    3072 R^2 f^5/(r_s^4 (1 + f)^5) and 8 pi G p/c^4 = 1024 R^2 f^6/(r_s^4 (1 - f)(1 + f)^5), so that
+    3p/(rho c^2) = f/(1 - f), his (2.12). At R = 0 the Ricci tensor vanishes: f = r_s/(4r) and
+    the chart is Schwarzschild's vacuum in isotropic coordinates, his (2.3)."""
+    t, r, theta, phi = chart.symbols
+    p = chart.reader.parameters
+    rs, R, f = p["r_s"], p["R"], p["f"]
+    explicit = rs / (4 * sp.sqrt(r ** 2 + R ** 2))
+    out = lambda e: sp.sympify(e).subs(chart.reader.held).doit()  # noqa: E731
+    G = chart.geo.raise_indices(chart.geo.einstein_ll(), 2, (0,))
+    ricci = chart.geo.ricci_ll()
+    density = 3072 * R ** 2 * explicit ** 5 / (rs ** 4 * (1 + explicit) ** 5)
+    pressure = 1024 * R ** 2 * explicit ** 6 / (rs ** 4 * (1 - explicit) * (1 + explicit) ** 5)
+    rate = vm.RATES[("buchdahl_sphere", "isotropic")]["f"]["r"]
+    slope = chart.reader(rate).subs(chart.reader.held).doit()
+    rng = random.Random(1964)
+    for _ in range(4):
+        at = {r: sp.Rational(rng.randint(1, 40), 7), R: sp.Rational(rng.randint(5, 30), 9), t: 1, theta: sp.Rational(7, 5),
+              phi: 1}
+        at[rs] = at[R] * sp.Rational(rng.randint(1, 30), 10)
+        at_vacuum = {**at, R: 0}
+
+        def gap(value, expected, where=at):
+            return abs(sp.N((out(value) - expected).subs(where), 40))
+        tiny = sp.Float("1e-30")
+        if gap(sp.diff(explicit, r), slope.subs(f, explicit)) > tiny:
+            raise AssertionError("buchdahl_sphere: f does not have the slope its rate declares")
+        if gap(vm._at(G, (0, 0)), -density) > tiny:
+            raise AssertionError("buchdahl_sphere: G^t_t is not Buchdahl's density")
+        for slot in ((1, 1), (2, 2), (3, 3)):
+            if gap(vm._at(G, slot), pressure) > tiny:
+                raise AssertionError(f"buchdahl_sphere: G^a_b in slot {slot} is not Buchdahl's pressure")
+        if abs(sp.N((3 * pressure / density - explicit / (1 - explicit)).subs(at), 40)) > tiny:
+            raise AssertionError("buchdahl_sphere: 3p/(rho c^2) is not f/(1 - f)")
+        for index in vm._indices(4, 2):
+            if gap(vm._at(ricci, index), 0, at_vacuum) > tiny:
+                raise AssertionError(f"buchdahl_sphere: the Ricci tensor at R = 0 does not vanish in slot {index}")
+
+
+CHARTS["buchdahl_sphere"] = buchdahl_sphere
 
 
 def step(seconds, where, name):

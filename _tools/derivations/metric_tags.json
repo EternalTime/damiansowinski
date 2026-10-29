@@ -2879,6 +2879,33 @@
    "\\gamma"
   ]
  },
+ "buchdahl_sphere/isotropic": {
+  "stamp": "b1f82c470333157c",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "c_metric/hong_teo": {
   "stamp": "643b2c69e832ec0c",
   "relations": {},
