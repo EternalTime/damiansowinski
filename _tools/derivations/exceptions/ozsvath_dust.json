@@ -1,0 +1,12 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The torus is a moment of class I, and the drawings of classes II and III and of Farnsworth and Kerr's form are of other universes of the family, so none of them meets it.",
+      "drawings": {
+        "ozsvath_dust/class_two/xy": ["torus"],
+        "ozsvath_dust/class_three/xy": ["torus"],
+        "ozsvath_dust/farnsworth_kerr/tx": ["torus"]
+      }
+    }
+  ]
+}
