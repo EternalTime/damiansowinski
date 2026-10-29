@@ -1338,6 +1338,13 @@ DIMENSIONS = {
     ("robinson_trautman", "axisymmetric"): {
         "u": "T", "r": "L", "\\theta": "1", "\\phi": "1", "f": "1", "H": "1",
     },
+    # Newman and Tamburino's r is an affine length along the rays and the fronts' x and y are pure
+    # numbers in the spherical class, so A, and a = A s, are lengths and b is pure; in the cylindrical
+    # limit y carries the length, and ell is the length that makes r^2 x^4 pure inside the logarithm.
+    ("newman_tamburino", "spherical"): {
+        "u": "T", "r": "L", "x": "1", "y": "1", "b": "1", "A_0": "L", "A": "L", "s": "1", "a": "L", "L": "1",
+    },
+    ("newman_tamburino", "cylindrical"): {"u": "T", "r": "L", "x": "1", "y": "L", "\\ell": "L"},
     ("rn_metric", "spherical"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
     },
@@ -2659,6 +2666,10 @@ HELD = {
     # of rho - c tau written 4r^3/(9 r_s), and compare once r is written out.
     ("black_to_white_hole", "kruskal"): ("r",),
     ("black_to_white_hole", "lemaitre"): ("r",),
+    # Newman and Tamburino's a = A s, through which alone the metric holds u, so that no value is
+    # expanded in A_0 and b; and L, half the logarithm of (r + a)/(r - a), a logarithm of radicals,
+    # since s = sqrt(x^2 + y^2). Both have algebraic slopes.
+    ("newman_tamburino", "spherical"): ("a", "L"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2806,6 +2817,14 @@ RATES = {
     # r = L (1 - w^4)^(-1/4), so dr/dw = w^3 r/(1 - w^4): L is the constant of integration, and the
     # line element is written in w and r alone, so the two have no relation a value could hold.
     ("three_brane_throat", "horizon"): {"r": {"w": "\\dfrac{w^3r}{1 - w^4}"}},
+    # Newman and Tamburino's a and L: da = b c s du + a (x dx + y dy)/s^2, with s = sqrt(x^2 + y^2),
+    # and dL = (r da - a dr)/(r^2 - a^2), so each slope is algebraic in a, L, r, x and y. The metric
+    # holds u only through a, so no value holds u, and L stands in no relation with the coordinates.
+    ("newman_tamburino", "spherical"): {
+        "a": {"u": "b\\,c\\,s", "x": "\\dfrac{a\\,x}{s^2}", "y": "\\dfrac{a\\,y}{s^2}"},
+        "L": {"u": "\\dfrac{b\\,c\\,r\\,s}{r^2 - a^2}", "r": "-\\dfrac{a}{r^2 - a^2}",
+              "x": "\\dfrac{a\\,r\\,x}{s^2\\left(r^2 - a^2\\right)}", "y": "\\dfrac{a\\,r\\,y}{s^2\\left(r^2 - a^2\\right)}"},
+    },
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

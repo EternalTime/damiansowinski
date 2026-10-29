@@ -34576,6 +34576,129 @@ def oscillating_sphere_check(chart, system):
 CHARTS["oscillating_sphere"] = [lambda s=s: oscillating_sphere(s) for s in OSC_CHARTS]
 
 
+# -- Newman and Tamburino's metrics ------------------------------------------------------
+
+NT_CHARTS = ("spherical", "cylindrical")
+NT_SPHERICAL = ["b", "A_0", "A = A_0 + b\\,c\\,u", "s = \\sqrt{x^2 + y^2}", "a = A\\,s",
+                "L = \\dfrac{1}{2}\\ln\\left(\\dfrac{r + a}{r - a}\\right)"]
+
+
+def newman_tamburino_line(system, c, c2):
+    """The line element of a chart, with c and c2 the texts that stand before du and du^2: empty
+    in the chart x^0 = cu, and c and c^2 where u is the named time."""
+    if system == "spherical":
+        return ("ds^2 = -\\dfrac{2L\\left(a\\,r\\,s^2 - L\\left((r + a)^2x^2 + (r - a)^2y^2\\right)\\right)}{a^2s}"
+                + c2 + "du^2 - 2" + c + "du\\,dr - \\dfrac{2x\\left(L(r + a)^2 - a\\,r\\right)}{a\\,s^2}" + c
+                + "du\\,dx - \\dfrac{2y\\left(L(r - a)^2 - a\\,r\\right)}{a\\,s^2}" + c
+                + "du\\,dy + \\dfrac{(r + a)^2}{2s^3}dx^2 + \\dfrac{(r - a)^2}{2s^3}dy^2")
+    return ("ds^2 = \\dfrac{\\ln\\left(r^2x^4/\\ell^2\\right)}{x^2}" + c2 + "du^2 - 2" + c + "du\\,dr - \\dfrac{4r}{x}"
+            + c + "du\\,dx + r^2dx^2 + x^2dy^2")
+
+
+def newman_tamburino(system):
+    """Newman and Tamburino's vacuum fields with hypersurface orthogonal, geodesic, shearing and
+    expanding rays, J. Math. Phys. 3, 902 (1962), in the two forms John Steele writes, Class.
+    Quantum Grav. 21, 3587 (2004), arXiv:gr-qc/0403031, section 2: the spherical class, which he
+    gives as its inverse metric with A = bu + c (his c a length, here A_0, and his u our cu), and
+    the limit of the cylindrical class, with his constant b = -ln ell^2. Both are his metrics with
+    the signature flipped. In the spherical class a = A s, through which alone the metric depends
+    on u, and L, half the logarithm of (r + a)/(r - a), are held as functions with the slopes
+    vm.RATES declares, which the reader checks against their definitions, so every value is a
+    rational function of a, L, r, x, y, s and b.
+    newman_tamburino_check holds each chart to Steele's before anything is written."""
+    coords = ["u", "r", "x", "y"]
+    key = ("newman_tamburino", system)
+    if system == "spherical":
+        parameters = NT_SPHERICAL
+        # The components are printed in the chart x^0 = cu, where A = A_0 + b x^0 and the slope of L
+        # along x^0 carries no c, so the file's own definition, with cu, stands beside them.
+        chart_parameters = [p.replace("b\\,c\\,u", "b\\,u") for p in parameters]
+        rates = {name: {k: v.replace("b\\,c", "b") for k, v in along.items()} for name, along in vm.RATES[key].items()}
+        probe = vm.Reader(coords, chart_parameters, (), held=vm.HELD[key], rates=rates)
+        r = probe.symbol["r"]
+        domains = ["u \\in (-\\infty, \\infty)", "r \\in (|a|, \\infty)", "x \\in (-\\infty, \\infty)",
+                   "y \\in (-\\infty, \\infty)"]
+        name = "Spherical class"
+        extra = {"chart_parameters": chart_parameters, "reduce": lambda value: vm.norm(probe.by_rates(value))}
+        lead = [r]
+    else:
+        parameters = ["\\ell"]
+        probe = vm.Reader(coords, parameters, ())
+        r = probe.symbol["r"]
+        domains = ["u \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "x \\in (0, \\infty)",
+                   "y \\in (-\\infty, \\infty)"]
+        name = "Cylindrical limit"
+        extra = {}
+        lead = [r]
+    return {
+        "metric_id": "newman_tamburino",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": newman_tamburino_line(system, "c\\,", "c^2")},
+        "chart_line_element": newman_tamburino_line(system, "", ""),
+        "printer": {"lead": lead, "flip": False},
+        "check": lambda chart: newman_tamburino_check(chart, system),
+        **extra,
+    }
+
+
+def newman_tamburino_check(chart, system):
+    """Each chart against John Steele's metric, arXiv:gr-qc/0403031 section 2, with his signature
+    (+,-,-,-) flipped and his u the chart's x^0 = cu: the spherical class against his inverse metric
+    g^{22} ... g^{44}, with his zeta zeta-bar = s^2, zeta^2 + zeta-bar^2 = 2(x^2 - y^2), A = bu + c
+    written A_0 + b x^0 and R^2 = r^2 - a^2; the cylindrical limit against his line element with
+    b = -ln ell^2. Each is then a vacuum, every component of its Ricci tensor zero."""
+    u, r, x, y = chart.symbols
+    P = chart.reader.parameters
+    if system == "spherical":
+        # Steele's a and L are the chart's a, which holds the held A, and its held L, with A = a/s, so
+        # both sides are rational in them and compared exactly.
+        s = sp.sqrt(x ** 2 + y ** 2)
+        a = P["a"]
+        A = a / s
+        L = P["L"]
+        R2 = r ** 2 - a ** 2
+        steele = sp.zeros(4, 4)
+        steele[0, 1] = steele[1, 0] = 1
+        steele[1, 1] = (-2 * r ** 2 * s / R2 + 2 * r * L / A + 2 * r ** 3 * A * 2 * (x ** 2 - y ** 2) / R2 ** 2
+                        - 4 * r ** 2 * A ** 2 * s ** 3 / R2 ** 2)
+        steele[1, 2] = steele[2, 1] = 4 * A ** 2 * s ** 3 * x * (L / (2 * a ** 3) - (r - 2 * a) / (2 * a ** 2 * R2)
+                                                                   - (r - a) / R2 ** 2)
+        steele[1, 3] = steele[3, 1] = 4 * A ** 2 * s ** 3 * y * (L / (2 * a ** 3) - (r + 2 * a) / (2 * a ** 2 * R2)
+                                                                   - (r + a) / R2 ** 2)
+        steele[2, 2] = -2 * s ** 3 / (r + a) ** 2
+        steele[3, 3] = -2 * s ** 3 / (r - a) ** 2
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(chart.geo.ginv[i, j] + steele[i, j]) != 0:
+                    raise AssertionError(f"newman_tamburino/spherical: slot {chart.coords_tex[i]}{chart.coords_tex[j]} "
+                                         "of the inverse metric is not Steele's")
+    else:
+        b = -sp.log(P["ell"] ** 2)
+        steele = sp.zeros(4, 4)
+        steele[0, 1] = steele[1, 0] = 1
+        steele[0, 0] = -(b + sp.log(r ** 2 * x ** 4)) / x ** 2
+        steele[0, 2] = steele[2, 0] = 2 * r / x
+        steele[2, 2] = -r ** 2
+        steele[3, 3] = -x ** 2
+        # Compared at three points to thirty digits, since the two spell the logarithm differently.
+        points = [{u: sp.Rational(1, 3), r: sp.Rational(5, 2), x: sp.Rational(3, 4), y: 2, P["ell"]: sp.Rational(7, 5)},
+                  {u: -2, r: sp.Rational(1, 7), x: 3, y: sp.Rational(-1, 2), P["ell"]: sp.Rational(1, 3)},
+                  {u: 5, r: 11, x: sp.Rational(2, 9), y: 0, P["ell"]: 4}]
+        for i in range(4):
+            for j in range(i, 4):
+                if any(abs(sp.N((chart.geo.g[i, j] + steele[i, j]).subs(p), 30)) > sp.Float(10) ** -25 for p in points):
+                    raise AssertionError(f"newman_tamburino/cylindrical: slot {chart.coords_tex[i]}{chart.coords_tex[j]} "
+                                         "is not Steele's")
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            if vm.norm(sp.sympify(ricci[i][j])) != 0:
+                raise AssertionError(f"newman_tamburino/{system}: R_{chart.coords_tex[i]}{chart.coords_tex[j]} is not zero")
+
+
+CHARTS["newman_tamburino"] = [lambda s=s: newman_tamburino(s) for s in NT_CHARTS]
+
+
 def step(seconds, where, name):
     """A step of the printing under the clock when a budget is given, so that one which runs past it
     stops the script naming the chart and the step rather than leaving it to hang."""
