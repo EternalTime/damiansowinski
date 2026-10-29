@@ -32,7 +32,7 @@ In the Boyer-Lindquist chart the check holds, before anything is written:
 the chart at $\ell = 0$ to the published Boyer-Lindquist chart of `kerr`, with $GM/c^2 = m$;
 the Ricci scalar to Simpson and Visser's (3.1), $R = 2\ell^2me^{-\ell/r}/(\Sigma r^3)$;
 the Kretschmann scalar to their (3.3), with $\Xi = \ell\Sigma/2r^3$;
-the mixed Einstein tensor $G^\mu{}_\nu$ to having the characteristic polynomial $(\lambda - \lambda_1)^2(\lambda - \lambda_2)^2$ with $\lambda_1 = -2\ell me^{-\ell/r}/\Sigma^2$ and $\lambda_2 = -2\ell me^{-\ell/r}(\Xi - 1)/\Sigma^2$, the eigenvalues of their orthonormal (3.11), so the source is of Hawking-Ellis type I with $\rho = -p_r$;
+the mixed Einstein tensor $G^\mu{}_\nu$, at three points in forty digits, to having the eigenvalues, each twice, $\lambda_1 = -2\ell me^{-\ell/r}/\Sigma^2$ and $\lambda_2 = -2\ell me^{-\ell/r}(\Xi - 1)/\Sigma^2$, the eigenvalues of their orthonormal (3.11), so the source is of Hawking-Ellis type I with $\rho = -p_r$;
 and the chart at $a = 0$ to their static (2.9), $f = 1 - 2me^{-\ell/r}/r$.
 With $G$ and $c$ restored, (3.1) and (3.3) keep their form, since $m$, $a$ and $\ell$ are already lengths.
 

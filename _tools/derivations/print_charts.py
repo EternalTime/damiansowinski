@@ -33899,6 +33899,16 @@ class EyeOfTheStormForms(KerrDeSitterForms):
                 number *= base ** k
             else:
                 powers[base] = powers.get(base, 0) + k
+        # A pair of sums whose product is two terms, as (cos + 1)(cos - 1), is written as that product.
+        pairs = [b for b in powers if b.is_Add and len(b.args) == 2]
+        for n, one in enumerate(pairs):
+            for other in pairs[n + 1:]:
+                both = sp.expand(one * other)
+                k = min(powers[one], powers[other], key=abs) if powers[one] * powers[other] > 0 else 0
+                if k and len(sp.Add.make_args(both)) == 2:
+                    powers[one] -= k
+                    powers[other] -= k
+                    powers[both] = powers.get(both, 0) + k
         C, s = self.C, self.s
         for base, sign in ((sp.expand(1 - C ** 2), 1), (sp.expand(C ** 2 - 1), -1)):
             k = powers.pop(base, 0)
@@ -34012,7 +34022,7 @@ def eye_of_the_storm_check(chart, system):
     """Kerr's published Boyer-Lindquist metric at ell = 0, with GM/c^2 = m; in Boyer and Lindquist's
     chart Simpson and Visser's R = 2 ell^2 m e^{-ell/r}/(Sigma r^3), their Kretschmann scalar (3.3),
     the eigenvalues of their Einstein tensor (3.11), G = -(2 ell m e^{-ell/r}/Sigma^2)
-    diag(1, 1, Xi - 1, Xi - 1) with Xi = ell Sigma/(2 r^3), each twice, and their static metric (2.9)
+    diag(1, 1, Xi - 1, Xi - 1) with Xi = ell Sigma/(2 r^3), each twice, at three points, and their static metric (2.9)
     at a = 0; in the ingoing chart Ghosh's (14), and the Boyer-Lindquist chart pulled back along
     dv = c dt + (r^2 + a^2) dr/Delta, d(phi~) = d(phi) + a dr/Delta."""
     g = chart.geo.g
@@ -34070,11 +34080,19 @@ def eye_of_the_storm_check(chart, system):
         + 8 * Xi ** 2 * (1 - ar) - 4 * Xi * (1 - 6 * ar + ar ** 2))
     if vm.norm(chart.geo.kretschmann() - source) != 0:
         raise AssertionError("eye_of_the_storm: the Kretschmann scalar is not Simpson and Visser's (3.3)")
-    mixed = chart.geo.ginv * sp.Matrix(chart.geo.einstein_ll())
-    lam = sp.Symbol("lambda")
+    # The eigenvalues of G^mu_nu, each twice, at points of rational coordinates and parameters, in
+    # forty digits: a symbolic characteristic polynomial took longer than forty minutes.
     one, two = -2 * ell * m * E / Sigma ** 2, -2 * ell * m * E * (Xi - 1) / Sigma ** 2
-    if vm.norm((mixed - lam * sp.eye(4)).det() - (lam - one) ** 2 * (lam - two) ** 2) != 0:
-        raise AssertionError("eye_of_the_storm: the Einstein tensor misses the eigenvalues of Simpson and Visser's (3.11)")
+    einstein = sp.Matrix(chart.geo.einstein_ll())
+    for point in ({r: sp.Rational(1, 3), th: sp.Rational(1, 5)}, {r: sp.Rational(7, 5), th: sp.Rational(9, 10)},
+                  {r: sp.Rational(5, 2), th: sp.Rational(3, 2)}):
+        point.update({m: 1, a: sp.Rational(3, 5), ell: sp.Rational(1, 5)})
+        mixed = (chart.geo.ginv.subs(point) * einstein.subs(point)).evalf(40)
+        found = sorted(complex(v).real for v in mpmath.eig(mpmath.matrix([[mpmath.mpf(str(x)) for x in row] for row in mixed.tolist()]))[0])
+        want = sorted([float(one.subs(point))] * 2 + [float(two.subs(point))] * 2)
+        if any(abs(x - y) > 1e-12 * max(1.0, abs(y)) for x, y in zip(found, want)):
+            raise AssertionError(f"eye_of_the_storm: the Einstein tensor misses Simpson and Visser's (3.11) at {point}: "
+                                 f"{found} for {want}")
     static = sp.diag(-(1 - 2 * m * E / r), 1 / (1 - 2 * m * E / r), r ** 2, r ** 2 * sp.sin(th) ** 2)
     for i in range(4):
         if vm.norm(g[i, i].subs(a, 0) - static[i, i]) != 0 or any(g[i, j].subs(a, 0) != 0 for j in range(4) if j != i):
