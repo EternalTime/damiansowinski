@@ -17712,7 +17712,7 @@ def newman_tamburino_cylindrical(ck, src):
         "marks": [{"class": "zero", "points": curve}],
         "legend": [["line", "zero", "$K = 0$, on $r\\,x^2 = e^{3/2}\\ell$"]],
         "caption": ["The Kretschmann scalar $K$ of the cylindrical limit, the same at every $u$ and $y$, diverging "
-                    "toward $r = 0$ and $x = 0$ and negative beyond the marked curve. $R = 0$."],
+                    "toward $r = 0$ and $x = 0$ and negative beyond the marked curve; the Ricci scalar vanishes."],
         "settings": "$\\ell = 1$, the unit of $r$.",
         "clip": "Signed log, $-10$ to $10^4$.",
     }]
@@ -17789,7 +17789,7 @@ def newman_tamburino_spherical(ck, src):
         "marks": [{"class": "zero", "points": curve}, {"class": "singular", "points": edge}],
         "legend": [["line", "zero", "$K = 0$"], ["line", "singular", "$r = |a|$, where every ray ends"]],
         "caption": ["The Kretschmann scalar $K$ of the spherical class on the line $x = 1$, $y = 0$, diverging "
-                    "toward $r = |a|$, $a = A_0 + b\\,cu$ here. $R = 0$."],
+                    "toward $r = |a|$, $a = A_0 + b\\,cu$ here; the Ricci scalar vanishes."],
         "settings": "$A_0 = 1$, $b = 1/2$.",
         "clip": "Signed log, $-10^4$ to $0.1$.",
     }]
