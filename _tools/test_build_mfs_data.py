@@ -4508,6 +4508,10 @@ class Slices(unittest.TestCase):
             if key.endswith("/synchronous/well"):
                 return (lambda X: 1 / (1 + math.exp(-X * X) / 30)), [-hi, hi]
             return (lambda X: 1.0), [-hi, hi]
+        if key == "newman_tamburino/cylindrical/line":
+            # The cylindrical limit's front, the surface of x and y at u = 0 and r = ell = 1, meets the
+            # plane of u and r at x = 1 in the one event drawn at (r, cu + r) = (1, 1).
+            return (lambda X: 1.0), [1.0]
         if key == "morgan_morgan/oblate_spheroidal/plane":
             # The plane z = 0 outside the rim, embedded out to Weyl's rho: xi = sqrt(rho^2/a^2 - 1).
             return (lambda X: 0.0), [math.sqrt(self.reach(surface)[1] ** 2 - 1)]

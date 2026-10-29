@@ -2616,6 +2616,13 @@ def _rt_fronts():
     return [Mark(m, [[(m.time, 0.0), (m.time, 100.0)]]) for m in moments("robinson_trautman", "fronts")]
 
 
+def _nt_front():
+    """Newman and Tamburino's cylindrical limit: the front embedded is the surface of x and y at
+    u = 0 and r = ell, which meets the plane of u and r at x = 1 in the one event u = 0, r = ell."""
+    return [Mark(m, points=[(0.0, 1.0)], label="the front $r = \\ell$")
+            for m in moments("newman_tamburino", "front")]
+
+
 def _sth_shells(system):
     """Compere and Long's shells, the surfaces of constant t = 0 and rho at ell = 1, each one event of
     each plane on the equator: (0, rho) on the static plane, and with rho = W + ell there and
@@ -2738,6 +2745,7 @@ FLAT = {
     **{("kerr_melvin", system, view): lambda: one("kerr_melvin", lambda m: along(0.0, *m.reach("boyer_lindquist", "r")))
        for system in ("boyer_lindquist", "rotating") for view in ("radial", "equator")},
     ("robinson_trautman", "axisymmetric", "axis"): _rt_fronts,
+    ("newman_tamburino", "cylindrical", "line"): _nt_front,
     ("bondi_sachs", "bondi", "equator"): _bondi_sphere(),
     **{("supertranslation_hair", system, "equator"): (lambda s=system: _sth_shells(s))
        for system in ("static", "bondi_retarded", "bondi_advanced")},
@@ -3774,6 +3782,7 @@ FLAT_METRICS = {key[0] for key in FLAT}
 # The moving mirror's embedding view is a height over a stretch of spacetime, t and x both.
 MIRROR_NO_MOMENT = "the radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime"
 HIDDEN = {
+    ("newman_tamburino", "spherical", "line"): "the spherical class, another spacetime than the cylindrical limit whose wave front is embedded",
     ("scalar_field_black_hole", "scalar_universe"): "the universe with no black hole, m = 0, another spacetime than the hole whose equator is embedded",
     ("scalar_field_black_hole", "scalar_universe", "radial"): "the universe with no black hole, m = 0, another spacetime than the hole whose equator is embedded",
     ("bardeen_perturbations", "longitudinal_curved", "well"): "a closed universe of dust, another spacetime than the flat universe whose moment is embedded",
