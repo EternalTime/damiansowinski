@@ -1,0 +1,15 @@
+{
+  "hidden": [
+    {
+      "reason": "The black string, the extremal string and the metric of four dimensions, other spacetimes than the topological star whose moment is embedded.",
+      "drawings": [
+        "topological_star/eddington_finkelstein_ingoing/finkelstein",
+        "topological_star/extremal/radial",
+        "topological_star/einstein/radial",
+        "conformal topological_star/black_string",
+        "conformal topological_star/extremal",
+        "conformal topological_star/einstein"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "hidden": [
+    {
+      "reason": "The bowl and skirt of the universe from nothing is a slice that holds the time, the four sphere and de Sitter space together, which is no moment of space, so no drawing marks one.",
+      "drawings": [
+        "universe_from_nothing/closed/radial",
+        "universe_from_nothing/scale_factor/radial",
+        "universe_from_nothing/conformal/radial",
+        "universe_from_nothing/lapse/radial",
+        "conformal universe_from_nothing/closed",
+        "conformal universe_from_nothing/scale_factor",
+        "conformal universe_from_nothing/conformal",
+        "conformal universe_from_nothing/lapse"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the time and phi.",
+      "drawings": {
+        "cremmer_scherk/cartesian/circle": ["sphere"]
+      }
+    }
+  ]
+}

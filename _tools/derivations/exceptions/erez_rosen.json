@@ -1,0 +1,32 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis of Erez and Rosen's metric, which the embedded equatorial plane does not meet.",
+      "drawings": [
+        "erez_rosen/spherical/axis_oblate",
+        "erez_rosen/spherical/axis_prolate",
+        "erez_rosen/prolate_spheroidal/axis_oblate",
+        "erez_rosen/prolate_spheroidal/axis_prolate",
+        "conformal erez_rosen/spherical_axis_oblate",
+        "conformal erez_rosen/spherical_axis_prolate",
+        "conformal erez_rosen/prolate_spheroidal_axis_oblate",
+        "conformal erez_rosen/prolate_spheroidal_axis_prolate"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Erez and Rosen's prolate and oblate masses are two spacetimes of one line element, each equatorial drawing marking its own moment.",
+      "drawings": {
+        "erez_rosen/spherical/equator_oblate": ["prolate"],
+        "erez_rosen/spherical/equator_prolate": ["oblate"],
+        "erez_rosen/prolate_spheroidal/equator_oblate": ["prolate"],
+        "erez_rosen/prolate_spheroidal/equator_prolate": ["oblate"],
+        "conformal erez_rosen/spherical_equator_oblate": ["prolate"],
+        "conformal erez_rosen/spherical_equator_prolate": ["oblate"],
+        "conformal erez_rosen/prolate_spheroidal_equator_oblate": ["prolate"],
+        "conformal erez_rosen/prolate_spheroidal_equator_prolate": ["oblate"]
+      }
+    }
+  ]
+}

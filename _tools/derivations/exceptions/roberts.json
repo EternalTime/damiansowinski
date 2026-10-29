@@ -1,0 +1,39 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Roberts's collapse at p = 9/10, 1 and 2 is three spacetimes of one line element, each drawing marking the moments of its own.",
+      "drawings": {
+        "roberts/double_null/disperses": ["collapses", "threshold"],
+        "roberts/double_null/threshold": ["collapses", "disperses"],
+        "roberts/double_null/collapses": ["disperses", "threshold"],
+        "roberts/advanced/disperses": ["collapses", "threshold"],
+        "roberts/advanced/threshold": ["collapses", "disperses"],
+        "roberts/advanced/collapses": ["disperses", "threshold"],
+        "roberts/areal/disperses": ["collapses", "threshold"],
+        "roberts/areal/threshold": ["collapses", "disperses"],
+        "roberts/areal/collapses": ["disperses", "threshold"],
+        "roberts/diagonal/disperses": ["collapses", "threshold"],
+        "roberts/diagonal/threshold": ["collapses", "disperses"],
+        "roberts/diagonal/collapses": ["disperses", "threshold"],
+        "roberts/scaling/disperses": ["collapses", "threshold"],
+        "roberts/scaling/threshold": ["collapses", "disperses"],
+        "roberts/scaling/collapses": ["disperses", "threshold"],
+        "conformal roberts/double_null_disperses": ["collapses", "threshold"],
+        "conformal roberts/double_null_threshold": ["collapses", "disperses"],
+        "conformal roberts/double_null_collapses": ["disperses", "threshold"],
+        "conformal roberts/advanced_disperses": ["collapses", "threshold"],
+        "conformal roberts/advanced_threshold": ["collapses", "disperses"],
+        "conformal roberts/advanced_collapses": ["disperses", "threshold"],
+        "conformal roberts/areal_disperses": ["collapses", "threshold"],
+        "conformal roberts/areal_threshold": ["collapses", "disperses"],
+        "conformal roberts/areal_collapses": ["disperses", "threshold"],
+        "conformal roberts/diagonal_disperses": ["collapses", "threshold"],
+        "conformal roberts/diagonal_threshold": ["collapses", "disperses"],
+        "conformal roberts/diagonal_collapses": ["disperses", "threshold"],
+        "conformal roberts/scaling_disperses": ["collapses", "threshold"],
+        "conformal roberts/scaling_threshold": ["collapses", "disperses"],
+        "conformal roberts/scaling_collapses": ["disperses", "threshold"]
+      }
+    }
+  ]
+}

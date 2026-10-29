@@ -1,0 +1,15 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Bartnik and McKinnon's solitons with one, two and three zeros are three spacetimes of one line element, and every drawing but the embedding diagram is the first's.",
+      "drawings": {
+        "conformal bartnik_mckinnon/soliton": ["n2", "n3"],
+        "bartnik_mckinnon/areal/radial": ["n2", "n3"],
+        "bartnik_mckinnon/areal/through": ["n2", "n3"],
+        "bartnik_mckinnon/isotropic/radial": ["n2", "n3"],
+        "bartnik_mckinnon/tortoise/radial": ["n2", "n3"],
+        "bartnik_mckinnon/flow/radial": ["n2", "n3"]
+      }
+    }
+  ]
+}

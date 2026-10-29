@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "Lifshitz spacetime's plane y = 0 with t left out, which every moment of the static spacetime covers whole.",
+      "drawings": ["lifshitz_spacetime/poincare/rays"]
+    }
+  ]
+}

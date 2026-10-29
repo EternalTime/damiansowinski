@@ -1,0 +1,14 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Israel, Wilson and Perjes's spinning source, source of complex mass and two sources are three spacetimes of one construction, each drawing marking the moment of its own.",
+      "drawings": {
+        "israel_wilson_perjes/cylindrical/midplane": ["charged_nut", "spinning"],
+        "israel_wilson_perjes/spheroidal/axis": ["charged_nut", "two_sources"],
+        "israel_wilson_perjes/spheroidal/principal": ["charged_nut", "two_sources"],
+        "conformal israel_wilson_perjes/spheroidal_axis": ["charged_nut", "two_sources"],
+        "israel_wilson_perjes/spherical/radial": ["spinning", "two_sources"]
+      }
+    }
+  ]
+}

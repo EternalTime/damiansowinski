@@ -1,0 +1,17 @@
+{
+  "hidden_surfaces": [
+    {
+      "reason": "The last two moments of Lindquist and Wheeler's lattice find the cell's boundary inside its horizon, and the whole moment with it, beyond Schwarzschild's chart.",
+      "drawings": {
+        "lindquist_wheeler_lattice/schwarzschild_cell/radial": [["lattice", 2], ["lattice", 3]]
+      }
+    },
+    {
+      "reason": "Clifton and Ferreira's chart covers the cell while it expands, and every moment embedded is of the cell at rest or contracting.",
+      "drawings": {
+        "lindquist_wheeler_lattice/cosmological_time/radial": [["lattice", 0], ["lattice", 1], ["lattice", 2], ["lattice", 3]],
+        "conformal lindquist_wheeler_lattice/expanding": [["lattice", 0], ["lattice", 1], ["lattice", 2], ["lattice", 3]]
+      }
+    }
+  ]
+}

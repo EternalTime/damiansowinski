@@ -1,0 +1,19 @@
+{
+  "hidden": [
+    {
+      "reason": "Lewis's cylinders inside the null circle, where the circles are closed timelike curves, and the members of his family other than the cylinder of the Weyl class whose moment is embedded.",
+      "drawings": [
+        "lewis/lewis/inside",
+        "lewis/canonical/inside",
+        "lewis/lewis_class/first",
+        "lewis/lewis_class/second",
+        "lewis/stockum_light/surface",
+        "lewis/stockum_light/beyond",
+        "lewis/stockum_critical/surface",
+        "lewis/stockum_critical/beyond",
+        "lewis/stockum_heavy/surface",
+        "lewis/stockum_heavy/band"
+      ]
+    }
+  ]
+}

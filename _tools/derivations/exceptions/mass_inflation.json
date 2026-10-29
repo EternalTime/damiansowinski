@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "Behind Ori's shell the mass function is another one, and the conformal diagram draws the shell: the moments embedded are the tail's alone.",
+      "drawings": ["mass_inflation/ingoing/behind", "conformal mass_inflation/shell"]
+    }
+  ]
+}

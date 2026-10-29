@@ -1,0 +1,10 @@
+{
+  "hidden": [
+    {
+      "reason": "Rosen's chart draws the axisymmetric universe, exponents (0, 0, 1); the ring embedded is of the universe that starts at (-2/7, 3/7, 6/7).",
+      "drawings": ["kasner_magnetic/rosen/etax", "kasner_magnetic/rosen/etaz"]
+    }
+  ],
+  "flat": "Its moments are flat planes, and what the spacetime does is carried by its ring of free particles, stacked up its axis of time.",
+  "height": "Its view tube stacks the ring of free particles up its axis of time, a grid whose height is the time."
+}

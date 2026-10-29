@@ -1,0 +1,17 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Randall and Sundrum's one wall and their two walls are two spacetimes of one line element: each drawing marks the moment of its own.",
+      "drawings": {
+        "randall_sundrum/proper_distance/ty": ["two_walls"],
+        "randall_sundrum/conformal/tw": ["two_walls"],
+        "randall_sundrum/poincare/tz": ["two_walls"],
+        "conformal randall_sundrum/proper_distance": ["two_walls"],
+        "conformal randall_sundrum/conformal": ["two_walls"],
+        "conformal randall_sundrum/poincare": ["two_walls"],
+        "randall_sundrum/two_walls/tphi": ["pseudosphere"],
+        "conformal randall_sundrum/two_walls": ["pseudosphere"]
+      }
+    }
+  ]
+}

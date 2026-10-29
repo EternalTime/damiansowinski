@@ -1,0 +1,17 @@
+{
+  "hidden": [
+    {
+      "reason": "Petrov's embedded plane of r and z meets each plane of t and phi, each cylinder outside the dust and the figure's slice in one event or along the figure's axis, where no moment is drawn.",
+      "drawings": [
+        "petrov_homogeneous/petrov/upright",
+        "petrov_homogeneous/petrov/diagonal",
+        "petrov_homogeneous/petrov/sideways",
+        "petrov_homogeneous/petrov/inverted",
+        "petrov_homogeneous/petrov/turning",
+        "petrov_homogeneous/cylinder/surface",
+        "petrov_homogeneous/cylinder/band",
+        "petrov_homogeneous/cylinder/beyond"
+      ]
+    }
+  ]
+}

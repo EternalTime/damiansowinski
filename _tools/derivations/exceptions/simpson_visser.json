@@ -1,0 +1,41 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Simpson and Visser's black bounce, one way wormhole and traversable wormhole are three spacetimes of one line element, a = r_s/2, r_s and 2 r_s, each drawing marking its own moments. The outgoing chart's region between the horizons is the white hole, where the black hole's moments of constant r do not lie.",
+      "drawings": {
+        "simpson_visser/spherical/bounce": ["null", "wormhole"],
+        "simpson_visser/spherical/null": ["inside", "outside", "wormhole"],
+        "simpson_visser/spherical/wormhole": ["inside", "null", "outside"],
+        "simpson_visser/areal/bounce": ["null", "wormhole"],
+        "simpson_visser/areal/null": ["inside", "outside", "wormhole"],
+        "simpson_visser/areal/wormhole": ["inside", "null", "outside"],
+        "simpson_visser/eddington_finkelstein_ingoing/bounce": ["null", "wormhole"],
+        "simpson_visser/eddington_finkelstein_ingoing/null": ["inside", "outside", "wormhole"],
+        "simpson_visser/eddington_finkelstein_ingoing/wormhole": ["inside", "null", "outside"],
+        "simpson_visser/eddington_finkelstein_outgoing/bounce": ["inside", "null", "wormhole"],
+        "simpson_visser/eddington_finkelstein_outgoing/null": ["inside", "outside", "wormhole"],
+        "simpson_visser/eddington_finkelstein_outgoing/wormhole": ["inside", "null", "outside"],
+        "conformal simpson_visser/spherical_bounce": ["null", "wormhole"],
+        "conformal simpson_visser/spherical_null": ["inside", "outside", "wormhole"],
+        "conformal simpson_visser/spherical_wormhole": ["inside", "null", "outside"],
+        "conformal simpson_visser/areal_bounce": ["null", "wormhole"],
+        "conformal simpson_visser/areal_null": ["inside", "outside", "wormhole"],
+        "conformal simpson_visser/areal_wormhole": ["inside", "null", "outside"],
+        "conformal simpson_visser/ingoing_bounce": ["null", "wormhole"],
+        "conformal simpson_visser/ingoing_null": ["inside", "outside", "wormhole"],
+        "conformal simpson_visser/ingoing_wormhole": ["inside", "null", "outside"],
+        "conformal simpson_visser/outgoing_bounce": ["null", "wormhole"],
+        "conformal simpson_visser/outgoing_null": ["inside", "outside", "wormhole"],
+        "conformal simpson_visser/outgoing_wormhole": ["inside", "null", "outside"]
+      }
+    }
+  ],
+  "hidden_surfaces": [
+    {
+      "reason": "The areal chart of the black bounce is drawn on the side r > 0, where the moments of r < 0 do not lie.",
+      "drawings": {
+        "simpson_visser/areal/bounce": [["inside", 3], ["inside", 4]]
+      }
+    }
+  ]
+}

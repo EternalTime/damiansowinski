@@ -1,0 +1,8 @@
+{
+  "flat_moments": [
+    {
+      "reason": "Kopczynski and Trautman's universe is a flat Friedmann universe, so each of its moments is a flat plane, on which its rings of dust shrink until the turn and grow again.",
+      "moments": [["universe", 0], ["universe", 1], ["universe", 2], ["universe", 3], ["universe", 4]]
+    }
+  ]
+}

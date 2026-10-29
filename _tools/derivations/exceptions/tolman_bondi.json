@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "A cloud of marginally bound dust whose density falls to zero at its surface, another cloud than the one collapsing from rest whose moments are embedded.",
+      "drawings": ["tolman_bondi/comoving_synchronous/collapse"]
+    }
+  ]
+}

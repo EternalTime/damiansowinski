@@ -1,0 +1,14 @@
+{
+  "hidden": [
+    {
+      "reason": "The wormhole time machine's axis of acceleration, which the embedded plane theta = pi/2 does not meet, the mouth of its short throat, and the flat space outside the mouths.",
+      "drawings": [
+        "wormhole_time_machine/wormhole/speeding",
+        "wormhole_time_machine/wormhole/slowing",
+        "wormhole_time_machine/short_throat/radial",
+        "wormhole_time_machine/lorentz/trip",
+        "conformal wormhole_time_machine/lorentz"
+      ]
+    }
+  ]
+}

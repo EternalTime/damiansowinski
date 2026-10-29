@@ -1,0 +1,32 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.",
+      "drawings": [
+        "zipoy_voorhees/spherical/axis_oblate",
+        "zipoy_voorhees/spherical/axis_prolate",
+        "zipoy_voorhees/prolate_spheroidal/axis_oblate",
+        "zipoy_voorhees/prolate_spheroidal/axis_prolate",
+        "conformal zipoy_voorhees/spherical_axis_oblate",
+        "conformal zipoy_voorhees/spherical_axis_prolate",
+        "conformal zipoy_voorhees/prolate_spheroidal_axis_oblate",
+        "conformal zipoy_voorhees/prolate_spheroidal_axis_prolate"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Zipoy and Voorhees's oblate and prolate masses are two spacetimes of one line element, each equatorial drawing marking its own moment.",
+      "drawings": {
+        "zipoy_voorhees/spherical/equator_oblate": ["prolate"],
+        "zipoy_voorhees/spherical/equator_prolate": ["oblate"],
+        "zipoy_voorhees/prolate_spheroidal/equator_oblate": ["prolate"],
+        "zipoy_voorhees/prolate_spheroidal/equator_prolate": ["oblate"],
+        "conformal zipoy_voorhees/spherical_equator_oblate": ["prolate"],
+        "conformal zipoy_voorhees/spherical_equator_prolate": ["oblate"],
+        "conformal zipoy_voorhees/prolate_spheroidal_equator_oblate": ["prolate"],
+        "conformal zipoy_voorhees/prolate_spheroidal_equator_prolate": ["oblate"]
+      }
+    }
+  ]
+}

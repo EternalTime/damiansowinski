@@ -1,0 +1,28 @@
+{
+  "hidden": [
+    {
+      "reason": "The moving mirror's radiation is drawn as a height over a region of the plane of t and x, which is no moment of the spacetime, so no drawing marks one.",
+      "drawings": [
+        "moving_mirror/inertial/thermal",
+        "moving_mirror/inertial/collapse",
+        "moving_mirror/inertial/uniform",
+        "moving_mirror/null/thermal",
+        "moving_mirror/null/collapse",
+        "moving_mirror/mirror_rest/thermal",
+        "moving_mirror/mirror_rest/collapse",
+        "moving_mirror/thermal/tx",
+        "moving_mirror/collapse/tx",
+        "moving_mirror/rindler/tx",
+        "conformal moving_mirror/inertial_thermal",
+        "conformal moving_mirror/inertial_collapse",
+        "conformal moving_mirror/inertial_uniform",
+        "conformal moving_mirror/null",
+        "conformal moving_mirror/mirror_rest",
+        "conformal moving_mirror/thermal",
+        "conformal moving_mirror/collapse",
+        "conformal moving_mirror/rindler"
+      ]
+    }
+  ],
+  "height": "Its view flux draws the flux of energy along each outgoing ray as a height over the plane of t and x."
+}

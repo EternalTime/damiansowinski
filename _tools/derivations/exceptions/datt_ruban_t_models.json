@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter space, other spacetimes than the T-sphere whose moments are embedded.",
+      "drawings": [
+        "datt_ruban_t_models/comoving/tube",
+        "datt_ruban_t_models/ruban/tube",
+        "datt_ruban_t_models/areal/expansion",
+        "datt_ruban_t_models/de_sitter/tube"
+      ]
+    }
+  ]
+}

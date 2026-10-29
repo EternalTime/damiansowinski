@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "The flat model of the whimper, another spacetime than Farnsworth's dust, whose surface of homogeneity is embedded.",
+      "drawings": [
+        "tilted_universes/flat_model/model",
+        "tilted_universes/inertial/model",
+        "conformal tilted_universes/flat_model",
+        "conformal tilted_universes/inertial"
+      ]
+    }
+  ]
+}

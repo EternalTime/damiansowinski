@@ -1,0 +1,11 @@
+{
+  "hidden": [
+    {
+      "reason": "The near-NHEK patch of the extreme Kerr throat, ct > r_0^2/r of the Poincare chart, which the moment tau = 0 embedded does not enter.",
+      "drawings": [
+        "near_horizon_extreme_kerr/near_nhek/equator",
+        "conformal near_horizon_extreme_kerr/near_nhek"
+      ]
+    }
+  ]
+}

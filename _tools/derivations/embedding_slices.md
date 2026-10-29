@@ -422,7 +422,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `equal_spins/radial` and `boyer_lindquist_six/transverse`: the line $ct = 0$ from the throat out.
 - `boyer_lindquist_six/rotation` marks nothing: the embedded transverse plane meets the plane of rotation nowhere outside the horizon, which `HIDDEN` records.
 - The conformal views `transverse`, `ingoing`, `rotation`, `equal` and `six`: the line $T = 0$ through the bifurcation surface, from one exterior to the other.
-- The four moments are four surfaces, three of them in other spacetimes than the fourth, so each drawing marks its own alone, which `HIDDEN_VIEWS` records.
+- The four moments are four surfaces, three of them in other spacetimes than the fourth, so each drawing marks its own alone, which `hidden_views` in its exceptions file records.
 
 ### Schwarzschild-Tangherlini
 
@@ -430,7 +430,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `spherical/radial` and `spherical_six/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r_h$ to the edge of the box at $6\,r_h$, each chart marking its own dimension's moment.
 - The Eddington-Finkelstein planes of five dimensions: $v = r_*$ and $u = -r_*$ with $r_* = r + \tfrac{1}{2}r_h\ln((r - r_h)/(r + r_h))$, which runs off the drawing toward the horizon.
 - `spherical`, `ingoing`, `outgoing` and `six`, the square: the line $T = 0$ through the bifurcation sphere, from $6\,r_h$ in one exterior to $6\,r_h$ in the other.
-- Five dimensions and six are two spacetimes, so no drawing of one marks the other's moment, which `HIDDEN_VIEWS` records.
+- Five dimensions and six are two spacetimes, so no drawing of one marks the other's moment, which `hidden_views` in its exceptions file records.
 
 ### Boulware-Deser
 
@@ -438,7 +438,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `spherical/radial`: the line $ct = 0$ from $r_h$ to the edge of the box at $6\,r_h$; `spherical_plus/radial`: the line $ct = 0$ from $0$ to $3\ell$.
 - The Eddington-Finkelstein planes: $v = r_*$ and $u = -r_*$ with `slices.boulware_deser_rstar`, which runs off the drawing toward the horizon.
 - `spherical`, `ingoing` and `outgoing`, the square: the line $T = 0$ through the bifurcation sphere, from $6\,r_h$ in one exterior to $6\,r_h$ in the other; `branch`, the strip: the line $T = 0$ from the singularity out to $r = 3\ell$.
-- The black hole and the other branch are two spacetimes, so no drawing of one marks the other's moment, which `HIDDEN_VIEWS` records.
+- The black hole and the other branch are two spacetimes, so no drawing of one marks the other's moment, which `hidden_views` in its exceptions file records.
 
 ### Curzon-Chazy
 
@@ -469,7 +469,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 - `spherical/equator_oblate` and `spherical/equator_prolate`, the plane of $t$ and $r$: the line $ct = 0$ from where that deformation's surface starts to the edge of the box at $6\,m$.
 - `prolate_spheroidal/equator_oblate` and `prolate_spheroidal/equator_prolate`, the plane of $t$ and $x$: the same line at $x = r/m - 1$.
 - The four equatorial triangles of the conformal diagram: the curve $u, v = \arctan(\mp r_*/\ell)$ over the same stretch.
-- Each equatorial drawing marks its own deformation's moment and none of the other's, which the tests list in `HIDDEN_VIEWS`.
+- Each equatorial drawing marks its own deformation's moment and none of the other's, which `hidden_views` in its exceptions file lists.
 - The eight drawings of the axis: nothing, since the equatorial plane does not meet the axis, which `HIDDEN` records.
 
 ### Robinson-Trautman
@@ -760,7 +760,7 @@ On the view through the nut it is the same line, which the page mirrors, and on 
 
 - The embedding has two views at $b = 0.9$ and $r_s = 1$: the equator of the static chart's $t = 0$, $r$ from $r_s$ to $6\,r_s$ on both sheets through the bifurcation sphere, and the horizon itself, the bifurcation sphere, $\theta$ from $0$ to $\pi$.
 - `static/radial` and `wedge/radial`: the line $ct = 0$ from $r = r_s$ to the box's edge at $6\,r_s$, and the bifurcation sphere as the point $ct = 0$, $r = r_s$.
-- The Eddington-Finkelstein views: the string enters $g_{\phi\phi}$ alone, so the equator's moment is Schwarzschild's curve on each, $v - r = r_s\ln(r/r_s - 1)$ and its time reverse; the bifurcation sphere lies at $v \to -\infty$ and $u \to +\infty$, off both charts, so those views mark the equator alone, which `HIDDEN_VIEWS` in the tests records.
+- The Eddington-Finkelstein views: the string enters $g_{\phi\phi}$ alone, so the equator's moment is Schwarzschild's curve on each, $v - r = r_s\ln(r/r_s - 1)$ and its time reverse; the bifurcation sphere lies at $v \to -\infty$ and $u \to +\infty$, off both charts, so those views mark the equator alone, which `hidden_views` in its exceptions file records.
 - `static`, `wedge`, `ingoing` and `outgoing`, Kruskal's diagram: the equator's moment is the line $T = 0$ across both exteriors, and the bifurcation sphere the point $(X, T) = (0, 0)$, on all four.
 
 ### Tolman-Bondi

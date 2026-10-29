@@ -1,0 +1,13 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and u -> +infinity, off both Eddington-Finkelstein charts.",
+      "drawings": {
+        "string_black_hole/eddington_finkelstein_ingoing/finkelstein": ["horizon"],
+        "string_black_hole/eddington_finkelstein_ingoing/chart": ["horizon"],
+        "string_black_hole/eddington_finkelstein_outgoing/finkelstein": ["horizon"],
+        "string_black_hole/eddington_finkelstein_outgoing/chart": ["horizon"]
+      }
+    }
+  ]
+}

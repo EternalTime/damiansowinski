@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.",
+      "drawings": [
+        "curzon_chazy/weyl/axis",
+        "curzon_chazy/spherical/axis",
+        "conformal curzon_chazy/weyl_axis",
+        "conformal curzon_chazy/spherical_axis"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "hidden": [
+    {
+      "reason": "Two point particles at rest, another spacetime than the one particle embedded, and the particle in motion, whose frame's moment is not its rest frame's.",
+      "drawings": [
+        "point_particle_2plus1/two_bodies/between",
+        "point_particle_2plus1/two_bodies/beyond",
+        "conformal point_particle_2plus1/two_bodies",
+        "point_particle_2plus1/moving/wedge"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Gott and Alpert's planet replaces the apex of the point particle's cone, which is another spacetime than the planet's.",
+      "drawings": {
+        "conformal point_particle_2plus1/planet": ["unroll"],
+        "point_particle_2plus1/planet/radial": ["unroll"]
+      }
+    }
+  ]
+}

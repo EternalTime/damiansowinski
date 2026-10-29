@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Letelier's black hole, r_s > 0, and the monopole with no mass at its centre are two spacetimes of one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the Barriola-Vilenkin drawings the monopole's.",
+      "drawings": {
+        "global_monopole/static/radial": ["monopole"],
+        "global_monopole/eddington_finkelstein_ingoing/finkelstein": ["monopole"],
+        "global_monopole/eddington_finkelstein_ingoing/chart": ["monopole"],
+        "global_monopole/eddington_finkelstein_outgoing/finkelstein": ["monopole"],
+        "global_monopole/eddington_finkelstein_outgoing/chart": ["monopole"],
+        "conformal global_monopole/static": ["monopole"],
+        "conformal global_monopole/ingoing": ["monopole"],
+        "conformal global_monopole/outgoing": ["monopole"],
+        "global_monopole/conical/radial": ["black_hole"],
+        "conformal global_monopole/conical": ["black_hole"]
+      }
+    }
+  ]
+}

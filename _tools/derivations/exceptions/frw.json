@@ -1,0 +1,16 @@
+{
+  "hidden": [
+    {
+      "reason": "The flat universe of dust, another universe than the closed one whose moments are embedded.",
+      "drawings": [
+        "frw/comoving_spherical/radial",
+        "frw/comoving_spherical/through",
+        "frw/conformal_spherical/radial"
+      ]
+    },
+    {
+      "reason": "The flat and the open universe of dust, other universes than the closed one whose moments are embedded.",
+      "drawings": ["conformal frw/flat", "conformal frw/open"]
+    }
+  ]
+}

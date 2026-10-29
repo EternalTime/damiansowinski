@@ -1,0 +1,27 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Bach and Weyl's plane is embedded in two views, outside the ring and on the disc inside it, and each drawing lies on one of them: the axis meets the disc alone, at its centre.",
+      "drawings": {
+        "bach_weyl_ring/weyl/axis": ["outside"],
+        "bach_weyl_ring/weyl/outside": ["inside"],
+        "bach_weyl_ring/weyl/inside": ["outside"],
+        "bach_weyl_ring/toroidal/axis": ["outside"],
+        "bach_weyl_ring/toroidal/outer": ["inside"],
+        "bach_weyl_ring/toroidal/inner": ["outside"],
+        "bach_weyl_ring/oblate_spheroidal/axis": ["outside"],
+        "bach_weyl_ring/oblate_spheroidal/plane": ["inside"],
+        "bach_weyl_ring/oblate_spheroidal/disc": ["outside"],
+        "conformal bach_weyl_ring/weyl_axis": ["outside"],
+        "conformal bach_weyl_ring/weyl_outside": ["inside"],
+        "conformal bach_weyl_ring/weyl_inside": ["outside"],
+        "conformal bach_weyl_ring/toroidal_axis": ["outside"],
+        "conformal bach_weyl_ring/toroidal_outer": ["inside"],
+        "conformal bach_weyl_ring/toroidal_inner": ["outside"],
+        "conformal bach_weyl_ring/oblate_axis": ["outside"],
+        "conformal bach_weyl_ring/oblate_plane": ["inside"],
+        "conformal bach_weyl_ring/oblate_disc": ["outside"]
+      }
+    }
+  ]
+}

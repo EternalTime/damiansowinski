@@ -1,0 +1,42 @@
+{
+  "hidden": [
+    {
+      "reason": "The hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic hole without mass whose moments are embedded, and the Eddington-Finkelstein planes of the hole without mass, which its bifurcation surface lies off.",
+      "drawings": [
+        "topological_black_hole/static/negative",
+        "topological_black_hole/eddington_finkelstein_ingoing/negative",
+        "topological_black_hole/eddington_finkelstein_outgoing/negative",
+        "topological_black_hole/hyperbolic/negative",
+        "conformal topological_black_hole/static_negative",
+        "conformal topological_black_hole/ingoing_negative",
+        "conformal topological_black_hole/outgoing_negative",
+        "conformal topological_black_hole/hyperbolic_negative",
+        "topological_black_hole/eddington_finkelstein_ingoing/massless",
+        "topological_black_hole/eddington_finkelstein_outgoing/massless"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The flat topological black hole and the hyperbolic one without mass are two spacetimes of one line element: the flat drawings mark the black string's moment and the massless ones the hyperbolic horizon.",
+      "drawings": {
+        "topological_black_hole/static/flat": ["horizon"],
+        "topological_black_hole/eddington_finkelstein_ingoing/flat": ["horizon"],
+        "topological_black_hole/eddington_finkelstein_outgoing/flat": ["horizon"],
+        "topological_black_hole/black_string/radial": ["horizon"],
+        "topological_black_hole/brane/tz": ["horizon"],
+        "conformal topological_black_hole/static_flat": ["horizon"],
+        "conformal topological_black_hole/ingoing_flat": ["horizon"],
+        "conformal topological_black_hole/outgoing_flat": ["horizon"],
+        "conformal topological_black_hole/string": ["horizon"],
+        "conformal topological_black_hole/brane": ["horizon"],
+        "topological_black_hole/static/massless": ["string"],
+        "topological_black_hole/hyperbolic/massless": ["string"],
+        "conformal topological_black_hole/static_massless": ["string"],
+        "conformal topological_black_hole/ingoing_massless": ["string"],
+        "conformal topological_black_hole/outgoing_massless": ["string"],
+        "conformal topological_black_hole/hyperbolic_massless": ["string"]
+      }
+    }
+  ]
+}

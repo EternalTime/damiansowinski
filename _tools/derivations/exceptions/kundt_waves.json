@@ -1,0 +1,24 @@
+{
+  "hidden": [
+    {
+      "reason": "Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter and anti-de Sitter space whose fronts are embedded.",
+      "drawings": [
+        "kundt_waves/kundt/front",
+        "kundt_waves/podolsky_belan/near",
+        "kundt_waves/podolsky_belan/far",
+        "kundt_waves/simplest_wave/front",
+        "kundt_waves/simplest_wave/depth",
+        "kundt_waves/kerr_schild/fronts"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Kundt's waves in de Sitter and in anti-de Sitter space are two spacetimes of one line element, and each plane of u and v marks the front of its own.",
+      "drawings": {
+        "kundt_waves/ozsvath_robinson_rozga/de_sitter": ["hyperbolic"],
+        "kundt_waves/ozsvath_robinson_rozga/anti_de_sitter": ["sphere"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.",
+      "drawings": ["siklos/kaigorodov_stationary/plane"]
+    }
+  ]
+}

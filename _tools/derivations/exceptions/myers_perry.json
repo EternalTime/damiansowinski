@@ -1,0 +1,26 @@
+{
+  "hidden": [
+    {
+      "reason": "Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane theta = 0 meets nowhere outside the horizon.",
+      "drawings": ["myers_perry/boyer_lindquist_six/rotation"]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Myers and Perry's black hole is embedded on four surfaces, the plane of rotation and the transverse plane of the hole with one spin in five dimensions, the Hopf fibre of the hole with equal spins, and the transverse plane in six dimensions: each drawing marks the one it draws.",
+      "drawings": {
+        "myers_perry/boyer_lindquist/transverse": ["fibre", "rotation", "six"],
+        "myers_perry/boyer_lindquist/rotation": ["fibre", "six", "transverse"],
+        "myers_perry/ingoing_kerr/transverse": ["fibre", "rotation", "six"],
+        "myers_perry/ingoing_kerr/rotation": ["fibre", "six", "transverse"],
+        "myers_perry/equal_spins/radial": ["rotation", "six", "transverse"],
+        "myers_perry/boyer_lindquist_six/transverse": ["fibre", "rotation", "transverse"],
+        "conformal myers_perry/transverse": ["fibre", "rotation", "six"],
+        "conformal myers_perry/ingoing": ["fibre", "rotation", "six"],
+        "conformal myers_perry/rotation": ["fibre", "six", "transverse"],
+        "conformal myers_perry/equal": ["rotation", "six", "transverse"],
+        "conformal myers_perry/six": ["fibre", "rotation", "transverse"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "hidden": [
+    {
+      "reason": "Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.",
+      "drawings": ["hiscock/ingoing/shells"]
+    }
+  ],
+  "hidden_surfaces": [
+    {
+      "reason": "Each chart of Hiscock's hole holds part of the spacetime: the ingoing chart ends at v_0 = 8, so the last moment, v - r = 11, has no part in it; the outgoing chart begins on the surface of pair creation, which the moments before v - r = -1 do not reach; and the flat space after the hole holds only the last.",
+      "drawings": {
+        "hiscock/ingoing/history": [["history", 5]],
+        "hiscock/outgoing/history": [["history", 0], ["history", 1]],
+        "hiscock/flat/after": [["history", 0], ["history", 1], ["history", 2], ["history", 3], ["history", 4]]
+      }
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "Hiscock's hole leaves flat space behind: at the last moment of its movie the flat disc inside the last ray has reached r = 3m_0/2 and the mass still inside the rim is under m_0/20.",
+      "moments": [["history", 5]]
+    }
+  ]
+}

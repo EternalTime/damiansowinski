@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "The rotating hole, J = 4 l/5, another spacetime than the hole without rotation whose moment is embedded.",
+      "drawings": [
+        "btz/stationary/rotating",
+        "btz/eddington_finkelstein_ingoing/rotating",
+        "btz/eddington_finkelstein_outgoing/rotating",
+        "conformal btz/rotating"
+      ]
+    }
+  ]
+}

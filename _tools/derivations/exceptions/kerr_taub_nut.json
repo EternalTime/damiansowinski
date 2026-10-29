@@ -1,0 +1,16 @@
+{
+  "hidden": [
+    {
+      "reason": "Kerr-Taub-NUT's regular half axis, which the embedded equatorial plane does not meet, and the equator in Plebanski and Demianski's chart, where the moment's tau changes with the sigma left out.",
+      "drawings": [
+        "kerr_taub_nut/one_string/axis",
+        "kerr_taub_nut/kerr_ingoing/axis",
+        "kerr_taub_nut/kerr_outgoing/axis",
+        "conformal kerr_taub_nut/axis",
+        "conformal kerr_taub_nut/ingoing",
+        "conformal kerr_taub_nut/outgoing",
+        "kerr_taub_nut/plebanski/principal"
+      ]
+    }
+  ]
+}

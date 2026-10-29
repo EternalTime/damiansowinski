@@ -1,0 +1,23 @@
+{
+  "hidden": [
+    {
+      "reason": "Ehlers and Kundt's A II, A III, B II and B III, other spacetimes of their page than the B I whose neck is embedded.",
+      "drawings": [
+        "ab_metrics/a2_static/radial",
+        "ab_metrics/a2_cone/beyond",
+        "ab_metrics/a2_kruskal/kruskal",
+        "ab_metrics/a2_cartesian/TX",
+        "ab_metrics/a3/radial",
+        "ab_metrics/b2_static/radial",
+        "ab_metrics/b2_static/wedge",
+        "ab_metrics/b2_neck/through",
+        "ab_metrics/b2_neck/ads",
+        "ab_metrics/b3/radial",
+        "conformal ab_metrics/a2_static",
+        "conformal ab_metrics/a2_cone",
+        "conformal ab_metrics/a2_inertial",
+        "conformal ab_metrics/a2_kruskal"
+      ]
+    }
+  ]
+}

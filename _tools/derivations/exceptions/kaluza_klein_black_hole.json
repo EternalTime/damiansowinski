@@ -1,0 +1,25 @@
+{
+  "hidden": [
+    {
+      "reason": "The Kaluza-Klein black hole of equal charges, another member of the family than the holes of one charge embedded.",
+      "drawings": ["kaluza_klein_black_hole/dyonic/radial", "conformal kaluza_klein_black_hole/equal"]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The Kaluza-Klein black holes are embedded three ways: the Einstein metric of four dimensions, and the fifth circle of the electric hole and of the magnetic one. Each chart's drawings mark the moment of its own.",
+      "drawings": {
+        "kaluza_klein_black_hole/electric/radial": ["einstein", "magnetic"],
+        "kaluza_klein_black_hole/eddington_finkelstein_ingoing/finkelstein": ["einstein", "magnetic"],
+        "kaluza_klein_black_hole/magnetic/radial": ["einstein", "electric"],
+        "kaluza_klein_black_hole/einstein/radial": ["electric", "magnetic"],
+        "kaluza_klein_black_hole/einstein_eddington_finkelstein/finkelstein": ["electric", "magnetic"],
+        "conformal kaluza_klein_black_hole/electric": ["einstein", "magnetic"],
+        "conformal kaluza_klein_black_hole/ingoing": ["einstein", "magnetic"],
+        "conformal kaluza_klein_black_hole/magnetic": ["einstein", "electric"],
+        "conformal kaluza_klein_black_hole/einstein": ["electric", "magnetic"],
+        "conformal kaluza_klein_black_hole/einstein_ingoing": ["electric", "magnetic"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Teo's equatorial plane, embedded at a = 1, does not meet the axis, and his throat, embedded at a = 1/4, is marked where its poles meet the axis, drawn at that spin.",
+      "drawings": {
+        "teo_wormhole/spherical/axis": ["equator"],
+        "teo_wormhole/spherical/equator": ["throat"],
+        "teo_wormhole/proper_radial/axis": ["equator"],
+        "teo_wormhole/proper_radial/equator": ["throat"],
+        "conformal teo_wormhole/spherical_axis": ["equator"],
+        "conformal teo_wormhole/spherical_equator": ["throat"],
+        "conformal teo_wormhole/proper_radial_axis": ["equator"],
+        "conformal teo_wormhole/proper_radial_equator": ["throat"]
+      }
+    }
+  ]
+}

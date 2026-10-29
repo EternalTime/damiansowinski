@@ -1,0 +1,29 @@
+{
+  "hidden": [
+    {
+      "reason": "Brill's charged Taub-NUT: the regular half axis, which the embedded equatorial plane does not meet, and Brill's universe between the horizons, where constant t is no moment of space.",
+      "drawings": [
+        "brill_charged_taub_nut/one_string/black_hole",
+        "brill_charged_taub_nut/one_string/wormhole",
+        "brill_charged_taub_nut/eddington_finkelstein_ingoing/black_hole",
+        "brill_charged_taub_nut/eddington_finkelstein_ingoing/wormhole",
+        "brill_charged_taub_nut/eddington_finkelstein_outgoing/black_hole",
+        "brill_charged_taub_nut/taub/universe",
+        "conformal brill_charged_taub_nut/axis",
+        "conformal brill_charged_taub_nut/ingoing",
+        "conformal brill_charged_taub_nut/outgoing",
+        "conformal brill_charged_taub_nut/universe",
+        "conformal brill_charged_taub_nut/wormhole"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Brill's black hole and his wormhole are two spacetimes of one family, each drawing marking the moment of its own.",
+      "drawings": {
+        "brill_charged_taub_nut/spherical/black_hole": ["wormhole"],
+        "brill_charged_taub_nut/spherical/wormhole": ["equator"]
+      }
+    }
+  ]
+}

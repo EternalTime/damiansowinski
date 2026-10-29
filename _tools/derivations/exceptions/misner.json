@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The region T > 0, where every vertical line is a closed timelike curve; the moments embedded are of the region T < 0.",
+      "drawings": ["misner/rindler/plane", "conformal misner/rindler"]
+    }
+  ]
+}

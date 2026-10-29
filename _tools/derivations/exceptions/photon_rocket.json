@@ -1,0 +1,15 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis of the photon rocket's flight, which the embedded surface of the rays that leave the rocket sideways meets only at r = 0.",
+      "drawings": [
+        "photon_rocket/rectilinear/behind",
+        "photon_rocket/rectilinear/ahead",
+        "photon_rocket/robinson_trautman/behind",
+        "photon_rocket/robinson_trautman/ahead",
+        "conformal photon_rocket/behind",
+        "conformal photon_rocket/ahead"
+      ]
+    }
+  ]
+}

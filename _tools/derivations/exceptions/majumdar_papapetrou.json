@@ -1,0 +1,14 @@
+{
+  "hidden_views": [
+    {
+      "reason": "One of Majumdar and Papapetrou's holes alone is another spacetime than two of them.",
+      "drawings": {
+        "majumdar_papapetrou/cartesian/tz": ["one_hole"],
+        "majumdar_papapetrou/cartesian/tx": ["one_hole"],
+        "majumdar_papapetrou/cylindrical/radial": ["one_hole"],
+        "majumdar_papapetrou/isotropic/radial": ["two_holes"],
+        "conformal majumdar_papapetrou/one_hole": ["two_holes"]
+      }
+    }
+  ]
+}

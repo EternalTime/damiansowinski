@@ -1,0 +1,23 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Kiselev's matter alone is another spacetime than his black hole, each marked on the drawings of the charts that hold it.",
+      "drawings": {
+        "kiselev/static/radial": ["free"],
+        "kiselev/linear/radial": ["free"],
+        "kiselev/eddington_finkelstein_ingoing/finkelstein": ["free"],
+        "kiselev/eddington_finkelstein_ingoing/chart": ["free"],
+        "kiselev/eddington_finkelstein_outgoing/finkelstein": ["free"],
+        "kiselev/eddington_finkelstein_outgoing/chart": ["free"],
+        "conformal kiselev/static": ["free"],
+        "conformal kiselev/linear": ["free"],
+        "conformal kiselev/ingoing": ["free"],
+        "conformal kiselev/outgoing": ["free"],
+        "kiselev/hyperbolic/radial": ["black_hole"],
+        "kiselev/conformally_flat/radial": ["black_hole"],
+        "conformal kiselev/hyperbolic": ["black_hole"],
+        "conformal kiselev/conformally_flat": ["black_hole"]
+      }
+    }
+  ]
+}

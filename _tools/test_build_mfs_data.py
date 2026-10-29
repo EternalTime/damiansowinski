@@ -98,6 +98,17 @@ def checks(*names):
 page_source = unittest.skipIf(CHOSEN, "holds the page's own sources, which a spacetime's files do not touch")
 
 
+# Each spacetime's exceptions to the tests every spacetime is held to, every one with its reason, in
+# _tools/derivations/exceptions/<id>.json, which _tools/README.md, "Exceptions", describes.
+EXCEPTIONS_DIR = build.ROOT / "_tools" / "derivations" / "exceptions"
+EXCEPTIONS = {p.stem: read(p) for p in sorted(EXCEPTIONS_DIR.glob("*.json"))}
+
+
+def exceptions(field):
+    """Each group of one field of every spacetime's exceptions, with its spacetime."""
+    return [(name, group) for name, data in EXCEPTIONS.items() for group in data.get(field, [])]
+
+
 def found(test, things, what):
     """Fail a test that found no `what` to check, or pass over it where the spacetimes MFS_SPACETIME
     chooses have none."""
@@ -2878,34 +2889,10 @@ class EmbeddingDiagrams(unittest.TestCase):
         particles. Lentz's class has flat slices for every potential and no soliton that can be
         computed, so it has no embedding diagram."""
         RELIEF = 0.05
-        flat = {"minkowski", "kasner", "kasner_scalar", "kasner_magnetic", "holographic_superconductor", "bianchi", "pp_wave", "aichelburg_sexl", "khan_penrose", "bell_szekeres", "light_beam",
-                "chandrasekhar_xanthopoulos", "belinski_zakharov", "big_rip", "maximally_supersymmetric_plane_wave"}
-        # The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken
-        # twice and joined at its rim; the moments either side of it are the cones it opens into.
-        # Hayward's hole forms from flat space and leaves flat space behind: the first and the last
-        # moments of its movie, before the radiation reaches the rim and after the last of it has left.
-        # Hiscock's hole leaves flat space behind as well: at the last moment of its movie the flat disc
-        # inside the last ray has reached r = 3m_0/2 and the mass still inside the rim is under m_0/20.
-        # Nordstrom's universe of dust is conformally flat with a factor that depends on the time alone,
-        # so each of its moments is a flat plane, on which its rings of galaxies grow and shrink.
-        # Kopczynski and Trautman's universe is a flat Friedmann universe, so each of its moments is a
-        # flat plane too, on which its rings of dust shrink until the turn and grow again.
-        flat_moments = {("domain_wall", "moments", 2), ("hayward", "history", 0), ("hayward", "history", 5),
-                        ("hiscock", "history", 5), *(("nordstrom_scalar", "dust", k) for k in range(5)),
-                        *(("kopczynski_trautman", "universe", k) for k in range(5)),
-                        # The bounce of loop quantum cosmology is a flat Friedmann universe as well, so each of
-                        # its moments is a flat plane, on which its comoving observers close in and draw apart.
-                        *(("lqc_bounce", "universe", k) for k in range(5)),
-                        # Space is flat in Einstein's static field of 1912, so the equator outside a body is a
-                        # plane, drawn under Flamm's paraboloid of the same mass.
-                        ("einstein_1912_static", "equator", 0),
-                        # The laboratory's moment of the draining bathtub is the plane the water moves in; the
-                        # curvature sound feels is in how the moments are stacked, and the catenoid beside it is
-                        # the Kerr-like chart's moment.
-                        ("draining_bathtub", "plane", 0),
-                        # The laboratory's moment of Unruh's acoustic black hole is the flat space the fluid falls
-                        # through, whose equator is a plane; the funnel beside it is the moment of Unruh's time.
-                        ("unruh_acoustic_hole", "space", 0)}
+        # The spacetimes whose embedding is the flat plane that carries what they do, and the single
+        # moments that are flat planes, from the `flat` and `flat_moments` of their exceptions.
+        flat = {name for name, data in EXCEPTIONS.items() if "flat" in data}
+        flat_moments = {(name, view, k) for name, group in exceptions("flat_moments") for view, k in group["moments"]}
         self.assertNotIn("lentz", self.embedding)
         self.assertNotIn("embedding", next(m for m in read(build.INDEX_FILE) if m["id"] == "lentz"))
         for name, data in self.embedding.items():
@@ -3019,11 +3006,7 @@ class EmbeddingDiagrams(unittest.TestCase):
                 self.assertEqual("height" in view, grids, f"{name} {view['id']}")
         self.assertEqual({name for name, data in self.embedding.items()
                           if any("height" in view for view in data["views"])},
-                         set(filter(chosen, {"alcubierre", "krasnikov", "natario", "kasner", "kasner_scalar", "kasner_magnetic",
-                          "holographic_superconductor", "bianchi", "pp_wave",
-                          "aichelburg_sexl", "khan_penrose",
-                          "bell_szekeres", "light_beam", "tippett_tsang", "chandrasekhar_xanthopoulos",
-                          "belinski_zakharov", "moving_mirror", "big_rip", "maximally_supersymmetric_plane_wave"})))
+                         {name for name, data in EXCEPTIONS.items() if "height" in data and chosen(name)})
 
     def test_a_grid_that_is_not_one_is_refused(self):
         def spoil(change, words):
@@ -4017,10 +4000,8 @@ class TurningUnderTheHand(unittest.TestCase):
         self.assertLess(cones["left"]["facing"], 0)
 
 
-# Simpson and Visser's three geometries at r_s = 1, and the embedding views each one's drawings mark.
+# Simpson and Visser's three geometries at r_s = 1.
 SV_A = {"bounce": 0.5, "null": 1.0, "wormhole": 2.0}
-SV_MOMENTS = ("outside", "inside", "null", "wormhole")
-SV_MOMENTS_OF = {"bounce": ("outside", "inside"), "null": ("null",), "wormhole": ("wormhole",)}
 
 
 def sv_rstar(r, a):
@@ -4345,267 +4326,80 @@ def hotta_tanaka_moment(tau, system=None, fixed=None):
     return (1 + k * eta) / c, eta
 
 
+class Exceptions(unittest.TestCase):
+    """Each spacetime's exceptions to the tests every spacetime is held to stand in a file of its own,
+    _tools/derivations/exceptions/<id>.json, every one with its reason and every one naming a drawing
+    and a moment that are published, so that none outlives what it excuses."""
+
+    # The fields that hold groups of exceptions, each a reason and what it excuses, by drawing.
+    GROUPS = {"hidden": list, "hidden_views": dict, "hidden_surfaces": dict, "hidden_moments": dict}
+
+    def test_every_file_is_a_spacetimes_and_every_exception_carries_its_reason(self):
+        spacetimes = {p.stem for p in build.METRICS_DIR.glob("*.json")}
+        for name, data in EXCEPTIONS.items():
+            if not chosen(name):
+                continue
+            where = f"exceptions/{name}.json"
+            self.assertIn(name, spacetimes, f"{where} is of no spacetime")
+            self.assertLessEqual(set(data), {*self.GROUPS, "flat", "flat_moments", "height"}, where)
+            for field in ("flat", "height"):
+                if field in data:
+                    self.assertTrue(isinstance(data[field], str) and data[field].strip(), f"{where} {field}")
+            for field, kind in self.GROUPS.items():
+                places = []
+                for group in data.get(field, []):
+                    self.assertEqual(set(group), {"reason", "drawings"}, f"{where} {field}")
+                    self.assertTrue(isinstance(group["reason"], str) and group["reason"].strip(), f"{where} {field}")
+                    self.assertIsInstance(group["drawings"], kind, f"{where} {field}")
+                    self.assertTrue(group["drawings"], f"{where} {field}")
+                    places += list(group["drawings"])
+                self.assertEqual(len(places), len(set(places)), f"{where} {field} names a drawing twice")
+                for place in places:
+                    self.assertEqual(place.removeprefix("conformal ").split("/")[0], name, f"{where} {field} {place}")
+            for group in data.get("flat_moments", []):
+                self.assertEqual(set(group), {"reason", "moments"}, f"{where} flat_moments")
+                self.assertTrue(isinstance(group["reason"], str) and group["reason"].strip(), f"{where} flat_moments")
+                self.assertTrue(group["moments"], f"{where} flat_moments")
+
+    def test_every_exception_names_a_published_drawing_and_moment(self):
+        for name, data in EXCEPTIONS.items():
+            if not chosen(name):
+                continue
+            where = f"exceptions/{name}.json"
+            drawings = set()
+            if (build.DIAGRAMS_DIR / f"{name}.json").exists():
+                drawings |= {f"{name}/{system}/{view['id']}" for part in ("systems", "projections")
+                             for system, views in diagram_file(name).get(part, {}).items() for view in views}
+            if (build.CONFORMAL_DIR / f"{name}.json").exists():
+                drawings |= {f"conformal {name}/{view['id']}" for view in conformal_file(name)["views"]}
+            views = ({view["id"]: view for view in embedding_file(name)["views"]}
+                     if (build.EMBEDDING_DIR / f"{name}.json").exists() else {})
+            for field in self.GROUPS:
+                for group in data.get(field, []):
+                    for place in group["drawings"]:
+                        self.assertIn(place, drawings, f"{where} {field} names no published drawing")
+                    for place, held in (group["drawings"].items() if field != "hidden" else ()):
+                        for moment in held:
+                            view, *at = [moment] if field == "hidden_views" else moment
+                            self.assertIn(view, views, f"{where} {field} {place}: no embedding view {view}")
+                            if at:
+                                self.assertLess(at[0], len(views[view]["surfaces"]), f"{where} {field} {place} {moment}")
+            for group in data.get("flat_moments", []):
+                for view, k in group["moments"]:
+                    self.assertIn(view, views, f"{where} flat_moments: no embedding view {view}")
+                    self.assertLess(k, len(views[view]["surfaces"]), f"{where} flat_moments {view} {k}")
+            if "flat" in data or "height" in data:
+                self.assertTrue(views, f"{where} excuses an embedding diagram {name} does not have")
+
+
 class Slices(unittest.TestCase):
     """Every moment an embedding diagram is cut from is drawn on its spacetime's other diagrams
     where it lies, from the numbers in the files alone, and on nothing else."""
 
-    # The drawings on which no moment of the spacetime's embedding lies: other universes,
-    # another cloud, the time reversed shell, and cylinders where no surface of constant t is
-    # a moment of space.
-    HIDDEN = {# The closed universe of the perturbed Friedmann universe's curved chart, another spacetime than
-              # the flat one whose moment is embedded.
-              "bardeen_perturbations/longitudinal_curved/well",
-              # The black ring and the black half plane of bubbling anti-de Sitter space, other members of the
-              # family than the black disc whose plane of droplets is embedded.
-              "bubbling_ads/rings/ring_axis", "bubbling_ads/plane_wave/axis", "conformal bubbling_ads/rings",
-              # The universe with no black hole, another spacetime than the hole whose equator is embedded.
-              "scalar_field_black_hole/scalar_universe/radial", "conformal scalar_field_black_hole/scalar_universe",
-              # The ball of dust of the quantum Oppenheimer-Snyder black hole, which holds no part of the
-              # moments of constant t embedded, moments of the vacuum outside it.
-              "quantum_oppenheimer_snyder/interior_comoving/through",
-              # The collapse keeps one exterior below the bounce and one above it, and the dust stands where the
-              # eternal vacuum's moments run through their bifurcation spheres.
-              "conformal quantum_oppenheimer_snyder/collapse",
-              # A tube of Datt and Ruban's dust that runs on in both directions, and Ruban's tube on de Sitter
-              # space, other spacetimes than the T-sphere whose moments are embedded.
-              "datt_ruban_t_models/comoving/tube", "datt_ruban_t_models/ruban/tube",
-              "datt_ruban_t_models/areal/expansion", "datt_ruban_t_models/de_sitter/tube",
-              # The flat interior of Tippett and Tsang's bubble continued over the whole plane, another
-              # spacetime than the bubble whose moment is embedded.
-              "tippett_tsang/interior/tx", "tippett_tsang/rindler/plane",
-              # The moving mirror's radiation is drawn as a height over a region of the plane of t and x,
-              # which is no moment of the spacetime, so no drawing marks one.
-              *(f"moving_mirror/{system}/{view}" for system, views in (
-                  ("inertial", ("thermal", "collapse", "uniform")), ("null", ("thermal", "collapse")),
-                  ("mirror_rest", ("thermal", "collapse")), ("thermal", ("tx",)), ("collapse", ("tx",)),
-                  ("rindler", ("tx",))) for view in views),
-              *(f"conformal moving_mirror/{view}" for view in (
-                  "inertial_thermal", "inertial_collapse", "inertial_uniform", "null", "mirror_rest", "thermal",
-                  "collapse", "rindler")),
-              # The bowl and skirt of the universe from nothing is a slice that holds the time, the four
-              # sphere and de Sitter space together, which is no moment of space, so no drawing marks one.
-              *(f"universe_from_nothing/{system}/radial" for system in ("closed", "scale_factor", "conformal", "lapse")),
-              *(f"conformal universe_from_nothing/{system}" for system in ("closed", "scale_factor", "conformal", "lapse")),
-              # A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point
-              # mass and the dust universe whose moments are embedded.
-              "nordstrom_scalar/conformal/tx", "nordstrom_scalar/uniform/tz",
-              "conformal nordstrom_scalar/conformal", "conformal nordstrom_scalar/uniform",
-              # A star, the uniform field and the body of the equation of February in Einstein's static
-              # field of 1912, other spacetimes than the body of the equation of March whose equator is embedded.
-              "einstein_1912_static/static/tx", "einstein_1912_static/uniform/tz", "einstein_1912_static/february/radial",
-              "conformal einstein_1912_static/static", "conformal einstein_1912_static/uniform",
-              "conformal einstein_1912_static/february",
-              # The region x < 0 of Siklos's chart, another region than the one whose wave front is embedded.
-              "siklos/kaigorodov_stationary/plane",
-              # Kundt's waves with no cosmological constant, other spacetimes than the waves in de Sitter
-              # and anti-de Sitter space whose fronts are embedded.
-              "kundt_waves/kundt/front", "kundt_waves/podolsky_belan/near", "kundt_waves/podolsky_belan/far",
-              "kundt_waves/simplest_wave/front", "kundt_waves/simplest_wave/depth", "kundt_waves/kerr_schild/fronts",
-              # A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.
-              "small_universes/hyperbolic/radial",
-              # Closed dust from its bang to its crunch, another member of the family than Luminet's
-              # universe, whose moment today is embedded.
-              "poincare_dodecahedral/comoving/through", "poincare_dodecahedral/toroidal/circle",
-              # Rosen's chart draws the axisymmetric universe, exponents (0, 0, 1); the ring embedded is
-              # of the universe that starts at (-2/7, 3/7, 6/7).
-              "kasner_magnetic/rosen/etax", "kasner_magnetic/rosen/etaz",
-              # The final Kasner epoch of the holographic superconductor, another solution than the
-              # Kasner inversion, whose moments are embedded.
-              "holographic_superconductor/kasner/taut", "holographic_superconductor/kasner/taux",
-              # Hiscock's simplest model, a hole made and removed by two shells, another spacetime than the one embedded.
-              "hiscock/ingoing/shells",
-              # The flat model of the whimper, another spacetime than Farnsworth's dust, whose surface of
-              # homogeneity is embedded.
-              "tilted_universes/flat_model/model", "tilted_universes/inertial/model",
-              "conformal tilted_universes/flat_model", "conformal tilted_universes/inertial",
-              # Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the
-              # conformally flat chart only as eta goes to minus infinity, and lie on the edge of the Kundt chart.
-              "hotta_tanaka/conformally_flat/equator", "hotta_tanaka/kundt/equator", "hotta_tanaka/kundt/near",
-              # The spring and the vortex filament of four dimensions, other spacetimes than the drain in the
-              # plane whose moments are embedded.
-              "draining_bathtub/laboratory/spring", "draining_bathtub/vortex_filament/drain",
-              "conformal draining_bathtub/spring",
-              "btz/stationary/rotating", "btz/eddington_finkelstein_ingoing/rotating",
-              "btz/eddington_finkelstein_outgoing/rotating", "conformal btz/rotating",
-              # The quantum BTZ hole's dressed cone and rotating hole, other spacetimes than the hole of
-              # positive mass without rotation whose moment is embedded.
-              "quantum_btz/brane/dressed", "quantum_btz/rotating/rotating", "conformal quantum_btz/dressed",
-              "conformal quantum_btz/rotating",
-              # Myers and Perry's plane of rotation in six dimensions, which the embedded transverse plane
-              # theta = 0 meets nowhere outside the horizon.
-              "myers_perry/boyer_lindquist_six/rotation",
-              # Black Saturn's ring alone, a spacetime with no hole in it; the moment embedded is the Saturn's.
-              "black_saturn/ring/outside", "black_saturn/ring/inside",
-              # Anti-de Sitter space of two dimensions times a flat plane, another spacetime than the two of
-              # Plebański and Hacyan's page whose surfaces are embedded; its moment is itself a flat plane.
-              "plebanski_hacyan/plane/uw", "plebanski_hacyan/plane_null/uv", "plebanski_hacyan/plane_static/wedge",
-              "conformal plebanski_hacyan/plane", "conformal plebanski_hacyan/plane_null",
-              "conformal plebanski_hacyan/plane_static",
-              # Ehlers and Kundt's A II, A III, B II and B III, other spacetimes of their page than the B I
-              # whose neck is embedded.
-              "ab_metrics/a2_static/radial", "ab_metrics/a2_cone/beyond", "ab_metrics/a2_kruskal/kruskal",
-              "ab_metrics/a2_cartesian/TX", "ab_metrics/a3/radial", "ab_metrics/b2_static/radial",
-              "ab_metrics/b2_static/wedge", "ab_metrics/b2_neck/through", "ab_metrics/b2_neck/ads",
-              "ab_metrics/b3/radial", "conformal ab_metrics/a2_static", "conformal ab_metrics/a2_cone",
-              "conformal ab_metrics/a2_inertial", "conformal ab_metrics/a2_kruskal",
-              "frw/comoving_spherical/radial", "frw/comoving_spherical/through", "frw/conformal_spherical/radial",
-              "tolman_bondi/comoving_synchronous/collapse", "vaidya/eddington_finkelstein_outgoing/shell",
-              "black_to_white_hole/kruskal/rising", "black_to_white_hole/painleve_gullstrand_outgoing/rising",
-              # Novikov's vacuole holds the marginally bound core, whose moments are planes, and Kruskal's
-              # view of the white hole is drawn about the surface's way out, a dozen widths of the drawing
-              # from the later moments embedded.
-              "white_hole/novikov_comoving/vacuole", "white_hole/exterior_kruskal/kruskal",
-              # Bonnor and Vaidya's leaving shell is the time reverse of the falling shell embedded, and the
-              # homothetic chart draws a mass and a charge that grow with the advanced time, another spacetime.
-              "bonnor_vaidya/eddington_finkelstein_outgoing/shell", "conformal bonnor_vaidya/leaving",
-              "bonnor_vaidya/homothetic/scaling",
-              # Behind Ori's shell the mass function is another one, and the conformal diagram draws the
-              # shell: the moments embedded are the tail's alone.
-              "mass_inflation/ingoing/behind", "conformal mass_inflation/shell",
-              # The Kaluza-Klein black hole of equal charges, another member of the family than the holes of
-              # one charge embedded.
-              "kaluza_klein_black_hole/dyonic/radial", "conformal kaluza_klein_black_hole/equal",
-              "godel/cylindrical/beyond", "stockum_dust/cylindrical/beyond", "som_raychaudhuri/cylindrical/beyond", "vuorio_warped_ads/cylindrical/beyond",
-              "conformal frw/flat", "conformal frw/open",
-              "misner/rindler/plane", "conformal misner/rindler",
-              # Gott and Li's region of closed timelike curves, which no moment of the inflating region meets.
-              "self_creating_universe/static/through", "conformal self_creating_universe/static",
-              # Gott's region of closed timelike curves, which no moment of Grant's Milne time meets,
-              # and the centre of momentum chart about the strings.
-              "gott_time_machine/grant_rindler/plane", "conformal gott_time_machine/grant_rindler",
-              "gott_time_machine/centre_of_momentum/loop",
-              # Two point particles at rest, another spacetime than the one particle embedded, and the
-              # particle in motion, whose frame's moment is not its rest frame's.
-              "point_particle_2plus1/two_bodies/between", "point_particle_2plus1/two_bodies/beyond",
-              "conformal point_particle_2plus1/two_bodies", "point_particle_2plus1/moving/wedge",
-              # Coleman and De Luccia's other bubbles than the anti-de Sitter one whose moments are embedded,
-              # and the drawings of that one outside the light cone of its centre.
-              "coleman_de_luccia/wall/into_flat", "coleman_de_luccia/open/zero", "coleman_de_luccia/open/positive",
-              "coleman_de_luccia/static_inside/into_flat", "coleman_de_luccia/static_outside/into_flat",
-              "coleman_de_luccia/wall/out_of_flat", "coleman_de_luccia/static_outside/out_of_flat",
-              "conformal coleman_de_luccia/into_flat",
-              # Bell and Szekeres's regular chart, whose planes of T and Z lie off eta = 0, where the ring is.
-              "bell_szekeres/regular/plane", "conformal bell_szekeres/regular",
-              # The spinning string's cylinders inside r_c, whose circles are closed timelike curves.
-              *[f"spinning_string/{s}/inside" for s in ("proper_radius", "rescaled_radius", "helical")],
-              # Lewis's cylinders inside the null circle, where the circles are closed timelike curves, and
-              # the members of his family other than the cylinder of the Weyl class whose moment is embedded.
-              "lewis/lewis/inside", "lewis/canonical/inside", "lewis/lewis_class/first", "lewis/lewis_class/second",
-              *[f"lewis/stockum_{s}/{v}" for s, views in (("light", ("surface", "beyond")),
-                                                         ("critical", ("surface", "beyond")),
-                                                         ("heavy", ("surface", "band"))) for v in views],
-              # Petrov's embedded plane of r and z meets each plane of t and phi, each cylinder outside the
-              # dust and the figure's slice in one event or along the figure's axis, where no moment is drawn.
-              *[f"petrov_homogeneous/petrov/{v}" for v in ("upright", "diagonal", "sideways", "inverted", "turning")],
-              *[f"petrov_homogeneous/cylinder/{v}" for v in ("surface", "band", "beyond")],
-              # Gowdy's sphere chart draws the inside of Schwarzschild's horizon; the moments
-              # embedded are the torus universe's.
-              "gowdy/sphere/plane", "conformal gowdy/sphere",
-              # The wormhole time machine's axis of acceleration, which the embedded plane theta = pi/2 does
-              # not meet, the mouth of its short throat, and the flat space outside the mouths.
-              "wormhole_time_machine/wormhole/speeding", "wormhole_time_machine/wormhole/slowing",
-              "wormhole_time_machine/short_throat/radial", "wormhole_time_machine/lorentz/trip",
-              "conformal wormhole_time_machine/lorentz",
-              # The axis of the Curzon-Chazy particle, which the embedded plane z = 0 meets only at R = 0.
-              "curzon_chazy/weyl/axis", "curzon_chazy/spherical/axis",
-              # Bonnor's dust cloud: its axis meets the embedded plane only at the centre, and inside the
-              # null circle the circles about the axis are closed timelike curves.
-              "bonnor_rotating_dust/cylindrical/axis", "bonnor_rotating_dust/spherical/axis",
-              "bonnor_rotating_dust/cylindrical/inside",
-              "conformal bonnor_rotating_dust/cylindrical_axis", "conformal bonnor_rotating_dust/spherical_axis",
-              "conformal curzon_chazy/weyl_axis", "conformal curzon_chazy/spherical_axis",
-              # The axis beyond a hole of Bonnor's dipole, which the embedded equatorial plane does not meet.
-              "bonnor_magnetic_dipole/spheroidal/axis", "conformal bonnor_magnetic_dipole/spheroidal_axis",
-              # The axis above the two Kerr black holes, which the embedded plane z = 0 between them does not meet.
-              "conformal double_kerr/weyl_axis_outside",
-              # The limit mu -> mu_0 of Neugebauer and Meinel's disc, the extreme Kerr metric; the moment
-              # embedded is the disc's at mu = 3.
-              "neugebauer_meinel/black_hole_limit/axis", "neugebauer_meinel/black_hole_limit/equator",
-              "conformal neugebauer_meinel/limit_axis",
-              # Herdeiro and Radu's black hole with scalar hair: its axis, which the embedded equatorial plane
-              # meets nowhere outside the horizon, and the Kerr member of the same mass and angular momentum,
-              # another member of the family than configuration IV, whose equator is embedded.
-              "kerr_scalar_hair/herdeiro_radu/axis", "conformal kerr_scalar_hair/hair_axis",
-              "kerr_scalar_hair/kerr_member/axis", "kerr_scalar_hair/kerr_member/equator",
-              "conformal kerr_scalar_hair/kerr_axis",
-              # The axis of Zipoy and Voorhees's metric, which the embedded equatorial plane does not meet.
-              # Kerr-Taub-NUT's regular half axis, which the embedded equatorial plane does not meet, and the
-              # equator in Plebanski and Demianski's chart, where the moment's tau changes with the sigma left out.
-              *[f"kerr_taub_nut/{s}/axis" for s in ("one_string", "kerr_ingoing", "kerr_outgoing")],
-              *[f"conformal kerr_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing")],
-              "kerr_taub_nut/plebanski/principal",
-              # Ernst and Wild's hole in the stronger field of the figure of its ergoregion, another member
-              # of the family than the hole whose equator is embedded.
-              "kerr_melvin/boyer_lindquist/tube",
-              # The ergoregions of the swirling universe and of the black hole in it, meridional planes that
-              # meet the embedded equatorial moments only in the line drawn as the equatorial plane.
-              "swirling_universe_black_hole/spherical/ergo", "swirling_universe_black_hole/cylindrical/ergo",
-              # Brill's charged Taub-NUT: the regular half axis, which the embedded equatorial plane does not
-              # meet, and Brill's universe between the horizons, where constant t is no moment of space.
-              *[f"brill_charged_taub_nut/{s}/{v}" for s, v in (("one_string", "black_hole"), ("one_string", "wormhole"),
-                                                                ("eddington_finkelstein_ingoing", "black_hole"),
-                                                                ("eddington_finkelstein_ingoing", "wormhole"),
-                                                                ("eddington_finkelstein_outgoing", "black_hole"),
-                                                                ("taub", "universe"))],
-              *[f"conformal brill_charged_taub_nut/{v}" for v in ("axis", "ingoing", "outgoing", "universe", "wormhole")],
-              # Podolsky and Ovcharenko's hole with no spin, another member of the family than the spinning
-              # hole whose equator is embedded.
-              "kerr_bertotti_robinson/static/radial",
-              *[f"zipoy_voorhees/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
-              *[f"conformal zipoy_voorhees/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
-                for k in ("oblate", "prolate")],
-              *[f"erez_rosen/{s}/axis_{k}" for s in ("spherical", "prolate_spheroidal") for k in ("oblate", "prolate")],
-              *[f"conformal erez_rosen/{s}_axis_{k}" for s in ("spherical", "prolate_spheroidal")
-                for k in ("oblate", "prolate")],
-              # The axis of Szekeres's cloud, which the embedded surface through the shells' equators meets
-              # only at the centre.
-              "szekeres/axisymmetric/north", "szekeres/axisymmetric/south",
-              # The axis of the photon rocket's flight, which the embedded surface of the rays that leave
-              # the rocket sideways meets only at r = 0.
-              *[f"photon_rocket/{s}/{half}" for s in ("rectilinear", "robinson_trautman") for half in ("behind", "ahead")],
-              "conformal photon_rocket/behind", "conformal photon_rocket/ahead",
-              # Two beams of light side by side, another spacetime than the single beam whose wave fronts
-              # are embedded, and the plane y = 0 with t left out, which every wave front covers whole.
-              "light_beam/null_cartesian/midway", "light_beam/null_cartesian/one", "conformal light_beam/midway",
-              "light_beam/cartesian/lens",
-              # Lifshitz spacetime's plane y = 0 with t left out, which every moment of the static spacetime
-              # covers whole.
-              "lifshitz_spacetime/poincare/rays",
-              # The surface X = 0 of Schrodinger spacetime's global chart with V left out, where a line of
-              # constant T holds every V and the embedded plane only V = 0.
-              "schrodinger_spacetime/global/trap",
-              # The near-NHEK patch of the extreme Kerr throat, ct > r_0^2/r of the Poincare chart, which
-              # the moment tau = 0 embedded does not enter.
-              "near_horizon_extreme_kerr/near_nhek/equator", "conformal near_horizon_extreme_kerr/near_nhek",
-              # The slowly rotating star's axis, which the embedded equatorial plane does not meet, and its
-              # Painleve-Gullstrand line element, which agrees with Hartle and Thorne's to first order in the
-              # spin and no further, while the moment embedded is one of Hartle and Thorne's t.
-              "hartle_thorne/hartle_thorne/axis", "hartle_thorne/painleve_gullstrand/axis",
-              # The rotating post-Newtonian body's axis, which the embedded equatorial plane does not meet.
-              "ppn_metric/rotating/axis",
-              # Mars's angle is divided out along another Killing vector than the fluid's, and its circles
-              # each run through every moment of Wahlquist's t.
-              "wahlquist/mars/equator", "wahlquist/mars_ingoing/equator",
-              "hartle_thorne/painleve_gullstrand/equator", "conformal hartle_thorne/painleve_gullstrand",
-              # The hyperbolic hole of negative mass, another spacetime than the flat hole and the hyperbolic
-              # hole without mass whose moments are embedded, and the Eddington-Finkelstein planes of the hole
-              # without mass, which its bifurcation surface lies off.
-              *[f"topological_black_hole/{s}/negative" for s in (
-                  "static", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing", "hyperbolic")],
-              *[f"conformal topological_black_hole/{s}_negative" for s in ("static", "ingoing", "outgoing", "hyperbolic")],
-              "topological_black_hole/eddington_finkelstein_ingoing/massless",
-              "topological_black_hole/eddington_finkelstein_outgoing/massless",
-              # The solitons of five and of three dimensions, other spacetimes than the soliton of four
-              # dimensions whose moment is embedded.
-              "ads_soliton/five_dimensional/radial", "ads_soliton/three_dimensional/radial",
-              # The plane 30 degrees from the string of Penrose's wave holds no event of the plane across it.
-              "penrose_impulsive_wave/retarded/near",
-              "conformal ads_soliton/five_dimensional", "conformal ads_soliton/three_dimensional",
-              # The black string, the extremal string and the metric of four dimensions, other
-              # spacetimes than the topological star whose moment is embedded.
-              "topological_star/eddington_finkelstein_ingoing/finkelstein", "topological_star/extremal/radial",
-              "topological_star/einstein/radial", "conformal topological_star/black_string",
-              "conformal topological_star/extremal", "conformal topological_star/einstein"}
+    # The drawings of a spacetime on which no moment of its embedding lies, as other universes, another
+    # cloud, the time reversed shell and cylinders where no surface of constant t is a moment of space,
+    # from the `hidden` of each spacetime's exceptions.
+    HIDDEN = {place for _, group in exceptions("hidden") for place in group["drawings"]}
 
     def setUp(self):
         self.diagrams, self.conformal, self.embedding = diagram_files(), conformal_files(), embedding_files()
@@ -4640,386 +4434,18 @@ class Slices(unittest.TestCase):
                 out += [(v["id"], i, k) for k in timed] or [(v["id"], i, None)]
         return out
 
-    # The embedding views a drawing does not mark though it marks others: Gott's core replaces
-    # the apex of the ideal string's cone, which is another spacetime than Gott's, and one of
-    # Majumdar and Papapetrou's holes alone is another spacetime than two of them.
-    # Letelier's black hole, r_s > 0, and the monopole with no mass at its centre are two spacetimes of
-    # one line element: the static and Eddington-Finkelstein drawings are the black hole's, and the
-    # Barriola-Vilenkin drawings the monopole's.
-    HIDDEN_VIEWS = {"conformal cosmic_string/gott": {"unroll"},
-                    # The bathtub's figure carries the laboratory's moment as its floor; the Kerr-like chart's
-                    # T = 0 is a curved surface of the figure, t = ln(r^2 - 1)/2, which would stand among the cones.
-                    "draining_bathtub/laboratory/swirl": {"funnel"},
-                    # Nordstrom's point mass and his universe of dust are two spacetimes of one theory,
-                    # each drawing marking the moments of its own.
-                    "nordstrom_scalar/spherical/radial": {"dust"}, "conformal nordstrom_scalar/spherical": {"dust"},
-                    "nordstrom_scalar/dust/radial": {"point_mass"}, "conformal nordstrom_scalar/dust": {"point_mass"},
-                    # The torus and the horn are two small universes, each drawing marking the moments of its own.
-                    **{where: {"horn"} for where in (
-                        "small_universes/torus/cell", "small_universes/torus/images",
-                        "small_universes/torus_conformal/cell", "small_universes/torus_conformal/images",
-                        "conformal small_universes/torus", "conformal small_universes/torus_conformal")},
-                    "small_universes/horn/along": {"torus"}, "conformal small_universes/horn": {"torus"},
-                    # Brill's black hole and his wormhole are two spacetimes of one family, each drawing
-                    # marking the moment of its own.
-                    "brill_charged_taub_nut/spherical/black_hole": {"wormhole"},
-                    "brill_charged_taub_nut/spherical/wormhole": {"equator"},
-                    # Cremmer and Scherk's sphere is embedded at the event x = a, off the plane x = 0 of the
-                    # time and phi.
-                    "cremmer_scherk/cartesian/circle": {"sphere"},
-                    # Freund and Rubin's moment t = 0 is three surfaces: the hyperbolic plane lies on the planes of
-                    # the time and the radius of the global, conformal and static charts, the cylinder on those of
-                    # the Poincare and proper distance charts and on the plane of t and psi, and the great 2-sphere
-                    # stands at one event, on none of the planes.
-                    **{f"{place}freund_rubin/{chart}{view}": hidden
-                       for hidden, charts in (({"circle", "sphere"}, ("global", "conformal", "static")),
-                                              ({"anti_de_sitter", "sphere"}, ("poincare", "proper")))
-                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
-                    "freund_rubin/proper/circle": {"anti_de_sitter", "sphere"},
-                    # The three-brane and its throat alone are two spacetimes, the second the limit of the
-                    # first, and each chart's drawings mark the surface of its own.
-                    **{f"{place}three_brane_throat/{chart}{view}": {other}
-                       for other, charts in (("throat", ("isotropic", "areal", "horizon")),
-                                             ("brane", ("throat", "throat_proper")))
-                       for chart in charts for place, view in (("", "/radial"), ("conformal ", ""))},
-                    # The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and
-                    # each chart's drawings mark the surfaces of its own.
-                    **{where: {"hyperbolic_plane"} for where in (
-                        "plebanski_hacyan/sphere/tz", "plebanski_hacyan/sphere_rindler/wedge",
-                        "conformal plebanski_hacyan/sphere", "conformal plebanski_hacyan/sphere_rindler")},
-                    **{where: {"equator", "sphere"} for where in (
-                        "plebanski_hacyan/anti_nariai/wedge", "plebanski_hacyan/anti_nariai_static/radial",
-                        "conformal plebanski_hacyan/anti_nariai", "conformal plebanski_hacyan/anti_nariai_static")},
-                    # The charged shell that falls and turns and the balanced shell at rest are two
-                    # spacetimes of one page: the isotropic chart's drawings mark the moment of the
-                    # shell at rest, and every other drawing the moments of the falling shell.
-                    **{f"charged_shell/{s}": {"point"} for s in (
-                        "interior/radial", "interior/through", "exterior/radial", "exterior/inside",
-                        "exterior_ingoing/shell", "exterior_outgoing/shell")},
-                    **{f"conformal charged_shell/{v}": {"point"} for v in (
-                        "interior", "exterior", "exterior_ingoing", "exterior_outgoing")},
-                    "charged_shell/exterior_isotropic/point": {"bounce"},
-                    "conformal charged_shell/exterior_isotropic": {"bounce"},
-                    # Wahlquist's rotating body and Whittaker's sphere are two spacetimes, the second the
-                    # first with no rotation, and each chart's drawings mark the moment of its own.
-                    **{f"wahlquist/wahlquist/{v}": {"static"} for v in ("equator", "disc")},
-                    **{f"wahlquist/whittaker/{v}": {"rotating"} for v in ("radial", "through")},
-                    # Kundt's waves in de Sitter and in anti-de Sitter space are two spacetimes of one line
-                    # element, and each plane of u and v marks the front of its own.
-                    "kundt_waves/ozsvath_robinson_rozga/de_sitter": {"hyperbolic"},
-                    "kundt_waves/ozsvath_robinson_rozga/anti_de_sitter": {"sphere"},
-                    # Bartnik and McKinnon's solitons with one, two and three zeros are three spacetimes
-                    # of one line element, and every drawing but the embedding diagram is the first's.
-                    **{f"{place}bartnik_mckinnon/{s}": {"n2", "n3"}
-                       for place, s in [("conformal ", "soliton")] + [("", f"{chart}/{view}") for chart, view in (
-                           ("areal", "radial"), ("areal", "through"), ("isotropic", "radial"), ("tortoise", "radial"),
-                           ("flow", "radial"))]},
-                    # Randall and Sundrum's one wall and their two walls are two spacetimes of one line
-                    # element: each drawing marks the moment of its own.
-                    **{f"randall_sundrum/{s}": {"two_walls"} for s in ("proper_distance/ty", "conformal/tw", "poincare/tz")},
-                    **{f"conformal randall_sundrum/{v}": {"two_walls"} for v in ("proper_distance", "conformal", "poincare")},
-                    "randall_sundrum/two_walls/tphi": {"pseudosphere"},
-                    "conformal randall_sundrum/two_walls": {"pseudosphere"},
-                    # Gott and Alpert's planet replaces the apex of the point particle's cone in the same way.
-                    "conformal point_particle_2plus1/planet": {"unroll"},
-                    "point_particle_2plus1/planet/radial": {"unroll"},
-                    # Einstein and Rosen's neutral bridge, their charged bridge with a mass and the one with
-                    # no mass are three spacetimes of one page: each drawing marks the moment of its own.
-                    # Israel, Wilson and Perjes's spinning source, source of complex mass and two sources are
-                    # three spacetimes of one construction, each drawing marking the moment of its own.
-                    "israel_wilson_perjes/cylindrical/midplane": {"charged_nut", "spinning"},
-                    "israel_wilson_perjes/spheroidal/axis": {"charged_nut", "two_sources"},
-                    "israel_wilson_perjes/spheroidal/principal": {"charged_nut", "two_sources"},
-                    "conformal israel_wilson_perjes/spheroidal_axis": {"charged_nut", "two_sources"},
-                    "israel_wilson_perjes/spherical/radial": {"spinning", "two_sources"},
-                    **{f"einstein_rosen_bridge/{c}/radial": {"charged", "charged_mass"} for c in ("bridge", "spherical", "isotropic")},
-                    **{f"conformal einstein_rosen_bridge/{c}": {"charged", "charged_mass"} for c in ("bridge", "spherical", "isotropic")},
-                    "einstein_rosen_bridge/charged_spherical/radial": {"neutral", "charged"},
-                    "conformal einstein_rosen_bridge/charged_spherical": {"neutral", "charged"},
-                    "einstein_rosen_bridge/charged_bridge/radial": {"neutral", "charged_mass"},
-                    "conformal einstein_rosen_bridge/charged_bridge": {"neutral", "charged_mass"},
-                    # Hayward's static hole and the hole that forms and evaporates are two spacetimes of one
-                    # line element: the static and Eddington-Finkelstein drawings mark the static moment, outside
-                    # r_+ and inside r_-, and the forming and evaporating ones the slices of constant v - r.
-                    **{f"hayward/{s}": {"history"} for s in (
-                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal hayward/{v}": {"history"} for v in ("static", "ingoing", "outgoing")},
-                    # Hoffmann's particle and the black hole of the same charge are two spacetimes of one
-                    # line element: each drawing marks the moment of its own.
-                    **{f"born_infeld_charge/{s}": {"hole"} for s in (
-                        "static/particle", "eddington_finkelstein_ingoing/particle", "eddington_finkelstein_outgoing/particle")},
-                    **{f"conformal born_infeld_charge/{v}": {"hole"} for v in ("particle", "particle_ingoing", "particle_outgoing")},
-                    **{f"born_infeld_charge/{s}": {"particle"} for s in (
-                        "static/hole", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal born_infeld_charge/{v}": {"particle"} for v in ("hole", "hole_ingoing", "hole_outgoing")},
-                    "hayward/evaporating/history": {"outside", "inside"},
-                    "conformal hayward/history": {"outside", "inside"},
-                    # Kerr-de Sitter and Kerr-anti-de Sitter are two spacetimes of one line element, each
-                    # marked on the drawings made at its own sign of Lambda.
-                    **{f"kerr_de_sitter/{s}": {"anti_de_sitter"} for s in (
-                        "boyer_lindquist/axis", "boyer_lindquist/principal", "boyer_lindquist/above",
-                        "boyer_lindquist/dragging", "nonrotating/above", "kerr_ingoing/axis", "kerr_outgoing/axis",
-                        "kerr_schild/axis")},
-                    **{f"kerr_de_sitter/{s}": {"de_sitter"} for s in (
-                        "boyer_lindquist/axis_ads", "boyer_lindquist/principal_ads", "nonrotating/above_ads",
-                        "kerr_ingoing/axis_ads", "kerr_outgoing/axis_ads", "kerr_schild/axis_ads")},
-                    **{f"conformal kerr_de_sitter/{v}": {"anti_de_sitter"} for v in ("axis", "ingoing", "outgoing")},
-                    **{f"conformal kerr_de_sitter/{v}": {"de_sitter"} for v in ("axis_ads", "ingoing_ads", "outgoing_ads")},
-                    # The flat topological black hole and the hyperbolic one without mass are two spacetimes of
-                    # one line element: the flat drawings mark the black string's moment and the massless ones the
-                    # hyperbolic horizon.
-                    **{f"topological_black_hole/{s}": {"horizon"} for s in (
-                        "static/flat", "eddington_finkelstein_ingoing/flat", "eddington_finkelstein_outgoing/flat",
-                        "black_string/radial", "brane/tz")},
-                    **{f"conformal topological_black_hole/{v}": {"horizon"} for v in (
-                        "static_flat", "ingoing_flat", "outgoing_flat", "string", "brane")},
-                    **{f"topological_black_hole/{s}/massless": {"string"} for s in ("static", "hyperbolic")},
-                    **{f"conformal topological_black_hole/{v}_massless": {"string"} for v in (
-                        "static", "ingoing", "outgoing", "hyperbolic")},
-                    **{f"global_monopole/{s}": {"monopole"} for s in (
-                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal global_monopole/{v}": {"monopole"} for v in ("static", "ingoing", "outgoing")},
-                    # Tangherlini's black hole in five dimensions and in six are two spacetimes, each
-                    # marked on the drawings of its own charts.
-                    **{f"tangherlini/{s}": {"six"} for s in (
-                        "spherical/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal tangherlini/{v}": {"six"} for v in ("spherical", "ingoing", "outgoing")},
-                    "tangherlini/spherical_six/radial": {"five"},
-                    # Boulware and Deser's black hole and the other root of their field equations are two
-                    # spacetimes, each marked on the drawings of its own charts.
-                    **{f"boulware_deser/{s}": {"branch"} for s in (
-                        "spherical/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal boulware_deser/{v}": {"branch"} for v in ("spherical", "ingoing", "outgoing")},
-                    "boulware_deser/spherical_plus/radial": {"hole"},
-                    "conformal boulware_deser/branch": {"hole"},
-                    # Myers and Perry's black hole is embedded on four surfaces, the plane of rotation and the
-                    # transverse plane of the hole with one spin in five dimensions, the Hopf fibre of the hole with
-                    # equal spins, and the transverse plane in six dimensions: each drawing marks the one it draws.
-                    **{f"{place}myers_perry/{where}": {"rotation", "transverse", "fibre", "six"} - {own}
-                       for place, where, own in (
-                           ("", "boyer_lindquist/transverse", "transverse"), ("", "boyer_lindquist/rotation", "rotation"),
-                           ("", "ingoing_kerr/transverse", "transverse"), ("", "ingoing_kerr/rotation", "rotation"),
-                           ("", "equal_spins/radial", "fibre"), ("", "boyer_lindquist_six/transverse", "six"),
-                           ("conformal ", "transverse", "transverse"), ("conformal ", "ingoing", "transverse"),
-                           ("conformal ", "rotation", "rotation"), ("conformal ", "equal", "fibre"),
-                           ("conformal ", "six", "six"))},
-                    "conformal tangherlini/six": {"five"},
-                    # The black string in five dimensions and in six are two spacetimes, each marked on
-                    # the drawings of its own charts, and its rippled horizon is the perturbed string, a
-                    # third, marked on none.
-                    **{f"black_string/{s}": {"ripple", "six"} for s in (
-                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "kerr_schild/radial")},
-                    **{f"conformal black_string/{v}": {"ripple", "six"} for v in ("static", "ingoing", "kerr_schild")},
-                    "black_string/static_six/radial": {"across", "ripple"},
-                    "conformal black_string/six": {"across", "ripple"},
-                    "global_monopole/conical/radial": {"black_hole"},
-                    # Each chart of the star of infinite central density is one spacetime of four: the
-                    # sphere of radiation, Tolman's two stars, and the stiffest fluid of his family.
-                    "misner_zapolsky/areal/radial": {"stiff", "tolman_v", "tolman_vi"},
-                    "conformal misner_zapolsky/areal": {"stiff", "tolman_v", "tolman_vi"},
-                    "misner_zapolsky/tolman_v/radial": {"core", "stiff", "tolman_vi"},
-                    "conformal misner_zapolsky/tolman_v": {"core", "stiff", "tolman_vi"},
-                    "misner_zapolsky/tolman_vi/radial": {"core", "stiff", "tolman_v"},
-                    "conformal misner_zapolsky/tolman_vi": {"core", "stiff", "tolman_v"},
-                    "misner_zapolsky/power_law/radial": {"core", "tolman_v", "tolman_vi"},
-                    "conformal misner_zapolsky/power_law": {"core", "tolman_v", "tolman_vi"},
-                    "conformal global_monopole/conical": {"black_hole"},
-                    # The threaded black hole's bifurcation sphere, its horizon view, lies at v -> -infinity and
-                    # u -> +infinity, off both Eddington-Finkelstein charts.
-                    **{f"string_black_hole/eddington_finkelstein_{way}/{v}": {"horizon"}
-                       for way in ("ingoing", "outgoing") for v in ("finkelstein", "chart")},
-                    # The dilaton black hole's Einstein metric and its two string metrics measure one
-                    # manifold three ways: the Einstein charts mark the Einstein metric's moment and each
-                    # string chart its own.
-                    **{f"dilaton_black_hole/{s}": {"string_magnetic", "string_electric"} for s in (
-                        "static/radial", "eddington_finkelstein_ingoing/finkelstein", "eddington_finkelstein_ingoing/chart",
-                        "eddington_finkelstein_outgoing/finkelstein", "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal dilaton_black_hole/{v}": {"string_magnetic", "string_electric"}
-                       for v in ("static", "ingoing", "outgoing")},
-                    "dilaton_black_hole/string_magnetic/radial": {"einstein", "string_electric"},
-                    "conformal dilaton_black_hole/string_magnetic": {"einstein", "string_electric"},
-                    "dilaton_black_hole/string_electric/radial": {"einstein", "string_magnetic"},
-                    "conformal dilaton_black_hole/string_electric": {"einstein", "string_magnetic"},
-                    # The Kaluza-Klein black holes are embedded three ways: the Einstein metric of four
-                    # dimensions, and the fifth circle of the electric hole and of the magnetic one. Each chart's
-                    # drawings mark the moment of its own.
-                    **{f"{place}kaluza_klein_black_hole/{where}": {"einstein", "electric", "magnetic"} - {own}
-                       for place, where, own in (
-                           ("", "electric/radial", "electric"),
-                           ("", "eddington_finkelstein_ingoing/finkelstein", "electric"),
-                           ("", "magnetic/radial", "magnetic"), ("", "einstein/radial", "einstein"),
-                           ("", "einstein_eddington_finkelstein/finkelstein", "einstein"),
-                           ("conformal ", "electric", "electric"), ("conformal ", "ingoing", "electric"),
-                           ("conformal ", "magnetic", "magnetic"), ("conformal ", "einstein", "einstein"),
-                           ("conformal ", "einstein_ingoing", "einstein"))},
-                    # Zipoy and Voorhees's oblate and prolate masses are two spacetimes of one line element,
-                    # each equatorial drawing marking its own moment.
-                    **{f"zipoy_voorhees/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
-                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
-                    **{f"conformal zipoy_voorhees/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
-                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
-                    # Bach and Weyl's plane is embedded in two views, outside the ring and on the disc inside
-                    # it, and each drawing lies on one of them: the axis meets the disc alone, at its centre.
-                    **{f"bach_weyl_ring/{s}/{v}": {hidden} for s, v, hidden in (
-                        ("weyl", "axis", "outside"), ("weyl", "outside", "inside"), ("weyl", "inside", "outside"),
-                        ("toroidal", "axis", "outside"), ("toroidal", "outer", "inside"),
-                        ("toroidal", "inner", "outside"), ("oblate_spheroidal", "axis", "outside"),
-                        ("oblate_spheroidal", "plane", "inside"), ("oblate_spheroidal", "disc", "outside"))},
-                    **{f"conformal bach_weyl_ring/{v}": {hidden} for v, hidden in (
-                        ("weyl_axis", "outside"), ("weyl_outside", "inside"), ("weyl_inside", "outside"),
-                        ("toroidal_axis", "outside"), ("toroidal_outer", "inside"), ("toroidal_inner", "outside"),
-                        ("oblate_axis", "outside"), ("oblate_plane", "inside"), ("oblate_disc", "outside"))},
-                    # So are Erez and Rosen's prolate and oblate masses.
-                    **{f"erez_rosen/{s}/equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
-                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
-                    **{f"conformal erez_rosen/{s}_equator_{k}": {o} for s in ("spherical", "prolate_spheroidal")
-                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
-                    # The black hole in a tidal field is drawn oblate and prolate, two spacetimes of one line
-                    # element: each drawing marks the horizon of its own shape, and an equatorial drawing the
-                    # equatorial plane of its own shape as well, which does not meet the axis.
-                    **{f"{place}distorted_schwarzschild/{s}{join}{plane}_{k}":
-                       {o, f"horizon_{o}"} | ({k} if plane == "axis" else set())
-                       for place, join in (("", "/"), ("conformal ", "_"))
-                       for s in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")
-                       for k, o in (("oblate", "prolate"), ("prolate", "oblate"))},
-                    # The black hole in a scalar universe: its equatorial plane does not meet the axis.
-                    **{f"{place}scalar_field_black_hole/{s}{join}axis": {"equator"}
-                       for place, join in (("", "/"), ("conformal ", "_")) for s in ("spherical", "weyl")},
-                    # Bonnor's two spheres, Lemos and Weinberg's cloud and the spheroid are four stars of one
-                    # line element, each chart's drawings marking its own; the exterior is drawn with the sphere
-                    # of 1975, and the spheroid's equatorial plane meets its axis inside the spheroid alone.
-                    **{f"{place}bonnor_charged_dust/{s}": {"star", "star_1965", "cloud", "spheroid"} - own
-                       for own, charts in (({"star"}, ("sphere_1975", "exterior", "exterior_areal")),
-                                           ({"star_1965"}, ("sphere_1965",)),
-                                           ({"cloud"}, ("quasi_black_hole", "harmonic")),
-                                           ({"spheroid"}, ("spheroid_interior",)), (set(), ("spheroid_exterior",)))
-                       for chart in charts
-                       for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in (
-                           "radial", "through", "tx", "axis")]},
-                    # The five charts of the black holes of string theory are drawn at parameters of their
-                    # own, three and four charges, extreme and not, and the three charges equal: five
-                    # spacetimes of one family, each chart's drawings marking its own moment.
-                    **{f"{place}string_bh_three_four_charges/{chart}{view}":
-                       {"five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme"} - {chart}
-                       for chart in ("five_charges", "five_extreme", "five_areal", "four_charges", "four_extreme")
-                       for place, view in (("conformal ", ""), ("", "/radial"))},
-                    "majumdar_papapetrou/cartesian/tz": {"one_hole"},
-                    "majumdar_papapetrou/cartesian/tx": {"one_hole"},
-                    "majumdar_papapetrou/cylindrical/radial": {"one_hole"},
-                    "majumdar_papapetrou/isotropic/radial": {"two_holes"},
-                    "conformal majumdar_papapetrou/one_hole": {"two_holes"},
-                    # One of Kastor and Traschen's holes alone is another spacetime than two of them.
-                    **{f"kastor_traschen/{v}": {"one_hole"} for v in (
-                        "cartesian/tz", "cartesian/tx", "cylindrical/radial", "comoving/tz", "comoving/tx")},
-                    "kastor_traschen/isotropic/radial": {"two_holes"},
-                    "conformal kastor_traschen/one_hole": {"two_holes"},
-                    # Melvin's universe with no hole and Ernst's hole inside it are two spacetimes of one entry,
-                    # each chart's drawings marking its own moment.
-                    "melvin/cylindrical/radial": {"ernst"}, "conformal melvin/cylindrical": {"ernst"},
-                    "melvin/ernst/radial": {"universe"}, "conformal melvin/ernst": {"universe"},
-                    # The swirling universe with no hole and the hole inside it, the same.
-                    "swirling_universe_black_hole/cylindrical/radial": {"hole"},
-                    "conformal swirling_universe_black_hole/cylindrical": {"hole"},
-                    "swirling_universe_black_hole/spherical/radial": {"universe"},
-                    "conformal swirling_universe_black_hole/spherical": {"universe"},
-                    # Einstein's cluster of constant speed, Florides's of uniform density and the declared
-                    # cluster with no surface are three spacetimes of one entry, each chart's drawings marking
-                    # the moment of its own.
-                    **{f"{place}einstein_cluster/{s}": {"speed", "uniform", "core"} - {own}
-                       for own, charts in (("core", ("areal",)), ("speed", ("constant_speed", "isotropic")),
-                                           ("uniform", ("uniform", "hyperspherical")))
-                       for chart in charts
-                       for place, s in [("conformal ", chart)] + [("", f"{chart}/{v}") for v in ("radial", "through")]},
-                    # The dust universe and the inside of Schwarzschild's horizon are two members of
-                    # the Kantowski-Sachs family, each marked on its own drawings.
-                    "kantowski_sachs/comoving/tr": {"vacuum"}, "kantowski_sachs/dust/etar": {"vacuum"},
-                    "conformal kantowski_sachs/dust": {"vacuum"},
-                    "kantowski_sachs/schwarzschild_interior/Tr": {"dust"},
-                    "conformal kantowski_sachs/vacuum": {"dust"},
-                    # Teo's equatorial plane, embedded at a = 1, does not meet the axis, and his throat,
-                    # embedded at a = 1/4, is marked where its poles meet the axis, drawn at that spin.
-                    **{f"teo_wormhole/{s}/{surface}": {other} for s in ("spherical", "proper_radial")
-                       for surface, other in (("axis", "equator"), ("equator", "throat"))},
-                    **{f"conformal teo_wormhole/{s}_{surface}": {other} for s in ("spherical", "proper_radial")
-                       for surface, other in (("axis", "equator"), ("equator", "throat"))},
-                    # Simpson and Visser's black bounce, one way wormhole and traversable wormhole are three
-                    # spacetimes of one line element, a = r_s/2, r_s and 2 r_s, each drawing marking its own
-                    # moments. The outgoing chart's region between the horizons is the white hole, where the
-                    # black hole's moments of constant r do not lie.
-                    **{f"simpson_visser/{s}/{case}": set(SV_MOMENTS) - set(own) | (
-                        {"inside"} if s.endswith("outgoing") else set())
-                       for s in ("spherical", "areal", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing")
-                       for case, own in SV_MOMENTS_OF.items()},
-                    **{f"conformal simpson_visser/{s}_{case}": set(SV_MOMENTS) - set(own)
-                       for s in ("spherical", "areal", "ingoing", "outgoing") for case, own in SV_MOMENTS_OF.items()},
-                    # Kiselev's matter alone is another spacetime than his black hole, each marked on the
-                    # drawings of the charts that hold it.
-                    **{f"kiselev/{v}": {"free"} for v in (
-                        "static/radial", "linear/radial", "eddington_finkelstein_ingoing/finkelstein",
-                        "eddington_finkelstein_ingoing/chart", "eddington_finkelstein_outgoing/finkelstein",
-                        "eddington_finkelstein_outgoing/chart")},
-                    **{f"conformal kiselev/{v}": {"free"} for v in ("static", "linear", "ingoing", "outgoing")},
-                    **{f"{place}kiselev/{v}": {"black_hole"} for place, views in (
-                        ("", ("hyperbolic/radial", "conformally_flat/radial")),
-                        ("conformal ", ("hyperbolic", "conformally_flat"))) for v in views},
-                    # Roberts's collapse at p = 9/10, 1 and 2 is three spacetimes of one line element, each
-                    # drawing marking the moments of its own.
-                    **{f"{place}roberts/{s}{sep}{case}": set(ROBERTS_P) - {case}
-                       for place, sep in (("", "/"), ("conformal ", "_"))
-                       for s in ("double_null", "advanced", "areal", "diagonal", "scaling") for case in ROBERTS_P}}
-    # The surfaces of a view that a drawing does not mark though it marks the view's others: the areal
-    # chart of the black bounce is drawn on the side r > 0, where the moments of r < 0 do not lie.
-    # Each chart of Hiscock's hole holds part of the spacetime: the ingoing chart ends at v_0 = 8, so the
-    # last moment, v - r = 11, has no part in it; the outgoing chart begins on the surface of pair creation,
-    # which the moments before v - r = -1 do not reach; and the flat space after the hole holds only the last.
-    # The last two moments of Lindquist and Wheeler's lattice find the cell's boundary inside its
-    # horizon, and the whole moment with it, beyond Schwarzschild's chart.
-    # Clifton and Ferreira's chart covers the cell while it expands, and every moment embedded is of
-    # the cell at rest or contracting.
-    # The first moment of Haggard and Rovelli's shell meets it at Kruskal's U = -12, three widths of the
-    # drawing to the right of the flap before the bounce.
-    # The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so
-    # the last moment, v - r = r_s, has no part in it.
-    # The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no
-    # part in the static chart inside r_- nor in the outgoing chart, which shares only that region with
-    # the ingoing one.
-    # Single moments a drawing does not hold, as (view, surface, ring) of every() with ring None for a
-    # surface of its own. The maximally supersymmetric plane wave's ring is drawn at mu c u = 0, 0.5, 1,
-    # 1.5, 2.5 and 3, in the ring's view and on the tube alike: the Rosen chart ends at u = 0, so neither
-    # its figure nor its band of the conformal diagram holds the first; the conformally flat chart ends
-    # at mu c u = pi/2, so its band holds none after 1.5, and its figure, whose window runs to cU = 3/mu,
-    # none after 1, since mu c U = tan(1.5) is 14.1.
-    HIDDEN_MOMENTS = {
-        **{where: {("ring", 0, None), ("tube", 0, 0)}
-           for where in ("maximally_supersymmetric_plane_wave/rosen/focus", "conformal maximally_supersymmetric_plane_wave/rosen")},
-        "maximally_supersymmetric_plane_wave/conformally_flat/focus": {("ring", k, None) for k in (3, 4, 5)}
-        | {("tube", 0, k) for k in (3, 4, 5)},
-        "conformal maximally_supersymmetric_plane_wave/conformally_flat": {("ring", k, None) for k in (4, 5)}
-        | {("tube", 0, k) for k in (4, 5)},
-        # The super-entropic horizon is embedded at the values of the figure of Gnecchi, Hristov, Klemm,
-        # Toldo and Vaughan, r_+ = sqrt(5) ell, where the whole horizon embeds with psi of period 2 pi; the
-        # principal rays of both charts are drawn at m = 2 ell, a lighter hole, whose plane holds no point of that horizon.
-        "super_entropic/hennigar_kubiznak_mann/principal": {("horizon", 0, None)},
-        "super_entropic/carter_plebanski/principal": {("horizon", 0, None)},
-    }
-    HIDDEN_SURFACES = {"lindquist_wheeler_lattice/schwarzschild_cell/radial": {("lattice", 2), ("lattice", 3)},
-                       "lindquist_wheeler_lattice/cosmological_time/radial": {("lattice", k) for k in range(4)},
-                       "conformal lindquist_wheeler_lattice/expanding": {("lattice", k) for k in range(4)},
-                       "simpson_visser/areal/bounce": {("inside", 3), ("inside", 4)},
-                       "charged_shell/exterior/inside": {("bounce", 0), ("bounce", 1)},
-                       "charged_shell/exterior_outgoing/shell": {("bounce", 0), ("bounce", 1)},
-                       "israel_shell/interior/radial": {("shell", 3)},
-                       "black_to_white_hole/kruskal/falling": {("collapse", 0)},
-                       "israel_shell/interior/through": {("shell", 3)},
-                       "hiscock/ingoing/history": {("history", 5)},
-                       "hiscock/outgoing/history": {("history", 0), ("history", 1)},
-                       "hiscock/flat/after": {("history", k) for k in range(5)}}
+    # The embedding views a drawing does not mark though it marks others, as another spacetime of the
+    # same line element is drawn there, from `hidden_views`.
+    HIDDEN_VIEWS = {place: set(views) for _, group in exceptions("hidden_views")
+                    for place, views in group["drawings"].items()}
+    # The single moments a drawing does not hold, as (view, surface, ring) of every() with ring None for a
+    # surface of its own, from `hidden_moments`.
+    HIDDEN_MOMENTS = {place: {tuple(moment) for moment in moments} for _, group in exceptions("hidden_moments")
+                      for place, moments in group["drawings"].items()}
+    # The surfaces of a view that a drawing does not mark though it marks the view's others, as (view,
+    # surface), from `hidden_surfaces`.
+    HIDDEN_SURFACES = {place: {tuple(surface) for surface in surfaces} for _, group in exceptions("hidden_surfaces")
+                       for place, surfaces in group["drawings"].items()}
 
     def reach(self, surface, system=None, reference=False):
         xs = [x for piece in surface["pieces"] if "points" in piece and (reference or not piece.get("reference"))

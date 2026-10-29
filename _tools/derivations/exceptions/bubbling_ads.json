@@ -1,0 +1,12 @@
+{
+  "hidden": [
+    {
+      "reason": "The black ring and the black half plane of bubbling anti-de Sitter space, other members of the family than the black disc whose plane of droplets is embedded.",
+      "drawings": [
+        "bubbling_ads/rings/ring_axis",
+        "bubbling_ads/plane_wave/axis",
+        "conformal bubbling_ads/rings"
+      ]
+    }
+  ]
+}

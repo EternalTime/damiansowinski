@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "The quantum BTZ hole's dressed cone and rotating hole, other spacetimes than the hole of positive mass without rotation whose moment is embedded.",
+      "drawings": [
+        "quantum_btz/brane/dressed",
+        "quantum_btz/rotating/rotating",
+        "conformal quantum_btz/dressed",
+        "conformal quantum_btz/rotating"
+      ]
+    }
+  ]
+}

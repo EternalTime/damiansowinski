@@ -1,0 +1,29 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Kerr-de Sitter and Kerr-anti-de Sitter are two spacetimes of one line element, each marked on the drawings made at its own sign of Lambda.",
+      "drawings": {
+        "kerr_de_sitter/boyer_lindquist/axis": ["anti_de_sitter"],
+        "kerr_de_sitter/boyer_lindquist/principal": ["anti_de_sitter"],
+        "kerr_de_sitter/boyer_lindquist/above": ["anti_de_sitter"],
+        "kerr_de_sitter/boyer_lindquist/dragging": ["anti_de_sitter"],
+        "kerr_de_sitter/nonrotating/above": ["anti_de_sitter"],
+        "kerr_de_sitter/kerr_ingoing/axis": ["anti_de_sitter"],
+        "kerr_de_sitter/kerr_outgoing/axis": ["anti_de_sitter"],
+        "kerr_de_sitter/kerr_schild/axis": ["anti_de_sitter"],
+        "kerr_de_sitter/boyer_lindquist/axis_ads": ["de_sitter"],
+        "kerr_de_sitter/boyer_lindquist/principal_ads": ["de_sitter"],
+        "kerr_de_sitter/nonrotating/above_ads": ["de_sitter"],
+        "kerr_de_sitter/kerr_ingoing/axis_ads": ["de_sitter"],
+        "kerr_de_sitter/kerr_outgoing/axis_ads": ["de_sitter"],
+        "kerr_de_sitter/kerr_schild/axis_ads": ["de_sitter"],
+        "conformal kerr_de_sitter/axis": ["anti_de_sitter"],
+        "conformal kerr_de_sitter/ingoing": ["anti_de_sitter"],
+        "conformal kerr_de_sitter/outgoing": ["anti_de_sitter"],
+        "conformal kerr_de_sitter/axis_ads": ["de_sitter"],
+        "conformal kerr_de_sitter/ingoing_ads": ["de_sitter"],
+        "conformal kerr_de_sitter/outgoing_ads": ["de_sitter"]
+      }
+    }
+  ]
+}

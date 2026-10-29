@@ -1,0 +1,23 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Hoffmann's particle and the black hole of the same charge are two spacetimes of one line element: each drawing marks the moment of its own.",
+      "drawings": {
+        "born_infeld_charge/static/particle": ["hole"],
+        "born_infeld_charge/eddington_finkelstein_ingoing/particle": ["hole"],
+        "born_infeld_charge/eddington_finkelstein_outgoing/particle": ["hole"],
+        "conformal born_infeld_charge/particle": ["hole"],
+        "conformal born_infeld_charge/particle_ingoing": ["hole"],
+        "conformal born_infeld_charge/particle_outgoing": ["hole"],
+        "born_infeld_charge/static/hole": ["particle"],
+        "born_infeld_charge/eddington_finkelstein_ingoing/finkelstein": ["particle"],
+        "born_infeld_charge/eddington_finkelstein_ingoing/chart": ["particle"],
+        "born_infeld_charge/eddington_finkelstein_outgoing/finkelstein": ["particle"],
+        "born_infeld_charge/eddington_finkelstein_outgoing/chart": ["particle"],
+        "conformal born_infeld_charge/hole": ["particle"],
+        "conformal born_infeld_charge/hole_ingoing": ["particle"],
+        "conformal born_infeld_charge/hole_outgoing": ["particle"]
+      }
+    }
+  ]
+}

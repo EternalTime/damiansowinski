@@ -1,0 +1,14 @@
+{
+  "hidden": [
+    {
+      "reason": "Bonnor's dust cloud: its axis meets the embedded plane only at the centre, and inside the null circle the circles about the axis are closed timelike curves.",
+      "drawings": [
+        "bonnor_rotating_dust/cylindrical/axis",
+        "bonnor_rotating_dust/spherical/axis",
+        "bonnor_rotating_dust/cylindrical/inside",
+        "conformal bonnor_rotating_dust/cylindrical_axis",
+        "conformal bonnor_rotating_dust/spherical_axis"
+      ]
+    }
+  ]
+}

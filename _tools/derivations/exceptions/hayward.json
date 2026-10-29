@@ -1,0 +1,25 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Hayward's static hole and the hole that forms and evaporates are two spacetimes of one line element: the static and Eddington-Finkelstein drawings mark the static moment, outside r_+ and inside r_-, and the forming and evaporating ones the slices of constant v - r.",
+      "drawings": {
+        "hayward/static/radial": ["history"],
+        "hayward/eddington_finkelstein_ingoing/finkelstein": ["history"],
+        "hayward/eddington_finkelstein_ingoing/chart": ["history"],
+        "hayward/eddington_finkelstein_outgoing/finkelstein": ["history"],
+        "hayward/eddington_finkelstein_outgoing/chart": ["history"],
+        "conformal hayward/static": ["history"],
+        "conformal hayward/ingoing": ["history"],
+        "conformal hayward/outgoing": ["history"],
+        "hayward/evaporating/history": ["inside", "outside"],
+        "conformal hayward/history": ["inside", "outside"]
+      }
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "Hayward's hole forms from flat space and leaves flat space behind: the first and the last moments of its movie, before the radiation reaches the rim and after the last of it has left.",
+      "moments": [["history", 0], ["history", 5]]
+    }
+  ]
+}

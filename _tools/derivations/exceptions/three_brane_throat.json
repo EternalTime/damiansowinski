@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The three-brane and its throat alone are two spacetimes, the second the limit of the first, and each chart's drawings mark the surface of its own.",
+      "drawings": {
+        "three_brane_throat/isotropic/radial": ["throat"],
+        "conformal three_brane_throat/isotropic": ["throat"],
+        "three_brane_throat/areal/radial": ["throat"],
+        "conformal three_brane_throat/areal": ["throat"],
+        "three_brane_throat/horizon/radial": ["throat"],
+        "conformal three_brane_throat/horizon": ["throat"],
+        "three_brane_throat/throat/radial": ["brane"],
+        "conformal three_brane_throat/throat": ["brane"],
+        "three_brane_throat/throat_proper/radial": ["brane"],
+        "conformal three_brane_throat/throat_proper": ["brane"]
+      }
+    }
+  ]
+}

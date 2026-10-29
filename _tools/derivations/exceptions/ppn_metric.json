@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The rotating post-Newtonian body's axis, which the embedded equatorial plane does not meet.",
+      "drawings": ["ppn_metric/rotating/axis"]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The surface X = 0 of Schrodinger spacetime's global chart with V left out, where a line of constant T holds every V and the embedded plane only V = 0.",
+      "drawings": ["schrodinger_spacetime/global/trap"]
+    }
+  ]
+}

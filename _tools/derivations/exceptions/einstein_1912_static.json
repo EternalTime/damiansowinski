@@ -1,0 +1,21 @@
+{
+  "hidden": [
+    {
+      "reason": "A star, the uniform field and the body of the equation of February in Einstein's static field of 1912, other spacetimes than the body of the equation of March whose equator is embedded.",
+      "drawings": [
+        "einstein_1912_static/static/tx",
+        "einstein_1912_static/uniform/tz",
+        "einstein_1912_static/february/radial",
+        "conformal einstein_1912_static/static",
+        "conformal einstein_1912_static/uniform",
+        "conformal einstein_1912_static/february"
+      ]
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "Space is flat in Einstein's static field of 1912, so the equator outside a body is a plane, drawn under Flamm's paraboloid of the same mass.",
+      "moments": [["equator", 0]]
+    }
+  ]
+}

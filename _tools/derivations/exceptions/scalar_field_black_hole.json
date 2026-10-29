@@ -1,0 +1,22 @@
+{
+  "hidden": [
+    {
+      "reason": "The universe with no black hole, another spacetime than the hole whose equator is embedded.",
+      "drawings": [
+        "scalar_field_black_hole/scalar_universe/radial",
+        "conformal scalar_field_black_hole/scalar_universe"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The black hole in a scalar universe: its equatorial plane does not meet the axis.",
+      "drawings": {
+        "scalar_field_black_hole/spherical/axis": ["equator"],
+        "scalar_field_black_hole/weyl/axis": ["equator"],
+        "conformal scalar_field_black_hole/spherical_axis": ["equator"],
+        "conformal scalar_field_black_hole/weyl_axis": ["equator"]
+      }
+    }
+  ]
+}

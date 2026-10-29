@@ -1,0 +1,19 @@
+{
+  "hidden": [
+    {
+      "reason": "Mars's angle is divided out along another Killing vector than the fluid's, and its circles each run through every moment of Wahlquist's t.",
+      "drawings": ["wahlquist/mars/equator", "wahlquist/mars_ingoing/equator"]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Wahlquist's rotating body and Whittaker's sphere are two spacetimes, the second the first with no rotation, and each chart's drawings mark the moment of its own.",
+      "drawings": {
+        "wahlquist/wahlquist/equator": ["static"],
+        "wahlquist/wahlquist/disc": ["static"],
+        "wahlquist/whittaker/radial": ["rotating"],
+        "wahlquist/whittaker/through": ["rotating"]
+      }
+    }
+  ]
+}

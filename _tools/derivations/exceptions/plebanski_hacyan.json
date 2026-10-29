@@ -1,0 +1,30 @@
+{
+  "hidden": [
+    {
+      "reason": "Anti-de Sitter space of two dimensions times a flat plane, another spacetime than the two of Plebański and Hacyan's page whose surfaces are embedded; its moment is itself a flat plane.",
+      "drawings": [
+        "plebanski_hacyan/plane/uw",
+        "plebanski_hacyan/plane_null/uv",
+        "plebanski_hacyan/plane_static/wedge",
+        "conformal plebanski_hacyan/plane",
+        "conformal plebanski_hacyan/plane_null",
+        "conformal plebanski_hacyan/plane_static"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The flat plane times a sphere and the anti-Nariai universe are two spacetimes, and each chart's drawings mark the surfaces of its own.",
+      "drawings": {
+        "plebanski_hacyan/sphere/tz": ["hyperbolic_plane"],
+        "plebanski_hacyan/sphere_rindler/wedge": ["hyperbolic_plane"],
+        "conformal plebanski_hacyan/sphere": ["hyperbolic_plane"],
+        "conformal plebanski_hacyan/sphere_rindler": ["hyperbolic_plane"],
+        "plebanski_hacyan/anti_nariai/wedge": ["equator", "sphere"],
+        "plebanski_hacyan/anti_nariai_static/radial": ["equator", "sphere"],
+        "conformal plebanski_hacyan/anti_nariai": ["equator", "sphere"],
+        "conformal plebanski_hacyan/anti_nariai_static": ["equator", "sphere"]
+      }
+    }
+  ]
+}

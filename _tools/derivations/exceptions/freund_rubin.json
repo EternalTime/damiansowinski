@@ -1,0 +1,20 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Freund and Rubin's moment t = 0 is three surfaces: the hyperbolic plane lies on the planes of the time and the radius of the global, conformal and static charts, the cylinder on those of the Poincare and proper distance charts and on the plane of t and psi, and the great 2-sphere stands at one event, on none of the planes.",
+      "drawings": {
+        "freund_rubin/global/radial": ["circle", "sphere"],
+        "conformal freund_rubin/global": ["circle", "sphere"],
+        "freund_rubin/conformal/radial": ["circle", "sphere"],
+        "conformal freund_rubin/conformal": ["circle", "sphere"],
+        "freund_rubin/static/radial": ["circle", "sphere"],
+        "conformal freund_rubin/static": ["circle", "sphere"],
+        "freund_rubin/poincare/radial": ["anti_de_sitter", "sphere"],
+        "conformal freund_rubin/poincare": ["anti_de_sitter", "sphere"],
+        "freund_rubin/proper/radial": ["anti_de_sitter", "sphere"],
+        "conformal freund_rubin/proper": ["anti_de_sitter", "sphere"],
+        "freund_rubin/proper/circle": ["anti_de_sitter", "sphere"]
+      }
+    }
+  ]
+}

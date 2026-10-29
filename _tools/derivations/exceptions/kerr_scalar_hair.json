@@ -1,0 +1,14 @@
+{
+  "hidden": [
+    {
+      "reason": "Herdeiro and Radu's black hole with scalar hair: its axis, which the embedded equatorial plane meets nowhere outside the horizon, and the Kerr member of the same mass and angular momentum, another member of the family than configuration IV, whose equator is embedded.",
+      "drawings": [
+        "kerr_scalar_hair/herdeiro_radu/axis",
+        "conformal kerr_scalar_hair/hair_axis",
+        "kerr_scalar_hair/kerr_member/axis",
+        "kerr_scalar_hair/kerr_member/equator",
+        "conformal kerr_scalar_hair/kerr_axis"
+      ]
+    }
+  ]
+}

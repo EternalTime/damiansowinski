@@ -1,0 +1,30 @@
+{
+  "hidden": [
+    {
+      "reason": "A plane wave and the uniform field of Nordstrom's theory, other spacetimes than the point mass and the dust universe whose moments are embedded.",
+      "drawings": [
+        "nordstrom_scalar/conformal/tx",
+        "nordstrom_scalar/uniform/tz",
+        "conformal nordstrom_scalar/conformal",
+        "conformal nordstrom_scalar/uniform"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "Nordstrom's point mass and his universe of dust are two spacetimes of one theory, each drawing marking the moments of its own.",
+      "drawings": {
+        "nordstrom_scalar/spherical/radial": ["dust"],
+        "conformal nordstrom_scalar/spherical": ["dust"],
+        "nordstrom_scalar/dust/radial": ["point_mass"],
+        "conformal nordstrom_scalar/dust": ["point_mass"]
+      }
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "Nordstrom's universe of dust is conformally flat with a factor that depends on the time alone, so each of its moments is a flat plane, on which its rings of galaxies grow and shrink.",
+      "moments": [["dust", 0], ["dust", 1], ["dust", 2], ["dust", 3], ["dust", 4]]
+    }
+  ]
+}

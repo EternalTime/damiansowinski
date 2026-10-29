@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis above the two Kerr black holes, which the embedded plane z = 0 between them does not meet.",
+      "drawings": ["conformal double_kerr/weyl_axis_outside"]
+    }
+  ]
+}

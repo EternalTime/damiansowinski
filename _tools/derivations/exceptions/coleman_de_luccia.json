@@ -1,0 +1,17 @@
+{
+  "hidden": [
+    {
+      "reason": "Coleman and De Luccia's other bubbles than the anti-de Sitter one whose moments are embedded, and the drawings of that one outside the light cone of its centre.",
+      "drawings": [
+        "coleman_de_luccia/wall/into_flat",
+        "coleman_de_luccia/open/zero",
+        "coleman_de_luccia/open/positive",
+        "coleman_de_luccia/static_inside/into_flat",
+        "coleman_de_luccia/static_outside/into_flat",
+        "coleman_de_luccia/wall/out_of_flat",
+        "coleman_de_luccia/static_outside/out_of_flat",
+        "conformal coleman_de_luccia/into_flat"
+      ]
+    }
+  ]
+}

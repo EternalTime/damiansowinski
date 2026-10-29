@@ -1,0 +1,12 @@
+{
+  "hidden": [
+    {
+      "reason": "Up to the shock the spheres through Hotta and Tanaka's ring meet the equatorial plane of the conformally flat chart only as eta goes to minus infinity, and lie on the edge of the Kundt chart.",
+      "drawings": [
+        "hotta_tanaka/conformally_flat/equator",
+        "hotta_tanaka/kundt/equator",
+        "hotta_tanaka/kundt/near"
+      ]
+    }
+  ]
+}

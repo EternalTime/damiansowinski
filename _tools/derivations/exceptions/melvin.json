@@ -1,0 +1,13 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Melvin's universe with no hole and Ernst's hole inside it are two spacetimes of one entry, each chart's drawings marking its own moment.",
+      "drawings": {
+        "melvin/cylindrical/radial": ["ernst"],
+        "conformal melvin/cylindrical": ["ernst"],
+        "melvin/ernst/radial": ["universe"],
+        "conformal melvin/ernst": ["universe"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "hidden": [
+    {
+      "reason": "The white hole's flap after the bounce, where no moment embedded lies: they run from Schwarzschild's ct = -3 r_s to the surface of time symmetry before it.",
+      "drawings": [
+        "black_to_white_hole/kruskal/rising",
+        "black_to_white_hole/painleve_gullstrand_outgoing/rising"
+      ]
+    }
+  ],
+  "hidden_surfaces": [
+    {
+      "reason": "The first moment of Haggard and Rovelli's shell meets it at Kruskal's U = -12, three widths of the drawing to the right of the flap before the bounce.",
+      "drawings": {
+        "black_to_white_hole/kruskal/falling": [["collapse", 0]]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "hidden_surfaces": [
+    {
+      "reason": "The flat interior of Israel's shell ends where the shell reaches the centre, at v - r = 0.52 r_s, so the last moment, v - r = r_s, has no part in it.",
+      "drawings": {
+        "israel_shell/interior/radial": [["shell", 3]],
+        "israel_shell/interior/through": [["shell", 3]]
+      }
+    }
+  ]
+}

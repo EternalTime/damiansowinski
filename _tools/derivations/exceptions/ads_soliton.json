@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "The solitons of five and of three dimensions, other spacetimes than the soliton of four dimensions whose moment is embedded.",
+      "drawings": [
+        "ads_soliton/five_dimensional/radial",
+        "ads_soliton/three_dimensional/radial",
+        "conformal ads_soliton/five_dimensional",
+        "conformal ads_soliton/three_dimensional"
+      ]
+    }
+  ]
+}

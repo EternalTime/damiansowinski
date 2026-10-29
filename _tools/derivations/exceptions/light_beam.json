@@ -1,0 +1,15 @@
+{
+  "hidden": [
+    {
+      "reason": "Two beams of light side by side, another spacetime than the single beam whose wave fronts are embedded, and the plane y = 0 with t left out, which every wave front covers whole.",
+      "drawings": [
+        "light_beam/null_cartesian/midway",
+        "light_beam/null_cartesian/one",
+        "conformal light_beam/midway",
+        "light_beam/cartesian/lens"
+      ]
+    }
+  ],
+  "flat": "Its moments are flat planes, and what the spacetime does is carried by its ring of free particles, stacked up its axis of time.",
+  "height": "Its view tube stacks the ring of free particles up its axis of time, a grid whose height is the time."
+}

@@ -1,0 +1,8 @@
+{
+  "flat_moments": [
+    {
+      "reason": "The domain wall's moment ct = 0, when the wall stops, is the flat disc of radius 1/k taken twice and joined at its rim; the moments either side of it are the cones it opens into.",
+      "moments": [["moments", 2]]
+    }
+  ]
+}

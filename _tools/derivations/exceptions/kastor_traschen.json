@@ -1,0 +1,16 @@
+{
+  "hidden_views": [
+    {
+      "reason": "One of Kastor and Traschen's holes alone is another spacetime than two of them.",
+      "drawings": {
+        "kastor_traschen/cartesian/tz": ["one_hole"],
+        "kastor_traschen/cartesian/tx": ["one_hole"],
+        "kastor_traschen/cylindrical/radial": ["one_hole"],
+        "kastor_traschen/comoving/tz": ["one_hole"],
+        "kastor_traschen/comoving/tx": ["one_hole"],
+        "kastor_traschen/isotropic/radial": ["two_holes"],
+        "conformal kastor_traschen/one_hole": ["two_holes"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "flat_moments": [
+    {
+      "reason": "The bounce of loop quantum cosmology is a flat Friedmann universe, so each of its moments is a flat plane, on which its comoving observers close in and draw apart.",
+      "moments": [["universe", 0], ["universe", 1], ["universe", 2], ["universe", 3], ["universe", 4]]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "hidden": [
+    {
+      "reason": "The flat interior of Tippett and Tsang's bubble continued over the whole plane, another spacetime than the bubble whose moment is embedded.",
+      "drawings": ["tippett_tsang/interior/tx", "tippett_tsang/rindler/plane"]
+    }
+  ],
+  "height": "Its view plane draws how far the boxes tip the light cone as a height over the plane of their path."
+}

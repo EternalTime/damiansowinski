@@ -1,0 +1,26 @@
+{
+  "hidden": [
+    {
+      "reason": "The spring and the vortex filament of four dimensions, other spacetimes than the drain in the plane whose moments are embedded.",
+      "drawings": [
+        "draining_bathtub/laboratory/spring",
+        "draining_bathtub/vortex_filament/drain",
+        "conformal draining_bathtub/spring"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The bathtub's figure carries the laboratory's moment as its floor; the Kerr-like chart's T = 0 is a curved surface of the figure, t = ln(r^2 - 1)/2, which would stand among the cones.",
+      "drawings": {
+        "draining_bathtub/laboratory/swirl": ["funnel"]
+      }
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "The laboratory's moment of the draining bathtub is the plane the water moves in; the curvature sound feels is in how the moments are stacked, and the catenoid beside it is the Kerr-like chart's moment.",
+      "moments": [["plane", 0]]
+    }
+  ]
+}

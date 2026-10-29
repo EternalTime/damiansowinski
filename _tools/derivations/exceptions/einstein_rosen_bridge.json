@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Einstein and Rosen's neutral bridge, their charged bridge with a mass and the one with no mass are three spacetimes of one page: each drawing marks the moment of its own.",
+      "drawings": {
+        "einstein_rosen_bridge/bridge/radial": ["charged", "charged_mass"],
+        "einstein_rosen_bridge/spherical/radial": ["charged", "charged_mass"],
+        "einstein_rosen_bridge/isotropic/radial": ["charged", "charged_mass"],
+        "conformal einstein_rosen_bridge/bridge": ["charged", "charged_mass"],
+        "conformal einstein_rosen_bridge/spherical": ["charged", "charged_mass"],
+        "conformal einstein_rosen_bridge/isotropic": ["charged", "charged_mass"],
+        "einstein_rosen_bridge/charged_spherical/radial": ["charged", "neutral"],
+        "conformal einstein_rosen_bridge/charged_spherical": ["charged", "neutral"],
+        "einstein_rosen_bridge/charged_bridge/radial": ["charged_mass", "neutral"],
+        "conformal einstein_rosen_bridge/charged_bridge": ["charged_mass", "neutral"]
+      }
+    }
+  ]
+}

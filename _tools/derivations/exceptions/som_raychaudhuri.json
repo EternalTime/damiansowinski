@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The cylinder of t and phi beyond the null circle, where the cones have tipped past the horizontal and no surface of constant t is a moment of space.",
+      "drawings": ["som_raychaudhuri/cylindrical/beyond"]
+    }
+  ]
+}

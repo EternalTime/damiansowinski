@@ -1,0 +1,21 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The dilaton black hole's Einstein metric and its two string metrics measure one manifold three ways: the Einstein charts mark the Einstein metric's moment and each string chart its own.",
+      "drawings": {
+        "dilaton_black_hole/static/radial": ["string_electric", "string_magnetic"],
+        "dilaton_black_hole/eddington_finkelstein_ingoing/finkelstein": ["string_electric", "string_magnetic"],
+        "dilaton_black_hole/eddington_finkelstein_ingoing/chart": ["string_electric", "string_magnetic"],
+        "dilaton_black_hole/eddington_finkelstein_outgoing/finkelstein": ["string_electric", "string_magnetic"],
+        "dilaton_black_hole/eddington_finkelstein_outgoing/chart": ["string_electric", "string_magnetic"],
+        "conformal dilaton_black_hole/static": ["string_electric", "string_magnetic"],
+        "conformal dilaton_black_hole/ingoing": ["string_electric", "string_magnetic"],
+        "conformal dilaton_black_hole/outgoing": ["string_electric", "string_magnetic"],
+        "dilaton_black_hole/string_magnetic/radial": ["einstein", "string_electric"],
+        "conformal dilaton_black_hole/string_magnetic": ["einstein", "string_electric"],
+        "dilaton_black_hole/string_electric/radial": ["einstein", "string_magnetic"],
+        "conformal dilaton_black_hole/string_electric": ["einstein", "string_magnetic"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "hidden": [
+    {
+      "reason": "A closed hyperbolic universe about one observer; the moments embedded are the torus's and the horn's.",
+      "drawings": ["small_universes/hyperbolic/radial"]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The torus and the horn are two small universes, each drawing marking the moments of its own.",
+      "drawings": {
+        "small_universes/torus/cell": ["horn"],
+        "small_universes/torus/images": ["horn"],
+        "small_universes/torus_conformal/cell": ["horn"],
+        "small_universes/torus_conformal/images": ["horn"],
+        "conformal small_universes/torus": ["horn"],
+        "conformal small_universes/torus_conformal": ["horn"],
+        "small_universes/horn/along": ["torus"],
+        "conformal small_universes/horn": ["torus"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Boulware and Deser's black hole and the other root of their field equations are two spacetimes, each marked on the drawings of its own charts.",
+      "drawings": {
+        "boulware_deser/spherical/radial": ["branch"],
+        "boulware_deser/eddington_finkelstein_ingoing/finkelstein": ["branch"],
+        "boulware_deser/eddington_finkelstein_ingoing/chart": ["branch"],
+        "boulware_deser/eddington_finkelstein_outgoing/finkelstein": ["branch"],
+        "boulware_deser/eddington_finkelstein_outgoing/chart": ["branch"],
+        "conformal boulware_deser/spherical": ["branch"],
+        "conformal boulware_deser/ingoing": ["branch"],
+        "conformal boulware_deser/outgoing": ["branch"],
+        "boulware_deser/spherical_plus/radial": ["hole"],
+        "conformal boulware_deser/branch": ["hole"]
+      }
+    }
+  ]
+}

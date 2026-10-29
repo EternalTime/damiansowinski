@@ -1,0 +1,21 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Einstein's cluster of constant speed, Florides's of uniform density and the declared cluster with no surface are three spacetimes of one entry, each chart's drawings marking the moment of its own.",
+      "drawings": {
+        "conformal einstein_cluster/areal": ["speed", "uniform"],
+        "einstein_cluster/areal/radial": ["speed", "uniform"],
+        "einstein_cluster/areal/through": ["speed", "uniform"],
+        "conformal einstein_cluster/constant_speed": ["core", "uniform"],
+        "einstein_cluster/constant_speed/radial": ["core", "uniform"],
+        "conformal einstein_cluster/isotropic": ["core", "uniform"],
+        "einstein_cluster/isotropic/radial": ["core", "uniform"],
+        "conformal einstein_cluster/uniform": ["core", "speed"],
+        "einstein_cluster/uniform/radial": ["core", "speed"],
+        "einstein_cluster/uniform/through": ["core", "speed"],
+        "conformal einstein_cluster/hyperspherical": ["core", "speed"],
+        "einstein_cluster/hyperspherical/radial": ["core", "speed"]
+      }
+    }
+  ]
+}

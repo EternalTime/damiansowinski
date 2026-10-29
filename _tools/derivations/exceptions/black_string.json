@@ -1,0 +1,18 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The black string in five dimensions and in six are two spacetimes, each marked on the drawings of its own charts, and its rippled horizon is the perturbed string, a third, marked on none.",
+      "drawings": {
+        "black_string/static/radial": ["ripple", "six"],
+        "black_string/eddington_finkelstein_ingoing/finkelstein": ["ripple", "six"],
+        "black_string/eddington_finkelstein_ingoing/chart": ["ripple", "six"],
+        "black_string/kerr_schild/radial": ["ripple", "six"],
+        "conformal black_string/static": ["ripple", "six"],
+        "conformal black_string/ingoing": ["ripple", "six"],
+        "conformal black_string/kerr_schild": ["ripple", "six"],
+        "black_string/static_six/radial": ["across", "ripple"],
+        "conformal black_string/six": ["across", "ripple"]
+      }
+    }
+  ]
+}

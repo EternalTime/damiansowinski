@@ -1,0 +1,26 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Bonnor's two spheres, Lemos and Weinberg's cloud and the spheroid are four stars of one line element, each chart's drawings marking its own; the exterior is drawn with the sphere of 1975, and the spheroid's equatorial plane meets its axis inside the spheroid alone.",
+      "drawings": {
+        "conformal bonnor_charged_dust/sphere_1975": ["cloud", "spheroid", "star_1965"],
+        "bonnor_charged_dust/sphere_1975/radial": ["cloud", "spheroid", "star_1965"],
+        "bonnor_charged_dust/sphere_1975/through": ["cloud", "spheroid", "star_1965"],
+        "conformal bonnor_charged_dust/exterior": ["cloud", "spheroid", "star_1965"],
+        "bonnor_charged_dust/exterior/radial": ["cloud", "spheroid", "star_1965"],
+        "conformal bonnor_charged_dust/exterior_areal": ["cloud", "spheroid", "star_1965"],
+        "bonnor_charged_dust/exterior_areal/radial": ["cloud", "spheroid", "star_1965"],
+        "conformal bonnor_charged_dust/sphere_1965": ["cloud", "spheroid", "star"],
+        "bonnor_charged_dust/sphere_1965/radial": ["cloud", "spheroid", "star"],
+        "conformal bonnor_charged_dust/quasi_black_hole": ["spheroid", "star", "star_1965"],
+        "bonnor_charged_dust/quasi_black_hole/radial": ["spheroid", "star", "star_1965"],
+        "conformal bonnor_charged_dust/harmonic": ["spheroid", "star", "star_1965"],
+        "bonnor_charged_dust/harmonic/tx": ["spheroid", "star", "star_1965"],
+        "conformal bonnor_charged_dust/spheroid_interior": ["cloud", "star", "star_1965"],
+        "bonnor_charged_dust/spheroid_interior/axis": ["cloud", "star", "star_1965"],
+        "conformal bonnor_charged_dust/spheroid_exterior": ["cloud", "spheroid", "star", "star_1965"],
+        "bonnor_charged_dust/spheroid_exterior/axis": ["cloud", "spheroid", "star", "star_1965"]
+      }
+    }
+  ]
+}

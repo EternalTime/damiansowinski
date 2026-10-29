@@ -1,0 +1,12 @@
+{
+  "hidden": [
+    {
+      "reason": "The spinning string's cylinders inside r_c, whose circles are closed timelike curves.",
+      "drawings": [
+        "spinning_string/proper_radius/inside",
+        "spinning_string/rescaled_radius/inside",
+        "spinning_string/helical/inside"
+      ]
+    }
+  ]
+}

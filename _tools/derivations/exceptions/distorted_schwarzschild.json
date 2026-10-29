@@ -1,0 +1,33 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The black hole in a tidal field is drawn oblate and prolate, two spacetimes of one line element: each drawing marks the horizon of its own shape, and an equatorial drawing the equatorial plane of its own shape as well, which does not meet the axis.",
+      "drawings": {
+        "distorted_schwarzschild/prolate_spheroidal/axis_oblate": ["horizon_prolate", "oblate", "prolate"],
+        "distorted_schwarzschild/prolate_spheroidal/axis_prolate": ["horizon_oblate", "oblate", "prolate"],
+        "distorted_schwarzschild/prolate_spheroidal/equator_oblate": ["horizon_prolate", "prolate"],
+        "distorted_schwarzschild/prolate_spheroidal/equator_prolate": ["horizon_oblate", "oblate"],
+        "distorted_schwarzschild/spherical/axis_oblate": ["horizon_prolate", "oblate", "prolate"],
+        "distorted_schwarzschild/spherical/axis_prolate": ["horizon_oblate", "oblate", "prolate"],
+        "distorted_schwarzschild/spherical/equator_oblate": ["horizon_prolate", "prolate"],
+        "distorted_schwarzschild/spherical/equator_prolate": ["horizon_oblate", "oblate"],
+        "distorted_schwarzschild/weyl/axis_oblate": ["horizon_prolate", "oblate", "prolate"],
+        "distorted_schwarzschild/weyl/axis_prolate": ["horizon_oblate", "oblate", "prolate"],
+        "distorted_schwarzschild/weyl/equator_oblate": ["horizon_prolate", "prolate"],
+        "distorted_schwarzschild/weyl/equator_prolate": ["horizon_oblate", "oblate"],
+        "conformal distorted_schwarzschild/prolate_spheroidal_axis_oblate": ["horizon_prolate", "oblate", "prolate"],
+        "conformal distorted_schwarzschild/prolate_spheroidal_axis_prolate": ["horizon_oblate", "oblate", "prolate"],
+        "conformal distorted_schwarzschild/prolate_spheroidal_equator_oblate": ["horizon_prolate", "prolate"],
+        "conformal distorted_schwarzschild/prolate_spheroidal_equator_prolate": ["horizon_oblate", "oblate"],
+        "conformal distorted_schwarzschild/spherical_axis_oblate": ["horizon_prolate", "oblate", "prolate"],
+        "conformal distorted_schwarzschild/spherical_axis_prolate": ["horizon_oblate", "oblate", "prolate"],
+        "conformal distorted_schwarzschild/spherical_equator_oblate": ["horizon_prolate", "prolate"],
+        "conformal distorted_schwarzschild/spherical_equator_prolate": ["horizon_oblate", "oblate"],
+        "conformal distorted_schwarzschild/weyl_axis_oblate": ["horizon_prolate", "oblate", "prolate"],
+        "conformal distorted_schwarzschild/weyl_axis_prolate": ["horizon_oblate", "oblate", "prolate"],
+        "conformal distorted_schwarzschild/weyl_equator_oblate": ["horizon_prolate", "prolate"],
+        "conformal distorted_schwarzschild/weyl_equator_prolate": ["horizon_oblate", "oblate"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "hidden_moments": [
+    {
+      "reason": "The ring of the maximally supersymmetric plane wave is drawn at mu c u = 0, 0.5, 1, 1.5, 2.5 and 3, in the ring's view and on the tube alike: the Rosen chart ends at u = 0, so neither its figure nor its band of the conformal diagram holds the first; the conformally flat chart ends at mu c u = pi/2, so its band holds none after 1.5, and its figure, whose window runs to cU = 3/mu, none after 1, since mu c U = tan(1.5) is 14.1.",
+      "drawings": {
+        "maximally_supersymmetric_plane_wave/rosen/focus": [["ring", 0, null], ["tube", 0, 0]],
+        "conformal maximally_supersymmetric_plane_wave/rosen": [["ring", 0, null], ["tube", 0, 0]],
+        "maximally_supersymmetric_plane_wave/conformally_flat/focus": [
+          ["ring", 3, null],
+          ["ring", 4, null],
+          ["ring", 5, null],
+          ["tube", 0, 3],
+          ["tube", 0, 4],
+          ["tube", 0, 5]
+        ],
+        "conformal maximally_supersymmetric_plane_wave/conformally_flat": [["ring", 4, null], ["ring", 5, null], ["tube", 0, 4], ["tube", 0, 5]]
+      }
+    }
+  ],
+  "flat": "Its moments are flat planes, and what the spacetime does is carried by its ring of free particles, stacked up its axis of time.",
+  "height": "Its view tube stacks the ring of free particles up its axis of time, a grid whose height is the time."
+}

@@ -1,0 +1,22 @@
+{
+  "hidden": [
+    {
+      "reason": "The ergoregions of the swirling universe and of the black hole in it, meridional planes that meet the embedded equatorial moments only in the line drawn as the equatorial plane.",
+      "drawings": [
+        "swirling_universe_black_hole/spherical/ergo",
+        "swirling_universe_black_hole/cylindrical/ergo"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The swirling universe with no hole and the hole inside it are two spacetimes of one page, each chart's drawings marking its own moment.",
+      "drawings": {
+        "swirling_universe_black_hole/cylindrical/radial": ["hole"],
+        "conformal swirling_universe_black_hole/cylindrical": ["hole"],
+        "swirling_universe_black_hole/spherical/radial": ["universe"],
+        "conformal swirling_universe_black_hole/spherical": ["universe"]
+      }
+    }
+  ]
+}

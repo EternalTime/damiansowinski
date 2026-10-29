@@ -1,0 +1,14 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The dust universe and the inside of Schwarzschild's horizon are two members of the Kantowski-Sachs family, each marked on its own drawings.",
+      "drawings": {
+        "kantowski_sachs/comoving/tr": ["vacuum"],
+        "kantowski_sachs/dust/etar": ["vacuum"],
+        "conformal kantowski_sachs/dust": ["vacuum"],
+        "kantowski_sachs/schwarzschild_interior/Tr": ["dust"],
+        "conformal kantowski_sachs/vacuum": ["dust"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The five charts of the black holes of string theory are drawn at parameters of their own, three and four charges, extreme and not, and the three charges equal: five spacetimes of one family, each chart's drawings marking its own moment.",
+      "drawings": {
+        "conformal string_bh_three_four_charges/five_charges": ["five_areal", "five_extreme", "four_charges", "four_extreme"],
+        "string_bh_three_four_charges/five_charges/radial": ["five_areal", "five_extreme", "four_charges", "four_extreme"],
+        "conformal string_bh_three_four_charges/five_extreme": ["five_areal", "five_charges", "four_charges", "four_extreme"],
+        "string_bh_three_four_charges/five_extreme/radial": ["five_areal", "five_charges", "four_charges", "four_extreme"],
+        "conformal string_bh_three_four_charges/five_areal": ["five_charges", "five_extreme", "four_charges", "four_extreme"],
+        "string_bh_three_four_charges/five_areal/radial": ["five_charges", "five_extreme", "four_charges", "four_extreme"],
+        "conformal string_bh_three_four_charges/four_charges": ["five_areal", "five_charges", "five_extreme", "four_extreme"],
+        "string_bh_three_four_charges/four_charges/radial": ["five_areal", "five_charges", "five_extreme", "four_extreme"],
+        "conformal string_bh_three_four_charges/four_extreme": ["five_areal", "five_charges", "five_extreme", "four_charges"],
+        "string_bh_three_four_charges/four_extreme/radial": ["five_areal", "five_charges", "five_extreme", "four_charges"]
+      }
+    }
+  ]
+}

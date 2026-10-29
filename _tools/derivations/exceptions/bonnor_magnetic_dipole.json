@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis beyond a hole of Bonnor's dipole, which the embedded equatorial plane does not meet.",
+      "drawings": ["bonnor_magnetic_dipole/spheroidal/axis", "conformal bonnor_magnetic_dipole/spheroidal_axis"]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The charged shell that falls and turns and the balanced shell at rest are two spacetimes of one page: the isotropic chart's drawings mark the moment of the shell at rest, and every other drawing the moments of the falling shell.",
+      "drawings": {
+        "charged_shell/interior/radial": ["point"],
+        "charged_shell/interior/through": ["point"],
+        "charged_shell/exterior/radial": ["point"],
+        "charged_shell/exterior/inside": ["point"],
+        "charged_shell/exterior_ingoing/shell": ["point"],
+        "charged_shell/exterior_outgoing/shell": ["point"],
+        "conformal charged_shell/interior": ["point"],
+        "conformal charged_shell/exterior": ["point"],
+        "conformal charged_shell/exterior_ingoing": ["point"],
+        "conformal charged_shell/exterior_outgoing": ["point"],
+        "charged_shell/exterior_isotropic/point": ["bounce"],
+        "conformal charged_shell/exterior_isotropic": ["bounce"]
+      }
+    }
+  ],
+  "hidden_surfaces": [
+    {
+      "reason": "The charged shell is inside r_- only from v - r = -0.25 r_s on, so the first two moments have no part in the static chart inside r_- nor in the outgoing chart, which shares only that region with the ingoing one.",
+      "drawings": {
+        "charged_shell/exterior/inside": [["bounce", 0], ["bounce", 1]],
+        "charged_shell/exterior_outgoing/shell": [["bounce", 0], ["bounce", 1]]
+      }
+    }
+  ]
+}

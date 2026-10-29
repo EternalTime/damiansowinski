@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "Tangherlini's black hole in five dimensions and in six are two spacetimes, each marked on the drawings of its own charts.",
+      "drawings": {
+        "tangherlini/spherical/radial": ["six"],
+        "tangherlini/eddington_finkelstein_ingoing/finkelstein": ["six"],
+        "tangherlini/eddington_finkelstein_ingoing/chart": ["six"],
+        "tangherlini/eddington_finkelstein_outgoing/finkelstein": ["six"],
+        "tangherlini/eddington_finkelstein_outgoing/chart": ["six"],
+        "conformal tangherlini/spherical": ["six"],
+        "conformal tangherlini/ingoing": ["six"],
+        "conformal tangherlini/outgoing": ["six"],
+        "tangherlini/spherical_six/radial": ["five"],
+        "conformal tangherlini/six": ["five"]
+      }
+    }
+  ]
+}

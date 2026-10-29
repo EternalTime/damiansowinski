@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "Gowdy's sphere chart draws the inside of Schwarzschild's horizon; the moments embedded are the torus universe's.",
+      "drawings": ["gowdy/sphere/plane", "conformal gowdy/sphere"]
+    }
+  ]
+}

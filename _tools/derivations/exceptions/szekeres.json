@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis of Szekeres's cloud, which the embedded surface through the shells' equators meets only at the centre.",
+      "drawings": ["szekeres/axisymmetric/north", "szekeres/axisymmetric/south"]
+    }
+  ]
+}
