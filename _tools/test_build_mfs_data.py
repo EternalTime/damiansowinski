@@ -5751,6 +5751,11 @@ class Slices(unittest.TestCase):
         | {("tube", 0, k) for k in (3, 4, 5)},
         "conformal maximally_supersymmetric_plane_wave/conformally_flat": {("ring", k, None) for k in (4, 5)}
         | {("tube", 0, k) for k in (4, 5)},
+        # The super-entropic horizon is embedded at the values of the figure of Gnecchi, Hristov, Klemm,
+        # Toldo and Vaughan, r_+ = sqrt(5) ell, where the whole horizon embeds with psi of period 2 pi; the
+        # principal rays of both charts are drawn at m = 2 ell, a lighter hole, whose plane holds no point of that horizon.
+        "super_entropic/hennigar_kubiznak_mann/principal": {("horizon", 0, None)},
+        "super_entropic/carter_plebanski/principal": {("horizon", 0, None)},
     }
     HIDDEN_SURFACES = {"lindquist_wheeler_lattice/schwarzschild_cell/radial": {("lattice", 2), ("lattice", 3)},
                        "lindquist_wheeler_lattice/cosmological_time/radial": {("lattice", k) for k in range(4)},
