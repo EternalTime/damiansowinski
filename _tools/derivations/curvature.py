@@ -2914,6 +2914,78 @@ BL_COMPACT = [BL_STEP * k for k in range(15, 36)]       # r_s/R of the frames of
 BL_QS = [BL_STEP * k for k in range(1, 19)]             # Q of the frames of the second movie
 
 
+BUCHDAHL_REACH = 6.0     # the plot runs to r = 6 r_s
+
+
+def buchdahl_sphere(ck, src):
+    """Buchdahl's fluid sphere at r_s = R = 1, f = 1/4 at the centre, as every other drawing of it
+    takes, its Kretschmann and Ricci scalars against r from the centre to r = 6 r_s.
+
+    The isotropic chart publishes K and R in f, r and R, and covers the whole spacetime, so one
+    stretch of each is drawn. The chart is static and spherical, so the view is a line view: two
+    panels share the axis of r, K and R^mu_mu each on a logarithmic axis from 10^-4 to 10, since
+    both are positive at every r. The core radius R is a parameter of the chart, so the Ricci scalar
+    is written R^mu_mu.
+
+    What the caption states is checked here: g^rr is positive at every r drawn, so there is no
+    horizon; the published R is minus the trace of the published Einstein tensor; both scalars fall
+    at every step outward from their values at the centre, stated; far out K r^6/r_s^2 nears
+    Schwarzschild's 12; and every value drawn lies within the clip stated."""
+    x_axis = axis("$r/r_s$", 0, BUCHDAHL_REACH)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 10}
+    R_scale = {"kind": "log", "from": 1e-4, "to": 10}
+    panels = [{"id": "K", "name": "$K\\,r_s^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,r_s^2$", "aspect": 2, "scale": R_scale,
+               "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "buchdahl_sphere", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["r_s", "R"]
+    K = nr_published(src, "buchdahl_sphere", "isotropic", "kretschmann", ["r"], names)
+    Ric = nr_published(src, "buchdahl_sphere", "isotropic", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "buchdahl_sphere", "isotropic", "inverse_metric_components", ["r"], names, ("r", "r"))
+    G = {i: nr_published(src, "buchdahl_sphere", "isotropic", "einstein_tensor", ["r"], names, (i, i))
+         for i in ("t", "r", "\\theta", "\\phi")}
+    name = "buchdahl_sphere at R = r_s"
+    params = {"r_s": 1.0, "R": 1.0}
+    at = [1.0, 1.0]
+    within = (0.0, BUCHDAHL_REACH)
+    rs = np.linspace(*within, SAMPLES)
+    ck(f"{name} has no horizon", np.all(grr(rs, *at) > 0))
+    curves = (line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params, within)
+              + line_curves(ck, name, "R", "R", Ric, "r", x_axis, R_scale, height["R"], params, within))
+    points = (0, 0.4, 1.0, 2.5, 5.0)
+    trace = [sum(float(G[i].exact([r] + at)) for i in G) for r in points]
+    published_R = [float(Ric.exact([r] + at)) for r in points]
+    ck(f"{name} R is minus the trace of the Einstein tensor",
+       all(abs(a + b) < 1e-12 * abs(b) for a, b in zip(published_R, trace)))
+    ck(f"{name} K falls at every step outward", np.all(np.diff(K(rs[1:], *at)) < 0))
+    ck(f"{name} R falls at every step outward", np.all(np.diff(Ric(rs[1:], *at)) < 0))
+    centre_K, centre_R = float(K.exact([0] + at)), float(Ric.exact([0] + at))
+    far = float(K.exact([200] + at)) * 200 ** 6
+    ck(f"{name} K r^6/r_s^2 nears 12 far out", abs(far / 12 - 1) < 0.05, f"{far}")
+    for k, fn, scale in (("K", K, K_scale), ("R", Ric, R_scale)):
+        up, down = beyond(fn, x_axis, scale, at, within)
+        ck(f"{name} {k} stays inside its panel", not up and not down, f"{up} {down}")
+    legend = [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
+    still = {
+        "id": "star", "label": "$R = r_s$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of Buchdahl's sphere against $r$, "
+            f"greatest at the centre, $K = {centre_K:.2f}/r_s^4$ and $R^\\mu{{}}_\\mu = {centre_R:.3f}/r_s^2$, and "
+            "falling outward, $K$ toward $12r_s^2/r^6$.",
+        ],
+        "ricci_sentences": [[0, 0]],
+        "per_scalar": scalar_clips(
+            "We draw $K\\,r_s^4$ on a logarithmic scale from $10^{-4}$ to $10$, and every value drawn lies within it.",
+            "We draw $R^\\mu{}_\\mu\\,r_s^2$ on a logarithmic scale from $10^{-4}$ to $10$, and every value drawn "
+            "lies within it."),
+        "settings": "$r_s = 1$ and $R = r_s$, so $f = 1/4$ at $r = 0$.",
+        "clip": "Both on logarithmic scales from $10^{-4}$ to $10$, every value within them.",
+    }
+    return [still]
+
+
 def bowers_liang(ck, src):
     """Bowers and Liang's star at r_s = 1, its Kretschmann and Ricci scalars against r, inside the
     star and in Schwarzschild's vacuum outside it.
@@ -17435,6 +17507,7 @@ DRAWN = {
     "born_infeld_charge": born_infeld_charge,
     "boulware_deser": boulware_deser,
     "bowers_liang": bowers_liang,
+    "buchdahl_sphere": buchdahl_sphere,
     "brane_wall_universe": brane_wall_universe,
     "boson_star": boson_star,
     "brans_dicke_sphere": brans_dicke_sphere,
