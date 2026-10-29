@@ -1062,7 +1062,7 @@
     "diagrams": "bdaefdbb18d751c9",
     "conformal": "b92adf8ac5f81806",
     "embedding": "eabc5caf8eb84bcd",
-    "curvature": "a2fe4c5d01938735"
+    "curvature": "81362e4dac6cd326"
   },
   {
     "id": "c_metric",
@@ -1426,7 +1426,7 @@
     "diagrams": "3293440e9059a970",
     "conformal": "49c40202992137c1",
     "embedding": "a0dc24d8631c665d",
-    "curvature": "47866bd648d822b3"
+    "curvature": "fff48b88cf1101d9"
   },
   {
     "id": "double_kerr",
@@ -1521,7 +1521,7 @@
     ],
     "version": "b0c56b0311d76519",
     "embedding": "4717367b2f2467bd",
-    "curvature": "78b88ccb72d3404e"
+    "curvature": "22c75e43617d680d"
   },
   {
     "id": "einstein_cluster",
@@ -1773,7 +1773,7 @@
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a",
-    "curvature": "8dc83d13aaa0d527"
+    "curvature": "f9b66b46b72dbcda"
   },
   {
     "id": "erez_rosen",
@@ -2281,7 +2281,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "924fe1d444252257",
+    "version": "827539c93a554856",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3",
@@ -3259,7 +3259,7 @@
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
-    "curvature": "defb37bc5f80a00a"
+    "curvature": "ba15454c393be139"
   },
   {
     "id": "lewis",
@@ -3853,7 +3853,7 @@
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922",
-    "curvature": "384639f6e5456618"
+    "curvature": "e4c4731cb1bb17a1"
   },
   {
     "id": "wormhole_time_machine",
@@ -4529,7 +4529,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "55a092aa1f802630",
+    "version": "6b563ab27c7137d8",
     "diagrams": "f63b64b6804356d9",
     "conformal": "4af782afff090dfb",
     "embedding": "9492d060e8b36e34",
