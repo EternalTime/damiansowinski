@@ -21324,7 +21324,7 @@ def _scalar_field_black_hole_captions():
             f"plane is Schwarzschild's. {kruskal}Kruskal and Szekeres's hexagon{drawn}",
             f"The horizon ${h_axis}$ is regular, the pair of null lines through the centre, the singularity $r = 0$ is "
             "spacelike, and the far edges are the null infinity of the plane, toward which the Kretschmann scalar "
-            "falls to zero.",
+            "tends to $12b^4$, its value on the axis of the universe with no black hole.",
         ]
         out[f"{system}_equator"] = [
             f"The plane of $t$ and ${ra_plane}$ ({fixed_plane}, $\\phi$ fixed) of {hole}. {kruskal}Kruskal and "

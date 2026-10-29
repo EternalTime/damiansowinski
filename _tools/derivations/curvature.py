@@ -17116,6 +17116,119 @@ def super_entropic(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- the black hole in a scalar universe
+
+SFBH_PARAMS = {"m": 1.0, "b": 1 / 3}                  # m = 1 and b = 1/3, as every drawing of the hole takes them
+SFBH_REACH = 6                                         # r sin(theta) and |r cos(theta)| up to 6m, the spacetime diagrams' reach
+SFBH_CELLS = 25                                        # cells to each unit of m
+SFBH_K = {"kind": "log", "from": 1e-2, "to": 1e4}      # the colours of K m^4
+SFBH_R = {"kind": "symlog", "from": -10.0, "to": 1e3, "linear": 1e-2}   # the colours of R m^2
+
+
+def scalar_field_black_hole(ck, src):
+    """The black hole in a scalar universe at m = 1 and b = 1/3, the parameters of its other
+    drawings: its Kretschmann scalar and its Ricci scalar over the meridian half plane of the
+    spherical chart's r and theta, drawn as polar coordinates about r = 0, 0 <= r sin(theta) <= 6m
+    and |r cos(theta)| <= 6m, the reach of the spacetime diagrams, one map for each scalar.
+
+    Both depend on r and theta alone, the same at theta and pi - theta. The horizon r = 2m is the
+    zero of the published g^rr on every ray, and r = 0, where both diverge, is marked. Checked here:
+    the published R is 2b^2(r^2 - 2mr + m^2 sin^2 theta)/(r^2 F), Herdeiro's and Lim's; at b = 0 K is
+    Schwarzschild's 48m^2/r^6 and R vanishes; on the axis K is
+    (48m^2 - 32b^2 m r^2(r - 2m) + 12b^4 r^4(r - 2m)^2)/r^6, which tends to 12b^4, and R is 2b^2(1 - 2m/r); on
+    the horizon K is (3/4)(1 - 4 beta/3 + beta^2)/m^4 with beta = b^2 m^2 sin^2(theta); both grow
+    without bound off the axis as r grows; R is negative only where (r - m)^2 < m^2 cos^2(theta),
+    inside the horizon; the symmetry; and forty cells of each map in sixty digits."""
+    metric, system = "scalar_field_black_hole", "spherical"
+    m, b = SFBH_PARAMS["m"], SFBH_PARAMS["b"]
+    K = nr_published(src, metric, system, "kretschmann", ["r", "theta"], ["m", "b"])
+    R = nr_published(src, metric, system, "ricci_scalar", ["r", "theta"], ["m", "b"])
+    grr = nr_published(src, metric, system, "inverse_metric_components", ["r", "theta"], ["m", "b"], ("r", "r"))
+    K_s = nr_published(src, "schwarzschild", "spherical", "kretschmann", ["r"], ["r_s"])
+    r, th = K.coords
+    m_, b_ = K.params
+    F = sp.exp(-b_ ** 2 * (r ** 2 - 2 * m_ * r) * sp.sin(th) ** 2)
+    ck(f"{metric} R is 2b^2(r^2 - 2mr + m^2 sin^2 theta)/(r^2 F)",
+       sp.simplify(R.expr - 2 * b_ ** 2 * (r ** 2 - 2 * m_ * r + m_ ** 2 * sp.sin(th) ** 2) / (r ** 2 * F)) == 0)
+    ck(f"{metric} at b = 0 K is Schwarzschild's published scalar and R vanishes",
+       sp.cancel(K.expr.subs(b_, 0) - K_s.expr.subs({K_s.coords[0]: r, K_s.params[0]: 2 * m_})) == 0
+       and R.expr.subs(b_, 0) == 0)
+    axis_K = (48 * m_ ** 2 - 32 * b_ ** 2 * m_ * r ** 2 * (r - 2 * m_) + 12 * b_ ** 4 * r ** 4 * (r - 2 * m_) ** 2) / r ** 6
+    ck(f"{metric} on the axis K is (48m^2 - 32b^2 m r^2(r - 2m) + 12b^4 r^4(r - 2m)^2)/r^6 and R is 2b^2(1 - 2m/r)",
+       sp.cancel(K.expr.subs(th, 0) - axis_K) == 0
+       and sp.cancel(R.expr.subs(th, 0) - 2 * b_ ** 2 * (1 - 2 * m_ / r)) == 0)
+    ck(f"{metric} K and R are the same at theta and pi - theta",
+       sp.simplify(K.expr.subs(th, sp.pi - th) - K.expr) == 0 and sp.simplify(R.expr.subs(th, sp.pi - th) - R.expr) == 0)
+    on = [(float(K.exact([2 * m, a, m, b])), 0.75 * (1 - 4 * (b * m * math.sin(a)) ** 2 / 3 + (b * m * math.sin(a)) ** 4))
+          for a in (0.0, 0.4, 1.0, math.pi / 2)]
+    ck(f"{metric} K on the horizon is (3/4)(1 - 4 beta/3 + beta^2)/m^4", all(abs(x / y - 1) < 1e-12 for x, y in on), f"{on}")
+    far = [float(K.exact([radius, math.pi / 2, m, b])) for radius in (8.0, 12.0, 16.0)]
+    farR = [float(R.exact([radius, math.pi / 2, m, b])) for radius in (8.0, 12.0, 16.0)]
+    ck(f"{metric} K and R grow without bound along the equator", far[0] < far[1] < far[2] and farR[0] < farR[1] < farR[2]
+       and far[2] > 1e10, f"K {far}, R {farR}")
+
+    x_axis = axis("$r\\sin\\theta/m$", 0, SFBH_REACH, 3)
+    y_axis = axis("$r\\cos\\theta/m$", -SFBH_REACH, SFBH_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, f"{metric} maps", [aspect])
+    nx = round(SFBH_CELLS * (x_axis["to"] - x_axis["from"]))
+    ny = round(SFBH_CELLS * (y_axis["to"] - y_axis["from"]))
+    params = dict(SFBH_PARAMS)
+
+    rays = []
+    for angle in np.linspace(0, math.pi, 13):
+        reach = min(SFBH_REACH / max(math.sin(angle), 1e-300), SFBH_REACH / max(abs(math.cos(angle)), 1e-300))
+        rays.append(zeros(ck, f"{metric} g^rr at theta = {angle:.4f}", grr, 0.0, reach, [angle, m, b], n=4000))
+    ck(f"{metric} the horizon is at r = 2m on every ray", all(len(z) == 1 and abs(z[0] - 2 * m) < 1e-12 for z in rays),
+       f"{rays[0]}")
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    n = math.ceil(math.pi / (2 * math.acos(1 - TOLERANCE / (2 * m * per_unit)))) + 1
+    horizon = [[float(2 * m * math.sin(a)) + 0.0, float(2 * m * math.cos(a)) + 0.0] for a in np.linspace(0, math.pi, n)]
+
+    views = []
+    rng = np.random.default_rng(2001)
+    for scalar, fn, scale, vid, label, name, caption in (
+            ("kretschmann", K, SFBH_K, "kretschmann", "$K$", "$K\\,m^4$",
+             "The Kretschmann scalar $K$ of the black hole in a scalar universe, tending to $12b^4$ along the axis "
+             "and growing without bound away from it."),
+            ("ricci_scalar", R, SFBH_R, "ricci", "$R$", "$R\\,m^2$",
+             "The Ricci scalar $R$ of the black hole in a scalar universe, negative only inside the horizon and "
+             "growing without bound away from the axis.")):
+        xs, ys, values = cells(fn, x_axis, y_axis, nx, ny, [m, b], frame="meridian")
+        ck(f"{metric} {scalar} is finite at every cell", np.all(np.isfinite(values)),
+           f"from {np.min(values):.3e} to {np.max(values):.3e}")
+        X, Y = np.meshgrid(xs, ys)
+        rr, tt = meridian(X, Y)
+        if scalar == "kretschmann":
+            ck(f"{metric} K is positive at every cell", np.all(values > 0))
+            ck(f"{metric} K stays above the bottom of its colours", np.min(values) >= scale["from"], f"{np.min(values):.4e}")
+        else:
+            negative = values < 0
+            inside = (rr - m) ** 2 < (m * np.cos(tt)) ** 2
+            ck(f"{metric} R is negative exactly where (r - m)^2 < m^2 cos^2(theta), inside the horizon",
+               np.array_equal(negative, inside) and np.all(rr[negative] < 2 * m))
+            ck(f"{metric} R stays above the bottom of its colours", np.min(values) >= scale["from"], f"{np.min(values):.4e}")
+        picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+        picks |= {(i, j) for i in (0, nx - 1) for j in (0, ny - 1)}
+        picks = sorted(picks)
+        agrees(ck, f"{metric} {scalar} map", fn, [[float(v) for v in meridian(xs[i], ys[j])] + [m, b] for i, j in picks],
+               [values[j, i] for i, j in picks])
+        rows = [[rounded(v) for v in row] for row in values]
+        views.append({
+            "id": vid, "label": label, "system": system, "kind": "map", "x": x_axis, "y": y_axis,
+            "colour": {"name": name, "scale": dict(scale), "ticks": every_second(scale)},
+            "map": {"metric": metric, "system": system, "scalar": scalar, "x": "r", "y": "\\theta",
+                    "frame": "meridian", "fixed": {"t": 0, "\\phi": 0}, "params": params, "nx": nx, "ny": ny,
+                    "cells": rows},
+            "marks": [{"class": "horizon", "points": horizon}, {"class": "singular", "at": [0.0, 0.0]}],
+            "legend": [["line", "horizon", "horizon"], ["point", "singular", "$r = 0$"]],
+            "caption": [caption],
+            "settings": "$m = 1$, $b = 1/3$.",
+            "clip": "Log, ends clamped." if scalar == "kretschmann" else "Signed log, ends clamped.",
+        })
+    return views
+
+
 DRAWN = {
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
@@ -17194,6 +17307,7 @@ DRAWN = {
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
     "rn_metric": rn_metric,
     "roberts": roberts,
+    "scalar_field_black_hole": scalar_field_black_hole,
     "schwarzschild": schwarzschild,
     "senovilla": senovilla,
     "swirling_universe_black_hole": swirling_universe_black_hole,

@@ -6019,8 +6019,9 @@ def _scalar_field_black_hole_captions():
             f"The plane of $t$ and $r$ ($\\theta = 0$, $\\phi = 0$) of {hole}. On the axis $F = 1$ and the metric "
             "is Schwarzschild's, $-(1 - 2m/r)c^2dt^2 + dr^2/(1 - 2m/r)$, so a ray has $c\\,dt/dr = \\pm 1/(1 - 2m/r)$, "
             "and every rotation about the axis fixes the plane, so the rays are null geodesics.",
-            "The gradient of the field points along this line, and on it the cones and the Kretschmann scalar, "
-            "$48m^2/r^6$, are Schwarzschild's.",
+            "The gradient of the field points along this line, and on it the cones are Schwarzschild's. The "
+            "Kretschmann scalar is $(48m^2 - 32b^2mr^2(r - 2m) + 12b^4r^4(r - 2m)^2)/r^6$, which tends far out to "
+            "$12b^4$, its value on the axis of the universe with no black hole.",
             inside,
         ],
         ("scalar_field_black_hole", "weyl", "equator"): [
@@ -6036,7 +6037,8 @@ def _scalar_field_black_hole_captions():
             "$x = z/m$, $y = 1$ and $\\gamma = 0$, so a ray has $c\\,dt/dz = \\pm(z + m)/(z - m)$, and every rotation "
             "about the axis fixes the plane, so the rays are null geodesics.",
             "The cones close toward the end $z = m$ of the rod, the pole of the horizon, as Schwarzschild's do, and "
-            "on this line the Kretschmann scalar is Schwarzschild's, $48m^2/(z + m)^6$.",
+            "far out along the axis the Kretschmann scalar tends to $12b^4$, its value on the axis of the universe "
+            "with no black hole.",
         ],
         ("scalar_field_black_hole", "scalar_universe", "radial"): [
             "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of the universe with no black hole ($b = 1$). The "
