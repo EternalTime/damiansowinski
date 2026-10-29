@@ -231,6 +231,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "Schwarzschild's hole set in a universe that turns one way above the equator and the other way below it. Kerr's hole set there by the same transformation keeps a conical singularity on its axis [astorino2022swirling]."
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "generalisation",
+      "text": "Kerr's black hole with its mass switched off toward the centre as $me^{-\\ell/r}$, which takes the ring singularity away. At $\\ell = 0$ it is Kerr's metric [simpson2022eye]."
     }
   ],
   "references": [
@@ -301,7 +306,8 @@
     "podolsky2025",
     "herdeiro2014",
     "james2015",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "simpson2022eye"
   ],
   "coordinates": [
     {

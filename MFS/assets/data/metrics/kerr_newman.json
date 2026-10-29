@@ -88,6 +88,11 @@
       "id": "kerr_bertotti_robinson",
       "kind": "family",
       "text": "A spinning hole in Bertotti and Robinson's uniform magnetic field, which carries a charge of its own. Kerr and Newman's hole and this one are members of one larger family of type D [ovcharenko2026b]."
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "family",
+      "text": "A rotating black hole with no singularity that far out looks like Kerr-Newman with $q^2 = 2m\\ell$, its mass suppressed as $me^{-\\ell/r}$ [ghosh2015]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "manko2006",
     "ernst1976c",
     "gibbons2013",
-    "ovcharenko2026b"
+    "ovcharenko2026b",
+    "ghosh2015"
   ],
   "coordinates": [
     {

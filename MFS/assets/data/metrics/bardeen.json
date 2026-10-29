@@ -87,6 +87,11 @@
       "id": "regular_black_hole_pure_gravity",
       "kind": "family",
       "text": "Hayward's metric in five dimensions or more as a vacuum solution of gravity alone. Other couplings of the same theory give metrics close to Bardeen's [bueno2025regular]."
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "family",
+      "text": "A rotating regular black hole with an asymptotically Minkowski core, Kerr's metric with the mass written $me^{-\\ell/r}$ [simpson2022eye]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "hoffmann1935",
     "gibbonsrasheed1995",
     "kelly2020",
-    "bueno2025regular"
+    "bueno2025regular",
+    "simpson2022eye"
   ],
   "coordinates": [
     {

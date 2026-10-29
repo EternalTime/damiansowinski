@@ -2,7 +2,7 @@
   "id": "eye_of_the_storm",
   "name": "The Eye of the Storm",
   "short_name": "Eye of the Storm",
-  "description": "Kerr's rotating black hole with its mass $m$ replaced by $me^{-\\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass is switched off so fast toward the centre that the core is flat space and Kerr's ring singularity is gone, while the horizons, the ergoregion and the separable geodesics stay.",
+  "description": "Kerr's rotating black hole with its mass $m$ replaced by $me^{-\\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass is switched off so fast toward the centre that the curvature falls away to nothing at the core and Kerr's ring singularity is gone, while it keeps horizons of its own, an ergoregion and geodesics that separate as Kerr's do.",
   "tags": [
     "regular black hole",
     "rotating",
@@ -32,9 +32,43 @@
   ],
   "signature": "(-,+,+,+)",
   "convention": "The mass is the length $m = GM/c^2$, and the spin $a = J/(Mc)$ and the suppression length $\\ell$ are lengths. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
-  "history": "",
-  "related": [],
-  "references": [],
+  "history": "Kerr's black hole carries a ring at its centre where the curvature grows without bound, and through the disk inside the ring lies a region of negative $r$ in which closed timelike curves run [simpson2022eye]. One change takes the ring away: in the coordinates of Robert Boyer and Richard Lindquist, wherever the mass $m$ appears, write $me^{-\\ell/r}$ [ghosh2015, boyer1967]. Sushant Ghosh, of Jamia Millia Islamia in New Delhi and the University of KwaZulu-Natal, posted it in August 2014 as a nonsingular rotating black hole [ghosh2015]. Far from the hole the factor is close to $1 - \\ell/r$, and Ghosh noticed that the metric there looks like the charged Kerr-Newman black hole with $q^2 = 2m\\ell$ [ghosh2015]. Toward the centre $e^{-\\ell/r}$ falls faster than any power of $r$, and every curvature invariant he computed stays finite [ghosh2015].¶Seven years later the same metric turned up again in Wellington, where Alex Simpson and Matt Visser found it on their own and wrote that \"this geometry was in fact first proposed by Ghosh\" and that \"we discovered it independently\" [simpson2022eye]. Their starting point was a static black hole of their own from 2019, Schwarzschild's metric with the mass $me^{-\\ell/r}$, whose density vanishes at the centre: a regular black hole with an asymptotically Minkowski core [simpson2019minkowski]. That static metric goes back to Hristu Culetu, who wrote it down in 2013 with $\\ell$ held at $2m/e$, the one value that leaves it a single horizon [culetu2013]. To set it spinning, Simpson and Visser weighed several ways of switching the mass off toward the centre, kept the one that is the most tractable, and called the result the eye of the storm [simpson2022eye].¶Why is the middle flat? Near $r = 0$ there is almost no mass left to curve it [simpson2022eye]. In an orthonormal frame every component of the Riemann tensor is $me^{-\\ell/r}$ times a well behaved function, divided by powers of $r$ and of $\\Sigma = r^2 + a^2\\cos^2\\theta$, and as $r \\to 0$ the exponential wins from every direction [simpson2022eye]. In Kerr's metric $r = 0$ is a disk of radius $a$, and across the whole of it, ring included, the curvature falls away to nothing [simpson2022eye]. The Ricci scalar, $R = 2m\\ell^2e^{-\\ell/r}/r^3\\Sigma$, falls to zero both at the centre and far away [simpson2022eye]. Since $e^{-\\ell/r}$ jumps at $r = 0$, Simpson and Visser keep $r \\ge 0$, and with the negative values of $r$ go Kerr's closed timelike curves [simpson2022eye].¶Outside, the hole still has horizons, the roots of $\\Delta = r^2 + a^2 - 2mre^{-\\ell/r}$: two of them, one counted twice, or none [simpson2022eye]. No formula gives them, and both lie strictly inside Kerr's, between $m - \\sqrt{m^2 - a^2}$ and $m + \\sqrt{m^2 - a^2}$ [simpson2022eye]. The ergosurface $g_{tt} = 0$ is still there, and so is Kerr's hidden symmetry, a Killing tensor, which gives every falling particle a fourth constant of its motion, the Carter constant, so its geodesics can be integrated as Kerr's are [simpson2022eye].¶Read through Einstein's equations, the metric asks for matter whose energy density is positive everywhere and whose radial pressure is the negative of that density [simpson2022eye]. The null energy condition fails only where $\\ell\\Sigma > 4r^3$, inside $r = \\ell/4$ on the equator, and the strong energy condition only where $\\ell\\Sigma > 2r^3$, inside $r = \\ell/2$ there, so a small $\\ell$ tucks every violation into the deep core [simpson2022eye]. Ghosh suggested that a nonlinear electrodynamics could supply such matter [ghosh2015].¶Can a telescope tell the eye of the storm from Kerr's black hole? Its shadow, computed by Rahul Kumar, Amit Kumar and Ghosh in 2020, is indistinguishable from Kerr's within the Event Horizon Telescope's uncertainties for M87* as long as $\\ell \\lesssim m/32$ [kumar2020testing]. Simpson and Visser conjectured that the equations of its gravitational perturbations separate too, which would let its ringdown be computed as Kerr's is [simpson2022eye].",
+  "related": [
+    {
+      "id": "kerr",
+      "kind": "special_case",
+      "text": "Set $\\ell = 0$ and the mass is never switched off: the metric is Kerr's, ring singularity and all [simpson2022eye]."
+    },
+    {
+      "id": "kerr_newman",
+      "kind": "family",
+      "text": "Far from the eye of the storm, $2mre^{-\\ell/r}$ is close to $2mr - 2m\\ell$, and the metric looks like the charged Kerr-Newman black hole with $q^2 = 2m\\ell$ [ghosh2015]."
+    },
+    {
+      "id": "simpson_visser",
+      "kind": "programme",
+      "text": "Simpson and Visser's other way of taking a singularity out of a black hole by one substitution. There it is the radius they change, and the centre opens into a throat [simpson2019]."
+    },
+    {
+      "id": "hayward",
+      "kind": "family",
+      "text": "A regular black hole with two horizons whose centre is a ball of de Sitter space. The eye of the storm spins, and at its centre the curvature falls away to nothing [simpson2022eye]."
+    },
+    {
+      "id": "bardeen",
+      "kind": "family",
+      "text": "The first regular black hole, with de Sitter space at its core. The eye of the storm is a regular black hole that spins, with an asymptotically Minkowski core [simpson2022eye]."
+    }
+  ],
+  "references": [
+    "simpson2022eye",
+    "ghosh2015",
+    "boyer1967",
+    "simpson2019minkowski",
+    "culetu2013",
+    "kumar2020testing",
+    "simpson2019"
+  ],
   "coordinates": [
     {
       "id": "boyer_lindquist",

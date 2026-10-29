@@ -21,7 +21,7 @@ string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, fre
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
-maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations and holographic_superconductor, and Godel's cylindrical chart.
+maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor and eye_of_the_storm, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]...
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -33847,6 +33847,241 @@ def holographic_superconductor_check(chart, system):
 
 
 CHARTS["holographic_superconductor"] = [lambda s=s: holographic_superconductor(s) for s in HS_CHARTS]
+
+
+# -- The eye of the storm ----------------------------------------------------------------
+
+EOS_CHARTS = ("boyer_lindquist", "kerr_ingoing")
+EOS_PARAMETERS = ["m", "a", "\\ell", "\\Sigma = r^2 + a^2\\cos^2\\theta", "\\Delta = r^2 + a^2 - 2mr\\,e^{-\\ell/r}"]
+
+
+class EyeOfTheStormForms(KerrDeSitterForms):
+    """How a value of the eye of the storm is written: in Kerr's Sigma and Delta.
+
+    The checker hands every value back as a rational function of r, a, m, ell, sin(theta),
+    cos(theta) and powers of exp(-ell/r). Here each power of the exponential is held as a power
+    of one symbol E, so that the value is a rational function, which is factored as Kerr-de
+    Sitter's values are, with each factor that is a multiple of Sigma or of Delta = r^2 + a^2 -
+    2mrE written by its name, and every sum left over written in the shortest of: as it stands
+    in the cosine or in the sine; grouped by the powers of mE; and, with 2mrE written as
+    r^2 + a^2 - Delta, grouped by the powers of Delta. E is written back as the exponential."""
+
+    def __init__(self, reader):
+        self.r, self.theta = reader.symbol["r"], reader.symbol["\\theta"]
+        self.m, self.a, self.ell = (reader.parameters[k] for k in ("m", "a", "ell"))
+        self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+        self.C, self.E = sp.Symbol("EOS_cos"), sp.Symbol("EOS_E", positive=True)
+        self.Sigma, self.Delta = sp.Symbol("Sigma", positive=True), sp.Symbol("Delta")
+        r, a, C = self.r, self.a, self.C
+        self.radial = r ** 2 + a ** 2 - 2 * self.m * r * self.E
+        self.named = [(self.Sigma, sp.expand(r ** 2 + a ** 2 * C ** 2)), (self.Delta, self.radial)]
+
+    def printer(self):
+        return {"lead": [self.r, self.a, self.ell, self.c, self.s], "rising": [self.m], "flip": False,
+                "overrides": {self.Sigma: "\\Sigma", self.Delta: "\\Delta"},
+                "factors": [self.m, self.a, self.ell, self.r, self.Sigma, self.Delta]}
+
+    def held(self, value):
+        """The value with each exp(-k ell/r) written E^k."""
+        def power(e):
+            k = sp.cancel(e.args[0] * self.r / -self.ell)
+            if not k.is_Rational:
+                raise AssertionError(f"eye_of_the_storm: an exponential {e} that is no power of exp(-ell/r)")
+            return self.E ** k
+        return sp.sympify(value).replace(lambda e: isinstance(e, sp.exp), power)
+
+    def product(self, value, depth=0):
+        powers, number = {}, sp.Integer(1)
+        gens = [g for g in (self.r, self.C, self.s, self.a, self.ell, self.m, self.E, self.Delta) if value.has(g)]
+        for f in sp.Mul.make_args(sp.factor(value, *gens)):
+            base, k = (f.base, f.exp) if f.is_Pow else (f, sp.Integer(1))
+            if base.is_Number:
+                number *= base ** k
+            else:
+                powers[base] = powers.get(base, 0) + k
+        C, s = self.C, self.s
+        for base, sign in ((sp.expand(1 - C ** 2), 1), (sp.expand(C ** 2 - 1), -1)):
+            k = powers.pop(base, 0)
+            if k:
+                powers[s] = powers.get(s, 0) + 2 * k
+                number *= sp.Integer(sign) ** k
+        factors = []
+        for base, k in powers.items():
+            if k == 0:
+                continue
+            if base.is_Add:
+                named = self.name_of(base)
+                base = named if named is not None else self.regrouped(base, depth)
+            if (base ** k).is_Number:
+                number *= base ** k
+            else:
+                factors.append(base ** k)
+        rest = sp.Mul(*factors)
+        number, rest = (number * rest.as_coeff_Mul()[0], rest.as_coeff_Mul()[1])
+        return sp.Mul(number, rest, evaluate=False) if rest.is_Add and number != 1 else sp.Mul(number, rest)
+
+    def name_of(self, base):
+        base = sp.expand(base)
+        for placeholder, polynomial in self.named:
+            ratio = sp.cancel(base / polynomial)
+            if ratio.is_Number:
+                return ratio * placeholder
+        return None
+
+    def regrouped(self, base, depth):
+        candidates = [base, self.in_sine(base)]
+        if depth <= 1:
+            mass = self.m * self.E
+            polynomial = sp.Poly(sp.expand(base.subs(self.m, self.m / self.E)), self.m)
+            if len(polynomial.terms()) > 1:
+                candidates.append(self.summed([(self.product(coefficient, 1), mass ** k)
+                                               for (k,), coefficient in polynomial.terms()]))
+            if base.has(self.m):
+                swapped = sp.expand(base.subs(self.m, (self.radial + 2 * self.m * self.r * self.E - self.Delta)
+                                              / (2 * self.r * self.E)))
+                if sp.denom(sp.together(swapped)).is_Number:
+                    candidates.append(self.summed([(self.product(coefficient, 1), self.Delta ** k)
+                                                   for (k,), coefficient in sp.Poly(swapped, self.Delta).terms()]))
+        return min(candidates, key=lambda e: len(str(e)))
+
+    def pretty(self, value):
+        value = sp.sympify(value)
+        if value == 0:
+            return value
+        out = self.product(self.in_cosine(sp.together(self.held(value)))).subs(self.C, self.c)
+        return out.replace(lambda e: e.is_Pow and e.base == self.E, lambda e: sp.exp(-e.exp * self.ell / self.r)
+                           ).subs(self.E, sp.exp(-self.ell / self.r))
+
+
+def eye_of_the_storm_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of its
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    if system == "boyer_lindquist":
+        return ("ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(" + c + "dt - a\\sin^2\\theta\\,d\\phi\\right)^2"
+                " + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\,d\\theta^2"
+                " + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(\\left(r^2 + a^2\\right)d\\phi - a\\," + c + "dt\\right)^2")
+    return ("ds^2 = -\\dfrac{\\Delta}{\\Sigma}\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right)^2"
+            " + 2\\,dr\\left(dv - a\\sin^2\\theta\\,d\\tilde\\phi\\right) + \\Sigma\\,d\\theta^2"
+            " + \\dfrac{\\sin^2\\theta}{\\Sigma}\\left(\\left(r^2 + a^2\\right)d\\tilde\\phi - a\\,dv\\right)^2")
+
+
+def eye_of_the_storm(system):
+    """Simpson and Visser's eye of the storm, JCAP 2022(03) 011, arXiv:2111.12329, which is Ghosh's
+    nonsingular rotating black hole, Eur. Phys. J. C 75, 532 (2015), arXiv:1408.5668: Kerr's metric
+    with m replaced by m exp(-ell/r), in two charts. Boyer and Lindquist's is Simpson and Visser's
+    (2.26) and Ghosh's (1); the ingoing Kerr chart is Ghosh's (14) with M and k constant.
+    eye_of_the_storm_check holds both to Kerr's published metric at ell = 0, the Boyer-Lindquist
+    chart to Simpson and Visser's Ricci scalar (3.1), Kretschmann scalar (3.3) and Einstein tensor
+    (3.11), and to their static metric (2.9) at a = 0, and the ingoing chart to Ghosh's (14) and to
+    the Boyer-Lindquist chart pulled back. eye_of_the_storm.md beside this file is the derivation."""
+    time, angle, name = {"boyer_lindquist": ("t", "\\phi", "Boyer-Lindquist"),
+                         "kerr_ingoing": ("v", "\\tilde\\phi", "Ingoing Kerr")}[system]
+    coords = [time, "r", "\\theta", angle]
+    forms = EyeOfTheStormForms(vm.Reader(coords, EOS_PARAMETERS, ()))
+    domains = [time + " \\in (-\\infty, \\infty)", "r \\in (0, \\infty)", "\\theta \\in [0, \\pi]",
+               angle + " \\in [0, 2\\pi)",
+               "\\Delta = 0 \\;\\text{(the horizons } r_- \\text{ and } r_+\\text{)}",
+               "r \\to 0 \\;\\text{(the flat disk at the centre)}"]
+    spec = {
+        "metric_id": "eye_of_the_storm",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": EOS_PARAMETERS,
+                   "line_element": eye_of_the_storm_line(system, "c\\," if time == "t" else "")},
+        "chart_line_element": eye_of_the_storm_line(system, ""),
+        "printer": forms.printer(),
+        "pretty": forms.pretty,
+        "bracketed": forms.pretty,
+        "check": lambda chart: eye_of_the_storm_check(chart, system),
+        "ricci_scalar": "\\dfrac{2m\\ell^2e^{-\\ell/r}}{r^3\\Sigma}",
+    }
+    if system == "boyer_lindquist":
+        cross = "-\\dfrac{2mar\\,e^{-\\ell/r}\\sin^2\\theta}{\\Sigma}"
+        up = "-\\dfrac{2mar\\,e^{-\\ell/r}}{\\Sigma\\Delta}"
+        spec["components"] = {
+            "metric_components": {
+                ("t", "t"): "-\\left(1 - \\dfrac{2mr\\,e^{-\\ell/r}}{\\Sigma}\\right)",
+                ("t", "\\phi"): cross, ("\\phi", "t"): cross,
+                ("\\phi", "\\phi"): "\\left(r^2 + a^2 + \\dfrac{2ma^2r\\,e^{-\\ell/r}\\sin^2\\theta}{\\Sigma}\\right)\\sin^2\\theta"},
+            "inverse_metric_components": {
+                ("t", "t"): "-\\dfrac{\\left(r^2 + a^2\\right)^2 - a^2\\Delta\\sin^2\\theta}{\\Sigma\\Delta}",
+                ("t", "\\phi"): up, ("\\phi", "t"): up,
+                ("\\phi", "\\phi"): "\\dfrac{\\Delta - a^2\\sin^2\\theta}{\\Sigma\\Delta\\sin^2\\theta}"}}
+    return spec
+
+
+def eye_of_the_storm_check(chart, system):
+    """Kerr's published Boyer-Lindquist metric at ell = 0, with GM/c^2 = m; in Boyer and Lindquist's
+    chart Simpson and Visser's R = 2 ell^2 m e^{-ell/r}/(Sigma r^3), their Kretschmann scalar (3.3),
+    the eigenvalues of their Einstein tensor (3.11), G = -(2 ell m e^{-ell/r}/Sigma^2)
+    diag(1, 1, Xi - 1, Xi - 1) with Xi = ell Sigma/(2 r^3), each twice, and their static metric (2.9)
+    at a = 0; in the ingoing chart Ghosh's (14), and the Boyer-Lindquist chart pulled back along
+    dv = c dt + (r^2 + a^2) dr/Delta, d(phi~) = d(phi) + a dr/Delta."""
+    g = chart.geo.g
+    t, r, th, phi = chart.symbols
+    m, a, ell = (chart.reader.parameters[k] for k in ("m", "a", "ell"))
+    E = sp.exp(-ell / r)
+    Sigma = r ** 2 + a ** 2 * sp.cos(th) ** 2
+    Delta = r ** 2 + a ** 2 - 2 * m * r * E
+    if system == "kerr_ingoing":
+        s2 = sp.sin(th) ** 2
+        ghosh = sp.zeros(4, 4)
+        ghosh[0, 0] = -(1 - 2 * m * r * E / Sigma)
+        ghosh[0, 1] = ghosh[1, 0] = 1
+        ghosh[0, 3] = ghosh[3, 0] = -2 * a * m * r * E * s2 / Sigma
+        ghosh[1, 3] = ghosh[3, 1] = -a * s2
+        ghosh[2, 2] = Sigma
+        ghosh[3, 3] = (r ** 2 + a ** 2 + 2 * m * r * a ** 2 * E * s2 / Sigma) * s2
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(ghosh[i, j] - g[i, j]) != 0:
+                    raise AssertionError(f"eye_of_the_storm/kerr_ingoing: Ghosh's (14) misses slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+        spec = eye_of_the_storm("boyer_lindquist")
+        source = cp.Chart(spec["system"]["coords"], EOS_PARAMETERS, spec["chart_line_element"])
+        at = dict(zip(source.symbols, chart.symbols))
+        jacobian = sp.Matrix([[1, -(r ** 2 + a ** 2) / Delta, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                              [0, -a / Delta, 0, 1]])
+        pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+        for i in range(4):
+            for j in range(i, 4):
+                if vm.norm(pulled[i, j] - g[i, j]) != 0:
+                    raise AssertionError("eye_of_the_storm/kerr_ingoing: the Boyer-Lindquist chart pulled back "
+                                         f"misses slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+        return
+    entry = next(c for c in json.loads((METRICS / "kerr.json").read_text(encoding="utf-8"))["coordinates"]
+                 if c["id"] == "boyer_lindquist")
+    K_reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+    G_, M_ = K_reader.parameters["G"], K_reader.parameters["M"]
+    swap = {K_reader.symbol[n]: chart.reader.symbol[n] for n in entry["coords"]}
+    swap[K_reader.parameters["a"]] = a
+    swap[G_] = m * K_reader.c ** 2 / M_
+    kerr = {tuple(e["indices"]): e["value"] for e in entry["metric_components"]}
+    for i in range(4):
+        for j in range(4):
+            text = kerr.get((chart.coords_tex[i], chart.coords_tex[j]), "0")
+            if vm.norm(K_reader(text).subs(swap, simultaneous=True) - g[i, j].subs(ell, 0)) != 0:
+                raise AssertionError("eye_of_the_storm: at ell = 0 the chart misses Kerr's published metric in slot "
+                                     f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+    if vm.norm(chart.geo.ricci_scalar() - 2 * ell ** 2 * m * E / (Sigma * r ** 3)) != 0:
+        raise AssertionError("eye_of_the_storm: the Ricci scalar is not Simpson and Visser's (3.1)")
+    Xi = ell * Sigma / (2 * r ** 3)
+    ar = (a / r) ** 2 * sp.cos(th) ** 2
+    source = 48 * r ** 6 * (m * E) ** 2 / Sigma ** 6 * (
+        1 - 15 * ar + 15 * ar ** 2 - ar ** 3 + sp.Rational(4, 3) * Xi ** 4 - sp.Rational(16, 3) * Xi ** 3
+        + 8 * Xi ** 2 * (1 - ar) - 4 * Xi * (1 - 6 * ar + ar ** 2))
+    if vm.norm(chart.geo.kretschmann() - source) != 0:
+        raise AssertionError("eye_of_the_storm: the Kretschmann scalar is not Simpson and Visser's (3.3)")
+    mixed = chart.geo.ginv * sp.Matrix(chart.geo.einstein_ll())
+    lam = sp.Symbol("lambda")
+    one, two = -2 * ell * m * E / Sigma ** 2, -2 * ell * m * E * (Xi - 1) / Sigma ** 2
+    if vm.norm((mixed - lam * sp.eye(4)).det() - (lam - one) ** 2 * (lam - two) ** 2) != 0:
+        raise AssertionError("eye_of_the_storm: the Einstein tensor misses the eigenvalues of Simpson and Visser's (3.11)")
+    static = sp.diag(-(1 - 2 * m * E / r), 1 / (1 - 2 * m * E / r), r ** 2, r ** 2 * sp.sin(th) ** 2)
+    for i in range(4):
+        if vm.norm(g[i, i].subs(a, 0) - static[i, i]) != 0 or any(g[i, j].subs(a, 0) != 0 for j in range(4) if j != i):
+            raise AssertionError("eye_of_the_storm: at a = 0 the chart misses Simpson and Visser's static metric (2.9)")
+
+
+CHARTS["eye_of_the_storm"] = [lambda s=s: eye_of_the_storm(s) for s in EOS_CHARTS]
 
 
 def write(spec):

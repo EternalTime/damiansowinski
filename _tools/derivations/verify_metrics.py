@@ -2144,6 +2144,16 @@ DIMENSIONS = {
     ("supertranslation_hair", "bondi_advanced"): {
         "v": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "L", "W": "L",
     },
+    # The eye of the storm: Kerr's metric with the mass m = GM/c^2 suppressed by e^{-ell/r}, so
+    # ell is a length and the exponent is a number.
+    ("eye_of_the_storm", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "\\ell": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("eye_of_the_storm", "kerr_ingoing"): {
+        "v": "L", "r": "L", "\\theta": "1", "\\tilde\\phi": "1", "m": "L", "a": "L", "\\ell": "L",
+        "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
     ("hayward", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "\\ell": "L",
     },

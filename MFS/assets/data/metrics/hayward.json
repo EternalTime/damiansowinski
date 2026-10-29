@@ -100,6 +100,11 @@
       "id": "regular_black_hole_pure_gravity",
       "kind": "generalisation",
       "text": "The same metric function in $D \\ge 5$ dimensions, where it solves Einstein's theory with an infinite tower of quasi-topological curvature terms and no matter at all [bueno2025regular]."
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "family",
+      "text": "A regular black hole that spins, Kerr's metric with the mass switched off toward the centre, whose core is asymptotically Minkowski [simpson2022eye]."
     }
   ],
   "references": [
@@ -126,7 +131,8 @@
     "lewandowski2023",
     "haggard2015fireworks",
     "ashtekar2006bounce",
-    "bueno2025regular"
+    "bueno2025regular",
+    "simpson2022eye"
   ],
   "coordinates": [
     {

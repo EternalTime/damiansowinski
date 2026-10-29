@@ -92,6 +92,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "A bounce of a whole universe, which loop quantum cosmology puts where the big bang was [ashtekar2006bounce]."
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "programme",
+      "text": "Simpson and Visser's rotating regular black hole, Kerr's metric with the mass written $me^{-\\ell/r}$. At its centre the curvature falls away to nothing across a disk [simpson2022eye]."
     }
   ],
   "references": [
@@ -116,7 +121,8 @@
     "hayward2006",
     "caldwell2002",
     "caldwell2003",
-    "ashtekar2006bounce"
+    "ashtekar2006bounce",
+    "simpson2022eye"
   ],
   "coordinates": [
     {
