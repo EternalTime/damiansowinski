@@ -1672,6 +1672,10 @@ SV_CASES = {"bounce": ("$a = r_s/2$", "1/2"), "null": ("$a = r_s$", "1"), "wormh
 # (r - 6m/7)(r - 12m/7)(r + 4m/7): the horizons are r_- = 6m/7 and r_+ = 12m/7, with surface
 # gravities -5/(12m) and 1/(6m). The extremal hole has ell = 4m/(3 sqrt 3) = 0.770 m.
 HAYWARD = {"m": 1, "ell": "12/(7*sqrt(7))"}
+# Bueno, Cano and Hennigar's regular black hole of five dimensions at r_0 = 1 and ell = 12/25, where
+# r^4 - r_0^2 r^2 + ell^2 r_0^2 = (r^2 - 16/25)(r^2 - 9/25): the horizons are r_+ = 4r_0/5 and
+# r_- = 3r_0/5, with surface gravities 7/(20 r_0) and 7/(15 r_0). The extremal hole has ell = r_0/2.
+RBHPG = {"r_0": 1, "ell": "12/25"}
 # Bonnor and Vaidya's charged shell: its charge in units of its mass M, the value of Reissner-Nordstrom's
 # drawings, r_q = 0.48 r_s, and the radius q^2/2M at which the shell's energy density changes sign.
 BV_CHARGE = "Rational(24, 25)"
@@ -3309,6 +3313,18 @@ DIAGRAMS = [
             to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
     Diagram("hayward", "eddington_finkelstein_outgoing", "chart", "against $u$",
             ("u", "r"), (0, 4, -3, 1), "$r/m$", "$u/m$", HAYWARD, EQUATOR, tau="u + r", areal=True),
+    Diagram("regular_black_hole_pure_gravity", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
+            "$r/r_0$", "$ct/r_0$", RBHPG, TANGHERLINI_FIVE, orient="ingoing", areal=True),
+    Diagram("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "finkelstein", "against $v - r$",
+            ("v", "r"), (0, 2, -1, 1), "$r/r_0$", "$(v - r)/r_0$", RBHPG, TANGHERLINI_FIVE,
+            to_display=FINKELSTEIN_IN, tau="v - r", areal=True),
+    Diagram("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "chart", "against $v$",
+            ("v", "r"), (0, 2, -0.5, 1.5), "$r/r_0$", "$v/r_0$", RBHPG, TANGHERLINI_FIVE, tau="v - r", areal=True),
+    Diagram("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "finkelstein", "against $u + r$",
+            ("u", "r"), (0, 2, -1, 1), "$r/r_0$", "$(u + r)/r_0$", RBHPG, TANGHERLINI_FIVE,
+            to_display=FINKELSTEIN_OUT, tau="u + r", areal=True),
+    Diagram("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "chart", "against $u$",
+            ("u", "r"), (0, 2, -1.5, 0.5), "$r/r_0$", "$u/r_0$", RBHPG, TANGHERLINI_FIVE, tau="u + r", areal=True),
     # The black hole forming and evaporating: the mass rises, holds and falls back to zero, and the
     # curve g^rr = 0, which the script marks, is closed. Outside 0 < v < 8 the plane is Minkowski's.
     Diagram("hayward", "evaporating", "history", "forming and evaporating", ("v", "r"), (0, 10, -6.5, 8.5),
@@ -7278,6 +7294,41 @@ CAPTIONS = {
         "The cones cross $r_s$ smoothly and keep tipping. Inside, both edges of every future cone point to "
         "smaller $r$, so every future directed ray ends at the singularity $r = 0$, where the area of the "
         "spheres vanishes.",
+    ],
+    ("regular_black_hole_pure_gravity", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 12r_0/25$, the same at "
+        "every other angle by symmetry. There $g^{rr} = 1 - r_0^2r^2/(r^4 + \\ell^2r_0^2)$ vanishes at $r_- = 3r_0/5$ "
+        "and at $r_+ = 4r_0/5$, and the cones close on both horizons. Inside $r_-$ they open again, and at the "
+        "centre, where $g^{rr} = 1$, they stand at 45°.",
+        "Between the horizons $t$ is a spacelike coordinate. We take the future from the ingoing "
+        "Eddington-Finkelstein chart, which makes that region the black hole, where every cone points to smaller "
+        "$r$. At $r = 0$ the Kretschmann scalar is $40/\\ell^4$, its value in de Sitter space of radius $\\ell$ in "
+        "five dimensions.",
+    ],
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "finkelstein"): [
+        "The plane of $v$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 12r_0/25$ with $v - r$ as "
+        "the vertical axis, so that the ingoing rays, $v = $ const, run at 45°. The outgoing family has "
+        "$dv/dr = 2/g^{rr}$, so it stands vertical at $r_- = 3r_0/5$ and at $r_+ = 4r_0/5$: each horizon is an "
+        "outgoing ray that stays where it is.",
+        "Between the horizons both edges of every future cone point to smaller $r$. Inside $r_-$ the outgoing edge "
+        "points to larger $r$ again, and an outgoing ray there climbs toward $r_-$, which it approaches as "
+        "$v \\to \\infty$. An ingoing ray reaches the centre at a finite $v$, where the curvature is finite.",
+    ],
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "chart"): [
+        "The same plane of $v$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The ingoing family is $v = $ const and runs horizontally here. The outgoing family turns "
+        "vertical at $r_+$, leans toward smaller $r$ between the horizons, and turns vertical again at $r_-$.",
+    ],
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "finkelstein"): [
+        "The plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 12r_0/25$ with $u + r$ as "
+        "the vertical axis, so that the outgoing rays, $u = $ const, run at 45°. The ingoing family stands "
+        "vertical at $r_- = 3r_0/5$ and at $r_+ = 4r_0/5$. Between the horizons both edges of every future cone "
+        "point to larger $r$: this is the white hole, which nothing from outside $r_+$ can enter.",
+    ],
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "chart"): [
+        "The same plane of $u$ and $r$ ($\\psi = \\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
+        "coordinates. The outgoing family is $u = $ const and runs horizontally here. The ingoing family turns "
+        "vertical at $r_+$, leans toward larger $r$ between the horizons, and turns vertical again at $r_-$.",
     ],
     ("hayward", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $\\ell = 12m/7\\sqrt{7} = 0.648\\,m$, "
@@ -15965,6 +16016,17 @@ def _bardeen_away(x, r):
     return (np.abs(r - 0.30096) > 0.05) & (np.abs(r - 0.77542) > 0.05)
 
 
+def _rbhpg_rstar(r):
+    """The tortoise coordinate of the regular black hole from pure gravity at r_0 = 1 and ell = 12/25,
+    where 1/f = 1 + r^2/((r^2 - 16/25)(r^2 - 9/25)): r + (10/7) ln|(r - 4/5)/(r + 4/5)|
+    - (15/14) ln|(r - 3/5)/(r + 3/5)|, which vanishes at r = 0."""
+    return r + 10 / 7 * np.log(np.abs((r - 0.8) / (r + 0.8))) - 15 / 14 * np.log(np.abs((r - 0.6) / (r + 0.6)))
+
+
+def _rbhpg_away(x, r):
+    return (np.abs(r - 0.6) > 0.05) & (np.abs(r - 0.8) > 0.05)
+
+
 def _hayward_rstar(r):
     """Hayward's tortoise coordinate at m = 1 and ell = 12/(7 sqrt 7), where 1/F = 1 + 2r^2/((r - 6/7)
     (r - 12/7)(r + 4/7)): r - (6/5) ln|r - 6/7| + 3 ln|r - 12/7| + (1/5) ln(r + 4/7), up to a constant."""
@@ -16495,6 +16557,12 @@ CLOSED_FORMS = {
        (lambda u, r, case=case: u + 2 * slices.born_infeld_rstar(r, case), lambda u, r: u, away)
        for view, case, away in (("particle", "particle", lambda u, r: r > 0.05),
                                 ("finkelstein", "hole", _away(slices.BORN_INFELD_HORIZON)))},
+    ("regular_black_hole_pure_gravity", "spherical", "radial"):
+        (lambda t, r: t + _rbhpg_rstar(r), lambda t, r: t - _rbhpg_rstar(r), _rbhpg_away),
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "finkelstein"):
+        (lambda v, r: v, lambda v, r: v - 2 * _rbhpg_rstar(r), _rbhpg_away),
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "finkelstein"):
+        (lambda u, r: u + 2 * _rbhpg_rstar(r), lambda u, r: u, _rbhpg_away),
     ("hayward", "static", "radial"):
         (lambda t, r: t + _hayward_rstar(r), lambda t, r: t - _hayward_rstar(r), _hayward_away),
     ("hayward", "eddington_finkelstein_ingoing", "finkelstein"):

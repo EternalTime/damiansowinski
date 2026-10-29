@@ -12143,6 +12143,90 @@
   ],
   "sphere": null
  },
+ "regular_black_hole_pure_gravity/eddington_finkelstein_ingoing": {
+  "stamp": "5668409e5602c6e6",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "regular_black_hole_pure_gravity/eddington_finkelstein_outgoing": {
+  "stamp": "ccce817ca710d92f",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "regular_black_hole_pure_gravity/spherical": {
+  "stamp": "5d07c21b4b62f967",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "reissner_nordstrom_ads/eddington_finkelstein_ingoing": {
   "stamp": "709ab2edbb74f9a7",
   "relations": {},

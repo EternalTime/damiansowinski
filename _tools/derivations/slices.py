@@ -2179,6 +2179,30 @@ def _born_infeld(case, sign=0):
     return [Mark(m, [np.column_stack([sign * born_infeld_rstar(r, case), r])])]
 
 
+def rbhpg_rstar(r):
+    """The tortoise coordinate of the regular black hole from pure gravity at r_0 = 1 and l = 12/25,
+    where 1/f = 1 + r^2/((r^2 - 16/25)(r^2 - 9/25)), as the Eddington-Finkelstein charts fix it,
+    vanishing at r = 0: r_* = r + (10/7) ln|(r - 4/5)/(r + 4/5)| - (15/14) ln|(r - 3/5)/(r + 3/5)|."""
+    r = np.asarray(r, dtype=float)
+    return r + 10 / 7 * np.log(np.abs((r - 0.8) / (r + 0.8))) - 15 / 14 * np.log(np.abs((r - 0.6) / (r + 0.6)))
+
+
+def _rbhpg(sign=0):
+    """The moment t = 0 of the regular black hole from pure gravity, outside r_+ = 4/5 and inside
+    r_- = 3/5, drawn as Hayward's is by _hayward: along r in the static chart (sign 0), and in the
+    ingoing (1) or outgoing (-1) chart as v = r_* or u = -r_*."""
+    out = []
+    for view_id in ("outside", "inside"):
+        m, = moments("regular_black_hole_pure_gravity", view_id)
+        lo, hi = m.reach("spherical", "r")
+        if not sign:
+            out.append(Mark(m, along(0.0, lo, hi)))
+            continue
+        r = near(lo, hi) if view_id == "outside" else (lo + hi) - near(lo, hi)[::-1]
+        out.append(Mark(m, [np.column_stack([sign * rbhpg_rstar(r), r])]))
+    return out
+
+
 def hayward_rstar(r):
     """Hayward's tortoise coordinate at m = 1 and ell = 12/(7 sqrt 7), where 1/F = 1 + 2r^2/((r - 6/7)
     (r - 12/7)(r + 4/7)), as the Eddington-Finkelstein charts fix it, vanishing at r = 0:
@@ -2663,6 +2687,11 @@ FLAT = {
     ("bardeen", "eddington_finkelstein_ingoing", "chart"): lambda: _bardeen_both(1),
     ("bardeen", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _bardeen_both(-1),
     ("bardeen", "eddington_finkelstein_outgoing", "chart"): lambda: _bardeen_both(-1),
+    ("regular_black_hole_pure_gravity", "spherical", "radial"): lambda: _rbhpg(),
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "finkelstein"): lambda: _rbhpg(1),
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_ingoing", "chart"): lambda: _rbhpg(1),
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "finkelstein"): lambda: _rbhpg(-1),
+    ("regular_black_hole_pure_gravity", "eddington_finkelstein_outgoing", "chart"): lambda: _rbhpg(-1),
     ("hayward", "static", "radial"): lambda: _hayward(),
     ("quantum_oppenheimer_snyder", "static", "radial"): lambda: _qos_both("static"),
     ("quantum_oppenheimer_snyder", "painleve_gullstrand", "collapse"): lambda: _qos_both("painleve_gullstrand"),

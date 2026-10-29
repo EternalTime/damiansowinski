@@ -5359,6 +5359,93 @@ def topological_star(ck, src):
     return views
 
 
+def regular_black_hole_pure_gravity(ck, src):
+    """Bueno, Cano and Hennigar's regular black hole of five dimensions at r_0 = 1 and l = 12/25,
+    where the horizons, the two positive roots of the published g^rr, are r_- = 3r_0/5 and
+    r_+ = 4r_0/5. The slice of constant t on the plane of r and phi, the other angles at pi/2, has
+    g_rr = 1/f with f = 1 - r_0^2 r^2/(r^4 + l^2 r_0^2), which is 1 at the centre and at infinity
+    and below 1 between, so wherever the slice is a moment of space flat space carries it,
+    dz/dr = sqrt(1/f - 1) = r_0 r/sqrt((r^2 - r_+^2)(r^2 - r_-^2)). Outside r_+ it runs through the
+    outer bifurcation sphere into a second exterior and far out climbs as r_0 ln r, Tangherlini's
+    catenoid of the same mass. Inside r_- it starts at the centre as the sphere of radius l of de
+    Sitter space does, z = r^2/(2 l) + O(r^4), which is checked, stands vertical at the inner
+    bifurcation sphere, its widest circle, and runs on into a second region inside r_-: a closed
+    surface. Between the horizons g_rr < 0, which is checked. Both heights are checked against the
+    closed form of the integral, z = (r_0/2) arcosh((2r^2 - r_+^2 - r_-^2)/(r_+^2 - r_-^2)) outside
+    and (r_0/2) arcosh((r_+^2 + r_-^2 - 2r^2)/(r_+^2 - r_-^2)) inside, each from its own horizon."""
+    ell = "12/25"
+    lnum = 12 / 25
+    a2, b2 = 16 / 25, 9 / 25
+    name = "Regular black hole from pure gravity"
+    held = {"t": 0, "psi": "pi/2", **EQUATOR}
+    sl = Slice(src, "regular_black_hole_pure_gravity", "spherical", "r", "\\phi", held, {"r_0": 1, "ell": ell})
+    # The other two roots of r^4 - r_0^2 r^2 + l^2 r_0^2, -4/5 and -3/5, lie outside the chart.
+    roots = sl.horizons()
+    rp, rm = roots[0], roots[1]
+    ck.add(f"{name}: the horizons are at 4r_0/5 and 3r_0/5", abs(rp - 0.8) + abs(rm - 0.6), 1e-12)
+    ck.stops(f"{name}, between the horizons", sl, np.linspace(rm, rp, 402)[1:-1])
+    top, radii = 3.0, (1.0, 1.5, 2.0, 2.5)
+    size = 2 * top
+    near, far = two_sheets(ck, f"{name} outside", sl, rp, top, radii, size,
+                           [(rp, "horizon", "$r = r_+$")], (" of the outer horizon", ""))
+    for p in (near, far):
+        ck.radius(f"{name} outside, {p.id}, rho = r", p, lambda r: r, size)
+    pts = np.array(near.data()["points"])
+    sample = pts[pts[:, 0] > rp + 0.05]
+    closed = 0.5 * np.arccosh((2 * sample[:, 0] ** 2 - a2 - b2) / (a2 - b2))
+    ck.add(f"{name} outside: the height is (r_0/2) arcosh((2r^2 - r_+^2 - r_-^2)/(r_+^2 - r_-^2))",
+           float(np.max(np.abs(np.abs(sample[:, 2] - pts[0][2]) - closed))), 2e-3)
+    outside = Surface([near, far])
+    fig = figure_of([outside], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], rp, 0.0, "$r = r_+$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(1.5), "$1.5\\,r_0$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$3\\,r_0$")
+    fig.legend("fill", "cover", "the exterior $r > r_+$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $1$, $1.5$, $2$, $2.5$ and $3\\,r_0$")
+    fig.legend("line", "r2", "the same radii on the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_+$, where the slice crosses the outer horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    settings = ("$r_0 = 1$, the unit of every length, and $\\ell = 12r_0/25$, so that $r_+ = 4r_0/5$ and "
+                "$r_- = 3r_0/5$; $\\psi = \\theta = \\pi/2$.")
+    between = ("Between the horizons, $r_- < r < r_+$, $g_{rr} < 0$: $r$ is a time there, and a slice of "
+               "constant $t$ is not a moment of space.")
+    views = [view("outside", "Outside $r_+$", "$r_0$", [outside], fig.done(), settings=settings, stops=[between])]
+
+    # Inside r-: each side from the centre up to the widest circle, r-.
+    size = 2 * rm
+    lo = Piece("inside", "sheet", sl, 0.0, rm, 0.0, 1,
+               (("axis", "the centre $r = 0$, where the surface closes smoothly, as a sphere of radius $\\ell$ does"),
+                ("join", "the inner horizon $r = r_-$, the widest circle, where the slice runs on into the other "
+                         "region inside $r_-$")),
+               [(0.2, "r", None), (0.4, "r", None), (rm, "horizon", "$r = r_-$")], size)
+    lo.z = lo.z - lo.z[-1]
+    hi = Piece("other_inside", "sheet2", sl, 0.0, rm, -lo.z[0], -1,
+               (("axis", "the centre of the other region inside $r_-$"), ("join", "the inner horizon $r = r_-$")),
+               [(0.2, "r2", None), (0.4, "r2", None)], size)
+    for p in (lo, hi):
+        ck.isometry(f"{name} inside, {p.id}", p)
+        ck.radius(f"{name} inside, {p.id}, rho = r", p, lambda r: r, size)
+    ck.join(f"{name} inside, the two sides at r-", lo, rm, hi, rm)
+    points = np.array(lo.data()["points"])
+    small = points[(points[:, 0] > 0) & (points[:, 0] <= 0.05)]
+    ck.add(f"{name} inside: at the centre the surface is the sphere of radius ell, z = r^2/(2 ell)",
+           float(np.max(np.abs((small[:, 2] - points[0][2]) - small[:, 0] ** 2 / (2 * lnum)))), 2e-5)
+    mid = points[(points[:, 0] > 0.05) & (points[:, 0] < rm - 0.05)]
+    closed = 0.5 * np.arccosh((a2 + b2 - 2 * mid[:, 0] ** 2) / (a2 - b2))
+    ck.add(f"{name} inside: the height is (r_0/2) arcosh((r_+^2 + r_-^2 - 2r^2)/(r_+^2 - r_-^2)) below the widest circle",
+           float(np.max(np.abs(np.abs(mid[:, 2] - lo.z[-1]) - closed))), 2e-3)
+    inside = Surface([lo, hi])
+    fig = figure_of([inside], {"sheet": "cover"}, size, Camera(-90, 22))
+    ring_label(fig, [0, 0, 0], rm, 0.0, "$r = r_-$", dx=10)
+    fig.legend("fill", "cover", "the region $r < r_-$ that $t$ and $r$ cover")
+    fig.legend("line", "r", "$r$ constant, at $0.2$ and $0.4\\,r_0$")
+    fig.legend("line", "r2", "the same radii in the other region inside $r_-$")
+    fig.legend("line", "horizon", "the widest circle $r = r_-$, where the slice crosses the inner horizon")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("inside", "Inside $r_-$", "$r_0$", [inside], fig.done(), settings=settings, stops=[between]))
+    return views
+
+
 def hayward(ck, src):
     """Hayward's regular black hole at ell = 12m/(7 sqrt 7), where the horizons, the two positive
     roots of the published g^rr, are r_- = 6m/7 and r_+ = 12m/7. g_rr = 1/F with F = 1 - 2mr^2/
@@ -17432,6 +17519,7 @@ DRAWN = {
     "kundt_waves": kundt_waves,
     "schrodinger_spacetime": schrodinger_spacetime,
     "hayward": hayward,
+    "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity,
     "mass_inflation": mass_inflation,
     "hiscock": hiscock,
     "reissner_nordstrom_de_sitter": reissner_nordstrom_de_sitter,
@@ -18552,6 +18640,23 @@ CAPTIONS = {
         "The surface crosses $r_c$ and $r_+$ with no throat and no widest circle, and inside $r_+$ it falls as "
         "$(r_s/2)\\ln\\rho$ without end while its circles close on the radius $r_s/2$, the infinitely long throat "
         "of the extremal Reissner-Nordström black hole. It is drawn down to $\\rho = r_s/100$.",
+    ],
+    ("regular_black_hole_pure_gravity", "outside"): [
+        "The plane of $r$ and $\\phi$ ($\\psi = \\theta = \\pi/2$) of the regular black hole from pure gravity at one "
+        "moment of $t$ outside its outer horizon ($\\ell = 12r_0/25$), drawn as a surface in flat space with every "
+        "distance along it the metric distance. On it $dz/dr = r_0r/\\sqrt{(r^2 - r_+^2)(r^2 - r_-^2)}$, and the slice "
+        "passes through the outer horizon's bifurcation sphere $r = r_+$, its throat, into a second exterior.",
+        "The core pulls the throat in from Tangherlini's $r_0$ to $r_+ = 4r_0/5$, and far out the surface climbs as "
+        "Tangherlini's of the same mass does, $z \\approx r_0\\ln r$. Between the horizons $r$ is a time, and no "
+        "slice of constant $t$ enters there.",
+    ],
+    ("regular_black_hole_pure_gravity", "inside"): [
+        "The same plane at one moment of $t$ inside the inner horizon, where $r$ is again a distance and $t$ a time. "
+        "The slice runs from the centre through the inner horizon's bifurcation sphere $r = r_-$, its widest circle, "
+        "to the centre of a second region inside $r_-$, the same surface turned over, so the whole of it is closed.",
+        "Near $r = 0$, $g_{rr} = 1 + r^2/\\ell^2$ to this order, and the surface is the sphere of radius $\\ell$, the "
+        "static slice of de Sitter space. The curvature at the centre is finite, and the surface closes smoothly on "
+        "the axis.",
     ],
     ("hayward", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Hayward's black hole at one moment of $t$ outside its outer "
