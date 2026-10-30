@@ -21831,7 +21831,12 @@ def charach_malin(ck, src):
         surface = Surface([tube], label="$t=1$", time=1.0)
         fig = figure_of([surface], {"sheet": "cover"}, size)
         fig.legend("fill", "cover", r"the cut-open torus")
-        out.append(view(matter, matter.title() + " waves", "$L$", [surface], fig.done(),
+        drawing = fig.done()
+        x0, x1, y0, y1 = drawing["box"]
+        half = max(x1-x0, y1-y0) / 2
+        cx, cy = (x0+x1)/2, (y0+y1)/2
+        drawing["box"] = [cx-half, cx+half, cy-half, cy+half]
+        out.append(view(matter, matter.title() + " waves", "$L$", [surface], drawing,
                         settings="$L=1$, $t=1$, $y=0$.", input=nr.CHARACH_MALIN_INPUT[matter]))
     return out
 

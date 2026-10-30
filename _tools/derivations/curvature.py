@@ -18585,6 +18585,43 @@ def vaidya_patel_kerr(ck, src):
 DRAWN["vaidya_patel_kerr"] = vaidya_patel_kerr
 
 
+def charach_malin(ck, src):
+    """Stored scalars of the two declared periodic waves over theta and areal time.
+
+    No curvature is computed here; nr_published reads the printed scalar and substitutes
+    the same profiles used by the ray and embedding generators, with the existing box frame.
+    """
+    x_axis, y_axis = axis(r"$\theta$", 0, 2*math.pi), axis("$t$", 0.2, 5.0)
+    out = []
+    for matter, field in (("scalar","kretschmann"), ("scalar","ricci_scalar"),
+                          ("electromagnetic","kretschmann")):
+        system = matter + "_areal"
+        wave = nr._charach_malin_wave(matter)
+        published = nr_published(src, "charach_malin", system, field, ["theta","t"], ["L"], functions=wave)
+        nx, ny = 96, 80
+        _, _, values = cells(published, x_axis, y_axis, nx, ny, [1.0])
+        ck(f"Charach-Malin {matter} {field}: finite stored values", np.all(np.isfinite(values)))
+        bound = 10.0 ** math.ceil(math.log10(max(float(np.max(np.abs(values))), 1e-6)))
+        scale = {"kind":"symlog", "from":-bound, "to":bound, "linear":bound/10000}
+        letter = "R" if field=="ricci_scalar" else "K"
+        power = 2 if letter=="R" else 4
+        out.append({"id":matter+"_"+letter, "label":f"{matter.title()} ${letter}$", "kind":"map",
+                    "x":x_axis, "y":y_axis,
+                    "colour":{"name":f"${letter}L^{power}$", "scale":scale, "ticks":value_ticks(scale)},
+                    "map":{"metric":"charach_malin", "system":system, "scalar":field,
+                           "x":r"\theta", "y":"t", "params":{"L":1}, "functions":wave,
+                           "nx":nx, "ny":ny, "cells":[[rounded(v) for v in row] for row in values]},
+                    "marks":[], "legend":[],
+                    "caption":[f"The {'Ricci' if letter=='R' else 'Kretschmann'} scalar ${letter}$ of the {matter} wave "
+                               r"over the plane of $\theta$ and $t$ ($x=y=0$)."],
+                    "settings":"$L=1$.", "input":nr.CHARACH_MALIN_INPUT[matter],
+                    "clip":"Signed logarithmic colour scale, linear near zero."})
+    return out
+
+
+DRAWN["charach_malin"] = charach_malin
+
+
 def draw(metric_id, ck):
     src = Sources()
     views = DRAWN[metric_id](ck, src)
