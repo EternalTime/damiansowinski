@@ -52,6 +52,12 @@
         "\\phi",
         "z"
       ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)"
+      ],
       "parameters": [
         {
           "symbol": "\\omega",
@@ -62,7 +68,1664 @@
           "description": "Positive inverse length, with $m^2\\leq2\\omega^2$ for magnetic dust"
         }
       ],
-      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged]."
+      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged].",
+      "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{2\\omega(\\cosh(mr)-1)}{m^2}d\\phi\\right)^2 + dr^2 + \\left(\\dfrac{\\sinh(mr)}{m}\\right)^2d\\phi^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{4\\omega\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\dfrac{4\\omega\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{4\\left(m^2 + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2}{m^2\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{\\omega}{\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\dfrac{\\omega}{\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{m^2}{4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^2\\sinh\\left(\\dfrac{m\\,r}{2}\\right)}{m\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2\\sinh\\left(\\dfrac{m\\,r}{2}\\right)}{m\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^3\\left(\\dfrac{m\\,r}{2}\\right)}{m^3\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^3\\left(\\dfrac{m\\,r}{2}\\right)}{m^3\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\,\\omega}{2\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{m\\,\\omega}{2\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^2 + 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{2m\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2 + 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{2m\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^2\\left(4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2\\left(4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\left(3\\omega^2 - m^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\left(3\\omega^2 - m^2\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\left(3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\left(3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{8\\omega^3\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2 - m^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(2m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 8\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 2m^2\\,\\omega^2 - m^4\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2 - m^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2\\omega^2 - m^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2\\left(4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)}{m^2\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\left(m^2 - 2\\omega^2\\right)}{\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\omega\\left(m^2 - 2\\omega^2\\right)}{\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2 - m^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^2\\left(2\\omega^2 - m^2\\right)}{4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 2\\left(\\omega + m\\right)\\left(\\omega - m\\right)",
+      "kretschmann": "K = -24m^2\\,\\omega^2 + 44\\omega^4 + 4m^4",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "3\\omega^2 - m^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega\\left(3\\omega^2 - m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega\\left(3\\omega^2 - m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^2\\left(12\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 3m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\omega + m\\right)\\left(\\omega - m\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(3\\omega^2 - m^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\omega + m\\right)\\left(\\omega - m\\right)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3m^2\\,\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 4\\omega^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + 3m^2\\,\\omega^2 - m^4}{m^2\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega^3}{\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega^3}{\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{m^2\\,\\omega^2}{4\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\omega + m\\right)\\left(\\omega - m\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(2\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(2\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\cosh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(2\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(2\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(2\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(2\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) + m^2\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{3m^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4\\omega^2\\sinh\\left(\\dfrac{m\\,r}{2}\\right)}{m\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}\\dot{t}\\dot{r} + \\dfrac{4\\omega\\left(2\\omega - m\\right)\\left(2\\omega + m\\right)\\sinh^3\\left(\\dfrac{m\\,r}{2}\\right)}{m^3\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + \\dfrac{4\\omega\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m}\\dot{t}\\dot{\\phi} + \\dfrac{2\\left(8\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - m^2\\right)\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}{m^3}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{m\\,\\omega}{\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}\\dot{t}\\dot{r} + \\dfrac{m^2 + 2m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m\\sinh\\left(\\dfrac{m\\,r}{2}\\right)\\cosh\\left(\\dfrac{m\\,r}{2}\\right)}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} = 0"
+      ]
     },
     {
       "id": "linear",
@@ -73,13 +1736,1676 @@
         "\\phi",
         "z"
       ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)"
+      ],
       "parameters": [
         {
           "symbol": "\\omega",
           "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
         }
       ],
-      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged]."
+      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged].",
+      "line_element": "ds^2 = -\\left(c\\,dt + \\omega r^2d\\phi\\right)^2 + dr^2 + \\left(r\\right)^2d\\phi^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\omega\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\omega\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "-r^2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "-\\omega"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "-\\omega"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\omega^2\\,r"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2\\,r"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\omega^3\\,r^3"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\omega^3\\,r^3"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r\\left(2\\omega^2\\,r^2 - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\omega}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)}{r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\omega\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r\\left(2\\omega^2\\,r^2 - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-r\\left(2\\omega^2\\,r^2 - 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-r\\left(2\\omega^2\\,r^2 - 1\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "4\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-4\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\omega^2\\,r^2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\omega^2\\,r^2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-3\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "3\\omega^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\omega^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\omega^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\omega^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega^2\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "2\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "2\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 1\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-4\\omega^3\\,r^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\omega^2\\left(\\omega^2\\,r^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-2\\omega^3"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-2\\omega^3"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2}{r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 2\\omega^2",
+      "kretschmann": "K = 44\\omega^4",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "3\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "3\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "3\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\omega^2\\,r^2\\left(3\\omega^2\\,r^2 + 1\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-3\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-4\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\omega^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\omega^2\\left(\\omega^2\\,r^2 + 3\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\omega^3"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\omega^3"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega^2}{r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "2\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-2\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "2\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-2\\omega^3\\,r^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(2\\omega^2\\,r^2 + 1\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(2\\omega^2\\,r^2 + 1\\right)}{3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^3\\,r^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(\\omega^2\\,r^2 + 2\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(2\\omega^2\\,r^2 + 1\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(2\\omega^2\\,r^2 + 1\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega^2\\,r^2\\left(2\\omega^2\\,r^2 + 1\\right)}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^2\\,r^2\\left(2\\omega^2\\,r^2 + 1\\right)}{3}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + 2\\omega^2\\,r\\,\\dot{t}\\dot{r} + 2\\omega^3\\,r^3\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + 2\\omega\\,r\\,\\dot{t}\\dot{\\phi} + r\\left(2\\omega^2\\,r^2 - 1\\right)\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2\\omega}{r}\\dot{t}\\dot{r} - \\dfrac{2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)}{r}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} = 0"
+      ]
     },
     {
       "id": "trigonometric",
@@ -89,6 +3415,12 @@
         "r",
         "\\phi",
         "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\pi/k)",
+        "\\phi \\in [0, 2\\pi)",
+        "z \\in (-\\infty, \\infty)"
       ],
       "parameters": [
         {
@@ -100,7 +3432,1664 @@
           "description": "Positive inverse length, with the curvature parameter $m^2=-k^2$"
         }
       ],
-      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged]."
+      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged].",
+      "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{2\\omega(1-\\cos(kr))}{k^2}d\\phi\\right)^2 + dr^2 + \\left(\\dfrac{\\sin(kr)}{k}\\right)^2d\\phi^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{4\\omega^2\\sin^2\\left(k\\,r\\right) + k^2\\sin^2\\left(k\\,r\\right) + 8\\omega^2\\cos\\left(k\\,r\\right) - 8\\omega^2}{k^4}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\left(8\\omega^2 - 8\\omega^2\\cos\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) - 4\\omega^2\\sin^2\\left(k\\,r\\right)\\right)\\csc^2\\left(k\\,r\\right)}{k^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\phi"
+          ],
+          "value": "2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\csc^2\\left(k\\,r\\right)"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "t"
+          ],
+          "value": "2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\csc^2\\left(k\\,r\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "k^2\\csc^2\\left(k\\,r\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^2\\left(1 - \\cos\\left(k\\,r\\right)\\right)\\csc\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2\\left(1 - \\cos\\left(k\\,r\\right)\\right)\\csc\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)^2\\left(4\\omega^2 + k^2\\right)\\csc\\left(k\\,r\\right)}{k^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)^2\\left(4\\omega^2 + k^2\\right)\\csc\\left(k\\,r\\right)}{k^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 - k^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\cos\\left(k\\,r\\right)\\right)\\sin\\left(k\\,r\\right)}{k^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-k\\,\\omega\\csc\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-k\\,\\omega\\csc\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2\\omega^2\\cos\\left(k\\,r\\right) + k^2\\cos\\left(k\\,r\\right) - 2\\omega^2\\right)\\csc\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2\\omega^2\\cos\\left(k\\,r\\right) + k^2\\cos\\left(k\\,r\\right) - 2\\omega^2\\right)\\csc\\left(k\\,r\\right)}{k}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega\\sin\\left(k\\,r\\right)}{k}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 - k^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\cos\\left(k\\,r\\right)\\right)\\sin\\left(k\\,r\\right)}{k^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 - k^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\cos\\left(k\\,r\\right)\\right)\\sin\\left(k\\,r\\right)}{k^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 - k^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\cos\\left(k\\,r\\right)\\right)\\sin\\left(k\\,r\\right)}{k^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega^2\\left(8\\omega^2 - 8\\omega^2\\cos\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) - 4\\omega^2\\sin^2\\left(k\\,r\\right)\\right)}{k^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega^2\\left(8\\omega^2 - 8\\omega^2\\cos\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) - 4\\omega^2\\sin^2\\left(k\\,r\\right)\\right)}{k^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4}{k^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4}{k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\left(3\\omega^2 + k^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\left(3\\omega^2 + k^2\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega^2\\sin^2\\left(k\\,r\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega^2\\sin^2\\left(k\\,r\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega^2\\sin^2\\left(k\\,r\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\omega^2\\sin^2\\left(k\\,r\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4}{k^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4}{k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4}{k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4}{k^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^3\\left(1 - \\cos\\left(k\\,r\\right)\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2 + k^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 16\\omega^4\\cos\\left(k\\,r\\right) + 16\\omega^4}{k^4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-2\\omega^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2 + k^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "2\\omega^2 + k^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega^2\\left(4k^2 + 8\\omega^2 - 4k^2\\cos\\left(k\\,r\\right) - 8\\omega^2\\cos\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) - 4\\omega^2\\sin^2\\left(k\\,r\\right)\\right)\\csc^2\\left(k\\,r\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(2\\omega^2 + k^2\\right)\\csc^2\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(2\\omega^2 + k^2\\right)\\csc^2\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "2\\omega^2 + k^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "k^2\\left(2\\omega^2 + k^2\\right)\\csc^2\\left(k\\,r\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 2\\omega^2 + 2k^2",
+      "kretschmann": "K = 24k^2\\,\\omega^2 + 44\\omega^4 + 4k^4",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "3\\omega^2 + k^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(3\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(3\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega^2\\left(8k^2 + 24\\omega^2 - 8k^2\\cos\\left(k\\,r\\right) - 24\\omega^2\\cos\\left(k\\,r\\right) - 3k^2\\sin^2\\left(k\\,r\\right) - 12\\omega^2\\sin^2\\left(k\\,r\\right)\\right)}{k^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\omega^2 + k^2\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\left(3\\omega^2 + k^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\omega^2 + k^2\\right)"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(3k^2\\,\\omega^2\\sin^2\\left(k\\,r\\right) - 4\\omega^4\\sin^2\\left(k\\,r\\right) + k^4\\sin^2\\left(k\\,r\\right) - 8\\omega^4\\cos\\left(k\\,r\\right) + 8\\omega^4\\right)\\csc^2\\left(k\\,r\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi"
+                ],
+                "value": "2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\csc^2\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t"
+                ],
+                "value": "2\\omega^3\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\csc^2\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "k^2\\,\\omega^2\\csc^2\\left(k\\,r\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(\\omega^2 + k^2\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)\\left(4\\omega^2\\cos\\left(k\\,r\\right) + k^2\\cos\\left(k\\,r\\right) - 4\\omega^2 + k^2\\right)}{6k^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)\\left(4\\omega^2\\cos\\left(k\\,r\\right) + k^2\\cos\\left(k\\,r\\right) - 4\\omega^2 + k^2\\right)}{6k^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(2\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 4\\omega^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\right)}{3k^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(2\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 4\\omega^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\right)}{3k^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(8\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 16\\omega^2\\cos\\left(k\\,r\\right) - 16\\omega^2\\right)}{6k^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(8\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 16\\omega^2\\cos\\left(k\\,r\\right) - 16\\omega^2\\right)}{6k^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\sin^2\\left(k\\,r\\right)}{6k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\sin^2\\left(k\\,r\\right)}{6k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\sin^2\\left(k\\,r\\right)}{6k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\sin^2\\left(k\\,r\\right)}{6k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\omega^2 + k^2}{3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)\\left(4\\omega^2 + k^2\\right)}{3k^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(2\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 4\\omega^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\right)}{3k^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(2\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 4\\omega^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\right)}{3k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(2\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 4\\omega^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\right)}{3k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(2\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 4\\omega^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\right)}{3k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(8\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 16\\omega^2\\cos\\left(k\\,r\\right) - 16\\omega^2\\right)}{6k^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(8\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 16\\omega^2\\cos\\left(k\\,r\\right) - 16\\omega^2\\right)}{6k^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(8\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 16\\omega^2\\cos\\left(k\\,r\\right) - 16\\omega^2\\right)}{6k^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4\\omega^2 + k^2\\right)\\left(8\\omega^2\\sin^2\\left(k\\,r\\right) - k^2\\sin^2\\left(k\\,r\\right) + 16\\omega^2\\cos\\left(k\\,r\\right) - 16\\omega^2\\right)}{6k^4}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4\\omega^2\\left(1 - \\cos\\left(k\\,r\\right)\\right)\\csc\\left(k\\,r\\right)}{k}\\dot{t}\\dot{r} + \\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)^2\\left(4\\omega^2 + k^2\\right)\\csc\\left(k\\,r\\right)}{k^3}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{r} + \\dfrac{2\\omega\\sin\\left(k\\,r\\right)}{k}\\dot{t}\\dot{\\phi} + \\dfrac{\\left(4\\omega^2 - k^2\\cos\\left(k\\,r\\right) - 4\\omega^2\\cos\\left(k\\,r\\right)\\right)\\sin\\left(k\\,r\\right)}{k^3}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - 2k\\,\\omega\\csc\\left(k\\,r\\right)\\dot{t}\\dot{r} + \\dfrac{2\\left(2\\omega^2\\cos\\left(k\\,r\\right) + k^2\\cos\\left(k\\,r\\right) - 2\\omega^2\\right)\\csc\\left(k\\,r\\right)}{k}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} = 0"
+      ]
     }
   ]
 }

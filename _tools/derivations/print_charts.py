@@ -35754,6 +35754,82 @@ def store(spec, math, path, start):
     print(f"{path.name}: {time.time() - start:.0f}s, {path.stat().st_size} bytes", flush=True)
 
 
+CGU_CHARTS = ("hyperbolic", "linear", "trigonometric")
+
+
+def charged_godel_universe(system):
+    """Homogeneous charged dust: Klepac-Horsky (3.9)-(3.10) at C=0;
+    Kanti-Vayonakis (3.8), (6.30), and the linear member between them.
+    Each chart is independently held to Einstein-Maxwell dust at numerical points."""
+    parameters = ["\\omega"] + ([] if system == "linear" else ["m" if system == "hyperbolic" else "k"])
+    D, H = {
+        "hyperbolic": (r"\dfrac{\sinh(mr)}{m}", r"\dfrac{2\omega(\cosh(mr)-1)}{m^2}"),
+        "linear": ("r", r"\omega r^2"),
+        "trigonometric": (r"\dfrac{\sin(kr)}{k}", r"\dfrac{2\omega(1-\cos(kr))}{k^2}"),
+    }[system]
+    line = rf"ds^2 = -\left(c\,dt + {H}d\phi\right)^2 + dr^2 + \left({D}\right)^2d\phi^2 + dz^2"
+    reals = r"(-\infty, \infty)"
+    domains = ["t \\in " + reals, r"r \in (0, \pi/k)" if system == "trigonometric" else r"r \in (0, \infty)",
+               r"\phi \in [0, 2\pi)", "z \\in " + reals]
+    spec = {"metric_id": "charged_godel_universe", "system": {"id": system, "name": system.capitalize(),
+            "coords": ["t", "r", "\\phi", "z"], "parameters": parameters, "domains": domains,
+            "line_element": line}, "chart_line_element": line.replace(r"c\,dt", "dt"),
+            "printer": {}, "check": lambda chart: charged_godel_check(chart, system)}
+    if system == "hyperbolic":
+        probe = vm.Reader(spec["system"]["coords"], parameters, ())
+        spec["pretty"] = cp.hyperbolic(probe.parameters["m"] * probe.symbol["r"] / 2)
+    elif system == "trigonometric":
+        spec["pretty"] = lambda v: sp.factor(sp.trigsimp(v.rewrite(sp.sin)))
+    return spec
+
+
+def charged_godel_check(chart, system):
+    """Pointwise orthonormal frame, Einstein-Maxwell split, current and force.
+    No symbolic determinant or simplification is performed in this check."""
+    t, r, phi, z = chart.symbols
+    P = chart.reader.parameters
+    w = P["omega"]
+    q = P.get("m", P.get("k", sp.Integer(0)))
+    m2 = q ** 2 if system == "hyperbolic" else -q ** 2 if system == "trigonometric" else sp.Integer(0)
+    D = sp.sinh(q*r)/q if system == "hyperbolic" else sp.sin(q*r)/q if system == "trigonometric" else r
+    H = 2*w*(sp.cosh(q*r)-1)/q**2 if system == "hyperbolic" else 2*w*(1-sp.cos(q*r))/q**2 if system == "trigonometric" else w*r**2
+    coframe = sp.Matrix([[1, 0, H, 0], [0, 1, 0, 0], [0, 0, D, 0], [0, 0, 0, 1]])
+    # Analytic inverse of the coframe, avoiding an unnecessary symbolic matrix inversion.
+    invframe = sp.Matrix([[1, 0, -H/D, 0], [0, 1, 0, 0], [0, 0, 1/D, 0], [0, 0, 0, 1]])
+    B = sp.Symbol("CGU_B", positive=True)
+    F = sp.zeros(4)
+    F[1, 2], F[2, 1] = B*D, -B*D
+    up = chart.geo.ginv * F * chart.geo.ginv
+    current = sp.Matrix([sum(sp.diff(D*up[i, j], chart.symbols[j]) for j in range(4))/D for i in range(4)])
+    einstein = sp.Matrix(chart.geo.einstein_ll())
+    expected = sp.diag(3*w*w-m2, w*w, w*w, m2-w*w)
+    ricci = chart.geo.ricci_scalar()
+    kretschmann = chart.geo.kretschmann()
+    for radial, twist, scale in [(0.23, 1.1, 0.7), (0.71, 1.3, 1.0), (1.2, 1.7, 1.2)]:
+        at = {t: 0.2, r: radial, phi: 0.4, z: -0.1, w: twist, B: 0.8, chart.reader.c: 1}
+        if system != "linear":
+            at[q] = scale
+        def matrix(value):
+            return sp.Matrix(value).subs(at).evalf(35)
+        def near(value, target, label):
+            gap = matrix(value) - matrix(target)
+            if max(abs(complex(v)) for v in gap) > 1e-8:
+                raise AssertionError(f"charged_godel_universe {system}: {label}: {gap}")
+        e, ei, g = matrix(coframe), matrix(invframe), matrix(chart.geo.g)
+        near(e.T*sp.diag(-1, 1, 1, 1)*e, g, "orthonormal frame")
+        near(ei.T*matrix(einstein)*ei, expected, "Einstein tensor")
+        near(current, sp.Matrix([2*w*B, 0, 0, 0]), "Maxwell current")
+        near(F*current, sp.zeros(4, 1), "Lorentz force")
+        near([[ricci]], [[2*(w*w-m2)]], "Ricci scalar")
+        near([[kretschmann]], [[4*(11*w**4-6*m2*w*w+m2*m2)]], "Kretschmann scalar")
+        # Lambda=-m2/2 and B2=w2-m2/2 leave positive pressureless dust.
+        source = sp.diag(3*w*w-m2, w*w, w*w, m2-w*w) + sp.diag(1,-1,-1,-1)*m2/2
+        near(source - (w*w-m2/2)*sp.diag(1,1,1,-1), sp.diag(2*w*w,0,0,0), "dust source split")
+
+
+CHARTS["charged_godel_universe"] = [lambda s=s: charged_godel_universe(s) for s in CGU_CHARTS]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
