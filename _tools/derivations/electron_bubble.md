@@ -55,6 +55,27 @@ The angular velocity is $d\phi/dt=ca/B_0$, and the speed measured in the interio
 It is subluminal at every latitude.
 The dedicated numerical check of the extrinsic curvature and the matching remains to be completed.
 
+## Electromagnetic boundary
+
+The exterior potential of Burinskii 2016, arXiv:1602.04215v1, equations (4)-(5), has intrinsic form $A^+=-qr\Sigma^{-1}(dx^0-a\sin^2\theta d\phi)$ in the time and spin orientation of the 2002 metric.
+The 2016 time is reversed to this orientation; the Kerr angular and Boyer-Lindquist azimuths agree on $dr=0$.
+For a field-free interior, direct differentiation on the shell gives
+
+$$\iota^*[F]=\frac{2qr_0a\sin\theta\cos\theta}{\Sigma_0^2}\,d\theta\wedge(B_0d\phi-a\,dx^0).$$
+
+This is nonzero at generic latitude for $qa\ne0$.
+In the co-rotating azimuth $\varphi=\phi-(a/B_0)x^0$, it is magnetic flux through the material surface.
+The total flux over the shell vanishes, and its local value is nonzero.
+An ordinary electric surface current leaves the homogeneous Maxwell equation $dF=0$ unchanged, which requires the intrinsic jump to vanish for a bounded field with a discontinuity.
+Thus a field-free interior and the rotating exterior require additional electromagnetic boundary structure.
+
+A formal electric dipole layer can be introduced through $A=\Theta(r-r_0)A^+$, whose field contains $\delta(r-r_0)dr\wedge\iota^*A^+$.
+The electromagnetic stress of that singular field contains delta products and needs a prescribed regularization.
+For this explicit potential step, the quadratic invariant has coefficient $-2q^2r_0^2/\Sigma_0^2$ multiplying $\delta(r-r_0)^2$.
+The gravitational surface tensor fixes the total stress required by the geometry and does not specify this electromagnetic prescription.
+A magnetic surface source is another idealization; a nonzero interior Maxwell field would require compensating matter stress to retain flatness.
+The separate 2016 model uses Higgs/chiral fields, a finite transition zone, and penetrating currents, equations (12), (17), and (30).
+
 ## Causal domain
 
 The restriction $q^2>m^2$ makes $\Delta=(r-m)^2+a^2+q^2-m^2$ positive.
