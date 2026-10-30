@@ -3818,6 +3818,51 @@ def datt_ruban_t_models(ck, src):
     }]
 
 
+MURPHY_K = {"kind": "log", "from": 1e-4, "to": 1e2}
+MURPHY_R = {"kind": "log", "from": 1e-3, "to": 1e2}
+
+
+def murphy_viscous_universe(ck, src):
+    """Murphy's universe with viscosity for radiation, q = 2, both scalars against the scale factor.
+
+    In units of H_s = c = 1 the stored scalars of the scale factor chart are R = 12/(1 + a^2)^3 and
+    K = 24(1 + a^4)/(1 + a^2)^6, functions of a alone, so a line plot shows their whole variation;
+    a runs from the steady state near a = 0 to a = 4. The checks cover both closed forms, de Sitter's
+    R = 12 and K = 24 as a -> 0, the fall of both with a, and every written point in sixty digits.
+    """
+    name = "murphy_viscous_universe"
+    params = {"q": 2.0, "H_s": 1.0}
+    x_axis = axis("$a$", 0, 4)
+    panels = [{"id": "K", "name": "$Kc^4/H_s^4$", "aspect": 2, "scale": MURPHY_K, "ticks": value_ticks(MURPHY_K)},
+              {"id": "R", "name": "$Rc^2/H_s^2$", "aspect": 2, "scale": MURPHY_R, "ticks": value_ticks(MURPHY_R)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    K = Published(src, name, "scale_factor", "kretschmann", ["a"], list(params))
+    R = Published(src, name, "scale_factor", "ricci_scalar", ["a"], list(params))
+    a = np.linspace(0, 4, SAMPLES)[1:]
+    k, r = K(a, 2.0, 1.0), R(a, 2.0, 1.0)
+    ck(f"{name} R is 12/(1 + a^2)^3", np.allclose(r, 12 / (1 + a * a) ** 3, rtol=1e-12))
+    ck(f"{name} K is 24(1 + a^4)/(1 + a^2)^6", np.allclose(k, 24 * (1 + a ** 4) / (1 + a * a) ** 6, rtol=1e-12))
+    ck(f"{name} R and K tend to de Sitter's 12 and 24 as a -> 0",
+       abs(float(R(1e-8, 2.0, 1.0)) - 12) < 1e-9 and abs(float(K(1e-8, 2.0, 1.0)) - 24) < 1e-9)
+    ck(f"{name} both scalars fall as a grows", np.all(np.diff(k) < 0) and np.all(np.diff(r) < 0))
+    ck(f"{name} both scalars stay within their axes",
+       np.min(k) > MURPHY_K["from"] and np.max(k) < MURPHY_K["to"] and np.min(r) > MURPHY_R["from"]
+       and np.max(r) < MURPHY_R["to"], f"K from {np.min(k):.2e}, R from {np.min(r):.2e}")
+    curves = (line_curves(ck, name, "K", "K", K, "a", x_axis, MURPHY_K, PLOT_W / 2, params)
+              + line_curves(ck, name, "R", "R", R, "a", x_axis, MURPHY_R, PLOT_W / 2, params))
+    return [{
+        "id": "radiation", "label": "radiation", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the universe of radiation, $q = 2$, "
+                    "against the scale factor, both finite at every $a$ and greatest at the steady state, $a \\to 0$."],
+        "ricci_sentences": [],
+        "per_scalar": scalar_clips("Log scale.", "Log scale."),
+        "settings": "$q = 2$, $H_s = 1$.",
+        "clip": "Log scales.",
+    }]
+
+
 # ---------------------------------------------------------------- the charged dilaton black hole
 
 DBH_RD = Fraction(1, 2)           # r_d in units of r_s, as every drawing of the black hole takes it
@@ -18148,6 +18193,7 @@ DRAWN = {
     "curzon_chazy": curzon_chazy,
     "damour_solodukhin": damour_solodukhin,
     "datt_ruban_t_models": datt_ruban_t_models,
+    "murphy_viscous_universe": murphy_viscous_universe,
     "dilaton_black_hole": dilaton_black_hole,
     "distorted_schwarzschild": distorted_schwarzschild,
     "eguchi_hanson": eguchi_hanson,
