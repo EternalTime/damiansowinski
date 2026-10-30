@@ -127,8 +127,8 @@ def null_forms():
             def distance(t, growing=growing, scale=scale):
                 return (2*np.sqrt(scale*t) if growing else 2*t**1.5/(3*np.sqrt(scale)))
             forms[(METRIC, system, "t"+coordinate)] = (
-                lambda t, x, distance=distance: x-distance(t),
                 lambda t, x, distance=distance: x+distance(t),
+                lambda t, x, distance=distance: x-distance(t),
                 lambda t, x: t > 0.02,
             )
     return forms
