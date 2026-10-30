@@ -6,6 +6,7 @@ import sys
 import unittest
 
 import numpy as np
+import sympy as sp
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "derivations"))
 import verify_metrics as vm
@@ -23,7 +24,7 @@ class FourForm(unittest.TestCase):
             reader = vm.Reader(names, [r"\mu"], ())
             mu, u = reader.parameters["mu"], reader.symbol["u"]
             rosen = chart["id"] == "rosen"
-            coefficient = mu * (vm.sp.sin(mu*u/3)**3 if rosen else 1)
+            coefficient = mu * (sp.sin(mu*u/3)**3 if rosen else 1)
             slots = []
             for order in itertools.permutations(range(4)):
                 indices = tuple((0, 2, 3, 4)[i] for i in order)
@@ -47,7 +48,7 @@ class FourForm(unittest.TestCase):
                 derivative = np.zeros((11,)*5)
                 for indices, sign in slots:
                     form[indices] = sign*float(coefficient.subs(at))
-                    derivative[(0,)+indices] = sign*float(vm.sp.diff(coefficient, u).subs(at))
+                    derivative[(0,)+indices] = sign*float(sp.diff(coefficient, u).subs(at))
                 # The connection acts on each covariant slot independently.
                 nabla = derivative - np.einsum('fab,fcde->abcde', gamma, form)
                 nabla -= np.einsum('fac,bfde->abcde', gamma, form)

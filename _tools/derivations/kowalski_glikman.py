@@ -6,7 +6,6 @@ Sources and normalization are recorded in kowalski_glikman.md.
 ID = "kowalski_glikman"
 CHARTS = ("brinkmann", "rosen")
 
-import itertools
 import math
 
 import numpy as np
@@ -15,7 +14,6 @@ import sympy as sp
 
 def chart_spec(system):
     """Figueroa-O'Farrill and Papadopoulos (12), (14); Blau et al. (14)-(17)."""
-    import chart_printer as cp
     import verify_metrics as vm
 
     rosen = system == "rosen"
@@ -113,8 +111,8 @@ def embedding_views(ck, src, e):
 
 
 EMBEDDING_CAPTION = [
-    r"The transverse plane $(x_1,x_4)=(\rho\cos\varphi,\rho\sin\varphi)$ at fixed $u,v$, "
-    r"with Euclidean embedding $(X,Y,Z)=(x_1,x_4,0)$ and induced metric $d\rho^2+\rho^2d\varphi^2$."
+    r"The transverse plane at fixed $u,v$, with polar coordinates $\rho,\varphi$, "
+    r"$(x_1,x_4)=(\rho\cos\varphi,\rho\sin\varphi)$ and Euclidean embedding $(X,Y,Z)=(x_1,x_4,0)$."
 ]
 
 
@@ -133,7 +131,6 @@ def ray_figure(spec, pj):
     rosen = spec.system == "rosen"
     letter, null = ("y", "w") if rosen else ("x", "v")
     kept = ["u", null, f"{letter}_1", f"{letter}_4"]
-    names = entry["coords"]
     symbols = [reader.symbol[c] for c in kept]
     fixed = {reader.c: 1, reader.parameters["mu"]: 1,
              **{s: 0 for c, s in reader.symbol.items() if c not in kept}}
@@ -240,7 +237,7 @@ def curvature_views(ck, src, cv):
     return [{"id": "null_scalars", "label": "Null curvature contractions", "kind": "line", "x": horizontal,
              "panels": panels, "curves": curves, "marks": [],
              "legend": [["line", "K", "Kretschmann scalar"], ["line", "R", "Ricci scalar"]],
-             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ along the wave.",
+             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the eleven dimensional wave.",
                          r"$K=0$, with tidal eigenvalues $\mu^2/9$ and $\mu^2/36$.",
                          r"The vanishing Ricci scalar, $R=0$."],
              "ricci_sentences": [[2, 0]],
