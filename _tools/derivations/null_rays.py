@@ -19018,9 +19018,9 @@ CAPTIONS.update({
         "The totally geodesic surface $y=\\phi=0$, with null rays $ct\\mp a\\ln(x/a)=\\mathrm{constant}$."],
 })
 CLOSED_FORMS.update({
-    ("mclenaghan_tariq_tupper", "original", "surface"): (lambda u, r: u, lambda u, r: u+2*r, None),
-    ("mclenaghan_tariq_tupper", "exponential", "surface"): (lambda t, r: t-r, lambda t, r: t+r, None),
-    ("mclenaghan_tariq_tupper", "upper_half_plane", "surface"): (lambda t, x: t-np.log(x), lambda t, x: t+np.log(x), None),
+    ("mclenaghan_tariq_tupper", "original", "surface"): (lambda u, r: u+2*r, lambda u, r: u, None),
+    ("mclenaghan_tariq_tupper", "exponential", "surface"): (lambda t, r: t+r, lambda t, r: t-r, None),
+    ("mclenaghan_tariq_tupper", "upper_half_plane", "surface"): (lambda t, x: t+np.log(x), lambda t, x: t-np.log(x), None),
 })
 
 
