@@ -79,6 +79,11 @@
       "id": "scalar_field_black_hole",
       "kind": "family",
       "text": "Schwarzschild's hole in a scalar field that grows along one axis. Its horizon stays regular, which the no hair theorems allow because the spacetime is not asymptotically flat [herdeiro2025]."
+    },
+    {
+      "id": "penney_scalar",
+      "kind": "generalisation",
+      "text": "Fisher's solution with an electric charge added, found by R. Penney in 1969. With the scalar field switched off it is Reissner and Nordström's black hole [banerjee1998]."
     }
   ],
   "references": [
@@ -110,7 +115,8 @@
     "belinskii1973",
     "dicke1962",
     "faraoni2018",
-    "herdeiro2025"
+    "herdeiro2025",
+    "banerjee1998"
   ],
   "coordinates": [
     {

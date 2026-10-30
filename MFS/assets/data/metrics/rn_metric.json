@@ -203,6 +203,11 @@
       "id": "jackiw_teitelboim_black_hole",
       "kind": "limit",
       "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Bring the mass down toward the charge and zoom in on the horizon: in that limit the plane of $t$ and $r$ becomes that black hole, with the area of the sphere as its dilaton [mertens2023]."
+    },
+    {
+      "id": "penney_scalar",
+      "kind": "generalisation",
+      "text": "Reissner and Nordström's black hole with a massless scalar field added, found by R. Penney in 1969. Any scalar charge, however small, removes the horizon and leaves a naked singularity [banerjee1998]."
     }
   ],
   "references": [
@@ -254,7 +259,8 @@
     "blazquez2021",
     "bah2021",
     "lewandowski2023",
-    "mertens2023"
+    "mertens2023",
+    "banerjee1998"
   ],
   "coordinates": [
     {

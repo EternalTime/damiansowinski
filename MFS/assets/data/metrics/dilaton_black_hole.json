@@ -87,6 +87,11 @@
       "id": "three_brane_throat",
       "kind": "family",
       "text": "The three-brane of ten dimensions has a horizon with no singularity behind it. Gibbons, Horowitz, and Townsend found it by the analysis that turns the singularity of some extreme dilaton black holes into a horizon in more dimensions [gibbons1995]."
+    },
+    {
+      "id": "penney_scalar",
+      "kind": "family",
+      "text": "A charged mass with a massless scalar field that does not couple to the Maxwell field, found by R. Penney in 1969. Its only black hole is the one with the scalar field switched off [banerjee1998]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "faraoni2016",
     "cvetic1996static",
     "cvetic1996dyonic",
-    "gibbons1995"
+    "gibbons1995",
+    "banerjee1998"
   ],
   "coordinates": [
     {

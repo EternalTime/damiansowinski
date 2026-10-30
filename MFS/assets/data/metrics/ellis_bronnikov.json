@@ -84,6 +84,11 @@
       "id": "kodama_kink",
       "kind": "family",
       "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost field with a potential whose two vacua sit on the two sides of the throat [kodama1978preprint]. Its mass is positive [kodama1978]."
+    },
+    {
+      "id": "penney_scalar",
+      "kind": "family",
+      "text": "With an electric charge, the scalar field of negative energy gives the extended Penney solution, which holds traversable wormholes and cold black holes [bronnikov2024]."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "caldwell2002",
     "caldwell2003",
     "kodama1978preprint",
-    "kodama1978"
+    "kodama1978",
+    "bronnikov2024"
   ],
   "coordinates": [
     {

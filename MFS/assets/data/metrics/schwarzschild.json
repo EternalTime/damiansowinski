@@ -514,6 +514,11 @@
       "id": "kerr_disc_source",
       "kind": "generalisation",
       "text": "Kerr's spacetime cut at the disc in its ring and glued shut, with a layer of matter on the disc. At $a = 0$ the disc is a point and the spacetime is Schwarzschild's."
+    },
+    {
+      "id": "penney_scalar",
+      "kind": "generalisation",
+      "text": "Schwarzschild's black hole with both an electric charge and a massless scalar field, found by R. Penney in 1969. With both switched on, the sphere of the horizon has zero area and infinite curvature [banerjee1998]."
     }
   ],
   "references": [
@@ -648,7 +653,8 @@
     "astorino2022swirling",
     "cardoso2025",
     "buchdahl1964",
-    "bonnor1967oscillating"
+    "bonnor1967oscillating",
+    "banerjee1998"
   ],
   "coordinates": [
     {

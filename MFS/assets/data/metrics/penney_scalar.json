@@ -1,0 +1,108 @@
+{
+  "id": "penney_scalar",
+  "name": "Penney's Charged Scalar Solution",
+  "short_name": "Penney",
+  "description": "The static, spherically symmetric field of a mass carrying both an electric charge and a massless scalar field, found by R. Penney in 1969. With the scalar field switched off it is Reissner and Nordström's charged black hole, and with the charge switched off it is Fisher's solution; with both present, every sphere that would be a horizon is a singularity in plain view.",
+  "tags": [
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "electric charge",
+    "point charge",
+    "scalar charge",
+    "scalar field",
+    "massless scalar field",
+    "minimally coupled scalar field",
+    "Einstein-Maxwell",
+    "Einstein-scalar",
+    "electromagnetic field",
+    "mass",
+    "naked singularity",
+    "curvature singularity",
+    "no horizon",
+    "no-hair theorem",
+    "instability",
+    "scalar-tensor theory",
+    "conformal transformation",
+    "harmonic coordinates",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The mass $M$ has $2GM/c^2 = \\gamma(a + b)$ and the charge $Q$ has $GQ^2/(4\\pi\\varepsilon_0c^4) = \\gamma^2ab$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "R. Penney worked at the Scientific Laboratory of the Ford Motor Company in Dearborn, Michigan, and in 1968 he published axially symmetric solutions of Einstein's equations with a scalar field of zero mass [penney1968]. In February 1969 he sent Physical Review the same field around a point charge [penney1969]. In his words, \"The field equations for coupled gravitational and zero-mass scalar fields in the presence of a point charge are solved in the spherically symmetric static case\" [penney1969]. He called the result \"the generalization of the Reissner-Nordström solution in the presence of a zero-mass meson field\" [penney1969].¶Two older solutions meet in it. Hans Reissner in 1916 and Gunnar Nordström in 1918 found the field of a charged mass with nothing else present [reissner1916, nordstrom1918]. Iosif Zalmanovich Fisher in 1948, and Allen Janis, Ezra Newman, and Jeffrey Winicour in 1968, found the field of a mass with a massless scalar field [fisher1948, janis1968]. In the radius used by Narayan Banerjee and Somasri Sen in 1998 and by Marco Astorino in 2013, three numbers fix Penney's solution: two lengths $a > b$ and an exponent $\\gamma$ with $0 < \\gamma \\le 1$, where $\\gamma = 1$ is the case with no scalar field [banerjee1998, astorino2013]. At $\\gamma = 1$ the scalar field vanishes and Reissner and Nordström's black hole remains, with its horizons at $r = a$ and $r = b$; at $b = 0$ the charge vanishes and Fisher's solution remains [banerjee1998, astorino2013].¶For every $\\gamma < 1$ the curvature grows without bound at $r = a$, and the sphere there has zero area: a point singularity, with nothing to hide it [banerjee1998]. Banerjee and Sen made a theorem of it in 1998, that in Penney's solution \"the scalar field becomes trivial if one demands a regular horizon\" [banerjee1998]. With a scalar meson field, in their words, \"the only charged spherical black hole that exists is the RN black hole\" [banerjee1998].¶Kirill Bronnikov solved the same equations in 1973 for a whole class of scalar-tensor theories, noting that they are solved in Penney's paper \"and more completely\" in two Kiev preprints of 1972 [bronnikov1973]. In his harmonic coordinate $u$ the scalar field is $\\psi = Cu$, and the metric is built from hyperbolic sines, ordinary sines, or straight lines, according to the signs of two constants $h$ and $k$ [bronnikov1973]. A scalar field of negative energy obeys the same equations, and its solutions extend Penney's into a wider family, which Bronnikov and his coauthors called in 2024 the extended Penney solution and which holds traversable wormholes and cold black holes [bronnikov2024]. With the energy positive, the singularity depends on how the mass compares with the charge [bronnikov2024]. A mass at least as large as the charge gives an attracting centre of the scalar kind, like Fisher's, and a charge larger than the mass gives a repulsive centre of Reissner and Nordström's kind [bronnikov2024].¶Bronnikov and A. V. Khodunov found in 1979 that Fisher's and Penney's solutions are unstable under radial perturbations [bronnikov1979, bronnikov2024]. In 2024 Bronnikov, Sergei Bolokhov, Milena Skvortsova, Rustam Ibadov, and Feruza Shaymanova confirmed it: all three branches of Penney's solution, in their words, \"are unstable under linear radial perturbations\" [bronnikov2024]. Penney's solution also grows out of Janis, Newman, and Winicour's by a method that Janis, David Robinson, and Winicour published in 1969, and Hideki Maeda and Cristián Martínez carried it to any number of dimensions in 2018 [maeda2018, janis1969]. The general static, spherically symmetric solution with charge, they showed, \"is not unique in the charged case\" [maeda2018]. At $\\gamma = 1/2$ a conformal transformation carries Penney's solution to the charged black hole of a conformally coupled scalar field, and Astorino used it in 2013 to set that black hole in Melvin's magnetic universe [astorino2013].",
+  "related": [
+    {
+      "id": "rn_metric",
+      "kind": "special_case",
+      "text": "The case $\\gamma = 1$, with no scalar field. The spheres $r = a$ and $r = b$ are then its two horizons, and any scalar charge at all turns the outer one into a singularity [banerjee1998]."
+    },
+    {
+      "id": "fisher_jnw",
+      "kind": "special_case",
+      "text": "The case $b = 0$, with no charge. Its parameter $b$ is Penney's $a$, and its $\\gamma$ is the same exponent."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "special_case",
+      "text": "The case $b = 0$ and $\\gamma = 1$: neither charge nor scalar field, and $r = a$ is the horizon."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "Another charged mass with a scalar field, here coupled to the Maxwell field, with a regular horizon around its singularity."
+    },
+    {
+      "id": "ellis_bronnikov",
+      "kind": "family",
+      "text": "Give the scalar field of Penney's solution a negative energy and its family holds traversable wormholes, as Ellis and Bronnikov's holds them without charge [bronnikov2024]."
+    }
+  ],
+  "references": [
+    "penney1968",
+    "penney1969",
+    "reissner1916",
+    "nordstrom1918",
+    "fisher1948",
+    "janis1968",
+    "banerjee1998",
+    "astorino2013",
+    "bronnikov1973",
+    "bronnikov2024",
+    "bronnikov1979",
+    "maeda2018",
+    "janis1969"
+  ],
+  "coordinates": [
+    {
+      "id": "spherical",
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, and write $E = \\left((r - a)/(r - b)\\right)^{\\gamma}$ and $D = (a - bE)/(a - b)$. The areal radius is $D\\sqrt{(r - a)(r - b)/E}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Value of $r$ at the singularity, a length, with $a > b$; at $\\gamma = 1$ the outer horizon"
+        },
+        {
+          "symbol": "b",
+          "description": "A length with $0 < b < a$; at $\\gamma = 1$ the inner horizon, and $b = 0$ is Fisher's solution with his $b$ equal to $a$"
+        },
+        {
+          "symbol": "\\gamma",
+          "description": "A pure number with $0 < \\gamma \\le 1$; $\\gamma = 1$ is Reissner and Nordström's metric. The scalar field is $\\varphi = \\sqrt{(1 - \\gamma^2)c^4/16\\pi G}\\,\\ln\\left((r - a)/(r - b)\\right)$, which vanishes at $\\gamma = 1$"
+        },
+        {
+          "symbol": "E = \\left(\\dfrac{r - a}{r - b}\\right)^{\\gamma}",
+          "description": "A pure number rising from 0 at the singularity to 1 far away; with $D$ it is $-g_{tt} = E/D^2$"
+        },
+        {
+          "symbol": "D = \\dfrac{a - bE}{a - b}",
+          "description": "A pure number falling from $a/(a - b)$ at the singularity to 1 far away; $D = 1$ everywhere at $b = 0$"
+        }
+      ]
+    }
+  ]
+}
