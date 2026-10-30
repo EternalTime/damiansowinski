@@ -39558,6 +39558,344 @@
       ]
     },
     {
+      "id": "lynden_bell_pineault",
+      "name": "Relativistic Discs of Lynden-Bell and Pineault",
+      "short_name": "Lynden-Bell-Pineault Discs",
+      "description": "Thin relativistic discs with counter rotating streams or matter rotating in one sense, and a circular speed independent of radius.",
+      "tags": [
+        "stationary",
+        "four-dimensional",
+        "axisymmetric",
+        "rotating",
+        "thin disc",
+        "dust",
+        "self-similar",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Components use $x^0 = ct$, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\dot t = d(ct)/d\\lambda$ for affine parameter $\\lambda$, with $c$ and $G$ explicit. Matter occupies an infinitesimally thin equatorial sheet, and smooth tensors describe the vacuum exterior.",
+      "related": [
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "Counter-rotating discs obtained with the static axisymmetric construction used for the Morgan-Morgan discs [lyndenbell1978]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "Flat space is recovered when the circular speed of both counter rotating streams vanishes [lyndenbell1978]."
+        }
+      ],
+      "references": [
+        "lyndenbell1978",
+        "lyndenbellpineault1978b",
+        "caishu2002"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lynden_bell_pineault.json",
+      "charts": [
+        {
+          "id": "weyl",
+          "name": "Weyl, Finite and Infinite Counter Rotating Discs",
+          "coordinates": [
+            "t",
+            "R",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "R \\in (0, \\infty)",
+            "z \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "0 < n \\le 1/2",
+            "A > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\nu = \\nu(R,z)",
+              "description": "The static potential, with $\\nu_{,RR} + R^{-1}\\nu_{,R} + \\nu_{,zz} = 0$ in vacuum; for the infinite disc $\\nu = n\\ln[(\\sqrt{R^2+z^2}+z)/(2A)]$; the finite disc has $\\nu(R,0) = n\\ln(R/2A)$ for $R < A$ and $\\nu \\to 0$ at infinity; outside the finite disc $\\nu_{,z}(R,0) = 0$ for $R > A$"
+            },
+            {
+              "symbol": "\\xi = \\xi(R,z)",
+              "description": "The second static potential, fixed by $\\xi_{,R} = R(\\nu_{,R}^2 - \\nu_{,z}^2)$, $\\xi_{,z} = 2R\\nu_{,R}\\nu_{,z}$, and $\\xi = 0$ on the axis; for the infinite disc $\\xi = 2n^2\\ln[(1+z/\\sqrt{R^2+z^2})/2]$"
+            },
+            {
+              "symbol": "n",
+              "description": "Self-similarity exponent, a number; for counter-rotation $n = V^2/(c^2 + V^2)$, with $V$ the speed of either stream measured by a static observer; for rotation $V$ is measured by a locally nonrotating observer and satisfies $(1-n)V^2/c^2 + (1-2n)Q_0V/c - n = 0$, where $Q_0 = Q(\\pi/2)$"
+            },
+            {
+              "symbol": "A",
+              "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc; the finite geometry is asymptotically flat, and the infinite geometry has no asymptotically flat end"
+            }
+          ],
+          "convention": "The Weyl coordinates $(t,R,z,\\phi)$ have time $t$, cylindrical radius $R$, height $z$, and azimuth $\\phi$. The finite disc occupies $z = 0$, $0 < R < A$, and the infinite disc occupies $z = 0$, $R > 0$. The displayed region is $z > 0$; the lower region follows by $z \\mapsto -z$.",
+          "line_element": "ds^2 = -e^{2\\nu}c^2dt^2 + e^{2\\xi - 2\\nu}\\left(dR^2 + dz^2\\right) + R^2e^{-2\\nu}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2\\nu}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "e^{-2\\nu + 2\\xi}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{-2\\nu + 2\\xi}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2e^{-2\\nu}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(R\\left(\\partial_R\\nu\\right)^2 + R\\left(\\partial_z\\nu\\right)^2 - R\\,\\partial_R^2\\nu + R\\,\\partial_R^2\\xi - R\\,\\partial_z^2\\nu + R\\,\\partial_z^2\\xi - \\partial_R\\nu\\right)e^{2\\nu - 2\\xi}}{R}",
+          "kretschmann": "K = -\\dfrac{4\\left(8R^2\\,\\partial_R\\nu\\,\\partial_R\\xi\\left(\\partial_z\\nu\\right)^2 + 8R^2\\left(\\partial_R\\nu\\right)^2\\,\\partial_z\\nu\\,\\partial_z\\xi - 16R^2\\,\\partial_R\\nu\\,\\partial_R\\partial_z\\nu\\,\\partial_z\\nu + 8R^2\\,\\partial_R\\nu\\,\\partial_R\\partial_z\\nu\\,\\partial_z\\xi + 4R^2\\,\\partial_R\\nu\\,\\partial_R\\xi\\,\\partial_R^2\\nu - 4R^2\\,\\partial_R\\nu\\,\\partial_R\\xi\\,\\partial_z^2\\nu + 8R^2\\,\\partial_R\\partial_z\\nu\\,\\partial_R\\xi\\,\\partial_z\\nu - 4R^2\\,\\partial_R^2\\nu\\,\\partial_z\\nu\\,\\partial_z\\xi + 4R^2\\,\\partial_z\\nu\\,\\partial_z\\xi\\,\\partial_z^2\\nu - 4R^2\\left(\\partial_R\\nu\\right)^2\\left(\\partial_R\\xi\\right)^2 - 14R^2\\left(\\partial_R\\nu\\right)^2\\left(\\partial_z\\nu\\right)^2 - 4R^2\\left(\\partial_R\\nu\\right)^2\\left(\\partial_z\\xi\\right)^2 - 4R^2\\left(\\partial_R\\xi\\right)^2\\left(\\partial_z\\nu\\right)^2 - 4R^2\\left(\\partial_z\\nu\\right)^2\\left(\\partial_z\\xi\\right)^2 + 4R^2\\,\\partial_R^2\\nu\\left(\\partial_z\\nu\\right)^2 - 4R^2\\left(\\partial_R\\nu\\right)^2\\,\\partial_R^2\\nu + 4R^2\\left(\\partial_R\\nu\\right)^2\\,\\partial_z^2\\nu + 8R^2\\left(\\partial_R\\nu\\right)^3\\,\\partial_R\\xi - 4R^2\\left(\\partial_z\\nu\\right)^2\\,\\partial_z^2\\nu + 8R^2\\left(\\partial_z\\nu\\right)^3\\,\\partial_z\\xi + 2R^2\\,\\partial_R^2\\nu\\,\\partial_R^2\\xi - 2R^2\\,\\partial_R^2\\nu\\,\\partial_z^2\\nu + 2R^2\\,\\partial_R^2\\nu\\,\\partial_z^2\\xi + 2R^2\\,\\partial_R^2\\xi\\,\\partial_z^2\\nu - 2R^2\\,\\partial_R^2\\xi\\,\\partial_z^2\\xi + 2R^2\\,\\partial_z^2\\nu\\,\\partial_z^2\\xi - 7R^2\\left(\\partial_R\\nu\\right)^4 - 4R^2\\left(\\partial_R\\partial_z\\nu\\right)^2 - 3R^2\\left(\\partial_R^2\\nu\\right)^2 - R^2\\left(\\partial_R^2\\xi\\right)^2 - 7R^2\\left(\\partial_z\\nu\\right)^4 - 3R^2\\left(\\partial_z^2\\nu\\right)^2 - R^2\\left(\\partial_z^2\\xi\\right)^2 - 4R\\,\\partial_R\\nu\\,\\partial_z\\nu\\,\\partial_z\\xi + 4R\\,\\partial_R\\nu\\left(\\partial_R\\xi\\right)^2 + 4R\\,\\partial_R\\nu\\left(\\partial_z\\nu\\right)^2 + 4R\\,\\partial_R\\nu\\left(\\partial_z\\xi\\right)^2 + 2R\\,\\partial_R\\xi\\left(\\partial_z\\nu\\right)^2 - 2R\\left(\\partial_R\\nu\\right)^2\\,\\partial_R\\xi - 2R\\,\\partial_R\\nu\\,\\partial_R^2\\nu - 2R\\,\\partial_R\\nu\\,\\partial_z^2\\nu - 4R\\,\\partial_R\\partial_z\\nu\\,\\partial_z\\xi - 2R\\,\\partial_R\\xi\\,\\partial_R^2\\nu + 2R\\,\\partial_R\\xi\\,\\partial_z^2\\nu + 4R\\left(\\partial_R\\nu\\right)^3 - 3\\left(\\partial_R\\nu\\right)^2 - 2\\left(\\partial_R\\xi\\right)^2 - 2\\left(\\partial_z\\xi\\right)^2\\right)e^{4\\nu - 4\\xi}}{R^2}"
+        },
+        {
+          "id": "spherical",
+          "name": "Infinite Counter Rotating Disc",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in (0, \\pi/2)",
+            "\\phi \\in [0, 2\\pi)",
+            "A > 0",
+            "0 \\le n \\le 1/2"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "Self-similarity exponent, a number; for counter-rotation $n = V^2/(c^2 + V^2)$, with $V$ the speed of either stream measured by a static observer; for rotation $V$ is measured by a locally nonrotating observer and satisfies $(1-n)V^2/c^2 + (1-2n)Q_0V/c - n = 0$, where $Q_0 = Q(\\pi/2)$"
+            },
+            {
+              "symbol": "A",
+              "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+            },
+            {
+              "symbol": "f = r/A",
+              "description": "The radial coordinate in units of $A$"
+            },
+            {
+              "symbol": "h = (1 + \\cos\\theta)/2",
+              "description": "The angular factor $h = \\cos^2(\\theta/2)$ on the upper vacuum side"
+            }
+          ],
+          "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The coordinates obey $R = r\\sin\\theta$ and $z = r\\cos\\theta$. The equatorial matter sheet is $\\theta = \\pi/2$, and the displayed chart covers its upper vacuum side.",
+          "line_element": "ds^2 = -f^{2n}h^{2n}c^2dt^2 + f^{-2n}h^{4n^2 - 2n}\\left(dr^2 + r^2d\\theta^2\\right) + f^{-2n}h^{-2n}r^2\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f^{2n}h^{2n}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{h^{2n(2n - 1)}}{f^{2n}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2\\,h^{2n(2n - 1)}}{f^{2n}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{f^{2n}h^{2n}}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{16n^2(2n - 1)^2f^{4n}h^{4n - 8n^2}\\left(2 + \\cos\\theta + n(2n - 1)(1 - \\cos\\theta)\\right)}{r^4(1 + \\cos\\theta)^2}"
+        },
+        {
+          "id": "photons",
+          "name": "Counter Rotating Massless Particles",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in (0, \\pi/2)",
+            "\\phi \\in [0, 2\\pi)",
+            "A > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+            },
+            {
+              "symbol": "h = (1 + \\cos\\theta)/2",
+              "description": "The angular factor $h = \\cos^2(\\theta/2)$ on the upper vacuum side"
+            }
+          ],
+          "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$ and azimuth $\\phi$, with the massless sheet at $\\theta = \\pi/2$. This member has $n = 1/2$. The vacuum side is locally flat under the Rindler transformation $\\rho = 2\\sqrt{Ar}\\sin(\\theta/2)$, $\\zeta = 2\\sqrt{Ar}\\cos(\\theta/2)$, with lapse $\\zeta/(2A)$.",
+          "line_element": "ds^2 = -\\dfrac{rh}{A}c^2dt^2 + \\dfrac{A}{r}\\left(dr^2 + r^2d\\theta^2\\right) + \\dfrac{Ar\\sin^2\\theta}{h}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r\\left(\\cos\\theta + 1\\right)}{2A}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{A}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "A\\,r"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-2A\\,r\\left(\\cos\\theta - 1\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rotating",
+          "name": "Rotating Self Similar Disc",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in (0, \\pi/2)",
+            "\\phi \\in [0, 2\\pi)",
+            "A > 0",
+            "0 < n < 1/2"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "Self-similarity exponent, a number; for counter-rotation $n = V^2/(c^2 + V^2)$, with $V$ the speed of either stream measured by a static observer; for rotation $V$ is measured by a locally nonrotating observer and satisfies $(1-n)V^2/c^2 + (1-2n)Q_0V/c - n = 0$, where $Q_0 = Q(\\pi/2)$"
+            },
+            {
+              "symbol": "A",
+              "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+            },
+            {
+              "symbol": "N = N(\\theta)",
+              "description": "The angular redshift function, normalized by $N(0) = 0$; with $b = 1 - 2n$ and $S = Q^\\prime - Q\\cot\\theta + QN^\\prime$, the vacuum equation is $N^{\\prime\\prime} = b^2Q^2 + S^2 - 2n - N^\\prime\\cot\\theta$, with primes denoting $d/d\\theta$"
+            },
+            {
+              "symbol": "P = P(\\theta)",
+              "description": "The angular circumference function, with $e^P = \\sin\\theta$ in the regular-axis normalization of the cold disc"
+            },
+            {
+              "symbol": "Q = Q(\\theta)",
+              "description": "The dimensionless frame dragging function, with $Q(0) = 0$ and $Q^{\\prime\\prime} = Q[b^2(1-Q^2) + (N^\\prime-\\cot\\theta)^2 - S^2] - Q^\\prime\\cot\\theta$; an ergoregion has $Q^2 > 1$; at the cold sheet $Q_0^\\prime = -N_0^\\prime[Q_0 + 2v/(1+v^2)]$, where $v = V/c$"
+            },
+            {
+              "symbol": "Z = Z(\\theta)",
+              "description": "The angular meridian function, with $Z(0) = 0$ and $Z^\\prime = bQS + 2nN^\\prime$; the equatorial derivative jumps carry the thin matter surface"
+            },
+            {
+              "symbol": "f = r/A",
+              "description": "The radial coordinate in units of $A$"
+            }
+          ],
+          "convention": "The coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The cold disc is at $\\theta = \\pi/2$, with the radial exponent $k = 1 - n$ of Lynden-Bell and Pineault. The angular functions obey the vacuum equations above the sheet and the cold disc jump conditions at the equator.",
+          "line_element": "ds^2 = -f^{2n}e^{N}c^2dt^2 + A^2f^{2 - 2n}e^{2P - N}\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}c\\,dt\\right)^2 + f^{-2n}e^{Z - N}\\left(dr^2 + r^2d\\theta^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\left(Q + 1\\right)\\left(Q - 1\\right)f^{2n}e^{N}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-Q\\,r\\,e^{P}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-Q\\,r\\,e^{P}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{e^{-N}e^{Z}}{f^{2n}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2e^{-N}e^{Z}}{f^{2n}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2e^{-N}e^{2P}}{f^{2n}}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4n^2\\,Q^2 - 4n^2 - 4n\\,Q^2 + 4n + Q^2\\left(\\partial_\\theta N\\right)^2 - \\left(\\partial_\\theta N\\right)^2 - 2Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P + 2\\partial_\\theta N\\,\\partial_\\theta P + 2Q\\,\\partial_\\theta N\\,\\partial_\\theta Q + 2\\partial_\\theta^2 N + Q^2\\left(\\partial_\\theta P\\right)^2 - 4\\left(\\partial_\\theta P\\right)^2 - 2Q\\,\\partial_\\theta P\\,\\partial_\\theta Q - 4\\partial_\\theta^2 P + Q^2 + \\left(\\partial_\\theta Q\\right)^2 - 2\\partial_\\theta^2 Z - 4\\right)f^{2n}e^{-Z}e^{N}}{2r^2}",
+          "kretschmann": "K = \\dfrac{f^{4n}\\left(176n^4\\,Q^4 - 288n^4\\,Q^2 + 112n^4 - 352n^3\\,Q^4 + 544n^3\\,Q^2 - 192n^3 + 88n^2\\,Q^4\\left(\\partial_\\theta N\\right)^2 - 144n^2\\,Q^2\\left(\\partial_\\theta N\\right)^2 + 56n^2\\left(\\partial_\\theta N\\right)^2 - 176n^2\\,Q^4\\,\\partial_\\theta N\\,\\partial_\\theta P + 208n^2\\,Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P - 32n^2\\,\\partial_\\theta N\\,\\partial_\\theta P + 176n^2\\,Q^3\\,\\partial_\\theta N\\,\\partial_\\theta Q + 32n^2\\,Q^2\\,\\partial_\\theta N\\,\\partial_\\theta Z - 112n^2\\,Q\\,\\partial_\\theta N\\,\\partial_\\theta Q - 32n^2\\,\\partial_\\theta N\\,\\partial_\\theta Z + 32n^2\\,Q^2\\,\\partial_\\theta^2 N - 32n^2\\,\\partial_\\theta^2 N + 88n^2\\,Q^4\\left(\\partial_\\theta P\\right)^2 - 104n^2\\,Q^2\\left(\\partial_\\theta P\\right)^2 + 32n^2\\left(\\partial_\\theta P\\right)^2 - 176n^2\\,Q^3\\,\\partial_\\theta P\\,\\partial_\\theta Q + 16n^2\\,Q^2\\,\\partial_\\theta P\\,\\partial_\\theta Z - 80n^2\\,Q\\,\\partial_\\theta P\\,\\partial_\\theta Q - 16n^2\\,\\partial_\\theta P\\,\\partial_\\theta Z - 32n^2\\,Q^2\\,\\partial_\\theta^2 P + 32n^2\\,\\partial_\\theta^2 P + 264n^2\\,Q^4 + 88n^2\\,Q^2\\left(\\partial_\\theta Q\\right)^2 - 16n^2\\,Q^2\\left(\\partial_\\theta Z\\right)^2 - 392n^2\\,Q^2 + 96n^2\\,Q\\,\\partial_\\theta Q\\,\\partial_\\theta Z + 32n^2\\,Q\\,\\partial_\\theta^2 Q - 40n^2\\left(\\partial_\\theta Q\\right)^2 + 16n^2\\left(\\partial_\\theta Z\\right)^2 + 144n^2 - 88n\\,Q^4\\left(\\partial_\\theta N\\right)^2 + 136n\\,Q^2\\left(\\partial_\\theta N\\right)^2 - 48n\\left(\\partial_\\theta N\\right)^2 + 176n\\,Q^4\\,\\partial_\\theta N\\,\\partial_\\theta P - 224n\\,Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P + 48n\\,\\partial_\\theta N\\,\\partial_\\theta P - 176n\\,Q^3\\,\\partial_\\theta N\\,\\partial_\\theta Q - 16n\\,Q^2\\,\\partial_\\theta N\\,\\partial_\\theta Z + 80n\\,Q\\,\\partial_\\theta N\\,\\partial_\\theta Q + 16n\\,\\partial_\\theta N\\,\\partial_\\theta Z - 48n\\,Q^2\\,\\partial_\\theta^2 N + 48n\\,\\partial_\\theta^2 N - 88n\\,Q^4\\left(\\partial_\\theta P\\right)^2 + 128n\\,Q^2\\left(\\partial_\\theta P\\right)^2 - 64n\\left(\\partial_\\theta P\\right)^2 + 176n\\,Q^3\\,\\partial_\\theta P\\,\\partial_\\theta Q - 32n\\,Q^2\\,\\partial_\\theta P\\,\\partial_\\theta Z + 80n\\,Q\\,\\partial_\\theta P\\,\\partial_\\theta Q + 32n\\,\\partial_\\theta P\\,\\partial_\\theta Z + 48n\\,Q^2\\,\\partial_\\theta^2 P - 64n\\,\\partial_\\theta^2 P - 88n\\,Q^4 - 88n\\,Q^2\\left(\\partial_\\theta Q\\right)^2 + 16n\\,Q^2\\left(\\partial_\\theta Z\\right)^2 + 128n\\,Q^2 - 80n\\,Q\\,\\partial_\\theta Q\\,\\partial_\\theta Z - 48n\\,Q\\,\\partial_\\theta^2 Q + 32n\\left(\\partial_\\theta Q\\right)^2 - 16n\\left(\\partial_\\theta Z\\right)^2 - 64n + 11Q^4\\left(\\partial_\\theta N\\right)^4 - 18Q^2\\left(\\partial_\\theta N\\right)^4 + 7\\left(\\partial_\\theta N\\right)^4 - 44Q^4\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta P + 52Q^2\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta P - 8\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta P + 44Q^3\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta Q + 8Q^2\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta Z - 28Q\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta Q - 8\\left(\\partial_\\theta N\\right)^3\\,\\partial_\\theta Z - 8Q^2\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta^2 N + 8\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta^2 N + 66Q^4\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta P\\right)^2 - 74Q^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta P\\right)^2 + 12\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta P\\right)^2 - 132Q^3\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta P\\,\\partial_\\theta Q - 4Q^2\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta P\\,\\partial_\\theta Z + 20Q\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta P\\,\\partial_\\theta Q + 4\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta P\\,\\partial_\\theta Z + 22Q^4\\left(\\partial_\\theta N\\right)^2 + 66Q^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 4Q^2\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta Z\\right)^2 - 34Q^2\\left(\\partial_\\theta N\\right)^2 + 24Q\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta Q\\,\\partial_\\theta Z + 8Q\\left(\\partial_\\theta N\\right)^2\\,\\partial_\\theta^2 Q - 18\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 4\\left(\\partial_\\theta N\\right)^2\\left(\\partial_\\theta Z\\right)^2 + 16\\left(\\partial_\\theta N\\right)^2 - 8Q^2\\,\\partial_\\theta N\\,\\partial_\\theta^2 N\\,\\partial_\\theta P + 8\\partial_\\theta N\\,\\partial_\\theta^2 N\\,\\partial_\\theta P + 8Q^2\\,\\partial_\\theta N\\,\\partial_\\theta^2 N\\,\\partial_\\theta Z - 40Q\\,\\partial_\\theta N\\,\\partial_\\theta^2 N\\,\\partial_\\theta Q - 8\\partial_\\theta N\\,\\partial_\\theta^2 N\\,\\partial_\\theta Z - 44Q^4\\,\\partial_\\theta N\\left(\\partial_\\theta P\\right)^3 + 64Q^2\\,\\partial_\\theta N\\left(\\partial_\\theta P\\right)^3 - 16\\partial_\\theta N\\left(\\partial_\\theta P\\right)^3 + 132Q^3\\,\\partial_\\theta N\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta Q - 16Q^2\\,\\partial_\\theta N\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta Z - 8Q\\,\\partial_\\theta N\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta Q + 8\\partial_\\theta N\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta Z + 24Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P\\,\\partial_\\theta^2 P - 16\\partial_\\theta N\\,\\partial_\\theta P\\,\\partial_\\theta^2 P - 44Q^4\\,\\partial_\\theta N\\,\\partial_\\theta P - 132Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2 + 8Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P\\left(\\partial_\\theta Z\\right)^2 + 64Q^2\\,\\partial_\\theta N\\,\\partial_\\theta P - 8Q\\,\\partial_\\theta N\\,\\partial_\\theta P\\,\\partial_\\theta Q\\,\\partial_\\theta Z - 40Q\\,\\partial_\\theta N\\,\\partial_\\theta P\\,\\partial_\\theta^2 Q - 8\\partial_\\theta N\\,\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2 - 8\\partial_\\theta N\\,\\partial_\\theta P\\left(\\partial_\\theta Z\\right)^2 - 16\\partial_\\theta N\\,\\partial_\\theta P - 8Q^2\\,\\partial_\\theta N\\,\\partial_\\theta^2 P\\,\\partial_\\theta Z + 24Q\\,\\partial_\\theta N\\,\\partial_\\theta^2 P\\,\\partial_\\theta Q + 8\\partial_\\theta N\\,\\partial_\\theta^2 P\\,\\partial_\\theta Z + 44Q^3\\,\\partial_\\theta N\\,\\partial_\\theta Q + 44Q\\,\\partial_\\theta N\\left(\\partial_\\theta Q\\right)^3 - 8Q\\,\\partial_\\theta N\\,\\partial_\\theta Q\\left(\\partial_\\theta Z\\right)^2 - 16Q\\,\\partial_\\theta N\\,\\partial_\\theta Q + 8Q\\,\\partial_\\theta N\\,\\partial_\\theta^2 Q\\,\\partial_\\theta Z + 16\\partial_\\theta N\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta Z - 8\\partial_\\theta N\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q - 8\\partial_\\theta N\\,\\partial_\\theta Z - 8Q^2\\left(\\partial_\\theta^2 N\\right)^2 + 12\\left(\\partial_\\theta^2 N\\right)^2 + 16Q^2\\,\\partial_\\theta^2 N\\left(\\partial_\\theta P\\right)^2 - 16\\partial_\\theta^2 N\\left(\\partial_\\theta P\\right)^2 - 8Q^2\\,\\partial_\\theta^2 N\\,\\partial_\\theta P\\,\\partial_\\theta Z + 16Q\\,\\partial_\\theta^2 N\\,\\partial_\\theta P\\,\\partial_\\theta Q + 8\\partial_\\theta^2 N\\,\\partial_\\theta P\\,\\partial_\\theta Z + 16Q^2\\,\\partial_\\theta^2 N\\,\\partial_\\theta^2 P - 16\\partial_\\theta^2 N\\,\\partial_\\theta^2 P + 16Q^2\\,\\partial_\\theta^2 N + 8Q\\,\\partial_\\theta^2 N\\,\\partial_\\theta Q\\,\\partial_\\theta Z - 16Q\\,\\partial_\\theta^2 N\\,\\partial_\\theta^2 Q - 16\\partial_\\theta^2 N\\left(\\partial_\\theta Q\\right)^2 - 8\\partial_\\theta^2 N\\,\\partial_\\theta^2 Z - 16\\partial_\\theta^2 N + 11Q^4\\left(\\partial_\\theta P\\right)^4 - 24Q^2\\left(\\partial_\\theta P\\right)^4 + 16\\left(\\partial_\\theta P\\right)^4 - 44Q^3\\left(\\partial_\\theta P\\right)^3\\,\\partial_\\theta Q + 12Q^2\\left(\\partial_\\theta P\\right)^3\\,\\partial_\\theta Z + 16Q\\left(\\partial_\\theta P\\right)^3\\,\\partial_\\theta Q - 16\\left(\\partial_\\theta P\\right)^3\\,\\partial_\\theta Z - 24Q^2\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta^2 P + 32\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta^2 P + 22Q^4\\left(\\partial_\\theta P\\right)^2 + 66Q^2\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 4Q^2\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\theta Z\\right)^2 - 40Q^2\\left(\\partial_\\theta P\\right)^2 - 16Q\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta Q\\,\\partial_\\theta Z + 32Q\\left(\\partial_\\theta P\\right)^2\\,\\partial_\\theta^2 Q + 8\\left(\\partial_\\theta P\\right)^2\\left(\\partial_\\theta Z\\right)^2 + 32\\left(\\partial_\\theta P\\right)^2 + 8Q^2\\,\\partial_\\theta P\\,\\partial_\\theta^2 P\\,\\partial_\\theta Z - 16\\partial_\\theta P\\,\\partial_\\theta^2 P\\,\\partial_\\theta Z - 44Q^3\\,\\partial_\\theta P\\,\\partial_\\theta Q + 12Q^2\\,\\partial_\\theta P\\,\\partial_\\theta Z - 44Q\\,\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^3 + 8Q\\,\\partial_\\theta P\\,\\partial_\\theta Q\\left(\\partial_\\theta Z\\right)^2 - 16Q\\,\\partial_\\theta P\\,\\partial_\\theta Q - 8Q\\,\\partial_\\theta P\\,\\partial_\\theta^2 Q\\,\\partial_\\theta Z + 4\\partial_\\theta P\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta Z - 16\\partial_\\theta P\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q - 16\\partial_\\theta P\\,\\partial_\\theta Z - 8Q^2\\left(\\partial_\\theta^2 P\\right)^2 + 16\\left(\\partial_\\theta^2 P\\right)^2 - 16Q^2\\,\\partial_\\theta^2 P - 8Q\\,\\partial_\\theta^2 P\\,\\partial_\\theta Q\\,\\partial_\\theta Z + 16Q\\,\\partial_\\theta^2 P\\,\\partial_\\theta^2 Q + 8\\partial_\\theta^2 P\\left(\\partial_\\theta Q\\right)^2 + 32\\partial_\\theta^2 P + 11Q^4 + 22Q^2\\left(\\partial_\\theta Q\\right)^2 - 4Q^2\\left(\\partial_\\theta Z\\right)^2 - 16Q^2 + 16Q\\,\\partial_\\theta Q\\,\\partial_\\theta Z + 16Q\\,\\partial_\\theta^2 Q + 11\\left(\\partial_\\theta Q\\right)^4 - 4\\left(\\partial_\\theta Q\\right)^2\\left(\\partial_\\theta Z\\right)^2 - 8\\left(\\partial_\\theta Q\\right)^2 + 8\\partial_\\theta Q\\,\\partial_\\theta^2 Q\\,\\partial_\\theta Z - 8\\left(\\partial_\\theta^2 Q\\right)^2 + 8\\left(\\partial_\\theta Z\\right)^2 + 4\\left(\\partial_\\theta^2 Z\\right)^2 + 16\\right)e^{-2Z}e^{2N}}{4r^4}"
+        }
+      ]
+    },
+    {
       "id": "maitra_dust",
       "name": "Maitra's Rotating Dust",
       "short_name": "Maitra Rotating Dust",
@@ -42544,6 +42882,11 @@
           "id": "kerr_disc_source",
           "kind": "generalisation",
           "text": "Israel's disc source of Kerr's metric is flat space at $m = 0$, where its layer of matter vanishes [gibbons2017]."
+        },
+        {
+          "id": "lynden_bell_pineault",
+          "kind": "generalisation",
+          "text": "The counter rotating family contains flat space when the circular speed and surface density vanish [lyndenbell1978]."
         }
       ],
       "references": [
@@ -42628,7 +42971,8 @@
         "unruh1981",
         "compere2016vacua",
         "haggard2015fireworks",
-        "astorino2022swirling"
+        "astorino2022swirling",
+        "lyndenbell1978"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -44135,6 +44479,11 @@
           "id": "kerr_disc_source",
           "kind": "family",
           "text": "A thin disc that is the source of Kerr's metric, with negative mass that turns faster than light [israel1970]."
+        },
+        {
+          "id": "lynden_bell_pineault",
+          "kind": "family",
+          "text": "Finite and infinite counter rotating discs with a circular speed independent of radius follow from the same static axisymmetric construction [lyndenbell1978]."
         }
       ],
       "references": [

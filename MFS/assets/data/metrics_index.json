@@ -3625,6 +3625,27 @@
     "embedding": "9b4467004019c7c7"
   },
   {
+    "id": "lynden_bell_pineault",
+    "name": "Lynden-Bell-Pineault Discs",
+    "tags": [
+      "stationary",
+      "four-dimensional",
+      "axisymmetric",
+      "rotating",
+      "thin disc",
+      "dust",
+      "self-similar",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "c0a9d3aa9ed4f43d",
+    "diagrams": "2955022359581714",
+    "conformal": "758198794bde266e",
+    "embedding": "82fb84e92784a25b",
+    "curvature": "648144756376caa7"
+  },
+  {
     "id": "maitra_dust",
     "name": "Maitra Rotating Dust",
     "tags": [
@@ -3952,7 +3973,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "2684957988c04e0a",
+    "version": "881611a968e66af6",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -4100,7 +4121,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b5b229bd2f339927",
+    "version": "80ec07f4192d4d5c",
     "diagrams": "fcd9b835546fa10a",
     "conformal": "5201752f1d1e4844",
     "embedding": "6602c018a8504748"

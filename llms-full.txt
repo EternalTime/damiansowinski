@@ -1628,6 +1628,19 @@ A closed universe that holds nothing but $N$ equal masses, one at the centre of 
 - chart Lindquist-Wheeler Comoving: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \dfrac{(\partial_\rho r)^2}{1 - \dfrac{r_s}{\rho}}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Comparison Hypersphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Relativistic Discs of Lynden-Bell and Pineault
+
+Thin relativistic discs with counter rotating streams or matter rotating in one sense, and a circular speed independent of radius.
+
+- id: `lynden_bell_pineault`
+- tags: stationary, four-dimensional, axisymmetric, rotating, thin disc, dust, self-similar, exact solution, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/lynden_bell_pineault.json
+- chart Weyl, Finite and Infinite Counter Rotating Discs: coordinates $(t, R, z, \phi)$, $$ds^2 = -e^{2\nu}c^2dt^2 + e^{2\xi - 2\nu}\left(dR^2 + dz^2\right) + R^2e^{-2\nu}d\phi^2$$
+- chart Infinite Counter Rotating Disc: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -f^{2n}h^{2n}c^2dt^2 + f^{-2n}h^{4n^2 - 2n}\left(dr^2 + r^2d\theta^2\right) + f^{-2n}h^{-2n}r^2\sin^2\theta\,d\phi^2$$
+- chart Counter Rotating Massless Particles: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{rh}{A}c^2dt^2 + \dfrac{A}{r}\left(dr^2 + r^2d\theta^2\right) + \dfrac{Ar\sin^2\theta}{h}d\phi^2$$
+- chart Rotating Self Similar Disc: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -f^{2n}e^{N}c^2dt^2 + A^2f^{2 - 2n}e^{2P - N}\left(d\phi - \dfrac{f^{2n - 1}e^{N - P}Q}{A}c\,dt\right)^2 + f^{-2n}e^{Z - N}\left(dr^2 + r^2d\theta^2\right)$$
+
 ### Maitra's Rotating Dust
 
 A stationary, cylindrically symmetric universe of dust that turns faster near its axis than far from it, found by Samaresh C. Maitra in 1966. It has no cosmological constant and no closed timelike curves, and its density falls from $c^2/8\pi Ga^2$ on the axis toward zero far away.
