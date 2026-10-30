@@ -6,12 +6,21 @@ The entry covers the minimally coupled scalar-wave and polarised electromagnetic
 Both founding bibliographic records and publisher abstracts were fetched and verified.
 Their original full texts remain unread after access refusals.
 The equations are sourced to readable later primary treatments, under the instruction to preserve that debt explicitly.
-The history, proposed references, related wording and literature ledger await review in the task data directory.
+The history, proposed references, reciprocal Gowdy wording and literature ledger are preserved in the task data directory.
 
 The scalar source is Szybka and Wyrębowski, Physical Review D 94, 024059 (2016), arXiv:1509.00346v3, equations (1)-(7) and (21)-(24), and sections 6.1, 6.3 and 6.4.
 The electromagnetic source is Nungesser and Rendall, Classical and Quantum Gravity 26, 105019 (2009), arXiv:0901.4000v2, equations (2)-(16), with the global constraint on page 7.
 The 1980 combined-field work supports a historical attribution from its verified abstract and supplies no formula to this addition.
 Conformally coupled scalar extensions and the combined-field family are outside the proposed two-matter-system scope.
+
+## Reference inventory
+
+`charach_malin1979` is Cosmological model with gravitational and scalar waves, Physical Review D 19(4), 1058-1064, published 15 February 1979, DOI 10.1103/PhysRevD.19.1058.
+`charach1979` is Electromagnetic Gowdy universe, Physical Review D 19(12), 3516-3523, published 15 June 1979, DOI 10.1103/PhysRevD.19.3516.
+`charach_malin1980` is Cosmological model with gravitational, electromagnetic, and scalar waves, Physical Review D 21(12), 3284-3294, published 15 June 1980, DOI 10.1103/PhysRevD.21.3284.
+`szybka_wyrebowski2016` is Backreaction for Einstein-Rosen waves coupled to a massless scalar field, Physical Review D 94(2), 024059, published 29 July 2016, DOI 10.1103/PhysRevD.94.024059.
+`nungesser_rendall2009` is Strong cosmic censorship for solutions of the Einstein-Maxwell field equations with polarized Gowdy symmetry, Classical and Quantum Gravity 26(10), 105019, published 29 April 2009, DOI 10.1088/0264-9381/26/10/105019.
+Each record was compared with its fetched publisher-deposited Crossref metadata, with the primary text or publisher abstract used for claim attribution.
 
 ## Coordinates and toroidal identifications
 
