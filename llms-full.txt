@@ -2571,6 +2571,21 @@ Edward Teo's rotating traversable wormhole of 1998, the stationary, axially symm
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{b_0}{r}} + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 - chart Proper Radial Distance: coordinates $(t, l, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{16a^2b_0\cos^2\theta}{r}\right)^2c^2dt^2 + dl^2 + \left(r + 16a^2b_0\cos^2\theta\right)^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2ab_0^2}{r^3}c\,dt\right)^2\right)$$
 
+### Thakurta Spacetime
+
+A conformal Schwarzschild geometry with cosmological expansion and a radial energy current.
+
+- id: `thakurta`
+- tags: spherically symmetric, four-dimensional, cosmology, conformal transformation, expanding universe, exact solution
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/thakurta.json
+- chart Conformal Spherical: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-\left(1-\dfrac{2m}{r}\right)d\eta^2 + \dfrac{dr^2}{\left(1-\dfrac{2m}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Cosmic Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2m}{r}\right)dt^2 + a^2\left(\dfrac{dr^2}{\left(1-\dfrac{2m}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Cosmic Areal: coordinates $(t, R, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2ma}{R}\right)dt^2 + \dfrac{\left(dR-\dfrac{\partial_t a}{a}R\,dt\right)^2}{\left(1-\dfrac{2ma}{R}\right)} + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Conformal Isotropic: coordinates $(\eta, \sigma, \theta, \phi)$, $$ds^2 = a^2\left(-\dfrac{\left(1-m/(2\sigma)\right)^2}{\left(1+m/(2\sigma)\right)^2}d\eta^2 + \left(1+\dfrac{m}{2\sigma}\right)^4\left(d\sigma^2+\sigma^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)$$
+- chart Tortoise: coordinates $(\eta, x, \theta, \phi)$, $$ds^2 = a^2\left(\left(1-\dfrac{2m}{r}\right)\left(-d\eta^2+dx^2\right)+r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Kruskal Null, Dust Expansion: coordinates $(U, V, \theta, \phi)$, $$ds^2 = \dfrac{\eta^4}{\eta_0^4}\left(\dfrac{16m^2(r-2m)}{rUV}dU\,dV + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Black Holes of String Theory with Three and Four Charges
 
 The black holes of string theory whose entropy was first counted from their microscopic states: in five dimensions with three charges, Strominger and Vafa's hole and the family of Horowitz, Maldacena, and Strominger around it, and in four dimensions with four charges, the hole of Cvetič and Youm. Each charge enters the metric through a harmonic function of its own, and the horizon of the extreme hole has an area only when every charge is present.
