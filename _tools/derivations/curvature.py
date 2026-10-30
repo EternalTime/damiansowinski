@@ -18480,6 +18480,111 @@ def bekenstein_universes(ck, src):
 DRAWN["bekenstein_universes"] = bekenstein_universes
 
 
+VPK_PARAMS = {"m": 1.0, "a": 0.6, "R": 4.0}       # the universe of every drawing of the spacetime
+VPK_REACH = 4                                       # m on either side of the ring, inside r = pi R/2
+VPK_CELLS = 20                                      # cells to each m
+VPK_K = {"kind": "symlog", "from": -1e4, "to": 1e4, "linear": 1e-3}   # the colours of K m^4
+VPK_R = {"kind": "symlog", "from": -10.0, "to": 1.0, "linear": 1e-3}   # the colours of R m^2
+
+
+def vaidya_patel_kerr(ck, src):
+    """Vaidya's Kerr black hole in Einstein's static universe at m = 1, a = 3m/5 and R = 4m, the
+    universe of its other drawings: its Kretschmann scalar and its Ricci scalar over the meridian
+    half plane of the Boyer-Lindquist chart's r and alpha, in the oblate frame about the ring,
+    sqrt(r^2 + a^2) sin(alpha) across and r cos(alpha) up, out to 4m each way, inside the equator
+    r = pi R/2 of the spatial sphere, one map for each scalar.
+
+    Both depend on r and alpha alone. The horizons R tan(r/R) = m +- sqrt(m^2 - a^2) are the zeros
+    of the published g^rr on every ray, and the ring r = 0, alpha = pi/2, where both diverge, is
+    marked. Checked here: R is 6(1 - 2m mu)/R^2, the trace of Vaidya's fluid; at m = 0 K is
+    12/R^4 and R is 6/R^2, Einstein's universe; as R grows K tends to Kerr's published scalar;
+    the symmetry about the equator; and forty cells of each map in sixty digits."""
+    metric, system = "vaidya_patel_kerr", "einstein_boyer_lindquist"
+    m, a, Rv = VPK_PARAMS["m"], VPK_PARAMS["a"], VPK_PARAMS["R"]
+    names = ["m", "a", "R"]
+    K = nr_published(src, metric, system, "kretschmann", ["r", "alpha"], names)
+    R = nr_published(src, metric, system, "ricci_scalar", ["r", "alpha"], names)
+    grr = nr_published(src, metric, system, "inverse_metric_components", ["r", "alpha"], names, ("r", "r"))
+    K_kerr = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["G", "M", "a"])
+    rng = np.random.default_rng(1977)
+    spread_ = list(zip(rng.uniform(0.3, 6.0, 20), rng.uniform(0.05, math.pi - 0.05, 20)))
+
+    def trace(rv, av):
+        sigma = (Rv * Rv - a * a) * math.sin(rv / Rv) ** 2 + a * a * math.cos(av) ** 2
+        mu = Rv * math.sin(rv / Rv) * math.cos(rv / Rv) / sigma
+        return 6 * (1 - 2 * m * mu) / Rv ** 2
+    worst = max(abs(float(R.exact([rv, av, m, a, Rv])) / trace(rv, av) - 1) for rv, av in spread_)
+    ck(f"{metric} R is 6(1 - 2m mu)/R^2, the trace of Vaidya's fluid", worst < 1e-12, f"worst {worst:.1e}")
+    empty = max(abs(float(K.exact([rv, av, 0.0, a, Rv])) * Rv ** 4 - 12) + abs(float(R.exact([rv, av, 0.0, a, Rv])) * Rv ** 2 - 6)
+                for rv, av in spread_[:10])
+    ck(f"{metric} at m = 0 K is 12/R^4 and R is 6/R^2, Einstein's universe", empty < 1e-12, f"worst {empty:.1e}")
+    gaps = [max(abs(float(K.exact([rv, av, m, a, big])) / float(K_kerr.exact([rv, av, 1.0, m, a])) - 1)
+                for rv, av in spread_[:10] if rv < 3) for big in (1e3, 1e5)]
+    ck(f"{metric} K tends to Kerr's published scalar as R grows", gaps[1] < gaps[0] / 1000 and gaps[1] < 1e-8,
+       f"{gaps[0]:.1e} at R = 10^3 m, {gaps[1]:.1e} at 10^5 m")
+
+    x_axis = axis("$\\sqrt{r^2 + a^2}\\,\\sin\\alpha/m$", 0, VPK_REACH, 3)
+    y_axis = axis("$r\\cos\\alpha/m$", -VPK_REACH, VPK_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, f"{metric} maps", [aspect])
+    nx, ny = VPK_CELLS * VPK_REACH, 2 * VPK_CELLS * VPK_REACH
+    per_unit = PLOT_W / (x_axis["to"] - x_axis["from"])
+    rp = Rv * math.atan((m + math.sqrt(m * m - a * a)) / Rv)
+    rm = Rv * math.atan((m - math.sqrt(m * m - a * a)) / Rv)
+    rays_ok = []
+    for angle in np.linspace(0, math.pi, 13):
+        hz = zeros(ck, f"{metric} g^rr at alpha = {angle:.4f}", lambda x, *p, t=angle: grr(x, t, m, a, Rv), 0.01, 4.0, [])
+        rays_ok.append(len(hz) == 2 and abs(hz[0] - rm) < 1e-10 and abs(hz[1] - rp) < 1e-10)
+    ck(f"{metric} has its horizons at R tan(r/R) = m -+ sqrt(m^2 - a^2) on every ray", all(rays_ok), f"{rm:.6f}, {rp:.6f}")
+
+    def drawn(radius):
+        t = np.linspace(0, math.pi, SAMPLES)
+        Xc, Yc = np.sqrt(radius ** 2 + a * a) * np.sin(t), radius * np.cos(t)
+        keep = thinned(Xc * per_unit, Yc * per_unit, TOLERANCE)
+        return [[float(Xc[k]) + 0.0, float(Yc[k]) + 0.0] for k in keep]
+    horizons = [drawn(v) for v in (rp, rm)]
+
+    views = []
+    for scalar, fn, scale, vid, label, name, caption in (
+            ("kretschmann", K, VPK_K, "kretschmann", "$K$", "$K\\,m^4$",
+             "The Kretschmann scalar $K$ of Kerr's black hole in Einstein's static universe, which nears "
+             "the universe's own $12/R^4$ far from the hole and diverges at the ring."),
+            ("ricci_scalar", R, VPK_R, "ricci", "$R$", "$R\\,m^2$",
+             "The Ricci scalar $R = 6(1 - 2m\\mu)/R^2$ of the same, the trace of Vaidya's fluid, which turns "
+             "negative near the ring, where the density of the fluid does.")):
+        xs, ys, values = cells(fn, x_axis, y_axis, nx, ny, [m, a, Rv], frame="oblate", focus=a)
+        ck(f"{metric} {scalar} is finite at every cell", np.all(np.isfinite(values)),
+           f"from {np.min(values):.3e} to {np.max(values):.3e}")
+        ck(f"{metric} {scalar} is the same above and below the equator",
+           np.allclose(values, values[::-1], rtol=1e-7, atol=1e-15))
+        picks = {(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+        picks |= {(i, j) for i in (0, nx - 1) for j in (0, ny - 1)}
+        picks = sorted(picks)
+        agrees(ck, f"{metric} {scalar} map", fn, [[float(v) for v in oblate(xs[i], ys[j], a)] + [m, a, Rv]
+                                                  for i, j in picks], [values[j, i] for i, j in picks])
+        X, Y = np.meshgrid(xs, ys)
+        beyond_ = ~(np.abs(values) <= scale["to"])
+        d_clip = float(np.hypot(X - a, Y)[beyond_].max()) if beyond_.any() else 0.0
+        ck(f"{metric} {scalar} leaves its colours only beside the ring", d_clip < 0.5, f"within {d_clip:.4f} of the ring")
+        views.append({
+            "id": vid, "label": label, "system": system, "kind": "map", "x": x_axis, "y": y_axis,
+            "colour": {"name": name, "scale": dict(scale), "ticks": every_second(scale)},
+            "map": {"metric": metric, "system": system, "scalar": scalar, "x": "r", "y": "\\alpha",
+                    "frame": "oblate", "focus": "a", "fixed": {"t": 0, "\\phi": 0}, "params": dict(VPK_PARAMS),
+                    "nx": nx, "ny": ny, "cells": [[rounded(v) for v in row] for row in values]},
+            "marks": [{"class": "horizon", "points": line} for line in horizons]
+                     + [{"class": "singular", "at": [a, 0.0]}],
+            "legend": [["line", "horizon", "the horizons"], ["point", "singular", "the ring"]],
+            "caption": [caption],
+            "settings": "$m = 1$, $a = 3m/5$, $R = 4m$.",
+            "clip": "Signed log, ring clipped.",
+        })
+    return views
+
+
+DRAWN["vaidya_patel_kerr"] = vaidya_patel_kerr
+
+
 def draw(metric_id, ck):
     src = Sources()
     views = DRAWN[metric_id](ck, src)

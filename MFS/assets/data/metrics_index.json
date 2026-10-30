@@ -22,7 +22,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c20ad99a389c2bea",
+    "version": "1f09e40f452ad594",
     "diagrams": "955db54b31a1e1c3",
     "conformal": "dacd55113d63661a",
     "embedding": "4829fb64992692bb",
@@ -310,43 +310,6 @@
     "curvature": "15df5518b3325317"
   },
   {
-    "id": "bekenstein_universes",
-    "name": "Bekenstein Universes",
-    "tags": [
-      "cosmology",
-      "FLRW",
-      "homogeneous",
-      "isotropic",
-      "dust",
-      "radiation",
-      "scalar field",
-      "massless scalar field",
-      "bounce",
-      "no singularity",
-      "singularity theorems",
-      "energy condition violation",
-      "strong energy condition",
-      "weak energy condition",
-      "closed universe",
-      "open universe",
-      "three sphere",
-      "expanding universe",
-      "time-dependent",
-      "exact solution",
-      "Lorentzian",
-      "Einstein equations",
-      "four-dimensional",
-      "idealized model",
-      "conformally flat",
-      "spherically symmetric"
-    ],
-    "version": "0d6e698133003e70",
-    "diagrams": "1d6c29c5b6bfabeb",
-    "conformal": "e5ff4de589ab53ea",
-    "embedding": "9bebc74012355e18",
-    "curvature": "ca116e9e816b5f9b"
-  },
-  {
     "id": "bell_szekeres",
     "name": "Bell-Szekeres",
     "tags": [
@@ -447,7 +410,7 @@
       "spherically symmetric",
       "quantum cosmology"
     ],
-    "version": "ab8abecd3098bf4b",
+    "version": "6044ee2eeca3953a",
     "diagrams": "3db667c16a7e7f5b",
     "conformal": "ccbbac884fd12a06",
     "embedding": "10fc45eaf22d2da9"
@@ -1742,7 +1705,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "b19fb984f575fe08",
+    "version": "93c122a5005777ac",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -1782,7 +1745,6 @@
       "energy condition violation",
       "electric charge",
       "electromagnetic field",
-      "Dirac field",
       "braneworld",
       "static",
       "stationary",
@@ -1793,7 +1755,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ff58e2731ef9e606",
+    "version": "f9f379603b6bf27d",
     "diagrams": "8ed3da1d15c6836e",
     "conformal": "29a0a2bdfee14a28",
     "embedding": "5f6b7e20a1d2a9dd",
@@ -2127,7 +2089,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "66354a4706ae7fec",
+    "version": "0d80b8a9c0383b82",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2154,34 +2116,6 @@
     "version": "155d8d1dab088905",
     "diagrams": "d86ff0a92ec2a5b0",
     "embedding": "eb113e431f8fa107"
-  },
-  {
-    "id": "ghost_neutrinos",
-    "name": "Ghost Neutrinos",
-    "tags": [
-      "vacuum",
-      "static",
-      "stationary",
-      "planar symmetry",
-      "Dirac field",
-      "Petrov type D",
-      "Weyl class",
-      "Kasner",
-      "negative mass",
-      "curvature singularity",
-      "timelike singularity",
-      "naked singularity",
-      "exact solution",
-      "Lorentzian",
-      "Einstein equations",
-      "four-dimensional",
-      "idealized model"
-    ],
-    "version": "5188f12ce10627ac",
-    "diagrams": "f0a2d2a7211281f0",
-    "conformal": "f4ed73afc00b554e",
-    "embedding": "dd42edb65e2da2d2",
-    "curvature": "94a423a07033db04"
   },
   {
     "id": "global_monopole",
@@ -2443,27 +2377,6 @@
     "diagrams": "dfa07fae80435e7d",
     "conformal": "878abf6db42c0334",
     "embedding": "cc9efb7cafec7946"
-  },
-  {
-    "id": "hauser_wave",
-    "name": "Hauser's Twisting Wave",
-    "tags": [
-      "vacuum",
-      "four-dimensional",
-      "gravitational wave",
-      "Petrov type N",
-      "algebraically special",
-      "null congruence",
-      "shear-free",
-      "expanding",
-      "not asymptotically flat",
-      "self-similar",
-      "exact solution",
-      "Lorentzian",
-      "idealized model"
-    ],
-    "version": "ba8445abb87a7eae",
-    "diagrams": "8db2da3173c1ed79"
   },
   {
     "id": "hayward",
@@ -2867,7 +2780,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "b9a539c04dc40eca",
+    "version": "d39d933f450312ad",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -2929,7 +2842,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "1f0b98c1c3d1cfaa",
+    "version": "e4c02d96a63bf55e",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
@@ -3005,7 +2918,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "636ca685e61b777b",
+    "version": "ae03299fa6f22959",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -3161,7 +3074,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "aec80add45612d85",
+    "version": "4cfa1e6788962222",
     "diagrams": "7dc03a9eedf6e5a2",
     "conformal": "4f803c414fba5da6",
     "embedding": "f1315ee1ffa48ebb"
@@ -3440,7 +3353,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "be2005dc590cc489",
+    "version": "d9a1cdc632d4a86d",
     "diagrams": "707ada311baa183e",
     "embedding": "aa93f3cc510fade8"
   },
@@ -3505,7 +3418,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "676b8e30fb30eddf",
+    "version": "cf43b0dfbf8a9095",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
@@ -3843,7 +3756,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4015f3d15e69931b",
+    "version": "f58083f56c331ebb",
     "diagrams": "1e8a40c11bf25b40",
     "conformal": "5bfaa0670ab1bb25",
     "embedding": "2c9b70767c1e34be",
@@ -4181,7 +4094,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e73a4603c4f5a2bf",
+    "version": "b7baf29cceaec895",
     "diagrams": "125170e57ca89e2d",
     "conformal": "7e80c8a2afadfdd1",
     "embedding": "6789f9195b146543",
@@ -4753,7 +4666,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1b93c87164dbbb92",
+    "version": "cd9e80048c06275b",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -5077,7 +4990,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0e0cf2e6e7b09448",
+    "version": "4d989a7b8c4d807f",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"
@@ -5413,7 +5326,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1163a99a2543ee3f",
+    "version": "6d3af6a35b0ba103",
     "diagrams": "ba9dba288cd26f63",
     "conformal": "e6b2c492ab043d17",
     "embedding": "e135a6bb032eedc2",
@@ -5602,27 +5515,6 @@
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
-  },
-  {
-    "id": "stiff_fluid_universes",
-    "name": "Stiff Fluid Universes",
-    "tags": [
-      "cosmology",
-      "inhomogeneous",
-      "perfect fluid",
-      "scalar field",
-      "exact solution",
-      "Lorentzian",
-      "Einstein equations",
-      "four-dimensional",
-      "time-dependent",
-      "stiff fluid"
-    ],
-    "version": "875d16f1f2621681",
-    "diagrams": "adc8c2dc582c9b84",
-    "conformal": "f462a84914c217d1",
-    "embedding": "10a8c1017f1ea66b",
-    "curvature": "17ddb5c7ece66e27"
   },
   {
     "id": "sultana_dyer",
@@ -6212,11 +6104,47 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "19a4af9c221b8734",
+    "version": "42754f60133f26d7",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",
     "curvature": "1e0ae749787ac5e7"
+  },
+  {
+    "id": "vaidya_patel_kerr",
+    "name": "Vaidya-Patel Kerr",
+    "tags": [
+      "rotating",
+      "rotating black hole",
+      "black hole",
+      "axisymmetric",
+      "null dust",
+      "radiating",
+      "retarded time",
+      "Kerr-Schild",
+      "algebraically special",
+      "perfect fluid",
+      "anisotropic pressure",
+      "energy condition violation",
+      "cosmology",
+      "expanding universe",
+      "closed universe",
+      "cosmological constant",
+      "time-dependent",
+      "angular momentum",
+      "mass",
+      "horizon",
+      "event horizon",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f1f534829570f88d",
+    "diagrams": "dcb1fc774959b7cf",
+    "embedding": "59e1e147d70288cc",
+    "curvature": "b0d67ac85d5c9733"
   },
   {
     "id": "van_den_broeck",

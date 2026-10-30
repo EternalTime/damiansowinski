@@ -18823,6 +18823,73 @@ def ghost_neutrino_diagrams():
 ghost_neutrino_diagrams()
 
 
+# Kerr radiating and Kerr in a universe: every chart on its axis, alpha = 0, where the rotation
+# about the axis leaves the plane of the time and the radius holding its light rays. The universe
+# is drawn at m = 1, a = 3/5 and R = 4, so its horizons R tan(r/R) = 1 +- 4/5 sit at r = 1.691
+# and 0.200, out to r = 2 pi, the equator of the spatial sphere; the expanding universe declares
+# F = t/10, under which the horizons last while t < (5/2) ln(25/9) = 2.554. The radiating hole is
+# drawn at k = 3/5, C = 27/125 and a = 1/10: its mass is 1 at u = 0 and C/A^3 with A^2 = 9/25 + u/10.
+VPK_UNIVERSE = {"m": 1, "a": "3/5", "R": 4}
+VPK_RADIATING = {"a": "1/10", "k": "3/5", "C": "27/125"}
+VPK_SPAN = (0, 2 * math.pi, -math.pi, math.pi)
+
+
+def vaidya_patel_kerr_diagrams():
+    """The axis of each chart. Vaidya's own charts draw t against t - u, the radius."""
+    radius_time = ((1, -1), (1, 0))          # X = t - u, Y = t
+    rows = [
+        ("einstein_boyer_lindquist", ("t", "r"), VPK_UNIVERSE, {"alpha": "0", "phi": "0"},
+         dict(orient="ingoing"), "$r/m$", "$t/m$"),
+        ("einstein_vaidya", ("t", "u"), VPK_UNIVERSE, {"alpha": "0", "beta": "0"},
+         dict(to_display=radius_time, where="t - u"), "$(t - u)/m$", "$t/m$"),
+        ("expanding_vaidya", ("t", "u"), VPK_UNIVERSE, {"alpha": "0", "beta": "0"},
+         dict(to_display=radius_time, where="t - u", functions={"F": "t/10"}, input=VPK_INPUT),
+         "$(t - u)/m$", "$t/m$"),
+        ("retarded", ("u", "r"), VPK_RADIATING, {"alpha": "0", "beta": "0"},
+         dict(to_display=FINKELSTEIN_OUT, tau="u + r"), "$r$", "$u + r$"),
+        ("vaidya_patel", ("T", "u"), VPK_RADIATING, {"alpha": "0", "beta": "0"},
+         dict(to_display=radius_time, tau="T"), "$T - u$", "$T$"),
+    ]
+    for system, plane, params, fixed, extra, xlabel, ylabel in rows:
+        box = VPK_SPAN if system not in ("retarded", "vaidya_patel") else (0, 4, -1, 3)
+        DIAGRAMS.append(Diagram("vaidya_patel_kerr", system, "axis", "the axis", plane, box, xlabel, ylabel,
+                                params, fixed, **extra))
+
+
+VPK_INPUT = "$F = t/10$: the universe grows as $e^{t/10}$, and the horizons last while $t < 2.554\\,m$."
+VPK_UNIVERSE_TEXT = ("Kerr's black hole, $a = 0.6\\,m$, in Einstein's universe of radius $R = 4\\,m$, out to "
+                     "$r = \\pi R/2$. Its horizons lie at $r = 1.691\\,m$ and $0.200\\,m$, inside Kerr's $1.8\\,m$ "
+                     "and $0.2\\,m$.")
+CAPTIONS.update({
+    ("vaidya_patel_kerr", "einstein_boyer_lindquist", "axis"): [
+        "The plane of $t$ and $r$ on the axis ($\\alpha = 0$). " + VPK_UNIVERSE_TEXT,
+        "Between the horizons every future cone points to smaller $r$.",
+    ],
+    ("vaidya_patel_kerr", "einstein_vaidya", "axis"): [
+        "The plane of $t$ and $u$ on the axis ($\\alpha = 0$), drawn against the radius $t - u$, its "
+        "outgoing rays at 45°. " + VPK_UNIVERSE_TEXT,
+    ],
+    ("vaidya_patel_kerr", "expanding_vaidya", "axis"): [
+        "The plane of $t$ and $u$ on the axis ($\\alpha = 0$), drawn against the radius $t - u$, of the Kerr "
+        "black hole in an expanding universe, $m = 1$, $a = 0.6\\,m$, and $R = 4\\,m$. The horizons close at "
+        "$t = 2.554\\,m$.",
+    ],
+    ("vaidya_patel_kerr", "retarded", "axis"): [
+        "The plane of $u$ and $r$ on the axis ($\\alpha = 0$), drawn with $u + r$ upward so that the outgoing "
+        "rays, $u$ constant, run at 45°, in units where the mass is $m = 1$ at $u = 0$. The rotation parameter "
+        "grows as $A^2 = 0.36 + u/10$ from $k = 0.6$ and the mass falls as $m = 0.216/A^3$.",
+    ],
+    ("vaidya_patel_kerr", "vaidya_patel", "axis"): [
+        "The plane of $T$ and $u$ on the axis ($\\alpha = 0$), drawn against $T - u$, which is the radius "
+        "there, in Vaidya and Patel's coordinates, in units where the mass is $m = 1$ at $u = 0$. The rotation "
+        "parameter grows as $A^2 = 0.36 + u/10$ from $k = 0.6$ and the mass falls as $m = 0.216/A^3$.",
+    ],
+})
+
+
+vaidya_patel_kerr_diagrams()
+
+
 def check_table():
     """Every view and figure has a caption, and no two share a place."""
     import projections as pj

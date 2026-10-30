@@ -3840,6 +3840,11 @@ FLAT.update({
         "ghost_neutrinos", lambda m: [[(_ghost_areal(z) ** 2 / 4,) * 2 for z in m.reach("taub", "z")]]),
 })
 
+# Kerr in Einstein's universe: the equator embedded is the moment t = 0 of the Boyer-Lindquist chart,
+# which crosses its plane on the axis as a line of constant t, as Kerr's does.
+FLAT[("vaidya_patel_kerr", "einstein_boyer_lindquist", "axis")] = lambda: one(
+    "vaidya_patel_kerr", lambda m: along(0.0, *m.reach("einstein_boyer_lindquist", "r")))
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
@@ -4169,6 +4174,17 @@ FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z]
 HIDDEN.update({key: "the flat universe, whose moments are planes and are not embedded, another member of the family "
                     "than the closed and open universes whose moments are"
                for key in (("bekenstein_universes", "flat", "radial"), ("bekenstein_universes", "flat"))})
+HIDDEN.update({
+    ("vaidya_patel_kerr", "einstein_vaidya", "axis"):
+        "the moment embedded, t = 0 of the Boyer-Lindquist chart, is the curve t = integral of "
+        "-2mR sin(r/R) cos(r/R)/Delta dr in Vaidya's chart, which has no closed form",
+    ("vaidya_patel_kerr", "expanding_vaidya", "axis"):
+        "the expanding universe is another spacetime than the static one embedded",
+    ("vaidya_patel_kerr", "retarded", "axis"):
+        "the radiating hole is another spacetime than the static universe embedded",
+    ("vaidya_patel_kerr", "vaidya_patel", "axis"):
+        "the radiating hole is another spacetime than the static universe embedded",
+})
 HIDDEN.update({("charged_godel_universe", system, "beyond"):
                "the cylinder lies beyond the first null circle and outside the Euclidean embedding"
                for system in ("hyperbolic", "linear", "trigonometric")})

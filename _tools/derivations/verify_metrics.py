@@ -2541,8 +2541,11 @@ DIMENSIONS.update({("bekenstein_universes", system): {
 # m = C/A^3 makes C a length to the fourth. Vaidya's F is the logarithm of a scale factor.
 DIMENSIONS.update({("vaidya_patel_kerr", chart): {
     **{c: ("1" if c in ("\\alpha", "\\beta", "\\phi") else "L") for c in coords},
-    **({"a": "L", "k": "L", "C": "L**4", "A": "L", "m": "L", "q": "L"} if chart in ("vaidya_patel", "retarded")
-       else {"m": "L", "a": "L", "R": "L", "r": "L", "\\Sigma": "L**2", "\\mu": "1/L", "\\Delta": "L**2"}),
+    **({"a": "L", "k": "L", "C": "L**4", "A": "L", "m": "L"} if chart in ("vaidya_patel", "retarded")
+       else {"m": "L", "a": "L", "R": "L"}),
+    **({"q": "L"} if chart == "vaidya_patel" else {}),
+    **({"\\Sigma": "L**2", "\\mu": "1/L", "\\Delta": "L**2"} if chart == "einstein_boyer_lindquist" else {}),
+    **({"r": "L"} if chart.endswith("_vaidya") else {}),
     **({"F": "1"} if chart.startswith("expanding") else {})}
     for chart, coords in (("vaidya_patel", ("u", "\\alpha", "\\beta", "T")), ("retarded", ("u", "r", "\\alpha", "\\beta")),
                           ("einstein_vaidya", ("u", "\\alpha", "\\beta", "t")),

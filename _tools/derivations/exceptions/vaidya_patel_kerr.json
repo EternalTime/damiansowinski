@@ -1,0 +1,18 @@
+{
+  "hidden": [
+    {
+      "reason": "The moment embedded is t = 0 of the Boyer-Lindquist chart, which in Vaidya's chart is the curve t equal to the integral of -2mR sin(r/R) cos(r/R)/Delta along r, with no closed form.",
+      "drawings": [
+        "vaidya_patel_kerr/einstein_vaidya/axis"
+      ]
+    },
+    {
+      "reason": "The radiating hole and the expanding universe are other spacetimes than the static universe whose moment is embedded.",
+      "drawings": [
+        "vaidya_patel_kerr/expanding_vaidya/axis",
+        "vaidya_patel_kerr/retarded/axis",
+        "vaidya_patel_kerr/vaidya_patel/axis"
+      ]
+    }
+  ]
+}

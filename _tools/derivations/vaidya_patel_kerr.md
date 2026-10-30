@@ -63,3 +63,14 @@ None is drawn, and `NOT_DRAWN` in `conformal.py` lists the spacetime.
 The radiating spacetime is time dependent with no horizon known in closed form, so no chart of it is conformally compact in closed form.
 The expanding universe leaves F free, so any diagram would draw one choice of F as if it were the spacetime.
 The static universe's axis runs from the black hole through its two horizons to the antipode, and its equator ends on the naked antipodal ring, which no two dimensional diagram of the axis shows.
+
+## Drawings
+
+Every chart is drawn on its axis, alpha = 0, where the rotation about the axis keeps light rays launched in the plane of the time and the radius in that plane.
+The universe is drawn at m = 1, a = 3/5 and R = 4, where R tan(r/R) = m +- sqrt(m^2 - a^2) puts the horizons at r = 1.6914 and 0.1998, inside Kerr's 1.8 and 0.2, out to r = pi R/2.
+The expanding universe declares F = t/10, under which Vaidya's condition a^2/m^2 < e^{-4F} holds while t < (5/2) ln(25/9) = 2.554.
+The radiating hole is drawn at k = 3/5, C = 27/125 and a = 1/10, so its mass is 1 at u = 0; its views stop at r = 0, since beyond the disc u + r stops being a time function on the axis.
+The embedding is the equator of the moment t = 0 of the Boyer-Lindquist chart, through the throat on the outer horizon, of circumference radius 2mR cos(r_+/R)/sqrt(R^2 - a^2) = 1.8447, to the level circle r = 9.741, beyond which no surface of revolution in flat space carries it; nearer the antipode the circles turn timelike.
+That moment is marked on the Boyer-Lindquist axis; `exceptions/vaidya_patel_kerr.json` says why the other views do not mark it.
+The curvature figure maps K and R of the Boyer-Lindquist chart in the oblate frame about the ring, out to 4m, with R = 6(1 - 2m mu)/R^2 checked against the stored scalar; R turns negative near the ring, where Vaidya's density does.
+No view steps through time, so no entry in the tables of movies or stacks is needed.

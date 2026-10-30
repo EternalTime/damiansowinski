@@ -440,11 +440,13 @@ class Slice:
 
             def near(e):
                 exact = self.exact[root]
-                if self._radical(e) or e.has(sp.exp):
+                if self._radical(e) or e.has(sp.exp) or (isinstance(exact, sp.Float) and e.has(sp.sin, sp.cos)):
                     # A metric with a square root or an exponential in it, as the eye of the storm's
                     # e^{-ell/r}, is no rational function of u, so it is evaluated at root + u in sixty
                     # digits, the root itself taken to seventy, which keeps what cancels at the root to
-                    # far below any u the quadrature asks for.
+                    # far below any u the quadrature asks for. So is a metric of sines and cosines of x
+                    # whose horizon horizon_between found, as Vaidya's Kerr hole in Einstein's universe,
+                    # whose root is no algebraic number.
                     f = sp.lambdify(self.x, e, "mpmath")
                     with mpmath.workdps(70):
                         x0 = mpmath.mpf(str(exact.evalf(70)))
@@ -21593,6 +21595,67 @@ def charged_godel_universe(ck, src):
 
 
 DRAWN["charged_godel_universe"] = charged_godel_universe
+
+
+def vaidya_patel_kerr(ck, src):
+    """Vaidya's Kerr black hole in Einstein's static universe at m = 1, a = 3m/5 and R = 4m, the
+    universe of its other drawings: the equator of a slice of constant t of the Boyer-Lindquist
+    chart, where g_tphi drops out and g_rphi was taken away by the chart itself, drawn at the
+    circumference radius rho = sqrt(g_phiphi) through the bifurcation sphere at r_+ into a second
+    exterior.
+
+    On the horizon Delta = 0 makes g_phiphi = (2m R sin(r/R) cos(r/R))^2/Sigma, so the throat has
+    the radius 2mR cos(r_+/R)/sqrt(R^2 - a^2), 1.8447 m here, which is checked, against Kerr's 2m.
+    The circles widen to about 4.0 m near the equator of the spatial sphere, r = pi R/2, and then
+    narrow, as on a sphere; beyond r = 9.74 m they narrow faster than the distance out to them,
+    g_rr < (drho/dr)^2, which is checked, so no surface in flat space carries the slice there, and
+    the drawing stops at that level circle. Nearer the antipode g_phiphi turns negative, where the
+    circles are timelike, around the antipodal ring."""
+    name = "Kerr in Einstein's universe"
+    sl = Slice(src, "vaidya_patel_kerr", "einstein_boyer_lindquist", "r", "\\phi", {"t": 0, "alpha": "pi/2"},
+               {"m": 1, "a": "3/5", "R": 4})
+    m, a, R = 1.0, 0.6, 4.0
+    rp = sl.horizon_between(1.5, 1.9)
+    ck.add(f"{name}: the horizon is at R tan(r/R) = m + sqrt(m^2 - a^2)", abs(rp - R * math.atan(1.8 / R)), 1e-12)
+    ck.add(f"{name}: the throat's circumference radius is 2mR cos(r_+/R)/sqrt(R^2 - a^2)",
+           abs(float(sl.rho_at(rp)) - 2 * m * R * math.cos(rp / R) / math.sqrt(R * R - a * a)), 1e-9)
+    level = brentq(lambda r: float(sl.defect_at(r)), 9.4, 10.0, xtol=1e-14)
+    ck.add(f"{name}: the surface lies level where g_rr = (drho/dr)^2", abs(float(sl.defect_at(level))), 1e-9)
+    ck.stops(f"{name}, beyond the level circle toward the antipode", sl, np.linspace(level, 11.6, 202)[1:-1])
+    radii = (3.0, 4.0, 5.0, 7.0, 8.0, 9.0)
+    equator = math.pi * R / 2
+    size = 2 * 4.1
+    marks = [(rp, "horizon", None), (equator, "throat", "$\\pi R/2$")] + [(r, "r", None) for r in radii]
+    near = Piece("exterior", "sheet", sl, rp, level, 0.0, 1,
+                 (("throat", "the throat on the outer horizon, the bifurcation sphere, where the other exterior begins"),
+                  ("stops", f"at $r = {level:.3f}\\,m$ the surface lies level, and further out the circles "
+                            "narrow faster than the distance out to them")),
+                 marks + [(level, "chartedge", None)], size)
+    far = Piece("other_exterior", "sheet2", sl, rp, level, 0.0, -1,
+                (("throat", "the throat on the outer horizon"),
+                 ("stops", f"the same level circle, $r = {level:.3f}\\,m$")),
+                [(r, "r2", None) for r in radii] + [(level, "chartedge", None)], size)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+    ck.join(f"{name}, the two sheets at the throat", near, rp, far, rp)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(rp), f"$r = {rp:.3f}\\,m$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(equator), "$\\pi R/2$")
+    fig.legend("fill", "cover", "outside the outer horizon")
+    fig.legend("line", "r", "$r = 3$ to $9\\,m$")
+    fig.legend("line", "horizon", "the outer horizon")
+    fig.legend("line", "throat", "$r = \\pi R/2$")
+    fig.legend("line", "chartedge", "the level circle")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$, $a = 3m/5$, $R = 4m$.",
+                 stops=["No flat surface carries the slice beyond the level circle."])]
+
+
+DRAWN["vaidya_patel_kerr"] = vaidya_patel_kerr
+CAPTIONS[("vaidya_patel_kerr", "equator")] = [
+    "The equator of a moment of Kerr's black hole in Einstein's static universe, through the throat of "
+    "radius $1.845\\,m$ into a second exterior. The circles widen to $4.0\\,m$ and close in again, as on a sphere."]
 for _system in ("hyperbolic", "linear", "trigonometric"):
     CAPTIONS[("charged_godel_universe", _system)] = [
         "The dust's plane at constant time. "
