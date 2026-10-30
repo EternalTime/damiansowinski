@@ -80,12 +80,17 @@ def spec(system):
         state["printer"] = chart.printer
         check_chart(chart, system)
 
-    return {"metric_id": METRIC,
+    out = {"metric_id": METRIC,
             "system": {"id": system, "name": name, "coords": coords, "domains": domains,
                        "parameters": parameters, "line_element": line.replace("{c2}", "c^2").replace("{c}", "c")},
             "chart_line_element": line.replace("{c2}", "").replace("{c}", ""),
             "printer": {"lead": [*probe.parameters.values(), *probe.symbol.values()], "flip": False},
             "pretty": pretty, "check": check}
+    if system == "spherical":
+        out["kretschmann"] = ("\\dfrac{16n^2(2n - 1)^2f^{4n}h^{4n - 8n^2}"
+                              "\\left(2 + \\cos\\theta + n(2n - 1)(1 - \\cos\\theta)\\right)}"
+                              "{r^4(1 + \\cos\\theta)^2}")
+    return out
 
 
 def check_chart(chart, system):
@@ -223,3 +228,16 @@ def rotating_jets(reader, theta, solution=None):
 def register(pc):
     """Register only this spacetime with the shared chart printer."""
     pc.CHARTS[METRIC] = [lambda s=s: spec(s) for s in SYSTEMS]
+
+
+def register_dimensions():
+    """Dimensions used by the published-value readers and the scoped metric checker."""
+    for system in SYSTEMS:
+        values = {"t": "T", "A": "L", "n": "1"}
+        if system == "weyl":
+            values.update({"R": "L", "z": "L", "\\phi": "1", "\\nu": "1", "\\xi": "1"})
+        else:
+            values.update({"r": "L", "\\theta": "1", "\\phi": "1", "f": "1", "h": "1"})
+            if system == "rotating":
+                values.update({name: "1" for name in ("N", "P", "Q", "Z")})
+        vm.DIMENSIONS[(METRIC, system)] = values

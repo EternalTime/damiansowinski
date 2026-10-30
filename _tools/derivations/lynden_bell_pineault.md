@@ -24,7 +24,9 @@ The source is an infinitesimally thin equatorial matter surface.
 Paper I writes a delta source at z=0 in equation (3.7), and Paper II integrates its field equations across theta=pi/2 on pages 701-702.
 Smooth exterior tensors apply on either open side of this surface.
 Vacuum Ricci components away from the disc do not describe its surface stress tensor.
-The origin is a singular boundary for nontrivial members of the infinite families.
+For the infinite static family, the smooth curvature diverges at the origin for 0<n<1/2.
+The massless member n=1/2 has a flat vacuum exterior and a nonzero distributional sheet.
+The change rho=2 sqrt(Ar) sin(theta/2), zeta=2 sqrt(Ar) cos(theta/2) makes its spatial metric Euclidean and its lapse zeta/(2A).
 
 ## Parameters and limits
 
@@ -32,19 +34,35 @@ For the static infinite family, n=V^2/(1+V^2), where V is the speed of either st
 The interval 0<n<1/2 describes massive streams, and n=1/2 describes counter-rotating massless particles.
 For the rotating family, V is the speed measured by a locally nonrotating observer.
 Paper II obtains the end of its pressureless rotating sequence numerically at V approximately 0.438c.
-No formula or parameter normalization has yet been approved for publication.
+The drawings use A=1, n=1/5 for the infinite counter-rotating member and V=0.2c for the cold rotating member.
+The rotating boundary solve gives n=0.045535001497421096 and Q'(0)=0.020898796121853757.
+Its functions are integrated from the regular-axis expansions, with N(0)=Z(0)=Q(0)=0 and e^P=sin(theta).
+The exact vacuum equations and cold-disc jump conditions determine the angular functions; no WKB expressions enter the calculation.
 
 ## Drawings
 
 The constant-time, constant-polar-angle surfaces have conical Euclidean embeddings.
 Paper I section 3.3 and Paper II page 707 state the constructions.
 The source surface and vacuum sides must be identified in any drawing crossing the equator.
-Diagram parameters, supported frame kinds, and any justified NOT_DRAWN registrations remain to be chosen after the source equations are visually verified.
+The embedded surfaces are the vacuum cones theta=pi/3 at t=0, over 0.3A<=r<=3.5A.
+Each is a single moment, and each view has one surface.
+Radial light views at theta=pi/3 and phi=0 show null curves of the induced metric, without a claim that the curves are spacetime geodesics.
+The Weyl view shows null geodesics along the upper axis of the infinite counter-rotating member.
+The conformal view is restricted to the totally geodesic upper axial section of the static n=1/5 member.
+Its r=0 boundary is timelike and singular; its diagram asserts no global causal classification for the complete axisymmetric spacetime or the rotating family.
+The curvature view reads the stored static Kretschmann scalar along theta=pi/3; it contains no distributional surface scalar.
 
-## Verification still required
+## Source comparison and verification
 
-Compare the mathematical OCR with the journal scans before transcribing coefficients.
-Implement pointwise chart checks, a dedicated spacetime test, and the scoped page check after the history review.
+The retained source images were inspected at Paper I pages 683, 686, 687, 688 and 690, Paper II pages 696, 698 and 699, and Cai-Shu pages 4 and 9.
+The finite-disc potential uses the even Legendre polynomials in the outer series on Paper I page 687; the earlier Newtonian expression on page 683 has a different printed subscript.
+The finite family is represented by the Weyl chart with its harmonic potential, disc Dirichlet value, zero exterior normal derivative and asymptotic normalization.
+The spherical chart is the explicit infinite member of that construction; a second finite spherical chart would repeat the coordinate map with the generic Weyl potentials.
+In the cold rotating member k+n=1, Cai-Shu's angular variable Theta equals the original polar angle and their radial exponent is n/(1-n).
+Their printed relation Z=Z_LP-ln(k) in equation (2-5) omits a factor of two: pulling back the radial line element gives Z=Z_LP-2ln(k).
+The implementation uses the original radial chart and only angular derivatives of Z, so this additive constant does not enter it.
+Each chart has pointwise source comparisons with no symbolic determinant or simplify call in its check.
+The dedicated test checks the surface stress through the equatorial derivative jump and independently pulls the massless member back from Minkowski space.
 Reconcile shared registrations and reciprocal relations only on the serialized landing turn.
 
 ## History
