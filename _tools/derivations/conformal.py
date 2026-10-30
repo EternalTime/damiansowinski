@@ -17894,7 +17894,7 @@ def penney_scalar(ck, src):
     table = (
         ("spherical", "Spherical", "r", (1.5, 2, 4, 8), "$1.5\\,a$, $2a$, $4a$, and $8a$", 2, "$r = 2a$",
          "$r = a$", lambda r: r, 1),
-        ("harmonic", "Harmonic", "u", (0.0625, 0.125, 0.25, 0.5, 1), "$1/16k$, $1/8k$, $1/4k$, $1/2k$, and $1/k$",
+        ("harmonic", "Harmonic", "u", (0.0625, 0.125, 0.25, 0.5, 1), "$1/16k$ to $1/k$, doubling",
          0.25, "$u = 1/4k$", "$u \\to \\infty$", lambda r: -np.log((r - 1) / (r - 0.25)) / 2, 1 / 0.375))
     views = []
     for cid, name, x, lines, listed, marked, mark, edge, of_r, unit in table:
@@ -17923,7 +17923,7 @@ def penney_scalar(ck, src):
         v.slice(moment, [fmap(0 * along, along)])
         v.set(settings=("$b = a/4$, $\\gamma = 1/2$, $a = 1$" if cid == "spherical" else
                         "$h = k/2$, $ku_1 = \\ln 4$, $k = 1$")
-              + "; $p, q = \\arctan((ct \\mp r_*)/4a)$.")
+              + "; $r_*$ is the tortoise coordinate, zero at the singularity, and $p, q = \\arctan((ct \\mp r_*)/4a)$.")
         views.append(v)
     return views
 
@@ -30879,12 +30879,12 @@ CAPTIONS = {
         "$\\phi_0e^{-su}$ grows without bound toward the edge.",
     ],
     ("penney_scalar", "spherical"): [
-        "A charged mass with a massless scalar field, each point a 2-sphere. With $r_*$ zero at $r = a$ the "
-        "spacetime fills Minkowski's triangle, whose edge $X = 0$ is a timelike singularity with no horizon.",
+        "A charged mass with a massless scalar field, each point a 2-sphere, filling Minkowski's triangle, whose "
+        "edge $X = 0$ is $r = a$, a timelike singularity with no horizon.",
     ],
     ("penney_scalar", "harmonic"): [
-        "The same spacetime in Bronnikov's harmonic coordinate, each point a 2-sphere, with spatial infinity at "
-        "$u = 0$ and the timelike singularity, with no horizon, at $u \\to \\infty$ on the edge $X = 0$.",
+        "The same spacetime in Bronnikov's harmonic coordinate, with $i^0$ at $u = 0$ and the timelike singularity "
+        "at $u \\to \\infty$ on the edge $X = 0$.",
     ],
     ("fisher_jnw", "spherical"): [
         "A static mass with a massless scalar field ($\\gamma = 1/2$), each point in the diagram a 2-sphere of "
