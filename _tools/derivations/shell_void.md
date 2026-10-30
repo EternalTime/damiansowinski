@@ -21,7 +21,55 @@ With $K_{ij}=h_i{}^a h_j{}^b\nabla_a n_b$ and $[K]=K_+-K_-$, the junction equati
 These are equations (2-8) through (2-10) of Sakai and Haines, with the surface stress of (2-18) at zero surface pressure.
 The smooth tensors on either side and the distribution supported on the shell must be treated separately.
 
-## Matching and drawings
+## The flat dust exterior
 
-The trajectory, time relation, initial density, and drawing parameters require the angular and temporal junction equations together with the energy flux into the shell.
-The small void power law is an asymptotic Newtonian result and does not specify an exact relativistic trajectory.
+In units $G=c=1$, take exterior cosmic time $t$, $a=(t/t_0)^{2/3}$, $H=2/(3t)$, and dust density $\rho=1/(6\pi t^2)$.
+The shell has exterior comoving radius $r=R/a$ and peculiar speed $v=a\,dr/dt$.
+Define $x=HR$, $w=x+v=dR/dt$, $\gamma=(1-v^2)^{-1/2}$, and $B=\sqrt{1+2xv+x^2}$.
+Induced metric continuity fixes $dT/dt=B$ for the interior Minkowski time $T$, and $d\tau/dt=1/\gamma$.
+The identity $B^2-w^2=1-v^2$ ensures that $-dT^2+dR^2=-d\tau^2$ on the shell.
+
+The angular curvatures on its two sides are
+
+$$K^\theta{}_{\theta,-}=\frac{\gamma B}{R},\qquad K^\theta{}_{\theta,+}=\frac{\gamma(1+xv)}{R}.$$
+
+Their jump fixes the surface density:
+
+$$\sigma=\frac{\gamma[B-(1+xv)]}{4\pi R}=\frac{H^2R}{4\pi\gamma[B+1+xv]}.$$
+
+The rationalized expression is positive for the expanding ordinary shell and avoids subtracting nearly equal quantities when $HR$ is small.
+The proper shell mass is $m=4\pi R^2\sigma$.
+Its Newtonian limit is the removed background mass $4\pi\rho R^3/3$.
+
+## Evolution and accretion
+
+For surface dust the temporal jump is $[K^\tau{}_\tau]=4\pi\sigma$.
+The normal stress equation is $-\sigma\overline{K^\tau{}_\tau}=\rho\gamma^2v^2$, with the bar denoting the mean of the two limiting values.
+Consequently $K^\tau{}_{\tau,+}=2\pi\sigma-\rho\gamma^2v^2/\sigma$.
+The homogeneous exterior has $K^\tau{}_{\tau,+}=\gamma^3dv/dt+\gamma vH$, so the motion obeys
+
+$$\frac{dR}{dt}=HR+v,\qquad\frac{dv}{dt}=\frac{-\gamma vH+2\pi\sigma-\rho\gamma^2v^2/\sigma}{\gamma^3},\qquad\frac{dT}{dt}=B.$$
+
+These follow directly from the junction equations (2-8)-(2-10), the stress (2-18), and the normal flux (2-20) of Sakai and Haines at zero McVittie mass and zero surface pressure.
+The angular constraint fixes $\sigma$ at each moment.
+Tangential conservation independently requires
+
+$$\frac{d\sigma}{dt}+\frac{2\sigma}{R}\frac{dR}{dt}=\rho\gamma v,\qquad\frac{dm}{dt}=4\pi R^2\rho\gamma v.$$
+
+The influx raises the proper mass when $v>0$.
+
+## Initial data for the drawings
+
+Take $t_0=1$, $a(t_0)=1$, $R(t_0)=0.15$, $v(t_0)=0$, and $T(t_0)=0$ in the chosen time unit.
+The initial size is $H_0R_0=0.1$, the surface density is approximately $0.002645984$, and the interior speed is approximately $0.09950372$.
+The shell starts with positive peculiar acceleration $dv/dt\simeq0.01662521$.
+The small void power law $R\propto t^{(15+\sqrt{17})/24}$ is an asymptotic Newtonian result; the trajectory obeys the relativistic differential equations above.
+
+## Bulk and surface curvature
+
+Minkowski's bulk Riemann tensor vanishes.
+The dust exterior has its ordinary smooth Friedmann curvature.
+The singular Einstein tensor on the shell is $8\pi S_{ab}\delta(n)$, where $n$ is signed Gaussian normal distance and $S_{ab}=\sigma u_au_b$ for shell velocity $u^a$.
+The bulk scalar invariants are defined away from the shell.
+Products of the shell's delta distribution do not define an ordinary curvature squared scalar.
+Sugiura and colleagues, section 2.3 and equations (2.18)-(2.27), derive finite optical jumps by integrating the singular curvature through the shell.
