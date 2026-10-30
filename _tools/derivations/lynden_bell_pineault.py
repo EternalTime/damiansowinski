@@ -234,11 +234,17 @@ def register_dimensions(vm=None):
     if vm is None:
         import verify_metrics as vm
     for system in SYSTEMS:
-        values = {"t": "T", "A": "L", "n": "1"}
+        values = {"t": "T", "A": "L"}
+        if system != "photons":
+            values["n"] = "1"
         if system == "weyl":
             values.update({"R": "L", "z": "L", "\\phi": "1", "\\nu": "1", "\\xi": "1"})
         else:
-            values.update({"r": "L", "\\theta": "1", "\\phi": "1", "f": "1", "h": "1"})
+            values.update({"r": "L", "\\theta": "1", "\\phi": "1"})
+            if system != "photons":
+                values["f"] = "1"
+            if system != "rotating":
+                values["h"] = "1"
             if system == "rotating":
                 values.update({name: "1" for name in ("N", "P", "Q", "Z")})
         vm.DIMENSIONS[(METRIC, system)] = values
