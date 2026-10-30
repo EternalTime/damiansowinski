@@ -214,7 +214,7 @@ class View:
     """One view of a spacetime: what it draws, its words, and the coordinates it tints."""
 
     def __init__(self, vid, label, box, system=None):
-        self.d = {"id": vid, "label": label, "box": [round(float(b), 4) for b in box]}
+        self.d = {"id": vid, "label": label, "box": [round(float(b), 4) for b in build.padded_window(box)]}
         if system:
             self.d["system"] = system
         self.layers, self.labels, self.legend_items, self.slices = [], [], [], []
