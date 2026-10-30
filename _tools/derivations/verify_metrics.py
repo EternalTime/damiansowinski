@@ -1100,6 +1100,9 @@ DIMENSIONS = {
         "u": "T", "v": "L", "x": "L", "y": "L", "\\lambda_1": "1/L**2", "\\lambda_2": "1/L**2"},
     ("cahen_wallach", "rotating"): {"u": "T", "v": "L", "x": "L", "y": "L", "\\omega": "1/L"},
     ("cahen_wallach", "rosen"): {"u": "T", "v": "L", "p": "L", "q": "L", "k": "1/L"},
+    # Hauser's coordinates and his function are pure numbers, and the one length L multiplies the
+    # whole line element, so no coordinate is a time the chart multiplies by c.
+    ("hauser_wave", "kerr_debney_schild"): {"t": "1", "r": "1", "x": "1", "y": "1", "L": "L", "f": "1", "H": "1"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",

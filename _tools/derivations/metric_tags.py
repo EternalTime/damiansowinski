@@ -519,6 +519,9 @@ OVERRULED = {
     ("mixmaster", "vacuum"): (
         True, "the three scale factors are left free; the Mixmaster universe is the "
               "vacuum of Bianchi type IX, whose equations fix them"),
+    ("hauser_wave", "vacuum"): (
+        True, "f is left free; Hauser's wave is the vacuum on which f obeys 16(1 + t^2)f'' + 3f = 0, "
+              "and every Ricci component vanishes exactly at points once that equation is used"),
     ("robinson_trautman", "vacuum"): (
         True, "P and H are left free in both charts; the spacetimes are the vacuum "
               "solutions, on which P obeys the Robinson-Trautman equation"),

@@ -6687,6 +6687,24 @@
   ],
   "sphere": null
  },
+ "hauser_wave/kerr_debney_schild": {
+  "stamp": "292dd7d894d2e042",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "hayward/eddington_finkelstein_ingoing": {
   "stamp": "3a498ff528b26244",
   "relations": {},

@@ -36207,6 +36207,95 @@ def bekenstein_universes_check(chart, system):
 CHARTS["bekenstein_universes"] = [lambda s=s: bekenstein_universes(s) for s in BEKENSTEIN_CHARTS]
 
 
+# -- Hauser's twisting type N wave -------------------------------------------------------
+
+HAUSER_H = "H = x\\left(24tff' - 16\\left(1 + t^2\\right)f'^2 - 9f^2\\right)/2 - \\dfrac{rf'}{4x^2f}"
+
+
+def hauser_wave():
+    """Hauser's field in the Kerr-Debney-Schild form of Godazgar et al 2021 eq. (24) with their
+    eq. (29), L = 2i(zeta + zetabar) and P = (zeta + zetabar)^{3/2} f(u/(zeta + zetabar)^2), in
+    zeta = x + iy and t = u/(4x^2) so that f depends on one coordinate. f is left free, and H is
+    written with Hauser's equation 16(1 + t^2)f'' + 3f = 0 used once, so f'' never enters the metric;
+    hauser_wave_check holds the chart to the vacuum on that equation, and hauser_wave.md records
+    the derivation."""
+    coords = ["t", "r", "x", "y"]
+    omega = "\\left(4x^2dt + 8xt\\,dx - 8x\\,dy\\right)"
+    line = ("ds^2 = L^2\\left(-2" + omega + "\\left(dr + 64x^2ff'\\,dx - 16x^2f\\left(3f - 4tf'\\right)dy\\right)"
+            " - 2H" + omega + "^2 + \\dfrac{r^2 + 256x^6f^4}{4x^3f^2}\\left(dx^2 + dy^2\\right)\\right)")
+    reals = "(-\\infty, \\infty)"
+    return {"metric_id": "hauser_wave",
+            "system": {"id": "kerr_debney_schild", "name": "Kerr-Debney-Schild", "coords": coords,
+                       "domains": ["t \\in " + reals, "r \\in " + reals, "x \\in (0, \\infty)", "y \\in " + reals,
+                                   "f(t) \\neq 0"],
+                       "parameters": ["L", "f = f(t)", HAUSER_H], "line_element": line},
+            "chart_line_element": line, "printer": {}, "check": hauser_wave_check}
+
+
+def hauser_on_shell(chart, value, at, f0, f1, coefficient=3):
+    """value with H written out and f and its derivatives at the point t of `at` taken from
+    16(1 + t^2)f'' + coefficient f = 0 with f = f0 and f' = f1 there; exact for rational inputs."""
+    t = chart.symbols[0]
+    f = chart.reader.parameters["f"]
+    F0, F1, T = sp.symbols("hauser_F0 hauser_F1 hauser_T")
+    second = -coefficient * F0 / (16 * (1 + T ** 2))
+    derivatives = [F0, F1, second]
+    for _ in range(3):
+        last = derivatives[-1]
+        derivatives.append(sp.diff(last, T) + sp.diff(last, F0) * F1 + sp.diff(last, F1) * second)
+    known = {F0: f0, F1: f1, T: at[t]}
+    expression = chart.reader.surface(sp.sympify(value)).doit()
+    for k in range(5, 0, -1):
+        expression = expression.subs(sp.Derivative(f, (t, k)), derivatives[k].subs(known))
+    return expression.subs(f, f0).subs(at)
+
+
+def hauser_wave_check(chart):
+    """At points of rational coordinates, with f and f' free there and f'' and higher from Hauser's
+    equation, every Ricci component is exactly zero; with the coefficient 3 changed to 4 it is not;
+    the Weyl tensor annihilates d_r, the fourfold principal null direction, and does not vanish;
+    and x d_x + y d_y + 3r d_r multiplies the metric by 5. No symbolic simplification is done."""
+    t, r, x, y = chart.symbols
+    ricci = chart.geo.ricci_ll()
+    weyl = chart.geo.weyl_llll()
+    g = chart.geo.g
+    xi = [sp.Integer(0), 3 * r, x, y]
+    points = [({t: sp.Rational(3, 10), r: sp.Rational(1, 2), x: sp.Rational(7, 10), y: sp.Rational(1, 5)}, 1, sp.Rational(-1, 4)),
+              ({t: sp.Rational(-2, 1), r: sp.Rational(-3, 2), x: sp.Rational(6, 5), y: 0}, sp.Rational(4, 5), sp.Rational(1, 3)),
+              ({t: sp.Rational(5, 1), r: sp.Rational(1, 10), x: sp.Rational(2, 5), y: 1}, sp.Rational(3, 2), sp.Rational(-2, 3))]
+    for at, f0, f1 in points:
+        at = dict(at)
+        at[chart.reader.parameters["L"]] = 1
+        for i in range(4):
+            for j in range(i, 4):
+                if hauser_on_shell(chart, ricci[i][j], at, f0, f1) != 0:
+                    raise AssertionError(f"hauser_wave: R_{coords_pair(chart, i, j)} is not zero on Hauser's equation")
+        if all(hauser_on_shell(chart, ricci[i][j], at, f0, f1, coefficient=4) == 0
+               for i in range(4) for j in range(i, 4)):
+            raise AssertionError("hauser_wave: the Ricci tensor vanishes off Hauser's equation too")
+        nonzero = False
+        for a, b, c in itertools.product(range(4), repeat=3):
+            if hauser_on_shell(chart, weyl[a][b][c][1], at, f0, f1) != 0:
+                raise AssertionError("hauser_wave: d_r is not a fourfold principal null direction")
+            nonzero = nonzero or hauser_on_shell(chart, weyl[a][b][c][0], at, f0, f1) != 0
+        if not nonzero:
+            raise AssertionError("hauser_wave: the Weyl tensor vanishes")
+        for i in range(4):
+            for j in range(i, 4):
+                lie = (sum(xi[k] * sp.diff(g[i, j], chart.symbols[k]) for k in range(4))
+                       + sum(g[k, j] * sp.diff(xi[k], chart.symbols[i]) + g[i, k] * sp.diff(xi[k], chart.symbols[j])
+                             for k in range(4)))
+                if hauser_on_shell(chart, lie - 5 * g[i, j], at, f0, f1) != 0:
+                    raise AssertionError("hauser_wave: x d_x + y d_y + 3r d_r is not a homothety of factor 5")
+
+
+def coords_pair(chart, i, j):
+    return chart.coords_tex[i] + chart.coords_tex[j]
+
+
+CHARTS["hauser_wave"] = hauser_wave
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
