@@ -63,3 +63,54 @@ Compute and print the chart tensors with the existing generator.
 Check the apparent coordinate inconsistency in the extracted text of Evtyagin and Magazev's equation (1) before using that matrix.
 Record every diagram's slice and any physically justified absence before drawing.
 History publication awaits the keyed review decision.
+
+## Maxwell field and inherited motions
+
+Write \(T=ct\) and take the oriented orthonormal coframe
+\[
+ e^0=dT-2y\,dz/a,\qquad e^1=dr,\qquad e^2=e^{-r/a}dy,\qquad e^3=e^{r/a}dz.
+\]
+Its exterior derivatives are \(de^0=-2e^2\wedge e^3/a\), \(de^1=0\), \(de^2=-e^1\wedge e^2/a\), and \(de^3=e^1\wedge e^3/a\).
+The Einstein tensor in this frame is \(2\operatorname{diag}(1,-1,1,1)/a^2\).
+In the normalization \(G_{ab}=2(F_{ac}F_b{}^c-g_{ab}F_{cd}F^{cd}/4)\), a compatible field is
+\[
+ F=\frac{\sqrt2}{a}\left[\cos(2r/a)e^0\wedge e^1+\sin(2r/a)e^2\wedge e^3\right].
+\]
+The orientation obeys \({}^{\star}(e^0\wedge e^1)=-e^2\wedge e^3\).
+Both \(dF\) and \(d{}^{\star}F\) vanish by the four exterior derivatives above.
+A constant duality phase may be added.
+The two electromagnetic invariants cannot vanish together, since their squared sum is \(16/a^4\).
+The first chart-print attempt exposed a normalization factor in the trial field; the verified amplitude is \(\sqrt2/a\).
+
+The metric Killing fields in the exponential coordinates are
+\[
+ K_0=\partial_T,\quad K_1=\partial_z,\quad K_2=\partial_y+2z\partial_T/a,\quad
+ K_3=\partial_r+(y/a)\partial_y-(z/a)\partial_z.
+\]
+All four preserve the coframe.
+The first three preserve \(F\); the fourth obeys \(\mathcal L_{K_3}F=-(2/a){}^{\star}F\).
+Thus the connected inherited subgroup of this transitive group is three dimensional.
+Its generators obey \([K_1,K_2]=2K_0/a\), while \([K_3,K_1]=K_1/a\) and \([K_3,K_2]=-K_2/a\).
+The full motion group and the field's inherited subgroup are distinct.
+The stored scalar values are \(R=0\) and \(K=64/a^4\).
+
+## Tensor computation
+
+All three chart tensors are computed with the established Geometry and chart printer.
+The source and both source-free Maxwell equations are checked at three numerical points per chart.
+Each chart is also compared at those points with the exponential metric pulled back by its stated map.
+The original-coordinate names are \((u,r,y,z)=(X^1,X^2,X^3,X^4)\).
+The extracted Evtyagin-Magazev matrix is not used.
+
+## Diagram slices
+
+Every drawing uses \(a=1\).
+The spacetime views follow the totally geodesic surface \(y=z=0\), with both coordinates real, and its images in the other charts.
+Its induced metric is \(-dT^2+dr^2\).
+The conformal diamond compactifies this surface alone, using \(p,q=\arctan((T\mp r)/a)\).
+No global causal-boundary claim follows from this surface.
+The spatial surface \(t=z=0\) has metric \(dr^2+e^{-2r/a}dy^2\), a hyperbolic plane.
+An isometric immersion of its strip of width \(2\pi a\) along \(y\), for \(0\le r\le2a\), is Beltrami's pseudosphere with radius \(a e^{-r/a}\).
+The strip is rolled once about the drawing's axis; the coordinates of spacetime retain their real domains.
+The drawing is a finite immersed strip, with no global embedding or periodic spacetime identification asserted.
+The curvature figure evaluates the stored scalars on \(-2a\le r\le2a\); both are constant, so one still view suffices.

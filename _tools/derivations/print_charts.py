@@ -36707,6 +36707,85 @@ def charach_malin_check(chart, system):
 CHARTS["charach_malin"] = [lambda s=s: charach_malin(s) for s in CHARACH_MALIN_CHARTS]
 
 
+MTT_CHARTS = ("original", "exponential", "upper_half_plane")
+
+
+def mclenaghan_tariq_tupper(system):
+    """Magazev (29), its time shift, and its upper-half-plane coordinates."""
+    coords = {"original": ["u", "r", "y", "z"], "exponential": ["t", "r", "y", "z"],
+              "upper_half_plane": ["t", "x", "y", "\\phi"]}[system]
+    time = "du + dr" if system == "original" else r"c\,dt"
+    line = (rf"ds^2 = -\left({time} - 2y\,dz/a\right)^2 + dr^2 + e^{{-2r/a}}dy^2 + e^{{2r/a}}dz^2"
+            if system != "upper_half_plane" else
+            r"ds^2 = -\left(c\,dt - 2y\,d\phi\right)^2 + \frac{a^2}{x^2}(dx^2 + dy^2) + x^2d\phi^2")
+    return {"metric_id": "mclenaghan_tariq_tupper", "system": {
+        "id": system, "name": {"original": "Original coordinates", "exponential": "Exponential coordinates",
+                                "upper_half_plane": "Upper half-plane coordinates"}[system],
+        "coords": coords, "parameters": ["a"],
+        "domains": [c + (r" \in (0, \infty)" if c == "x" else r" \in (-\infty, \infty)") for c in coords],
+        "line_element": line}, "chart_line_element": line.replace(r"c\,dt", "dt"), "printer": {},
+        "check": lambda chart: mtt_check(chart, system)}
+
+
+def mtt_frame(chart, system):
+    """Orthonormal coframe, logarithmic coordinate and the analytic determinant density."""
+    T, r, y, z = chart.symbols
+    a = chart.reader.parameters["a"]
+    if system == "upper_half_plane":
+        e = sp.Matrix([[1, 0, 0, -2*y], [0, a/r, 0, 0], [0, 0, a/r, 0], [0, 0, 0, r]])
+        return e, a*sp.log(r/a), a*a/r
+    e = sp.Matrix([[1, int(system == "original"), 0, -2*y/a], [0, 1, 0, 0],
+                   [0, 0, sp.exp(-r/a), 0], [0, 0, 0, sp.exp(r/a)]])
+    return e, r, sp.Integer(1)
+
+
+def mtt_maxwell(chart, system):
+    """Geometrized normalization G_ab = 2(F_ac F_b^c - g_ab F^2/4)."""
+    e, radial, density = mtt_frame(chart, system)
+    a = chart.reader.parameters["a"]
+    phase = 2*radial/a
+    frame = sp.zeros(4)
+    frame[0, 1], frame[2, 3] = sp.sqrt(2)*sp.cos(phase)/a, sp.sqrt(2)*sp.sin(phase)/a
+    frame[1, 0], frame[3, 2] = -frame[0, 1], -frame[2, 3]
+    return e.T*frame*e, density
+
+
+def mtt_check(chart, system):
+    """Point comparisons of the source, both Maxwell equations and coordinate maps.
+    No symbolic determinant or simplify call occurs in this check."""
+    X = chart.symbols
+    a = chart.reader.parameters["a"]
+    F, density = mtt_maxwell(chart, system)
+    up = chart.geo.ginv*F*chart.geo.ginv
+    closed = [sum(sp.diff(F[j, k], X[i]) for i, j, k in ((i, j, k), (j, k, i), (k, i, j)))
+              for i, j, k in itertools.combinations(range(4), 3)]
+    current = [sum(sp.diff(density*up[i, j], X[j]) for j in range(4))/density for i in range(4)]
+    inv = sum(F[i, j]*up[i, j] for i in range(4) for j in range(4))
+    source = 2*(F*chart.geo.ginv*F.T-chart.geo.g*inv/4)
+    G = sp.Matrix(chart.geo.einstein_ll())
+    # Each chart maps to the same exponential coframe at T=ct.
+    T, r, y, z = X
+    image = ([T+r, r, y, z] if system == "original" else
+             [T, a*sp.log(r/a), y, a*z] if system == "upper_half_plane" else list(X))
+    J = sp.Matrix(image).jacobian(X)
+    ep = sp.Matrix([[1, 0, 0, -2*image[2]/a], [0, 1, 0, 0],
+                    [0, 0, sp.exp(-image[1]/a), 0], [0, 0, 0, sp.exp(image[1]/a)]])
+    pulled = J.T*ep.T*sp.diag(-1, 1, 1, 1)*ep*J
+    for point in ((0.2, 0.7, -0.3, 0.4, 1.2), (-0.4, 1.4, 0.8, -0.2, 0.9), (1.1, 2.3, -1.2, 0.5, 1.7)):
+        at = {**dict(zip(X, point[:4])), a: point[4], chart.reader.c: 1}
+        def near(value, label):
+            gap = max((abs(complex(sp.N(v.subs(at), 35))) for v in sp.flatten(value)), default=0)
+            if gap > 1e-9:
+                raise AssertionError(f"mclenaghan_tariq_tupper/{system}: {label}: {gap}")
+        near(list(G-source), "Einstein-Maxwell source")
+        near(closed, "dF")
+        near(current, "Maxwell divergence")
+        near(list(chart.geo.g-pulled), "exponential chart pulled back")
+
+
+CHARTS["mclenaghan_tariq_tupper"] = [lambda s=s: mclenaghan_tariq_tupper(s) for s in MTT_CHARTS]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])

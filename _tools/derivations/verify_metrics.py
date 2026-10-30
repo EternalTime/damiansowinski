@@ -2519,6 +2519,9 @@ DIMENSIONS = {
        for chart, coords in (("areal", ("t", "x", "y", "z")), ("comoving", ("t", "\\chi", "y", "z")),
                              ("characteristic", ("u", "v", "y", "z")))},
 
+    ("mclenaghan_tariq_tupper", "original"): {"u": "L", "r": "L", "y": "L", "z": "L", "a": "L"},
+    ("mclenaghan_tariq_tupper", "exponential"): {"t": "T", "r": "L", "y": "L", "z": "L", "a": "L"},
+    ("mclenaghan_tariq_tupper", "upper_half_plane"): {"t": "T", "x": "L", "y": "L", "\\phi": "1", "a": "L"},
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
