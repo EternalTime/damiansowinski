@@ -1442,7 +1442,7 @@
     },
     {
       "id": "exterior_proper",
-      "name": "Friedmann Proper Radial Coordinate",
+      "name": "Friedmann Comoving Coordinate",
       "coords": [
         "t",
         "\\chi",
@@ -1475,7 +1475,7 @@
           "description": "The shell comoving position, with areal radius $R=a f(\\chi_s)$."
         }
       ],
-      "convention": "The time $t$ has dimensions of length, and the proper radial coordinate $\\chi$ is dimensionless. The dust scale factor $a=a(t)$ has dimensions of length, $k$ is its curvature sign, $f=f(\\chi)$ is the curvature function, and $\\chi_s=\\chi_s(t)$ is the shell position.",
+      "convention": "The time $t$ and dust scale factor $a=a(t)$ have dimensions of length, and $\\chi$ is a dimensionless proper radial coordinate. For curvature sign $k=-1,0,1$, we take $f=f(\\chi)$ as $\\sinh\\chi$, $\\chi$, and $\\sin\\chi$, respectively. The shell lies at $\\chi=\\chi_s(t)$, with $R=a f(\\chi_s)$.",
       "line_element": "ds^2=-dt^2+a^2\\left(d\\chi^2+f^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {

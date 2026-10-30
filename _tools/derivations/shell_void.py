@@ -103,7 +103,7 @@ def diagram_specs(Diagram, EQUATOR, SIDEWAYS):
                 tau="t", cones=(6,9), areal=True, functions=DRAWING_FUNCTIONS,
                 where="r-sv_radius(t)/t**Rational(2,3)", input=DRAWING_INPUT,
                 curves=(("shell", "sv_radius(t)/t**Rational(2,3)", "the shell"),)),
-        Diagram("shell_void", "exterior_proper", "radial", "Proper radial coordinate", ("t", r"\chi"),
+        Diagram("shell_void", "exterior_proper", "radial", "Comoving radial coordinate", ("t", r"\chi"),
                 (0, 1.9, T0, END), r"$\chi$", "$t/t_0$", {"k":0}, EQUATOR,
                 tau="t", cones=(6,9), areal=True,
                 functions={"a":"t**Rational(2,3)", "f":"chi", "chi_s":"sv_comoving_radius(t)"},
