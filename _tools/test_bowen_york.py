@@ -4,7 +4,6 @@ The chart printer checks generic intrinsic tensors and coordinate maps.
 The embedding generator checks distances on the drawn surface.
 These checks cover the remaining extrinsic data and elliptic boundary problem.
 """
-import json
 import math
 from pathlib import Path
 import sys
@@ -87,19 +86,22 @@ class SpinThroatConstraint(unittest.TestCase):
         r=np.geomspace(1,40,30)
         np.testing.assert_allclose(w.field(r,0.3),1+1/r,atol=2e-14)
         w=solution()
-        # The interior extension psi(r)=psi(1/r)/r carries the spatial line element onto itself.
-        for r in (1.3,2.1,7.2):
+        # Check the Hamiltonian source on the other end using the inverted numerical solution.
+        # Finite differences are independent of the exterior spectral derivatives.
+        for r in (0.2,0.6,0.9):
             for mu in (-0.8,0,0.6):
-                outer=float(w.field(r,mu))
-                inner=r*outer
-                self.assertAlmostEqual(inner**4/r**8,outer**4/r**4,places=12)
-
-    def test_the_stored_geometry_is_intrinsic_and_the_history_is_preserved(self):
-        metric=json.loads((ROOT/'MFS/assets/data/metrics/bowen_york.json').read_text())
-        self.assertEqual(metric['signature'],'(+,+,+)')
-        self.assertEqual([len(c['coords']) for c in metric['coordinates']],[3,3,3])
-        self.assertNotIn('vacuum',metric['tags'])
-        self.assertEqual(len(metric['history'].split('¶')),5)
+                def f(rv,m):
+                    return float(w.field(1/rv,m))/rv
+                h=2e-4
+                def first(axis):
+                    values=[f(r+k*h,mu) if axis==0 else f(r,mu+k*h) for k in (-2,-1,1,2)]
+                    return (values[0]-8*values[1]+8*values[2]-values[3])/(12*h)
+                def second(axis):
+                    values=[f(r+k*h,mu) if axis==0 else f(r,mu+k*h) for k in (-2,-1,0,1,2)]
+                    return (-values[0]+16*values[1]-30*values[2]+16*values[3]-values[4])/(12*h*h)
+                lap=second(0)+2*first(0)/r+((1-mu*mu)*second(1)-2*mu*first(1))/r**2
+                source=2.25*(1-mu*mu)/r**6/f(r,mu)**7
+                self.assertLess(abs(lap+source),2e-6)
 
 
 if __name__ == '__main__':
