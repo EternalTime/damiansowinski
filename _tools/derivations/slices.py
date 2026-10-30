@@ -3875,6 +3875,11 @@ for _system in ("conformal", "cosmic", "areal", "isotropic", "tortoise", "kruska
     FLAT[("thakurta", _system, "radial")] = lambda s=_system: one(
         "thakurta", lambda m: thakurta_slice_lines(m, s), label=r"$\eta=\eta_0$")
 
+# The embedded t=1 torus meets each theta=phi=0 section in its full compact circle.
+FLAT.update({("moncrief_taub_nut", system, "compact"):
+             (lambda: one("moncrief_taub_nut", lambda m: along(1.0, 0.0, 2*math.pi)))
+             for system in ("areal", "extension_plus", "extension_minus")})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

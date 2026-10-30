@@ -31781,6 +31781,10 @@ for _matter in ("scalar", "electromagnetic"):
             r"Light rays cross the identified edges and wind round the spatial circle."]
 
 
+import moncrief_taub_nut as moncrief_torus
+DRAWN["moncrief_taub_nut"] = lambda ck, src: moncrief_torus.conformal_view(sys.modules[__name__], ck, src)
+CAPTIONS.update({("moncrief_taub_nut", system): [r"The local section $\theta=\phi=0$ in conformal null coordinates, with identified angular edges and finite time cuts."] for system in moncrief_torus.SYSTEMS})
+
 def main(argv=None):
     check_table()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

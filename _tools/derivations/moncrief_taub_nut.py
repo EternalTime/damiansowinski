@@ -26,7 +26,7 @@ def spec(system):
         domains = [r't \in (0,\infty)']
     else:
         coords = ['T', r'\theta', r'\chi', r'\phi']
-        params = ['L', r'\kappa'] + [f'{f} = {f}(T,\\theta)' for f in ('B', 'F', 'Q')]
+        params = ['L', r'\kappa', r'\delta'] + [f'{f} = {f}(T,\\theta)' for f in ('B', 'F', 'Q')]
         sign = '-' if system == 'extension_plus' else '+'
         line = (r'ds^2=L^2\left(e^{2B}\left(T(d\chi+Q\,d\phi)^2'
                 + sign + r'\kappa\,dT(d\chi+Q\,d\phi)'
@@ -118,3 +118,204 @@ def drawing_functions(t, theta):
     b = epsilon*j0*mp.cos(theta)
     f = epsilon**2*(t*t*(j0*j0+j1*j1)/2-t*j0*j1*mp.cos(theta)**2)
     return b, f
+
+
+# The extension drawings use the totally geodesic section theta=phi=0.
+# F/T is evaluated by its entire power series so the coefficient H stays regular at T=0.
+INPUT = r'Polarised Bessel member ($\epsilon=1/4$, $q=0$, $L=\kappa=1$).'
+
+
+def areal_functions():
+    return {'b': 'besselj(0,t)*cos(theta)/4', 'q': '0',
+            'f': '(t**2*(besselj(0,t)**2+besselj(1,t)**2)/2-t*besselj(0,t)*besselj(1,t)*cos(theta)**2)/16'}
+
+
+def extension_functions():
+    """Declared functions on theta=0; F's transverse first derivative also vanishes there."""
+    return {'B': 'mon_j0(T)*cos(theta)/4', 'Q': '0', 'F': 'log(1+4*T*mon_h0(T))/2'}
+
+
+def f_over_T(T):
+    import math
+    import numpy as np
+    # D(T)=J1(sqrt(T))/sqrt(T); F_T=T*D(T)^2/32 on theta=0.
+    d = [(-1)**n / (2*4**n*math.factorial(n)*math.factorial(n+1)) for n in range(40)]
+    square = np.convolve(d, d)[:40]
+    coeff = [c/(32*(n+2)) for n, c in enumerate(square)]
+    return np.asarray(T)*np.polynomial.polynomial.polyval(T, coeff)
+
+
+def j0_T(T, order=0):
+    import numpy as np
+    from scipy.special import hyp0f1
+    import math
+    return (-0.25)**order/math.factorial(order)*hyp0f1(1+order, -np.asarray(T)/4)
+
+
+def h0_T(T, order=0):
+    import numpy as np
+    from scipy.special import exprel
+    if order:
+        def derivative(x):
+            with mp.workdps(40):
+                def value(z):
+                    if not z:
+                        return mp.mpf(0)
+                    a, d = mp.hyp0f1(1,-z/4), mp.hyp0f1(2,-z/4)/2
+                    f = (z*(a*a+z*d*d)/2-z*a*d)/16
+                    return mp.expm1(2*f)/(4*z)
+                return float(mp.diff(value, mp.mpf(float(x)), order))
+        return np.vectorize(derivative, otypes=[float])(T)
+    ft = f_over_T(T)
+    return ft*exprel(2*np.asarray(T)*ft)/2
+
+
+def conformal_w(T):
+    """Integral of (exp(F)-1)/(2T), regular on the horizon section."""
+    import numpy as np
+    from scipy.special import exprel
+    nodes, weights = np.polynomial.legendre.leggauss(24)
+    ts = np.asarray(T)[..., None]*(nodes+1)/2
+    ft = f_over_T(ts)
+    values = ft*exprel(ts*ft)/2
+    return np.asarray(T)*np.sum(values*weights, axis=-1)/2
+
+
+def null_rows(nr):
+    params, fixed = {'L': 1, 'kappa': 1}, {'theta': 0, 'phi': 0}
+    rows = [nr.Diagram('moncrief_taub_nut', 'areal', 'compact', '$t$ and $\\psi$',
+                       ('t', r'\psi'), (0, 2*nr.math.pi, 0, 4), '$\\psi$', '$t$', params, fixed,
+                       tau='t', families=nr.SIDEWAYS, functions=areal_functions(), input=INPUT,
+                       periodic=(r'\psi',), kretschmann=False, where='t', inside=True)]
+    for system in SYSTEMS[1:]:
+        rows.append(nr.Diagram('moncrief_taub_nut', system, 'compact', '$T$ and $\\chi$',
+                               ('T', r'\chi'), (0, 2*nr.math.pi, -2, 2), '$\\chi$', '$T$', params | {'delta': 3}, fixed,
+                               orient='outgoing' if system.endswith('plus') else 'ingoing',
+                               families=nr.SIDEWAYS, functions=extension_functions(), input=INPUT,
+                               
+                               periodic=(r'\chi',), kretschmann=False, mark_g00=False,
+                               lines=(('horizon','x0','0', '$T=0$, compact Cauchy horizon'),)))
+    return rows
+
+
+def null_captions():
+    captions = {('moncrief_taub_nut','areal','compact'): [
+        r'The section $\theta=\phi=0$, with the edges $\psi=0,2\pi$ identified and the compact direction shrinking toward the Cauchy horizon $t=0$.']}
+    for system in SYSTEMS[1:]:
+        captions[('moncrief_taub_nut',system,'compact')] = [
+            r'The regular section $\theta=\phi=0$, with the edges $\chi=0,2\pi$ identified; spacelike circles at $T>0$, the compact null horizon at $T=0$, and closed timelike circles at $T<0$.']
+    return captions
+
+
+def embedding_view(em, ck, src):
+    """The isometric surface of t=1, phi=0, cut at theta=0 and 2pi with ends identified."""
+    import math
+    import numpy as np
+    sl = em.Slice(src, 'moncrief_taub_nut', 'areal', r'\theta', r'\psi',
+                  {'t': 1, 'phi': 0}, {'L': 1, 'kappa': 1}, areal_functions())
+    size, top = 8.0, 2*math.pi
+    ck.add('Moncrief: positive embedding defect on the entire cut torus',
+           max(0.0, -float(np.min(sl.defect_at(np.linspace(0, top, 721))))), 0.0)
+    tube = em.Piece('torus', 'sheet', sl, 0.0, top, 0.0, 1,
+                    (('edge', r'$\theta=0$, identified with the other end'),
+                     ('edge', r'$\theta=2\pi$, identified with the other end')),
+                    [(math.pi, 'r', None)], size)
+    ck.isometry('Moncrief cut torus', tube)
+    ck.radius('Moncrief: rho=e^b at t=1', tube,
+              lambda theta: np.exp(float(mp.besselj(0,1))*np.cos(theta)/4), size)
+    ck.add('Moncrief: identified ends have the same radius', abs(tube.rho[0]-tube.rho[-1]), em.FORM)
+    surface = em.Surface([tube], label='$t=1$', time=1)
+    fig = em.figure_of([surface], {'sheet': 'cover'}, size, meridians=12)
+    fig.legend('fill', 'cover', r'$t=1$, $\phi=0$, with the two ends identified')
+    fig.legend('line', 'r', r'$\theta=\pi$')
+    fig.legend('line', 'meridian', r'$\psi$ constant')
+    return [em.view('cut_torus', 'Toroidal spatial slice', '$L$', [surface], fig.done(),
+                    settings=r'$L=\kappa=1$, $t=1$, $\phi=0$.', input=INPUT)]
+
+
+def conformal_view(cf, ck, src):
+    """Null coordinates on the regular theta=phi=0 section, with its compact identification.
+
+    w'= (exp(F)-1)/(2T), U=exp(chi+w), V=T exp(-chi+w) for the plus extension.
+    For the minus extension U=T exp(chi+w), V=exp(-chi+w).
+    Thus ds^2=-exp(2B-2w)dU dV, and chi+2pi is the boost (U,V)->(e^2pi U,e^-2pi V).
+    The boundaries T=+-1 are finite section cuts, not an assumed global continuation.
+    """
+    import numpy as np
+    views = []
+    period = 2*np.pi
+    for system in SYSTEMS:
+        areal = system == 'areal'
+        s = 1 if system != 'extension_minus' else -1
+        def regular(T, chi, s=s):
+            T, chi = np.asarray(T), np.asarray(chi)
+            w = conformal_w(T)
+            U, V = ((np.exp(chi+w), T*np.exp(-chi+w)) if s == 1
+                    else (T*np.exp(chi+w), np.exp(-chi+w)))
+            return np.arctan(U), np.arctan(V)
+        if areal:
+            # Rebind regular in the function default so the loop cannot change it later.
+            def fmap(t, psi, regular=regular):
+                return regular(np.asarray(t)**2, np.asarray(psi)+np.log(t))
+            plane = cf.Plane(src, 'moncrief_taub_nut', system, ('t', r'\psi'),
+                             {'theta': 0, 'phi': 0}, {'L': 1, 'kappa': 1}, areal_functions(), induced=True)
+            ck.chart('Moncrief areal section', plane, fmap, ck.uniform(0.04,1,80),
+                     ck.uniform(0,period,80), lambda t, psi: (1,0))
+            x = np.linspace(0.001,1,401)
+            across = np.linspace(0,period,401)
+            boundary = [*zip(*fmap(x,0*x)), *zip(*fmap(1+0*across,across)),
+                        *zip(*fmap(x[::-1],0*x+period)), *zip(*fmap(0*across+0.001,across[::-1]))]
+        else:
+            fmap = regular
+            plane = cf.Plane(src, 'moncrief_taub_nut', system, ('T', r'\chi'),
+                             {'theta': 0, 'phi': 0}, {'L': 1, 'kappa': 1}, extension_functions(), induced=True)
+            ck.chart('Moncrief '+system+' section', plane, fmap, ck.uniform(-1,1,80),
+                     ck.uniform(0,period,80), lambda T, chi, s=s: (1,s/(1+np.abs(T))))
+            x = np.linspace(-1,1,401)
+            across = np.linspace(0,period,401)
+            boundary = [*zip(*fmap(x,0*x)), *zip(*fmap(1+0*across,across)),
+                        *zip(*fmap(x[::-1],0*x+period)), *zip(*fmap(0*across-1,across[::-1]))]
+        v = cf.View(system, plane.entry['name'], (-1.9,1.9,-1.9,1.9), system)
+        v.fill('cover', [cf.point(*pq) for pq in boundary])
+        for edge in (0,period):
+            p,q=fmap(x,0*x+edge)
+            v.curve('r',p,q)
+        for edge in ((0.25,0.5,1) if areal else (-1,-0.5,0,0.5,1)):
+            p,q=fmap(0*across+edge,across)
+            v.curve('horizon' if edge == 0 else 't',p,q)
+        v.legend('cover', r'one copy of the section')
+        v.legend('r', r'identified angular edges')
+        v.legend('t', r'finite cuts at constant time')
+        if not areal:
+            v.legend('horizon', r'$T=0$, compact Cauchy horizon')
+        v.set(settings=INPUT, restriction=r'The section $\theta=\phi=0$, with its periodic angular edges identified.')
+        v.set(caption=[r'The local horizon section in conformal null coordinates, with finite time cuts.'])
+        for moment in cf.slices.moments('moncrief_taub_nut'):
+            p,q=fmap(0*across+1,across)
+            v.slice(moment, [(p,q)])
+        views.append(v)
+    return views
+
+
+def curvature_view(cv, ck, src):
+    """The stored Kretschmann scalar of the Bessel member on a finite areal-time rectangle."""
+    import math
+    import numpy as np
+    wave = areal_functions()
+    K = cv.nr_published(src, 'moncrief_taub_nut', 'areal', 'kretschmann',
+                        ['theta','t'], ['L','kappa'], functions=wave)
+    xaxis, yaxis = cv.axis('$\\theta$', 0,2*math.pi), cv.axis('$t$',0.2,4)
+    nx, ny = 96,64
+    xs,ys,values=cv.cells(K,xaxis,yaxis,nx,ny,[1,1])
+    ck('Moncrief stored K finite in every cell', np.all(np.isfinite(values)))
+    bound=10**math.ceil(math.log10(max(1e-6,float(np.max(np.abs(values))))))
+    scale={'kind':'linear','from':-bound,'to':bound}
+    cv.shape_checks(ck,'moncrief_taub_nut',[(2*math.pi)/3.8])
+    return [{'id':'bessel','label':'Toroidal Bessel member','kind':'map','x':xaxis,'y':yaxis,
+             'colour':{'name':'$K L^4$','scale':scale,'ticks':cv.value_ticks(scale)},
+             'map':{'metric':'moncrief_taub_nut','system':'areal','scalar':'kretschmann',
+                    'x':r'\theta','y':'t','params':{'L':1,'kappa':1},'functions':wave,
+                    'nx':nx,'ny':ny,'cells':[[cv.rounded(v) for v in row] for row in values]},
+             'marks':[],'legend':[], 'settings':INPUT,
+             'clip':'Colour range covering the displayed values.',
+             'caption':[r'The Kretschmann scalar $K$ of the polarised Bessel member over one spatial period, the same at every $\psi$ and $\phi$.']}]

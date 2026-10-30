@@ -18649,6 +18649,9 @@ def draw(metric_id, ck):
     return {"metric": metric_id, "source": src.stamps(), "views": views}
 
 
+import moncrief_taub_nut as moncrief_torus
+DRAWN["moncrief_taub_nut"] = lambda ck, src: moncrief_torus.curvature_view(sys.modules[__name__], ck, src)
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--metric", action="append", default=[], help="redraw only this spacetime, repeatable")

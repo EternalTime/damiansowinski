@@ -4534,6 +4534,10 @@ class Slices(unittest.TestCase):
                 return (lambda X: 1.0), ends
             # U=-exp(-(1-x)/4), V=exp((1+x)/4), drawn in X=(V-U)/2, Y=(V+U)/2.
             return (lambda X: math.tanh(0.25) * X), [math.exp(x / 4) * math.cosh(0.25) for x in ends]
+
+        if key.startswith("moncrief_taub_nut/"):
+            # t=1 is T=1 and chi=psi for both logarithmic shifts.
+            return (lambda X: 1.0), [0.0, 2*math.pi]
         if key.startswith("stiff_fluid_universes/"):
             # The one embedded symmetry plane is t=1/2,x=0, a point on each quotient.
             # chi=x+t^2/2=1/8 in the fluid labels; the characteristic view displays x,t.
@@ -5958,6 +5962,15 @@ class Slices(unittest.TestCase):
                             f = lambda r: (1 - r) * math.exp(4 * r - 2 * math.atan(r)) / (1 + r) - tp * tq
                             r = bisect(f, 0, 20)
                             self.assertLess(abs(math.log(tq) / 2 - r + math.atan(r)), 5e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "moncrief_taub_nut":
+                        # At t=T=1 the mapped compact circle has UV=exp(2w(1)).
+                        import sys
+                        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+                        import moncrief_taub_nut
+                        expected = math.exp(2*float(moncrief_taub_nut.conformal_w(1.0)))
+                        for X, T in points:
+                            U, V = math.tan((T-X)/2), math.tan((T+X)/2)
+                            self.assertLess(abs(U*V-expected), 0.02, where)
                     elif metric_id == "brane_wall_universe":
                         # The wall's own moment, p = arctan U and q = arctan V along it, as
                         # brane_wall_universe.Moment follows Kruskal's U and V out from the wall.

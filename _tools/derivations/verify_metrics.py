@@ -2567,6 +2567,16 @@ DIMENSIONS.update({("charach_malin", system): {
 import chodos_detweiler as _chodos_detweiler
 DIMENSIONS.update(_chodos_detweiler.DIMENSIONS)
 
+# Moncrief's torus coordinates are pure numbers and L carries the overall length.
+DIMENSIONS.update({("moncrief_taub_nut", chart): {
+    **{c: "1" for c in coords}, "L": "L", "\\kappa": "1",
+    **({"\\delta": "1"} if chart != "areal" else {}),
+    **{f: "1" for f in funcs}}
+    for chart, coords, funcs in (
+        ("areal", ("t", "\\theta", "\\psi", "\\phi"), ("b", "f", "q")),
+        ("extension_plus", ("T", "\\theta", "\\chi", "\\phi"), ("B", "F", "Q")),
+        ("extension_minus", ("T", "\\theta", "\\chi", "\\phi"), ("B", "F", "Q")))})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),

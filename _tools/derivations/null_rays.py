@@ -18967,6 +18967,13 @@ def check_table():
         raise SystemExit("\n".join(shapes))
 
 
+# Moncrief's analytic torus family and its regular horizon section.
+import moncrief_taub_nut as moncrief_torus
+DECLARED_FUNCTIONS.update(_nm_declare({"mon_j0": moncrief_torus.j0_T, "mon_h0": moncrief_torus.h0_T}))
+DIAGRAMS.extend(moncrief_torus.null_rows(sys.modules[__name__]))
+CAPTIONS.update(moncrief_torus.null_captions())
+
+
 def main(argv=None):
     check_table()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

@@ -21853,6 +21853,10 @@ for _matter in ("scalar", "electromagnetic"):
         r"The two end circles are identified, and each circle of $x$ has radius $L\sqrt{t}e^{P/2}$."]
 
 
+import moncrief_taub_nut as moncrief_torus
+DRAWN["moncrief_taub_nut"] = lambda ck, src: moncrief_torus.embedding_view(sys.modules[__name__], ck, src)
+CAPTIONS[("moncrief_taub_nut", "cut_torus")] = [r"The torus at $t=1$, $\phi=0$, cut along $\theta=0$ with its two ends identified; each ring a full circle of $\psi$."]
+
 def main(argv=None):
     check_table()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

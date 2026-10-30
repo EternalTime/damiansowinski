@@ -61,3 +61,34 @@ The chart specifications and dedicated spacetime check remain to be implemented 
 The pointwise checks must exercise nonzero $q$ derivatives as well as the polarised drawing member.
 The constraints, regular horizon determinant, sign change of the compact generator, and pullbacks of both extension signs are distinct checks.
 The page-scoped checker runs once after the page is complete.
+
+## Implemented charts and figures
+
+All three charts retain both wave amplitudes in their tensor expressions.
+The printer checks the vacuum equations at generic jets with nonzero derivatives of the second amplitude, and compares both logarithmic coordinate pullbacks at points.
+A named positive radius $\delta$ restricts each extension to its local analytic domain.
+The dedicated spacetime test evaluates the horizon determinant numerically after writing out the removable quotient, and checks the sign of the periodic generator on both sides.
+
+The spacetime drawings show the totally geodesic section $\theta=\phi=0$ of the polarised Bessel member, with the edges of each periodic angle identified.
+On that section, derivatives of every metric coefficient transverse to the section vanish.
+The conformal generator also checks this against the published Christoffel symbols.
+For the regular section, the entire functions $A(T)=J_0(\sqrt{T})$ and $D(T)=J_1(\sqrt{T})/\sqrt{T}$ have real power series on either side of the horizon.
+The constraint reads $F_T=T D(T)^2/32$ there, so evaluating $F/T$ by its convergent series avoids cancellation in $H$ at zero.
+The numerical drawing functions retain forty terms of this convergent series on $|T|\le2$.
+The spacetime is still defined by the analytic functions and the vacuum equations, with the finite series used solely to evaluate the drawing coefficients.
+
+For the conformal map define $w(T)=\int_0^T(e^{F(u)}-1)/(2u)\,du$.
+The plus extension has $U=e^{\chi+w}$ and $V=T e^{-\chi+w}$, while the minus extension has $U=T e^{\chi+w}$ and $V=e^{-\chi+w}$.
+In both cases the induced line element is $-L^2e^{2B-2w}dU\,dV$ at $\kappa=1$.
+The drawn coordinates are $p=\arctan U$ and $q=\arctan V$.
+The periodic identification is $(U,V)\mapsto(e^{2\pi}U,e^{-2\pi}V)$.
+Finite cuts at $T=\pm1$ bound the local views; no global analytic extension or conformal infinity is inferred from them.
+The embedded moment is $t=T=1$, where both angular shifts vanish, and its compact circle is marked in every spacetime and conformal view.
+
+The embedding is the torus $t=1$, $\phi=0$, cut along $\theta=0$ and $2\pi$ with its ends identified.
+Its radius is $Lte^b$, and its height obeys $z_\theta^2=L^2\kappa^2e^{2b+2f}-L^2t^2e^{2b}b_\theta^2$.
+The generator checks that this is positive throughout the selected slice and that the induced metric is preserved.
+The open tube with its stated identification represents the cut torus.
+A single moment is drawn, so no movie or stack registration is required.
+The curvature figure reads only the stored Kretschmann scalar on $0.2\le t\le4$ over one full spatial period.
+All four kinds of diagram are present, so no absent-diagram registration is needed.
