@@ -31934,5 +31934,9 @@ import hawking_moss_drawings as hm_drawings
 hm_drawings.register_conformal(sys.modules[__name__])
 
 
+# The anisotropic wave has two independent transverse radii and a null-line causal completion.
+# An axial conformal diamond cannot represent its full causal identifications.
+NOT_DRAWN.add("kowalski_glikman")
+
 if __name__ == "__main__":
     sys.exit(main())

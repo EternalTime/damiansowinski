@@ -2991,3 +2991,13 @@ def msw_rays(spec, chart):
                                     "$\\pm 1$ and $\\pm 3/2$")
         fig.legend("line", "axis", "the axis, $X_1 = 0$")
     return fig.done(pad=0.03), sl
+
+
+import kowalski_glikman as _kowalski_glikman
+for _chart, _null, _letter in (("brinkmann", "v", "x"), ("rosen", "w", "y")):
+    FIGURES.append(Projection(
+        "kowalski_glikman", _chart, "focus", "Two transverse frequencies",
+        lambda spec: _kowalski_glikman.ray_figure(spec, __import__(__name__)),
+        {"mu": 1}, {f"{_letter}_{i}": "0" for i in range(1, 10) if i not in (1, 4)},
+        fields=("christoffel",)))
+    CAPTIONS[("kowalski_glikman", _chart, "focus")] = _kowalski_glikman.RAY_CAPTIONS[_chart]

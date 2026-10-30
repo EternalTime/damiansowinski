@@ -22065,6 +22065,14 @@ import hawking_moss_drawings as hm_drawings
 hm_drawings.register_embedding(sys.modules[__name__])
 
 
+import kowalski_glikman as _kowalski_glikman
+
+def kowalski_glikman(ck, src):
+    return _kowalski_glikman.embedding_views(ck, src, sys.modules[__name__])
+
+DRAWN["kowalski_glikman"] = kowalski_glikman
+CAPTIONS[("kowalski_glikman", "plane")] = _kowalski_glikman.EMBEDDING_CAPTION
+
 if __name__ == "__main__":
     sys.exit(main())
 
