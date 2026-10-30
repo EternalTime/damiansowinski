@@ -1624,6 +1624,22 @@ ASPECT_WIDEST = 2.0
 ASPECT_TALLEST = 0.5
 
 
+def padded_window(box):
+    """Enlarge a drawing's window about its centre, preserving every plotted point.
+
+    Leave room inside the limits for rounding the published coordinates.
+    """
+    x0, x1, y0, y1 = box
+    width, height = x1 - x0, y1 - y0
+    if width / height < ASPECT_TALLEST:
+        extra = (0.51 * height - width) / 2
+        x0, x1 = x0 - extra, x1 + extra
+    elif width / height > ASPECT_WIDEST:
+        extra = (width / 1.99 - height) / 2
+        y0, y1 = y0 - extra, y1 + extra
+    return [x0, x1, y0, y1]
+
+
 def view_aspect(view):
     """The width over the height of the region a view of a spacetime diagram plots, as the page
     and the application draw it: its box at one scale on both axes, a view drawn through a centre
