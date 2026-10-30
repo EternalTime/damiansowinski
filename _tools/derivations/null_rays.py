@@ -2826,6 +2826,45 @@ def _bw_declare():
 DECLARED_FUNCTIONS.update(_bw_declare())
 
 
+def _hauser_even(t):
+    from scipy.special import hyp2f1
+    t = np.asarray(t, dtype=float)
+    return hyp2f1(-0.125, -0.375, 0.5, -t * t)
+
+
+def _hauser_even_slope(t):
+    from scipy.special import hyp2f1
+    t = np.asarray(t, dtype=float)
+    return -0.1875 * t * hyp2f1(0.875, 0.625, 1.5, -t * t)
+
+
+class hauser_f(sp.Function):
+    """Novoseller's even solution of Hauser's equation 16(1 + t^2)f'' + 3f = 0,
+    2F1(-1/8, -3/8; 1/2; -t^2), a declared function a row may name: sympy differentiates it by
+    hauser_df, and hauser_df by the equation itself, so every derivative a published value takes is
+    the equation's, and lambdify evaluates both with scipy's hyp2f1."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(_hauser_even)
+
+    def fdiff(self, argindex=1):
+        return hauser_df(self.args[0])
+
+
+class hauser_df(sp.Function):
+    """The slope of hauser_f, -(3t/16) 2F1(7/8, 5/8; 3/2; -t^2)."""
+    nargs = 1
+    is_real = True
+    _imp_ = staticmethod(_hauser_even_slope)
+
+    def fdiff(self, argindex=1):
+        t = self.args[0]
+        return -3 * hauser_f(t) / (16 * (1 + t ** 2))
+
+
+DECLARED_FUNCTIONS.update({"hauser_f": hauser_f, "hauser_df": hauser_df})
+
+
 def e12_tortoise(x):
     """x_* of the declared star on the line through its centre, dx_*/dx = 1/N from x_* = 0 at the
     centre: one quadrature inside the star, and outside it Einstein's r + m ln(r - m/2) -
@@ -5910,6 +5949,16 @@ DIAGRAMS = [
     Diagram("newman_tamburino", "cylindrical", "line", "the line $x = 1$", ("u", "r"), (0, 4, 0, 4),
             "$r/\\ell$", "$(cu + r)/\\ell$", {"ell": 1}, {"x": "1", "y": "0"}, to_display=FINKELSTEIN_OUT,
             orient="outgoing", mark_gtt="where $\\partial_u$ is null, $r = \\ell$"),
+    # Hauser's twisting wave on the line x = 1/2, y = 0, where t is the retarded coordinate u itself:
+    # the rays of constant t are the twisting geodesic rays with r their affine distance, and the other
+    # family obeys dr/dt = -H, which Gamma^x_tt turns out of the plane, so it is drawn as null curves.
+    # f is Novoseller's even solution, hauser_f, and the window keeps to |t| <= 5, inside its first
+    # zero t = 5.467, where P vanishes and the chart ends.
+    Diagram("hauser_wave", "kerr_debney_schild", "line", "the line $x = 1/2$", ("t", "r"), (-2.5, 2.5, -2.5, 2.5),
+            "$r$", "$t + r$", {"L": 1}, {"x": "1/2", "y": "0"}, to_display=FINKELSTEIN_OUT, orient="outgoing",
+            functions={"f": "hauser_f(t)"}, kretschmann=False,
+            input="Novoseller's even solution of Hauser's equation, the hypergeometric function with "
+                  "$f = 1$ and $f' = 0$ at $t = 0$."),
     # Bondi's chart for the declared burst, on the equator and on the axis: sigma is even about the
     # equator and vanishes on the axis, so U and every Gamma^theta of the plane vanish on both and
     # the null curves drawn are null geodesics. The expansion in 1/r is for large r, so the views
@@ -12948,6 +12997,12 @@ CAPTIONS = {
         "constant, run at 45°. The other family, null curves that $\\Gamma^x{}_{uu}$ turns out of the plane, "
         "obeys $dr/d(cu) = \\ln(r/\\ell)$: inside $r = \\ell$ it falls to $r = 0$, where the Kretschmann "
         "scalar diverges.",
+    ],
+    ("hauser_wave", "kerr_debney_schild", "line"): [
+        "The plane of $t$ and $r$ ($x = 1/2$, $y = 0$) with $t + r$ upward, so the twisting rays, $t$ "
+        "constant, run at 45°. The other family, null curves that $\\Gamma^x{}_{tt}$ turns out of the plane, "
+        "obeys $dr/dt = -H$. The rays twist most at $r = 0$, and the surfaces of constant $r$ are null on "
+        "the marked curves.",
     ],
     ("bondi_sachs", "bondi", "equator"): [
         "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) outside the world tube "
