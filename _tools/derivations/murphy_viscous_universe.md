@@ -34,6 +34,7 @@ The proper time follows from $dt = da/(aH) = (1 + a^q)\,da/(H_sa)$:
 $$H_st = \ln a + \frac{a^q}{q},$$
 
 with $t = 0$ at the one moment where $\ln a = -a^q/q$.
+Multiplying by $q$ and exponentiating, $a^qe^{a^q} = e^{qH_st}$, so $a^q = W(e^{qH_st})$ with $W$ Lambert's function, the cosmic chart's scale factor in closed form; the diagrams of that chart draw it so.
 As $t \to -\infty$, $a \to 0$ like $e^{H_st}$ and $H \to H_s$: the steady state, de Sitter's expansion in its flat chart.
 As $t \to \infty$, $a^q \to qH_st$, so $a \propto t^{2/3(1+w)}$ and $H \to 2/3(1 + w)t$, the Friedmann expansion of the same fluid without viscosity.
 

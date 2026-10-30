@@ -960,7 +960,7 @@ FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k":
 # We sit at x = 0, one galaxy at x = 3L/10, and both stand again every period.
 MURPHY = {"q": 2, "H_s": 1}
 MURPHY_TURN = "the end of the acceleration, $a = 1$"
-MURPHY_INPUT = ("Radiation, $q = 2$: $a^2 = W(e^{2H_st})$, with $W$ Lambert's function, the inverse of "
+MURPHY_INPUT = ("Radiation, $q = 2$: $a^2 = W(e^{2H_st})$, with $W$ the Lambert function, the inverse of "
                 "$H_st = \\ln a + a^2/2$.")
 SMALL_TORUS = {"L_1": 1, "L_2": 1, "L_3": 1}
 SMALL_PLANE = {"y": "0", "z": "0"}

@@ -17138,7 +17138,7 @@ def murphy_viscous_universe(ck, src):
             lo, hi = m.reach("scale_factor_spherical", "r")
             along = np.linspace(lo, hi, 60) if half else np.linspace(-hi, hi, 120)
             v.slice(m, [mink_pq(np.full_like(along, float(eta_a(m.time))), along)])
-        v.set(settings="$q = 2$, $H_s = 1$, $p, q = \\arctan(\\eta \\mp x)$.")
+        v.set(settings="$q = 2$, $H_s = 1$, $p, q = \\arctan(\\eta \\mp " + ("r" if half else "x") + ")$ with $\\eta = a - 1/a$.")
         views.append(v)
     return views
 
@@ -30682,7 +30682,7 @@ CAPTIONS = {
         "The plane $y = z = 0$, the whole diamond of Minkowski space, with $c\\eta = (c/H_s)(a - 1/a)$.",
     ],
     ("murphy_viscous_universe", "cosmic"): [
-        "The plane $y = z = 0$ in the proper time, with $a^2 = W(e^{2H_st})$ and $W$ Lambert's function.",
+        "The plane $y = z = 0$ in the proper time, with $a^2 = W(e^{2H_st})$ and $W$ the Lambert function.",
     ],
     ("lqc_bounce", "comoving"): [
         "The bounce of loop quantum cosmology, each point in the diagram a 2-sphere. The metric is "

@@ -2112,7 +2112,7 @@
         },
         {
           "symbol": "a = a(t)",
-          "description": "Scale factor, a dimensionless function of $t$ fixed by $H_st = \\ln a + a^q/q$, so that $\\dot{a}/a = H_s/(1 + a^q)$; it runs from $0$ as $t \\to -\\infty$ to $\\infty$ as $t \\to \\infty$"
+          "description": "Scale factor, a dimensionless function of $t$ fixed by $H_st = \\ln a + a^q/q$, that is $a^q = W(e^{qH_st})$ with $W$ the Lambert function, so that $\\dot{a}/a = H_s/(1 + a^q)$; it runs from $0$ as $t \\to -\\infty$ to $\\infty$ as $t \\to \\infty$"
         }
       ],
       "convention": "We use comoving coordinates $(t, x, y, z)$, with $t$ the proper time of a comoving observer and $x$, $y$, and $z$ comoving lengths. We take components in the chart $x^0 = ct$, so $a'$ means $da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
