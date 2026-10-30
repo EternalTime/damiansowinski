@@ -31,28 +31,77 @@
   "coordinates": [
     {
       "id": "cosmic",
-      "convention": "Pending chart definition.",
-      "parameters": []
+      "convention": "The interval $I$ is any connected interval on which $a>0$. The radius $r$ covers one hemisphere when $k>0$. Primes in the tensors denote derivatives along $\\tau$. With $h=(da/d\\tau)/a$ and $Q=h^2+k/a^2$, the exact semiclassical constraint is $Q-Q^2/H_0^2+[2h(d^2h/d\\tau^2)+6h^2(dh/d\\tau)-(dh/d\\tau)^2-2kh^2/a^2+k^2/a^4]/M^2=0$ [starobinsky1980, hirano2026].",
+      "parameters": [
+        {
+          "symbol": "a = a(\\tau)",
+          "description": "Dimensionless scale factor, constrained by the semiclassical equation in this chart's convention."
+        },
+        {
+          "symbol": "k",
+          "description": "Spatial curvature, with units of inverse length squared."
+        },
+        {
+          "symbol": "H_0",
+          "description": "Positive inverse length setting the anomaly-supported de Sitter curvature."
+        },
+        {
+          "symbol": "M",
+          "description": "Positive scalaron inverse Compton length setting the higher-derivative term."
+        }
+      ]
     },
     {
       "id": "conformal",
-      "convention": "Pending chart definition.",
-      "parameters": []
+      "convention": "The interval $I$ is any connected interval on which $a>0$. The radius $r$ covers one hemisphere when $k>0$. Primes in the tensors denote derivatives along $\\eta$. With $h=(da/d\\tau)/a$ and $Q=h^2+k/a^2$, the exact semiclassical constraint is $Q-Q^2/H_0^2+[2h(d^2h/d\\tau^2)+6h^2(dh/d\\tau)-(dh/d\\tau)^2-2kh^2/a^2+k^2/a^4]/M^2=0$ [starobinsky1980, hirano2026]. In this chart $d/d\\tau=a^{-1}d/d\\eta$.",
+      "parameters": [
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Dimensionless scale factor, constrained by the semiclassical equation in this chart's convention."
+        },
+        {
+          "symbol": "k",
+          "description": "Spatial curvature, with units of inverse length squared."
+        },
+        {
+          "symbol": "H_0",
+          "description": "Positive inverse length setting the anomaly-supported de Sitter curvature."
+        },
+        {
+          "symbol": "M",
+          "description": "Positive scalaron inverse Compton length setting the higher-derivative term."
+        }
+      ]
     },
     {
       "id": "closed_de_sitter",
-      "convention": "Pending chart definition.",
-      "parameters": []
+      "convention": "The closed exact solution of Eq. (7) has dimensionless scale factor $a=\\cosh(H_0\\tau)$ and $k=H_0^2$. The radial angle $\\chi$ covers the whole three-sphere [starobinsky1980].",
+      "parameters": [
+        {
+          "symbol": "H_0",
+          "description": "Positive inverse length, with Ricci scalar $R=12H_0^2$ and Kretschmann scalar $K=24H_0^4$."
+        }
+      ]
     },
     {
       "id": "flat_de_sitter",
-      "convention": "Pending chart definition.",
-      "parameters": []
+      "convention": "The flat exact solution of Eq. (7) has $a=e^{H_0\\tau}$ and $k=0$. The past null edge of this expanding chart is a regular de Sitter horizon [starobinsky1980].",
+      "parameters": [
+        {
+          "symbol": "H_0",
+          "description": "Positive inverse length, with Ricci scalar $R=12H_0^2$ and Kretschmann scalar $K=24H_0^4$."
+        }
+      ]
     },
     {
       "id": "open_de_sitter",
-      "convention": "Pending chart definition.",
-      "parameters": []
+      "convention": "The open exact solution of Eq. (7) has $a=\\sinh(H_0\\tau)$ and $k=-H_0^2$. The radial coordinate $\\chi$ is dimensionless; $\\tau>0$ covers the expanding region inside a light cone [starobinsky1980].",
+      "parameters": [
+        {
+          "symbol": "H_0",
+          "description": "Positive inverse length, with Ricci scalar $R=12H_0^2$ and Kretschmann scalar $K=24H_0^4$."
+        }
+      ]
     }
   ],
   "related": [
