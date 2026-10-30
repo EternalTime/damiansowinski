@@ -1,0 +1,19 @@
+{
+  "hidden": [
+    {
+      "reason": "The embedded surface belongs to the flat magnetic membrane; the other localization backgrounds and the curved membrane are distinct geometries.",
+      "drawings": [
+        "early_braneworlds/vortex_cartesian/radial",
+        "early_braneworlds/vortex_polar/radial",
+        "early_braneworlds/scalar_wall/radial",
+        "early_braneworlds/vacuum_six/radial",
+        "early_braneworlds/visser_lapse/radial",
+        "early_braneworlds/visser_electric/radial",
+        "early_braneworlds/squires_three/radial",
+        "early_braneworlds/squires_family/radial",
+        "early_braneworlds/squires_axis/radial",
+        "early_braneworlds/magnetic_curved/radial"
+      ]
+    }
+  ]
+}

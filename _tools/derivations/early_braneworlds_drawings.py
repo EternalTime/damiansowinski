@@ -78,13 +78,13 @@ def embedding(ck, src):
     top, size = 5.0, 12.0
     piece = eb.Piece("membrane", "sheet", sl, 0, top, 0, 1,
                      (("axis", r"$\rho=0$"), ("edge", r"$\rho=5a$")),
-                     [(1, "maximum", None), (3, "r", None), (5, "r", None)], size)
+                     [(1, "surface", None), (3, "r", None), (5, "r", None)], size)
     ck.isometry("six dimensional magnetic membrane", piece)
     ck.radius("magnetic circles rho/H", piece, lambda r: r/(1+r*r), size)
     surface = eb.Surface([piece])
     fig = eb.figure_of([surface], {"sheet": "cover"}, size)
     fig.legend("fill", "cover", "magnetic transverse surface")
-    fig.legend("line", "maximum", r"$\rho=a$")
+    fig.legend("line", "surface", r"$\rho=a$")
     fig.legend("line", "r", r"$\rho/a=3,5$")
     fig.legend("line", "meridian", r"$\phi$ constant")
     return [eb.view("magnetic", "Magnetic transverse surface", "$a$", [surface], fig.done(), settings="$a=1$.")]

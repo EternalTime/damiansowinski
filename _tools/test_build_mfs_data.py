@@ -4509,6 +4509,9 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key == "early_braneworlds/magnetic_general/radial":
+            # The same magnetic surface: beta=(1+rho^2/a^2)^(1/3), with a=1.
+            return (lambda X: 0.0), [(1+rho*rho)**(1/3) for rho in self.reach(surface)]
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
