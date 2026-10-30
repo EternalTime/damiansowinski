@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 215,
+  "count": 216,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -23694,6 +23694,11 @@
           "id": "vaidya_patel_kerr",
           "kind": "generalisation",
           "text": "A Kerr black hole in a closed expanding universe, which early epochs favour more than late ones [vaidya1977kerr]."
+        },
+        {
+          "id": "thakurta",
+          "kind": "generalisation",
+          "text": "A conformal Schwarzschild geometry approaching the flat Friedmann universe at large radius. Setting $m=0$ recovers that universe [mello2017]."
         }
       ],
       "references": [
@@ -23769,7 +23774,8 @@
         "mukohyama2000",
         "sussman2000stephani",
         "murphy1973",
-        "vaidya1977kerr"
+        "vaidya1977kerr",
+        "mello2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -42565,6 +42571,11 @@
           "id": "vaidya_patel_kerr",
           "kind": "family",
           "text": "A spinning black hole in an expanding universe with closed spatial sections, whose fluid has one pressure along a single direction and another across it [vaidya1977kerr]."
+        },
+        {
+          "id": "thakurta",
+          "kind": "family",
+          "text": "A member of the generalized McVittie family with $M(t)=m a(t)$ and a radial heat flow [mello2017]."
         }
       ],
       "references": [
@@ -42585,7 +42596,8 @@
         "dasilva2013",
         "kastor1993",
         "carrera2010mcvittie",
-        "vaidya1977kerr"
+        "vaidya1977kerr",
+        "mello2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mcvittie.json",
@@ -58374,6 +58386,11 @@
           "id": "bowen_york",
           "kind": "family",
           "text": "A single hole with vanishing momentum and spin has Schwarzschild's isotropic spatial geometry. Nonzero momentum or spin specifies dynamical black hole initial data [brandt1997, cook2000]."
+        },
+        {
+          "id": "thakurta",
+          "kind": "conformal",
+          "text": "Schwarzschild's geometry multiplied by the square of a scale factor depending on its static time. The source carries a radial heat flow [mello2017]."
         }
       ],
       "references": [
@@ -58511,7 +58528,8 @@
         "bonnor1967oscillating",
         "banerjee1998",
         "fransen2023",
-        "brandt1997"
+        "brandt1997",
+        "mello2017"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -63200,6 +63218,11 @@
           "id": "mcvittie",
           "kind": "family",
           "text": "The older way to put a mass in an expanding universe. McVittie's fluid never falls onto the mass, Sultana and Dyer's black hole swallows its dust, and no choice of mass and scale factor turns one metric into the other [carrera2010mcvittie]."
+        },
+        {
+          "id": "thakurta",
+          "kind": "family",
+          "text": "A conformal Schwarzschild geometry whose scale factor depends on static Schwarzschild time. Its fluid carries a radial heat flow [mello2017]."
         }
       ],
       "references": [
@@ -64902,6 +64925,443 @@
           ],
           "ricci_scalar": "R = \\dfrac{2r^8 - 2r^8\\left(\\partial_l r\\right)^2 - 4r^9\\,\\partial_l^2 r + 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2 - 18a^2\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 128a^2\\,r^7\\,b_0 + 448a^2\\,r^7\\,b_0\\cos^2\\theta - 64a^2\\,r^7\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 160a^2\\,r^8\\,b_0\\,\\partial_l^2 r\\,\\cos^2\\theta + 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 1152a^4\\,r^3\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 4608a^4\\,r^6\\,b_0^2\\cos^4\\theta - 1536a^4\\,r^6\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 1536a^4\\,r^7\\,b_0^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 27648a^6\\,r^2\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 32768a^6\\,r^5\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 8192a^6\\,r^6\\,b_0^3\\,\\partial_l^2 r\\,\\cos^6\\theta + 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 294912a^8\\,r\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 262144a^8\\,r^4\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 131072a^8\\,r^5\\,b_0^4\\,\\partial_l^2 r\\,\\cos^8\\theta + 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 1179648a^{10}\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta}{r^6\\left(r + 16a^2b_0\\cos^2\\theta\\right)^4}",
           "kretschmann": "K = \\dfrac{15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{20}\\theta - 30614526885888a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta + 15307263442944a^{20}\\,b_0^{16}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{18}\\theta - 309237645312a^{18}\\,r^6\\,b_0^{12}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{18}\\theta + 2783138807808a^{18}\\,r^5\\,b_0^{12}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 4638564679680a^{18}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{18}\\theta - 15307263442944a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 7653631721472a^{18}\\,r\\,b_0^{15}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 17179869184a^{16}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 68719476736a^{16}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 68719476736a^{16}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta + 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{16}\\theta - 154618822656a^{16}\\,r^7\\,b_0^{11}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{16}\\theta + 1275605286912a^{16}\\,r^6\\,b_0^{11}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 1990717341696a^{16}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{16}\\theta - 3348463878144a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 1674231939072a^{16}\\,r^2\\,b_0^{14}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6442450944a^{14}\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 25769803776a^{14}\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 25769803776a^{14}\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{14}\\theta - 33822867456a^{14}\\,r^8\\,b_0^{10}\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{14}\\theta + 253671505920a^{14}\\,r^7\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 24159191040a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{14}\\theta + 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta + 21743271936a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta - 368427663360a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 4831838208a^{14}\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{14}\\theta - 418557984768a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 209278992384a^{14}\\,r^3\\,b_0^{13}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 1140850688a^{12}\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4026531840a^{12}\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta - 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 4160749568a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 536870912a^{12}\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{12}\\theta - 4227858432a^{12}\\,r^9\\,b_0^9\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{12}\\theta + 28538044416a^{12}\\,r^8\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 7700742144a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{12}\\theta + 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta + 6190792704a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta - 38277218304a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1207959552a^{12}\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{12}\\theta - 32699842560a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 16349921280a^{12}\\,r^4\\,b_0^{12}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 134217728a^{10}\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 335544320a^{10}\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta - 150994944a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 369098752a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 184549376a^{10}\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^{10}\\theta - 330301440a^{10}\\,r^{10}\\,b_0^8\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^{10}\\theta + 1981808640a^{10}\\,r^9\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 1009778688a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^{10}\\theta + 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta + 698351616a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta - 2430074880a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 113246208a^{10}\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^{10}\\theta - 1634992128a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 817496064a^{10}\\,r^5\\,b_0^{11}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 11796480a^8\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 15728640a^8\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta - 21495808a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 19136512a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 11796480a^8\\,r^{12}\\,b_0^4\\cos^8\\theta + 25165824a^8\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 9437184a^8\\,r^{12}\\,b_0^4\\cos^6\\theta + 6291456a^8\\,r^{12}\\,b_0^4\\cos^4\\theta + 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^8\\theta - 16515072a^8\\,r^{11}\\,b_0^7\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^8\\theta + 86704128a^8\\,r^{10}\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 69599232a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^8\\theta + 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta + 38928384a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta - 95846400a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 4718592a^8\\,r^9\\,b_0^7\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^8\\theta - 51093504a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 25546752a^8\\,r^6\\,b_0^{10}\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 753664a^6\\,r^{15}\\,b_0^3\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 393216a^6\\,r^{14}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta - 1703936a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 589824a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1179648a^6\\,r^{13}\\,b_0^3\\cos^6\\theta + 1572864a^6\\,r^{13}\\,b_0^3\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 327680a^6\\,r^{13}\\,b_0^3\\cos^4\\theta - 262144a^6\\,r^{13}\\,b_0^3\\cos^2\\theta + 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^6\\theta - 516096a^6\\,r^{12}\\,b_0^6\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^6\\theta + 2322432a^6\\,r^{11}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 2654208a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^6\\theta + 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta + 1069056a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta - 2267136a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 73728a^6\\,r^{10}\\,b_0^6\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^6\\theta - 912384a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 456192a^6\\,r^7\\,b_0^9\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 31744a^4\\,r^{16}\\,b_0^2\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 4096a^4\\,r^{15}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta - 69632a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 12288a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 92160a^4\\,r^{14}\\,b_0^2\\cos^4\\theta + 40960a^4\\,r^{14}\\,b_0^2\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 45056a^4\\,r^{14}\\,b_0^2\\cos^2\\theta + 8192a^4\\,r^{14}\\,b_0^2 + 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^4\\theta - 9216a^4\\,r^{13}\\,b_0^5\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^4\\theta + 34560a^4\\,r^{12}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta - 52992a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^4\\theta + 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta + 11520a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta - 28800a^4\\,r^{11}\\,b_0^5\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^4\\theta - 7128a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 3564a^4\\,r^8\\,b_0^8\\left(\\partial_l r\\right)^4 + 768a^2\\,r^{17}\\,b_0\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 1280a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta + 1024a^2\\,r^{15}\\,b_0\\cos^2\\theta + 256a^2\\,r^{15}\\,b_0\\left(\\partial_l r\\right)^2 - 256a^2\\,r^{15}\\,b_0 + 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2\\,\\cos^2\\theta - 72a^2\\,r^{14}\\,b_0^4\\left(\\partial_l^2 r\\right)^2 - 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r\\,\\cos^2\\theta + 216a^2\\,r^{13}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\partial_l^2 r - 432a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^2\\,\\cos^2\\theta + 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4\\,\\cos^2\\theta - 144a^2\\,r^{12}\\,b_0^4\\left(\\partial_l r\\right)^4 + 8r^{18}\\left(\\partial_l^2 r\\right)^2 - 8r^{16}\\left(\\partial_l r\\right)^2 + 4r^{16}\\left(\\partial_l r\\right)^4 + 4r^{16}}{r^{12}\\left(r + 16a^2b_0\\cos^2\\theta\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "thakurta",
+      "name": "Thakurta Spacetime",
+      "short_name": "Thakurta",
+      "description": "A conformal Schwarzschild geometry with cosmological expansion and a radial energy current.",
+      "tags": [
+        "spherically symmetric",
+        "four-dimensional",
+        "cosmology",
+        "conformal transformation",
+        "expanding universe",
+        "exact solution"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Geometrized units $G=c=1$, signature $(-,+,+,+)$, and constant mass length $m$. The scale factor $a>0$ is dimensionless, $dt=a\\,d\\eta$ relates cosmic and conformal times, and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "conformal",
+          "text": "Schwarzschild's geometry multiplied by $a^2(\\eta)$, with the scale factor depending on static Schwarzschild time [mello2017]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "At $m=0$ the geometry is a spatially flat Friedmann universe with scale factor $a(\\eta)$ [mello2017]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "family",
+          "text": "A mass in a Friedmann universe with a perfect fluid source. Thakurta's geometry belongs to a generalized McVittie family with $M(t)=m a(t)$ and a radial heat flow [mello2017]."
+        },
+        {
+          "id": "sultana_dyer",
+          "kind": "family",
+          "text": "A conformal Schwarzschild geometry whose scale factor depends on Kerr-Schild time [sato2022conformal]."
+        }
+      ],
+      "references": [
+        "thakurta1981",
+        "mello2017",
+        "sato2022conformal",
+        "harada2022thakurta",
+        "kobakhidze2022thakurta",
+        "maciel2024thakurta",
+        "sato2023corrigendum"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thakurta.json",
+      "charts": [
+        {
+          "id": "conformal",
+          "name": "Conformal Spherical",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty)",
+            "r \\in (2m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Constant mass length."
+            },
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Positive dimensionless scale factor."
+            }
+          ],
+          "convention": "Conformal time $\\eta$ and Schwarzschild radial coordinate $r$ carry dimensions of length, with $a=a(\\eta)$. The areal radius is $R=ar$.",
+          "line_element": "ds^2 = a^2\\left(-\\left(1-\\dfrac{2m}{r}\\right)d\\eta^2 + \\dfrac{dr^2}{\\left(1-\\dfrac{2m}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{a^2\\left(2m - r\\right)}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{a^2\\,r}{2m - r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6r\\,\\partial_\\eta^2 a}{a^3\\left(2m - r\\right)}",
+          "kretschmann": "K = \\dfrac{192a^4\\,m^4 + 24r^8\\left(\\partial_\\eta a\\right)^4 - 192a^4\\,m^3\\,r + 48a^4\\,m^2\\,r^2 + 12a^2\\,r^8\\left(\\partial_\\eta^2 a\\right)^2 - 16a^2\\,m^2\\,r^4\\left(\\partial_\\eta a\\right)^2 - 24a\\,r^8\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a}{a^8\\,r^6\\left(2m - r\\right)^2}"
+        },
+        {
+          "id": "cosmic",
+          "name": "Cosmic Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in (2m, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Constant mass length."
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Positive dimensionless scale factor."
+            }
+          ],
+          "convention": "Cosmic time $t$ and comoving radius $r$ carry dimensions of length, with $a=a(t)$. The areal radius is $R=ar$.",
+          "line_element": "ds^2 = -\\left(1-\\dfrac{2m}{r}\\right)dt^2 + a^2\\left(\\dfrac{dr^2}{\\left(1-\\dfrac{2m}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{2m - r}{r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{a^2\\,r}{2m - r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6r\\left(a\\,\\partial_t^2 a + \\left(\\partial_t a\\right)^2\\right)}{a^2\\left(2m - r\\right)}",
+          "kretschmann": "K = \\dfrac{12a^2\\,r^8\\left(\\partial_t^2 a\\right)^2 - 16m^2\\,r^4\\left(\\partial_t a\\right)^2 + 12r^8\\left(\\partial_t a\\right)^4 + 48m^2\\,r^2 - 192m^3\\,r + 192m^4}{a^4\\,r^6\\left(2m - r\\right)^2}"
+        },
+        {
+          "id": "areal",
+          "name": "Cosmic Areal",
+          "coordinates": [
+            "t",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "R \\in (2ma, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Constant mass length."
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Positive dimensionless scale factor."
+            }
+          ],
+          "convention": "Cosmic time $t$ and areal radius $R=ar$ carry dimensions of length, with $a=a(t)$. The radial differential is $a\\,dr=dR-(\\partial_ta/a)R\\,dt$.",
+          "line_element": "ds^2 = -\\left(1-\\dfrac{2ma}{R}\\right)dt^2 + \\dfrac{\\left(dR-\\dfrac{\\partial_t a}{a}R\\,dt\\right)^2}{\\left(1-\\dfrac{2ma}{R}\\right)} + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(R^2\\,\\partial_t a + 2a^2\\,m - R\\,a\\right)\\left(R^2\\,\\partial_t a - 2a^2\\,m + R\\,a\\right)}{R\\,a^2\\left(2a\\,m - R\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "R"
+              ],
+              "value": "\\dfrac{R^2\\,\\partial_t a}{a\\left(2a\\,m - R\\right)}"
+            },
+            {
+              "indices": [
+                "R",
+                "t"
+              ],
+              "value": "\\dfrac{R^2\\,\\partial_t a}{a\\left(2a\\,m - R\\right)}"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "-\\dfrac{R}{2a\\,m - R}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6R\\left(a\\,\\partial_t^2 a + \\left(\\partial_t a\\right)^2\\right)}{a^2\\left(2a\\,m - R\\right)}",
+          "kretschmann": "K = \\dfrac{192a^8\\,m^4 + 12R^8\\left(\\partial_t a\\right)^4 - 192R\\,a^7\\,m^3 + 48R^2\\,a^6\\,m^2 + 12R^8\\,a^2\\left(\\partial_t^2 a\\right)^2 - 16R^4\\,a^4\\,m^2\\left(\\partial_t a\\right)^2}{R^6\\,a^4\\left(2a\\,m - R\\right)^2}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Conformal Isotropic",
+          "coordinates": [
+            "\\eta",
+            "\\sigma",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty)",
+            "\\sigma \\in (m/2, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Constant mass length."
+            },
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Positive dimensionless scale factor."
+            }
+          ],
+          "convention": "Conformal time $\\eta$ and isotropic radius $\\sigma$ carry dimensions of length, with $a=a(\\eta)$. The Schwarzschild radial coordinate is $r=\\sigma(1+m/(2\\sigma))^2$.",
+          "line_element": "ds^2 = a^2\\left(-\\dfrac{\\left(1-m/(2\\sigma)\\right)^2}{\\left(1+m/(2\\sigma)\\right)^2}d\\eta^2 + \\left(1+\\dfrac{m}{2\\sigma}\\right)^4\\left(d\\sigma^2+\\sigma^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{a^2\\left(2\\sigma - m\\right)^2}{\\left(2\\sigma + m\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "\\dfrac{a^2\\left(2\\sigma + m\\right)^4}{16\\sigma^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{a^2\\left(2\\sigma + m\\right)^4}{16\\sigma^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^2\\left(2\\sigma + m\\right)^4\\sin^2\\theta}{16\\sigma^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(2\\sigma + m\\right)^2\\,\\partial_\\eta^2 a}{a^3\\left(2\\sigma - m\\right)^2}",
+          "kretschmann": "K = \\dfrac{24m^{16}\\left(\\partial_\\eta a\\right)^4 + 1572864\\sigma^{16}\\left(\\partial_\\eta a\\right)^4 + 768m^{15}\\sigma\\left(\\partial_\\eta a\\right)^4 + 12582912m\\,\\sigma^{15}\\left(\\partial_\\eta a\\right)^4 + 196608a^4\\,m^6\\,\\sigma^6 - 1572864a^4\\,m^5\\,\\sigma^7 + 4718592a^4\\,m^4\\,\\sigma^8 - 6291456a^4\\,m^3\\,\\sigma^9 + 3145728a^4\\,m^2\\,\\sigma^{10} + 11520m^{14}\\sigma^2\\left(\\partial_\\eta a\\right)^4 + 107520m^{13}\\sigma^3\\left(\\partial_\\eta a\\right)^4 + 698880m^{12}\\sigma^4\\left(\\partial_\\eta a\\right)^4 + 3354624m^{11}\\sigma^5\\left(\\partial_\\eta a\\right)^4 + 12300288m^{10}\\sigma^6\\left(\\partial_\\eta a\\right)^4 + 35143680m^9\\,\\sigma^7\\left(\\partial_\\eta a\\right)^4 + 79073280m^8\\,\\sigma^8\\left(\\partial_\\eta a\\right)^4 + 140574720m^7\\,\\sigma^9\\left(\\partial_\\eta a\\right)^4 + 196804608m^6\\,\\sigma^{10}\\left(\\partial_\\eta a\\right)^4 + 214695936m^5\\,\\sigma^{11}\\left(\\partial_\\eta a\\right)^4 + 178913280m^4\\,\\sigma^{12}\\left(\\partial_\\eta a\\right)^4 + 110100480m^3\\,\\sigma^{13}\\left(\\partial_\\eta a\\right)^4 + 47185920m^2\\,\\sigma^{14}\\left(\\partial_\\eta a\\right)^4 + 12a^2\\,m^{16}\\left(\\partial_\\eta^2 a\\right)^2 + 786432a^2\\,\\sigma^{16}\\left(\\partial_\\eta^2 a\\right)^2 + 384a^2\\,m^{15}\\sigma\\left(\\partial_\\eta^2 a\\right)^2 + 6291456a^2\\,m\\,\\sigma^{15}\\left(\\partial_\\eta^2 a\\right)^2 + 5760a^2\\,m^{14}\\sigma^2\\left(\\partial_\\eta^2 a\\right)^2 + 53760a^2\\,m^{13}\\sigma^3\\left(\\partial_\\eta^2 a\\right)^2 + 349440a^2\\,m^{12}\\sigma^4\\left(\\partial_\\eta^2 a\\right)^2 + 1677312a^2\\,m^{11}\\sigma^5\\left(\\partial_\\eta^2 a\\right)^2 + 6150144a^2\\,m^{10}\\sigma^6\\left(\\partial_\\eta^2 a\\right)^2 - 4096a^2\\,m^{10}\\sigma^4\\left(\\partial_\\eta a\\right)^2 + 17571840a^2\\,m^9\\,\\sigma^7\\left(\\partial_\\eta^2 a\\right)^2 - 65536a^2\\,m^9\\,\\sigma^5\\left(\\partial_\\eta a\\right)^2 + 39536640a^2\\,m^8\\,\\sigma^8\\left(\\partial_\\eta^2 a\\right)^2 - 458752a^2\\,m^8\\,\\sigma^6\\left(\\partial_\\eta a\\right)^2 + 70287360a^2\\,m^7\\,\\sigma^9\\left(\\partial_\\eta^2 a\\right)^2 - 1835008a^2\\,m^7\\,\\sigma^7\\left(\\partial_\\eta a\\right)^2 + 98402304a^2\\,m^6\\,\\sigma^{10}\\left(\\partial_\\eta^2 a\\right)^2 - 4587520a^2\\,m^6\\,\\sigma^8\\left(\\partial_\\eta a\\right)^2 + 107347968a^2\\,m^5\\,\\sigma^{11}\\left(\\partial_\\eta^2 a\\right)^2 - 7340032a^2\\,m^5\\,\\sigma^9\\left(\\partial_\\eta a\\right)^2 + 89456640a^2\\,m^4\\,\\sigma^{12}\\left(\\partial_\\eta^2 a\\right)^2 - 7340032a^2\\,m^4\\,\\sigma^{10}\\left(\\partial_\\eta a\\right)^2 + 55050240a^2\\,m^3\\,\\sigma^{13}\\left(\\partial_\\eta^2 a\\right)^2 - 4194304a^2\\,m^3\\,\\sigma^{11}\\left(\\partial_\\eta a\\right)^2 + 23592960a^2\\,m^2\\,\\sigma^{14}\\left(\\partial_\\eta^2 a\\right)^2 - 1048576a^2\\,m^2\\,\\sigma^{12}\\left(\\partial_\\eta a\\right)^2 - 24a\\,m^{16}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 1572864a\\,\\sigma^{16}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 768a\\,m^{15}\\sigma\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 12582912a\\,m\\,\\sigma^{15}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 11520a\\,m^{14}\\sigma^2\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 107520a\\,m^{13}\\sigma^3\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 698880a\\,m^{12}\\sigma^4\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 3354624a\\,m^{11}\\sigma^5\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 12300288a\\,m^{10}\\sigma^6\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 35143680a\\,m^9\\,\\sigma^7\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 79073280a\\,m^8\\,\\sigma^8\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 140574720a\\,m^7\\,\\sigma^9\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 196804608a\\,m^6\\,\\sigma^{10}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 214695936a\\,m^5\\,\\sigma^{11}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 178913280a\\,m^4\\,\\sigma^{12}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 110100480a\\,m^3\\,\\sigma^{13}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a - 47185920a\\,m^2\\,\\sigma^{14}\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a}{a^8\\left(2\\sigma - m\\right)^4\\left(2\\sigma + m\\right)^{12}}"
+        },
+        {
+          "id": "tortoise",
+          "name": "Tortoise",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Constant mass length."
+            },
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Positive dimensionless scale factor."
+            },
+            {
+              "symbol": "r = 2m\\left(1 + \\mathrm{W}\\left(e^{x/(2m)-1}\\right)\\right)",
+              "description": "Schwarzschild radial coordinate as a function of this chart."
+            }
+          ],
+          "convention": "Conformal time $\\eta$ and tortoise coordinate $x=r+2m\\ln(r/(2m)-1)$ carry dimensions of length, with $a=a(\\eta)$. The principal Lambert function obeys $\\mathrm{W}(z)e^{\\mathrm{W}(z)}=z$.",
+          "line_element": "ds^2 = a^2\\left(\\left(1-\\dfrac{2m}{r}\\right)\\left(-d\\eta^2+dx^2\\right)+r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{a^2\\left(2m - r\\right)}{r}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "-\\dfrac{a^2\\left(2m - r\\right)}{r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6r\\,\\partial_\\eta^2 a}{a^3\\left(r - 2m\\right)}",
+          "kretschmann": "K = \\dfrac{192a^4\\,m^4 + 24r^8\\left(\\partial_\\eta a\\right)^4 - 192a^4\\,m^3\\,r + 48a^4\\,m^2\\,r^2 + 12a^2\\,r^8\\left(\\partial_\\eta^2 a\\right)^2 - 16a^2\\,m^2\\,r^4\\left(\\partial_\\eta a\\right)^2 - 24a\\,r^8\\left(\\partial_\\eta a\\right)^2\\,\\partial_\\eta^2 a}{a^8\\,r^6\\left(r - 2m\\right)^2}"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal Null, Dust Expansion",
+          "coordinates": [
+            "U",
+            "V",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "U \\in (-\\infty, 0)",
+            "V \\in (-U, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Constant mass length."
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "Positive reference conformal time."
+            },
+            {
+              "symbol": "r = 2m\\left(1 + \\mathrm{W}\\left(-UV e^{-1}\\right)\\right)",
+              "description": "Schwarzschild radial coordinate as a function of this chart."
+            },
+            {
+              "symbol": "\\eta = 2m\\ln\\left(-V/U\\right)",
+              "description": "Static conformal time as a function of the null coordinates."
+            }
+          ],
+          "convention": "The null coordinates $U=-e^{-(\\eta-x)/(4m)}$ and $V=e^{(\\eta+x)/(4m)}$ are dimensionless, with $x=r+2m\\ln(r/(2m)-1)$. The scale factor is $a=(\\eta/\\eta_0)^2$, with positive reference conformal time $\\eta_0$. The principal Lambert function fixes $r$.",
+          "line_element": "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(\\dfrac{16m^2(r-2m)}{rUV}dU\\,dV + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "U",
+                "V"
+              ],
+              "value": "\\dfrac{8\\eta^4\\,m^2\\left(r - 2m\\right)}{U\\,V\\,\\eta_0^4\\,r}"
+            },
+            {
+              "indices": [
+                "V",
+                "U"
+              ],
+              "value": "\\dfrac{8\\eta^4\\,m^2\\left(r - 2m\\right)}{U\\,V\\,\\eta_0^4\\,r}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r^2}{\\eta_0^4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\eta^4\\,r^2\\sin^2\\theta}{\\eta_0^4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12\\eta_0^4\\,r}{\\eta^6\\left(r - 2m\\right)}",
+          "kretschmann": "K = \\dfrac{16\\eta_0^8\\left(15r^8 + 12\\eta^4\\,m^4 - 12\\eta^4\\,m^3\\,r + 3\\eta^4\\,m^2\\,r^2 - 4\\eta^2\\,m^2\\,r^4\\right)}{\\eta^{12}\\,r^6\\left(r - 2m\\right)^2}"
         }
       ]
     },

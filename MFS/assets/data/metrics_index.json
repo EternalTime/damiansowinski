@@ -2206,7 +2206,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "e62f2167f9dc01f6",
+    "version": "66e4ae7079fba20b",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -3960,7 +3960,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f58083f56c331ebb",
+    "version": "5315cfdb0dfe0af3",
     "diagrams": "1e8a40c11bf25b40",
     "conformal": "8eca882a8f2cfb79",
     "embedding": "2c9b70767c1e34be",
@@ -5341,7 +5341,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "691f475f35da200c",
+    "version": "453f5b0a2a8fa0aa",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -5774,7 +5774,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "facfb49ac2b3ca0a",
+    "version": "26d7ee9bed19cda2",
     "diagrams": "7276a636d705765d",
     "conformal": "e0a22ba6cfc54754",
     "embedding": "8003002e86c3bf6e"
@@ -5941,6 +5941,23 @@
     "diagrams": "f99505d95b083db0",
     "conformal": "577727a22f10c827",
     "embedding": "b79fedbd55cef742"
+  },
+  {
+    "id": "thakurta",
+    "name": "Thakurta",
+    "tags": [
+      "spherically symmetric",
+      "four-dimensional",
+      "cosmology",
+      "conformal transformation",
+      "expanding universe",
+      "exact solution"
+    ],
+    "version": "e655f436fc580816",
+    "diagrams": "91f34116862e4621",
+    "conformal": "d893f70573ef1323",
+    "embedding": "a33d0616bc045d8e",
+    "curvature": "9092fb5bd432adc4"
   },
   {
     "id": "string_bh_three_four_charges",

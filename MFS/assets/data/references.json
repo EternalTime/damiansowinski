@@ -1,5 +1,5 @@
 {
-  "version": "5407eb478ff7a155",
+  "version": "0cca6e6720925a7c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33830,6 +33830,95 @@
         "pages": "863--872",
         "year": "1985",
         "doi": "10.1119/1.14353"
+      }
+    },
+    "thakurta1981": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr metric in an expanding universe",
+        "author": "Thakurta, S. N. G.",
+        "journal": "Indian Journal of Physics",
+        "volume": "55",
+        "pages": "304",
+        "year": "1981",
+        "url": "https://ui.adsabs.harvard.edu/abs/1981InJPh..55..304T/abstract"
+      }
+    },
+    "harada2022thakurta": {
+      "type": "article",
+      "fields": {
+        "title": "Thakurta metric does not describe a cosmological black hole",
+        "author": "Harada, Tomohiro and Maeda, Hideki and Sato, Takuma",
+        "journal": "Physics Letters B",
+        "volume": "833",
+        "pages": "137332",
+        "year": "2022",
+        "doi": "10.1016/j.physletb.2022.137332",
+        "eprint": "2106.06651",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2106.06651"
+      }
+    },
+    "kobakhidze2022thakurta": {
+      "type": "article",
+      "fields": {
+        "title": "Apparent horizons of the Thakurta spacetime and the description of cosmological black holes",
+        "author": "Kobakhidze, Archil and Picker, Zachary S. C.",
+        "journal": "The European Physical Journal C",
+        "volume": "82",
+        "number": "4",
+        "pages": "347",
+        "year": "2022",
+        "doi": "10.1140/epjc/s10052-022-10312-1",
+        "eprint": "2112.13921",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-022-10312-1"
+      }
+    },
+    "sato2022conformal": {
+      "type": "article",
+      "fields": {
+        "title": "Conformally Schwarzschild cosmological black holes",
+        "author": "Sato, Takuma and Maeda, Hideki and Harada, Tomohiro",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "39",
+        "number": "21",
+        "pages": "215011",
+        "year": "2022",
+        "doi": "10.1088/1361-6382/ac902f",
+        "eprint": "2206.10998",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2206.10998v3"
+      }
+    },
+    "sato2023corrigendum": {
+      "type": "article",
+      "fields": {
+        "title": "Corrigendum: Conformally Schwarzschild cosmological black holes (2022 Class. Quantum Grav. 39 215011)",
+        "author": "Sato, Takuma and Maeda, Hideki and Harada, Tomohiro",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "40",
+        "number": "7",
+        "pages": "079501",
+        "year": "2023",
+        "doi": "10.1088/1361-6382/acbd82",
+        "url": "https://doi.org/10.1088/1361-6382/acbd82"
+      }
+    },
+    "maciel2024thakurta": {
+      "type": "article",
+      "fields": {
+        "title": "Comment on ``Apparent horizons of the Thakurta spacetime and the description of cosmological black holes''",
+        "author": "Maciel, Alan and Zanchin, Vilson T.",
+        "journal": "The European Physical Journal C",
+        "volume": "84",
+        "number": "10",
+        "pages": "1109",
+        "year": "2024",
+        "doi": "10.1140/epjc/s10052-024-13489-9",
+        "eprint": "2407.06365",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-024-13489-9"
       }
     }
   }
