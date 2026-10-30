@@ -1,0 +1,161 @@
+{
+  "id": "cahen_wallach",
+  "name": "Cahen-Wallach Symmetric Plane Waves",
+  "short_name": "Cahen-Wallach Spaces",
+  "description": "The plane waves whose curvature is the same at every event and carried unchanged along every geodesic. Among the Lorentzian symmetric spaces that do not split into a product of smaller ones, they are the one family besides de Sitter and anti-de Sitter space. Michel Cahen and Nolan Wallach found them in 1970; a negative eigenvalue of the wave's matrix pulls free particles toward its axis and a positive one pushes them away.",
+  "tags": [
+    "stationary",
+    "four-dimensional",
+    "plane wave",
+    "pp-wave",
+    "homogeneous",
+    "geodesically complete",
+    "no horizon",
+    "null Killing vector",
+    "null dust",
+    "string theory",
+    "supergravity",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A symmetric space asks less of a spacetime than de Sitter space does: its curvature is merely carried unchanged along every geodesic, its Riemann tensor covariantly constant [cahen1970]. Élie Cartan classified the irreducible Riemannian symmetric spaces, and every Lorentzian symmetric space is locally a product of Riemannian ones with a single Lorentzian piece that does not split further [figueroa2013symmetric]. Michel Cahen and Nolan Wallach found every such piece in 1970: besides a line of time, de Sitter space and anti-de Sitter space, there is one more family, a family of plane waves [cahen1970, figueroa2003maximally].¶Their interest began with Huygens' principle in general relativity, which holds where a flash of light travels on a sharp front with nothing trailing behind it, and the four-dimensional members of the new family satisfy it [cahen1970]. Cahen had written down the symmetric metrics of four dimensions with Raymond McLenaghan in 1968 [cahen1968]. Armand Borel communicated the general classification to the Bulletin of the American Mathematical Society on 25 August 1969 [cahen1970]. It shows that the Lie algebra of the transvection group of a symmetric space that does not split is either semisimple, the case of de Sitter and anti-de Sitter space, or solvable, and that every solvable one is fixed by a single nondegenerate symmetric matrix $A$ acting across the wave [cahen1970]. Two matrices give the same spacetime exactly when one is a positive multiple of a rotation of the other, so a member is labelled by the eigenvalues of $A$ up to scale and order, a point on a sphere with its coordinate planes removed [cahen1970, blau2003homogeneous].¶In the coordinates Cahen and Wallach wrote down, a member of four dimensions is the plane wave $ds^2 = (\\lambda_1 x^2 + \\lambda_2 y^2)c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2$, whose profile is the same on every wave front [cahen1970, figueroa2013symmetric]. A negative $\\lambda_i$ pulls free particles toward the axis in its direction and a positive one pushes them away. The Ricci tensor has a single component, along the wave and proportional to $-(\\lambda_1 + \\lambda_2)$, so the wave is empty space when the two eigenvalues cancel and otherwise carries null radiation, whose energy is positive when the pull outweighs the push [figueroa2013symmetric, marolf2002]. The Weyl tensor vanishes exactly when $A$ is a multiple of the identity [marolf2002]. Every plane wave of four dimensions has five Killing vectors forming a Heisenberg algebra, and the translation along $u$ adds a sixth that turns it into the algebra of a harmonic oscillator, with the translation as its Hamiltonian [blau2003homogeneous]. The whole isometry group is never connected, and quotients of the family give compact Lorentzian symmetric spaces with the topology of a torus [cahen1970].¶Chiara Nappi and Edward Witten met a member of four dimensions in 1993 without its name [nappi1993]. They built a conformal field theory on a central extension of the Poincaré algebra of two dimensions and found a homogeneous spacetime of Lorentz signature whose central charge is exactly four, that of Minkowski space, which they read as a \"monochromatic plane wave\" with a seven-dimensional symmetry group [nappi1993]. Sam Halliday and Richard Szabo rotated the transverse plane of their wave at a steady rate and found the conformally flat member of Cahen and Wallach's family [halliday2005]. José Figueroa-O'Farrill and George Papadopoulos named the family the Cahen-Wallach spaces in 2001, and showed that a generic one of eleven dimensions, with a constant null four-form field, solves supergravity keeping half its supersymmetry, while two points of the family keep all of it: flat space and the wave Jerzy Kowalski-Glikman had found in 1984 [figueroa2001, kowalski1984]. The maximally supersymmetric wave of type IIB supergravity and the Penrose limits of anti-de Sitter space times a sphere along a ray circling the sphere are members too [blau2002, blau2002penrose].¶A light ray circling a Schwarzschild black hole on its photon sphere, at $r = 3GM/c^2$, sees a member of the family. Kwinten Fransen took the Penrose limit along that orbit in 2023 and found a vacuum Cahen-Wallach space whose radial direction pushes neighbouring rays away and whose other direction pulls them back [fransen2023]. The push is the instability of the circular orbit of light, which grows at the rate $c^3/(\\sqrt{27}\\,GM)$, and the pull makes neighbouring rays precess at the orbital frequency, the same rate, as the vacuum requires [fransen2023]. Waves on this plane wave give the black hole's quasinormal ringing at large angular number, in agreement with the numerically computed frequencies [fransen2023].¶Light leaving an event in a member that pulls in some direction comes back together, and its first focus lies at $u = \\pi/(\\mu c)$ for the strongest pull $\\lambda = -\\mu^2$ [marolf2002]. Donald Marolf and Simon Ross found in 2002 that every such member has the same infinity: a single null line along which $u$ runs, with the two points $i^\\pm$ at its ends [marolf2002]. A member that pushes in every direction carries negative energy, and its infinity has a different shape [marolf2002].",
+  "related": [
+    {
+      "id": "maximally_supersymmetric_plane_wave",
+      "kind": "family",
+      "text": "The member of ten dimensions whose matrix is $-\\mu^2$ times the identity, so that it pulls toward its axis with one period in all eight directions across it. Held up by the 5-form field of type IIB supergravity, it keeps all 32 supersymmetries [blau2002]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "limit_source",
+      "text": "Zoom in on a light ray circling the black hole on its photon sphere and the Penrose limit is the vacuum member of four dimensions. It pushes rays off the orbit in the radial direction and pulls them back across it at the same rate [fransen2023]."
+    },
+    {
+      "id": "pp_wave",
+      "kind": "generalisation",
+      "text": "Plane-fronted waves with parallel rays, whose profile may be any function across the wave and along it. A Cahen-Wallach space is the one whose profile is quadratic across the wave and the same on every front [blau2003homogeneous]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "With anti-de Sitter space, the other kind of Lorentzian symmetric space that does not split into a product [cahen1970, figueroa2003maximally]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "With de Sitter space, the other kind of Lorentzian symmetric space that does not split into a product [cahen1970, figueroa2003maximally]."
+    },
+    {
+      "id": "light_beam",
+      "kind": "family",
+      "text": "Bonnor's beam of light, whose profile inside the beam is quadratic, the same in both directions across it and the same on every front. Inside the beam it is the conformally flat member of four dimensions [bonnor1969light]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "Anti-de Sitter space of two dimensions times a sphere, a Lorentzian symmetric space that splits into a product of the kind the classification allows [figueroa2003maximally]."
+    },
+    {
+      "id": "nariai",
+      "kind": "family",
+      "text": "De Sitter space of two dimensions times a sphere, a symmetric spacetime that splits into a product [figueroa2003maximally]."
+    }
+  ],
+  "references": [
+    "cahen1970",
+    "figueroa2013symmetric",
+    "figueroa2003maximally",
+    "cahen1968",
+    "blau2003homogeneous",
+    "marolf2002",
+    "nappi1993",
+    "halliday2005",
+    "figueroa2001",
+    "kowalski1984",
+    "blau2002",
+    "blau2002penrose",
+    "fransen2023",
+    "bonnor1969light"
+  ],
+  "coordinates": [
+    {
+      "id": "brinkmann",
+      "name": "Brinkmann",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\lambda_1",
+          "description": "Eigenvalue of the wave's matrix along $x$, an inverse length squared and never zero: negative, it pulls free particles toward the axis $x = 0$ with the angular rate $\\sqrt{-\\lambda_1}\\,c$; positive, it pushes them away at the rate $\\sqrt{\\lambda_1}\\,c$"
+        },
+        {
+          "symbol": "\\lambda_2",
+          "description": "Eigenvalue along $y$, as $\\lambda_1$ is along $x$; the wave is a vacuum when $\\lambda_1 + \\lambda_2 = 0$ and conformally flat when $\\lambda_1 = \\lambda_2$"
+        }
+      ],
+      "convention": "We use coordinates $(u, v, x, y)$, with $u$ the time that labels the wave fronts, carrying dimensions of time, $v$ a length along the rays, and $x$ and $y$ the lengths across them along the eigenvectors of the wave's matrix. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(\\lambda_1x^2 + \\lambda_2y^2\\right)c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2"
+    },
+    {
+      "id": "rotating",
+      "name": "Rotating, Conformally Flat Member",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\omega",
+          "description": "The rate at which the axes turn, an inverse length, so that the axes turn through the angle $\\omega cu$; the member drawn is the conformally flat one, $\\lambda_1 = \\lambda_2 = -\\omega^2$ in the Brinkmann chart, which pulls free particles toward the axis at the angular rate $\\omega c$"
+        }
+      ],
+      "convention": "We use the Brinkmann chart's $u$ and $v$, and lengths $x$ and $y$ along axes that turn about the axis of the wave, $X + iY = e^{i\\omega cu}\\left(x + iy\\right)$ in the Brinkmann chart's $X$ and $Y$. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = -2c\\,du\\,dv + dx^2 + dy^2 + 2\\omega c\\left(x\\,dy - y\\,dx\\right)du"
+    },
+    {
+      "id": "rosen",
+      "name": "Rosen, Vacuum Member",
+      "coords": [
+        "u",
+        "v",
+        "p",
+        "q"
+      ],
+      "domains": [
+        "u \\in (0, \\pi/kc)",
+        "v \\in (-\\infty, \\infty)",
+        "p \\in (-\\infty, \\infty)",
+        "q \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Strength of the vacuum member, an inverse length, $\\lambda_1 = k^2$ and $\\lambda_2 = -k^2$ in the Brinkmann chart: the wave pushes free particles away from the axis along one direction and pulls them back along the other, both at the rate $kc$"
+        }
+      ],
+      "convention": "We use the Brinkmann chart's $u$, a time, $v$ a length, and lengths $p$ and $q$ that label the light rays leaving the axis at $u = 0$, $x = p\\sinh(kcu)$ and $y = q\\sin(kcu)$ in the Brinkmann chart. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+      "line_element": "ds^2 = -2c\\,du\\,dv + \\sinh^2\\left(kcu\\right)dp^2 + \\sin^2\\left(kcu\\right)dq^2"
+    }
+  ]
+}
