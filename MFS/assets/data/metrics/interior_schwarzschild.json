@@ -93,6 +93,11 @@
       "id": "oscillating_sphere",
       "kind": "generalisation",
       "text": "The same ball of uniform density set moving, its pressure still vanishing at the surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever, and that the static star is stable to such motions unless it is too compact [bonnor1967oscillating]."
+    },
+    {
+      "id": "spheroidal_stars",
+      "kind": "family",
+      "text": "Vaidya and Tikekar's fluid star has a spheroidal spatial geometry. Their spatial ansatz includes Schwarzschild's uniform sphere at $K=0$ [khugaev2016]."
     }
   ],
   "references": [
@@ -117,7 +122,8 @@
     "bonnor1975",
     "bowers1974",
     "buchdahl1964",
-    "bonnor1967oscillating"
+    "bonnor1967oscillating",
+    "khugaev2016"
   ],
   "coordinates": [
     {

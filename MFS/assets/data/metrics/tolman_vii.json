@@ -58,6 +58,11 @@
       "id": "buchdahl_sphere",
       "kind": "family",
       "text": "Another static star of fluid in closed form whose density falls outward. Buchdahl's never reaches zero density, and its fluid fills all of space with a finite mass [buchdahl1964]."
+    },
+    {
+      "id": "spheroidal_stars",
+      "kind": "family",
+      "text": "Other exact fluid spheres with density falling outward. Durgapal's 1982 families differ from the separate solution of 1984 that reproduces Tolman VII [delgaty1998]."
     }
   ],
   "references": [

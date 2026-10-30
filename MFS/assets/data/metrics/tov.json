@@ -88,6 +88,11 @@
       "id": "buchdahl_sphere",
       "kind": "special_case",
       "text": "A solution in closed form for an equation of state that is nearly $p \\propto \\rho^{6/5}$, the relativistic polytrope of index five, whose fluid runs to infinity with a finite mass [buchdahl1964]."
+    },
+    {
+      "id": "spheroidal_stars",
+      "kind": "special_case",
+      "text": "Exact fluid spheres with a regular centre and a surface where pressure vanishes. Their lapse and mass functions solve the equations of equilibrium [delgaty1998]."
     }
   ],
   "references": [
@@ -127,7 +132,8 @@
     "bartnik1988",
     "volkov1999",
     "bowers1974",
-    "buchdahl1964"
+    "buchdahl1964",
+    "delgaty1998"
   ],
   "coordinates": [
     {

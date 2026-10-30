@@ -534,6 +534,11 @@
       "id": "thakurta",
       "kind": "conformal",
       "text": "Schwarzschild's geometry multiplied by the square of a scale factor depending on its static time. The source carries a radial heat flow [mello2017]."
+    },
+    {
+      "id": "spheroidal_stars",
+      "kind": "composite",
+      "text": "Static fluid stars joined to Schwarzschild's vacuum at their surfaces. Vanishing pressure and continuity of the lapse fix the matching [delgaty1998]."
     }
   ],
   "references": [
@@ -672,7 +677,8 @@
     "banerjee1998",
     "fransen2023",
     "brandt1997",
-    "mello2017"
+    "mello2017",
+    "delgaty1998"
   ],
   "coordinates": [
     {

@@ -75,7 +75,7 @@
         },
         {
           "symbol": "r_b",
-          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Zy_r/(r_by)+(Z-1)/r_b^2=0$."
+          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
         },
         {
           "symbol": "A",
@@ -91,11 +91,11 @@
         },
         {
           "symbol": "Z = \\dfrac{2-x}{2(1+x)}",
-          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-Z_r/r$, with central value $-3Z_{rr}(0)/2$."
+          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
         },
         {
           "symbol": "y = A(1+x)^{3/2}+B(5+2x)\\sqrt{2-x}",
-          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Zy_r/(ry)+(Z-1)/r^2$, with central value $2y_{rr}(0)/y(0)+Z_{rr}(0)/2$; subscripts $r$ denote radial derivatives."
+          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
         }
       ],
       "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
@@ -1517,7 +1517,7 @@
         },
         {
           "symbol": "r_b",
-          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Zy_r/(r_by)+(Z-1)/r_b^2=0$."
+          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
         },
         {
           "symbol": "a",
@@ -1533,11 +1533,11 @@
         },
         {
           "symbol": "Z = 1-\\dfrac{3x}{2(1+x)}\\left(1+\\dfrac{k}{\\sqrt{1+4x}}\\right)",
-          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-Z_r/r$, with central value $-3Z_{rr}(0)/2$."
+          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
         },
         {
           "symbol": "y = a(1+x)^{3/2}",
-          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Zy_r/(ry)+(Z-1)/r^2$, with central value $2y_{rr}(0)/y(0)+Z_{rr}(0)/2$; subscripts $r$ denote radial derivatives."
+          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
         }
       ],
       "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
@@ -2959,7 +2959,7 @@
         },
         {
           "symbol": "r_b",
-          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Zy_r/(r_by)+(Z-1)/r_b^2=0$."
+          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
         },
         {
           "symbol": "a",
@@ -2975,11 +2975,11 @@
         },
         {
           "symbol": "Z = \\dfrac{7-10x-x^2}{7(1+x)^2}+\\dfrac{kx}{(1+x)^2(1+5x)^{2/5}}",
-          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-Z_r/r$, with central value $-3Z_{rr}(0)/2$."
+          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
         },
         {
           "symbol": "y = a(1+x)^{4/2}",
-          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Zy_r/(ry)+(Z-1)/r^2$, with central value $2y_{rr}(0)/y(0)+Z_{rr}(0)/2$; subscripts $r$ denote radial derivatives."
+          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
         }
       ],
       "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
@@ -4401,7 +4401,7 @@
         },
         {
           "symbol": "r_b",
-          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Zy_r/(r_by)+(Z-1)/r_b^2=0$."
+          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
         },
         {
           "symbol": "a",
@@ -4417,11 +4417,11 @@
         },
         {
           "symbol": "Z = \\dfrac{1-x(309+54x+8x^2)/112+kx/(1+6x)^{1/3}}{(1+x)^3}",
-          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-Z_r/r$, with central value $-3Z_{rr}(0)/2$."
+          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
         },
         {
           "symbol": "y = a(1+x)^{5/2}",
-          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Zy_r/(ry)+(Z-1)/r^2$, with central value $2y_{rr}(0)/y(0)+Z_{rr}(0)/2$; subscripts $r$ denote radial derivatives."
+          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
         }
       ],
       "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
@@ -5843,7 +5843,7 @@
         },
         {
           "symbol": "r_b",
-          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Zy_r/(r_by)+(Z-1)/r_b^2=0$."
+          "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
         },
         {
           "symbol": "A",
@@ -5863,11 +5863,11 @@
         },
         {
           "symbol": "Z = \\dfrac{1}{1+x}",
-          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-Z_r/r$, with central value $-3Z_{rr}(0)/2$."
+          "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
         },
         {
           "symbol": "y = A(\\cos s+s\\sin s)+B(\\sin s-s\\cos s)",
-          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Zy_r/(ry)+(Z-1)/r^2$, with central value $2y_{rr}(0)/y(0)+Z_{rr}(0)/2$; subscripts $r$ denote radial derivatives."
+          "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
         }
       ],
       "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",

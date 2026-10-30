@@ -47,6 +47,11 @@
       "id": "tolman_vii",
       "kind": "family",
       "text": "Another static star of fluid in closed form whose density falls outward. Tolman's ends at a surface where the density vanishes, while Buchdahl's runs to infinity."
+    },
+    {
+      "id": "spheroidal_stars",
+      "kind": "family",
+      "text": "The Vaidya-Tikekar and Durgapal-Bannerji star is Buchdahl's finite fluid sphere of 1959. Its pressure vanishes at a finite surface [delgaty1998]."
     }
   ],
   "references": [
@@ -58,7 +63,8 @@
     "heinzle2002",
     "andersson2019",
     "igata2022",
-    "igata2025"
+    "igata2025",
+    "delgaty1998"
   ],
   "coordinates": [
     {
