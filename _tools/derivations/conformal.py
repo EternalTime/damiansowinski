@@ -31764,9 +31764,9 @@ def charach_malin(ck, src):
             v.legend("cover", "the toroidal universe")
             v.legend("boundary", r"$\theta=0,2\pi$, identified at equal $t$")
             v.legend("singular", "$t=0$, the past singularity")
-            for m in slices.moments("charach_malin", matter):
+            for m in slices.moments("charach_malin", matter, label="$t=1$"):
                 reach = np.linspace(*m.reach(matter+"_areal", r"\theta"), 200)
-                v.slice(m, [mink_pq(np.full_like(reach, m.time), reach)])
+                v.slice(m, [mink_pq(np.ones_like(reach), reach)])
             v.set(input=nr.CHARACH_MALIN_INPUT[matter], settings="$L=1$.")
             out.append(v)
     return out

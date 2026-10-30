@@ -1,0 +1,38 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The scalar charts contain the scalar matter system; the electromagnetic spatial slice belongs to the other matter system.",
+      "drawings": {
+        "charach_malin/scalar_areal/plane": [
+          "electromagnetic"
+        ],
+        "conformal charach_malin/scalar_areal": [
+          "electromagnetic"
+        ],
+        "charach_malin/scalar_logarithmic/plane": [
+          "electromagnetic"
+        ],
+        "conformal charach_malin/scalar_logarithmic": [
+          "electromagnetic"
+        ]
+      }
+    },
+    {
+      "reason": "The electromagnetic charts contain the electromagnetic matter system; the scalar spatial slice belongs to the other matter system.",
+      "drawings": {
+        "charach_malin/electromagnetic_areal/plane": [
+          "scalar"
+        ],
+        "conformal charach_malin/electromagnetic_areal": [
+          "scalar"
+        ],
+        "charach_malin/electromagnetic_logarithmic/plane": [
+          "scalar"
+        ],
+        "conformal charach_malin/electromagnetic_logarithmic": [
+          "scalar"
+        ]
+      }
+    }
+  ]
+}

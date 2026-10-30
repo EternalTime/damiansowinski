@@ -4508,6 +4508,9 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key.startswith("charach_malin/"):
+            # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
+            return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
         if key.startswith("stiff_fluid_universes/"):
             # The one embedded symmetry plane is t=1/2,x=0, a point on each quotient.
             # chi=x+t^2/2=1/8 in the fluid labels; the characteristic view displays x,t.
@@ -5880,7 +5883,16 @@ class Slices(unittest.TestCase):
                     points = [p for line in mark["lines"] for p in line] + mark["points"]
                     self.assertTrue(all(X0 <= X <= X1 and T0 <= T <= T1 for X, T in points), where)
                     t = surface.get("time")
-                    if metric_id == "stiff_fluid_universes":
+                    if metric_id == "charach_malin":
+                        # p,q=atan(1 -+ theta) on each static matter slice.
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
+                            scale = 1 + tp*tp + tq*tq
+                            self.assertLess(abs((tp+tq)/2-1), 2e-4*scale, where)
+                            self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
+                            self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
+                    elif metric_id == "stiff_fluid_universes":
                         # At t=1/2,x=0, p=q=atan(2), hence X=0,T=2 atan(2).
                         self.assertEqual(len(points), 1, where)
                         X, T = points[0]

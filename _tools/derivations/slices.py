@@ -3849,8 +3849,8 @@ for _matter in ("scalar", "electromagnetic"):
     for _time in ("areal", "logarithmic"):
         FLAT[("charach_malin", _matter+"_"+_time, "plane")] = (
             lambda matter=_matter, time=_time: one("charach_malin",
-                lambda m: along(-math.log(m.time) if time == "logarithmic" else m.time,
-                                *m.reach(matter+"_areal", r"\theta")), view_id=matter))
+                lambda m: along(0.0 if time == "logarithmic" else 1.0,
+                                *m.reach(matter+"_areal", r"\theta")), view_id=matter, label="$t=1$"))
 
 FLAT_METRICS = {key[0] for key in FLAT}
 

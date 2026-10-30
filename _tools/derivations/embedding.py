@@ -21828,7 +21828,7 @@ def charach_malin(ck, src):
                            ("edge", r"$\theta=2\pi$, identified with the other end")))
         ck.isometry(f"Charach-Malin {matter}", tube)
         ck.add(f"Charach-Malin {matter}: the end circles agree", abs(float(tube.rho[0]-tube.rho[-1])), FORM)
-        surface = Surface([tube], label="$t=1$", time=1.0)
+        surface = Surface([tube])
         fig = figure_of([surface], {"sheet": "cover"}, size)
         fig.legend("fill", "cover", r"the cut-open torus")
         drawing = fig.done()
