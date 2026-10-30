@@ -18730,5 +18730,11 @@ DRAWN["chodos_detweiler"] = chodos_detweiler
 from thakurta_figures import curvature as thakurta_curvature
 DRAWN["thakurta"] = lambda ck, src: thakurta_curvature(ck, src, sys.modules[__name__])
 
+
+import starobinsky_universe as _starobinsky
+
+DRAWN["starobinsky_universe"] = _starobinsky.curvature_diagram
+
+
 if __name__ == "__main__":
     sys.exit(main())

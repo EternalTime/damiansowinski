@@ -31866,5 +31866,12 @@ from thakurta_figures import conformal as thakurta_conformal
 DRAWN["thakurta"] = lambda ck, src: thakurta_conformal(ck, src, sys.modules[__name__])
 CAPTIONS[("thakurta", "exterior")] = [r"The expanding dust exterior, each point a 2-sphere."]
 
+
+import starobinsky_universe as _starobinsky
+
+DRAWN["starobinsky_universe"] = _starobinsky.conformal_diagram
+CAPTIONS.update({("starobinsky_universe", key): value for key, value in _starobinsky.CONFORMAL_CAPTIONS.items()})
+
+
 if __name__ == "__main__":
     sys.exit(main())

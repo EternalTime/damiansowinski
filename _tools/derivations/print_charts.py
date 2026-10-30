@@ -36795,6 +36795,10 @@ CHARTS["thakurta"] = [lambda s=s: thakurta_chart(s) for s in THAKURTA_CHARTS]
 import moncrief_taub_nut as moncrief_torus
 CHARTS["moncrief_taub_nut"] = [lambda s=s: moncrief_torus.spec(s) for s in moncrief_torus.SYSTEMS]
 
+import starobinsky_universe as _starobinsky
+
+CHARTS["starobinsky_universe"] = [lambda s=s: _starobinsky.chart_spec(s) for s in _starobinsky.CHART_IDS]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])

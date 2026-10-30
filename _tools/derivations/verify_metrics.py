@@ -2577,6 +2577,14 @@ DIMENSIONS.update({("moncrief_taub_nut", chart): {
         ("extension_plus", ("T", "\\theta", "\\chi", "\\phi"), ("B", "F", "Q")),
         ("extension_minus", ("T", "\\theta", "\\chi", "\\phi"), ("B", "F", "Q")))})
 
+# Starobinsky's semiclassical family: geometric cosmic and conformal times are lengths.
+DIMENSIONS.update({("starobinsky_universe", system): {
+    "\\theta": "1", "\\phi": "1", "H_0": "1/L",
+    ("\\eta" if system == "conformal" else "\\tau"): "L",
+    **({"r": "L", "a": "1", "k": "1/L**2", "M": "1/L"} if system in ("cosmic", "conformal")
+       else {"r": "L"} if system == "flat_de_sitter" else {"\\chi": "1"})}
+    for system in ("cosmic", "conformal", "closed_de_sitter", "flat_de_sitter", "open_de_sitter")})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),

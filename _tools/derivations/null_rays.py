@@ -18946,6 +18946,10 @@ CAPTIONS.update({
 
 vaidya_patel_kerr_diagrams()
 
+import starobinsky_universe as _starobinsky
+
+_starobinsky.register_null_rays(sys.modules[__name__])
+
 
 def check_table():
     """Every view and figure has a caption, and no two share a place."""

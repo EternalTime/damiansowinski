@@ -21989,6 +21989,13 @@ from thakurta_figures import embedding as thakurta_embedding
 DRAWN["thakurta"] = lambda ck, src: thakurta_embedding(ck, src, sys.modules[__name__])
 CAPTIONS[("thakurta", "exterior")] = [r"The equatorial exterior at $\eta=\eta_0$ ($\theta=\pi/2$), one spatial sheet with inner cutoff $r=2.05m$."]
 
+
+import starobinsky_universe as _starobinsky
+
+DRAWN["starobinsky_universe"] = _starobinsky.embedding_diagram
+CAPTIONS.update({("starobinsky_universe", key): value for key, value in _starobinsky.EMBEDDING_CAPTIONS.items()})
+
+
 if __name__ == "__main__":
     sys.exit(main())
 
