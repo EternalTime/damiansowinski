@@ -18724,5 +18724,8 @@ def chodos_detweiler(ck, src):
 
 DRAWN["chodos_detweiler"] = chodos_detweiler
 
+from thakurta_figures import curvature as thakurta_curvature
+DRAWN["thakurta"] = lambda ck, src: thakurta_curvature(ck, src, sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

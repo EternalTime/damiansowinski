@@ -3870,6 +3870,11 @@ FLAT.update({
     for view in views
 })
 
+from thakurta_figures import slice_lines as thakurta_slice_lines
+for _system in ("conformal", "cosmic", "areal", "isotropic", "tortoise", "kruskal"):
+    FLAT[("thakurta", _system, "radial")] = lambda s=_system: one(
+        "thakurta", lambda m: thakurta_slice_lines(m, s))
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

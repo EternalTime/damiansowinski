@@ -21981,6 +21981,10 @@ def chodos_detweiler(ck, src):
 DRAWN["chodos_detweiler"] = chodos_detweiler
 CAPTIONS.update(_chodos_detweiler.embedding_captions())
 
+from thakurta_figures import embedding as thakurta_embedding
+DRAWN["thakurta"] = lambda ck, src: thakurta_embedding(ck, src, sys.modules[__name__])
+CAPTIONS[("thakurta", "exterior")] = [r"The equatorial exterior at $\eta=\eta_0$ ($\theta=\pi/2$), one spatial sheet with inner cutoff $r=2.05m$."]
+
 if __name__ == "__main__":
     sys.exit(main())
 

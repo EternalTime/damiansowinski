@@ -31858,5 +31858,9 @@ CAPTIONS[("mclenaghan_tariq_tupper", "surface")] = [
 # The expanding and contracting circles have different null slopes; see the derivation.
 NOT_DRAWN.add("chodos_detweiler")
 
+from thakurta_figures import conformal as thakurta_conformal
+DRAWN["thakurta"] = lambda ck, src: thakurta_conformal(ck, src, sys.modules[__name__])
+CAPTIONS[("thakurta", "exterior")] = [r"The expanding dust exterior, each point a 2-sphere."]
+
 if __name__ == "__main__":
     sys.exit(main())

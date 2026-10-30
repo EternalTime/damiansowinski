@@ -19029,5 +19029,10 @@ DIAGRAMS.extend(_chodos_detweiler.diagram_specs(Diagram, SIDEWAYS))
 CAPTIONS.update(_chodos_detweiler.diagram_captions())
 CLOSED_FORMS.update(_chodos_detweiler.null_forms())
 
+from thakurta_figures import null_specs as thakurta_null_specs
+_thakurta_rows, _thakurta_captions = thakurta_null_specs(sys.modules[__name__])
+DIAGRAMS.extend(_thakurta_rows)
+CAPTIONS.update(_thakurta_captions)
+
 if __name__ == "__main__":
     sys.exit(main())
