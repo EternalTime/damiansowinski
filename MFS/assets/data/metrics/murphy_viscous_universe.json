@@ -51,6 +51,11 @@
       "id": "kasner",
       "kind": "family",
       "text": "Kasner's vacuum is where Belinskii and Khalatnikov's anisotropic universes of the same viscous fluid begin, at a singularity where the density vanishes [belinskii1975]."
+    },
+    {
+      "id": "bekenstein_universes",
+      "kind": "family",
+      "text": "Another Friedmann universe of the 1970s whose matter breaks the strong energy condition. Its dust interacts with a conformally coupled scalar field, and its scale factor need never reach zero."
     }
   ],
   "references": [

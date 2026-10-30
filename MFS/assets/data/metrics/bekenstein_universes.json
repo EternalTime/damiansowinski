@@ -1,0 +1,73 @@
+{
+  "id": "bekenstein_universes",
+  "name": "Bekenstein's Universes with No Singularity",
+  "short_name": "Bekenstein Universes",
+  "description": "Friedmann universes of dust whose particles interact with a conformally coupled scalar field, solved exactly by Jacob D. Bekenstein in 1975. For a range of the constants the scale factor never reaches zero: the closed universe swings between two radii for all time, and the flat and open universes contract to a smallest radius and expand again.",
+  "tags": [
+    "cosmology",
+    "FLRW",
+    "homogeneous",
+    "isotropic",
+    "dust",
+    "radiation",
+    "scalar field",
+    "massless scalar field",
+    "bounce",
+    "no singularity",
+    "singularity theorems",
+    "energy condition violation",
+    "strong energy condition",
+    "weak energy condition",
+    "closed universe",
+    "open universe",
+    "three sphere",
+    "expanding universe",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model",
+    "conformally flat",
+    "spherically symmetric"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The scale factor $a$ is a length and the conformal time $\\eta$ is dimensionless, and the constants of the matter are written in units with $G = c = 1$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Every Friedmann universe of ordinary matter, followed back in time, shrinks to a moment of infinite density. Stephen Hawking and Roger Penrose proved in 1970 that singularities are to be expected in any spatially closed universe whose matter obeys an energy condition and which holds no closed timelike curves [hawkingpenrose1970]. Jacob D. Bekenstein, at the Center for Relativity Theory of the University of Texas at Austin, observed that the energy condition assumed by such theorems \"is not satisfied by all known forms of matter\" [bekenstein1975]. He set out to build isotropic universes free of singularities from a violation that follows from the action of the matter itself. Physical Review D published his universes on 15 April 1975 [bekenstein1975].¶Bekenstein filled space with dust whose particles interact with a scalar field of zero mass, and took both the field equation and the stress tensor from one action [bekenstein1975]. A particle of the dust carries the mass $\\mu + f\\psi$, where $\\psi$ is the scalar field and $f$ a coupling constant, an interaction he proposed as a classical analogue of the coupling between pions and nucleons [novello2008]. The field is conformally coupled: its action carries the term $R\\psi^2/6$ beside its kinetic term, with $R$ the Ricci scalar, which leaves its equation unchanged when the metric is rescaled. In a Friedmann universe this coupling makes $F = a\\psi$ obey an equation free of the scale factor $a$, and it makes the stress tensor of the field traceless, so only the bare mass $\\mu$ enters the trace of Einstein's equations. A field coupled minimally, with no curvature term, would feel the expansion in its own equation and add a trace of its own.¶Bekenstein worked in the conformal time $\\eta$, with $N = na^3$ the number of particles in a unit of comoving volume, $n$ their density, and units with $G = c = 1$ [novello2008]. The field obeys $F'' + kF = -fN$ and the scale factor $a'' + ka = 4\\pi N\\mu/3$, where a prime is a derivative in $\\eta$ and $k = 1$, $0$, or $-1$ for closed, flat, or open space. In the closed universe $a = \\bar a - A\\cos\\eta$ with $\\bar a = 4\\pi N\\mu/3$, so the radius swings between $\\bar a - A$ and $\\bar a + A$ for all time. The Friedmann equation fixes $A^2 = \\bar a^2 + (4\\pi/3)(2B + P^2 + Q^2 - f^2N^2)$, where $B$ measures the radiation and $P$ and $Q$ are the amplitudes of the free oscillation of $F$ about $-fN$, a wave of the scalar field that carries energy of its own. The radius stays above zero when $f^2N^2 > 2B + P^2 + Q^2$, so the energy of the interaction has to outweigh the radiation and the free wave together. Mario Novello and Santiago Esteban Perez Bergliaffa summarised the condition as $N^2f^2 > 2B$, which is the case with no free oscillation [novello2008].¶Flat and open space avoid the singularity too, each for a range of its own [bekenstein1975]. In flat space $a = \\bar a\\eta^2/2 + a_b$, and the smallest radius $a_b$ is positive when $-2Nfe > 2B + d^2$, where $e$ is the value of $F$ at the bounce and $d$ its rate of change there. In open space, with $\\eta$ counted from the bounce, $a = A\\cosh\\eta - \\bar a$ and $F = fN + D_+e^\\eta + D_-e^{-\\eta}$, and the radius stays positive when $A > \\bar a$, which holds when $4D_+D_- > 2B + f^2N^2$. The total energy density is $3(a'^2 + ka^2)/8\\pi a^4$, which at the bounce, where $a' = 0$, is positive in the closed universe, zero in the flat one, and negative in the open one. Bekenstein found the required range physically appealing only for the closed universe [bekenstein1975].¶Setting $A = 0$ holds the closed universe at the radius $\\bar a$ for all time, a static universe supported by the dust and the field with no cosmological constant. With $f = 0$, no radiation, and no free wave, $A = \\bar a$ and the radius $\\bar a(1 - \\cos\\eta)$ is Friedmann's closed universe of dust, which begins and ends in a singularity [friedmann1922]. A year earlier Bekenstein had published exact solutions of Einstein's equations with a conformal scalar field [bekenstein1974]. Novello and Perez Bergliaffa noted that the solution satisfies the weak energy condition [novello2008]. In 2024 Michela Cimaglia, Massimo Gengo, and Livio Pizzocchero counted the model among the early nonsingular cosmologies, with solutions that bounce once and others whose scale factor oscillates [cimaglia2024].",
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "Friedmann's universe with any scale factor. In conformal time Bekenstein's scale factors obey $a'' + ka = \\bar a$, which in closed space makes $a = \\bar a - A\\cos\\eta$, a radius that never reaches zero while $A < \\bar a$."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "special_case",
+      "text": "The closed universe at $A = 0$, whose radius stays at $\\bar a$ for all time. The dust and the conformally coupled field hold it up with no cosmological constant."
+    },
+    {
+      "id": "senovilla",
+      "kind": "family",
+      "text": "Another universe with no singularity in Einstein's theory. Its radiation obeys every energy condition and escapes the singularity theorems by its shape, while Bekenstein's matter breaks the strong energy condition at the bounce."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "Another universe whose contraction turns into expansion at a bounce. Loop quantum cosmology brings it about through quantum geometry, and Bekenstein's universes through a scalar field coupled to curvature and to dust."
+    },
+    {
+      "id": "murphy_viscous_universe",
+      "kind": "family",
+      "text": "Another Friedmann universe of the 1970s whose matter breaks the strong energy condition and keeps the curvature finite at every finite time, there through the bulk viscosity of its fluid."
+    }
+  ],
+  "references": [
+    "hawkingpenrose1970",
+    "bekenstein1975",
+    "novello2008",
+    "friedmann1922",
+    "bekenstein1974",
+    "cimaglia2024"
+  ],
+  "coordinates": []
+}

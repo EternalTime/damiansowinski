@@ -171,6 +171,11 @@
       "id": "stiff_fluid_universes",
       "kind": "family",
       "text": "The spatially flat stiff fluid universe is the isotropic member, $b=0$ and $a^2=3/2$, of this plane symmetric family."
+    },
+    {
+      "id": "bekenstein_universes",
+      "kind": "special_case",
+      "text": "Jacob D. Bekenstein's closed, flat, and open universes of dust and a conformally coupled scalar field, solved exactly. For a range of their constants the scale factor never reaches zero."
     }
   ],
   "references": [

@@ -60,6 +60,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "A universe whose bounce comes from loop quantum cosmology, at a critical density of about 0.41 of the Planck density [ashtekar2011status]."
+    },
+    {
+      "id": "bekenstein_universes",
+      "kind": "family",
+      "text": "Another universe with no singularity in Einstein's theory, found by Jacob D. Bekenstein. Its dust interacts with a conformally coupled scalar field, and the matter breaks the strong energy condition at the bounce."
     }
   ],
   "references": [

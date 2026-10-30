@@ -80,6 +80,11 @@
       "id": "murphy_viscous_universe",
       "kind": "family",
       "text": "A flat universe in Einstein's theory whose curvature stays finite at every finite time with no bounce: its viscous fluid holds it at the steady state in the infinite past [murphy1973]."
+    },
+    {
+      "id": "bekenstein_universes",
+      "kind": "family",
+      "text": "Another universe whose contraction turns into expansion at a bounce, in Einstein's theory, through a scalar field coupled to curvature and to dust."
     }
   ],
   "references": [

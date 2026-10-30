@@ -90,6 +90,11 @@
       "id": "ozsvath_dust",
       "kind": "generalisation",
       "text": "Ozsváth's class I squeezes Einstein's three sphere and twists its lines of time, and every event still looks like every other. At $\\beta = 0$ it is Einstein's universe again."
+    },
+    {
+      "id": "bekenstein_universes",
+      "kind": "generalisation",
+      "text": "Jacob D. Bekenstein's closed universe of dust and a conformally coupled scalar field, whose radius swings about a mean value for all time. With no swing the dust and the field hold it static with no cosmological constant."
     }
   ],
   "references": [
