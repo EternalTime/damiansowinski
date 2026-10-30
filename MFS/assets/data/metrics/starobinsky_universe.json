@@ -39,12 +39,12 @@
         "\\phi"
       ],
       "domains": [
-        "\\tau\\in I",
+        "\\tau \\in  I",
         "a>0",
-        "r\\in[0,\\infty)\\;\\text{for}\\;k\\le0",
-        "r\\in[0,1/\\sqrt{k})\\;\\text{for}\\;k>0",
-        "\\theta\\in[0,\\pi]",
-        "\\phi\\in[0,2\\pi)"
+        "r \\in [0, \\in fty)\\;\\text{for}\\;k\\le0",
+        "r \\in [0,1/\\sqrt{k})\\;\\text{for}\\;k>0",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
       ],
       "parameters": [
         {
@@ -1132,12 +1132,12 @@
         "\\phi"
       ],
       "domains": [
-        "\\eta\\in I",
+        "\\eta \\in  I",
         "a>0",
-        "r\\in[0,\\infty)\\;\\text{for}\\;k\\le0",
-        "r\\in[0,1/\\sqrt{k})\\;\\text{for}\\;k>0",
-        "\\theta\\in[0,\\pi]",
-        "\\phi\\in[0,2\\pi)"
+        "r \\in [0, \\in fty)\\;\\text{for}\\;k\\le0",
+        "r \\in [0,1/\\sqrt{k})\\;\\text{for}\\;k>0",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
       ],
       "parameters": [
         {
@@ -2241,10 +2241,10 @@
         "\\phi"
       ],
       "domains": [
-        "\\tau\\in(-\\infty,\\infty)",
-        "\\chi\\in[0,\\pi]",
-        "\\theta\\in[0,\\pi]",
-        "\\phi\\in[0,2\\pi)"
+        "\\tau \\in (- \\in fty, \\in fty)",
+        "\\chi \\in [0,\\pi]",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
       ],
       "parameters": [
         {
@@ -3304,10 +3304,10 @@
         "\\phi"
       ],
       "domains": [
-        "\\tau\\in(-\\infty,\\infty)",
-        "r\\in[0,\\infty)",
-        "\\theta\\in[0,\\pi]",
-        "\\phi\\in[0,2\\pi)"
+        "\\tau \\in (- \\in fty, \\in fty)",
+        "r \\in [0, \\in fty)",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
       ],
       "parameters": [
         {
@@ -4367,10 +4367,10 @@
         "\\phi"
       ],
       "domains": [
-        "\\tau\\in(0,\\infty)",
-        "\\chi\\in[0,\\infty)",
-        "\\theta\\in[0,\\pi]",
-        "\\phi\\in[0,2\\pi)"
+        "\\tau \\in (0, \\in fty)",
+        "\\chi \\in [0, \\in fty)",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
       ],
       "parameters": [
         {

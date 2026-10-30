@@ -15384,7 +15384,7 @@
   "sphere": null
  },
  "starobinsky_universe/closed_de_sitter": {
-  "stamp": "a2cdfe465c510284",
+  "stamp": "3ac380c0a9fc138b",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15402,10 +15402,14 @@
     "translation": false
    }
   ],
-  "sphere": null
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
  },
  "starobinsky_universe/conformal": {
-  "stamp": "f81d02f6cd73deac",
+  "stamp": "9cfca2bf29c4ca62",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15420,10 +15424,13 @@
     "translation": false
    }
   ],
-  "sphere": null
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
  },
  "starobinsky_universe/cosmic": {
-  "stamp": "26b03a90a3dc8631",
+  "stamp": "f0fb8e0b3a833a0b",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15438,10 +15445,13 @@
     "translation": false
    }
   ],
-  "sphere": null
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
  },
  "starobinsky_universe/flat_de_sitter": {
-  "stamp": "de45ebc6fdb296ed",
+  "stamp": "ee20e598e38156d8",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15459,10 +15469,13 @@
     "translation": false
    }
   ],
-  "sphere": null
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
  },
  "starobinsky_universe/open_de_sitter": {
-  "stamp": "40bb7207fd9a89d2",
+  "stamp": "5010149a685c7cd7",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15480,7 +15493,10 @@
     "translation": false
    }
   ],
-  "sphere": null
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
  },
  "stiff_fluid_universes/areal": {
   "stamp": "bd10f0767ab1c4cf",

@@ -44,6 +44,7 @@ def chart_spec(system):
         domains = [r"\tau\in(0,\infty)" if system == "open_de_sitter" else r"\tau\in(-\infty,\infty)",
                    (r"\chi\in[0,\pi]" if system == "closed_de_sitter" else radial + r"\in[0,\infty)")]
     domains += [r"\theta\in[0,\pi]", r"\phi\in[0,2\pi)"]
+    domains = [domain.replace(r"\in", r" \in ") for domain in domains]
     probe = vm.Reader(coords, parameters, ())
     x = probe.symbol[first]
     pretty = cp.hyperbolic(probe.parameters["H_0"] * x) if system in ("closed_de_sitter", "open_de_sitter") else sp.factor
