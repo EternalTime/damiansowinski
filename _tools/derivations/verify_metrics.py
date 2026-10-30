@@ -2536,6 +2536,18 @@ DIMENSIONS.update({
 DIMENSIONS.update({("bekenstein_universes", system): {
     "\\eta": "1", radial: "1", "\\theta": "1", "\\phi": "1", "\\ell": "L", second: "L", "a": "L"}
     for system, radial, second in (("closed", "\\chi", "A"), ("flat", "r", "a_b"), ("open", "\\chi", "A"))})
+# Kerr radiating and Kerr in a universe, in units c = G = 1: every coordinate but the angles is a
+# length, as m, a, k and R are; A^2 = k^2 + a u makes Vaidya and Patel's a a length too, and
+# m = C/A^3 makes C a length to the fourth. Vaidya's F is the logarithm of a scale factor.
+DIMENSIONS.update({("vaidya_patel_kerr", chart): {
+    **{c: ("1" if c in ("\\alpha", "\\beta", "\\phi") else "L") for c in coords},
+    **({"a": "L", "k": "L", "C": "L**4", "A": "L", "m": "L", "q": "L"} if chart in ("vaidya_patel", "retarded")
+       else {"m": "L", "a": "L", "R": "L", "r": "L", "\\Sigma": "L**2", "\\mu": "1/L", "\\Delta": "L**2"}),
+    **({"F": "1"} if chart.startswith("expanding") else {})}
+    for chart, coords in (("vaidya_patel", ("u", "\\alpha", "\\beta", "T")), ("retarded", ("u", "r", "\\alpha", "\\beta")),
+                          ("einstein_vaidya", ("u", "\\alpha", "\\beta", "t")),
+                          ("einstein_boyer_lindquist", ("t", "r", "\\alpha", "\\phi")),
+                          ("expanding_vaidya", ("u", "\\alpha", "\\beta", "t")))})
 
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
@@ -2740,6 +2752,13 @@ HELD = {
     ("penney_scalar", "harmonic"): ("K", "H"),
     **{("stiff_fluid_universes", chart): ("F",) for chart in ("areal", "comoving", "characteristic")},
 
+    # Vaidya and Patel's radiating Kerr metric: the rotation parameter A = sqrt(k^2 + a u) and the mass
+    # m = C/A^3, held so that every value is rational in them, with the slopes RATES declares.
+    ("vaidya_patel_kerr", "retarded"): ("A", "m"),
+    ("vaidya_patel_kerr", "vaidya_patel"): ("A", "m", "q"),
+    # Vaidya's own charts of Kerr in a universe: u and t enter only through the radius r = t - u.
+    ("vaidya_patel_kerr", "einstein_vaidya"): ("r",),
+    ("vaidya_patel_kerr", "expanding_vaidya"): ("r",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2905,6 +2924,13 @@ RATES = {
         "u": r"F((a^2-1/2)/(u+v)+b^2(u+v)/4-ab)",
         "v": r"F((a^2-1/2)/(u+v)+b^2(u+v)/4+ab)"}},
 
+    # A^2 = k^2 + a u, so A' = a/(2A), and m A^3 = C, so m' = -3 m A'/A = -3 a m/(2A^2). In Vaidya
+    # and Patel's chart q = u - T + (a/2) sin^2 alpha is held too, with its three slopes, so u and T
+    # stand in every value only through A, m and q, as r does in the retarded chart.
+    ("vaidya_patel_kerr", "retarded"): {"A": {"u": "\\dfrac{a}{2A}"}, "m": {"u": "-\\dfrac{3am}{2A^2}"}},
+    ("vaidya_patel_kerr", "vaidya_patel"): {"A": {"u": "\\dfrac{a}{2A}"}, "m": {"u": "-\\dfrac{3am}{2A^2}"},
+                                            "q": {"u": "1", "T": "-1", "\\alpha": "a\\sin\\alpha\\cos\\alpha"}},
+    **{("vaidya_patel_kerr", chart): {"r": {"u": "-1", "t": "1"}} for chart in ("einstein_vaidya", "expanding_vaidya")},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

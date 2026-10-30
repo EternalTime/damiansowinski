@@ -403,6 +403,13 @@ REGIONS = {
         "why": "whittaker is the fluid at rest, the limit of no rotation, which is static and "
                "spherically symmetric where the rotating fluid is neither",
     },
+    "vaidya_patel_kerr": {
+        "regions": [["vaidya_patel", "retarded"],
+                    ["einstein_vaidya", "einstein_boyer_lindquist"],
+                    ["expanding_vaidya"]],
+        "why": "Kerr radiating, Kerr in Einstein's static universe and Kerr in an expanding universe "
+               "are three spacetimes, the first of pure radiation and the others of a fluid",
+    },
 }
 
 # Where the charts cannot decide a tag and the entry's history and sources do.

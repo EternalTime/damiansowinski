@@ -141,7 +141,11 @@ NOT_DRAWN = {"charged_godel_universe", "godel", "stockum_dust", "som_raychaudhur
              "oscillating_sphere", "newman_tamburino",
              # Hauser's twisting wave: not asymptotically flat, singular on hypersurfaces, and with one
              # Killing vector, so no plane of two coordinates carries its causal structure to a boundary.
-             "hauser_wave"}
+             "hauser_wave",
+             # Kerr radiating and Kerr in a universe: three spacetimes, two of them time dependent, the
+             # radiating one with no horizon in closed form and the expanding one with F left free, and
+             # the static one with a naked antipodal singularity; vaidya_patel_kerr.md gives the reasons.
+             "vaidya_patel_kerr"}
 
 
 # ---------------------------------------------------------------- the drawing

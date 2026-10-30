@@ -36295,6 +36295,303 @@ def coords_pair(chart, i, j):
 
 CHARTS["hauser_wave"] = hauser_wave
 
+# -- Kerr radiating, and Kerr in a universe (Vaidya and Patel 1973, Vaidya 1977) ---------------
+
+VPK_CHARTS = ("vaidya_patel", "retarded", "einstein_vaidya", "einstein_boyer_lindquist", "expanding_vaidya")
+VPK_RADIATING = ["a", "k", "C", "A = \\sqrt{k^2 + au}", "m = \\dfrac{C}{A^3}"]
+VPK_SIGMA = "\\Sigma = \\left(R^2 - a^2\\right)\\sin^2\\dfrac{{{r}}}{{R}} + a^2\\cos^2\\alpha"
+VPK_MU = "\\mu = \\dfrac{{R}}{{\\Sigma}}\\sin\\dfrac{{{r}}}{{R}}\\cos\\dfrac{{{r}}}{{R}}"
+VPK_DELTA = "\\Delta = \\left(R^2 - a^2\\right)\\sin^2\\dfrac{r}{R} + a^2 - 2mR\\sin\\dfrac{r}{R}\\cos\\dfrac{r}{R}"
+
+
+def vpk_parameters(system):
+    """The parameters of a chart: the radiating charts hold A and m as functions of u with the
+    slopes vm.RATES declares, and Vaidya and Patel's chart holds q too. The charts in a universe name
+    Sigma and mu in the radius, and Vaidya's own charts hold the radius r = t - u, through which
+    alone u and t enter, with Sigma and mu written out in it."""
+    if system in ("vaidya_patel", "retarded"):
+        return VPK_RADIATING + (["q = u - T + \\dfrac{a}{2}\\sin^2\\alpha"] if system == "vaidya_patel" else [])
+    if system.endswith("_vaidya"):
+        names = ["m", "a", "R", "r = t - u"]
+    else:
+        names = ["m", "a", "R", VPK_SIGMA.format(r="r"), VPK_MU.format(r="r")]
+    if system == "einstein_boyer_lindquist":
+        names.append(VPK_DELTA)
+    if system.startswith("expanding"):
+        names.append("F = F(t)")
+    return names
+
+
+def vpk_line(system):
+    """The line elements, signature (-,+,+,+), c = G = 1: Vaidya and Patel's (4) of 1989 with
+    q = -r, Vaidya's (13) and (15) of 1977, each negated from his signature (+,-,-,-), the same in r = t - u,
+    and the Boyer-Lindquist form of (13), dt -> dt - (2m R sin cos/Delta) dr and
+    d(beta) -> d(phi) + (a/Delta) dr, which takes every cross term with dr away."""
+    if system in ("vaidya_patel", "retarded"):
+        th = "\\left(du + A\\sin^2\\alpha\\,d\\beta\\right)"
+        if system == "vaidya_patel":
+            return ("ds^2 = -2" + th + "\\left(dT + \\dfrac{aq}{2A}\\sin^2\\alpha\\,d\\beta\\right)"
+                    " + \\left(A^2\\cos^2\\alpha + q^2\\right)\\left(d\\alpha^2 + \\sin^2\\alpha\\,d\\beta^2\\right)"
+                    " + \\left(1 + \\dfrac{a^2\\sin^2\\alpha}{4A^2} - \\dfrac{2mq}{A^2\\cos^2\\alpha + q^2}\\right)" + th + "^2")
+        return ("ds^2 = -2" + th + "\\left(du + dr + a\\sin\\alpha\\cos\\alpha\\,d\\alpha"
+                " - \\dfrac{ar}{2A}\\sin^2\\alpha\\,d\\beta\\right)"
+                " + \\left(r^2 + A^2\\cos^2\\alpha\\right)\\left(d\\alpha^2 + \\sin^2\\alpha\\,d\\beta^2\\right)"
+                " + \\left(1 + \\dfrac{a^2\\sin^2\\alpha}{4A^2} + \\dfrac{2mr}{r^2 + A^2\\cos^2\\alpha}\\right)" + th + "^2")
+    angle = "\\phi" if system == "einstein_boyer_lindquist" else "\\beta"
+    null = {"einstein_vaidya": "du", "expanding_vaidya": "du", "einstein_boyer_lindquist": "dt"}.get(system, "dt - dr")
+    th = "\\left(" + null + " + a\\sin^2\\alpha\\,d" + angle + "\\right)"
+    sigma, mu = "\\Sigma", "\\mu"
+    if system.endswith("_vaidya"):
+        sigma = "\\left(\\left(R^2 - a^2\\right)\\sin^2\\dfrac{r}{R} + a^2\\cos^2\\alpha\\right)"
+        mu = "\\dfrac{R\\sin\\dfrac{r}{R}\\cos\\dfrac{r}{R}}{\\left(R^2 - a^2\\right)\\sin^2\\dfrac{r}{R} + a^2\\cos^2\\alpha}"
+    space = (sigma + "\\left(\\dfrac{R^2\\,d\\alpha^2}{R^2 - a^2\\sin^2\\alpha} + \\sin^2\\alpha\\,d" + angle + "^2\\right)")
+    if system == "einstein_boyer_lindquist":
+        space = "\\dfrac{\\Sigma}{\\Delta}dr^2 + " + space
+    if system.startswith("expanding"):
+        return ("ds^2 = e^{2F}\\left(-2" + th + "dt + \\left(1 + 2m" + mu + "e^{-2F}\\right)" + th + "^2 + " + space + "\\right)")
+    return "ds^2 = -2" + th + "dt + \\left(1 + 2m" + mu + "\\right)" + th + "^2 + " + space
+
+
+VPK_NAMES = {"vaidya_patel": "Vaidya and Patel", "retarded": "Retarded Spheroidal",
+             "einstein_vaidya": "Einstein Universe, Vaidya",
+             "einstein_boyer_lindquist": "Einstein Universe, Boyer-Lindquist",
+             "expanding_vaidya": "Expanding Universe, Vaidya"}
+
+
+def vpk_coords(system):
+    return {"vaidya_patel": ["u", "\\alpha", "\\beta", "T"], "retarded": ["u", "r", "\\alpha", "\\beta"],
+            "einstein_vaidya": ["u", "\\alpha", "\\beta", "t"], "expanding_vaidya": ["u", "\\alpha", "\\beta", "t"],
+            "einstein_boyer_lindquist": ["t", "r", "\\alpha", "\\phi"]}.get(system, ["t", "r", "\\alpha", "\\beta"])
+
+
+def vpk_domains(system):
+    reals = "(-\\infty, \\infty)"
+    # TeX's thin space before a condition or a note, spelled so that no string holds a stray escape.
+    gap = " " + chr(92) + ";"
+    if system in ("vaidya_patel", "retarded"):
+        span = ["u \\in \\left(-k^2/a, \\infty\\right)" + gap + "\\text{for}" + gap + " a > 0",
+                "u \\in \\left(-\\infty, -k^2/a\\right)" + gap + "\\text{for}" + gap + " a < 0",
+                "u \\in " + reals + gap + "\\text{for}" + gap + " a = 0"]
+        other = ["T \\in " + reals] if system == "vaidya_patel" else ["r \\in " + reals]
+        ring = ("q = 0,\\ \\alpha = \\pi/2" if system == "vaidya_patel" else "r = 0,\\ \\alpha = \\pi/2")
+        return span + other + ["\\alpha \\in [0, \\pi]", "\\beta \\in [0, 2\\pi)",
+                               ring + gap + "\\text{(the ring singularity)}"]
+    angle = "\\phi" if system == "einstein_boyer_lindquist" else "\\beta"
+    if system.endswith("_vaidya"):
+        radial = ["u \\in " + reals, "t \\in " + reals,
+                  "0 < t - u < \\pi R" + gap + "\\text{(the radius } r = t - u\\text{)}"]
+    else:
+        radial = ["t \\in " + reals, "r \\in (0, \\pi R)"]
+    horizon = "R\\tan\\dfrac{r}{R} = m \\pm \\sqrt{m^2 - a^2}" + gap
+    notes = [horizon + ("\\text{(the horizons, where } \\Delta = 0\\text{)}" if system == "einstein_boyer_lindquist"
+                        else "\\text{(the horizons)}")]
+    if system.startswith("expanding"):
+        notes = ["R\\tan\\dfrac{r}{R} = me^{-2F} \\pm \\sqrt{m^2e^{-4F} - a^2}" + gap
+                 + "\\text{(the horizons Vaidya found)}"]
+    return radial + ["\\alpha \\in [0, \\pi]", angle + " \\in [0, 2\\pi)"] + notes
+
+
+def vaidya_patel_kerr(system):
+    """Kerr radiating and Kerr in a universe, three spacetimes on one page.
+
+    Vaidya and Patel's radiating Kerr metric of 1973 in their own restatement, (4) and (5) of
+    Pramana 32, 731 (1989), with A^2 = k^2 + a u and m = C/A^3 from M W^3 cosec^3 alpha constant, and
+    N there taken as dW/d(alpha) at fixed u, A cos(alpha), the reading that makes it a solution\\; and
+    the same in r = T - u - (a/2) sin^2 alpha, which is -q. Vaidya's Kerr metric in Einstein's
+    static universe, (13) and (14) of Pramana 8, 512 (1977), in his coordinates, in r = t - u and
+    in a Boyer-Lindquist form\\; and his Kerr metric in the expanding universe, (15), with F free.
+    vaidya_patel_kerr_check holds each chart at points: the radiating charts to pure radiation
+    along du + A sin^2 alpha d(beta), flat at C = 0 and Kerr's Kretschmann scalar at a = 0\\; the
+    Einstein charts to Vaidya's perfect fluid on p. 515\\; the expanding charts to a fluid with a
+    timelike eigenvector and two equal pressures\\; and each chart after the first of its spacetime
+    to being the first pulled back. vaidya_patel_kerr.md beside this file is the derivation."""
+    coords = vpk_coords(system)
+    parameters = vpk_parameters(system)
+    line = vpk_line(system)
+    key = ("vaidya_patel_kerr", system)
+    spec = {"metric_id": "vaidya_patel_kerr",
+            "system": {"id": system, "name": VPK_NAMES[system], "coords": coords, "domains": vpk_domains(system),
+                       "parameters": parameters, "line_element": line},
+            "chart_line_element": line, "printer": {},
+            "check": lambda chart: vaidya_patel_kerr_check(chart, system)}
+    if key in vm.RATES:
+        probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+        spec["reduce"] = lambda value: vm.norm(probe.by_rates(value))
+    if system == "einstein_boyer_lindquist":
+        spec["printer"], spec["pretty"] = vpk_named(coords, parameters)
+    return spec
+
+
+def vpk_named(coords, parameters):
+    """The Boyer-Lindquist chart's values written in Sigma and Delta: each value has sin^2 alpha written
+    in cos alpha and cos^2(r/R) in sin(r/R), is factored, and each factor that is Sigma or Delta, up to
+    its sign, is printed by name, as Kerr-de Sitter's values are."""
+    probe = vm.Reader(coords, parameters, ())
+    r, alpha = probe.symbol["r"], probe.symbol["\\alpha"]
+    m, a, R = (probe.parameters[k] for k in ("m", "a", "R"))
+    S, C, sa, ca = sp.sin(r / R), sp.cos(r / R), sp.sin(alpha), sp.cos(alpha)
+    sigma, delta = sp.Symbol("VPK_Sigma", positive=True), sp.Symbol("VPK_Delta")
+    named = [(sigma, (R ** 2 - a ** 2) * S ** 2 + a ** 2 * ca ** 2, "\\Sigma"),
+             (delta, (R ** 2 - a ** 2) * S ** 2 + a ** 2 - 2 * m * R * S * C, "\\Delta")]
+    factors = named_factors(named)
+
+    def even(base, other):
+        return lambda e: e.is_Pow and e.base == base and e.exp.is_Integer and e.exp > 1
+
+    def pretty(value):
+        value = sp.sympify(value)
+        value = value.replace(even(sa, ca), lambda e: sa ** (int(e.exp) % 2) * (1 - ca ** 2) ** (int(e.exp) // 2))
+        value = value.replace(even(C, S), lambda e: C ** (int(e.exp) % 2) * (1 - S ** 2) ** (int(e.exp) // 2))
+        return factors(value)
+    return {"lead": [m, a, R, r, S, C, ca, sa], "named": {p: text for p, _, text in named}}, pretty
+
+
+def vpk_numeric(chart, system):
+    """A function that evaluates a value of the chart at a point to thirty digits: every
+    derivative of a held name written by its rates, the names written out, then the numbers."""
+    key = ("vaidya_patel_kerr", system)
+    rated = (vm.Reader(chart.coords_tex, vpk_parameters(system), (), held=vm.HELD[key], rates=vm.RATES[key])
+             if key in vm.RATES else None)
+    held = chart.reader.held
+
+    def at(value, point, functions=None):
+        value = sp.sympify(value)
+        if functions:
+            value = value.subs(functions)
+        value = value.doit()
+        if rated:
+            value = rated.by_rates(value)
+        for _ in range(3):
+            value = value.subs(held)
+        return sp.N(value.doit().subs(point), 30)
+    return at
+
+
+VPK_POINTS = {
+    "vaidya_patel": [(0.0, 0.2, 0.0, 0.6), (1.0, 1.5, 0.4, 3.0), (3.0, 0.9, 1.0, 9.0)],
+    "retarded": [(0.0, 0.6, 0.2, 0.0), (1.0, 1.85, 1.5, 0.4), (3.0, 5.9, 0.9, 1.0)],
+    "einstein_vaidya": [(0.3, 0.9, 0.2, 2.1), (-1.0, 1.7, 1.0, 1.4), (0.5, 1.2, 2.0, 4.5)],
+    "expanding_vaidya": [(0.3, 0.9, 0.2, 2.1), (-1.0, 1.7, 1.0, 1.4), (0.5, 1.2, 2.0, 4.5)],
+}
+
+
+def vpk_point(chart, system, triple):
+    names = dict(zip(chart.symbols, triple))
+    if system in VPK_POINTS:
+        return names
+    # Spheroidal and Boyer-Lindquist charts at the events of the Vaidya chart: r = t - u.
+    u, alpha, beta, t = triple
+    return dict(zip(chart.symbols, (t, t - u, alpha, beta)))
+
+
+def vaidya_patel_kerr_check(chart, system):
+    """Pointwise, at thirty digits, with the parameters at numbers\\; no symbolic simplification."""
+    at = vpk_numeric(chart, system)
+    P = chart.reader.parameters
+    radiating = system in ("vaidya_patel", "retarded")
+    if radiating:
+        numbers = {P["a"]: sp.Rational(3, 10), P["k"]: sp.Rational(7, 10), P["C"]: sp.Rational(1, 2)}
+    else:
+        numbers = {P["m"]: sp.Rational(1, 2), P["a"]: sp.Rational(2, 5), P["R"]: 3}
+    ricci = chart.geo.ricci_ll()
+    einstein = chart.geo.einstein_ll()
+    g, ginv = chart.geo.g, chart.geo.ginv
+    triples = VPK_POINTS.get(system) or VPK_POINTS["einstein_vaidya"]
+    # A declared scale factor for the expanding charts, any F serving, since Vaidya leaves it free.
+    scale = None
+    if system.startswith("expanding"):
+        t = chart.symbols[3] if system == "expanding_vaidya" else chart.symbols[0]
+        scale = {P["F"]: sp.Rational(3, 10) * t + sp.Rational(1, 10) * t ** 2}
+    for triple in triples:
+        point = {**vpk_point(chart, system, [sp.Rational(str(x)) for x in triple]), **numbers}
+        G = sp.Matrix(4, 4, lambda i, j: at(g[i, j], point, scale))
+        Gi = sp.Matrix(4, 4, lambda i, j: at(ginv[i, j], point, scale))
+        if max(abs(x) for x in (G * Gi - sp.eye(4))) > 1e-20:
+            raise AssertionError(f"vaidya_patel_kerr/{system}: the inverse metric misses at {triple}")
+        if radiating:
+            A = sp.sqrt(numbers[P["k"]] ** 2 + numbers[P["a"]] * point[chart.symbols[0]])
+            alpha = point[chart.symbols[1] if system == "vaidya_patel" else chart.symbols[2]]
+            theta = [1, 0, A * sp.sin(alpha) ** 2, 0] if system == "vaidya_patel" else [1, 0, 0, A * sp.sin(alpha) ** 2]
+            theta = sp.Matrix([sp.N(x, 30) for x in theta])
+            if abs((theta.T * Gi * theta)[0]) > 1e-20:
+                raise AssertionError(f"vaidya_patel_kerr/{system}: du + A sin^2 alpha d beta is not null")
+            Ric = sp.Matrix(4, 4, lambda i, j: at(vm._at(ricci, (i, j)), point))
+            sigma = Ric[0, 0]
+            if max(abs(x) for x in (Ric - sigma * theta * theta.T)) > 1e-20:
+                raise AssertionError(f"vaidya_patel_kerr/{system}: the Ricci tensor is not pure radiation at {triple}")
+            if not sigma > 0:
+                raise AssertionError(f"vaidya_patel_kerr/{system}: the radiation density is not positive at {triple}")
+            # With no mass the spacetime is flat however A runs.
+            flat = {**point, P["C"]: 0}
+            for index in itertools.product(range(4), repeat=4):
+                value = vm._at(chart.geo.riemann_llll(), index)
+                if value != 0 and abs(at(value, flat)) > 1e-20:
+                    raise AssertionError(f"vaidya_patel_kerr/{system}: C = 0 is not flat at {triple}")
+        else:
+            mixed = Gi * sp.Matrix(4, 4, lambda i, j: at(vm._at(einstein, (i, j)), point, scale))
+            values = sorted((complex(e).real for e in mpmath.eig(mpmath.matrix(mixed.tolist()))[0]))
+            if system.startswith("einstein"):
+                r = point[chart.symbols[3]] - point[chart.symbols[0]] if system == "einstein_vaidya" else point[chart.symbols[1]]
+                alpha = point[chart.symbols[1] if system == "einstein_vaidya" else chart.symbols[2]]
+                m, a, R = numbers[P["m"]], numbers[P["a"]], numbers[P["R"]]
+                Sigma = (R ** 2 - a ** 2) * sp.sin(r / R) ** 2 + a ** 2 * sp.cos(alpha) ** 2
+                mu = R * sp.sin(r / R) * sp.cos(r / R) / Sigma
+                # Vaidya's p.515 in this signature: the mixed Einstein tensor of his fluid has the
+                # eigenvalue -(1 - 2 m mu)/R^2 three times and -3(1 - 2 m mu)/R^2 once.
+                shift = float(sp.N((1 - 2 * m * mu) / R ** 2, 30))
+                wanted = sorted([-shift] * 3 + [-3 * shift])
+                if max(abs(x - y) for x, y in zip(values, wanted)) > 1e-12:
+                    raise AssertionError(f"vaidya_patel_kerr/{system}: Vaidya's fluid misses at {triple}: {values}")
+            else:
+                pairs = [abs(values[i] - values[i + 1]) < 1e-12 for i in range(3)]
+                if sum(pairs) != 1:
+                    raise AssertionError(f"vaidya_patel_kerr/{system}: no single pair of equal pressures at {triple}")
+    if system in ("vaidya_patel", "einstein_vaidya", "expanding_vaidya"):
+        return
+    # Each other chart is the first chart of its spacetime pulled back, at the same points.
+    first = {"retarded": "vaidya_patel", "einstein_boyer_lindquist": "einstein_vaidya"}[system]
+    source = cp.Chart(vpk_coords(first), vpk_parameters(first), vpk_line(first), {},
+                      held=vm.HELD.get(("vaidya_patel_kerr", first), ()))
+    X, Y = chart.symbols, source.symbols
+    P2 = source.reader.parameters
+    if system == "retarded":
+        u, r, alpha, beta = X
+        a = P["a"]
+        images = [u, alpha, beta, r + u + a * sp.sin(alpha) ** 2 / 2]
+    else:
+        # Vaidya's chart has u and t through r = t - u alone, so the event (t - r, alpha, phi, t) is
+        # an image of the Boyer-Lindquist event, and the Jacobian carries dt -> dt + f dr and
+        # d(beta) -> d(phi) + h dr, with u = t - r.
+        t, r, alpha, phi = X
+        images = [t - r, alpha, phi, t]
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(images[i], X[j]))
+    if system == "einstein_boyer_lindquist":
+        m, a, R = P["m"], P["a"], P["R"]
+        delta = (R ** 2 - a ** 2) * sp.sin(r / R) ** 2 + a ** 2 - 2 * m * R * sp.sin(r / R) * sp.cos(r / R)
+        f = -2 * m * R * sp.sin(r / R) * sp.cos(r / R) / delta
+        J[0, 1] = f - 1
+        J[3, 1] = f
+        J[2, 1] = a / delta
+    swap = {P2[name]: P[name] for name in ("a", "k", "C", "m", "R") if name in P2 and name in P}
+    if "F" in P2:
+        swap[P2["F"]] = P["F"]
+    at_source = vpk_numeric(source, first)
+    for triple in VPK_POINTS.get(first, VPK_POINTS["einstein_vaidya"])[:2]:
+        point = {**vpk_point(chart, system, [sp.Rational(str(x)) for x in triple]), **numbers}
+        Jn = sp.Matrix(4, 4, lambda i, j: at(J[i, j], point))
+        image = {y: at(e, point) for y, e in zip(Y, images)}
+        there = {**image, **{swap.get(s, s): v for s, v in numbers.items()}}
+        source_scale = ({P2["F"]: sp.Rational(3, 10) * Y[3] + sp.Rational(1, 10) * Y[3] ** 2}
+                        if system.startswith("expanding") else None)
+        old = sp.Matrix(4, 4, lambda i, j: at_source(source.geo.g[i, j], there, source_scale))
+        pulled = Jn.T * old * Jn
+        here = sp.Matrix(4, 4, lambda i, j: at(chart.geo.g[i, j], point, scale))
+        if max(abs(x) for x in (pulled - here)) > 1e-20:
+            raise AssertionError(f"vaidya_patel_kerr/{system}: the {first} chart pulled back misses at {triple}")
+
+
+CHARTS["vaidya_patel_kerr"] = [lambda s=s: vaidya_patel_kerr(s) for s in VPK_CHARTS]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
