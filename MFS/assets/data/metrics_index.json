@@ -1176,7 +1176,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6c2138f6854d83b3",
+    "version": "dbc5770ccfb8354b",
     "diagrams": "f22ea0dd9b361d6c",
     "conformal": "804501ee6749f574",
     "embedding": "1eff4ec665a7b80c",
@@ -5380,7 +5380,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "453f5b0a2a8fa0aa",
+    "version": "65a9e159eeecb92d",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -5406,7 +5406,7 @@
       "hydrostatic equilibrium",
       "gravitational redshift"
     ],
-    "version": "19af092e13680ed5",
+    "version": "f036f3a297d9ab72",
     "diagrams": "2c3a4f257a42be77",
     "conformal": "576471fc7fb8c666",
     "embedding": "33dc4c3913188978",
@@ -5724,6 +5724,23 @@
     "version": "87e953234ebb54b6",
     "diagrams": "24d791c0188bc8ef",
     "embedding": "96ddbe0d3bf719ac"
+  },
+  {
+    "id": "spheroidal_stars",
+    "name": "Spheroidal stars",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "four-dimensional",
+      "perfect fluid",
+      "stellar interior"
+    ],
+    "version": "83608f2dd80f3ca7",
+    "diagrams": "83a40a71853175c3",
+    "conformal": "a762dc96059258ea",
+    "embedding": "67923fdc6eb37a4a",
+    "curvature": "c449a6ceb53e87c3"
   },
   {
     "id": "spinning_string",
@@ -6201,7 +6218,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a133910a18b2090f",
+    "version": "534b5f72c4edaf91",
     "diagrams": "54dd0e9e7887701d",
     "conformal": "0f87c7ddfbce658d",
     "embedding": "80461874aabb5765"
@@ -6249,7 +6266,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "eb1553f795e08d84",
+    "version": "abe5376ac5cbaa25",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89",

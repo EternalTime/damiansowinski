@@ -9,6 +9,24 @@ METRIC = stars.METRIC
 SETTINGS = "$r_b=1$, $GM/(c^2r_b)=1/5$."
 
 
+class StableScalar:
+    """Preserve the removable central cancellations in the stored scalar."""
+    def __init__(self, published):
+        self.published = published
+
+    def __getattr__(self, name):
+        return getattr(self.published, name)
+
+    def __call__(self, *values):
+        arrays = np.broadcast_arrays(*values)
+        out = self.published(*values).copy()
+        near = np.abs(arrays[0]) < 0.01
+        for index in np.ndindex(out.shape):
+            if near[index]:
+                out[index] = float(self.published.exact([a[index] for a in arrays]))
+        return out
+
+
 def register_null(nr):
     for system in stars.SYSTEMS:
         row = nr.Diagram(METRIC, system, "radial", "$t$ and $r$", ("t", "r"),
@@ -70,9 +88,14 @@ def conformal(ck, src):
     """r*=integral dr/(y sqrt(Z)) inside, continued into the vacuum exterior."""
     import conformal as cd
     from scipy.integrate import cumulative_simpson
+    class StellarPlane(cd.Plane):
+        def prep(self, expr, limit=True):
+            # Numeric comparisons need no global simplification of these radical lapses.
+            e = cd.sp.sympify(expr).subs(self.reader.held).doit()
+            return e.subs(self.subs).subs(self.fixed)
     views = []
     for system, name in zip(stars.SYSTEMS, stars.NAMES):
-        inner = cd.Plane(src, METRIC, system, ("t", "r"), cd.EQUATOR, stars.drawing_parameters(system))
+        inner = StellarPlane(src, METRIC, system, ("t", "r"), cd.EQUATOR, stars.drawing_parameters(system))
         outer = cd.Plane(src, "schwarzschild", "spherical", ("t", "r"), cd.EQUATOR, {"r_s": "2/5"})
         ck.limit(f"{name}: continuous lapse", [float(inner.g[0, 0].subs(inner.x1, 1))],
                  [float(outer.g[0, 0].subs(outer.x1, 1))], 1e-12)
@@ -91,7 +114,10 @@ def conformal(ck, src):
             return cd.mink_pq(t, rstar(r), 2.0)
         ck.chart(f"{name}: fluid", inner, pq, ck.uniform(-8, 8), ck.uniform(0.01, 0.99), lambda t, r: (1, 0))
         ck.chart(f"{name}: vacuum", outer, pq, ck.uniform(-8, 8), ck.uniform(1.01, 20), lambda t, r: (1, 0))
-        ck.finite(f"{name}: regular centre", inner.kretschmann(0, 1e-5))
+        import curvature as cv
+        params = stars.drawing_parameters(system)
+        scalar = cv.nr_published(src, METRIC, system, "kretschmann", ["r"], list(params))
+        ck.finite(f"{name}: regular centre", float(scalar.exact([1e-5]+[float(v) for v in params.values()])))
         ck.limit(f"{name}: spatial infinity", cd.point(*pq(0, 1e10)), [math.pi, 0], 1e-4)
         v = cd.View(system, name, [-0.35, math.pi+0.35, -math.pi-0.25, math.pi+0.25], system)
         v.fill("region", cd.TRIANGLE)
@@ -137,7 +163,7 @@ def curvature(ck, src):
         xaxis = cv.axis("$r/r_b$", 0, 1)
         curves, panels = [], []
         for field, letter, power in (("kretschmann", "K", 4), ("ricci_scalar", "R", 2)):
-            fn = cv.nr_published(src, METRIC, system, field, ["r"], list(params))
+            fn = StableScalar(cv.nr_published(src, METRIC, system, field, ["r"], list(params)))
             # A finite centre is approached at 1e-5; exact decimal evaluation avoids cancellation.
             samples = [float(fn.exact([r]+list(params.values()))) for r in (1e-5, 0.1, 0.3, 0.6, 1.0)]
             low, high = min(0.0, min(samples)), max(samples)

@@ -2500,6 +2500,20 @@ A homogeneous universe of charged dust in rigid rotation, held in a uniform magn
 - chart Cylindrical: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(c\,dt + \dfrac{\Omega r^2}{c}\,d\phi\right)^2 + dr^2 + r^2d\phi^2 + dz^2$$
 - chart Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -\left(c\,dt + \dfrac{\Omega}{c}\left(x\,dy - y\,dx\right)\right)^2 + dx^2 + dy^2 + dz^2$$
 
+### Spheroidal Stars
+
+Static fluid spheres with spheroidal and paraboloidal spatial geometries.
+
+- id: `spheroidal_stars`
+- tags: static, stationary, spherically symmetric, four-dimensional, perfect fluid, stellar interior
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/spheroidal_stars.json
+- chart Vaidya-Tikekar and Durgapal-Bannerji: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -y^2c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Durgapal III (Heintzmann IIa): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -y^2c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Durgapal IV: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -y^2c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Durgapal V: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -y^2c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Finch and Skea: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -y^2c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Spinning Cosmic String
 
 The spacetime around an infinitely thin, straight string that carries angular momentum as well as mass, flat everywhere off the string. The mass removes a wedge from every plane the string crosses, the spin shifts time by $8\pi GJ/c^4$ on each circuit of the string, and within $r = 4GJ/(c^3 - 4G\mu c)$ the circles around it are closed timelike curves.

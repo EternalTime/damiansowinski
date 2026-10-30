@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 220,
+  "count": 221,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12555,6 +12555,11 @@
           "id": "tolman_vii",
           "kind": "family",
           "text": "Another static star of fluid in closed form whose density falls outward. Tolman's ends at a surface where the density vanishes, while Buchdahl's runs to infinity."
+        },
+        {
+          "id": "spheroidal_stars",
+          "kind": "family",
+          "text": "The Vaidya-Tikekar and Durgapal-Bannerji star is Buchdahl's finite fluid sphere of 1959. Its pressure vanishes at a finite surface [delgaty1998]."
         }
       ],
       "references": [
@@ -12566,7 +12571,8 @@
         "heinzle2002",
         "andersson2019",
         "igata2022",
-        "igata2025"
+        "igata2025",
+        "delgaty1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/buchdahl_sphere.json",
@@ -59775,6 +59781,11 @@
           "id": "thakurta",
           "kind": "conformal",
           "text": "Schwarzschild's geometry multiplied by the square of a scale factor depending on its static time. The source carries a radial heat flow [mello2017]."
+        },
+        {
+          "id": "spheroidal_stars",
+          "kind": "composite",
+          "text": "Static fluid stars joined to Schwarzschild's vacuum at their surfaces. Vanishing pressure and continuity of the lapse fix the matching [delgaty1998]."
         }
       ],
       "references": [
@@ -59913,7 +59924,8 @@
         "banerjee1998",
         "fransen2023",
         "brandt1997",
-        "mello2017"
+        "mello2017",
+        "delgaty1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -60196,6 +60208,11 @@
           "id": "oscillating_sphere",
           "kind": "generalisation",
           "text": "The same ball of uniform density set moving, its pressure still vanishing at the surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever, and that the static star is stable to such motions unless it is too compact [bonnor1967oscillating]."
+        },
+        {
+          "id": "spheroidal_stars",
+          "kind": "family",
+          "text": "Vaidya and Tikekar's fluid star has a spheroidal spatial geometry. Their spatial ansatz includes Schwarzschild's uniform sphere at $K=0$ [khugaev2016]."
         }
       ],
       "references": [
@@ -60220,7 +60237,8 @@
         "bonnor1975",
         "bowers1974",
         "buchdahl1964",
-        "bonnor1967oscillating"
+        "bonnor1967oscillating",
+        "khugaev2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/interior_schwarzschild.json",
@@ -63770,6 +63788,472 @@
           ],
           "ricci_scalar": "R = \\dfrac{2\\Omega^2}{c^2}",
           "kretschmann": "K = \\dfrac{44\\Omega^4}{c^4}"
+        }
+      ]
+    },
+    {
+      "id": "spheroidal_stars",
+      "name": "Spheroidal Stars",
+      "short_name": "Spheroidal stars",
+      "description": "Static fluid spheres with spheroidal and paraboloidal spatial geometries.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional",
+        "perfect fluid",
+        "stellar interior"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use areal coordinates $(t,r,\\theta,\\phi)$, with $t$ a time and $r$ a length. Components use $x^0=ct$, with factors of $c$ explicit in the line element. The constant $C$ has dimensions of inverse squared length, and $r_b$ is the surface radius.",
+      "related": [
+        {
+          "id": "tov",
+          "kind": "generalisation",
+          "text": "The equilibrium equations for a static sphere of fluid. Each of these stars satisfies them with its own density and pressure [delgaty1998]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "The vacuum outside each star. At the surface the pressure vanishes, and the lapse and radial metric match the exterior of the enclosed mass [delgaty1998]."
+        },
+        {
+          "id": "interior_schwarzschild",
+          "kind": "family",
+          "text": "The star of uniform density. Vaidya and Tikekar's spatial ansatz becomes its spherical spatial geometry at $K=0$ [khugaev2016]."
+        },
+        {
+          "id": "tolman_vii",
+          "kind": "family",
+          "text": "A static fluid sphere whose density falls quadratically with the areal radius. Durgapal IV and V and Finch and Skea's star have different density profiles [delgaty1998]."
+        },
+        {
+          "id": "buchdahl_sphere",
+          "kind": "family",
+          "text": "Buchdahl's fluid sphere of 1964 extends to infinity with a finite mass. His finite star of 1959 is the Vaidya-Tikekar and Durgapal-Bannerji solution [delgaty1998]."
+        }
+      ],
+      "references": [
+        "vaidya1982spheroid",
+        "khugaev2016",
+        "thirukkanesh2009",
+        "buchdahl1959",
+        "durgapal1983bannerji",
+        "delgaty1998",
+        "durgapal1982",
+        "finch1989"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spheroidal_stars.json",
+      "charts": [
+        {
+          "id": "vaidya_tikekar",
+          "name": "Vaidya-Tikekar and Durgapal-Bannerji",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in [0,r_b]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "C>0,\\quad y>0,\\quad Z>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Positive inverse squared length setting the density scale."
+            },
+            {
+              "symbol": "r_b",
+              "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
+            },
+            {
+              "symbol": "A",
+              "description": "Dimensionless lapse constant, fixed together with $B$ by the surface pressure and time normalization."
+            },
+            {
+              "symbol": "B",
+              "description": "The second independent lapse constant."
+            },
+            {
+              "symbol": "x = Cr^2",
+              "description": "Dimensionless squared radius."
+            },
+            {
+              "symbol": "Z = \\dfrac{2-x}{2(1+x)}",
+              "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
+            },
+            {
+              "symbol": "y = A(1+x)^{3/2}+B(5+2x)\\sqrt{2-x}",
+              "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
+            }
+          ],
+          "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
+          "line_element": "ds^2 = -y^2c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-y^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2y - 2y\\,Z - 4r\\,Z\\,\\partial_r y - 2r\\,y\\,\\partial_r Z - r^2\\,\\partial_r Z\\,\\partial_r y - 2r^2\\,Z\\,\\partial_r^2 y}{r^2\\,y}",
+          "kretschmann": "K = \\dfrac{4r^4\\,Z^2\\left(\\partial_r^2 y\\right)^2 + 4r^4\\,Z\\,\\partial_r Z\\,\\partial_r y\\,\\partial_r^2 y + r^4\\left(\\partial_r Z\\right)^2\\left(\\partial_r y\\right)^2 + 2r^2\\,y^2\\left(\\partial_r Z\\right)^2 + 8r^2\\,Z^2\\left(\\partial_r y\\right)^2 + 4y^2\\,Z^2 - 8y^2\\,Z + 4y^2}{r^4\\,y^2}"
+        },
+        {
+          "id": "durgapal_iii",
+          "name": "Durgapal III (Heintzmann IIa)",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in [0,r_b]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "C>0,\\quad y>0,\\quad Z>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Positive inverse squared length setting the density scale."
+            },
+            {
+              "symbol": "r_b",
+              "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
+            },
+            {
+              "symbol": "a",
+              "description": "Positive dimensionless normalization of time, fixed by $y(r_b)^2=Z(r_b)$."
+            },
+            {
+              "symbol": "k",
+              "description": "Dimensionless radial integration constant, fixed by vanishing surface pressure."
+            },
+            {
+              "symbol": "x = Cr^2",
+              "description": "Dimensionless squared radius."
+            },
+            {
+              "symbol": "Z = 1-\\dfrac{3x}{2(1+x)}\\left(1+\\dfrac{k}{\\sqrt{1+4x}}\\right)",
+              "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
+            },
+            {
+              "symbol": "y = a(1+x)^{3/2}",
+              "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
+            }
+          ],
+          "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
+          "line_element": "ds^2 = -y^2c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-y^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2y - 2y\\,Z - 4r\\,Z\\,\\partial_r y - 2r\\,y\\,\\partial_r Z - r^2\\,\\partial_r Z\\,\\partial_r y - 2r^2\\,Z\\,\\partial_r^2 y}{r^2\\,y}",
+          "kretschmann": "K = \\dfrac{4r^4\\,Z^2\\left(\\partial_r^2 y\\right)^2 + 4r^4\\,Z\\,\\partial_r Z\\,\\partial_r y\\,\\partial_r^2 y + r^4\\left(\\partial_r Z\\right)^2\\left(\\partial_r y\\right)^2 + 2r^2\\,y^2\\left(\\partial_r Z\\right)^2 + 8r^2\\,Z^2\\left(\\partial_r y\\right)^2 + 4y^2\\,Z^2 - 8y^2\\,Z + 4y^2}{r^4\\,y^2}"
+        },
+        {
+          "id": "durgapal_iv",
+          "name": "Durgapal IV",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in [0,r_b]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "C>0,\\quad y>0,\\quad Z>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Positive inverse squared length setting the density scale."
+            },
+            {
+              "symbol": "r_b",
+              "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
+            },
+            {
+              "symbol": "a",
+              "description": "Positive dimensionless normalization of time, fixed by $y(r_b)^2=Z(r_b)$."
+            },
+            {
+              "symbol": "k",
+              "description": "Dimensionless radial integration constant, fixed by vanishing surface pressure."
+            },
+            {
+              "symbol": "x = Cr^2",
+              "description": "Dimensionless squared radius."
+            },
+            {
+              "symbol": "Z = \\dfrac{7-10x-x^2}{7(1+x)^2}+\\dfrac{kx}{(1+x)^2(1+5x)^{2/5}}",
+              "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
+            },
+            {
+              "symbol": "y = a(1+x)^{4/2}",
+              "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
+            }
+          ],
+          "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
+          "line_element": "ds^2 = -y^2c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-y^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2y - 2y\\,Z - 4r\\,Z\\,\\partial_r y - 2r\\,y\\,\\partial_r Z - r^2\\,\\partial_r Z\\,\\partial_r y - 2r^2\\,Z\\,\\partial_r^2 y}{r^2\\,y}",
+          "kretschmann": "K = \\dfrac{4r^4\\,Z^2\\left(\\partial_r^2 y\\right)^2 + 4r^4\\,Z\\,\\partial_r Z\\,\\partial_r y\\,\\partial_r^2 y + r^4\\left(\\partial_r Z\\right)^2\\left(\\partial_r y\\right)^2 + 2r^2\\,y^2\\left(\\partial_r Z\\right)^2 + 8r^2\\,Z^2\\left(\\partial_r y\\right)^2 + 4y^2\\,Z^2 - 8y^2\\,Z + 4y^2}{r^4\\,y^2}"
+        },
+        {
+          "id": "durgapal_v",
+          "name": "Durgapal V",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in [0,r_b]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "C>0,\\quad y>0,\\quad Z>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Positive inverse squared length setting the density scale."
+            },
+            {
+              "symbol": "r_b",
+              "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
+            },
+            {
+              "symbol": "a",
+              "description": "Positive dimensionless normalization of time, fixed by $y(r_b)^2=Z(r_b)$."
+            },
+            {
+              "symbol": "k",
+              "description": "Dimensionless radial integration constant, fixed by vanishing surface pressure."
+            },
+            {
+              "symbol": "x = Cr^2",
+              "description": "Dimensionless squared radius."
+            },
+            {
+              "symbol": "Z = \\dfrac{1-x(309+54x+8x^2)/112+kx/(1+6x)^{1/3}}{(1+x)^3}",
+              "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
+            },
+            {
+              "symbol": "y = a(1+x)^{5/2}",
+              "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
+            }
+          ],
+          "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
+          "line_element": "ds^2 = -y^2c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-y^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2y - 2y\\,Z - 4r\\,Z\\,\\partial_r y - 2r\\,y\\,\\partial_r Z - r^2\\,\\partial_r Z\\,\\partial_r y - 2r^2\\,Z\\,\\partial_r^2 y}{r^2\\,y}",
+          "kretschmann": "K = \\dfrac{4r^4\\,Z^2\\left(\\partial_r^2 y\\right)^2 + 4r^4\\,Z\\,\\partial_r Z\\,\\partial_r y\\,\\partial_r^2 y + r^4\\left(\\partial_r Z\\right)^2\\left(\\partial_r y\\right)^2 + 2r^2\\,y^2\\left(\\partial_r Z\\right)^2 + 8r^2\\,Z^2\\left(\\partial_r y\\right)^2 + 4y^2\\,Z^2 - 8y^2\\,Z + 4y^2}{r^4\\,y^2}"
+        },
+        {
+          "id": "finch_skea",
+          "name": "Finch and Skea",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in [0,r_b]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "C>0,\\quad y>0,\\quad Z>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Positive inverse squared length setting the density scale."
+            },
+            {
+              "symbol": "r_b",
+              "description": "The first zero of pressure $p$, with $p>0$ inside and $y,Z>0$ throughout; $Z(0)=1$ and $y(0)>0$ ensure a regular centre. At $r_b$, $p=0$, $y^2=Z$, and $2GM/(c^2r_b)=1-Z$, where $M$ is the exterior mass. We match to Schwarzschild with $2Z\\partial_r y/(r_by)+(Z-1)/r_b^2=0$."
+            },
+            {
+              "symbol": "A",
+              "description": "Dimensionless lapse constant, fixed together with $B$ by the surface pressure and time normalization."
+            },
+            {
+              "symbol": "B",
+              "description": "The second independent lapse constant."
+            },
+            {
+              "symbol": "x = Cr^2",
+              "description": "Dimensionless squared radius."
+            },
+            {
+              "symbol": "s = \\sqrt{1+x}",
+              "description": "Dimensionless trigonometric argument."
+            },
+            {
+              "symbol": "Z = \\dfrac{1}{1+x}",
+              "description": "Inverse radial potential. The energy density $\\epsilon$ obeys $8\\pi G\\epsilon/c^4=(1-Z)/r^2-\\partial_r Z/r$, with central value $-3\\partial_r^2Z(0)/2$."
+            },
+            {
+              "symbol": "y = A(\\cos s+s\\sin s)+B(\\sin s-s\\cos s)",
+              "description": "Lapse. The pressure obeys $8\\pi Gp/c^4=2Z\\partial_r y/(ry)+(Z-1)/r^2$, with central value $2\\partial_r^2y(0)/y(0)+\\partial_r^2Z(0)/2$; subscripts $r$ denote radial derivatives."
+            }
+          ],
+          "convention": "The functions $y$ and $Z$ are the lapse and the inverse radial potential.",
+          "line_element": "ds^2 = -y^2c^2dt^2 + \\dfrac{dr^2}{Z} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-y^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{Z}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2y - 2y\\,Z - 4r\\,Z\\,\\partial_r y - 2r\\,y\\,\\partial_r Z - r^2\\,\\partial_r Z\\,\\partial_r y - 2r^2\\,Z\\,\\partial_r^2 y}{r^2\\,y}",
+          "kretschmann": "K = \\dfrac{4r^4\\,Z^2\\left(\\partial_r^2 y\\right)^2 + 4r^4\\,Z\\,\\partial_r Z\\,\\partial_r y\\,\\partial_r^2 y + r^4\\left(\\partial_r Z\\right)^2\\left(\\partial_r y\\right)^2 + 2r^2\\,y^2\\left(\\partial_r Z\\right)^2 + 8r^2\\,Z^2\\left(\\partial_r y\\right)^2 + 4y^2\\,Z^2 - 8y^2\\,Z + 4y^2}{r^4\\,y^2}"
         }
       ]
     },
@@ -69378,6 +69862,11 @@
           "id": "buchdahl_sphere",
           "kind": "family",
           "text": "Another static star of fluid in closed form whose density falls outward. Buchdahl's never reaches zero density, and its fluid fills all of space with a finite mass [buchdahl1964]."
+        },
+        {
+          "id": "spheroidal_stars",
+          "kind": "family",
+          "text": "Other exact fluid spheres with density falling outward. Durgapal's 1982 families differ from the separate solution of 1984 that reproduces Tolman VII [delgaty1998]."
         }
       ],
       "references": [
@@ -69816,6 +70305,11 @@
           "id": "buchdahl_sphere",
           "kind": "special_case",
           "text": "A solution in closed form for an equation of state that is nearly $p \\propto \\rho^{6/5}$, the relativistic polytrope of index five, whose fluid runs to infinity with a finite mass [buchdahl1964]."
+        },
+        {
+          "id": "spheroidal_stars",
+          "kind": "special_case",
+          "text": "Exact fluid spheres with a regular centre and a surface where pressure vanishes. Their lapse and mass functions solve the equations of equilibrium [delgaty1998]."
         }
       ],
       "references": [
@@ -69855,7 +70349,8 @@
         "bartnik1988",
         "volkov1999",
         "bowers1974",
-        "buchdahl1964"
+        "buchdahl1964",
+        "delgaty1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",

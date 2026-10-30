@@ -67,7 +67,7 @@ class StellarFamilies(unittest.TestCase):
         for folder in ("diagrams", "conformal", "embedding", "curvature"):
             data = json.loads((DATA / folder / "spheroidal_stars.json").read_text())
             if folder == "diagrams":
-                ids = {c["system"] for c in data["diagrams"]}
+                ids = set(data["systems"])
             else:
                 ids = {v.get("system", v["id"]) for v in data["views"]}
             self.assertEqual(ids, set(stars.SYSTEMS), folder)

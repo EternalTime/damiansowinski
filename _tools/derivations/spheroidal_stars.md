@@ -159,3 +159,18 @@ Each equatorial embedding has $dz/dr=\sqrt{Z^{-1}-1}$ inside and continues tange
 
 The residual of pressure isotropy and the independently evaluated equilibrium residual test the complete potentials.
 The density, pressure, central limits, and surface equations use the same geometrical units throughout.
+
+## Matched drawings
+
+Each spatial section has the areal radius as its Euclidean cylindrical radius.
+Its fluid height obeys $dz/dr=\sqrt{Z^{-1}-1}$ and joins Schwarzschild at $r_b$ with one tangent plane.
+The exterior has Schwarzschild radius $2GM/c^2=2r_b/5$.
+The embedding extends to $3r_b$, with the initial and rotated windows enlarged to hold the entire surface.
+The spacetime diagrams cover each fluid interior, while the conformal triangles cover the matched isolated stars through null infinity.
+
+Inside, the optical radius is $r_*=\int_0^r d\bar r/(y\sqrt Z)$.
+Outside, its continuous continuation is $r_*(r_b)+r-r_b+(2r_b/5)\ln[(r-2r_b/5)/(3r_b/5)]$.
+Compactification uses $p=\arctan[(ct-r_*)/(2r_b)]$ and $q=\arctan[(ct+r_*)/(2r_b)]$.
+Every centre is timelike and regular, and every surface is timelike.
+The scalar curves approach the regular centre to $r=10^{-5}r_b$, using sixty digit evaluation near the removable central cancellations.
+These curves use the stored Ricci and Kretschmann scalars.
