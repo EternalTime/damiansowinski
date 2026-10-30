@@ -6,6 +6,11 @@ Chodos and Detweiler, Physical Review D 21, 2167-2170 (1980), DOI 10.1103/PhysRe
 Their unnumbered metric at the top left of page 2168 specializes (2) and (3) to exponents $(1/2,1/2,1/2,-1/2)$.
 Chyba, American Journal of Physics 53, 863-872 (1985), DOI 10.1119/1.14353, restates the metric in (6.5) and its rescaled form in (6.6), using the opposite signature.
 
+The founding article's publication metadata was verified against the publisher record and Crossref.
+Its readable cached extraction was consulted in the research conversation but was not archived as a full-text file, and subsequent retrieval is currently unreproducible.
+A later saved HTTP 502 response contains no original-paper text.
+The retained institutional author scan of Chyba independently supports the metric, identifications and circumference normalization in (6.2)-(6.7), page 868.
+
 The two proposed charts retain all five dimensions:
 
 - `synchronous`: $ds^2=-c^2dt^2+(t/t_0)(dx^2+dy^2+dz^2)+(t_0/t)dw^2$, with every spatial coordinate periodic with period $L$.
@@ -55,4 +60,4 @@ The generator's chart checks will carry these source identities when the page is
 
 ## Drawings
 
-Pending the history review and the chart checks.
+Drawing generation follows the chart implementation and its source checks.
