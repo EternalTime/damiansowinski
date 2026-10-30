@@ -5969,8 +5969,9 @@ class Slices(unittest.TestCase):
                         import moncrief_taub_nut
                         expected = math.exp(2*float(moncrief_taub_nut.conformal_w(1.0)))
                         for X, T in points:
-                            U, V = math.tan((T-X)/2), math.tan((T+X)/2)
-                            self.assertLess(abs(U*V-expected), 0.02, where)
+                            p, q = (T-X)/2, (T+X)/2
+                            residual = math.sin(p)*math.sin(q)-expected*math.cos(p)*math.cos(q)
+                            self.assertLess(abs(residual), 2e-4, where)
                     elif metric_id == "brane_wall_universe":
                         # The wall's own moment, p = arctan U and q = arctan V along it, as
                         # brane_wall_universe.Moment follows Kruskal's U and V out from the wall.

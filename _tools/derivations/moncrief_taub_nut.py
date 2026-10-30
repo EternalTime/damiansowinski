@@ -224,7 +224,7 @@ def embedding_view(em, ck, src):
     ck.radius('Moncrief: rho=e^b at t=1', tube,
               lambda theta: np.exp(float(mp.besselj(0,1))*np.cos(theta)/4), size)
     ck.add('Moncrief: identified ends have the same radius', abs(tube.rho[0]-tube.rho[-1]), em.FORM)
-    surface = em.Surface([tube], label='$t=1$', time=1)
+    surface = em.Surface([tube])
     fig = em.figure_of([surface], {'sheet': 'cover'}, size, meridians=12)
     fig.legend('fill', 'cover', r'$t=1$, $\phi=0$, with the two ends identified')
     fig.legend('line', 'r', r'$\theta=\pi$')
@@ -276,21 +276,20 @@ def conformal_view(cf, ck, src):
             boundary = [*zip(*fmap(x,0*x)), *zip(*fmap(1+0*across,across)),
                         *zip(*fmap(x[::-1],0*x+period)), *zip(*fmap(0*across-1,across[::-1]))]
         v = cf.View(system, plane.entry['name'], (-1.9,1.9,-1.9,1.9), system)
-        v.fill('cover', [cf.point(*pq) for pq in boundary])
+        v.fill('region', [cf.point(*pq) for pq in boundary])
         for edge in (0,period):
             p,q=fmap(x,0*x+edge)
             v.curve('r',p,q)
         for edge in ((0.25,0.5,1) if areal else (-1,-0.5,0,0.5,1)):
             p,q=fmap(0*across+edge,across)
             v.curve('horizon' if edge == 0 else 't',p,q)
-        v.legend('cover', r'one copy of the section')
         v.legend('r', r'identified angular edges')
         v.legend('t', r'finite cuts at constant time')
         if not areal:
             v.legend('horizon', r'$T=0$, compact Cauchy horizon')
         v.set(settings=INPUT, restriction=r'The section $\theta=\phi=0$, with its periodic angular edges identified.')
         v.set(caption=[r'The local horizon section in conformal null coordinates, with finite time cuts.'])
-        for moment in cf.slices.moments('moncrief_taub_nut'):
+        for moment in cf.slices.moments('moncrief_taub_nut', label='$t=1$'):
             p,q=fmap(0*across+1,across)
             v.slice(moment, [(p,q)])
         views.append(v)

@@ -46,6 +46,8 @@ class AnalyticHorizon(unittest.TestCase):
             for c in entry['metric_components']:
                 i,j=(entry['coords'].index(x) for x in c['indices'])
                 value=R(c['value']).subs(F,sp.log(1+4*T*H/R.parameters['kappa']**2)/2).subs(vals)
+                # Cancel the removable quotient before assigning its analytic value at T=0.
+                value=sp.cancel(sp.expand_power_exp(value))
                 matrix[i,j]=value
                 matrix[j,i]=value
             horizon=np.array(matrix.subs(T,0),dtype=float)
