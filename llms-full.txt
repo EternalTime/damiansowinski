@@ -1855,6 +1855,18 @@ A spatially homogeneous Bianchi type IX cosmology whose approach to the singular
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/mixmaster.json
 - chart Euler Angles: coordinates $(t, \psi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a_1^2\left(\cos\psi\,d\theta + \sin\psi\sin\theta\,d\phi\right)^2 + a_2^2\left(\sin\psi\,d\theta - \cos\psi\sin\theta\,d\phi\right)^2 + a_3^2\left(d\psi + \cos\theta\,d\phi\right)^2$$
 
+### Moncrief's Generalised Taub-NUT Spacetimes
+
+Inhomogeneous toroidal vacuum cosmologies with a compact Cauchy horizon.
+
+- id: `moncrief_taub_nut`
+- tags: vacuum, cosmology, Cauchy horizon, closed timelike curves, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/moncrief_taub_nut.json
+- chart Toroidal Areal Time: coordinates $(t, \theta, \psi, \phi)$, $$ds^2=L^2\left(\kappa^2e^{2b+2f}(-dt^2+d\theta^2)+t^2e^{2b}(d\psi+q\,d\phi)^2+e^{-2b}d\phi^2\right)$$
+- chart Horizon Extension (+): coordinates $(T, \theta, \chi, \phi)$, $$ds^2=L^2\left(e^{2B}\left(T(d\chi+Q\,d\phi)^2-\kappa\,dT(d\chi+Q\,d\phi)-\dfrac{\kappa^2(e^{2F}-1)}{4T}dT^2\right)+\kappa^2e^{2B+2F}d\theta^2+e^{-2B}d\phi^2\right)$$
+- chart Horizon Extension (-): coordinates $(T, \theta, \chi, \phi)$, $$ds^2=L^2\left(e^{2B}\left(T(d\chi+Q\,d\phi)^2+\kappa\,dT(d\chi+Q\,d\phi)-\dfrac{\kappa^2(e^{2F}-1)}{4T}dT^2\right)+\kappa^2e^{2B+2F}d\theta^2+e^{-2B}d\phi^2\right)$$
+
 ### Morgan-Morgan Discs
 
 Static thin discs of dust in Weyl's class, found by Thomas Morgan and Lesley Morgan in 1969. Half the dust circles the axis one way and half the other, so a disc has no angular momentum, and the field around it is a static vacuum built on a Newtonian potential.

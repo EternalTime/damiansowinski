@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 216,
+  "count": 217,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -25887,6 +25887,11 @@
           "id": "charach_malin",
           "kind": "family",
           "text": "A Gowdy torus filled with massless scalar or electromagnetic waves. The scalar waves share a linear wave equation with the gravitational polarisation [charach_malin1979, szybka_wyrebowski2016]; the electromagnetic waves couple nonlinearly to it [charach1979, nungesser_rendall2009]."
+        },
+        {
+          "id": "moncrief_taub_nut",
+          "kind": "special_case",
+          "text": "An infinite dimensional toroidal subfamily extends through a compact Cauchy horizon [moncrief1981nut]."
         }
       ],
       "references": [
@@ -25920,7 +25925,8 @@
         "charach_malin1979",
         "szybka_wyrebowski2016",
         "charach1979",
-        "nungesser_rendall2009"
+        "nungesser_rendall2009",
+        "moncrief1981nut"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -44035,6 +44041,11 @@
           "id": "btz_multi_holes_wormholes",
           "kind": "family",
           "text": "Anti-de Sitter space of three dimensions cut and glued under several boosts at once. Each black hole's singularity is of the kind Misner space has, with the curvature finite [brill1996]."
+        },
+        {
+          "id": "moncrief_taub_nut",
+          "kind": "family",
+          "text": "A compact Killing horizon separates a globally hyperbolic vacuum cosmology from an acausal extension [moncriefisenberg1983]."
         }
       ],
       "references": [
@@ -44058,7 +44069,8 @@
         "parikh2003",
         "lachiezerey1995",
         "gott1998",
-        "brill1996"
+        "brill1996",
+        "moncriefisenberg1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -45127,6 +45139,372 @@
           ],
           "ricci_scalar": "R = 2\\left(\\dfrac{a_1''}{a_1} + \\dfrac{a_2''}{a_2} + \\dfrac{a_3''}{a_3} + \\dfrac{a_1'\\,a_2'}{a_1\\,a_2} + \\dfrac{a_1'\\,a_3'}{a_1\\,a_3} + \\dfrac{a_2'\\,a_3'}{a_2\\,a_3}\\right) - \\dfrac{a_1^4 + a_2^4 + a_3^4 - 2a_1^2\\,a_2^2 - 2a_1^2\\,a_3^2 - 2a_2^2\\,a_3^2}{2a_1^2\\,a_2^2\\,a_3^2}",
           "kretschmann": "K = 4\\left(\\left(\\dfrac{a_1''}{a_1}\\right)^2 + \\left(\\dfrac{a_2''}{a_2}\\right)^2 + \\left(\\dfrac{a_3''}{a_3}\\right)^2 + \\left(\\dfrac{4a_1\\,a_2\\,a_3^2\\,a_1'\\,a_2' + a_1^4 - 2a_1^2\\,a_2^2 + 2a_1^2\\,a_3^2 + a_2^4 + 2a_2^2\\,a_3^2 - 3a_3^4}{4a_1^2\\,a_2^2\\,a_3^2}\\right)^2 + \\left(\\dfrac{4a_1\\,a_2^2\\,a_3\\,a_1'\\,a_3' + a_1^4 + 2a_1^2\\,a_2^2 - 2a_1^2\\,a_3^2 - 3a_2^4 + 2a_2^2\\,a_3^2 + a_3^4}{4a_1^2\\,a_2^2\\,a_3^2}\\right)^2 + \\left(\\dfrac{4a_1^2\\,a_2\\,a_3\\,a_2'\\,a_3' - 3a_1^4 + 2a_1^2\\,a_2^2 + 2a_1^2\\,a_3^2 + a_2^4 - 2a_2^2\\,a_3^2 + a_3^4}{4a_1^2\\,a_2^2\\,a_3^2}\\right)^2\\right) - 8\\left(\\left(\\dfrac{2a_1\\,a_2\\,a_3\\,a_1' - a_3\\left(a_1^2 + a_2^2 - a_3^2\\right)a_2' - a_2\\left(a_1^2 - a_2^2 + a_3^2\\right)a_3'}{2a_1\\,a_2^2\\,a_3^2}\\right)^2 + \\left(\\dfrac{a_1\\left(a_1^2 - a_2^2 - a_3^2\\right)a_3' + 2a_1\\,a_2\\,a_3\\,a_2' - a_3\\left(a_1^2 + a_2^2 - a_3^2\\right)a_1'}{2a_1^2\\,a_2\\,a_3^2}\\right)^2 + \\left(\\dfrac{2a_1\\,a_2\\,a_3\\,a_3' + a_1\\left(a_1^2 - a_2^2 - a_3^2\\right)a_2' - a_2\\left(a_1^2 - a_2^2 + a_3^2\\right)a_1'}{2a_1^2\\,a_2^2\\,a_3}\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "moncrief_taub_nut",
+      "name": "Moncrief's Generalised Taub-NUT Spacetimes",
+      "short_name": "Moncrief Taub-NUT",
+      "description": "Inhomogeneous toroidal vacuum cosmologies with a compact Cauchy horizon.",
+      "tags": [
+        "vacuum",
+        "cosmology",
+        "Cauchy horizon",
+        "closed timelike curves",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "All coordinates are dimensionless, and $L$ is the unit of length. We use the Riemann convention $R^\\rho{}_{\\sigma\\mu\\nu}=\\partial_\\mu\\Gamma^\\rho{}_{\\nu\\sigma}-\\partial_\\nu\\Gamma^\\rho{}_{\\mu\\sigma}+\\Gamma^\\rho{}_{\\mu\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma}-\\Gamma^\\rho{}_{\\nu\\lambda}\\Gamma^\\lambda{}_{\\mu\\sigma}$.",
+      "related": [
+        {
+          "id": "gowdy",
+          "kind": "generalisation",
+          "text": "Gowdy's vacuum universes include the toroidal solutions with a compact Cauchy horizon [moncrief1981nut]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "Both families admit vacuum extensions across compact Cauchy horizons into regions with closed timelike curves [moncriefisenberg1983]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "A compact null direction becomes timelike beyond the horizon, producing closed timelike orbits [moncriefisenberg1983]."
+        }
+      ],
+      "references": [
+        "moncrief1981nut",
+        "chrusciel2004horizons",
+        "chrusciel1990cim",
+        "moncriefisenberg1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/moncrief_taub_nut.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Toroidal Areal Time",
+          "coordinates": [
+            "t",
+            "\\theta",
+            "\\psi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0,\\infty)",
+            "\\theta \\in [0,2\\pi)",
+            "\\psi \\in [0,2\\pi)",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Positive length scale."
+            },
+            {
+              "symbol": "\\kappa",
+              "description": "Positive coefficient of the logarithmic angular shift."
+            },
+            {
+              "symbol": "b = b(t,\\theta)",
+              "description": "First wave amplitude. Analytic functions of $t^2$ and $\\theta$ near the horizon, periodic in $\\theta$, satisfying $b_{tt}+t^{-1}b_t-b_{\\theta\\theta}=\\tfrac12t^2e^{4b}(q_t^2-q_\\theta^2)$, $q_{tt}+3t^{-1}q_t-q_{\\theta\\theta}+4(b_tq_t-b_\\theta q_\\theta)=0$, and $f_t=t(b_t^2+b_\\theta^2)+\\tfrac14t^3e^{4b}(q_t^2+q_\\theta^2)$ and $f_\\theta=2tb_tb_\\theta+\\tfrac12t^3e^{4b}q_tq_\\theta$, with $f(0,\\theta)=0$ and $\\int_0^{2\\pi}f_\\theta\\,d\\theta=0$. The drawings use the amplitude $\\epsilon=1/4$, the Bessel functions $J_0$ and $J_1$ of the first kind, $q=0$, $b=\\epsilon J_0(t)\\cos\\theta$, and $f=\\epsilon^2[t^2(J_0(t)^2+J_1(t)^2)/2-tJ_0(t)J_1(t)\\cos^2\\theta]$."
+            },
+            {
+              "symbol": "f = f(t,\\theta)",
+              "description": "Constraint function."
+            },
+            {
+              "symbol": "q = q(t,\\theta)",
+              "description": "Second wave amplitude."
+            }
+          ],
+          "convention": "The areal coordinate is $t$; subscripts on $b$, $q$, and $f$ denote partial derivatives. Each spatial angle has period $2\\pi$.",
+          "line_element": "ds^2=L^2\\left(\\kappa^2e^{2b+2f}(-dt^2+d\\theta^2)+t^2e^{2b}(d\\psi+q\\,d\\phi)^2+e^{-2b}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-L^2\\,\\kappa^2e^{2b + 2f}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2\\,\\kappa^2e^{2b + 2f}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "L^2\\,t^2e^{2b}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "L^2\\,q\\,t^2e^{2b}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "L^2\\,q\\,t^2e^{2b}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\left(q^2\\,t^2e^{4b} + 1\\right)e^{-2b}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4\\partial_t b + 4t\\,\\partial_t^2 f + 4t\\,\\partial_t^2 b - 4t\\,\\partial_\\theta^2 f - 4t\\,\\partial_\\theta^2 b + 4t\\left(\\partial_t b\\right)^2 - 4t\\left(\\partial_\\theta b\\right)^2 + t^3e^{4b}\\left(\\partial_t q\\right)^2 - t^3e^{4b}\\left(\\partial_\\theta q\\right)^2\\right)e^{-2b - 2f}}{2L^2\\,\\kappa^2\\,t}",
+          "kretschmann": "K = \\dfrac{\\left(32\\left(\\partial_t f\\right)^2 + 48\\left(\\partial_t b\\right)^2 - 32\\left(\\partial_\\theta f\\right)^2 + 64t\\left(\\partial_t b\\right)^3 + 16t^2\\left(\\partial_t^2 f\\right)^2 + 48t^2\\left(\\partial_t^2 b\\right)^2 - 64t^2\\left(\\partial_t\\partial_\\theta b\\right)^2 + 112t^2\\left(\\partial_t b\\right)^4 + 16t^2\\left(\\partial_\\theta^2 f\\right)^2 + 48t^2\\left(\\partial_\\theta^2 b\\right)^2 + 112t^2\\left(\\partial_\\theta b\\right)^4 - 32t\\,\\partial_t f\\,\\partial_t^2 b + 32t\\,\\partial_t b\\,\\partial_t^2 b - 32t\\,\\partial_\\theta^2 b\\,\\partial_t f - 32t\\,\\partial_\\theta^2 b\\,\\partial_t b + 64t\\,\\partial_\\theta f\\,\\partial_t\\partial_\\theta b + 32t^2\\,\\partial_t^2 b\\,\\partial_t^2 f - 32t^2\\,\\partial_\\theta^2 f\\,\\partial_t^2 f - 32t^2\\,\\partial_\\theta^2 f\\,\\partial_t^2 b - 32t^2\\,\\partial_\\theta^2 b\\,\\partial_t^2 f - 32t^2\\,\\partial_\\theta^2 b\\,\\partial_t^2 b + 32t^2\\,\\partial_\\theta^2 b\\,\\partial_\\theta^2 f + 32t\\left(\\partial_t b\\right)^2\\,\\partial_t f - 64t\\left(\\partial_\\theta f\\right)^2\\,\\partial_t b + 32t\\left(\\partial_\\theta b\\right)^2\\,\\partial_t f - 64t\\left(\\partial_\\theta b\\right)^2\\,\\partial_t b + 64t\\,\\partial_t b\\left(\\partial_t f\\right)^2 + 128t^2\\left(\\partial_t b\\right)^3\\,\\partial_t f - 64t^2\\left(\\partial_t b\\right)^2\\,\\partial_t^2 b + 128t^2\\left(\\partial_\\theta b\\right)^3\\,\\partial_\\theta f - 64t^2\\left(\\partial_\\theta b\\right)^2\\,\\partial_t^2 b - 64t^2\\left(\\partial_\\theta b\\right)^2\\,\\partial_\\theta^2 b - 64t^2\\,\\partial_\\theta^2 b\\left(\\partial_t b\\right)^2 + 11t^6e^{8b}\\left(\\partial_t q\\right)^4 + 11t^6e^{8b}\\left(\\partial_\\theta q\\right)^4 + 8t^4e^{4b}\\left(\\partial_t^2 q\\right)^2 - 16t^4e^{4b}\\left(\\partial_t\\partial_\\theta q\\right)^2 + 8t^4e^{4b}\\left(\\partial_\\theta^2 q\\right)^2 + 72t^2e^{4b}\\left(\\partial_t q\\right)^2 - 48t^2e^{4b}\\left(\\partial_\\theta q\\right)^2 + 64t^2\\left(\\partial_t b\\right)^2\\left(\\partial_t f\\right)^2 - 64t^2\\left(\\partial_\\theta f\\right)^2\\left(\\partial_t b\\right)^2 - 64t^2\\left(\\partial_\\theta b\\right)^2\\left(\\partial_t f\\right)^2 - 224t^2\\left(\\partial_\\theta b\\right)^2\\left(\\partial_t b\\right)^2 + 64t^2\\left(\\partial_\\theta b\\right)^2\\left(\\partial_\\theta f\\right)^2 - 64t\\,\\partial_\\theta b\\,\\partial_\\theta f\\,\\partial_t b - 64t^2\\,\\partial_t b\\,\\partial_t f\\,\\partial_t^2 b - 64t^2\\,\\partial_\\theta^2 b\\,\\partial_t b\\,\\partial_t f + 128t^2\\,\\partial_\\theta f\\,\\partial_t b\\,\\partial_t\\partial_\\theta b + 128t^2\\,\\partial_\\theta b\\,\\partial_t f\\,\\partial_t\\partial_\\theta b + 256t^2\\,\\partial_\\theta b\\,\\partial_t b\\,\\partial_t\\partial_\\theta b - 64t^2\\,\\partial_\\theta b\\,\\partial_\\theta f\\,\\partial_t^2 b - 64t^2\\,\\partial_\\theta b\\,\\partial_\\theta f\\,\\partial_\\theta^2 b + 48t^3e^{4b}\\partial_t q\\,\\partial_t^2 q - 48t^3e^{4b}\\partial_\\theta q\\,\\partial_t\\partial_\\theta q - 128t^2\\left(\\partial_\\theta b\\right)^2\\,\\partial_t b\\,\\partial_t f - 128t^2\\,\\partial_\\theta b\\,\\partial_\\theta f\\left(\\partial_t b\\right)^2 - 32t^4e^{4b}\\left(\\partial_t q\\right)^2\\,\\partial_t^2 b - 32t^4e^{4b}\\left(\\partial_\\theta q\\right)^2\\,\\partial_\\theta^2 b - 40t^3e^{4b}\\partial_t f\\left(\\partial_t q\\right)^2 + 144t^3e^{4b}\\partial_t b\\left(\\partial_t q\\right)^2 + 56t^3e^{4b}\\left(\\partial_\\theta q\\right)^2\\,\\partial_t f - 96t^3e^{4b}\\left(\\partial_\\theta q\\right)^2\\,\\partial_t b - 22t^6e^{8b}\\left(\\partial_\\theta q\\right)^2\\left(\\partial_t q\\right)^2 + 16t^4e^{4b}\\left(\\partial_t f\\right)^2\\left(\\partial_t q\\right)^2 + 136t^4e^{4b}\\left(\\partial_t b\\right)^2\\left(\\partial_t q\\right)^2 - 16t^4e^{4b}\\left(\\partial_\\theta q\\right)^2\\left(\\partial_t f\\right)^2 - 40t^4e^{4b}\\left(\\partial_\\theta q\\right)^2\\left(\\partial_t b\\right)^2 - 16t^4e^{4b}\\left(\\partial_\\theta f\\right)^2\\left(\\partial_t q\\right)^2 + 16t^4e^{4b}\\left(\\partial_\\theta f\\right)^2\\left(\\partial_\\theta q\\right)^2 - 40t^4e^{4b}\\left(\\partial_\\theta b\\right)^2\\left(\\partial_t q\\right)^2 + 136t^4e^{4b}\\left(\\partial_\\theta b\\right)^2\\left(\\partial_\\theta q\\right)^2 - 16t^4e^{4b}\\partial_t f\\,\\partial_t q\\,\\partial_t^2 q + 48t^4e^{4b}\\partial_t b\\,\\partial_t q\\,\\partial_t^2 q - 16t^4e^{4b}\\partial_\\theta^2 q\\,\\partial_t f\\,\\partial_t q - 16t^4e^{4b}\\partial_\\theta^2 q\\,\\partial_t b\\,\\partial_t q + 64t^4e^{4b}\\partial_\\theta q\\,\\partial_t q\\,\\partial_t\\partial_\\theta b + 32t^4e^{4b}\\partial_\\theta q\\,\\partial_t f\\,\\partial_t\\partial_\\theta q - 32t^4e^{4b}\\partial_\\theta q\\,\\partial_t b\\,\\partial_t\\partial_\\theta q + 32t^4e^{4b}\\partial_\\theta f\\,\\partial_t q\\,\\partial_t\\partial_\\theta q - 16t^4e^{4b}\\partial_\\theta f\\,\\partial_\\theta q\\,\\partial_t^2 q - 16t^4e^{4b}\\partial_\\theta f\\,\\partial_\\theta q\\,\\partial_\\theta^2 q - 32t^4e^{4b}\\partial_\\theta b\\,\\partial_t q\\,\\partial_t\\partial_\\theta q - 16t^4e^{4b}\\partial_\\theta b\\,\\partial_\\theta q\\,\\partial_t^2 q + 48t^4e^{4b}\\partial_\\theta b\\,\\partial_\\theta q\\,\\partial_\\theta^2 q - 16t^3e^{4b}\\partial_\\theta f\\,\\partial_\\theta q\\,\\partial_t q - 48t^3e^{4b}\\partial_\\theta b\\,\\partial_\\theta q\\,\\partial_t q + 64t^4e^{4b}\\partial_\\theta b\\,\\partial_\\theta f\\left(\\partial_t q\\right)^2 + 64t^4e^{4b}\\left(\\partial_\\theta q\\right)^2\\,\\partial_t b\\,\\partial_t f - 64t^4e^{4b}\\partial_\\theta f\\,\\partial_\\theta q\\,\\partial_t b\\,\\partial_t q - 64t^4e^{4b}\\partial_\\theta b\\,\\partial_\\theta q\\,\\partial_t f\\,\\partial_t q - 192t^4e^{4b}\\partial_\\theta b\\,\\partial_\\theta q\\,\\partial_t b\\,\\partial_t q\\right)e^{-4b - 4f}}{4L^4\\,\\kappa^4\\,t^2}"
+        },
+        {
+          "id": "extension_plus",
+          "name": "Horizon Extension (+)",
+          "coordinates": [
+            "T",
+            "\\theta",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\delta,\\delta)",
+            "\\theta \\in [0,2\\pi)",
+            "\\chi \\in [0,2\\pi)",
+            "\\phi \\in [0,2\\pi)",
+            "\\delta>0\\;\\text{within the analytic continuation}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Positive length scale."
+            },
+            {
+              "symbol": "\\kappa",
+              "description": "Positive coefficient of the logarithmic angular shift."
+            },
+            {
+              "symbol": "B = B(T,\\theta)",
+              "description": "Analytic continuation $B(T,\\theta)=b(\\sqrt{T},\\theta)$ of the areal family, with $T=t^2$."
+            },
+            {
+              "symbol": "F = F(T,\\theta)",
+              "description": "Analytic continuation of $f$, with $F(0,\\theta)=0$."
+            },
+            {
+              "symbol": "Q = Q(T,\\theta)",
+              "description": "Analytic continuation of $q$."
+            },
+            {
+              "symbol": "\\delta",
+              "description": "Positive radius within the analytic continuation of the chosen solution."
+            }
+          ],
+          "convention": "We use $T=t^2$ and $\\chi=\\psi+\\kappa\\ln t$, with $\\chi$ periodic modulo $2\\pi$. The coefficient $H=\\kappa^2(e^{2F}-1)/(4T)$ takes its analytic value at $T=0$, and $\\delta$ is a positive continuation radius.",
+          "line_element": "ds^2=L^2\\left(e^{2B}\\left(T(d\\chi+Q\\,d\\phi)^2-\\kappa\\,dT(d\\chi+Q\\,d\\phi)-\\dfrac{\\kappa^2(e^{2F}-1)}{4T}dT^2\\right)+\\kappa^2e^{2B+2F}d\\theta^2+e^{-2B}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2\\,\\kappa^2\\left(e^{F} + 1\\right)\\left(e^{F} - 1\\right)e^{2B}}{4T}"
+            },
+            {
+              "indices": [
+                "T",
+                "\\chi"
+              ],
+              "value": "-\\dfrac{L^2\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "T",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{L^2\\,Q\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2\\,Q\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2\\,\\kappa^2e^{2B + 2F}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "L^2\\,T\\,e^{2B}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\phi"
+              ],
+              "value": "L^2\\,Q\\,T\\,e^{2B}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\chi"
+              ],
+              "value": "L^2\\,Q\\,T\\,e^{2B}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\left(Q^2\\,T\\,e^{4B} + 1\\right)e^{-2B}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4T^2e^{4B}\\left(\\partial_T Q\\right)^2 - T\\,e^{4B}\\left(\\partial_\\theta Q\\right)^2 + 16T\\left(\\partial_T B\\right)^2 + 16T\\,\\partial_T^2 B + 16T\\,\\partial_T^2 F - 4\\left(\\partial_\\theta B\\right)^2 + 16\\partial_T B + 8\\partial_T F - 4\\partial_\\theta^2 B - 4\\partial_\\theta^2 F\\right)e^{-2B - 2F}}{2L^2\\,\\kappa^2}",
+          "kretschmann": "K = -\\dfrac{\\left(768T^3e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_\\theta B\\,\\partial_\\theta Q + 256T^3e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_\\theta F\\,\\partial_\\theta Q + 256T^3e^{4B}\\partial_T F\\,\\partial_T Q\\,\\partial_\\theta B\\,\\partial_\\theta Q - 256T^3e^{4B}\\left(\\partial_T Q\\right)^2\\,\\partial_\\theta B\\,\\partial_\\theta F - 256T^3e^{4B}\\partial_T B\\,\\partial_T F\\left(\\partial_\\theta Q\\right)^2 + 128T^2e^{4B}\\partial_T Q\\,\\partial_\\theta B\\,\\partial_\\theta Q + 64T^2e^{4B}\\partial_T Q\\,\\partial_\\theta F\\,\\partial_\\theta Q - 48T^2e^{4B}\\partial_\\theta B\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 16T^2e^{4B}\\partial_\\theta F\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 64T^3e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_\\theta^2 Q + 128T^3e^{4B}\\partial_T B\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta Q + 64T^3e^{4B}\\partial_T F\\,\\partial_T Q\\,\\partial_\\theta^2 Q - 128T^3e^{4B}\\partial_T F\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta Q - 256T^3e^{4B}\\partial_T Q\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta Q + 128T^3e^{4B}\\partial_T Q\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta B - 128T^3e^{4B}\\partial_T Q\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta F + 64T^3e^{4B}\\partial_T^2 Q\\,\\partial_\\theta B\\,\\partial_\\theta Q + 64T^3e^{4B}\\partial_T^2 Q\\,\\partial_\\theta F\\,\\partial_\\theta Q - 768T^4e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_T^2 Q + 256T^4e^{4B}\\partial_T F\\,\\partial_T Q\\,\\partial_T^2 Q - 136T^2e^{4B}\\left(\\partial_\\theta B\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 16T^2e^{4B}\\left(\\partial_\\theta F\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 160T^3e^{4B}\\left(\\partial_T B\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 64T^3e^{4B}\\left(\\partial_T F\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 160T^3e^{4B}\\left(\\partial_T Q\\right)^2\\left(\\partial_\\theta B\\right)^2 + 64T^3e^{4B}\\left(\\partial_T Q\\right)^2\\left(\\partial_\\theta F\\right)^2 - 2176T^4e^{4B}\\left(\\partial_T B\\right)^2\\left(\\partial_T Q\\right)^2 - 256T^4e^{4B}\\left(\\partial_T F\\right)^2\\left(\\partial_T Q\\right)^2 + 88T^4e^{8B}\\left(\\partial_T Q\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 32T^2e^{4B}\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta^2 B + 192T^2e^{4B}\\partial_T B\\left(\\partial_\\theta Q\\right)^2 - 112T^2e^{4B}\\partial_T F\\left(\\partial_\\theta Q\\right)^2 - 1280T^3e^{4B}\\partial_T B\\left(\\partial_T Q\\right)^2 + 448T^3e^{4B}\\partial_T F\\left(\\partial_T Q\\right)^2 + 512T^4e^{4B}\\left(\\partial_T Q\\right)^2\\,\\partial_T^2 B + 512T^2\\,\\partial_T B\\,\\partial_T F\\left(\\partial_\\theta B\\right)^2 + 512T^2\\left(\\partial_T B\\right)^2\\,\\partial_\\theta B\\,\\partial_\\theta F + 96T^2e^{4B}\\partial_T\\partial_\\theta Q\\,\\partial_\\theta Q - 512T^3e^{4B}\\partial_T Q\\,\\partial_T^2 Q + 256T^2\\,\\partial_T B\\,\\partial_T F\\,\\partial_\\theta^2 B - 1024T^2\\,\\partial_T B\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta B - 512T^2\\,\\partial_T B\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta F - 512T^2\\,\\partial_T F\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta B + 256T^2\\,\\partial_T^2 B\\,\\partial_\\theta B\\,\\partial_\\theta F + 1024T^3\\,\\partial_T B\\,\\partial_T F\\,\\partial_T^2 B + 256T\\,\\partial_T B\\,\\partial_\\theta B\\,\\partial_\\theta F + 64T\\,\\partial_\\theta B\\,\\partial_\\theta F\\,\\partial_\\theta^2 B + 896T^2\\left(\\partial_T B\\right)^2\\left(\\partial_\\theta B\\right)^2 + 256T^2\\left(\\partial_T B\\right)^2\\left(\\partial_\\theta F\\right)^2 + 256T^2\\left(\\partial_T F\\right)^2\\left(\\partial_\\theta B\\right)^2 - 512T^2e^{4B}\\left(\\partial_T Q\\right)^2 - 8T^2e^{4B}\\left(\\partial_\\theta^2 Q\\right)^2 - 1024T^3\\left(\\partial_T B\\right)^2\\left(\\partial_T F\\right)^2 + 64T^3e^{4B}\\left(\\partial_T\\partial_\\theta Q\\right)^2 - 11T^3e^{8B}\\left(\\partial_\\theta Q\\right)^4 - 128T^4e^{4B}\\left(\\partial_T^2 Q\\right)^2 - 176T^5e^{8B}\\left(\\partial_T Q\\right)^4 + 48T\\,e^{4B}\\left(\\partial_\\theta Q\\right)^2 - 64T\\left(\\partial_\\theta B\\right)^2\\left(\\partial_\\theta F\\right)^2 - 512T^2\\,\\partial_T B\\left(\\partial_T F\\right)^2 + 256T^2\\,\\partial_T^2 B\\left(\\partial_\\theta B\\right)^2 + 256T^2\\left(\\partial_T B\\right)^2\\,\\partial_T F + 256T^2\\left(\\partial_T B\\right)^2\\,\\partial_\\theta^2 B + 1024T^3\\left(\\partial_T B\\right)^2\\,\\partial_T^2 B - 2048T^3\\left(\\partial_T B\\right)^3\\,\\partial_T F + 256T\\,\\partial_T B\\left(\\partial_\\theta B\\right)^2 + 128T\\,\\partial_T B\\left(\\partial_\\theta F\\right)^2 - 64T\\,\\partial_T F\\left(\\partial_\\theta B\\right)^2 + 64T\\left(\\partial_\\theta B\\right)^2\\,\\partial_\\theta^2 B - 128T\\left(\\partial_\\theta B\\right)^3\\,\\partial_\\theta F - 1024T^2\\,\\partial_T B\\,\\partial_T^2 B - 256T^2\\,\\partial_T B\\,\\partial_T^2 F - 256T^2\\,\\partial_T F\\,\\partial_T^2 F + 128T^2\\,\\partial_T^2 B\\,\\partial_\\theta^2 B + 128T^2\\,\\partial_T^2 B\\,\\partial_\\theta^2 F + 128T^2\\,\\partial_T^2 F\\,\\partial_\\theta^2 B + 128T^2\\,\\partial_T^2 F\\,\\partial_\\theta^2 F - 512T^3\\,\\partial_T^2 B\\,\\partial_T^2 F + 128T\\,\\partial_T B\\,\\partial_\\theta^2 B + 64T\\,\\partial_T B\\,\\partial_\\theta^2 F + 128T\\,\\partial_T F\\,\\partial_\\theta^2 B + 64T\\,\\partial_T F\\,\\partial_\\theta^2 F - 128T\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta F - 32T\\,\\partial_\\theta^2 B\\,\\partial_\\theta^2 F + 256T^2\\left(\\partial_T\\partial_\\theta B\\right)^2 - 1792T^3\\left(\\partial_T B\\right)^4 - 768T^3\\left(\\partial_T^2 B\\right)^2 - 256T^3\\left(\\partial_T^2 F\\right)^2 - 512T\\left(\\partial_T B\\right)^2 - 192T\\left(\\partial_T F\\right)^2 - 112T\\left(\\partial_\\theta B\\right)^4 - 48T\\left(\\partial_\\theta^2 B\\right)^2 - 16T\\left(\\partial_\\theta^2 F\\right)^2 + 32\\left(\\partial_\\theta F\\right)^2\\right)e^{-4B - 4F}}{4L^4\\,T\\,\\kappa^4}"
+        },
+        {
+          "id": "extension_minus",
+          "name": "Horizon Extension (-)",
+          "coordinates": [
+            "T",
+            "\\theta",
+            "\\chi",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\delta,\\delta)",
+            "\\theta \\in [0,2\\pi)",
+            "\\chi \\in [0,2\\pi)",
+            "\\phi \\in [0,2\\pi)",
+            "\\delta>0\\;\\text{within the analytic continuation}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Positive length scale."
+            },
+            {
+              "symbol": "\\kappa",
+              "description": "Positive coefficient of the logarithmic angular shift."
+            },
+            {
+              "symbol": "B = B(T,\\theta)",
+              "description": "Analytic continuation $B(T,\\theta)=b(\\sqrt{T},\\theta)$ of the areal family, with $T=t^2$."
+            },
+            {
+              "symbol": "F = F(T,\\theta)",
+              "description": "Analytic continuation of $f$, with $F(0,\\theta)=0$."
+            },
+            {
+              "symbol": "Q = Q(T,\\theta)",
+              "description": "Analytic continuation of $q$."
+            },
+            {
+              "symbol": "\\delta",
+              "description": "Positive radius within the analytic continuation of the chosen solution."
+            }
+          ],
+          "convention": "We use $T=t^2$ and $\\chi=\\psi-\\kappa\\ln t$, with $\\chi$ periodic modulo $2\\pi$. The coefficient $H=\\kappa^2(e^{2F}-1)/(4T)$ takes its analytic value at $T=0$, and $\\delta$ is a positive continuation radius.",
+          "line_element": "ds^2=L^2\\left(e^{2B}\\left(T(d\\chi+Q\\,d\\phi)^2+\\kappa\\,dT(d\\chi+Q\\,d\\phi)-\\dfrac{\\kappa^2(e^{2F}-1)}{4T}dT^2\\right)+\\kappa^2e^{2B+2F}d\\theta^2+e^{-2B}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{L^2\\,\\kappa^2\\left(e^{F} + 1\\right)\\left(e^{F} - 1\\right)e^{2B}}{4T}"
+            },
+            {
+              "indices": [
+                "T",
+                "\\chi"
+              ],
+              "value": "\\dfrac{L^2\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "T"
+              ],
+              "value": "\\dfrac{L^2\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "T",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\,Q\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "T"
+              ],
+              "value": "\\dfrac{L^2\\,Q\\,\\kappa\\,e^{2B}}{2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2\\,\\kappa^2e^{2B + 2F}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "L^2\\,T\\,e^{2B}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\phi"
+              ],
+              "value": "L^2\\,Q\\,T\\,e^{2B}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\chi"
+              ],
+              "value": "L^2\\,Q\\,T\\,e^{2B}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\left(Q^2\\,T\\,e^{4B} + 1\\right)e^{-2B}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4T^2e^{4B}\\left(\\partial_T Q\\right)^2 - T\\,e^{4B}\\left(\\partial_\\theta Q\\right)^2 + 16T\\left(\\partial_T B\\right)^2 + 16T\\,\\partial_T^2 B + 16T\\,\\partial_T^2 F - 4\\left(\\partial_\\theta B\\right)^2 + 16\\partial_T B + 8\\partial_T F - 4\\partial_\\theta^2 B - 4\\partial_\\theta^2 F\\right)e^{-2B - 2F}}{2L^2\\,\\kappa^2}",
+          "kretschmann": "K = -\\dfrac{\\left(768T^3e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_\\theta B\\,\\partial_\\theta Q + 256T^3e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_\\theta F\\,\\partial_\\theta Q + 256T^3e^{4B}\\partial_T F\\,\\partial_T Q\\,\\partial_\\theta B\\,\\partial_\\theta Q - 256T^3e^{4B}\\left(\\partial_T Q\\right)^2\\,\\partial_\\theta B\\,\\partial_\\theta F - 256T^3e^{4B}\\partial_T B\\,\\partial_T F\\left(\\partial_\\theta Q\\right)^2 + 128T^2e^{4B}\\partial_T Q\\,\\partial_\\theta B\\,\\partial_\\theta Q + 64T^2e^{4B}\\partial_T Q\\,\\partial_\\theta F\\,\\partial_\\theta Q - 48T^2e^{4B}\\partial_\\theta B\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 16T^2e^{4B}\\partial_\\theta F\\,\\partial_\\theta Q\\,\\partial_\\theta^2 Q + 64T^3e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_\\theta^2 Q + 128T^3e^{4B}\\partial_T B\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta Q + 64T^3e^{4B}\\partial_T F\\,\\partial_T Q\\,\\partial_\\theta^2 Q - 128T^3e^{4B}\\partial_T F\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta Q - 256T^3e^{4B}\\partial_T Q\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta Q + 128T^3e^{4B}\\partial_T Q\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta B - 128T^3e^{4B}\\partial_T Q\\,\\partial_T\\partial_\\theta Q\\,\\partial_\\theta F + 64T^3e^{4B}\\partial_T^2 Q\\,\\partial_\\theta B\\,\\partial_\\theta Q + 64T^3e^{4B}\\partial_T^2 Q\\,\\partial_\\theta F\\,\\partial_\\theta Q - 768T^4e^{4B}\\partial_T B\\,\\partial_T Q\\,\\partial_T^2 Q + 256T^4e^{4B}\\partial_T F\\,\\partial_T Q\\,\\partial_T^2 Q - 136T^2e^{4B}\\left(\\partial_\\theta B\\right)^2\\left(\\partial_\\theta Q\\right)^2 - 16T^2e^{4B}\\left(\\partial_\\theta F\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 160T^3e^{4B}\\left(\\partial_T B\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 64T^3e^{4B}\\left(\\partial_T F\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 160T^3e^{4B}\\left(\\partial_T Q\\right)^2\\left(\\partial_\\theta B\\right)^2 + 64T^3e^{4B}\\left(\\partial_T Q\\right)^2\\left(\\partial_\\theta F\\right)^2 - 2176T^4e^{4B}\\left(\\partial_T B\\right)^2\\left(\\partial_T Q\\right)^2 - 256T^4e^{4B}\\left(\\partial_T F\\right)^2\\left(\\partial_T Q\\right)^2 + 88T^4e^{8B}\\left(\\partial_T Q\\right)^2\\left(\\partial_\\theta Q\\right)^2 + 32T^2e^{4B}\\left(\\partial_\\theta Q\\right)^2\\,\\partial_\\theta^2 B + 192T^2e^{4B}\\partial_T B\\left(\\partial_\\theta Q\\right)^2 - 112T^2e^{4B}\\partial_T F\\left(\\partial_\\theta Q\\right)^2 - 1280T^3e^{4B}\\partial_T B\\left(\\partial_T Q\\right)^2 + 448T^3e^{4B}\\partial_T F\\left(\\partial_T Q\\right)^2 + 512T^4e^{4B}\\left(\\partial_T Q\\right)^2\\,\\partial_T^2 B + 512T^2\\,\\partial_T B\\,\\partial_T F\\left(\\partial_\\theta B\\right)^2 + 512T^2\\left(\\partial_T B\\right)^2\\,\\partial_\\theta B\\,\\partial_\\theta F + 96T^2e^{4B}\\partial_T\\partial_\\theta Q\\,\\partial_\\theta Q - 512T^3e^{4B}\\partial_T Q\\,\\partial_T^2 Q + 256T^2\\,\\partial_T B\\,\\partial_T F\\,\\partial_\\theta^2 B - 1024T^2\\,\\partial_T B\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta B - 512T^2\\,\\partial_T B\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta F - 512T^2\\,\\partial_T F\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta B + 256T^2\\,\\partial_T^2 B\\,\\partial_\\theta B\\,\\partial_\\theta F + 1024T^3\\,\\partial_T B\\,\\partial_T F\\,\\partial_T^2 B + 256T\\,\\partial_T B\\,\\partial_\\theta B\\,\\partial_\\theta F + 64T\\,\\partial_\\theta B\\,\\partial_\\theta F\\,\\partial_\\theta^2 B + 896T^2\\left(\\partial_T B\\right)^2\\left(\\partial_\\theta B\\right)^2 + 256T^2\\left(\\partial_T B\\right)^2\\left(\\partial_\\theta F\\right)^2 + 256T^2\\left(\\partial_T F\\right)^2\\left(\\partial_\\theta B\\right)^2 - 512T^2e^{4B}\\left(\\partial_T Q\\right)^2 - 8T^2e^{4B}\\left(\\partial_\\theta^2 Q\\right)^2 - 1024T^3\\left(\\partial_T B\\right)^2\\left(\\partial_T F\\right)^2 + 64T^3e^{4B}\\left(\\partial_T\\partial_\\theta Q\\right)^2 - 11T^3e^{8B}\\left(\\partial_\\theta Q\\right)^4 - 128T^4e^{4B}\\left(\\partial_T^2 Q\\right)^2 - 176T^5e^{8B}\\left(\\partial_T Q\\right)^4 + 48T\\,e^{4B}\\left(\\partial_\\theta Q\\right)^2 - 64T\\left(\\partial_\\theta B\\right)^2\\left(\\partial_\\theta F\\right)^2 - 512T^2\\,\\partial_T B\\left(\\partial_T F\\right)^2 + 256T^2\\,\\partial_T^2 B\\left(\\partial_\\theta B\\right)^2 + 256T^2\\left(\\partial_T B\\right)^2\\,\\partial_T F + 256T^2\\left(\\partial_T B\\right)^2\\,\\partial_\\theta^2 B + 1024T^3\\left(\\partial_T B\\right)^2\\,\\partial_T^2 B - 2048T^3\\left(\\partial_T B\\right)^3\\,\\partial_T F + 256T\\,\\partial_T B\\left(\\partial_\\theta B\\right)^2 + 128T\\,\\partial_T B\\left(\\partial_\\theta F\\right)^2 - 64T\\,\\partial_T F\\left(\\partial_\\theta B\\right)^2 + 64T\\left(\\partial_\\theta B\\right)^2\\,\\partial_\\theta^2 B - 128T\\left(\\partial_\\theta B\\right)^3\\,\\partial_\\theta F - 1024T^2\\,\\partial_T B\\,\\partial_T^2 B - 256T^2\\,\\partial_T B\\,\\partial_T^2 F - 256T^2\\,\\partial_T F\\,\\partial_T^2 F + 128T^2\\,\\partial_T^2 B\\,\\partial_\\theta^2 B + 128T^2\\,\\partial_T^2 B\\,\\partial_\\theta^2 F + 128T^2\\,\\partial_T^2 F\\,\\partial_\\theta^2 B + 128T^2\\,\\partial_T^2 F\\,\\partial_\\theta^2 F - 512T^3\\,\\partial_T^2 B\\,\\partial_T^2 F + 128T\\,\\partial_T B\\,\\partial_\\theta^2 B + 64T\\,\\partial_T B\\,\\partial_\\theta^2 F + 128T\\,\\partial_T F\\,\\partial_\\theta^2 B + 64T\\,\\partial_T F\\,\\partial_\\theta^2 F - 128T\\,\\partial_T\\partial_\\theta B\\,\\partial_\\theta F - 32T\\,\\partial_\\theta^2 B\\,\\partial_\\theta^2 F + 256T^2\\left(\\partial_T\\partial_\\theta B\\right)^2 - 1792T^3\\left(\\partial_T B\\right)^4 - 768T^3\\left(\\partial_T^2 B\\right)^2 - 256T^3\\left(\\partial_T^2 F\\right)^2 - 512T\\left(\\partial_T B\\right)^2 - 192T\\left(\\partial_T F\\right)^2 - 112T\\left(\\partial_\\theta B\\right)^4 - 48T\\left(\\partial_\\theta^2 B\\right)^2 - 16T\\left(\\partial_\\theta^2 F\\right)^2 + 32\\left(\\partial_\\theta F\\right)^2\\right)e^{-4B - 4F}}{4L^4\\,T\\,\\kappa^4}"
         }
       ]
     },
@@ -64596,6 +64974,11 @@
           "id": "newman_tamburino",
           "kind": "programme",
           "text": "The vacuum fields with shearing, untwisted rays that Newman and Tamburino found a year before this one [newman1962tamburino]."
+        },
+        {
+          "id": "moncrief_taub_nut",
+          "kind": "family",
+          "text": "Inhomogeneous toroidal vacuum cosmologies admit extensions of Taub-NUT type across compact Cauchy horizons [moncrief1981nut]."
         }
       ],
       "references": [
@@ -64628,7 +65011,8 @@
         "collins1974",
         "clement2016",
         "astorino2022swirling",
-        "newman1962tamburino"
+        "newman1962tamburino",
+        "moncrief1981nut"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",

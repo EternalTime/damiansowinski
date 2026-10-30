@@ -2399,7 +2399,7 @@
       "BKL",
       "torus"
     ],
-    "version": "f262d8c94740dbc9",
+    "version": "3b9ff46a5dda68bb",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "84b1c9abf03c3c01",
@@ -4068,7 +4068,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "6035771a9f41ead2",
+    "version": "fd774c0e94b8bec8",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -4163,6 +4163,22 @@
     ],
     "version": "49374e8093b1ba17",
     "embedding": "1762ae2364403f3b"
+  },
+  {
+    "id": "moncrief_taub_nut",
+    "name": "Moncrief Taub-NUT",
+    "tags": [
+      "vacuum",
+      "cosmology",
+      "Cauchy horizon",
+      "closed timelike curves",
+      "four-dimensional"
+    ],
+    "version": "07b7cec698b9b51c",
+    "diagrams": "feacfe6ab19f1097",
+    "conformal": "839e18b969bddfe7",
+    "embedding": "881a689c1d694f2f",
+    "curvature": "b7944cf12543309a"
   },
   {
     "id": "morgan_morgan",
@@ -5912,7 +5928,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "2e103d2745185e6b",
+    "version": "7bce58d2f839124f",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078",
     "curvature": "67bff764e3e14927"
