@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 219,
+  "count": 220,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1817,6 +1817,11 @@
           "id": "topological_star",
           "kind": "family",
           "text": "The same exchange of time and a circle in flat space of five dimensions, where the bubble needs magnetic flux to give it mass and hold it open [bah2021]."
+        },
+        {
+          "id": "early_braneworlds",
+          "kind": "family",
+          "text": "The Squires family contains a regular axis solution with the geometry of the five dimensional soliton [bannister1987]."
         }
       ],
       "references": [
@@ -1839,7 +1844,8 @@
         "surya2001",
         "nishioka2010",
         "hawking1983",
-        "bah2021"
+        "bah2021",
+        "bannister1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_soliton.json",
@@ -18412,6 +18418,957 @@
           ],
           "ricci_scalar": "R = \\dfrac{2A^2 + 2B^2}{c^2\\,r^4}",
           "kretschmann": "K = \\dfrac{44\\left(A^2 + B^2\\right)^2}{c^4\\,r^8}"
+        }
+      ]
+    },
+    {
+      "id": "early_braneworlds",
+      "name": "Early Braneworlds",
+      "short_name": "Early Braneworlds",
+      "description": "Vortices, scalar walls, electric trapping, vacuum geometries, and magnetic membranes in three to six dimensions, developed from 1982 to 1987.",
+      "tags": [
+        "stationary",
+        "static",
+        "three-dimensional",
+        "five-dimensional",
+        "six-dimensional",
+        "brane",
+        "higher dimensions",
+        "Kaluza-Klein",
+        "Einstein equations",
+        "electromagnetic field",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We keep factors of $c$ explicit and take $R_{AB}=R^C{}_{ACB}$.",
+      "related": [
+        {
+          "id": "randall_sundrum",
+          "kind": "programme",
+          "text": "The four dimensional slices share a warp factor in Randall and Sundrum's geometry. Visser's electric example warps time alone [visser1985]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "The scalar wall used for five dimensional fermion trapping belongs to the same defect family as a gravitating domain wall [rubakov1983, rubakov2001extra]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "Gibbons and Wiltshire extended Melvin's magnetic flux tube to membranes in higher dimensions [gibbonswiltshire1987]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "family",
+          "text": "Bannister's regular axis in the Squires family has the geometry of the five dimensional anti-de Sitter soliton [bannister1987]."
+        }
+      ],
+      "references": [
+        "akama1983pregeometry",
+        "rubakov1983",
+        "rubakov2001extra",
+        "rubakov1983cosmological",
+        "lavrelashvili2012",
+        "visser1985",
+        "squires1986",
+        "bannister1987",
+        "gibbonswiltshire1987"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/early_braneworlds.json",
+      "charts": [
+        {
+          "id": "vortex_cartesian",
+          "name": "Akama, Cartesian Background",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "u",
+            "v"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "u \\in (-\\infty,\\infty)",
+            "v \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [],
+          "convention": "We use time $t$ and Cartesian lengths $x$, $y$, and $z$ along the vortex, with transverse lengths $u$ and $v$. The six dimensional background is flat. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-c^2dt^2+dx^2+dy^2+dz^2+du^2+dv^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "vortex_polar",
+          "name": "Akama, Transverse Polar Coordinates",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "\\rho \\in (0,\\infty)",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [],
+          "convention": "We use time $t$, Cartesian lengths $x$, $y$, and $z$ along the vortex, transverse radius $\\rho$, and angle $\\phi$, with $u=\\rho\\cos\\phi$ and $v=\\rho\\sin\\phi$. The axis is regular. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-c^2dt^2+dx^2+dy^2+dz^2+d\\rho^2+\\rho^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "scalar_wall",
+          "name": "Scalar Wall Background",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "w \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [],
+          "convention": "We use time $t$ and Cartesian lengths $x$, $y$, and $z$ along the defect, with transverse length $w$. Gravitational backreaction of the scalar wall is neglected. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-c^2dt^2+dx^2+dy^2+dz^2+dw^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "vacuum_six",
+          "name": "Rubakov and Shaposhnikov, Six Dimensional Vacuum",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "\\rho \\in (0,\\pi L/2)",
+            "\\phi \\in [0,2\\pi)",
+            "L>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radial length scale, with cosmological constant $\\Lambda=8/(5L^2)$ in $G_{AB}+\\Lambda g_{AB}=0$"
+            },
+            {
+              "symbol": "f = \\cos^{2/5}(\\rho/L)",
+              "description": "Scale factor of the four dimensional Minkowski factor"
+            },
+            {
+              "symbol": "h = L\\sin(\\rho/L)\\cos^{-3/5}(\\rho/L)",
+              "description": "Circumferential radius of a transverse circle, a length"
+            }
+          ],
+          "convention": "We use time $t$, Cartesian lengths $x$, $y$, and $z$, proper radial length $\\rho$, and angle $\\phi$. The regular axis is at $\\rho=0$ and the singular endpoint at $\\rho=\\pi L/2$. We reverse Lavrelashvili's overall signature. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=f^2\\left(-c^2dt^2+dx^2+dy^2+dz^2\\right)+d\\rho^2+h^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "f^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "f^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "f^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "h^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8f\\,\\partial_\\rho f\\,\\partial_\\rho h + 8f\\,h\\,\\partial_\\rho^2 f + 2f^2\\,\\partial_\\rho^2 h + 12h\\left(\\partial_\\rho f\\right)^2}{f^2\\,h}",
+          "kretschmann": "K = \\dfrac{16f^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_\\rho h\\right)^2 + 16f^2\\,h^2\\left(\\partial_\\rho^2 f\\right)^2 + 4f^4\\left(\\partial_\\rho^2 h\\right)^2 + 24h^2\\left(\\partial_\\rho f\\right)^4}{f^4\\,h^2}"
+        },
+        {
+          "id": "visser_lapse",
+          "name": "Visser, Lapse Ansatz",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "w \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "N = N(w)",
+              "description": "Positive dimensionless lapse; the supporting stress is fixed by Einstein's equations"
+            }
+          ],
+          "convention": "We use time $t$ and Cartesian lengths $x$, $y$, and $z$ along the defect, with transverse length $w$. We leave the lapse free and impose no matter equation. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-N^2c^2dt^2+dx^2+dy^2+dz^2+dw^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\partial_w^2 N}{N}",
+          "kretschmann": "K = \\dfrac{4\\left(\\partial_w^2 N\\right)^2}{N^2}"
+        },
+        {
+          "id": "visser_electric",
+          "name": "Visser, Electric Trapping",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "w \\in (-\\infty,\\infty)",
+            "L>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Curvature length, with normalized electric field $E=1/L$, potential $A_t=\\sinh(w/L)$, and cosmological constant $\\Lambda=-1/(2L^2)$ in $G_{AB}+\\Lambda g_{AB}=T_{AB}$"
+            }
+          ],
+          "convention": "We use time $t$ and Cartesian lengths $x$, $y$, and $z$ along the defect, with transverse length $w$. A constant electric field and a cosmological constant support the varying clock rate. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-\\cosh^2(w/L)c^2dt^2+dx^2+dy^2+dz^2+dw^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(e^{2w/L} + 1\\right)^2e^{-2w/L}}{4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2}{L^2}",
+          "kretschmann": "K = \\dfrac{4}{L^4}"
+        },
+        {
+          "id": "squires_three",
+          "name": "Squires, Three Dimensional Vacuum",
+          "coordinates": [
+            "t",
+            "w",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "w \\in (0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "L>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Positive radial length scale; the five dimensional vacuum has $\\Lambda=-3/(2L^2)$ and the three dimensional vacuum has $\\Lambda=-1/L^2$"
+            }
+          ],
+          "convention": "We use time $t$, proper radial length $w$, and angle $\\phi$, scaled to a regular axis. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-\\cosh^2(w/L)c^2dt^2+dw^2+L^2\\sinh^2(w/L)d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(e^{2w/L} + 1\\right)^2e^{-2w/L}}{4}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{w/L} + 1\\right)^2\\left(e^{w/L} - 1\\right)^2e^{-2w/L}}{4}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{L^2}",
+          "kretschmann": "K = \\dfrac{12}{L^4}"
+        },
+        {
+          "id": "squires_family",
+          "name": "Squires, Constrained Vacuum Family",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "w",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "w \\in (0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "L>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Positive radial length scale; the five dimensional vacuum has $\\Lambda=-3/(2L^2)$ and the three dimensional vacuum has $\\Lambda=-1/L^2$"
+            },
+            {
+              "symbol": "q_0",
+              "description": "Dimensionless exponent; $q_0+q_1+q_2+q_3=0$ and $q_0^2+q_1^2+q_2^2+q_3^2=3/4$"
+            },
+            {
+              "symbol": "A_0 = \\left(\\sinh(w/L)\\right)^{1/4+q_0}\\left(\\cosh(w/L)\\right)^{1/4-q_0}",
+              "description": "Dimensionless tangential scale factor"
+            },
+            {
+              "symbol": "q_1",
+              "description": "Dimensionless exponent; $q_0+q_1+q_2+q_3=0$ and $q_0^2+q_1^2+q_2^2+q_3^2=3/4$"
+            },
+            {
+              "symbol": "A_1 = \\left(\\sinh(w/L)\\right)^{1/4+q_1}\\left(\\cosh(w/L)\\right)^{1/4-q_1}",
+              "description": "Dimensionless tangential scale factor"
+            },
+            {
+              "symbol": "q_2",
+              "description": "Dimensionless exponent; $q_0+q_1+q_2+q_3=0$ and $q_0^2+q_1^2+q_2^2+q_3^2=3/4$"
+            },
+            {
+              "symbol": "A_2 = \\left(\\sinh(w/L)\\right)^{1/4+q_2}\\left(\\cosh(w/L)\\right)^{1/4-q_2}",
+              "description": "Dimensionless tangential scale factor"
+            },
+            {
+              "symbol": "q_3",
+              "description": "Dimensionless exponent; $q_0+q_1+q_2+q_3=0$ and $q_0^2+q_1^2+q_2^2+q_3^2=3/4$"
+            },
+            {
+              "symbol": "A_3 = \\left(\\sinh(w/L)\\right)^{1/4+q_3}\\left(\\cosh(w/L)\\right)^{1/4-q_3}",
+              "description": "Dimensionless tangential scale factor"
+            }
+          ],
+          "convention": "We use time $t$, Cartesian lengths $x$ and $y$, proper radial length $w$, and angle $\\phi$. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=-A_0^2c^2dt^2+A_1^2dx^2+A_2^2dy^2+dw^2+L^2A_3^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-A_0^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "A_1^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "A_2^2"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "L^2\\,A_3^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2A_0\\,A_1\\,\\partial_w A_2\\,\\partial_w A_3 + 2A_0\\,A_2\\,\\partial_w A_1\\,\\partial_w A_3 + 2A_0\\,A_3\\,\\partial_w A_1\\,\\partial_w A_2 + 2A_1\\,A_2\\,\\partial_w A_0\\,\\partial_w A_3 + 2A_1\\,A_3\\,\\partial_w A_0\\,\\partial_w A_2 + 2A_2\\,A_3\\,\\partial_w A_0\\,\\partial_w A_1 + 2A_0\\,A_1\\,A_2\\,\\partial_w^2 A_3 + 2A_0\\,A_1\\,A_3\\,\\partial_w^2 A_2 + 2A_0\\,A_2\\,A_3\\,\\partial_w^2 A_1 + 2A_1\\,A_2\\,A_3\\,\\partial_w^2 A_0}{A_0\\,A_1\\,A_2\\,A_3}",
+          "kretschmann": "K = \\dfrac{4A_0^2\\,A_1^2\\left(\\partial_w A_2\\right)^2\\left(\\partial_w A_3\\right)^2 + 4A_0^2\\,A_2^2\\left(\\partial_w A_1\\right)^2\\left(\\partial_w A_3\\right)^2 + 4A_0^2\\,A_3^2\\left(\\partial_w A_1\\right)^2\\left(\\partial_w A_2\\right)^2 + 4A_1^2\\,A_2^2\\left(\\partial_w A_0\\right)^2\\left(\\partial_w A_3\\right)^2 + 4A_1^2\\,A_3^2\\left(\\partial_w A_0\\right)^2\\left(\\partial_w A_2\\right)^2 + 4A_2^2\\,A_3^2\\left(\\partial_w A_0\\right)^2\\left(\\partial_w A_1\\right)^2 + 4A_0^2\\,A_1^2\\,A_2^2\\left(\\partial_w^2 A_3\\right)^2 + 4A_0^2\\,A_1^2\\,A_3^2\\left(\\partial_w^2 A_2\\right)^2 + 4A_0^2\\,A_2^2\\,A_3^2\\left(\\partial_w^2 A_1\\right)^2 + 4A_1^2\\,A_2^2\\,A_3^2\\left(\\partial_w^2 A_0\\right)^2}{A_0^2\\,A_1^2\\,A_2^2\\,A_3^2}"
+        },
+        {
+          "id": "squires_axis",
+          "name": "Squires, Regular Axis",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "w",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "w \\in (0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "L>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Positive radial length scale; the five dimensional vacuum has $\\Lambda=-3/(2L^2)$ and the three dimensional vacuum has $\\Lambda=-1/L^2$"
+            }
+          ],
+          "convention": "We use time $t$, Cartesian lengths $x$ and $y$, proper radial length $w$, and angle $\\phi$. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=\\cosh(w/L)\\left(-c^2dt^2+dx^2+dy^2\\right)+dw^2+\\dfrac{L^2\\sinh^2(w/L)}{\\cosh(w/L)}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(e^{2w/L} + 1\\right)e^{-w/L}}{2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\left(e^{2w/L} + 1\\right)e^{-w/L}}{2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(e^{2w/L} + 1\\right)e^{-w/L}}{2}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{w/L} + 1\\right)^2\\left(e^{w/L} - 1\\right)^2e^{-w/L}}{2\\left(e^{2w/L} + 1\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{5}{L^2}",
+          "kretschmann": "K = \\dfrac{20e^{2w/L} + 174e^{4w/L} + 20e^{6w/L} + 5e^{8w/L} + 5}{2L^4\\left(e^{2w/L} + 1\\right)^4}"
+        },
+        {
+          "id": "magnetic_flat",
+          "name": "Gibbons and Wiltshire, Flat Magnetic Membrane",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "\\rho",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "\\rho \\in (0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "a>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Magnetic length, with central field $B_0$ fixed by $a^2=2/(3\\pi G B_0^2)$"
+            },
+            {
+              "symbol": "H = 1+\\rho^2/a^2",
+              "description": "Dimensionless magnetic warp factor"
+            }
+          ],
+          "convention": "We use time $t$, Cartesian lengths $x$, $y$, and $z$, transverse radius $\\rho$, and angle $\\phi$. The magnetic two form is $F=B_0\\rho H^{-2}d\\rho\\wedge d\\phi$ with Maxwell stress normalized by $8\\pi G$. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=H^{2/3}\\left(-c^2dt^2+dx^2+dy^2+dz^2+d\\rho^2\\right)+\\rho^2H^{-2}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(a^2 + \\rho^2\\right)^{2/3}}{a^{4/3}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\left(a^2 + \\rho^2\\right)^{2/3}}{a^{4/3}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(a^2 + \\rho^2\\right)^{2/3}}{a^{4/3}}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\left(a^2 + \\rho^2\\right)^{2/3}}{a^{4/3}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\left(a^2 + \\rho^2\\right)^{2/3}}{a^{4/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{a^4\\,\\rho^2}{\\left(a^2 + \\rho^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8a^{10/3}}{3\\left(a^2 + \\rho^2\\right)^{8/3}}",
+          "kretschmann": "K = \\dfrac{64a^{8/3}\\left(81a^4 - 72a^2\\,\\rho^2 + 20\\rho^4\\right)}{27\\left(a^2 + \\rho^2\\right)^{16/3}}"
+        },
+        {
+          "id": "magnetic_general",
+          "name": "Gibbons and Wiltshire, Radial Warp Coordinates",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "\\beta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "\\beta>0",
+            "D>0",
+            "\\phi \\in [0,2\\pi)",
+            "C>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Angular scale, a squared length; at a simple regular root $\\beta_0$ of $D$ we set $C=2/|\\partial_\\beta D(\\beta_0)|$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Integration constant, an inverse squared length, $\\mu=2Gk$ with integration constant $k$"
+            },
+            {
+              "symbol": "Q",
+              "description": "Magnetic parameter, an inverse length, $Q^2=2\\pi G B_0^2/3$ with magnetic field parameter $B_0$"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Bulk cosmological constant, an inverse squared length"
+            },
+            {
+              "symbol": "D = \\mu/\\beta^3-Q^2/\\beta^6-\\Lambda\\beta^2/10",
+              "description": "Radial function, an inverse squared length"
+            }
+          ],
+          "convention": "We use time $t$, Cartesian lengths $x$, $y$, and $z$ on the flat membrane, dimensionless warp coordinate $\\beta$, and angle $\\phi$, with $\\tilde\\phi=C\\phi$. The magnetic two form is $F=CB_0\\beta^{-4}d\\beta\\wedge d\\phi$ with Maxwell stress normalized by $8\\pi G$. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=\\beta^2\\left(-c^2dt^2+dx^2+dy^2+dz^2\\right)+\\dfrac{d\\beta^2}{D}+C^2D\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\beta^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\beta^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\beta^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\beta^2"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "\\dfrac{1}{D}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "C^2\\,D"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\beta^2\\,\\partial_\\beta^2 D + 8\\beta\\,\\partial_\\beta D + 12D}{\\beta^2}",
+          "kretschmann": "K = \\dfrac{\\beta^4\\left(\\partial_\\beta^2 D\\right)^2 + 8\\beta^2\\left(\\partial_\\beta D\\right)^2 + 24D^2}{\\beta^4}"
+        },
+        {
+          "id": "magnetic_curved",
+          "name": "Gibbons and Wiltshire, Curved Membrane",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\psi",
+            "\\beta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (0,\\infty)",
+            "\\theta \\in (0,\\pi)",
+            "\\psi \\in [0,2\\pi)",
+            "1-Kr^2>0",
+            "\\beta>0",
+            "D>0",
+            "\\phi \\in [0,2\\pi)",
+            "C>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "C",
+              "description": "Angular scale, a squared length; at a simple regular root $\\beta_0$ of $D$ we set $C=2/|\\partial_\\beta D(\\beta_0)|$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Integration constant, an inverse squared length, $\\mu=2Gk$ with integration constant $k$"
+            },
+            {
+              "symbol": "Q",
+              "description": "Magnetic parameter, an inverse length, $Q^2=2\\pi G B_0^2/3$ with magnetic field parameter $B_0$"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Bulk cosmological constant, an inverse squared length"
+            },
+            {
+              "symbol": "K",
+              "description": "Membrane sectional curvature, an inverse squared length; its Ricci tensor is $\\bar R_{ab}=3K\\bar g_{ab}$"
+            },
+            {
+              "symbol": "D = K+\\mu/\\beta^3-Q^2/\\beta^6-\\Lambda\\beta^2/10",
+              "description": "Radial function, an inverse squared length"
+            }
+          ],
+          "convention": "We use time $t$, areal length $r$ and angles $\\theta$ and $\\psi$ on the maximally symmetric membrane, dimensionless warp coordinate $\\beta$, and angle $\\phi$, with $\\tilde\\phi=C\\phi$. The magnetic two form is $F=CB_0\\beta^{-4}d\\beta\\wedge d\\phi$ with Maxwell stress normalized by $8\\pi G$. We take components in $x^0=ct$; a dot denotes an affine derivative, so $\\dot t=d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+          "line_element": "ds^2=\\beta^2\\left(-\\left(1-Kr^2\\right)c^2dt^2+\\dfrac{dr^2}{1-Kr^2}+r^2d\\theta^2+r^2\\sin^2\\theta\\,d\\psi^2\\right)+\\dfrac{d\\beta^2}{D}+C^2D\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\beta^2\\left(K\\,r^2 - 1\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{\\beta^2}{K\\,r^2 - 1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,\\beta^2"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\,\\beta^2\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "\\dfrac{1}{D}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "C^2\\,D"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12K - \\beta^2\\,\\partial_\\beta^2 D - 8\\beta\\,\\partial_\\beta D - 12D}{\\beta^2}",
+          "kretschmann": "K = \\dfrac{24K^2 - 48K\\,D + \\beta^4\\left(\\partial_\\beta^2 D\\right)^2 + 8\\beta^2\\left(\\partial_\\beta D\\right)^2 + 24D^2}{\\beta^4}"
         }
       ]
     },
@@ -42881,6 +43838,11 @@
           "id": "scalar_field_black_hole",
           "kind": "family",
           "text": "The scalar counterpart of Ernst's hole: Schwarzschild's hole in a massless scalar field whose gradient points along the axis, in a universe built after Melvin's [cardoso2025]."
+        },
+        {
+          "id": "early_braneworlds",
+          "kind": "family",
+          "text": "The magnetic membranes of Gibbons and Wiltshire extend the flux tube construction to higher dimensions [gibbonswiltshire1987]."
         }
       ],
       "references": [
@@ -42915,7 +43877,8 @@
         "rosen1962",
         "astorino2025",
         "astorino2022swirling",
-        "cardoso2025"
+        "cardoso2025",
+        "gibbonswiltshire1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -54880,6 +55843,11 @@
           "id": "brane_wall_universe",
           "kind": "generalisation",
           "text": "Set the wall moving past a black hole, with matter on it and a curved space if it likes, and those who live on it see their universe expand [kraus1999, ida2000]."
+        },
+        {
+          "id": "early_braneworlds",
+          "kind": "programme",
+          "text": "Earlier localization constructions include Akama's vortex, a scalar domain wall, and Visser's electric geometry [akama1983pregeometry, rubakov1983, visser1985]."
         }
       ],
       "references": [
@@ -54906,7 +55874,9 @@
         "emparan2020qbtz",
         "singh2006",
         "kraus1999",
-        "ida2000"
+        "ida2000",
+        "akama1983pregeometry",
+        "visser1985"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -72061,6 +73031,11 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "A wall between two copies of anti-de Sitter space of five dimensions, carrying matter, moves past a black hole, and those who live on it see a universe expand [kraus1999]."
+        },
+        {
+          "id": "early_braneworlds",
+          "kind": "family",
+          "text": "Rubakov and Shaposhnikov trapped fermions on a domain wall in flat five dimensional spacetime [rubakov1983, rubakov2001extra]."
         }
       ],
       "references": [
@@ -72081,7 +73056,9 @@
         "harari1990",
         "randall1999a",
         "coleman1980",
-        "kraus1999"
+        "kraus1999",
+        "rubakov1983",
+        "rubakov2001extra"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",
