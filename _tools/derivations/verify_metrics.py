@@ -2521,6 +2521,13 @@ DIMENSIONS.update({("charged_godel_universe", system): {
     **({parameter: "1/L"} if parameter else {})}
     for system, parameter in (("hyperbolic", "m"), ("linear", None), ("trigonometric", "k"))})
 
+# Taub's vacuum under the ghost neutrinos: L a length, x and y lengths, mu and nu pure numbers.
+DIMENSIONS.update({
+    ("ghost_neutrinos", "taub"): {"t": "T", "x": "L", "y": "L", "z": "L", "L": "L"},
+    ("ghost_neutrinos", "areal"): {"t": "T", "x": "L", "y": "L", "r": "L", "L": "L"},
+    ("ghost_neutrinos", "null"): {"\\mu": "1", "\\nu": "1", "x": "L", "y": "L", "L": "L"},
+})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),

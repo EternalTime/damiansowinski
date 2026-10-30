@@ -97,6 +97,11 @@
       "id": "murphy_viscous_universe",
       "kind": "family",
       "text": "Murphy's flat viscous universe with a small anisotropy added. Belinskii and Khalatnikov found that it then begins at a singularity near Kasner's vacuum, where the density vanishes and the gravitational field creates matter [belinskii1975]."
+    },
+    {
+      "id": "ghost_neutrinos",
+      "kind": "dual",
+      "text": "Taub's static plane symmetric vacuum, the geometry of the ghost neutrinos, continues through its timelike singularity into Kasner's universe with exponents $(2/3, 2/3, -1/3)$ [bedran1997]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "martins1996",
     "king1973",
     "kastor2015",
-    "belinskii1975"
+    "belinskii1975",
+    "bedran1997"
   ],
   "coordinates": [
     {

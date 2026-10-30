@@ -89,6 +89,11 @@
       "id": "twisting_cylindrical_waves",
       "kind": "generalisation",
       "text": "Levi-Civita's field set waving with both polarisations. With $\\omega = 0$ and $\\psi$ a multiple of $\\ln\\rho$ the cylindrical waves of Kompaneets, Jordan and Ehlers stand still as this field."
+    },
+    {
+      "id": "ghost_neutrinos",
+      "kind": "locally_same",
+      "text": "At $\\sigma = -1/2$ the static cylinder is locally Taub's plane symmetric vacuum, through which the ghost neutrinos of Davis and Ray flow with no energy or momentum [davis1974]."
     }
   ],
   "references": [
@@ -124,7 +129,8 @@
     "bonnor1969light",
     "podolsky2018",
     "martins1996",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "davis1974"
   ],
   "coordinates": [
     {

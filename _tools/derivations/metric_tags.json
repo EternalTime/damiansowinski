@@ -5796,6 +5796,90 @@
    "\\phi"
   ]
  },
+ "ghost_neutrinos/areal": {
+  "stamp": "0e415b3b7a5e3c06",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ghost_neutrinos/null": {
+  "stamp": "4619a241a63002be",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "ghost_neutrinos/taub": {
+  "stamp": "06b6470bdd7fb0da",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "global_monopole/conical": {
   "stamp": "59ebfc159d972a88",
   "relations": {},

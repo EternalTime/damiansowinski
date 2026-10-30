@@ -35908,6 +35908,134 @@ def stiff_fluid_check(chart, system):
 CHARTS["stiff_fluid_universes"] = [lambda s=s: stiff_fluid_universes(s) for s in STIFF_FLUID_CHARTS]
 
 
+# Bedran et al.'s (3.2), in u and v, carries ln(1/(v^2 - u^2)) under a root, which sympy keeps in two
+# equal forms the read back cannot match; its u and v are stated in the null chart's convention.
+GN_CHARTS = ("taub", "areal", "null")
+GN_PLANE = "\\left(dx^2 + dy^2\\right)"
+GN_LINES = {
+    "taub": "ds^2 = -\\left(\\dfrac{z}{L}\\right)^{-2/3}c^2dt^2 + dz^2 + \\left(\\dfrac{z}{L}\\right)^{4/3}" + GN_PLANE,
+    "areal": "ds^2 = -\\dfrac{L}{r}c^2dt^2 + \\dfrac{r}{L}dr^2 + \\dfrac{r^2}{L^2}" + GN_PLANE,
+    # ln(1/(v^2 - u^2)) is positive on the chart; the root of minus a logarithm reads on the wrong branch.
+    "kruskal": ("ds^2 = \\dfrac{2\\sqrt{2}L^2\\left(dv^2 - du^2\\right)}{\\left(v^2 - u^2\\right)\\sqrt{\\ln\\dfrac{1}{v^2 - u^2}}}"
+                " + 2\\ln\\left(\\dfrac{1}{v^2 - u^2}\\right)" + GN_PLANE),
+    "null": "ds^2 = \\dfrac{2\\sqrt{2}L^2\\,d\\mu\\,d\\nu}{\\sqrt{\\mu + \\nu}} + 2\\left(\\mu + \\nu\\right)" + GN_PLANE,
+}
+GN_COORDS = {"taub": ["t", "x", "y", "z"], "areal": ["t", "x", "y", "r"],
+             "kruskal": ["u", "v", "x", "y"], "null": ["\\mu", "\\nu", "x", "y"]}
+
+
+def ghost_neutrinos(system):
+    """Taub's static plane symmetric vacuum, the geometry of Davis and Ray's ghost neutrinos,
+    Phys. Rev. D 9, 331 (1974), in the four charts of Bedran, Calvao, Paiva and Damiao Soares,
+    Phys. Rev. D 55, 3431 (1997), arXiv:gr-qc/9608058: their (2.1), (2.2), (3.2) and (3.4) with
+    Table 1, turned to signature (-,+,+,+) with c and a length L put back. ghost_neutrinos.md
+    beside this file derives each\\; ghost_neutrinos_check holds each to vacuum, to its Kretschmann
+    scalar and, but for Taub's own, to the pullback of Taub's chart, all at points."""
+    reals = "(-\\infty, \\infty)"
+    domains = {
+        "taub": [f"t \\in {reals}", f"x \\in {reals}", f"y \\in {reals}", "z \\in (0, \\infty)",
+                 "z = 0 \\;\\text{(the singularity)}"],
+        "areal": [f"t \\in {reals}", f"x \\in {reals}", f"y \\in {reals}", "r \\in (0, \\infty)",
+                  "r = 0 \\;\\text{(the singularity)}"],
+        "kruskal": ["u \\in (-v, v)", "v \\in (0, \\infty)", f"x \\in {reals}", f"y \\in {reals}",
+                    "v^2 - u^2 < 1", "v^2 - u^2 = 1 \\;\\text{(the singularity)}",
+                    "v = \\pm u \\;\\text{(null infinity)}"],
+        "null": [f"\\mu \\in {reals}", f"\\nu \\in {reals}", f"x \\in {reals}", f"y \\in {reals}",
+                 "\\mu + \\nu > 0", "\\mu + \\nu = 0 \\;\\text{(the singularity)}"],
+    }[system]
+    line = GN_LINES[system]
+    timed = system in ("taub", "areal")
+    spec = {"metric_id": "ghost_neutrinos",
+            "system": {"id": system, "name": {"kruskal": "Kruskal Type"}.get(system, system.capitalize()),
+                       "coords": GN_COORDS[system], "domains": domains, "parameters": ["L"], "line_element": line},
+            "chart_line_element": line.replace("c^2dt^2", "dt^2"),
+            "printer": {}, "check": lambda chart: ghost_neutrinos_check(chart, system)}
+    if timed:
+        spec["time"] = "t"
+    if system == "kruskal":
+        state = {}
+        spec["pretty"] = ghost_neutrinos_log(state)
+        spec["check"] = lambda chart: (state.__setitem__("printer", chart.printer), ghost_neutrinos_check(chart, system))
+    return spec
+
+
+def ghost_neutrinos_log(state):
+    """A `pretty` for the Kruskal type chart: ln(1/(v^2 - u^2)), positive on the chart, is held as one
+    symbol set as \\ln\\dfrac{1}{v^2 - u^2}, so that the printer, which takes no logarithm, sets it
+    whole. `state["printer"]` is the chart's printer, which the chart's check puts there first."""
+    held = sp.Symbol("GNLOG", positive=True)
+
+    def pretty(value):
+        state["printer"].named[held] = "\\ln\\dfrac{1}{v^2 - u^2}"
+        value = sp.sympify(value).replace(sp.log, lambda arg: held if arg.free_symbols else sp.log(arg))
+        return sp.factor(value)
+
+    return pretty
+
+
+def ghost_neutrinos_taub_map(system, X, L):
+    """Taub's chart (ct, x, y, z) as functions of the chart's own coordinates, Table 1 of Bedran et
+    al. with L put back: z = (2/3)L(r/L)^(3/2), Taub's ct = (2/3)^(1/3) times the areal ct, Taub's x
+    and y = (2/3)^(-2/3) times the areal ones, and the areal ct and r from u = e^(-r^2/4L^2) sinh(ct/2L),
+    v = e^(-r^2/4L^2) cosh(ct/2L), with v - u = e^(-mu) and v + u = e^(-nu)."""
+    if system == "null":
+        mu, nu, x, y = X
+        u, v = (sp.exp(-nu) - sp.exp(-mu)) / 2, (sp.exp(-nu) + sp.exp(-mu)) / 2
+    elif system == "kruskal":
+        u, v, x, y = X
+    if system in ("null", "kruskal"):
+        r = L * sp.sqrt(2 * sp.log(1 / (v ** 2 - u ** 2)))
+        ct = 2 * L * sp.atanh(u / v)
+    else:
+        ct, x, y, r = X
+    third = sp.Rational(2, 3)
+    return [third ** sp.Rational(1, 3) * ct, third ** sp.Rational(-2, 3) * x, third ** sp.Rational(-2, 3) * y,
+            third * L * (r / L) ** sp.Rational(3, 2)]
+
+
+def ghost_neutrinos_check(chart, system):
+    """Vacuum: every Ricci component zero at points. Kretschmann 64/27z^4 in Taub's z, which is
+    Bedran et al.'s (2.7), carried to each chart. Each chart other than Taub's is the pullback of
+    Taub's metric through ghost_neutrinos_taub_map, compared at points. No symbolic determinant and
+    no simplification: every comparison is a number."""
+    L = chart.reader.parameters["L"]
+    X = list(chart.symbols)
+    ricci = chart.geo.ricci_ll()
+    kretschmann = chart.geo.kretschmann()
+    taub = ghost_neutrinos_taub_map(system, X, L) if system != "taub" else X
+    z = taub[3]
+    g = chart.geo.g
+    if system != "taub":
+        J = sp.Matrix(4, 4, lambda a, b: sp.diff(taub[a], X[b]))
+        T, Z = sp.symbols("GN_T GN_Z", positive=True)
+        taub_g = sp.diag(-(Z / L) ** sp.Rational(-2, 3), (Z / L) ** sp.Rational(4, 3), (Z / L) ** sp.Rational(4, 3), 1)
+    points = {"taub": [(0.3, -0.7, 1.1, 0.4), (1.2, 0.5, -0.2, 2.6), (-0.8, 2.0, 0.3, 7.5)],
+              "areal": [(0.3, -0.7, 1.1, 0.4), (1.2, 0.5, -0.2, 2.6), (-0.8, 2.0, 0.3, 7.5)],
+              "kruskal": [(0.1, 0.5, 0.3, -0.4), (-0.3, 0.7, 1.2, 0.2), (0.02, 0.98, -0.5, 0.9)],
+              "null": [(0.2, 0.5, 0.3, -0.4), (-0.4, 1.7, 1.2, 0.2), (3.0, -1.2, -0.5, 0.9)]}[system]
+    for values, scale in zip(points, (0.7, 1.0, 1.9)):
+        at = dict(zip(X, values))
+        at[L] = scale
+        if chart.reader.c in g.free_symbols | {chart.reader.c}:
+            at[chart.reader.c] = 1
+        for i in range(4):
+            for j in range(4):
+                if abs(complex(vm._at(ricci, (i, j)).subs(at).evalf(30))) > 1e-20:
+                    raise AssertionError(f"ghost_neutrinos {system}: R_{i}{j} is not zero at {values}")
+        zz = sp.N(z.subs(at), 30)
+        if abs(complex(kretschmann.subs(at).evalf(30)) - complex(64 / (27 * zz ** 4))) > 1e-12 * abs(complex(64 / (27 * zz ** 4))):
+            raise AssertionError(f"ghost_neutrinos {system}: the Kretschmann scalar is not 64/27z^4 at {values}")
+        if system != "taub":
+            j = J.subs(at).evalf(30)
+            pulled = j.T * taub_g.subs({Z: zz, L: scale}) * j
+            gap = pulled - g.subs(at).evalf(30)
+            if max(abs(complex(v)) for v in gap) > 1e-12:
+                raise AssertionError(f"ghost_neutrinos {system}: the chart is not Taub's pulled back at {values}: {gap}")
+
+
+CHARTS["ghost_neutrinos"] = [lambda s=s: ghost_neutrinos(s) for s in GN_CHARTS]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])

@@ -12,6 +12,7 @@
     "energy condition violation",
     "electric charge",
     "electromagnetic field",
+    "Dirac field",
     "braneworld",
     "static",
     "stationary",
@@ -55,6 +56,11 @@
       "id": "einstein_rosen_bridge",
       "kind": "family",
       "text": "Einstein and Rosen's bridge of 1935, two sheets of space joined at a throat that is a horizon. Written in $u$ with $r = r_0 + u^2$, this wormhole joins its two sheets in the same way, with no horizon [einstein1935, bronnikovkim2003]."
+    },
+    {
+      "id": "ghost_neutrinos",
+      "kind": "family",
+      "text": "Massless spinors again, in Taub's static plane symmetric vacuum, carrying a current with no energy or momentum at all [davis1974]."
     }
   ],
   "references": [
@@ -71,7 +77,8 @@
     "kain2023",
     "tsukamoto2020",
     "visser1989nuclphysb",
-    "einstein1935"
+    "einstein1935",
+    "davis1974"
   ],
   "coordinates": [
     {

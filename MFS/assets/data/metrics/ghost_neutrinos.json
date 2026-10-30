@@ -1,0 +1,3704 @@
+{
+  "id": "ghost_neutrinos",
+  "name": "Davis-Ray Ghost Neutrinos",
+  "short_name": "Ghost Neutrinos",
+  "description": "A current of neutrinos along one axis of Taub's static plane symmetric vacuum, which Talmadge M. Davis and John R. Ray found in 1974. The neutrinos carry no energy or momentum, so the geometry around them is that of empty space, with a timelike singularity on one side.",
+  "tags": [
+    "vacuum",
+    "static",
+    "stationary",
+    "planar symmetry",
+    "Dirac field",
+    "Petrov type D",
+    "Weyl class",
+    "Kasner",
+    "negative mass",
+    "curvature singularity",
+    "timelike singularity",
+    "naked singularity",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A current of neutrinos runs along one axis of this spacetime, and the geometry around it is the geometry of empty space. Talmadge M. Davis and John R. Ray, of the Department of Physics and Astronomy at Clemson University, sent the solution to Physical Review on 12 October 1973, and it appeared on 15 January 1974 [davis1974]. It solves the Einstein-Dirac equations for neutrinos in a spacetime that is static and plane symmetric [davis1974]. The neutrino field is not zero, yet its energy-momentum tensor vanishes, so the gravitational field is exactly that of vacuum [davis1974]. Davis and Ray called it a \"ghost neutrino\" field [davis1974].¶Neutrino fields of this kind had turned up a little earlier on gravitational waves. Jerry B. Griffiths identified a class of neutrino fields with zero energy-momentum tensor and suggested that the spacetimes carrying them could also be read as gravitational waves [pasic2014]. C. D. Collinson and P. B. Morris then showed that those spacetimes could be pp-waves or Robinson-Trautman solutions of type N [pasic2014, collinson1973]. The name ghost neutrinos came afterwards, from Davis and Ray [pasic2014]. In their example nothing depends on time, and the neutrinos flow at right angles to the planes of symmetry [davis1974].¶Empty space that is static and plane symmetric has one curved form, the vacuum Abraham Taub found in 1951 [taub1951, bedran1997]. With $L$ a length that sets the units of $t$, $x$ and $y$, its line element is $ds^2 = -(z/L)^{-2/3}c^2dt^2 + dz^2 + (z/L)^{4/3}(dx^2 + dy^2)$, and $L$ is no physical parameter, since rescaling $t$, $x$ and $y$ removes it [bedran1997]. The singularity at $z = 0$ is timelike, and every curvature invariant vanishes as $z$ grows [bedran1997]. M. L. Bedran, Mauricio O. Calvão, F. M. Paiva and Ivano Damião Soares read Taub's spacetime as the field outside a plane of negative mass, and a massive particle falling freely through it eventually recedes from the singularity, whatever its start [bedran1997]. Davis and Ray found in 1975 that their spacetime is of Petrov type D [davis1975plane].¶In Taub's coordinates the neutrino field is $\\psi = (L/z)^{1/2}\\chi$, with $\\chi$ a constant spinor, and the massless Dirac equation holds for every constant $\\chi$. The energy-momentum tensor of this field vanishes when its current points along $z$, and that current is null, so the neutrinos stream at the speed of light toward the singularity or away from it. The neutrino flux $\\sqrt{-g}\\,j^z$ is the same constant on every plane of constant $z$. The density of the current falls as $1/z$, while the area of a patch of plane grows as $(z/L)^{4/3}$ and the static clocks run at the rate $(z/L)^{-1/3}$, and the three together hold the flux at one value.¶In January 1975 Davis and Ray let the plane symmetric ghost depend on time, and showed that a Lorentz transformation takes the time dependent current to the static one and a spinor transformation takes the wavefunction to the static wavefunction [davis1975plane]. The ghost current runs along geodesics that expand, and by earlier results their solution is the most general ghost of the Einstein-Dirac equations with an expanding current [davis1975plane]. In the same issue they put neutrinos in a static cylindrically symmetric spacetime with a radial current, and found that they can live there only where the spacetime is locally a static plane symmetric one [davis1975cylinder].¶J. Audretsch showed in 1976 that ghost neutrinos need an algebraically special spacetime, with the neutrino flux along a principal null direction of the Weyl tensor, so that the Kerr-Newman and the spherically symmetric spacetimes carry none [audretsch1976]. Griffiths showed in 1980 that ghost neutrino fields occur in Einstein-Cartan theory as well as in general relativity [griffiths1980]. In the first order formalism of Einstein-Cartan theory torsion adds to the canonical energy-momentum of the neutrino, and there the ghost interpretation cannot be maintained [dereli2023].",
+  "related": [
+    {
+      "id": "levi_civita",
+      "kind": "locally_same",
+      "text": "At $\\sigma = -1/2$ Levi-Civita's static cylinder is locally Taub's plane symmetric vacuum, the geometry the ghost neutrinos flow through [wang1997, taub1951]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "locally_same",
+      "text": "The A III metric of Ehlers and Kundt is Taub's plane symmetric vacuum in other coordinates, the vacuum that carries the ghost neutrinos [martins1996, taub1951]."
+    },
+    {
+      "id": "kasner",
+      "kind": "dual",
+      "text": "Continue Taub's coordinate $r$ through its singularity to negative values and the vacuum the ghost neutrinos flow through becomes Kasner's universe with exponents $(2/3, 2/3, -1/3)$, its singularity spacelike [bedran1997]."
+    },
+    {
+      "id": "einstein_dirac_maxwell_wormhole",
+      "kind": "family",
+      "text": "Massless Dirac fields again, with an electric field beside them, and here their energy holds a wormhole open [blazquez2021]. The ghost neutrinos are massless spinors that carry no energy at all."
+    }
+  ],
+  "references": [
+    "davis1974",
+    "pasic2014",
+    "collinson1973",
+    "taub1951",
+    "bedran1997",
+    "davis1975plane",
+    "davis1975cylinder",
+    "audretsch1976",
+    "griffiths1980",
+    "dereli2023",
+    "wang1997",
+    "martins1996",
+    "blazquez2021"
+  ],
+  "coordinates": [
+    {
+      "id": "taub",
+      "name": "Taub",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (0, \\infty)",
+        "z = 0 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "A length that sets the units of $t$, $x$ and $y$; rescaling them removes it, so Taub's vacuum has no physical parameter"
+        }
+      ],
+      "convention": "We use Taub's coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $z$ the proper distance from the singularity. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\left(\\dfrac{z}{L}\\right)^{-2/3}c^2dt^2 + dz^2 + \\left(\\dfrac{z}{L}\\right)^{4/3}\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{L^{2/3}}{z^{2/3}}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{z^{4/3}}{L^{4/3}}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{z^{4/3}}{L^{4/3}}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{z^{2/3}}{L^{2/3}}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{L^{4/3}}{z^{4/3}}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{L^{4/3}}{z^{4/3}}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{3z}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{3z}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{3z}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{3z}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{3z}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{3z}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^{2/3}}{3z^{5/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{L^{2/3}}{3z^{5/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{L^{2/3}}{3z^{5/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^{2/3}}{3z^{5/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2z^{1/3}}{3L^{4/3}}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4}{9z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{9z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{64}{27z^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4}{9z^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4}{9z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2}{9z^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2}{9L^{2/3}\\,z^{4/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4L^{2/3}}{9z^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{4z^{2/3}}{9L^{8/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{9L^{4/3}\\,z^{2/3}}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2}{3z}\\dot{t}\\dot{z} = 0",
+        "\\ddot{x} + \\dfrac{4}{3z}\\dot{x}\\dot{z} = 0",
+        "\\ddot{y} + \\dfrac{4}{3z}\\dot{y}\\dot{z} = 0",
+        "\\ddot{z} - \\dfrac{L^{2/3}}{3z^{5/3}}\\dot{t}^2 - \\dfrac{2z^{1/3}}{3L^{4/3}}\\dot{x}^2 - \\dfrac{2z^{1/3}}{3L^{4/3}}\\dot{y}^2 = 0"
+      ]
+    },
+    {
+      "id": "areal",
+      "name": "Areal",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "r"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "r = 0 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "A length that sets the units of $t$, $x$ and $y$; rescaling them removes it, so Taub's vacuum has no physical parameter"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, r)$, with $t$ carrying dimensions of time and $r$ a length, $z = \\tfrac{2}{3}L\\left(r/L\\right)^{3/2}$; $t$ is Taub's $t$ divided by $(2/3)^{1/3}$, and $x$ and $y$ are Taub's multiplied by $(2/3)^{2/3}$. We take components in the chart $x^0 = ct$.",
+      "line_element": "ds^2 = -\\dfrac{L}{r}c^2dt^2 + \\dfrac{r}{L}dr^2 + \\dfrac{r^2}{L^2}\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{L}{r}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{r^2}{L^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{r^2}{L^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{r}{L}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{r}{L}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{L^2}{r^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{L^2}{r^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{L}{r}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2r}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2}{2r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{L}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{L}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{L}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{L}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{r}{L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{r}{L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{r}{L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{r}{L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{r}{L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2L}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{L^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2}{r^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{12L^2}{r^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2L\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{L^2}{2r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{L\\,r}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{L^2}{r^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{L^2}{r^4}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{L}{r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{r}{L^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "y",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "r",
+                  "r",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "y",
+                  "r"
+                ],
+                "value": "-\\dfrac{1}{2L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "y",
+                  "r",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2L^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{1}{r}\\dot{t}\\dot{r} = 0",
+        "\\ddot{x} + \\dfrac{2}{r}\\dot{x}\\dot{r} = 0",
+        "\\ddot{y} + \\dfrac{2}{r}\\dot{y}\\dot{r} = 0",
+        "\\ddot{r} - \\dfrac{L^2}{2r^3}\\dot{t}^2 - \\dfrac{1}{L}\\dot{x}^2 - \\dfrac{1}{L}\\dot{y}^2 + \\dfrac{1}{2r}\\dot{r}^2 = 0"
+      ]
+    },
+    {
+      "id": "null",
+      "name": "Null",
+      "coords": [
+        "\\mu",
+        "\\nu",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "\\mu \\in (-\\infty, \\infty)",
+        "\\nu \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "\\mu + \\nu > 0",
+        "\\mu + \\nu = 0 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "A length that sets the units of $t$, $x$ and $y$; rescaling them removes it, so Taub's vacuum has no physical parameter"
+        }
+      ],
+      "convention": "We use the null coordinates $(\\mu, \\nu, x, y)$ of Bedran, Calvão, Paiva and Damião Soares, both dimensionless, $\\mu = -\\ln(v - u)$ and $\\nu = -\\ln(v + u)$ with $u = e^{-r^2/4L^2}\\sinh\\left(ct/2L\\right)$ and $v = e^{-r^2/4L^2}\\cosh\\left(ct/2L\\right)$ in the areal chart, so that $r = L\\sqrt{2(\\mu + \\nu)}$. The singularity is $v^2 - u^2 = 1$ and null infinity is $v = \\pm u$, where $\\mu$ or $\\nu$ runs to infinity.",
+      "line_element": "ds^2 = \\dfrac{2\\sqrt{2}L^2\\,d\\mu\\,d\\nu}{\\sqrt{\\mu + \\nu}} + 2\\left(\\mu + \\nu\\right)\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\mu",
+            "\\nu"
+          ],
+          "value": "\\dfrac{\\sqrt{2}\\,L^2}{\\sqrt{\\mu + \\nu}}"
+        },
+        {
+          "indices": [
+            "\\nu",
+            "\\mu"
+          ],
+          "value": "\\dfrac{\\sqrt{2}\\,L^2}{\\sqrt{\\mu + \\nu}}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "2\\mu + 2\\nu"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "2\\mu + 2\\nu"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\mu",
+            "\\nu"
+          ],
+          "value": "\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}"
+        },
+        {
+          "indices": [
+            "\\nu",
+            "\\mu"
+          ],
+          "value": "\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\mu",
+                  "\\mu",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\nu",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\mu",
+                  "\\nu",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\mu",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{3/2}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "x"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "y"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "x"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "y"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "1"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "1"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\mu",
+                  "\\mu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "\\mu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\nu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\nu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\mu",
+                  "\\nu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "\\nu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\mu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\mu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{3}{2L^4\\left(\\mu + \\nu\\right)^3}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\mu",
+                  "\\mu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "\\mu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\nu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\nu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{4L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{4\\left(\\mu + \\nu\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}}{2L^2\\,\\sqrt{\\mu + \\nu}}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\mu",
+                  "\\nu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "\\nu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\mu",
+                  "\\mu",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "\\mu",
+                  "\\nu",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,L^2}{2\\left(\\mu + \\nu\\right)^{5/2}}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "x",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\mu",
+                  "y",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "x",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "\\nu",
+                  "y",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "\\nu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\mu",
+                  "x",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "\\mu",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\nu",
+                  "x",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "\\nu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\mu",
+                  "y",
+                  "\\nu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "\\mu",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\nu",
+                  "y",
+                  "\\mu"
+                ],
+                "value": "\\dfrac{1}{2\\left(\\mu + \\nu\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{L^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\mu} - \\dfrac{1}{2\\left(\\mu + \\nu\\right)}\\dot{\\mu}^2 - \\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}\\dot{x}^2 - \\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}\\dot{y}^2 = 0",
+        "\\ddot{\\nu} - \\dfrac{1}{2\\left(\\mu + \\nu\\right)}\\dot{\\nu}^2 - \\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}\\dot{x}^2 - \\dfrac{\\sqrt{2}\\sqrt{\\mu + \\nu}}{2L^2}\\dot{y}^2 = 0",
+        "\\ddot{x} + \\dfrac{1}{\\mu + \\nu}\\dot{\\mu}\\dot{x} + \\dfrac{1}{\\mu + \\nu}\\dot{\\nu}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{1}{\\mu + \\nu}\\dot{\\mu}\\dot{y} + \\dfrac{1}{\\mu + \\nu}\\dot{\\nu}\\dot{y} = 0"
+      ]
+    }
+  ]
+}

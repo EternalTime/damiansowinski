@@ -71,6 +71,11 @@
       "id": "taub_nut",
       "kind": "family",
       "text": "Schwarzschild's A I with the NUT parameter $l$ added. The B-metrics take a parameter of the same kind, which removes their singularity as $l$ removes Schwarzschild's, and Jerzy Plebański called that family the anti-NUT solution [podolsky2018]."
+    },
+    {
+      "id": "ghost_neutrinos",
+      "kind": "locally_same",
+      "text": "Taub's plane symmetric vacuum, the A III metric in other coordinates, carrying a current of neutrinos with no energy or momentum, as Talmadge M. Davis and John R. Ray found in 1974 [davis1974]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "peres1970",
     "schulman1971",
     "gott1974",
-    "kruskal1960"
+    "kruskal1960",
+    "davis1974"
   ],
   "coordinates": [
     {
