@@ -36728,5 +36728,9 @@ def main():
         raise SystemExit(f"{error}; nothing of that chart was written") from None
 
 
+import lynden_bell_pineault as lbp
+lbp.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()

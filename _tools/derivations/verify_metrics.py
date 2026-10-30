@@ -5235,5 +5235,9 @@ def main():
     return 0
 
 
+import lynden_bell_pineault as lbp
+lbp.register_dimensions(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

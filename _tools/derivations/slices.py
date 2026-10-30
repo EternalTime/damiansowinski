@@ -4959,6 +4959,10 @@ def checks():
     return failures
 
 
+import lynden_bell_pineault_drawings as lbp_drawings
+lbp_drawings.register_slices(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)

@@ -298,6 +298,11 @@
       "id": "kerr_disc_source",
       "kind": "generalisation",
       "text": "Israel's disc source of Kerr's metric is flat space at $m = 0$, where its layer of matter vanishes [gibbons2017]."
+    },
+    {
+      "id": "lynden_bell_pineault",
+      "kind": "generalisation",
+      "text": "The counter-rotating family contains flat space when the circular speed and surface density vanish [lyndenbell1978]."
     }
   ],
   "references": [
@@ -382,7 +387,8 @@
     "unruh1981",
     "compere2016vacua",
     "haggard2015fireworks",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "lyndenbell1978"
   ],
   "coordinates": [
     {

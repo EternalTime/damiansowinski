@@ -10,16 +10,15 @@ from functools import lru_cache
 import numpy as np
 import sympy as sp
 
-import chart_printer as cp
-import verify_metrics as vm
-
 METRIC = "lynden_bell_pineault"
 SYSTEMS = ("weyl", "spherical", "photons", "rotating")
 
 
-def spec(system):
+def spec(system, pc=None):
     """One chart in the conventions of Paper I (3.1), (3.16), (4.2), or Paper II (2.2)."""
-    import print_charts as pc
+    if pc is None:
+        import print_charts as pc
+    import verify_metrics as vm
 
     if system == "weyl":
         coords = ["t", "R", "z", "\\phi"]
@@ -38,7 +37,7 @@ def spec(system):
                           "Q = Q(\\theta)", "Z = Z(\\theta)", "f = r/A"]
             domains += ["0 < n < 1/2"]
             line = ("ds^2 = -f^{2n}e^{N}{c2}dt^2 + A^2f^{2 - 2n}e^{2P - N}"
-                    "\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}{c}dt\\right)^2"
+                    "\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}{c}\\,dt\\right)^2"
                     " + f^{-2n}e^{Z - N}\\left(dr^2 + r^2d\\theta^2\\right)")
             name = "Rotating Self-Similar Disc"
         elif system == "photons":
@@ -227,11 +226,13 @@ def rotating_jets(reader, theta, solution=None):
 
 def register(pc):
     """Register only this spacetime with the shared chart printer."""
-    pc.CHARTS[METRIC] = [lambda s=s: spec(s) for s in SYSTEMS]
+    pc.CHARTS[METRIC] = [lambda s=s: spec(s, pc) for s in SYSTEMS]
 
 
-def register_dimensions():
+def register_dimensions(vm=None):
     """Dimensions used by the published-value readers and the scoped metric checker."""
+    if vm is None:
+        import verify_metrics as vm
     for system in SYSTEMS:
         values = {"t": "T", "A": "L", "n": "1"}
         if system == "weyl":

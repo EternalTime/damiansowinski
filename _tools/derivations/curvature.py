@@ -18683,5 +18683,9 @@ def main(argv=None):
     return 0
 
 
+import lynden_bell_pineault_drawings as lbp_drawings
+lbp_drawings.register_curvature(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

@@ -5,7 +5,6 @@
   "description": "Thin relativistic discs with counter-rotating streams or matter rotating in one sense, and a circular speed independent of radius.",
   "tags": [
     "stationary",
-    "static",
     "four-dimensional",
     "axisymmetric",
     "rotating",
@@ -17,7 +16,7 @@
     "idealized model"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "The constants $c$ and $G$ remain explicit. The matter source is an infinitesimally thin equatorial sheet. Smooth curvature describes only the vacuum exterior; its scalar invariants exclude the distributional surface. The finite discs are asymptotically flat; the infinite discs have no asymptotically flat end.",
+  "convention": "Components use $x^0 = ct$, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$ and $\\dot t = d(ct)/d\\lambda$ for affine parameter $\\lambda$, with $c$ and $G$ explicit. Matter occupies an infinitesimally thin equatorial sheet, and smooth tensors describe the vacuum exterior.",
   "history": "The gravity of an infinite disc can support circular motion at a speed independent of radius. Donald Lynden-Bell and Serge Pineault constructed such relativistic equilibria in 1978, publishing their counter-rotating and rotating families in Monthly Notices of the Royal Astronomical Society [lyndenbell1978, lyndenbellpineault1978b]. The constants $G$ and $c$, together with the circular speed, supply no characteristic length. These infinite discs are self-similar, with a change of radial scale accompanied by a change of the time scale [lyndenbellpineault1978b].¶Equal streams of stars circle in opposite senses in the counter-rotating family. Each stream is cold, and its stars follow circular orbits with a speed independent of radius. The opposing streams have equal and opposite angular momenta, and their gravitational field is static, with no dragging of inertial frames [lyndenbell1978]. Lynden-Bell and Pineault also constructed finite discs whose geometry approaches the infinite disc solution well inside the outer edge [lyndenbell1978].¶The matter occupies an infinitesimally thin equatorial sheet. Its surface energy density and azimuthal stress enter Einstein's equations through a delta function supported on that sheet [lyndenbell1978]. The regions above and below the disc satisfy the vacuum Einstein equations, with a vanishing smooth Ricci tensor away from the matter surface [lyndenbell1978, lyndenbellpineault1978b].¶At the speed of light, the counter-rotating streams consist of particles with zero rest mass [lyndenbell1978]. Lynden-Bell and Pineault obtained analytic photon trajectories for this limiting disc. Some photons circle at constant radius while oscillating across the equatorial plane, and others spiral inward or outward [lyndenbell1978].¶Matter rotating in one sense drags the surrounding inertial frames. Lynden-Bell and Pineault reduced the stationary field equations through self-similarity and determined the rotating disc's angular metric functions numerically [lyndenbellpineault1978b]. An ergoregion appears around the equatorial plane at a circular speed of approximately $0.384c$ measured by locally nonrotating observers, where the stationary Killing vector becomes spacelike. Its conical boundary extends toward the symmetry axis as the rotation speed increases. Their cold rotating sequence ends near $0.438c$, with a diverging frame dragging parameter and an ergoregion extending throughout space away from the axis [lyndenbellpineault1978b].¶The infinite discs have infinite total mass and a geometry that is not asymptotically flat [lyndenbell1978, lyndenbellpineault1978b]. The cold counter-rotating equilibria are unstable to gravitational fragmentation into rings [lyndenbell1978]. Mike J. Cai and Frank H. Shu included isothermal pressure in the disc plane in 2002, retaining infinitesimal vertical thickness and a circular speed independent of radius [caishu2002].",
   "references": [
     "lyndenbell1978",
@@ -69,10 +68,10 @@
         },
         {
           "symbol": "A",
-          "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+          "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc; the finite geometry is asymptotically flat, and the infinite geometry has no asymptotically flat end"
         }
       ],
-      "convention": "The Weyl coordinates $(t,R,z,\\phi)$ have time $t$, cylindrical radius $R$, height $z$, and azimuth $\\phi$. The finite disc occupies $z = 0$, $0 < R < A$, and the infinite disc occupies $z = 0$, $R > 0$. The displayed region is $z > 0$; the lower region follows by $z \\mapsto -z$. Components use $x^0 = ct$ and $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$; the tensors describe the smooth vacuum side, and $\\dot t = d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+      "convention": "The Weyl coordinates $(t,R,z,\\phi)$ have time $t$, cylindrical radius $R$, height $z$, and azimuth $\\phi$. The finite disc occupies $z = 0$, $0 < R < A$, and the infinite disc occupies $z = 0$, $R > 0$. The displayed region is $z > 0$; the lower region follows by $z \\mapsto -z$.",
       "line_element": "ds^2 = -e^{2\\nu}c^2dt^2 + e^{2\\xi - 2\\nu}\\left(dR^2 + dz^2\\right) + R^2e^{-2\\nu}d\\phi^2",
       "metric_components": [
         {
@@ -2275,7 +2274,7 @@
           "description": "The angular factor $h = \\cos^2(\\theta/2)$ on the upper vacuum side"
         }
       ],
-      "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The coordinates obey $R = r\\sin\\theta$ and $z = r\\cos\\theta$. The equatorial matter sheet is $\\theta = \\pi/2$, and the displayed chart covers its upper vacuum side. Components use $x^0 = ct$ and $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$; the tensors describe the smooth vacuum side, and $\\dot t = d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
+      "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The coordinates obey $R = r\\sin\\theta$ and $z = r\\cos\\theta$. The equatorial matter sheet is $\\theta = \\pi/2$, and the displayed chart covers its upper vacuum side.",
       "line_element": "ds^2 = -f^{2n}h^{2n}c^2dt^2 + f^{-2n}h^{4n^2 - 2n}\\left(dr^2 + r^2d\\theta^2\\right) + f^{-2n}h^{-2n}r^2\\sin^2\\theta\\,d\\phi^2",
       "metric_components": [
         {
@@ -4211,7 +4210,7 @@
           "description": "The angular factor $h = \\cos^2(\\theta/2)$ on the upper vacuum side"
         }
       ],
-      "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ describe the member $n = 1/2$, whose two streams consist of massless particles. Here $t$ is time, $r$ is a length, $\\theta$ is the polar angle, and $\\phi$ is the azimuth. The matter sheet is $\\theta = \\pi/2$. Components use $x^0 = ct$ and $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$; the tensors describe the smooth vacuum side, and $\\dot t = d(ct)/d\\lambda$ for affine parameter $\\lambda$. The smooth vacuum side is locally flat under the Rindler transformation $\\rho = 2\\sqrt{Ar}\\sin(\\theta/2)$, $\\zeta = 2\\sqrt{Ar}\\cos(\\theta/2)$, with lapse $\\zeta/(2A)$.",
+      "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$ and azimuth $\\phi$, with the massless sheet at $\\theta = \\pi/2$. This member has $n = 1/2$. The vacuum side is locally flat under the Rindler transformation $\\rho = 2\\sqrt{Ar}\\sin(\\theta/2)$, $\\zeta = 2\\sqrt{Ar}\\cos(\\theta/2)$, with lapse $\\zeta/(2A)$.",
       "line_element": "ds^2 = -\\dfrac{rh}{A}c^2dt^2 + \\dfrac{A}{r}\\left(dr^2 + r^2d\\theta^2\\right) + \\dfrac{Ar\\sin^2\\theta}{h}d\\phi^2",
       "metric_components": [
         {
@@ -4660,8 +4659,8 @@
           "description": "The radial coordinate in units of $A$"
         }
       ],
-      "convention": "The coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The cold disc is at $\\theta = \\pi/2$, with the radial exponent $k = 1 - n$ of Lynden-Bell and Pineault. The angular functions obey the vacuum equations above the sheet and the cold-disc jump conditions at the equator. Components use $x^0 = ct$ and $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$; the tensors describe the smooth vacuum side, and $\\dot t = d(ct)/d\\lambda$ for affine parameter $\\lambda$.",
-      "line_element": "ds^2 = -f^{2n}e^{N}c^2dt^2 + A^2f^{2 - 2n}e^{2P - N}\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}cdt\\right)^2 + f^{-2n}e^{Z - N}\\left(dr^2 + r^2d\\theta^2\\right)",
+      "convention": "The coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The cold disc is at $\\theta = \\pi/2$, with the radial exponent $k = 1 - n$ of Lynden-Bell and Pineault. The angular functions obey the vacuum equations above the sheet and the cold-disc jump conditions at the equator.",
+      "line_element": "ds^2 = -f^{2n}e^{N}c^2dt^2 + A^2f^{2 - 2n}e^{2P - N}\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}c\\,dt\\right)^2 + f^{-2n}e^{Z - N}\\left(dr^2 + r^2d\\theta^2\\right)",
       "metric_components": [
         {
           "indices": [

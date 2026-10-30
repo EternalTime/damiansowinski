@@ -179,6 +179,11 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "lynden_bell_pineault": {
+        "regions": [["weyl", "spherical"], ["rotating"]],
+        "why": "counter-rotating static discs and single-stream rotating discs are distinct families; "
+               "photons is the massless specialization of the static family, whose smooth exterior is flat",
+    },
     "btz_multi_holes_wormholes": {
         "regions": [["sausage", "stereographic", "free_fall"]],
         "why": "exterior covers the outside of one horizon alone, where the hole is static; the Killing "
