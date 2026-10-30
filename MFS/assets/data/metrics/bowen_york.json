@@ -1,0 +1,124 @@
+{
+  "id": "bowen_york",
+  "name": "Bowen-York Black Hole Initial Data",
+  "short_name": "Bowen-York Initial Data",
+  "description": "Conformally flat maximal spatial initial data for black holes with linear momentum and spin.",
+  "tags": [
+    "three-dimensional",
+    "conformally flat",
+    "Riemannian",
+    "no time",
+    "initial data",
+    "spatial slice",
+    "constraint equations",
+    "Hamiltonian constraint",
+    "black hole",
+    "multiple black holes",
+    "black hole collision",
+    "spin",
+    "angular momentum",
+    "asymptotically flat",
+    "numerical relativity",
+    "Einstein equations"
+  ],
+  "signature": "(+,+,+)",
+  "convention": "We use $G=c=1$, with $\\gamma_{ij}=\\psi^4\\delta_{ij}$ the spatial metric and $K_{ij}=\\psi^{-2}\\widehat A_{ij}$ its trace free extrinsic curvature. The Ricci tensor is $R_{ij}=R^k{}_{ikj}$, and a dot denotes differentiation with respect to spatial arc length.",
+  "history": "A black hole's linear momentum and spin enter the initial data through the extrinsic curvature of a spatial slice. Jeffrey M. Bowen and James W. York, Jr. constructed such data in 1980, in Physical Review D [bowen1980]. They took space to be conformally flat and its embedding in spacetime to be maximal, with vanishing trace of the extrinsic curvature. Their analytic momentum tensors satisfy three of Einstein's four constraint equations; the remaining equation determines the conformal factor of the spatial metric [bowen1980, cook2000].¶The spatial metric is $\\gamma_{ij}=\\psi^4\\delta_{ij}$, and the physical extrinsic curvature is $K_{ij}=\\psi^{-2}\\widehat A_{ij}$ [brandt1997]. The conformal tensor $\\widehat A_{ij}$ has zero trace and zero divergence in Euclidean space. Its momentum term falls as $r^{-2}$ and its spin term as $r^{-3}$; surface integrals at infinity identify their parameters with the total linear and angular momentum of a single hole [cook2000]. Superposing tensors centred on different holes preserves the momentum constraint, while the Hamiltonian constraint remains a nonlinear elliptic equation for $\\psi$ [brandt1997].¶In the original construction, a throat joins two isometric asymptotically flat ends [bowen1980]. Inversion through the throat exchanges the ends and preserves the spatial geometry, with a permitted change of sign in the extrinsic curvature. For a spherical throat of coordinate radius $a$, this symmetry imposes $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$, and $\\psi$ approaches one at infinity [cook2000]. Several throats require a sequence of tensor images, with an inversion condition at each throat [cook2000].¶Steven Brandt and Bernd Brügmann developed the puncture construction in 1997 [brandt1997]. They wrote the conformal factor as $\\psi=\\sum_A m_A/(2r_A)+u$, where $m_A$ is a bare mass parameter and $r_A$ is the Euclidean distance from the corresponding puncture. The remainder $u$ approaches one at infinity and satisfies an elliptic equation on the entire Euclidean coordinate space, including the puncture positions. They established existence and uniqueness of a solution with two continuous derivatives at those positions. Each puncture represents another asymptotically flat end of the spatial geometry [brandt1997].¶A spinning hole constructed with conformal flatness also carries gravitational radiation [gleiser1998by]. Reinaldo J. Gleiser, Carlos O. Nicasio, Richard H. Price, and Jorge Pullin analysed this radiation in 1998 through a small spin expansion about Schwarzschild; the radiative perturbation is second order in the dimensionless spin, and the leading radiated energy is fourth order. In 2000, Alcides Garat and Richard H. Price excluded conformally flat Kerr slices within axisymmetric families that depend smoothly on spin and reduce to constant Schwarzschild-time slices at zero spin [garat2000]. Their obstruction follows from the Cotton-York tensor of the spatial geometry. The isolated single spinning hole approaches Kerr during its perturbative evolution, emitting gravitational radiation from its initial distortion [gleiser1998by].",
+  "references": [
+    "bowen1980",
+    "cook2000",
+    "brandt1997",
+    "gleiser1998by",
+    "garat2000"
+  ],
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian",
+      "coords": [
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\text{Puncture centres or excised throat interiors are excluded}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi = \\psi(x,y,z)",
+          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity."
+        }
+      ],
+      "convention": "We use Cartesian coordinates $(x,y,z)$, each a length."
+    },
+    {
+      "id": "spherical",
+      "name": "Spherical",
+      "coords": [
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "r \\in (0, \\infty)",
+        "\\theta \\in (0, \\pi)",
+        "\\phi \\in [0, 2\\pi)",
+        "\\text{Puncture centres or excised throat interiors are excluded}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi = \\psi(r,\\theta,\\phi)",
+          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity."
+        }
+      ],
+      "convention": "We use spherical coordinates $(r,\\theta,\\phi)$, with $r$ a length and both angles dimensionless."
+    },
+    {
+      "id": "cylindrical",
+      "name": "Axisymmetric Cylindrical",
+      "coords": [
+        "\\rho",
+        "z",
+        "\\phi"
+      ],
+      "domains": [
+        "\\rho \\in (0, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "\\text{Puncture centres or excised throat interiors are excluded}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\psi = \\psi(\\rho,z)",
+          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity."
+        }
+      ],
+      "convention": "We use axisymmetric cylindrical coordinates $(\\rho,z,\\phi)$, with $\\rho$ and $z$ lengths and $\\phi$ dimensionless."
+    }
+  ],
+  "related": [
+    {
+      "id": "misner_brill_lindquist",
+      "kind": "family",
+      "text": "At zero momenta and spins, the puncture construction reduces to Brill and Lindquist's neutral data. The inversion construction reduces to the time-symmetric throat geometry of Misner [cook2000, brandt1997]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "For one hole with vanishing momentum and spin, the spatial metric is a constant Schwarzschild-time slice in isotropic coordinates [brandt1997]."
+    },
+    {
+      "id": "einstein_rosen_bridge",
+      "kind": "family",
+      "text": "The original inversion-symmetric data have two isometric asymptotically flat ends joined through a throat [bowen1980]."
+    },
+    {
+      "id": "kerr",
+      "kind": "family",
+      "text": "A spinning hole carries an initial distortion whose evolution emits gravitational radiation as the hole approaches Kerr [gleiser1998by]."
+    }
+  ]
+}
