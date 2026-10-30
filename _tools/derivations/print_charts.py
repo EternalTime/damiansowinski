@@ -36786,6 +36786,11 @@ def mtt_check(chart, system):
 CHARTS["mclenaghan_tariq_tupper"] = [lambda s=s: mclenaghan_tariq_tupper(s) for s in MTT_CHARTS]
 
 
+from thakurta import CHART_IDS as THAKURTA_CHARTS, chart_spec as thakurta_chart
+
+CHARTS["thakurta"] = [lambda s=s: thakurta_chart(s) for s in THAKURTA_CHARTS]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])

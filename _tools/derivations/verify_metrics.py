@@ -2951,6 +2951,22 @@ RATES = {
     **{("vaidya_patel_kerr", chart): {"r": {"u": "-1", "t": "1"}} for chart in ("einstein_vaidya", "expanding_vaidya")},
 }
 
+
+# The non-rotating conformal Schwarzschild family, in geometrized length coordinates.
+for _chart, _time, _radial in (("conformal", r"\eta", "r"), ("cosmic", "t", "r"),
+                              ("areal", "t", "R"), ("isotropic", r"\eta", r"\sigma"),
+                              ("tortoise", r"\eta", "x")):
+    DIMENSIONS[("thakurta", _chart)] = {_time: "L", _radial: "L", r"\theta": "1", r"\phi": "1", "m": "L", "a": "1"}
+DIMENSIONS[("thakurta", "tortoise")]["r"] = "L"
+DIMENSIONS[("thakurta", "kruskal")] = {"U": "1", "V": "1", r"\theta": "1", r"\phi": "1", "m": "L", "r": "L", r"\eta": "L", r"\eta_0": "L"}
+HELD[("thakurta", "tortoise")] = ("r",)
+HELD[("thakurta", "kruskal")] = ("r", "eta")
+RATES[("thakurta", "tortoise")] = {"r": {"x": r"1-2m/r"}}
+RATES[("thakurta", "kruskal")] = {
+    "r": {"U": r"2m(r-2m)/(rU)", "V": r"2m(r-2m)/(rV)"},
+    "eta": {"U": "-2m/U", "V": "2m/V"}}
+
+
 # The systems whose delta stands on a curved background, where what multiplies it varies across
 # it: the delta is read as a smooth pulse while the tensors are built and taken to its limit
 # where two values are compared. See on_the_shock.

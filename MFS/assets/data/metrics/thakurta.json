@@ -22,7 +22,188 @@
     "maciel2024thakurta",
     "sato2023corrigendum"
   ],
-  "coordinates": [],
+  "coordinates": [
+    {
+      "id": "conformal",
+      "name": "Conformal Spherical",
+      "coords": [
+        "\\eta",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Constant mass length."
+        },
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Positive dimensionless scale factor."
+        }
+      ],
+      "domains": [
+        "\\eta \\in (0, \\infty)",
+        "r \\in (2m, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "line_element": "ds^2 = a^2\\left(-\\left(1-\\dfrac{2m}{r}\\right)d\\eta^2 + \\dfrac{dr^2}{\\left(1-\\dfrac{2m}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "convention": "Conformal time $\\eta$ has dimensions of length. The scale factor is $a(\\eta)>0$, and $r$ is the Schwarzschild radial coordinate. The sphere has areal radius $R=ar$."
+    },
+    {
+      "id": "cosmic",
+      "name": "Cosmic Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Constant mass length."
+        },
+        {
+          "symbol": "a = a(t)",
+          "description": "Positive dimensionless scale factor."
+        }
+      ],
+      "domains": [
+        "t \\in (0, \\infty)",
+        "r \\in (2m, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "line_element": "ds^2 = -\\left(1-\\dfrac{2m}{r}\\right)dt^2 + a^2\\left(\\dfrac{dr^2}{\\left(1-\\dfrac{2m}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "convention": "Cosmic time $t$ satisfies $dt=a\\,d\\eta$, and $a=a(t)>0$. The radial coordinate $r$ is comoving, with areal radius $R=ar$."
+    },
+    {
+      "id": "areal",
+      "name": "Cosmic Areal",
+      "coords": [
+        "t",
+        "R",
+        "\\theta",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Constant mass length."
+        },
+        {
+          "symbol": "a = a(t)",
+          "description": "Positive dimensionless scale factor."
+        }
+      ],
+      "domains": [
+        "t \\in (0, \\infty)",
+        "R \\in (2ma, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "line_element": "ds^2 = -\\left(1-\\dfrac{2ma}{R}\\right)dt^2 + \\dfrac{\\left(dR-\\dfrac{\\partial_t a}{a}R\\,dt\\right)^2}{\\left(1-\\dfrac{2ma}{R}\\right)} + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "convention": "The radius $R=ar$ is the areal radius, $a=a(t)>0$, and $t$ is cosmic time. The cross term follows from $a\\,dr=dR-(\\partial_ta/a)R\\,dt$."
+    },
+    {
+      "id": "isotropic",
+      "name": "Conformal Isotropic",
+      "coords": [
+        "\\eta",
+        "\\sigma",
+        "\\theta",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Constant mass length."
+        },
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Positive dimensionless scale factor."
+        }
+      ],
+      "domains": [
+        "\\eta \\in (0, \\infty)",
+        "\\sigma \\in (m/2, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "line_element": "ds^2 = a^2\\left(-\\dfrac{\\left(1-m/(2\\sigma)\\right)^2}{\\left(1+m/(2\\sigma)\\right)^2}d\\eta^2 + \\left(1+\\dfrac{m}{2\\sigma}\\right)^4\\left(d\\sigma^2+\\sigma^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+      "convention": "The isotropic radius $\\sigma>m/2$ obeys $r=\\sigma(1+m/(2\\sigma))^2$. Conformal time is $\\eta$ and the scale factor is $a(\\eta)>0$."
+    },
+    {
+      "id": "tortoise",
+      "name": "Tortoise",
+      "coords": [
+        "\\eta",
+        "x",
+        "\\theta",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Constant mass length."
+        },
+        {
+          "symbol": "a = a(\\eta)",
+          "description": "Positive dimensionless scale factor."
+        },
+        {
+          "symbol": "r = 2m\\left(1 + \\mathrm{W}\\left(e^{x/(2m)-1}\\right)\\right)",
+          "description": "Schwarzschild radial coordinate as a function of this chart."
+        }
+      ],
+      "domains": [
+        "\\eta \\in (0, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "line_element": "ds^2 = a^2\\left(\\left(1-\\dfrac{2m}{r}\\right)\\left(-d\\eta^2+dx^2\\right)+r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "convention": "The tortoise coordinate is $x=r+2m\\ln(r/(2m)-1)$. The principal real Lambert function $\\mathrm{W}$ obeys $\\mathrm{W}(z)e^{\\mathrm{W}(z)}=z$. The scale factor is $a(\\eta)>0$."
+    },
+    {
+      "id": "kruskal",
+      "name": "Kruskal Null, Dust Expansion",
+      "coords": [
+        "U",
+        "V",
+        "\\theta",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Constant mass length."
+        },
+        {
+          "symbol": "\\eta_0",
+          "description": "Positive reference conformal time."
+        },
+        {
+          "symbol": "r = 2m\\left(1 + \\mathrm{W}\\left(-UV e^{-1}\\right)\\right)",
+          "description": "Schwarzschild radial coordinate as a function of this chart."
+        },
+        {
+          "symbol": "\\eta = 2m\\ln\\left(-V/U\\right)",
+          "description": "Static conformal time as a function of the null coordinates."
+        }
+      ],
+      "domains": [
+        "U \\in (-\\infty, 0)",
+        "V \\in (-U, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "line_element": "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(\\dfrac{16m^2(r-2m)}{rUV}dU\\,dV + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "convention": "This chart uses $a=(\\eta/\\eta_0)^2$, with $\\eta_0>0$. The null coordinates are $U=-e^{-(\\eta-x)/(4m)}$ and $V=e^{(\\eta+x)/(4m)}$, where $x=r+2m\\ln(r/(2m)-1)$. The exterior after the initial singularity has $U<0$ and $V>-U$. The principal Lambert function fixes $r$."
+    }
+  ],
   "related": [
     {
       "id": "schwarzschild",
