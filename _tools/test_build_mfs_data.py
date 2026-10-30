@@ -7202,6 +7202,50 @@ class Aspect(unittest.TestCase):
         wide, = build.aspect_problems("kerr", self.file([-2, 2, 0, 1]))
         self.assertIn("4.00:1", wide)
 
+    def test_every_kind_and_curvature_region_uses_the_same_limits(self):
+        cases = [
+            ("conformal", {"views": [{"id": "edge", "box": [0, 1, 0, 3]}]}),
+            ("embedding", {"views": [{"id": "edge", "figure": {"box": [0, 1, 0, 3]}}]}),
+            ("curvature", {"views": [{"id": "edge", "kind": "map",
+                                     "x": {"from": 0, "to": 1}, "y": {"from": 0, "to": 3}}]}),
+            ("curvature", {"views": [{"id": "edge", "kind": "line",
+                                     "panels": [{"id": "p", "aspect": 3}]}]}),
+            ("curvature", {"views": [{"id": "edge", "kind": "line",
+                                     "panels": [{"id": str(i), "aspect": 1} for i in range(3)]}]}),
+        ]
+        for kind, data in cases:
+            with self.subTest(kind=kind, data=data):
+                problems = build.aspect_problems("x", data, kind)
+                self.assertTrue(problems)
+                self.assertIn(f"{kind}/x.json edge", problems[0])
+                with self.assertRaises(build.DataError):
+                    build.check_aspects({}, **{kind: {"x": data}})
+        with self.assertRaisesRegex(build.DataError, "has no aspect measure"):
+            build.check_aspects({}, future={"x": {"views": []}})
+
+    def test_padding_only_enlarges_the_window_and_leaves_valid_windows_alone(self):
+        for box in ([0, 1, 0, 4], [0, 4, 0, 1], [-1, 1, -1, 1]):
+            padded = build.padded_window(box)
+            self.assertLessEqual(padded[0], box[0])
+            self.assertGreaterEqual(padded[1], box[1])
+            self.assertLessEqual(padded[2], box[2])
+            self.assertGreaterEqual(padded[3], box[3])
+            self.assertTrue(0.5 <= build.view_aspect({"box": padded}) <= 2)
+        self.assertEqual(build.padded_window([-1, 1, -1, 1]), [-1, 1, -1, 1])
+
+    def test_an_enlarged_embedding_window_fits_labels_at_its_final_scale(self):
+        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+        import embedding
+        label = {"at": [0.25, 0], "text": "$" + "r" * 45 + "$", "class": "small",
+                 "anchor": "l", "dx": 8, "dy": 0}
+        box = embedding.fit_window([-0.3, 0.3, -2, 2], [label])
+        x0, y0, x1, y1 = embedding.label_box(label, (box[1] - box[0]) / 560)
+        self.assertLessEqual(box[0], x0)
+        self.assertLessEqual(x1, box[1])
+        self.assertLessEqual(box[2], y0)
+        self.assertLessEqual(y1, box[3])
+        self.assertTrue(0.5 <= build.view_aspect({"box": box}) <= 2)
+
     def test_a_diagram_outside_the_limits_stops_the_build_and_leaves_the_files_alone(self):
         diagrams = copy.deepcopy(diagram_files(every=True))
         name = sorted(diagrams)[0]

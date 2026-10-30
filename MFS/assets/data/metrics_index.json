@@ -196,7 +196,7 @@
     "version": "b3ebc7538e485359",
     "diagrams": "dc13a758c6ce9e83",
     "conformal": "a879de23f7faf4b3",
-    "embedding": "c140dd553d561027",
+    "embedding": "572ba49646346a3a",
     "curvature": "d5392d81473c757a"
   },
   {
@@ -450,7 +450,7 @@
     "version": "ab8abecd3098bf4b",
     "diagrams": "3db667c16a7e7f5b",
     "conformal": "ccbbac884fd12a06",
-    "embedding": "10fc45eaf22d2da9"
+    "embedding": "ceeab6a7ab8b327f"
   },
   {
     "id": "big_rip",
@@ -483,7 +483,7 @@
     "version": "6b56b04d2767abcb",
     "diagrams": "dfcdcf371744ecf1",
     "conformal": "1634e5cc998338f9",
-    "embedding": "4bc4eb0f51470939"
+    "embedding": "c88dabd552d50013"
   },
   {
     "id": "black_to_white_hole",
@@ -554,7 +554,7 @@
     ],
     "version": "e5658f970eff3005",
     "diagrams": "64069f5e3159e0e7",
-    "embedding": "726e24d2db3acd3e",
+    "embedding": "96a0983642838198",
     "curvature": "a20afe04d7fc58db"
   },
   {
@@ -589,7 +589,7 @@
     "version": "fa21ea839b7cc8b2",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
-    "embedding": "6f1faae1e35e650b"
+    "embedding": "163c135cc969d5f9"
   },
   {
     "id": "bondi_sachs",
@@ -711,7 +711,7 @@
     "version": "d310c4c58505c8fd",
     "diagrams": "c33a80d5fbd3405b",
     "conformal": "5a2e7ecd5c36aed6",
-    "embedding": "2e2e3d2fe70fcce0",
+    "embedding": "46e51a0ccad0ce53",
     "curvature": "8a3d2a2465a5ec1a"
   },
   {
@@ -741,7 +741,7 @@
     "version": "5dd37517ea96051d",
     "diagrams": "f0fbc5b3a954d5c0",
     "conformal": "35ac3817c45f10f9",
-    "embedding": "b7f898b0ae23639c",
+    "embedding": "83ef0b04436dd20a",
     "curvature": "6385f179ed6281b5"
   },
   {
@@ -805,7 +805,7 @@
     ],
     "version": "447ac2bdd73e00f7",
     "diagrams": "2122349c176f47ed",
-    "conformal": "f82fe13ee8206113",
+    "conformal": "fe30a252dab8b052",
     "embedding": "c306446463337712",
     "curvature": "28f92f5e309235e6"
   },
@@ -845,7 +845,7 @@
     "version": "689fa9631baebc0c",
     "diagrams": "57ee5c7562cefd4b",
     "conformal": "e2bbbb9cac6bd337",
-    "embedding": "5e7af1a4e6b9a9b6",
+    "embedding": "fdfe57a58165ac19",
     "curvature": "4545effe452d8526"
   },
   {
@@ -918,7 +918,7 @@
     ],
     "version": "8139f62e08066e6b",
     "diagrams": "aad81dc2048a0547",
-    "conformal": "6c5c22a5247f56a8",
+    "conformal": "235a9c07b83bc763",
     "embedding": "d857ba18e7d9066a",
     "curvature": "875808198beb89a7"
   },
@@ -1058,7 +1058,7 @@
       "idealized model"
     ],
     "version": "6bfc060b31b6bbfe",
-    "embedding": "be58694ee9d966c0",
+    "embedding": "0665e353193ed99b",
     "curvature": "a594586a8e3812ff"
   },
   {
@@ -1313,7 +1313,7 @@
     ],
     "version": "481442897f513ac7",
     "diagrams": "0c8055201b356841",
-    "conformal": "67014d080f0dd52b",
+    "conformal": "9a86449fd5dc7244",
     "embedding": "2c30edaa0cee4bdc"
   },
   {
@@ -1591,7 +1591,7 @@
     "version": "7c8925b84f027b69",
     "diagrams": "3293440e9059a970",
     "conformal": "49c40202992137c1",
-    "embedding": "a0dc24d8631c665d",
+    "embedding": "84b96fdfc56548d3",
     "curvature": "fff48b88cf1101d9"
   },
   {
@@ -1662,7 +1662,7 @@
     "version": "9de216666f68929a",
     "diagrams": "f15df464f0bd3714",
     "conformal": "4e349fa775a9fedb",
-    "embedding": "296f0b60caedc6cf"
+    "embedding": "0b94902b156b8152"
   },
   {
     "id": "eguchi_hanson",
@@ -1819,7 +1819,7 @@
     ],
     "version": "91af6aa316f3fcc6",
     "diagrams": "7c0ed7cc7e087f7f",
-    "embedding": "3f468d0fec878b32",
+    "embedding": "fff7a814e65cff6e",
     "curvature": "cbad1f48551b27a9"
   },
   {
@@ -2074,7 +2074,7 @@
     "version": "71e1c3f11e804846",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
-    "embedding": "3cdd1185c95f1f46",
+    "embedding": "702d68d9fe0d4f1d",
     "curvature": "0f94112712e7110b"
   },
   {
@@ -2212,7 +2212,7 @@
     "version": "205c935c08fbffcd",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
-    "embedding": "364e0217d4805443",
+    "embedding": "0715fc5083d2df7a",
     "curvature": "a9c0014fd398ed71"
   },
   {
@@ -2323,7 +2323,7 @@
     "version": "8ca0b151054c86d6",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
-    "embedding": "f0d7a1bdcd0620df",
+    "embedding": "84b1c9abf03c3c01",
     "curvature": "f35a558b981942af"
   },
   {
@@ -2387,7 +2387,7 @@
       "idealized model"
     ],
     "version": "68f9be4929fe0e04",
-    "embedding": "a33ae90f2b057aee",
+    "embedding": "f7b5f03abe971ff6",
     "curvature": "23007b402fd37c38"
   },
   {
@@ -2785,7 +2785,7 @@
     "version": "ae9f9af5cfc74cfe",
     "diagrams": "90d54985332dcf14",
     "conformal": "47650710de79f09c",
-    "embedding": "3daf392852ed147c",
+    "embedding": "d67797d3b49aa7ba",
     "curvature": "85a9f8819b737f32"
   },
   {
@@ -2845,7 +2845,7 @@
     "version": "84d66e711d51009c",
     "diagrams": "af83133484b3c126",
     "conformal": "5aa345afee4654d8",
-    "embedding": "46d9d6d9484b8e00",
+    "embedding": "7e661e3124d380aa",
     "curvature": "c4c90f685f7f5ec4"
   },
   {
@@ -3163,7 +3163,7 @@
     ],
     "version": "4cfa1e6788962222",
     "diagrams": "7dc03a9eedf6e5a2",
-    "conformal": "4f803c414fba5da6",
+    "conformal": "285d4f33c4486dd2",
     "embedding": "f1315ee1ffa48ebb"
   },
   {
@@ -3200,7 +3200,7 @@
     "version": "c6f3f8d68fea752c",
     "diagrams": "751e7bb9426ca853",
     "conformal": "c948590fa4547aec",
-    "embedding": "d603369104ee5eab",
+    "embedding": "8c4b344875f825be",
     "curvature": "faa89e7625b916d1"
   },
   {
@@ -3397,7 +3397,7 @@
     "version": "470396427b4c9344",
     "diagrams": "cdb14d2cd4994bf6",
     "conformal": "12298805078c9773",
-    "embedding": "93002f20411a5f03"
+    "embedding": "c1d8898d9745f721"
   },
   {
     "id": "krasnikov",
@@ -3597,7 +3597,7 @@
     "version": "a94ddb6515696e6c",
     "diagrams": "79ea70865a3595d1",
     "conformal": "e174596b63171289",
-    "embedding": "bc12998ea149ca7e"
+    "embedding": "9b4467004019c7c7"
   },
   {
     "id": "maitra_dust",
@@ -3845,7 +3845,7 @@
     ],
     "version": "f58083f56c331ebb",
     "diagrams": "1e8a40c11bf25b40",
-    "conformal": "5bfaa0670ab1bb25",
+    "conformal": "8eca882a8f2cfb79",
     "embedding": "2c9b70767c1e34be",
     "curvature": "0107beb4aaf05ab3"
   },
@@ -3876,7 +3876,7 @@
     "version": "9d907e6f052d1bcc",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
-    "embedding": "86969fc37532f407",
+    "embedding": "f82056eed836aaf8",
     "curvature": "de05ecefe45599e2"
   },
   {
@@ -4077,7 +4077,7 @@
     ],
     "version": "b5b229bd2f339927",
     "diagrams": "fcd9b835546fa10a",
-    "conformal": "83b45b101a7e6db4",
+    "conformal": "5201752f1d1e4844",
     "embedding": "6602c018a8504748"
   },
   {
@@ -4309,7 +4309,7 @@
     "version": "4328ad15551af25c",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
-    "embedding": "d2cedaf6a4fa93cb",
+    "embedding": "7667dd747e7d1a4d",
     "curvature": "537d16288efa7809"
   },
   {
@@ -4387,7 +4387,7 @@
     "version": "c64fb8d2534bfdf5",
     "diagrams": "6fd971676062a65c",
     "conformal": "20e04688ba6cf230",
-    "embedding": "3a2c6a2557fbf67a",
+    "embedding": "a1af7a0037273cf7",
     "curvature": "889fb5c57e63fcf9"
   },
   {
@@ -4437,7 +4437,7 @@
     "version": "a1d450671bd4551f",
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
-    "embedding": "7b305003632e43d9"
+    "embedding": "984dd972b1a2fddf"
   },
   {
     "id": "ozsvath_dust",
@@ -4587,7 +4587,7 @@
     ],
     "version": "d11f45c76a19dd15",
     "diagrams": "0690f4bc485f74e3",
-    "embedding": "fde09cde623a1c8c",
+    "embedding": "7e06aed96dd3c60c",
     "curvature": "9996ac09da4ca1ba"
   },
   {
@@ -4678,7 +4678,7 @@
     ],
     "version": "29a10ce84bf7e81f",
     "diagrams": "4fa9e29b17d51d20",
-    "conformal": "ec15d211d9118915",
+    "conformal": "a1c6fef8b6655acc",
     "embedding": "b7a09dddf9867ddf"
   },
   {
@@ -4736,7 +4736,7 @@
     "version": "1a7c2cbf23899ba0",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
-    "embedding": "925f9f623e566c24"
+    "embedding": "c40545f1ea0c929c"
   },
   {
     "id": "pp_wave",
@@ -4755,7 +4755,7 @@
     ],
     "version": "1b93c87164dbbb92",
     "diagrams": "6e432dbfef4f0d7d",
-    "embedding": "a484d91e42495a51"
+    "embedding": "c2fea606320f23bc"
   },
   {
     "id": "quantum_btz",
@@ -4797,7 +4797,7 @@
     ],
     "version": "c07cd5922b295ce4",
     "diagrams": "9e27900d07c618e4",
-    "conformal": "4fb359269e6b0ef1",
+    "conformal": "6d0610f9c9f91a25",
     "embedding": "aa11b776d61eb469"
   },
   {
@@ -4972,7 +4972,7 @@
     ],
     "version": "fa4715cd89b09e55",
     "diagrams": "84d8aa4c800066d0",
-    "conformal": "df06b8d369f90c16",
+    "conformal": "3d5ddd92f7851875",
     "embedding": "b5e538549e42926e"
   },
   {
@@ -5014,7 +5014,7 @@
     "version": "b1809a519c7e0afc",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
-    "embedding": "342b4919bb1495ae",
+    "embedding": "4d304b421f18a69a",
     "curvature": "58681f439a504154"
   },
   {
@@ -5047,7 +5047,7 @@
     "version": "d114a736484ecea8",
     "diagrams": "ef50bbbb10b2fcf3",
     "conformal": "7870256e2aa08cb4",
-    "embedding": "7d4fbd4e5c072163",
+    "embedding": "c4852dac6f3f346e",
     "curvature": "046dbbf7b7be5dc0"
   },
   {
@@ -5323,7 +5323,7 @@
     ],
     "version": "c98a2ae64685c8c3",
     "diagrams": "01986085179076c1",
-    "conformal": "da2331625dd4e7df",
+    "conformal": "32bdc5cbd0072ca8",
     "embedding": "2693e5d4af5edd89"
   },
   {
@@ -5542,7 +5542,7 @@
     "version": "156439d55b316403",
     "diagrams": "4fe4b870a1063747",
     "conformal": "60e261619c0672af",
-    "embedding": "31ff007c1a714047"
+    "embedding": "bc57c8422b6337be"
   },
   {
     "id": "som_raychaudhuri",
@@ -5601,7 +5601,7 @@
     "version": "12988fb519e3702b",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
-    "embedding": "d2f10fa2373b33b4"
+    "embedding": "8ceb22efb0ed465b"
   },
   {
     "id": "stiff_fluid_universes",
@@ -5621,7 +5621,7 @@
     "version": "875d16f1f2621681",
     "diagrams": "adc8c2dc582c9b84",
     "conformal": "f462a84914c217d1",
-    "embedding": "10a8c1017f1ea66b",
+    "embedding": "6a1bc6f9c3a87571",
     "curvature": "17ddb5c7ece66e27"
   },
   {
@@ -5746,7 +5746,7 @@
     "version": "ac0e9c03a4d49f7a",
     "diagrams": "e6957591dd83230d",
     "conformal": "bcf35826e01e4d80",
-    "embedding": "707a9b9f485a8c7c",
+    "embedding": "c546bedc62cbd556",
     "curvature": "d54f9c60f5289057"
   },
   {
@@ -6076,7 +6076,7 @@
     ],
     "version": "bc62dd6a2a6cf6a6",
     "diagrams": "70598c77af726b80",
-    "conformal": "243a2de40edb7f43",
+    "conformal": "376fd97d44eb677e",
     "embedding": "930f06c7003fad35"
   },
   {
@@ -6188,7 +6188,7 @@
     "version": "673860d1cf2adf86",
     "diagrams": "b6a409820f7523a2",
     "conformal": "27826ad818be5392",
-    "embedding": "9eb052e28dc08c86"
+    "embedding": "d3bc63dd86a87cdc"
   },
   {
     "id": "vaidya",
@@ -6251,7 +6251,7 @@
     ],
     "version": "f1f534829570f88d",
     "diagrams": "dcb1fc774959b7cf",
-    "embedding": "59e1e147d70288cc",
+    "embedding": "eb26e4c2cdd53ec6",
     "curvature": "b0d67ac85d5c9733"
   },
   {
@@ -6298,7 +6298,7 @@
     "version": "1016f434b4f6c964",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
-    "embedding": "aa10dc85dcfab188"
+    "embedding": "ef960fe8cb1357e7"
   },
   {
     "id": "domain_wall",
@@ -6375,7 +6375,7 @@
     ],
     "version": "2bbc4786d263ead8",
     "diagrams": "2cd37e3bf1d0121e",
-    "embedding": "59d9dfc3fa5e54bd"
+    "embedding": "7a431c451f792316"
   },
   {
     "id": "wahlquist",

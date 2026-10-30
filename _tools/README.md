@@ -10,7 +10,7 @@ The search list is ordered by `short_name` alone, case and accents ignored, so G
 There is no per entry sort field, and the build refuses a file that carries `sort_name`; a new spacetime takes its place from its name.
 Cite references by their key in `assets/data/references.bib`.
 Every symbol its mathematics and its drawings use is defined on its page, which the build refuses to go without; "Every symbol is defined" below gives the rule.
-Every spacetime diagram it draws plots a region near 1:1 and never outside 1:2 to 2:1, which the build refuses too; "The shape of a view" under "Spacetime diagrams" gives the rule.
+Every diagram it draws plots a region near 1:1 and never outside 1:2 to 2:1, which the build refuses too; "The shape of a view" under "Spacetime diagrams" gives the rule.
 
 Every entry cites each of its references in its `history`, as `[key]` or `[key1, key2]` at the point the prose leans on it, and lists them in `references` in the order they are first cited.
 The page turns those brackets into numbered links by looking the key up in `references`, so a square bracket in a history is always read as a citation and never printed.
@@ -607,6 +607,11 @@ A new view is a row in each, and the script refuses to run while one lacks the o
 The region a view plots is as near square as its physics allows, and never wider than 2:1 or taller than 1:2, as the captain asked on 2 October 2026: "many of the spacetime diagrams have terrible aspect ratios. We should try to stick to 1:1 aspect ratios, allowing for up to 1:2 and 2:1 but no more than that."
 The shape is the row's `box`, its width over its height in the units of the drawn axes, with a view drawn through a centre twice as wide as the half its row holds; the page and the application both draw the plot at that proportion, one scale on both axes.
 A figure in three dimensions is held to the same limits by the box of its projected drawing.
+The same rule covers every kind: spacetime and conformal views use `box` (including `mirror`), embedding views use `figure.box`, and curvature views use each panel's `aspect`, the assembled stack's aspect, or the map's `x` and `y` ranges.
+An embedding surface has no camera independent silhouette ratio, but its display window is fixed while the reader turns it, so that window is held to the rule too.
+The rotation renderer keeps the turned surface inside that window at one scale.
+`check_aspects` checks all four collections together before the build writes anything, with one bounds policy in `aspect_problems`; an unknown kind is refused until its measure is declared.
+The conformal and embedding generators enlarge outlying windows without removing geometry, and fit labels to the resulting scale.
 Aim for 1:1, as Schwarzschild's $(0, 6, -3, 3)$ is, and go toward a limit only for a reason the caption could state: a coordinate that ends on a horizon, a tip or a collision, a period drawn whole, or a model whose times are its declared input.
 Reach the shape by choosing the window, the coordinate ranges or the stretch of time, so that it still holds the horizons and the feature the view exists for; never squash or stretch one axis to fit.
 The one exception is a plane whose two axes have no common unit, an angle against a length, where equal scaling means nothing: scale the angle by a length of the spacetime through `to_display`, name the axis as that length, and say so in the caption, as the Einstein cluster's $t$ and $\chi$ is drawn against $a\chi/r_s$.

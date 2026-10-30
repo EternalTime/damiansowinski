@@ -548,11 +548,8 @@ def check_line(where, view, read, x):
             raise DataError(f"{at} has no name as TeX between dollar signs")
         check_value_scale(at, panel.get("scale") or {})
         check_ticks(at, panel.get("ticks"), panel["scale"]["from"], panel["scale"]["to"])
-        if not (finite(panel.get("aspect")) and ASPECT_TALLEST - 1e-9 <= panel["aspect"] <= ASPECT_WIDEST + 1e-9):
-            raise DataError(f"{at} plots a panel outside 1:2 to 2:1; choose its aspect nearer 1:1")
-    whole = 1 / sum(1 / p["aspect"] for p in panels)
-    if not ASPECT_TALLEST - 1e-9 <= whole <= ASPECT_WIDEST + 1e-9:
-        raise DataError(f"{where} stacks its panels into a figure outside 1:2 to 2:1")
+        if not (finite(panel.get("aspect")) and panel["aspect"] > 0):
+            raise DataError(f"{at} needs a finite positive panel aspect")
     drawn = set()
     for holder, name in [(view, "")] + [(f, f", frame {k}") for k, f in enumerate(view.get("movie", {}).get("frames", []))]:
         for n, curve in enumerate(holder.get("curves") or []):
@@ -629,9 +626,6 @@ def check_map(where, view, read, x):
     """The cells and marks of a map view, each frame's among them."""
     y = view.get("y")
     check_axis(f"{where}, its vertical axis", y)
-    aspect = (x["to"] - x["from"]) / (y["to"] - y["from"])
-    if not ASPECT_TALLEST - 1e-9 <= aspect <= ASPECT_WIDEST + 1e-9:
-        raise DataError(f"{where} maps a region outside 1:2 to 2:1; choose a box nearer 1:1")
     colour = view.get("colour") or {}
     if not (isinstance(colour.get("name"), str) and TEX_LABEL.match(colour["name"])):
         raise DataError(f"{where} does not name what its colour is as TeX between dollar signs")
@@ -1619,7 +1613,7 @@ def check_dollars():
         raise DataError("\n".join(problems))
 
 
-# The widest and the tallest a spacetime diagram's plotted region may be, as width over height.
+# The widest and tallest any diagram's display region may be, as width over height.
 ASPECT_WIDEST = 2.0
 ASPECT_TALLEST = 0.5
 
@@ -1641,34 +1635,61 @@ def padded_window(box):
 
 
 def view_aspect(view):
-    """The width over the height of the region a view of a spacetime diagram plots, as the page
-    and the application draw it: its box at one scale on both axes, a view drawn through a centre
-    twice as wide as the half its file holds."""
+    """A boxed display region at one scale on both axes, as the page draws it.
+
+    A view drawn through a centre is twice as wide as the half its file holds.
+    """
     x0, x1, y0, y1 = view["box"]
     width = 2 * x1 if view.get("mirror") else x1 - x0
     return width / (y1 - y0)
 
 
-def aspect_problems(name, data):
-    """Each view and figure of one parsed diagram file whose plotted region is wider than 2:1 or
-    taller than 1:2, named by its place. The captain asked on 2 October 2026 that the spacetime
-    diagrams "stick to 1:1 aspect ratios, allowing for up to 1:2 and 2:1 but no more than that"."""
+def aspect_regions(kind, data):
+    """Every display region, including panels and their assembled figure.
+
+    Embeddings keep a fixed figure box while their surfaces turn inside it.
+    Unknown kinds are refused so adding a kind requires declaring its display regions.
+    """
+    if kind == "diagrams":
+        for part in ("systems", "projections"):
+            for system, views in data.get(part, {}).items():
+                for view in views:
+                    yield f"{system}/{view['id']}", view_aspect(view)
+    elif kind in ("conformal", "embedding"):
+        for view in data["views"]:
+            yield view["id"], view_aspect(view if kind == "conformal" else view["figure"])
+    elif kind == "curvature":
+        for view in data["views"]:
+            if view["kind"] == "line":
+                for panel in view["panels"]:
+                    yield f"{view['id']}, panel {panel['id']!r}", panel["aspect"]
+                yield view["id"], 1 / sum(1 / p["aspect"] for p in view["panels"])
+            elif view["kind"] == "map":
+                x, y = view["x"], view["y"]
+                yield view["id"], (x["to"] - x["from"]) / (y["to"] - y["from"])
+            else:
+                raise DataError(f"curvature view {view['id']!r} has no aspect measure")
+    else:
+        raise DataError(f"diagram kind {kind!r} has no aspect measure")
+
+
+def aspect_problems(name, data, kind="diagrams"):
+    """The one aspect policy for every kind's display regions."""
     problems = []
-    for part in ("systems", "projections"):
-        for system_id, views in data.get(part, {}).items():
-            for view in views:
-                aspect = view_aspect(view)
-                if not ASPECT_TALLEST - 1e-9 <= aspect <= ASPECT_WIDEST + 1e-9:
-                    shape = f"{aspect:.2f}:1" if aspect > 1 else f"1:{1 / aspect:.2f}"
-                    problems.append(
-                        f"diagrams/{name}.json {system_id}/{view['id']} plots a region of {shape}, outside "
-                        "1:2 to 2:1; choose a window nearer 1:1 in its row and redraw it")
+    for place, aspect in aspect_regions(kind, data):
+        if not finite(aspect) or not ASPECT_TALLEST - 1e-9 <= aspect <= ASPECT_WIDEST + 1e-9:
+            shape = (f"{aspect:.2f}:1" if aspect > 1 else f"1:{1 / aspect:.2f}") if aspect > 0 else str(aspect)
+            problems.append(
+                f"{kind}/{name}.json {place} plots a region of {shape}, outside "
+                "1:2 to 2:1; choose a window nearer 1:1 in its row and redraw it")
     return problems
 
 
-def check_aspects(diagrams):
-    """Refuse a spacetime diagram whose plotted region is outside 1:2 to 2:1, naming each."""
-    problems = [problem for name, data in sorted(diagrams.items()) for problem in aspect_problems(name, data)]
+def check_aspects(diagrams, **collections):
+    """Refuse every outlying display region before any build output is written."""
+    collections = {"diagrams": diagrams, **collections}
+    problems = [problem for kind, files in collections.items() for name, data in sorted(files.items())
+                for problem in aspect_problems(name, data, kind)]
     if problems:
         raise DataError("\n".join(problems))
 
@@ -1691,12 +1712,14 @@ def main(argv=None):
         check_conventions(metrics)
         check_relations(metrics)
         check_tags(metrics)
-        diagrams = load_diagrams(metrics)
-        check_aspects(diagrams)
-        conformal = load_conformal(metrics)
-        embedding = load_embedding(metrics)
+        # Register every diagram collection here: every loader's result passes the same
+        # aspect gate, including a future kind, which must declare its measure first.
+        loaders = {"diagrams": load_diagrams, "conformal": load_conformal,
+                   "embedding": load_embedding, "curvature": load_curvature}
+        collections = {kind: load(metrics) for kind, load in loaders.items()}
+        check_aspects(**collections)
+        diagrams, conformal, embedding, curvature = (collections[kind] for kind in loaders)
         check_embedding(metrics, embedding)
-        curvature = load_curvature(metrics)
         check_slices(diagrams, conformal, embedding)
         check_shades(conformal, embedding)
         check_symbols(metrics, diagrams, conformal, embedding, curvature)
