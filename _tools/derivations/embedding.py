@@ -17898,7 +17898,8 @@ def cahen_wallach(ck, src):
                                        - np.column_stack([math.cosh(u) * np.cos(alpha), math.cos(u) * np.sin(alpha)])))
                          for u in us])), 1e-8)
     top = 2.6
-    us, keys = movie_values([0.0, 0.3, 0.6, 0.9, 1.2, 1.5], 0.1)
+    # The movie runs through the wave fronts at a steady u, a frame every 0.05L of cu.
+    us, keys = movie_values([0.0, 0.3, 0.6, 0.9, 1.2, 1.5], 0.05)
     frames = []
     for u in [round(u, 9) for u in us]:
         sl = FlatPlane(src, name, "brinkmann", "x", "y", {"u": repr(u), "v": 0},
@@ -17909,7 +17910,8 @@ def cahen_wallach(ck, src):
         w = run.sol(u)
         cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
         ring, dots = particles(ck, where, sl, plane, cx, cy)
-        frames.append(Surface([plane], label=f"$cu = {u:g}L$", time=u, curves=[ring], dots=dots))
+        frames.append(Surface([plane], label="$u = 0$" if u == 0 else f"$cu = {u:g}L$", time=u, curves=[ring],
+                              dots=dots))
     surfaces = [frames[i] for i in keys]
 
     def wave_rows(u):

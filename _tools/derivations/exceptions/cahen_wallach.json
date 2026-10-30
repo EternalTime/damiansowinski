@@ -1,0 +1,102 @@
+{
+  "hidden_moments": [
+    {
+      "reason": "The ring of the vacuum member is drawn at cu = 0, 0.3L, 0.6L, 0.9L, 1.2L and 1.5L, in the ring's view and on the tube alike: the Rosen chart ends at u = 0, so neither of its figures holds the first.",
+      "drawings": {
+        "cahen_wallach/rosen/push": [
+          [
+            "ring",
+            0,
+            null
+          ],
+          [
+            "tube",
+            0,
+            0
+          ]
+        ],
+        "cahen_wallach/rosen/pull": [
+          [
+            "ring",
+            0,
+            null
+          ],
+          [
+            "tube",
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "reason": "The rotating chart draws the conformally flat member, a different spacetime from the vacuum member whose wave fronts the ring is drawn on, so its figure holds none of them.",
+      "drawings": {
+        "cahen_wallach/rotating/turning": [
+          [
+            "tube",
+            0,
+            0
+          ],
+          [
+            "tube",
+            0,
+            1
+          ],
+          [
+            "tube",
+            0,
+            2
+          ],
+          [
+            "tube",
+            0,
+            3
+          ],
+          [
+            "tube",
+            0,
+            4
+          ],
+          [
+            "tube",
+            0,
+            5
+          ],
+          [
+            "ring",
+            0,
+            null
+          ],
+          [
+            "ring",
+            1,
+            null
+          ],
+          [
+            "ring",
+            2,
+            null
+          ],
+          [
+            "ring",
+            3,
+            null
+          ],
+          [
+            "ring",
+            4,
+            null
+          ],
+          [
+            "ring",
+            5,
+            null
+          ]
+        ]
+      }
+    }
+  ],
+  "flat": "Its moments are flat planes, and what the spacetime does is carried by its ring of free particles, stacked up its axis of time.",
+  "height": "Its view tube stacks the ring of free particles up its axis of time, a grid whose height is the time."
+}
