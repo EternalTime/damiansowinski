@@ -36791,6 +36791,11 @@ from thakurta import CHART_IDS as THAKURTA_CHARTS, chart_spec as thakurta_chart
 CHARTS["thakurta"] = [lambda s=s: thakurta_chart(s) for s in THAKURTA_CHARTS]
 
 
+# -- Moncrief toroidal horizons -----------------------------------------------------------
+import moncrief_taub_nut as moncrief_torus
+CHARTS["moncrief_taub_nut"] = [lambda s=s: moncrief_torus.spec(s) for s in moncrief_torus.SYSTEMS]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])
