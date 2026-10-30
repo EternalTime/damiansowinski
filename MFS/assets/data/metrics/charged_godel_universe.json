@@ -1,0 +1,106 @@
+{
+  "id": "charged_godel_universe",
+  "name": "Charged universes of Gödel's kind",
+  "short_name": "Charged Gödel universes",
+  "description": "Charged dust rotating rigidly with a magnetic field. Circular paths close in time beyond a radius that moves inward as the field grows at fixed dust density.",
+  "history": "Magnetic fields exert pressure across their field lines and tension along them. That directional stress can accompany pressureless matter in a universe that rotates rigidly, with the same mass density at every event. The matter carries electric charge, yet its Lorentz force vanishes, so the dust follows geodesics through its own electromagnetic field. A. Banerjee and S. Banerji constructed stationary distributions of this kind in March 1968 [banerjee1968charged, klepac2000charged].¶The homogeneous charged family has two geometric scales: the vorticity $\\omega$, measured per unit length, and the curvature parameter $m^2$ of the plane perpendicular to the rotation axis. In Gaussian units with $G=c=1$, a uniform magnetic field of magnitude $B$ satisfies $B^2=\\omega^2-m^2/2$, the cosmological constant is $\\Lambda=-m^2/2$, and the dust's mass density is $\\rho=\\omega^2/(4\\pi)$. The magnetic pressure and tension account for the difference between the transverse and axial stresses, while the dust supplies the remaining energy density. The uncharged endpoint $B=0$ is Gödel's universe, and the member with $m^2=0$ is the homogeneous Som-Raychaudhuri universe [klepac2000charged].¶At a fixed distance from the axis, a circular journey can close in time as well as in space. In cylindrical coordinates $(t,r,\\phi,z)$, where $r$ is proper radial distance and $\\phi$ has period $2\\pi$, the squared length of the circular tangent is $D^2-H^2$: $D$ is the radius of a circle in the dust's local rest geometry, and $H$ is the coefficient of $d\\phi$ added to $c\\,dt$. For $m^2>0$, $D=\\sinh(mr)/m$ and $H=2\\omega(\\cosh(mr)-1)/m^2$, so circles at constant $t,r,z$ become timelike beyond $r_c=2\\operatorname{artanh}(m/(2\\omega))/m$. Every allowed magnetic charged-dust solution on this branch has $m^2\\leq2\\omega^2$, which places that threshold at finite radius [klepac2000charged, kanti1999charged].¶Marcelo J. Rebouças presented another rotating Einstein-Maxwell universe in 1979, with a perfect fluid and an electromagnetic field [reboucas1979charged]. Its electric and magnetic components along the rotation axis vary as a sine and a cosine of the axial coordinate, with constant total electromagnetic energy density and zero electric current [kanti1999charged]. For the trigonometric branch, writing $m^2=-k^2$ with $k>0$, the cylindrical functions become $D=\\sin(kr)/k$ and $H=2\\omega(1-\\cos(kr))/k^2$. The circular tangent then changes between spacelike and timelike on successive radial intervals; a band of spacelike circles alone does not establish that the band is globally causal [kanti1999charged].¶Pavel Klepáč and Jan Horský extended the charged homogeneous solution to radially varying configurations in 2000 [klepac2000charged]. Their charged fluids can have a nonuniform density and a magnetic field whose strength depends on distance from the axis, while retaining stationary cylindrical symmetry. In the homogeneous member, increasing the magnetic field at fixed dust density brings the first null circle closer to the axis: the electromagnetic stress changes the radius at which a circular journey becomes timelike [klepac2000charged].",
+  "references": [
+    "banerjee1968charged",
+    "klepac2000charged",
+    "kanti1999charged",
+    "reboucas1979charged"
+  ],
+  "related": [
+    {
+      "id": "godel",
+      "kind": "special_case",
+      "text": "The uncharged member, $B=0$ and $m^2=2\\omega^2$, with pressureless dust and a negative cosmological constant [klepac2000charged]."
+    },
+    {
+      "id": "som_raychaudhuri",
+      "kind": "special_case",
+      "text": "The member with $m^2=0$ and $\\Lambda=0$, where the cylindrical functions reduce to $D=r$ and $H=\\omega r^2$ [klepac2000charged, kanti1999charged]."
+    }
+  ],
+  "tags": [
+    "dust",
+    "electric charge",
+    "magnetic field",
+    "rotating",
+    "closed timelike curves",
+    "cosmology",
+    "exact solution",
+    "stationary",
+    "homogeneous",
+    "cylindrical symmetry",
+    "axisymmetric",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "rigid rotation",
+    "cosmological constant"
+  ],
+  "signature": "(-+++)",
+  "convention": "We keep $c$ explicit and take tensor components in $x^0=ct$. The vorticity $\\omega$ has dimensions of inverse length. The Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "coordinates": [
+    {
+      "id": "hyperbolic",
+      "name": "Hyperbolic",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\omega",
+          "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
+        },
+        {
+          "symbol": "m",
+          "description": "Positive inverse length, with $m^2\\leq2\\omega^2$ for magnetic dust"
+        }
+      ],
+      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged]."
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\omega",
+          "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
+        }
+      ],
+      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged]."
+    },
+    {
+      "id": "trigonometric",
+      "name": "Trigonometric",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\omega",
+          "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
+        },
+        {
+          "symbol": "k",
+          "description": "Positive inverse length, with the curvature parameter $m^2=-k^2$"
+        }
+      ],
+      "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates. The homogeneous Einstein-Maxwell source is derived from [klepac2000charged, kanti1999charged]."
+    }
+  ]
+}

@@ -81,6 +81,11 @@
       "id": "ozsvath_dust",
       "kind": "generalisation",
       "text": "Ozsváth's class III stretches Gödel's universe along one direction of the plane in which its dust turns and squeezes it along the other, so the dust shears as it turns [wylleman2010]. At $s = 0$ it is Gödel's universe again."
+    },
+    {
+      "id": "charged_godel_universe",
+      "kind": "generalisation",
+      "text": "Rigidly rotating charged dust in a uniform magnetic field. Setting the magnetic field to zero recovers Gödel's universe."
     }
   ],
   "references": [
