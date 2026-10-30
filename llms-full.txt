@@ -650,6 +650,18 @@ An exact vacuum solution describing two black holes that accelerate away from ea
 - chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \dfrac{1}{\left(1 + \alpha r\cos\theta\right)^2}\left(-\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \alpha^2r^2\right)\left(1 - \dfrac{2m}{r}\right)} + \dfrac{r^2d\theta^2}{1 + 2\alpha m\cos\theta} + C^2\left(1 + 2\alpha m\cos\theta\right)r^2\sin^2\theta\,d\phi^2\right)$$
 - chart Hong-Teo: coordinates $(\tau, y, x, \phi)$, $$ds^2 = \dfrac{1}{\alpha^2\left(x + y\right)^2}\left(\left(1 - y^2\right)\left(1 - 2\alpha m y\right)d\tau^2 - \dfrac{dy^2}{\left(1 - y^2\right)\left(1 - 2\alpha m y\right)} + \dfrac{dx^2}{\left(1 - x^2\right)\left(1 + 2\alpha m x\right)} + C^2\left(1 - x^2\right)\left(1 + 2\alpha m x\right)d\phi^2\right)$$
 
+### Cahen-Wallach Symmetric Plane Waves
+
+The plane waves whose curvature is the same at every event and carried unchanged along every geodesic. Among the Lorentzian symmetric spaces that do not split into a product of smaller ones, they are the one family besides de Sitter and anti-de Sitter space. Michel Cahen and Nolan Wallach found them in 1970; a negative eigenvalue of the wave's matrix pulls free particles toward its axis and a positive one pushes them away.
+
+- id: `cahen_wallach`
+- tags: stationary, four-dimensional, plane wave, pp-wave, homogeneous, geodesically complete, no horizon, null Killing vector, null dust, string theory, supergravity, exact solution, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/cahen_wallach.json
+- chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = \left(\lambda_1x^2 + \lambda_2y^2\right)c^2du^2 - 2c\,du\,dv + dx^2 + dy^2$$
+- chart Rotating, Conformally Flat Member: coordinates $(u, v, x, y)$, $$ds^2 = -2c\,du\,dv + dx^2 + dy^2 + 2\omega c\left(x\,dy - y\,dx\right)du$$
+- chart Rosen, Vacuum Member: coordinates $(u, v, p, q)$, $$ds^2 = -2c\,du\,dv + \sinh^2\left(kcu\right)dp^2 + \sin^2\left(kcu\right)dq^2$$
+
 ### Chandrasekhar-Xanthopoulos Colliding Plane Waves
 
 Two plane gravitational waves colliding head on in flat space, each an impulse with a shock wave behind it, their polarizations out of line. Where both have passed the spacetime is locally Kerr's between its horizons, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite.

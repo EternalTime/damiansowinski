@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 202,
+  "count": 203,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1574,6 +1574,11 @@
           "id": "eternal_traversable_wormhole",
           "kind": "family",
           "text": "Anti-de Sitter space of two dimensions, whose two boundaries Maldacena and Qi coupled to each other to make a wormhole that stays open [maldacena2018]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
         }
       ],
       "references": [
@@ -1629,7 +1634,8 @@
         "lin2004",
         "blau2002penrose",
         "berenstein2002",
-        "maldacena2018"
+        "maldacena2018",
+        "cahen1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -4475,6 +4481,11 @@
           "id": "eternal_traversable_wormhole",
           "kind": "family",
           "text": "Global anti-de Sitter space of two dimensions held open as a wormhole by a coupling of its two boundaries [maldacena2018]. Times a sphere, such a throat joins two magnetically charged black holes in the wormhole of Maldacena, Milekhin, and Popov [maldacena2023]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The Lorentzian symmetric spaces that do not split into a product. This one is a product of two symmetric pieces, anti-de Sitter space of two dimensions and a sphere [figueroa2003maximally]."
         }
       ],
       "references": [
@@ -4508,7 +4519,8 @@
         "strominger1996",
         "freund1980",
         "maldacena2018",
-        "maldacena2023"
+        "maldacena2023",
+        "figueroa2003maximally"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -7158,6 +7170,11 @@
           "id": "maximally_supersymmetric_plane_wave",
           "kind": "family",
           "text": "A plane wave of ten dimensions whose profile is quadratic and the same in all eight directions across it, as the profile inside the beam is in two. Light leaving its axis comes back to it after a time $\\pi/\\mu c$ [blau2002, marolf2002]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The symmetric plane waves. Inside the beam the metric is the conformally flat member of four dimensions, its profile quadratic and the same on every front [bonnor1969light]."
         }
       ],
       "references": [
@@ -12421,6 +12438,299 @@
       ]
     },
     {
+      "id": "cahen_wallach",
+      "name": "Cahen-Wallach Symmetric Plane Waves",
+      "short_name": "Cahen-Wallach Spaces",
+      "description": "The plane waves whose curvature is the same at every event and carried unchanged along every geodesic. Among the Lorentzian symmetric spaces that do not split into a product of smaller ones, they are the one family besides de Sitter and anti-de Sitter space. Michel Cahen and Nolan Wallach found them in 1970; a negative eigenvalue of the wave's matrix pulls free particles toward its axis and a positive one pushes them away.",
+      "tags": [
+        "stationary",
+        "four-dimensional",
+        "plane wave",
+        "pp-wave",
+        "homogeneous",
+        "geodesically complete",
+        "no horizon",
+        "null Killing vector",
+        "null dust",
+        "string theory",
+        "supergravity",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The drawings take any length $L$ as their unit.",
+      "related": [
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "family",
+          "text": "The member of ten dimensions whose matrix is $-\\mu^2$ times the identity, so that it pulls toward its axis with one period in all eight directions across it. Held up by the 5-form field of type IIB supergravity, it keeps all 32 supersymmetries [blau2002]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "limit_source",
+          "text": "Zoom in on a light ray circling the black hole on its photon sphere and the Penrose limit is the vacuum member of four dimensions. It pushes rays off the orbit in the radial direction and pulls them back across it at the same rate [fransen2023]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "generalisation",
+          "text": "Plane-fronted waves with parallel rays, whose profile may be any function across the wave and along it. A Cahen-Wallach space is the one whose profile is quadratic across the wave and the same on every front [blau2003homogeneous]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "With anti-de Sitter space, the other kind of Lorentzian symmetric space that does not split into a product [cahen1970, figueroa2003maximally]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "With de Sitter space, the other kind of Lorentzian symmetric space that does not split into a product [cahen1970, figueroa2003maximally]."
+        },
+        {
+          "id": "light_beam",
+          "kind": "family",
+          "text": "Bonnor's beam of light, whose profile inside the beam is quadratic, the same in both directions across it and the same on every front. Inside the beam it is the conformally flat member of four dimensions [bonnor1969light]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "Anti-de Sitter space of two dimensions times a sphere, a Lorentzian symmetric space that splits into a product of the kind the classification allows [figueroa2003maximally]."
+        },
+        {
+          "id": "nariai",
+          "kind": "family",
+          "text": "De Sitter space of two dimensions times a sphere, a symmetric spacetime that splits into a product [figueroa2003maximally]."
+        }
+      ],
+      "references": [
+        "cahen1970",
+        "figueroa2013symmetric",
+        "figueroa2003maximally",
+        "cahen1968",
+        "blau2003homogeneous",
+        "marolf2002",
+        "nappi1993",
+        "halliday2005",
+        "figueroa2001",
+        "kowalski1984",
+        "blau2002",
+        "blau2002penrose",
+        "fransen2023",
+        "bonnor1969light"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cahen_wallach.json",
+      "charts": [
+        {
+          "id": "brinkmann",
+          "name": "Brinkmann",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\lambda_1",
+              "description": "Eigenvalue of the wave's matrix along $x$, an inverse length squared and never zero: negative, it pulls free particles toward the axis $x = 0$ with the angular rate $\\sqrt{-\\lambda_1}\\,c$; positive, it pushes them away at the rate $\\sqrt{\\lambda_1}\\,c$"
+            },
+            {
+              "symbol": "\\lambda_2",
+              "description": "Eigenvalue along $y$, as $\\lambda_1$ is along $x$; the wave is a vacuum when $\\lambda_1 + \\lambda_2 = 0$ and conformally flat when $\\lambda_1 = \\lambda_2$"
+            }
+          ],
+          "convention": "We use coordinates $(u, v, x, y)$, with $u$ the time that labels the wave fronts, carrying dimensions of time, $v$ a length along the rays, and $x$ and $y$ the lengths across them along the eigenvectors of the wave's matrix. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(\\lambda_1x^2 + \\lambda_2y^2\\right)c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\lambda_1\\,x^2 + \\lambda_2\\,y^2"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rotating",
+          "name": "Rotating, Conformally Flat Member",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\omega",
+              "description": "The rate at which the axes turn, an inverse length, so that the axes turn through the angle $\\omega cu$; the member drawn is the conformally flat one, $\\lambda_1 = \\lambda_2 = -\\omega^2$ in the Brinkmann chart, which pulls free particles toward the axis at the angular rate $\\omega c$"
+            }
+          ],
+          "convention": "We use the Brinkmann chart's $u$ and $v$, and lengths $x$ and $y$ along axes that turn about the axis of the wave, $X + iY = e^{i\\omega cu}\\left(x + iy\\right)$ in the Brinkmann chart's $X$ and $Y$. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -2c\\,du\\,dv + dx^2 + dy^2 + 2\\omega c\\left(x\\,dy - y\\,dx\\right)du",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "-\\omega\\,y"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "-\\omega\\,y"
+            },
+            {
+              "indices": [
+                "u",
+                "y"
+              ],
+              "value": "\\omega\\,x"
+            },
+            {
+              "indices": [
+                "y",
+                "u"
+              ],
+              "value": "\\omega\\,x"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rosen",
+          "name": "Rosen, Vacuum Member",
+          "coordinates": [
+            "u",
+            "v",
+            "p",
+            "q"
+          ],
+          "domains": [
+            "u \\in (0, \\pi/kc)",
+            "v \\in (-\\infty, \\infty)",
+            "p \\in (-\\infty, \\infty)",
+            "q \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Strength of the vacuum member, an inverse length, $\\lambda_1 = k^2$ and $\\lambda_2 = -k^2$ in the Brinkmann chart: the wave pushes free particles away from the axis along one direction and pulls them back along the other, both at the rate $kc$"
+            }
+          ],
+          "convention": "We use the Brinkmann chart's time $u$, the length $v$, and lengths $p$ and $q$ that label the light rays leaving the axis at $u = 0$: $x = p\\sinh(kcu)$ and $y = q\\sin(kcu)$ in the Brinkmann chart. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -2c\\,du\\,dv + \\sinh^2\\left(kcu\\right)dp^2 + \\sin^2\\left(kcu\\right)dq^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "p",
+                "p"
+              ],
+              "value": "\\sinh^2\\left(k\\,u\\,c\\right)"
+            },
+            {
+              "indices": [
+                "q",
+                "q"
+              ],
+              "value": "\\sin^2\\left(k\\,u\\,c\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "chandrasekhar_xanthopoulos",
       "name": "Chandrasekhar-Xanthopoulos Colliding Plane Waves",
       "short_name": "Chandrasekhar-Xanthopoulos",
@@ -15355,6 +15665,11 @@
           "id": "bardeen_perturbations",
           "kind": "generalisation",
           "text": "Any Friedmann universe with two small potentials laid over it. At $\\Phi = \\Psi = 0$ and $a = -c/(H\\eta)$ its flat longitudinal gauge is de Sitter space in flat slices."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
         }
       ],
       "references": [
@@ -15403,7 +15718,8 @@
         "gott1998",
         "vilenkin1982",
         "feldbrugge2017",
-        "chiba2005"
+        "chiba2005",
+        "cahen1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -39357,6 +39673,11 @@
           "id": "anti_de_sitter",
           "kind": "family",
           "text": "Anti-de Sitter space alone. A light ray of anti-de Sitter space times a sphere that does not move on the sphere has flat space for its Penrose limit, and only a ray circling the sphere gives this wave [blau2002penrose]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The family it belongs to, the plane waves whose curvature is carried unchanged along every geodesic. This wave is the member whose matrix is $-\\mu^2$ times the identity in ten dimensions [cahen1970, blau2002]."
         }
       ],
       "references": [
@@ -44116,6 +44437,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "The nucleation of a de Sitter universe without black holes, half a 4-sphere joined to de Sitter's waist. Bousso and Hawking gave the rate of pair creation relative to it [bousso1996]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The Lorentzian symmetric spaces that do not split into a product. This one is a product of two symmetric pieces, de Sitter space of two dimensions and a sphere [figueroa2003maximally]."
         }
       ],
       "references": [
@@ -44138,7 +44464,8 @@
         "ortaggio2002direct",
         "ruban1969",
         "krasinski2001ruban",
-        "freund1980"
+        "freund1980",
+        "figueroa2003maximally"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nariai.json",
@@ -50251,6 +50578,11 @@
           "id": "maximally_supersymmetric_plane_wave",
           "kind": "family",
           "text": "A plane wave of ten dimensions with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$, the same in every direction across it, held up by a 5-form field of supergravity. It keeps every supersymmetry of the theory [blau2002]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "special_case",
+          "text": "The pp-wave whose profile is quadratic across the wave and the same on every front, which makes its curvature covariantly constant [blau2003homogeneous]."
         }
       ],
       "references": [
@@ -50295,7 +50627,8 @@
         "bondi1962",
         "sachs1962",
         "blau2002",
-        "lin2004"
+        "lin2004",
+        "blau2003homogeneous"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -55279,6 +55612,11 @@
           "id": "penney_scalar",
           "kind": "generalisation",
           "text": "Schwarzschild's black hole with both an electric charge and a massless scalar field, found by R. Penney in 1969. With both switched on, the sphere of the horizon has zero area and infinite curvature [banerjee1998]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "limit",
+          "text": "The Penrose limit along a light ray on the photon sphere, a vacuum plane wave that pushes rays off the orbit at the rate $c^3/(\\sqrt{27}\\,GM)$ and pulls them back across it at the same rate [fransen2023]."
         }
       ],
       "references": [
@@ -55414,7 +55752,8 @@
         "cardoso2025",
         "buchdahl1964",
         "bonnor1967oscillating",
-        "banerjee1998"
+        "banerjee1998",
+        "fransen2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
