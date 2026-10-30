@@ -7,7 +7,7 @@ Durgapal, doi:10.1088/0305-4470/15/8/039, published in August 1982, chooses a po
 Durgapal and Bannerji, doi:10.1103/PhysRevD.27.328, published in January 1983, have an erratum, doi:10.1103/PhysRevD.28.2695, published in November 1983.
 Finch and Skea, doi:10.1088/0264-9381/6/4/007, published in April 1989, solve the isotropy equation for a paraboloidal spatial geometry.
 All four original records have been verified against Crossref.
-Their original full texts remain unread: the available Academy repository address returns 404, the APS text endpoint refuses access, and the IOP PDF returns a bot-management response.
+Their original full texts remain unread: the available Academy repository address returns 404, the APS text endpoint refuses access, and the IOP PDF returns a response from its bot management service.
 No quotation or equation is attributed to an unread page.
 
 The equations below follow the completely read texts of Delgaty and Lake, arXiv:gr-qc/9809013v1, Thirukkanesh and Maharaj, arXiv:0904.0781v1, and Khugaev, Dadhich, and Molina, arXiv:1603.07118v1.
@@ -41,7 +41,7 @@ y=A(1+x)^{3/2}+B(5+2x)\sqrt{2-x},\qquad
 
 Both independent lapse solutions are retained.
 Khugaev, Dadhich, and Molina's $K=2$ has $x=2r^2/L^2$, so its radial potential is exactly this $Z$.
-Substitution of each lapse basis into their pressure-isotropy equation, or into the equation above, gives zero.
+Substitution of each lapse basis into their equation of pressure isotropy, or into the equation above, gives zero.
 Thus the complete isotropic solution spaces agree, including their two integration constants.
 
 ### Durgapal III, IV, and V
@@ -100,7 +100,7 @@ These conditions also match the extrinsic curvature to Schwarzschild's exterior.
 Indeed, $dy/dr=2Cr\,y_x$, and the boundary equation is exactly the required derivative of the Schwarzschild lapse.
 A jump from a positive surface density to the exterior vacuum is compatible with this matching; a thin shell is unnecessary when the pressure vanishes.
 
-For Durgapal's power lapses the zero-pressure condition determines
+For Durgapal's power lapses the condition of zero pressure determines
 
 $$Z(q)=\frac{1+q}{1+(1+2n)q},\qquad
 u\equiv\frac{GM}{c^2r_b}=\frac{nq}{1+(1+2n)q},\qquad
@@ -115,23 +115,22 @@ Every coefficient of the lapse is therefore fixed once a radius and compactness 
 Delgaty and Lake's Appendix C identifies Durgapal-Bannerji with Buchdahl's 1959 finite star, called Buch1 in their tables.
 Their page 6 has exactly the $Z$ and two lapse basis functions stated above, with the constants interchanged.
 The $K=2$ Vaidya-Tikekar star belongs to this same solution space.
-It is represented once.
 
-The existing `buchdahl_sphere` is Buchdahl's 1964 sphere, called Buch2 by Delgaty and Lake, with isotropic potential $f=GM/(2c^2\sqrt{r^2+R^2})$ and fluid of infinite extent.
+Buchdahl's 1964 sphere, called Buch2 by Delgaty and Lake, has isotropic potential $f=GM/(2c^2\sqrt{r^2+R^2})$ and fluid of infinite extent.
 It is a different geometry from the finite 1959 star.
-The $K=0$ member of the general spheroidal ansatz is the constant-density star already represented by `interior_schwarzschild`.
-It needs a relation and an explicit limiting identification, not another named star.
+The $K=0$ member of the general spheroidal ansatz is Schwarzschild's star of uniform density.
 
 Delgaty and Lake also identify Durgapal III with Heintzmann IIa, and Durgapal II with Wyman IIa at its $n=1$.
 The first lapse power is Tolman IV, whose $g_{tt}$ is proportional to $1+Cr^2$.
 The separate Durgapal-Pande-Phuloria II solution of 1984 is Tolman VII.
 That 1984 result is not Durgapal's 1982 IV or V.
 Neither IV nor V nor Finch-Skea has Tolman VII's quadratic density profile.
-The `tov` geometry has free mass and lapse functions; each isotropic star here specializes those functions and obeys the equilibrium equation.
+The general static spherical metric has free mass and lapse functions; each isotropic star here specializes those functions and obeys the Tolman-Oppenheimer-Volkoff equilibrium equation.
+
 ## Drawing parameters
 
 All five examples have $u=1/5$ and are scaled to $r_b=1$.
-This common mass-to-radius ratio compares the shapes at the same compactness.
+This common ratio of mass to radius compares the shapes at the same compactness.
 It is selected only after checking positive density and pressure, a regular centre, a first zero of pressure, lapse positivity, and subluminal $dp/d\epsilon$ across the interior.
 It is not a claim of dynamical stability or of agreement with a measured neutron star.
 
@@ -142,19 +141,17 @@ The corresponding constants $k$ are approximately $1.71464281995$, $-1.979402109
 The dimensionless central density and pressure, $\mathcal{E}_c/C$ and $\mathcal{P}_c/C$, are respectively $(4.5,0.698509162283)$, $(12.2158926898,1.92803577008)$, $(16.2239206156,2.59202646148)$, $(20.2319550799,3.25601497337)$, and $(3,0.443379358342)$ in the same order.
 Direct differentiation at 50 decimal digits, at the centre and 200 interior or boundary points, finds $dp/d\epsilon$ in the respective intervals $[0.38096,0.39526]$, $[0.46041,0.50544]$, $[0.54368,0.55811]$, $[0.56989,0.62736]$, and $[0.24850,0.27229]$.
 These are sampled bounds, not an exhaustive classification of the parameter domains.
-The largest absolute residual of the pressure-isotropy equation is below $5\times10^{-51}$; that of the equilibrium equation is below $6\times10^{-49}$.
+The largest absolute residual of the equation of pressure isotropy is below $5\times10^{-51}$; that of the equilibrium equation is below $6\times10^{-49}$.
 The central limits are evaluated by Taylor coefficients, avoiding division by $x=0$.
 
 ## Charts and diagrams
 
-The intended areal charts retain the complete lapse and radial potential for the shared Vaidya-Tikekar/Durgapal-Bannerji star, Durgapal III, IV, V, and Finch-Skea.
-The positive-pressure interior ends at $r_b$.
-Schwarzschild's exterior completes each isolated geometry for the spacetime, conformal, and embedding diagrams.
+Each star has the same areal coordinates $(t,r,\theta,\phi)$ with its stated lapse and radial potential.
+The interior with positive pressure ends at $r_b$.
+Schwarzschild's exterior completes each isolated geometry beyond $r_b$.
 Each equatorial embedding has $dz/dr=\sqrt{Z^{-1}-1}$ inside and continues tangentially to the exterior paraboloid.
-No conformal boundary or embedding exclusion is presently required.
 
 ## Validation
 
-The independent matter and junction calculation takes 1.400 seconds for all five stars.
-It uses the source potentials and the neutral field equations, without computing or inserting tensor components by hand.
-The page still requires its chart generator, stored tensors, all diagrams, dedicated tests, and the single scoped page check.
+The residual of pressure isotropy and the independently evaluated equilibrium residual test the complete potentials.
+The density, pressure, central limits, and surface equations use the same geometrical units throughout.
