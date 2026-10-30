@@ -1726,7 +1726,10 @@ class Figure:
                 box_lo = np.minimum(box_lo, [x0 - pad * width / 4, y0 - pad * width / 4])
                 box_hi = np.maximum(box_hi, [x1 + pad * width / 4, y1 + pad * width / 4])
             lo, hi = box_lo + pad * width, box_hi - pad * width
-        box = [box_lo[0], box_hi[0], box_lo[1], box_hi[1]]
+        original_box = [box_lo[0], box_hi[0], box_lo[1], box_hi[1]]
+        box = fit_window(original_box, self.labels, pad)
+        if box != original_box:
+            unit = (box[1] - box[0]) / 560
         boxes = [label_box(L, unit) for L in self.labels]
         for i, a in enumerate(boxes):
             for j, b in enumerate(boxes[:i]):
@@ -1786,6 +1789,32 @@ def label_width(text):
 
 ANCHOR = {"l": (0, -0.5), "r": (-1, -0.5), "t": (-0.5, 0), "b": (-0.5, -1), "c": (-0.5, -0.5),
           "tl": (0, 0), "tr": (-1, 0), "bl": (0, -1), "br": (-1, -1)}
+
+
+def fit_window(box, labels, pad=0.04):
+    """Enlarge an outlying window, fitting labels at the final display scale.
+
+    Geometry and label anchors stay fixed. Healthy windows retain their old fitting path.
+    """
+    fitted = build.padded_window(box)
+    if fitted == list(box):
+        return box
+    for _ in range(32):
+        width = fitted[1] - fitted[0]
+        unit, margin = width / 560, pad * width / 4
+        bounds = [label_box(label, unit) for label in labels]
+        if all(fitted[0] + margin / 2 <= b[0] and b[2] <= fitted[1] - margin / 2
+               and fitted[2] + margin / 2 <= b[1] and b[3] <= fitted[3] - margin / 2 for b in bounds):
+            return fitted
+        grown = [min([fitted[0]] + [b[0] - margin for b in bounds]),
+                 max([fitted[1]] + [b[2] + margin for b in bounds]),
+                 min([fitted[2]] + [b[1] - margin for b in bounds]),
+                 max([fitted[3]] + [b[3] + margin for b in bounds])]
+        grown = build.padded_window(grown)
+        if grown == fitted:
+            return fitted
+        fitted = grown
+    raise AssertionError("the enlarged window cannot hold its labels at the display scale")
 
 
 def label_box(L, unit):
