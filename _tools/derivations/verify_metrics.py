@@ -2512,6 +2512,11 @@ DIMENSIONS = {
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
+DIMENSIONS.update({("charged_godel_universe", system): {
+    "t": "T", "r": "L", "\\phi": "1", "z": "L", "\\omega": "1/L",
+    **({parameter: "1/L"} if parameter else {})}
+    for system, parameter in (("hyperbolic", "m"), ("linear", None), ("trigonometric", "k"))})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),

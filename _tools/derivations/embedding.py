@@ -21530,6 +21530,50 @@ CAPTIONS = {
 }
 
 
+def charged_godel_universe(ck, src):
+    """Each constant-t plane up to its Euclidean surface-of-revolution limit.
+    Both the null circle and the embedding stop are solved from the stored metric."""
+    class DustSlice(Slice):
+        def slope(self, x, side):
+            # Both ends are regular, with g_rr=1. The axis has rho'=1;
+            # the numerically located outer stop has rho'=-1. Avoid treating
+            # a rounded transcendental root as an exact symbolic horizon.
+            if x == 0:
+                return np.array([1.0, 0.0])
+            derivative = float(self._at(self._drho, x))
+            return np.array([derivative, math.sqrt(max(float(self.defect_at(x)), 0.0))])
+
+    views = []
+    for system, rc in (("hyperbolic", math.log(3)), ("linear", 1.0),
+                       ("trigonometric", 2*math.atan(0.5))):
+        params = {"omega": 1, **({"m": 1} if system == "hyperbolic" else {"k": 1} if system == "trigonometric" else {})}
+        sl = DustSlice(src, "charged_godel_universe", system, "r", "\\phi", {"t": 0, "z": 0}, params)
+        stop = brentq(lambda r: float(sl.defect_at(r)), 0.2*rc, 0.99*rc, xtol=1e-14)
+        ck.add(f"Charged universe {system}: null circle", abs(float(sl.gpp_at(rc))), 1e-10)
+        ck.add(f"Charged universe {system}: embedding stop", abs(float(sl.defect_at(stop))), 1e-9)
+        ck.stops(f"Charged universe {system}: beyond the embedding", sl, np.linspace(stop, rc, 80)[1:-1])
+        size = 2*rc
+        piece = Piece("dust", "star", sl, 0.0, stop, size=size,
+                      ends=(("axis", "dust worldline"), ("stops", "Euclidean embedding limit")),
+                      marks=[(0.5*rc, "r", None), (stop, "chartedge", None)])
+        ck.isometry(f"Charged universe {system}", piece)
+        surface = Surface([piece])
+        fig = figure_of([surface], {"star": "star"}, size, Camera(-90, 32))
+        fig.legend("fill", "star", "constant $t$ and $z$")
+        fig.legend("line", "chartedge", "Euclidean embedding limit")
+        views.append(view(system, system.capitalize(), "$1/\\omega$", [surface], fig.done(),
+            settings="$\\omega=1$" + (", $m=1$." if system == "hyperbolic" else ", $k=1$." if system == "trigonometric" else "."),
+            stops=["The surface ends where its circles shrink faster than proper radial distance permits in flat space."]))
+    return views
+
+
+DRAWN["charged_godel_universe"] = charged_godel_universe
+for _system in ("hyperbolic", "linear", "trigonometric"):
+    CAPTIONS[("charged_godel_universe", _system)] = [
+        "The dust's constant-time plane, with circular radius $\\sqrt{D^2-H^2}$. "
+        "The circles widen and then narrow; the Euclidean surface ends before the first null circle."]
+
+
 def draw(metric_id, ck):
     src = Sources()
     if metric_id in STATED:

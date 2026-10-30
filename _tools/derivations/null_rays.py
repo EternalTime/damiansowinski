@@ -18632,6 +18632,40 @@ def verify_principal(specs, traced):
     return failures
 
 
+def charged_godel_diagrams():
+    """Unrolled cylinders at half and three halves of the first null radius.
+    The slopes are -H-D and D-H; radial acceleration is checked by TURNING."""
+    for system, rc in (("hyperbolic", math.log(3)), ("linear", 1.0),
+                       ("trigonometric", 2*math.atan(0.5))):
+        params = {"omega": 1, **({"m": 1} if system == "hyperbolic" else {"k": 1} if system == "trigonometric" else {})}
+        for vid, multiple in (("inside", 0.5), ("beyond", 1.5)):
+            radius = multiple*rc
+            if system == "hyperbolic":
+                D, H = math.sinh(radius), 2*(math.cosh(radius)-1)
+            elif system == "trigonometric":
+                D, H = math.sin(radius), 2*(1-math.cos(radius))
+            else:
+                D, H = radius, radius*radius
+            key = ("charged_godel_universe", system, vid)
+            DIAGRAMS.append(Diagram(key[0], system, vid, "$t$ and $\\phi$",
+                ("t", "\\phi"), tuple(v*math.pi*radius for v in (-1,1,-1,1)),
+                "$r\\phi$", "$ct$", params, {"r": repr(radius), "z": "0"},
+                to_display=((0, radius), (1, 0)), orient="vector", families=SIDEWAYS,
+                cones=(5,5), periodic=("\\phi",)))
+            CYLINDERS[key] = (-H-D, D-H)
+            TURNING[key] = ("away", "geodesic" if vid == "inside" else "toward")
+            CAPTIONS[key] = [
+                ("Unrolled cylinder at half the first null radius. Its horizontal circles are spacelike. "
+                 "The right-moving null curve is a circular geodesic." if vid == "inside" else
+                 "Unrolled cylinder beyond the first null radius. Horizontal circles are closed timelike curves; "
+                 "the right-moving null curve returns to an earlier coordinate time."),
+                "The vertical edges represent the same angular position. Light launched to the left leaves the cylinder outward."
+            ]
+
+
+charged_godel_diagrams()
+
+
 def check_table():
     """Every view and figure has a caption, and no two share a place."""
     import projections as pj

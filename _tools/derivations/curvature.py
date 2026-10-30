@@ -18269,6 +18269,37 @@ DRAWN = {
 }
 
 
+def charged_godel_universe(ck, src):
+    """Stored scalar profiles across the three homogeneous charged-dust branches.
+    Their constancy is checked at separated radii, including both sides of the null circle."""
+    metric = "charged_godel_universe"
+    views = []
+    for system in ("hyperbolic", "linear", "trigonometric"):
+        params = {"omega": 1.0, **({"m": 1.0} if system == "hyperbolic" else {"k": 1.0} if system == "trigonometric" else {})}
+        names = list(params)
+        for scalar, pid, hi, power in (("kretschmann", "K", 80, 4), ("ricci_scalar", "R", 5, 2)):
+            fn = nr_published(src, metric, system, scalar, ["r"], names)
+            x = axis("$\\omega r$", 0.0, 2.0)
+            scale = {"kind": "linear", "from": 0.0, "to": hi}
+            panel = {"id": pid, "name": f"${pid}/\\omega^{power}$", "aspect": 1,
+                     "scale": scale, "ticks": value_ticks(scale)}
+            shape_checks(ck, f"{metric} {system} {pid}", [1])
+            values = [float(fn(r, *params.values())) for r in (0.2, 0.8, 1.5)]
+            ck(f"{system} {pid} is constant across the first null circle", max(values)-min(values) < 1e-9)
+            curves = line_curves(ck, f"{metric} {system}", pid, pid, fn, "r", x, scale, PLOT_W, params)
+            views.append({"id": system+"_"+pid, "label": system.capitalize()+f" ${pid}$", "kind": "line",
+                "x": x, "panels": [panel], "curves": curves, "marks": [],
+                "legend": [["line", pid, "homogeneous curvature"]],
+                "caption": [f"The {system} branch has spatially constant ${pid}/\\omega^{power}={values[0]:g}$. "
+                            "The first null circle is not a curvature singularity."],
+                "settings": "$\\omega=1$"+("." if system == "linear" else ", $m=1$." if system == "hyperbolic" else ", $k=1$."),
+                "clip": "Linear scale."})
+    return views
+
+
+DRAWN["charged_godel_universe"] = charged_godel_universe
+
+
 def draw(metric_id, ck):
     src = Sources()
     views = DRAWN[metric_id](ck, src)
