@@ -1,5 +1,5 @@
 {
-  "version": "fbb2ba2b38a6d643",
+  "version": "26d783582f61e283",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -32647,6 +32647,66 @@
         "eprint": "2106.05829",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.106.124022"
+      }
+    },
+    "israel1970": {
+      "type": "article",
+      "fields": {
+        "title": "Source of the {Kerr} metric",
+        "author": "Israel, Werner",
+        "journal": "Physical Review D",
+        "volume": "2",
+        "number": "4",
+        "pages": "641--646",
+        "year": "1970",
+        "doi": "10.1103/PhysRevD.2.641",
+        "url": "https://doi.org/10.1103/PhysRevD.2.641"
+      }
+    },
+    "bicak1993kerr": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic disks as sources of the {Kerr} metric",
+        "author": "Bič\\'ak, Jiř\\'i and Ledvinka, Tom\\'aš",
+        "journal": "Physical Review Letters",
+        "volume": "71",
+        "number": "11",
+        "pages": "1669--1672",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.71.1669",
+        "url": "https://doi.org/10.1103/PhysRevLett.71.1669"
+      }
+    },
+    "balasin1994": {
+      "type": "article",
+      "fields": {
+        "title": "Distributional energy-momentum tensor of the {Kerr-Newman} spacetime family",
+        "author": "Balasin, Herbert and Nachbagauer, Herbert",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "6",
+        "pages": "1453--1461",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/6/010",
+        "eprint": "gr-qc/9312028",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9312028"
+      }
+    },
+    "bianchi2025": {
+      "type": "article",
+      "fields": {
+        "title": "Source multipoles and energy-momentum tensors for spinning black holes and other compact objects in arbitrary dimensions",
+        "author": "Bianchi, Massimo and Gambino, Claudio and Pani, Paolo and Riccioni, Fabio",
+        "journal": "Physical Review D",
+        "volume": "111",
+        "number": "8",
+        "pages": "084013",
+        "year": "2025",
+        "doi": "10.1103/PhysRevD.111.084013",
+        "eprint": "2412.01771",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2412.01771"
       }
     }
   }

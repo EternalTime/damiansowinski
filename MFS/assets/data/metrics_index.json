@@ -2531,7 +2531,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "632094d8c7e08c76",
+    "version": "0c3dcba4034d3fee",
     "diagrams": "e28989ef92105e2d",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
@@ -2868,11 +2868,45 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "dc145f08fd5f5f9f",
+    "version": "636ca685e61b777b",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
     "curvature": "1b6a47fced6ece42"
+  },
+  {
+    "id": "kerr_disc_source",
+    "name": "Kerr Disc Source",
+    "tags": [
+      "rotating",
+      "stationary",
+      "axisymmetric",
+      "ring singularity",
+      "curvature singularity",
+      "thin disc",
+      "thin shell",
+      "junction conditions",
+      "cut and paste",
+      "exotic matter",
+      "negative mass",
+      "negative energy",
+      "energy condition violation",
+      "weak energy condition",
+      "causal structure",
+      "frame dragging",
+      "ergoregion",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "0e001b062856487a",
+    "diagrams": "e7a1445e07b52920",
+    "conformal": "c3a8a3ed3877d66e",
+    "embedding": "63e93efeaa52ca52",
+    "curvature": "c5870f7ee3611eb3"
   },
   {
     "id": "kerr_scalar_hair",
@@ -3062,7 +3096,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e36038fab317c0fd",
+    "version": "5e3cd61383f0be1a",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652",
@@ -3756,7 +3790,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "a009df036a1fb63e",
+    "version": "2684957988c04e0a",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -3904,7 +3938,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9c70ac47bc9e0a96",
+    "version": "b5b229bd2f339927",
     "diagrams": "fcd9b835546fa10a",
     "conformal": "83b45b101a7e6db4",
     "embedding": "6602c018a8504748"
@@ -4986,7 +5020,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "97e14e2c93a4a3e1",
+    "version": "5a27862ddc5d071b",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -6053,7 +6087,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ca7972b1319ddec",
+    "version": "99026b918aa4be12",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24",

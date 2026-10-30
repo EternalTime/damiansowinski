@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 200,
+  "count": 201,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -27623,6 +27623,11 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "The same junction conditions move a wall through the black hole of anti-de Sitter space in five dimensions, and the wall carries a universe [kraus1999]."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "programme",
+          "text": "Werner Israel's surface layers applied to Kerr's metric in 1970: a layer on the disc in the ring singularity [israel1970]."
         }
       ],
       "references": [
@@ -27646,7 +27651,8 @@
         "visser1989nuclphysb",
         "visser2004",
         "haggard2015fireworks",
-        "kraus1999"
+        "kraus1999",
+        "israel1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -31086,6 +31092,11 @@
           "id": "twisting_cylindrical_waves",
           "kind": "dual",
           "text": "Kerr's metric with $t \\to iz$, $z \\to it$, and $a \\to ia$, given new coordinates, is a cylindrical pulse of gravitational waves with both polarisations, and it has no singularities [piran1986, dinverno2000]."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "composite",
+          "text": "Werner Israel cut Kerr's spacetime at the disc in its ring, kept the sheet of positive $r$ and glued the two faces of the disc together. The seam carries a layer of negative mass turning faster than light, and the spacetime keeps only the causal part of Kerr's extension [israel1970]."
         }
       ],
       "references": [
@@ -31159,7 +31170,8 @@
         "astorino2022swirling",
         "simpson2022eye",
         "piran1986",
-        "dinverno2000"
+        "dinverno2000",
+        "israel1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -31241,6 +31253,288 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48G^2M^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\left(r^2 + a^2\\cos^2\\theta\\right)^2 - 16r^2a^2\\cos^2\\theta\\right)}{c^4\\left(r^2 + a^2\\cos^2\\theta\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "kerr_disc_source",
+      "name": "Israel's Disc Source of the Kerr Metric",
+      "short_name": "Kerr Disc Source",
+      "description": "Kerr's spacetime cut at the disc spanning its ring singularity, the sheet of negative $r$ thrown away and the two faces of the disc glued together, as Werner Israel did in 1970. The seam carries a layer of negative mass turning faster than light, and the spacetime keeps only the causal part of Kerr's extension.",
+      "tags": [
+        "rotating",
+        "stationary",
+        "axisymmetric",
+        "ring singularity",
+        "curvature singularity",
+        "thin disc",
+        "thin shell",
+        "junction conditions",
+        "cut and paste",
+        "exotic matter",
+        "negative mass",
+        "negative energy",
+        "energy condition violation",
+        "weak energy condition",
+        "causal structure",
+        "frame dragging",
+        "ergoregion",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit; the mass enters as the length $m = GM/c^2$ and the spin per unit mass $a$ is a length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kerr",
+          "kind": "piece",
+          "text": "Kerr's spacetime is what the disc source is cut from. Keep its sheet of positive $r$, glue the upper face of the disc in its ring to the lower, and the seam carries Israel's layer [israel1970]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "With $m = 0$ the layer on the disc vanishes and the cut spacetime is flat, written in oblate spheroidal coordinates [gibbons2017]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "With $a = 0$ the disc shrinks to the point $r = 0$ and the spacetime is Schwarzschild's."
+        },
+        {
+          "id": "kerr_newman",
+          "kind": "family",
+          "text": "Israel cut the charged Kerr-Newman metric at its disc in the same way, and found a layer of mass and charge that carries the Dirac electron's gyromagnetic ratio [israel1970]."
+        },
+        {
+          "id": "morgan_morgan",
+          "kind": "family",
+          "text": "Thin discs as the sources of vacuum fields. Jiří Bičák and Tomáš Ledvinka built discs of two counterrotating streams for Kerr's metric by the same cut and glue [bicak1993kerr, bicak2000]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "programme",
+          "text": "Werner Israel's surface layers again: a field that is continuous across a surface while its normal derivatives jump, and a sheet of matter on the surface to carry the jump."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Spacetimes cut and glued, with all their matter on the seam. The seam's matter is exotic in both, negative mass on the disc and negative energy density on the throat."
+        }
+      ],
+      "references": [
+        "kerr1963",
+        "boyer1967",
+        "carter1968",
+        "israel1970",
+        "bianchi2025",
+        "gibbons2017",
+        "bicak1993kerr",
+        "bicak2000",
+        "balasin1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_disc_source.json",
+      "charts": [
+        {
+          "id": "boyer_lindquist",
+          "name": "Boyer-Lindquist",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(r, \\theta) = (0, \\theta) \\sim (0, \\pi - \\theta) \\;\\text{(the two faces of the disc, one surface)}",
+            "\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 - a^2}\\text{, for } a \\le m\\text{)}",
+            "\\Sigma = 0 \\;\\text{(the ring singularity, the rim of the disc)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin per unit mass, $a = J/(Mc)$, a length and the radius of the disc; horizons exist for $a \\le m$"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Vanishes only on the ring $r = 0$, $\\theta = \\pi/2$, the rim of the disc"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2",
+              "description": "Its roots are the horizons $r_\\pm = m \\pm \\sqrt{m^2 - a^2}$, which exist for $a \\le m$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Boyer and Lindquist, with $t$ carrying dimensions of time, and keep only $r \\ge 0$. The disc $r = 0$ is the flat disc of radius $a$ spanning the ring, and its upper face $\\theta < \\pi/2$ is the same surface as its lower face, the point at $\\theta$ joined to the point at $\\pi - \\theta$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2mr}{\\Sigma}\\right)c^2\\,dt^2 - \\dfrac{4mar\\sin^2\\theta}{\\Sigma}c\\,dt\\,d\\phi + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma\\,d\\theta^2 + \\left(r^2 + a^2 + \\dfrac{2ma^2r\\sin^2\\theta}{\\Sigma}\\right)\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Sigma - 2m\\,r}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma}{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(a^2\\,\\Delta\\sin^2\\theta - \\left(r^2 + a^2\\right)^2\\right)\\sin^2\\theta}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\Sigma^2 - 16a^2r^2\\cos^2\\theta\\right)}{\\Sigma^6}"
+        },
+        {
+          "id": "kerr_schild",
+          "name": "Kerr-Schild",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\psi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)",
+            "(r, \\theta) = (0, \\theta) \\sim (0, \\pi - \\theta) \\;\\text{(the two faces of the disc, one surface)}",
+            "\\Sigma = 0 \\;\\text{(the ring singularity, the rim of the disc)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Geometric mass, $m = GM/c^2$, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin per unit mass, $a = J/(Mc)$, a length and the radius of the disc; horizons exist for $a \\le m$"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Vanishes only on the ring $r = 0$, $\\theta = \\pi/2$, the rim of the disc"
+            },
+            {
+              "symbol": "\\Delta = r^2 - 2mr + a^2",
+              "description": "Its roots are the horizons $r_\\pm = m \\pm \\sqrt{m^2 - a^2}$, which exist for $a \\le m$"
+            }
+          ],
+          "convention": "We use Kerr and Schild's form in spheroidal coordinates $(\\tau, r, \\theta, \\psi)$, flat space in oblate spheroidal coordinates plus $2mr/\\Sigma$ times the square of a null one form, with $\\tau$ carrying dimensions of time and $c\\,d\\tau = c\\,dt + 2mr\\,dr/\\Delta$, $d\\psi = d\\phi + 2mar\\,dr/\\left(\\left(r^2 + a^2\\right)\\Delta\\right)$. The chart runs through both horizons to the disc $r = 0$, whose two faces are joined as in Boyer and Lindquist's chart. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -c^2\\,d\\tau^2 + \\dfrac{\\Sigma}{r^2 + a^2}dr^2 + \\Sigma\\,d\\theta^2 + \\left(r^2 + a^2\\right)\\sin^2\\theta\\,d\\psi^2 + \\dfrac{2mr}{\\Sigma}\\left(c\\,d\\tau + \\dfrac{\\Sigma}{r^2 + a^2}dr - a\\sin^2\\theta\\,d\\psi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{\\Sigma - 2m\\,r}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "r"
+              ],
+              "value": "\\dfrac{2m\\,r}{r^2 + a^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tau"
+              ],
+              "value": "\\dfrac{2m\\,r}{r^2 + a^2}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{\\Sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Sigma\\left(r^2 + a^2 + 2m\\,r\\right)}{\\left(r^2 + a^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{r^2 + a^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "r"
+              ],
+              "value": "-\\dfrac{2m\\,a\\,r\\sin^2\\theta}{r^2 + a^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\Sigma"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{\\left(a^2\\,\\Delta\\sin^2\\theta - \\left(r^2 + a^2\\right)^2\\right)\\sin^2\\theta}{\\Sigma}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48m^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\Sigma^2 - 16a^2r^2\\cos^2\\theta\\right)}{\\Sigma^6}"
         }
       ]
     },
@@ -32906,6 +33200,11 @@
           "id": "eye_of_the_storm",
           "kind": "family",
           "text": "A rotating black hole with no singularity that far out looks like Kerr-Newman with $q^2 = 2m\\ell$, its mass suppressed as $me^{-\\ell/r}$ [ghosh2015]."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "family",
+          "text": "Werner Israel cut the Kerr-Newman metric at the disc in its ring and found the layer of mass and charge on the seam [israel1970]."
         }
       ],
       "references": [
@@ -32937,7 +33236,8 @@
         "ernst1976c",
         "gibbons2013",
         "ovcharenko2026b",
-        "ghosh2015"
+        "ghosh2015",
+        "israel1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -40478,6 +40778,11 @@
           "id": "twisting_cylindrical_waves",
           "kind": "generalisation",
           "text": "Cylindrical gravitational waves with both polarisations. With $\\psi = \\omega = \\gamma = 0$ their metric is Minkowski's in cylindrical coordinates."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "generalisation",
+          "text": "Israel's disc source of Kerr's metric is flat space at $m = 0$, where its layer of matter vanishes [gibbons2017]."
         }
       ],
       "references": [
@@ -42064,6 +42369,11 @@
           "id": "bach_weyl_ring",
           "kind": "family",
           "text": "A Weyl field built on Newton's potential of a hoop, as the discs are on that of a disc. The hoop is a singularity, and the discs are sheets of counterrotating dust."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "family",
+          "text": "A thin disc that is the source of Kerr's metric, with negative mass that turns faster than light [israel1970]."
         }
       ],
       "references": [
@@ -42086,7 +42396,8 @@
         "bonnor1968",
         "semerak2001",
         "kofron2023",
-        "bonnor1975"
+        "bonnor1975",
+        "israel1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morgan_morgan.json",
@@ -54704,6 +55015,11 @@
           "id": "oscillating_sphere",
           "kind": "composite",
           "text": "A ball of fluid of uniform density with pressure, joined to this vacuum at a moving surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever [bonnor1967oscillating]."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "generalisation",
+          "text": "Kerr's spacetime cut at the disc in its ring and glued shut, with a layer of matter on the disc. At $a = 0$ the disc is a point and the spacetime is Schwarzschild's."
         }
       ],
       "references": [
@@ -66284,6 +66600,11 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "Two copies of a black hole in anti-de Sitter space of five dimensions glued along a moving wall, each kept on the side where its radius falls away from the wall [kraus1999]."
+        },
+        {
+          "id": "kerr_disc_source",
+          "kind": "family",
+          "text": "Kerr's spacetime cut at the disc in its ring and glued to itself, with all the cut's matter on the seam [israel1970]."
         }
       ],
       "references": [
@@ -66310,7 +66631,8 @@
         "damour2007",
         "danielson2021",
         "james2015",
-        "kraus1999"
+        "kraus1999",
+        "israel1970"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",
