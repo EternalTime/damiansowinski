@@ -251,6 +251,11 @@
       "id": "vaidya_patel_kerr",
       "kind": "generalisation",
       "text": "Kerr's black hole set radiating, its rotation parameter growing as its mass falls, and set in Einstein's universe and in an expanding one [vaidya1989kerr, vaidya1977kerr]."
+    },
+    {
+      "id": "bowen_york",
+      "kind": "family",
+      "text": "Conformally flat initial data for a spinning hole contain a radiative distortion. Its perturbative evolution approaches Kerr while emitting gravitational waves [gleiser1998by]."
     }
   ],
   "references": [
@@ -327,7 +332,8 @@
     "dinverno2000",
     "israel1970",
     "vaidya1989kerr",
-    "vaidya1977kerr"
+    "vaidya1977kerr",
+    "gleiser1998by"
   ],
   "coordinates": [
     {

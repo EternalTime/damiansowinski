@@ -1565,6 +1565,9 @@ DIMENSIONS = {
     ("misner_brill_lindquist", "bispherical"): {"\\mu": "1", "\\eta": "1", "\\phi": "1", "a": "L", "\\Psi": "1"},
     ("misner_brill_lindquist", "isotropic"): {"r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L"},
     ("misner_brill_lindquist", "charged"): {"x": "L", "y": "L", "z": "L", "\\chi": "1", "\\psi": "1"},
+    ("bowen_york", "cartesian"): {"x": "L", "y": "L", "z": "L", "\\psi": "1"},
+    ("bowen_york", "spherical"): {"r": "L", "\\theta": "1", "\\phi": "1", "\\psi": "1"},
+    ("bowen_york", "cylindrical"): {"\\rho": "L", "z": "L", "\\phi": "1", "\\psi": "1"},
     # Brill's waves, one moment of a spacetime too: the conformal factor psi and the free function q
     # of the base metric, which stands in an exponential, are pure numbers.
     ("brill_waves", "cylindrical"): {"\\rho": "L", "z": "L", "\\phi": "1", "\\psi": "1", "q": "1"},

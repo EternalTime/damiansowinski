@@ -524,6 +524,11 @@
       "id": "cahen_wallach",
       "kind": "limit",
       "text": "The Penrose limit along a light ray on the photon sphere, a vacuum plane wave that pushes rays off the orbit at the rate $c^3/(\\sqrt{27}\\,GM)$ and pulls them back across it at the same rate [fransen2023]."
+    },
+    {
+      "id": "bowen_york",
+      "kind": "family",
+      "text": "A single hole with vanishing momentum and spin has Schwarzschild's isotropic spatial geometry. Nonzero momentum or spin specifies dynamical black hole initial data [brandt1997, cook2000]."
     }
   ],
   "references": [
@@ -660,7 +665,8 @@
     "buchdahl1964",
     "bonnor1967oscillating",
     "banerjee1998",
-    "fransen2023"
+    "fransen2023",
+    "brandt1997"
   ],
   "coordinates": [
     {

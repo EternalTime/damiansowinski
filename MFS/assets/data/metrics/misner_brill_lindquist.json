@@ -95,6 +95,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "family",
       "text": "Brill's moment of rest for many black holes in three dimensions, cut from the hyperbolic plane and glued. The one constraint there is that the slice has constant negative curvature [brill1996]."
+    },
+    {
+      "id": "bowen_york",
+      "kind": "family",
+      "text": "Linear momentum and spin enter through a conformal extrinsic curvature that solves the momentum constraint. The Hamiltonian constraint then determines the spatial conformal factor [cook2000, brandt1997]."
     }
   ],
   "references": [

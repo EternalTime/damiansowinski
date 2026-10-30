@@ -132,7 +132,8 @@ NOT_DRAWN = {"charged_godel_universe", "godel", "stockum_dust", "som_raychaudhur
              "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
-             "misner_brill_lindquist", "brill_waves",
+             # Spatial initial data have no intrinsic causal compactification.
+             "misner_brill_lindquist", "brill_waves", "bowen_york",
              "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous", "eih_many_bodies",
              "kerr_bertotti_robinson", "bardeen_perturbations", "super_entropic", "holographic_superconductor",
              "ozsvath_dust",

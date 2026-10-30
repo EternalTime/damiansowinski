@@ -77,6 +77,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import chart_printer as cp  # noqa: E402
 import verify_metrics as vm  # noqa: E402
+import bowen_york as by  # noqa: E402
 
 METRICS = vm.METRICS_DIR
 SYSTEM_ORDER = ["id", "name", "coords", "domains", "parameters", "convention", "line_element", "metric_components",
@@ -36591,6 +36592,7 @@ def vaidya_patel_kerr_check(chart, system):
 
 
 CHARTS["vaidya_patel_kerr"] = [lambda s=s: vaidya_patel_kerr(s) for s in VPK_CHARTS]
+CHARTS["bowen_york"] = [lambda s=s: by.chart_spec(s) for s in by.CHARTS]
 
 
 # -- Scalar and electromagnetic Gowdy universes ---------------------------------------

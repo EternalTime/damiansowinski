@@ -91,6 +91,7 @@ import null_rays as nr  # noqa: E402
 import slices  # noqa: E402
 import two_holes  # noqa: E402
 import view_text  # noqa: E402
+import bowen_york as by  # noqa: E402
 import bubbling_ads as ba  # noqa: E402
 
 CURVATURE_DIR = build.CURVATURE_DIR
@@ -18583,6 +18584,7 @@ def vaidya_patel_kerr(ck, src):
 
 
 DRAWN["vaidya_patel_kerr"] = vaidya_patel_kerr
+DRAWN["bowen_york"] = by.curvature
 
 
 def charach_malin(ck, src):

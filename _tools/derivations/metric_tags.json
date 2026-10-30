@@ -2261,6 +2261,46 @@
    "\\phi"
   ]
  },
+ "bowen_york/cartesian": {
+  "stamp": "d55e911f6d46a7b3",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "bowen_york/cylindrical": {
+  "stamp": "e073af2d9719e817",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "bowen_york/spherical": {
+  "stamp": "0fcee34e297acfef",
+  "relations": {},
+  "orders": null,
+  "dimension": 3,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
  "bowers_liang/areal": {
   "stamp": "1f743aace5aec4ed",
   "relations": {},

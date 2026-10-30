@@ -116,6 +116,11 @@
       "id": "eternal_traversable_wormhole",
       "kind": "family",
       "text": "A wormhole in two dimensions that stays open for ever, its two boundaries coupled so that light crosses between them [maldacena2018]."
+    },
+    {
+      "id": "bowen_york",
+      "kind": "family",
+      "text": "The inversion-symmetric throat construction extends the spatial bridge to black hole initial data with linear momentum and spin [bowen1980, cook2000]."
     }
   ],
   "references": [
@@ -150,7 +155,9 @@
     "shenker2014",
     "kodama1978preprint",
     "kodama1979preprint",
-    "maldacena2018"
+    "maldacena2018",
+    "bowen1980",
+    "cook2000"
   ],
   "coordinates": [
     {

@@ -128,6 +128,7 @@ import black_to_white_hole as bwh  # noqa: E402
 import null_rays as nr  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import view_text  # noqa: E402
+import bowen_york as by  # noqa: E402
 import conformal  # noqa: E402
 from conformal import Sources  # noqa: E402
 from projections import Camera  # noqa: E402
@@ -21782,6 +21783,10 @@ CAPTIONS[("bekenstein_universes", "open")] = [
     "The equator ($\\theta = \\pi/2$) of the open universe, each moment a hyperboloid in Minkowski space, "
     "smallest at the bounce, $\\eta = 0$.",
 ]
+
+
+DRAWN["bowen_york"] = by.embedding
+CAPTIONS[("bowen_york", "spin")] = ["Two isometric equatorial sheets of a spinning throat."]
 
 
 def draw(metric_id, ck):
