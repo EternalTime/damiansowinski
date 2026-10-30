@@ -226,7 +226,9 @@ def register_dimensions(vm):
                      "C": "L**2", r"\mu": "1/L**2", "Q": "1/L", r"\Lambda": "1/L**2", "K": "1/L**2", "D": "1/L**2"})
         dims.update({f"q_{i}": "1" for i in range(4)})
         dims.update({f"A_{i}": "1" for i in range(4)})
-        vm.DIMENSIONS[(METRIC, system)] = dims
+        used = {vm.Reader._plain(s) for s in d["coords"]}
+        used.update(vm.Reader._plain(p["symbol"].partition("=")[0].strip()) for p in d["parameters"])
+        vm.DIMENSIONS[(METRIC, system)] = {k:v for k,v in dims.items() if vm.Reader._plain(k) in used}
     vm.HELD[(METRIC, "vacuum_six")] = ("f", "h")
     vm.HELD[(METRIC, "squires_family")] = tuple(f"A_{i}" for i in range(4))
     for system in ("magnetic_general", "magnetic_curved"):
