@@ -18349,6 +18349,66 @@ def charged_godel_universe(ck, src):
 DRAWN["charged_godel_universe"] = charged_godel_universe
 
 
+
+def ghost_neutrinos(ck, src):
+    """Taub's vacuum under the ghost neutrinos: K against Taub's proper distance z at L = 1.
+
+    The stored scalar is 64/(27 z^4) with R identically zero, in every chart: the areal chart's
+    and the null chart's are checked against Taub's at the same events, z = (2/3) r^(3/2) and
+    r^2 = 2(mu + nu). The interval joins the embedding's inner circle z = 8L/27 to z = 4L, its
+    outer one, and the logarithmic scale 10^-3 to 10^3 holds every sample. Every one of the 4001
+    samples is evaluated again in sixty digits, and every written point is checked again."""
+    name = "ghost_neutrinos"
+    K = Published(src, name, "taub", "kretschmann", ["z"], ["L"])
+    R = Published(src, name, "taub", "ricci_scalar", ["z"], ["L"])
+    gzz = Published(src, name, "taub", "inverse_metric_components", ["z"], ["L"], ("z", "z"))
+    z = K.coords[0]
+    ck(f"{name} the stored scalar is 64/(27 z^4)", sp.simplify(K.expr - sp.Rational(64, 27) / z ** 4) == 0)
+    ck(f"{name} publishes R = 0", R.expr == 0)
+    areal = Published(src, name, "areal", "kretschmann", ["r"], ["L"])
+    null = Published(src, name, "null", "kretschmann", ["mu", "nu"], ["L"])
+    for zz in (0.3, 1.0, 3.7):
+        r = (1.5 * zz) ** (2 / 3)
+        want = 64 / (27 * zz ** 4)
+        ck(f"{name} the areal chart's K is Taub's at z = {zz}", abs(float(areal(np.array([r]), 1.0)[0]) / want - 1) < 1e-12)
+        mu = r * r / 4 + 0.3
+        ck(f"{name} the null chart's K is Taub's at z = {zz}",
+           abs(float(null(np.array([mu]), np.array([r * r / 2 - mu]), 1.0)[0]) / want - 1) < 1e-12)
+    x_axis = axis("$z/L$", 8 / 27, 4)
+    x_axis["ticks"].insert(0, {"at": 8 / 27, "label": "$8/27$"})
+    scale = {"kind": "log", "from": 1e-3, "to": 1e3}
+    aspect = 1.25
+    panel = {"id": "K", "name": "$KL^4$", "aspect": aspect, "scale": scale, "ticks": even_decades(scale)}
+    shape_checks(ck, name, [aspect])
+    samples = np.linspace(x_axis["from"], x_axis["to"], SAMPLES)
+    values = K(samples, 1.0)
+    exact_K = sp.lambdify(K.coords + K.params, K.expr, "mpmath")
+    with mpmath.workdps(60):
+        worst = max(float(abs(mpmath.mpf(float(value)) / exact_K(mpmath.mpf(float(x)), mpmath.mpf(1)) - 1))
+                    for x, value in zip(samples, values))
+    ck(f"{name} all samples agree with the stored formula in sixty digits", worst < AGREE,
+       f"worst {worst:.2e} at {len(samples)} samples")
+    ck(f"{name} K is positive and falls outward", np.all(values > 0) and np.all(np.diff(values) < 0))
+    ck(f"{name} has no horizon on the drawn range", np.all(gzz(samples, 1.0) > 0))
+    ck(f"{name} stays inside the stated logarithmic scale",
+       np.all(values >= scale["from"]) and np.all(values <= scale["to"]), f"{np.min(values):.8g} to {np.max(values):.8g}")
+    ck(f"{name} K at the embedding's inner circle is 3^9/2^6 = 307.5", abs(float(K(np.array([8 / 27]), 1.0)[0]) - 3 ** 9 / 2 ** 6) < 1e-9)
+    curves = line_curves(ck, name, "K", "K", K, "z", x_axis, scale, PLOT_W / aspect, {"L": 1.0})
+    for curve in curves:
+        agrees(ck, f"{name} every written point", K, [[x, 1.0] for x, _ in curve["points"]], [v for _, v in curve["points"]])
+    return [{
+        "id": "taub", "label": "$K$ against $z$", "kind": "line", "x": x_axis, "panels": [panel],
+        "curves": curves, "marks": [], "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+        "caption": ["The Kretschmann scalar $K = 64/27z^4$ of Taub's vacuum against the proper distance $z$ from the "
+                    "singularity, the same at every $t$, $x$, and $y$ and for whatever ghost neutrino current flows "
+                    "through it. It falls by $1/z^4$, from $307.5/L^4$ on the embedding's innermost circle, and "
+                    "the Ricci scalar vanishes."],
+        "settings": "$L = 1$.", "clip": "Logarithmic scale, $10^{-3}$ to $10^3$."}]
+
+
+DRAWN["ghost_neutrinos"] = ghost_neutrinos
+
+
 def draw(metric_id, ck):
     src = Sources()
     views = DRAWN[metric_id](ck, src)

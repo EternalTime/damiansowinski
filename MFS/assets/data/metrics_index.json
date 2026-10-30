@@ -2143,7 +2143,8 @@
     "version": "5188f12ce10627ac",
     "diagrams": "f0a2d2a7211281f0",
     "conformal": "f4ed73afc00b554e",
-    "embedding": "dd42edb65e2da2d2"
+    "embedding": "dd42edb65e2da2d2",
+    "curvature": "94a423a07033db04"
   },
   {
     "id": "global_monopole",
