@@ -246,6 +246,11 @@
       "id": "kerr_disc_source",
       "kind": "composite",
       "text": "Werner Israel cut Kerr's spacetime at the disc in its ring, kept the sheet of positive $r$ and glued the two faces of the disc together. The seam carries a layer of negative mass turning faster than light, and the spacetime keeps only the causal part of Kerr's extension [israel1970]."
+    },
+    {
+      "id": "vaidya_patel_kerr",
+      "kind": "generalisation",
+      "text": "Kerr's black hole set radiating, its rotation parameter growing as its mass falls, and set in Einstein's universe and in an expanding one [vaidya1989kerr, vaidya1977kerr]."
     }
   ],
   "references": [
@@ -320,7 +325,9 @@
     "simpson2022eye",
     "piran1986",
     "dinverno2000",
-    "israel1970"
+    "israel1970",
+    "vaidya1989kerr",
+    "vaidya1977kerr"
   ],
   "coordinates": [
     {

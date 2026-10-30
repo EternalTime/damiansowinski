@@ -135,6 +135,11 @@
       "id": "black_to_white_hole",
       "kind": "composite",
       "text": "Haggard and Rovelli's black hole fireworks glue this imploding shell, flat inside and Schwarzschild's outside, to its own time reverse, with a quantum region between [haggard2015fireworks]."
+    },
+    {
+      "id": "vaidya_patel_kerr",
+      "kind": "family",
+      "text": "The radiating star set spinning, its rotation parameter growing as its mass radiates away [vaidya1989kerr]."
     }
   ],
   "references": [
@@ -172,7 +177,8 @@
     "good2016",
     "bondi1962",
     "compere2016final",
-    "haggard2015fireworks"
+    "haggard2015fireworks",
+    "vaidya1989kerr"
   ],
   "coordinates": [
     {

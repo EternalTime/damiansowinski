@@ -108,6 +108,11 @@
       "id": "super_entropic",
       "kind": "limit",
       "text": "Kerr-anti-de Sitter spun up to the limit $a \\to \\ell$, after the angle is rescaled to $\\psi = \\phi/\\Xi$ and rolled up again with a new period [hennigar2015prl]. Its horizon is a sphere with both poles cut out, noncompact and of finite area."
+    },
+    {
+      "id": "vaidya_patel_kerr",
+      "kind": "family",
+      "text": "Kerr's black hole set in Einstein's static universe and in an expanding one, two other cosmic backgrounds for a spinning hole [vaidya1977kerr]."
     }
   ],
   "references": [
@@ -137,7 +142,8 @@
     "mars2001",
     "page1978compact",
     "gibbonshawking1979",
-    "hennigar2015prl"
+    "hennigar2015prl",
+    "vaidya1977kerr"
   ],
   "coordinates": [
     {

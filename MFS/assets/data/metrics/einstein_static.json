@@ -95,6 +95,11 @@
       "id": "bekenstein_universes",
       "kind": "generalisation",
       "text": "Jacob D. Bekenstein's closed universe of dust and a conformally coupled scalar field, whose radius swings about a mean value for all time. With no swing the dust and the field hold it static with no cosmological constant."
+    },
+    {
+      "id": "vaidya_patel_kerr",
+      "kind": "generalisation",
+      "text": "A Kerr black hole placed in Einstein's universe, which is what remains when its mass is set to zero [vaidya1977kerr]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "florides1974",
     "bohmerlobo2008",
     "lachiezerey1995",
-    "luminet2003"
+    "luminet2003",
+    "vaidya1977kerr"
   ],
   "coordinates": [
     {
