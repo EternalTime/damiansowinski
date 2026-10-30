@@ -77,6 +77,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "family",
       "text": "Anti-de Sitter space of three dimensions cut and glued under several boosts at once. Each black hole's singularity is of the kind Misner space has, with the curvature finite [brill1996]."
+    },
+    {
+      "id": "moncrief_taub_nut",
+      "kind": "family",
+      "text": "A compact Killing horizon separates a globally hyperbolic vacuum cosmology from an acausal extension [moncriefisenberg1983]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "parikh2003",
     "lachiezerey1995",
     "gott1998",
-    "brill1996"
+    "brill1996",
+    "moncriefisenberg1983"
   ],
   "coordinates": [
     {

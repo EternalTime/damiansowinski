@@ -525,6 +525,9 @@ OVERRULED = {
     ("bondi_sachs", "vacuum"): (
         True, "V, beta, U and gamma are left free in both charts; Bondi and Sachs's radiating metrics "
               "are the solutions of the vacuum equations, which fix them from the shear"),
+    ("moncrief_taub_nut", "vacuum"): (
+        True, "The free amplitudes satisfy the displayed two wave equations and constraints, "
+              "with analytic horizon conditions; the family consists of their vacuum solutions"),
     ("gowdy", "vacuum"): (
         True, "P, Q and lambda are left free in every chart; Gowdy's universes are the "
               "solutions of the vacuum equations, two wave equations and a quadrature"),

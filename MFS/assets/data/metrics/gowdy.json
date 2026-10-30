@@ -83,6 +83,11 @@
       "id": "charach_malin",
       "kind": "family",
       "text": "A Gowdy torus filled with massless scalar or electromagnetic waves. The scalar waves share a linear wave equation with the gravitational polarisation [charach_malin1979, szybka_wyrebowski2016]; the electromagnetic waves couple nonlinearly to it [charach1979, nungesser_rendall2009]."
+    },
+    {
+      "id": "moncrief_taub_nut",
+      "kind": "special_case",
+      "text": "An infinite dimensional toroidal subfamily extends through a compact Cauchy horizon [moncrief1981nut]."
     }
   ],
   "references": [
@@ -116,7 +121,8 @@
     "charach_malin1979",
     "szybka_wyrebowski2016",
     "charach1979",
-    "nungesser_rendall2009"
+    "nungesser_rendall2009",
+    "moncrief1981nut"
   ],
   "coordinates": [
     {

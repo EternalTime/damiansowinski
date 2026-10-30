@@ -63,7 +63,7 @@
         },
         {
           "symbol": "b = b(t,\\theta)",
-          "description": "First wave amplitude. Analytic functions of $t^2$ and $\\theta$ near the horizon, periodic in $\\theta$, satisfying $b_{tt}+t^{-1}b_t-b_{\\theta\\theta}=\\tfrac12t^2e^{4b}(q_t^2-q_\\theta^2)$, $q_{tt}+3t^{-1}q_t-q_{\\theta\\theta}+4(b_tq_t-b_\\theta q_\\theta)=0$, and $f_t=t(b_t^2+b_\\theta^2)+\\tfrac14t^3e^{4b}(q_t^2+q_\\theta^2)$ and $f_\\theta=2tb_tb_\\theta+\\tfrac12t^3e^{4b}q_tq_\\theta$, with $f(0,\\theta)=0$ and $\\int_0^{2\\pi}f_\\theta\\,d\\theta=0$."
+          "description": "First wave amplitude. Analytic functions of $t^2$ and $\\theta$ near the horizon, periodic in $\\theta$, satisfying $b_{tt}+t^{-1}b_t-b_{\\theta\\theta}=\\tfrac12t^2e^{4b}(q_t^2-q_\\theta^2)$, $q_{tt}+3t^{-1}q_t-q_{\\theta\\theta}+4(b_tq_t-b_\\theta q_\\theta)=0$, and $f_t=t(b_t^2+b_\\theta^2)+\\tfrac14t^3e^{4b}(q_t^2+q_\\theta^2)$ and $f_\\theta=2tb_tb_\\theta+\\tfrac12t^3e^{4b}q_tq_\\theta$, with $f(0,\\theta)=0$ and $\\int_0^{2\\pi}f_\\theta\\,d\\theta=0$. The drawings use the amplitude $\\epsilon=1/4$, the Bessel functions $J_0$ and $J_1$ of the first kind, $q=0$, $b=\\epsilon J_0(t)\\cos\\theta$, and $f=\\epsilon^2[t^2(J_0(t)^2+J_1(t)^2)/2-tJ_0(t)J_1(t)\\cos^2\\theta]$."
         },
         {
           "symbol": "f = f(t,\\theta)",
@@ -4166,6 +4166,10 @@
         {
           "symbol": "Q = Q(T,\\theta)",
           "description": "Analytic continuation of $q$."
+        },
+        {
+          "symbol": "\\delta",
+          "description": "Positive radius within the analytic continuation of the chosen solution."
         }
       ],
       "convention": "We use $T=t^2$ and $\\chi=\\psi+\\kappa\\ln t$, with $\\chi$ periodic modulo $2\\pi$. The coefficient $H=\\kappa^2(e^{2F}-1)/(4T)$ takes its analytic value at $T=0$, and $\\delta$ is a positive continuation radius.",
@@ -10556,6 +10560,10 @@
         {
           "symbol": "Q = Q(T,\\theta)",
           "description": "Analytic continuation of $q$."
+        },
+        {
+          "symbol": "\\delta",
+          "description": "Positive radius within the analytic continuation of the chosen solution."
         }
       ],
       "convention": "We use $T=t^2$ and $\\chi=\\psi-\\kappa\\ln t$, with $\\chi$ periodic modulo $2\\pi$. The coefficient $H=\\kappa^2(e^{2F}-1)/(4T)$ takes its analytic value at $T=0$, and $\\delta$ is a positive continuation radius.",
