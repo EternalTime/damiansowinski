@@ -186,6 +186,11 @@
       "id": "thakurta",
       "kind": "generalisation",
       "text": "A conformal Schwarzschild geometry approaching the flat Friedmann universe at large radius. Setting $m=0$ recovers that universe [mello2017]."
+    },
+    {
+      "id": "starobinsky_universe",
+      "kind": "special_case",
+      "text": "Starobinsky's homogeneous universe follows the semiclassical field equation with conformally invariant quantum matter [starobinsky1980]."
     }
   ],
   "references": [
@@ -262,7 +267,8 @@
     "sussman2000stephani",
     "murphy1973",
     "vaidya1977kerr",
-    "mello2017"
+    "mello2017",
+    "starobinsky1980"
   ],
   "coordinates": [
     {
