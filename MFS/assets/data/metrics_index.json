@@ -586,7 +586,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "fa21ea839b7cc8b2",
+    "version": "c83ed58838d4e9e6",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "163c135cc969d5f9"
@@ -2150,7 +2150,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "71e1c3f11e804846",
+    "version": "a8b284ec0aa0947c",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "702d68d9fe0d4f1d",
@@ -2861,7 +2861,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ae9f9af5cfc74cfe",
+    "version": "b5a5e4e88db29959",
     "diagrams": "90d54985332dcf14",
     "conformal": "47650710de79f09c",
     "embedding": "d67797d3b49aa7ba",
@@ -2895,7 +2895,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c4460131d6d4f8dc",
+    "version": "df634ea1307d13c1",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -5760,6 +5760,24 @@
     "conformal": "2839ab0431684e4b",
     "embedding": "c3d499269ec020ba",
     "curvature": "9cc8121a596e3929"
+  },
+  {
+    "id": "static_five_soliton",
+    "name": "Static five dimensional soliton",
+    "tags": [
+      "vacuum",
+      "stationary",
+      "static",
+      "five-dimensional",
+      "Kaluza-Klein",
+      "scalar field",
+      "naked singularity"
+    ],
+    "version": "0368fb97f1dc5495",
+    "diagrams": "d44710c10d87276f",
+    "conformal": "b6c1b07af1ea393e",
+    "embedding": "a34a8a2ad2314a27",
+    "curvature": "4ed61149d3ec626d"
   },
   {
     "id": "stiff_fluid_universes",

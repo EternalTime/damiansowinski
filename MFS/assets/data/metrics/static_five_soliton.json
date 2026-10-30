@@ -54,7 +54,7 @@
         },
         {
           "symbol": "b",
-          "description": "Dimensionless circle exponent on the same ellipse."
+          "description": "Dimensionless circle exponent on the same ellipse. A compact fifth coordinate may have any positive period; smooth closure requires period $4\\pi r_s$ at $a=0$, $b=1$."
         },
         {
           "symbol": "f = 1 - \\dfrac{r_s}{r}",
@@ -1952,7 +1952,7 @@
         },
         {
           "symbol": "b",
-          "description": "Dimensionless circle exponent on the same ellipse."
+          "description": "Dimensionless circle exponent on the same ellipse. A compact fifth coordinate may have any positive period; smooth closure requires period $4\\pi r_s$ at $a=0$, $b=1$."
         },
         {
           "symbol": "h = \\dfrac{4\\rho-r_s}{4\\rho+r_s}",
@@ -3850,7 +3850,7 @@
         },
         {
           "symbol": "b",
-          "description": "Dimensionless circle exponent on the same ellipse."
+          "description": "Dimensionless circle exponent on the same ellipse. A compact fifth coordinate may have any positive period; smooth closure requires period $4\\pi r_s$ at $a=0$, $b=1$."
         }
       ],
       "convention": "We use $(t,h,\\theta,\\phi,y)$, with $t$ a time, $y$ a length, and $h$, $\\theta$, and $\\phi$ dimensionless.",

@@ -1,5 +1,5 @@
 {
-  "version": "a158292a545f9a33",
+  "version": "e007146274333cb5",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -34017,6 +34017,49 @@
         "archiveprefix": "arXiv",
         "primaryclass": "gr-qc",
         "url": "https://doi.org/10.1088/1361-6382/aacf4b"
+      }
+    },
+    "kramer1971projective": {
+      "type": "article",
+      "fields": {
+        "title": "Axialsymmetrische station\\\"are L\\\"osungen der projektiven Feldtheorie",
+        "author": "Kramer, Dietrich",
+        "journal": "Acta Physica Polonica B",
+        "volume": "2",
+        "number": "6",
+        "pages": "807--811",
+        "year": "1971",
+        "url": "https://inspirehep.net/literature/71611"
+      }
+    },
+    "davidsonowen1985": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes as windows to extra dimensions",
+        "author": "Davidson, Aharon and Owen, David A.",
+        "journal": "Physics Letters B",
+        "volume": "155",
+        "number": "4",
+        "pages": "247--250",
+        "year": "1985",
+        "doi": "10.1016/0370-2693(85)90647-1",
+        "url": "https://doi.org/10.1016/0370-2693(85)90647-1"
+      }
+    },
+    "lake2006static": {
+      "type": "article",
+      "fields": {
+        "title": "Static {Ricci}-flat 5-manifolds admitting the 2-sphere",
+        "author": "Lake, Kayll",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "20",
+        "pages": "5871--5881",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/20/009",
+        "eprint": "gr-qc/0606005",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/23/20/009"
       }
     }
   }

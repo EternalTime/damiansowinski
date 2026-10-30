@@ -15498,6 +15498,114 @@
    "\\phi"
   ]
  },
+ "static_five_soliton/isotropic": {
+  "stamp": "65b006bf46b1f520",
+  "relations": {
+   "a": "(u**2 - 1)/(u**2 + u + 1)",
+   "b": "-u*(u + 2)/(u**2 + u + 1)"
+  },
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "static_five_soliton/lake": {
+  "stamp": "0942667357b205d0",
+  "relations": {
+   "a": "(u**2 - 1)/(u**2 + u + 1)",
+   "b": "-u*(u + 2)/(u**2 + u + 1)"
+  },
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "static_five_soliton/spherical": {
+  "stamp": "ef30481630bb8687",
+  "relations": {
+   "a": "(u**2 - 1)/(u**2 + u + 1)",
+   "b": "-u*(u + 2)/(u**2 + u + 1)"
+  },
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "stiff_fluid_universes/areal": {
   "stamp": "bd10f0767ab1c4cf",
   "relations": {},

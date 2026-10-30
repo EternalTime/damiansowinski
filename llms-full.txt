@@ -2507,6 +2507,18 @@ A semiclassical homogeneous isotropic universe evolving from an unstable de Sitt
 - chart Flat de Sitter: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -d\tau^2 + e^{2H_0\tau}\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Open de Sitter: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -d\tau^2 + \sinh^2(H_0\tau)/H_0^2\left(d\chi^2 + \sinh^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Static soliton of five dimensional gravity
+
+A neutral static vacuum family with a radially varying fifth dimension.
+
+- id: `static_five_soliton`
+- tags: vacuum, stationary, static, five-dimensional, Kaluza-Klein, scalar field, naked singularity
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/static_five_soliton.json
+- chart Spherical: coordinates $(t, r, \theta, \phi, y)$, $$ds^2=-f^{a}c^2dt^2+f^{-a-b}dr^2+r^2f^{1-a-b}\left(d\theta^2+\sin^2\theta\,d\phi^2\right)+f^{b}dy^2$$
+- chart Isotropic: coordinates $(t, \rho, \theta, \phi, y)$, $$ds^2=-h^{2a}c^2dt^2+\left(1+\dfrac{r_s}{4\rho}\right)^4h^{2(1-a-b)}\left(d\rho^2+\rho^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)\right)+h^{2b}dy^2$$
+- chart Lake: coordinates $(t, h, \theta, \phi, y)$, $$ds^2=-h^{2a}c^2dt^2+\dfrac{4r_s^2h^{2-2a-2b}}{(1-h^2)^4}dh^2+\dfrac{r_s^2h^{2-2a-2b}}{(1-h^2)^2}\left(d\theta^2+\sin^2\theta\,d\phi^2\right)+h^{2b}dy^2$$
+
 ### Universes of Stiff Fluid
 
 Plane-symmetric exact universes with pressure equal to energy density, represented by a massless scalar field with timelike gradient.

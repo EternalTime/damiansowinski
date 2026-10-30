@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 218,
+  "count": 219,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -6796,6 +6796,11 @@
           "id": "kerr_scalar_hair",
           "kind": "family",
           "text": "Another family that branches off where an instability sets in: spinning black holes with a cloud of scalar field branch off Kerr's at the threshold of superradiance, and Herdeiro and Radu set them beside the rippled strings of the Gregory-Laflamme instability [herdeiro2014]."
+        },
+        {
+          "id": "static_five_soliton",
+          "kind": "generalisation",
+          "text": "The neutral scalar family includes the uniform black string as its member with a regular horizon and constant circle size [lake2006static]."
         }
       ],
       "references": [
@@ -6823,7 +6828,8 @@
         "elvang2007",
         "gibbons1995",
         "bah2021",
-        "herdeiro2014"
+        "herdeiro2014",
+        "lake2006static"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -22512,6 +22518,11 @@
           "id": "penney_scalar",
           "kind": "generalisation",
           "text": "Fisher's solution with an electric charge added, found by R. Penney in 1969. With the scalar field switched off it is Reissner and Nordström's black hole [banerjee1998]."
+        },
+        {
+          "id": "static_five_soliton",
+          "kind": "family",
+          "text": "A spacelike fifth dimension lifts the massless scalar geometry to a vacuum solution in five dimensions [kramer1971projective]."
         }
       ],
       "references": [
@@ -22544,7 +22555,8 @@
         "dicke1962",
         "faraoni2018",
         "herdeiro2025",
-        "banerjee1998"
+        "banerjee1998",
+        "kramer1971projective"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -30715,6 +30727,11 @@
           "id": "string_bh_three_four_charges",
           "kind": "generalisation",
           "text": "The Einstein metric of the Kaluza-Klein black hole is one charge out of four. String theory's hole of four dimensions has a harmonic function for each [cvetic1996static]."
+        },
+        {
+          "id": "static_five_soliton",
+          "kind": "family",
+          "text": "A static diagonal geometry supports an independent scalar charge in five dimensional vacuum gravity [lake2006static]."
         }
       ],
       "references": [
@@ -30733,7 +30750,8 @@
         "emparan2006",
         "hovdebo2006",
         "gibbons1988",
-        "cvetic1996static"
+        "cvetic1996static",
+        "lake2006static"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json",
@@ -31370,6 +31388,11 @@
           "id": "chodos_detweiler",
           "kind": "family",
           "text": "The fifth circle contracts as $t^{-1/2}$ while three other compact directions expand as $t^{1/2}$ [chyba1985]."
+        },
+        {
+          "id": "static_five_soliton",
+          "kind": "family",
+          "text": "The neutral scalar solitons belong to the family of static vacuum geometries studied by Gross and Perry [grossperry1983, lake2006static]."
         }
       ],
       "references": [
@@ -31398,7 +31421,8 @@
         "horvath1977",
         "nilsson1984",
         "bah2021",
-        "chyba1985"
+        "chyba1985",
+        "lake2006static"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -63640,6 +63664,290 @@
           ],
           "ricci_scalar": "R = 12H_0^2",
           "kretschmann": "K = 24H_0^4"
+        }
+      ]
+    },
+    {
+      "id": "static_five_soliton",
+      "name": "Static soliton of five dimensional gravity",
+      "short_name": "Static five dimensional soliton",
+      "description": "A neutral static vacuum family with a radially varying fifth dimension.",
+      "tags": [
+        "vacuum",
+        "stationary",
+        "static",
+        "five-dimensional",
+        "Kaluza-Klein",
+        "scalar field",
+        "naked singularity"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "We take $x^0=ct$ for components and keep $c$ explicit in the line element. The fifth direction is spacelike, and the exponents obey $a^2+ab+b^2=1$.",
+      "related": [
+        {
+          "id": "black_string",
+          "kind": "special_case",
+          "text": "At $a=1$, $b=0$, the circle has constant size and the solution is the uniform Schwarzschild black string [lake2006static]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "family",
+          "text": "Reduction along $y$ and a conformal rescaling produce the massless scalar geometry with exponent $\\gamma=a+b/2$, for $0<\\gamma<1$ [kramer1971projective]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "family",
+          "text": "The norm of the fifth translation acts as a scalar field in four dimensions, and the mixed metric components supply the gauge potential [overduin1997]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Gross and Perry studied the neutral scalar family and magnetic monopoles in five dimensional vacuum gravity [grossperry1983, lake2006static]."
+        }
+      ],
+      "references": [
+        "kramer1971projective",
+        "lake2006static",
+        "chodos1982",
+        "overduin1997",
+        "grossperry1983",
+        "davidsonowen1985"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/static_five_soliton.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (r_s,\\infty)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "y \\in (-\\infty,\\infty)",
+            "a^2+ab+b^2=1",
+            "r_s>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Positive length scale."
+            },
+            {
+              "symbol": "a",
+              "description": "Dimensionless time exponent, with $a^2+ab+b^2=1$."
+            },
+            {
+              "symbol": "b",
+              "description": "Dimensionless circle exponent on the same ellipse. A compact fifth coordinate may have any positive period; smooth closure requires period $4\\pi r_s$ at $a=0$, $b=1$."
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{r_s}{r}",
+              "description": "Dimensionless radial function."
+            }
+          ],
+          "convention": "We use $(t,r,\\theta,\\phi,y)$, with $t$ a time, $r$ and $y$ lengths, and $\\theta$ and $\\phi$ angles.",
+          "line_element": "ds^2=-f^{a}c^2dt^2+f^{-a-b}dr^2+r^2f^{1-a-b}\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)+f^{b}dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f^{a}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{f^{a + b}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r\\left(r - r_s\\right)}{f^{a + b}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r\\left(r - r_s\\right)\\sin^2\\theta}{f^{a + b}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "f^{b}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3r_s^2\\left(8r^2 - 8a\\,r_s\\,r - 4b^3\\,r_s\\,r - 4b\\,r_s\\,r - 8r_s\\,r + a\\,b^3\\,r_s^2 + 4a\\,r_s^2 + b^4\\,r_s^2 + 2b^3\\,r_s^2 - b^2\\,r_s^2 + 2b\\,r_s^2 + 4r_s^2\\right)f^{2a + 2b}}{2r^4\\left(r - r_s\\right)^4}"
+        },
+        {
+          "id": "isotropic",
+          "name": "Isotropic",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "\\rho \\in (r_s/4,\\infty)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "y \\in (-\\infty,\\infty)",
+            "a^2+ab+b^2=1",
+            "r_s>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Positive length scale."
+            },
+            {
+              "symbol": "a",
+              "description": "Dimensionless time exponent, with $a^2+ab+b^2=1$."
+            },
+            {
+              "symbol": "b",
+              "description": "Dimensionless circle exponent on the same ellipse. A compact fifth coordinate may have any positive period; smooth closure requires period $4\\pi r_s$ at $a=0$, $b=1$."
+            },
+            {
+              "symbol": "h = \\dfrac{4\\rho-r_s}{4\\rho+r_s}",
+              "description": "Dimensionless radial function."
+            }
+          ],
+          "convention": "We use $(t,\\rho,\\theta,\\phi,y)$, with $t$ a time, $\\rho$ and $y$ lengths, and $\\theta$ and $\\phi$ angles.",
+          "line_element": "ds^2=-h^{2a}c^2dt^2+\\left(1+\\dfrac{r_s}{4\\rho}\\right)^4h^{2(1-a-b)}\\left(d\\rho^2+\\rho^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)+h^{2b}dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-h^{2a}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\left(4\\rho - r_s\\right)^2\\left(4\\rho + r_s\\right)^2}{256\\rho^4\\,h^{2a + 2b}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(4\\rho - r_s\\right)^2\\left(4\\rho + r_s\\right)^2}{256\\rho^2\\,h^{2a + 2b}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(4\\rho - r_s\\right)^2\\left(4\\rho + r_s\\right)^2\\sin^2\\theta}{256\\rho^2\\,h^{2a + 2b}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "h^{2b}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{201326592r_s^2\\,\\rho^6\\left(256\\rho^4 - 256a\\,r_s\\,\\rho^3 - 128b^3\\,r_s\\,\\rho^3 - 128b\\,r_s\\,\\rho^3 + 32a\\,b^3\\,r_s^2\\,\\rho^2 + 32b^4\\,r_s^2\\,\\rho^2 - 32b^2\\,r_s^2\\,\\rho^2 + 96r_s^2\\,\\rho^2 - 16a\\,r_s^3\\,\\rho - 8b^3\\,r_s^3\\,\\rho - 8b\\,r_s^3\\,\\rho + r_s^4\\right)h^{4a + 4b}}{\\left(4\\rho - r_s\\right)^8\\left(4\\rho + r_s\\right)^8}"
+        },
+        {
+          "id": "lake",
+          "name": "Lake",
+          "coordinates": [
+            "t",
+            "h",
+            "\\theta",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "h \\in (0,1)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "y \\in (-\\infty,\\infty)",
+            "a^2+ab+b^2=1",
+            "r_s>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_s",
+              "description": "Positive length scale."
+            },
+            {
+              "symbol": "a",
+              "description": "Dimensionless time exponent, with $a^2+ab+b^2=1$."
+            },
+            {
+              "symbol": "b",
+              "description": "Dimensionless circle exponent on the same ellipse. A compact fifth coordinate may have any positive period; smooth closure requires period $4\\pi r_s$ at $a=0$, $b=1$."
+            }
+          ],
+          "convention": "We use $(t,h,\\theta,\\phi,y)$, with $t$ a time, $y$ a length, and $h$, $\\theta$, and $\\phi$ dimensionless.",
+          "line_element": "ds^2=-h^{2a}c^2dt^2+\\dfrac{4r_s^2h^{2-2a-2b}}{(1-h^2)^4}dh^2+\\dfrac{r_s^2h^{2-2a-2b}}{(1-h^2)^2}\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)+h^{2b}dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-h^{2a}"
+            },
+            {
+              "indices": [
+                "h",
+                "h"
+              ],
+              "value": "\\dfrac{4r_s^2\\,h^2}{\\left(h + 1\\right)^4\\left(h - 1\\right)^4\\,h^{2a + 2b}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r_s^2\\,h^2}{\\left(h + 1\\right)^2\\left(h - 1\\right)^2\\,h^{2a + 2b}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r_s^2\\,h^2\\sin^2\\theta}{\\left(h + 1\\right)^2\\left(h - 1\\right)^2\\,h^{2a + 2b}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "h^{2b}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3\\left(h + 1\\right)^6\\left(h - 1\\right)^6\\left(a\\,b^3\\,h^4 + 4a\\,h^4 + b^4\\,h^4 + 2b^3\\,h^4 - b^2\\,h^4 + 2b\\,h^4 + 4h^4 - 2a\\,b^3\\,h^2 - 2b^4\\,h^2 + 2b^2\\,h^2 + a\\,b^3 - 4a + b^4 - 2b^3 - b^2 - 2b + 4\\right)h^{4a + 4b}}{2r_s^4\\,h^8}"
         }
       ]
     },
