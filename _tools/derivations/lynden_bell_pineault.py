@@ -27,7 +27,7 @@ def spec(system, pc=None):
                 "\\left(dR^2 + dz^2\\right) + R^2e^{-2\\nu}d\\phi^2")
         domains = ["t \\in (-\\infty, \\infty)", "R \\in (0, \\infty)",
                    "z \\in (0, \\infty)", "\\phi \\in [0, 2\\pi)", "0 < n \\le 1/2", "A > 0"]
-        name = "Weyl, Finite and Infinite Counter-Rotating Discs"
+        name = "Weyl, Finite and Infinite Counter Rotating Discs"
     else:
         coords = ["t", "r", "\\theta", "\\phi"]
         domains = ["t \\in (-\\infty, \\infty)", "r \\in (0, \\infty)",
@@ -39,19 +39,19 @@ def spec(system, pc=None):
             line = ("ds^2 = -f^{2n}e^{N}{c2}dt^2 + A^2f^{2 - 2n}e^{2P - N}"
                     "\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}{c}\\,dt\\right)^2"
                     " + f^{-2n}e^{Z - N}\\left(dr^2 + r^2d\\theta^2\\right)")
-            name = "Rotating Self-Similar Disc"
+            name = "Rotating Self Similar Disc"
         elif system == "photons":
             parameters = ["A", "h = (1 + \\cos\\theta)/2"]
             line = ("ds^2 = -\\dfrac{rh}{A}{c2}dt^2 + \\dfrac{A}{r}"
                     "\\left(dr^2 + r^2d\\theta^2\\right) + \\dfrac{Ar\\sin^2\\theta}{h}d\\phi^2")
-            name = "Counter-Rotating Massless Particles"
+            name = "Counter Rotating Massless Particles"
         else:
             parameters = ["n", "A", "f = r/A", "h = (1 + \\cos\\theta)/2"]
             domains += ["0 \\le n \\le 1/2"]
             line = ("ds^2 = -f^{2n}h^{2n}{c2}dt^2 + f^{-2n}h^{4n^2 - 2n}"
                     "\\left(dr^2 + r^2d\\theta^2\\right)"
                     " + f^{-2n}h^{-2n}r^2\\sin^2\\theta\\,d\\phi^2")
-            name = "Infinite Counter-Rotating Disc"
+            name = "Infinite Counter Rotating Disc"
     probe = vm.Reader(coords, parameters, ())
     state = {}
     if system in ("spherical", "rotating"):

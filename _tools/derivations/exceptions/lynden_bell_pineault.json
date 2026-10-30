@@ -1,0 +1,21 @@
+{
+  "hidden": [
+    {
+      "reason": "The vacuum cones at polar angle pi/3 do not intersect the upper axis over their finite radial reach.",
+      "drawings": [
+        "lynden_bell_pineault/weyl/axis",
+        "conformal lynden_bell_pineault/axis"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The static massive-stream, static massless-stream and rotating cold-stream embeddings are different members of the disc families.",
+      "drawings": {
+        "lynden_bell_pineault/spherical/radial": ["photons", "rotating"],
+        "lynden_bell_pineault/photons/radial": ["spherical", "rotating"],
+        "lynden_bell_pineault/rotating/radial": ["spherical", "photons"]
+      }
+    }
+  ]
+}

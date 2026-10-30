@@ -24,7 +24,7 @@ def register_null(nr):
            "xi": "2*n**2*log((1+z/sqrt(R**2+z**2))/2)"}
     rows = [nr.Diagram(METRIC, "weyl", "axis", "The upper axis", ("t", "z"), (0.3, 3.5, -1.6, 1.6),
                        "$z/A$", "$ct/A$", {"n": "1/5", "A": 1}, {"R": "0", "phi": "0"},
-                       functions=fns, kretschmann=False, input="The infinite counter-rotating member.")]
+                       functions=fns, kretschmann=False, input="The infinite counter rotating member.")]
     captions = {"weyl": ["The axial plane of $t$ and $z$ ($R = 0$, $\\phi = 0$), null geodesics above the disc."]}
     forms = {"weyl": lambda z: np.asarray(z)**0.6/0.6}
     for system in ("spherical", "photons", "rotating"):
@@ -156,7 +156,7 @@ def conformal(ck, src):
 
 def register_conformal(cd):
     cd.DRAWN[METRIC] = conformal
-    cd.CAPTIONS[(METRIC, "axis")] = ["The upper axial section ($\\theta = 0$) of the infinite counter-rotating disc, with the timelike singular boundary $r = 0$."]
+    cd.CAPTIONS[(METRIC, "axis")] = ["The upper axial section ($\\theta = 0$) of the infinite counter rotating disc, with the timelike singular boundary $r = 0$."]
 
 
 def curvature(ck, src):
