@@ -7,12 +7,11 @@
     "cosmology",
     "dust",
     "thin shell",
-    "matching",
     "spherically symmetric",
     "four-dimensional"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "We use $G=c=1$, with $t_0$ a reference length and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ the unit sphere. We orient the shell normal toward the exterior, with $K_{ij}$ the projected covariant derivative of that normal. The tensors apply in the smooth regions on either side of the shell.",
+  "convention": "We use $G=c=1$, with $t_0$ a reference length and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ the unit sphere. We orient the shell normal toward the exterior, with $K_{ij}$ the projected covariant derivative of that normal; the smooth bulk tensors apply away from the shell.",
   "history": "A void grows as its surrounding shell sweeps through cosmic dust. Kei-ichi Maeda and Humitaka Sato formulated this motion relativistically in 1983, treating the compressed matter as an infinitely thin spherical shell [maeda1983void]. The shell expands within a homogeneous dust universe, gathering the matter displaced from its interior [maeda1983void, sugiura2000void].¶In the empty case, the centre lies in Minkowski spacetime, with an expanding Friedmann universe outside the shell [sugiura2000void]. The two regions meet on a sphere whose area is $4\\pi R^2$, where $R$ is the shell's areal radius. The interior clock and the cosmic clock outside it run at rates related by the motion of that sphere [sakaihaines2000void].¶The shell carries mass with zero pressure along its surface [sakaihaines2000void]. Its radius and proper time agree when calculated from either side, while the jump in its extrinsic curvature is fixed by its surface density [sakaihaines2000void]. Matter crossing the expanding shell increases its mass through the energy flux from the exterior dust [sakaihaines2000void]. The shell's stress produces curvature concentrated on its moving surface, alongside the smooth curvature of the surrounding universe [sugiura2000void].¶For a small void in a spatially flat dust universe, Maeda and Sato found the asymptotic law $R\\propto t^{(15+\\sqrt{17})/24}$ in the Newtonian approximation, with $t$ the exterior cosmic time [sakaihaines2000void]. The exponent is about $0.797$, exceeding the background expansion exponent $2/3$. In an open universe the shell's expansion eventually follows the background flow. In a closed universe its speed approaches that of light as the universe recollapses [maeda1983voidII, sakaihaines2000void].¶Nobuyuki Sakai, Maeda, and Sato studied the relation between shell motion and cosmological parameters in 1993 [sakai1993void]. They allowed dust inside the void and a cosmological constant in the surrounding universe. The ratio of the shell's peculiar speed to the local Hubble expansion depends mainly on the exterior matter density, with a further dependence on the density inside the void [sakai1993void].¶Norimasa Sugiura, Ken-ichi Nakao, Daisuke Ida, Sakai, and Hideki Ishihara followed light through compensated spherical voids in 2000 [sugiura2000void]. The shell changes the expansion and shear of a light beam as it crosses, altering the relation between redshift and angular diameter distance [sugiura2000void]. In 2011 Maeda, Sakai, and Roland Triay calculated the appearance of an expanding spherical void in redshift space [maeda2011void]. The outward motion of its shell stretches the apparent void along the observer's line of sight through the Doppler shift [maeda2011void].",
   "references": [
     "maeda1983void",
@@ -62,7 +61,7 @@
           "description": "Areal radius of the shell in the interior time $T$; the common shell radius is $R(t)=R(T(t))$."
         }
       ],
-      "convention": "The interior time $T$ and radius $r$ have dimensions of length.",
+      "convention": "The interior time $T$ and radius $r$ have dimensions of length. The shell has areal radius $R=R(T)$.",
       "line_element": "ds^2=-dT^2+dr^2+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -380,10 +379,10 @@
         },
         {
           "symbol": "R = R(t)",
-          "description": "Areal radius of the moving shell. In the flat dust case $a=(t/t_0)^{2/3}$, $H=2/(3t)$, $\\rho=1/(6\\pi t^2)$, $v=dR/dt-HR$, $\\gamma=(1-v^2)^{-1/2}$, and $B=\\sqrt{1+2HRv+H^2R^2}$. Its surface density is $\\sigma=H^2R/[4\\pi\\gamma(B+1+HRv)]$, with surface stress $S^i{}_j=\\operatorname{diag}(-\\sigma,0,0)$ in shell proper time $\\tau$. The junction equations are $dR/dt=HR+v$, $dv/dt=(-\\gamma vH+2\\pi\\sigma-\\rho\\gamma^2v^2/\\sigma)/\\gamma^3$, $dT/dt=B$, and $d\\tau/dt=1/\\gamma$ [sakaihaines2000void]. The proper shell mass $m=4\\pi R^2\\sigma$ obeys $dm/dt=4\\pi R^2\\rho\\gamma v$."
+          "description": "Areal radius of the moving shell. In the flat dust case $a=(t/t_0)^{2/3}$, $H=2/(3t)$, $\\rho=1/(6\\pi t^2)$, $v=dR/dt-HR$, $\\gamma=(1-v^2)^{-1/2}$, and $B=\\sqrt{1+2HRv+H^2R^2}$. Its surface density is $\\sigma=H^2R/[4\\pi\\gamma(B+1+HRv)]$, with surface stress $S^i{}_j=\\operatorname{diag}(-\\sigma,0,0)$ in shell proper time $\\tau$. The junction equations are $dR/dt=HR+v$, $dv/dt=(-\\gamma vH+2\\pi\\sigma-\\rho\\gamma^2v^2/\\sigma)/\\gamma^3$, $dT/dt=B$, and $d\\tau/dt=1/\\gamma$. The proper shell mass $m=4\\pi R^2\\sigma$ obeys $dm/dt=4\\pi R^2\\rho\\gamma v$."
         }
       ],
-      "convention": "The cosmic time $t$ and comoving radius $r$ have dimensions of length.",
+      "convention": "The cosmic time $t$ and comoving radius $r$ have dimensions of length. We write the dimensionless dust scale factor as $a=a(t)$, the spatial curvature as $k$, and the shell areal radius as $R=R(t)$.",
       "line_element": "ds^2=-dt^2+a^2\\left(\\dfrac{dr^2}{1-kr^2}+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -1439,6 +1438,1517 @@
         "\\ddot{r} + \\dfrac{2\\partial_t a}{a}\\dot{t}\\dot{r} - \\dfrac{k\\,r}{k\\,r^2 - 1}\\dot{r}^2 + r\\left(k\\,r^2 - 1\\right)\\dot{\\theta}^2 + r\\left(k\\,r^2 - 1\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
         "\\ddot{\\theta} + \\dfrac{2\\partial_t a}{a}\\dot{t}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
         "\\ddot{\\phi} + \\dfrac{2\\partial_t a}{a}\\dot{t}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "exterior_proper",
+      "name": "Friedmann Proper Radial Coordinate",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t\\in(0,\\infty)",
+        "\\chi\\in(\\chi_s,\\pi)\\;\\text{for}\\;k>0",
+        "\\chi\\in(\\chi_s,\\infty)\\;\\text{for}\\;k\\le0",
+        "af(\\chi_s)=R\\;\\text{(the shell)}",
+        "\\theta\\in[0,\\pi]",
+        "\\phi\\in[0,2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(t)",
+          "description": "The dust scale factor has dimensions of length, with $H=(da/dt)/a$ and $H^2=8\\pi\\rho/3-k/a^2$ for density $\\rho$."
+        },
+        {
+          "symbol": "f = f(\\chi)",
+          "description": "The dimensionless curvature function, $f=\\sin\\chi$ for $k=1$, $f=\\chi$ for $k=0$, and $f=\\sinh\\chi$ for $k=-1$."
+        },
+        {
+          "symbol": "k",
+          "description": "The dimensionless curvature sign, $k\\in\\{-1,0,1\\}$."
+        },
+        {
+          "symbol": "\\chi_s = \\chi_s(t)",
+          "description": "The shell comoving position, with areal radius $R=a f(\\chi_s)$."
+        }
+      ],
+      "convention": "The time $t$ has dimensions of length, and the proper radial coordinate $\\chi$ is dimensionless. The dust scale factor $a=a(t)$ has dimensions of length, $k$ is its curvature sign, $f=f(\\chi)$ is the curvature function, and $\\chi_s=\\chi_s(t)$ is the shell position.",
+      "line_element": "ds^2=-dt^2+a^2\\left(d\\chi^2+f^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\,f^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\,f^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{a^2\\,f^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{a^2\\,f^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "a\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "a\\,f^2\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "a\\,f^2\\,\\partial_t a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_t a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t a}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_t a}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t a}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_t a}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-f\\,\\partial_\\chi f"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-f\\,\\partial_\\chi f\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\chi f}{f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_\\chi f}{f}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\chi f}{f}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_\\chi f}{f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-a\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "a\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "a\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "a\\,f^2\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "a\\,f^2\\,\\partial_t a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "a\\,f^2\\,\\partial_t a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "a\\,f^2\\,\\partial_t a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,f\\,\\partial_\\chi f"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,f\\,\\partial_\\chi f"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\,f\\,\\partial_\\chi f"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,f\\,\\partial_\\chi f\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\,f\\,\\partial_\\chi f\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\,f\\,\\partial_\\chi f\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,f^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\,f^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,f^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "a\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-a\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t^2 a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2}{f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2}{f}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2}{f}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2}{f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(\\left(\\partial_\\chi f\\right)^2\\,\\sin^2\\theta - f^2\\left(\\partial_t a\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(\\left(\\partial_\\chi f\\right)^2\\,\\sin^2\\theta - f^2\\left(\\partial_t a\\right)^2\\,\\sin^2\\theta - \\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-a\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "a\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "a\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-a\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t^2 a"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t^2 a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-a\\,f^2\\,\\partial_t^2 a\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "a^2\\,f\\left(f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\,f^2\\left(f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,f^2\\left(f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,f^2\\left(f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,f^2\\left(f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,f\\,\\partial_t^2 a + 2f\\left(\\partial_t a\\right)^2 - 2\\partial_\\chi^2 f}{f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "a\\,f^2\\,\\partial_t^2 a + 2f^2\\left(\\partial_t a\\right)^2 - f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\left(a\\,f^2\\,\\partial_t^2 a + 2f^2\\left(\\partial_t a\\right)^2 - f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,f\\,\\partial_t^2 a + 2f\\left(\\partial_t a\\right)^2 - 2\\partial_\\chi^2 f}{a^2\\,f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,f^2\\,\\partial_t^2 a + 2f^2\\left(\\partial_t a\\right)^2 - f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,f^2\\,\\partial_t^2 a + 2f^2\\left(\\partial_t a\\right)^2 - f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{a^2\\,f^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\partial_t^2 a}{a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,f\\,\\partial_t^2 a + 2f\\left(\\partial_t a\\right)^2 - 2\\partial_\\chi^2 f}{a^4\\,f}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,f^2\\,\\partial_t^2 a + 2f^2\\left(\\partial_t a\\right)^2 - f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{a^4\\,f^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a\\,f^2\\,\\partial_t^2 a + 2f^2\\left(\\partial_t a\\right)^2 - f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\csc^2\\theta}{a^4\\,f^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6a\\,f^2\\,\\partial_t^2 a + 6f^2\\left(\\partial_t a\\right)^2 - 4f\\,\\partial_\\chi^2 f - 2\\left(\\partial_\\chi f\\right)^2 + 2}{a^2\\,f^2}",
+      "kretschmann": "K = \\dfrac{4 + 4\\left(\\partial_\\chi f\\right)^4 - 8\\left(\\partial_\\chi f\\right)^2 + 12f^4\\left(\\partial_t a\\right)^4 + 8f^2\\left(\\partial_t a\\right)^2 + 8f^2\\left(\\partial_\\chi^2 f\\right)^2 - 16f^3\\,\\partial_\\chi^2 f\\left(\\partial_t a\\right)^2 + 12a^2\\,f^4\\left(\\partial_t^2 a\\right)^2 - 8f^2\\left(\\partial_\\chi f\\right)^2\\left(\\partial_t a\\right)^2}{a^4\\,f^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3f^2\\left(\\partial_t a\\right)^2 - 2f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,f^2\\,\\partial_t^2 a + f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1}{f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-f\\left(2a\\,f\\,\\partial_t^2 a + f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-f\\left(2a\\,f\\,\\partial_t^2 a + f\\left(\\partial_t a\\right)^2 - \\partial_\\chi^2 f\\right)\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3f^2\\left(\\partial_t a\\right)^2 - 2f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,f^2\\,\\partial_t^2 a + f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1}{a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2 - 2a\\,f\\,\\partial_t^2 a}{a^2\\,f}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2 - 2a\\,f\\,\\partial_t^2 a}{a^2\\,f}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3f^2\\left(\\partial_t a\\right)^2 - 2f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2a\\,f^2\\,\\partial_t^2 a + f^2\\left(\\partial_t a\\right)^2 - \\left(\\partial_\\chi f\\right)^2 + 1}{a^4\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2 - 2a\\,f\\,\\partial_t^2 a}{a^4\\,f^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(\\partial_\\chi^2 f - f\\left(\\partial_t a\\right)^2 - 2a\\,f\\,\\partial_t^2 a\\right)\\csc^2\\theta}{a^4\\,f^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3f^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3f^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6a^2\\,f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6f^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6f^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6f^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3f^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3f^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3f^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{3f^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{6}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,f^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,f^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,f^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,f^2\\left(f\\,\\partial_\\chi^2 f - \\left(\\partial_\\chi f\\right)^2 + 1\\right)\\sin^2\\theta}{3}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + a\\,\\partial_t a\\,\\dot{\\chi}^2 + a\\,f^2\\,\\partial_t a\\,\\dot{\\theta}^2 + a\\,f^2\\,\\partial_t a\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2\\partial_t a}{a}\\dot{t}\\dot{\\chi} - f\\,\\partial_\\chi f\\,\\dot{\\theta}^2 - f\\,\\partial_\\chi f\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\partial_t a}{a}\\dot{t}\\dot{\\theta} + \\dfrac{2\\partial_\\chi f}{f}\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\partial_t a}{a}\\dot{t}\\dot{\\phi} + \\dfrac{2\\partial_\\chi f}{f}\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     }
   ]

@@ -107,3 +107,14 @@ The singular Riemann tensor has $R_{nanb}^{\mathrm{sing}}=-[K_{ab}]\delta(n)$ in
 For dust, $[K^\tau{}_\tau]=4\pi\sigma$ and $[K^\theta{}_\theta]=-4\pi\sigma$.
 Taking its traces leaves a nonzero singular Weyl tensor, so conformal flatness of the bulks is not a conformal flatness claim about the glued spacetime.
 Its curvature figure samples only the smooth exterior Kretschmann scalar and marks the shell trajectory separately.
+
+## The proper radial coordinate of the source
+
+Sakai and Haines equations (2-1) and (2-2), at zero McVittie mass, use $ds^2=-dt^2+a^2[d\chi^2+f(\chi)^2d\Omega^2]$.
+Here $\chi$ and the curvature sign $k$ are dimensionless, $a$ has dimensions of length, and $f$ is $\sin\chi$, $\chi$, or $\sinh\chi$ for $k=1,0,-1$.
+The shell position is $\chi_s(t)$, with $R=a f(\chi_s)$.
+This coordinate covers the closed exterior through its equator to its antipodal centre.
+The radial coordinate $r=f(\chi)$ covers a hemisphere in the closed case and obeys $dr^2/(1-kr^2)=d\chi^2$ on that hemisphere.
+A constant rescaling makes $r$ a length and $a$ dimensionless in the alternative comoving coordinate.
+The flat specialization of the proper radial coordinate has $a=t_0(t/t_0)^{2/3}$ and horizontal plotting distance $t_0\chi$.
+The two flat exterior diagrams represent the same shell in their respective radial coordinates.

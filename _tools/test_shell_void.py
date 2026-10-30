@@ -24,6 +24,8 @@ class Junction(unittest.TestCase):
         metric = json.loads((ROOT / 'MFS/assets/data/metrics/shell_void.json').read_text())
         cls.sides = {}
         for chart in metric['coordinates']:
+            if chart['id'] not in ('interior','exterior'):
+                continue
             coords = chart['coords']
             rd = vm.Reader(coords, [p['symbol'] for p in chart['parameters']], ())
             t, r = [rd.symbol[c] for c in coords[:2]]

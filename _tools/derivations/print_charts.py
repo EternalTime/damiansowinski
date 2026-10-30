@@ -15513,10 +15513,13 @@ def shell_void(system):
     if system == "interior":
         coords, params = ["T", "r", r"\theta", r"\phi"], ["R = R(T)"]
         line = "ds^2=-dT^2+dr^2+r^2" + sphere
+    elif system == "exterior_proper":
+        coords, params = ["t", r"\chi", r"\theta", r"\phi"], ["a = a(t)", r"f = f(\chi)", "k", r"\chi_s = \chi_s(t)"]
+        line = r"ds^2=-dt^2+a^2\left(d\chi^2+f^2" + sphere + r"\right)"
     else:
         coords, params = ["t", "r", r"\theta", r"\phi"], ["a = a(t)", "k", "R = R(t)"]
         line = r"ds^2=-dt^2+a^2\left(\dfrac{dr^2}{1-kr^2}+r^2" + sphere + r"\right)"
-    return {"metric_id": "shell_void", "system": {"id": system, "name": "Minkowski Interior" if system == "interior" else "Dust Friedmann Exterior",
+    return {"metric_id": "shell_void", "system": {"id": system, "name": {"interior":"Minkowski Interior", "exterior":"Dust Friedmann Exterior", "exterior_proper":"Friedmann Proper Radial Coordinate"}[system],
             "coords": coords, "domains": next(c["domains"] for c in json.loads((METRICS / "shell_void.json").read_text())["coordinates"] if c["id"] == system),
             "parameters": params, "line_element": line}, "chart_line_element": line, "printer": {},
             "check": lambda chart: shell_void_check(chart, system)}
@@ -15528,20 +15531,27 @@ def shell_void_check(chart, system):
     r, theta = chart.symbols[1:3]
     ricci, einstein = geo.ricci_ll(), geo.einstein_ll()
     scalar, kretschmann = geo.ricci_scalar(), geo.kretschmann()
-    for radius, angle, a0, adot, curvature in ((.43, .71, 1.2, .31, 0.0), (.67, 1.13, 1.7, .54, .2),
-                                              (.37, 2.02, .9, .63, -.1)):
+    for radius, angle, a0, adot, curvature in ((.43, .71, 1.2, .31, 0.0), (.67, 1.13, 1.7, .54, 1.0),
+                                              (.37, 2.02, .9, 1.63, -1.0)):
         at = {r: radius, theta: angle, chart.symbols[0]: 2.3, rd.c: 1}
         want_g = [-1, 1, radius ** 2, radius ** 2 * float(sp.sin(angle)) ** 2]
         want_ricci, want_einstein = [0] * 4, [0] * 4
         want_scalar, want_k = 0, 0
-        if system == "exterior":
+        if system != "interior":
             a, k = rd.parameters["a"], rd.parameters["k"]
             time = chart.symbols[0]
             addot = -(adot * adot + curvature) / (2 * a0)
             at.update({a: a0, sp.diff(a, time): adot, sp.diff(a, time, 2): addot, k: curvature})
+            if system == "exterior_proper":
+                f = rd.parameters["f"]
+                f0 = radius if curvature == 0 else float(sp.sin(radius) if curvature > 0 else sp.sinh(radius))
+                f1 = 1 if curvature == 0 else float(sp.cos(radius) if curvature > 0 else sp.cosh(radius))
+                at.update({f:f0, sp.diff(f,r):f1, sp.diff(f,r,2):-curvature*f0})
             density = 3 * (adot * adot + curvature) / a0 ** 2
             want_g = [-1, a0 ** 2 / (1-curvature*radius**2), a0**2*radius**2,
                       a0**2*radius**2*float(sp.sin(angle))**2]
+            if system == "exterior_proper":
+                want_g = [-1, a0**2, a0**2*f0**2, a0**2*f0**2*float(sp.sin(angle))**2]
             want_ricci = [density / 2] + [density * v / 2 for v in want_g[1:]]
             want_einstein = [density, 0, 0, 0]
             want_scalar = density
@@ -15559,7 +15569,7 @@ def shell_void_check(chart, system):
         close(kretschmann, want_k)
 
 
-CHARTS["shell_void"] = [lambda s=s: shell_void(s) for s in ("interior", "exterior")]
+CHARTS["shell_void"] = [lambda s=s: shell_void(s) for s in ("interior", "exterior", "exterior_proper")]
 
 
 def israel_shell(system):

@@ -49,17 +49,6 @@ def state(t):
     return trajectory().sol(t)
 
 
-def radius_at_inner_time(inner):
-    from scipy.optimize import brentq
-    end = state(END)[2]
-    values = np.asarray(inner)
-    def one(value):
-        if value < 0 or value > end:
-            return np.nan
-        t = brentq(lambda t: state(t)[2] - value, T0, END, xtol=1e-13)
-        return state(t)[0]
-    return np.vectorize(one, otypes=[float])(values)
-
 
 @lru_cache(maxsize=1)
 def inner_inverse():
@@ -91,7 +80,11 @@ def declared_functions():
         nargs = 1
         is_real = True
         _imp_ = staticmethod(drawn_inner_radius)
-    return {"sv_radius": sv_radius, "sv_inner_radius": sv_inner_radius}
+    class sv_comoving_radius(sp.Function):
+        nargs = 1
+        is_real = True
+        _imp_ = staticmethod(lambda t: drawn_radius(t)/scale(t))
+    return {"sv_radius": sv_radius, "sv_inner_radius": sv_inner_radius, "sv_comoving_radius": sv_comoving_radius}
 
 
 DRAWING_INPUT = (r"$t_0=1$, $k=0$, $a=(t/t_0)^{2/3}$; at $t=t_0$, $R=0.15t_0$, $v=0$, and $T=0$.")
@@ -101,7 +94,7 @@ DRAWING_FUNCTIONS = {"a": "t**Rational(2,3)", "R": "sv_radius(t)"}
 def diagram_specs(Diagram, EQUATOR, SIDEWAYS):
     return [
         Diagram("shell_void", "interior", "through", "Through the cavity", ("T", "r"),
-                (0, .95, 0, float(state(END)[2])), "$r/t_0$", "$T/t_0$", {}, EQUATOR,
+                (0, .95, 0, float(state(END)[2])), "$x/t_0$", "$T/t_0$", {}, EQUATOR,
                 mirror=True, tau="T", families=SIDEWAYS, cones=(3,9), areal=True,
                 functions={"R": "sv_inner_radius(T)"}, where="sv_inner_radius(T)-r", input=DRAWING_INPUT,
                 curves=(("shell", "sv_inner_radius(T)", "the shell"),)),
@@ -110,12 +103,20 @@ def diagram_specs(Diagram, EQUATOR, SIDEWAYS):
                 tau="t", cones=(6,9), areal=True, functions=DRAWING_FUNCTIONS,
                 where="r-sv_radius(t)/t**Rational(2,3)", input=DRAWING_INPUT,
                 curves=(("shell", "sv_radius(t)/t**Rational(2,3)", "the shell"),)),
+        Diagram("shell_void", "exterior_proper", "radial", "Proper radial coordinate", ("t", r"\chi"),
+                (0, 1.9, T0, END), r"$\chi$", "$t/t_0$", {"k":0}, EQUATOR,
+                tau="t", cones=(6,9), areal=True,
+                functions={"a":"t**Rational(2,3)", "f":"chi", "chi_s":"sv_comoving_radius(t)"},
+                where="chi-sv_comoving_radius(t)",
+                input=DRAWING_INPUT.replace("$a=(t/t_0)^{2/3}$", "$a=t_0(t/t_0)^{2/3}$"),
+                curves=(("shell","sv_comoving_radius(t)","the shell"),)),
     ]
 
 
 def diagram_captions():
     return {
-        ("shell_void", "interior", "through"): [r"The radial plane through the empty cavity ($\theta=\pi/2$, $\phi=0$), bounded by the moving shell."],
+        ("shell_void", "interior", "through"): [r"The radial plane through the empty cavity ($x=\pm r$, $\theta=\pi/2$, $\phi=0$), bounded by the moving shell."],
+        ("shell_void", "exterior_proper", "radial"): [r"The radial plane ($\theta=\pi/2$, $\phi=0$) in the flat dust exterior, with horizontal distance $t_0\chi$."],
         ("shell_void", "exterior", "radial"): [r"The radial plane of the dust exterior ($\theta=\pi/2$, $\phi=0$), with the shell sweeping outward in comoving radius."],
     }
 
@@ -123,6 +124,7 @@ def diagram_captions():
 def null_forms():
     return {
         ("shell_void", "interior", "through"): (lambda T,r:T+r, lambda T,r:T-r, None),
+        ("shell_void", "exterior_proper", "radial"): (lambda t,r:3*np.cbrt(t)+r, lambda t,r:3*np.cbrt(t)-r, None),
         ("shell_void", "exterior", "radial"): (lambda t,r:3*np.cbrt(t)+r, lambda t,r:3*np.cbrt(t)-r, None),
     }
 
@@ -139,7 +141,7 @@ def embedding_views(ck, src, api):
     top, size = .75, 1.5
     flat = api.Slice(src,"shell_void","interior","r",r"\phi",{"T":float(T),**api.EQUATOR},{})
     outer = api.Slice(src,"shell_void","exterior","r",r"\phi",{"t":time,**api.EQUATOR},
-                      {"k":0}, {"a":repr(a)})
+                      {"k":0}, {"a":"2**Rational(2,3)"})
     inside = api.Piece("inside","sheet",flat,0.0,float(R),0.0,1,
                        (("axis",r"the centre $r=0$"),("join","the shell")),[(float(R),"surface",None)],size)
     outside = api.Piece("outside","sheet",outer,float(R/a),top/a,0.0,1,
@@ -155,7 +157,12 @@ def embedding_views(ck, src, api):
     fig.legend("fill","cover","the spatial slice")
     fig.legend("line","surface","the shell")
     fig.legend("line","meridian",r"$\phi$ constant")
-    return [api.view("slice","The cavity and shell","$t_0$",[surface],fig.done(),
+    figure = fig.done()
+    x0,x1,y0,y1 = figure["box"]
+    half = max(x1-x0,y1-y0)/2
+    centre = (y0+y1)/2
+    figure["box"] = [x0,x1,centre-half,centre+half]
+    return [api.view("slice","The cavity and shell","$t_0$",[surface],figure,
                      settings=r"$t_0=1$; $t=2t_0$ outside, $T=1.00439t_0$ inside.",input=DRAWING_INPUT)]
 
 
@@ -166,7 +173,7 @@ def embedding_captions():
 def flat_slice_marks(api,system):
     out=[]
     for moment in api.moments("shell_void"):
-        lo,hi=moment.reach(system,"r")
+        lo,hi=moment.reach("exterior" if system=="exterior_proper" else system,"r")
         t=float(state(2.0)[2]) if system=="interior" else 2.0
         out.append(api.Mark(moment,[[(t,lo),(t,hi)]]))
     return out
@@ -195,5 +202,5 @@ def curvature_views(ck,src,api):
                     "params":{"k":0},"functions":dict(DRAWING_FUNCTIONS),
                     "domain":"r>sv_radius(t)/t**Rational(2,3)","nx":nx,"ny":ny,"cells":rows},
              "marks":[{"class":"front","points":world}],"legend":[["line","front","the shell"]],
-             "caption":[r"The smooth exterior Kretschmann scalar, with the flat cavity blank and the distributional shell marked by its trajectory."],
-             "settings":DRAWING_INPUT}]
+             "caption":[r"The smooth exterior Kretschmann scalar $K$, with the flat cavity blank and the distributional shell marked by its trajectory."],
+             "settings":DRAWING_INPUT,"clip":"Logarithmic scale."}]

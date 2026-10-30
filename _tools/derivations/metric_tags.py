@@ -264,7 +264,7 @@ REGIONS = {
                "painleve_gullstrand is exact for its line element as written, which is "
                "a vacuum only to first order in the spin",
     },
-    "shell_void": {"regions": [["interior"], ["exterior"]],
+    "shell_void": {"regions": [["interior"], ["exterior", "exterior_proper"]],
                    "why": "an empty cavity and a dust exterior separated by an accreting shell"},
     "israel_shell": {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],

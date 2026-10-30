@@ -5018,5 +5018,6 @@ def _shell_void_slice(system):
 FLAT.update({
     ("shell_void", "interior", "through"): lambda: _shell_void_slice("interior"),
     ("shell_void", "exterior", "radial"): lambda: _shell_void_slice("exterior"),
+    ("shell_void", "exterior_proper", "radial"): lambda: _shell_void_slice("exterior_proper"),
 })
 FLAT_METRICS.add("shell_void")

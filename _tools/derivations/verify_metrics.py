@@ -1953,6 +1953,7 @@ DIMENSIONS = {
     # outside in Schwarzschild's time t and in the advanced time v, a length. R, the areal radius of
     # the shell, and mu = G m/c^2, the rest mass of the dust as a length, enter the domains and the
     # shell's motion alone.
+    ("shell_void", "exterior_proper"): {"t":"L", "\\chi":"1", "\\theta":"1", "\\phi":"1", "a":"L", "f":"1", "k":"1", "\\chi_s":"1"},
     ("shell_void", "interior"): {"T": "L", "r": "L", "\\theta": "1", "\\phi": "1", "R": "L"},
     ("shell_void", "exterior"): {"t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "a": "1", "k": "L^-2", "R": "L"},
     ("israel_shell", "interior"): {
