@@ -2592,6 +2592,10 @@ DIMENSIONS.update({("starobinsky_universe", system): {
        else {"r": "L"} if system == "flat_de_sitter" else {"\\chi": "1"})}
     for system in ("cosmic", "conformal", "closed_de_sitter", "flat_de_sitter", "open_de_sitter")})
 
+DIMENSIONS.update({("kowalski_glikman", system): {
+    "u": "T", null: "L", **{f"{letter}_{i}": "L" for i in range(1, 10)}, "\\mu": "1/L"}
+    for system, null, letter in (("brinkmann", "v", "x"), ("rosen", "w", "y"))})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),
