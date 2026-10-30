@@ -36932,6 +36932,8 @@ def main():
 
 import lynden_bell_pineault as lbp
 lbp.register(sys.modules[__name__])
+import spheroidal_stars as sph_stars
+sph_stars.register(sys.modules[__name__])
 
 import early_braneworlds as eb
 eb.register(sys.modules[__name__])
