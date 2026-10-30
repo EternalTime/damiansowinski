@@ -36035,6 +36035,177 @@ def ghost_neutrinos_check(chart, system):
 
 CHARTS["ghost_neutrinos"] = [lambda s=s: ghost_neutrinos(s) for s in GN_CHARTS]
 
+# -- Bekenstein's universes with no singularity ----------------------------------------------
+
+BEKENSTEIN_CHARTS = ("closed", "flat", "open")
+BEKENSTEIN_SPACE = {"closed": "d\\chi^2 + \\sin^2\\chi", "flat": "dr^2 + r^2", "open": "d\\chi^2 + \\sinh^2\\chi"}
+BEKENSTEIN_SCALE = {"closed": "\\ell - A\\cos\\eta", "flat": "a_b + \\ell\\eta^2/2", "open": "A\\cosh\\eta - \\ell"}
+
+
+def bekenstein_universes(system):
+    """Friedmann universes of dust whose particles carry the mass mu + f psi, a conformally coupled
+    massless scalar field psi and radiation, Bekenstein, Phys. Rev. D 11, 2072 (1975), as restated
+    by Novello and Perez Bergliaffa, Phys. Rep. 463, 127 (2008), equations (64)-(67). In the
+    conformal time the trace of the field equations is a'' + k a = abar with abar = 4 pi N mu/3
+    (G = c = 1), whose solutions with the bounce at eta = 0 are the three scale factors here; the
+    Friedmann constraint fixes their amplitudes. bekenstein_universes_check holds each chart to the
+    full field equations, dust, field and radiation, at points; bekenstein_universes.md beside this
+    file records the derivation."""
+    radial = "r" if system == "flat" else "\\chi"
+    coords = ["\\eta", radial, "\\theta", "\\phi"]
+    second = "a_b" if system == "flat" else "A"
+    scale = BEKENSTEIN_SCALE[system]
+    parameters = ["\\ell", second, "a = " + scale]
+    angles = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+    space = BEKENSTEIN_SPACE[system] + angles
+    reals = "(-\\infty, \\infty)"
+    domains = ["\\eta \\in " + reals, ("\\chi \\in [0, \\pi]" if system == "closed" else radial + " \\in [0, \\infty)"),
+               "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+    probe = vm.Reader(coords, parameters, ())
+    eta, abar, other = probe.symbol["\\eta"], probe.parameters["ell"], probe.parameters[second.replace("\\", "")]
+    a = sp.Symbol("a", positive=True)
+    pretty = bekenstein_scale_factor(system, eta, abar, other, a, probe.symbol[radial])
+    return {
+        "metric_id": "bekenstein_universes",
+        "system": {"id": system, "name": system.capitalize() + " Universe", "coords": coords, "domains": domains,
+                   "parameters": parameters, "line_element": "ds^2 = a^2\\left(-d\\eta^2 + " + space + "\\right)"},
+        "chart_line_element": "ds^2 = \\left(" + scale + "\\right)^2\\left(-d\\eta^2 + " + space + "\\right)",
+        "printer": {"lead": [a, abar, other]},
+        "pretty": pretty,
+        # A sum the printer brackets is written in the scale factor too, and expanded there.
+        "bracketed": lambda value: sp.expand(pretty(value)),
+        "check": lambda chart: bekenstein_universes_check(chart, system),
+    }
+
+
+def bekenstein_scale_factor(system, eta, abar, other, a, chi):
+    """A `pretty` that writes each value in the scale factor a: the even part of its dependence on
+    eta, cos(eta), cosh(eta) or eta^2, is the scale factor itself, so it is replaced by a, and only an
+    odd factor sin(eta), sinh(eta) or eta, the rate of change of a, is left beside it."""
+    odd = sp.Symbol("_odd")
+    if system == "closed":
+        even, odd_of, even_of = (abar - a) / other, sp.sin(eta), sp.cos(eta)
+        square = 1 - even ** 2
+    elif system == "open":
+        even, odd_of, even_of = (a + abar) / other, sp.sinh(eta), sp.cosh(eta)
+        square = even ** 2 - 1
+    else:
+        even, odd_of, even_of = None, eta, None
+        square = 2 * (a - other) / abar
+
+    def reduce(p):
+        p = sp.expand(p)
+        if even is not None:
+            p = p.subs(even_of, even)
+        poly = sp.Poly(p, odd)
+        out = sum(coefficient * square ** (k // 2) * odd ** (k % 2) for (k,), coefficient in poly.terms())
+        return sp.expand(out)
+
+    def pretty(value):
+        x = sp.sympify(value)
+        if not x.has(eta):
+            return cp.hyperbolic(chi)(x) if system == "open" and x.has(sp.exp) else sp.factor(x)
+        x = x.rewrite(sp.sin) if x.has(sp.tan) else x.rewrite(sp.sinh) if x.has(sp.tanh) else x
+        if system == "open":
+            # e^(k eta) is (cosh eta + sinh eta)^k, and (cosh eta - sinh eta)^(-k) for k < 0; the
+            # angles keep their own hyperbolic functions.
+            x = x.replace(lambda e: isinstance(e, sp.exp) and e.args[0].has(eta),
+                          lambda e: (lambda k: (even_of + odd_of) ** k if k >= 0 else (even_of - odd_of) ** -k)(
+                              sp.Integer(sp.simplify(e.args[0] / eta))))
+        x = x.subs(odd_of, odd) if system != "flat" else x.subs(eta, odd)
+        num, den = (reduce(p) for p in sp.fraction(sp.together(x)))
+        # A denominator left with the odd factor is cleared by its conjugate, since (d0 + d1 odd)
+        # times (d0 - d1 odd) is d0^2 - d1^2 odd^2, which is even.
+        num, den = (reduce(p) for p in sp.fraction(sp.cancel(num / den)))
+        d0, d1 = sp.Poly(den, odd).coeff_monomial(1), sp.Poly(den, odd).coeff_monomial(odd)
+        if d1 != 0:
+            num, den = reduce(num * (d0 - d1 * odd)), reduce(d0 ** 2 - d1 ** 2 * odd ** 2)
+        out = sp.factor(sp.cancel(num / den))
+        if out.has(eta) or (system != "flat" and out.has(even_of)):
+            raise ValueError(f"bekenstein_universes: {value} is not written in the scale factor")
+        out = out.subs(odd, odd_of)
+        return cp.hyperbolic(chi)(out) if system == "open" and out.has(sp.exp) else out
+    return pretty
+
+
+def bekenstein_universes_check(chart, system):
+    """The field equations G = 8 pi (T_dust + T_field + T_radiation), with G = c = 1, at points,
+    for constants of the matter chosen to meet the Friedmann constraint. The dust is at rest with
+    number density N/a^3 and mass mu + f psi, the field psi = F/a carries the stress tensor of
+    conformal coupling, d psi d psi - g (d psi)^2/2 + (g box - nabla nabla + G) psi^2/6, and
+    satisfies box psi - R psi/6 = f N/a^3, and the radiation has density B/a^4. No symbolic
+    determinant or simplification is performed."""
+    eta = chart.symbols[0]
+    P = chart.reader.parameters
+    abar = P["ell"]
+    other = P["a_b"] if system == "flat" else P["A"]
+    k = {"closed": 1, "flat": 0, "open": -1}[system]
+    f, B, P1, Q1 = sp.symbols("BU_f BU_B BU_P BU_Q", real=True)
+    mu, N = sp.Rational(3, 4) / sp.pi, abar  # 4 pi N mu/3 = abar
+    if system == "closed":
+        F = -f * N + P1 * sp.cos(eta) + Q1 * sp.sin(eta)
+    elif system == "flat":
+        F = -f * N * eta ** 2 / 2 + P1 * eta + Q1
+    else:
+        F = f * N + P1 * sp.exp(eta) + Q1 * sp.exp(-eta)
+    a = chart.geo.g[1, 1] ** sp.Rational(1, 2)
+    psi = F / a
+    g, ginv = chart.geo.g, chart.geo.ginv
+    gamma = chart.geo.christoffel_ull()
+    X = chart.symbols
+
+    def hessian(s):
+        d = [sp.diff(s, x) for x in X]
+        return sp.Matrix(4, 4, lambda i, j: sp.diff(d[j], X[i]) - sum(gamma[l][i][j] * d[l] for l in range(4)))
+    dpsi = [sp.diff(psi, x) for x in X]
+    grad2 = sum(ginv[i, j] * dpsi[i] * dpsi[j] for i in range(4) for j in range(4))
+    H2 = hessian(psi ** 2)
+    box2 = sum(ginv[i, j] * H2[i, j] for i in range(4) for j in range(4))
+    Hpsi = hessian(psi)
+    box = sum(ginv[i, j] * Hpsi[i, j] for i in range(4) for j in range(4))
+    G = sp.Matrix(chart.geo.einstein_ll())
+    R = chart.geo.ricci_scalar()
+    u = [-a, 0, 0, 0]
+    n = N / a ** 3
+    rho_r = B / a ** 4
+    T = sp.Matrix(4, 4, lambda i, j: dpsi[i] * dpsi[j] - g[i, j] * grad2 / 2
+                  + (g[i, j] * box2 - H2[i, j] + G[i, j] * psi ** 2) / 6
+                  + n * (mu + f * psi) * u[i] * u[j] + 4 * rho_r * u[i] * u[j] / 3 + rho_r * g[i, j] / 3)
+    # Constants (f, P, Q, B) in each chart's range of no singularity, N = 1 and mu = 3/4 pi.
+    cases = {"closed": [(0.5, 0.2, 0.1, 0.05), (0.7, 0.3, 0.25, 0.1)],
+             "flat": [(-0.9, 0.2, 0.1, 0.05), (-1.3, 0.3, 0.25, 0.1)],
+             "open": [(0.4, 0.5, 0.4, 0.05), (0.6, 0.7, 0.5, 0.1)]}[system]
+    third = sp.Rational(4, 3) * sp.pi
+    for constants in cases:
+        coupling, wave1, wave2, radiation = (sp.Rational(str(v)) for v in constants)
+        at = {abar: 1, f: coupling, P1: wave1, Q1: wave2, B: radiation}
+        # The Friedmann constraint fixes the amplitude of a for the chosen field, coupling and radiation.
+        if system == "closed":
+            at[other] = sp.sqrt(1 + third * (2 * radiation + wave1 ** 2 + wave2 ** 2 - coupling ** 2))
+            bounces = 0 <= at[other] < 1
+        elif system == "flat":
+            at[other] = -(2 * radiation + wave1 ** 2 + 2 * coupling * wave2) / (2 * mu)
+            bounces = at[other] > 0
+        else:
+            at[other] = sp.sqrt(1 - third * (2 * radiation + coupling ** 2 - 4 * wave1 * wave2))
+            bounces = at[other] > 1
+        if not bounces:
+            raise AssertionError(f"bekenstein_universes {system}: the test constants do not bounce")
+        for time, angle in [(0.3, 0.7), (1.1, 1.3), (-0.6, 0.4)]:
+            point = {**at, eta: sp.Rational(str(time)), X[1]: sp.Rational(str(angle)), X[2]: sp.Rational(9, 10),
+                     X[3]: sp.Rational(1, 5)}
+            gap = (G - 8 * sp.pi * T).subs(point).evalf(30)
+            if max(abs(v) for v in gap) > 1e-20:
+                raise AssertionError(f"bekenstein_universes {system}: the field equations fail at {time}: {gap}")
+            wave = ((box - R * psi / 6 - f * n) * a ** 3).subs(point).evalf(30)
+            if abs(wave) > 1e-20:
+                raise AssertionError(f"bekenstein_universes {system}: the scalar field equation fails at {time}")
+            if abs((R - 8 * sp.pi * n * mu).subs(point).evalf(30)) > 1e-20:
+                raise AssertionError(f"bekenstein_universes {system}: R is not 8 pi N mu/a^3")
+
+
+CHARTS["bekenstein_universes"] = [lambda s=s: bekenstein_universes(s) for s in BEKENSTEIN_CHARTS]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])

@@ -2528,6 +2528,12 @@ DIMENSIONS.update({
     ("ghost_neutrinos", "null"): {"\\mu": "1", "\\nu": "1", "x": "L", "y": "L", "L": "L"},
 })
 
+# Bekenstein's universes: the conformal time and the comoving coordinates are pure numbers, and the
+# scale factor a, named for its value in eta, and the constants l, A and a_b are lengths.
+DIMENSIONS.update({("bekenstein_universes", system): {
+    "\\eta": "1", radial: "1", "\\theta": "1", "\\phi": "1", "\\ell": "L", second: "L", "a": "L"}
+    for system, radial, second in (("closed", "\\chi", "A"), ("flat", "r", "a_b"), ("open", "\\chi", "A"))})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),

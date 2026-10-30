@@ -882,6 +882,70 @@
    "\\phi"
   ]
  },
+ "bekenstein_universes/closed": {
+  "stamp": "c7a6547907b5f81e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "bekenstein_universes/flat": {
+  "stamp": "6e233bbd797f9c47",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "bekenstein_universes/open": {
+  "stamp": "08183d470d5b1c01",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "belinski_zakharov/canonical": {
   "stamp": "3a09ffce312cd038",
   "relations": {},
