@@ -36799,6 +36799,113 @@ import starobinsky_universe as _starobinsky
 
 CHARTS["starobinsky_universe"] = [lambda s=s: _starobinsky.chart_spec(s) for s in _starobinsky.CHART_IDS]
 
+# -- Neutral static soliton of five dimensional gravity -----------------------------
+
+STATIC_FIVE_CHARTS = ("spherical", "isotropic", "lake")
+
+
+def static_five_soliton(system):
+    """Kramer's (22), the isotropic radius, and Lake's (14)-(19), on the whole ellipse.
+
+    The fifth coordinate is spacelike. Polynomial reduction imposes only a^2+ab+b^2=1;
+    powers keep their free exponents. The numerical check also uses the unreduced Ricci
+    tensor and includes the black string, smooth bubble, and negative exponents.
+    """
+    x = {"spherical": "r", "isotropic": r"\rho", "lake": "h"}[system]
+    coords = ["t", x, r"\theta", r"\phi", "y"]
+    parameters = ["r_s", "a", "b"]
+    if system == "spherical":
+        parameters += [r"f = 1 - \dfrac{r_s}{r}"]
+        radial, name = r"r \in (r_s,\infty)", "Spherical"
+        body = (r"-f^{a}{c2}dt^2+f^{-a-b}dr^2+r^2f^{1-a-b}"
+                r"\left(d\theta^2+\sin^2\theta\,d\phi^2\right)+f^{b}dy^2")
+    elif system == "isotropic":
+        parameters += [r"h = \dfrac{4\rho-r_s}{4\rho+r_s}"]
+        radial, name = r"\rho \in (r_s/4,\infty)", "Isotropic"
+        body = (r"-h^{2a}{c2}dt^2+\left(1+\dfrac{r_s}{4\rho}\right)^4h^{2(1-a-b)}"
+                r"\left(d\rho^2+\rho^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)\right)+h^{2b}dy^2")
+    else:
+        radial, name = r"h \in (0,1)", "Lake"
+        body = (r"-h^{2a}{c2}dt^2+\dfrac{4r_s^2h^{2-2a-2b}}{(1-h^2)^4}dh^2"
+                r"+\dfrac{r_s^2h^{2-2a-2b}}{(1-h^2)^2}"
+                r"\left(d\theta^2+\sin^2\theta\,d\phi^2\right)+h^{2b}dy^2")
+    line = lambda c2: "ds^2=" + body.replace("{c2}", c2)
+    probe = vm.Reader(coords, parameters, ())
+    radius, a, b, rs = probe.symbol[x], *(probe.parameters[n] for n in ("a", "b", "r_s"))
+    state = {}
+    if system == "spherical":
+        powers = named_powers({"f": {radius - rs: 1, radius: -1}}, state)
+    elif system == "isotropic":
+        powers = named_powers({"h": {rs - 4 * radius: 1, rs + 4 * radius: -1}}, state)
+    else:
+        powers = named_powers({"h": {radius: 1}}, state)
+
+    def pretty(value):
+        value = sp.factor(sp.sympify(value)).replace(
+            lambda e: e.is_Pow and e.base == -1 and not e.exp.is_Number,
+            lambda e: sp.Integer(1))
+        return powers(value)
+
+    def reduce(value):
+        value = vm.norm(value)
+        if not value:
+            return value
+        held = {p: sp.Dummy() for p in value.atoms(sp.Pow) if p.exp.has(a, b)}
+        numerator, denominator = sp.fraction(sp.cancel(value.xreplace(held)))
+        numerator = sp.rem(numerator, a*a + a*b + b*b - 1, a)
+        return vm.norm((numerator / denominator).xreplace({v: k for k, v in held.items()}))
+
+    def check(chart):
+        state["printer"] = chart.printer
+        static_five_soliton_check(chart, system)
+
+    return {"metric_id": "static_five_soliton", "system": {
+        "id": system, "name": name, "coords": coords,
+        "domains": [r"t \in (-\infty,\infty)", radial, r"\theta \in [0,\pi]",
+                    r"\phi \in [0,2\pi)", r"y \in (-\infty,\infty)",
+                    r"a^2+ab+b^2=1", r"r_s>0"],
+        "parameters": parameters, "line_element": line("c^2")},
+        "chart_line_element": line(""), "reduce": reduce, "pretty": pretty,
+        "printer": {"lead": [radius, rs, a, b], "factors": [a, b, rs, radius], "flip": False},
+        "check": check}
+
+
+def static_five_soliton_check(chart, system):
+    """Raw vacuum equations and the sourced radial pullbacks at five ellipse points.
+
+    All comparisons are numerical; no symbolic determinant or simplification is used.
+    """
+    t, x, theta, phi, y = chart.symbols
+    P = chart.reader.parameters
+    a, b, rs = (P[n] for n in ("a", "b", "r_s"))
+    raw = chart.geo._geometry
+    ricci = raw.ricci_ll()
+    r = x if system == "spherical" else (x*(1+rs/(4*x))**2 if system == "isotropic" else rs/(1-x*x))
+    f = 1-rs/r
+    sourced = sp.diag(-f**a, f**(-a-b)*sp.diff(r, x)**2,
+                      r*r*f**(1-a-b), r*r*f**(1-a-b)*sp.sin(theta)**2, f**b)
+    def exterior(value):
+        # The canonical algebra splits positive ratios into irreducible factors.
+        # Restore their positive exterior bases before numerical evaluation.
+        if system == "isotropic":
+            value = sp.sympify(value).replace(
+                lambda e: e.is_Pow and not e.exp.is_Integer and e.base in (-1, rs-4*x),
+                lambda e: sp.Integer(1) if e.base == -1 else (4*x-rs)**e.exp)
+        return value
+    for aa, bb in ((sp.Rational(8,7), -sp.Rational(3,7)), (1,0), (0,1), (-1,0), (0,-1)):
+        for scale in (sp.Rational(3,4), sp.Rational(7,5)):
+            at = {a: aa, b: bb, rs: scale, theta: sp.Rational(7,10),
+                  x: 3*scale if system != "lake" else sp.Rational(3,5)}
+            for i in range(5):
+                for j in range(5):
+                    if abs(sp.N(ricci[i][j].subs(at), 40)) > 1e-28:
+                        raise AssertionError(f"static_five_soliton/{system}: vacuum equation {i},{j}")
+                    if abs(sp.N((exterior(raw.g[i,j])-sourced[i,j]).subs(at), 40)) > 1e-28:
+                        raise AssertionError(f"static_five_soliton/{system}: radial pullback {i},{j}")
+
+
+CHARTS["static_five_soliton"] = [lambda s=s: static_five_soliton(s) for s in STATIC_FIVE_CHARTS]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])

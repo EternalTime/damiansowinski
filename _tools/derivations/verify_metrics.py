@@ -507,6 +507,13 @@ DIMENSIONS = {
     },
     # Fisher, Janis, Newman and Winicour's b is a length and gamma a pure number; f and h are the
     # ratios the charts name. Bronnikov's harmonic coordinate u is an inverse length, e^{-2ku} = 1 - b/r.
+    **{("static_five_soliton", system): {
+        "t": "T", radius: dimension, "\\theta": "1", "\\phi": "1", "y": "L",
+        "r_s": "L", "a": "1", "b": "1", **names,
+    } for system, radius, dimension, names in (
+        ("spherical", "r", "L", {"f": "1"}),
+        ("isotropic", "\\rho", "L", {"h": "1"}),
+        ("lake", "h", "1", {}))},
     ("fisher_jnw", "spherical"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "b": "L", "\\gamma": "1", "f": "1",
     },
@@ -2606,6 +2613,12 @@ def time_coordinates(declared, coords):
 # A rational parametrisation of the surface an entry's constrained parameters live on,
 # written as {parameter name: expression in a fresh symbol}. See the header.
 PARAMETER_RELATIONS = {
+    # The ellipse through (1, 0), parametrised by the line b = u(a - 1).
+    # The limit u -> infinity reaches (1, -1); both regular members are checked explicitly.
+    **{("static_five_soliton", system): {
+        "a": "(u**2 - 1)/(u**2 + u + 1)",
+        "b": "-u*(u + 2)/(u**2 + u + 1)",
+    } for system in ("spherical", "isotropic", "lake")},
     # The Kasner circle, where the plane sum p_i = 1 cuts the sphere sum p_i^2 = 1.
     # Every point of it is reached, and the exponent ordering p_1 <= p_2 <= p_3 holds
     # on u >= 1, which is the range Belinskii, Khalatnikov and Lifshitz bounce within.

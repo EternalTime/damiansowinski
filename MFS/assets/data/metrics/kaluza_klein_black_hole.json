@@ -73,6 +73,11 @@
       "id": "string_bh_three_four_charges",
       "kind": "generalisation",
       "text": "The Einstein metric of the Kaluza-Klein black hole is one charge out of four. String theory's hole of four dimensions has a harmonic function for each [cvetic1996static]."
+    },
+    {
+      "id": "static_five_soliton",
+      "kind": "family",
+      "text": "A static diagonal geometry supports an independent scalar charge in five dimensional vacuum gravity [lake2006static]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "emparan2006",
     "hovdebo2006",
     "gibbons1988",
-    "cvetic1996static"
+    "cvetic1996static",
+    "lake2006static"
   ],
   "coordinates": [
     {

@@ -106,6 +106,11 @@
       "id": "chodos_detweiler",
       "kind": "family",
       "text": "The fifth circle contracts as $t^{-1/2}$ while three other compact directions expand as $t^{1/2}$ [chyba1985]."
+    },
+    {
+      "id": "static_five_soliton",
+      "kind": "family",
+      "text": "The neutral scalar solitons belong to the family of static vacuum geometries studied by Gross and Perry [grossperry1983, lake2006static]."
     }
   ],
   "references": [
@@ -134,7 +139,8 @@
     "horvath1977",
     "nilsson1984",
     "bah2021",
-    "chyba1985"
+    "chyba1985",
+    "lake2006static"
   ],
   "coordinates": [
     {
