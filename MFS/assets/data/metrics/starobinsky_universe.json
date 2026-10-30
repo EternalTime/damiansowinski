@@ -20,7 +20,7 @@
     "quantum field theory in curved spacetime"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Geometric cosmic time is $\\tau=ct$, conformal time satisfies $d\\eta=d\\tau/a$, and $r$ is a comoving length. The scale factor $a>0$ is dimensionless, $k$ carries inverse length squared, and $\\theta$, $\\phi$ and $\\chi$ are dimensionless angles; the Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "convention": "Geometric cosmic time is $\\tau=ct$, conformal time satisfies $d\\eta=d\\tau/a$, and $r$ is a comoving length. The scale factor $a>0$ is dimensionless, $k$ carries inverse length squared, and $\\theta$, $\\phi$ and $\\chi$ are dimensionless coordinates; the Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Starobinsky's universe has a de Sitter phase sustained by quantum vacuum polarization. Alexei A. Starobinsky studied this possibility in 1980, coupling classical spacetime to massless conformally invariant quantum fields [starobinsky1980]. He included their one-loop contributions in Einstein's equations. The scale factor then obeys an equation containing its third time derivative.¶His equations admit exact de Sitter solutions with closed, flat, and open spatial slices [starobinsky1980]. Their curvature scale depends on the quantum fields through $H_0^2 = 360\\pi/(Gk_2)$, in units $\\hbar = c = 1$, where $k_2$ is their combined coefficient. The closed slicing has $a(t) = H_0^{-1}\\cosh(H_0t)$. With a negative higher-derivative coefficient $k_3$, this de Sitter state is unstable.¶Starobinsky followed a family of solutions from the unstable de Sitter state into an oscillating phase [starobinsky1980]. His near-de Sitter perturbations retain first order in their amplitude. At late times, his asymptotic scale factor grows as $t^{2/3}$ with an oscillatory correction. He interpreted the oscillations as massive scalar excitations, called scalarons. Massive matter fields allow those scalarons to decay.¶Viatcheslav F. Mukhanov and Gennady V. Chibisov quantized scalar curvature perturbations of this background in 1981 [mukhanov_chibisov1981]. They found that quantum fluctuations grow until their amplitude becomes comparable to the background curvature. This growth limits the duration of the de Sitter phase in their treatment. They also calculated a nearly flat spectrum of perturbations capable of seeding galaxies and galactic clusters.¶As the expansion rate falls below its anomaly-supported value, the local $R+R^2$ contribution controls the evolution. In a 2026 preprint, Shinji Hirano followed this connection numerically and retained the full homogeneous background equation [hirano2026]. In the scalaron regime, the leading slow-roll relation is $dH/dt \\simeq -M^2/6$, where $H = (da/dt)/a$ and $M$ is the scalaron mass, with $\\hbar = c = 1$. Its approximately Gaussian scale factor describes a limited regime of the evolving solution.¶Daisuke Yoshida and Jerome Quintin examined the past boundaries of inflationary spacetimes in 2018 [yoshida_quintin2018]. For a spatially flat universe approaching de Sitter in the past, a radial light ray reaches that boundary in finite affine parameter. Curvature measured in a frame parallel transported along the ray contains the ratio $(dH/dt)/a^2$. A divergent ratio signals a tidal curvature singularity even when scalar curvature invariants stay finite.",
   "references": [
     "starobinsky1980",
@@ -57,11 +57,11 @@
         },
         {
           "symbol": "H_0",
-          "description": "Positive inverse length setting the anomaly-supported de Sitter curvature."
+          "description": "Positive inverse length setting the de Sitter curvature sustained by the anomaly."
         },
         {
           "symbol": "M",
-          "description": "Positive scalaron inverse Compton length setting the higher-derivative term."
+          "description": "Positive scalaron inverse Compton length setting the term with higher derivatives."
         }
       ],
       "convention": "The interval $I$ is a connected interval on which $a>0$; the radius covers one hemisphere for $k>0$. Primes denote $d/d\\tau$.",
@@ -1150,11 +1150,11 @@
         },
         {
           "symbol": "H_0",
-          "description": "Positive inverse length setting the anomaly-supported de Sitter curvature."
+          "description": "Positive inverse length setting the de Sitter curvature sustained by the anomaly."
         },
         {
           "symbol": "M",
-          "description": "Positive scalaron inverse Compton length setting the higher-derivative term."
+          "description": "Positive scalaron inverse Compton length setting the term with higher derivatives."
         }
       ],
       "convention": "The interval $I$ is a connected interval on which $a>0$; the radius covers one hemisphere for $k>0$. Primes denote $d/d\\eta$ and $d/d\\tau=a^{-1}d/d\\eta$.",
