@@ -21809,6 +21809,40 @@ def check_table():
         raise SystemExit(f"captions for spacetimes that are not drawn: {sorted(stray)}")
 
 
+def charach_malin(ck, src):
+    """Cut-open theta,x tori at t=1,y=0, from the stored spatial metric.
+
+    rho=sqrt(t)*exp(P/2), z_theta=sqrt(exp(lambda/2)/sqrt(t)-rho_theta^2).
+    Both complete spatial periods have a positive radicand; the two end circles are identified.
+    """
+    out = []
+    for matter in ("scalar", "electromagnetic"):
+        system = matter + "_areal"
+        sl = Slice(src, "charach_malin", system, r"\theta", "x", {"t": "1", "y": "0"}, {"L": 1},
+                   nr._charach_malin_wave(matter, "1"))
+        defect = sl.defect_at(np.linspace(0, 2 * math.pi, 801))
+        ck.add(f"Charach-Malin {matter}: the complete spatial period embeds", max(0.0, -float(np.min(defect))), 0)
+        size = 12.0
+        tube = Piece("torus", "sheet", sl, 0, 2 * math.pi, size=size,
+                     ends=(("edge", r"$\theta=0$, identified with the other end"),
+                           ("edge", r"$\theta=2\pi$, identified with the other end")))
+        ck.isometry(f"Charach-Malin {matter}", tube)
+        ck.add(f"Charach-Malin {matter}: the end circles agree", abs(float(tube.rho[0]-tube.rho[-1])), FORM)
+        surface = Surface([tube], label="$t=1$", time=1.0)
+        fig = figure_of([surface], {"sheet": "cover"}, size)
+        fig.legend("fill", "cover", r"the cut-open torus")
+        out.append(view(matter, matter.title() + " waves", "$L$", [surface], fig.done(),
+                        settings="$L=1$, $t=1$, $y=0$.", input=nr.CHARACH_MALIN_INPUT[matter]))
+    return out
+
+
+DRAWN["charach_malin"] = charach_malin
+for _matter in ("scalar", "electromagnetic"):
+    CAPTIONS[("charach_malin", _matter)] = [
+        r"The torus of $\theta$ and $x$ ($t=1$, $y=0$), cut open along $\theta=0$. "
+        r"The two end circles are identified, and each circle of $x$ has radius $L\sqrt{t}e^{P/2}$."]
+
+
 def main(argv=None):
     check_table()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

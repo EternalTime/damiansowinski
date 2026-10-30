@@ -3845,6 +3845,13 @@ FLAT.update({
 FLAT[("vaidya_patel_kerr", "einstein_boyer_lindquist", "axis")] = lambda: one(
     "vaidya_patel_kerr", lambda m: along(0.0, *m.reach("einstein_boyer_lindquist", "r")))
 
+for _matter in ("scalar", "electromagnetic"):
+    for _time in ("areal", "logarithmic"):
+        FLAT[("charach_malin", _matter+"_"+_time, "plane")] = (
+            lambda matter=_matter, time=_time: one("charach_malin",
+                lambda m: along(-math.log(m.time) if time == "logarithmic" else m.time,
+                                *m.reach(matter+"_areal", r"\theta")), view_id=matter))
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

@@ -31727,6 +31727,59 @@ for _cid in ("taub", "areal", "null"):
     ]
 
 
+def charach_malin(ck, src):
+    """The conformal cylinder cut at theta=0, in each chart of each matter system.
+
+    p,q=atan(t -+ theta), with t=exp(-tau) in logarithmic time.
+    Periodic edges have the same t and are identified; winding null rays re-enter there.
+    """
+    def any_wave(a, b):
+        w = ck.rng.uniform(-2, 2, np.shape(a))
+        return {"lambda": (w, 0*w, 0*w)}
+    far = np.concatenate([[0.0], S_POS])
+    X, T = xt(*mink_pq(far, np.full_like(far, 2*PI)))
+    region = [[0.0, 0.0]] + [[float(a), float(b)] for a, b in zip(X, T)] + [[0.0, PI]]
+    edge = 2 * math.atan(2 * PI)
+    box = [-0.4, edge + 0.4, -0.3, PI + 0.3]
+    out = []
+    for matter in ("scalar", "electromagnetic"):
+        for time in ("areal", "logarithmic"):
+            system = matter + "_" + time
+            log = time == "logarithmic"
+            c = r"\tau" if log else "t"
+            tr = (lambda tau, th: mink_pq(np.exp(-np.asarray(tau)), th)) if log else mink_pq
+            plane = Plane(src, "charach_malin", system, (c, r"\theta"), {"x":"0", "y":"0"},
+                          {"L":1}, numeric=["lambda"])
+            ck.chart(f"Charach-Malin {system}", plane, tr, ck.uniform(-2, 3) if log else ck.uniform(0.01, 30),
+                     ck.uniform(0, 2*PI), lambda a,b: (-1 if log else 1, 0), any_wave)
+            v = View(system, f"{matter.title()}, {time} time", box, system)
+            v.fill("region", region)
+            v.fill("cover", region)
+            v.line("boundary", [[[0, 0], [0, PI]]])
+            v.curve("boundary", *mink_pq(far, np.full_like(far, 2*PI)))
+            v.line("singular", [[[0, 0], [edge, 0]]], zig=True)
+            v.layers.append({"kind":"point", "class":"infinity", "at":[0.0, round(PI, 4)]})
+            v.label_xt([0, PI], "$i^+$", "b", dy=-6)
+            v.label_xt([edge/2,0], "$t=0$", "t", dy=8)
+            v.legend("cover", "the toroidal universe")
+            v.legend("boundary", r"$\theta=0,2\pi$, identified at equal $t$")
+            v.legend("singular", "$t=0$, the past singularity")
+            for m in slices.moments("charach_malin", matter):
+                reach = np.linspace(*m.reach(matter+"_areal", r"\theta"), 200)
+                v.slice(m, [mink_pq(np.full_like(reach, m.time), reach)])
+            v.set(input=nr.CHARACH_MALIN_INPUT[matter], settings="$L=1$.")
+            out.append(v)
+    return out
+
+
+DRAWN["charach_malin"] = charach_malin
+for _matter in ("scalar", "electromagnetic"):
+    for _time in ("areal", "logarithmic"):
+        CAPTIONS[("charach_malin", _matter+"_"+_time)] = [
+            r"The plane of $t$ and $\theta$ ($x=y=0$), with $p,q=\arctan(t\mp\theta)$. "
+            r"Light rays cross the identified edges and wind round the spatial circle."]
+
+
 def main(argv=None):
     check_table()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

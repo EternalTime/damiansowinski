@@ -779,6 +779,35 @@ def _bz_cone(chart):
     return (("shell", {"x0": "1", "r": "-1"}, 0, left), ("shell", {"x0": "1", "r": "1"}, 1, right))
 
 
+def _charach_malin_wave(matter, t="t"):
+    """Smooth periodic standing modes; the electromagnetic mode is a geodesic wave map.
+
+    The longitudinal primitive B has B_t=t(J1^2 cos^2(theta)+J0^2 sin^2(theta)).
+    Its spatial integral vanishes; q=1/2 adds a homogeneous wave-map velocity.
+    """
+    t = f"({t})"
+    j0, j1 = f"besselj(0,{t})", f"besselj(1,{t})"
+    B = f"({t}**2*({j0}**2+{j1}**2)/2-{t}*{j0}*{j1}*cos(theta)**2)"
+    if matter == "scalar":
+        return {"P": f"{j0}*cos(theta)/2", "Phi": f"7*{j0}*cos(theta)/20",
+                "lambda": f"99*{B}/200"}
+    U = f"(log({t})/2+2*{j0}*cos(theta)/5)"
+    bar = f"(log({t})/4+2*{j0}*cos(theta)/5+4*{B}/25)"
+    return {"P": f"2*log(cosh({U}))+log({t})", "chi": f"tanh({U})",
+            "lambda": f"4*({bar}+log(cosh({U})))+log({t})"}
+
+
+CHARACH_MALIN_INPUT = {
+    "scalar": (r"$P=\tfrac12J_0(t)\cos\theta$, $\Phi=\tfrac7{20}J_0(t)\cos\theta$, "
+               r"$\lambda=\tfrac{99}{200}B$, with $B=\tfrac12t^2(J_0^2+J_1^2)-tJ_0J_1\cos^2\theta$ "
+               r"and $J_0,J_1$ the Bessel functions of the first kind at $t$."),
+    "electromagnetic": (r"$U=\tfrac12\ln t+\tfrac25J_0(t)\cos\theta$, $P=2\ln\cosh U+\ln t$, "
+                        r"$\chi=\tanh U$, $\lambda=4(\bar\lambda+\ln\cosh U)+\ln t$, "
+                        r"with $\bar\lambda=\tfrac14\ln t+\tfrac25J_0(t)\cos\theta+\tfrac4{25}B$ "
+                        r"and $B=\tfrac12t^2(J_0^2+J_1^2)-tJ_0J_1\cos^2\theta$; "
+                        r"$J_0,J_1$ are Bessel functions of the first kind at $t$.")}
+
+
 def _gowdy_solves(time):
     return ((time, time), (time, "\\theta"), ("\\theta", "\\theta"), ("\\sigma", "\\sigma"), ("\\delta", "\\delta"))
 
@@ -5104,6 +5133,26 @@ DIAGRAMS = [
             input=PSK_INPUT),
     # Gowdy's torus: the plane of the time and theta is conformally flat in the areal time, so its
     # rays are at 45 degrees for every wave, and in tau = -ln t they are theta -+ e^{-tau} = const.
+    Diagram("charach_malin", "scalar_areal", "plane", '$t$ and $\\theta$',
+            ('t', r"\theta"), (0, 2 * math.pi, -2, 2) if False else (0, 2 * math.pi, 0.2, 5.0),
+            r"$\theta$", '$t$', {"L": 1}, {"x": "0", "y": "0"},
+            families=SIDEWAYS, periodic=(r"\theta",), functions=_charach_malin_wave("scalar", 't'),
+            input=CHARACH_MALIN_INPUT["scalar"]),,
+    Diagram("charach_malin", "scalar_logarithmic", "plane", '$\\tau$ and $\\theta$',
+            ('\\tau', r"\theta"), (0, 2 * math.pi, -2, 2) if True else (0, 2 * math.pi, 0.2, 5.0),
+            r"$\theta$", '$-\\tau$', {"L": 1}, {"x": "0", "y": "0"},
+            families=SIDEWAYS, periodic=(r"\theta",), functions=_charach_malin_wave("scalar", 'exp(-tau)'),
+            input=CHARACH_MALIN_INPUT["scalar"], to_display=((0, 1), (-1, 0)), tau="-tau"),
+    Diagram("charach_malin", "electromagnetic_areal", "plane", '$t$ and $\\theta$',
+            ('t', r"\theta"), (0, 2 * math.pi, -2, 2) if False else (0, 2 * math.pi, 0.2, 5.0),
+            r"$\theta$", '$t$', {"L": 1}, {"x": "0", "y": "0"},
+            families=SIDEWAYS, periodic=(r"\theta",), functions=_charach_malin_wave("electromagnetic", 't'),
+            input=CHARACH_MALIN_INPUT["electromagnetic"]),,
+    Diagram("charach_malin", "electromagnetic_logarithmic", "plane", '$\\tau$ and $\\theta$',
+            ('\\tau', r"\theta"), (0, 2 * math.pi, -2, 2) if True else (0, 2 * math.pi, 0.2, 5.0),
+            r"$\theta$", '$-\\tau$', {"L": 1}, {"x": "0", "y": "0"},
+            families=SIDEWAYS, periodic=(r"\theta",), functions=_charach_malin_wave("electromagnetic", 'exp(-tau)'),
+            input=CHARACH_MALIN_INPUT["electromagnetic"], to_display=((0, 1), (-1, 0)), tau="-tau"),
     Diagram("gowdy", "areal", "plane", "$t$ and $\\theta$", ("t", "\\theta"), (0, 2 * math.pi, 0, 2 * math.pi),
             "$\\theta$", "$t$", {"L": 1}, {"sigma": "0", "delta": "0"}, families=SIDEWAYS, periodic=("\\theta",),
             functions=_gowdy_wave("t"), solves=_gowdy_solves("t"), input=GOWDY_INPUT),
@@ -11707,6 +11756,10 @@ CAPTIONS = {
         "nonzero on it, so the rays are the lines of constant $u$ and of constant $v$.",
         "The pulse is deepest on the axis at $u = v = 0$ and leaves just inside $u = 0$.",
     ],
+    ("charach_malin", "scalar_areal", "plane"): ['The plane of $t$ and $\\theta$ ($x=y=0$), with identified spatial edges and null geodesics $t\\pm\\theta$ constant.'],
+    ("charach_malin", "scalar_logarithmic", "plane"): ['The plane of $\\tau$ and $\\theta$ ($x=y=0$), with future upwards along $-\\tau$. The two spatial edges are identified.'],
+    ("charach_malin", "electromagnetic_areal", "plane"): ['The plane of $t$ and $\\theta$ ($x=y=0$), with identified spatial edges and null geodesics $t\\pm\\theta$ constant.'],
+    ("charach_malin", "electromagnetic_logarithmic", "plane"): ['The plane of $\\tau$ and $\\theta$ ($x=y=0$), with future upwards along $-\\tau$. The two spatial edges are identified.'],
     ("gowdy", "areal", "plane"): [
         "The plane of $t$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of a polarised wave on the torus, the "
         "edges $\\theta = 0$ and $\\theta = 2\\pi$ one line. The metric on it is "
@@ -17467,6 +17520,10 @@ CLOSED_FORMS = {
         (lambda u, r: u + 2 * _rstar(r, [0.64, 0.36]), lambda u, r: u, _away(0.64, 0.36)),
     ("charged_shell", "exterior_isotropic", "point"):
         (lambda t, rho: t + rho + 2 * np.log(rho) - 1 / rho, lambda t, rho: t - rho - 2 * np.log(rho) + 1 / rho, None),
+    ("charach_malin", "scalar_areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
+    ("charach_malin", "scalar_logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),
+    ("charach_malin", "electromagnetic_areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
+    ("charach_malin", "electromagnetic_logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),
     ("gowdy", "areal", "plane"): (lambda t, th: t + th, lambda t, th: t - th, lambda t, th: t > 0.02),
     ("gowdy", "sphere", "plane"): (lambda t, th: t + th, lambda t, th: t - th, None),
     ("gowdy", "logarithmic", "plane"): (lambda tau, th: np.exp(-tau) + th, lambda tau, th: np.exp(-tau) - th, None),
