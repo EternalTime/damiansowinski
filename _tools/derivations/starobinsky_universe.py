@@ -214,3 +214,199 @@ def declared_functions():
                 body["fdiff"] = lambda self, argindex=1, up=name+str(order+1): made[up](self.args[0])
             made[label] = type(label, (sp.Function,), body)
     return made
+
+
+NUMERIC_INPUT = (r"Full semiclassical evolution; $M/H_0=1/2$, $a=1$ and $\tau=0$ at $h=H_0/\sqrt2$. "
+                 r"Second-order saddle initialization at $h/H_0=1-10^{-4}$.")
+
+
+def conformal_time(system, time):
+    """Radial conformal coordinate in units H_0=1, with exact de Sitter primitives."""
+    time = np.asarray(time, dtype=float)
+    if system == "cosmic":
+        return trajectory().eta(time)
+    if system == "conformal":
+        return time
+    if system == "closed_de_sitter":
+        return np.arctan(np.sinh(time))
+    if system == "flat_de_sitter":
+        return -np.exp(-time)
+    return np.log(np.tanh(time/2))
+
+
+def register_null_rays(nr):
+    """Page-local rows for the existing ray tracer and its independent null integrals."""
+    nr.DECLARED_FUNCTIONS.update(declared_functions())
+    for system in CHART_IDS:
+        radial = r"\chi" if system in ("closed_de_sitter", "open_de_sitter") else "r"
+        first = r"\eta" if system == "conformal" else r"\tau"
+        params = {"H_0": 1}
+        functions = {}
+        if system in ("cosmic", "conformal"):
+            params.update({"k": 0, "M": MASS})
+            functions = {"a": "sta_c(eta)" if system == "conformal" else "sta_a(tau)"}
+        box = {"cosmic": (0,4,-2,2), "conformal": (0,3,-2,1),
+               "closed_de_sitter": (0,np.pi,-1.5,1.5), "flat_de_sitter": (0,4,-2,2),
+               "open_de_sitter": (0,3,0.2,3.2)}[system]
+        nr.DIAGRAMS.append(nr.Diagram(ID, system, "radial", "$"+first+"$ and $"+radial+"$",
+                           (first,radial),box,"$H_0r$" if radial == "r" else r"$\chi$",
+                           "$H_0"+first+"$",params,nr.EQUATOR,tau=first.replace("\\", ""),
+                           functions=functions,input=NUMERIC_INPUT if functions else None))
+        nr.CAPTIONS[(ID,system,"radial")] = [
+            "The radial plane ($\\theta=\\pi/2$, $\\phi=0$), with "
+            + ("the evolving scale factor." if functions else "an exact de Sitter scale factor.")
+            + " Light rays conserve $" + (r"H_0\eta" if radial != "r" else r"\eta") + r"\pm " + radial + "$."]
+        nr.CLOSED_FORMS[(ID,system,"radial")] = (
+            lambda t,r,s=system: conformal_time(s,t)+r,
+            lambda t,r,s=system: conformal_time(s,t)-r,None)
+
+
+CONFORMAL_CAPTIONS = {
+    "cosmic": [r"The evolving flat universe, each point a sphere; $p,q=\arctan[H_0(\eta\mp r)]$. "
+               r"The past null boundary has divergent transported tidal curvature [yoshida_quintin2018]."],
+    "conformal": [r"The evolving flat universe in conformal time, with $\eta$ extending over the real line. "
+                  r"The past null boundary has divergent transported tidal curvature [yoshida_quintin2018]."],
+    "closed_de_sitter": [r"The exact closed de Sitter universe, each point a sphere; "
+                        r"$T=\arctan[\sinh(H_0\tau)]$, $X=\chi$."],
+    "flat_de_sitter": [r"The expanding flat de Sitter patch, with $H_0\eta=-e^{-H_0\tau}$. "
+                      r"The past null horizon admits a regular continuation."],
+    "open_de_sitter": [r"The expanding open de Sitter patch, with $H_0\eta=\ln\tanh(H_0\tau/2)$. "
+                      r"The past light cone admits a regular continuation."],
+}
+
+
+def conformal_diagram(ck, src):
+    """Compactify the evolving branch using both sourced asymptotic conformal limits.
+
+    Its past a~exp(tau) and future a~tau^(2/3) imply eta in the whole real line.
+    The past edge is explicitly distinguished from complete null infinity.
+    For M/H_0=1/2, q<2 and h'/a^2 diverges there; scalar invariants stay finite.
+    The exact de Sitter charts use their untruncated conformal-time ranges.
+    """
+    import conformal as cd
+    import slices
+    views = []
+    pi = np.pi
+    for system in CHART_IDS:
+        evolving = system in ("cosmic", "conformal")
+        radial = r"\chi" if system in ("closed_de_sitter", "open_de_sitter") else "r"
+        first = r"\eta" if system == "conformal" else r"\tau"
+        params = {"H_0": 1, **({"M": MASS,"k":0} if evolving else {})}
+        functions = {"a": "sta_c(eta)" if system == "conformal" else "sta_a(tau)"} if evolving else {}
+        plane = cd.Plane(src,ID,system,(first,radial),cd.EQUATOR,params,functions=functions)
+
+        def mapping(t,r,system=system):
+            e = conformal_time(system,t)
+            return ((e-r)/2,(e+r)/2) if system == "closed_de_sitter" else (np.arctan(e-r),np.arctan(e+r))
+        times = ck.uniform(-2,1) if system == "conformal" else ck.uniform(0.3,4) if system == "open_de_sitter" else ck.uniform(-3,3)
+        ck.chart(ID+" "+system,plane,mapping,times,ck.uniform(0.02,2.8),lambda t,r:(1,0))
+        if system == "closed_de_sitter":
+            v = cd.View(system,"Closed de Sitter",[-0.3,pi+0.3,-pi/2-0.3,pi/2+0.3],system)
+            square = [[0,-pi/2],[pi,-pi/2],[pi,pi/2],[0,pi/2]]
+            v.fill("region",square);v.fill("cover",square)
+            v.line("scri",[[[0,-pi/2],[pi,-pi/2]],[[0,pi/2],[pi,pi/2]]])
+            v.line("centre",[[[0,-pi/2],[0,pi/2]],[[pi,-pi/2],[pi,pi/2]]])
+            for t in (-2,-1,0,1,2):
+                v.curve("t",*mapping(np.full(101,t),np.linspace(0,pi,101)))
+            v.legend("scri",r"spacelike infinity $\mathscr I^\pm$")
+            v.legend("centre","regular poles")
+            m = slices.moments(ID,"closed")[0]
+            v.slice(m,[mapping(np.zeros(101),np.linspace(0,pi,101))])
+        else:
+            full = evolving
+            bottom,top = -pi, pi if full else 0
+            v = cd.View(system,"Evolving flat branch" if full else "Expanding de Sitter",
+                        [-0.35,pi+0.35,bottom-0.3,top+0.3],system)
+            shape = [[0,bottom],[pi,0],[0,top]]
+            v.fill("region",shape);v.fill("cover",shape)
+            v.line("centre",[[[0,bottom],[0,top]]])
+            v.line("chartedge" if full else "horizon",[[[0,bottom],[pi,0]]])
+            v.line("scri",[[[pi,0],[0,top]]])
+            v.legend("centre","regular centre")
+            v.legend("scri","future null infinity" if full else "future spacelike infinity")
+            v.legend("chartedge" if full else "horizon","past null tidal boundary" if full else "regular past horizon")
+            evalues = (-4,-2,0,1,4) if full else (-4,-2,-1,-0.3)
+            r = cd.spread(0,np.inf,400,10)
+            for e in evalues:
+                v.curve("t",np.arctan(e-r),np.arctan(e+r))
+            if full:
+                m = slices.moments(ID,"flat")[0]
+                r = np.linspace(0,3,101)
+                v.slice(m,[(np.arctan(-r),np.arctan(r))],label=r"$\tau=\eta=0$")
+        v.legend("cover","chart domain")
+        v.legend("t",r"conformal time constant")
+        v.set(settings=r"$H_0=1$"+(r", $M/H_0=1/2$, $k=0$." if evolving else "."))
+        if evolving:
+            v.set(input=NUMERIC_INPUT)
+        views.append(v)
+    ck.limit("Starobinsky q<2: the nonzero past mode has divergent h'/a^2",[int(EXPONENT<2)],[1],0.1)
+    return views
+
+
+EMBEDDING_CAPTIONS = {
+    "flat": [r"The flat equatorial slice ($\tau=0$, $\theta=\pi/2$), a Euclidean plane with $a=1$."],
+    "closed": [r"The closed de Sitter equator ($\tau=0$, $\theta=\pi/2$), a sphere of radius $H_0^{-1}$."],
+}
+
+
+def embedding_diagram(ck, src):
+    """One moment of the flat numerical family and the whole exact closed de Sitter equator.
+
+    The flat profile is z=0 and rho=ar.
+    The closed profile is rho=sin(chi)/H_0, z=-cos(chi)/H_0 at tau=0.
+    Both are read from the published induced metric, through the existing surface integrator.
+    """
+    import embedding as em
+    views = []
+    for system,vid in (("cosmic","flat"),("closed_de_sitter","closed")):
+        flat = vid == "flat"
+        radial = "r" if flat else r"\chi"
+        params = {"H_0":1, **({"M":MASS,"k":0} if flat else {})}
+        sl = em.Slice(src,ID,system,radial,r"\phi",{"tau":0,"theta":"pi/2"},params,
+                      functions={"a":"1"} if flat else None)
+        top = 3.0 if flat else np.pi
+        size = 6.0 if flat else 2.0
+        marks = [(x,"r",None) for x in ((1,2,3) if flat else (np.pi/4,np.pi/2,3*np.pi/4))]
+        piece = em.Piece("equator","sheet",sl,0,top,0 if flat else -1,1,
+                         (("axis","centre"),("edge","plane continues") if flat else ("axis","antipode")),marks,size)
+        surface = em.Surface([piece],label=r"$H_0\tau=0$",time=0.0)
+        ck.isometry(ID+" "+vid,piece)
+        if flat:
+            ck.plane(ID+" flat equator",sl,np.linspace(0.01,3,50))
+        else:
+            ck.form(ID+" closed sphere",piece,lambda x:-np.cos(x),size)
+            ck.radius(ID+" closed circumference",piece,lambda x:np.sin(x),size)
+        fig = em.figure_of([surface],{"sheet":"cover"},size,meridians=12)
+        fig.legend("fill","cover","equatorial slice")
+        fig.legend("line","r",r"comoving circles")
+        fig.legend("line","meridian",r"$\phi$ constant")
+        views.append(em.view(vid,"Flat slice" if flat else "Closed de Sitter",r"$H_0^{-1}$",
+                             [surface],fig.done(),system=system,settings=r"$H_0=1$, $\tau=0$."))
+    return views
+
+
+def curvature_diagram(ck, src):
+    """Evaluate the two stored FLRW scalars on the same full-equation trajectory.
+
+    The display includes the de Sitter departure and the first scalaron oscillations.
+    No curvature tensor is recomputed, and the axis is ordinary geometric cosmic time.
+    """
+    import curvature as cv
+    params = {"k":0,"H_0":1,"M":MASS}
+    functions = {"a":"sta_a(tau)"}
+    x_axis = cv.axis(r"$H_0\tau$",-6,80)
+    panels,curves = [],[]
+    for field,kind,power,lo,hi in (("kretschmann","K",4,0,25),("ricci_scalar","R",2,-1,9)):
+        scale = {"kind":"linear","from":lo,"to":hi}
+        panels.append({"id":kind,"name":f"${kind}/H_0^{power}$","aspect":2,"scale":scale,
+                       "ticks":cv.value_ticks(scale)})
+        stored = cv.Published(src,ID,"cosmic",field,["tau"],list(params),functions=functions)
+        curves += cv.line_curves(ck,ID+" "+kind,kind,kind,stored,r"\tau",x_axis,scale,cv.PLOT_W/2,params)
+    cv.shape_checks(ck,ID,[2,2])
+    return [{"id":"evolution","label":"Departure and oscillations","kind":"line","x":x_axis,
+             "panels":panels,"curves":curves,"marks":[],
+             "legend":[["line","K","$K$"],["line","R","$R$"]],
+             "caption":[r"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the evolving flat universe. "
+                        r"The Ricci scalar oscillates through zero in the scalaron phase."],
+             "ricci_sentences":[[0,1]],"per_scalar":cv.scalar_clips("Linear scale.","Linear scale."),
+             "settings":r"$H_0=1$, $M/H_0=1/2$, $k=0$.","input":NUMERIC_INPUT,"clip":"Linear scales."}]
