@@ -1,10 +1,3 @@
 {
-  "flat": [
-    {
-      "reason": "At fixed exterior cosmic time and the interior time of the same shell event, both equatorial pieces have Euclidean intrinsic geometry and join at one areal radius.",
-      "drawings": [
-        "slice"
-      ]
-    }
-  ]
+  "flat": "The piecewise constant time equatorial slice is intrinsically Euclidean in both regions and joins at one areal radius."
 }

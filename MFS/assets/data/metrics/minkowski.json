@@ -303,6 +303,11 @@
       "id": "lynden_bell_pineault",
       "kind": "generalisation",
       "text": "The counter rotating family contains flat space when the circular speed and surface density vanish [lyndenbell1978]."
+    },
+    {
+      "id": "shell_void",
+      "kind": "composite",
+      "text": "Minkowski space fills the interior of a spherical dust shell in an expanding Friedmann universe."
     }
   ],
   "references": [

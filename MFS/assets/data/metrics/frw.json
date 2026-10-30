@@ -191,6 +191,11 @@
       "id": "starobinsky_universe",
       "kind": "special_case",
       "text": "Starobinsky's homogeneous universe follows the semiclassical field equation with conformally invariant quantum matter [starobinsky1980]."
+    },
+    {
+      "id": "shell_void",
+      "kind": "composite",
+      "text": "A Friedmann dust region surrounds an empty cavity and its accreting shell."
     }
   ],
   "references": [

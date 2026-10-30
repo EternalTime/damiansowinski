@@ -77,6 +77,11 @@
       "id": "kerr_disc_source",
       "kind": "programme",
       "text": "Werner Israel's surface layers applied to Kerr's metric in 1970: a layer on the disc in the ring singularity [israel1970]."
+    },
+    {
+      "id": "shell_void",
+      "kind": "family",
+      "text": "An expanding dust exterior feeds the shell as it moves around an empty interior [sakaihaines2000void]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "visser2004",
     "haggard2015fireworks",
     "kraus1999",
-    "israel1970"
+    "israel1970",
+    "sakaihaines2000void"
   ],
   "coordinates": [
     {

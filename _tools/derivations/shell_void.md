@@ -73,3 +73,37 @@ The singular Einstein tensor on the shell is $8\pi S_{ab}\delta(n)$, where $n$ i
 The bulk scalar invariants are defined away from the shell.
 Products of the shell's delta distribution do not define an ordinary curvature squared scalar.
 Sugiura and colleagues, section 2.3 and equations (2.18)-(2.27), derive finite optical jumps by integrating the singular curvature through the shell.
+
+## Numerical motion and the junction check
+
+The drawing interval is $1\le t/t_0\le4$.
+DOP853 integrates the relativistic equations at relative tolerance $2\times10^{-12}$ and absolute tolerance $2\times10^{-14}$, with maximum step $0.025t_0$.
+At $t=2t_0$ the shell has $R=0.24387876888560137t_0$, $v=0.007872607582882827$, and $T=1.0043869706139898t_0$.
+At $t=4t_0$ it has $R=0.4106499137590503t_0$, $v=0.010403560061993835$, and $T=3.011244482443109t_0$.
+
+The normal covector in each radial plane is $n_a=\sqrt{-\det h}(-u^r,u^0)$, with $h$ its two dimensional metric and $u^a$ the shell velocity.
+Contracting its acceleration with this normal determines $K^\tau{}_\tau=n_aa^a$.
+The angular curvature follows independently from $K^\theta{}_\theta=-n_a\Gamma^a_{\theta\theta}/g_{\theta\theta}$.
+The metrics and their Christoffel symbols determine these quantities on each side.
+At $t/t_0=1,2,4$, both jumps have residuals smaller than $10^{-15}/t_0$.
+The dedicated junction checks use additional time samples, differentiate the algebraic proper shell mass to check its influx, and perturb the acceleration to confirm that the temporal jump rejects an altered trajectory.
+
+## Spatial slice and global causal boundary
+
+The equatorial spatial slice meets the shell at $t=2t_0$ outside and $T=1.0043869706139898t_0$ inside.
+Each side has intrinsic metric $d\rho^2+\rho^2d\phi^2$, with $\rho=r$ inside and $\rho=ar$ outside.
+Their circumferences and radial distances agree at $\rho=R$.
+The time normal of this piecewise spacelike slice has a corner at the shell, while its intrinsic geometry is a plane.
+A circle marks the shell on that plane.
+
+The freely chosen dust Friedmann exterior and shell initial data describe a family with different global causal boundaries.
+The numerical initial value solution specifies a finite future interval and leaves its past extension free.
+A global conformal diagram is therefore recorded in NOT_DRAWN, with no guessed cosmological or shell boundary.
+
+## Surface Weyl curvature
+
+The smooth Minkowski and Friedmann bulks are conformally flat.
+The singular Riemann tensor has $R_{nanb}^{\mathrm{sing}}=-[K_{ab}]\delta(n)$ in Gaussian normal coordinates.
+For dust, $[K^\tau{}_\tau]=4\pi\sigma$ and $[K^\theta{}_\theta]=-4\pi\sigma$.
+Taking its traces leaves a nonzero singular Weyl tensor, so conformal flatness of the bulks is not a conformal flatness claim about the glued spacetime.
+Its curvature figure samples only the smooth exterior Kretschmann scalar and marks the shell trajectory separately.
