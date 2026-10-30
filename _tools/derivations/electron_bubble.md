@@ -69,6 +69,12 @@ The total flux over the shell vanishes, and its local value is nonzero.
 An ordinary electric surface current leaves the homogeneous Maxwell equation $dF=0$ unchanged, which requires the intrinsic jump to vanish for a bounded field with a discontinuity.
 Thus a field-free interior and the rotating exterior require additional electromagnetic boundary structure.
 
+The normal Maxwell jump, using $\nabla_\nu F^{\mu\nu}=4\pi j^\mu$, is $j_s^a=\sigma_e u^a$, with
+
+$$\sigma_e=\frac{q(r_0^2-a^2\cos^2\theta)}{4\pi\Sigma_0^2}.$$
+
+Its electric charge integrates to $q$, and the homogeneous Maxwell jump remains nonzero.
+
 A formal electric dipole layer can be introduced through $A=\Theta(r-r_0)A^+$, whose field contains $\delta(r-r_0)dr\wedge\iota^*A^+$.
 The electromagnetic stress of that singular field contains delta products and needs a prescribed regularization.
 For this explicit potential step, the quadratic invariant has coefficient $-2q^2r_0^2/\Sigma_0^2$ multiplying $\delta(r-r_0)^2$.
