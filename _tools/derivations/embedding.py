@@ -21547,7 +21547,8 @@ def charged_godel_universe(ck, src):
     for system, rc in (("hyperbolic", math.log(3)), ("linear", 1.0),
                        ("trigonometric", 2*math.atan(0.5))):
         params = {"omega": 1, **({"m": 1} if system == "hyperbolic" else {"k": 1} if system == "trigonometric" else {})}
-        sl = DustSlice(src, "charged_godel_universe", system, "r", "\\phi", {"t": 0, "z": 0}, params)
+        sl = DustSlice(src, "charged_godel_universe", system, "r", "\\phi", {"t": 0, "z": 0}, params,
+                       rewrite=half_angles if system == "trigonometric" else None)
         stop = brentq(lambda r: float(sl.defect_at(r)), 0.2*rc, 0.99*rc, xtol=1e-14)
         ck.add(f"Charged universe {system}: null circle", abs(float(sl.gpp_at(rc))), 1e-10)
         ck.add(f"Charged universe {system}: embedding stop", abs(float(sl.defect_at(stop))), 1e-9)

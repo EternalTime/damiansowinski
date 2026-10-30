@@ -36,3 +36,17 @@ The present page must show the dependence on m and B explicitly so it describes 
 
 History approval, complete chart definitions, per-chart numerical checks, stored curvature, every required drawing, related links, bibliography and page checks remain to be completed.
 The trigonometric branch and the electromagnetic field attributed to Rebouças must be derived independently before any of their signs or numbers is published.
+
+## Euclidean embedding and the axis
+
+The plane of constant t and z has circular radius rho=sqrt(D²-H²) and embedding height derivative squared 1-rho'².
+The Euclidean endpoint precedes the first null circle on every branch drawn.
+At ω=m=1 its radius is 2 asinh(sqrt((sqrt(3)-1)/3))=0.9516430642, before the null circle log(3)=1.098612289.
+At ω=1 in the linear member the endpoint is sqrt(3)/2, before the null circle 1.
+At ω=k=1 in the trigonometric member the endpoint is 2 asin(sqrt((3-sqrt(5))/5))=0.8031727833, before the null circle 2 atan(1/2)=0.9272952180.
+The trigonometric metric component printed as 5 sin²(r)+8 cos(r)-8 loses digits near its regular axis.
+With s=sin²(r/2), exactly the same component is 4s(1-5s), and the embedding defect is 4s(4-30s+25s²)/(1-5s).
+The defect tends to 4r² at the axis; its apparent 0/0 in the first expression is numerical cancellation, not a geometric singularity.
+The existing half_angles helper rewrites both expressions before quadrature, so the integrand is evaluated continuously at the axis without sampling a singular expression.
+No shared Slice implementation is changed and neither endpoint is entered as a horizon in Slice.exact.
+The local finite-endpoint slope uses rho'=1 at the axis and a real height derivative tending to zero at the numerically located outer endpoint.
