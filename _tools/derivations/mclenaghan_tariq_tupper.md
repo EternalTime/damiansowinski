@@ -104,5 +104,6 @@ No global causal-boundary claim follows from this surface.
 The spatial surface \(t=z=0\) has metric \(dr^2+e^{-2r/a}dy^2\), a hyperbolic plane.
 An isometric immersion of its strip of width \(2\pi a\) along \(y\), for \(0\le r\le2a\), is Beltrami's pseudosphere with radius \(a e^{-r/a}\).
 The strip is rolled once about the drawing's axis; the coordinates of spacetime retain their real domains.
+Its radial ends \(r=0\) and \(r=2a\) lie at \(x=a\) and \(x=ae^2\) in the upper half plane.
 The drawing is a finite immersed strip, with no global embedding or periodic spacetime identification asserted.
 The curvature figure evaluates the stored scalars on \(-2a\le r\le2a\); both are constant, so one still view suffices.

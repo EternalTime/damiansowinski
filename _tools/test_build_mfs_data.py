@@ -5397,6 +5397,9 @@ class Slices(unittest.TestCase):
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
             return (lambda X: 0.0), [rho ** 0.75 / 0.75 for rho in self.reach(surface)]
+        if key == "mclenaghan_tariq_tupper/upper_half_plane/surface":
+            # The strip is embedded in r, while this view draws x = a exp(r/a), at a = 1.
+            return (lambda X: 0.0), [math.exp(r) for r in self.reach(surface)]
         if key in ("ghost_neutrinos/areal/radial", "ghost_neutrinos/null/null"):
             # Taub's z = (2/3) r^(3/2) at L = 1, the strip reached in z; the null view draws
             # (mu + nu)/2 = r^2/4 across, and t = 0 is mu = nu, its zero up.
