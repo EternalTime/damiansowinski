@@ -18005,7 +18005,7 @@ def cahen_wallach(ck, src):
         w = run.sol(u)
         cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
         ring, dots = particles(ck, where, sl, plane, cx, cy)
-        frames.append(Surface([plane], label="$u = 0$" if u == 0 else f"$cu = {u:g}L$", time=u, curves=[ring],
+        frames.append(Surface([plane], label="$cu = 0$" if u == 0 else f"$cu = {u:g}L$", time=u, curves=[ring],
                               dots=dots))
     surfaces = [frames[i] for i in keys]
 
