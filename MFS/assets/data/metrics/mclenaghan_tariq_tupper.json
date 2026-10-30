@@ -1,0 +1,86 @@
+{
+  "id": "mclenaghan_tariq_tupper",
+  "name": "McLenaghan-Tariq-Tupper electrovacuum",
+  "short_name": "McLenaghan-Tariq-Tupper",
+  "description": "A homogeneous electrovacuum of Petrov type I with a non-inheriting electromagnetic field.",
+  "tags": [
+    "electrovacuum",
+    "electromagnetic field",
+    "homogeneous",
+    "Petrov type I",
+    "stationary",
+    "four-dimensional"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use signature $(-,+,+,+)$ and a positive length $a$, with components along $x^0=ct$ wherever $t$ is a time.",
+  "history": "An electromagnetic field can change under a motion that preserves the geometry of spacetime. Electric and magnetic fields mix under a duality rotation, while their combined energy and momentum remain invariant [anderson2022noninheriting]. Raymond G. McLenaghan and Nessim Tariq found a homogeneous solution with precisely this separation of symmetries, published in the Journal of Mathematical Physics in November 1975 [mclenaghan1975electrovacuum]. Its source is a non-null electromagnetic field, and its gravitational curvature is of Petrov type I [evtyagin2021mtt].¶Nessim Tariq and B. O. J. Tupper had investigated algebraically general Einstein-Maxwell solutions in August 1975 [tariq1975electrovacuum]. They required a null tetrad parallelly propagated along the two principal null congruences of the electromagnetic field. Their solutions included a field with twist and shear whose principal null congruences have zero expansion. Tupper determined the expansion-free family in June 1976 and acknowledged McLenaghan and Tariq's independent discovery of essentially the same solution [tupper1976electrovacuum].¶Four independent Killing vectors generate a simply transitive group of motions [magazev2021mtt]. Every event can be carried to any other by an isometry in this group. An isometry in the group that fixes an event is the identity. Its solvable Lie algebra is a one-dimensional central extension of the Bianchi type VI$_0$ algebra. The metric's curvature scalars are therefore constant throughout the homogeneous spacetime.¶The electromagnetic field inherits a proper subgroup of those motions [magazev2021mtt, anderson2022noninheriting]. For a Killing vector $\\xi$, the change of the Maxwell two-form $F$ can have the form $\\mathcal{L}_{\\xi}F=\\psi\\,{}^{\\star}F$, where $\\psi$ measures a duality rotation and ${}^{\\star}F$ is its Hodge dual [anderson2022noninheriting]. Its energy-momentum tensor inherits the metric's isometries because duality rotations preserve that tensor. Einstein's equations couple the geometry to this invariant energy and momentum.¶The noncommuting isometries also organize particle trajectories and scalar waves. In 2021 Alexey Anatolievich Magazev constructed a complete integral of the geodesic Hamilton-Jacobi equation in terms of incomplete elliptic integrals [magazev2021mtt]. Anatoly Leonidovich Evtyagin and Magazev solved the Klein-Gordon equation by noncommutative integration in the same year, obtaining confluent Heun functions [evtyagin2021mtt]. Both constructions use the full motion algebra to integrate equations that do not admit separation of variables in spacetime coordinates.",
+  "references": [
+    "anderson2022noninheriting",
+    "mclenaghan1975electrovacuum",
+    "evtyagin2021mtt",
+    "tariq1975electrovacuum",
+    "tupper1976electrovacuum",
+    "magazev2021mtt",
+    "tariq1974"
+  ],
+  "related": [
+    {
+      "id": "bertotti_robinson",
+      "kind": "family",
+      "text": "A homogeneous electrovacuum with conformally flat curvature [anderson2022noninheriting, tariq1974]."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "original",
+      "name": "Original coordinates",
+      "coords": [
+        "u",
+        "r",
+        "y",
+        "z"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "The positive curvature length."
+        }
+      ],
+      "convention": "The coordinates $(u,r,y,z)$ carry length, with $u=X^1$, $r=X^2$, $y=X^3$, $z=X^4$, and $a=2/k$ in the original notation."
+    },
+    {
+      "id": "exponential",
+      "name": "Exponential coordinates",
+      "coords": [
+        "t",
+        "r",
+        "y",
+        "z"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "The positive curvature length."
+        }
+      ],
+      "convention": "The time $t$ obeys $ct=u+r$, and $r$, $y$, and $z$ carry length."
+    },
+    {
+      "id": "upper_half_plane",
+      "name": "Upper half-plane coordinates",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "The positive curvature length."
+        }
+      ],
+      "convention": "We use $x=a e^{r/a}$ and $\\phi=z/a$, with $x$ and $y$ lengths and $\\phi$ a dimensionless real coordinate."
+    }
+  ]
+}
