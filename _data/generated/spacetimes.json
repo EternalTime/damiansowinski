@@ -13213,7 +13213,7 @@
     },
     {
       "id": "charged_godel_universe",
-      "name": "Charged universes of Gödel's kind",
+      "name": "Charged Universes of Gödel's Kind",
       "short_name": "Charged Gödel universes",
       "description": "Charged dust rotating rigidly with a magnetic field. Circular paths close in time beyond a radius that moves inward as the field grows at fixed dust density.",
       "tags": [
