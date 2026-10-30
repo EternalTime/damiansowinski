@@ -22004,6 +22004,8 @@ CAPTIONS[("ghost_neutrinos", "strip")] = [
 
 import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_embedding(sys.modules[__name__])
+import spheroidal_stars_drawings as sph_drawings
+sph_drawings.register_embedding(sys.modules[__name__])
 
 import early_braneworlds_drawings as eb_drawings
 eb_drawings.register_embedding(sys.modules[__name__])

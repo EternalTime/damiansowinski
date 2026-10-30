@@ -4995,6 +4995,8 @@ def checks():
 
 import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_slices(sys.modules[__name__])
+import spheroidal_stars_drawings as sph_drawings
+sph_drawings.register_slices(sys.modules[__name__])
 
 import starobinsky_universe as _starobinsky
 
