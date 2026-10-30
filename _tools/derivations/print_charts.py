@@ -22,7 +22,7 @@ bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
 maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm,
-buchdahl_sphere and ozsvath_dust, and Godel's cylindrical chart.
+buchdahl_sphere, ozsvath_dust and kerr_disc_source, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -51,7 +51,7 @@ misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, pet
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md,
 eternal_traversable_wormhole.md, interstellar_wormhole.md,
-supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md, buchdahl_sphere.md and ozsvath_dust.md beside this file.
+supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md, buchdahl_sphere.md, ozsvath_dust.md and kerr_disc_source.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -11241,6 +11241,154 @@ def kerr_de_sitter_riemann(math, chart, forms):
 
 
 CHARTS["kerr_de_sitter"] = [lambda s=s: kerr_de_sitter(s) for s in KDS_CHARTS]
+
+
+# -- Israel's disc source of Kerr's metric -------------------------------------------------
+
+KDSRC_CHARTS = ["boyer_lindquist", "kerr_schild"]
+KDSRC_PARAMETERS = ["m", "a", "\\Sigma = r^2 + a^2\\cos^2\\theta", "\\Delta = r^2 - 2mr + a^2"]
+
+
+class KerrDiscForms(KerrDeSitterForms):
+    """How a value of Kerr's metric is written: factored as Kerr-de Sitter's values are at
+    Lambda = 0, with each factor that is a multiple of Sigma or Delta written by its name, and
+    every sum left over in the shortest of: as it stands in the cosine or in the sine, grouped by
+    the powers of m, and, with 2mr written as r^2 + a^2 - Delta, grouped by the powers of Delta."""
+
+    def __init__(self, reader):
+        self.r, self.theta = reader.symbol["r"], reader.symbol["\\theta"]
+        self.m, self.a = reader.parameters["m"], reader.parameters["a"]
+        self.rs, self.L = 2 * self.m, sp.Integer(0)
+        self.s, self.c = sp.sin(self.theta), sp.cos(self.theta)
+        self.C = sp.Symbol("KDSRC_cos")
+        self.Sigma, self.Dr = sp.Symbol("Sigma", positive=True), sp.Symbol("Delta")
+        r, a, C = self.r, self.a, self.C
+        self.radial = r ** 2 - 2 * self.m * r + a ** 2
+        self.named = [(self.Sigma, r ** 2 + a ** 2 * C ** 2), (self.Dr, self.radial)]
+
+    def printer(self):
+        return {"lead": [self.r, self.a, self.c, self.s], "rising": [self.m], "flip": False,
+                "factors": [self.m, self.a, self.r, self.Sigma, self.Dr]}
+
+    def regrouped(self, base, depth):
+        candidates = [base, self.in_sine(base)]
+        if depth == 0:
+            polynomial = sp.Poly(base, self.m)
+            if len(polynomial.terms()) > 1:
+                candidates.append(self.summed([(self.product(coefficient, 1), self.m ** k)
+                                               for (k,), coefficient in polynomial.terms()]))
+            if base.has(self.m):
+                swapped = sp.expand(base.subs(self.m, (self.radial + 2 * self.m * self.r - self.Dr) / (2 * self.r)))
+                if sp.denom(sp.together(swapped)).is_Number:
+                    candidates.append(self.summed([(self.product(coefficient, 1), self.Dr ** k)
+                                                   for (k,), coefficient in sp.Poly(swapped, self.Dr).terms()]))
+        return min(candidates, key=lambda e: len(str(e)))
+
+
+def kerr_disc_source_line(system, c):
+    """The line element of a chart, with c the text that stands before the differential of its
+    time: empty in the chart x^0 = ct, and c where the time is the named one."""
+    if system == "boyer_lindquist":
+        return ("ds^2 = -\\left(1 - \\dfrac{2mr}{\\Sigma}\\right)" + c.replace("c", "c^2") + "dt^2"
+                " - \\dfrac{4mar\\sin^2\\theta}{\\Sigma}" + c + "dt\\,d\\phi + \\dfrac{\\Sigma}{\\Delta}dr^2"
+                " + \\Sigma\\,d\\theta^2 + \\left(r^2 + a^2 + \\dfrac{2ma^2r\\sin^2\\theta}{\\Sigma}\\right)\\sin^2\\theta\\,d\\phi^2")
+    radial = "\\dfrac{\\Sigma}{r^2 + a^2}"
+    return ("ds^2 = -" + c.replace("c", "c^2") + "d\\tau^2 + " + radial + "dr^2 + \\Sigma\\,d\\theta^2"
+            " + \\left(r^2 + a^2\\right)\\sin^2\\theta\\,d\\psi^2"
+            " + \\dfrac{2mr}{\\Sigma}\\left(" + c + "d\\tau + " + radial + "dr - a\\sin^2\\theta\\,d\\psi\\right)^2")
+
+
+def kerr_disc_source(system):
+    """Kerr's metric on r >= 0, with the disc r = 0 spanning the ring singularity a surface whose
+    two faces, theta and pi - theta, are one: Israel's source of the Kerr metric (Phys. Rev. D 2,
+    641, 1970). Two charts: Boyer and Lindquist's, and Kerr and Schild's in spheroidal
+    coordinates, which is Carter's Kerr-de Sitter chart of that name at Lambda = 0.
+    kerr_disc_source_check holds each, at points, to being a vacuum off the disc, to the
+    gluing theta -> pi - theta being an isometry of the disc's two faces, and the Kerr-Schild
+    chart to being Boyer and Lindquist's pulled back. kerr_disc_source.md beside this file
+    derives the layer on the disc."""
+    time, angle, name = {"boyer_lindquist": ("t", "\\phi", "Boyer-Lindquist"),
+                         "kerr_schild": ("\\tau", "\\psi", "Kerr-Schild")}[system]
+    coords = [time, "r", "\\theta", angle]
+    forms = KerrDiscForms(vm.Reader(coords, KDSRC_PARAMETERS, ()))
+    if system == "boyer_lindquist":
+        notes = ["\\Delta = 0 \;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 - a^2}\\text{, for } a \\le m\\text{)}"]
+    else:
+        notes = []
+    domains = ([time + " \\in (-\\infty, \\infty)", "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", angle + " \\in [0, 2\\pi)",
+                "(r, \\theta) = (0, \\theta) \\sim (0, \\pi - \\theta) \;\\text{(the two faces of the disc, one surface)}"]
+               + notes + ["\\Sigma = 0 \;\\text{(the ring singularity, the rim of the disc)}"])
+    return {
+        "metric_id": "kerr_disc_source",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                   "parameters": KDSRC_PARAMETERS, "line_element": kerr_disc_source_line(system, "c\\,")},
+        "chart_line_element": kerr_disc_source_line(system, ""),
+        "printer": forms.printer(),
+        "pretty": forms.pretty,
+        "bracketed": forms.pretty,
+        "check": lambda chart: kerr_disc_source_check(chart, system),
+        "kretschmann": ("\\dfrac{48m^2\\left(r^2 - a^2\\cos^2\\theta\\right)\\left(\\Sigma^2 - 16a^2r^2\\cos^2\\theta\\right)}"
+                        "{\\Sigma^6}"),
+    }
+
+
+def kerr_disc_source_points(chart, seed):
+    """Points off the disc and off the horizons, r between the disc and well outside, with m < a
+    and m > a both met, as exact rationals."""
+    rng = random.Random(seed)
+    m, a = chart.reader.parameters["m"], chart.reader.parameters["a"]
+    for k in range(4):
+        yield {m: sp.Rational(rng.randint(5, 40), 13), a: sp.Rational(rng.randint(5, 40), 11),
+               chart.symbols[0]: sp.Rational(rng.randint(-30, 30), 7), chart.symbols[1]: sp.Rational(rng.randint(1, 90), 17),
+               chart.symbols[2]: sp.Rational(rng.randint(1, 150), 97), chart.symbols[3]: sp.Rational(rng.randint(0, 60), 11)}
+
+
+def kerr_disc_source_check(chart, system):
+    small = sp.Float(10) ** -40
+    g = chart.geo.g
+    ricci = chart.geo.ricci_ll()
+    for i in range(4):
+        for j in range(i, 4):
+            for at in kerr_disc_source_points(chart, 1970 + 4 * i + j):
+                if abs(sp.N(ricci[i][j].subs(at), 50)) > small:
+                    raise AssertionError(f"kerr_disc_source/{system}: R_{chart.coords_tex[i]}{chart.coords_tex[j]} "
+                                         f"does not vanish at {at}")
+    # The two faces of the disc are one surface: theta -> pi - theta carries the metric and its
+    # derivative across the disc, d_r g, at r = 0 into themselves, so the gluing is an isometry
+    # and both faces see the same extrinsic curvature with their normals pointing into r > 0.
+    r, theta = chart.symbols[1], chart.symbols[2]
+    for i in range(4):
+        for j in range(i, 4):
+            for value in (g[i, j], sp.diff(g[i, j], r)):
+                for at in kerr_disc_source_points(chart, 1963 + 4 * i + j):
+                    at[r] = 0
+                    mirrored = dict(at)
+                    mirrored[theta] = sp.pi - at[theta]
+                    if abs(sp.N(value.subs(at) - value.subs(mirrored), 50)) > small:
+                        raise AssertionError(f"kerr_disc_source/{system}: theta -> pi - theta does not carry slot "
+                                             f"{chart.coords_tex[i]}{chart.coords_tex[j]} of the disc into itself")
+    if system == "boyer_lindquist":
+        return
+    spec = kerr_disc_source("boyer_lindquist")
+    source = cp.Chart(spec["system"]["coords"], KDSRC_PARAMETERS, spec["chart_line_element"])
+    at = dict(zip(source.symbols, chart.symbols))
+    m, a = chart.reader.parameters["m"], chart.reader.parameters["a"]
+    at.update({source.reader.parameters["m"]: m, source.reader.parameters["a"]: a})
+    Delta = r ** 2 - 2 * m * r + a ** 2
+    # c dtau = c dt + 2mr dr/Delta and dpsi = dphi + 2mar dr/((r^2 + a^2) Delta), so
+    # d(ct)/dr = -2mr/Delta and dphi/dr = -2mar/((r^2 + a^2) Delta) along the chart.
+    jacobian = sp.Matrix([[1, -2 * m * r / Delta, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
+                          [0, -2 * m * a * r / ((r ** 2 + a ** 2) * Delta), 0, 1]])
+    pulled = jacobian.T * source.geo.g.subs(at, simultaneous=True) * jacobian
+    for i in range(4):
+        for j in range(i, 4):
+            for point in kerr_disc_source_points(chart, 1999 + 4 * i + j):
+                if abs(sp.N((pulled[i, j] - g[i, j]).subs(point), 50)) > small:
+                    raise AssertionError(f"kerr_disc_source/{system}: Boyer and Lindquist's chart pulled back misses slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["kerr_disc_source"] = [lambda s=s: kerr_disc_source(s) for s in KDSRC_CHARTS]
 
 
 # -- Kerr-Taub-NUT ----------------------------------------------------------------------

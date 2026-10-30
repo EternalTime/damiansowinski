@@ -438,6 +438,10 @@ OVERRULED = {
     ("israel_shell", "vacuum"): (
         False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
                "jumps across it; the spacetime has matter on r = R"),
+    ("kerr_disc_source", "vacuum"): (
+        False, "both charts are Kerr's vacuum off the disc r = 0, but the disc is in no chart: the normal "
+               "derivatives of the metric jump across it once its two faces are glued, and the jump is "
+               "Israel's layer of negative mass turning faster than light"),
     ("black_to_white_hole", "vacuum"): (
         False, "flat space inside and Kruskal's vacuum outside, but the thin shell of light between them "
                "is in no chart, and neither is the quantum region where the black hole turns white; the "

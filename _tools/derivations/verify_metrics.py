@@ -1399,6 +1399,14 @@ DIMENSIONS = {
     ("kiselev", "conformally_flat"): {
         "\\tau": "1", "\\rho": "1", "\\theta": "1", "\\phi": "1", "r_q": "L",
     },
+    # Israel's disc source of Kerr's metric: Kerr's metric with the mass as the length m = GM/c^2,
+    # the spin per unit mass a a length, Sigma and Delta areas, and the Kerr-Schild time tau a time.
+    ("kerr_disc_source", "boyer_lindquist"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "m": "L", "a": "L", "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
+    ("kerr_disc_source", "kerr_schild"): {
+        "\\tau": "T", "r": "L", "\\theta": "1", "\\psi": "1", "m": "L", "a": "L", "\\Sigma": "L**2", "\\Delta": "L**2",
+    },
     # Carter's rotating black hole with a cosmological constant of either sign. The mass enters as
     # the length r_s = 2GM/c^2, the rotation parameter a is a length as Kerr's is, and Lambda is a
     # curvature. Every chart defines four names: Xi and Delta_theta are pure numbers, rho is a
