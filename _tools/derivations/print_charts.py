@@ -11312,12 +11312,12 @@ def kerr_disc_source(system):
     coords = [time, "r", "\\theta", angle]
     forms = KerrDiscForms(vm.Reader(coords, KDSRC_PARAMETERS, ()))
     if system == "boyer_lindquist":
-        notes = ["\\Delta = 0 \;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 - a^2}\\text{, for } a \\le m\\text{)}"]
+        notes = ["\\Delta = 0 \\;\\text{(the horizons } r_\\pm = m \\pm \\sqrt{m^2 - a^2}\\text{, for } a \\le m\\text{)}"]
     else:
         notes = []
     domains = ([time + " \\in (-\\infty, \\infty)", "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", angle + " \\in [0, 2\\pi)",
-                "(r, \\theta) = (0, \\theta) \\sim (0, \\pi - \\theta) \;\\text{(the two faces of the disc, one surface)}"]
-               + notes + ["\\Sigma = 0 \;\\text{(the ring singularity, the rim of the disc)}"])
+                "(r, \\theta) = (0, \\theta) \\sim (0, \\pi - \\theta) \\;\\text{(the two faces of the disc, one surface)}"]
+               + notes + ["\\Sigma = 0 \\;\\text{(the ring singularity, the rim of the disc)}"])
     return {
         "metric_id": "kerr_disc_source",
         "system": {"id": system, "name": name, "coords": coords, "domains": domains,
@@ -35828,6 +35828,84 @@ def charged_godel_check(chart, system):
 
 
 CHARTS["charged_godel_universe"] = [lambda s=s: charged_godel_universe(s) for s in CGU_CHARTS]
+
+
+STIFF_FLUID_CHARTS = ("areal", "comoving", "characteristic")
+
+
+def stiff_fluid_universes(system):
+    """Plane-symmetric stiff fluid, derived from Rendall (1994), (2)-(5), with canonical
+    Phi=sigma/sqrt(8pi). The areal scalar sigma=a log(t)+b x integrates the wave equation;
+    chi=x+b t^2/(2a) follows the fluid, and u=t-x,v=t+x are characteristic coordinates.
+    The full derivation and the normalization dictionary are in stiff_fluid_universes.md."""
+    key = ("stiff_fluid_universes", system)
+    areal = system == "areal"
+    null = system == "characteristic"
+    coords = ["u", "v", "y", "z"] if null else ["t", "x" if areal else "\\chi", "y", "z"]
+    definitions = {
+        "areal": r"F = t^{a^2-1/2}e^{b^2t^2/2+2abx}",
+        "comoving": r"F = t^{a^2-1/2}e^{-b^2t^2/2+2ab\chi}",
+        "characteristic": r"F = \left(\dfrac{u+v}{2}\right)^{a^2-1/2}e^{b^2(u+v)^2/8+ab(v-u)}",
+    }
+    parameters = ["a", "b", r"\ell", definitions[system]]
+    reals = r" \in (-\infty,\infty)"
+    if null:
+        domains = ["u"+reals, "v"+reals, "y"+reals, "z"+reals,
+                   r"0<u+v<2a/b\;\text{for}\;b>0", r"u+v>0\;\text{for}\;b=0"]
+        line = r"ds^2 = \ell^2\left(-F\,du\,dv+\dfrac{u+v}{2}\left(dy^2+dz^2\right)\right)"
+    else:
+        domains = [r"t \in (0,a/b)\;\text{for}\;b>0", r"t \in (0,\infty)\;\text{for}\;b=0"]
+        domains += [c+reals for c in coords[1:]]
+        domains += [r"t\to0\;\text{(curvature singularity)}", r"t=a/b\;\text{(null scalar gradient)}"]
+        line = (r"ds^2 = \ell^2\left(F\left(-dt^2+dx^2\right)+t\left(dy^2+dz^2\right)\right)" if areal else
+                r"ds^2 = \ell^2\left(F\left(-\left(1-\dfrac{b^2t^2}{a^2}\right)dt^2-\dfrac{2bt}{a}dt\,d\chi+d\chi^2\right)+t\left(dy^2+dz^2\right)\right)")
+    probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+    return {"metric_id": "stiff_fluid_universes", "system": {"id": system, "name": system.capitalize(),
+            "coords": coords, "domains": domains, "parameters": parameters, "line_element": line},
+            "chart_line_element": line, "printer": {},
+            "reduce": lambda value: vm.norm(probe.by_rates(value)),
+            "check": lambda chart: stiff_fluid_check(chart, system)}
+
+
+def stiff_fluid_check(chart, system):
+    """Every Ricci slot and the held slopes at points, with no symbolic determinant or check
+    simplification. A separate published-data test pins both stresses and the limits."""
+    R = chart.reader
+    a, b, ell, F = (R.parameters[k] for k in ("a", "b", "ell", "F"))
+    X = chart.symbols
+    if system == "characteristic":
+        u, v = X[:2]
+        t, x = (u+v)/2, (v-u)/2
+    elif system == "comoving":
+        t, chi = X[:2]
+        x = chi-b*t**2/(2*a)
+    else:
+        t, x = X[:2]
+    sigma = a*sp.log(t)+b*x
+    gradient = [sp.diff(sigma, c) for c in X]
+    ricci = chart.geo.ricci_ll()
+    explicit = R.held[F]
+    for av, bv, tv, xv, lv in ((1, 1, sp.Rational(1, 3), sp.Rational(1, 5), 1),
+                               (2, sp.Rational(1, 2), 1, sp.Rational(-1, 3), 2),
+                               (sp.Rational(3, 2), sp.Rational(2, 3), sp.Rational(1, 2), 0, sp.Rational(3, 2))):
+        at = {a: av, b: bv, ell: lv, X[2]: 0, X[3]: 0}
+        if system == "characteristic":
+            at.update({X[0]: tv-xv, X[1]: tv+xv})
+        else:
+            at.update({X[0]: tv, X[1]: xv if system == "areal" else xv+bv*tv**2/(2*av)})
+        def number(value):
+            return sp.N(sp.sympify(value).subs(R.held).doit().subs(at), 40)
+        for i in range(4):
+            for j in range(4):
+                if abs(number(ricci[i][j])-number(gradient[i]*gradient[j])) > 1e-28:
+                    raise AssertionError(f"stiff fluid {system}: Ricci slot {i},{j} misses the canonical scalar")
+        for name, rates in vm.RATES[("stiff_fluid_universes", system)].items():
+            for coord, rate in rates.items():
+                if abs(number(R(rate))-number(sp.diff(explicit,R.symbol[coord]))) > 1e-28:
+                    raise AssertionError(f"stiff fluid {system}: held slope of {name} along {coord} is wrong")
+
+
+CHARTS["stiff_fluid_universes"] = [lambda s=s: stiff_fluid_universes(s) for s in STIFF_FLUID_CHARTS]
 
 
 def main():

@@ -1,0 +1,5585 @@
+{
+  "id": "stiff_fluid_universes",
+  "name": "Universes of Stiff Fluid",
+  "short_name": "Stiff Fluid Universes",
+  "description": "Plane-symmetric exact universes with pressure equal to energy density, represented by a massless scalar field with timelike gradient.",
+  "tags": [
+    "cosmology",
+    "inhomogeneous",
+    "perfect fluid",
+    "scalar field",
+    "plane symmetry",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "time-dependent"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use signature $(-,+,+,+)$ and $G=c=1$, publish the canonical scalar $\\Phi$ with $G_{\\mu\\nu}=8\\pi T_{\\mu\\nu}$, and rescale the review field as $\\sigma=\\sqrt{8\\pi}\\Phi$. The Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$; $a>0$, $b\\geq0$, $\\ell>0$, and $\\rho$ and $p$ are energy density and pressure.",
+  "history": "Pressure and energy density coincide in a stiff fluid: $p=\\rho$, and small disturbances travel at the speed of light. Romualdo Tabensky and Abraham Haskel Taub published their plane-symmetric self-gravitating fluids in March 1973, in Communications in Mathematical Physics [tabensky1973]. They solved the initial-value problem with general initial conditions under plane symmetry. Translations and rotations within each symmetry plane preserve the geometry, while the density can vary in the direction across the planes.¶A massless scalar field can carry precisely this fluid's stress. Where its gradient is timelike, the gradient fixes the fluid velocity, and half its negative squared norm is both pressure and energy density. The scalar wave equation then contains the fluid's conservation equations. Tabensky and Taub identified this correspondence in their plane-symmetric construction [tabensky1973].¶Plane symmetry makes the scalar equation linear in an areal coordinate, whose value fixes the area of each transverse plane [rendall1995plane]. The remaining gravitational field follows by integration once the scalar has been chosen. One exact family has the dimensionless scalar $\\sigma=a\\ln t+bx$, with $a>0$ and $b\\geq0$. Its physical scalar is $\\Phi=\\sigma/\\sqrt{8\\pi}$, and its conformal factor is $F=t^{a^2-1/2}\\exp(b^2t^2/2+2abx)$. The pressure is $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$, so $b>0$ produces a density that varies across the planes.¶The fluid occupies $0<t<a/b$ when $b>0$. At the upper boundary the scalar gradient becomes null, its stress stays finite at finite $x$, and the fluid loses its timelike rest frame. The scalar solution continues through that boundary. At $t=0$ the Ricci scalar diverges for every $a>0$, marking a curvature singularity. An exact solution can carry both an uneven density and matter moving across the planes right up to a singularity at the start.¶John Wainwright, W. C. W. Ince and B. J. Marshman published a broader solution-generating construction in February 1979 for irrotational stiff fluids with two commuting Killing vectors [wainwright1979stiff]. Their construction includes spatially homogeneous and inhomogeneous cosmologies, with both tilted and untilted homogeneous models. In the plane-symmetric family, $b=0$ leaves a homogeneous universe with equal expansion rates in the two transverse directions. Its proper-time powers are $(a^2-1/2)/(a^2+3/2)$ across the planes and $1/(a^2+3/2)$ within them. At $a^2=3/2$ all three powers are $1/3$, the spatially flat Friedmann universe filled with stiff matter.",
+  "related": [
+    {
+      "id": "kasner_scalar",
+      "kind": "family",
+      "text": "At $b=0$ the plane-symmetric family is a homogeneous scalar-field universe with equal transverse exponents, $p_y=p_z$."
+    },
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "At $b=0$ and $a^2=3/2$ the proper-time scale factor is $\\tau^{1/3}$, the spatially flat Friedmann universe of a stiff fluid."
+    }
+  ],
+  "references": [
+    "tabensky1973",
+    "rendall1995plane",
+    "wainwright1979stiff"
+  ],
+  "coordinates": [
+    {
+      "id": "areal",
+      "name": "Areal",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (0,a/b)\\;\\text{for}\\;b>0",
+        "t \\in (0,\\infty)\\;\\text{for}\\;b=0",
+        "x \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)",
+        "t\\to0\\;\\text{(curvature singularity)}",
+        "t=a/b\\;\\text{(null scalar gradient)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Positive dimensionless amplitude of the logarithmic scalar."
+        },
+        {
+          "symbol": "b",
+          "description": "Nonnegative dimensionless spatial slope of the scalar."
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Positive fixed length unit; all coordinates are dimensionless."
+        },
+        {
+          "symbol": "F = t^{a^2-1/2}e^{b^2t^2/2+2abx}",
+          "description": "Positive conformal factor of the two-dimensional quotient."
+        }
+      ],
+      "convention": "The area of a unit coordinate square in the symmetry plane is $\\ell^2t$, with $x$ across the planes and $y,z$ within them; $\\sigma=a\\ln t+bx$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$.",
+      "line_element": "ds^2 = \\ell^2\\left(F\\left(-dt^2+dx^2\\right)+t\\left(dy^2+dz^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-F\\,\\ell^2"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "F\\,\\ell^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\ell^2\\,t"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\ell^2\\,t"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{F\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{F\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\ell^2\\,t}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{\\ell^2\\,t}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "a\\,b"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(1 - 2a^2 - 2b^2\\,t^2\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(1 - 2a^2 - 2b^2\\,t^2\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(1 - 2a^2 - 2b^2\\,t^2\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(1 - 2a^2 - 2b^2\\,t^2\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-F\\,a\\,b\\,\\ell^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-F\\,a\\,b\\,\\ell^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t"
+                ],
+                "value": "F\\,a\\,b\\,\\ell^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "F\\,a\\,b\\,\\ell^2"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{4t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{4t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 + 1}{8t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b}{2t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{4F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{4F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{4F\\,t}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 + 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{4F}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2}{t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b}{t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b}{t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "b^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2}{F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,b}{F\\,\\ell^2\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b}{F\\,\\ell^2\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{b^2}{F\\,\\ell^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2}{F^2\\,\\ell^4\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,b}{F^2\\,\\ell^4\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b}{F^2\\,\\ell^4\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{b^2}{F^2\\,\\ell^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{F\\,\\ell^2\\,t^2}",
+      "kretschmann": "K = \\dfrac{3 + 8a^4 - 4a^2 + 8b^4\\,t^4 + 4b^2\\,t^2 - 16a^2\\,b^2\\,t^2}{4F^2\\,\\ell^4\\,t^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,b}{t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b}{t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,t}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{b^2\\,t^2 + a^2}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,b}{F\\,\\ell^2\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b}{F\\,\\ell^2\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^2\\,t^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2F^2\\,\\ell^4\\,t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2F^2\\,\\ell^4\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,b}{F^2\\,\\ell^4\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b}{F^2\\,\\ell^4\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^4\\,t^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^4\\,t^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}\\dot{t}^2 + 2a\\,b\\,\\dot{t}\\dot{x} + \\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}\\dot{x}^2 + \\dfrac{1}{2F}\\dot{y}^2 + \\dfrac{1}{2F}\\dot{z}^2 = 0",
+        "\\ddot{x} + a\\,b\\,\\dot{t}^2 + \\dfrac{2b^2\\,t^2 + 2a^2 - 1}{2t}\\dot{t}\\dot{x} + a\\,b\\,\\dot{x}^2 = 0",
+        "\\ddot{y} + \\dfrac{1}{t}\\dot{t}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{1}{t}\\dot{t}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "comoving",
+      "name": "Comoving",
+      "coords": [
+        "t",
+        "\\chi",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (0,a/b)\\;\\text{for}\\;b>0",
+        "t \\in (0,\\infty)\\;\\text{for}\\;b=0",
+        "\\chi \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)",
+        "t\\to0\\;\\text{(curvature singularity)}",
+        "t=a/b\\;\\text{(null scalar gradient)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Positive dimensionless amplitude of the logarithmic scalar."
+        },
+        {
+          "symbol": "b",
+          "description": "Nonnegative dimensionless spatial slope of the scalar."
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Positive fixed length unit; all coordinates are dimensionless."
+        },
+        {
+          "symbol": "F = t^{a^2-1/2}e^{-b^2t^2/2+2ab\\chi}",
+          "description": "Positive conformal factor of the two-dimensional quotient."
+        }
+      ],
+      "convention": "The fluid labels are $\\chi=x+bt^2/(2a)$, $y$ and $z$, constant along each fluid world line; $t$ is areal time, $\\sigma=a\\ln t+b\\chi-b^2t^2/(2a)$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$.",
+      "line_element": "ds^2 = \\ell^2\\left(F\\left(-\\left(1-\\dfrac{b^2t^2}{a^2}\\right)dt^2-\\dfrac{2bt}{a}dt\\,d\\chi+d\\chi^2\\right)+t\\left(dy^2+dz^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{F\\,\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{a^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\chi"
+          ],
+          "value": "-\\dfrac{F\\,b\\,\\ell^2\\,t}{a}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "t"
+          ],
+          "value": "-\\dfrac{F\\,b\\,\\ell^2\\,t}{a}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "F\\,\\ell^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\ell^2\\,t"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\ell^2\\,t"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{F\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "t",
+            "\\chi"
+          ],
+          "value": "-\\dfrac{b\\,t}{F\\,a\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "t"
+          ],
+          "value": "-\\dfrac{b\\,t}{F\\,a\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{F\\,a^2\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{\\ell^2\\,t}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{\\ell^2\\,t}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2a^4 - a^2 + 2b^4\\,t^4 - b^2\\,t^2 - 4a^2\\,b^2\\,t^2}{4a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{4a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{4a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(2a^4 - 3a^2 + 2b^4\\,t^4 - b^2\\,t^2 - 4a^2\\,b^2\\,t^2\\right)}{4a^3}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{4a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{4a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 + 6a^2 - 1\\right)}{4a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\,t}{2F\\,a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\,t}{2F\\,a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2t}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(4a^2\\,b^2\\,t^2 + 3b^2\\,t^2 - 2b^4\\,t^4 + a^2 - 2a^4\\right)}{4a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{F\\,b\\,\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,b\\,\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(1 - 2a^2 - 6b^2\\,t^2\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2}{2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,b\\,\\ell^2}{2a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "F\\,a\\,b\\,\\ell^2"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4a\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4a\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 - 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{a\\,b}{2F}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 1}{8F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{1 - 2a^2 - 2b^2\\,t^2}{8t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{4F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{4F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{4F\\,t}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 1\\right)}{4t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 - 1\\right)}{8a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{8a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{8t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{4F}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)^2\\left(b\\,t - a\\right)^2}{a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "b^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a\\,b}{F\\,\\ell^2\\,t}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2}{F^2\\,\\ell^4\\,t^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{F\\,\\ell^2\\,t^2}",
+      "kretschmann": "K = \\dfrac{3 + 8a^4 - 4a^2 + 8b^4\\,t^4 + 4b^2\\,t^2 - 16a^2\\,b^2\\,t^2}{4F^2\\,\\ell^4\\,t^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)^2\\left(b\\,t - a\\right)^2}{2a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,t}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{a\\,b}{F\\,\\ell^2\\,t}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{b^2\\,t^2 + a^2}{2F^2\\,\\ell^4\\,t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F^2\\,a\\,\\ell^4\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F^2\\,a\\,\\ell^4\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)^2\\left(b\\,t - a\\right)^2}{2F^2\\,a^2\\,\\ell^4\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^4\\,t^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)}{2F\\,\\ell^4\\,t^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12a\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12a\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12a\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24F\\,t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{24t^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,t^2 - 2a^2 + 3}{12F\\,t}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12t^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a^2\\,t}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{b\\,\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24a}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "z",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "\\chi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\chi",
+                  "z",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{24t}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,t^2 - 2a^2 + 3\\right)}{12F}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2a^4 - a^2 + 2b^4\\,t^4 - b^2\\,t^2 - 4a^2\\,b^2\\,t^2}{4a^2\\,t}\\dot{t}^2 + \\dfrac{b\\left(1 + 2a^2 - 2b^2\\,t^2\\right)}{2a}\\dot{t}\\dot{\\chi} + \\dfrac{2b^2\\,t^2 + 2a^2 - 1}{4t}\\dot{\\chi}^2 + \\dfrac{1}{2F}\\dot{y}^2 + \\dfrac{1}{2F}\\dot{z}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{b\\left(2a^4 - 3a^2 + 2b^4\\,t^4 - b^2\\,t^2 - 4a^2\\,b^2\\,t^2\\right)}{4a^3}\\dot{t}^2 - \\dfrac{\\left(b\\,t + a\\right)\\left(b\\,t - a\\right)\\left(2b^2\\,t^2 + 2a^2 - 1\\right)}{2a^2\\,t}\\dot{t}\\dot{\\chi} + \\dfrac{b\\left(2b^2\\,t^2 + 6a^2 - 1\\right)}{4a}\\dot{\\chi}^2 + \\dfrac{b\\,t}{2F\\,a}\\dot{y}^2 + \\dfrac{b\\,t}{2F\\,a}\\dot{z}^2 = 0",
+        "\\ddot{y} + \\dfrac{1}{t}\\dot{t}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{1}{t}\\dot{t}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "characteristic",
+      "name": "Characteristic",
+      "coords": [
+        "u",
+        "v",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "u \\in (-\\infty,\\infty)",
+        "v \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)",
+        "0<u+v<2a/b\\;\\text{for}\\;b>0",
+        "u+v>0\\;\\text{for}\\;b=0"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Positive dimensionless amplitude of the logarithmic scalar."
+        },
+        {
+          "symbol": "b",
+          "description": "Nonnegative dimensionless spatial slope of the scalar."
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Positive fixed length unit; all coordinates are dimensionless."
+        },
+        {
+          "symbol": "F = \\left(\\dfrac{u+v}{2}\\right)^{a^2-1/2}e^{b^2(u+v)^2/8+ab(v-u)}",
+          "description": "Positive conformal factor of the two-dimensional quotient."
+        }
+      ],
+      "convention": "The null coordinates are $u=t-x$ and $v=t+x$, with $t=(u+v)/2$, $x=(v-u)/2$ and $y,z$ within the symmetry planes; $\\sigma=a\\ln((u+v)/2)+b(v-u)/2$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(4a^2/(u+v)^2-b^2)/(16\\pi\\ell^2F)$.",
+      "line_element": "ds^2 = \\ell^2\\left(-F\\,du\\,dv+\\dfrac{u+v}{2}\\left(dy^2+dz^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{F\\,\\ell^2}{2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{F\\,\\ell^2}{2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{\\ell^2\\left(u + v\\right)}{2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{\\ell^2\\left(u + v\\right)}{2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-\\dfrac{2}{F\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-\\dfrac{2}{F\\,\\ell^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{2}{\\ell^2\\left(u + v\\right)}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{2}{\\ell^2\\left(u + v\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a\\,b\\,u - 4a\\,b\\,v + 4a^2 - 2}{4\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2F}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 + 4a\\,b\\,u + 4a\\,b\\,v + 4a^2 - 2}{4\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{2\\left(u + v\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2 - 4a^2 - 4a\\,b\\,v - 4a\\,b\\,u - b^2\\,v^2 - b^2\\,u^2 - 2b^2\\,u\\,v\\right)}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2}{4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2 - 4a^2 + 4a\\,b\\,v + 4a\\,b\\,u - b^2\\,v^2 - b^2\\,u^2 - 2b^2\\,u\\,v\\right)}{8\\left(u + v\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{2F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{2F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{2F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{2F\\left(u + v\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2\\right)}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2\\right)}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2\\right)}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 2\\right)}{8\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v - 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2}{8\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(b\\,u + b\\,v + 2a\\right)^2}{16\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2}{4F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2}{4F}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{4\\left(u + v\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{F^2\\,\\ell^4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{F^2\\,\\ell^4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{F^2\\,\\ell^4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{F^2\\,\\ell^4\\left(u + v\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{F\\,\\ell^2\\left(u + v\\right)^2}",
+      "kretschmann": "K = \\dfrac{12 + 32a^4 - 16a^2 + 2b^4\\,v^4 + 2b^4\\,u^4 + 4b^2\\,v^2 + 4b^2\\,u^2 + 8b^2\\,u\\,v + 8b^4\\,u^3\\,v + 8b^4\\,u\\,v^3 + 12b^4\\,u^2\\,v^2 - 16a^2\\,b^2\\,v^2 - 16a^2\\,b^2\\,u^2 - 32a^2\\,b^2\\,u\\,v}{F^2\\,\\ell^4\\left(u + v\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{4F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{4F\\left(u + v\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{2F\\,\\ell^2\\left(u + v\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v + 2a\\right)^2}{F^2\\,\\ell^4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)^2}{F^2\\,\\ell^4\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{F\\,\\ell^4\\left(u + v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{F\\,\\ell^4\\left(u + v\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12F\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6}{12F\\left(u + v\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{F\\,\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24\\left(u + v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "v",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "v",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "z",
+                  "z",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "u",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "z",
+                  "z",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "v",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "v",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "u",
+                  "z",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "u",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "v",
+                  "z",
+                  "u"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{48\\left(u + v\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24F}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24F}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a^2 + 6\\right)}{24F}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 - 4a\\,b\\,u - 4a\\,b\\,v + 4a^2 - 2}{4\\left(u + v\\right)}\\dot{u}^2 + \\dfrac{1}{2F}\\dot{y}^2 + \\dfrac{1}{2F}\\dot{z}^2 = 0",
+        "\\ddot{v} + \\dfrac{2b^2\\,u\\,v + b^2\\,u^2 + b^2\\,v^2 + 4a\\,b\\,u + 4a\\,b\\,v + 4a^2 - 2}{4\\left(u + v\\right)}\\dot{v}^2 + \\dfrac{1}{2F}\\dot{y}^2 + \\dfrac{1}{2F}\\dot{z}^2 = 0",
+        "\\ddot{y} + \\dfrac{1}{u + v}\\dot{u}\\dot{y} + \\dfrac{1}{u + v}\\dot{v}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{1}{u + v}\\dot{u}\\dot{z} + \\dfrac{1}{u + v}\\dot{v}\\dot{z} = 0"
+      ]
+    }
+  ]
+}

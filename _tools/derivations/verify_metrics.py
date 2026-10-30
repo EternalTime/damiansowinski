@@ -2509,6 +2509,10 @@ DIMENSIONS = {
     ("holographic_superconductor", "inversion"): {
         "\\rho": "1", "t": "T", "x": "L", "y": "L", "\\beta": "1", "\\ell": "L",
     },
+    **{("stiff_fluid_universes", chart): {**{c: "1" for c in coords}, "a": "1", "b": "1", "\\ell": "L", "F": "1"}
+       for chart, coords in (("areal", ("t", "x", "y", "z")), ("comoving", ("t", "\\chi", "y", "z")),
+                             ("characteristic", ("u", "v", "y", "z")))},
+
 }
 
 # What a field carries when every coordinate is a length; the indices supply the rest.
@@ -2718,6 +2722,8 @@ HELD = {
     ("penney_scalar", "spherical"): ("E",),
     # Bronnikov's k coth(ku) and h coth(h(u + u_1)), each with a slope in itself alone.
     ("penney_scalar", "harmonic"): ("K", "H"),
+    **{("stiff_fluid_universes", chart): ("F",) for chart in ("areal", "comoving", "characteristic")},
+
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2877,6 +2883,12 @@ RATES = {
     ("penney_scalar", "spherical"): {"E": {"r": "\\dfrac{\\gamma\\left(a - b\\right)E}{\\left(r - a\\right)\\left(r - b\\right)}"}},
     # K' = -(K^2 - k^2) and H' = -(H^2 - h^2), each in its own name, so no relation is left out.
     ("penney_scalar", "harmonic"): {"K": {"u": "k^2 - K^2"}, "H": {"u": "h^2 - H^2"}},
+    ("stiff_fluid_universes", "areal"): {"F": {"t": r"F((a^2-1/2)/t+b^2t)", "x": "2abF"}},
+    ("stiff_fluid_universes", "comoving"): {"F": {"t": r"F((a^2-1/2)/t-b^2t)", r"\chi": "2abF"}},
+    ("stiff_fluid_universes", "characteristic"): {"F": {
+        "u": r"F((a^2-1/2)/(u+v)+b^2(u+v)/4-ab)",
+        "v": r"F((a^2-1/2)/(u+v)+b^2(u+v)/4+ab)"}},
+
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across
