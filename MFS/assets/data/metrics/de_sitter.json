@@ -164,6 +164,11 @@
       "id": "bardeen_perturbations",
       "kind": "generalisation",
       "text": "Any Friedmann universe with two small potentials laid over it. At $\\Phi = \\Psi = 0$ and $a = -c/(H\\eta)$ its flat longitudinal gauge is de Sitter space in flat slices."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
     }
   ],
   "references": [
@@ -212,7 +217,8 @@
     "gott1998",
     "vilenkin1982",
     "feldbrugge2017",
-    "chiba2005"
+    "chiba2005",
+    "cahen1970"
   ],
   "coordinates": [
     {

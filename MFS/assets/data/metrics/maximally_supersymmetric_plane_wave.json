@@ -56,6 +56,11 @@
       "id": "anti_de_sitter",
       "kind": "family",
       "text": "Anti-de Sitter space alone. A light ray of anti-de Sitter space times a sphere that does not move on the sphere has flat space for its Penrose limit, and only a ray circling the sphere gives this wave [blau2002penrose]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "The family it belongs to, the plane waves whose curvature is carried unchanged along every geodesic. This wave is the member whose matrix is $-\\mu^2$ times the identity in ten dimensions [cahen1970, blau2002]."
     }
   ],
   "references": [

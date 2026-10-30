@@ -519,6 +519,11 @@
       "id": "penney_scalar",
       "kind": "generalisation",
       "text": "Schwarzschild's black hole with both an electric charge and a massless scalar field, found by R. Penney in 1969. With both switched on, the sphere of the horizon has zero area and infinite curvature [banerjee1998]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "limit",
+      "text": "The Penrose limit along a light ray on the photon sphere, a vacuum plane wave that pushes rays off the orbit at the rate $c^3/(\\sqrt{27}\\,GM)$ and pulls them back across it at the same rate [fransen2023]."
     }
   ],
   "references": [
@@ -654,7 +659,8 @@
     "cardoso2025",
     "buchdahl1964",
     "bonnor1967oscillating",
-    "banerjee1998"
+    "banerjee1998",
+    "fransen2023"
   ],
   "coordinates": [
     {

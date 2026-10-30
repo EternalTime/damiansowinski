@@ -182,6 +182,11 @@
       "id": "eternal_traversable_wormhole",
       "kind": "family",
       "text": "Anti-de Sitter space of two dimensions, whose two boundaries Maldacena and Qi coupled to each other to make a wormhole that stays open [maldacena2018]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
     }
   ],
   "references": [
@@ -237,7 +242,8 @@
     "lin2004",
     "blau2002penrose",
     "berenstein2002",
-    "maldacena2018"
+    "maldacena2018",
+    "cahen1970"
   ],
   "coordinates": [
     {

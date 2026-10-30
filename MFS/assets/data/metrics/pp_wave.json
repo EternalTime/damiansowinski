@@ -113,6 +113,11 @@
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "family",
       "text": "A plane wave of ten dimensions with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$, the same in every direction across it, held up by a 5-form field of supergravity. It keeps every supersymmetry of the theory [blau2002]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "special_case",
+      "text": "The pp-wave whose profile is quadratic across the wave and the same on every front, which makes its curvature covariantly constant [blau2003homogeneous]."
     }
   ],
   "references": [
@@ -157,7 +162,8 @@
     "bondi1962",
     "sachs1962",
     "blau2002",
-    "lin2004"
+    "lin2004",
+    "blau2003homogeneous"
   ],
   "coordinates": [
     {

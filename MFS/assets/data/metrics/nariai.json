@@ -82,6 +82,11 @@
       "id": "universe_from_nothing",
       "kind": "family",
       "text": "The nucleation of a de Sitter universe without black holes, half a 4-sphere joined to de Sitter's waist. Bousso and Hawking gave the rate of pair creation relative to it [bousso1996]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "The Lorentzian symmetric spaces that do not split into a product. This one is a product of two symmetric pieces, de Sitter space of two dimensions and a sphere [figueroa2003maximally]."
     }
   ],
   "references": [
@@ -104,7 +109,8 @@
     "ortaggio2002direct",
     "ruban1969",
     "krasinski2001ruban",
-    "freund1980"
+    "freund1980",
+    "figueroa2003maximally"
   ],
   "coordinates": [
     {

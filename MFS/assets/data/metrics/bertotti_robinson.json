@@ -134,6 +134,11 @@
       "id": "eternal_traversable_wormhole",
       "kind": "family",
       "text": "Global anti-de Sitter space of two dimensions held open as a wormhole by a coupling of its two boundaries [maldacena2018]. Times a sphere, such a throat joins two magnetically charged black holes in the wormhole of Maldacena, Milekhin, and Popov [maldacena2023]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "The Lorentzian symmetric spaces that do not split into a product. This one is a product of two symmetric pieces, anti-de Sitter space of two dimensions and a sphere [figueroa2003maximally]."
     }
   ],
   "references": [
@@ -167,7 +172,8 @@
     "strominger1996",
     "freund1980",
     "maldacena2018",
-    "maldacena2023"
+    "maldacena2023",
+    "figueroa2003maximally"
   ],
   "coordinates": [
     {

@@ -61,6 +61,11 @@
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "family",
       "text": "A plane wave of ten dimensions whose profile is quadratic and the same in all eight directions across it, as the profile inside the beam is in two. Light leaving its axis comes back to it after a time $\\pi/\\mu c$ [blau2002, marolf2002]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "The symmetric plane waves. Inside the beam the metric is the conformally flat member of four dimensions, its profile quadratic and the same on every front [bonnor1969light]."
     }
   ],
   "references": [
