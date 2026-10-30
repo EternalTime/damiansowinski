@@ -4503,6 +4503,11 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key.startswith("stiff_fluid_universes/"):
+            # The one embedded symmetry plane is t=1/2,x=0, a point on each quotient.
+            # chi=x+t^2/2=1/8 in the fluid labels; the characteristic view displays x,t.
+            location = 0.125 if "/comoving/" in key else 0.0
+            return (lambda X: 0.5), [location]
         if key.startswith("draining_bathtub/"):
             # The laboratory's t = 0 and the Kerr-like chart's T = 0, with T = t - ln(r^2 - 1)/2 for the
             # drain at |A| = c = 1: each a level line in its own chart and a curve in the other's.
@@ -5861,7 +5866,13 @@ class Slices(unittest.TestCase):
                     points = [p for line in mark["lines"] for p in line] + mark["points"]
                     self.assertTrue(all(X0 <= X <= X1 and T0 <= T <= T1 for X, T in points), where)
                     t = surface.get("time")
-                    if metric_id == "frw":
+                    if metric_id == "stiff_fluid_universes":
+                        # At t=1/2,x=0, p=q=atan(2), hence X=0,T=2 atan(2).
+                        self.assertEqual(len(points), 1, where)
+                        X, T = points[0]
+                        self.assertLess(abs(X), 2e-4, where)
+                        self.assertLess(abs(T - 2 * math.atan(2)), 2e-4, where)
+                    elif metric_id == "frw":
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)
                         self.assertEqual(sorted(X for X, _ in points), [0, round(math.pi, 4)], where)

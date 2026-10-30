@@ -18250,7 +18250,7 @@ def stiff_fluid_universes(ck, src):
     plane = disc(sl, "plane", top, "the origin of the symmetry plane", "the plane extends to infinity", [], size)
     ck.isometry("stiff fluid symmetry plane", plane)
     ck.add("stiff fluid transverse lengths scale as sqrt(t)", float(np.max(np.abs(sl.scale-math.sqrt(0.5)))), 1e-12)
-    surface = Surface([plane], label="$t=1/2$", time=0.5)
+    surface = Surface([plane])
     fig = figure_of([surface], {"sheet": "cover"}, size)
     fig.legend("fill", "cover", "the symmetry plane, intrinsically flat")
     fig.legend("line", "meridian", "radial lines in proper distance")

@@ -27064,8 +27064,8 @@ def stiff_fluid_universes(ck, src):
     v.line("chartedge",[upper])
     grid(v,"r",lambda x,t:fmap(t,x),(-1,-0.5,0,0.5,1),np.linspace(0.001,0.999,400))
     grid(v,"t",fmap,(0.2,0.4,0.6,0.8),span)
-    for m in slices.moments("stiff_fluid_universes"):
-        v.slice(m,points=[fmap(m.time,0.0)])
+    for m in slices.moments("stiff_fluid_universes",label="$t=1/2$"):
+        v.slice(m,points=[fmap(0.5,0.0)])
     v.label_xt([0,-0.1],"$t=0$","t")
     v.label_xt([0,2*math.atan(4)+0.1],"$t=1$","b")
     v.legend("cover","the fluid region $0<t<1$")
