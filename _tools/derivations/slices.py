@@ -3852,6 +3852,16 @@ for _matter in ("scalar", "electromagnetic"):
                 lambda m: along(0.0 if time == "logarithmic" else 1.0,
                                 *m.reach(matter+"_areal", r"\theta")), view_id=matter, label="$t=1$"))
 
+
+FLAT.update({
+    ("mclenaghan_tariq_tupper", "original", "surface"): lambda: one("mclenaghan_tariq_tupper",
+        lambda m: [[[-r, r] for r in m.reach("exponential", "r")]]),
+    ("mclenaghan_tariq_tupper", "exponential", "surface"): lambda: one("mclenaghan_tariq_tupper",
+        lambda m: along(0.0, *m.reach("exponential", "r"))),
+    ("mclenaghan_tariq_tupper", "upper_half_plane", "surface"): lambda: one("mclenaghan_tariq_tupper",
+        lambda m: along(0.0, *(math.exp(r) for r in m.reach("exponential", "r")))),
+})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

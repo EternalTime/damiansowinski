@@ -31826,5 +31826,34 @@ import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_conformal(sys.modules[__name__])
 
 
+def mclenaghan_tariq_tupper(ck, src):
+    """The totally geodesic y=z=0 surface is a complete Minkowski plane.
+    Only that induced two-dimensional geometry is compactified."""
+    metric = "mclenaghan_tariq_tupper"
+    plane = Plane(src, metric, "exponential", ("t", "r"), {"y": 0, "z": 0}, {"a": 1}, induced=True)
+    ck.chart("McLenaghan-Tariq-Tupper, flat geodesic surface", plane, mink_pq,
+             ck.uniform(-20, 20), ck.uniform(-20, 20), lambda t, r: (1, 0))
+    v = View("surface", "The surface $y=z=0$", [-3.5, 3.5, -3.5, 3.5], "exponential")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    grid(v, "r", lambda r, t: mink_pq(t, r), (-4, -2, 0, 2, 4), S_ALL)
+    grid(v, "t", mink_pq, (-4, -2, 0, 2, 4), S_ALL)
+    diamond_edges(v)
+    v.legend("cover", "the surface $y=z=0$")
+    v.legend("r", "$r/a$ constant")
+    v.legend("t", "$ct/a$ constant")
+    moment = slices.moments(metric)[0]
+    r = np.linspace(*moment.reach("exponential", "r"), 51)
+    v.slice(moment, [mink_pq(0*r, r)])
+    v.set(restriction="The totally geodesic surface $y=z=0$.", settings="$a=1$.")
+    return [v]
+
+
+DRAWN["mclenaghan_tariq_tupper"] = mclenaghan_tariq_tupper
+CAPTIONS[("mclenaghan_tariq_tupper", "surface")] = [
+    "The flat surface $y=z=0$, with $p,q=\\arctan((ct\\mp r)/a)$ and $T=p+q$, $X=q-p$."
+]
+
+
 if __name__ == "__main__":
     sys.exit(main())

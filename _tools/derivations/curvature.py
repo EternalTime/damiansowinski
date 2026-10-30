@@ -18689,5 +18689,31 @@ import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_curvature(sys.modules[__name__])
 
 
+def mclenaghan_tariq_tupper(ck, src):
+    """Constant scalar profiles read exclusively from the stored curvature scalars."""
+    name = "mclenaghan_tariq_tupper"
+    x = axis("$r/a$", -2.0, 2.0)
+    params = {"a": 1.0}
+    panels, curves = [], []
+    for field, pid, lo, hi, power in (("kretschmann", "K", 0.0, 80.0, 4),
+                                     ("ricci_scalar", "R", -1.0, 1.0, 2)):
+        published = nr_published(src, name, "exponential", field, ["r"], ["a"])
+        scale = {"kind": "linear", "from": lo, "to": hi}
+        panels.append({"id": pid, "name": f"${pid}a^{power}$", "aspect": 2.0,
+                       "scale": scale, "ticks": value_ticks(scale)})
+        curves.extend(line_curves(ck, name, pid, pid, published, "r", x, scale, PLOT_W/2, params))
+    shape_checks(ck, name, [2.0, 2.0])
+    return [{"id": "homogeneous", "label": "Homogeneous curvature", "kind": "line", "x": x,
+             "panels": panels, "curves": curves, "marks": [],
+             "legend": [["line", "K", "Kretschmann scalar"], ["line", "R", "Ricci scalar"]],
+             "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the homogeneous electrovacuum.",
+                         "The constant curvature invariant, $Ka^4=64$.", "The vanishing Ricci scalar, $Ra^2=0$."],
+             "ricci_sentences": [[2, 0]], "per_scalar": scalar_clips("Linear scale; no clipping.", "Linear scale; no clipping."),
+             "settings": "$a=1$.", "clip": "Linear scales; both curves within their panels."}]
+
+
+DRAWN["mclenaghan_tariq_tupper"] = mclenaghan_tariq_tupper
+
+
 if __name__ == "__main__":
     sys.exit(main())

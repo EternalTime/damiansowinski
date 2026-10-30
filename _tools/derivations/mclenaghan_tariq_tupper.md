@@ -54,15 +54,8 @@ ds^2=-(c\,dt-2y\,d\varphi)^2+\frac{a^2}{x^2}(dx^2+dy^2)+x^2d\varphi^2.
 
 This last form is also explicitly displayed by Frausto, Kolář, Málek and Torre (2025), equation (4.16), with attribution to the textbook's equation (12.21).
 The symbol \(\varphi\) is a real coordinate; no periodic identification is imposed by these transformations.
-These changes of coordinates have yet to be checked by the page's generator.
-
-## Pending verification
-
-Determine the Maxwell two-form and its inherited subgroup independently of the metric Killing fields.
-Compute and print the chart tensors with the existing generator.
-Check the apparent coordinate inconsistency in the extracted text of Evtyagin and Magazev's equation (1) before using that matrix.
-Record every diagram's slice and any physically justified absence before drawing.
-History publication awaits the keyed review decision.
+The changes of coordinates agree at the numerical points used for the Einstein-Maxwell equations.
+The History and the reciprocal relation were approved on 2026-10-30.
 
 ## Maxwell field and inherited motions
 
@@ -80,7 +73,6 @@ The orientation obeys \({}^{\star}(e^0\wedge e^1)=-e^2\wedge e^3\).
 Both \(dF\) and \(d{}^{\star}F\) vanish by the four exterior derivatives above.
 A constant duality phase may be added.
 The two electromagnetic invariants cannot vanish together, since their squared sum is \(16/a^4\).
-The first chart-print attempt exposed a normalization factor in the trial field; the verified amplitude is \(\sqrt2/a\).
 
 The metric Killing fields in the exponential coordinates are
 \[
@@ -96,7 +88,7 @@ The stored scalar values are \(R=0\) and \(K=64/a^4\).
 
 ## Tensor computation
 
-All three chart tensors are computed with the established Geometry and chart printer.
+All three charts obey the same Einstein-Maxwell equations.
 The source and both source-free Maxwell equations are checked at three numerical points per chart.
 Each chart is also compared at those points with the exponential metric pulled back by its stated map.
 The original-coordinate names are \((u,r,y,z)=(X^1,X^2,X^3,X^4)\).

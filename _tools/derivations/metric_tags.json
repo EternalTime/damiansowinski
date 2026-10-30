@@ -10231,6 +10231,78 @@
   ],
   "sphere": null
  },
+ "mclenaghan_tariq_tupper/exponential": {
+  "stamp": "8ab7f7117c002ce1",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "mclenaghan_tariq_tupper/original": {
+  "stamp": "df916c3bef5f3af0",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "u",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "mclenaghan_tariq_tupper/upper_half_plane": {
+  "stamp": "7730d905af5ac3b8",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "mcvittie/areal": {
   "stamp": "6b25ad149b9a8828",
   "relations": {},

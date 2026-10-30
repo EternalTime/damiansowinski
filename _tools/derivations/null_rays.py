@@ -18999,5 +18999,30 @@ import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_null(sys.modules[__name__])
 
 
+DIAGRAMS.extend([
+    Diagram("mclenaghan_tariq_tupper", "original", "surface", "The surface $y=z=0$", ("u", "r"),
+            (-2.5, 2.5, -2.5, 2.5), "$r/a$", "$(u+r)/a$", {"a": 1}, {"y": "0", "z": "0"},
+            to_display=FINKELSTEIN_OUT, tau="u+r", families=SIDEWAYS),
+    Diagram("mclenaghan_tariq_tupper", "exponential", "surface", "The surface $y=z=0$", ("t", "r"),
+            (-2.5, 2.5, -2.5, 2.5), "$r/a$", "$ct/a$", {"a": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
+    Diagram("mclenaghan_tariq_tupper", "upper_half_plane", "surface", "The surface $y=\\phi=0$", ("t", "x"),
+            (0.1, 8.5, -4.2, 4.2), "$x/a$", "$ct/a$", {"a": 1}, {"y": "0", "phi": "0"}, families=SIDEWAYS),
+])
+CAPTIONS.update({
+    ("mclenaghan_tariq_tupper", "original", "surface"): [
+        "The totally geodesic surface $y=z=0$ in $T=u+r$, with null rays $u=\\mathrm{constant}$ "
+        "and $u+2r=\\mathrm{constant}$."],
+    ("mclenaghan_tariq_tupper", "exponential", "surface"): [
+        "The totally geodesic surface $y=z=0$, with null rays $ct\\mp r=\\mathrm{constant}$."],
+    ("mclenaghan_tariq_tupper", "upper_half_plane", "surface"): [
+        "The totally geodesic surface $y=\\phi=0$, with null rays $ct\\mp a\\ln(x/a)=\\mathrm{constant}$."],
+})
+CLOSED_FORMS.update({
+    ("mclenaghan_tariq_tupper", "original", "surface"): (lambda u, r: u, lambda u, r: u+2*r, None),
+    ("mclenaghan_tariq_tupper", "exponential", "surface"): (lambda t, r: t-r, lambda t, r: t+r, None),
+    ("mclenaghan_tariq_tupper", "upper_half_plane", "surface"): (lambda t, x: t-np.log(x), lambda t, x: t+np.log(x), None),
+})
+
+
 if __name__ == "__main__":
     sys.exit(main())

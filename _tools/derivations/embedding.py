@@ -21941,6 +21941,36 @@ import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_embedding(sys.modules[__name__])
 
 
+def mclenaghan_tariq_tupper(ck, src):
+    """Isometric immersion of a finite hyperbolic strip at t=z=0.
+    The real y coordinate is rolled once around the axis, with no quotient of spacetime."""
+    sl = Slice(src, "mclenaghan_tariq_tupper", "exponential", "r", "y", {"t": 0, "z": 0}, {"a": 1})
+    size = 3.0
+    horn = Piece("strip", "sheet", sl, 0.0, 2.0, 0.0, 1,
+                 (("edge", "the edge $r=0$ of the immersed strip"),
+                  ("edge", "the strip continues toward larger $r$")),
+                 [(r, "r", None) for r in (0.0, 1.0, 2.0)], size)
+    ck.isometry("McLenaghan-Tariq-Tupper, hyperbolic strip", horn)
+    ck.radius("McLenaghan-Tariq-Tupper, radius exp(-r)", horn, lambda r: np.exp(-r), size)
+    ck.form("McLenaghan-Tariq-Tupper, tractrix", horn, tractrix, size)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *horn.at(0.0), "$r=0$")
+    ring_label(fig, [0, 0, 0], *horn.at(2.0), "$2a$")
+    fig.legend("fill", "cover", "the strip at $t=z=0$")
+    fig.legend("line", "r", "$r/a=0,1,2$")
+    fig.legend("line", "meridian", "$y$ constant")
+    return [view("strip", "Hyperbolic strip", "$a$", [surface], fig.done(),
+                 settings="$a=1$, $0\\le y<2\\pi a$.")]
+
+
+DRAWN["mclenaghan_tariq_tupper"] = mclenaghan_tariq_tupper
+CAPTIONS[("mclenaghan_tariq_tupper", "strip")] = [
+    "Beltrami's pseudosphere, an isometric immersion of the strip $0\\le r\\le2a$, "
+    "$0\\le y<2\\pi a$ at $t=z=0$, rolled once round its axis; $y$ a real coordinate."
+]
+
+
 if __name__ == "__main__":
     sys.exit(main())
 
