@@ -5385,6 +5385,11 @@ class Slices(unittest.TestCase):
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
             return (lambda X: 0.0), [rho ** 0.75 / 0.75 for rho in self.reach(surface)]
+        if key in ("ghost_neutrinos/areal/radial", "ghost_neutrinos/null/null"):
+            # Taub's z = (2/3) r^(3/2) at L = 1, the strip reached in z; the null view draws
+            # (mu + nu)/2 = r^2/4 across, and t = 0 is mu = nu, its zero up.
+            of = (lambda r: r) if key.endswith("radial") else (lambda r: r * r / 4)
+            return (lambda X: 0.0), [of((1.5 * z) ** (2 / 3)) for z in self.reach(surface)]
         if key == "kaluza_klein_monopole/taub_nut/radial":
             # The Taub-NUT radius is rho = r + 2m, at m = 1, of the circles the cigar reaches in r.
             return (lambda X: 0.0), [r + 2 for r in self.reach(surface)]
