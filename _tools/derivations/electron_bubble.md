@@ -28,7 +28,32 @@ The shell is a separate distributional surface, excluded from the smooth coordin
 ## Surface stresses
 
 The shell stress follows by taking the thin limit of equations (10)-(15), or by the jump in extrinsic curvature of equation (108).
-The calculation, sign convention, and independent numerical check remain to be completed.
+Put $B_0=r_0^2+a^2$ and $\Sigma_0=r_0^2+a^2\cos^2\theta$.
+The surface metric is $h_{ab}dx^adx^b=-(dx^0)^2+\Sigma_0d\theta^2+B_0\sin^2\theta d\phi^2$, with $x^0=ct$.
+The outward normal on both sides points towards increasing $r$.
+With $K_{ab}=\tfrac12n^r\partial_rg_{ab}$, exterior minus interior, the jump is
+
+$$[K_{ab}]=\frac{m\sqrt{B_0}}{\Sigma_0^{3/2}}v_av_b,\qquad v_adx^a=dx^0-a\sin^2\theta d\phi,\qquad [K]=-\frac{m}{\sqrt{B_0\Sigma_0}}.$$
+
+Israel's condition in the $(-,+,+,+)$ convention is $S_{ab}=-([K_{ab}]-h_{ab}[K])/(8\pi)$.
+Consequently,
+
+$$u^a=\frac{(B_0,0,a)}{\sqrt{B_0\Sigma_0}},\qquad S_{ab}=-\mathcal T(h_{ab}+u_au_b),\qquad\mathcal T=\frac{m}{8\pi\sqrt{B_0\Sigma_0}}.$$
+
+Here $S_{ab}$ is the geometric surface stress; multiplying it by $c^4/G$ restores physical energy per area.
+The comoving surface energy density is zero and both tangential pressures equal $-\mathcal T$.
+These are derived from the readable 2002 metric, not transcribed from the unread 1984 or 1985 texts.
+
+The independent thin limit uses $f=(mr-q^2/2)\Theta(r-r_0)$, so $f'=m\Theta(r-r_0)$ and $f''=m\delta(r-r_0)$.
+Equations (10)-(15) then give no delta term in the comoving density and $-m\delta(r-r_0)/(8\pi\Sigma_0)$ in each tangential pressure.
+Since $d\ell=\sqrt{\Sigma_0/B_0}\,dr$, the coefficient of $\delta(\ell)$ is precisely $-\mathcal T$.
+The 2002 authors use the opposite Ricci convention and write Einstein's equation with $-R_{ab}$; the physical stress and its signs agree with the standard Ricci contraction used here.
+Every smooth bulk tensor excludes the shell.
+A product such as the square of its delta curvature is undefined as an ordinary distribution, so no shell value of the Kretschmann scalar is assigned.
+
+The angular velocity is $d\phi/dt=ca/B_0$, and the speed measured in the interior inertial frame is $ca\sin\theta/\sqrt{B_0}$.
+It is subluminal at every latitude.
+The dedicated numerical check of the extrinsic curvature and the matching remains to be completed.
 
 ## Causal domain
 
