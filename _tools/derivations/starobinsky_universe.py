@@ -15,6 +15,12 @@ import verify_metrics as vm
 ID = "starobinsky_universe"
 CHART_IDS = ("cosmic", "conformal", "closed_de_sitter", "flat_de_sitter", "open_de_sitter")
 ANGLES = r"\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)"
+DIMENSIONS = {(ID, system): {
+    r"\theta":"1",r"\phi":"1","H_0":"1/L",
+    (r"\eta" if system == "conformal" else r"\tau"):"L",
+    **({"r":"L","a":"1","k":"1/L**2","M":"1/L"} if system in ("cosmic","conformal")
+       else {"r":"L"} if system == "flat_de_sitter" else {r"\chi":"1"})}
+    for system in CHART_IDS}
 
 
 def chart_spec(system):
