@@ -269,7 +269,8 @@ def register_slices(sl):
         view,source,coordinate = ("closed",system,r"\chi") if curved else ("flat","cosmic","r")
         sl.FLAT[(ID,system,"radial")] = (
             lambda view=view,source=source,coordinate=coordinate:
-            sl.one(ID,lambda m:sl.along(0.0,*m.reach(source,coordinate)),view_id=view))
+            sl.one(ID,lambda m:sl.along(0.0,*m.reach(source,coordinate)),
+                   label=r"$H_0\tau=0$",view_id=view))
     sl.FLAT_METRICS.add(ID)
     for system in ("flat_de_sitter","open_de_sitter"):
         sl.HIDDEN[(ID,system,"radial")] = "a different member of the semiclassical family from the two embedded slices"
@@ -324,7 +325,7 @@ def conformal_diagram(ck, src):
                 v.curve("t",*mapping(np.full(101,t),np.linspace(0,pi,101)))
             v.legend("scri",r"spacelike infinity $\mathscr I^\pm$")
             v.legend("centre","regular poles")
-            m = slices.moments(ID,"closed")[0]
+            m = slices.moments(ID,"closed",label=r"$H_0\tau=0$")[0]
             v.slice(m,[mapping(np.zeros(101),np.linspace(0,pi,101))])
         else:
             full = evolving
@@ -383,7 +384,7 @@ def embedding_diagram(ck, src):
         marks = [(x,"r",None) for x in ((1,2,3) if flat else (np.pi/4,np.pi/2,3*np.pi/4))]
         piece = em.Piece("equator","sheet",sl,0,top,0 if flat else -1,1,
                          (("axis","centre"),("edge","plane continues") if flat else ("axis","antipode")),marks,size)
-        surface = em.Surface([piece],label=r"$H_0\tau=0$",time=0.0)
+        surface = em.Surface([piece])
         ck.isometry(ID+" "+vid,piece)
         if flat:
             ck.plane(ID+" flat equator",sl,np.linspace(0.01,3,50))
