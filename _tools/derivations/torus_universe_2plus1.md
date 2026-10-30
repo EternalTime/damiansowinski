@@ -57,14 +57,15 @@ The spatial lattice has the Euclidean metric at each fixed positive $t$.
 ## Quotient drawings
 
 The flat spatial torus has a parallelogram development with opposite sides identified.
-A smooth doughnut surface in Euclidean three space has nonzero Gaussian curvature and cannot carry this flat metric globally.
+A smooth doughnut surface in Euclidean 3-space has nonzero Gaussian curvature and cannot carry this flat metric globally.
 Any spatial development must retain its paired edges.
 
-In fact, no compact flat torus admits a smooth global isometric immersion in Euclidean three space.
-For a smooth compact immersed surface, choose a point of maximal Euclidean distance $R$ from an origin outside the surface.
+In fact, no compact flat torus admits a smooth isometric immersion in Euclidean 3-space.
+For a smooth compact surface immersed in Euclidean 3-space, choose a point of maximal Euclidean distance $R$ from an origin outside the surface.
 At that point the Hessian of the squared distance along a unit tangent vector $v$ is $2+2R\,\mathrm{II}(v,v)\leq0$, with the normal directed radially outward.
 Both principal curvatures therefore have the same nonzero sign, so the Gaussian curvature is positive there.
 This contradicts the vanishing Gaussian curvature of a flat torus.
+This obstruction is specific to Euclidean 3-space; a rectangular flat torus embeds smoothly and isometrically in Euclidean 4-space as a product of circles.
 A planar fundamental parallelogram with paired edges is an intrinsic development.
 
 A projection to one spatial coordinate suppresses one torus cycle and its null winding classes.
