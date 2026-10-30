@@ -3235,6 +3235,7 @@ class StacksAndMovies(unittest.TestCase):
     STACKS = chosen_entries({"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
               "big_rip": 1.0,
+              "murphy_viscous_universe": 1.0,
               "maximally_supersymmetric_plane_wave": 0.8,
               "cahen_wallach": 2.0,
               "holographic_superconductor": 1.0})   # the height of a unit of time
@@ -3244,7 +3245,6 @@ class StacksAndMovies(unittest.TestCase):
     MOVIES = chosen_entries({("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("lqc_bounce", "universe"): "$t$",
-              ("murphy_viscous_universe", "universe"): "$a$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -3276,7 +3276,7 @@ class StacksAndMovies(unittest.TestCase):
               ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("kasner_magnetic", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
-              ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$",
+              ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$", ("murphy_viscous_universe", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("cahen_wallach", "ring"): "$cu/L$",
@@ -4289,6 +4289,19 @@ BARTNIK_MCKINNON_REACH = {"isotropic": 7.147807396, "tortoise": 24.219163201, "f
 ROBERTS_P = {"disperses": 0.9, "threshold": 1.0, "collapses": 2.0}
 
 
+def murphy_scale(t):
+    """The scale factor of Murphy's universe for radiation at the proper time t, in units of 1/H_s: the
+    root of ln a + a^2/2 = t, by bisection on the logarithm of a."""
+    lo, hi = -60.0, 10.0
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        if mid + math.exp(2 * mid) / 2 < t:
+            lo = mid
+        else:
+            hi = mid
+    return math.exp((lo + hi) / 2)
+
+
 def lqc_bounce_eta(t, n=2000):
     """The conformal time of the bounce of loop quantum cosmology at the proper time t, in units of t_b:
     the integral of dt/(1 + t^2)^(1/6) from the bounce, by Simpson's rule."""
@@ -4607,13 +4620,10 @@ class Slices(unittest.TestCase):
             height = math.asinh(t) if system == "harmonic" else t
             return (lambda X: height), ([lo, hi] if system == "comoving_spherical" else [-hi, hi])
         if key.startswith("murphy_viscous_universe/"):
-            # A moment of the scale factor a, out to the observer at r = c/H_s: the line of that a on the
-            # scale factor charts, through the centre on the Cartesian one, and of H_s t = ln a + a^2/2 on
-            # the cosmic chart, for q = 2.
-            lo, hi = self.reach(surface)
-            system = key.split("/")[1]
-            height = math.log(t) + t * t / 2 if system == "cosmic" else t
-            return (lambda X: height), ([lo, hi] if system == "scale_factor_spherical" else [-hi, hi])
+            # A moment of the proper time t of the ring's world tube, a whole line: of that t on the cosmic
+            # chart and of its scale factor, ln a + a^2/2 = t, on the scale factor charts, for q = 2.
+            height = t if key.split("/")[1] == "cosmic" else murphy_scale(t)
+            return (lambda X: height), None
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
@@ -6250,10 +6260,12 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
                                                 - 2 * lqc_bounce_eta(t)), 2e-3, f"{where} at {(X, T)}")
                     elif metric_id == "murphy_viscous_universe":
-                        # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta = 2(a - 1/a) on a moment of a, for q = 2.
+                        # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta = 2(a - 1/a) on the moment t, for q = 2.
+                        a = murphy_scale(t)
                         for X, T in points:
-                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
-                                                - 2 * (t - 1 / t)), 2e-3, f"{where} at {(X, T)}")
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            scale = 1 + tp * tp + tq * tq
+                            self.assertLess(abs((tp + tq) / 2 - (a - 1 / a)), 2e-4 * scale, f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
                         for X, T in points:

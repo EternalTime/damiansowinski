@@ -17134,10 +17134,10 @@ def murphy_viscous_universe(ck, src):
         v.legend("r", "comoving observers")
         v.legend("t", "$a$ constant" if system != "cosmic" else "$t$ constant")
         v.legend("surface", "$a = 1$, the end of the acceleration")
+        # The world tube's moments are moments of the proper time, whole lines of constant eta.
         for m in slices.moments("murphy_viscous_universe"):
-            lo, hi = m.reach("scale_factor_spherical", "r")
-            along = np.linspace(lo, hi, 60) if half else np.linspace(-hi, hi, 120)
-            v.slice(m, [mink_pq(np.full_like(along, float(eta_a(m.time))), along)])
+            along = span
+            v.slice(m, lines=[mink_pq(np.full_like(along, float(eta_a(a_of_t(m.time)))), along)])
         v.set(settings="$q = 2$, $H_s = 1$, $p, q = \\arctan(\\eta \\mp " + ("r" if half else "x") + ")$ with $\\eta = a - 1/a$.")
         views.append(v)
     return views

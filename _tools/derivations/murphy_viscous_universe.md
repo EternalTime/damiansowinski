@@ -62,3 +62,9 @@ So light rays reach $t \to -\infty$ at a finite affine distance, as Borde, Guth 
 
 The conformal time $c\,d\eta = c\,dt/a$ runs over $(-\infty, \infty)$ when $q > 1$, that is $w > -1/3$: $c\eta = (c/H_s)\left(a^{q-1}/(q - 1) - 1/a\right)$.
 So the conformal diagram is the whole diamond of Minkowski space, its past null boundary at $a = 0$.
+
+## The embedding diagram
+
+Every moment is flat, so a moment embeds as a plane and shows nothing of the expansion.
+The diagram stacks a ring of comoving observers at $r = c/H_s$ in the plane $y = 0$ up the axis of the proper time, from $H_st = -3$ to $3$ for radiation: the ring's proper radius $ac/H_s$ at the height of its time.
+With $a^2 = W(e^{2H_st})$ the world tube narrows as $e^{H_st}$ toward the steady state and widens as $t^{1/2}$ late.

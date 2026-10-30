@@ -12746,40 +12746,67 @@ def lqc_bounce(ck, src):
 
 
 def murphy_viscous_universe(ck, src):
-    """The equator of space in Murphy's universe with viscosity, for radiation, q = 2, in units of
-    c/H_s. A moment of the scale factor a has g_rr = a^2 and g_phiphi = a^2 r^2: a flat plane on which
-    the comoving observer at the radius r stands the distance a r from the centre. It is drawn out to
-    r = c/H_s at five moments from a = 1/4, near the steady state, to a = 3, through a = 1, where the
-    acceleration ends, and played as a movie with a frame every 0.1 of a."""
-    named = (0.25, 0.5, 1.0, 2.0, 3.0)
-    size = 2 * 3.0
+    """The world tube of a ring of comoving observers in Murphy's universe with viscosity, for
+    radiation, q = 2, in units of 1/H_s and c/H_s. The ring stands on x^2 + z^2 = (c/H_s)^2 in the
+    plane y = 0 of the scale factor chart, flat at every moment, a^2(dx^2 + dz^2), and the published
+    Christoffel symbols have no Gamma^x_aa or Gamma^z_aa, so its observers stay at rest in the chart.
+    Its proper radius is a c/H_s, and the proper time is a^2 = W(e^(2t)), Lambert's W, so stacked up
+    the axis of time from t = -3 to 3 the ring's world tube opens out of the steady state, where a
+    falls as e^t, and slows into the expansion of radiation, a growing as t^(1/2)."""
+    from scipy import special
+    gamma, _ = published_christoffel(src, "murphy_viscous_universe", "scale_factor")
+    ck.exact("murphy_viscous_universe: no published Gamma^i_aa, so observers at rest in the chart stay there",
+             not any(ix[1:] == ("a", "a") and ix[0] != "a" for ix in gamma))
+    params = {"q": 2, "H_s": 1}
+    ring_radius = 1.0
 
-    def name(a):
-        return f"$a = {a:g}$"
+    def a_of(t):
+        return float(np.sqrt(np.real(special.lambertw(math.exp(2 * float(t))))))
+    named = ("-3", "-1.5", "0", "1.5", "3")
+    keys = [float(k) for k in named]
+    moments, key_at = ring_moments(keys, 0.1,
+                                   lambda k: (f"$t = {named[k]}/H_s$", keys[k], {"a": repr(a_of(keys[k])), "y": 0}),
+                                   lambda t: (f"$t = {t:g}/H_s$", t, {"a": repr(a_of(t)), "y": 0}))
+    top = 2.5
+    size = 2 * top
+    alpha = np.linspace(0, 2 * math.pi, 361)
+    frames = []
+    for label, time, fixed_at in moments:
+        sl = FlatPlane(src, "murphy_viscous_universe", "scale_factor", "x", "z", fixed_at, params)
+        where = f"Murphy, {label}"
+        plane = disc(sl, "plane", top, "the centre of the ring", "the plane runs on, flat, to infinity", [], size)
+        ck.isometry(where, plane)
+        a = a_of(time)
+        ck.add(f"{where}: the plane's scale factor solves t = ln a + a^2/2", abs(math.log(a) + a * a / 2 - time), 1e-12)
+        ring, dots = particles(ck, where, sl, plane, ring_radius * np.cos(alpha), ring_radius * np.sin(alpha))
+        ck.add(f"{where}: the ring's proper radius is a c/H_s",
+               float(np.max(np.abs(np.hypot(ring.points[:, 0], ring.points[:, 1]) - a * ring_radius))), 1e-12)
+        frames.append(Surface([plane], label=label, time=time, curves=[ring], dots=dots))
+    surfaces = [frames[k] for k in key_at]
+    ck.add("Murphy: the ring narrows as e^t toward the steady state", abs(a_of(-12) / math.exp(-12) - 1), 1e-9)
 
-    def moment(a):
-        sl = Slice(src, "murphy_viscous_universe", "scale_factor_spherical", "r", "\\phi",
-                   {"a": repr(float(a)), **EQUATOR}, {"q": 2, "H_s": 1})
-        disc = Piece("disc", "sheet", sl, 0.0, 1.0, 0.0, 1,
-                     (("axis", "the comoving observer at $r = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
-                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "r", None)], size)
-        where = f"Murphy at a = {a:g}"
-        ck.plane(where, sl, np.linspace(1e-3, 20, 200))
-        ck.isometry(where, disc)
-        ck.radius(f"{where}, rho = a r", disc, lambda r, a=a: a * r, size)
-        ck.form(f"{where}, a plane", disc, lambda r: 0 * r, size)
-        return Surface([disc], label=name(a), time=a)
-
-    times, keys = movie_values(list(named), 0.1)
-    times = [round(t, 10) for t in times]
-    frames = [moment(t) for t in times]
-    surfaces = [frames[i] for i in keys]
-    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
-    fig.legend("fill", "cover", "the equator, out to $r = c/H_s$")
-    fig.legend("line", "r", "comoving observers, circles of radius $ar$")
-    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
-    return [view("universe", "The universe leaving the steady state", "$c/H_s$", surfaces, fig.done(),
-                 movie=movie(frames, "$a$", times), settings="$q = 2$, $H_s = 1$.")]
+    def plane_at(u, a, b):
+        sl = FlatPlane(src, "murphy_viscous_universe", "scale_factor", "x", "z", {"a": repr(a_of(u)), "y": 0}, params)
+        return float(np.max(np.abs(ring_radius * sl.scale - [a, b])))
+    tube = stack(ck, "Murphy", surfaces, lambda u: (ring_radius * np.sqrt(np.real(special.lambertw(np.exp(2 * u))))
+                                                   ,) * 2, 1.0, plane_at, size,
+                 "the ring's world tube narrows on toward the steady state before $t = -3/H_s$ and widens on after "
+                 "$t = 3/H_s$")
+    tube_fig = stack_figure(tube, size, "$t$", [
+        ("fill", "cover", "the ring at each moment, at the height of its time"),
+        ("line", "particles", "the ring at five moments"),
+        ("line", "worldline", "twelve observers' world lines"),
+        ("line", "axis", "the axis of time")])
+    fig, played = ring_movie(frames, size, "$t$")
+    fig.legend("fill", "cover", "the plane $y = 0$ at each moment, flat")
+    fig.legend("line", "particles", "the ring at $r = c/H_s$, of proper radius $ac/H_s$")
+    fig.legend("line", "meridian", "straight lines from the centre, every $30°$")
+    settings = "$q = 2$, $H_s = 1$."
+    given = "Radiation, $q = 2$, as in the spacetime diagrams."
+    return [view("tube", "The ring's world tube", "$c/H_s$", [tube], tube_fig, settings=settings, input=given,
+                 height="$t$, a height of $c/H_s$ for each $1/H_s$"),
+            view("ring", "A ring of observers", "$c/H_s$", surfaces, fig.done(), movie=played, settings=settings,
+                 input=given)]
 
 
 def kopczynski_trautman(ck, src):
@@ -19754,9 +19781,15 @@ CAPTIONS = {
         "expansion $H = t/3(t_b^2 + t^2)$ grows until $t = t_b$, where the density has fallen to half its greatest "
         "value, and falls after it as in a classical universe of a stiff fluid, with $a$ growing as $|t|^{1/3}$.",
     ],
-    ("murphy_viscous_universe", "universe"): [
-        "The equator ($\\theta = \\pi/2$) of space as $a$ runs from $1/4$ to $3$, each moment a flat plane. "
-        "The expansion leaves the steady rate $H_s$, ends its acceleration at $a = 1$, and slows as $H = H_s/(1 + a^2)$.",
+    ("murphy_viscous_universe", "ring"): [
+        "The plane $y = 0$ from $H_st = -3$ to $3$ for radiation, flat at every moment, with a ring of comoving "
+        "observers at $r = c/H_s$ at rest in the chart. Its proper radius $ac/H_s$ grows as $e^{H_st}$ out of the "
+        "steady state and as $t^{1/2}$ late.",
+    ],
+    ("murphy_viscous_universe", "tube"): [
+        "A ring of comoving observers at $r = c/H_s$, its proper radius $ac/H_s$ stacked up the proper time. "
+        "It opens out of the steady state, where $a$ falls as $e^{H_st}$, and slows into the expansion of "
+        "radiation, $a \\propto t^{1/2}$.",
     ],
     ("kopczynski_trautman", "universe"): [
         "The equator ($\\theta = \\pi/2$) of space in Kopczyński and Trautman's universe as the dust's time runs "

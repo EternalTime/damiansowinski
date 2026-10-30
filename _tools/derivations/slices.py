@@ -1250,6 +1250,19 @@ def bp_synchronous(m):
     return [np.column_stack([BP_MOMENT / (1.0 + np.exp(-x * x) / 30.0), x])]
 
 
+def murphy_scale(t):
+    """The scale factor of Murphy's universe for radiation at the proper time t, in units of 1/H_s:
+    the root of ln a + a^2/2 = t, which is a^2 = W(e^(2t)), by Newton's method from e^t, its value
+    near the steady state, or from sqrt(2t) late."""
+    a = math.exp(t) if t < 1 else math.sqrt(2 * t)
+    for _ in range(100):
+        step = (math.log(a) + a * a / 2 - t) / (1 / a + a)
+        a = max(a - step, a / 10)
+        if abs(step) < 1e-15 * a:
+            break
+    return a
+
+
 def one(metric_id, lines_of, label=None, view_id=None):
     """Each moment of a spacetime as the lines lines_of(moment) returns."""
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
@@ -3682,15 +3695,14 @@ FLAT = {
         "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
     ("lqc_bounce", "harmonic", "taux"): lambda: one(
         "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
-    # Murphy's moments are moments of the scale factor, the time of two charts; on the cosmic chart the
-    # same moment is t = ln a + a^2/2 in units of 1/H_s, for q = 2.
+    # Murphy's moments are moments of the proper time t, whole lines of it; on the scale factor charts the
+    # same moment is the a of a^2 = W(e^(2t)), in units of 1/H_s, for q = 2.
     ("murphy_viscous_universe", "scale_factor_spherical", "radial"): lambda: one(
-        "murphy_viscous_universe", lambda m: along(m.time, *m.reach("scale_factor_spherical", "r"))),
+        "murphy_viscous_universe", lambda m: along(murphy_scale(m.time), 0.0, BIG)),
     ("murphy_viscous_universe", "scale_factor", "ax"): lambda: one(
-        "murphy_viscous_universe", lambda m: across(m.time, *m.reach("scale_factor_spherical", "r"))),
+        "murphy_viscous_universe", lambda m: across(murphy_scale(m.time), 0.0, BIG)),
     ("murphy_viscous_universe", "cosmic", "tx"): lambda: one(
-        "murphy_viscous_universe",
-        lambda m: across(math.log(m.time) + m.time ** 2 / 2, *m.reach("scale_factor_spherical", "r"))),
+        "murphy_viscous_universe", lambda m: across(m.time, 0.0, BIG)),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),
