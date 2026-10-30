@@ -5445,6 +5445,13 @@ class Slices(unittest.TestCase):
             of_r = {"spherical": lambda r: r,
                     "isotropic": lambda r: r - 1 + math.sqrt(r * (r - 2))}[key.split("/")[1]]
             return (lambda X: 0.0), [of_r(2 / (1 - math.exp(-2 * u))) for u in (hi, lo)]
+        if key.startswith("static_five_soliton/"):
+            # Lake's h labels the embedded circles; r_s=1 in every drawn chart.
+            system = key.split("/")[1]
+            of_h = {"spherical": lambda h: 1/(1-h*h),
+                    "isotropic": lambda h: (1+h)/(4*(1-h)),
+                    "lake": lambda h: h}[system]
+            return (lambda X: 0.0), [of_h(h) for h in self.reach(surface, "lake")]
         if key.startswith("fisher_jnw/"):
             # The embedding is read in the harmonic chart at k = 1/2 and b = 1, where e^(-u) = 1 - b/r: the
             # harmonic plane draws ku at k = 1, half of that u, and the other three the radii r reached, as
