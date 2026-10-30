@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 222,
+  "count": 223,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -13017,6 +13017,11 @@
           "id": "nariai",
           "kind": "family",
           "text": "De Sitter space of two dimensions times a sphere, a symmetric spacetime that splits into a product [figueroa2003maximally]."
+        },
+        {
+          "id": "kowalski_glikman",
+          "kind": "family",
+          "text": "The member in eleven dimensions with a null 4-form and 32 Killing spinors. Three transverse directions oscillate at twice the frequency of the other six [figueroa2001]."
         }
       ],
       "references": [
@@ -23881,6 +23886,11 @@
           "id": "maximally_supersymmetric_plane_wave",
           "kind": "family",
           "text": "The counterpart one dimension down. The Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere is a plane wave that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose]."
+        },
+        {
+          "id": "kowalski_glikman",
+          "kind": "limit",
+          "text": "The Penrose limit along a light ray with motion on the 7-sphere. Its two transverse frequencies are inversely proportional to the curvature radii of the two factors [blau2002penrose]."
         }
       ],
       "references": [
@@ -38688,6 +38698,308 @@
       ]
     },
     {
+      "id": "kowalski_glikman",
+      "name": "Kowalski-Glikman's Eleven Dimensional Wave",
+      "short_name": "Kowalski-Glikman Wave",
+      "description": "An eleven dimensional supergravity wave with parallel null 4-form flux and 32 Killing spinors. Three transverse directions focus at twice the frequency of the other six.",
+      "tags": [
+        "stationary",
+        "eleven-dimensional",
+        "plane wave",
+        "pp-wave",
+        "higher dimensions",
+        "supergravity",
+        "supersymmetric",
+        "homogeneous",
+        "geodesically complete",
+        "null Killing vector",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We use mostly plus signature, with $c$ explicit in the line element and exterior form, components in the basis $cu$, and the standard Ricci contraction $R_{MN}=R^P{}_{MPN}$, where $M,N,P,Q,R,S$ label spacetime coordinates.",
+      "related": [
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "The symmetric plane wave family with an arbitrary constant transverse matrix. Kowalski-Glikman's solution fixes this matrix through its null flux and maximal supersymmetry [figueroa2001]."
+        },
+        {
+          "id": "freund_rubin",
+          "kind": "limit_source",
+          "text": "Anti-de Sitter space of four dimensions times a 7-sphere. Its Penrose limit along a light ray with motion on the sphere is Kowalski-Glikman's wave [blau2002penrose]."
+        },
+        {
+          "id": "maximally_supersymmetric_plane_wave",
+          "kind": "family",
+          "text": "The maximally supersymmetric wave of type IIB supergravity, in ten dimensions with a null 5-form. Its eight transverse directions share one frequency [figueroa2003maximally]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "The parallel null rays of a pp-wave extend to eleven dimensions, with nine transverse directions and a parallel 4-form supporting the homogeneous tidal curvature [figueroa2001]."
+        }
+      ],
+      "references": [
+        "kowalski1984",
+        "figueroa2001",
+        "marolf2002",
+        "hull1984",
+        "blau2002penrose",
+        "figueroa2003maximally"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kowalski_glikman.json",
+      "charts": [
+        {
+          "id": "brinkmann",
+          "name": "Brinkmann",
+          "coordinates": [
+            "u",
+            "v",
+            "x_1",
+            "x_2",
+            "x_3",
+            "x_4",
+            "x_5",
+            "x_6",
+            "x_7",
+            "x_8",
+            "x_9"
+          ],
+          "domains": [
+            "u \\in (-\\infty,\\infty)",
+            "v \\in (-\\infty,\\infty)",
+            "x_1 \\in (-\\infty,\\infty)",
+            "x_2 \\in (-\\infty,\\infty)",
+            "x_3 \\in (-\\infty,\\infty)",
+            "x_4 \\in (-\\infty,\\infty)",
+            "x_5 \\in (-\\infty,\\infty)",
+            "x_6 \\in (-\\infty,\\infty)",
+            "x_7 \\in (-\\infty,\\infty)",
+            "x_8 \\in (-\\infty,\\infty)",
+            "x_9 \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "The positive flux scale, an inverse length. In the Brinkmann chart $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$, with $F_{u123}=\\mu$ in the component basis $cu$. The field equation is $R_{MN}=\\frac1{12}(F_{MPQR}F_N{}^{PQR}-\\frac1{12}g_{MN}F_{PQRS}F^{PQRS})$ [figueroa2001]."
+            }
+          ],
+          "convention": "The null wave fronts have constant $u$, with $u$ a time and $v$ a length along their parallel null rays; $x_1$ to $x_9$ are transverse lengths. Components use $x^0=cu$. A dot denotes differentiation with respect to an affine parameter, so $\\dot u=d(cu)/d\\lambda$. The global chart has $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$ [figueroa2001].",
+          "line_element": "ds^2 = -\\mu^2\\left(\\frac{x_1^2 + x_2^2 + x_3^2}{9} + \\frac{x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2 + x_9^2}{36}\\right)c^2du^2 - 2c\\,du\\,dv + dx_1^2 + dx_2^2 + dx_3^2 + dx_4^2 + dx_5^2 + dx_6^2 + dx_7^2 + dx_8^2 + dx_9^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{\\mu^2\\left(4x_1^2 + 4x_2^2 + 4x_3^2 + x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2 + x_9^2\\right)}{36}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_4",
+                "x_4"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_5",
+                "x_5"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_6",
+                "x_6"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_7",
+                "x_7"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_8",
+                "x_8"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x_9",
+                "x_9"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "rosen",
+          "name": "Rosen",
+          "coordinates": [
+            "u",
+            "w",
+            "y_1",
+            "y_2",
+            "y_3",
+            "y_4",
+            "y_5",
+            "y_6",
+            "y_7",
+            "y_8",
+            "y_9"
+          ],
+          "domains": [
+            "u \\in (0,3\\pi/(\\mu c))",
+            "w \\in (-\\infty,\\infty)",
+            "y_1 \\in (-\\infty,\\infty)",
+            "y_2 \\in (-\\infty,\\infty)",
+            "y_3 \\in (-\\infty,\\infty)",
+            "y_4 \\in (-\\infty,\\infty)",
+            "y_5 \\in (-\\infty,\\infty)",
+            "y_6 \\in (-\\infty,\\infty)",
+            "y_7 \\in (-\\infty,\\infty)",
+            "y_8 \\in (-\\infty,\\infty)",
+            "y_9 \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "The positive flux scale, an inverse length. In the Brinkmann chart $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$, with $F_{u123}=\\mu$ in the component basis $cu$. The field equation is $R_{MN}=\\frac1{12}(F_{MPQR}F_N{}^{PQR}-\\frac1{12}g_{MN}F_{PQRS}F^{PQRS})$ [figueroa2001]."
+            }
+          ],
+          "convention": "The Rosen patch has $0<u<3\\pi/(\\mu c)$, with $w$ and $y_1$ to $y_9$ lengths, ending at coordinate caustics [blau2002penrose]. Put $a_i=\\sin(\\omega_i cu)$, where $\\omega_i=\\mu/3$ for $i=1,2,3$ and $\\omega_i=\\mu/6$ for $i=4,\\ldots,9$. The Brinkmann map is $x_i=a_i y_i$, $v=w+\\frac12\\sum_{i=1}^9a_i a_i' y_i^2$, where $a_i'=da_i/d(cu)$. The flux is $F=\\mu c\\,a_1a_2a_3\\,du\\wedge dy_1\\wedge dy_2\\wedge dy_3$; dots are affine derivatives.",
+          "line_element": "ds^2 = -2c\\,du\\,dw + \\sin^2\\left(\\mu cu/3\\right)\\left(dy_1^2 + dy_2^2 + dy_3^2\\right) + \\sin^2\\left(\\mu cu/6\\right)\\left(dy_4^2 + dy_5^2 + dy_6^2 + dy_7^2 + dy_8^2 + dy_9^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "w"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "w",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "y_1",
+                "y_1"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{3}\\right)"
+            },
+            {
+              "indices": [
+                "y_2",
+                "y_2"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{3}\\right)"
+            },
+            {
+              "indices": [
+                "y_3",
+                "y_3"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{3}\\right)"
+            },
+            {
+              "indices": [
+                "y_4",
+                "y_4"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{6}\\right)"
+            },
+            {
+              "indices": [
+                "y_5",
+                "y_5"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{6}\\right)"
+            },
+            {
+              "indices": [
+                "y_6",
+                "y_6"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{6}\\right)"
+            },
+            {
+              "indices": [
+                "y_7",
+                "y_7"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{6}\\right)"
+            },
+            {
+              "indices": [
+                "y_8",
+                "y_8"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{6}\\right)"
+            },
+            {
+              "indices": [
+                "y_9",
+                "y_9"
+              ],
+              "value": "\\sin^2\\left(\\dfrac{\\mu\\,u\\,c}{6}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "krasnikov",
       "name": "Krasnikov Tube",
       "short_name": "Krasnikov",
@@ -43294,6 +43606,11 @@
           "id": "cahen_wallach",
           "kind": "family",
           "text": "The family it belongs to, the plane waves whose curvature is carried unchanged along every geodesic. This wave is the member whose matrix is $-\\mu^2$ times the identity in ten dimensions [cahen1970, blau2002]."
+        },
+        {
+          "id": "kowalski_glikman",
+          "kind": "family",
+          "text": "The maximally supersymmetric wave of eleven dimensional supergravity, with a null 4-form. Three transverse directions oscillate at twice the frequency of the other six [figueroa2003maximally]."
         }
       ],
       "references": [
@@ -43310,7 +43627,8 @@
         "penrose1965plane",
         "hubeny2002",
         "lin2004",
-        "bonnor1969light"
+        "bonnor1969light",
+        "figueroa2003maximally"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/maximally_supersymmetric_plane_wave.json",
@@ -55135,6 +55453,11 @@
           "id": "hauser_wave",
           "kind": "family",
           "text": "Hauser's twisting wave, a type N vacuum whose rays spread and twist [godazgar2021]."
+        },
+        {
+          "id": "kowalski_glikman",
+          "kind": "family",
+          "text": "A homogeneous wave in eleven dimensions with nine transverse directions and a parallel null 4-form. The metric and flux admit 32 Killing spinors [figueroa2001]."
         }
       ],
       "references": [
@@ -55181,7 +55504,8 @@
         "blau2002",
         "lin2004",
         "blau2003homogeneous",
-        "godazgar2021"
+        "godazgar2021",
+        "figueroa2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",

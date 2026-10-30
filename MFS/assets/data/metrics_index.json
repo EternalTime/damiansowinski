@@ -1235,7 +1235,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "c8af324a6ec24d15",
+    "version": "101d527f084b31bb",
     "diagrams": "07c29806c64a38dc",
     "conformal": "e9b1dc4aed6a0a12",
     "embedding": "de42a4c092d5d323"
@@ -2206,7 +2206,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "d6082c780525da7a",
+    "version": "011b188c267ea789",
     "diagrams": "5e0c638643e61027",
     "conformal": "fdaf25d52bb0d79a",
     "embedding": "c496b535987be512"
@@ -3534,6 +3534,29 @@
     "embedding": "c1d8898d9745f721"
   },
   {
+    "id": "kowalski_glikman",
+    "name": "Kowalski-Glikman Wave",
+    "tags": [
+      "stationary",
+      "eleven-dimensional",
+      "plane wave",
+      "pp-wave",
+      "higher dimensions",
+      "supergravity",
+      "supersymmetric",
+      "homogeneous",
+      "geodesically complete",
+      "null Killing vector",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "60fe48a2da75622f",
+    "diagrams": "38c8057c390e5ad9",
+    "embedding": "1b250ac00d4e229c",
+    "curvature": "ca83d2a4a206563e"
+  },
+  {
     "id": "krasnikov",
     "name": "Krasnikov",
     "tags": [
@@ -3965,7 +3988,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "17b97c02ace6b39b",
+    "version": "5022174678370288",
     "diagrams": "bd7d5856e23baa9e",
     "conformal": "73dd5df297bbb623",
     "embedding": "581548ed12bf4ece"
@@ -4941,7 +4964,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1b93c87164dbbb92",
+    "version": "058da1c399e466f2",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "c2fea606320f23bc"
   },
