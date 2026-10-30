@@ -4451,10 +4451,11 @@ class Slices(unittest.TestCase):
             surface = dict(surface, time=ring["time"], label=ring["label"])
         return view, surface
 
-    # The moments of a spacetime's embedding views, a stack's each ring it marks at a time.
+    # The moments of a spacetime's embedding views, a stack's each ring it marks at a time; a spacetime
+    # WITHOUT_EMBEDDING has none.
     def every(self, metric_id):
         out = []
-        for v in self.embedding[metric_id]["views"]:
+        for v in self.embedding.get(metric_id, {"views": []})["views"]:
             for i, surface in enumerate(v["surfaces"]):
                 timed = [k for k, c in enumerate(surface.get("curves", [])) if "time" in c]
                 out += [(v["id"], i, k) for k in timed] or [(v["id"], i, None)]
