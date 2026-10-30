@@ -1,0 +1,163 @@
+{
+  "id": "moncrief_taub_nut",
+  "name": "Moncrief's Generalised Taub-NUT Spacetimes",
+  "short_name": "Moncrief Taub-NUT",
+  "description": "Inhomogeneous toroidal vacuum cosmologies with a compact Cauchy horizon.",
+  "tags": [
+    "vacuum",
+    "cosmology",
+    "Cauchy horizon",
+    "closed timelike curves",
+    "four-dimensional"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "All coordinates are dimensionless, and $L$ is the unit of length. We use the Riemann convention $R^\\rho{}_{\\sigma\\mu\\nu}=\\partial_\\mu\\Gamma^\\rho{}_{\\nu\\sigma}-\\partial_\\nu\\Gamma^\\rho{}_{\\mu\\sigma}+\\Gamma^\\rho{}_{\\mu\\lambda}\\Gamma^\\lambda{}_{\\nu\\sigma}-\\Gamma^\\rho{}_{\\nu\\lambda}\\Gamma^\\lambda{}_{\\mu\\sigma}$.",
+  "history": "# History¶A compact Cauchy horizon can survive in an inhomogeneous vacuum cosmology. Vincent Moncrief established an infinite dimensional family of such universes in 1981, within the Gowdy solutions on $T^3\\times\\mathbb{R}$ [moncrief1981nut]. Their compact spatial sections are three-tori, and each member admits an extension of Taub-NUT type beyond its maximal Cauchy development [moncrief1981nut]. The family allows gravitational waves and spatial variation while preserving the horizon [chrusciel2004horizons].¶Two commuting Killing fields generate the toroidal symmetry orbits. The orbit area serves as a time coordinate in the globally hyperbolic region [chrusciel2004horizons]. Two wave amplitudes obey coupled equations for a map into the hyperbolic plane, while first order constraints determine the remaining metric function [chrusciel2004horizons]. Periodicity of the spatial coordinates also imposes an integral constraint on the data [chrusciel1990cim].¶At the horizon, a periodic Killing direction becomes null. Coordinates that combine its angle with the logarithm of areal time extend through the horizon when the metric functions have the required regularity [chrusciel1990cim, chrusciel2004horizons]. On the continued side, that periodic direction is timelike, so its closed orbits are closed timelike curves [moncriefisenberg1983]. The two choices of logarithmic shift lead to inequivalent extensions in the polarised family [chrusciel1990cim].¶Piotr T. Chruściel, James Isenberg, and Vincent Moncrief made the polarised extension conditions precise in 1990 [chrusciel1990cim]. In their torus variables, the logarithmic datum $\\pi$ must be everywhere $0$ or everywhere $1$, and the remaining horizon datum $\\omega$ must be analytic, for a vacuum extension retaining the polarised Gowdy form across a compact Cauchy horizon [chrusciel1990cim]. They also proved that an open dense set of smooth polarised Gowdy initial data has an inextendible maximal globally hyperbolic development [chrusciel1990cim]. The extendible universes therefore coexist with strong cosmic censorship in that class [chrusciel1990cim].¶Moncrief and James Isenberg proved in 1983 that an analytic vacuum or electrovacuum spacetime containing a compact null hypersurface ruled by closed null generators has a nontrivial Killing symmetry [moncriefisenberg1983]. A constant analogous to surface gravity distinguishes degenerate horizons from nondegenerate ones [moncriefisenberg1983]. In the nondegenerate case, the Killing field changes from spacelike in the globally hyperbolic region to timelike in the acausal analytic extension [moncriefisenberg1983].",
+  "references": [
+    "moncrief1981nut",
+    "chrusciel2004horizons",
+    "chrusciel1990cim",
+    "moncriefisenberg1983"
+  ],
+  "related": [
+    {
+      "id": "gowdy",
+      "kind": "generalisation",
+      "text": "Gowdy's vacuum universes include the toroidal solutions with a compact Cauchy horizon [moncrief1981nut]."
+    },
+    {
+      "id": "taub_nut",
+      "kind": "family",
+      "text": "Both families admit vacuum extensions across compact Cauchy horizons into regions with closed timelike curves [moncriefisenberg1983]."
+    },
+    {
+      "id": "misner",
+      "kind": "family",
+      "text": "A compact null direction becomes timelike beyond the horizon, producing closed timelike orbits [moncriefisenberg1983]."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "areal",
+      "name": "Toroidal Areal Time",
+      "coords": [
+        "t",
+        "\\theta",
+        "\\psi",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (0,\\infty)",
+        "\\theta \\in [0,2\\pi)",
+        "\\psi \\in [0,2\\pi)",
+        "\\phi \\in [0,2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Positive length scale."
+        },
+        {
+          "symbol": "\\kappa",
+          "description": "Positive coefficient of the logarithmic angular shift."
+        },
+        {
+          "symbol": "b = b(t,\\theta)",
+          "description": "First wave amplitude. Analytic functions of $t^2$ and $\\theta$ near the horizon, periodic in $\\theta$, satisfying $b_{tt}+t^{-1}b_t-b_{\\theta\\theta}=\\tfrac12t^2e^{4b}(q_t^2-q_\\theta^2)$, $q_{tt}+3t^{-1}q_t-q_{\\theta\\theta}+4(b_tq_t-b_\\theta q_\\theta)=0$, and $f_t=t(b_t^2+b_\\theta^2)+\\tfrac14t^3e^{4b}(q_t^2+q_\\theta^2)$ and $f_\\theta=2tb_tb_\\theta+\\tfrac12t^3e^{4b}q_tq_\\theta$, with $f(0,\\theta)=0$ and $\\int_0^{2\\pi}f_\\theta\\,d\\theta=0$."
+        },
+        {
+          "symbol": "q = q(t,\\theta)",
+          "description": "Second wave amplitude."
+        },
+        {
+          "symbol": "f = f(t,\\theta)",
+          "description": "Constraint function."
+        }
+      ],
+      "convention": "The areal coordinate is $t$; subscripts on $b$, $q$, and $f$ denote partial derivatives. Each spatial angle has period $2\\pi$.",
+      "line_element": "ds^2=L^2\\left(\\kappa^2e^{2b+2f}(-dt^2+d\\theta^2)+t^2e^{2b}(d\\psi+q\\,d\\phi)^2+e^{-2b}d\\phi^2\\right)"
+    },
+    {
+      "id": "extension_plus",
+      "name": "Horizon Extension (+)",
+      "coords": [
+        "T",
+        "\\theta",
+        "\\chi",
+        "\\phi"
+      ],
+      "domains": [
+        "T \\in (-\\delta,\\delta)",
+        "\\theta \\in [0,2\\pi)",
+        "\\chi \\in [0,2\\pi)",
+        "\\phi \\in [0,2\\pi)",
+        "\\delta>0\\;\\text{within the analytic continuation}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Positive length scale."
+        },
+        {
+          "symbol": "\\kappa",
+          "description": "Positive coefficient of the logarithmic angular shift."
+        },
+        {
+          "symbol": "B = B(T,\\theta)",
+          "description": "Analytic continuation $B(T,\\theta)=b(\\sqrt{T},\\theta)$ of the areal family, with $T=t^2$."
+        },
+        {
+          "symbol": "F = F(T,\\theta)",
+          "description": "Analytic continuation of $f$, with $F(0,\\theta)=0$."
+        },
+        {
+          "symbol": "Q = Q(T,\\theta)",
+          "description": "Analytic continuation of $q$."
+        }
+      ],
+      "convention": "We use $T=t^2$ and $\\chi=\\psi+\\kappa\\ln t$, with $\\chi$ periodic modulo $2\\pi$. The coefficient $H=\\kappa^2(e^{2F}-1)/(4T)$ takes its analytic value at $T=0$, and $\\delta$ is a positive continuation radius.",
+      "line_element": ""
+    },
+    {
+      "id": "extension_minus",
+      "name": "Horizon Extension (-)",
+      "coords": [
+        "T",
+        "\\theta",
+        "\\chi",
+        "\\phi"
+      ],
+      "domains": [
+        "T \\in (-\\delta,\\delta)",
+        "\\theta \\in [0,2\\pi)",
+        "\\chi \\in [0,2\\pi)",
+        "\\phi \\in [0,2\\pi)",
+        "\\delta>0\\;\\text{within the analytic continuation}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Positive length scale."
+        },
+        {
+          "symbol": "\\kappa",
+          "description": "Positive coefficient of the logarithmic angular shift."
+        },
+        {
+          "symbol": "B = B(T,\\theta)",
+          "description": "Analytic continuation $B(T,\\theta)=b(\\sqrt{T},\\theta)$ of the areal family, with $T=t^2$."
+        },
+        {
+          "symbol": "F = F(T,\\theta)",
+          "description": "Analytic continuation of $f$, with $F(0,\\theta)=0$."
+        },
+        {
+          "symbol": "Q = Q(T,\\theta)",
+          "description": "Analytic continuation of $q$."
+        }
+      ],
+      "convention": "We use $T=t^2$ and $\\chi=\\psi-\\kappa\\ln t$, with $\\chi$ periodic modulo $2\\pi$. The coefficient $H=\\kappa^2(e^{2F}-1)/(4T)$ takes its analytic value at $T=0$, and $\\delta$ is a positive continuation radius.",
+      "line_element": ""
+    }
+  ]
+}
