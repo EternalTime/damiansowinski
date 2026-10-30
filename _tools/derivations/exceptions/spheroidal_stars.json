@@ -1,0 +1,69 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The five interiors have different lapse and density profiles at the same compactness. Each radial and conformal view contains the spatial section of its own stellar model; the other stellar interiors are different geometries.",
+      "drawings": {
+        "spheroidal_stars/vaidya_tikekar/radial": [
+          "durgapal_iii",
+          "durgapal_iv",
+          "durgapal_v",
+          "finch_skea"
+        ],
+        "conformal spheroidal_stars/vaidya_tikekar": [
+          "durgapal_iii",
+          "durgapal_iv",
+          "durgapal_v",
+          "finch_skea"
+        ],
+        "spheroidal_stars/durgapal_iii/radial": [
+          "vaidya_tikekar",
+          "durgapal_iv",
+          "durgapal_v",
+          "finch_skea"
+        ],
+        "conformal spheroidal_stars/durgapal_iii": [
+          "vaidya_tikekar",
+          "durgapal_iv",
+          "durgapal_v",
+          "finch_skea"
+        ],
+        "spheroidal_stars/durgapal_iv/radial": [
+          "vaidya_tikekar",
+          "durgapal_iii",
+          "durgapal_v",
+          "finch_skea"
+        ],
+        "conformal spheroidal_stars/durgapal_iv": [
+          "vaidya_tikekar",
+          "durgapal_iii",
+          "durgapal_v",
+          "finch_skea"
+        ],
+        "spheroidal_stars/durgapal_v/radial": [
+          "vaidya_tikekar",
+          "durgapal_iii",
+          "durgapal_iv",
+          "finch_skea"
+        ],
+        "conformal spheroidal_stars/durgapal_v": [
+          "vaidya_tikekar",
+          "durgapal_iii",
+          "durgapal_iv",
+          "finch_skea"
+        ],
+        "spheroidal_stars/finch_skea/radial": [
+          "vaidya_tikekar",
+          "durgapal_iii",
+          "durgapal_iv",
+          "durgapal_v"
+        ],
+        "conformal spheroidal_stars/finch_skea": [
+          "vaidya_tikekar",
+          "durgapal_iii",
+          "durgapal_iv",
+          "durgapal_v"
+        ]
+      }
+    }
+  ]
+}
