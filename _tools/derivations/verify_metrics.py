@@ -955,6 +955,13 @@ DIMENSIONS = {
     ("lqc_bounce", "cosmic"): {"t": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
     ("lqc_bounce", "comoving_spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "t_b": "T", "a": "1"},
     ("lqc_bounce", "harmonic"): {"\\tau": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
+    # The scale factor is the time of two of Murphy's charts, a pure number, so no coordinate of
+    # theirs is a time the chart multiplies by c.
+    ("murphy_viscous_universe", "scale_factor"): {"a": "1", "x": "L", "y": "L", "z": "L", "q": "1", "H_s": "1/T"},
+    ("murphy_viscous_universe", "scale_factor_spherical"): {
+        "a": "1", "r": "L", "\\theta": "1", "\\phi": "1", "q": "1", "H_s": "1/T",
+    },
+    ("murphy_viscous_universe", "cosmic"): {"t": "T", "x": "L", "y": "L", "z": "L", "q": "1", "H_s": "1/T", "a": "1"},
     # The travelling wave on a string: u = ct - z and v = ct + z are lengths, so no coordinate is a
     # time and the profile F is a pure number, as is b = 1 - 4G mu/c^2. The string's displacements
     # A(u) and B(u) are lengths, as are the isotropic x and y, their distance rho from the string

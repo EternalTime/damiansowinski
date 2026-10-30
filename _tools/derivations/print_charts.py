@@ -35466,6 +35466,170 @@ def penney_harmonic_check(chart):
 
 CHARTS["penney_scalar"] = [lambda s=s: penney_scalar(s) for s in PENNEY_CHARTS]
 
+
+# -- Murphy's universe with viscosity ------------------------------------------------------
+
+MURPHY_CHARTS = ("scale_factor", "scale_factor_spherical", "cosmic")
+MURPHY_SPACE = "\\left(dx^2 + dy^2 + dz^2\\right)"
+MURPHY_SPHERE = "\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)"
+MURPHY_SCALE = "a = a(t)"
+
+
+def murphy_powers(a, q, state):
+    """A `pretty` for the charts in the scale factor, whose every value is a rational function of
+    a, of a^q and of the parameters. Each power of a whose exponent holds q is split into
+    (a^q)^m a^k with m and k whole, a^q is held as one symbol while the value is factored, so that
+    1 + a^q stays whole, and each power of that symbol is handed to the printer as a placeholder
+    whose text is a^{mq}. `state["printer"]` is the chart's printer, which the chart's check puts
+    there before anything is printed."""
+    held = sp.Symbol("MURPHYPOWER", positive=True)
+    table = {}
+
+    def split(value):
+        def one(power):
+            base, e = power.as_base_exp()
+            if base != a or not e.has(q):
+                return power
+            e = sp.expand(e)
+            m = e.coeff(q)
+            k = sp.expand(e - m * q)
+            if not (m.is_Integer and k.is_Integer):
+                raise AssertionError(f"murphy_viscous_universe: {power} is no whole power of a^q times a power of a")
+            return held ** m * a ** k
+        return value.replace(lambda e: e.is_Pow and e.base == a and e.exp.has(q), one)
+
+    def pretty(value):
+        # The scale factor is positive on the chart, which is what lets its powers be gathered.
+        positive = sp.Dummy(positive=True)
+        value = sp.sympify(value).subs(a, positive).replace(sp.Abs, lambda e: e)
+        value = sp.powsimp(sp.expand_power_base(value, force=True), force=True).subs(positive, a)
+        value = sp.factor(sp.cancel(split(sp.expand(value))))
+        # Each sum is gathered by the powers of a^q, as (q - 1)a^q - 1.
+        value = value.replace(lambda e: e.is_Add and e.has(held), lambda e: sp.factor_terms(sp.collect(e, held, sp.factor)))
+        if value.has(q) and any(p.base == a and p.exp.has(q) for p in value.atoms(sp.Pow)):
+            raise AssertionError(f"murphy_viscous_universe: {value} keeps a power of a in q")
+        printer = state["printer"]
+
+        def placeholder(m):
+            text = "a^q" if m == 1 else "a^{" + str(m) + "q}"
+            symbol = table.setdefault(text, sp.Symbol(f"MURPHYPOWER{m}", positive=True))
+            printer.overrides[symbol] = text
+            return symbol
+        # xreplace swaps a whole power of the held symbol before it would look inside it.
+        swaps = {held: placeholder(1)}
+        for p in value.atoms(sp.Pow):
+            if p.base == held:
+                swaps[p] = placeholder(p.exp) if p.exp > 0 else 1 / placeholder(-p.exp)
+        return value.xreplace(swaps)
+
+    return pretty
+
+
+def murphy_viscous_universe(system):
+    """Murphy's flat Friedmann universe of a fluid with p = w rho c^2 and a bulk viscosity
+    zeta = beta rho c^2 proportional to its energy density, Phys. Rev. D 8, 4231 (1973), in the
+    form Brevik and Gron restate, Astrophys. Space Sci. (2013), arXiv:1306.5634, their (41):
+    dH/dt = (3/2) H^2 (3 beta H - 1 - w), with zeta = beta rho c^2 and kappa absorbed. With
+    q = 3(1 + w)/2 and H_s = 2q/9 beta, the rate of the steady state, its integral is
+    H = H_s/(1 + a^q) and H_s t = ln a + a^q/q, which murphy_viscous_universe.md beside this file
+    derives. Two charts take the scale factor itself as the time, ds^2 = -(c^2(1 + a^q)^2/H_s^2 a^2) da^2
+    + a^2 dl^2, in Cartesian and in spherical comoving coordinates; the cosmic chart is the
+    proper time of a comoving observer with a left a function of t, as Murphy and Brevik and Gron
+    write it. murphy_check holds each to the field equations of the viscous fluid at points."""
+    state = {}
+    lapse = "-\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2a^2}da^2"
+    if system == "cosmic":
+        coords, parameters = ["t", "x", "y", "z"], ["q", "H_s", MURPHY_SCALE]
+        probe = vm.Reader(coords, parameters, ())
+        reals = "(-\\infty, \\infty)"
+        return {
+            "metric_id": "murphy_viscous_universe",
+            "system": {"id": system, "name": "Cosmic Time", "coords": coords,
+                       "domains": [f"{x} \\in {reals}" for x in coords], "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2" + MURPHY_SPACE},
+            "chart_line_element": "ds^2 = -dt^2 + a^2" + MURPHY_SPACE,
+            "time": "t",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]]},
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2}{a^2}\\right)",
+            "kretschmann": "12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\dfrac{\\left(a'\\right)^4}{a^4}\\right)",
+            "check": lambda chart: murphy_check(chart, system, state),
+        }
+    spherical = system == "scale_factor_spherical"
+    coords = ["a", "r", "\\theta", "\\phi"] if spherical else ["a", "x", "y", "z"]
+    parameters = ["q", "H_s"]
+    space = MURPHY_SPHERE if spherical else MURPHY_SPACE
+    probe = vm.Reader(coords, parameters, ())
+    a, q, Hs = probe.symbol["a"], probe.parameters["q"], probe.parameters["H_s"]
+    spatial = [probe.symbol[n] for n in coords[1:]]
+    end = "a \\to 0 \\;\\text{(the steady state, as}\\; t \\to -\\infty\\text{)}"
+    domains = (["a \\in (0, \\infty)", "r \\in [0, \\infty)", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)", end]
+               if spherical else ["a \\in (0, \\infty)"] + [f"{x} \\in (-\\infty, \\infty)" for x in coords[1:]] + [end])
+    return {
+        "metric_id": "murphy_viscous_universe",
+        "system": {"id": system, "name": "Scale Factor Time, Spherical" if spherical else "Scale Factor Time",
+                   "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": f"ds^2 = {lapse} + a^2{space}"},
+        # No coordinate is a time the chart multiplies by c, so the chart is the line element itself.
+        "chart_line_element": f"ds^2 = {lapse} + a^2{space}",
+        "printer": {"lead": [Hs, a, *spatial], "factors": [probe.c, Hs, a, *spatial]},
+        "pretty": murphy_powers(a, q, state),
+        "ricci_scalar": "\\dfrac{6H_s^2\\left(2 + \\left(2 - q\\right)a^q\\right)}{c^2\\left(1 + a^q\\right)^3}",
+        "kretschmann": ("\\dfrac{12H_s^4\\left(\\left(1 + a^q\\right)^2 + \\left(1 + \\left(1 - q\\right)a^q\\right)^2\\right)}"
+                        "{c^4\\left(1 + a^q\\right)^6}"),
+        "check": lambda chart: murphy_check(chart, system, state),
+    }
+
+
+def murphy_check(chart, system, state):
+    """Each chart is the viscous fluid at rest at random points and parameters: the mixed Einstein
+    tensor is diagonal, G^0_0 = -3H^2/c^2 is Friedmann's equation with H = H_s/(1 + a^q), and along
+    each spatial axis G^i_i = -(w - (1 + w)H/H_s) G^0_0, the fluid's pressure w rho c^2 with the
+    viscous pressure -3 zeta H = -(1 + w)(H/H_s) rho c^2 added, w = 2q/3 - 1. In the cosmic chart
+    a' = da/d(ct) and a'' are written by the same rate before the points are taken. No determinant
+    and no simplification: every comparison is a number."""
+    state["printer"] = chart.printer
+    geo = chart.geo
+    P = chart.reader.parameters
+    q, Hs, c = P["q"], P["H_s"], chart.reader.c
+    x0 = chart.symbols[0]
+    einstein = geo.einstein_ll()
+    mixed = sp.Matrix(4, 4, lambda i, j: sum(geo.ginv[i, k] * vm._at(einstein, (k, j)) for k in range(4)))
+    if system == "cosmic":
+        A = P["a"]
+        s = sp.Symbol("s", positive=True)
+        rate = Hs / c * s / (1 + s ** q)
+        second = rate * sp.diff(rate, s)
+        mixed = mixed.subs(sp.Derivative(A, (x0, 2)), second.subs(s, A)).subs(
+            sp.Derivative(A, x0), rate.subs(s, A)).subs(A, s)
+        scale = s
+    else:
+        scale = x0
+    w = sp.Rational(2, 3) * q - 1
+    H = Hs / (1 + scale ** q)
+    rng = random.Random(1973)
+    for _ in range(6):
+        point = {v: sp.Rational(rng.randint(1, 40), 17) for v in chart.symbols}
+        point.update({q: sp.Rational(rng.randint(3, 40), 11), Hs: sp.Rational(rng.randint(1, 30), 7),
+                      c: sp.Rational(rng.randint(5, 30), 9)})
+        if system == "cosmic":
+            point[s] = sp.Rational(rng.randint(1, 50), 13)
+        at = mixed.subs(point).evalf(40)
+        h = H.subs(point).evalf(40)
+        for i in range(4):
+            for j in range(4):
+                if i != j and abs(at[i, j]) > 1e-30:
+                    raise AssertionError(f"murphy_viscous_universe: the {system} chart has a flux G^{i}_{j}")
+        if abs(at[0, 0] + 3 * h ** 2 / point[c] ** 2) > 1e-30:
+            raise AssertionError(f"murphy_viscous_universe: the {system} chart misses Friedmann's equation")
+        pressure = (w - (1 + w) * H / Hs).subs(point).evalf(40)
+        for i in range(1, 4):
+            if abs(at[i, i] + pressure * at[0, 0]) > 1e-30:
+                raise AssertionError(f"murphy_viscous_universe: the {system} chart's pressure is not the viscous fluid's")
+
+
+CHARTS["murphy_viscous_universe"] = [lambda s=s: murphy_viscous_universe(s) for s in MURPHY_CHARTS]
+
+
 def step(seconds, where, name):
     """A step of the printing under the clock when a budget is given, so that one which runs past it
     stops the script naming the chart and the step rather than leaving it to hang."""

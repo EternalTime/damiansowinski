@@ -1,0 +1,2965 @@
+{
+  "id": "murphy_viscous_universe",
+  "name": "Murphy's Universe with Viscosity",
+  "short_name": "Murphy's Viscous Universe",
+  "description": "",
+  "tags": [],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "",
+  "related": [],
+  "references": [],
+  "coordinates": [
+    {
+      "id": "scale_factor",
+      "name": "Scale Factor Time",
+      "coords": [
+        "a",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "a \\in (0, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "a \\to 0 \\;\\text{(the steady state, as}\\; t \\to -\\infty\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "q",
+          "description": "Exponent $q = 3(1 + w)/2$, with $w = p/\\rho c^2$ the ratio of the fluid's pressure $p$ to its energy density $\\rho c^2$; $q = 2$ for radiation and $q = 3/2$ for dust, and $q > 0$"
+        },
+        {
+          "symbol": "H_s",
+          "description": "Hubble rate of the steady state, $H_s = 2q/9\\beta$, where the bulk viscosity is $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time; the expansion rate is $H = H_s/(1 + a^q)$"
+        }
+      ],
+      "convention": "We use the scale factor $a$ itself as the time coordinate, a pure number, with $x$, $y$ and $z$ comoving lengths. A comoving observer's proper time is $t = \\left(\\ln a + a^q/q\\right)/H_s$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2a^2}da^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "a",
+            "a"
+          ],
+          "value": "-\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2\\,a^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "a^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "a",
+            "a"
+          ],
+          "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "a",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "a",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "a",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{c^2\\left(1 + a^q\\right)\\left(\\left(1 - q\\right)a^q + 1\\right)}{H_s^2\\,a^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "x",
+                  "x"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "a",
+                  "y",
+                  "y"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "a",
+                  "z",
+                  "z"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "x",
+                  "a",
+                  "x"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "a"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "y",
+                  "a",
+                  "y"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "a"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "z",
+                  "a",
+                  "z"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "a"
+                ],
+                "value": "a"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "x",
+                  "a",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "x",
+                  "x",
+                  "a"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "y",
+                  "a",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "y",
+                  "y",
+                  "a"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "z",
+                  "a",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "z",
+                  "z",
+                  "a"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "a",
+                  "a",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "a",
+                  "x",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "a",
+                  "a",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "a",
+                  "y",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "a",
+                  "a",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "a",
+                  "z",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "x",
+                  "a",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "x",
+                  "x",
+                  "a"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "y",
+                  "a",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "y",
+                  "y",
+                  "a"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "z",
+                  "a",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "z",
+                  "z",
+                  "a"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "a",
+                  "a",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "a",
+                  "x",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "a",
+                  "a",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "a",
+                  "y",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "a",
+                  "a",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "a",
+                  "z",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4}{c^2\\left(1 + a^q\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3\\left(1 - q\\right)a^q + 3}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3H_s^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3H_s^4\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^4\\left(1 + a^q\\right)^5}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6H_s^2\\left(2 + \\left(2 - q\\right)a^q\\right)}{c^2\\left(1 + a^q\\right)^3}",
+      "kretschmann": "K = \\dfrac{12H_s^4\\left(\\left(1 + a^q\\right)^2 + \\left(1 + \\left(1 - q\\right)a^q\\right)^2\\right)}{c^4\\left(1 + a^q\\right)^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3H_s^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3H_s^4\\,a^2}{c^4\\left(1 + a^q\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{a} - \\dfrac{\\left(1 - q\\right)a^q + 1}{a\\left(1 + a^q\\right)}\\dot{a}^2 + \\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}\\dot{x}^2 + \\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}\\dot{y}^2 + \\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2}{a}\\dot{a}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2}{a}\\dot{a}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2}{a}\\dot{a}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "scale_factor_spherical",
+      "name": "Scale Factor Time, Spherical",
+      "coords": [
+        "a",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "a \\in (0, \\infty)",
+        "r \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "a \\to 0 \\;\\text{(the steady state, as}\\; t \\to -\\infty\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "q",
+          "description": "Exponent $q = 3(1 + w)/2$, with $w = p/\\rho c^2$ the ratio of the fluid's pressure $p$ to its energy density $\\rho c^2$; $q = 2$ for radiation and $q = 3/2$ for dust, and $q > 0$"
+        },
+        {
+          "symbol": "H_s",
+          "description": "Hubble rate of the steady state, $H_s = 2q/9\\beta$, where the bulk viscosity is $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time; the expansion rate is $H = H_s/(1 + a^q)$"
+        }
+      ],
+      "convention": "We use the scale factor $a$ itself as the time coordinate, a pure number, with $r$ a comoving length and $\\theta$ and $\\phi$ the angles about the origin. A comoving observer's proper time is $t = \\left(\\ln a + a^q/q\\right)/H_s$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2a^2}da^2 + a^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "a",
+            "a"
+          ],
+          "value": "-\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2\\,a^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "a^2\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "a^2\\,r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "a",
+            "a"
+          ],
+          "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{a^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{a^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^3\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^3\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "a",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "\\dfrac{1}{a}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{1}{r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{c^2\\left(1 + a^q\\right)\\left(\\left(1 - q\\right)a^q + 1\\right)}{H_s^2\\,a^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "r",
+                  "r"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "r",
+                  "a",
+                  "r"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "a"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "a\\,r^2"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "a\\,r^2"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a\\,r^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "a\\,r^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "a\\,r^2\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "a^2\\,r"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "a^2\\,r\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "a^2\\,r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "r",
+                  "a",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "r",
+                  "r",
+                  "a"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(1 - q\\right)a^q + 1\\right)\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(1 - q\\right)a^q + 1\\right)\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "a",
+                  "a",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "a",
+                  "r",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2}{c^2\\left(1 + a^q\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "r",
+                  "a",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "r",
+                  "r",
+                  "a"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "a",
+                  "a",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "a",
+                  "r",
+                  "a"
+                ],
+                "value": "-\\dfrac{\\left(1 - q\\right)a^q + 1}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\theta",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "a",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "a",
+                  "\\theta",
+                  "a"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)\\sin^2\\theta}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "a",
+                  "\\phi",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)\\sin^2\\theta}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "a",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)\\sin^2\\theta}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "a",
+                  "\\phi",
+                  "a"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\left(1 - q\\right)a^q + 1\\right)\\sin^2\\theta}{1 + a^q}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4\\,r^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4\\,r^4\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4\\,r^4\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^4\\,r^4\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^4\\,r^4\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3\\left(1 - q\\right)a^q + 3}{a^2\\left(1 + a^q\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(3 - q\\right)a^q + 3\\right)\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3H_s^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3H_s^4\\,a^2\\left(\\left(1 - q\\right)a^q + 1\\right)}{c^4\\left(1 + a^q\\right)^5}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)}{c^2\\,a^2\\,r^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H_s^2\\left(\\left(3 - q\\right)a^q + 3\\right)\\csc^2\\theta}{c^2\\,a^2\\,r^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6H_s^2\\left(2 + \\left(2 - q\\right)a^q\\right)}{c^2\\left(1 + a^q\\right)^3}",
+      "kretschmann": "K = \\dfrac{12H_s^4\\left(\\left(1 + a^q\\right)^2 + \\left(1 + \\left(1 - q\\right)a^q\\right)^2\\right)}{c^4\\left(1 + a^q\\right)^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3}{a^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\,a^2\\,r^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "-\\dfrac{3H_s^2}{c^2\\left(1 + a^q\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "a",
+                  "a"
+                ],
+                "value": "\\dfrac{3H_s^4\\,a^2}{c^4\\left(1 + a^q\\right)^4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\,a^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)}{c^2\\,a^2\\,r^2\\left(1 + a^q\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H_s^2\\left(\\left(3 - 2q\\right)a^q + 3\\right)\\csc^2\\theta}{c^2\\,a^2\\,r^2\\left(1 + a^q\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{a} - \\dfrac{\\left(1 - q\\right)a^q + 1}{a\\left(1 + a^q\\right)}\\dot{a}^2 + \\dfrac{H_s^2\\,a^3}{c^2\\left(1 + a^q\\right)^2}\\dot{r}^2 + \\dfrac{H_s^2\\,a^3\\,r^2}{c^2\\left(1 + a^q\\right)^2}\\dot{\\theta}^2 + \\dfrac{H_s^2\\,a^3\\,r^2\\sin^2\\theta}{c^2\\left(1 + a^q\\right)^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{2}{a}\\dot{a}\\dot{r} - r\\,\\dot{\\theta}^2 - r\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{a}\\dot{a}\\dot{\\theta} + \\dfrac{2}{r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{a}\\dot{a}\\dot{\\phi} + \\dfrac{2}{r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "cosmic",
+      "name": "Cosmic Time",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "q",
+          "description": "Exponent $q = 3(1 + w)/2$, with $w = p/\\rho c^2$ the ratio of the fluid's pressure $p$ to its energy density $\\rho c^2$; $q = 2$ for radiation and $q = 3/2$ for dust, and $q > 0$"
+        },
+        {
+          "symbol": "H_s",
+          "description": "Hubble rate of the steady state, $H_s = 2q/9\\beta$, where the bulk viscosity is $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time; the expansion rate is $H = H_s/(1 + a^q)$"
+        },
+        {
+          "symbol": "a = a(t)",
+          "description": "Scale factor, a dimensionless function of $t$ fixed by $H_st = \\ln a + a^q/q$, so that $\\dot{a}/a = H_s/(1 + a^q)$; it runs from $0$ as $t \\to -\\infty$ to $\\infty$ as $t \\to \\infty$"
+        }
+      ],
+      "convention": "We use comoving coordinates $(t, x, y, z)$, with $t$ the proper time of a comoving observer and $x$, $y$ and $z$ comoving lengths. We take components in the chart $x^0 = ct$, so $a'$ means $da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "a^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "a^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{a^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{a'}{a}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-a\\,a'"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-a\\,a'"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z"
+                ],
+                "value": "-a\\,a'"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "a\\,a'"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "a\\,a'"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{a''}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "-\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "-\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "-\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "\\left(-\\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "-\\left(-\\left(a'\\right)^2\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "a\\,a''"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-a\\,a''"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-a^2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "a^2\\left(a'\\right)^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "a\\,a'' + 2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "a\\,a'' + 2\\left(a'\\right)^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "a\\,a'' + 2\\left(a'\\right)^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3a''}{a}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{a\\,a'' + 2\\left(a'\\right)^2}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2}{a^2}\\right)",
+      "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\dfrac{\\left(a'\\right)^4}{a^4}\\right)",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\left(2a\\,a'' + \\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\left(2a\\,a'' + \\left(a'\\right)^2\\right)"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\left(2a\\,a'' + \\left(a'\\right)^2\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3\\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2}{a^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3\\left(a'\\right)^2}{a^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2}{a^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2a\\,a'' + \\left(a'\\right)^2}{a^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + a\\,a'\\,\\dot{x}^2 + a\\,a'\\,\\dot{y}^2 + a\\,a'\\,\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2a'}{a}\\dot{t}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2a'}{a}\\dot{t}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2a'}{a}\\dot{t}\\dot{z} = 0"
+      ]
+    }
+  ]
+}
