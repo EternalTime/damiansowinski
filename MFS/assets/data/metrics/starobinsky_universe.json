@@ -17,7 +17,7 @@
     "idealized model",
     "conformally flat",
     "spherically symmetric",
-    "semiclassical gravity"
+    "quantum field theory in curved spacetime"
   ],
   "signature": "(-,+,+,+)",
   "convention": "Geometric cosmic time is $\\tau=ct$, conformal time satisfies $d\\eta=d\\tau/a$, and $r$ is a comoving length. The scale factor $a>0$ is dimensionless, $k$ carries inverse length squared, and $\\theta$, $\\phi$ and $\\chi$ are dimensionless angles; the Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",

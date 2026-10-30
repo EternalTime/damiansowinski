@@ -267,6 +267,16 @@ def register_null_rays(nr):
             lambda t,r,s=system: conformal_time(s,t)-r,None)
 
 
+def register_slices(sl):
+    """The reference moment of each of the two embedded members of the family."""
+    for system in ("cosmic","conformal","closed_de_sitter"):
+        curved = system == "closed_de_sitter"
+        view,source,coordinate = ("closed",system,r"\chi") if curved else ("flat","cosmic","r")
+        sl.FLAT[(ID,system,"radial")] = (
+            lambda view=view,source=source,coordinate=coordinate:
+            sl.one(ID,lambda m:sl.along(0.0,*m.reach(source,coordinate)),view_id=view))
+
+
 CONFORMAL_CAPTIONS = {
     "cosmic": [r"The evolving flat universe, each point a sphere; $p,q=\arctan[H_0(\eta\mp r)]$. "
                r"The past null boundary has divergent transported tidal curvature [yoshida_quintin2018]."],

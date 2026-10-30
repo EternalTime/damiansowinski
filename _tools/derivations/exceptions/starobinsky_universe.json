@@ -1,0 +1,32 @@
+{
+  "hidden": [
+    {
+      "reason": "The flat and open exact de Sitter patches are different members of the semiclassical family from the evolving flat branch and the closed de Sitter slice embedded here.",
+      "drawings": [
+        "starobinsky_universe/flat_de_sitter/radial",
+        "starobinsky_universe/open_de_sitter/radial",
+        "conformal starobinsky_universe/flat_de_sitter",
+        "conformal starobinsky_universe/open_de_sitter"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The evolving flat branch and the closed exact de Sitter universe are separate members of the family; each drawing marks its own spatial slice.",
+      "drawings": {
+        "starobinsky_universe/cosmic/radial": ["closed"],
+        "starobinsky_universe/conformal/radial": ["closed"],
+        "conformal starobinsky_universe/cosmic": ["closed"],
+        "conformal starobinsky_universe/conformal": ["closed"],
+        "starobinsky_universe/closed_de_sitter/radial": ["flat"],
+        "conformal starobinsky_universe/closed_de_sitter": ["flat"]
+      }
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "The k=0 equator at the reference epoch is intrinsically Euclidean, with circumferential radius rho=r and no embedding height.",
+      "moments": [["flat", 0]]
+    }
+  ]
+}
