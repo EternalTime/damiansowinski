@@ -1,5 +1,5 @@
 {
-  "version": "f0a08bdfe4ae8060",
+  "version": "759e36a41865891a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33521,6 +33521,58 @@
         "eprint": "1112.5481",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1112.5481"
+      }
+    },
+    "vaidya1977kerr": {
+      "type": "article",
+      "fields": {
+        "author": "Vaidya, P. C.",
+        "title": "The Kerr metric in cosmological background",
+        "journal": "Pramana",
+        "volume": "8",
+        "number": "6",
+        "pages": "512--517",
+        "year": "1977",
+        "doi": "10.1007/BF02872099"
+      }
+    },
+    "vaidya1989kerr": {
+      "type": "article",
+      "fields": {
+        "author": "Vaidya, P. C. and Patel, L. K.",
+        "title": "Radiating Kerr particle in Einstein universe",
+        "journal": "Pramana",
+        "volume": "32",
+        "number": "6",
+        "pages": "731--739",
+        "year": "1989",
+        "doi": "10.1007/BF02845993"
+      }
+    },
+    "astefanesei1999": {
+      "type": "misc",
+      "fields": {
+        "author": "Astefanesei, D. and Radu, E.",
+        "title": "On the gravitational field of a point mass in {E}instein {U}niverse background",
+        "year": "1999",
+        "eprint": "gr-qc/9901058",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9901058"
+      }
+    },
+    "bohmer2017": {
+      "type": "article",
+      "fields": {
+        "author": "B{\\\"o}hmer, C. G. and Hogan, P. A.",
+        "title": "A {V}aidya-type generalization of {K}err spacetime",
+        "journal": "Modern Physics Letters A",
+        "volume": "32",
+        "number": "35",
+        "pages": "1750189",
+        "year": "2017",
+        "doi": "10.1142/S0217732317501899",
+        "eprint": "1710.01059",
+        "archiveprefix": "arXiv"
       }
     }
   }

@@ -2660,6 +2660,20 @@ A dynamical solution describing the spacetime of a radiating or accreting spheri
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 du^2 - 2c\,du\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 dv^2 + 2c\,dv\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 
+### Kerr's Black Hole in a Universe, and Kerr Radiating
+
+Kerr's spinning black hole set radiating by Vaidya and Patel in 1973, its rotation parameter growing as its mass falls, and set by Vaidya in 1977 in Einstein's static universe and in an expanding universe with closed spatial sections. The radiating metric is a different one from the Kerr-Vaidya metric whose mass alone depends on the retarded time.
+
+- id: `vaidya_patel_kerr`
+- tags: rotating, rotating black hole, black hole, axisymmetric, null dust, radiating, retarded time, Kerr-Schild, algebraically special, perfect fluid, anisotropic pressure, energy condition violation, cosmology, expanding universe, closed universe, cosmological constant, time-dependent, angular momentum, mass, horizon, event horizon, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/vaidya_patel_kerr.json
+- chart Vaidya and Patel: coordinates $(u, \alpha, \beta, T)$, $$ds^2 = -2\left(du + A\sin^2\alpha\,d\beta\right)\left(dT + \dfrac{aq}{2A}\sin^2\alpha\,d\beta\right) + \left(A^2\cos^2\alpha + q^2\right)\left(d\alpha^2 + \sin^2\alpha\,d\beta^2\right) + \left(1 + \dfrac{a^2\sin^2\alpha}{4A^2} - \dfrac{2mq}{A^2\cos^2\alpha + q^2}\right)\left(du + A\sin^2\alpha\,d\beta\right)^2$$
+- chart Retarded Spheroidal: coordinates $(u, r, \alpha, \beta)$, $$ds^2 = -2\left(du + A\sin^2\alpha\,d\beta\right)\left(du + dr + a\sin\alpha\cos\alpha\,d\alpha - \dfrac{ar}{2A}\sin^2\alpha\,d\beta\right) + \left(r^2 + A^2\cos^2\alpha\right)\left(d\alpha^2 + \sin^2\alpha\,d\beta^2\right) + \left(1 + \dfrac{a^2\sin^2\alpha}{4A^2} + \dfrac{2mr}{r^2 + A^2\cos^2\alpha}\right)\left(du + A\sin^2\alpha\,d\beta\right)^2$$
+- chart Einstein Universe, Vaidya: coordinates $(u, \alpha, \beta, t)$, $$ds^2 = -2\left(du + a\sin^2\alpha\,d\beta\right)dt + \left(1 + 2m\dfrac{R\sin\dfrac{r}{R}\cos\dfrac{r}{R}}{\left(R^2 - a^2\right)\sin^2\dfrac{r}{R} + a^2\cos^2\alpha}\right)\left(du + a\sin^2\alpha\,d\beta\right)^2 + \left(\left(R^2 - a^2\right)\sin^2\dfrac{r}{R} + a^2\cos^2\alpha\right)\left(\dfrac{R^2\,d\alpha^2}{R^2 - a^2\sin^2\alpha} + \sin^2\alpha\,d\beta^2\right)$$
+- chart Einstein Universe, Boyer-Lindquist: coordinates $(t, r, \alpha, \phi)$, $$ds^2 = -2\left(dt + a\sin^2\alpha\,d\phi\right)dt + \left(1 + 2m\mu\right)\left(dt + a\sin^2\alpha\,d\phi\right)^2 + \dfrac{\Sigma}{\Delta}dr^2 + \Sigma\left(\dfrac{R^2\,d\alpha^2}{R^2 - a^2\sin^2\alpha} + \sin^2\alpha\,d\phi^2\right)$$
+- chart Expanding Universe, Vaidya: coordinates $(u, \alpha, \beta, t)$, $$ds^2 = e^{2F}\left(-2\left(du + a\sin^2\alpha\,d\beta\right)dt + \left(1 + 2m\dfrac{R\sin\dfrac{r}{R}\cos\dfrac{r}{R}}{\left(R^2 - a^2\right)\sin^2\dfrac{r}{R} + a^2\cos^2\alpha}e^{-2F}\right)\left(du + a\sin^2\alpha\,d\beta\right)^2 + \left(\left(R^2 - a^2\right)\sin^2\dfrac{r}{R} + a^2\cos^2\alpha\right)\left(\dfrac{R^2\,d\alpha^2}{R^2 - a^2\sin^2\alpha} + \sin^2\alpha\,d\beta^2\right)\right)$$
+
 ### Van Den Broeck Warp Drive
 
 Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.

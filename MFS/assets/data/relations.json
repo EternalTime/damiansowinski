@@ -486,6 +486,7 @@
     ["einstein_static", "senovilla"],
     ["einstein_static", "small_universes"],
     ["einstein_static", "universe_from_nothing"],
+    ["einstein_static", "vaidya_patel_kerr"],
     ["elliptic_de_sitter", "misner"],
     ["elliptic_de_sitter", "poincare_dodecahedral"],
     ["elliptic_de_sitter", "rp3_geon"],
@@ -551,6 +552,7 @@
     ["frw", "tilted_universes"],
     ["frw", "tolman_bondi"],
     ["frw", "universe_from_nothing"],
+    ["frw", "vaidya_patel_kerr"],
     ["frw", "white_hole"],
     ["ghost_neutrinos", "kasner"],
     ["ghost_neutrinos", "levi_civita"],
@@ -707,6 +709,7 @@
     ["kerr", "teo_wormhole"],
     ["kerr", "twisting_cylindrical_waves"],
     ["kerr", "vaidya"],
+    ["kerr", "vaidya_patel_kerr"],
     ["kerr", "wahlquist"],
     ["kerr", "zipoy_voorhees"],
     ["kerr_bertotti_robinson", "kerr_melvin"],
@@ -719,6 +722,7 @@
     ["kerr_de_sitter", "schwarzschild_ads"],
     ["kerr_de_sitter", "schwarzschild_de_sitter"],
     ["kerr_de_sitter", "super_entropic"],
+    ["kerr_de_sitter", "vaidya_patel_kerr"],
     ["kerr_de_sitter", "wahlquist"],
     ["kerr_disc_source", "kerr_newman"],
     ["kerr_disc_source", "minkowski"],
@@ -808,6 +812,7 @@
     ["mcvittie", "schwarzschild"],
     ["mcvittie", "schwarzschild_de_sitter"],
     ["mcvittie", "sultana_dyer"],
+    ["mcvittie", "vaidya_patel_kerr"],
     ["melvin", "minkowski"],
     ["melvin", "scalar_field_black_hole"],
     ["melvin", "schwarzschild"],
@@ -993,6 +998,7 @@
     ["tolman_bondi", "white_hole"],
     ["tolman_vii", "tov"],
     ["tov", "vaidya"],
+    ["vaidya", "vaidya_patel_kerr"],
     ["vaidya", "white_hole"]
   ]
 }
