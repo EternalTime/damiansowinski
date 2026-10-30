@@ -1562,6 +1562,13 @@ class Diagrams(unittest.TestCase):
         self.first = min(p.stem for p in build.DIAGRAMS_DIR.glob("*.json"))
         found(self, self.diagrams, "diagram file")
 
+    def assert_some_flat_view(self, views):
+        """A test of the flat views ran on at least one, or the spacetimes this run checks draw none,
+        as a spacetime whose spacetime diagrams are all projections does."""
+        if not views and CHOSEN and not any(d["systems"] for d in self.diagrams.values()):
+            self.skipTest("the spacetimes this run checks draw no flat view")
+        self.assertTrue(views)
+
     def test_every_view_was_drawn_from_what_its_metric_publishes(self):
         by_id = {m["id"]: m for m in self.metrics}
         views = 0
@@ -1574,7 +1581,7 @@ class Diagrams(unittest.TestCase):
                         build.diagram_source_version(systems[system_id], view["source"]["fields"]),
                         view["source"]["version"], f"{metric_id}/{system_id}/{view['id']}")
         self.assertEqual({name for name in build.load_diagrams(self.metrics) if chosen(name)}, set(self.diagrams))
-        self.assertTrue(views)
+        self.assert_some_flat_view(views)
 
     def test_a_changed_component_is_refused_and_leaves_the_files_alone(self):
         metric_id, system_id, changed = self.metric_with_a_changed_component()
@@ -1634,7 +1641,7 @@ class Diagrams(unittest.TestCase):
                         for tick in view["ticks"][axis]:
                             self.assertRegex(tick["label"], r"^\$-?\d+(\.\d+)?\$$", where)
                             self.assertEqual(float(tick["label"][1:-1]), tick["at"], where)
-        self.assertTrue(views)
+        self.assert_some_flat_view(views)
 
     def test_a_diagram_of_a_system_its_metric_lacks_is_refused(self):
         metric = {"id": "x", "name": "X", "short_name": "X", "tags": ["t"], "coordinates": [{"id": "a"}]}
