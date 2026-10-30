@@ -28,8 +28,8 @@ def chart_spec(system):
         space = r"\dfrac{dr^2}{1-kr^2} + r^2" + ANGLES
         line = (r"ds^2 = a^2\left(-d\eta^2 + " + space + r"\right)" if system == "conformal"
                 else r"ds^2 = -d\tau^2 + a^2\left(" + space + r"\right)")
-        domains = [first + r"\in I", r"a>0", r"r\in[0,\infty)\;\text{for}\;k\le0",
-                   r"r\in[0,1/\sqrt{k})\;\text{for}\;k>0"]
+        domains = [first + r" \in I", r"a>0", r"r \in [0,\infty)\;\text{for}\;k\le0",
+                   r"r \in [0,1/\sqrt{k})\;\text{for}\;k>0"]
     else:
         parameters = ["H_0"]
         if system == "flat_de_sitter":
@@ -41,10 +41,9 @@ def chart_spec(system):
             space = r"d\chi^2 + " + trig + r"^2\chi" + ANGLES
             factor = scale + r"^2(H_0\tau)/H_0^2"
         line = r"ds^2 = -d\tau^2 + " + factor + r"\left(" + space + r"\right)"
-        domains = [r"\tau\in(0,\infty)" if system == "open_de_sitter" else r"\tau\in(-\infty,\infty)",
-                   (r"\chi\in[0,\pi]" if system == "closed_de_sitter" else radial + r"\in[0,\infty)")]
-    domains += [r"\theta\in[0,\pi]", r"\phi\in[0,2\pi)"]
-    domains = [domain.replace(r"\in", r" \in ") for domain in domains]
+        domains = [r"\tau \in (0,\infty)" if system == "open_de_sitter" else r"\tau \in (-\infty,\infty)",
+                   (r"\chi \in [0,\pi]" if system == "closed_de_sitter" else radial + r" \in [0,\infty)")]
+    domains += [r"\theta \in [0,\pi]", r"\phi \in [0,2\pi)"]
     probe = vm.Reader(coords, parameters, ())
     x = probe.symbol[first]
     pretty = cp.hyperbolic(probe.parameters["H_0"] * x) if system in ("closed_de_sitter", "open_de_sitter") else sp.factor

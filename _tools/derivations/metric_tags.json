@@ -15384,7 +15384,7 @@
   "sphere": null
  },
  "starobinsky_universe/closed_de_sitter": {
-  "stamp": "3ac380c0a9fc138b",
+  "stamp": "528c8fa458a1bf6d",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15409,7 +15409,7 @@
   ]
  },
  "starobinsky_universe/conformal": {
-  "stamp": "9cfca2bf29c4ca62",
+  "stamp": "05cf50763d607235",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15430,7 +15430,7 @@
   ]
  },
  "starobinsky_universe/cosmic": {
-  "stamp": "f0fb8e0b3a833a0b",
+  "stamp": "1eb1f36198a83a84",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15451,7 +15451,7 @@
   ]
  },
  "starobinsky_universe/flat_de_sitter": {
-  "stamp": "ee20e598e38156d8",
+  "stamp": "ddf731f278981291",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15475,7 +15475,7 @@
   ]
  },
  "starobinsky_universe/open_de_sitter": {
-  "stamp": "5010149a685c7cd7",
+  "stamp": "783de580cc037c17",
   "relations": {},
   "orders": null,
   "dimension": 4,
