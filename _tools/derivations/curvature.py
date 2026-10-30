@@ -18408,6 +18408,77 @@ def ghost_neutrinos(ck, src):
 
 DRAWN["ghost_neutrinos"] = ghost_neutrinos
 
+BEKENSTEIN_VIEWS = {   # chart: its label, its parameters, the range of eta and the scales of K and R
+    "closed": ("closed universe", {"ell": 1.0, "A": 0.5}, (-math.pi, math.pi),
+               {"kind": "log", "from": 1.0, "to": 1e3}, {"kind": "log", "from": 1.0, "to": 1e2}),
+    "flat": ("flat universe", {"ell": 1.0, "a_b": 0.5}, (-3.0, 3.0),
+             {"kind": "log", "from": 1e-3, "to": 1e3}, {"kind": "log", "from": 1e-2, "to": 1e2}),
+    "open": ("open universe", {"ell": 1.0, "A": 1.5}, (-2.0, 2.0),
+             {"kind": "log", "from": 1e-3, "to": 1e4}, {"kind": "log", "from": 1e-2, "to": 1e2}),
+}
+
+
+def bekenstein_universes(ck, src):
+    """Bekenstein's three universes, both scalars against the conformal time, in units of
+    l = 4 pi N mu/3, at the parameters of every other drawing.
+
+    Each universe is homogeneous, so both stored scalars depend on eta alone and a line plot shows
+    their whole variation. The checks cover R = 6 l/a^3 with the scale factor of each chart, both
+    scalars greatest at the bounce eta = 0, where a is least, K = 384, 768 and 1920 there for the
+    closed, flat and open universes, the closed universe's scalars periodic in eta, both scalars
+    finite and above their axes everywhere drawn, and every written point in sixty digits.
+    """
+    name = "bekenstein_universes"
+    scale = {"closed": lambda e, p: p["ell"] - p["A"] * np.cos(e),
+             "flat": lambda e, p: p["a_b"] + p["ell"] * e * e / 2,
+             "open": lambda e, p: p["A"] * np.cosh(e) - p["ell"]}
+    bounce = {"closed": 384.0, "flat": 768.0, "open": 1920.0}
+    views = []
+    for system, (label, params, (lo, hi), k_scale, r_scale) in BEKENSTEIN_VIEWS.items():
+        x_axis = axis("$\\eta$", lo, hi)
+        panels = [{"id": "K", "name": "$K\\ell^4$", "aspect": 2, "scale": k_scale, "ticks": value_ticks(k_scale)},
+                  {"id": "R", "name": "$R\\ell^2$", "aspect": 2, "scale": r_scale, "ticks": value_ticks(r_scale)}]
+        shape_checks(ck, f"{name} {system}", [p["aspect"] for p in panels])
+        K = Published(src, name, system, "kretschmann", ["eta"], list(params))
+        R = Published(src, name, system, "ricci_scalar", ["eta"], list(params))
+        eta = np.linspace(lo, hi, SAMPLES)
+        values = list(params.values())
+        k, r = K(eta, *values), R(eta, *values)
+        a = scale[system](eta, params)
+        ck(f"{name} {system}: R is 6 l/a^3", np.allclose(r, 6 / a ** 3, rtol=1e-12))
+        ck(f"{name} {system}: K is {bounce[system]:g} at the bounce",
+           abs(float(K(0.0, *values)) - bounce[system]) < AGREE * bounce[system])
+        ck(f"{name} {system}: both scalars are greatest at the bounce",
+           int(np.argmax(k)) == SAMPLES // 2 and int(np.argmax(r)) == SAMPLES // 2)
+        if system == "closed":
+            ck(f"{name} closed: both scalars are periodic in eta",
+               abs(float(K(-math.pi, *values)) - float(K(math.pi, *values))) < AGREE
+               and abs(float(R(0.3, *values)) - float(R(0.3 + 2 * math.pi, *values))) < AGREE)
+        ck(f"{name} {system}: both scalars stay within their axes",
+           np.min(k) > k_scale["from"] and np.max(k) < k_scale["to"]
+           and np.min(r) > r_scale["from"] and np.max(r) < r_scale["to"],
+           f"K from {np.min(k):.3e} to {np.max(k):.3e}, R from {np.min(r):.3e} to {np.max(r):.3e}")
+        curves = (line_curves(ck, f"{name} {system}", "K", "K", K, "\\eta", x_axis, k_scale, PLOT_W / 2, params)
+                  + line_curves(ck, f"{name} {system}", "R", "R", R, "\\eta", x_axis, r_scale, PLOT_W / 2, params))
+        greatest = ("and least at the greatest expansion, $\\eta = \\pm\\pi$" if system == "closed"
+                    else "and falling as the universe expands")
+        views.append({
+            "id": system, "label": label, "kind": "line", "x": x_axis,
+            "panels": panels, "curves": curves, "marks": [],
+            "legend": [["line", "K", "$K$"], ["line", "R", "$R = 6\\ell/a^3$"]],
+            "caption": [f"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the {label}, finite at every "
+                        f"$\\eta$, greatest at the bounce, $\\eta = 0$, {greatest}."],
+            "ricci_sentences": [],
+            "per_scalar": scalar_clips("Log scale.", "Log scale."),
+            "settings": "$\\ell = 1$, " + ("$a_b = 1/2$." if system == "flat" else
+                                          "$A = 1/2$." if system == "closed" else "$A = 3/2$."),
+            "clip": "Log scales.",
+        })
+    return views
+
+
+DRAWN["bekenstein_universes"] = bekenstein_universes
+
 
 def draw(metric_id, ck):
     src = Sources()

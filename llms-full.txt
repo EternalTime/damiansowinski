@@ -336,6 +336,18 @@ A static ball of SU(2) Yang-Mills field held together by its own gravity, with a
 - chart Tortoise: coordinates $(t, \xi, \theta, \phi)$, $$ds^2 = F\left(-c^2dt^2 + d\xi^2\right) + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Breitenlohner-Forgács-Maison: coordinates $(t, \tau, \theta, \phi)$, $$ds^2 = -A^2N^2c^2dt^2 + r^2\left(d\tau^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Bekenstein's Universes with No Singularity
+
+Friedmann universes of dust whose particles interact with a conformally coupled scalar field, solved exactly by Jacob D. Bekenstein in 1975. For a range of the constants the scale factor never reaches zero: the closed universe swings between two radii for all time, and the flat and open universes contract to a smallest radius and expand again.
+
+- id: `bekenstein_universes`
+- tags: cosmology, FLRW, homogeneous, isotropic, dust, radiation, scalar field, massless scalar field, bounce, no singularity, singularity theorems, energy condition violation, strong energy condition, weak energy condition, closed universe, open universe, three sphere, expanding universe, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bekenstein_universes.json
+- chart Closed Universe: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Flat Universe: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Open Universe: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Bell-Szekeres Colliding Electromagnetic Waves
 
 Two plane electromagnetic shock waves colliding head on in flat space. Where both have passed the spacetime is locally the Bertotti-Robinson universe, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite everywhere.

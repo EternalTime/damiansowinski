@@ -343,7 +343,8 @@
     "version": "0d6e698133003e70",
     "diagrams": "1d6c29c5b6bfabeb",
     "conformal": "e5ff4de589ab53ea",
-    "embedding": "9bebc74012355e18"
+    "embedding": "9bebc74012355e18",
+    "curvature": "ca116e9e816b5f9b"
   },
   {
     "id": "bell_szekeres",
