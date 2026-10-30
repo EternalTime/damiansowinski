@@ -3800,7 +3800,7 @@ def kerr_disc_source(ck, src):
                   (("stops", f"at $r = {level:.3f}\\,m$ the surface lies level, and nearer the ring the circles grow "
                              "faster than the distance in to them"),
                    ("edge", "the surface runs on, widening, to $r \\to \\infty$")),
-                  [(level, "chartedge", None), (neck, "neck", "neck")] + [(r, "r", None) for r in radii[1:]]
+                  [(level, "chartedge", None), (neck, "throat", "neck")] + [(r, "r", None) for r in radii[1:]]
                   + [(2.0, "ergo", None), (top, "r", "$8\\,m$")], size, digits=1e-12)
     ck.isometry(f"{name}, the equator", sheet)
     surface = Surface([sheet])
@@ -3809,7 +3809,7 @@ def kerr_disc_source(ck, src):
     ring_label(fig, [0, 0, 0], *sheet.at(top), "$8\\,m$")
     fig.legend("fill", "cover", "the equator outside the ring")
     fig.legend("line", "r", "$r = 3$, $4$, $5$, $6$ and $8\\,m$")
-    fig.legend("line", "neck", "the neck, $r = (ma^2)^{1/3}$")
+    fig.legend("line", "throat", "the neck, $r = (ma^2)^{1/3}$")
     fig.legend("line", "ergo", "the edge of the ergoregion, $r = 2m$")
     fig.legend("line", "chartedge", f"$r = {level:.3f}\\,m$, where the drawing stops")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
