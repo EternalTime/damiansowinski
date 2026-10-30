@@ -4512,6 +4512,15 @@ class Slices(unittest.TestCase):
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
+        if key.startswith("chodos_detweiler/"):
+            # The cylinder cuts x at half a period and keeps the whole w circle.
+            # X=2x and W=w/2 in the displayed rescaled chart; time is unchanged.
+            _, system, plane = key.split("/")
+            growing = plane in ("tx", "tX")
+            end = math.pi if growing else 2 * math.pi
+            if system == "rescaled":
+                end *= 2 if growing else 0.5
+            return (lambda X: t), [0.0, end]
         if key.startswith("stiff_fluid_universes/"):
             # The one embedded symmetry plane is t=1/2,x=0, a point on each quotient.
             # chi=x+t^2/2=1/8 in the fluid labels; the characteristic view displays x,t.
