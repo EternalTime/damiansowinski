@@ -121,7 +121,7 @@ def check_chart(chart, system):
         if system == "conformal":
             ap = float(sp.diff(A, z).subs(z, eta))
             app = float(sp.diff(A, z, 2).subs(z, eta))
-            G = chart.geo.einstein_ll().applyfunc(at)
+            G = sp.Matrix(chart.geo.einstein_ll()).applyfunc(at)
             wanted_G = sp.diag(3 * ap ** 2 / a ** 2, (ap ** 2 - 2 * a * app) / (a ** 2 * f ** 2),
                               r ** 2 * (ap ** 2 - 2 * a * app) / (a ** 2 * f),
                               r ** 2 * sp.sin(1.1) ** 2 * (ap ** 2 - 2 * a * app) / (a ** 2 * f))
