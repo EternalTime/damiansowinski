@@ -66,3 +66,14 @@ All these views are single frames, so no movie or stack entry is needed.
 ## Verification
 
 Every chart will be checked at points against the scalar and perfect-fluid stresses, the field dictionary, and the fluid boundary.
+
+## Curvature maps
+
+Both curvature maps use the stored scalars of the areal chart at $a=b=\ell=1$, on $-0.5\leq x\leq0.5$, $0.05\leq t\leq1$.
+The $80\times76$ cell values are evaluated from those expressions, with a sample checked again to sixty digits.
+The $K$ colour range is $10^{-2}$ to $10^8$ and the $R$ range is $-10^4$ to zero, signed logarithmic with linear width $10^{-3}$.
+Every sampled cell fits within its colour scale.
+At fixed $t$, $K$ varies as $e^{-4x}$ and $R$ as $e^{-2x}$, checked from the stored scalars.
+As $t\to0$, their magnitudes diverge as $t^{-5}$ and $t^{-5/2}$, respectively.
+At $t=1$, $R=0$ and $K=3e^{-1-4x}/4$, finite and positive at finite $x$.
+The embedding plane meets each quotient diagram at one point, $(t,x)=(1/2,0)$, transformed into the other charts by their own dictionaries.

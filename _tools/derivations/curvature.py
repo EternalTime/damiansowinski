@@ -18163,7 +18163,55 @@ def newman_tamburino(ck, src):
     """Both charts' maps of the Kretschmann scalar, the spherical class's and the cylindrical limit's."""
     return newman_tamburino_spherical(ck, src) + newman_tamburino_cylindrical(ck, src)
 
+
+def stiff_fluid_universes(ck, src):
+    """Both published scalars mapped over x,t at a=b=ell=1. The scalar/fluid
+    boundary is t=1, where R vanishes while K stays finite. The geometry varies
+    across x exponentially, and both scalars diverge toward t=0. Every cell is
+    read from the stored formulas; sampled values are checked again at sixty digits."""
+    name="stiff_fluid_universes"
+    params={"a":1.0,"b":1.0,"ell":1.0}
+    x_axis,y_axis=axis("$x$",-0.5,0.5),axis("$t$",0.05,1.0)
+    nx,ny=80,76
+    shape_checks(ck,name,[(x_axis["to"]-x_axis["from"])/(y_axis["to"]-y_axis["from"])])
+    out=[]
+    for sid,field,title,scale in (
+        ("K","kretschmann","$K\\ell^4$",{"kind":"log","from":1e-2,"to":1e8}),
+        ("R","ricci_scalar","$R\\ell^2$",{"kind":"symlog","from":-1e4,"to":0,"linear":1e-3})):
+        value=Published(src,name,"areal",field,["x","t"],list(params))
+        xs,ts,values=cells(value,x_axis,y_axis,nx,ny,list(params.values()))
+        ck(name+" "+sid+" cells are finite",np.all(np.isfinite(values)))
+        ck(name+" "+sid+" stays inside the colour scale",np.min(values)>scale["from"] and np.max(values)<scale["to"])
+        picks=[(0,0),(nx-1,0),(0,ny-1),(nx-1,ny-1),(nx//2,ny//2),(nx//3,ny//3)]
+        agrees(ck,name+" "+sid,value,[[xs[i],ts[j],1,1,1] for i,j in picks],[values[j,i] for i,j in picks])
+        # At a=b=1 each scalar's spatial dependence is exp(-2x) or exp(-4x).
+        power=4 if sid=="K" else 2
+        ck(name+" "+sid+" spatial dependence is exponential",np.allclose(values[:,1:]/values[:,:-1],math.exp(-power*(xs[1]-xs[0])),rtol=1e-11))
+        boundary=[float(value.exact([x,1,1,1,1])) for x in (-0.5,0,0.5)]
+        if sid=="R":
+            ck(name+" R vanishes at the null-gradient boundary",max(map(abs,boundary))<1e-30)
+        else:
+            ck(name+" K stays finite and positive at the null-gradient boundary",all(math.isfinite(k) and k>0 for k in boundary))
+        # With a=1, F~sqrt(t), so R~t^-5/2 and K~t^-5.
+        lo,hi=1e-7,1e-6
+        ratio=float(abs(value.exact([0,lo,1,1,1])/value.exact([0,hi,1,1,1])))
+        expected=1e5 if sid=="K" else 10**2.5
+        ck(name+" "+sid+" diverges at its independently derived time power",abs(ratio/expected-1)<1e-9)
+        out.append({"id":sid,"label":title,"system":"areal","kind":"map","x":x_axis,"y":y_axis,
+            "colour":{"name":title,"scale":scale,"ticks":every_second(scale)},
+            "map":{"metric":name,"system":"areal","scalar":field,"x":"x","y":"t","params":params,
+                   "nx":nx,"ny":ny,"cells":[[rounded(v) for v in row] for row in values]},
+            "marks":[],"legend":[],
+            "caption":[("Curvature grows toward the initial singularity below the plot and toward decreasing $x$. "
+                         + ("At $t=1$ the scalar gradient becomes null while $K$ stays finite." if sid=="K" else
+                            "The Ricci scalar tends to zero at $t=1$, where the scalar gradient becomes null."))],
+            "settings":"$a=b=\\ell=1$; every $y,z$.",
+            "clip":"Log colour scale; the plotted cells fit within it." if sid=="K" else "Signed log colour scale, linear near zero; the plotted cells fit within it."})
+    return out
+
+
 DRAWN = {
+    "stiff_fluid_universes": stiff_fluid_universes,
     "newman_tamburino": newman_tamburino,
     "ab_metrics": ab_metrics,
     "alcubierre": alcubierre,
