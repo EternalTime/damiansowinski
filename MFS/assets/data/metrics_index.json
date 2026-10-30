@@ -132,7 +132,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "151385ba16c892a5",
+    "version": "a35317771f063c57",
     "diagrams": "f8d136f5ed61d7d1",
     "conformal": "be0bf05b08f0c825",
     "embedding": "819ee1c2da820b20"
@@ -1742,6 +1742,29 @@
     "diagrams": "f15df464f0bd3714",
     "conformal": "4e349fa775a9fedb",
     "embedding": "0b94902b156b8152"
+  },
+  {
+    "id": "early_braneworlds",
+    "name": "Early Braneworlds",
+    "tags": [
+      "stationary",
+      "static",
+      "three-dimensional",
+      "five-dimensional",
+      "six-dimensional",
+      "brane",
+      "higher dimensions",
+      "Kaluza-Klein",
+      "Einstein equations",
+      "electromagnetic field",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "f05cf42312b3334c",
+    "diagrams": "331d3ed0e92420c7",
+    "conformal": "420755ae5fafd02e",
+    "embedding": "e3dc1e677c6c8795",
+    "curvature": "afaa09f8cdab7f73"
   },
   {
     "id": "eguchi_hanson",
@@ -3990,7 +4013,7 @@
       "idealized model",
       "black hole pair creation"
     ],
-    "version": "9d907e6f052d1bcc",
+    "version": "f74c8dcfb53f7c30",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "edd5386c486f11df",
     "embedding": "f82056eed836aaf8",
@@ -4994,7 +5017,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "545458dc0309b0f0",
+    "version": "a941dfaa0d0c607d",
     "diagrams": "f78be2d481dc49b2",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -6515,7 +6538,7 @@
       "spherically symmetric",
       "black hole pair creation"
     ],
-    "version": "1e7e50c46d9b8e36",
+    "version": "dd4da1aaaee9af00",
     "diagrams": "d5e2884c8c7af71d",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"

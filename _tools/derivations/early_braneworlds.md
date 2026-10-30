@@ -95,3 +95,47 @@ Gibbons and Wiltshire find flux controlled chiral fermion zero modes in equation
 For their flat magnetic membrane with both cosmological constants zero, the axisymmetric neutral scalar spectrum extends continuously to arbitrarily small positive mass, equations (6.1) and (6.2).
 The mass gap in the curved cases depends on the boundary conditions discussed after (6.9); the constant scalar zero mode is not square integrable in that discussion.
 Their stability argument concerns radial perturbations of the flat magnetic membrane, section 4; section 7 leaves stability of the curved extensions open.
+
+## Coordinates and normalizations
+
+The two vortex coordinate systems are the Cartesian background and its transverse polar coordinates, with $u=\rho\cos\phi$ and $v=\rho\sin\phi$.
+The scalar wall retains its five dimensional flat background.
+The six dimensional vacuum uses the two scale factors $f=\cos^{2/5}(\rho/L)$ and $h=L\sin(\rho/L)\cos^{-3/5}(\rho/L)$.
+Its source cosmological constant has the positive value $8/(5L^2)$ after converting to $G_{AB}+\Lambda g_{AB}=0$.
+
+Visser's free lapse and his electric solution are separate coordinate systems.
+The electric solution has $R_{tt}=\cosh^2(w/L)/L^2$, $R_{ww}=-1/L^2$, and flat ordinary spatial directions.
+His field normalization is absorbed into the electric field as stated above.
+
+The Squires family has five dimensions, four tangential scale factors, and the explicit constraints $\sum q_A=0$ and $\sum q_A^2=3/4$.
+The scale factors and their first and second derivatives appear explicitly in the tensors, with the source definitions above.
+The three dimensional member uses its regular angular coordinate, with the spatial coordinate in Bannister's chapter 3 rescaled by $L$.
+For the five dimensional regular axis, set the anti-de Sitter soliton's radius to $2L$, its tip radius to $2L$, its areal coordinate to $r=2L\sqrt{\cosh(w/L)}$, and its circle coordinate to $\tau=L\phi$.
+This pulls the soliton's five dimensional metric back to the regular axis form.
+
+In the general magnetic coordinates, $\beta$ is dimensionless, the angle $\phi$ has period $2\pi$, and $\tilde\phi=C\phi$.
+We use $\mu=2Gk$ and $Q^2=2\pi G B_0^2/3$, so $D=K+\mu/\beta^3-Q^2/\beta^6-\Lambda\beta^2/10$ has inverse squared length units and $C$ has squared length units.
+The flat membrane sets $K=0$; the curved membrane uses a maximally symmetric four dimensional Einstein factor of sectional curvature $K$ in its static spherical coordinates.
+Gibbons and Wiltshire also permit other Einstein factors with the same Ricci tensor.
+Intervals require $D>0$, and a simple regular axis at $\beta_0$ requires $C=2/|D'(\beta_0)|$.
+The Maxwell two form is $F=CB_0\beta^{-4}d\beta\wedge d\phi$ with coupling $8\pi G$.
+In six dimensions the trace reversed Einstein equation is $R_{AB}=\Lambda g_{AB}/2+8\pi G(F_{AC}F_B{}^C-g_{AB}F_{CD}F^{CD}/8)$.
+
+For the flat magnetic solution, the change $\beta=(1+\rho^2/a^2)^{1/3}$, $\mu=Q^2=4/(9a^2)$, $C=3a^2/2$, and $\Lambda=K=0$ relates the two radial coordinates.
+The scalar radial kinetic and mass measures both reduce to $\rho\,d\rho$.
+Thus the angular harmonic zero has the Bessel equation and a continuum down to arbitrarily small positive mass; the constant function has divergent norm.
+
+## Drawings
+
+Every coordinate system has one radial light section with its fixed coordinates stated in the caption.
+All views are stills.
+The free lapse uses Visser's electric solution, and the general Squires view uses its regular axis exponents.
+The general flat magnetic view uses $\mu=Q^2=4/9$, $C=3/2$, and $\Lambda=0$, in the interval $\beta>1$.
+The curved magnetic section has $K=1/4$, $\mu=2$, $Q=1/2$, $C=1$, and $\Lambda=-1/10$, at $r=1/2$.
+Its null curves belong to that fixed radius section; they are not asserted to be six dimensional null geodesics.
+
+The magnetic transverse surface at $a=1$ is embedded from its regular axis to $\rho=5a$, with circle radius $\rho/(1+\rho^2/a^2)$ and its full circumference retained.
+The conformal triangle describes the totally geodesic magnetic radial section, with $p,q=\arctan((ct\mp\rho)/a)$, and makes no assertion of a conformal completion of all six dimensions.
+The embedding's $t=0$ slice is carried onto both magnetic radial charts by the coordinate map above and onto the conformal section by these null coordinates.
+The other light sections belong to different localization backgrounds and carry no slice of this magnetic surface.
+The curvature line uses the stored magnetic Kretschmann scalar alone.

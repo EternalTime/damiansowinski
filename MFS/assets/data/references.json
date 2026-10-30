@@ -1,5 +1,5 @@
 {
-  "version": "e007146274333cb5",
+  "version": "ae5efb50a4114e6a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -34060,6 +34060,123 @@
         "eprint": "gr-qc/0606005",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/23/20/009"
+      }
+    },
+    "akama1983pregeometry": {
+      "type": "incollection",
+      "fields": {
+        "author": "Akama, Keiichi",
+        "title": "Pregeometry",
+        "booktitle": "Gauge Theory and Gravitation",
+        "editor": "Kikkawa, Keiji and Nakanishi, Noboru and Nariai, Hidekazu",
+        "series": "Lecture Notes in Physics",
+        "volume": "176",
+        "pages": "267--271",
+        "publisher": "Springer Berlin Heidelberg",
+        "year": "1983",
+        "doi": "10.1007/3-540-11994-9_41",
+        "eprint": "hep-th/0001113",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/3-540-11994-9_41"
+      }
+    },
+    "rubakov1983cosmological": {
+      "type": "article",
+      "fields": {
+        "author": "Rubakov, V. A. and Shaposhnikov, M. E.",
+        "title": "Extra space-time dimensions: Towards a solution to the cosmological constant problem",
+        "journal": "Physics Letters B",
+        "volume": "125",
+        "number": "2--3",
+        "pages": "139--143",
+        "year": "1983",
+        "doi": "10.1016/0370-2693(83)91254-6",
+        "url": "https://doi.org/10.1016/0370-2693(83)91254-6"
+      }
+    },
+    "rubakov2001extra": {
+      "type": "article",
+      "fields": {
+        "author": "Rubakov, V. A.",
+        "title": "Large and infinite extra dimensions",
+        "journal": "Physics-Uspekhi",
+        "volume": "44",
+        "number": "9",
+        "pages": "871--893",
+        "year": "2001",
+        "doi": "10.1070/PU2001v044n09ABEH001000",
+        "eprint": "hep-ph/0104152",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1070/PU2001v044n09ABEH001000"
+      }
+    },
+    "lavrelashvili2012": {
+      "type": "article",
+      "fields": {
+        "author": "Lavrelashvili, George",
+        "title": "On instability of {Rubakov-Shaposhnikov} model",
+        "journal": "Proceedings of A. Razmadze Mathematical Institute",
+        "volume": "159",
+        "pages": "65--74",
+        "year": "2012",
+        "eprint": "1002.4566",
+        "archiveprefix": "arXiv",
+        "url": "https://rmi.tsu.ge/geo/open_science/annex4_docs_geo/Lavrelashvili%202012.pdf"
+      }
+    },
+    "visser1985": {
+      "type": "article",
+      "fields": {
+        "author": "Visser, Matt",
+        "title": "An exotic class of {Kaluza-Klein} models",
+        "journal": "Physics Letters B",
+        "volume": "159",
+        "number": "1",
+        "pages": "22--25",
+        "year": "1985",
+        "doi": "10.1016/0370-2693(85)90112-1",
+        "eprint": "hep-th/9910093",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(85)90112-1"
+      }
+    },
+    "squires1986": {
+      "type": "article",
+      "fields": {
+        "author": "Squires, Euan J.",
+        "title": "Dimensional reduction caused by a cosmological constant",
+        "journal": "Physics Letters B",
+        "volume": "167",
+        "number": "3",
+        "pages": "286--288",
+        "year": "1986",
+        "doi": "10.1016/0370-2693(86)90347-3",
+        "url": "https://doi.org/10.1016/0370-2693(86)90347-3"
+      }
+    },
+    "bannister1987": {
+      "type": "mastersthesis",
+      "fields": {
+        "author": "Bannister, Peter Anthony",
+        "title": "The cosmological constant and dimensional reduction",
+        "school": "Durham University",
+        "year": "1987",
+        "url": "https://etheses.durham.ac.uk/id/eprint/6732/"
+      }
+    },
+    "gibbonswiltshire1987": {
+      "type": "article",
+      "fields": {
+        "author": "Gibbons, G. W. and Wiltshire, D. L.",
+        "title": "Spacetime as a membrane in higher dimensions",
+        "journal": "Nuclear Physics B",
+        "volume": "287",
+        "pages": "717--742",
+        "year": "1987",
+        "doi": "10.1016/0550-3213(87)90125-8",
+        "eprint": "hep-th/0109093",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(87)90125-8"
       }
     }
   }

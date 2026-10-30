@@ -5000,6 +5000,9 @@ import starobinsky_universe as _starobinsky
 
 _starobinsky.register_slices(sys.modules[__name__])
 
+import early_braneworlds_drawings as eb_drawings
+eb_drawings.register_slices(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")

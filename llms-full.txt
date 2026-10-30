@@ -882,6 +882,27 @@ The spacetime that sound travels through in a fluid that swirls as it runs down 
 - chart Kerr-like: coordinates $(T, r, \phi)$, $$ds^2 = -\left(1 - \dfrac{A^2 + B^2}{c^2r^2}\right)c^2dT^2 + \dfrac{dr^2}{1 - \dfrac{A^2}{c^2r^2}} - 2B\,dT\,d\phi + r^2d\phi^2$$
 - chart Vortex Filament: coordinates $(t, r, \theta, z)$, $$ds^2 = -c^2dt^2 + \left(dr - \dfrac{A}{r}dt\right)^2 + \left(r\,d\theta - \dfrac{B}{r}dt\right)^2 + dz^2$$
 
+### Early Braneworlds
+
+Vortices, scalar walls, electric trapping, vacuum geometries, and magnetic membranes in three to six dimensions, developed from 1982 to 1987.
+
+- id: `early_braneworlds`
+- tags: stationary, static, three-dimensional, five-dimensional, six-dimensional, brane, higher dimensions, Kaluza-Klein, Einstein equations, electromagnetic field, Lorentzian, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/early_braneworlds.json
+- chart Akama, Cartesian Background: coordinates $(t, x, y, z, u, v)$, $$ds^2=-c^2dt^2+dx^2+dy^2+dz^2+du^2+dv^2$$
+- chart Akama, Transverse Polar Coordinates: coordinates $(t, x, y, z, \rho, \phi)$, $$ds^2=-c^2dt^2+dx^2+dy^2+dz^2+d\rho^2+\rho^2d\phi^2$$
+- chart Scalar Wall Background: coordinates $(t, x, y, z, w)$, $$ds^2=-c^2dt^2+dx^2+dy^2+dz^2+dw^2$$
+- chart Rubakov and Shaposhnikov, Six Dimensional Vacuum: coordinates $(t, x, y, z, \rho, \phi)$, $$ds^2=f^2\left(-c^2dt^2+dx^2+dy^2+dz^2\right)+d\rho^2+h^2d\phi^2$$
+- chart Visser, Lapse Ansatz: coordinates $(t, x, y, z, w)$, $$ds^2=-N^2c^2dt^2+dx^2+dy^2+dz^2+dw^2$$
+- chart Visser, Electric Trapping: coordinates $(t, x, y, z, w)$, $$ds^2=-\cosh^2(w/L)c^2dt^2+dx^2+dy^2+dz^2+dw^2$$
+- chart Squires, Three Dimensional Vacuum: coordinates $(t, w, \phi)$, $$ds^2=-\cosh^2(w/L)c^2dt^2+dw^2+L^2\sinh^2(w/L)d\phi^2$$
+- chart Squires, Constrained Vacuum Family: coordinates $(t, x, y, w, \phi)$, $$ds^2=-A_0^2c^2dt^2+A_1^2dx^2+A_2^2dy^2+dw^2+L^2A_3^2d\phi^2$$
+- chart Squires, Regular Axis: coordinates $(t, x, y, w, \phi)$, $$ds^2=\cosh(w/L)\left(-c^2dt^2+dx^2+dy^2\right)+dw^2+\dfrac{L^2\sinh^2(w/L)}{\cosh(w/L)}d\phi^2$$
+- chart Gibbons and Wiltshire, Flat Magnetic Membrane: coordinates $(t, x, y, z, \rho, \phi)$, $$ds^2=H^{2/3}\left(-c^2dt^2+dx^2+dy^2+dz^2+d\rho^2\right)+\rho^2H^{-2}d\phi^2$$
+- chart Gibbons and Wiltshire, Radial Warp Coordinates: coordinates $(t, x, y, z, \beta, \phi)$, $$ds^2=\beta^2\left(-c^2dt^2+dx^2+dy^2+dz^2\right)+\dfrac{d\beta^2}{D}+C^2D\,d\phi^2$$
+- chart Gibbons and Wiltshire, Curved Membrane: coordinates $(t, r, \theta, \psi, \beta, \phi)$, $$ds^2=\beta^2\left(-\left(1-Kr^2\right)c^2dt^2+\dfrac{dr^2}{1-Kr^2}+r^2d\theta^2+r^2\sin^2\theta\,d\psi^2\right)+\dfrac{d\beta^2}{D}+C^2D\,d\phi^2$$
+
 ### Eguchi-Hanson Space
 
 A space of four dimensions with no time in it, the gravitational instanton Tohru Eguchi and Andrew Hanson found in 1978: a solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. Space closes on a 2-sphere of radius $a/2$, the bolt, and far away it is flat space with every point identified with its opposite.

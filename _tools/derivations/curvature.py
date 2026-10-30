@@ -18721,6 +18721,9 @@ def main(argv=None):
 import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_curvature(sys.modules[__name__])
 
+import early_braneworlds_drawings as eb_drawings
+eb_drawings.register_curvature(sys.modules[__name__])
+
 
 def mclenaghan_tariq_tupper(ck, src):
     """Constant scalar profiles read exclusively from the stored curvature scalars."""

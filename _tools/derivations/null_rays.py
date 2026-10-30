@@ -19042,6 +19042,9 @@ def main(argv=None):
 import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_null(sys.modules[__name__])
 
+import early_braneworlds_drawings as eb_drawings
+eb_drawings.register_null(sys.modules[__name__])
+
 
 DIAGRAMS.extend([
     Diagram("mclenaghan_tariq_tupper", "original", "surface", "The surface $y=z=0$", ("u", "r"),

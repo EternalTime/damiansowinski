@@ -22005,6 +22005,9 @@ CAPTIONS[("ghost_neutrinos", "strip")] = [
 import lynden_bell_pineault_drawings as lbp_drawings
 lbp_drawings.register_embedding(sys.modules[__name__])
 
+import early_braneworlds_drawings as eb_drawings
+eb_drawings.register_embedding(sys.modules[__name__])
+
 
 def mclenaghan_tariq_tupper(ck, src):
     """Isometric immersion of a finite hyperbolic strip at t=z=0.
