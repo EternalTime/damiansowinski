@@ -107,7 +107,600 @@
         }
       ],
       "convention": "We use coordinates $(u, v, x, y)$, with $u$ the time that labels the wave fronts, carrying dimensions of time, $v$ a length along the rays, and $x$ and $y$ the lengths across them along the eigenvectors of the wave's matrix. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
-      "line_element": "ds^2 = \\left(\\lambda_1x^2 + \\lambda_2y^2\\right)c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2"
+      "line_element": "ds^2 = \\left(\\lambda_1x^2 + \\lambda_2y^2\\right)c^2du^2 - 2c\\,du\\,dv + dx^2 + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\lambda_1\\,x^2 + \\lambda_2\\,y^2"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-\\left(\\lambda_1\\,x^2 + \\lambda_2\\,y^2\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\lambda_1\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\lambda_1\\,x"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\lambda_1\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\lambda_2\\,y"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\lambda_2\\,y"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\lambda_2\\,y"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\lambda_1\\,x"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\lambda_1\\,x"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\lambda_1\\,x"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\lambda_2\\,y"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\lambda_2\\,y"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\lambda_2\\,y"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\lambda_1"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\lambda_1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\lambda_1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\lambda_1"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\lambda_2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\lambda_2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\lambda_2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\lambda_2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\lambda_1"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\lambda_1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\lambda_1"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\lambda_1"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\lambda_2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\lambda_2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "\\lambda_2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\lambda_2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(\\lambda_1 + \\lambda_2\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\lambda_1 + \\lambda_2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\left(\\lambda_1 + \\lambda_2\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(\\lambda_1 + \\lambda_2\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\lambda_1 + \\lambda_2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\left(\\lambda_1 + \\lambda_2\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda_1 - \\lambda_2}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} - 2\\lambda_1\\,x\\,\\dot{u}\\dot{x} - 2\\lambda_2\\,y\\,\\dot{u}\\dot{y} = 0",
+        "\\ddot{x} - \\lambda_1\\,x\\,\\dot{u}^2 = 0",
+        "\\ddot{y} - \\lambda_2\\,y\\,\\dot{u}^2 = 0"
+      ]
     },
     {
       "id": "rotating",
@@ -131,7 +724,539 @@
         }
       ],
       "convention": "We use the Brinkmann chart's $u$ and $v$, and lengths $x$ and $y$ along axes that turn about the axis of the wave, $X + iY = e^{i\\omega cu}\\left(x + iy\\right)$ in the Brinkmann chart's $X$ and $Y$. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
-      "line_element": "ds^2 = -2c\\,du\\,dv + dx^2 + dy^2 + 2\\omega c\\left(x\\,dy - y\\,dx\\right)du"
+      "line_element": "ds^2 = -2c\\,du\\,dv + dx^2 + dy^2 + 2\\omega c\\left(x\\,dy - y\\,dx\\right)du",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "-\\omega\\,y"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "-\\omega\\,y"
+        },
+        {
+          "indices": [
+            "u",
+            "y"
+          ],
+          "value": "\\omega\\,x"
+        },
+        {
+          "indices": [
+            "y",
+            "u"
+          ],
+          "value": "\\omega\\,x"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\omega^2\\left(x^2 + y^2\\right)"
+        },
+        {
+          "indices": [
+            "v",
+            "x"
+          ],
+          "value": "-\\omega\\,y"
+        },
+        {
+          "indices": [
+            "x",
+            "v"
+          ],
+          "value": "-\\omega\\,y"
+        },
+        {
+          "indices": [
+            "v",
+            "y"
+          ],
+          "value": "\\omega\\,x"
+        },
+        {
+          "indices": [
+            "y",
+            "v"
+          ],
+          "value": "\\omega\\,x"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "\\omega^2\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "\\omega^2\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "\\omega^2\\,y"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "\\omega^2\\,y"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\omega"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\omega"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\omega"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\omega"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\omega^3\\,y"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\omega^3\\,y"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\omega^3\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\omega^3\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\omega^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\omega^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\omega^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "\\omega^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2\\omega^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-2\\omega^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2\\omega^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "2\\omega^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-2\\omega^2"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "2\\omega^2"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + 2\\omega^2\\,x\\,\\dot{u}\\dot{x} + 2\\omega^2\\,y\\,\\dot{u}\\dot{y} = 0",
+        "\\ddot{x} - 2\\omega\\,\\dot{u}\\dot{y} = 0",
+        "\\ddot{y} + 2\\omega\\,\\dot{u}\\dot{x} = 0"
+      ]
     },
     {
       "id": "rosen",
@@ -155,7 +1280,538 @@
         }
       ],
       "convention": "We use the Brinkmann chart's $u$, a time, $v$ a length, and lengths $p$ and $q$ that label the light rays leaving the axis at $u = 0$, $x = p\\sinh(kcu)$ and $y = q\\sin(kcu)$ in the Brinkmann chart. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
-      "line_element": "ds^2 = -2c\\,du\\,dv + \\sinh^2\\left(kcu\\right)dp^2 + \\sin^2\\left(kcu\\right)dq^2"
+      "line_element": "ds^2 = -2c\\,du\\,dv + \\sinh^2\\left(kcu\\right)dp^2 + \\sin^2\\left(kcu\\right)dq^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "p",
+            "p"
+          ],
+          "value": "\\sinh^2\\left(k\\,u\\,c\\right)"
+        },
+        {
+          "indices": [
+            "q",
+            "q"
+          ],
+          "value": "\\sin^2\\left(k\\,u\\,c\\right)"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "p",
+            "p"
+          ],
+          "value": "\\dfrac{1}{\\sinh^2\\left(k\\,u\\,c\\right)}"
+        },
+        {
+          "indices": [
+            "q",
+            "q"
+          ],
+          "value": "\\csc^2\\left(k\\,u\\,c\\right)"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "p",
+                  "p"
+                ],
+                "value": "k\\sinh\\left(k\\,u\\,c\\right)\\cosh\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "q",
+                  "q"
+                ],
+                "value": "k\\sin\\left(k\\,u\\,c\\right)\\cos\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "p"
+                ],
+                "value": "\\dfrac{k\\cosh\\left(k\\,u\\,c\\right)}{\\sinh\\left(k\\,u\\,c\\right)}"
+              },
+              {
+                "indices": [
+                  "p",
+                  "p",
+                  "u"
+                ],
+                "value": "\\dfrac{k\\cosh\\left(k\\,u\\,c\\right)}{\\sinh\\left(k\\,u\\,c\\right)}"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "q"
+                ],
+                "value": "k\\cot\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "q",
+                  "u"
+                ],
+                "value": "k\\cot\\left(k\\,u\\,c\\right)"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "p",
+                  "p"
+                ],
+                "value": "-k\\sinh\\left(k\\,u\\,c\\right)\\cosh\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "p"
+                ],
+                "value": "k\\sinh\\left(k\\,u\\,c\\right)\\cosh\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "p",
+                  "u"
+                ],
+                "value": "k\\sinh\\left(k\\,u\\,c\\right)\\cosh\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "q",
+                  "q"
+                ],
+                "value": "-k\\sin\\left(k\\,u\\,c\\right)\\cos\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "q"
+                ],
+                "value": "k\\sin\\left(k\\,u\\,c\\right)\\cos\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "q",
+                  "u"
+                ],
+                "value": "k\\sin\\left(k\\,u\\,c\\right)\\cos\\left(k\\,u\\,c\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "p",
+                  "u",
+                  "p"
+                ],
+                "value": "k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "p",
+                  "p",
+                  "u"
+                ],
+                "value": "-k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "q",
+                  "u",
+                  "q"
+                ],
+                "value": "-k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "q",
+                  "q",
+                  "u"
+                ],
+                "value": "k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "u",
+                  "p"
+                ],
+                "value": "k^2"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "p",
+                  "u"
+                ],
+                "value": "-k^2"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "u",
+                  "q"
+                ],
+                "value": "-k^2"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "q",
+                  "u"
+                ],
+                "value": "k^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "p",
+                  "u",
+                  "p"
+                ],
+                "value": "-k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "p",
+                  "p",
+                  "u"
+                ],
+                "value": "k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "u",
+                  "p"
+                ],
+                "value": "k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "p",
+                  "u"
+                ],
+                "value": "-k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "q",
+                  "u",
+                  "q"
+                ],
+                "value": "k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "q",
+                  "q",
+                  "u"
+                ],
+                "value": "-k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "u",
+                  "q"
+                ],
+                "value": "-k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "q",
+                  "u"
+                ],
+                "value": "k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "p",
+                  "u",
+                  "p"
+                ],
+                "value": "k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "p",
+                  "p",
+                  "u"
+                ],
+                "value": "-k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "q",
+                  "u",
+                  "q"
+                ],
+                "value": "-k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "q",
+                  "q",
+                  "u"
+                ],
+                "value": "k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "u",
+                  "p"
+                ],
+                "value": "k^2"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "p",
+                  "u"
+                ],
+                "value": "-k^2"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "u",
+                  "q"
+                ],
+                "value": "-k^2"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "q",
+                  "u"
+                ],
+                "value": "k^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "p",
+                  "u",
+                  "p"
+                ],
+                "value": "-k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "p",
+                  "p",
+                  "u"
+                ],
+                "value": "k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "u",
+                  "p"
+                ],
+                "value": "k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "p",
+                  "u",
+                  "p",
+                  "u"
+                ],
+                "value": "-k^2\\sinh^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "q",
+                  "u",
+                  "q"
+                ],
+                "value": "k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "q",
+                  "q",
+                  "u"
+                ],
+                "value": "-k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "u",
+                  "q"
+                ],
+                "value": "-k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              },
+              {
+                "indices": [
+                  "q",
+                  "u",
+                  "q",
+                  "u"
+                ],
+                "value": "k^2\\sin^2\\left(k\\,u\\,c\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} = 0",
+        "\\ddot{v} + k\\sinh\\left(k\\,u\\,c\\right)\\cosh\\left(k\\,u\\,c\\right)\\dot{p}^2 + k\\sin\\left(k\\,u\\,c\\right)\\cos\\left(k\\,u\\,c\\right)\\dot{q}^2 = 0",
+        "\\ddot{p} + \\dfrac{2k\\cosh\\left(k\\,u\\,c\\right)}{\\sinh\\left(k\\,u\\,c\\right)}\\dot{u}\\dot{p} = 0",
+        "\\ddot{q} + 2k\\cot\\left(k\\,u\\,c\\right)\\dot{u}\\dot{q} = 0"
+      ]
     }
   ]
 }

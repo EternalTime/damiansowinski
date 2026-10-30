@@ -1087,6 +1087,12 @@ DIMENSIONS = {
         "u": "T", "v": "L", **{f"y_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
     ("maximally_supersymmetric_plane_wave", "conformally_flat"): {
         "U": "T", "V": "L", **{f"X_{i}": "L" for i in range(1, 9)}, "\\mu": "1/L"},
+    # Cahen and Wallach's waves: the eigenvalues are inverse lengths squared, omega and k inverse
+    # lengths; u is a time, every other coordinate a length.
+    ("cahen_wallach", "brinkmann"): {
+        "u": "T", "v": "L", "x": "L", "y": "L", "\\lambda_1": "1/L**2", "\\lambda_2": "1/L**2"},
+    ("cahen_wallach", "rotating"): {"u": "T", "v": "L", "x": "L", "y": "L", "\\omega": "1/L"},
+    ("cahen_wallach", "rosen"): {"u": "T", "v": "L", "p": "L", "q": "L", "k": "1/L"},
     # The conformal chart's eta and chi are angles; 1/Lambda carries the length squared.
     ("nariai", "static"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda": "1/L**2",

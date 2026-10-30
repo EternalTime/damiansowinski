@@ -22,7 +22,7 @@ bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
 maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm,
-buchdahl_sphere, ozsvath_dust and kerr_disc_source, and Godel's cylindrical chart.
+buchdahl_sphere, ozsvath_dust, kerr_disc_source and cahen_wallach, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -32415,6 +32415,139 @@ def msw_check(chart, system):
 
 CHARTS["maximally_supersymmetric_plane_wave"] = [lambda s=s: maximally_supersymmetric_plane_wave(s)
                                                  for s in MSW_CHARTS]
+
+
+# -- The symmetric plane waves of Cahen and Wallach -----------------------------------------
+
+CW_CHARTS = ["brinkmann", "rotating", "rosen"]
+
+
+def cahen_wallach(system):
+    """The indecomposable solvable Lorentzian symmetric spaces of Cahen and Wallach, Bull. Am. Math.
+    Soc. 76 (1970) 585, Theorem 5(a), in four dimensions and in units where every parameter is an
+    inverse length or its square and the time coordinate carries c:
+
+    brinkmann  their metric 2 ds dt + A(w,w) ds^2 + (dw,dw), Figueroa-O'Farrill's (12) in
+               arXiv:1112.4967, in the signature (-,+,+,+) with A diagonal, lambda_1 and lambda_2
+               its eigenvalues, negative ones focusing;
+    rotating   the conformally flat member lambda_1 = lambda_2 = -omega^2 on axes turning by omega c u,
+               X + iY = e^{i omega c u}(x + iy), Nappi and Witten's (17) of hep-th/9310112 at b = 0
+               and Halliday and Szabo's (2.7) of hep-th/0502054;
+    rosen      the vacuum member lambda_1 = k^2, lambda_2 = -k^2 in Blau and O'Loughlin's Rosen form,
+               (2.8) and (2.9) of hep-th/0212135, x = p sinh(kcu), y = q sin(kcu).
+
+    cw_check holds the Brinkmann chart to a covariantly constant Riemann tensor, to a Ricci tensor
+    with the single component -(lambda_1 + lambda_2) along the wave, and to a Weyl tensor that
+    vanishes at lambda_1 = lambda_2, and each other chart to being the Brinkmann chart pulled back,
+    every comparison at rational points."""
+    reals = "(-\\infty, \\infty)"
+    if system == "brinkmann":
+        coords, parameters, name = ["u", "v", "x", "y"], ["\\lambda_1", "\\lambda_2"], "Brinkmann"
+        domains = [f"{c} \\in {reals}" for c in coords]
+        line = "ds^2 = \\left(\\lambda_1x^2 + \\lambda_2y^2\\right){c2}du^2 - 2{c}\\,du\\,dv + dx^2 + dy^2"
+    elif system == "rotating":
+        coords, parameters, name = ["u", "v", "x", "y"], ["\\omega"], "Rotating, Conformally Flat Member"
+        domains = [f"{c} \\in {reals}" for c in coords]
+        line = "ds^2 = -2{c}\\,du\\,dv + dx^2 + dy^2 + 2\\omega {c}\\left(x\\,dy - y\\,dx\\right)du"
+    else:
+        coords, parameters, name = ["u", "v", "p", "q"], ["k"], "Rosen, Vacuum Member"
+        domains = ["u \\in (0, \\pi/kc)"] + [f"{c} \\in {reals}" for c in coords[1:]]
+        line = "ds^2 = -2{c}\\,du\\,dv + \\sinh^2\\left(k{c}u\\right)dp^2 + \\sin^2\\left(k{c}u\\right)dq^2"
+    probe = vm.Reader(coords, parameters, ())
+    published = line.replace("{c2}", "c^2").replace("{c}", "c")
+    chart_line = line.replace("{c2}", "").replace("{c}", "")
+    return {"metric_id": "cahen_wallach",
+            "check": lambda chart, s=system: cw_check(chart, s),
+            "system": {"id": system, "name": name, "coords": coords, "domains": domains,
+                       "parameters": parameters, "line_element": published},
+            "chart_line_element": chart_line,
+            "printer": {"lead": [*probe.parameters.values(), *probe.symbol.values()], "flip": False},
+            # The Rosen components hold their time, which they print as c times it, and sinh(kcu)
+            # and cosh(kcu), which the geometry hands back as exponentials.
+            **({"time": "u", "pretty": cp.hyperbolic(probe.parameters["k"] * probe.c * probe.symbol["u"])}
+               if system == "rosen" else {})}
+
+
+def cw_chart(system):
+    spec = cahen_wallach(system)
+    return cp.Chart(spec["system"]["coords"], spec["system"]["parameters"], spec["chart_line_element"])
+
+
+def cw_points(symbols, seed, count=3):
+    """`count` points of rationals for the given symbols, none of them zero."""
+    rng = random.Random(seed)
+    for _ in range(count):
+        yield {s: sp.Rational(rng.choice([-1, 1]) * rng.randint(3, 40), rng.randint(7, 19)) for s in symbols}
+
+
+def cw_zero_at(value, at):
+    return abs(sp.N(sp.sympify(value).xreplace(at), 50)) < sp.Float(10) ** -40
+
+
+def cw_check(chart, system):
+    name = f"cahen_wallach/{system}"
+    x = chart.symbols
+    params = list(chart.reader.parameters.values())
+    if system == "brinkmann":
+        l1, l2 = params
+        gamma = chart.geo.christoffel_ull()
+        riemann = chart.geo.riemann_llll()
+        # nabla_e R_abcd = d_e R_abcd - Gamma^f_ea R_fbcd - ... , every component at points.
+        for idx in itertools.product(range(4), repeat=5):
+            e, a, b, c, d = idx
+            if a >= b or c >= d:
+                continue
+            value = sp.diff(vm._at(riemann, (a, b, c, d)), x[e])
+            for f in range(4):
+                value -= (vm._at(gamma, (f, e, a)) * vm._at(riemann, (f, b, c, d))
+                          + vm._at(gamma, (f, e, b)) * vm._at(riemann, (a, f, c, d))
+                          + vm._at(gamma, (f, e, c)) * vm._at(riemann, (a, b, f, d))
+                          + vm._at(gamma, (f, e, d)) * vm._at(riemann, (a, b, c, f)))
+            for at in cw_points(x + params, 1970 + sum(idx)):
+                if not cw_zero_at(value, at):
+                    raise AssertionError(f"{name}: the Riemann tensor is not covariantly constant, "
+                                         f"nabla_{chart.coords_tex[e]} R_{''.join(chart.coords_tex[i] for i in idx[1:])}")
+        ricci = chart.geo.ricci_ll()
+        for a in range(4):
+            for b in range(a, 4):
+                want = -(l1 + l2) if (a, b) == (0, 0) else 0
+                for at in cw_points(x + params, 1969 + 4 * a + b):
+                    if not cw_zero_at(vm._at(ricci, (a, b)) - want, at):
+                        raise AssertionError(f"{name}: R_{chart.coords_tex[a]}{chart.coords_tex[b]} is not "
+                                             "-(lambda_1 + lambda_2) along the wave and zero elsewhere")
+        weyl = chart.geo.weyl_llll()
+        for idx in vm._indices(4, 4):
+            for at in cw_points(x + [l1], 1968 + sum(idx)):
+                at[l2] = at[l1]
+                if not cw_zero_at(vm._at(weyl, idx), at):
+                    raise AssertionError(f"{name}: the Weyl tensor does not vanish at lambda_1 = lambda_2")
+        return
+    brink = cw_chart("brinkmann")
+    l1, l2 = brink.reader.parameters.values()
+    u, v, a, b = x
+    (p,) = params
+    if system == "rotating":
+        # X + iY = e^{i omega u}(x + iy), with lambda_1 = lambda_2 = -omega^2.
+        image = [u, v, a * sp.cos(p * u) - b * sp.sin(p * u), a * sp.sin(p * u) + b * sp.cos(p * u)]
+        values = {l1: -p ** 2, l2: -p ** 2}
+    else:
+        sh, ch, s, co = sp.sinh(p * u), sp.cosh(p * u), sp.sin(p * u), sp.cos(p * u)
+        image = [u, v + p * (a ** 2 * sh * ch + b ** 2 * s * co) / 2, a * sh, b * s]
+        values = {l1: p ** 2, l2: -p ** 2}
+    at = dict(zip(brink.symbols, image))
+    J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], x[j]))
+    pulled = J.T * brink.geo.g.subs(values).subs(at, simultaneous=True) * J
+    for i in range(4):
+        for j in range(i, 4):
+            for point in cw_points(x + [p], 1993 + 4 * i + j):
+                if system == "rosen":
+                    point[u] = abs(point[u]) / (3 * abs(point[p]))
+                if not cw_zero_at(pulled[i, j] - chart.geo.g[i, j], point):
+                    raise AssertionError(f"{name}: not the Brinkmann chart pulled back, slot "
+                                         f"{chart.coords_tex[i]}{chart.coords_tex[j]}")
+
+
+CHARTS["cahen_wallach"] = [lambda s=s: cahen_wallach(s) for s in CW_CHARTS]
 
 
 # -- Interstellar's wormhole ----------------------------------------------------------------

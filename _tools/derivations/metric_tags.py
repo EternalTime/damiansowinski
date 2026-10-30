@@ -413,6 +413,10 @@ REGIONS = {
 WHOLE = {("brane_wall_universe", "gaussian_normal")}
 
 OVERRULED = {
+    ("cahen_wallach", "stationary"): (
+        True, "the Brinkmann chart's d_u is a Killing vector whose norm, (lambda_1 x^2 + lambda_2 y^2)c^2, takes "
+              "a sign the parameters leave open, but d_u + a d_v with a > 0 is a Killing vector too, of norm "
+              "(lambda_1 x^2 + lambda_2 y^2)c^2 - 2ac, timelike about the axis for every lambda_1 and lambda_2"),
     ("small_universes", "spherically symmetric"): (
         False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
                "identifications that close space leave only a discrete group of the rotations about any "
