@@ -3243,7 +3243,8 @@ class StacksAndMovies(unittest.TestCase):
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
-    MOVIES = chosen_entries({("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
+    MOVIES = chosen_entries({("chodos_detweiler", "cylinder"): "$t/t_0$",
+              ("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("lqc_bounce", "universe"): "$t$",
               ("bekenstein_universes", "closed"): "$\\eta$", ("bekenstein_universes", "open"): "$\\eta$",

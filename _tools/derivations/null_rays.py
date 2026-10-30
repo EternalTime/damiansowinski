@@ -19024,5 +19024,10 @@ CLOSED_FORMS.update({
 })
 
 
+import chodos_detweiler as _chodos_detweiler
+DIAGRAMS.extend(_chodos_detweiler.diagram_specs(Diagram, SIDEWAYS))
+CAPTIONS.update(_chodos_detweiler.diagram_captions())
+CLOSED_FORMS.update(_chodos_detweiler.null_forms())
+
 if __name__ == "__main__":
     sys.exit(main())

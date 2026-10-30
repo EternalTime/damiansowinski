@@ -101,6 +101,11 @@
       "id": "topological_star",
       "kind": "family",
       "text": "A star held open by magnetic flux in the same five dimensions, whose circle shrinks to a point all over a sphere, the bubble. When the bubble's tip is a cone, its two poles carry monopole charges $k$ and $-k$ [bah2021]."
+    },
+    {
+      "id": "chodos_detweiler",
+      "kind": "family",
+      "text": "The fifth circle contracts as $t^{-1/2}$ while three other compact directions expand as $t^{1/2}$ [chyba1985]."
     }
   ],
   "references": [
@@ -128,7 +133,8 @@
     "emparan2000",
     "horvath1977",
     "nilsson1984",
-    "bah2021"
+    "bah2021",
+    "chyba1985"
   ],
   "coordinates": [
     {

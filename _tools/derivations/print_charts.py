@@ -36813,5 +36813,11 @@ import lynden_bell_pineault as lbp
 lbp.register(sys.modules[__name__])
 
 
+import chodos_detweiler as _chodos_detweiler
+CHARTS["chodos_detweiler"] = [
+    lambda system=system: _chodos_detweiler.chart_spec(system)
+    for system in _chodos_detweiler.CHARTS
+]
+
 if __name__ == "__main__":
     main()

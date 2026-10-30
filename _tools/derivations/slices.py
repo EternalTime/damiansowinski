@@ -3862,6 +3862,14 @@ FLAT.update({
         lambda m: along(0.0, *(math.exp(r) for r in m.reach("exponential", "r")))),
 })
 
+import chodos_detweiler as _chodos_detweiler
+FLAT.update({
+    ("chodos_detweiler", system, view):
+        lambda system=system, view=view: _chodos_detweiler.slice_marks(sys.modules[__name__], system, view)
+    for system, views in (("synchronous", ("tx", "tw")), ("rescaled", ("tX", "tW")))
+    for view in views
+})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

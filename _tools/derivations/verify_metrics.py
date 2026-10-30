@@ -2563,6 +2563,10 @@ DIMENSIONS.update({("charach_malin", system): {
     "L": "L", "P": "1", r"\lambda": "1", (r"\Phi" if system.startswith("scalar") else r"\chi"): "1",
 } for system in ("scalar_areal", "scalar_logarithmic", "electromagnetic_areal", "electromagnetic_logarithmic")})
 
+# Four periodic spatial lengths, cosmic time, and two constant reference times.
+import chodos_detweiler as _chodos_detweiler
+DIMENSIONS.update(_chodos_detweiler.DIMENSIONS)
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),

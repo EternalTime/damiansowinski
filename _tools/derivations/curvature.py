@@ -18715,5 +18715,14 @@ def mclenaghan_tariq_tupper(ck, src):
 DRAWN["mclenaghan_tariq_tupper"] = mclenaghan_tariq_tupper
 
 
+import chodos_detweiler as _chodos_detweiler
+
+
+def chodos_detweiler(ck, src):
+    return _chodos_detweiler.curvature_views(ck, src, sys.modules[__name__])
+
+
+DRAWN["chodos_detweiler"] = chodos_detweiler
+
 if __name__ == "__main__":
     sys.exit(main())

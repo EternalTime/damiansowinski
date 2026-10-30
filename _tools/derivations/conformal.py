@@ -31855,5 +31855,8 @@ CAPTIONS[("mclenaghan_tariq_tupper", "surface")] = [
 ]
 
 
+# The expanding and contracting circles have different null slopes; see the derivation.
+NOT_DRAWN.add("chodos_detweiler")
+
 if __name__ == "__main__":
     sys.exit(main())

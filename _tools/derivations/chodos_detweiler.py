@@ -196,7 +196,7 @@ def curvature_views(ck, src, cv):
                             {"t_0": 1, "L": 2*math.pi})
     return [{"id": "cosmic_time", "label": "Cosmic time", "kind": "line", "x": x_axis,
              "panels": panels, "curves": curves, "marks": [],
-             "legend": [["line", "K", "five-dimensional vacuum"]],
+             "legend": [["line", "K", "five dimensional vacuum"]],
              "caption": ["The Kretschmann scalar $K$, growing as $t^{-4}$ toward the initial singularity. "
                          "The Ricci scalar vanishes."],
              "settings": "$ct_0=1$, $L=2\\pi ct_0$.",

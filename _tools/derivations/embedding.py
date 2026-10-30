@@ -21971,6 +21971,16 @@ CAPTIONS[("mclenaghan_tariq_tupper", "strip")] = [
 ]
 
 
+import chodos_detweiler as _chodos_detweiler
+
+
+def chodos_detweiler(ck, src):
+    return _chodos_detweiler.embedding_views(ck, src, sys.modules[__name__])
+
+
+DRAWN["chodos_detweiler"] = chodos_detweiler
+CAPTIONS.update(_chodos_detweiler.embedding_captions())
+
 if __name__ == "__main__":
     sys.exit(main())
 

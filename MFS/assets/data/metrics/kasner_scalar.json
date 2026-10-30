@@ -77,6 +77,11 @@
       "id": "stiff_fluid_universes",
       "kind": "family",
       "text": "The plane symmetric stiff fluid admits density gradients across its symmetry planes. At $b=0$ it shares the homogeneous scalar field solutions with $p_y=p_z$."
+    },
+    {
+      "id": "chodos_detweiler",
+      "kind": "family",
+      "text": "The five dimensional vacuum chart at $s_1=s_2=s_3=1/2$, $s_5=-1/2$ has the local geometry of this expanding and contracting four torus [chyba1985]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "janis1968",
     "jacobs1969",
     "ashtekar2009bianchi",
-    "hartnoll2021diving"
+    "hartnoll2021diving",
+    "chyba1985"
   ],
   "coordinates": [
     {
