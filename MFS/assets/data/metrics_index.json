@@ -410,7 +410,7 @@
       "spherically symmetric",
       "quantum cosmology"
     ],
-    "version": "c0f72cf02ee7c5eb",
+    "version": "6044ee2eeca3953a",
     "diagrams": "3db667c16a7e7f5b",
     "conformal": "ccbbac884fd12a06",
     "embedding": "10fc45eaf22d2da9"
@@ -443,7 +443,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "45d6a34e074f2d77",
+    "version": "6b56b04d2767abcb",
     "diagrams": "dfcdcf371744ecf1",
     "conformal": "1634e5cc998338f9",
     "embedding": "4bc4eb0f51470939"
@@ -1451,7 +1451,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "ad7b5a97a5a29db5",
+    "version": "efd55935418342f0",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2063,7 +2063,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "403832007a53a5e1",
+    "version": "95eb60c76645feca",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2754,7 +2754,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "e9b3874dd688d077",
+    "version": "d39d933f450312ad",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -4044,6 +4044,35 @@
     "diagrams": "71b5d5fd56fc2bcf",
     "conformal": "87e0174e8f73dc88",
     "embedding": "3103128e785dc4ef"
+  },
+  {
+    "id": "murphy_viscous_universe",
+    "name": "Murphy's Viscous Universe",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "homogeneous",
+      "isotropic",
+      "FLRW",
+      "de Sitter",
+      "no singularity",
+      "energy condition violation",
+      "strong energy condition",
+      "singularity theorems",
+      "time-dependent",
+      "conformally flat",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "b7baf29cceaec895",
+    "diagrams": "a72f6f92398f6081",
+    "conformal": "07abc35057b50eb9",
+    "embedding": "51bdb7affbaa435b",
+    "curvature": "309c49a3a59ba6c9"
   },
   {
     "id": "myers_perry",

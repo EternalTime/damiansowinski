@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 203,
+  "count": 204,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4889,6 +4889,11 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "A universe on a wall in anti-de Sitter space of five dimensions, whose Friedmann equation carries a term in $\\rho^2$ with a plus sign [binetruy2000nonconventional]."
+        },
+        {
+          "id": "murphy_viscous_universe",
+          "kind": "family",
+          "text": "A flat universe in Einstein's theory whose curvature stays finite at every finite time with no bounce: its viscous fluid holds it at the steady state in the infinite past [murphy1973]."
         }
       ],
       "references": [
@@ -4906,7 +4911,8 @@
         "chinea1992",
         "simpson2019",
         "hayward2006",
-        "binetruy2000nonconventional"
+        "binetruy2000nonconventional",
+        "murphy1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lqc_bounce.json",
@@ -5145,6 +5151,11 @@
           "id": "simpson_visser",
           "kind": "family",
           "text": "A black hole whose singularity opens into a bounce. Kirill Bronnikov and Rahul Kumar Walia found it a source in a phantom scalar field with a potential and a magnetic field, and the phantom field is the kind behind phantom energy [bronnikov2022, caldwell2002]."
+        },
+        {
+          "id": "murphy_viscous_universe",
+          "kind": "family",
+          "text": "A flat universe of one fluid whose viscous pressure tends to minus its energy density in the infinite past, so that it starts from the steady state and slows into the ordinary expansion of the fluid [murphy1973]."
         }
       ],
       "references": [
@@ -5157,7 +5168,8 @@
         "barrow2004",
         "fernandezjambrina2004",
         "ellis1973",
-        "bronnikov2022"
+        "bronnikov2022",
+        "murphy1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/big_rip.json",
@@ -15670,6 +15682,11 @@
           "id": "cahen_wallach",
           "kind": "family",
           "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
+        },
+        {
+          "id": "murphy_viscous_universe",
+          "kind": "family",
+          "text": "A flat universe of a viscous fluid that tends to de Sitter space in its flat slices as $t \\to -\\infty$ and slows toward the expansion of the fluid alone [murphy1973]. Its viscous pressure plays the part of the cosmological constant at early times and fades later."
         }
       ],
       "references": [
@@ -15719,7 +15736,8 @@
         "vilenkin1982",
         "feldbrugge2017",
         "chiba2005",
-        "cahen1970"
+        "cahen1970",
+        "murphy1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -22365,6 +22383,11 @@
           "id": "oscillating_sphere",
           "kind": "family",
           "text": "A ball of fluid whose density is uniform while its pressure varies with radius, conformally flat as a Friedmann universe is [sussman2000stephani]."
+        },
+        {
+          "id": "murphy_viscous_universe",
+          "kind": "special_case",
+          "text": "The flat Friedmann universe of a fluid whose bulk viscosity is proportional to its density, which George L. Murphy found in 1973 [murphy1973]. Its Hubble rate holds at the constant rate of the steady state in the infinite past and falls to the fluid's own as the universe grows."
         }
       ],
       "references": [
@@ -22438,7 +22461,8 @@
         "ashtekar2006improved",
         "binetruy2000brane",
         "mukohyama2000",
-        "sussman2000stephani"
+        "sussman2000stephani",
+        "murphy1973"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -30202,6 +30226,11 @@
           "id": "kasner_magnetic",
           "kind": "generalisation",
           "text": "Kasner's universe with a uniform magnetic field along one axis. The field carries it from one set of Kasner exponents at early times to another at late times, and the exponent $p_3$ along the field becomes $-p_3/(1 + 2p_3)$ [kastor2015]."
+        },
+        {
+          "id": "murphy_viscous_universe",
+          "kind": "family",
+          "text": "Murphy's flat viscous universe with a small anisotropy added. Belinskii and Khalatnikov found that it then begins at a singularity near Kasner's vacuum, where the density vanishes and the gravitational field creates matter [belinskii1975]."
         }
       ],
       "references": [
@@ -30225,7 +30254,8 @@
         "ferrando2006",
         "martins1996",
         "king1973",
-        "kastor2015"
+        "kastor2015",
+        "belinskii1975"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -43742,6 +43772,259 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "murphy_viscous_universe",
+      "name": "Murphy's Universe with Viscosity",
+      "short_name": "Murphy's Viscous Universe",
+      "description": "A flat Friedmann universe of a fluid whose bulk viscosity is proportional to its density, which George L. Murphy found in 1973. It leaves the steady state in the infinite past and slows toward the expansion of the same fluid without viscosity, with finite curvature at every finite time.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "homogeneous",
+        "isotropic",
+        "FLRW",
+        "de Sitter",
+        "no singularity",
+        "energy condition violation",
+        "strong energy condition",
+        "singularity theorems",
+        "time-dependent",
+        "conformally flat",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "Friedmann's universe with its scale factor left free and its space allowed to curve. Its flat case with $H = H_s/(1 + a^q)$ is Murphy's universe."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "The steady state that Murphy's universe leaves in the infinite past, de Sitter space in its flat slices. The viscous fluid holds it exactly when $H = H_s$, a solution Murphy found unstable [murphy1973]."
+        },
+        {
+          "id": "big_rip",
+          "kind": "family",
+          "text": "Another flat universe of one fluid whose pressure breaks the strong energy condition. Phantom energy tears it apart at a finite time in the future, while viscosity carries Murphy's universe out of the steady state in the infinite past."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "Another flat universe with finite curvature at every time, whose contraction turns into expansion at a bounce in loop quantum cosmology."
+        },
+        {
+          "id": "kasner",
+          "kind": "family",
+          "text": "Kasner's vacuum is where Belinskii and Khalatnikov's anisotropic universes of the same viscous fluid begin, at a singularity where the density vanishes [belinskii1975]."
+        }
+      ],
+      "references": [
+        "belinskii1975",
+        "murphy1973",
+        "brevik2013",
+        "barrow1986",
+        "hiscock1991",
+        "borde2003"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/murphy_viscous_universe.json",
+      "charts": [
+        {
+          "id": "scale_factor",
+          "name": "Scale Factor Time",
+          "coordinates": [
+            "a",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "a \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "a \\to 0 \\;\\text{(the steady state, as}\\; t \\to -\\infty\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "q",
+              "description": "Exponent $q = 3(1 + w)/2$, with $w = p/\\rho c^2$ the ratio of the fluid's pressure $p$ to its energy density $\\rho c^2$; $q = 2$ for radiation and $q = 3/2$ for dust, and $q > 0$"
+            },
+            {
+              "symbol": "H_s",
+              "description": "Hubble rate of the steady state, $H_s = 2q/9\\beta$, where the bulk viscosity is $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time; the expansion rate is $H = H_s/(1 + a^q)$"
+            }
+          ],
+          "convention": "We use the scale factor $a$ itself as the time coordinate, a pure number, with $x$, $y$, and $z$ comoving lengths. A comoving observer's proper time is $t = \\left(\\ln a + a^q/q\\right)/H_s$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2a^2}da^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "a",
+                "a"
+              ],
+              "value": "-\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2\\,a^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6H_s^2\\left(2 + \\left(2 - q\\right)a^q\\right)}{c^2\\left(1 + a^q\\right)^3}",
+          "kretschmann": "K = \\dfrac{12H_s^4\\left(\\left(1 + a^q\\right)^2 + \\left(1 + \\left(1 - q\\right)a^q\\right)^2\\right)}{c^4\\left(1 + a^q\\right)^6}"
+        },
+        {
+          "id": "scale_factor_spherical",
+          "name": "Scale Factor Time, Spherical",
+          "coordinates": [
+            "a",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "a \\in (0, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a \\to 0 \\;\\text{(the steady state, as}\\; t \\to -\\infty\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "q",
+              "description": "Exponent $q = 3(1 + w)/2$, with $w = p/\\rho c^2$ the ratio of the fluid's pressure $p$ to its energy density $\\rho c^2$; $q = 2$ for radiation and $q = 3/2$ for dust, and $q > 0$"
+            },
+            {
+              "symbol": "H_s",
+              "description": "Hubble rate of the steady state, $H_s = 2q/9\\beta$, where the bulk viscosity is $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time; the expansion rate is $H = H_s/(1 + a^q)$"
+            }
+          ],
+          "convention": "We use the scale factor $a$ itself as the time coordinate, a pure number, with $r$ a comoving length and $\\theta$ and $\\phi$ the angles about the origin. A comoving observer's proper time is $t = \\left(\\ln a + a^q/q\\right)/H_s$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2a^2}da^2 + a^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "a",
+                "a"
+              ],
+              "value": "-\\dfrac{c^2\\left(1 + a^q\\right)^2}{H_s^2\\,a^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6H_s^2\\left(2 + \\left(2 - q\\right)a^q\\right)}{c^2\\left(1 + a^q\\right)^3}",
+          "kretschmann": "K = \\dfrac{12H_s^4\\left(\\left(1 + a^q\\right)^2 + \\left(1 + \\left(1 - q\\right)a^q\\right)^2\\right)}{c^4\\left(1 + a^q\\right)^6}"
+        },
+        {
+          "id": "cosmic",
+          "name": "Cosmic Time",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "q",
+              "description": "Exponent $q = 3(1 + w)/2$, with $w = p/\\rho c^2$ the ratio of the fluid's pressure $p$ to its energy density $\\rho c^2$; $q = 2$ for radiation and $q = 3/2$ for dust, and $q > 0$"
+            },
+            {
+              "symbol": "H_s",
+              "description": "Hubble rate of the steady state, $H_s = 2q/9\\beta$, where the bulk viscosity is $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time; the expansion rate is $H = H_s/(1 + a^q)$"
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor, a dimensionless function of $t$ fixed by $H_st = \\ln a + a^q/q$, that is $a^q = W(e^{qH_st})$ with $W$ the Lambert function, so that $\\dot{a}/a = H_s/(1 + a^q)$; it runs from $0$ as $t \\to -\\infty$ to $\\infty$ as $t \\to \\infty$"
+            }
+          ],
+          "convention": "We use comoving coordinates $(t, x, y, z)$, with $t$ the proper time of a comoving observer and $x$, $y$, and $z$ comoving lengths. We take components in the chart $x^0 = ct$, so $a'$ means $da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\dfrac{\\left(a'\\right)^4}{a^4}\\right)"
         }
       ]
     },

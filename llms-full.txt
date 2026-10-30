@@ -1797,6 +1797,18 @@ Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a
 - chart Collapse Mirror: coordinates $(T, X)$, $$ds^2 = \left(1 + \dfrac{1}{\kappa\left(X - cT\right)}\right)\left(-c^2dT^2 + dX^2\right)$$
 - chart Rindler: coordinates $(\eta, \xi)$, $$ds^2 = e^{2\kappa\xi}\left(-c^2d\eta^2 + d\xi^2\right)$$
 
+### Murphy's Universe with Viscosity
+
+A flat Friedmann universe of a fluid whose bulk viscosity is proportional to its density, which George L. Murphy found in 1973. It leaves the steady state in the infinite past and slows toward the expansion of the same fluid without viscosity, with finite curvature at every finite time.
+
+- id: `murphy_viscous_universe`
+- tags: cosmology, expanding universe, homogeneous, isotropic, FLRW, de Sitter, no singularity, energy condition violation, strong energy condition, singularity theorems, time-dependent, conformally flat, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/murphy_viscous_universe.json
+- chart Scale Factor Time: coordinates $(a, x, y, z)$, $$ds^2 = -\dfrac{c^2\left(1 + a^q\right)^2}{H_s^2a^2}da^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Scale Factor Time, Spherical: coordinates $(a, r, \theta, \phi)$, $$ds^2 = -\dfrac{c^2\left(1 + a^q\right)^2}{H_s^2a^2}da^2 + a^2\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Cosmic Time: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + a^2\left(dx^2 + dy^2 + dz^2\right)$$
+
 ### Myers-Perry Rotating Black Hole
 
 The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.
