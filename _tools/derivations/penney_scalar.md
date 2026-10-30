@@ -48,4 +48,13 @@ The factors $(e^{hu_1} \pm 1)$ in which the reader writes $q$ are written back a
 
 ## Step 5: what the drawings use
 
-The drawings use the spherical chart with $a = 2$, $b = 1/2$ and $\gamma = 3/5$, lengths in any one unit, unless a drawing records otherwise below.
+Every drawing shows one spacetime, $b = a/4$ and $\gamma = 1/2$, so $q = a/4$ and $GM/c^2 = 5a/16$: the spherical chart at $a = 1$, and the harmonic chart at $k = 1$, $h = 1/2$ and $u_1 = \ln 4$, which is $a = 8/3$ in units of $k$, with $q = 2k/3$ and $GM/c^2 = 5k/6$.
+A ray moving in from $r = 2a$ reaches the singularity after $2.8\,a/c$; with $P = \sqrt{(r - a)(r - b)}$ the tortoise coordinate at $\gamma = 1/2$ is $r_* = ((a^2 + b^2)P - 2ab(r - a))/(a - b)^2 + (a + b)\ln\left((\sqrt{r - a} + \sqrt{r - b})/\sqrt{a - b}\right)$, which vanishes at $r = a$.
+
+## Step 6: the embedding diagram
+
+The equatorial plane at one moment is read in the spherical chart, where the circle of the sphere $r$ has the radius $\rho = (a - bE)\sqrt{(r - a)(r - b)/E}/(a - b)$, which shrinks to a point at $r = a$ as $(r - a)^{1/4}$.
+At $b = a/4$ and $\gamma = 1/2$, $g_{rr} - (d\rho/dr)^2$ vanishes where $E^2 - 15E + 4 = 0$, so $E_e = (15 - \sqrt{209})/2$ and $r_e = (209 + 9\sqrt{209})a/320 = 1.0597\,a$, the larger root of $800r^2 - 1045ar + 209a^2$.
+Beyond $r_e$ the surface is drawn in flat space and inside it in three dimensional Minkowski space, as on Fisher's page, and the two pieces lie level at $r_e$.
+Toward the singular point the surface runs along a light cone, where a chord's proper length is the small difference of its extents in $\rho$ and $Z$, so the profile stops at $r - a = 10^{-7}a$, a circle of radius $0.019\,a$.
+`embedding.penney_scalar` checks the heights against quadratures of $g_{rr} - (d\rho/dr)^2$ written by hand and the harmonic chart against the same circles and heights.

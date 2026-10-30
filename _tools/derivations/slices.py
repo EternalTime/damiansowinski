@@ -2913,6 +2913,11 @@ FLAT = {
     # Brans and Dicke's sphere at omega = 6 and C = -1/4: the moment t = 0 as far as the embedding
     # reaches, from the singularity out, in the isotropic radius, which its plane draws in units of
     # B = r_0/2, in Campanelli and Lousto's r, and in the harmonic coordinate.
+    # Penney's equator is read in the spherical chart at a = 1, b = 1/4 and gamma = 1/2; the harmonic view
+    # draws the same spacetime with k = 1, where e^(-2ku) = (r - a)/(r - b), a ratio the scale leaves alone.
+    ("penney_scalar", "spherical", "radial"): lambda: one("penney_scalar", lambda m: along(0.0, *m.reach("spherical", "r"))),
+    ("penney_scalar", "harmonic", "radial"): lambda: one("penney_scalar", lambda m: along(
+        0.0, *sorted(-math.log((r - 1) / (r - 0.25)) / 2 for r in m.reach("spherical", "r")))),
     ("brans_dicke_sphere", "isotropic", "radial"): lambda: one(
         "brans_dicke_sphere", lambda m: along(0.0, *_bd_reach(m, lambda r: r - 1 + math.sqrt(r * (r - 2))))),
     ("brans_dicke_sphere", "spherical", "radial"): lambda: one(

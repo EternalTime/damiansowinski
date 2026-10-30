@@ -13739,6 +13739,119 @@ def fisher_jnw(ck, src):
                           "$dX^2 + dY^2 - dZ^2$.")]
 
 
+def penney_scalar(ck, src):
+    """The equatorial plane of Penney's charged scalar solution at one moment, at a = 1, b = 1/4 and
+    gamma = 1/2, read in the spherical chart. With E = sqrt((r - a)/(r - b)) the circle of the sphere r
+    has the radius rho = (a - bE) sqrt((r - a)(r - b)/E)/(a - b), which shrinks to a point at the
+    singularity r = a as (r - a)^(1/4).
+
+    g_rr - (d rho/dr)^2 vanishes where E^2 - 15E + 4 = 0, E_e = (15 - sqrt 209)/2 = 0.2716, so
+    r_e = (a - bE_e^2)/(1 - E_e^2) = (209 + 9 sqrt 209)a/320 = 1.0597a. Beyond it the surface is drawn in flat space, climbing
+    from level as Flamm's paraboloid does; inside it the circles grow faster than the distance out
+    to them, which is checked, and the surface is drawn in three dimensional Minkowski space,
+    falling from level to the singular point, as Fisher's does. Both pieces lie level at r_e, so
+    they meet in one circle with one tangent. The heights are checked against quadratures of the
+    hand-written g_rr - (d rho/dr)^2, and the harmonic chart at k = 3/8, h = 3/16 and
+    u_1 = (8/3) ln 4 against the same circles and heights.
+
+    The profile steps toward the singular point by a fortieth of rho at a time, geometric knots in
+    r - a, since there rho changes as the fourth root of r - a, with more knots beside the level
+    circle. Along the light cone a chord's proper length is the small difference of its extents in
+    rho and Z, which agree ever more closely toward the singular point, so the profile stops at
+    r - a = 10^-7 a, a circle of radius 0.019a, a quarter of a hundredth of the drawing's width."""
+    params = {"a": 1, "b": sp.Rational(1, 4), "gamma": sp.Rational(1, 2)}
+    fixed = {"t": 0, **EQUATOR}
+    name = "Penney"
+    sl = Slice(src, "penney_scalar", "spherical", "r", "\\phi", fixed, params)
+    msl = Slice(src, "penney_scalar", "spherical", "r", "\\phi", fixed, params, space="minkowski")
+    # r_e = (209 + 9 sqrt 209)/320, the larger root of 800 r^2 - 1045 r + 209, named as that root,
+    # since sympy's one sided limit at the surd comes back complex, and slope() takes a root named so
+    # at forty digits.
+    level_exact = sp.CRootOf(800 * sp.Symbol("x") ** 2 - 1045 * sp.Symbol("x") + 209, 1)
+    level, top, tip = float(level_exact), 4.0, 1.0 + 1e-7
+    sl.known = msl.known = {level: level_exact}
+    
+    def radius(r):
+        r = np.asarray(r, dtype=float)
+        E = np.sqrt((r - 1) / (r - 0.25))
+        return (1 - 0.25 * E) * np.sqrt((r - 1) * (r - 0.25) / E) / 0.75
+    size = 2 * float(radius(top))
+    ck.add(f"{name}: the surface lies level where g_rr = (d rho/dr)^2, at r = 1.0597a",
+           abs(float(sl.defect_at(np.array([level]))[0])), 1e-10)
+    ck.stops(f"{name}, inside r = 1.0597a in flat space", sl, 1 + (level - 1) * np.geomspace(1e-8, 1, 402)[:-1])
+    outward = np.linspace(level, 40, 402)[1:]
+    ck.add(f"{name}: beyond r = 1.0597a no surface in Minkowski space carries the slice, (d rho/dr)^2 - g_rr < 0",
+           float(max(0.0, np.max(-msl.defect_at(outward)))), 0.0)
+    if not np.all(msl.defect_at(outward) > 0):
+        ck.items[-1]["ok"] = False
+
+    join = ("at $r = 1.06\\,a$ the surface lies level, in Minkowski space nearer the singularity and in flat "
+            "space beyond")
+    far = Piece("far", "sheet", sl, level, top, 0.0, 1,
+                (("join", join), ("edge", "the surface runs on, to $r \\to \\infty$")),
+                [(level, "space", None), (1.5, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size,
+                digits=1e-11, knots=[level + (top - level) * q for q in np.geomspace(1e-5, 1, 80)[:-1]])
+    sink = msl.rise(tip, level)
+    # A fortieth of rho at a time, which is a factor 1.025^4 in r - a, and finer beside the level circle.
+    steps = int(math.ceil(math.log((level - 1) / (tip - 1)) / (4 * math.log(1.025))))
+    knots = sorted({1 + (tip - 1) * ((level - 1) / (tip - 1)) ** (k / steps) for k in range(1, steps)}
+                   | {level - (level - 1) * q for q in np.geomspace(1e-5, 0.5, 40)})
+    near = Piece("near", "sheet", msl, tip, level, -sink, 1,
+                 (("edge", "the surface runs on into the axis along a light cone, to the singularity $r = a$"),
+                  ("join", join)),
+                 [(level, "space", None)], size, digits=1e-14, knots=knots)
+    for p in (far, near):
+        space = "in Minkowski space" if p.sl.lorentz else "in flat space"
+        ck.isometry(f"{name}, {p.id} {space}", p)
+        ck.radius(f"{name}, {p.id}, rho = (a - bE) sqrt((r - a)(r - b)/E)/(a - b) {space}", p, radius, size)
+    ck.join(f"{name}, near in Minkowski space and far in flat space at r = 1.0597a", near, level, far, level)
+    pa, pb = near.data()["points"][-1], far.data()["points"][0]
+    ck.add(f"{name}, near and far as written: one point at r = 1.0597a",
+           max(abs(pa[0] - pb[0]), abs(pa[1] - pb[1]), abs(pa[2] - pb[2])), 10.0 ** -min(far.decimals, near.decimals))
+
+    # The heights by a quadrature of their own, of g_rr - (d rho/dr)^2 written by hand.
+    r_ = sp.Symbol("r", positive=True)
+    E_ = sp.sqrt((r_ - 1) / (r_ - sp.Rational(1, 4)))
+    rho_ = (1 - E_ / 4) * sp.sqrt((r_ - 1) * (r_ - sp.Rational(1, 4)) / E_) / sp.Rational(3, 4)
+    grr_ = (1 - E_ / 4) ** 2 / (sp.Rational(9, 16) * E_)
+    defect = sp.lambdify(r_, grr_ - sp.diff(rho_, r_) ** 2, "math")
+
+    def flat_height(r):
+        return np.array([quad(lambda s: math.sqrt(max(defect(s), 0.0)), level, x, epsabs=1e-13, epsrel=1e-12)[0]
+                         for x in np.atleast_1d(r)])
+
+    def cone_height(r):
+        # In the variable s^4 = r - a, so the integrable growth of d rho/dr at the singularity is smooth.
+        return np.array([-quad(lambda s: 4 * s ** 3 * math.sqrt(max(-defect(1 + s ** 4), 0.0)), (x - 1) ** 0.25,
+                               (level - 1) ** 0.25, epsabs=1e-13, epsrel=1e-12, limit=200)[0] for x in np.atleast_1d(r)])
+    ck.form(f"{name}, far, z = the integral of sqrt(g_rr - (d rho/dr)^2)", far, flat_height, size)
+    ck.form(f"{name}, near, Z = -the integral of sqrt((d rho/dr)^2 - g_rr)", near, cone_height, size)
+
+    # Bronnikov's harmonic chart at the same a, b and gamma gives the same circles and the same heights.
+    harmonic = {"k": sp.Rational(3, 8), "h": sp.Rational(3, 16), "u_1": 8 * sp.log(4) / 3}
+    other = Slice(src, "penney_scalar", "harmonic", "u", "\\phi", fixed, harmonic)
+    mother = Slice(src, "penney_scalar", "harmonic", "u", "\\phi", fixed, harmonic, space="minkowski")
+    u_of = lambda r: -math.log((r - 1) / (r - 0.25)) / 0.75     # noqa: E731, e^(-2ku) = (r - a)/(r - b)
+    rs = np.array([1.001, level, 1.5, 2.0, 3.0, 4.0])
+    ck.add(f"{name}: the harmonic chart's circles are the same", float(np.max(np.abs(
+        other.rho_at(np.array([u_of(r) for r in rs])) - radius(rs)))), 1e-12)
+    ck.add(f"{name}: the harmonic chart's surface in flat space is the same",
+           abs(other.rise(u_of(4.0), u_of(level)) - sl.rise(level, 4.0)), 1e-9)
+    ck.add(f"{name}: the harmonic chart's surface in Minkowski space is the same",
+           abs(mother.rise(u_of(level), u_of(1.001)) - msl.rise(1.001, level)), 1e-9)
+
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *far.at(level), "$r = 1.06\\,a$", dx=10)
+    ring_label(fig, [0, 0, 0], *far.at(2.0), "$2a$")
+    ring_label(fig, [0, 0, 0], *far.at(top), "$4a$")
+    fig.legend("fill", "cover", "the equatorial plane")
+    fig.legend("line", "r", "$r$ constant, at $1.5\\,a$, $2a$, $3a$, and $4a$")
+    fig.legend("line", "space", "$r = 1.06\\,a$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "A moment of $t$", "$a$", [surface], fig.done(),
+                 settings="$b = a/4$, $\\gamma = 1/2$, and $a = 1$.")]
+
 def exponential_metric(ck, src):
     """The equatorial plane of the exponential metric at one moment, at m = 1, read in the isotropic
     chart, where the slice is e^(2m/r)(dr^2 + r^2 dphi^2) and the circle of the sphere r has the
@@ -18178,6 +18291,7 @@ DRAWN = {
     "near_horizon_extreme_kerr": near_horizon_extreme_kerr,
     "photon_rocket": photon_rocket,
     "fisher_jnw": fisher_jnw,
+    "penney_scalar": penney_scalar,
     "brans_dicke_sphere": brans_dicke_sphere,
     "exponential_metric": exponential_metric,
     "roberts": roberts,
@@ -18269,6 +18383,11 @@ CAPTIONS = {
         "Minkowski space and bends over until it lies level on that circle. Beyond it the surface climbs in "
         "flat space as Flamm's paraboloid does, and at $\\gamma = 1$ the circle is $r = b$ and the surface is "
         "Flamm's. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("penney_scalar", "equator"): [
+        "The equatorial plane ($\\theta = \\pi/2$) at one moment, from the singularity $r = a$ out to $4a$, in "
+        "Minkowski space ($dX^2 + dY^2 - dZ^2$) inside $r = 1.06\\,a$, where the circles grow faster than the "
+        "distance out to them, and in flat space beyond.",
     ],
     ("exponential_metric", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the exponential metric at one moment of $t$, from $r = m/3$ on "

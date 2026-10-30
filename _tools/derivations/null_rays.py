@@ -1582,6 +1582,10 @@ ERB_CHARGED = {"r_s": 1, "r_q": "sqrt(3)/2"}
 # figures, in units of b; the harmonic chart in units of k = b/2, where m = gamma k.
 FJNW = {"b": 1, "gamma": "1/2"}
 FJNW_HARMONIC = {"m": "1/2", "k": 1}
+# Penney's charged scalar solution at b = a/4 and gamma = 1/2, so q = a/4 and GM/c^2 = 5a/16, and the
+# same spacetime in Bronnikov's harmonic chart, h = k/2 and u_1 = ln(4)/k, with a = 8k/3.
+PENNEY = {"a": 1, "b": "1/4", "gamma": "1/2"}
+PENNEY_HARMONIC = {"k": 1, "h": "1/2", "u_1": "log(4)"}
 # Kasner's universe with a scalar field with all three exponents positive: they sum to 1 and their
 # squares to 1 - q^2 = 69/169. The vacuum of five dimensions that reduces to it has
 # s_5 = 2q/(sqrt(6) - q) and s_i = (sqrt(6) p_i - q)/(sqrt(6) - q), about (-0.234, -0.009, 0.327, 0.916).
@@ -3635,6 +3639,13 @@ DIAGRAMS = [
     Diagram("fisher_jnw", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
             "$ku$", "$ct/k$", FJNW_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True,
             areal_contours=(0.5, 1.0, 2.0, 4.0)),
+    # Penney's charged scalar solution on its plane of the time and the radial coordinate: from the
+    # singularity r = a out in the radius of Banerjee and Sen, and from spatial infinity u = 0 in toward
+    # the singularity u = infinity in Bronnikov's harmonic u.
+    Diagram("penney_scalar", "spherical", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r/a$", "$ct/a$", PENNEY, EQUATOR, areal=True),
+    Diagram("penney_scalar", "harmonic", "radial", "$t$ and $u$", ("t", "u"), (0, 4, -4, 4),
+            "$ku$", "$ct/k$", PENNEY_HARMONIC, EQUATOR, families=("outgoing", "ingoing"), areal=True),
     # Brans and Dicke's static sphere on its plane of the time and the radial coordinate in each of its
     # three charts, at omega = 6 and C = -1/4: from the singularity out in Brans's isotropic radius, whose
     # singularity is B, and in Campanelli and Lousto's r, whose singularity is 2 r_0, and from spatial
@@ -8340,6 +8351,17 @@ CAPTIONS = {
         "$e^{2(k - m)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
         "time and reaches the singularity $1.6\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
         "the spheres of areal radius $4k$, $2k$, $k$, and $k/2$, at $ku = 0.28$, $0.64$, $1.5$, and $2.8$.",
+    ],
+    ("penney_scalar", "spherical", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for $b = a/4$ and $\\gamma = 1/2$, so "
+        "$q = a/4$ and $GM/c^2 = 5a/16$. The cones close on $r = a$, where the spheres have zero area and the "
+        "curvature diverges; a ray moving in from $r = 2a$ reaches it after $2.8\\,a/c$.",
+    ],
+    ("penney_scalar", "harmonic", "radial"): [
+        "The plane of $t$ and $u$ ($\\theta = \\pi/2$, $\\phi = 0$) for $h = k/2$ and $ku_1 = \\ln 4$, which "
+        "is $a = 8k/3$, so $q = 2k/3$ and $GM/c^2 = 5k/6$. Spatial infinity is "
+        "$u = 0$, where the cones close as $u^2$, and the singularity is $u \\to \\infty$, where they open "
+        "without bound.",
     ],
     ("brans_dicke_sphere", "isotropic", "radial"): [
         "The plane of $t$ and the isotropic radius $\\rho$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for "
