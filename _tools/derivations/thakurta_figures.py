@@ -51,7 +51,7 @@ def embedding(ck, src, api):
     ck.isometry("Thakurta exterior at eta=1", piece)
     ck.form("Thakurta one exterior Flamm profile", piece,
             lambda r: 2 * np.sqrt(2) * (np.sqrt(r - 2) - np.sqrt(lo - 2)), size)
-    surface = api.Surface([piece], label=r"$\eta=\eta_0$", time=1.0)
+    surface = api.Surface([piece])
     fig = api.figure_of([surface], {"sheet": "cover"}, size)
     fig.legend("fill", "cover", r"the equator at $\eta=\eta_0$")
     fig.legend("line", "r", r"constant $r$")
@@ -63,7 +63,7 @@ def slice_lines(moment, system):
     """The eta=1 embedding slice, transformed into each chart's own coordinates."""
     lo, hi = moment.reach("conformal", "r")
     rr = np.linspace(lo, hi, 801)
-    eta = moment.time
+    eta = 1.0
     if system in ("conformal", "cosmic", "areal"):
         time = eta if system == "conformal" else eta ** 3 / 3
         return [[(time, float(r * eta ** 2 if system == "areal" else r)) for r in rr]]
@@ -101,7 +101,9 @@ def conformal(ck, src, api):
     half = np.pi / 2
     ck.limit("Thakurta future null edge at p=pi/2", compact(1000, 2 + 1e-8)[0], half, 0.005)
     v = api.View("exterior", "Expanding dust exterior", [-np.pi - 0.4, np.pi + 0.4, -0.4, np.pi + 0.4])
-    v.fill("cover", [[-np.pi, 0], [np.pi, 0], [0, np.pi]])
+    triangle = [[-np.pi, 0], [np.pi, 0], [0, np.pi]]
+    v.fill("region", triangle)
+    v.fill("cover", triangle)
     v.segment("singular", (half, -half), (-half, half), zig=True)
     v.segment("singular", (half, -half), (half, half), zig=True)
     v.segment("scri", (-half, half), (half, half))
@@ -110,10 +112,10 @@ def conformal(ck, src, api):
     for radius in (2.1, 3, 4, 8):
         e = api.spread(0, np.inf, 400, 15)
         v.curve("r", *compact(e, np.full_like(e, radius)))
-    for moment in api.slices.moments("thakurta"):
+    for moment in api.slices.moments("thakurta", label=r"$\eta=\eta_0$"):
         lo, hi = moment.reach("conformal", "r")
         r = np.linspace(lo, hi, 250)
-        v.slice(moment, [compact(np.full_like(r, moment.time), r)])
+        v.slice(moment, [compact(np.ones_like(r), r)])
     v.legend("cover", r"$\eta>0$, $r>2m$")
     v.legend("r", r"constant $r$")
     v.legend("apparent", r"past marginal tube")

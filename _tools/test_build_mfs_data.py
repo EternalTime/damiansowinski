@@ -4521,6 +4521,19 @@ class Slices(unittest.TestCase):
             if system == "rescaled":
                 end *= 2 if growing else 0.5
             return (lambda X: t), [0.0, end]
+        if key.startswith("thakurta/"):
+            # The one embedded surface is eta=eta_0=1, with t=eta^3/3 and a=1.
+            lo, hi = self.reach(surface, "conformal")
+            system = key.split("/")[1]
+            if system in ("conformal", "cosmic", "areal"):
+                return (lambda X: 1.0 if system == "conformal" else 1 / 3), [lo, hi]
+            if system == "isotropic":
+                return (lambda X: 1.0), [(r - 1 + math.sqrt(r * (r - 2))) / 2 for r in (lo, hi)]
+            ends = [r + 2 * math.log(r / 2 - 1) for r in (lo, hi)]
+            if system == "tortoise":
+                return (lambda X: 1.0), ends
+            # U=-exp(-(1-x)/4), V=exp((1+x)/4), drawn in X=(V-U)/2, Y=(V+U)/2.
+            return (lambda X: math.tanh(0.25) * X), [math.exp(x / 4) * math.cosh(0.25) for x in ends]
         if key.startswith("stiff_fluid_universes/"):
             # The one embedded symmetry plane is t=1/2,x=0, a point on each quotient.
             # chi=x+t^2/2=1/8 in the fluid labels; the characteristic view displays x,t.
@@ -6242,6 +6255,12 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
                             self.assertLess(abs(tp * tq - (1 - radius) * math.exp(radius)), 2e-3 * (1 + tp * tp) * (1 + tq * tq),
+                                            f"{where} at {(X, T)}")
+                    elif metric_id == "thakurta":
+                        # tan(p)=(eta-x)/4, tan(q)=(eta+x)/4 on the fixed eta=1 surface.
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            self.assertLess(abs(2 * (tp + tq) - 1), 5e-4 * (1 + tp * tp + tq * tq),
                                             f"{where} at {(X, T)}")
                     elif metric_id == "sultana_dyer":
                         # Kruskal's map of the ingoing chart at r_s = 1: tan q = e^((eta + r)/2) and

@@ -3873,7 +3873,7 @@ FLAT.update({
 from thakurta_figures import slice_lines as thakurta_slice_lines
 for _system in ("conformal", "cosmic", "areal", "isotropic", "tortoise", "kruskal"):
     FLAT[("thakurta", _system, "radial")] = lambda s=_system: one(
-        "thakurta", lambda m: thakurta_slice_lines(m, s))
+        "thakurta", lambda m: thakurta_slice_lines(m, s), label=r"$\eta=\eta_0$")
 
 FLAT_METRICS = {key[0] for key in FLAT}
 
