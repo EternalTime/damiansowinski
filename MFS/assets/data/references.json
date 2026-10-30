@@ -1,5 +1,5 @@
 {
-  "version": "1f99df86c29883c8",
+  "version": "e2e52057ce3093aa",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33080,6 +33080,47 @@
         "pages": "161--163",
         "year": "1979",
         "doi": "10.1016/0375-9601(79)90193-2"
+      }
+    },
+    "tabensky1973": {
+      "type": "article",
+      "fields": {
+        "author": "Tabensky, Romualdo and Taub, A. H.",
+        "title": "Plane symmetric self-gravitating fluids with pressure equal to energy density",
+        "journal": "Communications in Mathematical Physics",
+        "volume": "29",
+        "number": "1",
+        "pages": "61--77",
+        "year": "1973",
+        "doi": "10.1007/BF01661153"
+      }
+    },
+    "rendall1995plane": {
+      "type": "article",
+      "fields": {
+        "author": "Rendall, Alan D.",
+        "title": "The nature of singularities in plane symmetric scalar field cosmologies",
+        "journal": "General Relativity and Gravitation",
+        "volume": "27",
+        "number": "2",
+        "pages": "213--221",
+        "year": "1995",
+        "doi": "10.1007/BF02107959",
+        "eprint": "gr-qc/9408001",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "wainwright1979stiff": {
+      "type": "article",
+      "fields": {
+        "author": "Wainwright, J. and Ince, W. C. W. and Marshman, B. J.",
+        "title": "Spatially homogeneous and inhomogeneous cosmologies with equation of state $p=\\mu$",
+        "journal": "General Relativity and Gravitation",
+        "volume": "10",
+        "number": "3",
+        "pages": "259--271",
+        "year": "1979",
+        "doi": "10.1007/BF00759860"
       }
     }
   }

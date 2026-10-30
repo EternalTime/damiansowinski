@@ -2386,6 +2386,18 @@ The spacetime around an infinitely thin, straight string that carries angular mo
 - chart Helical Time: coordinates $(\tau, r, \tilde\phi, z)$, $$ds^2 = -c^2d\tau^2 + dr^2 + r^2d\tilde\phi^2 + dz^2$$
 - chart Extended Source: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(c\,dt + M\,d\phi\right)^2 + dr^2 + \rho^2d\phi^2 + dz^2$$
 
+### Universes of Stiff Fluid
+
+Plane-symmetric exact universes with pressure equal to energy density, represented by a massless scalar field with timelike gradient.
+
+- id: `stiff_fluid_universes`
+- tags: cosmology, inhomogeneous, perfect fluid, scalar field, exact solution, Lorentzian, Einstein equations, four-dimensional, time-dependent, stiff fluid
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/stiff_fluid_universes.json
+- chart Areal: coordinates $(t, x, y, z)$, $$ds^2 = \ell^2\left(F\left(-dt^2+dx^2\right)+t\left(dy^2+dz^2\right)\right)$$
+- chart Comoving: coordinates $(t, \chi, y, z)$, $$ds^2 = \ell^2\left(F\left(-\left(1-\dfrac{b^2t^2}{a^2}\right)dt^2-\dfrac{2bt}{a}dt\,d\chi+d\chi^2\right)+t\left(dy^2+dz^2\right)\right)$$
+- chart Characteristic: coordinates $(u, v, y, z)$, $$ds^2 = \ell^2\left(-F\,du\,dv+\dfrac{u+v}{2}\left(dy^2+dz^2\right)\right)$$
+
 ### Sultana-Dyer Black Hole in an Expanding Universe
 
 A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multiplied by the square of the scale factor of a flat universe of dust, which Joseph Sultana and Charles Dyer found in 2005. Its event horizon grows with the universe, and its matter is a dust and a null dust that fall into the hole.

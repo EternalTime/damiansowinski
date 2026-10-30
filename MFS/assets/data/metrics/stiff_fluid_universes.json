@@ -16,18 +16,18 @@
     "stiff fluid"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "We use signature $(-,+,+,+)$ and $G=c=1$, publish the canonical scalar $\\Phi$ with $G_{\\mu\\nu}=8\\pi T_{\\mu\\nu}$, and rescale the review field as $\\sigma=\\sqrt{8\\pi}\\Phi$. The Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$; $a>0$, $b\\geq0$, $\\ell>0$, and $\\rho$ and $p$ are energy density and pressure.",
-  "history": "Pressure and energy density coincide in a stiff fluid: $p=\\rho$, and small disturbances travel at the speed of light. Romualdo Tabensky and Abraham Haskel Taub published their plane-symmetric self-gravitating fluids in March 1973, in Communications in Mathematical Physics [tabensky1973]. They solved the initial-value problem with general initial conditions under plane symmetry. Translations and rotations within each symmetry plane preserve the geometry, while the density can vary in the direction across the planes.¶A massless scalar field can carry precisely this fluid's stress. Where its gradient is timelike, the gradient fixes the fluid velocity, and half its negative squared norm is both pressure and energy density. The scalar wave equation then contains the fluid's conservation equations. Tabensky and Taub identified this correspondence in their plane-symmetric construction [tabensky1973].¶Plane symmetry makes the scalar equation linear in an areal coordinate, whose value fixes the area of each transverse plane [rendall1995plane]. The remaining gravitational field follows by integration once the scalar has been chosen. One exact family has the dimensionless scalar $\\sigma=a\\ln t+bx$, with $a>0$ and $b\\geq0$. Its physical scalar is $\\Phi=\\sigma/\\sqrt{8\\pi}$, and its conformal factor is $F=t^{a^2-1/2}\\exp(b^2t^2/2+2abx)$. The pressure is $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$, so $b>0$ produces a density that varies across the planes.¶The fluid occupies $0<t<a/b$ when $b>0$. At the upper boundary the scalar gradient becomes null, its stress stays finite at finite $x$, and the fluid loses its timelike rest frame. The scalar solution continues through that boundary. At $t=0$ the Ricci scalar diverges for every $a>0$, marking a curvature singularity. An exact solution can carry both an uneven density and matter moving across the planes right up to a singularity at the start.¶John Wainwright, W. C. W. Ince and B. J. Marshman published a broader solution-generating construction in February 1979 for irrotational stiff fluids with two commuting Killing vectors [wainwright1979stiff]. Their construction includes spatially homogeneous and inhomogeneous cosmologies, with both tilted and untilted homogeneous models. In the plane-symmetric family, $b=0$ leaves a homogeneous universe with equal expansion rates in the two transverse directions. Its proper-time powers are $(a^2-1/2)/(a^2+3/2)$ across the planes and $1/(a^2+3/2)$ within them. At $a^2=3/2$ all three powers are $1/3$, the spatially flat Friedmann universe filled with stiff matter.",
+  "convention": "We use signature $(-,+,+,+)$ and $G=c=1$, with $G_{\\mu\\nu}=8\\pi T_{\\mu\\nu}$ for the canonical scalar $\\Phi$ and the review field rescaled as $\\sigma=\\sqrt{8\\pi}\\Phi$. The Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$; $a>0$, $b\\geq0$, $\\ell>0$, and $\\rho$ and $p$ are energy density and pressure. The scalars $R$ and $K$ are the Ricci and Kretschmann scalars, and $\\tau$ is proper time.",
+  "history": "Pressure and energy density coincide in a stiff fluid: $p=\\rho$, and small disturbances travel at the speed of light. Romualdo Tabensky and Abraham Haskel Taub published their plane symmetric self gravitating fluids in March 1973, in Communications in Mathematical Physics [tabensky1973]. They solved the initial value problem with general initial conditions under plane symmetry. Translations and rotations within each symmetry plane preserve the geometry, while the density can vary in the direction across the planes.¶A massless scalar field can carry precisely this fluid's stress. Where its gradient is timelike, the gradient fixes the fluid velocity, and half its negative squared norm is both pressure and energy density. The scalar wave equation then contains the fluid's conservation equations. Tabensky and Taub identified this correspondence in their plane symmetric construction [tabensky1973].¶Plane symmetry makes the scalar equation linear in an areal coordinate, whose value fixes the area of each transverse plane [rendall1995plane]. The remaining gravitational field follows by integration once the scalar has been chosen. One exact family has the dimensionless scalar $\\sigma=a\\ln t+bx$, with $a>0$ and $b\\geq0$. Its physical scalar is $\\Phi=\\sigma/\\sqrt{8\\pi}$, and its conformal factor is $F=t^{a^2-1/2}\\exp(b^2t^2/2+2abx)$. The pressure is $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$, so $b>0$ produces a density that varies across the planes.¶The fluid occupies $0<t<a/b$ when $b>0$. At the upper boundary the scalar gradient becomes null, its stress stays finite at finite $x$, and the fluid loses its timelike rest frame. The scalar solution continues through that boundary. At $t=0$ the Ricci scalar diverges for every $a>0$, marking a curvature singularity. An exact solution can carry both an uneven density and matter moving across the planes right up to a singularity at the start.¶John Wainwright, W. C. W. Ince and B. J. Marshman published a broader solution generating construction in February 1979 for irrotational stiff fluids with two commuting Killing vectors [wainwright1979stiff]. Their construction includes spatially homogeneous and inhomogeneous cosmologies, with both tilted and untilted homogeneous models. In the plane symmetric family, $b=0$ leaves a homogeneous universe with equal expansion rates in the two transverse directions. Its proper time powers are $(a^2-1/2)/(a^2+3/2)$ across the planes and $1/(a^2+3/2)$ within them. At $a^2=3/2$ all three powers are $1/3$, the spatially flat Friedmann universe filled with stiff matter.",
   "related": [
     {
       "id": "kasner_scalar",
       "kind": "family",
-      "text": "At $b=0$ the plane-symmetric family is a homogeneous scalar-field universe with equal transverse exponents, $p_y=p_z$."
+      "text": "At $b=0$ the plane symmetric family is a homogeneous scalar field universe with equal transverse exponents, $p_y=p_z$."
     },
     {
       "id": "frw",
       "kind": "family",
-      "text": "At $b=0$ and $a^2=3/2$ the proper-time scale factor is $\\tau^{1/3}$, the spatially flat Friedmann universe of a stiff fluid."
+      "text": "At $b=0$ and $a^2=3/2$ the proper time scale factor is $\\tau^{1/3}$, the spatially flat Friedmann universe of a stiff fluid."
     }
   ],
   "references": [
@@ -1850,7 +1850,7 @@
           "description": "Positive conformal factor of the two-dimensional quotient."
         }
       ],
-      "convention": "The fluid labels are $\\chi=x+bt^2/(2a)$, $y$ and $z$, constant along each fluid world line; $t$ is areal time, $\\sigma=a\\ln t+b\\chi-b^2t^2/(2a)$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$.",
+      "convention": "The fluid labels are $\\chi=x+bt^2/(2a)$, $y$, and $z$, constant along each fluid world line; $t$ is areal time, $\\sigma=a\\ln t+b\\chi-b^2t^2/(2a)$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(a^2/t^2-b^2)/(16\\pi\\ell^2F)$.",
       "line_element": "ds^2 = \\ell^2\\left(F\\left(-\\left(1-\\dfrac{b^2t^2}{a^2}\\right)dt^2-\\dfrac{2bt}{a}dt\\,d\\chi+d\\chi^2\\right)+t\\left(dy^2+dz^2\\right)\\right)",
       "metric_components": [
         {
@@ -3857,7 +3857,7 @@
       ],
       "domains": [
         "u \\in (-\\infty,\\infty)",
-        "v \\in (-\\infty,\\infty)",
+        "v \\in (-u,\\infty)",
         "y \\in (-\\infty,\\infty)",
         "z \\in (-\\infty,\\infty)",
         "0<u+v<2a/b\\;\\text{for}\\;b>0",
@@ -3881,7 +3881,7 @@
           "description": "Positive conformal factor of the two-dimensional quotient."
         }
       ],
-      "convention": "The null coordinates are $u=t-x$ and $v=t+x$, with $t=(u+v)/2$, $x=(v-u)/2$ and $y,z$ within the symmetry planes; $\\sigma=a\\ln((u+v)/2)+b(v-u)/2$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(4a^2/(u+v)^2-b^2)/(16\\pi\\ell^2F)$.",
+      "convention": "The null coordinates are $u=t-x$ and $v=t+x$, with $t=(u+v)/2$, $x=(v-u)/2$, and $y,z$ within the symmetry planes; $\\sigma=a\\ln((u+v)/2)+b(v-u)/2$, $\\Phi=\\sigma/\\sqrt{8\\pi}$, and $\\rho=p=(4a^2/(u+v)^2-b^2)/(16\\pi\\ell^2F)$.",
       "line_element": "ds^2 = \\ell^2\\left(-F\\,du\\,dv+\\dfrac{u+v}{2}\\left(dy^2+dz^2\\right)\\right)",
       "metric_components": [
         {

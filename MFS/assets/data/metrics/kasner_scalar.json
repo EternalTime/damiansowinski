@@ -76,7 +76,7 @@
     {
       "id": "stiff_fluid_universes",
       "kind": "family",
-      "text": "The plane-symmetric stiff fluid admits density gradients across its symmetry planes. At $b=0$ it shares the homogeneous scalar-field solutions with $p_y=p_z$."
+      "text": "The plane symmetric stiff fluid admits density gradients across its symmetry planes. At $b=0$ it shares the homogeneous scalar field solutions with $p_y=p_z$."
     }
   ],
   "references": [

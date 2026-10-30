@@ -35850,7 +35850,7 @@ def stiff_fluid_universes(system):
     parameters = ["a", "b", r"\ell", definitions[system]]
     reals = r" \in (-\infty,\infty)"
     if null:
-        domains = ["u"+reals, "v"+reals, "y"+reals, "z"+reals,
+        domains = ["u"+reals, r"v \in (-u,\infty)", "y"+reals, "z"+reals,
                    r"0<u+v<2a/b\;\text{for}\;b>0", r"u+v>0\;\text{for}\;b=0"]
         line = r"ds^2 = \ell^2\left(-F\,du\,dv+\dfrac{u+v}{2}\left(dy^2+dz^2\right)\right)"
     else:

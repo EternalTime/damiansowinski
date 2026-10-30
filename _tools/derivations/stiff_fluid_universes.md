@@ -65,7 +65,7 @@ All these views are single frames, so no movie or stack entry is needed.
 
 ## Verification
 
-Every chart will be checked at points against the scalar and perfect-fluid stresses, the field dictionary, and the fluid boundary.
+Every chart is checked at points against the scalar and perfect-fluid stresses, the field dictionary, and the fluid boundary.
 
 ## Curvature maps
 
@@ -77,3 +77,7 @@ At fixed $t$, $K$ varies as $e^{-4x}$ and $R$ as $e^{-2x}$, checked from the sto
 As $t\to0$, their magnitudes diverge as $t^{-5}$ and $t^{-5/2}$, respectively.
 At $t=1$, $R=0$ and $K=3e^{-1-4x}/4$, finite and positive at finite $x$.
 The embedding plane meets each quotient diagram at one point, $(t,x)=(1/2,0)$, transformed into the other charts by their own dictionaries.
+
+The characteristic domain explicitly includes $v>-u$ so that $t=(u+v)/2>0$.
+That dependent lower bound also keeps automatic symmetry sampling inside the Lorentzian patch, where the transverse Killing vectors have positive norm.
+The remaining upper fluid bound is the declared inequality $u+v<2a/b$ when $b>0$.

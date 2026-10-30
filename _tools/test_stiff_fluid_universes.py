@@ -68,7 +68,8 @@ class StiffFluidUniverses(unittest.TestCase):
             d=sp.Matrix([sp.diff(phi,c) for c in X])
             for av,bv,tv,xv,lv in ((1,1,sp.Rational(2,5),sp.Rational(-1,4),1),
                                    (2,sp.Rational(1,2),1,sp.Rational(1,3),2),
-                                   (sp.Rational(3,2),0,2,1,sp.Rational(3,2))):
+                                   (sp.Rational(3,2),0,2,1,sp.Rational(3,2)),
+                                   (1,1,sp.Rational(2,5),2,1)):
                 at=self.points(chart,av,bv,tv,xv,lv)
                 gn=g.subs(at).evalf(40);gin=gi.subs(at).evalf(40);dn=d.subs(at).evalf(40)
                 norm=(dn.T*gin*dn)[0]

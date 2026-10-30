@@ -2089,7 +2089,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "95eb60c76645feca",
+    "version": "13f80d47e2e80dd7",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2842,7 +2842,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "e4c02d96a63bf55e",
+    "version": "1f0b98c1c3d1cfaa",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
@@ -5515,6 +5515,27 @@
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "d2f10fa2373b33b4"
+  },
+  {
+    "id": "stiff_fluid_universes",
+    "name": "Stiff Fluid Universes",
+    "tags": [
+      "cosmology",
+      "inhomogeneous",
+      "perfect fluid",
+      "scalar field",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "time-dependent",
+      "stiff fluid"
+    ],
+    "version": "875d16f1f2621681",
+    "diagrams": "24312328515b9d2d",
+    "conformal": "952fa1e450baec6d",
+    "embedding": "47b1bdb9b67dd277",
+    "curvature": "17ddb5c7ece66e27"
   },
   {
     "id": "sultana_dyer",
