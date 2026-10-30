@@ -93,6 +93,11 @@
       "id": "eye_of_the_storm",
       "kind": "family",
       "text": "A rotating black hole with no singularity that far out looks like Kerr-Newman with $q^2 = 2m\\ell$, its mass suppressed as $me^{-\\ell/r}$ [ghosh2015]."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "family",
+      "text": "Werner Israel cut the Kerr-Newman metric at the disc in its ring and found the layer of mass and charge on the seam [israel1970]."
     }
   ],
   "references": [
@@ -124,7 +129,8 @@
     "ernst1976c",
     "gibbons2013",
     "ovcharenko2026b",
-    "ghosh2015"
+    "ghosh2015",
+    "israel1970"
   ],
   "coordinates": [
     {

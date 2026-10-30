@@ -72,6 +72,11 @@
       "id": "brane_wall_universe",
       "kind": "family",
       "text": "The same junction conditions move a wall through the black hole of anti-de Sitter space in five dimensions, and the wall carries a universe [kraus1999]."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "programme",
+      "text": "Werner Israel's surface layers applied to Kerr's metric in 1970: a layer on the disc in the ring singularity [israel1970]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "visser1989nuclphysb",
     "visser2004",
     "haggard2015fireworks",
-    "kraus1999"
+    "kraus1999",
+    "israel1970"
   ],
   "coordinates": [
     {

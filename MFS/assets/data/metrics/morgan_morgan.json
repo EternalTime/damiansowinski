@@ -66,6 +66,11 @@
       "id": "bach_weyl_ring",
       "kind": "family",
       "text": "A Weyl field built on Newton's potential of a hoop, as the discs are on that of a disc. The hoop is a singularity, and the discs are sheets of counterrotating dust."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "family",
+      "text": "A thin disc that is the source of Kerr's metric, with negative mass that turns faster than light [israel1970]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "bonnor1968",
     "semerak2001",
     "kofron2023",
-    "bonnor1975"
+    "bonnor1975",
+    "israel1970"
   ],
   "coordinates": [
     {

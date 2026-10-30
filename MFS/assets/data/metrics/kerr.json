@@ -241,6 +241,11 @@
       "id": "twisting_cylindrical_waves",
       "kind": "dual",
       "text": "Kerr's metric with $t \\to iz$, $z \\to it$, and $a \\to ia$, given new coordinates, is a cylindrical pulse of gravitational waves with both polarisations, and it has no singularities [piran1986, dinverno2000]."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "composite",
+      "text": "Werner Israel cut Kerr's spacetime at the disc in its ring, kept the sheet of positive $r$ and glued the two faces of the disc together. The seam carries a layer of negative mass turning faster than light, and the spacetime keeps only the causal part of Kerr's extension [israel1970]."
     }
   ],
   "references": [
@@ -314,7 +319,8 @@
     "astorino2022swirling",
     "simpson2022eye",
     "piran1986",
-    "dinverno2000"
+    "dinverno2000",
+    "israel1970"
   ],
   "coordinates": [
     {

@@ -509,6 +509,11 @@
       "id": "oscillating_sphere",
       "kind": "composite",
       "text": "A ball of fluid of uniform density with pressure, joined to this vacuum at a moving surface. W. B. Bonnor and M. C. Faulkes found in 1967 that it can oscillate for ever [bonnor1967oscillating]."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "generalisation",
+      "text": "Kerr's spacetime cut at the disc in its ring and glued shut, with a layer of matter on the disc. At $a = 0$ the disc is a point and the spacetime is Schwarzschild's."
     }
   ],
   "references": [

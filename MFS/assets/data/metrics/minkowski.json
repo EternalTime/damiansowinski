@@ -293,6 +293,11 @@
       "id": "twisting_cylindrical_waves",
       "kind": "generalisation",
       "text": "Cylindrical gravitational waves with both polarisations. With $\\psi = \\omega = \\gamma = 0$ their metric is Minkowski's in cylindrical coordinates."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "generalisation",
+      "text": "Israel's disc source of Kerr's metric is flat space at $m = 0$, where its layer of matter vanishes [gibbons2017]."
     }
   ],
   "references": [

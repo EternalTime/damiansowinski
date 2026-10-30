@@ -2730,6 +2730,11 @@
       "id": "brane_wall_universe",
       "kind": "family",
       "text": "Two copies of a black hole in anti-de Sitter space of five dimensions glued along a moving wall, each kept on the side where its radius falls away from the wall [kraus1999]."
+    },
+    {
+      "id": "kerr_disc_source",
+      "kind": "family",
+      "text": "Kerr's spacetime cut at the disc in its ring and glued to itself, with all the cut's matter on the seam [israel1970]."
     }
   ],
   "references": [
@@ -2756,6 +2761,7 @@
     "damour2007",
     "danielson2021",
     "james2015",
-    "kraus1999"
+    "kraus1999",
+    "israel1970"
   ]
 }
