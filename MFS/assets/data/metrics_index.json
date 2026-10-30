@@ -1593,7 +1593,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "efd55935418342f0",
+    "version": "5f407d302477f113",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2206,7 +2206,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "66e4ae7079fba20b",
+    "version": "d6e82be31458c663",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -5735,6 +5735,31 @@
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "8ceb22efb0ed465b"
+  },
+  {
+    "id": "starobinsky_universe",
+    "name": "Starobinsky Universe",
+    "tags": [
+      "cosmology",
+      "inflation",
+      "expanding universe",
+      "homogeneous",
+      "isotropic",
+      "FLRW",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model",
+      "conformally flat",
+      "spherically symmetric",
+      "quantum field theory in curved spacetime"
+    ],
+    "version": "9f8bdaa78df25e14",
+    "diagrams": "b39d6edadc986065",
+    "conformal": "082b70e4935cbd3a",
+    "embedding": "fa02ed4e5e1b7ac3",
+    "curvature": "9cc8121a596e3929"
   },
   {
     "id": "stiff_fluid_universes",

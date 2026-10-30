@@ -2493,6 +2493,20 @@ The spacetime around an infinitely thin, straight string that carries angular mo
 - chart Helical Time: coordinates $(\tau, r, \tilde\phi, z)$, $$ds^2 = -c^2d\tau^2 + dr^2 + r^2d\tilde\phi^2 + dz^2$$
 - chart Extended Source: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(c\,dt + M\,d\phi\right)^2 + dr^2 + \rho^2d\phi^2 + dz^2$$
 
+### Starobinsky's Universe
+
+A semiclassical homogeneous isotropic universe evolving from an unstable de Sitter state into scalaron oscillations.
+
+- id: `starobinsky_universe`
+- tags: cosmology, inflation, expanding universe, homogeneous, isotropic, FLRW, time-dependent, exact solution, Lorentzian, four-dimensional, idealized model, conformally flat, spherically symmetric, quantum field theory in curved spacetime
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/starobinsky_universe.json
+- chart Cosmic Time: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -d\tau^2 + a^2\left(\dfrac{dr^2}{1-kr^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + \dfrac{dr^2}{1-kr^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Closed de Sitter: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -d\tau^2 + \cosh^2(H_0\tau)/H_0^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Flat de Sitter: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = -d\tau^2 + e^{2H_0\tau}\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Open de Sitter: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -d\tau^2 + \sinh^2(H_0\tau)/H_0^2\left(d\chi^2 + \sinh^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Universes of Stiff Fluid
 
 Plane-symmetric exact universes with pressure equal to energy density, represented by a massless scalar field with timelike gradient.

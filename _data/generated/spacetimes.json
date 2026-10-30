@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 217,
+  "count": 218,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -16953,6 +16953,11 @@
           "id": "murphy_viscous_universe",
           "kind": "family",
           "text": "A flat universe of a viscous fluid that tends to de Sitter space in its flat slices as $t \\to -\\infty$ and slows toward the expansion of the fluid alone [murphy1973]. Its viscous pressure plays the part of the cosmological constant at early times and fades later."
+        },
+        {
+          "id": "starobinsky_universe",
+          "kind": "generalisation",
+          "text": "Starobinsky's semiclassical family contains de Sitter space at zero departure amplitude [starobinsky1980]."
         }
       ],
       "references": [
@@ -17003,7 +17008,8 @@
         "feldbrugge2017",
         "chiba2005",
         "cahen1970",
-        "murphy1973"
+        "murphy1973",
+        "starobinsky1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -23699,6 +23705,11 @@
           "id": "thakurta",
           "kind": "generalisation",
           "text": "A conformal Schwarzschild geometry approaching the flat Friedmann universe at large radius. Setting $m=0$ recovers that universe [mello2017]."
+        },
+        {
+          "id": "starobinsky_universe",
+          "kind": "special_case",
+          "text": "Starobinsky's homogeneous universe follows the semiclassical field equation with conformally invariant quantum matter [starobinsky1980]."
         }
       ],
       "references": [
@@ -23775,7 +23786,8 @@
         "sussman2000stephani",
         "murphy1973",
         "vaidya1977kerr",
-        "mello2017"
+        "mello2017",
+        "starobinsky1980"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -63274,6 +63286,360 @@
           ],
           "ricci_scalar": "R = \\dfrac{\\left(\\partial_r M\\right)^2 - 4\\rho\\,\\partial_r^2\\rho}{2\\rho^2}",
           "kretschmann": "K = \\dfrac{11\\left(\\partial_r M\\right)^4 - 24\\rho\\left(\\partial_r M\\right)^2\\,\\partial_r^2\\rho - 8\\left(\\partial_r M\\right)^2\\left(\\partial_r\\rho\\right)^2 + 16\\rho\\,\\partial_r M\\,\\partial_r^2 M\\,\\partial_r\\rho - 8\\rho^2\\left(\\partial_r^2 M\\right)^2 + 16\\rho^2\\left(\\partial_r^2\\rho\\right)^2}{4\\rho^4}"
+        }
+      ]
+    },
+    {
+      "id": "starobinsky_universe",
+      "name": "Starobinsky's Universe",
+      "short_name": "Starobinsky Universe",
+      "description": "A semiclassical homogeneous isotropic universe evolving from an unstable de Sitter state into scalaron oscillations.",
+      "tags": [
+        "cosmology",
+        "inflation",
+        "expanding universe",
+        "homogeneous",
+        "isotropic",
+        "FLRW",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model",
+        "conformally flat",
+        "spherically symmetric",
+        "quantum field theory in curved spacetime"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Geometric cosmic time is $\\tau=ct$, conformal time satisfies $d\\eta=d\\tau/a$, and $r$ is a comoving length. The scale factor $a>0$ is dimensionless, $k$ carries inverse length squared, and $\\theta$, $\\phi$, and $\\chi$ are dimensionless coordinates; the Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "Homogeneous isotropic expansion with a freely specified scale factor. Starobinsky's scale factor satisfies the semiclassical vacuum polarization equation [starobinsky1980]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "At zero departure amplitude, the solution has constant de Sitter curvature fixed by the conformal quantum fields [starobinsky1980]."
+        }
+      ],
+      "references": [
+        "starobinsky1980",
+        "mukhanov_chibisov1981",
+        "hirano2026",
+        "yoshida_quintin2018"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/starobinsky_universe.json",
+      "charts": [
+        {
+          "id": "cosmic",
+          "name": "Cosmic Time",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in I",
+            "a>0",
+            "r \\in [0,\\infty)\\;\\text{for}\\;k\\le0",
+            "r \\in [0,1/\\sqrt{k})\\;\\text{for}\\;k>0",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau)",
+              "description": "Dimensionless scale factor of the semiclassical family. With $h=(da/d\\tau)/a$ and $Q=h^2+k/a^2$, it obeys $Q-Q^2/H_0^2+[2h(d^2h/d\\tau^2)+6h^2(dh/d\\tau)-(dh/d\\tau)^2-2kh^2/a^2+k^2/a^4]/M^2=0$ [starobinsky1980, hirano2026]."
+            },
+            {
+              "symbol": "k",
+              "description": "Spatial curvature, with units of inverse length squared."
+            },
+            {
+              "symbol": "H_0",
+              "description": "Positive inverse length setting the de Sitter curvature sustained by the anomaly."
+            },
+            {
+              "symbol": "M",
+              "description": "Positive scalaron inverse Compton length setting the term with higher derivatives."
+            }
+          ],
+          "convention": "The interval $I$ is a connected interval on which $a>0$; the radius covers one hemisphere for $k>0$. Primes denote $d/d\\tau$.",
+          "line_element": "ds^2 = -d\\tau^2 + a^2\\left(\\dfrac{dr^2}{1-kr^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{a^2}{k\\,r^2 - 1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,a'' + 6\\left(a'\\right)^2 + 6k}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(a''\\right)^2 + 24k\\left(a'\\right)^2 + 12\\left(a'\\right)^4 + 12k^2}{a^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in I",
+            "a>0",
+            "r \\in [0,\\infty)\\;\\text{for}\\;k\\le0",
+            "r \\in [0,1/\\sqrt{k})\\;\\text{for}\\;k>0",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\eta)",
+              "description": "Dimensionless scale factor of the semiclassical family. With $h=(da/d\\tau)/a$ and $Q=h^2+k/a^2$, it obeys $Q-Q^2/H_0^2+[2h(d^2h/d\\tau^2)+6h^2(dh/d\\tau)-(dh/d\\tau)^2-2kh^2/a^2+k^2/a^4]/M^2=0$ [starobinsky1980, hirano2026]."
+            },
+            {
+              "symbol": "k",
+              "description": "Spatial curvature, with units of inverse length squared."
+            },
+            {
+              "symbol": "H_0",
+              "description": "Positive inverse length setting the de Sitter curvature sustained by the anomaly."
+            },
+            {
+              "symbol": "M",
+              "description": "Positive scalaron inverse Compton length setting the term with higher derivatives."
+            }
+          ],
+          "convention": "The interval $I$ is a connected interval on which $a>0$; the radius covers one hemisphere for $k>0$. Primes denote $d/d\\eta$ and $d/d\\tau=a^{-1}d/d\\eta$.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + \\dfrac{dr^2}{1-kr^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{a^2}{k\\,r^2 - 1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a'' + 6a\\,k}{a^3}",
+          "kretschmann": "K = \\dfrac{24\\left(a'\\right)^4 + 12a^4\\,k^2 + 12a^2\\left(a''\\right)^2 + 24a^2\\,k\\left(a'\\right)^2 - 24a\\left(a'\\right)^2\\,a''}{a^8}"
+        },
+        {
+          "id": "closed_de_sitter",
+          "name": "Closed de Sitter",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty,\\infty)",
+            "\\chi \\in [0,\\pi]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "H_0",
+              "description": "Positive inverse length, with Ricci scalar $R=12H_0^2$ and Kretschmann scalar $K=24H_0^4$."
+            }
+          ],
+          "convention": "The radial angle $\\chi$ covers the 3-sphere, with physical curvature radius $\\cosh(H_0\\tau)/H_0$.",
+          "line_element": "ds^2 = -d\\tau^2 + \\cosh^2(H_0\\tau)/H_0^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\cosh^2\\left(H_0\\,\\tau\\right)}{H_0^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\cosh^2\\left(H_0\\,\\tau\\right)\\sin^2\\chi}{H_0^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\cosh^2\\left(H_0\\,\\tau\\right)\\sin^2\\chi\\sin^2\\theta}{H_0^2}"
+            }
+          ],
+          "ricci_scalar": "R = 12H_0^2",
+          "kretschmann": "K = 24H_0^4"
+        },
+        {
+          "id": "flat_de_sitter",
+          "name": "Flat de Sitter",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty,\\infty)",
+            "r \\in [0,\\infty)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "H_0",
+              "description": "Positive inverse length, with Ricci scalar $R=12H_0^2$ and Kretschmann scalar $K=24H_0^4$."
+            }
+          ],
+          "convention": "The comoving radius $r$ is a length; the scale factor is $a=e^{H_0\\tau}$.",
+          "line_element": "ds^2 = -d\\tau^2 + e^{2H_0\\tau}\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "e^{2H_0\\,\\tau}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2e^{2H_0\\,\\tau}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2e^{2H_0\\,\\tau}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 12H_0^2",
+          "kretschmann": "K = 24H_0^4"
+        },
+        {
+          "id": "open_de_sitter",
+          "name": "Open de Sitter",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (0,\\infty)",
+            "\\chi \\in [0,\\infty)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "H_0",
+              "description": "Positive inverse length, with Ricci scalar $R=12H_0^2$ and Kretschmann scalar $K=24H_0^4$."
+            }
+          ],
+          "convention": "The hyperbolic radius $\\chi$ is dimensionless, with spatial curvature radius $\\sinh(H_0\\tau)/H_0$.",
+          "line_element": "ds^2 = -d\\tau^2 + \\sinh^2(H_0\\tau)/H_0^2\\left(d\\chi^2 + \\sinh^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\sinh^2\\left(H_0\\,\\tau\\right)}{H_0^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(e^{\\chi} + 1\\right)^2\\left(e^{\\chi} - 1\\right)^2e^{-2\\chi}\\sinh^2\\left(H_0\\,\\tau\\right)}{4H_0^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(e^{\\chi} + 1\\right)^2\\left(e^{\\chi} - 1\\right)^2e^{-2\\chi}\\sinh^2\\left(H_0\\,\\tau\\right)\\sin^2\\theta}{4H_0^2}"
+            }
+          ],
+          "ricci_scalar": "R = 12H_0^2",
+          "kretschmann": "K = 24H_0^4"
         }
       ]
     },

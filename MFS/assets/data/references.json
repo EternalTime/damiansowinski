@@ -1,5 +1,5 @@
 {
-  "version": "4102e9ca8ad45d20",
+  "version": "a158292a545f9a33",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33961,6 +33961,62 @@
         "year": "1983",
         "doi": "10.1007/BF01214662",
         "url": "https://doi.org/10.1007/BF01214662"
+      }
+    },
+    "starobinsky1980": {
+      "type": "article",
+      "fields": {
+        "author": "Starobinsky, Alexei A.",
+        "title": "A new type of isotropic cosmological models without singularity",
+        "journal": "Physics Letters B",
+        "volume": "91",
+        "number": "1",
+        "pages": "99--102",
+        "year": "1980",
+        "doi": "10.1016/0370-2693(80)90670-X",
+        "url": "https://doi.org/10.1016/0370-2693(80)90670-X"
+      }
+    },
+    "mukhanov_chibisov1981": {
+      "type": "article",
+      "fields": {
+        "author": "Mukhanov, Viatcheslav F. and Chibisov, G. V.",
+        "title": "Quantum fluctuations and a nonsingular universe",
+        "journal": "JETP Letters",
+        "volume": "33",
+        "number": "10",
+        "pages": "532--535",
+        "year": "1981",
+        "url": "https://inspirehep.net/literature/170051"
+      }
+    },
+    "hirano2026": {
+      "type": "misc",
+      "fields": {
+        "author": "Hirano, Shinji",
+        "title": "From the Old to the New Starobinsky Inflation",
+        "year": "2026",
+        "eprint": "2610.00401",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th",
+        "url": "https://arxiv.org/abs/2610.00401"
+      }
+    },
+    "yoshida_quintin2018": {
+      "type": "article",
+      "fields": {
+        "author": "Yoshida, Daisuke and Quintin, Jerome",
+        "title": "Maximal extensions and singularities in inflationary spacetimes",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "15",
+        "pages": "155019",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aacf4b",
+        "eprint": "1803.07085",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1088/1361-6382/aacf4b"
       }
     }
   }
