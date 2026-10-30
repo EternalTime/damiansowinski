@@ -217,8 +217,8 @@ def declared_functions():
     return made
 
 
-NUMERIC_INPUT = (r"Full semiclassical evolution; $M/H_0=1/2$, $a=1$ and $\tau=0$ at $h=H_0/\sqrt2$. "
-                 r"Second-order saddle initialization at $h/H_0=1-10^{-4}$.")
+NUMERIC_INPUT = (r"Semiclassical equation; $M/H_0=1/2$, $a=1$, and $\tau=0$ at $h=H_0/\sqrt2$. "
+                 r"Approximate initial data through second order at $h/H_0=1-10^{-4}$.")
 
 
 def conformal_time(system, time):
