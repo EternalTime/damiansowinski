@@ -958,6 +958,10 @@ FRW_DUST = {"funcs": ["a"], "eqs": [["r", "r"]], "rates": [1.0], "params": {"k":
 # Ellis's small universes: a cubic torus of dust, in units of its period L, with the scale factor one
 # when the Hubble radius is L, so a = (3ct/2L)^(2/3), the conformal time is 2L sqrt(a) and a = (eta/2L)^2.
 # We sit at x = 0, one galaxy at x = 3L/10, and both stand again every period.
+MURPHY = {"q": 2, "H_s": 1}
+MURPHY_TURN = "the end of the acceleration, $a = 1$"
+MURPHY_INPUT = ("Radiation, $q = 2$: $a^2 = W(e^{2H_st})$, with $W$ Lambert's function, the inverse of "
+                "$H_st = \\ln a + a^2/2$.")
 SMALL_TORUS = {"L_1": 1, "L_2": 1, "L_3": 1}
 SMALL_PLANE = {"y": "0", "z": "0"}
 SMALL_SOLVES = (("x", "x"), ("y", "y"), ("z", "z"))
@@ -5095,6 +5099,18 @@ DIAGRAMS = [
             "$r/ct_b$", "$t/t_b$", {"t_b": 1}, EQUATOR, areal=True),
     Diagram("lqc_bounce", "harmonic", "taux", "$\\tau$ and $x$", ("\\tau", "x"), (-3, 3, -2.5, 2.5),
             "$x/ct_b$", "$\\tau/t_b$", {"t_b": 1}, {"y": "0", "z": "0"}, tau="tau", families=SIDEWAYS),
+    # Murphy's universe with viscosity for radiation, q = 2, in units of 1/H_s and c/H_s. The scale factor
+    # is the time of two charts; the cosmic chart's a(t) is a^2 = W(e^(2t)), Lambert's W, from
+    # H_s t = ln a + a^2/2, and the expansion stops accelerating at a = 1, t = 1/2.
+    Diagram("murphy_viscous_universe", "scale_factor", "ax", "$a$ and $x$", ("a", "x"), (-1.5, 1.5, 0, 3),
+            "$x\\;[c/H_s]$", "$a$", MURPHY, {"y": "0", "z": "0"}, tau="a", families=SIDEWAYS,
+            lines=(("shell", "x0", "1", MURPHY_TURN),)),
+    Diagram("murphy_viscous_universe", "scale_factor_spherical", "radial", "$a$ and $r$", ("a", "r"), (0, 3, 0, 3),
+            "$r\\;[c/H_s]$", "$a$", MURPHY, EQUATOR, tau="a", areal=True, lines=(("shell", "x0", "1", MURPHY_TURN),)),
+    Diagram("murphy_viscous_universe", "cosmic", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
+            "$x\\;[c/H_s]$", "$t\\;[1/H_s]$", MURPHY, {"y": "0", "z": "0"}, families=SIDEWAYS,
+            functions={"a": "sqrt(LambertW(exp(2*t)))"}, input=MURPHY_INPUT,
+            lines=(("shell", "x0", "1/2", MURPHY_TURN),)),
     Diagram("kopczynski_trautman", "comoving_cartesian", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
             "$x/\\ell$", "$ct/\\ell$", {"ell": 1}, {"y": "0", "z": "0"}, families=SIDEWAYS),
     Diagram("kopczynski_trautman", "comoving_spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
@@ -12003,6 +12019,21 @@ CAPTIONS = {
         "lies at infinity at the bounce, where the expansion rate vanishes, and comes nearest the centre at "
         "$t = \\pm\\sqrt{3/2}\\,t_b$, where $r \\approx 5.26\\,ct_b$. Beyond it both families "
         "of rays converge before the bounce and both diverge after it.",
+    ],
+    ("murphy_viscous_universe", "scale_factor", "ax"): [
+        "The plane of the scale factor $a$ and $x$ ($y = z = 0$) for radiation, $q = 2$, each vertical line a "
+        "comoving observer. The edges of the cones are $dx/da = \\pm c(1 + a^2)/H_sa^2$, nearly flat as $a \\to 0$, "
+        "the steady state in the infinite past, where the curvature stays finite.",
+    ],
+    ("murphy_viscous_universe", "scale_factor_spherical", "radial"): [
+        "The plane of $a$ and the comoving $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for $q = 2$, each point a 2-sphere "
+        "of areal radius $ar$. The dotted curve is the Hubble sphere, $ar = c(1 + a^2)/H_s$, nearest the centre "
+        "at $a = 1$, where the acceleration ends.",
+    ],
+    ("murphy_viscous_universe", "cosmic", "tx"): [
+        "The plane of the proper time $t$ and $x$ ($y = z = 0$) for $q = 2$. The edges of the cones are "
+        "$dx/dt = \\pm c/a$; as $t \\to -\\infty$ the scale factor falls as $e^{H_st}$ and the cones open "
+        "out, while the Kretschmann scalar tends to $24H_s^4/c^4$.",
     ],
     ("lqc_bounce", "harmonic", "taux"): [
         "The plane of the harmonic time $\\tau$ and $x$ ($y = z = 0$), with $t = t_b\\sinh(\\tau/t_b)$. A unit of "
