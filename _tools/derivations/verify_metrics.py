@@ -5300,6 +5300,9 @@ sph_stars.register_dimensions(sys.modules[__name__])
 import early_braneworlds as eb
 eb.register_dimensions(sys.modules[__name__])
 
+import hawking_moss as hm
+hm.register_dimensions(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

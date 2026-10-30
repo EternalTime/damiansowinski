@@ -1,0 +1,207 @@
+{
+  "id": "hawking_moss",
+  "name": "Hawking-Moss Instanton",
+  "short_name": "Hawking-Moss",
+  "description": "A homogeneous scalar field at a positive potential maximum on a Euclidean 4-sphere.",
+  "tags": [
+    "gravitational instanton",
+    "Euclidean quantum gravity",
+    "Riemannian",
+    "Lorentzian",
+    "quantum cosmology",
+    "tunnelling",
+    "de Sitter",
+    "inflation",
+    "vacuum energy",
+    "bounce",
+    "cosmology",
+    "cosmological constant",
+    "positive cosmological constant",
+    "constant curvature",
+    "exact solution",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model",
+    "Einstein space",
+    "conformally flat",
+    "spherically symmetric"
+  ],
+  "signature": "(+,+,+,+)",
+  "convention": "We use $c = \\hbar = 1$, keep $G$ explicit, and take $\\ell$ as the sphere radius at the barrier maximum, with $V_{\\mathrm{top}}$ the potential energy density there and $V_F$ the false vacuum energy density. The Euclidean signature is $(+,+,+,+)$, and a dot denotes a derivative with respect to an affine parameter. The Ricci tensor is $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "At the top of a potential barrier, a scalar field rests in an unstable equilibrium. Stephen Hawking and Ian G. Moss used this configuration in 1982 to describe a transition out of a metastable vacuum whose energy sustains exponential expansion [hawking_moss1982]. Their homogeneous solution holds the field at the barrier top throughout a compact Euclidean 4-sphere [weinberg2007hm].¶The potential energy at the maximum sets the radius of this sphere [weinberg2007hm]. A larger positive energy density means a smaller sphere, with stronger curvature. A continuation to real time produces de Sitter geometry with the scalar field still at the maximum [brown2007hm]. A displacement from the maximum starts the field rolling toward one of its neighbouring minima [weinberg2007hm].¶The false vacuum and the barrier top each have their own Euclidean sphere [weinberg2007hm]. For an energy density $V$, the sphere's Euclidean action is $S_E = -3/(8G^2V)$ in units with $c = \\hbar = 1$ [weinberg2007hm]. Their action difference is the positive suppression exponent $B = 3(1/V_F - 1/V_{\\mathrm{top}})/(8G^2)$, where $V_F$ is the false vacuum energy density and $V_{\\mathrm{top}}$ its value at the barrier maximum [weinberg2007hm]. The leading exponential weight is $e^{-B}$ [weinberg2007hm].¶Adam R. Brown and Erick J. Weinberg derived a thermal description of these transitions in 2007, treating the scalar field inside a de Sitter horizon as a system at the horizon's temperature [brown2007hm]. They worked with potential differences small enough that the geometry could be held fixed. In this approximation, the Hawking-Moss exponent is the energy required to raise the field throughout a horizon volume to the barrier top, divided by the de Sitter temperature [weinberg2007hm, brown2007hm]. The thermal construction specifies the field within that horizon volume, with the state beyond the horizon left free [brown2007hm].¶Along suitable families of thick Coleman-De Luccia bounces, the field values at the two poles approach the same barrier maximum [brown2007hm]. Their homogeneous endpoint is the Hawking-Moss saddle. Brown and Weinberg also identified potentials for which a Coleman-De Luccia bounce coexists with a Hawking-Moss solution carrying one negative fluctuation mode [brown2007hm]. The dominant decay channel depends on the competing actions.¶For a fixed false vacuum, equal potential heights at distant maxima produce equal Hawking-Moss action differences [weinberg2007hm]. Weinberg related these saddle weights to thermal occupation probabilities and showed that a decay calculation must restrict the contributing states to the chosen false vacuum [weinberg2007hm]. Daiki Saito and Naritaka Oshita studied remote transitions in 2025 using a homogeneous scalar field on a fixed de Sitter background, with thermal and stochastic noise switched off [saito2025hm]. For their linear potential and stated regime of validity, the quantum transition probability retains dependence on the field separation, with greater suppression at larger separations [saito2025hm].",
+  "references": [
+    "hawking_moss1982",
+    "weinberg2007hm",
+    "brown2007hm",
+    "saito2025hm"
+  ],
+  "related": [
+    {
+      "id": "de_sitter",
+      "kind": "dual",
+      "text": "The sphere at the barrier maximum continues to de Sitter space with the same constant scalar field [brown2007hm]."
+    },
+    {
+      "id": "coleman_de_luccia",
+      "kind": "family",
+      "text": "A family of thick vacuum bubbles can approach the homogeneous field at a barrier maximum [brown2007hm]. The two saddles can also coexist for the same potential."
+    },
+    {
+      "id": "universe_from_nothing",
+      "kind": "family",
+      "text": "A round Euclidean 4-sphere enters both constructions. The Hawking-Moss exponent compares a whole sphere at the barrier maximum with a false vacuum sphere [weinberg2007hm]."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "four_sphere",
+      "name": "Euclidean 4-Sphere",
+      "coords": [
+        "\\xi",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\xi \\in [0, \\pi\\ell]",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\ell > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+        }
+      ],
+      "line_element": "ds^2 = d\\xi^2 + \\ell^2\\sin^2(\\xi/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "convention": "We use the proper distance $\\xi$ from one pole, with $\\chi$, $\\theta$, and $\\phi$ angles on each 3-sphere."
+    },
+    {
+      "id": "thermal",
+      "name": "Euclidean Thermal Coordinates",
+      "coords": [
+        "\\tau",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in [0, 2\\pi\\ell)",
+        "r \\in [0, \\ell]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\ell > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+        }
+      ],
+      "line_element": "ds^2 = \\left(1 - r^2/\\ell^2\\right)d\\tau^2 + \\dfrac{dr^2}{1 - r^2/\\ell^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "convention": "We use the Euclidean time $\\tau$ of period $2\\pi\\ell$, the areal radius $r$, and the polar angles $\\theta$ and $\\phi$."
+    },
+    {
+      "id": "thermal_angle",
+      "name": "Euclidean Thermal Angle",
+      "coords": [
+        "\\tau",
+        "\\eta",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in [0, 2\\pi\\ell)",
+        "\\eta \\in [0, \\pi/2]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\ell > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+        }
+      ],
+      "line_element": "ds^2 = \\cos^2\\eta\\,d\\tau^2 + \\ell^2d\\eta^2 + \\ell^2\\sin^2\\eta\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "convention": "We use the Euclidean time $\\tau$ of period $2\\pi\\ell$ and the radial angle $\\eta$, where $r = \\ell\\sin\\eta$, with $\\theta$ and $\\phi$ polar angles."
+    },
+    {
+      "id": "static_continuation",
+      "name": "Static Constant Field Continuation",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in [0, \\ell)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\ell > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+        }
+      ],
+      "line_element": "ds^2 = -\\left(1 - r^2/\\ell^2\\right)dt^2 + \\dfrac{dr^2}{1 - r^2/\\ell^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "convention": "We continue $\\tau = it$ with $t$ a length, and use the areal radius $r$ and the polar angles $\\theta$ and $\\phi$ in signature $(-,+,+,+)$."
+    },
+    {
+      "id": "wall_continuation",
+      "name": "Wall Constant Field Continuation",
+      "coords": [
+        "\\xi",
+        "\\psi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\xi \\in (0, \\pi\\ell)",
+        "\\psi \\in (-\\infty, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\ell > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+        }
+      ],
+      "line_element": "ds^2 = d\\xi^2 + \\ell^2\\sin^2(\\xi/\\ell)\\left(-d\\psi^2 + \\cosh^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "convention": "We continue $\\chi = \\pi/2 + i\\psi$, with $\\psi$ a dimensionless time and $\\xi$ a length, in signature $(+,-,+,+)$."
+    },
+    {
+      "id": "closed_continuation",
+      "name": "Closed Constant Field Continuation",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\chi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "\\ell > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+        }
+      ],
+      "line_element": "ds^2 = -dt^2 + \\ell^2\\cosh^2(t/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+      "convention": "We continue $\\xi = \\pi\\ell/2 + it$, with $t$ a proper time measured as a length and $\\chi$, $\\theta$, and $\\phi$ angles, in signature $(-,+,+,+)$."
+    }
+  ]
+}

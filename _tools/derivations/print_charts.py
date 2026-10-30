@@ -36945,5 +36945,9 @@ CHARTS["chodos_detweiler"] = [
     for system in _chodos_detweiler.CHARTS
 ]
 
+import hawking_moss as hm
+hm.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()
