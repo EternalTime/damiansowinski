@@ -123,6 +123,11 @@
       "id": "hauser_wave",
       "kind": "family",
       "text": "Hauser's twisting wave, a type N vacuum whose rays spread and twist [godazgar2021]."
+    },
+    {
+      "id": "kowalski_glikman",
+      "kind": "family",
+      "text": "A homogeneous wave in eleven dimensions with nine transverse directions and a parallel null 4-form. The metric and flux admit 32 Killing spinors [figueroa2001]."
     }
   ],
   "references": [
@@ -169,7 +174,8 @@
     "blau2002",
     "lin2004",
     "blau2003homogeneous",
-    "godazgar2021"
+    "godazgar2021",
+    "figueroa2001"
   ],
   "coordinates": [
     {

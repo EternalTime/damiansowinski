@@ -223,3 +223,27 @@ RAY_CAPTIONS = {
                   r"at $\mu/3$ and $\mu/6$, all other transverse coordinates zero."],
     "rosen": [r"Null geodesics in $(cu,y_1,y_4)$, with $w$ suppressed, inside "
               r"$0<\mu cu<3\pi$; the remaining transverse coordinates zero."]}
+
+
+def curvature_views(ck, src, cv):
+    """Only the two stored scalar contractions; no new curvature is calculated."""
+    horizontal = cv.axis(r"$\mu cu$", 0.0, 6*math.pi)
+    panels, curves = [], []
+    for field, pid, power in (("kretschmann", "K", 4), ("ricci_scalar", "R", 2)):
+        published = cv.nr_published(src, ID, "brinkmann", field, ["u"], ["mu"])
+        scale = {"kind": "linear", "from": -1.0, "to": 1.0}
+        panels.append({"id": pid, "name": f"${pid}/\\mu^{power}$", "aspect": 2.0,
+                       "scale": scale, "ticks": cv.value_ticks(scale)})
+        curves.extend(cv.line_curves(ck, ID, pid, pid, published, "u", horizontal, scale,
+                                     cv.PLOT_W/2, {"mu": 1.0}))
+    cv.shape_checks(ck, ID, [2.0, 2.0])
+    return [{"id": "null_scalars", "label": "Null curvature contractions", "kind": "line", "x": horizontal,
+             "panels": panels, "curves": curves, "marks": [],
+             "legend": [["line", "K", "Kretschmann scalar"], ["line", "R", "Ricci scalar"]],
+             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ along the wave.",
+                         r"$K=0$, with tidal eigenvalues $\mu^2/9$ and $\mu^2/36$.",
+                         r"The vanishing Ricci scalar, $R=0$."],
+             "ricci_sentences": [[2, 0]],
+             "settings": r"$\mu=1$; length unit $1/\mu$.",
+             "per_scalar": cv.scalar_clips("Linear scale; no clipping.", "Linear scale; no clipping."),
+             "clip": "Linear scales; both curves within their panels."}]

@@ -61,6 +61,11 @@
       "id": "cahen_wallach",
       "kind": "family",
       "text": "The family it belongs to, the plane waves whose curvature is carried unchanged along every geodesic. This wave is the member whose matrix is $-\\mu^2$ times the identity in ten dimensions [cahen1970, blau2002]."
+    },
+    {
+      "id": "kowalski_glikman",
+      "kind": "family",
+      "text": "The maximally supersymmetric wave of eleven dimensional supergravity, with a null 4-form. Three transverse directions oscillate at twice the frequency of the other six [figueroa2003maximally]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "penrose1965plane",
     "hubeny2002",
     "lin2004",
-    "bonnor1969light"
+    "bonnor1969light",
+    "figueroa2003maximally"
   ],
   "coordinates": [
     {

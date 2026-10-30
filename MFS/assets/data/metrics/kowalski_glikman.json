@@ -87,7 +87,7 @@
           "description": "The positive flux scale, an inverse length. In the Brinkmann chart $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$, with $F_{u123}=\\mu$ in the component basis $cu$. The field equation is $R_{MN}=\\frac1{12}(F_{MPQR}F_N{}^{PQR}-\\frac1{12}g_{MN}F_{PQRS}F^{PQRS})$ [figueroa2001]."
         }
       ],
-      "convention": "The coordinates $u$ and $v$ are null, with $u$ a time and $v$ a length; $x_1$ to $x_9$ are transverse lengths. Components use $x^0=cu$. A dot denotes differentiation with respect to an affine parameter, so $\\dot u=d(cu)/d\\lambda$. The global chart has $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$ [figueroa2001].",
+      "convention": "The null wave fronts have constant $u$, with $u$ a time and $v$ a length along their parallel null rays; $x_1$ to $x_9$ are transverse lengths. Components use $x^0=cu$. A dot denotes differentiation with respect to an affine parameter, so $\\dot u=d(cu)/d\\lambda$. The global chart has $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$ [figueroa2001].",
       "line_element": "ds^2 = -\\mu^2\\left(\\frac{x_1^2 + x_2^2 + x_3^2}{9} + \\frac{x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2 + x_9^2}{36}\\right)c^2du^2 - 2c\\,du\\,dv + dx_1^2 + dx_2^2 + dx_3^2 + dx_4^2 + dx_5^2 + dx_6^2 + dx_7^2 + dx_8^2 + dx_9^2",
       "metric_components": [
         {
@@ -2167,7 +2167,7 @@
           "description": "The positive flux scale, an inverse length. In the Brinkmann chart $F=\\mu c\\,du\\wedge dx_1\\wedge dx_2\\wedge dx_3$, with $F_{u123}=\\mu$ in the component basis $cu$. The field equation is $R_{MN}=\\frac1{12}(F_{MPQR}F_N{}^{PQR}-\\frac1{12}g_{MN}F_{PQRS}F^{PQRS})$ [figueroa2001]."
         }
       ],
-      "convention": "The Rosen patch has $0<u<3\\pi/(\\mu c)$, with $w$ and $y_1$ to $y_9$ lengths. Put $a_i=\\sin(\\omega_i cu)$, where $\\omega_i=\\mu/3$ for $i=1,2,3$ and $\\omega_i=\\mu/6$ for $i=4,\\ldots,9$. The Brinkmann map is $x_i=a_i y_i$, $v=w+\\frac12\\sum_{i=1}^9a_i a_i\\prime y_i^2$, where $a_i\\prime=da_i/d(cu)$. The flux is $F=\\mu c\\,a_1a_2a_3\\,du\\wedge dy_1\\wedge dy_2\\wedge dy_3$. Components use $cu$; dots are affine derivatives. The patch ends at coordinate caustics [blau2002penrose].",
+      "convention": "The Rosen patch has $0<u<3\\pi/(\\mu c)$, with $w$ and $y_1$ to $y_9$ lengths. Put $a_i=\\sin(\\omega_i cu)$, where $\\omega_i=\\mu/3$ for $i=1,2,3$ and $\\omega_i=\\mu/6$ for $i=4,\\ldots,9$. The Brinkmann map is $x_i=a_i y_i$, $v=w+\\frac12\\sum_{i=1}^9a_i a_i' y_i^2$, where $a_i'=da_i/d(cu)$. The flux is $F=\\mu c\\,a_1a_2a_3\\,du\\wedge dy_1\\wedge dy_2\\wedge dy_3$. Components use $cu$; dots are affine derivatives. The patch ends at coordinate caustics [blau2002penrose].",
       "line_element": "ds^2 = -2c\\,du\\,dw + \\sin^2\\left(\\mu cu/3\\right)\\left(dy_1^2 + dy_2^2 + dy_3^2\\right) + \\sin^2\\left(\\mu cu/6\\right)\\left(dy_4^2 + dy_5^2 + dy_6^2 + dy_7^2 + dy_8^2 + dy_9^2\\right)",
       "metric_components": [
         {

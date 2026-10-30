@@ -62,6 +62,11 @@
       "id": "nariai",
       "kind": "family",
       "text": "De Sitter space of two dimensions times a sphere, a symmetric spacetime that splits into a product [figueroa2003maximally]."
+    },
+    {
+      "id": "kowalski_glikman",
+      "kind": "family",
+      "text": "The member in eleven dimensions with a null 4-form and 32 Killing spinors. Three transverse directions oscillate at twice the frequency of the other six [figueroa2001]."
     }
   ],
   "references": [

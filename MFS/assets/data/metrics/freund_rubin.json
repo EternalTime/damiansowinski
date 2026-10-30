@@ -85,6 +85,11 @@
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "family",
       "text": "The counterpart one dimension down. The Penrose limit of anti-de Sitter space of five dimensions times a 5-sphere along a light ray circling the sphere is a plane wave that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose]."
+    },
+    {
+      "id": "kowalski_glikman",
+      "kind": "limit",
+      "text": "The Penrose limit along a light ray with motion on the 7-sphere. Its two transverse frequencies are inversely proportional to the curvature radii of the two factors [blau2002penrose]."
     }
   ],
   "references": [
