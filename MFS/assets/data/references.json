@@ -1,5 +1,5 @@
 {
-  "version": "db4caf99bd76be15",
+  "version": "5407eb478ff7a155",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33804,6 +33804,32 @@
         "year": "2021",
         "doi": "10.1007/s11040-021-09385-3",
         "url": "https://doi.org/10.1007/s11040-021-09385-3"
+      }
+    },
+    "chodos1980": {
+      "type": "article",
+      "fields": {
+        "author": "Chodos, Alan and Detweiler, Steven",
+        "title": "Where has the fifth dimension gone?",
+        "journal": "Physical Review D",
+        "volume": "21",
+        "number": "8",
+        "pages": "2167--2170",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.21.2167"
+      }
+    },
+    "chyba1985": {
+      "type": "article",
+      "fields": {
+        "author": "Chyba, Christopher F.",
+        "title": "{Kaluza-Klein} unified field theory and apparent four-dimensional space-time",
+        "journal": "American Journal of Physics",
+        "volume": "53",
+        "number": "9",
+        "pages": "863--872",
+        "year": "1985",
+        "doi": "10.1119/1.14353"
       }
     }
   }

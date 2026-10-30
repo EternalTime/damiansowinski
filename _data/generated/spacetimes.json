@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 214,
+  "count": 215,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -14742,6 +14742,205 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{8\\rho^6\\left(6a^2\\,\\rho^4 + 12a\\,b\\,\\rho^4 + 6b^2\\,\\rho^4 + 48a^2\\,b\\,\\rho^3 + 48a\\,b^2\\,\\rho^3 + a^4\\,\\rho^2 + 8a^3\\,b\\,\\rho^2 + 126a^2\\,b^2\\,\\rho^2 + 8a\\,b^3\\,\\rho^2 + b^4\\,\\rho^2 + 48a^3\\,b^2\\,\\rho + 48a^2\\,b^3\\,\\rho + 6a^4\\,b^2 + 12a^3\\,b^3 + 6a^2\\,b^4\\right)}{\\left(\\rho + a\\right)^8\\left(\\rho + b\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "chodos_detweiler",
+      "name": "Chodos and Detweiler's five-dimensional universe",
+      "short_name": "Chodos-Detweiler",
+      "description": "Three expanding spatial circles and one contracting circle in a five-dimensional vacuum universe.",
+      "tags": [
+        "vacuum",
+        "five-dimensional",
+        "higher dimensions",
+        "Kaluza-Klein",
+        "compact dimension",
+        "cosmology",
+        "Kasner",
+        "anisotropic",
+        "spatially homogeneous",
+        "homogeneous",
+        "time-dependent",
+        "curvature singularity",
+        "spacelike singularity",
+        "big bang",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "torus",
+        "topology"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "We use signature $(-,+,+,+,+)$ and keep $c$ explicit. Cosmic time $t$, the equality time $t_0$ and the normalization time $\\tau$ have units of time; $L$ and the spatial coordinates have units of length. Tensor components use $x^0=ct$.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "family",
+          "text": "The four spatial exponents are $(1/2,1/2,1/2,-1/2)$, with each spatial direction closed into a circle [chyba1985]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "family",
+          "text": "Its five dimensional vacuum chart has these local scale factors at $s_1=s_2=s_3=1/2$ and $s_5=-1/2$. The four spatial coordinates here are periodic [chyba1985]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "The proper size of a compact direction varies with position in the monopole and with cosmic time in this vacuum universe."
+        }
+      ],
+      "references": [
+        "chodos1980",
+        "chyba1985"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/chodos_detweiler.json",
+      "charts": [
+        {
+          "id": "synchronous",
+          "name": "Synchronous",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "w"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "x \\in [0, L)",
+            "y \\in [0, L)",
+            "z \\in [0, L)",
+            "w \\in [0, L)",
+            "t \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "t_0",
+              "description": "Positive cosmic time at which all four proper circumferences equal $L$"
+            },
+            {
+              "symbol": "L",
+              "description": "Common positive coordinate period in the synchronous chart, with units of length"
+            }
+          ],
+          "convention": "The source's spatial coordinates $x^1,x^2,x^3,x^5$ are written $x,y,z,w$. The four proper circumferences equal $L$ at $t=t_0$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{t}{t_0}\\left(dx^2 + dy^2 + dz^2\\right) + \\dfrac{t_0}{t}dw^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{t}{t_0}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{t}{t_0}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{t}{t_0}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "\\dfrac{t_0}{t}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{9}{2c^4\\,t^4}"
+        },
+        {
+          "id": "rescaled",
+          "name": "Rescaled",
+          "coordinates": [
+            "t",
+            "X",
+            "Y",
+            "Z",
+            "W"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "X \\in [0, L\\sqrt{\\tau/t_0})",
+            "Y \\in [0, L\\sqrt{\\tau/t_0})",
+            "Z \\in [0, L\\sqrt{\\tau/t_0})",
+            "W \\in [0, L\\sqrt{t_0/\\tau})",
+            "t \\to 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "t_0",
+              "description": "Positive cosmic time at which all four proper circumferences equal $L$"
+            },
+            {
+              "symbol": "L",
+              "description": "Common positive coordinate period in the synchronous chart, with units of length"
+            },
+            {
+              "symbol": "\\tau",
+              "description": "Fixed positive cosmic time at which the rescaled spatial metric coefficients equal one"
+            }
+          ],
+          "convention": "The rescaling is $X=\\sqrt{\\tau/t_0}x$, $Y=\\sqrt{\\tau/t_0}y$, $Z=\\sqrt{\\tau/t_0}z$, and $W=\\sqrt{t_0/\\tau}w$, with $t$ unchanged.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{t}{\\tau}\\left(dX^2 + dY^2 + dZ^2\\right) + \\dfrac{\\tau}{t}dW^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "\\dfrac{t}{\\tau}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "\\dfrac{t}{\\tau}"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "\\dfrac{t}{\\tau}"
+            },
+            {
+              "indices": [
+                "W",
+                "W"
+              ],
+              "value": "\\dfrac{\\tau}{t}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{9}{2c^4\\,t^4}"
         }
       ]
     },
@@ -31142,6 +31341,11 @@
           "id": "topological_star",
           "kind": "family",
           "text": "A star held open by magnetic flux in the same five dimensions, whose circle shrinks to a point all over a sphere, the bubble. When the bubble's tip is a cone, its two poles carry monopole charges $k$ and $-k$ [bah2021]."
+        },
+        {
+          "id": "chodos_detweiler",
+          "kind": "family",
+          "text": "The fifth circle contracts as $t^{-1/2}$ while three other compact directions expand as $t^{1/2}$ [chyba1985]."
         }
       ],
       "references": [
@@ -31169,7 +31373,8 @@
         "emparan2000",
         "horvath1977",
         "nilsson1984",
-        "bah2021"
+        "bah2021",
+        "chyba1985"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -31802,6 +32007,11 @@
           "id": "ghost_neutrinos",
           "kind": "dual",
           "text": "Taub's static plane symmetric vacuum, the geometry of the ghost neutrinos, continues through its timelike singularity into Kasner's universe with exponents $(2/3, 2/3, -1/3)$ [bedran1997]."
+        },
+        {
+          "id": "chodos_detweiler",
+          "kind": "family",
+          "text": "Three expanding circles and one contracting circle form a five dimensional Kasner vacuum with exponents $(1/2,1/2,1/2,-1/2)$ [chyba1985]."
         }
       ],
       "references": [
@@ -31827,7 +32037,8 @@
         "king1973",
         "kastor2015",
         "belinskii1975",
-        "bedran1997"
+        "bedran1997",
+        "chyba1985"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -32179,6 +32390,11 @@
           "id": "stiff_fluid_universes",
           "kind": "family",
           "text": "The plane symmetric stiff fluid admits density gradients across its symmetry planes. At $b=0$ it shares the homogeneous scalar field solutions with $p_y=p_z$."
+        },
+        {
+          "id": "chodos_detweiler",
+          "kind": "family",
+          "text": "The five dimensional vacuum chart at $s_1=s_2=s_3=1/2$, $s_5=-1/2$ has the local geometry of this expanding and contracting four torus [chyba1985]."
         }
       ],
       "references": [
@@ -32196,7 +32412,8 @@
         "janis1968",
         "jacobs1969",
         "ashtekar2009bianchi",
-        "hartnoll2021diving"
+        "hartnoll2021diving",
+        "chyba1985"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
