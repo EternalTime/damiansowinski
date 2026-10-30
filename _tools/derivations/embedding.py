@@ -3776,6 +3776,48 @@ def kerr(ck, src):
                           f"so that $r_+ = {rp:.3f}\\,GM/c^2$.")]
 
 
+def kerr_disc_source(ck, src):
+    """Israel's disc source at m = 1 and a = 3m/2, as its other diagrams draw it, with no horizon.
+    The equatorial slice of constant t, outside the ring, has g_rr = r^2/Delta and the circumference
+    radius rho = sqrt(r^2 + a^2 + 2ma^2/r), which is least at r = (ma^2)^(1/3), a neck of radius
+    2.7205 m, checked, and grows without bound toward the ring at r = 0. Inside the neck the circles
+    soon grow faster than the distance in to them: g_rr = (drho/dr)^2 at a root of the published
+    defect, found here, where the surface lies level and the drawing stops, and nearer the ring no
+    surface of revolution in flat space carries the slice. g_tt vanishes on the equator at r = 2m,
+    the edge of the ergoregion."""
+    name = "Kerr disc source"
+    sl = Slice(src, "kerr_disc_source", "boyer_lindquist", "r", "\\phi", {"t": 0, **EQUATOR}, {"m": 1, "a": "3/2"})
+    levels = [float(z) for z in sp.Poly(sp.numer(sp.together(sl.defect)), sl.x).real_roots() if 0 < z < 1.3]
+    ck.add(f"{name}: one circle inside the neck where the surface lies level", abs(len(levels) - 1), 0.5)
+    level = levels[0]
+    neck = 2.25 ** (1 / 3)
+    ck.add(f"{name}: the neck is at r = (ma^2)^(1/3), with radius 2.7205 m",
+           abs(float(sl.rho_at(neck)) - math.sqrt(neck ** 2 + 2.25 + 4.5 / neck)) + abs(math.sqrt(neck ** 2 + 2.25 + 4.5 / neck) - 2.72052), 1e-4)
+    ck.stops(f"{name}, nearer the ring than the level circle", sl, np.linspace(0.02, level, 402)[1:-1])
+    top, radii = 8.0, (2.0, 3.0, 4.0, 5.0, 6.0)
+    size = 2 * float(sl.rho_at(top))
+    sheet = Piece("equator", "sheet", sl, level, top, 0.0, 1,
+                  (("stops", f"at $r = {level:.3f}\\,m$ the surface lies level, and nearer the ring the circles grow "
+                             "faster than the distance in to them"),
+                   ("edge", "the surface runs on, widening, to $r \\to \\infty$")),
+                  [(level, "chartedge", None), (neck, "neck", "neck")] + [(r, "r", None) for r in radii[1:]]
+                  + [(2.0, "ergo", None), (top, "r", "$8\\,m$")], size, digits=1e-12)
+    ck.isometry(f"{name}, the equator", sheet)
+    surface = Surface([sheet])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(neck), "neck", dx=10)
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$8\\,m$")
+    fig.legend("fill", "cover", "the equator outside the ring")
+    fig.legend("line", "r", "$r = 3$, $4$, $5$, $6$ and $8\\,m$")
+    fig.legend("line", "neck", "the neck, $r = (ma^2)^{1/3}$")
+    fig.legend("line", "ergo", "the edge of the ergoregion, $r = 2m$")
+    fig.legend("line", "chartedge", f"$r = {level:.3f}\\,m$, where the drawing stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$m$", [surface], fig.done(),
+                 settings="$m = 1$ and $a = 1.5\\,m$, with no horizon.",
+                 stops=["Nearer the ring no surface in flat space carries the slice."])]
+
+
 def kerr_bertotti_robinson(ck, src):
     """The equatorial slice of constant t of Podolsky and Ovcharenko's hole outside r_+, at a = 4m/5
     and B = 1/(4m), where g_tphi drops out: rho = sqrt(g_phiphi) = C sqrt(W), the circumference
@@ -18021,6 +18063,7 @@ DRAWN = {
     "vuorio_warped_ads": vuorio_warped_ads,
     "maitra_dust": maitra_dust,
     "kerr": kerr,
+    "kerr_disc_source": kerr_disc_source,
     "kerr_newman": kerr_newman,
     "eye_of_the_storm": eye_of_the_storm,
     "kerr_bertotti_robinson": kerr_bertotti_robinson,
@@ -18858,6 +18901,9 @@ CAPTIONS = {
         "Moving in from $r_-$, $g_{rr} = r^2/((r_+ - r)(r_- - r))$ falls to $1$ at $r = r_q^2/r_s$, where the "
         "surface lies level. Nearer the singularity at $r = 0$, $g_{rr} < 1$: the circles grow faster than "
         "the distance out to them, and no surface in flat space carries that part of the slice.",
+    ],
+    ("kerr_disc_source", "equator"): [
+        "The equator outside the ring at one moment of $t$. Its circles, of radius $\\sqrt{r^2 + a^2 + 2ma^2/r}$, narrow to a neck and widen without bound toward the ring.",
     ],
     ("kerr", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a rotating black hole at one moment of "

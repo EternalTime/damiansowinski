@@ -1,0 +1,12 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis through the centre of the disc, which the embedded equatorial plane outside the ring does not meet.",
+      "drawings": [
+        "kerr_disc_source/boyer_lindquist/through",
+        "kerr_disc_source/kerr_schild/through",
+        "conformal kerr_disc_source/axis"
+      ]
+    }
+  ]
+}

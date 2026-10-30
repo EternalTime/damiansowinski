@@ -3899,6 +3899,9 @@ HIDDEN = {
        for system in ("one_string", "kerr_ingoing", "kerr_outgoing")},
     **{("kerr_taub_nut", view): "the regular half of the axis, which the embedded equatorial plane does not meet"
        for view in ("axis", "ingoing", "outgoing")},
+    **{("kerr_disc_source", system, "through"): "the axis through the centre of the disc, which the embedded equatorial plane outside the ring does not meet"
+       for system in ("boyer_lindquist", "kerr_schild")},
+    ("kerr_disc_source", "axis"): "the axis through the centre of the disc, which the embedded equatorial plane outside the ring does not meet",
     ("kerr_taub_nut", "plebanski", "principal"): "the moment of constant t is a surface on which tau changes with sigma, the coordinate the drawing leaves out",
     ("kerr_melvin", "boyer_lindquist", "tube"): "the hole in a stronger field, B = 3/(4m), than the one whose equator is embedded",
     **{("swirling_universe_black_hole", system, "ergo"): "the moment embedded is the plane through the equator, which meets this meridional plane only in the line drawn as the equatorial plane"

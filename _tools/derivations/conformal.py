@@ -6172,6 +6172,69 @@ def kerr(ck, src):
     return views
 
 
+def kerr_disc_source(ck, src):
+    """Israel's disc source on its symmetry axis, at m = 1 and a = 3m/2, where no horizon forms. On the
+    axis the published metric is -f c^2dt^2 + dr^2/f with f = Delta/(r^2 + a^2), g_tt g_rr = -1 checked,
+    and f > 0 at every r. At r = 0 the axis passes through the centre of the disc onto the half axis
+    theta = pi, so with z = r on theta = 0 and z = -r on theta = pi the axis is one line, z over the
+    whole real line, and p, q = arctan((t -+ z*)/a), with z* = sign(z) r*(|z|), give the full diamond,
+    the centre of the disc on its middle line. The tortoise coordinate, with dr*/dr = 1/f and
+    r*(0) = 0, is r + m ln(Delta/a^2) + (2m^2/b)(arctan((r - m)/b) + arctan(m/b)), b^2 = a^2 - m^2,
+    checked against 1/f. The Kerr-Schild chart has c tau = ct + (r* - r), and is checked onto the same
+    diamond. The Kretschmann scalar is checked finite at the centre of the disc."""
+    name = "Kerr disc source axis"
+    pl = Plane(src, "kerr_disc_source", "boyer_lindquist", ("t", "r"), {"phi": "0"}, nr.KDSRC, axis=("theta", "0"))
+    assert pl.g[0, 1] == 0 and sp.simplify(pl.g[0, 0] * pl.g[1, 1] + 1) == 0
+    m, a = 1.0, 1.5
+    b = math.sqrt(a * a - m * m)
+
+    def rstar(r):
+        r = np.asarray(r, dtype=float)
+        return (r + m * np.log((r * r - 2 * m * r + a * a) / (a * a))
+                + (2 * m * m / b) * (np.arctan((r - m) / b) + math.atan(m / b)))
+    rs = np.linspace(0.05, 40, 200)
+    f = (rs * rs - 2 * m * rs + a * a) / (rs * rs + a * a)
+    ck.limit(f"{name}: dr*/dr = 1/f", (rstar(rs + 1e-6) - rstar(rs - 1e-6)) / 2e-6, 1 / f, 1e-6)
+    ck.limit(f"{name}: r*(0) = 0", [float(rstar(0.0))], [0.0], 1e-14)
+
+    def zstar(z):
+        z = np.asarray(z, dtype=float)
+        return np.sign(z) * rstar(np.abs(z))
+
+    def chart(t, r):
+        return mink_pq(t, rstar(r), a)
+
+    def schild(tau, r):
+        return mink_pq(tau - (rstar(r) - r), rstar(r), a)
+    ck.chart(f"{name}, Boyer-Lindquist", pl, chart, ck.uniform(-30, 30), ck.uniform(0.01, 60), lambda t, r: (1, 0))
+    ks = Plane(src, "kerr_disc_source", "kerr_schild", ("\\tau", "r"), {"psi": "0"}, nr.KDSRC, axis=("theta", "0"))
+    ck.chart(f"{name}, Kerr-Schild", ks, schild, ck.uniform(-30, 30), ck.uniform(0.01, 60), lambda t, r: (1, 0))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at the centre of the disc",
+              pl.kretschmann(np.zeros(3), np.array([0.0, 1e-3, 1e-2])))
+
+    box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    v = View("axis", "Symmetry axis", box, "boyer_lindquist")
+    v.fill("region", DIAMOND)
+    v.fill("cover", DIAMOND)
+    radii = (1.5, 3.0, 6.0)
+    for r in radii:
+        for side in (1, -1):
+            v.curve("r", *mink_pq(S_ALL, np.full_like(S_ALL, side * float(rstar(r))), a))
+    zz = np.concatenate([-np.geomspace(1e4, 1e-6, 300), [0.0], np.geomspace(1e-6, 1e4, 300)])
+    for tt in (-4, -2, -1, 0, 1, 2, 4):
+        v.curve("t", *mink_pq(np.full_like(zz, tt * a), zstar(zz), a))
+    v.line("centre", [[[0, -PI], [0, PI]]])
+    diamond_edges(v)
+    v.label_xt([0, 0.3], "disc", "l", "small", dx=6)
+    v.legend("cover", "the whole axis")
+    v.legend("r", "$r = 1.5$, $3$ and $6\\,m$ on either side")
+    v.legend("t", "$ct = 0$, $\\pm 1.5$, $\\pm 3$ and $\\pm 6\\,m$")
+    v.legend("centre", "the centre of the disc, $r = 0$")
+    v.set(settings="$m = 1$ and $a = 1.5\\,m$, with no horizon.",
+          restriction="The symmetry axis only, a totally geodesic surface.")
+    return [v]
+
+
 def kerr_newman(ck, src):
     views = kerr_axis(ck, src, "kerr_newman", {"G": 1, "M": 1, "a": "3/5", "r_Q": "1/2"}, "Kerr-Newman")
     views[0].set(settings="$a = 0.6\\,GM/c^2$ and $r_Q = 0.5\\,GM/c^2$.")
@@ -26682,7 +26745,7 @@ DRAWN = {
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
     "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
-    "kerr": kerr, "kerr_newman": kerr_newman, "eye_of_the_storm": eye_of_the_storm, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
+    "kerr": kerr, "kerr_disc_source": kerr_disc_source, "kerr_newman": kerr_newman, "eye_of_the_storm": eye_of_the_storm, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
     "elliptic_de_sitter": elliptic_de_sitter,
@@ -28443,6 +28506,10 @@ CAPTIONS = {
         "the lens between the surface and its centre $\\chi = 0$, which runs from $i^-$ to $i^+$.",
         "Someone who stays in the lower exterior sees the ball sink behind $r_+$ and never sees the bounce, and "
         "someone in the upper exterior sees the white hole, and the dust coming out of it.",
+    ],
+    ("kerr_disc_source", "axis"): [
+        "The axis through the centre of the disc, $\\theta = 0$ on the right and $\\theta = \\pi$ on the left: one "
+        "line through the layer, running out to infinity at both ends.",
     ],
     ("eye_of_the_storm", "axis"): [
         "The rotation axis of the eye of the storm ($\\theta = 0$), maximally extended, drawn for $a = 0.6\\,m$ and "

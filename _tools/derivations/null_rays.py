@@ -261,6 +261,8 @@ UV_TO_TZ = ((-0.5, 1), (0.5, 1))        # (u, v) of the plane wave to z = v - u/
 RADIAL = ("ingoing", "outgoing")
 SIDEWAYS = ("moving left", "moving right")
 EQUATOR = {"theta": "pi/2", "phi": "0"}
+# Israel's disc source of Kerr's metric, spun past extremality so that no horizon hides the disc.
+KDSRC = {"m": 1, "a": "3/2"}
 # Tangherlini's planes of the time and r hold every angle fixed, three in five dimensions and four in six.
 TANGHERLINI_FIVE = {"psi": "pi/2", "theta": "pi/2", "phi": "0"}
 TANGHERLINI_SIX = {"chi": "pi/2", **TANGHERLINI_FIVE}
@@ -4650,6 +4652,15 @@ DIAGRAMS = [
     Diagram("kerr_taub_nut", "plebanski", "principal", "principal null rays, $\\tau$ and $q$", ("\\tau", "q"),
             (0, 6, -3, 3), "$q/m$", "$\\tau/m$", KTN, {"p": "5/4"}, orient="ingoing", tau="tau", principal=True,
             leaves=("sigma",), mark_gtt="the ergosurface", cone=PRINCIPAL_CONE),
+    # Israel's disc source of Kerr's metric at m = 1, a = 3/2, where no horizon hides the disc. The axis
+    # runs through the centre of the disc, r = 0, and comes out on the other face, theta -> pi - theta:
+    # drawn through the centre, z = r cos(theta) on each side, in both charts.
+    Diagram("kerr_disc_source", "boyer_lindquist", "through", "the axis, through the disc", ("t", "r"),
+            (0, 4, -4, 4), "$z/m$", "$ct/m$", KDSRC, {"theta": "0", "phi": "0"}, mirror=True, families=SIDEWAYS,
+            cones=(4, 8), lines=(("shell", "r", "0", "the disc, $r = 0$"),)),
+    Diagram("kerr_disc_source", "kerr_schild", "through", "the axis, through the disc", ("\\tau", "r"),
+            (0, 4, -4, 4), "$z/m$", "$c\\tau/m$", KDSRC, {"theta": "0", "psi": "0"}, mirror=True, tau="tau",
+            families=SIDEWAYS, cones=(4, 8), lines=(("shell", "r", "0", "the disc, $r = 0$"),)),
     # Brill's charged Taub-NUT. The cross term carries cos(theta), so the equator's plane of t and r
     # holds its rays in the chart with two strings, and the regular half of the axis does in the
     # chart with one and in both Eddington-Finkelstein charts, which run through both horizons.
@@ -10730,6 +10741,12 @@ CAPTIONS = {
     ("super_entropic", "carter_plebanski", "principal"): [
         "The equatorial plane ($p = 0$) drawn in $\\tau$ and $q$, with $\\sigma$ left out, for $m = 2\\ell$, where $q_+ = \\ell$. Its rays are the principal null congruence: the two null directions of the plane of $\\partial_q$ and $(q^2 + \\ell^2)\\,\\partial_\\tau - \\partial_\\sigma$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\sigma/dq = \\mp 1/Q$, and the curves drawn are the rays' projections, $d(c\\tau)/dq = \\pm(q^2 + \\ell^2)/Q$, the same at every $p$.",
         "The rays are null geodesics, and each cone is the future cone of the principal plane. The cones close at $q_+ = \\ell$ and point to smaller $q$ inside it. The dotted line is the ergosurface, $Q = P$, at $q = 1.180\\,\\ell$ on the equator, and between it and $q_+$ nothing, light included, can keep $\\sigma$ fixed.",
+    ],
+    ("kerr_disc_source", "boyer_lindquist", "through"): [
+        "The rotation axis through the centre of the disc ($m = 1$, $a = 3m/2$, no horizon): $z = r$ is $\\theta = 0$ and $z = -r$ is $\\theta = \\pi$, the far face of the disc glued to the near one. The rays have $d(ct)/dr = \\pm(r^2 + a^2)/\\Delta$, steepest at $r = a$, with a corner in their slope at the disc, where the layer sits.",
+    ],
+    ("kerr_disc_source", "kerr_schild", "through"): [
+        "The axis through the centre of the disc in Kerr and Schild's chart ($m = 1$, $a = 3m/2$), $z = \\pm r$ on its two halves. Rays toward the disc run at 45°, $c\\,d\\tau = -dr$; rays away from it have $c\\,d\\tau/dr = (1 + H)/(1 - H)$, $H = 2mr/(r^2 + a^2)$, steepest at $r = a$. Both families cross the disc into the other face.",
     ],
     ("kerr_taub_nut", "boyer_lindquist", "principal"): [
         "The equatorial plane ($\\theta = \\pi/2$) drawn in $t$ and $r$, with $\\phi$ left out, for $a = m$ and $l = 5m/4$. Its rays are the principal null congruence, the light rays that run straight in and straight out: the two null directions of the plane of $\\partial_r$ and $(r^2 + a^2 + l^2)\\,\\partial_t + a\\,\\partial_\\phi$, which are the repeated principal null directions of the Weyl tensor. Every ray turns as it goes, at $d\\phi/dr = \\pm a/\\Delta$, and the curves drawn are the rays' projections, $d(ct)/dr = \\pm(r^2 + a^2 + l^2)/\\Delta$, the same at every $\\theta$.",
