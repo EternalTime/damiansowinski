@@ -139,6 +139,11 @@
       "id": "cahen_wallach",
       "kind": "family",
       "text": "The Lorentzian symmetric spaces that do not split into a product. This one is a product of two symmetric pieces, anti-de Sitter space of two dimensions and a sphere [figueroa2003maximally]."
+    },
+    {
+      "id": "mclenaghan_tariq_tupper",
+      "kind": "family",
+      "text": "A homogeneous electrovacuum of Petrov type I with a non-inheriting Maxwell field [evtyagin2021mtt, anderson2022noninheriting]."
     }
   ],
   "references": [
@@ -173,7 +178,9 @@
     "freund1980",
     "maldacena2018",
     "maldacena2023",
-    "figueroa2003maximally"
+    "figueroa2003maximally",
+    "evtyagin2021mtt",
+    "anderson2022noninheriting"
   ],
   "coordinates": [
     {
