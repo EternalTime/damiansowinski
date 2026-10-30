@@ -170,11 +170,15 @@ class Trajectory:
         return self.state(time)[4]
 
     def time(self, eta):
-        from scipy.optimize import brentq
-        values = np.asarray(eta, dtype=float)
-        result = [brentq(lambda t: float(self.eta(t))-e, self.lo, self.hi, xtol=1e-11)
-                  for e in values.ravel()]
-        return np.asarray(result).reshape(values.shape)
+        from scipy.interpolate import CubicHermiteSpline
+        if not hasattr(self, "inverse_eta"):
+            times = np.linspace(-12, self.hi, 43001)
+            etas = self.eta(times)
+            self.inverse_eta = CubicHermiteSpline(etas, times, self.a(times), extrapolate=False)
+        values = self.inverse_eta(np.asarray(eta, dtype=float))
+        if np.any(~np.isfinite(values)):
+            raise ValueError("conformal-time sample outside the numerical trajectory")
+        return values
 
     def conformal_a(self, eta, order=0):
         time = self.time(eta)
@@ -185,3 +189,28 @@ class Trajectory:
 @lru_cache(maxsize=1)
 def trajectory():
     return Trajectory()
+
+
+def declared_functions():
+    """Scale factor and two derivatives for the existing numeric-function reader.
+
+    evalf evaluates the stored scalar formula on the same double precision numerical
+    trajectory; its digits are not additional precision of the differential equation.
+    """
+    made = {}
+    for name, conformal in (("sta_a", False), ("sta_c", True)):
+        for order in (2, 1, 0):
+            label = name if order == 0 else name+str(order)
+
+            def value(x, order=order, conformal=conformal):
+                sol = trajectory()
+                return sol.conformal_a(x, order) if conformal else sol.a(x, order)
+
+            def evaluate(self, prec, value=value):
+                if self.args[0].is_number:
+                    return sp.Float(float(value(float(self.args[0]))), precision=prec)
+            body = {"nargs": 1, "is_real": True, "_imp_": staticmethod(value), "_eval_evalf": evaluate}
+            if order < 2:
+                body["fdiff"] = lambda self, argindex=1, up=name+str(order+1): made[up](self.args[0])
+            made[label] = type(label, (sp.Function,), body)
+    return made
