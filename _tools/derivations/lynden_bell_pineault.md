@@ -46,3 +46,33 @@ Diagram parameters, supported frame kinds, and any justified NOT_DRAWN registrat
 Compare the mathematical OCR with the journal scans before transcribing coefficients.
 Implement pointwise chart checks, a dedicated spacetime test, and the scoped page check after the history review.
 Reconcile shared registrations and reciprocal relations only on the serialized landing turn.
+
+## History
+
+The gravity of an infinite disc can support circular motion at a speed independent of radius.
+Donald Lynden-Bell and Serge Pineault constructed such relativistic equilibria in 1978, publishing their counter-rotating and rotating families in Monthly Notices of the Royal Astronomical Society [lyndenbell1978, lyndenbellpineault1978b].
+The constants $G$ and $c$, together with the circular speed, supply no characteristic length.
+These infinite discs are self-similar, with a change of radial scale accompanied by a change of the time scale [lyndenbellpineault1978b].
+
+Equal streams of stars circle in opposite senses in the counter-rotating family.
+Each stream is cold, and its stars follow circular orbits with a speed independent of radius.
+The opposing streams have equal and opposite angular momenta, and their gravitational field is static, with no dragging of inertial frames [lyndenbell1978].
+Lynden-Bell and Pineault also constructed finite discs whose geometry approaches the infinite disc solution well inside the outer edge [lyndenbell1978].
+
+The matter occupies an infinitesimally thin equatorial sheet.
+Its surface energy density and azimuthal stress enter Einstein's equations through a delta function supported on that sheet [lyndenbell1978].
+The regions above and below the disc satisfy the vacuum Einstein equations, with a vanishing smooth Ricci tensor away from the matter surface [lyndenbell1978, lyndenbellpineault1978b].
+
+At the speed of light, the counter-rotating streams consist of particles with zero rest mass [lyndenbell1978].
+Lynden-Bell and Pineault obtained analytic photon trajectories for this limiting disc.
+Some photons circle at constant radius while oscillating across the equatorial plane, and others spiral inward or outward [lyndenbell1978].
+
+Matter rotating in one sense drags the surrounding inertial frames.
+Lynden-Bell and Pineault reduced the stationary field equations through self-similarity and determined the rotating disc's angular metric functions numerically [lyndenbellpineault1978b].
+An ergoregion appears around the equatorial plane at a circular speed of approximately $0.384c$ measured by locally nonrotating observers, where the stationary Killing vector becomes spacelike.
+Its conical boundary extends toward the symmetry axis as the rotation speed increases.
+Their cold rotating sequence ends near $0.438c$, with a diverging frame dragging parameter and an ergoregion extending throughout space away from the axis [lyndenbellpineault1978b].
+
+The infinite discs have infinite total mass and a geometry that is not asymptotically flat [lyndenbell1978, lyndenbellpineault1978b].
+The cold counter-rotating equilibria are unstable to gravitational fragmentation into rings [lyndenbell1978].
+Mike J. Cai and Frank H. Shu included isothermal pressure in the disc plane in 2002, retaining infinitesimal vertical thickness and a circular speed independent of radius [caishu2002].
