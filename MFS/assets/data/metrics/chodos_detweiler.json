@@ -9,7 +9,6 @@
     "higher dimensions",
     "Kaluza-Klein",
     "compact dimension",
-    "toroidal topology",
     "cosmology",
     "Kasner",
     "anisotropic",
@@ -22,7 +21,9 @@
     "exact solution",
     "Lorentzian",
     "Einstein equations",
-    "idealized model"
+    "idealized model",
+    "torus",
+    "topology"
   ],
   "signature": "(-,+,+,+,+)",
   "convention": "We use signature $(-,+,+,+,+)$ and keep $c$ explicit. Cosmic time $t$, the equality time $t_0$ and the normalization time $\\tau$ have units of time; $L$ and the spatial coordinates have units of length. Tensor components use $x^0=ct$.",

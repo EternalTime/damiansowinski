@@ -78,3 +78,16 @@ The embedding is a fixed-time cylinder cut from the $x,w$ two-torus, with $y=z=0
 Its full circular direction is $w$, whose period is $2\pi ct_0$ at the chosen $L$.
 The cylinder is an isometric embedding of this cut alone; identifying its two end circles would restore the complete flat two-torus.
 Its displayed height increases along $x$, and its radius measures the physical size of the fifth circle.
+The movie uses 41 evenly spaced times on $t/t_0\in[1/4,4]$, with a distinct label at every time.
+The two endpoint moments are marked on every spacetime plane, with the ranges carried through the constant spatial rescaling.
+The embedding generator passed 246 checks, and the complete drawing pass took 14.804 seconds.
+The view is registered in `MOVIES` at landing; it has no stack of rings and needs no `STACKS` entry.
+
+The curvature figure is a line plot of the stored Kretschmann scalar against $t/t_0$ from $1/4$ to $4$.
+It uses a logarithmic vertical scale, with the full curve inside the panel.
+No curvature tensor is recomputed for this figure.
+The figure-generation pass took 0.007 seconds.
+
+The page uses the existing `torus` and `topology` tags for the four spatial circles.
+Its dedicated tests read the published periodic ranges and hold them to the same identifications under the source's spatial rescaling.
+The tests keep all four spatial coordinates in each chart.
