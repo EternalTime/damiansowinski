@@ -6,13 +6,14 @@
   "tags": [
     "spherically symmetric",
     "four-dimensional",
-    "cosmological",
+    "cosmology",
+    "conformal transformation",
     "expanding universe",
     "exact solution"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "Geometrized units $G=c=1$ and signature $(-,+,+,+)$. The constant $m$ has dimensions of length, and the positive scale factor $a$ is dimensionless. Conformal time $\\eta$ and cosmic time $t$ obey $dt=a\\,d\\eta$; $R=ar$ is the areal radius. The exterior has $r>2m$. The drawings use $m=1$ and $a=(\\eta/\\eta_0)^2$, with $\\eta_0=1$.",
-  "history": "Schwarzschild's vacuum acquires a radial energy current when its metric is multiplied by the square of a time-dependent scale factor.\nS. N. G. Thakurta introduced a conformal extension of Kerr's rotating geometry in 1981, with the scale factor depending on Boyer-Lindquist time [thakurta1981, mello2017].\nIts spherical member has $ds^2=a^2(\\eta)[-f(r)d\\eta^2+dr^2/f(r)+r^2d\\Omega^2]$, where $f(r)=1-2m/r$ and $m$ is a constant.\nAt large radius it approaches a spatially flat Friedmann universe, and its spheres have areal radius $R=a r$ [mello2017]. ¶ For $a>0$, $da/dt>0$ in cosmic time $t$, and $m>0$, an observer at fixed $r>2m$ measures an isotropic pressure and an inward radial energy flow.\nMarina M. C. Mello, Alan Maciel, and Vilson T. Zanchin analysed this fluid source in 2017 and separated the Misner-Sharp energy into its matter and Weyl contributions [mello2017].\nThe Weyl contribution is $m a$, and the density and pressure depend on radius through the factor $1/f$.\nFor the scale factor $a(t)\\propto t^{2/3}$, where $dt=a\\,d\\eta$, the pressure vanishes and the energy current remains [mello2017]. ¶ The time appearing in the conformal factor determines the resulting geometry.\nThakurta's spherical solution belongs to a generalized McVittie family with mass parameter $M(t)=m a(t)$ [mello2017].\nThe original McVittie solution has a perfect-fluid source, and the McClure-Dyer geometry is Thakurta's solution in isotropic radial coordinates [sato2022conformal].\nThe Sultana-Dyer construction uses the Kerr-Schild time of Schwarzschild's geometry as the argument of its scale factor [sato2022conformal]. ¶ For the positive power law $a(\\eta)=a_0\\eta^\\alpha$, with $a_0>0$, $\\alpha>0$, and $\\eta>0$, the expanding exterior occupies $r>2m$.\nIts outgoing radial null congruence has positive expansion, and its ingoing congruence becomes marginal on a past trapping horizon.\nThis horizon obeys $\\eta=\\alpha r^2/(r-2m)$, with two radial branches on slices later than $\\eta=8\\alpha m$ [harada2022thakurta].\nTomohiro Harada, Hideki Maeda, and Takuma Sato showed in 2022 that the future boundary at $r=2m$ is a curvature singularity reached by ingoing light in finite affine parameter, and that this exterior has no black-hole event horizon.\nThe stress tensor also violates the null, weak, dominant, and strong energy conditions in a late-time region near that boundary [harada2022thakurta]. ¶ Other choices of the scale factor have different future boundaries.\nMello, Maciel, and Zanchin found families in which $a$ approaches a finite constant and its time derivative decays sufficiently rapidly for $r=2m$ to become a regular horizon [mello2017].\nThe continuation can contain a black-hole or a white-hole region, depending on the late-time behaviour of the scale factor.\nTheir examples include a smooth transition from an early dust-like expansion to a final static geometry [mello2017]. ¶ Archil Kobakhidze and Zachary S. C. Picker argued in 2022 that a Kodama-time foliation identifies a future outer trapping horizon [kobakhidze2022thakurta].\nHarada, Maeda, and Sato traced the exterior disagreement to the sign chosen in the transformation to Painlevé-Gullstrand-like coordinates [harada2022thakurta].\nAlan Maciel and Vilson T. Zanchin showed in 2024 that the additional positive root of the marginal-sphere equation lies below $R=2m a$, in a region separated from the expanding power-law exterior by the singular boundary [maciel2024thakurta].\nFor a fixed spherical foliation and regular future-directed radial null vectors, the location and type of a trapping horizon are invariant under a change of coordinates [sato2022conformal, sato2023corrigendum].",
+  "convention": "Geometrized units $G=c=1$, signature $(-,+,+,+)$, and constant mass length $m$. The scale factor $a>0$ is dimensionless, $dt=a\\,d\\eta$ relates cosmic and conformal times, and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$.",
+  "history": "Schwarzschild's vacuum acquires a radial energy current when its metric is multiplied by the square of a time dependent scale factor.\nS. N. G. Thakurta introduced a conformal extension of Kerr's rotating geometry in 1981, with the scale factor depending on Boyer-Lindquist time [thakurta1981, mello2017].\nIts spherical member has $ds^2=a^2(\\eta)[-f(r)d\\eta^2+dr^2/f(r)+r^2d\\Omega^2]$, where $f(r)=1-2m/r$ and $m$ is a constant.\nAt large radius it approaches a spatially flat Friedmann universe, and its spheres have areal radius $R=a r$ [mello2017].¶For $a>0$, $da/dt>0$ in cosmic time $t$, and $m>0$, an observer at fixed $r>2m$ measures an isotropic pressure and an inward radial energy flow.\nMarina M. C. Mello, Alan Maciel, and Vilson T. Zanchin analysed this fluid source in 2017 and separated the Misner-Sharp energy into its matter and Weyl contributions [mello2017].\nThe Weyl contribution is $m a$, and the density and pressure depend on radius through the factor $1/f$.\nFor the scale factor $a(t)\\propto t^{2/3}$, where $dt=a\\,d\\eta$, the pressure vanishes and the energy current remains [mello2017].¶The time appearing in the conformal factor determines the resulting geometry.\nThakurta's spherical solution belongs to a generalized McVittie family with mass parameter $M(t)=m a(t)$ [mello2017].\nThe original McVittie solution has a perfect fluid source, and the McClure-Dyer geometry is Thakurta's solution in isotropic radial coordinates [sato2022conformal].\nThe Sultana-Dyer construction uses the Kerr-Schild time of Schwarzschild's geometry as the argument of its scale factor [sato2022conformal].¶For the positive power law $a(\\eta)=a_0\\eta^\\alpha$, with $a_0>0$, $\\alpha>0$, and $\\eta>0$, the expanding exterior occupies $r>2m$.\nIts outgoing radial null congruence has positive expansion, and its ingoing congruence becomes marginal on a past trapping horizon.\nThis horizon obeys $\\eta=\\alpha r^2/(r-2m)$, with two radial branches on slices later than $\\eta=8\\alpha m$ [harada2022thakurta].\nTomohiro Harada, Hideki Maeda, and Takuma Sato showed in 2022 that the future boundary at $r=2m$ is a curvature singularity reached by ingoing light in finite affine parameter, and that this exterior has no black hole event horizon.\nThe stress tensor also violates the null, weak, dominant, and strong energy conditions in a late time region near that boundary [harada2022thakurta].¶Other choices of the scale factor have different future boundaries.\nMello, Maciel, and Zanchin found families in which $a$ approaches a finite constant and its time derivative decays sufficiently rapidly for $r=2m$ to become a regular horizon [mello2017].\nThe continuation can contain a black hole or a white hole region, depending on the late time behaviour of the scale factor.\nTheir examples include a smooth transition from an early dustlike expansion to a final static geometry [mello2017].¶Archil Kobakhidze and Zachary S. C. Picker argued in 2022 that a Kodama-time foliation identifies a future outer trapping horizon [kobakhidze2022thakurta].\nHarada, Maeda, and Sato traced the exterior disagreement to the sign chosen in the transformation to Painlevé-Gullstrand-like coordinates [harada2022thakurta].\nAlan Maciel and Vilson T. Zanchin showed in 2024 that the additional positive root of the marginal sphere equation lies below $R=2m a$, in a region separated from the expanding power law exterior by the singular boundary [maciel2024thakurta].\nFor a fixed spherical foliation and regular future directed radial null vectors, the location and type of a trapping horizon are invariant under a change of coordinates [sato2022conformal, sato2023corrigendum].",
   "references": [
     "thakurta1981",
     "mello2017",
@@ -48,7 +49,7 @@
           "description": "Positive dimensionless scale factor."
         }
       ],
-      "convention": "Conformal time $\\eta$ has dimensions of length. The scale factor is $a(\\eta)>0$, and $r$ is the Schwarzschild radial coordinate. The sphere has areal radius $R=ar$.",
+      "convention": "Conformal time $\\eta$ and Schwarzschild radial coordinate $r$ carry dimensions of length, with $a=a(\\eta)$. The areal radius is $R=ar$.",
       "line_element": "ds^2 = a^2\\left(-\\left(1-\\dfrac{2m}{r}\\right)d\\eta^2 + \\dfrac{dr^2}{\\left(1-\\dfrac{2m}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -2001,7 +2002,7 @@
           "description": "Positive dimensionless scale factor."
         }
       ],
-      "convention": "Cosmic time $t$ satisfies $dt=a\\,d\\eta$, and $a=a(t)>0$. The radial coordinate $r$ is comoving, with areal radius $R=ar$.",
+      "convention": "Cosmic time $t$ and comoving radius $r$ carry dimensions of length, with $a=a(t)$. The areal radius is $R=ar$.",
       "line_element": "ds^2 = -\\left(1-\\dfrac{2m}{r}\\right)dt^2 + a^2\\left(\\dfrac{dr^2}{\\left(1-\\dfrac{2m}{r}\\right)} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -3938,7 +3939,7 @@
           "description": "Positive dimensionless scale factor."
         }
       ],
-      "convention": "The radius $R=ar$ is the areal radius, $a=a(t)>0$, and $t$ is cosmic time. The cross term follows from $a\\,dr=dR-(\\partial_ta/a)R\\,dt$.",
+      "convention": "Cosmic time $t$ and areal radius $R=ar$ carry dimensions of length, with $a=a(t)$. The radial differential is $a\\,dr=dR-(\\partial_ta/a)R\\,dt$.",
       "line_element": "ds^2 = -\\left(1-\\dfrac{2ma}{R}\\right)dt^2 + \\dfrac{\\left(dR-\\dfrac{\\partial_t a}{a}R\\,dt\\right)^2}{\\left(1-\\dfrac{2ma}{R}\\right)} + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -6127,7 +6128,7 @@
           "description": "Positive dimensionless scale factor."
         }
       ],
-      "convention": "The isotropic radius $\\sigma>m/2$ obeys $r=\\sigma(1+m/(2\\sigma))^2$. Conformal time is $\\eta$ and the scale factor is $a(\\eta)>0$.",
+      "convention": "Conformal time $\\eta$ and isotropic radius $\\sigma$ carry dimensions of length, with $a=a(\\eta)$. The Schwarzschild radial coordinate is $r=\\sigma(1+m/(2\\sigma))^2$.",
       "line_element": "ds^2 = a^2\\left(-\\dfrac{\\left(1-m/(2\\sigma)\\right)^2}{\\left(1+m/(2\\sigma)\\right)^2}d\\eta^2 + \\left(1+\\dfrac{m}{2\\sigma}\\right)^4\\left(d\\sigma^2+\\sigma^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
       "metric_components": [
         {
@@ -8084,7 +8085,7 @@
           "description": "Schwarzschild radial coordinate as a function of this chart."
         }
       ],
-      "convention": "The tortoise coordinate is $x=r+2m\\ln(r/(2m)-1)$. The principal real Lambert function $\\mathrm{W}$ obeys $\\mathrm{W}(z)e^{\\mathrm{W}(z)}=z$. The scale factor is $a(\\eta)>0$.",
+      "convention": "Conformal time $\\eta$ and tortoise coordinate $x=r+2m\\ln(r/(2m)-1)$ carry dimensions of length, with $a=a(\\eta)$. The principal Lambert function obeys $\\mathrm{W}(z)e^{\\mathrm{W}(z)}=z$.",
       "line_element": "ds^2 = a^2\\left(\\left(1-\\dfrac{2m}{r}\\right)\\left(-d\\eta^2+dx^2\\right)+r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -10045,7 +10046,7 @@
           "description": "Static conformal time as a function of the null coordinates."
         }
       ],
-      "convention": "This chart uses $a=(\\eta/\\eta_0)^2$, with $\\eta_0>0$. The null coordinates are $U=-e^{-(\\eta-x)/(4m)}$ and $V=e^{(\\eta+x)/(4m)}$, where $x=r+2m\\ln(r/(2m)-1)$. The exterior after the initial singularity has $U<0$ and $V>-U$. The principal Lambert function fixes $r$.",
+      "convention": "The null coordinates $U=-e^{-(\\eta-x)/(4m)}$ and $V=e^{(\\eta+x)/(4m)}$ are dimensionless, with $x=r+2m\\ln(r/(2m)-1)$. The scale factor is $a=(\\eta/\\eta_0)^2$, with positive reference conformal time $\\eta_0$. The principal Lambert function fixes $r$.",
       "line_element": "ds^2 = \\dfrac{\\eta^4}{\\eta_0^4}\\left(\\dfrac{16m^2(r-2m)}{rUV}dU\\,dV + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -11808,7 +11809,7 @@
     {
       "id": "mcvittie",
       "kind": "family",
-      "text": "A mass in a Friedmann universe with a perfect-fluid source. Thakurta's geometry belongs to a generalized McVittie family with $M(t)=m a(t)$ and a radial heat flow [mello2017]."
+      "text": "A mass in a Friedmann universe with a perfect fluid source. Thakurta's geometry belongs to a generalized McVittie family with $M(t)=m a(t)$ and a radial heat flow [mello2017]."
     },
     {
       "id": "sultana_dyer",

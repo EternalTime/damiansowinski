@@ -181,6 +181,11 @@
       "id": "vaidya_patel_kerr",
       "kind": "generalisation",
       "text": "A Kerr black hole in a closed expanding universe, which early epochs favour more than late ones [vaidya1977kerr]."
+    },
+    {
+      "id": "thakurta",
+      "kind": "generalisation",
+      "text": "A conformal Schwarzschild geometry approaching the flat Friedmann universe at large radius. Setting $m=0$ recovers that universe [mello2017]."
     }
   ],
   "references": [
@@ -256,7 +261,8 @@
     "mukohyama2000",
     "sussman2000stephani",
     "murphy1973",
-    "vaidya1977kerr"
+    "vaidya1977kerr",
+    "mello2017"
   ],
   "coordinates": [
     {

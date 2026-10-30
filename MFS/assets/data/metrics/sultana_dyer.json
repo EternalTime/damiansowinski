@@ -51,6 +51,11 @@
       "id": "mcvittie",
       "kind": "family",
       "text": "The older way to put a mass in an expanding universe. McVittie's fluid never falls onto the mass, Sultana and Dyer's black hole swallows its dust, and no choice of mass and scale factor turns one metric into the other [carrera2010mcvittie]."
+    },
+    {
+      "id": "thakurta",
+      "kind": "family",
+      "text": "A conformal Schwarzschild geometry whose scale factor depends on static Schwarzschild time. Its fluid carries a radial heat flow [mello2017]."
     }
   ],
   "references": [

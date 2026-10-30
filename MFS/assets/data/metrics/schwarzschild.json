@@ -529,6 +529,11 @@
       "id": "bowen_york",
       "kind": "family",
       "text": "A single hole with vanishing momentum and spin has Schwarzschild's isotropic spatial geometry. Nonzero momentum or spin specifies dynamical black hole initial data [brandt1997, cook2000]."
+    },
+    {
+      "id": "thakurta",
+      "kind": "conformal",
+      "text": "Schwarzschild's geometry multiplied by the square of a scale factor depending on its static time. The source carries a radial heat flow [mello2017]."
     }
   ],
   "references": [
@@ -666,7 +671,8 @@
     "bonnor1967oscillating",
     "banerjee1998",
     "fransen2023",
-    "brandt1997"
+    "brandt1997",
+    "mello2017"
   ],
   "coordinates": [
     {

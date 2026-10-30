@@ -13,7 +13,7 @@ SETTINGS = r"$m=\eta_0=1$, $a=(\eta/\eta_0)^2$."
 def null_specs(api):
     """One radial plane in each chart, with every ray restricted to the exterior."""
     D = api.Diagram
-    common = dict(params={"m": 1}, fixed=api.EQUATOR, areal=True, inside=True)
+    common = dict(params={"m": 1}, fixed=api.EQUATOR, areal=True)
     data = [
         ("conformal", (r"\eta", "r"), (1, 25, 0, 24), "eta", {"a": "eta**2"}, "r-2", "r-2"),
         ("cosmic", ("t", "r"), (1, 9, 0, 8), "t", {"a": "(3*t)**Rational(2,3)"}, "r-2", "r-2"),
@@ -27,13 +27,13 @@ def null_specs(api):
     for system, plane, box, tau, functions, where, singular in data:
         rows.append(D("thakurta", system, "radial", "Radial plane", plane, box,
                       rf"${plane[1]}/m$", rf"${plane[0]}/m$", tau=tau, functions=functions,
-                      where=where, singular_zero=singular, input=SETTINGS, **common))
+                      where=where, singular_zero=singular, inside=system != "areal", input=SETTINGS, **common))
         captions[("thakurta", system, "radial")] = [
             rf"The plane of ${plane[0]}$ and ${plane[1]}$ ($\theta=\pi/2$, $\phi=0$), in the expanding exterior."]
     rows.append(D("thakurta", "kruskal", "radial", "Null plane", ("U", "V"), (0, 8, 0, 8),
                   "$(V-U)/2$", "$(V+U)/2$", {"m": 1, "eta_0": 1}, api.EQUATOR,
                   to_display=((-0.5, 0.5), (0.5, 0.5)), tau="2*log(-V/U)",
-                  where="V+U", areal=True, inside=True, null_radius=True, other_trapped=True, input=SETTINGS))
+                  where="V+U", areal=True, null_radius=True, other_trapped=True, input=SETTINGS))
     captions[("thakurta", "kruskal", "radial")] = [
         r"The plane of $U$ and $V$ ($\theta=\pi/2$, $\phi=0$), in the expanding exterior $U<0$, $V>-U$."]
     return rows, captions

@@ -17,7 +17,7 @@ An issue number, final page, expanded given name, B designation, and DOI are omi
 
 ## History
 
-Schwarzschild's vacuum acquires a radial energy current when its metric is multiplied by the square of a time-dependent scale factor.
+Schwarzschild's vacuum acquires a radial energy current when its metric is multiplied by the square of a time dependent scale factor.
 S. N. G. Thakurta introduced a conformal extension of Kerr's rotating geometry in 1981, with the scale factor depending on Boyer-Lindquist time [thakurta1981, mello2017].
 Its spherical member has $ds^2=a^2(\eta)[-f(r)d\eta^2+dr^2/f(r)+r^2d\Omega^2]$, where $f(r)=1-2m/r$ and $m$ is a constant.
 At large radius it approaches a spatially flat Friedmann universe, and its spheres have areal radius $R=a r$ [mello2017].
@@ -29,31 +29,31 @@ For the scale factor $a(t)\propto t^{2/3}$, where $dt=a\,d\eta$, the pressure va
 
 The time appearing in the conformal factor determines the resulting geometry.
 Thakurta's spherical solution belongs to a generalized McVittie family with mass parameter $M(t)=m a(t)$ [mello2017].
-The original McVittie solution has a perfect-fluid source, and the McClure-Dyer geometry is Thakurta's solution in isotropic radial coordinates [sato2022conformal].
+The original McVittie solution has a perfect fluid source, and the McClure-Dyer geometry is Thakurta's solution in isotropic radial coordinates [sato2022conformal].
 The Sultana-Dyer construction uses the Kerr-Schild time of Schwarzschild's geometry as the argument of its scale factor [sato2022conformal].
 
 For the positive power law $a(\eta)=a_0\eta^\alpha$, with $a_0>0$, $\alpha>0$, and $\eta>0$, the expanding exterior occupies $r>2m$.
 Its outgoing radial null congruence has positive expansion, and its ingoing congruence becomes marginal on a past trapping horizon.
 This horizon obeys $\eta=\alpha r^2/(r-2m)$, with two radial branches on slices later than $\eta=8\alpha m$ [harada2022thakurta].
-Tomohiro Harada, Hideki Maeda, and Takuma Sato showed in 2022 that the future boundary at $r=2m$ is a curvature singularity reached by ingoing light in finite affine parameter, and that this exterior has no black-hole event horizon.
-The stress tensor also violates the null, weak, dominant, and strong energy conditions in a late-time region near that boundary [harada2022thakurta].
+Tomohiro Harada, Hideki Maeda, and Takuma Sato showed in 2022 that the future boundary at $r=2m$ is a curvature singularity reached by ingoing light in finite affine parameter, and that this exterior has no black hole event horizon.
+The stress tensor also violates the null, weak, dominant, and strong energy conditions in a late time region near that boundary [harada2022thakurta].
 
 Other choices of the scale factor have different future boundaries.
 Mello, Maciel, and Zanchin found families in which $a$ approaches a finite constant and its time derivative decays sufficiently rapidly for $r=2m$ to become a regular horizon [mello2017].
-The continuation can contain a black-hole or a white-hole region, depending on the late-time behaviour of the scale factor.
-Their examples include a smooth transition from an early dust-like expansion to a final static geometry [mello2017].
+The continuation can contain a black hole or a white hole region, depending on the late time behaviour of the scale factor.
+Their examples include a smooth transition from an early dustlike expansion to a final static geometry [mello2017].
 
 Archil Kobakhidze and Zachary S. C. Picker argued in 2022 that a Kodama-time foliation identifies a future outer trapping horizon [kobakhidze2022thakurta].
 Harada, Maeda, and Sato traced the exterior disagreement to the sign chosen in the transformation to Painlevé-Gullstrand-like coordinates [harada2022thakurta].
-Alan Maciel and Vilson T. Zanchin showed in 2024 that the additional positive root of the marginal-sphere equation lies below $R=2m a$, in a region separated from the expanding power-law exterior by the singular boundary [maciel2024thakurta].
-For a fixed spherical foliation and regular future-directed radial null vectors, the location and type of a trapping horizon are invariant under a change of coordinates [sato2022conformal, sato2023corrigendum].
+Alan Maciel and Vilson T. Zanchin showed in 2024 that the additional positive root of the marginal sphere equation lies below $R=2m a$, in a region separated from the expanding power law exterior by the singular boundary [maciel2024thakurta].
+For a fixed spherical foliation and regular future directed radial null vectors, the location and type of a trapping horizon are invariant under a change of coordinates [sato2022conformal, sato2023corrigendum].
 
 ## Physical source locators
 
 Mello, Maciel and Zanchin, arXiv:1611.05077v2, Sec. II B, pp. 3-4, Eqs. (7)-(9) and (14), define the exterior observer frame, density, isotropic pressure, heat-flow vector, and flux magnitude.
 Their Sec. II C, Eq. (20), identifies the Weyl contribution to the Misner-Sharp energy.
 Their Secs. IV-V and Appendix B treat the late-static regular-horizon cases.
-Harada, Maeda and Sato, arXiv:2106.06651v5, Eqs. (3.1)-(3.6) and (4.1)-(4.13), treat the positive-power-law exterior, null singularity, past marginal tube, and energy-condition failure.
+Harada, Maeda and Sato, arXiv:2106.06651v5, Eqs. (3.1)-(3.6) and (4.1)-(4.13), treat the positive-power law exterior, null singularity, past marginal tube, and energy-condition failure.
 Sato, Maeda and Harada, arXiv:2206.10998v3, Sec. 2.4 and Appendix A, distinguish Thakurta, McClure-Dyer, Sultana-Dyer, and original McVittie geometries.
 Its Proposition 1 includes the regularity and fixed spherical-symmetry qualifications and incorporates the 2023 corrigendum.
 Maciel and Zanchin, doi:10.1140/epjc/s10052-024-13489-9, Eqs. (9)-(11), separate the exterior marginal roots from the positive root below the singular boundary.
@@ -70,5 +70,48 @@ The positive-sign expanding Painlevé-Gullstrand form in Harada Sec. V requires 
 
 The drawing specialization is m=1, a(eta)=(eta/eta0)^2, eta0=1, with eta>0 and r>2m.
 A spatial embedding uses one constant-eta exterior sheet and does not identify points across r=2m.
-The conformal diagram follows the power-law exterior with its singular future null boundary and past marginal tube.
+The conformal diagram follows the power law exterior with its singular future null boundary and past marginal tube.
 Curvature figures use the stored scalars and an existing supported frame kind.
+
+## Coordinate transformations
+
+Five coordinate systems retain an arbitrary positive scale factor.
+The conformal, cosmic, areal, isotropic and tortoise forms follow the source equations listed above.
+In the tortoise system the radius is $r=2m[1+W(e^{x/(2m)-1})]$ and $dr/dx=1-2m/r$.
+The Kruskal system specializes to $a=(\eta/\eta_0)^2$ and uses $\eta=2m\ln(-V/U)$ and $r=2m[1+W(-UV/e)]$.
+Its exterior is $U<0$, $V>-U$, so the conformal time remains positive.
+The radial null coefficient is $16m^2(1-2m/r)/(UV)$, equal to $-32m^3e^{-r/(2m)}/r$ by the defining relation for the radius.
+The $4m$ normalization in both null exponentials is essential.
+Every coordinate transformation is compared numerically at three exterior points with the canonical conformal geometry.
+The conformal Einstein tensor is also compared numerically with the density, isotropic pressure and radial flux in Mello's equations.
+
+## Local Painlevé-Gullstrand form
+
+Harada Sec. V, Eqs. (5.4)-(5.9), specifies a local implicit transformation in the expanding exterior.
+Write $f=1-2ma/R$, $H=(\partial_ta)/a$ and $F=f-H^2R^2/f$.
+The positive branch has $dt=N\,d\tau+\beta\,dR$, with $\beta=(\sqrt{1-F}-HR/f)/F$ and $N=\partial_\tau t$.
+Rationalizing the numerator gives $\beta=(1-f)/(f\sqrt{1-F}+HR)$, including its finite continuation through $F=0$.
+The integrability equation is $\partial_RN=(\partial_t\beta)N$, with the derivative on the left at fixed $\tau$ and the derivative on the right at fixed $R$.
+The resulting line element is $ds^2=-N^2F\,d\tau^2-2N\sqrt{1-F}\,d\tau\,dR+dR^2+R^2d\Omega^2$.
+On the exterior marginal tube the positive branch has positive outgoing expansion and zero ingoing expansion.
+The lapse cannot be assigned the constant one for a general expanding scale factor.
+The explicit-function representation available to the chart and drawing generators does not solve this implicit two-variable transformation and its lapse equation.
+The six executable coordinate systems therefore retain this local implicit relation here, without claiming an extra independently specified coordinate map.
+
+## Dust exterior drawings
+
+All diagrams use $m=\eta_0=1$ and $a=\eta^2$ in conformal time, or $a=(3t)^{2/3}$ in cosmic time.
+Future orientation is increasing $\eta$, equivalently increasing $t$.
+The apparent tube is $\eta=2r^2/(r-2)$ and has its minimum at $r=4$, $\eta=16$.
+The two future null expansions are positive near the singular boundary at fixed positive conformal time.
+The initial boundary is $\eta=0$.
+The future null boundary is reached at $r\to2$, $\eta\to\infty$ with $\eta+x$ fixed.
+The compactification $p=\arctan[(\eta-x)/4]$, $q=\arctan[(\eta+x)/4]$ puts the exterior in the triangle $T>0$, $|X|+T<\pi$, where $T=p+q$ and $X=q-p$.
+Its left future null edge is singular, and the right edge is future null infinity.
+The spatial embedding is the equator at $\eta=1$ from $r=2.05$ to $r=8$.
+Its single sheet has $\rho=r$ and $z=2\sqrt2(\sqrt{r-2}-\sqrt{0.05})$, with zero height at the inner cutoff.
+No point of this surface lies on the excluded singular sphere, and no second exterior is attached.
+The scalar maps cover $2.02\le r\le26.02$ and $0.2\le\eta\le24.2$.
+The Kretschmann scalar uses signed logarithmic colours, since a Lorentzian contraction can be negative.
+The Ricci scalar uses positive logarithmic colours.
+Both maps evaluate the stored scalars and retain the past marginal tube.

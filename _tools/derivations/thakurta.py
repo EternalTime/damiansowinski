@@ -5,7 +5,6 @@ The checks compare numeric pullbacks and the published fluid source at points.
 """
 import sympy as sp
 
-import chart_printer as cp
 import verify_metrics as vm
 
 
