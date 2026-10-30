@@ -330,6 +330,7 @@
     ["chandrasekhar_xanthopoulos", "minkowski"],
     ["chandrasekhar_xanthopoulos", "pp_wave"],
     ["chandrasekhar_xanthopoulos", "schwarzschild"],
+    ["charach_malin", "gowdy"],
     ["charged_godel_universe", "godel"],
     ["charged_godel_universe", "som_raychaudhuri"],
     ["charged_shell", "israel_shell"],

@@ -56,7 +56,7 @@
           "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$, with $\\partial_t^2\\Phi=\\dfrac{t\\,\\partial_\\theta^2\\Phi - \\partial_t\\Phi}{t}$"
         }
       ],
-      "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the symmetry-orbit area in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
+      "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the area of each symmetry orbit in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
       "line_element": "ds^2=L^2\\left(\\dfrac{e^{\\lambda/2}}{\\sqrt{t}}\\left(-dt^2+d\\theta^2\\right)+t\\left(e^{P}dx^2+e^{-P}dy^2\\right)\\right)",
       "metric_components": [
         {
@@ -4458,7 +4458,7 @@
           "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$, with $\\partial_t^2\\chi=-\\left(\\partial_t P\\,\\partial_t\\chi - \\partial_\\theta P\\,\\partial_\\theta\\chi - \\partial_\\theta^2\\chi\\right)$"
         }
       ],
-      "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the symmetry-orbit area in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
+      "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the area of each symmetry orbit in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
       "line_element": "ds^2=L^2\\left(\\dfrac{e^{\\lambda/2}}{\\sqrt{t}}\\left(-dt^2+d\\theta^2\\right)+t\\left(e^{P}dx^2+e^{-P}dy^2\\right)\\right)",
       "metric_components": [
         {

@@ -1249,6 +1249,31 @@
     "curvature": "a98ece8b3bfa41c1"
   },
   {
+    "id": "charach_malin",
+    "name": "Charach-Malin",
+    "tags": [
+      "cosmology",
+      "inhomogeneous",
+      "gravitational wave",
+      "closed universe",
+      "exact solution",
+      "time-dependent",
+      "curvature singularity",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "torus",
+      "scalar field",
+      "electromagnetic field"
+    ],
+    "version": "7c0fb4a35c7fd04b",
+    "diagrams": "0cb63c179c14997d",
+    "conformal": "be742b07a132d8bc",
+    "embedding": "5f13ecb9a534b763",
+    "curvature": "55a9df8603d16c89"
+  },
+  {
     "id": "charged_godel_universe",
     "name": "Charged Gödel universes",
     "tags": [
@@ -2320,7 +2345,7 @@
       "BKL",
       "torus"
     ],
-    "version": "8ca0b151054c86d6",
+    "version": "f262d8c94740dbc9",
     "diagrams": "2af1bbf417683eb3",
     "conformal": "431800db7085dc77",
     "embedding": "84b1c9abf03c3c01",

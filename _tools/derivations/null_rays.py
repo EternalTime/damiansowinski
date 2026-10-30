@@ -805,7 +805,7 @@ CHARACH_MALIN_INPUT = {
                         r"$\chi=\tanh U$, $\lambda=4(\bar\lambda+\ln\cosh U)+\ln t$, "
                         r"with $\bar\lambda=\tfrac14\ln t+\tfrac25J_0(t)\cos\theta+\tfrac4{25}B$ "
                         r"and $B=\tfrac12t^2(J_0^2+J_1^2)-tJ_0J_1\cos^2\theta$; "
-                        r"$J_0,J_1$ are Bessel functions of the first kind at $t$.")}
+                        r"$J_0,J_1$ are the Bessel functions of the first kind at $t$.")}
 
 
 def _gowdy_solves(time):

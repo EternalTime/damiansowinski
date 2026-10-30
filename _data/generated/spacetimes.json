@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 210,
+  "count": 211,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12337,9 +12337,9 @@
         }
       ],
       "references": [
-        "melrose2012",
         "buchdahl1964",
         "plummer1911",
+        "melrose2012",
         "buchdahl1978",
         "rosquist1999",
         "heinzle2002",
@@ -13486,6 +13486,320 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = -\\dfrac{48m^2\\left(a\\cos\\theta + r\\right)\\left(a\\cos\\theta - r\\right)\\left(a^2\\cos^2\\theta - 4a\\,r\\cos\\theta + r^2\\right)\\left(a^2\\cos^2\\theta + 4a\\,r\\cos\\theta + r^2\\right)}{\\Sigma^6}"
+        }
+      ]
+    },
+    {
+      "id": "charach_malin",
+      "name": "Gowdy Universes with Scalar and Electromagnetic Waves",
+      "short_name": "Charach-Malin",
+      "description": "Toroidal cosmologies containing gravitational waves and a massless scalar field or electromagnetic waves. Two commuting spacelike symmetries leave time and one periodic spatial coordinate in the field equations.",
+      "tags": [
+        "cosmology",
+        "inhomogeneous",
+        "gravitational wave",
+        "closed universe",
+        "exact solution",
+        "time-dependent",
+        "curvature singularity",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "torus",
+        "scalar field",
+        "electromagnetic field"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Every coordinate is dimensionless and $L$ is a constant length, with $G=c=1$. The Ricci contraction is $R_{ab}=R^d{}_{adb}$.",
+      "related": [
+        {
+          "id": "gowdy",
+          "kind": "family",
+          "text": "Gravitational and matter waves on the same toroidal spatial sections. A constant scalar field leaves a polarised vacuum Gowdy solution [charach_malin1979, szybka_wyrebowski2016]."
+        }
+      ],
+      "references": [
+        "charach_malin1979",
+        "szybka_wyrebowski2016",
+        "charach1979",
+        "charach_malin1980",
+        "nungesser_rendall2009"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charach_malin.json",
+      "charts": [
+        {
+          "id": "scalar_areal",
+          "name": "Scalar, Areal Time",
+          "coordinates": [
+            "t",
+            "\\theta",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (0,\\infty)",
+            "\\theta \\in [0,2\\pi)",
+            "x \\in [0,2\\pi)",
+            "y \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Constant length setting the scale ($L>0$)"
+            },
+            {
+              "symbol": "P = P(t,\\theta)",
+              "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_t^2 P=\\dfrac{t\\,\\partial_\\theta^2 P - \\partial_t P}{t}$"
+            },
+            {
+              "symbol": "\\lambda = \\lambda(t,\\theta)",
+              "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_t\\lambda=t\\left(\\left(\\partial_t P\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + 2\\left(\\partial_\\theta\\Phi\\right)^2 + 2\\left(\\partial_t\\Phi\\right)^2\\right)$ and $\\partial_\\theta\\lambda=2t\\left(\\partial_t P\\,\\partial_\\theta P + 2\\partial_\\theta\\Phi\\,\\partial_t\\Phi\\right)$; its spatial constraint has zero integral around the circle"
+            },
+            {
+              "symbol": "\\Phi = \\Phi(t,\\theta)",
+              "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$, with $\\partial_t^2\\Phi=\\dfrac{t\\,\\partial_\\theta^2\\Phi - \\partial_t\\Phi}{t}$"
+            }
+          ],
+          "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the area of each symmetry orbit in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=L^2\\left(\\dfrac{e^{\\lambda/2}}{\\sqrt{t}}\\left(-dt^2+d\\theta^2\\right)+t\\left(e^{P}dx^2+e^{-P}dy^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2e^{\\lambda/2}}{\\sqrt{t}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2e^{\\lambda/2}}{\\sqrt{t}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "L^2\\,t\\,e^{P}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "L^2\\,t\\,e^{-P}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\sqrt{t}\\left(\\partial_t^2\\lambda - \\partial_\\theta^2\\lambda + \\left(\\partial_t P\\right)^2 - \\left(\\partial_\\theta P\\right)^2\\right)e^{-\\lambda/2}}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(t^4\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_t P\\right)^2 - t^4\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 + t^2\\left(\\partial_t\\lambda\\right)^2 - 8t^3\\,\\partial_t\\lambda\\left(\\partial_t P\\right)^2 - 4t^4\\,\\partial_t\\lambda\\,\\partial_t P\\,\\partial_t^2 P - 4t^4\\,\\partial_t\\lambda\\,\\partial_t P\\,\\partial_\\theta^2 P + 4t^3\\,\\partial_t\\lambda\\left(\\partial_\\theta P\\right)^2 + 8t^4\\,\\partial_t\\lambda\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P - t^4\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_t P\\right)^2 + t^4\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 - t^2\\left(\\partial_\\theta\\lambda\\right)^2 + 4t^3\\,\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_\\theta P + 8t^4\\,\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_t\\partial_\\theta P - 4t^4\\,\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_t^2 P - 4t^4\\,\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\theta^2 P + t^4\\left(\\partial_t^2\\lambda\\right)^2 - 2t^4\\,\\partial_t^2\\lambda\\,\\partial_\\theta^2\\lambda + 2t^2\\,\\partial_t^2\\lambda + t^4\\left(\\partial_\\theta^2\\lambda\\right)^2 - 2t^2\\,\\partial_\\theta^2\\lambda + 3t^4\\left(\\partial_t P\\right)^4 - 6t^4\\left(\\partial_t P\\right)^2\\left(\\partial_\\theta P\\right)^2 + 9t^2\\left(\\partial_t P\\right)^2 + 20t^3\\,\\partial_t P\\,\\partial_t^2 P + 4t^3\\,\\partial_t P\\,\\partial_\\theta^2 P + 3t^4\\left(\\partial_\\theta P\\right)^4 - 5t^2\\left(\\partial_\\theta P\\right)^2 - 24t^3\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P + 8t^4\\left(\\partial_t^2 P\\right)^2 - 16t^4\\left(\\partial_t\\partial_\\theta P\\right)^2 + 8t^4\\left(\\partial_\\theta^2 P\\right)^2 + 3\\right)e^{-\\lambda}}{4L^4\\,t^3}"
+        },
+        {
+          "id": "scalar_logarithmic",
+          "name": "Scalar, Logarithmic Time",
+          "coordinates": [
+            "\\tau",
+            "\\theta",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty,\\infty)",
+            "\\theta \\in [0,2\\pi)",
+            "x \\in [0,2\\pi)",
+            "y \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Constant length setting the scale ($L>0$)"
+            },
+            {
+              "symbol": "P = P(\\tau,\\theta)",
+              "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_\\tau^2 P=e^{-2\\tau}\\partial_\\theta^2 P$"
+            },
+            {
+              "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
+              "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_\\tau\\lambda=-\\left(e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + 2e^{2\\tau}\\left(\\partial_\\tau\\Phi\\right)^2 + 2\\left(\\partial_\\theta\\Phi\\right)^2\\right)e^{-2\\tau}$ and $\\partial_\\theta\\lambda=-2\\partial_\\tau P\\,\\partial_\\theta P - 4\\partial_\\tau\\Phi\\,\\partial_\\theta\\Phi$; its spatial constraint has zero integral around the circle"
+            },
+            {
+              "symbol": "\\Phi = \\Phi(\\tau,\\theta)",
+              "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$, with $\\partial_\\tau^2\\Phi=e^{-2\\tau}\\partial_\\theta^2\\Phi$"
+            }
+          ],
+          "convention": "The time $\\tau=-\\ln t$ has future towards decreasing $\\tau$, with $(\\theta,x,y)$ the periodic coordinates of the areal chart. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=L^2\\left(e^{(\\lambda+\\tau)/2}\\left(-e^{-2\\tau}d\\tau^2+d\\theta^2\\right)+e^{-\\tau}\\left(e^{P}dx^2+e^{-P}dy^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-L^2e^{\\lambda/2}e^{-3\\tau/2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2e^{\\tau/2}e^{\\lambda/2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "L^2e^{-\\tau}e^{P}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "L^2e^{-\\tau}e^{-P}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(e^{2\\tau}\\partial_\\tau\\lambda + e^{2\\tau}\\partial_\\tau^2\\lambda - \\partial_\\theta^2\\lambda + e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 - \\left(\\partial_\\theta P\\right)^2\\right)e^{-\\tau/2}e^{-\\lambda/2}}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(e^{4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\tau P\\right)^2 - e^{2\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 + 2e^{4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2 + 2e^{4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau^2\\lambda - 2e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta^2\\lambda + 4e^{4\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\tau P\\right)^2 - 4e^{4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau^2 P - 4e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\,\\partial_\\theta^2 P - 4e^{2\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\theta P\\right)^2 + 8e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau\\partial_\\theta P + 2e^{4\\tau}\\partial_\\tau\\lambda - e^{2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 - e^{2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2 - 8e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\theta P + 8e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau\\partial_\\theta P - 4e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau^2 P - 4\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\theta^2 P + e^{4\\tau}\\left(\\partial_\\tau^2\\lambda\\right)^2 - 2e^{2\\tau}\\partial_\\tau^2\\lambda\\,\\partial_\\theta^2\\lambda + 2e^{4\\tau}\\partial_\\tau^2\\lambda + \\left(\\partial_\\theta^2\\lambda\\right)^2 - 2e^{2\\tau}\\partial_\\theta^2\\lambda + 3e^{4\\tau}\\left(\\partial_\\tau P\\right)^4 - 6e^{2\\tau}\\left(\\partial_\\tau P\\right)^2\\left(\\partial_\\theta P\\right)^2 - 3e^{4\\tau}\\left(\\partial_\\tau P\\right)^2 - 4e^{4\\tau}\\partial_\\tau P\\,\\partial_\\tau^2 P - 4e^{2\\tau}\\partial_\\tau P\\,\\partial_\\theta^2 P + 3\\left(\\partial_\\theta P\\right)^4 - 5e^{2\\tau}\\left(\\partial_\\theta P\\right)^2 + 24e^{2\\tau}\\partial_\\theta P\\,\\partial_\\tau\\partial_\\theta P + 8e^{4\\tau}\\left(\\partial_\\tau^2 P\\right)^2 - 16e^{2\\tau}\\left(\\partial_\\tau\\partial_\\theta P\\right)^2 + 8\\left(\\partial_\\theta^2 P\\right)^2 + 3e^{4\\tau}\\right)e^{-\\tau}e^{-\\lambda}}{4L^4}"
+        },
+        {
+          "id": "electromagnetic_areal",
+          "name": "Electromagnetic, Areal Time",
+          "coordinates": [
+            "t",
+            "\\theta",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (0,\\infty)",
+            "\\theta \\in [0,2\\pi)",
+            "x \\in [0,2\\pi)",
+            "y \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Constant length setting the scale ($L>0$)"
+            },
+            {
+              "symbol": "P = P(t,\\theta)",
+              "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_t^2 P=\\dfrac{2e^{P}\\left(\\partial_t\\chi\\right)^2 - 2e^{P}\\left(\\partial_\\theta\\chi\\right)^2 + t\\,\\partial_\\theta^2 P - \\partial_t P}{t}$"
+            },
+            {
+              "symbol": "\\lambda = \\lambda(t,\\theta)",
+              "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_t\\lambda=t\\left(\\partial_t P\\right)^2 + t\\left(\\partial_\\theta P\\right)^2 + 4e^{P}\\left(\\partial_\\theta\\chi\\right)^2 + 4e^{P}\\left(\\partial_t\\chi\\right)^2$ and $\\partial_\\theta\\lambda=2t\\,\\partial_t P\\,\\partial_\\theta P + 8e^{P}\\partial_\\theta\\chi\\,\\partial_t\\chi$; its spatial constraint has zero integral around the circle"
+            },
+            {
+              "symbol": "\\chi = \\chi(t,\\theta)",
+              "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$, with $\\partial_t^2\\chi=-\\left(\\partial_t P\\,\\partial_t\\chi - \\partial_\\theta P\\,\\partial_\\theta\\chi - \\partial_\\theta^2\\chi\\right)$"
+            }
+          ],
+          "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the area of each symmetry orbit in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=L^2\\left(\\dfrac{e^{\\lambda/2}}{\\sqrt{t}}\\left(-dt^2+d\\theta^2\\right)+t\\left(e^{P}dx^2+e^{-P}dy^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^2e^{\\lambda/2}}{\\sqrt{t}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2e^{\\lambda/2}}{\\sqrt{t}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "L^2\\,t\\,e^{P}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "L^2\\,t\\,e^{-P}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\sqrt{t}\\left(\\partial_t^2\\lambda - \\partial_\\theta^2\\lambda + \\left(\\partial_t P\\right)^2 - \\left(\\partial_\\theta P\\right)^2\\right)e^{-\\lambda/2}}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(t^4\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_t P\\right)^2 - t^4\\left(\\partial_t\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 + t^2\\left(\\partial_t\\lambda\\right)^2 - 8t^3\\,\\partial_t\\lambda\\left(\\partial_t P\\right)^2 - 4t^4\\,\\partial_t\\lambda\\,\\partial_t P\\,\\partial_t^2 P - 4t^4\\,\\partial_t\\lambda\\,\\partial_t P\\,\\partial_\\theta^2 P + 4t^3\\,\\partial_t\\lambda\\left(\\partial_\\theta P\\right)^2 + 8t^4\\,\\partial_t\\lambda\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P - t^4\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_t P\\right)^2 + t^4\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 - t^2\\left(\\partial_\\theta\\lambda\\right)^2 + 4t^3\\,\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_\\theta P + 8t^4\\,\\partial_\\theta\\lambda\\,\\partial_t P\\,\\partial_t\\partial_\\theta P - 4t^4\\,\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_t^2 P - 4t^4\\,\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\theta^2 P + t^4\\left(\\partial_t^2\\lambda\\right)^2 - 2t^4\\,\\partial_t^2\\lambda\\,\\partial_\\theta^2\\lambda + 2t^2\\,\\partial_t^2\\lambda + t^4\\left(\\partial_\\theta^2\\lambda\\right)^2 - 2t^2\\,\\partial_\\theta^2\\lambda + 3t^4\\left(\\partial_t P\\right)^4 - 6t^4\\left(\\partial_t P\\right)^2\\left(\\partial_\\theta P\\right)^2 + 9t^2\\left(\\partial_t P\\right)^2 + 20t^3\\,\\partial_t P\\,\\partial_t^2 P + 4t^3\\,\\partial_t P\\,\\partial_\\theta^2 P + 3t^4\\left(\\partial_\\theta P\\right)^4 - 5t^2\\left(\\partial_\\theta P\\right)^2 - 24t^3\\,\\partial_\\theta P\\,\\partial_t\\partial_\\theta P + 8t^4\\left(\\partial_t^2 P\\right)^2 - 16t^4\\left(\\partial_t\\partial_\\theta P\\right)^2 + 8t^4\\left(\\partial_\\theta^2 P\\right)^2 + 3\\right)e^{-\\lambda}}{4L^4\\,t^3}"
+        },
+        {
+          "id": "electromagnetic_logarithmic",
+          "name": "Electromagnetic, Logarithmic Time",
+          "coordinates": [
+            "\\tau",
+            "\\theta",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty,\\infty)",
+            "\\theta \\in [0,2\\pi)",
+            "x \\in [0,2\\pi)",
+            "y \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Constant length setting the scale ($L>0$)"
+            },
+            {
+              "symbol": "P = P(\\tau,\\theta)",
+              "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_\\tau^2 P=\\left(\\partial_\\theta^2 P + 2e^{3\\tau}e^{P}\\left(\\partial_\\tau\\chi\\right)^2 - 2e^{\\tau}e^{P}\\left(\\partial_\\theta\\chi\\right)^2\\right)e^{-2\\tau}$"
+            },
+            {
+              "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
+              "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_\\tau\\lambda=-\\left(e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + 4e^{3\\tau}e^{P}\\left(\\partial_\\tau\\chi\\right)^2 + 4e^{\\tau}e^{P}\\left(\\partial_\\theta\\chi\\right)^2\\right)e^{-2\\tau}$ and $\\partial_\\theta\\lambda=-2\\partial_\\tau P\\,\\partial_\\theta P - 8e^{\\tau}e^{P}\\partial_\\tau\\chi\\,\\partial_\\theta\\chi$; its spatial constraint has zero integral around the circle"
+            },
+            {
+              "symbol": "\\chi = \\chi(\\tau,\\theta)",
+              "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$, with $\\partial_\\tau^2\\chi=-\\left(e^{2\\tau}\\partial_\\tau P\\,\\partial_\\tau\\chi - \\partial_\\theta P\\,\\partial_\\theta\\chi + e^{2\\tau}\\partial_\\tau\\chi - \\partial_\\theta^2\\chi\\right)e^{-2\\tau}$"
+            }
+          ],
+          "convention": "The time $\\tau=-\\ln t$ has future towards decreasing $\\tau$, with $(\\theta,x,y)$ the periodic coordinates of the areal chart. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=L^2\\left(e^{(\\lambda+\\tau)/2}\\left(-e^{-2\\tau}d\\tau^2+d\\theta^2\\right)+e^{-\\tau}\\left(e^{P}dx^2+e^{-P}dy^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-L^2e^{\\lambda/2}e^{-3\\tau/2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "L^2e^{\\tau/2}e^{\\lambda/2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "L^2e^{-\\tau}e^{P}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "L^2e^{-\\tau}e^{-P}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(e^{2\\tau}\\partial_\\tau\\lambda + e^{2\\tau}\\partial_\\tau^2\\lambda - \\partial_\\theta^2\\lambda + e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 - \\left(\\partial_\\theta P\\right)^2\\right)e^{-\\tau/2}e^{-\\lambda/2}}{2L^2}",
+          "kretschmann": "K = \\dfrac{\\left(e^{4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\tau P\\right)^2 - e^{2\\tau}\\left(\\partial_\\tau\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 + 2e^{4\\tau}\\left(\\partial_\\tau\\lambda\\right)^2 + 2e^{4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau^2\\lambda - 2e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta^2\\lambda + 4e^{4\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\tau P\\right)^2 - 4e^{4\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau^2 P - 4e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\tau P\\,\\partial_\\theta^2 P - 4e^{2\\tau}\\partial_\\tau\\lambda\\left(\\partial_\\theta P\\right)^2 + 8e^{2\\tau}\\partial_\\tau\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau\\partial_\\theta P + 2e^{4\\tau}\\partial_\\tau\\lambda - e^{2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta\\lambda\\right)^2\\left(\\partial_\\theta P\\right)^2 - e^{2\\tau}\\left(\\partial_\\theta\\lambda\\right)^2 - 8e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\theta P + 8e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\tau P\\,\\partial_\\tau\\partial_\\theta P - 4e^{2\\tau}\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\tau^2 P - 4\\partial_\\theta\\lambda\\,\\partial_\\theta P\\,\\partial_\\theta^2 P + e^{4\\tau}\\left(\\partial_\\tau^2\\lambda\\right)^2 - 2e^{2\\tau}\\partial_\\tau^2\\lambda\\,\\partial_\\theta^2\\lambda + 2e^{4\\tau}\\partial_\\tau^2\\lambda + \\left(\\partial_\\theta^2\\lambda\\right)^2 - 2e^{2\\tau}\\partial_\\theta^2\\lambda + 3e^{4\\tau}\\left(\\partial_\\tau P\\right)^4 - 6e^{2\\tau}\\left(\\partial_\\tau P\\right)^2\\left(\\partial_\\theta P\\right)^2 - 3e^{4\\tau}\\left(\\partial_\\tau P\\right)^2 - 4e^{4\\tau}\\partial_\\tau P\\,\\partial_\\tau^2 P - 4e^{2\\tau}\\partial_\\tau P\\,\\partial_\\theta^2 P + 3\\left(\\partial_\\theta P\\right)^4 - 5e^{2\\tau}\\left(\\partial_\\theta P\\right)^2 + 24e^{2\\tau}\\partial_\\theta P\\,\\partial_\\tau\\partial_\\theta P + 8e^{4\\tau}\\left(\\partial_\\tau^2 P\\right)^2 - 16e^{2\\tau}\\left(\\partial_\\tau\\partial_\\theta P\\right)^2 + 8\\left(\\partial_\\theta^2 P\\right)^2 + 3e^{4\\tau}\\right)e^{-\\tau}e^{-\\lambda}}{4L^4}"
         }
       ]
     },
@@ -15059,8 +15373,8 @@
         "jordan1960",
         "halilsoy1988",
         "piran1985",
-        "piransafier1985",
         "bronnikov2020",
+        "piransafier1985",
         "tomizawa2014",
         "piran1986",
         "dinverno2000",
@@ -25147,6 +25461,11 @@
           "id": "twisting_cylindrical_waves",
           "kind": "dual",
           "text": "The same field equations around an axis. A complex change of coordinates carries every cylindrical wave with both polarisations to a universe of Gowdy's kind, Halilsoy's standing wave to the torus $T^3$ [glod2022]."
+        },
+        {
+          "id": "charach_malin",
+          "kind": "family",
+          "text": "A Gowdy torus filled with massless scalar or electromagnetic waves. The scalar waves share a linear wave equation with the gravitational polarisation [charach_malin1979, szybka_wyrebowski2016]; the electromagnetic waves couple nonlinearly to it [charach1979, nungesser_rendall2009]."
         }
       ],
       "references": [
@@ -25176,7 +25495,11 @@
         "chinea1992",
         "belinskii1978",
         "martinbenito2011",
-        "glod2022"
+        "glod2022",
+        "charach_malin1979",
+        "szybka_wyrebowski2016",
+        "charach1979",
+        "nungesser_rendall2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",

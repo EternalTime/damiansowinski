@@ -78,6 +78,11 @@
       "id": "twisting_cylindrical_waves",
       "kind": "dual",
       "text": "The same field equations around an axis. A complex change of coordinates carries every cylindrical wave with both polarisations to a universe of Gowdy's kind, Halilsoy's standing wave to the torus $T^3$ [glod2022]."
+    },
+    {
+      "id": "charach_malin",
+      "kind": "family",
+      "text": "A Gowdy torus filled with massless scalar or electromagnetic waves. The scalar waves share a linear wave equation with the gravitational polarisation [charach_malin1979, szybka_wyrebowski2016]; the electromagnetic waves couple nonlinearly to it [charach1979, nungesser_rendall2009]."
     }
   ],
   "references": [
@@ -107,7 +112,11 @@
     "chinea1992",
     "belinskii1978",
     "martinbenito2011",
-    "glod2022"
+    "glod2022",
+    "charach_malin1979",
+    "szybka_wyrebowski2016",
+    "charach1979",
+    "nungesser_rendall2009"
   ],
   "coordinates": [
     {
