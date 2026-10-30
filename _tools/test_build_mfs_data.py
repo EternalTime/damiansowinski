@@ -4625,6 +4625,10 @@ class Slices(unittest.TestCase):
             system = key.split("/")[1]
             height = math.asinh(t) if system == "harmonic" else t
             return (lambda X: height), ([lo, hi] if system == "comoving_spherical" else [-hi, hi])
+        if key.startswith("bekenstein_universes/"):
+            # A moment of the conformal time eta, which each chart draws upward, from the centre to the
+            # embedding's reach: the pole to the antipode in the closed chart, out to chi = 1 in the open one.
+            return (lambda X: t), list(self.reach(surface))
         if key.startswith("murphy_viscous_universe/"):
             # A moment of the proper time t of the ring's world tube, a whole line: of that t on the cosmic
             # chart and of its scale factor, ln a + a^2/2 = t, on the scale factor charts, for q = 2.
@@ -6276,6 +6280,16 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
                                                 - 2 * lqc_bounce_eta(t)), 2e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "bekenstein_universes":
+                        # The closed strip draws T = eta; the open universe's p, q = gd(eta -+ chi), so
+                        # ln tan(p/2 + pi/4) + ln tan(q/2 + pi/4) = 2 eta on a moment.
+                        for X, T in points:
+                            if mark["view"] == "closed":
+                                self.assertLess(abs(T - t), 2e-4, f"{where} at {(X, T)}")
+                            else:
+                                p_, q_ = (T - X) / 2, (T + X) / 2
+                                total = math.log(math.tan(p_ / 2 + math.pi / 4)) + math.log(math.tan(q_ / 2 + math.pi / 4))
+                                self.assertLess(abs(total - 2 * t), 2e-3 / math.cos(q_) ** 2, f"{where} at {(X, T)}")
                     elif metric_id == "murphy_viscous_universe":
                         # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta = 2(a - 1/a) on the moment t, for q = 2.
                         a = murphy_scale(t)
