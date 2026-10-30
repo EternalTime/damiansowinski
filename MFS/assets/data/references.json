@@ -1,5 +1,5 @@
 {
-  "version": "4bf1bfefb7cd19ed",
+  "version": "db4caf99bd76be15",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33720,6 +33720,90 @@
         "eprint": "gr-qc/0002013",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/0002013"
+      }
+    },
+    "anderson2022noninheriting": {
+      "type": "article",
+      "fields": {
+        "title": "A new non-inheriting homogeneous solution of the Einstein-Maxwell equations with cosmological term",
+        "author": "Anderson, Ian and Torre, Charles",
+        "journal": "General Relativity and Gravitation",
+        "volume": "54",
+        "number": "3",
+        "pages": "27",
+        "year": "2022",
+        "doi": "10.1007/s10714-022-02913-8",
+        "url": "https://doi.org/10.1007/s10714-022-02913-8"
+      }
+    },
+    "mclenaghan1975electrovacuum": {
+      "type": "article",
+      "fields": {
+        "title": "A new solution of the Einstein--Maxwell equations",
+        "author": "McLenaghan, Raymond G. and Tariq, Nessim",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "16",
+        "number": "11",
+        "pages": "2306--2312",
+        "year": "1975",
+        "doi": "10.1063/1.522461",
+        "url": "https://doi.org/10.1063/1.522461"
+      }
+    },
+    "evtyagin2021mtt": {
+      "type": "article",
+      "fields": {
+        "title": "On exact solutions of the Klein--Gordon equation in the McLenaghan--Tariq--Tupper space",
+        "author": "Evtyagin, A.L. and Magazev, A.A.",
+        "journal": "Herald of Omsk University",
+        "volume": "26",
+        "number": "1",
+        "pages": "21--26",
+        "year": "2021",
+        "doi": "10.24147/1812-3996.2021.26(1).21-26",
+        "url": "https://doi.org/10.24147/1812-3996.2021.26(1).21-26"
+      }
+    },
+    "tariq1975electrovacuum": {
+      "type": "article",
+      "fields": {
+        "title": "A class of algebraically general solutions of the Einstein-Maxwell equations for non-null electromagnetic fields",
+        "author": "Tariq, N. and Tupper, B. O. J.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "6",
+        "number": "4",
+        "pages": "345--360",
+        "year": "1975",
+        "doi": "10.1007/bf00761969",
+        "url": "https://doi.org/10.1007/bf00761969"
+      }
+    },
+    "tupper1976electrovacuum": {
+      "type": "article",
+      "fields": {
+        "title": "A class of algebraically general solutions of the Einstein-Maxwell equations for non-null electromagnetic fields. II",
+        "author": "Tupper, B. O. J.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "7",
+        "number": "6",
+        "pages": "479--486",
+        "year": "1976",
+        "doi": "10.1007/bf00766405",
+        "url": "https://doi.org/10.1007/bf00766405"
+      }
+    },
+    "magazev2021mtt": {
+      "type": "article",
+      "fields": {
+        "title": "Constructing a Complete Integral of the Hamilton--Jacobi Equation on Pseudo-Riemannian Spaces with Simply Transitive Groups of Motions",
+        "author": "Magazev, Alexey A.",
+        "journal": "Mathematical Physics, Analysis and Geometry",
+        "volume": "24",
+        "number": "2",
+        "pages": "11",
+        "year": "2021",
+        "doi": "10.1007/s11040-021-09385-3",
+        "url": "https://doi.org/10.1007/s11040-021-09385-3"
       }
     }
   }

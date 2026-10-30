@@ -394,7 +394,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "c16324c114e3e6a8",
+    "version": "b38a59b437dffdae",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -3884,6 +3884,23 @@
     "diagrams": "bd7d5856e23baa9e",
     "conformal": "73dd5df297bbb623",
     "embedding": "581548ed12bf4ece"
+  },
+  {
+    "id": "mclenaghan_tariq_tupper",
+    "name": "McLenaghan-Tariq-Tupper",
+    "tags": [
+      "electrovacuum",
+      "electromagnetic field",
+      "homogeneous",
+      "Petrov type I",
+      "stationary",
+      "four-dimensional"
+    ],
+    "version": "84650dc26758f592",
+    "diagrams": "24d254e9410ebf09",
+    "conformal": "de7c12ea5e6e823e",
+    "embedding": "1209f3afb26e3d96",
+    "curvature": "708f57717271a7c2"
   },
   {
     "id": "mcvittie",

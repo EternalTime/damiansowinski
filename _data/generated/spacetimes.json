@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 213,
+  "count": 214,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4759,6 +4759,11 @@
           "id": "cahen_wallach",
           "kind": "family",
           "text": "The Lorentzian symmetric spaces that do not split into a product. This one is a product of two symmetric pieces, anti-de Sitter space of two dimensions and a sphere [figueroa2003maximally]."
+        },
+        {
+          "id": "mclenaghan_tariq_tupper",
+          "kind": "family",
+          "text": "A homogeneous electrovacuum of Petrov type I with a Maxwell field that does not inherit the symmetry [evtyagin2021mtt, anderson2022noninheriting]."
         }
       ],
       "references": [
@@ -4793,7 +4798,9 @@
         "freund1980",
         "maldacena2018",
         "maldacena2023",
-        "figueroa2003maximally"
+        "figueroa2003maximally",
+        "evtyagin2021mtt",
+        "anderson2022noninheriting"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -42004,6 +42011,273 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "mclenaghan_tariq_tupper",
+      "name": "McLenaghan-Tariq-Tupper electrovacuum",
+      "short_name": "McLenaghan-Tariq-Tupper",
+      "description": "A homogeneous electrovacuum of Petrov type I with a Maxwell field that does not inherit the symmetry.",
+      "tags": [
+        "electrovacuum",
+        "electromagnetic field",
+        "homogeneous",
+        "Petrov type I",
+        "stationary",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use signature $(-,+,+,+)$ and a positive length $a$, with components along $x^0=ct$ wherever $t$ is a time.",
+      "related": [
+        {
+          "id": "bertotti_robinson",
+          "kind": "family",
+          "text": "A homogeneous electrovacuum with conformally flat curvature [anderson2022noninheriting, tariq1974]."
+        }
+      ],
+      "references": [
+        "anderson2022noninheriting",
+        "mclenaghan1975electrovacuum",
+        "evtyagin2021mtt",
+        "tariq1975electrovacuum",
+        "tupper1976electrovacuum",
+        "magazev2021mtt",
+        "tariq1974"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mclenaghan_tariq_tupper.json",
+      "charts": [
+        {
+          "id": "original",
+          "name": "Original coordinates",
+          "coordinates": [
+            "u",
+            "r",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The positive curvature length."
+            }
+          ],
+          "convention": "The coordinates $(u,r,y,z)$ carry length, with $u=X^1$, $r=X^2$, $y=X^3$, $z=X^4$, and $a=2/k$ in the original notation.",
+          "line_element": "ds^2 = -\\left(du + dr - 2y\\,dz/a\\right)^2 + dr^2 + e^{-2r/a}dy^2 + e^{2r/a}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "u",
+                "z"
+              ],
+              "value": "\\dfrac{2y}{a}"
+            },
+            {
+              "indices": [
+                "r",
+                "z"
+              ],
+              "value": "\\dfrac{2y}{a}"
+            },
+            {
+              "indices": [
+                "z",
+                "u"
+              ],
+              "value": "\\dfrac{2y}{a}"
+            },
+            {
+              "indices": [
+                "z",
+                "r"
+              ],
+              "value": "\\dfrac{2y}{a}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{-2r/a}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\left(a\\,e^{r/a} + 2y\\right)\\left(a\\,e^{r/a} - 2y\\right)}{a^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64}{a^4}"
+        },
+        {
+          "id": "exponential",
+          "name": "Exponential coordinates",
+          "coordinates": [
+            "t",
+            "r",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The positive curvature length."
+            }
+          ],
+          "convention": "The time $t$ obeys $ct=u+r$, and $r$, $y$, and $z$ carry length.",
+          "line_element": "ds^2 = -\\left(c\\,dt - 2y\\,dz/a\\right)^2 + dr^2 + e^{-2r/a}dy^2 + e^{2r/a}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "z"
+              ],
+              "value": "\\dfrac{2y}{a}"
+            },
+            {
+              "indices": [
+                "z",
+                "t"
+              ],
+              "value": "\\dfrac{2y}{a}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{-2r/a}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\left(a\\,e^{r/a} + 2y\\right)\\left(a\\,e^{r/a} - 2y\\right)}{a^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64}{a^4}"
+        },
+        {
+          "id": "upper_half_plane",
+          "name": "Upper half-plane coordinates",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\phi \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "The positive curvature length."
+            }
+          ],
+          "convention": "We use $x=a e^{r/a}$ and $\\phi=z/a$, with $x$ and $y$ lengths and $\\phi$ a dimensionless real coordinate.",
+          "line_element": "ds^2 = -\\left(c\\,dt - 2y\\,d\\phi\\right)^2 + \\frac{a^2}{x^2}(dx^2 + dy^2) + x^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "2y"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "2y"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{a^2}{x^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{a^2}{x^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(x - 2y\\right)\\left(x + 2y\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64}{a^4}"
         }
       ]
     },
