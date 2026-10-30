@@ -3047,6 +3047,19 @@ BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi}
                    "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
+    Diagram("stiff_fluid_universes", "areal", "tx", "Areal time", ("t", "x"), (-0.8, 0.8, -0.3, 1.3),
+            "$x$", "$t$", {"a": 1, "b": 1, "ell": 1}, {"y": "0", "z": "0"},
+            families=SIDEWAYS, singular_zero="t", curves=(("surface", "-t**2/2", "$\\chi=0$, one fluid world line", "signed"),),
+            lines=(("shell", "x0", "1", "$t=1$, the scalar gradient becomes null"),)),
+    Diagram("stiff_fluid_universes", "comoving", "fluid", "Comoving labels", ("t", "\\chi"), (-0.8, 0.8, -0.3, 1.3),
+            "$\\chi$", "$t$", {"a": 1, "b": 1, "ell": 1}, {"y": "0", "z": "0"},
+            families=SIDEWAYS, singular_zero="t", curves=(("surface", "0", "$\\chi=0$, one fluid world line", "signed"),),
+            lines=(("shell", "x0", "1", "$t=1$, the scalar gradient becomes null"),)),
+    Diagram("stiff_fluid_universes", "characteristic", "null", "Characteristic coordinates", ("u", "v"),
+            (-0.8, 0.8, -0.3, 1.3), "$(v-u)/2$", "$(u+v)/2$",
+            {"a": 1, "b": 1, "ell": 1}, {"y": "0", "z": "0"},
+            to_display=((-0.5,0.5),(0.5,0.5)), tau="u+v", families=SIDEWAYS,
+            where="(u+v)*(2-u-v)", singular_zero="u+v"),
     *[Diagram("hotta_tanaka", "conformally_flat", view, f"$\\theta = {tex}$", ("\\eta", "\\rho"), (0, 4, -4.3, -0.3),
               "$\\rho/a$", "$\\eta/a$", HT, {"theta": theta, "phi": "0"}, tau="eta", delta=AS_PULSE, step=0.0005,
               input=HT_MOMENTS if view == "near" else HT_INPUT)
@@ -6412,6 +6425,15 @@ def _lb_outside_caption(n, last):
 
 
 LB_CAPTIONS = {
+    ("stiff_fluid_universes", "areal", "tx"): [
+        "Light rays across the symmetry planes ($a=b=1$, $\\ell=1$, $y=z=0$). The fluid moves toward decreasing $x$; its world lines obey $x=\\chi-t^2/2$. The singularity is $t=0$.",
+    ],
+    ("stiff_fluid_universes", "comoving", "fluid"): [
+        "Light rays in fluid labels ($a=b=1$, $\\ell=1$, $y=z=0$). The matter stays at fixed $\\chi$, and the cones tilt as $t$ grows. The singularity is $t=0$.",
+    ],
+    ("stiff_fluid_universes", "characteristic", "null"): [
+        "Characteristic coordinates shown against $x=(v-u)/2$ and $t=(u+v)/2$ ($a=b=1$, $\\ell=1$, $y=z=0$). Each ray keeps $u$ or $v$ constant; the fluid occupies $0<t<1$.",
+    ],
     ("light_beam", "cartesian", "axis"): [
         "The plane of $t$ and $z$ on the axis of a uniform beam ($x = y = 0$), in units of its radius $R$. The "
         "profile $A$ and its gradient both vanish on the axis, so the metric on this plane is "
@@ -18431,6 +18453,16 @@ CLOSED_FORMS.update({
         (_btz_shock_before, lambda U, V: U, None),
     ("btz_shock_wave", "exterior", "radial"):
         (lambda t, r: t + _btz_rstar(r, BTZ_STATIC), lambda t, r: t - _btz_rstar(r, BTZ_STATIC), _away(1.0)),
+})
+
+
+CLOSED_FORMS.update({
+    ("stiff_fluid_universes", "areal", "tx"):
+        (lambda t,x: t+x, lambda t,x: t-x, lambda t,x: (t>0.02)&(t<0.98)),
+    ("stiff_fluid_universes", "comoving", "fluid"):
+        (lambda t,chi: t+chi-t*t/2, lambda t,chi: t-chi+t*t/2, lambda t,chi: (t>0.02)&(t<0.98)),
+    ("stiff_fluid_universes", "characteristic", "null"):
+        (lambda u,v: v, lambda u,v: u, lambda u,v: (u+v>0.04)&(u+v<1.96)),
 })
 
 

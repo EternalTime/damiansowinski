@@ -8,12 +8,12 @@
     "inhomogeneous",
     "perfect fluid",
     "scalar field",
-    "plane symmetry",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "time-dependent"
+    "time-dependent",
+    "stiff fluid"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We use signature $(-,+,+,+)$ and $G=c=1$, publish the canonical scalar $\\Phi$ with $G_{\\mu\\nu}=8\\pi T_{\\mu\\nu}$, and rescale the review field as $\\sigma=\\sqrt{8\\pi}\\Phi$. The Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$; $a>0$, $b\\geq0$, $\\ell>0$, and $\\rho$ and $p$ are energy density and pressure.",

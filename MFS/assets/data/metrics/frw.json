@@ -166,6 +166,11 @@
       "id": "murphy_viscous_universe",
       "kind": "special_case",
       "text": "The flat Friedmann universe of a fluid whose bulk viscosity is proportional to its density, which George L. Murphy found in 1973 [murphy1973]. Its Hubble rate holds at the constant rate of the steady state in the infinite past and falls to the fluid's own as the universe grows."
+    },
+    {
+      "id": "stiff_fluid_universes",
+      "kind": "family",
+      "text": "The spatially flat stiff-fluid universe is the isotropic member, $b=0$ and $a^2=3/2$, of this plane-symmetric family."
     }
   ],
   "references": [

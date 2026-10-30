@@ -2731,6 +2731,12 @@ def _hotta_tanaka(system, fixed):
 
 
 FLAT = {
+    ("stiff_fluid_universes", "areal", "tx"): lambda: [
+        Mark(m, points=[(m.time,0.0)]) for m in moments("stiff_fluid_universes")],
+    ("stiff_fluid_universes", "comoving", "fluid"): lambda: [
+        Mark(m, points=[(m.time,m.time**2/2)]) for m in moments("stiff_fluid_universes")],
+    ("stiff_fluid_universes", "characteristic", "null"): lambda: [
+        Mark(m, points=[(m.time,m.time)]) for m in moments("stiff_fluid_universes")],
     **{("hotta_tanaka", system, view): (lambda system=system, fixed=fixed: _hotta_tanaka(system, fixed))
        for system in ("conformally_flat", "global", "kruskal")
        for view, fixed in (("equator", math.pi / 2), ("near", math.pi / 12))

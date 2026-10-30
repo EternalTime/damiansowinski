@@ -18239,7 +18239,27 @@ def brane_wall_universe(ck, src):
                  input=nr.BWU_INPUT)]
 
 
+
+def stiff_fluid_universes(ck, src):
+    """The symmetry plane t=1/2,x=0 at a=b=ell=1, with induced metric
+    ell^2 t(dy^2+dz^2), a flat disc. Its physical radius is sqrt(t) times
+    the coordinate radius, checked against the published metric and every chord."""
+    sl = FlatPlane(src, "stiff_fluid_universes", "areal", "y", "z", {"t": "1/2", "x": 0},
+                   {"a": 1, "b": 1, "ell": 1})
+    top, size = 1.0, 2.0
+    plane = disc(sl, "plane", top, "the origin of the symmetry plane", "the plane extends to infinity", [], size)
+    ck.isometry("stiff fluid symmetry plane", plane)
+    ck.add("stiff fluid transverse lengths scale as sqrt(t)", float(np.max(np.abs(sl.scale-math.sqrt(0.5)))), 1e-12)
+    surface = Surface([plane], label="$t=1/2$", time=0.5)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the symmetry plane, intrinsically flat")
+    fig.legend("line", "meridian", "radial lines in proper distance")
+    return [view("plane", "A symmetry plane", "$\\ell$", [surface], fig.done(),
+                 system="areal", settings="$a=b=1$, $t=1/2$, $x=0$, $\\ell=1$.")]
+
+
 DRAWN = {
+    "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
     "moving_mirror": moving_mirror,
     "aichelburg_sexl": aichelburg_sexl,
@@ -18450,6 +18470,7 @@ DRAWN = {
 NOT_DRAWN = {"lentz"}
 
 CAPTIONS = {
+    ("stiff_fluid_universes", "plane"): ["A transverse symmetry plane at one moment. Proper lengths within it are $\\ell\\sqrt{t}$ times coordinate lengths."],
     ("ab_metrics", "neck"): [
         "The surface of $r$ and $\\phi$ of B I ($z = 0$) at moments of the de Sitter slicing from $\\tau = -0.8$ "
         "to $0.8$, each drawn as a surface in flat space with every distance along it the metric distance. On "

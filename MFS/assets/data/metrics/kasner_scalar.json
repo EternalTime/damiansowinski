@@ -72,6 +72,11 @@
       "id": "holographic_superconductor",
       "kind": "limit_source",
       "text": "A black hole whose inside ends as this universe with $p_2 = p_3$. Inside the holographic superconductor the scalar field oscillates and then settles into this limit near the singularity [hartnoll2021diving]."
+    },
+    {
+      "id": "stiff_fluid_universes",
+      "kind": "family",
+      "text": "The plane-symmetric stiff fluid admits density gradients across its symmetry planes. At $b=0$ it shares the homogeneous scalar-field solutions with $p_y=p_z$."
     }
   ],
   "references": [

@@ -27028,7 +27028,62 @@ def brane_wall_universe(ck, src):
 BWU_AT = {"chi": "1/2", "theta": "pi/2", "phi": "0"}
 
 
+
+def stiff_fluid_universes(ck, src):
+    """The fluid strip 0<t<1 at a=b=ell=1, compactified by
+    p=atan(4(t-x)),q=atan(4(t+x)). The upper spacelike edge is a
+    null scalar gradient, not a curvature singularity; the canonical scalar
+    extends across it. All three coordinate maps are checked against their
+    published metrics, and the fixed embedding moment is traced on the strip."""
+    params = {"a": 1, "b": 1, "ell": 1}
+    def fmap(t,x):
+        return np.arctan(4*(t-x)),np.arctan(4*(t+x))
+    def moving(t,chi):
+        return fmap(t,chi-t*t/2)
+    def characteristic(u,v):
+        return fmap((u+v)/2,(v-u)/2)
+    ts,xs = ck.uniform(0.05,0.95),ck.uniform(-3,3)
+    for system,pair,fun,first,second,future in (
+        ("areal",("t","x"),fmap,ts,xs,lambda t,x:(1,0)),
+        ("comoving",("t","\\chi"),moving,ts,xs+ts*ts/2,lambda t,chi:(1,0)),
+        ("characteristic",("u","v"),characteristic,ts-xs,ts+xs,lambda u,v:(1,1))):
+        plane = Plane(src,"stiff_fluid_universes",system,pair,{"y":"0","z":"0"},params)
+        ck.chart("stiff fluid "+system,plane,fun,first,second,future)
+    plane = Plane(src,"stiff_fluid_universes","areal",("t","x"),{"y":"0","z":"0"},params)
+    ck.finite("stiff fluid scalar extension has finite curvature on t=1",plane.kretschmann(np.ones(100),ck.uniform(-2,2,100)))
+    near_x=ck.uniform(-1,1,100)
+    ck.diverges("stiff fluid has an initial curvature singularity",plane.kretschmann(np.full(100,1e-3),near_x),
+                plane.kretschmann(np.full(100,1e-4),near_x))
+    span=np.tan(np.linspace(-PI/2,PI/2,1601))
+    p,q=fmap(np.ones_like(span),span)
+    upper=np.column_stack([q-p,q+p]);upper[0]=[-PI,0];upper[-1]=[PI,0]
+    shape=np.vstack([upper,[[PI,0],[-PI,0]]])
+    v=View("fluid","The stiff fluid region",[-3.5,3.5,-0.4,3.3],"areal")
+    v.fill("region",shape);v.fill("cover",shape)
+    v.line("singular",[[[-PI,0],[PI,0]]],zig=True)
+    v.line("chartedge",[upper])
+    grid(v,"r",lambda x,t:fmap(t,x),(-1,-0.5,0,0.5,1),np.linspace(0.001,0.999,400))
+    grid(v,"t",fmap,(0.2,0.4,0.6,0.8),span)
+    for m in slices.moments("stiff_fluid_universes"):
+        v.slice(m,points=[fmap(m.time,0.0)])
+    v.label_xt([0,-0.1],"$t=0$","t")
+    v.label_xt([0,2*math.atan(4)+0.1],"$t=1$","b")
+    v.legend("cover","the fluid region $0<t<1$")
+    v.legend("singular","the initial curvature singularity")
+    v.legend("chartedge","the scalar gradient becomes null")
+    v.legend("r","$x$ constant")
+    v.legend("t","$t$ constant")
+    ray_t=np.linspace(0.001,0.999,400)
+    v.curve("null",*fmap(ray_t,ray_t-0.5))
+    v.curve("null",*fmap(ray_t,0.5-ray_t))
+    v.legend("null","light across the planes")
+    v.set(caption=["The scalar solution continues through the upper edge with finite curvature at finite $x$."],
+          settings="$a=b=\\ell=1$; $p=\\arctan(4(t-x))$, $q=\\arctan(4(t+x))$.")
+    return [v]
+
+
 DRAWN = {
+    "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
     "big_rip": big_rip,
     "moving_mirror": moving_mirror,
@@ -27204,6 +27259,7 @@ KISELEV_STATIC_CAPTION = [
 ]
 
 CAPTIONS = {
+    ("stiff_fluid_universes", "fluid"): ["The scalar solution continues through the upper edge with finite curvature at finite $x$."],
     ("siklos", "kaigorodov"): [
         "Kaigorodov's spacetime on its slice $y = 0$ with the lines of $u$ divided out, each point in the diagram "
         "one such line, brought by $p = \\arctan((v - x_*)/L)$ and $q = \\arctan((v + x_*)/L)$ into Minkowski's "
