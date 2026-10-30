@@ -3806,6 +3806,11 @@ FLAT = {
     ("wahlquist", "whittaker", "through"): lambda: one(
         "wahlquist", lambda m: along(0.0, *m.reach("whittaker", "X")), view_id="static"),
 }
+FLAT.update({("charged_godel_universe", system, "inside"):
+             lambda s=system, r=radius: one("charged_godel_universe", _godel_cylinder(r), view_id=s)
+             for system, radius in (("hyperbolic", math.log(3)/2), ("linear", 0.5),
+                                    ("trigonometric", math.atan(0.5)))})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
@@ -4132,6 +4137,11 @@ FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z]
 # label's em MathJax sets mathematics at where it cannot measure the label's own font, a
 # hundredth more, rounded up to a twentieth. "$X = X_s$" stood 1.45 em from the edge of
 # Whittaker's sphere until 3 October 2026, its two X's 0.97 em wide and counted 0.7.
+HIDDEN.update({("charged_godel_universe", system, "beyond"):
+               "the cylinder lies beyond the first null circle and outside the Euclidean embedding"
+               for system in ("hyperbolic", "linear", "trigonometric")})
+
+
 WIDE = {"A": 0.9, "B": 0.9, "C": 0.9, "D": 0.95, "E": 0.9, "F": 0.9, "G": 0.9, "H": 1.05, "J": 0.75, "K": 1.05,
         "L": 0.8, "M": 1.2, "N": 1.05, "O": 0.9, "P": 0.9, "Q": 0.95, "R": 0.9, "S": 0.75, "T": 0.85, "U": 0.9,
         "V": 0.9, "W": 1.2, "X": 1.0, "Y": 0.9, "Z": 0.85, "m": 1.05, "w": 0.85, "-": 0.9, "+": 0.9}

@@ -65,3 +65,6 @@ These constant scalars show that the first null circle is not a curvature singul
 The conformal generator records this spacetime in NOT_DRAWN because a global time-oriented radial conformal square does not encode its closed angular timelike curves.
 All views are stationary snapshots, so no movie or stack registry entry is required.
 The shared view_text count is below 400 for every view.
+The inside cylinder on each branch marks its own embedding at t=0.
+The outside cylinders lie beyond the embedded spatial region and carry no such mark.
+The slice exceptions record both that geometric exclusion and the different curvature parameters of the other branches, so moments from different universes are not overlaid.

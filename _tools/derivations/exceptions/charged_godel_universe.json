@@ -1,0 +1,31 @@
+{
+  "hidden": [
+    {
+      "reason": "The cylinders beyond the first null circle lie outside every Euclidean embedding drawn on this page.",
+      "drawings": [
+        "charged_godel_universe/hyperbolic/beyond",
+        "charged_godel_universe/linear/beyond",
+        "charged_godel_universe/trigonometric/beyond"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The three branches are drawn at different curvature parameters; each cylinder marks only the embedding of its own branch.",
+      "drawings": {
+        "charged_godel_universe/hyperbolic/inside": [
+          "linear",
+          "trigonometric"
+        ],
+        "charged_godel_universe/linear/inside": [
+          "hyperbolic",
+          "trigonometric"
+        ],
+        "charged_godel_universe/trigonometric/inside": [
+          "hyperbolic",
+          "linear"
+        ]
+      }
+    }
+  ]
+}
