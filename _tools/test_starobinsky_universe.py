@@ -71,7 +71,8 @@ class NumericalBranch(unittest.TestCase):
         print(f"Starobinsky trajectory: constraint {residual:.3e}; refined N,h,R,S gap {gap:.3e}")
 
     def test_conformal_quadrature_inverse_and_oscillations(self):
-        samples = np.linspace(-6,150,157)
+        # These epochs lie between the inverse table's 0.004-spaced samples.
+        samples = np.linspace(-5.9993,149.9137,157)
         eta = self.sol.eta(samples)
         self.assertTrue(np.all(np.diff(eta)>0))
         gap = float(np.max(np.abs(self.sol.time(eta)-samples)))

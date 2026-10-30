@@ -116,3 +116,11 @@ The whole closed de Sitter equator at $\tau=0$ has $\rho=H_0^{-1}\sin\chi$ and $
 Each embedding view contains one moment, so no movie or stack registration is needed.
 The curvature figure evaluates the stored Ricci and Kretschmann scalars on the same numerical trajectory from $H_0\tau=-6$ to 80.
 Its panels use linear scales and no new frame kind.
+
+## Numerical precision
+
+At $H_0=1$, the largest sampled $|C|$ is $8.701\times10^{-13}$ on 2001 equally spaced epochs from $\tau=-6$ to 160.
+Halving the initial displacement and quartering the integration tolerances changes the normalized $N=\ln a$, $h$, $R$, and $S$ by at most $7.914\times10^{-13}$ on the same grid.
+The conformal-time inverse has a largest time discrepancy of $4.547\times10^{-12}$ at 157 epochs between its tabulated sample points.
+These are sampled refinement and interpolation diagnostics.
+The past boundary belongs to the exact branch A selected at the de Sitter saddle; the finite initial data approximate that branch on the displayed interval.
