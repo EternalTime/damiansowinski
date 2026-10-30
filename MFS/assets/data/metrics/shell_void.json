@@ -1,0 +1,102 @@
+{
+  "id": "shell_void",
+  "name": "Void with an Accreting Dust Shell",
+  "short_name": "Shell Void",
+  "description": "An empty spherical cavity surrounded by an accreting dust shell in a Friedmann universe.",
+  "tags": [
+    "cosmology",
+    "dust",
+    "thin shell",
+    "matching",
+    "spherically symmetric",
+    "four-dimensional",
+    "conformally flat"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use $G=c=1$, with $t_0$ a reference length and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ the unit sphere. We orient the shell normal toward the exterior, with $K_{ij}$ the projected covariant derivative of that normal. The tensors apply in the smooth regions on either side of the shell.",
+  "history": "A void grows as its surrounding shell sweeps through cosmic dust. Kei-ichi Maeda and Humitaka Sato formulated this motion relativistically in 1983, treating the compressed matter as an infinitely thin spherical shell [maeda1983void]. The shell expands within a homogeneous dust universe, gathering the matter displaced from its interior [maeda1983void, sugiura2000void].¶In the empty case, the centre lies in Minkowski spacetime, with an expanding Friedmann universe outside the shell [sugiura2000void]. The two regions meet on a sphere whose area is $4\\pi R^2$, where $R$ is the shell's areal radius. The interior clock and the cosmic clock outside it run at rates related by the motion of that sphere [sakaihaines2000void].¶The shell carries mass with zero pressure along its surface [sakaihaines2000void]. Its radius and proper time agree when calculated from either side, while the jump in its extrinsic curvature is fixed by its surface density [sakaihaines2000void]. Matter crossing the expanding shell increases its mass through the energy flux from the exterior dust [sakaihaines2000void]. The shell's stress produces curvature concentrated on its moving surface, alongside the smooth curvature of the surrounding universe [sugiura2000void].¶For a small void in a spatially flat dust universe, Maeda and Sato found the asymptotic law $R\\propto t^{(15+\\sqrt{17})/24}$ in the Newtonian approximation, with $t$ the exterior cosmic time [sakaihaines2000void]. The exponent is about $0.797$, exceeding the background expansion exponent $2/3$. In an open universe the shell's expansion eventually follows the background flow. In a closed universe its speed approaches that of light as the universe recollapses [maeda1983voidII, sakaihaines2000void].¶Nobuyuki Sakai, Maeda, and Sato studied the relation between shell motion and cosmological parameters in 1993 [sakai1993void]. They allowed dust inside the void and a cosmological constant in the surrounding universe. The ratio of the shell's peculiar speed to the local Hubble expansion depends mainly on the exterior matter density, with a further dependence on the density inside the void [sakai1993void].¶Norimasa Sugiura, Ken-ichi Nakao, Daisuke Ida, Sakai, and Hideki Ishihara followed light through compensated spherical voids in 2000 [sugiura2000void]. The shell changes the expansion and shear of a light beam as it crosses, altering the relation between redshift and angular diameter distance [sugiura2000void]. In 2011 Maeda, Sakai, and Roland Triay calculated the appearance of an expanding spherical void in redshift space [maeda2011void]. The outward motion of its shell stretches the apparent void along the observer's line of sight through the Doppler shift [maeda2011void].",
+  "references": [
+    "maeda1983void",
+    "sugiura2000void",
+    "sakaihaines2000void",
+    "maeda1983voidII",
+    "sakai1993void",
+    "maeda2011void"
+  ],
+  "related": [
+    {
+      "id": "frw",
+      "kind": "piece",
+      "text": "The homogeneous dust universe outside the moving shell has Friedmann geometry."
+    },
+    {
+      "id": "minkowski",
+      "kind": "piece",
+      "text": "The empty interior is a spherical region of Minkowski spacetime."
+    },
+    {
+      "id": "israel_shell",
+      "kind": "family",
+      "text": "Both models join a Minkowski interior to a spherical dust shell. The cosmological shell sweeps mass from its dust exterior [sakaihaines2000void]."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "interior",
+      "name": "Minkowski Interior",
+      "coords": [
+        "T",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "T \\in (-\\infty,\\infty)",
+        "r \\in [0,R)",
+        "r=R\\;\\text{(the shell)}",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "R = R(T)",
+          "description": "Areal radius of the shell in the interior time $T$; the common shell radius is $R(t)=R(T(t))$."
+        }
+      ],
+      "convention": "The interior time $T$ and radius $r$ have dimensions of length."
+    },
+    {
+      "id": "exterior",
+      "name": "Dust Friedmann Exterior",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (0,\\infty)",
+        "r \\in (R/a,1/\\sqrt{k})\\;\\text{for}\\; k>0",
+        "r \\in (R/a,\\infty)\\;\\text{for}\\; k\\le 0",
+        "ar=R\\;\\text{(the shell)}",
+        "\\theta \\in [0,\\pi]",
+        "\\phi \\in [0,2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a = a(t)",
+          "description": "Dimensionless dust scale factor, with Hubble rate $H=(da/dt)/a$ and dust density $\\rho$ satisfying $H^2=8\\pi\\rho/3-k/a^2$ and $\\rho a^3=\\mathrm{constant}$."
+        },
+        {
+          "symbol": "k",
+          "description": "Spatial curvature with dimensions of inverse length squared; $k>0$, $k=0$, and $k<0$ select closed, flat, and open exteriors."
+        },
+        {
+          "symbol": "R = R(t)",
+          "description": "Areal radius of the moving shell. In the flat dust case $a=(t/t_0)^{2/3}$, $H=2/(3t)$, $\\rho=1/(6\\pi t^2)$, $v=dR/dt-HR$, $\\gamma=(1-v^2)^{-1/2}$, and $B=\\sqrt{1+2HRv+H^2R^2}$. Its surface density is $\\sigma=H^2R/[4\\pi\\gamma(B+1+HRv)]$, with surface stress $S^i{}_j=\\operatorname{diag}(-\\sigma,0,0)$ in shell proper time $\\tau$. The junction equations are $dR/dt=HR+v$, $dv/dt=(-\\gamma vH+2\\pi\\sigma-\\rho\\gamma^2v^2/\\sigma)/\\gamma^3$, $dT/dt=B$, and $d\\tau/dt=1/\\gamma$ [sakaihaines2000void]. The proper shell mass $m=4\\pi R^2\\sigma$ obeys $dm/dt=4\\pi R^2\\rho\\gamma v$."
+        }
+      ],
+      "convention": "The cosmic time $t$ and comoving radius $r$ have dimensions of length."
+    }
+  ]
+}

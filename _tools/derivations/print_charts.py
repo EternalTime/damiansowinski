@@ -15504,6 +15504,63 @@ CHARTS["gravastar"] = [lambda s=s: gravastar(s) for s in GRAVASTAR_CHARTS]
 ISRAEL_SHELL_CHARTS = ("interior", "exterior", "exterior_ingoing")
 
 
+# -- Accreting cosmological shell void -------------------------------------------------
+
+def shell_void(system):
+    """Minkowski and dust Friedmann bulks, Sakai-Haines (2-1), (2-15), (2-24),
+    and Sugiura et al. (3.1)-(3.3). The shell is checked separately from these smooth tensors."""
+    sphere = r"\left(d\theta^2+\sin^2\theta\,d\phi^2\right)"
+    if system == "interior":
+        coords, params = ["T", "r", r"\theta", r"\phi"], ["R = R(T)"]
+        line = "ds^2=-dT^2+dr^2+r^2" + sphere
+    else:
+        coords, params = ["t", "r", r"\theta", r"\phi"], ["a = a(t)", "k", "R = R(t)"]
+        line = r"ds^2=-dt^2+a^2\left(\dfrac{dr^2}{1-kr^2}+r^2" + sphere + r"\right)"
+    return {"metric_id": "shell_void", "system": {"id": system, "coords": coords,
+            "parameters": params, "line_element": line}, "chart_line_element": line,
+            "check": lambda chart: shell_void_check(chart, system)}
+
+
+def shell_void_check(chart, system):
+    """Point comparisons with flat space and Friedmann dust, without symbolic reduction."""
+    g, geo, rd = chart.geo.g, chart.geo, chart.reader
+    r, theta = chart.symbols[1:3]
+    ricci, einstein = geo.ricci_ll(), geo.einstein_ll()
+    scalar, kretschmann = geo.ricci_scalar(), geo.kretschmann()
+    for radius, angle, a0, adot, curvature in ((.43, .71, 1.2, .31, 0.0), (.67, 1.13, 1.7, .54, .2),
+                                              (.37, 2.02, .9, .63, -.1)):
+        at = {r: radius, theta: angle, chart.symbols[0]: 2.3, rd.c: 1}
+        want_g = [-1, 1, radius ** 2, radius ** 2 * float(sp.sin(angle)) ** 2]
+        want_ricci, want_einstein = [0] * 4, [0] * 4
+        want_scalar, want_k = 0, 0
+        if system == "exterior":
+            a, k = rd.parameters["a"], rd.parameters["k"]
+            time = chart.symbols[0]
+            addot = -(adot * adot + curvature) / (2 * a0)
+            at.update({a: a0, sp.diff(a, time): adot, sp.diff(a, time, 2): addot, k: curvature})
+            density = 3 * (adot * adot + curvature) / a0 ** 2
+            want_g = [-1, a0 ** 2 / (1-curvature*radius**2), a0**2*radius**2,
+                      a0**2*radius**2*float(sp.sin(angle))**2]
+            want_ricci = [density / 2] + [density * v / 2 for v in want_g[1:]]
+            want_einstein = [density, 0, 0, 0]
+            want_scalar = density
+            want_k = 12 * ((addot/a0)**2 + ((adot*adot+curvature)/a0**2)**2)
+        def close(value, target):
+            value = float(sp.sympify(value).subs(at).evalf())
+            if abs(value-target) > 2e-9 * max(1,abs(target)):
+                raise AssertionError(f"shell_void {system}: {value} != {target}")
+        for i in range(4):
+            for j in range(4):
+                close(g[i,j], want_g[i] if i==j else 0)
+                close(ricci[i][j], want_ricci[i] if i==j else 0)
+                close(einstein[i][j], want_einstein[i] if i==j else 0)
+        close(scalar, want_scalar)
+        close(kretschmann, want_k)
+
+
+CHARTS["shell_void"] = [lambda s=s: shell_void(s) for s in ("interior", "exterior")]
+
+
 def israel_shell(system):
     """Israel's thin shell of dust, Nuovo Cimento B 44, 1 (1966), and Phys. Rev. 153,
     1388 (1967): flat space inside the shell in the time T of an observer at its centre,
