@@ -97,6 +97,11 @@
       "id": "scalar_field_black_hole",
       "kind": "family",
       "text": "The scalar counterpart of Ernst's hole: Schwarzschild's hole in a massless scalar field whose gradient points along the axis, in a universe built after Melvin's [cardoso2025]."
+    },
+    {
+      "id": "early_braneworlds",
+      "kind": "family",
+      "text": "The magnetic membranes of Gibbons and Wiltshire extend the flux tube construction to higher dimensions [gibbonswiltshire1987]."
     }
   ],
   "references": [
@@ -131,7 +136,8 @@
     "rosen1962",
     "astorino2025",
     "astorino2022swirling",
-    "cardoso2025"
+    "cardoso2025",
+    "gibbonswiltshire1987"
   ],
   "coordinates": [
     {

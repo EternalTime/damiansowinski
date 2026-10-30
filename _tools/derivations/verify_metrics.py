@@ -5295,6 +5295,9 @@ def main():
 import lynden_bell_pineault as lbp
 lbp.register_dimensions(sys.modules[__name__])
 
+import early_braneworlds as eb
+eb.register_dimensions(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

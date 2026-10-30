@@ -36933,6 +36933,9 @@ def main():
 import lynden_bell_pineault as lbp
 lbp.register(sys.modules[__name__])
 
+import early_braneworlds as eb
+eb.register(sys.modules[__name__])
+
 
 import chodos_detweiler as _chodos_detweiler
 CHARTS["chodos_detweiler"] = [

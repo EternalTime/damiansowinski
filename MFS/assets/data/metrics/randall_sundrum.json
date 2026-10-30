@@ -90,6 +90,11 @@
       "id": "brane_wall_universe",
       "kind": "generalisation",
       "text": "Set the wall moving past a black hole, with matter on it and a curved space if it likes, and those who live on it see their universe expand [kraus1999, ida2000]."
+    },
+    {
+      "id": "early_braneworlds",
+      "kind": "programme",
+      "text": "Earlier localization constructions include Akama's vortex, a scalar domain wall, and Visser's electric geometry [akama1983pregeometry, rubakov1983, visser1985]."
     }
   ],
   "references": [
@@ -116,7 +121,9 @@
     "emparan2020qbtz",
     "singh2006",
     "kraus1999",
-    "ida2000"
+    "ida2000",
+    "akama1983pregeometry",
+    "visser1985"
   ],
   "coordinates": [
     {

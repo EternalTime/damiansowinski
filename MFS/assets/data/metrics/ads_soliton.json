@@ -56,6 +56,11 @@
       "id": "topological_star",
       "kind": "family",
       "text": "The same exchange of time and a circle in flat space of five dimensions, where the bubble needs magnetic flux to give it mass and hold it open [bah2021]."
+    },
+    {
+      "id": "early_braneworlds",
+      "kind": "family",
+      "text": "The Squires family contains a regular axis solution with the geometry of the five dimensional soliton [bannister1987]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "surya2001",
     "nishioka2010",
     "hawking1983",
-    "bah2021"
+    "bah2021",
+    "bannister1987"
   ],
   "coordinates": [
     {

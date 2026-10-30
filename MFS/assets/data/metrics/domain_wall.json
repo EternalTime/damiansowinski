@@ -60,6 +60,11 @@
       "id": "brane_wall_universe",
       "kind": "family",
       "text": "A wall between two copies of anti-de Sitter space of five dimensions, carrying matter, moves past a black hole, and those who live on it see a universe expand [kraus1999]."
+    },
+    {
+      "id": "early_braneworlds",
+      "kind": "family",
+      "text": "Rubakov and Shaposhnikov trapped fermions on a domain wall in flat five dimensional spacetime [rubakov1983, rubakov2001extra]."
     }
   ],
   "references": [
@@ -80,7 +85,9 @@
     "harari1990",
     "randall1999a",
     "coleman1980",
-    "kraus1999"
+    "kraus1999",
+    "rubakov1983",
+    "rubakov2001extra"
   ],
   "coordinates": [
     {
