@@ -39,7 +39,7 @@
     {
       "id": "rn_metric",
       "kind": "special_case",
-      "text": "The case $\\gamma = 1$, with no scalar field. The spheres $r = a$ and $r = b$ are then its two horizons, and any scalar charge at all turns the outer one into a singularity [banerjee1998]."
+      "text": "The case $\\gamma = 1$, with no scalar field. The spheres $r = a$ and $r = b$ are then its two horizons, and any scalar charge turns the outer one into a singularity [banerjee1998]."
     },
     {
       "id": "fisher_jnw",
@@ -1551,7 +1551,7 @@
           "description": "A length falling from the mass $GM/c^2$ at spatial infinity to $h$ at the singularity"
         }
       ],
-      "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u$ an inverse length, Bronnikov's harmonic coordinate, with $e^{-2ku} = (r - a)/(r - b)$ for $a - b = 2k$, $\\gamma = h/k$ and $a/b = e^{2hu_1}$. The scalar field is $\\varphi = -\\sqrt{(k^2 - h^2)c^4/4\\pi G}\\,u$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u$ an inverse length, Bronnikov's harmonic coordinate, with $e^{-2ku} = (r - a)/(r - b)$ for $a - b = 2k$, $\\gamma = h/k$, and $a/b = e^{2hu_1}$. The scalar field is $\\varphi = -\\sqrt{(k^2 - h^2)c^4/4\\pi G}\\,u$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
       "line_element": "ds^2 = -\\dfrac{H^2 - h^2}{q^2}c^2dt^2 + \\dfrac{q^2\\left(K^2 - k^2\\right)}{H^2 - h^2}\\left(\\left(K^2 - k^2\\right)du^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
