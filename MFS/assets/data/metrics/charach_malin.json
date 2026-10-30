@@ -1,0 +1,181 @@
+{
+  "id": "charach_malin",
+  "name": "Gowdy Universes with Scalar and Electromagnetic Waves",
+  "short_name": "Charach-Malin",
+  "description": "Toroidal cosmologies containing gravitational waves and a massless scalar field or electromagnetic waves. Two commuting spacelike symmetries leave time and one periodic spatial coordinate in the field equations.",
+  "tags": [
+    "cosmology",
+    "inhomogeneous",
+    "gravitational wave",
+    "closed universe",
+    "exact solution",
+    "time-dependent",
+    "curvature singularity",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model",
+    "torus",
+    "scalar field",
+    "electromagnetic field"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "Every coordinate is dimensionless and $L$ is a constant length, with $G=c=1$. The Ricci contraction is $R_{ab}=R^d{}_{adb}$.",
+  "history": "Three periodic spatial coordinates close a universe into a 3-torus. Chaim Charach and Shimon Malin filled such a universe with gravitational waves and a minimally coupled massless scalar field in February 1979 [charach_malin1979]. Two commuting spacelike Killing vectors generate the toroidal wavefronts. The wave amplitudes depend on time and on the remaining periodic coordinate [szybka_wyrebowski2016].¶The scalar field and the gravitational polarisation obey independent linear wave equations. Their periodic modes combine ordinary Bessel functions in time with sines and cosines around the circle. Both fields contribute quadratically to the equations for the longitudinal part of the geometry. A constant scalar field leaves the polarised vacuum Gowdy solution [szybka_wyrebowski2016].¶At wavelengths short compared with the cosmological time scale, the waves admit a description as radiation on an anisotropic homogeneous background. Charach and Malin separated a homogeneous scalar component from a null fluid in this regime [charach_malin1979]. The null fluid carries the averaged energy of scalar and gravitational radiation. The radiation travels in both directions around the compact spatial circle [szybka_wyrebowski2016].¶Charach added electromagnetic waves to a Gowdy torus in June 1979 [charach1979]. The homogeneous member is an electromagnetic Bianchi type I universe. Spatially varying data introduce interacting electromagnetic and gravitational waves while preserving the 3-torus spatial topology. Charach and Malin included all three fields together in 1980 [charach_malin1980].¶The electromagnetic potential can have one component along a toroidal symmetry direction. Its time derivative determines an electric field, and its spatial derivative determines a magnetic field. The electromagnetic potential and gravitational polarisation satisfy coupled nonlinear equations. The Maxwell stress tensor has zero trace, so the Ricci scalar vanishes even where the electromagnetic field curves spacetime [nungesser_rendall2009].¶Ernesto Nungesser and Alan D. Rendall related the polarised Einstein-Maxwell equations to the equations for vacuum Gowdy spacetimes with both gravitational polarisations in 2009. They proved curvature divergence at the past boundary for an open dense set of smooth initial data in this toroidal symmetry class. Timelike and null geodesics are complete towards the expanding future [nungesser_rendall2009].",
+  "coordinates": [
+    {
+      "id": "scalar_areal",
+      "name": "Scalar, Areal Time",
+      "coords": [
+        "t",
+        "\\theta",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (0,\\infty)",
+        "\\theta \\in [0,2\\pi)",
+        "x \\in [0,2\\pi)",
+        "y \\in [0,2\\pi)"
+      ],
+      "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the symmetry-orbit area in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Constant length setting the scale ($L>0$)"
+        },
+        {
+          "symbol": "P = P(t,\\theta)",
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\lambda = \\lambda(t,\\theta)",
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\Phi = \\Phi(t,\\theta)",
+          "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$"
+        }
+      ]
+    },
+    {
+      "id": "scalar_logarithmic",
+      "name": "Scalar, Logarithmic Time",
+      "coords": [
+        "\\tau",
+        "\\theta",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty,\\infty)",
+        "\\theta \\in [0,2\\pi)",
+        "x \\in [0,2\\pi)",
+        "y \\in [0,2\\pi)"
+      ],
+      "convention": "The time $\\tau=-\\ln t$ has future towards decreasing $\\tau$, with $(\\theta,x,y)$ the periodic coordinates of the areal chart. A dot denotes differentiation with respect to an affine parameter.",
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Constant length setting the scale ($L>0$)"
+        },
+        {
+          "symbol": "P = P(\\tau,\\theta)",
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\Phi = \\Phi(\\tau,\\theta)",
+          "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$"
+        }
+      ]
+    },
+    {
+      "id": "electromagnetic_areal",
+      "name": "Electromagnetic, Areal Time",
+      "coords": [
+        "t",
+        "\\theta",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (0,\\infty)",
+        "\\theta \\in [0,2\\pi)",
+        "x \\in [0,2\\pi)",
+        "y \\in [0,2\\pi)"
+      ],
+      "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the symmetry-orbit area in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Constant length setting the scale ($L>0$)"
+        },
+        {
+          "symbol": "P = P(t,\\theta)",
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\lambda = \\lambda(t,\\theta)",
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\chi = \\chi(t,\\theta)",
+          "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$"
+        }
+      ]
+    },
+    {
+      "id": "electromagnetic_logarithmic",
+      "name": "Electromagnetic, Logarithmic Time",
+      "coords": [
+        "\\tau",
+        "\\theta",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty,\\infty)",
+        "\\theta \\in [0,2\\pi)",
+        "x \\in [0,2\\pi)",
+        "y \\in [0,2\\pi)"
+      ],
+      "convention": "The time $\\tau=-\\ln t$ has future towards decreasing $\\tau$, with $(\\theta,x,y)$ the periodic coordinates of the areal chart. A dot denotes differentiation with respect to an affine parameter.",
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Constant length setting the scale ($L>0$)"
+        },
+        {
+          "symbol": "P = P(\\tau,\\theta)",
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+        },
+        {
+          "symbol": "\\chi = \\chi(\\tau,\\theta)",
+          "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$"
+        }
+      ]
+    }
+  ],
+  "related": [
+    {
+      "id": "gowdy",
+      "kind": "family",
+      "text": "Gravitational and matter waves on the same toroidal spatial sections. A constant scalar field leaves a polarised vacuum Gowdy solution [charach_malin1979, szybka_wyrebowski2016]."
+    }
+  ],
+  "references": [
+    "charach_malin1979",
+    "szybka_wyrebowski2016",
+    "charach1979",
+    "charach_malin1980",
+    "nungesser_rendall2009"
+  ]
+}
