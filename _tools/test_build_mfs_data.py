@@ -5375,6 +5375,14 @@ class Slices(unittest.TestCase):
             of_r = {"spherical": lambda r: r, "jnw": lambda r: r - 0.75,
                     "isotropic": lambda r: (r - 0.5 + math.sqrt(r * (r - 1))) / 2}[key.split("/")[1]]
             return (lambda X: 0.0), [of_r(1 / (1 - math.exp(-u))) for u in (hi, lo)]
+        if key.startswith("penney_scalar/"):
+            # The embedding is read in the spherical chart at a = 1, b = 1/4 and gamma = 1/2: the spherical plane
+            # draws the radii r reached, and the harmonic plane, at k = 1 with a = 8k/3, the u with
+            # e^(-2u) = (r - a)/(r - b), a ratio the scale leaves alone.
+            lo, hi = self.reach(surface)
+            if key == "penney_scalar/harmonic/radial":
+                return (lambda X: 0.0), sorted(-math.log((r - 1) / (r - 0.25)) / 2 for r in (lo, hi))
+            return (lambda X: 0.0), [lo, hi]
         if key.startswith("jackiw_teitelboim_black_hole/"):
             # The Euclidean disc is read in the proper distance rho at L = r_h = 1, and its meridians are the
             # moment t = 0: level in every chart, from the horizon r = cosh(rho) = 1 out in the static chart,
