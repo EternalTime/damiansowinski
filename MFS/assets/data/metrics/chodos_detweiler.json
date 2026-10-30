@@ -1,0 +1,101 @@
+{
+  "id": "chodos_detweiler",
+  "name": "Chodos and Detweiler's five-dimensional universe",
+  "short_name": "Chodos-Detweiler",
+  "description": "Three expanding spatial circles and one contracting circle in a five-dimensional vacuum universe.",
+  "tags": [
+    "vacuum",
+    "five-dimensional",
+    "higher dimensions",
+    "Kaluza-Klein",
+    "compact dimension",
+    "toroidal topology",
+    "cosmology",
+    "Kasner",
+    "anisotropic",
+    "spatially homogeneous",
+    "homogeneous",
+    "time-dependent",
+    "curvature singularity",
+    "spacelike singularity",
+    "big bang",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "We use signature $(-,+,+,+,+)$ and keep $c$ explicit. Cosmic time $t$, the equality time $t_0$ and the normalization time $\\tau$ have units of time; $L$ and the spatial coordinates have units of length. Tensor components use $x^0=ct$.",
+  "history": "Every spatial direction closes into a circle in the universe Alan Chodos and Steven Detweiler studied in 1980 [chodos1980, chyba1985]. At the reference time $t_0$, each circuit has the same proper length $L$. Three circles expand as cosmic time advances, while the fourth contracts. The vacuum field equations hold in five spacetime dimensions throughout [chyba1985]. ¶ Their cosmology belongs to the higher-dimensional Kasner family, whose spatial scale factors are powers $(t/t_0)^{p_i}$ [chyba1985]. The four spatial exponents obey $\\sum_i p_i=\\sum_i p_i^2=1$. The choice $p_1=p_2=p_3=1/2$ and $p_5=-1/2$ makes the three expanding directions locally isotropic. Christopher F. Chyba set out this construction in his 1985 account of Kaluza-Klein unification [chyba1985]. ¶ At cosmic time $t$, the three growing circumferences are $L\\sqrt{t/t_0}$ and the fifth-direction circumference is $L\\sqrt{t_0/t}$ [chyba1985]. Their ratio is $t/t_0$, so a late universe can have three macroscopic spatial directions and a much smaller closed direction. Toward the initial singularity at $t=0$, the three expanding circles shrink to zero and the fourth circumference grows without bound [chodos1980, chyba1985]. ¶ A constant spatial coordinate rescaling normalizes all four spatial metric coefficients to one at a chosen time $\\tau$ [chyba1985]. The coordinate periods then become $L\\sqrt{\\tau/t_0}$ in the three growing directions and $L\\sqrt{t_0/\\tau}$ in the fifth. The proper circumferences continue to depend on the cosmic time $t$. Equal metric coefficients at one instant coexist with unequal circuit lengths. ¶ Chodos and Detweiler related the small fifth circumference to quantized charge by perturbing the metric and imposing periodicity on a scalar quantum field [chodos1980, chyba1985]. They treated $t/\\tau$ as approximately constant during that calculation [chyba1985]. The cosmological vacuum itself keeps the fifth circle contracting as $t^{-1/2}$. The three equal positive exponents and one negative exponent select this evolution; Chyba emphasized that the field equations admit other choices [chyba1985].",
+  "related": [
+    {
+      "id": "kasner",
+      "kind": "family",
+      "text": "The four spatial exponents are $(1/2,1/2,1/2,-1/2)$, with each spatial direction closed into a circle [chyba1985]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "family",
+      "text": "Its five-dimensional vacuum chart has these local scale factors at $s_1=s_2=s_3=1/2$ and $s_5=-1/2$. The four spatial coordinates here are periodic [chyba1985]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "The proper size of a compact direction varies with position in the monopole and with cosmic time in this vacuum universe."
+    }
+  ],
+  "references": [
+    "chodos1980",
+    "chyba1985"
+  ],
+  "coordinates": [
+    {
+      "id": "synchronous",
+      "name": "Synchronous",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z",
+        "w"
+      ],
+      "parameters": [
+        {
+          "symbol": "t_0",
+          "description": "Positive cosmic time at which all four proper circumferences equal $L$"
+        },
+        {
+          "symbol": "L",
+          "description": "Common positive coordinate period in the synchronous chart, with units of length"
+        }
+      ],
+      "convention": "The source's spatial coordinates $x^1,x^2,x^3,x^5$ are written $x,y,z,w$. The four proper circumferences equal $L$ at $t=t_0$."
+    },
+    {
+      "id": "rescaled",
+      "name": "Rescaled",
+      "coords": [
+        "t",
+        "X",
+        "Y",
+        "Z",
+        "W"
+      ],
+      "parameters": [
+        {
+          "symbol": "t_0",
+          "description": "Positive cosmic time at which all four proper circumferences equal $L$"
+        },
+        {
+          "symbol": "L",
+          "description": "Common positive coordinate period in the synchronous chart, with units of length"
+        },
+        {
+          "symbol": "\\tau",
+          "description": "Fixed positive cosmic time at which the rescaled spatial metric coefficients equal one"
+        }
+      ],
+      "convention": "The rescaling is $X=\\sqrt{\\tau/t_0}x$, $Y=\\sqrt{\\tau/t_0}y$, $Z=\\sqrt{\\tau/t_0}z$ and $W=\\sqrt{t_0/\\tau}w$, with $t$ unchanged."
+    }
+  ]
+}
