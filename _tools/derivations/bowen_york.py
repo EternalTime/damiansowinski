@@ -6,6 +6,11 @@ Source equations and the two boundary prescriptions are recorded in bowen_york.m
 import sympy as sp
 
 CHARTS = ("cartesian", "spherical", "cylindrical")
+DIMENSIONS = {
+    ("bowen_york", "cartesian"): {"x": "L", "y": "L", "z": "L", r"\psi": "1"},
+    ("bowen_york", "spherical"): {"r": "L", r"\theta": "1", r"\phi": "1", r"\psi": "1"},
+    ("bowen_york", "cylindrical"): {r"\rho": "L", "z": "L", r"\phi": "1", r"\psi": "1"},
+}
 
 
 def chart_spec(system):

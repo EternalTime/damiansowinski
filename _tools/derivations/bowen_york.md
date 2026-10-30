@@ -64,3 +64,37 @@ Altas and Tekin, arXiv:2007.14279, section II, equation (20), retain a source pr
 Their equation (21) discards angular dependence to obtain a radial ordinary differential equation.
 A radial conformal factor has a radial Euclidean Laplacian, while that full source depends on the polar angle for nonzero momentum.
 The algebraic radial solution of the reduced equation consequently does not specify the general vacuum initial data in three dimensions.
+
+## Numerical spinning throat
+
+The drawings use one inversion throat with $P^i=0$, $S^i=(0,0,a^2)$ and $a$ as the unit of length.
+The solver retains the entire angular source $18S^2\sin^2\theta/r^6$.
+With $t=a/r$ and $\mu=\cos\theta$, its equation is
+
+$$t^2\partial_t^2\psi+\partial_\mu[(1-\mu^2)\partial_\mu\psi]=-\frac94\left(\frac{S}{a^2}\right)^2t^4(1-\mu^2)\psi^{-7}.$$
+
+The compact interval $0\le t\le1$ includes spatial infinity, where $\psi=1$.
+The throat condition is $\partial_t\psi=\psi/2$ at $t=1$.
+The correction to $1+t$ is collocated at 33 Chebyshev points in $t$, with eight even Legendre modes in $\mu$.
+Gauss-Legendre projection resolves the nonlinear angular source at every fixed-point iteration.
+The dedicated test samples the Hamiltonian equation between collocation points, checks the throat and infinity conditions, and compares against 41 radial points and ten angular modes.
+The zero-spin solution is $\psi=1+a/r$.
+
+The equatorial embedding reads the published spherical metric with this numerical conformal factor.
+Its circumferential radius is $\mathcal R=r\psi(r,\pi/2)^2$, and its height obeys $Z'^2=\psi^4-\mathcal R'^2$.
+The generator checks that this radicand is nonnegative throughout the drawn interval $a\le r\le8a$ and measures both drawn sheets against their intrinsic metric.
+The lower sheet is the inversion image of the exterior, parametrized by its own exterior radial coordinate.
+Both sheets meet at $r=a$ and $Z=0$.
+The figure window encloses the whole surface with a square frame.
+
+The curvature generator evaluates the stored intrinsic Ricci scalar in the supported meridian frame.
+Its function declaration is a finite polynomial approximation in $a/r$ and $\cos\theta$, written through the existing closed-expression function representation.
+This declaration records the numerical solution; it is not an exact algebraic solution of the constraint.
+The map covers the exterior $r\ge a$ and marks the inversion throat.
+There is no time coordinate, movie or stack.
+
+## Absent causal diagrams
+
+A three-dimensional Riemannian initial-data slice has no null directions or intrinsic causal compactification.
+The null and conformal generators therefore draw no causal diagram for any of its three spatial charts.
+The extrinsic data and constraints do not specify an explicit four-dimensional spacetime development.

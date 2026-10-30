@@ -49,7 +49,7 @@
       "parameters": [
         {
           "symbol": "\\psi = \\psi(x,y,z)",
-          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity."
+          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity. For one centre, with Euclidean radius $r=|\\boldsymbol{x}|$ and radial unit vector $n^i=x^i/r$, $\\widehat A^{ij}=\\frac{3}{2r^2}[P^i n^j+P^j n^i-(\\delta^{ij}-n^i n^j)P^k n_k]+\\frac{3}{r^3}[\\epsilon^{ikl}S_k n_l n^j+\\epsilon^{jkl}S_k n_l n^i]$, where $P^i$ is a constant linear momentum of length dimension and $S^i$ a constant spin of area dimension; conformal indices use $\\delta_{ij}$. The puncture prescription is $\\psi=\\sum_A m_A/(2r_A)+u$, with $m_A$ bare mass lengths, $r_A$ distances to the punctures and $u\\to1$ at infinity. A single inversion throat adds the tensor image $\\mp\\frac{3a^2}{2r^4}[P^i n^j+P^j n^i+(\\delta^{ij}-5n^i n^j)P^k n_k]$."
         }
       ],
       "convention": "We use Cartesian coordinates $(x,y,z)$, each a length.",
@@ -1570,7 +1570,7 @@
       "parameters": [
         {
           "symbol": "\\psi = \\psi(r,\\theta,\\phi)",
-          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity."
+          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity. For one centre, with Euclidean radius $r=|\\boldsymbol{x}|$ and radial unit vector $n^i=x^i/r$, $\\widehat A^{ij}=\\frac{3}{2r^2}[P^i n^j+P^j n^i-(\\delta^{ij}-n^i n^j)P^k n_k]+\\frac{3}{r^3}[\\epsilon^{ikl}S_k n_l n^j+\\epsilon^{jkl}S_k n_l n^i]$, where $P^i$ is a constant linear momentum of length dimension and $S^i$ a constant spin of area dimension; conformal indices use $\\delta_{ij}$. The puncture prescription is $\\psi=\\sum_A m_A/(2r_A)+u$, with $m_A$ bare mass lengths, $r_A$ distances to the punctures and $u\\to1$ at infinity. A single inversion throat adds the tensor image $\\mp\\frac{3a^2}{2r^4}[P^i n^j+P^j n^i+(\\delta^{ij}-5n^i n^j)P^k n_k]$."
         }
       ],
       "convention": "We use spherical coordinates $(r,\\theta,\\phi)$, with $r$ a length and both angles dimensionless.",
@@ -3091,7 +3091,7 @@
       "parameters": [
         {
           "symbol": "\\psi = \\psi(\\rho,z)",
-          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity."
+          "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity. For one centre, with Euclidean radius $r=|\\boldsymbol{x}|$ and radial unit vector $n^i=x^i/r$, $\\widehat A^{ij}=\\frac{3}{2r^2}[P^i n^j+P^j n^i-(\\delta^{ij}-n^i n^j)P^k n_k]+\\frac{3}{r^3}[\\epsilon^{ikl}S_k n_l n^j+\\epsilon^{jkl}S_k n_l n^i]$, where $P^i$ is a constant linear momentum of length dimension and $S^i$ a constant spin of area dimension; conformal indices use $\\delta_{ij}$. The puncture prescription is $\\psi=\\sum_A m_A/(2r_A)+u$, with $m_A$ bare mass lengths, $r_A$ distances to the punctures and $u\\to1$ at infinity. A single inversion throat adds the tensor image $\\mp\\frac{3a^2}{2r^4}[P^i n^j+P^j n^i+(\\delta^{ij}-5n^i n^j)P^k n_k]$."
         }
       ],
       "convention": "We use axisymmetric cylindrical coordinates $(\\rho,z,\\phi)$, with $\\rho$ and $z$ lengths and $\\phi$ dimensionless.",
