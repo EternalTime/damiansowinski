@@ -3896,7 +3896,7 @@ class TurningLightConeFigures(unittest.TestCase):
                                    "som_raychaudhuri/tipping", "spinning_string/tipping", "stockum_dust/tipping",
                                    "bonnor_rotating_dust/tipping", "maitra_dust/tipping", "tippett_tsang/ring",
                                    "wormhole_time_machine/trip", "petrov_homogeneous/turning", "draining_bathtub/swirl",
-                                   "vuorio_warped_ads/tipping"} if chosen(key.split("/")[0])})
+                                   "vuorio_warped_ads/tipping", "cahen_wallach/turning"} if chosen(key.split("/")[0])})
 
     def test_at_its_own_camera_the_page_draws_the_published_figure(self):
         # Every point the generator does not thin is the published point to the published
@@ -3968,10 +3968,12 @@ class TurningLightConeFigures(unittest.TestCase):
         still = {f"{name}/{figure['id']}" for name, data in diagram_files().items()
                  for figures in data.get("projections", {}).values() for figure in figures if "turn" not in figure}
         # Ernst and Wild's ergoregion is its meridional plane seen from the side, t and phi left out, and so
-        # are the ergoregions of the swirling universe and of the black hole in it.
+        # are the ergoregions of the swirling universe and of the black hole in it. The plane waves' light
+        # lies in a surface of their Brinkmann and Rosen charts seen from the side, v left out.
         self.assertEqual(still, {key for key in {"cosmic_string/beam", "light_beam/lens", "lifshitz_spacetime/rays",
                                  "point_particle_2plus1/beam", "schrodinger_spacetime/trap", "kerr_melvin/tube",
-                                 "maximally_supersymmetric_plane_wave/focus", "swirling_universe_black_hole/ergo"} if chosen(key.split("/")[0])})
+                                 "maximally_supersymmetric_plane_wave/focus", "swirling_universe_black_hole/ergo",
+                                 "cahen_wallach/pull", "cahen_wallach/push"} if chosen(key.split("/")[0])})
 
 
 @page_source
