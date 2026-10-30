@@ -1,0 +1,196 @@
+{
+  "id": "lynden_bell_pineault",
+  "name": "Relativistic Discs of Lynden-Bell and Pineault",
+  "short_name": "Lynden-Bell-Pineault Discs",
+  "description": "Thin relativistic discs with counter-rotating streams or matter rotating in one sense, and a circular speed independent of radius.",
+  "tags": [
+    "stationary",
+    "static",
+    "four-dimensional",
+    "axisymmetric",
+    "rotating",
+    "thin disk",
+    "dust",
+    "self-similar",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The constants $c$ and $G$ remain explicit. The matter source is an infinitesimally thin equatorial sheet. Smooth curvature describes only the vacuum exterior; its scalar invariants exclude the distributional surface. The finite discs are asymptotically flat; the infinite discs have no asymptotically flat end.",
+  "history": "The gravity of an infinite disc can support circular motion at a speed independent of radius.\nDonald Lynden-Bell and Serge Pineault constructed such relativistic equilibria in 1978, publishing their counter-rotating and rotating families in Monthly Notices of the Royal Astronomical Society [lyndenbell1978, lyndenbellpineault1978b].\nThe constants $G$ and $c$, together with the circular speed, supply no characteristic length.\nThese infinite discs are self-similar, with a change of radial scale accompanied by a change of the time scale [lyndenbellpineault1978b].\n\nEqual streams of stars circle in opposite senses in the counter-rotating family.\nEach stream is cold, and its stars follow circular orbits with a speed independent of radius.\nThe opposing streams have equal and opposite angular momenta, and their gravitational field is static, with no dragging of inertial frames [lyndenbell1978].\nLynden-Bell and Pineault also constructed finite discs whose geometry approaches the infinite disc solution well inside the outer edge [lyndenbell1978].\n\nThe matter occupies an infinitesimally thin equatorial sheet.\nIts surface energy density and azimuthal stress enter Einstein's equations through a delta function supported on that sheet [lyndenbell1978].\nThe regions above and below the disc satisfy the vacuum Einstein equations, with a vanishing smooth Ricci tensor away from the matter surface [lyndenbell1978, lyndenbellpineault1978b].\n\nAt the speed of light, the counter-rotating streams consist of particles with zero rest mass [lyndenbell1978].\nLynden-Bell and Pineault obtained analytic photon trajectories for this limiting disc.\nSome photons circle at constant radius while oscillating across the equatorial plane, and others spiral inward or outward [lyndenbell1978].\n\nMatter rotating in one sense drags the surrounding inertial frames.\nLynden-Bell and Pineault reduced the stationary field equations through self-similarity and determined the rotating disc's angular metric functions numerically [lyndenbellpineault1978b].\nAn ergoregion appears around the equatorial plane at a circular speed of approximately $0.384c$ measured by locally nonrotating observers, where the stationary Killing vector becomes spacelike.\nIts conical boundary extends toward the symmetry axis as the rotation speed increases.\nTheir cold rotating sequence ends near $0.438c$, with a diverging frame dragging parameter and an ergoregion extending throughout space away from the axis [lyndenbellpineault1978b].\n\nThe infinite discs have infinite total mass and a geometry that is not asymptotically flat [lyndenbell1978, lyndenbellpineault1978b].\nThe cold counter-rotating equilibria are unstable to gravitational fragmentation into rings [lyndenbell1978].\nMike J. Cai and Frank H. Shu included isothermal pressure in the disc plane in 2002, retaining infinitesimal vertical thickness and a circular speed independent of radius [caishu2002].",
+  "references": [
+    "lyndenbell1978",
+    "lyndenbellpineault1978b",
+    "caishu2002"
+  ],
+  "related": [
+    {
+      "id": "morgan_morgan",
+      "kind": "family",
+      "text": "Counter-rotating discs obtained with the static axisymmetric construction used for the Morgan-Morgan discs [lyndenbell1978]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "Flat space is recovered when the circular speed of both counter-rotating streams vanishes [lyndenbell1978]."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "weyl",
+      "name": "Weyl, Finite and Infinite Counter-Rotating Discs",
+      "coords": [
+        "t",
+        "R",
+        "z",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "R \\in (0, \\infty)",
+        "z \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "0 < n \\le 1/2",
+        "A > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\nu = \\nu(R,z)",
+          "description": "The static potential, with $\\nu_{,RR} + R^{-1}\\nu_{,R} + \\nu_{,zz} = 0$ in vacuum; for the infinite disc $\\nu = n\\ln[(\\sqrt{R^2+z^2}+z)/(2A)]$; the finite disc has $\\nu(R,0) = n\\ln(R/2A)$ for $R < A$ and $\\nu \\to 0$ at infinity"
+        },
+        {
+          "symbol": "\\xi = \\xi(R,z)",
+          "description": "The second static potential, fixed by $\\xi_{,R} = R(\\nu_{,R}^2 - \\nu_{,z}^2)$, $\\xi_{,z} = 2R\\nu_{,R}\\nu_{,z}$, and $\\xi = 0$ on the axis; for the infinite disc $\\xi = 2n^2\\ln[(1+z/\\sqrt{R^2+z^2})/2]$"
+        },
+        {
+          "symbol": "n",
+          "description": "Self-similarity exponent, a number; for counter-rotation $n = V^2/(c^2 + V^2)$, with $V$ the speed of either stream measured by a static observer; for rotation $V$ is measured by a locally nonrotating observer and satisfies $(1-n)V^2/c^2 + (1-2n)Q_0V/c - n = 0$, where $Q_0 = Q(\\pi/2)$"
+        },
+        {
+          "symbol": "A",
+          "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+        }
+      ],
+      "line_element": "ds^2 = -e^{2\\nu}c^2dt^2 + e^{2\\xi - 2\\nu}\\left(dR^2 + dz^2\\right) + R^2e^{-2\\nu}d\\phi^2",
+      "convention": "The Weyl coordinates $(t,R,z,\\phi)$ have time $t$, cylindrical radius $R$, height $z$, and azimuth $\\phi$. The finite disc occupies $z = 0$, $0 < R < A$, and the infinite disc occupies $z = 0$, $R > 0$. The displayed region is $z > 0$; the lower region follows by $z \\mapsto -z$. Components use $x^0 = ct$, signature $(-,+,+,+)$, and the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The smooth tensors apply on the open vacuum side of the disc. Reflection across the equatorial sheet supplies the lower side and a distributional surface stress. A dot denotes differentiation with respect to an affine parameter, with $\\dot t = d(ct)/d\\lambda$."
+    },
+    {
+      "id": "spherical",
+      "name": "Infinite Counter-Rotating Disc",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in (0, \\pi/2)",
+        "\\phi \\in [0, 2\\pi)",
+        "A > 0",
+        "0 \\le n \\le 1/2"
+      ],
+      "parameters": [
+        {
+          "symbol": "n",
+          "description": "Self-similarity exponent, a number; for counter-rotation $n = V^2/(c^2 + V^2)$, with $V$ the speed of either stream measured by a static observer; for rotation $V$ is measured by a locally nonrotating observer and satisfies $(1-n)V^2/c^2 + (1-2n)Q_0V/c - n = 0$, where $Q_0 = Q(\\pi/2)$"
+        },
+        {
+          "symbol": "A",
+          "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+        },
+        {
+          "symbol": "f = r/A",
+          "description": "The radial coordinate in units of $A$"
+        },
+        {
+          "symbol": "h = (1 + \\cos\\theta)/2",
+          "description": "The angular factor $h = \\cos^2(\\theta/2)$ on the upper vacuum side"
+        }
+      ],
+      "line_element": "ds^2 = -f^{2n}h^{2n}c^2dt^2 + f^{-2n}h^{4n^2 - 2n}\\left(dr^2 + r^2d\\theta^2\\right) + f^{-2n}h^{-2n}r^2\\sin^2\\theta\\,d\\phi^2",
+      "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The coordinates obey $R = r\\sin\\theta$ and $z = r\\cos\\theta$. The equatorial matter sheet is $\\theta = \\pi/2$, and the displayed chart covers its upper vacuum side. Components use $x^0 = ct$, signature $(-,+,+,+)$, and the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The smooth tensors apply on the open vacuum side of the disc. Reflection across the equatorial sheet supplies the lower side and a distributional surface stress. A dot denotes differentiation with respect to an affine parameter, with $\\dot t = d(ct)/d\\lambda$."
+    },
+    {
+      "id": "photons",
+      "name": "Counter-Rotating Massless Particles",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in (0, \\pi/2)",
+        "\\phi \\in [0, 2\\pi)",
+        "A > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "A",
+          "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+        },
+        {
+          "symbol": "h = (1 + \\cos\\theta)/2",
+          "description": "The angular factor $h = \\cos^2(\\theta/2)$ on the upper vacuum side"
+        }
+      ],
+      "line_element": "ds^2 = -\\dfrac{rh}{A}c^2dt^2 + \\dfrac{A}{r}\\left(dr^2 + r^2d\\theta^2\\right) + \\dfrac{Ar\\sin^2\\theta}{h}d\\phi^2",
+      "convention": "The spherical coordinates $(t,r,\\theta,\\phi)$ describe the member $n = 1/2$, whose two streams consist of massless particles. Here $t$ is time, $r$ is a length, $\\theta$ is the polar angle, and $\\phi$ is the azimuth. The matter sheet is $\\theta = \\pi/2$. Components use $x^0 = ct$, signature $(-,+,+,+)$, and the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The smooth tensors apply on the open vacuum side of the disc. Reflection across the equatorial sheet supplies the lower side and a distributional surface stress. A dot denotes differentiation with respect to an affine parameter, with $\\dot t = d(ct)/d\\lambda$."
+    },
+    {
+      "id": "rotating",
+      "name": "Rotating Self-Similar Disc",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in (0, \\pi/2)",
+        "\\phi \\in [0, 2\\pi)",
+        "A > 0",
+        "0 < n < 1/2"
+      ],
+      "parameters": [
+        {
+          "symbol": "n",
+          "description": "Self-similarity exponent, a number; for counter-rotation $n = V^2/(c^2 + V^2)$, with $V$ the speed of either stream measured by a static observer; for rotation $V$ is measured by a locally nonrotating observer and satisfies $(1-n)V^2/c^2 + (1-2n)Q_0V/c - n = 0$, where $Q_0 = Q(\\pi/2)$"
+        },
+        {
+          "symbol": "A",
+          "description": "A length: the outer coordinate radius of the finite disc, or an arbitrary normalization length for an infinite disc"
+        },
+        {
+          "symbol": "N = N(\\theta)",
+          "description": "The angular redshift function, normalized by $N(0) = 0$"
+        },
+        {
+          "symbol": "P = P(\\theta)",
+          "description": "The angular circumference function, with $e^P = \\sin\\theta$ in the regular-axis normalization of the cold disc"
+        },
+        {
+          "symbol": "Q = Q(\\theta)",
+          "description": "The dimensionless frame dragging function, with $Q(0) = 0$; an ergoregion has $Q^2 > 1$"
+        },
+        {
+          "symbol": "Z = Z(\\theta)",
+          "description": "The angular meridian function, with $Z(0) = 0$; the functions are determined by the field equations and the disc boundary conditions"
+        },
+        {
+          "symbol": "f = r/A",
+          "description": "The radial coordinate in units of $A$"
+        }
+      ],
+      "line_element": "ds^2 = -f^{2n}e^Nc^2dt^2 + A^2f^{2 - 2n}e^{2P - N}\\left(d\\phi - \\dfrac{f^{2n - 1}e^{N - P}Q}{A}cdt\\right)^2 + f^{-2n}e^{Z - N}\\left(dr^2 + r^2d\\theta^2\\right)",
+      "convention": "The coordinates $(t,r,\\theta,\\phi)$ have time $t$, radial length $r$, polar angle $\\theta$, and azimuth $\\phi$. The cold disc is at $\\theta = \\pi/2$, with the radial exponent $k = 1 - n$ of Lynden-Bell and Pineault. The angular functions obey the vacuum equations above the sheet and the cold-disc jump conditions at the equator. Components use $x^0 = ct$, signature $(-,+,+,+)$, and the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The smooth tensors apply on the open vacuum side of the disc. Reflection across the equatorial sheet supplies the lower side and a distributional surface stress. A dot denotes differentiation with respect to an affine parameter, with $\\dot t = d(ct)/d\\lambda$."
+    }
+  ]
+}
