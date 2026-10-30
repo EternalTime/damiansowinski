@@ -8556,6 +8556,89 @@ def kerr_melvin(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Israel's disc source of Kerr's metric
+
+KDSRC_A = Fraction(3, 2)          # a in units of m, as every drawing of the disc takes it, with no horizon
+KDSRC_REACH = 5                   # the box runs out to 5 m and from -5 m to 5 m up
+KDSRC_CELLS = 20                  # the cells of the map to each m, across and up
+KDSRC_SCALE = {"kind": "symlog", "from": -1e3, "to": 1e3, "linear": 1e-4}   # the colours of K m^4
+
+
+def kerr_disc_source(ck, src):
+    """Israel's disc source of Kerr's metric at m = 1 and a = 3m/2, where no horizon forms, its
+    Kretschmann scalar over the meridian half plane of r >= 0 and theta in the oblate frame about the
+    ring: sqrt(r^2 + a^2) sin theta across and r cos theta up, over 0 <= across <= 5 m and |up| <= 5 m,
+    in cells a twentieth of m on a side, on a signed logarithmic scale from -10^3 to 10^3 in units of
+    1/m^4, linear within 10^-4, since K changes sign and diverges at the ring. In this frame r = 0 is
+    the segment up = 0, across < a: the disc, drawn as a front, with the ring at its end as a point.
+    Off the disc the spacetime is a vacuum and the published R vanishes, so the figure is K alone.
+
+    What the captions state is checked here: R vanishes, in sixty digits at twenty points; K is Kerr's
+    published scalar at the same m and a; on the disc, r = 0, K = -48 m^2/(a^2 - rho^2)^3 with
+    rho = a sin theta, at ten points to the double the angle is given in; every cell is read in sixty digits at forty
+    points, the four about the ring among them; the map is the same above and below the disc; no
+    horizon, the published g^rr positive on every ray; and the clip stated is where |K| leaves the
+    colours, beside the ring alone."""
+    m, a = 1.0, float(KDSRC_A)
+    names = ["m", "a"]
+
+    def read(field, indices=None):
+        return nr_published(src, "kerr_disc_source", "boyer_lindquist", field, ["r", "theta"], names, indices)
+
+    K, ricci, grr = read("kretschmann"), read("ricci_scalar"), read("inverse_metric_components", ("r", "r"))
+    K_kerr = nr_published(src, "kerr", "boyer_lindquist", "kretschmann", ["r", "theta"], ["G", "M", "a"])
+    rng = np.random.default_rng(1970)
+    spread_ = list(zip(rng.uniform(0.05, KDSRC_REACH, 20), rng.uniform(0.05, math.pi - 0.05, 20)))
+    worst = max(abs(float(ricci.exact([rv, tv, m, a]))) for rv, tv in spread_)
+    ck("kerr_disc_source R vanishes, in sixty digits at twenty points", worst < 1e-40, f"worst {worst:.1e}")
+    off = max(abs(float(K.exact([rv, tv, m, a])) / float(K_kerr.exact([rv, tv, 1.0, m, a])) - 1) for rv, tv in spread_)
+    ck("kerr_disc_source K is Kerr's published scalar at the same m and a", off < 1e-40, f"worst {off:.1e}")
+    disc = [float(x) for x in rng.uniform(0.05, 1.45, 10)]
+    off = max(abs(float(K.exact([0.0, math.asin(rho / a), m, a])) / (-48 * m * m / (a * a - rho * rho) ** 3) - 1)
+              for rho in disc)
+    # The angle is the double asin(rho/a), so the two agree to the double it is given in.
+    ck("kerr_disc_source K on the disc is -48 m^2/(a^2 - rho^2)^3", off < 1e-12, f"worst {off:.1e}")
+    positive = all(float(grr(rv, tv, m, a)) > 0 for rv in np.linspace(0.01, 20, 400) for tv in np.linspace(0.05, 3.09, 13))
+    ck("kerr_disc_source has no horizon: g^rr > 0 on every ray", positive)
+
+    x_axis = axis("$\\sqrt{r^2 + a^2}\\,\\sin\\theta/m$", 0, KDSRC_REACH, 3)
+    y_axis = axis("$r\\cos\\theta/m$", -KDSRC_REACH, KDSRC_REACH)
+    aspect = (x_axis["to"] - x_axis["from"]) / (y_axis["to"] - y_axis["from"])
+    shape_checks(ck, "kerr_disc_source", [aspect])
+    nx, ny = KDSRC_CELLS * KDSRC_REACH, 2 * KDSRC_CELLS * KDSRC_REACH
+    params = {"m": m, "a": a}
+    values = list(params.values())
+    xs, ys, cellv = cells(K, x_axis, y_axis, nx, ny, values, frame="oblate", focus=a)
+    ck("kerr_disc_source K is finite at every cell", np.all(np.isfinite(cellv)),
+       f"from {np.min(cellv):.4e} to {np.max(cellv):.4e}")
+    ck("kerr_disc_source the map is the same above and below the disc",
+       np.allclose(cellv, cellv[::-1], rtol=1e-7, atol=1e-15))
+    ring_i, mid = round(a * KDSRC_CELLS), ny // 2
+    picks = sorted({(int(i), int(j)) for i, j in zip(rng.integers(0, nx, 40), rng.integers(0, ny, 40))}
+                   | {(ring_i - 1, mid - 1), (ring_i, mid - 1), (ring_i - 1, mid), (ring_i, mid)}
+                   | {(0, 0), (nx - 1, 0), (0, ny - 1), (nx - 1, ny - 1)})
+    points = [[float(v) for v in oblate(xs[i], ys[j], a)] + values for i, j in picks]
+    agrees(ck, "kerr_disc_source map", K, points, [cellv[j, i] for i, j in picks])
+    X, Y = np.meshgrid(xs, ys)
+    beyond_ = ~(np.abs(cellv) <= KDSRC_SCALE["to"])
+    d_clip = float(np.hypot(X - a, Y)[beyond_].max()) if beyond_.any() else 0.0
+    ck("kerr_disc_source |K| passes 10^3/m^4 only beside the ring", 0 < d_clip < 0.5, f"within {d_clip:.4f} of the ring")
+    return [{
+        "id": "meridian", "label": "Meridian plane", "system": "boyer_lindquist", "kind": "map", "x": x_axis, "y": y_axis,
+        "colour": {"name": "$K\\,m^4$", "scale": dict(KDSRC_SCALE), "ticks": value_ticks(KDSRC_SCALE)},
+        "map": {"metric": "kerr_disc_source", "system": "boyer_lindquist", "scalar": "kretschmann", "x": "r",
+                "y": "\\theta", "frame": "oblate", "focus": "a", "params": params, "nx": nx, "ny": ny,
+                "cells": [[rounded(v) for v in row] for row in cellv]},
+        "marks": [{"class": "front", "points": [[0.0, 0.0], [a, 0.0]]}, {"class": "singular", "at": [a, 0.0]}],
+        "legend": [["line", "front", "the disc, $r = 0$"], ["point", "singular", "the ring"]],
+        "caption": ["The Kretschmann scalar $K$ about the disc; the Ricci scalar vanishes off it. On the disc "
+                    "$K = -48m^2/(a^2 - \\rho^2)^3$, with $\\rho = a\\sin\\theta$ its radius, negative and growing "
+                    "without bound at the rim."],
+        "settings": "$m=1$, $a=3m/2$.",
+        "clip": "Signed log, ring clipped.",
+    }]
+
+
 # ---------------------------------------------------------------- the black hole in a swirling universe
 
 SWIRL_REACH = 3                   # the universe's line runs over 0 <= sqrt(j) rho <= 3
@@ -17973,6 +18056,7 @@ DRAWN = {
     "israel_shell": israel_shell,
     "kerr": kerr,
     "kerr_melvin": kerr_melvin,
+    "kerr_disc_source": kerr_disc_source,
     "kerr_newman": kerr_newman,
     "eye_of_the_storm": eye_of_the_storm,
     "kerr_bertotti_robinson": kerr_bertotti_robinson,
