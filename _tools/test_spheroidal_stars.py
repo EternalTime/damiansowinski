@@ -23,6 +23,11 @@ class StellarFamilies(unittest.TestCase):
         chart = self.charts[system]
         return vm.Reader(chart["coords"], [p["symbol"] for p in chart["parameters"]], ())
 
+    def test_no_family_is_skipped_for_an_incomplete_dimension_declaration(self):
+        for system in stars.SYSTEMS:
+            declared = vm.DIMENSIONS[(stars.METRIC, system)]
+            vm.Dimensions(self.reader(system), declared)
+
     def test_complete_models_and_the_credited_duplicates_share_one_chart(self):
         self.assertEqual(tuple(self.charts), stars.SYSTEMS)
         vt = self.charts["vaidya_tikekar"]

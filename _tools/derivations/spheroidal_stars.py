@@ -37,7 +37,7 @@ def register_dimensions(vm):
         vm.HELD[(METRIC, system)] = ("y", "Z")
         vm.DIMENSIONS[(METRIC, system)] = {
             "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "C": "L^-2", "r_b": "L",
-            **{name: "1" for name in ("A", "B", "a", "k", "x", "s", "y", "Z")},
+            **{value.split(" = ")[0]: "1" for value in parameters(system)[2:]},
         }
 
 
