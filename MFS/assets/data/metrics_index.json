@@ -1212,6 +1212,32 @@
     "curvature": "a98ece8b3bfa41c1"
   },
   {
+    "id": "charged_godel_universe",
+    "name": "Charged Gödel universes",
+    "tags": [
+      "dust",
+      "electric charge",
+      "magnetic field",
+      "rotating",
+      "closed timelike curves",
+      "cosmology",
+      "exact solution",
+      "stationary",
+      "homogeneous",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "rigid rotation",
+      "cosmological constant"
+    ],
+    "version": "e98299f1dfcb9932",
+    "diagrams": "47b4abd87380f5d2",
+    "embedding": "c87056e25873f24a",
+    "curvature": "80fd5fac66098182"
+  },
+  {
     "id": "charged_shell",
     "name": "Charged Shell",
     "tags": [
@@ -2141,7 +2167,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "1e41831bc42aad63",
+    "version": "8abd7a370964e157",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -5452,7 +5478,7 @@
       "idealized model",
       "rigid rotation"
     ],
-    "version": "3499c017095addaa",
+    "version": "87e953234ebb54b6",
     "diagrams": "24d791c0188bc8ef",
     "embedding": "96ddbe0d3bf719ac"
   },

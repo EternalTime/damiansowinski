@@ -1,5 +1,5 @@
 {
-  "version": "9a464b8c18da5437",
+  "version": "1f99df86c29883c8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33024,6 +33024,62 @@
         "eprint": "gr-qc/0110012",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevLett.90.151301"
+      }
+    },
+    "banerjee1968charged": {
+      "type": "article",
+      "fields": {
+        "author": "Banerjee, A. and Banerji, S.",
+        "title": "Stationary distributions of dust and electromagnetic fields in general relativity",
+        "journal": "Journal of Physics A: General Physics",
+        "volume": "1",
+        "number": "2",
+        "pages": "188--193",
+        "year": "1968",
+        "doi": "10.1088/0305-4470/1/2/302"
+      }
+    },
+    "klepac2000charged": {
+      "type": "article",
+      "fields": {
+        "author": "Klep{\\'a}{\\v c}, Pavel and Horsk{\\'y}, Jan",
+        "title": "Charged universes of the {G}{\\\"o}del type with closed timelike curves",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "13",
+        "pages": "2547--2555",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/13/308",
+        "eprint": "gr-qc/0009022",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "kanti1999charged": {
+      "type": "article",
+      "fields": {
+        "author": "Kanti, P. and Vayonakis, C. E.",
+        "title": "{G}{\\\"o}del-type universes in string-inspired charged gravity",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "10",
+        "pages": "103519",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.103519",
+        "eprint": "gr-qc/9905032",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "reboucas1979charged": {
+      "type": "article",
+      "fields": {
+        "author": "Rebou{\\c c}as, M. J.",
+        "title": "A rotating universe with violation of causality",
+        "journal": "Physics Letters A",
+        "volume": "70",
+        "number": "3",
+        "pages": "161--163",
+        "year": "1979",
+        "doi": "10.1016/0375-9601(79)90193-2"
       }
     }
   }

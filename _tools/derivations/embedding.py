@@ -21571,7 +21571,7 @@ def charged_godel_universe(ck, src):
 DRAWN["charged_godel_universe"] = charged_godel_universe
 for _system in ("hyperbolic", "linear", "trigonometric"):
     CAPTIONS[("charged_godel_universe", _system)] = [
-        "The dust's constant-time plane, with circular radius $\\sqrt{D^2-H^2}$. "
+        "The dust's plane at constant time. "
         "The circles widen and then narrow; the Euclidean surface ends before the first null circle."]
 
 

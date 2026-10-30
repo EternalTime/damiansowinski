@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 204,
+  "count": 205,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -13212,6 +13212,272 @@
       ]
     },
     {
+      "id": "charged_godel_universe",
+      "name": "Charged universes of Gödel's kind",
+      "short_name": "Charged Gödel universes",
+      "description": "Charged dust rotating rigidly with a magnetic field. Circular paths close in time beyond a radius that moves inward as the field grows at fixed dust density.",
+      "tags": [
+        "dust",
+        "electric charge",
+        "magnetic field",
+        "rotating",
+        "closed timelike curves",
+        "cosmology",
+        "exact solution",
+        "stationary",
+        "homogeneous",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "rigid rotation",
+        "cosmological constant"
+      ],
+      "signature": "(-+++)",
+      "convention": "We keep $c$ explicit; the vorticity $\\omega$ has dimensions of inverse length. The Ricci tensor is $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "godel",
+          "kind": "special_case",
+          "text": "The uncharged member, $B=0$ and $m^2=2\\omega^2$, with pressureless dust and a negative cosmological constant [klepac2000charged]."
+        },
+        {
+          "id": "som_raychaudhuri",
+          "kind": "special_case",
+          "text": "The member with $m^2=0$ and $\\Lambda=0$, where the cylindrical functions reduce to $D=r$ and $H=\\omega r^2$ [klepac2000charged, kanti1999charged]."
+        }
+      ],
+      "references": [
+        "banerjee1968charged",
+        "klepac2000charged",
+        "kanti1999charged",
+        "reboucas1979charged"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_godel_universe.json",
+      "charts": [
+        {
+          "id": "hyperbolic",
+          "name": "Hyperbolic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\omega",
+              "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
+            },
+            {
+              "symbol": "m",
+              "description": "Positive inverse length, with $m^2\\leq2\\omega^2$ for magnetic dust"
+            }
+          ],
+          "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{2\\omega(\\cosh(mr)-1)}{m^2}d\\phi\\right)^2 + dr^2 + \\left(\\dfrac{\\sinh(mr)}{m}\\right)^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4\\omega\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{4\\omega\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4\\left(m^2 + m^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right) - 4\\omega^2\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)\\right)\\sinh^2\\left(\\dfrac{m\\,r}{2}\\right)}{m^4}"
+            }
+          ],
+          "ricci_scalar": "R = 2\\left(\\omega + m\\right)\\left(\\omega - m\\right)",
+          "kretschmann": "K = -24m^2\\,\\omega^2 + 44\\omega^4 + 4m^4"
+        },
+        {
+          "id": "linear",
+          "name": "Linear",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\omega",
+              "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
+            }
+          ],
+          "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\omega r^2d\\phi\\right)^2 + dr^2 + \\left(r\\right)^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\omega\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\omega\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-r^2\\left(\\omega\\,r + 1\\right)\\left(\\omega\\,r - 1\\right)"
+            }
+          ],
+          "ricci_scalar": "R = 2\\omega^2",
+          "kretschmann": "K = 44\\omega^4"
+        },
+        {
+          "id": "trigonometric",
+          "name": "Trigonometric",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\pi/k)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\omega",
+              "description": "Positive vorticity per unit length; the angular velocity is $c\\omega$"
+            },
+            {
+              "symbol": "k",
+              "description": "Positive inverse length, with the curvature parameter $m^2=-k^2$"
+            }
+          ],
+          "convention": "Cylindrical coordinates about a dust worldline, with proper radial distance $r$ and angular period $2\\pi$. Components use $x^0=ct$; dots denote affine derivatives of these chart coordinates.",
+          "line_element": "ds^2 = -\\left(c\\,dt + \\dfrac{2\\omega(1-\\cos(kr))}{k^2}d\\phi\\right)^2 + dr^2 + \\left(\\dfrac{\\sin(kr)}{k}\\right)^2d\\phi^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "\\dfrac{2\\omega\\left(\\cos\\left(k\\,r\\right) - 1\\right)}{k^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4\\omega^2\\sin^2\\left(k\\,r\\right) + k^2\\sin^2\\left(k\\,r\\right) + 8\\omega^2\\cos\\left(k\\,r\\right) - 8\\omega^2}{k^4}"
+            }
+          ],
+          "ricci_scalar": "R = 2\\omega^2 + 2k^2",
+          "kretschmann": "K = 24k^2\\,\\omega^2 + 44\\omega^4 + 4k^4"
+        }
+      ]
+    },
+    {
       "id": "charged_shell",
       "name": "Charged Shell of Dust",
       "short_name": "Charged Shell",
@@ -23334,6 +23600,11 @@
           "id": "ozsvath_dust",
           "kind": "generalisation",
           "text": "Ozsváth's class III stretches Gödel's universe along one direction of the plane in which its dust turns and squeezes it along the other, so the dust shears as it turns [wylleman2010]. At $s = 0$ it is Gödel's universe again."
+        },
+        {
+          "id": "charged_godel_universe",
+          "kind": "generalisation",
+          "text": "Rigidly rotating charged dust in a uniform magnetic field. Setting the magnetic field to zero recovers Gödel's universe."
         }
       ],
       "references": [
@@ -59687,6 +59958,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "Empty spaces of gravity in three dimensions with a mass for the graviton, a timelike line twisted over a hyperbolic plane of curvature $-m^2$ [gurses2010]. This universe's plane of $t$, $r$, and $\\phi$ is the same line element at $m = 0$ [reboucas2009]."
+        },
+        {
+          "id": "charged_godel_universe",
+          "kind": "generalisation",
+          "text": "The homogeneous family of charged dust with a cosmological constant. Its member with zero cosmological constant is the Som-Raychaudhuri universe."
         }
       ],
       "references": [

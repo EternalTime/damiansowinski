@@ -18656,9 +18656,9 @@ def charged_godel_diagrams():
             TURNING[key] = ("away", "geodesic" if vid == "inside" else "toward")
             CAPTIONS[key] = [
                 ("Unrolled cylinder at half the first null radius. Its horizontal circles are spacelike. "
-                 "The right-moving null curve is a circular geodesic." if vid == "inside" else
+                 "The null curve moving right is a circular geodesic." if vid == "inside" else
                  "Unrolled cylinder beyond the first null radius. Horizontal circles are closed timelike curves; "
-                 "the right-moving null curve returns to an earlier coordinate time."),
+                 "the null curve moving right returns to an earlier coordinate time."),
                 "The vertical edges represent the same angular position. Light launched to the left leaves the cylinder outward."
             ]
 

@@ -18290,7 +18290,8 @@ def charged_godel_universe(ck, src):
             views.append({"id": system+"_"+pid, "label": system.capitalize()+f" ${pid}$", "kind": "line",
                 "x": x, "panels": [panel], "curves": curves, "marks": [],
                 "legend": [["line", pid, "homogeneous curvature"]],
-                "caption": [f"The {system} branch has spatially constant ${pid}/\\omega^{power}={values[0]:g}$. "
+                "caption": [f"The {'Kretschmann' if pid == 'K' else 'Ricci'} scalar ${pid}$ of the {system} branch "
+                            f"is spatially constant: ${pid}/\\omega^{power}={values[0]:g}$. "
                             "The first null circle is not a curvature singularity."],
                 "settings": "$\\omega=1$"+("." if system == "linear" else ", $m=1$." if system == "hyperbolic" else ", $k=1$."),
                 "clip": "Linear scale."})
