@@ -1353,6 +1353,16 @@ DIMENSIONS = {
         "u": "T", "r": "L", "x": "1", "y": "1", "b": "1", "A_0": "L", "A": "L", "s": "1", "a": "L", "L": "1",
     },
     ("newman_tamburino", "cylindrical"): {"u": "T", "r": "L", "x": "1", "y": "L", "\\ell": "L"},
+    # Penney's a and b are lengths, and gamma and the ratio power E are pure numbers.
+    ("penney_scalar", "spherical"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "a": "L", "b": "L", "\\gamma": "1", "E": "1",
+    },
+    # Bronnikov's harmonic u is an inverse length, so k, h, the charge q and K = k coth(ku) and
+    # H = h coth(h(u + u_1)) are lengths and u_1 an inverse length.
+    ("penney_scalar", "harmonic"): {
+        "t": "T", "u": "1/L", "\\theta": "1", "\\phi": "1", "k": "L", "h": "L", "u_1": "1/L", "q": "L", "K": "L",
+        "H": "L",
+    },
     ("rn_metric", "spherical"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "r_s": "L", "r_q": "L",
     },
@@ -2686,6 +2696,10 @@ HELD = {
     # expanded in A_0 and b; and L, half the logarithm of (r + a)/(r - a), a logarithm of radicals,
     # since s = sqrt(x^2 + y^2). Both have algebraic slopes.
     ("newman_tamburino", "spherical"): ("a", "L"),
+    # Penney's E, a power gamma of (r - a)/(r - b), whose slope is rational in E and r.
+    ("penney_scalar", "spherical"): ("E",),
+    # Bronnikov's k coth(ku) and h coth(h(u + u_1)), each with a slope in itself alone.
+    ("penney_scalar", "harmonic"): ("K", "H"),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -2841,6 +2855,10 @@ RATES = {
         "L": {"u": "\\dfrac{b\\,c\\,r\\,s}{r^2 - a^2}", "r": "-\\dfrac{a}{r^2 - a^2}",
               "x": "\\dfrac{a\\,r\\,x}{s^2\\left(r^2 - a^2\\right)}", "y": "\\dfrac{a\\,r\\,y}{s^2\\left(r^2 - a^2\\right)}"},
     },
+    # Penney's E = ((r - a)/(r - b))^gamma: dE/dr = gamma (a - b) E/((r - a)(r - b)), rational in E and r.
+    ("penney_scalar", "spherical"): {"E": {"r": "\\dfrac{\\gamma\\left(a - b\\right)E}{\\left(r - a\\right)\\left(r - b\\right)}"}},
+    # K' = -(K^2 - k^2) and H' = -(H^2 - h^2), each in its own name, so no relation is left out.
+    ("penney_scalar", "harmonic"): {"K": {"u": "k^2 - K^2"}, "H": {"u": "h^2 - H^2"}},
 }
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across

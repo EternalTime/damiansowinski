@@ -80,7 +80,20 @@
   "coordinates": [
     {
       "id": "spherical",
-      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, and write $E = \\left((r - a)/(r - b)\\right)^{\\gamma}$ and $D = (a - bE)/(a - b)$. The areal radius is $D\\sqrt{(r - a)(r - b)/E}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "name": "Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (a, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "r = a \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"
+      ],
       "parameters": [
         {
           "symbol": "a",
@@ -96,12 +109,2842 @@
         },
         {
           "symbol": "E = \\left(\\dfrac{r - a}{r - b}\\right)^{\\gamma}",
-          "description": "A pure number rising from 0 at the singularity to 1 far away; with $D$ it is $-g_{tt} = E/D^2$"
+          "description": "A pure number rising from 0 at the singularity to 1 far away; $-g_{tt} = (a - b)^2E/(a - bE)^2$"
+        }
+      ],
+      "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, and write $E = \\left((r - a)/(r - b)\\right)^{\\gamma}$. The areal radius is $(a - bE)\\sqrt{(r - a)(r - b)/E}/(a - b)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{(a - b)^2E}{(a - bE)^2}c^2dt^2 + \\dfrac{(a - bE)^2}{(a - b)^2E}\\left(dr^2 + (r - a)(r - b)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{(a - b)^2E}{(a - bE)^2}"
         },
         {
-          "symbol": "D = \\dfrac{a - bE}{a - b}",
-          "description": "A pure number falling from $a/(a - b)$ at the singularity to 1 far away; $D = 1$ everywhere at $b = 0$"
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{(a - bE)^2}{(a - b)^2E}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{(a - bE)^2(r - a)(r - b)}{(a - b)^2E}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{(a - bE)^2(r - a)(r - b)}{(a - b)^2E}\\sin^2\\theta"
         }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{(a - bE)^2}{(a - b)^2E}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{(a - b)^2E}{(a - bE)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{E\\left(a - b\\right)^2}{\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{E\\left(a - b\\right)^2\\csc^2\\theta}{\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)^5\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{2\\left(a - b\\,E\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{2\\left(a - b\\,E\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)^3\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)^3\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)^3\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\gamma\\left(b\\,E + a\\right)\\left(b\\,E - a\\right)}{2E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(b\\,E - a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(b\\,E - a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(b\\,E - a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(b\\,E - a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{2E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(b\\,E - a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{2E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(b\\,E - a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{2E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(b\\,E - a\\right)^2\\left(r - a\\right)\\left(r - b\\right)\\sin\\theta\\cos\\theta}{E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(b\\,E - a\\right)^2\\left(r - a\\right)\\left(r - b\\right)\\sin\\theta\\cos\\theta}{E\\left(a - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(b\\,E - a\\right)^2\\left(r - a\\right)\\left(r - b\\right)\\sin\\theta\\cos\\theta}{E\\left(a - b\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\gamma\\left(a - b\\right)\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\left(a - b\\right)\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(2b^2\\,r\\,E^2 - 2a^2\\,r - b^2\\,E^2\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + 4a\\,b\\,\\gamma\\,E\\left(a - b\\right) + a^2\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\gamma\\,E\\left(a - b\\right)^3\\left(b\\,E + a\\right)\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2b^2\\,\\gamma\\,r\\,E^2 - 2a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - a\\,\\gamma - b\\,\\gamma\\right) - 2a\\,b\\,E\\left(1 - 2\\gamma^2\\right)\\left(a - b\\right) + a^2\\left(a - b + a\\,\\gamma + b\\,\\gamma\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(4b^2\\,\\gamma\\,r\\,E^2 - 4a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 2a\\,\\gamma - 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 2a\\,\\gamma + 2b\\,\\gamma + a\\,\\gamma^2 - b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{4E\\left(a - b\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E^3\\left(a - b\\right)^6}{\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)^2\\left(b^2\\,E^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) - 2a\\,b\\,E + a^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E\\left(a - b\\right)^2}{\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E\\left(a - b\\right)^2\\sin^2\\theta}{\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{a\\,b\\,\\gamma^2\\,E^2\\left(a - b\\right)^4}{\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E^2\\left(a - b\\right)^4}{\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E^2\\left(a - b\\right)^4}{\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^4\\left(b^2\\,E^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) - 2a\\,b\\,E + a^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E\\left(a - b\\right)^2}{\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{E^2\\left(a - b\\right)^6\\left(b^2\\,E^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) - 2a\\,b\\,E + a^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\right)}{2\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E^3\\left(a - b\\right)^6}{\\left(a - b\\,E\\right)^6\\left(r - a\\right)^3\\left(r - b\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a\\,b\\,\\gamma^2\\,E^3\\left(a - b\\right)^6\\csc^2\\theta}{\\left(a - b\\,E\\right)^6\\left(r - a\\right)^3\\left(r - b\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{E\\left(a - b\\right)^4\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)}{2\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}",
+      "kretschmann": "K = \\dfrac{E^2\\left(a - b\\right)^6\\left(48b^4\\,\\gamma^2\\,r^2\\,E^4 - 96a^2\\,b^2\\,\\gamma^2\\,r^2\\,E^2 + 48a^4\\,\\gamma^2\\,r^2 + 16b^4\\,\\gamma\\,r\\,E^4\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 32a\\,b^3\\,\\gamma\\,r\\,E^3\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + 96a^2\\,b^2\\,\\gamma^2\\,r\\,E^2\\left(a + b\\right) + 32a^3\\,b\\,\\gamma\\,r\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) - 16a^4\\,\\gamma\\,r\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) + b^4\\,E^4\\left(3a^2 - 6a\\,b + 3b^2 - 8a^2\\,\\gamma + 8b^2\\,\\gamma + 14a^2\\,\\gamma^2 + 20a\\,b\\,\\gamma^2 + 14b^2\\,\\gamma^2 - 16a^2\\,\\gamma^3 + 16b^2\\,\\gamma^3 + 7a^2\\,\\gamma^4 - 14a\\,b\\,\\gamma^4 + 7b^2\\,\\gamma^4\\right) - 4a\\,b^3\\,E^3\\left(a - b\\right)\\left(3a - 3b - 4a\\,\\gamma - 4b\\,\\gamma - 4a\\,\\gamma^2 + 4b\\,\\gamma^2 + 16a\\,\\gamma^3 + 16b\\,\\gamma^3 - 11a\\,\\gamma^4 + 11b\\,\\gamma^4\\right) + 2a^2\\,b^2\\,E^2\\left(9a^2 - 18a\\,b + 9b^2 - 30a^2\\,\\gamma^2 + 12a\\,b\\,\\gamma^2 - 30b^2\\,\\gamma^2 + 61a^2\\,\\gamma^4 - 122a\\,b\\,\\gamma^4 + 61b^2\\,\\gamma^4\\right) - 4a^3\\,b\\,E\\left(a - b\\right)\\left(3a - 3b + 4a\\,\\gamma + 4b\\,\\gamma - 4a\\,\\gamma^2 + 4b\\,\\gamma^2 - 16a\\,\\gamma^3 - 16b\\,\\gamma^3 - 11a\\,\\gamma^4 + 11b\\,\\gamma^4\\right) + a^4\\left(3a^2 - 6a\\,b + 3b^2 + 8a^2\\,\\gamma - 8b^2\\,\\gamma + 14a^2\\,\\gamma^2 + 20a\\,b\\,\\gamma^2 + 14b^2\\,\\gamma^2 + 16a^2\\,\\gamma^3 - 16b^2\\,\\gamma^3 + 7a^2\\,\\gamma^4 - 14a\\,b\\,\\gamma^4 + 7b^2\\,\\gamma^4\\right)\\right)}{4\\left(a - b\\,E\\right)^8\\left(r - a\\right)^4\\left(r - b\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{E^2\\left(a - b\\right)^6\\left(b^2\\,E^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) - 2a\\,b\\,E\\left(1 - 3\\gamma^2\\right) + a^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)^2\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)^2\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)^2\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)\\sin^2\\theta}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^4\\left(b^2\\,E^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) - 2a\\,b\\,E\\left(1 - 3\\gamma^2\\right) + a^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^4\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^4\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^4\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)^2\\left(b^2\\,E^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right) - 2a\\,b\\,E\\left(1 - 3\\gamma^2\\right) + a^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{E^2\\left(a - b\\right)^6\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{E^2\\left(a - b\\right)^6\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^3\\left(r - b\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{E^2\\left(a - b\\right)^6\\left(b\\,E\\left(1 - \\gamma\\right) - a\\left(1 + \\gamma\\right)\\right)\\left(b\\,E\\left(1 + \\gamma\\right) - a\\left(1 - \\gamma\\right)\\right)\\csc^2\\theta}{4\\left(a - b\\,E\\right)^6\\left(r - a\\right)^3\\left(r - b\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{E^2\\left(a - b\\right)^5\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{E^2\\left(a - b\\right)^5\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{E^2\\left(a - b\\right)^5\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{E^2\\left(a - b\\right)^5\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{E^2\\left(a - b\\right)^5\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{E^2\\left(a - b\\right)^5\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^6\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{6\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{6\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(a - b\\right)\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^2\\left(r - a\\right)\\left(r - b\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{6\\left(a - b\\,E\\right)^4\\left(r - a\\right)^2\\left(r - b\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{E\\left(a - b\\right)^3\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12\\left(a - b\\,E\\right)^4\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{12E\\left(a - b\\right)\\left(r - a\\right)\\left(r - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{6E\\left(a - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{6E\\left(a - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{6E\\left(a - b\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(6b^2\\,\\gamma\\,r\\,E^2 - 6a^2\\,\\gamma\\,r + b^2\\,E^2\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 2a\\,b\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + a^2\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right)\\right)\\sin^2\\theta}{6E\\left(a - b\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)}{\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{\\gamma\\,E^2\\left(a - b\\right)^5\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)^5\\left(r - a\\right)\\left(r - b\\right)}\\dot{t}^2 - \\dfrac{\\gamma\\left(a - b\\right)\\left(b\\,E + a\\right)}{2\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}\\dot{r}^2 + \\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{2\\left(a - b\\,E\\right)}\\dot{\\theta}^2 + \\dfrac{\\left(2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)\\right)\\sin^2\\theta}{2\\left(a - b\\,E\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} - \\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{2b\\,r\\,E - 2a\\,r - b\\,E\\left(a + b - a\\,\\gamma + b\\,\\gamma\\right) + a\\left(a + b + a\\,\\gamma - b\\,\\gamma\\right)}{\\left(a - b\\,E\\right)\\left(r - a\\right)\\left(r - b\\right)}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "harmonic",
+      "name": "Harmonic",
+      "coords": [
+        "t",
+        "u",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "u \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "u \\to 0 \\;\\text{(spatial infinity)}",
+        "u \\to \\infty \\;\\text{(the singularity, for } h < k\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "A length, $k = (a - b)/2$, with $k > h$"
+        },
+        {
+          "symbol": "h",
+          "description": "A length, $h = \\gamma k$, with $0 < h < k$; $h = k$ is Reissner and Nordström's metric"
+        },
+        {
+          "symbol": "u_1",
+          "description": "An inverse length, with $a/b = e^{2hu_1}$; the mass is $GM/c^2 = h\\coth(hu_1)$"
+        },
+        {
+          "symbol": "q = \\dfrac{h}{\\sinh(hu_1)}",
+          "description": "The charge as a length, $q^2 = GQ^2/(4\\pi\\varepsilon_0c^4) = \\gamma^2ab$"
+        },
+        {
+          "symbol": "K = k\\coth(ku)",
+          "description": "A length falling from $1/u$ near spatial infinity to $k$ at the singularity"
+        },
+        {
+          "symbol": "H = h\\coth(h(u + u_1))",
+          "description": "A length falling from the mass $GM/c^2$ at spatial infinity to $h$ at the singularity"
+        }
+      ],
+      "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u$ an inverse length, Bronnikov's harmonic coordinate, with $e^{-2ku} = (r - a)/(r - b)$ for $a - b = 2k$, $\\gamma = h/k$ and $a/b = e^{2hu_1}$. The scalar field is $\\varphi = -\\sqrt{(k^2 - h^2)c^4/4\\pi G}\\,u$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -\\dfrac{H^2 - h^2}{q^2}c^2dt^2 + \\dfrac{q^2\\left(K^2 - k^2\\right)}{H^2 - h^2}\\left(\\left(K^2 - k^2\\right)du^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)}{q^2}"
+        },
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\dfrac{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}{\\left(H - h\\right)\\left(H + h\\right)}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{q^2}{\\left(H - h\\right)\\left(H + h\\right)}"
+        },
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\csc^2\\theta}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "-H"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "-H"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)^2\\left(H + h\\right)^2}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(2K - H\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{K - H}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(K - H\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\left(K - H\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\left(K - H\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\left(K - H\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\left(K - H\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2\\left(2K - H\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(K - H\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(K - H\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(K - H\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(K - H\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(K - H\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(K - H\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\sin\\theta\\cos\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\sin\\theta\\cos\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\sin\\theta\\cos\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\left(3H^2 - 2H\\,K - h^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "u",
+                  "t"
+                ],
+                "value": "\\left(3H^2 - 2H\\,K - h^2\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H\\left(K - H\\right)}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(K - H\\right)}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\left(K - H\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(K - H\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(2H\\,K - 3H^2 + h^2\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(2H\\,K - 3H^2 + h^2\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H\\,K - H^2 - k^2 + h^2}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{H\\,K - H^2 - k^2 + h^2}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(H\\,K - H^2 - k^2 + h^2\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(H\\,K - H^2 - k^2 + h^2\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(K - H\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(K - H\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(K - H\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(K - H\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\left(H^2 - H\\,K + k^2 - h^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\left(H^2 - H\\,K + k^2 - h^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\left(H^2 - H\\,K + k^2 - h^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\left(H^2 - H\\,K + k^2 - h^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2H\\,K - H^2 - k^2\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2H\\,K - H^2 - k^2\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2H\\,K - H^2 - k^2}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2H\\,K - H^2 - k^2}{\\left(K - k\\right)\\left(K + k\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(2H\\,K - 3H^2 + h^2\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(2H\\,K - 3H^2 + h^2\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(2H\\,K - 3H^2 + h^2\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(2H\\,K - 3H^2 + h^2\\right)}{q^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)\\sin^2\\theta}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)\\sin^2\\theta}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)\\sin^2\\theta}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(H - h\\right)\\left(H + h\\right)\\left(K - H\\right)\\sin^2\\theta}{q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(H\\,K - H^2 - k^2 + h^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\left(2H\\,K - H^2 - k^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{q^2\\left(2H\\,K - H^2 - k^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{q^2\\left(2H\\,K - H^2 - k^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2\\left(2H\\,K - H^2 - k^2\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^3\\left(H + h\\right)^3}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(H^2 - 2k^2 + h^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(H^2 - 2k^2 + h^2\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)}{\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(H^2 - 2k^2 + h^2\\right)}{q^4\\left(K - k\\right)^4\\left(K + k\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^3\\left(H + h\\right)^3}{q^4\\left(K - k\\right)^3\\left(K + k\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^3\\left(H + h\\right)^3\\csc^2\\theta}{q^4\\left(K - k\\right)^3\\left(K + k\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2\\left(k + h\\right)\\left(k - h\\right)\\left(H - h\\right)\\left(H + h\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}",
+      "kretschmann": "K = \\dfrac{4\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(12H^2\\,K^2 - 24H^3\\,K - 8k^2\\,H\\,K + 8h^2\\,H\\,K + 14H^4 + 6k^2\\,H^2 - 10h^2\\,H^2 + 3k^4 - 4k^2\\,h^2 + 3h^4\\right)}{q^4\\left(K - k\\right)^4\\left(K + k\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(H^2 + k^2 - 2h^2\\right)}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(H - k\\right)\\left(H + k\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - k\\right)\\left(H + k\\right)}{\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - k\\right)\\left(H + k\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(H^2 + k^2 - 2h^2\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(H - k\\right)\\left(H + k\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(H - k\\right)\\left(H + k\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(H - k\\right)\\left(H + k\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{H^2 + k^2 - 2h^2}{\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(H - k\\right)\\left(H + k\\right)}{q^4\\left(K - k\\right)^4\\left(K + k\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(H - k\\right)\\left(H + k\\right)}{q^4\\left(K - k\\right)^3\\left(K + k\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(H - k\\right)\\left(H + k\\right)\\csc^2\\theta}{q^4\\left(K - k\\right)^3\\left(K + k\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\left(2H^2 - 2H\\,K + \\dfrac{2k^2}{3} - \\dfrac{2h^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "u",
+                  "t"
+                ],
+                "value": "\\left(2H^2 - 2H\\,K + \\dfrac{2k^2}{3} - \\dfrac{2h^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3H\\,K - 3H^2 - k^2 + h^2}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{3H\\,K - 3H^2 - k^2 + h^2}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3H\\,K - 3H^2 - k^2 + h^2}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{3H\\,K - 3H^2 - k^2 + h^2}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\left(H^2 - H\\,K + \\dfrac{k^2}{3} - \\dfrac{h^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\left(H^2 - H\\,K + \\dfrac{k^2}{3} - \\dfrac{h^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\left(H^2 - H\\,K + \\dfrac{k^2}{3} - \\dfrac{h^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\left(H^2 - H\\,K + \\dfrac{k^2}{3} - \\dfrac{h^2}{3}\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{6H\\,K - 6H^2 - 2k^2 + 2h^2}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6H\\,K - 6H^2 - 2k^2 + 2h^2}{3\\left(K - k\\right)\\left(K + k\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\dfrac{2\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{2\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(H - h\\right)\\left(H + h\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3q^2\\left(K - k\\right)\\left(K + k\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\theta",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "u",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "u",
+                  "\\theta",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "\\phi",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "u",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "u",
+                  "\\phi",
+                  "u"
+                ],
+                "value": "-\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2q^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2q^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2q^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2q^2\\left(3H\\,K - 3H^2 - k^2 + h^2\\right)\\sin^2\\theta}{3\\left(H - h\\right)\\left(H + h\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - 2H\\,\\dot{t}\\dot{u} = 0",
+        "\\ddot{u} - \\dfrac{H\\left(H - h\\right)^2\\left(H + h\\right)^2}{q^4\\left(K - k\\right)^2\\left(K + k\\right)^2}\\dot{t}^2 - \\left(2K - H\\right)\\dot{u}^2 + \\dfrac{K - H}{\\left(K - k\\right)\\left(K + k\\right)}\\dot{\\theta}^2 + \\dfrac{\\left(K - H\\right)\\sin^2\\theta}{\\left(K - k\\right)\\left(K + k\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} - \\left(2K - 2H\\right)\\dot{u}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\left(2K - 2H\\right)\\dot{u}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     }
   ]

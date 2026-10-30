@@ -35089,6 +35089,250 @@ def newman_tamburino_check(chart, system):
 CHARTS["newman_tamburino"] = [lambda s=s: newman_tamburino(s) for s in NT_CHARTS]
 
 
+# -- Penney's charged scalar solution ------------------------------------------------------
+
+PENNEY_CHARTS = ["spherical", "harmonic"]
+PENNEY_HARMONIC = ["k", "h", "u_1", "q = \\dfrac{h}{\\sinh(hu_1)}", "K = k\\coth(ku)", "H = h\\coth(h(u + u_1))"]
+PENNEY_SPHERE = "\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)"
+PENNEY_ANGLES = ["\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+PENNEY_E = "E = \\left(\\dfrac{r - a}{r - b}\\right)^{\\gamma}"
+# Points of the parameters and the radius at which the checks compare, each outside r = a.
+PENNEY_POINTS = [{"a": 2, "b": sp.Rational(1, 2), "gamma": sp.Rational(3, 5), "r": sp.Rational(37, 10)},
+                 {"a": 3, "b": 1, "gamma": sp.Rational(1, 4), "r": 5},
+                 {"a": sp.Rational(5, 2), "b": 2, "gamma": sp.Rational(9, 10), "r": sp.Rational(11, 4)}]
+
+
+def penney_scalar(system):
+    """R. Penney's static, spherically symmetric solution of Einstein's equations with a Maxwell
+    field and a massless scalar field, Phys. Rev. 182, 1383 (1969), in the radius of Banerjee and
+    Sen, Phys. Rev. D 58, 104024 (1998), their (2.14) to (2.17), and of Astorino, Phys. Rev. D 87,
+    084029 (2013), his (2.25) to (2.29), in which g_tt g_rr = -1. Their b(r - a)^gamma - a(r - b)^gamma
+    over b - a is (r - b)^gamma (a - bE)/(a - b), with E = ((r - a)/(r - b))^gamma, so
+
+        ds^2 = -((a - b)^2 E/(a - bE)^2) c^2dt^2 + ((a - bE)^2/((a - b)^2 E))(dr^2 + (r - a)(r - b) dOmega^2).
+
+    E is held as a function of r with the slope gamma (a - b) E/((r - a)(r - b)), vm.HELD and
+    vm.RATES, so every value is a rational function of r, E and the parameters. A second name for
+    a - bE would be held too, by the reader's rule for a name defined through a held one, and the
+    two would stand in a relation the rates leave out, so the sum is written as it is.
+    penney_scalar_check holds the chart to the field equations and to its two special cases before
+    anything is written, and penney_scalar.md is the derivation."""
+    key = ("penney_scalar", system)
+    if system == "harmonic":
+        return penney_harmonic()
+    coords, name = ["t", "r", "\\theta", "\\phi"], "Spherical"
+    parameters = ["a", "b", "\\gamma", PENNEY_E]
+    domains = (["t \\in (-\\infty, \\infty)", "r \\in (a, \\infty)"] + PENNEY_ANGLES
+               + ["r = a \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"])
+    probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+    r, a, b, g = probe.symbol["r"], probe.parameters["a"], probe.parameters["b"], probe.parameters["gamma"]
+    E = probe.parameters["E"]
+    printer = {"lead": [r, a, b, g, E], "factors": [a, b, g, r], "rising": [g], "flip": False,
+               "collect": lambda poly, pr: cp.collect_by(poly, [r, E], pr)}
+
+    def line(c2):
+        return ("ds^2 = -\\dfrac{(a - b)^2E}{(a - bE)^2}" + c2 + "dt^2 + \\dfrac{(a - bE)^2}{(a - b)^2E}"
+                "\\left(dr^2 + (r - a)(r - b)" + PENNEY_SPHERE + "\\right)")
+
+    area = "\\dfrac{(a - bE)^2(r - a)(r - b)}{(a - b)^2E}"
+    components = {"metric_components": {("t", "t"): "-\\dfrac{(a - b)^2E}{(a - bE)^2}",
+                                        ("r", "r"): "\\dfrac{(a - bE)^2}{(a - b)^2E}",
+                                        ("\\theta", "\\theta"): area, ("\\phi", "\\phi"): area + "\\sin^2\\theta"},
+                  "inverse_metric_components": {("t", "t"): "-\\dfrac{(a - bE)^2}{(a - b)^2E}",
+                                                ("r", "r"): "\\dfrac{(a - b)^2E}{(a - bE)^2}"}}
+    return {
+        "metric_id": "penney_scalar",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "reduce": lambda value: vm.norm(probe.by_rates(value)),
+        "components": components,
+        "check": lambda chart: penney_scalar_check(chart, system),
+    }
+
+
+def penney_harmonic():
+    """Bronnikov's harmonic chart, Acta Phys. Pol. B 4, 251 (1973), his (36), (37) and (40) with
+    F = 1, as Bronnikov, Bolokhov, Skvortsova, Ibadov and Shaymanova write it, Eur. Phys. J. C 84,
+    1027 (2024), their (19) and (24) to (27), on the branch k > h > 0 with u_1 > 0. Their s(k, u) is
+    sinh(ku)/k, and q s(h, u + u_1) = sinh(h(u + u_1))/sinh(h u_1) by their (29), so with
+    K = k coth(ku), H = h coth(h(u + u_1)) and q = h/sinh(h u_1), 1/s^2(k, u) = K^2 - k^2 and
+    1/(q s(h, u + u_1))^2 = (H^2 - h^2)/q^2, and
+
+        ds^2 = -((H^2 - h^2)/q^2) c^2dt^2 + (q^2 (K^2 - k^2)/(H^2 - h^2))((K^2 - k^2) du^2 + dOmega^2).
+
+    K and H are held with the slopes k^2 - K^2 and h^2 - H^2, each in itself, so every value is a
+    rational function of K, H and the constants with no relation among them. H at u = 0 is
+    h coth(h u_1), the mass."""
+    key = ("penney_scalar", "harmonic")
+    coords = ["t", "u", "\\theta", "\\phi"]
+    domains = (["t \\in (-\\infty, \\infty)", "u \\in (0, \\infty)"] + PENNEY_ANGLES
+               + ["u \\to 0 \\;\\text{(spatial infinity)}", "u \\to \\infty \\;\\text{(the singularity, for } h < k\\text{)}"])
+    probe = vm.Reader(coords, PENNEY_HARMONIC, (), held=vm.HELD[key], rates=vm.RATES[key])
+    u = probe.symbol["u"]
+    k, h, u1 = probe.parameters["k"], probe.parameters["h"], probe.parameters["u_1"]
+    K, H = probe.parameters["K"], probe.parameters["H"]
+    # Printed as q, which the reader takes back as its definition.
+    q = sp.Symbol("q", positive=True)
+    printer = {"lead": [u, K, H, k, h], "factors": [k, h], "flip": False}
+    X = sp.exp(h * u1)
+
+    def pretty(value):
+        # q = h/sinh(h u_1) is read as exponentials of h u_1, which come back as
+        # (e^{h u_1} + 1)^n (e^{h u_1} - 1)^n e^{-n h u_1} = (2h/q)^n.
+        value = sp.factor(sp.sympify(value))
+        plus = minus = shift = 0
+        out = sp.Integer(1)
+        for f in sp.Mul.make_args(value):
+            base, e = f.as_base_exp()
+            if sp.expand(base - (X + 1)) == 0:
+                plus += e
+            elif sp.expand(base - (X - 1)) == 0:
+                minus += e
+            elif isinstance(f, sp.exp) or (f.is_Pow and isinstance(base, sp.exp)):
+                c = sp.cancel(sp.log(f).expand(force=True) / (h * u1))
+                if not c.is_Integer:
+                    raise AssertionError(f"penney_scalar: {f} is no power of e^(h u_1)")
+                shift += c
+            else:
+                out *= f
+        if not plus == minus == -shift:
+            raise AssertionError(f"penney_scalar: the powers of e^(h u_1) in {value} are not powers of q")
+        return out * (2 * h / q) ** plus
+
+    def line(c2):
+        return ("ds^2 = -\\dfrac{H^2 - h^2}{q^2}" + c2 + "dt^2 + \\dfrac{q^2\\left(K^2 - k^2\\right)}{H^2 - h^2}"
+                "\\left(\\left(K^2 - k^2\\right)du^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)")
+
+    return {
+        "metric_id": "penney_scalar",
+        "system": {"id": "harmonic", "name": "Harmonic", "coords": coords, "domains": domains,
+                   "parameters": PENNEY_HARMONIC, "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": printer,
+        "pretty": pretty,
+        "reduce": lambda value: vm.norm(probe.by_rates(value)),
+        "check": lambda chart: penney_scalar_check(chart, "harmonic"),
+    }
+
+
+
+def penney_scalar_check(chart, system):
+    """The chart at the points PENNEY_POINTS, never symbolically, with E written out: the slope
+    declared for E is its definition's; the Ricci tensor is 2 d_a psi d_b psi + 2 F_ac F_b^c -
+    g_ab F_cd F^cd/2, for the scalar psi = sqrt(1 - gamma^2) ln((r - a)/(r - b))/2 and the Coulomb
+    field F_tr = q E/(D^2 (r - a)(r - b)), q^2 = gamma^2 ab, Banerjee and Sen's (2.17) to (2.19) in
+    the normalisation where Reissner and Nordstrom's g_tt is -(1 - r_s/r + r_q^2/r^2); at gamma = 1
+    the metric is the published chart of rn_metric with r_s = a + b and r_q^2 = ab, and at b = 0 the
+    published spherical chart of fisher_jnw with its b equal to a; and far away -g_tt = 1 - gamma(a + b)/r,
+    so 2GM/c^2 = gamma(a + b)."""
+    if system == "harmonic":
+        return penney_harmonic_check(chart)
+    t, r, th, ph = chart.symbols
+    P = chart.reader.parameters
+    a, b, g = P["a"], P["b"], P["gamma"]
+    held = chart.reader.held
+    E, Ed = P["E"], ((r - a) / (r - b)) ** g
+    rate = vm.RATES[("penney_scalar", system)]["E"]["r"]
+    out = lambda e: sp.sympify(e).subs(held).subs(held).doit()  # noqa: E731
+    geo = chart.geo
+    G, Ginv = geo.g, geo.ginv
+    ricci = geo.ricci_ll()
+    psi = sp.sqrt(1 - g ** 2) * sp.log((r - a) / (r - b)) / 2
+    Dd = (a - b * Ed) / (a - b)
+    F = sp.zeros(4, 4)
+    F[0, 1] = g * sp.sqrt(a * b) * Ed / (Dd ** 2 * (r - a) * (r - b))
+    F[1, 0] = -F[0, 1]
+    for point in PENNEY_POINTS:
+        at = {a: point["a"], b: point["b"], g: point["gamma"], r: point["r"], th: sp.Rational(7, 10)}
+
+        def number(e):
+            return sp.N(out(e).subs(at), 40)
+        if abs(number(chart.reader(rate).subs(E, Ed) - sp.diff(Ed, r))) > 1e-30:
+            raise AssertionError("penney_scalar: the slope of E is not its definition's")
+        gn = G.applyfunc(number)
+        gi = Ginv.applyfunc(number)
+        Fn = F.applyfunc(lambda e: sp.N(e.subs(at), 40))
+        FF = sum(Fn[i, j] * Fn[k, l] * gi[i, k] * gi[j, l] for i in range(4) for j in range(4) for k in range(4) for l in range(4))
+        for i in range(4):
+            for j in range(i, 4):
+                source = (2 * sp.N((sp.diff(psi, chart.symbols[i]) * sp.diff(psi, chart.symbols[j])).subs(at), 40)
+                          + 2 * sum(Fn[i, k] * Fn[j, l] * gi[k, l] for k in range(4) for l in range(4)) - gn[i, j] * FF / 2)
+                if abs(number(ricci[i][j]) - source) > 1e-25:
+                    raise AssertionError(f"penney_scalar: R_{chart.coords_tex[i]}{chart.coords_tex[j]} misses the "
+                                         "scalar and Maxwell fields")
+        far = {a: point["a"], b: point["b"], g: point["gamma"], r: sp.Integer(10) ** 12, th: sp.Rational(7, 10)}
+        if abs(sp.N((out(1 + G[0, 0]) * r).subs(far), 40) - point["gamma"] * (point["a"] + point["b"])) > 1e-9:
+            raise AssertionError("penney_scalar: the mass is not 2GM/c^2 = gamma(a + b)")
+    for other, system_id, same in (("rn_metric", "spherical", lambda R: {R.parameters["r_s"]: a + b,
+                                                                          R.parameters["r_q"]: sp.sqrt(a * b)}),
+                                   ("fisher_jnw", "spherical", lambda R: {R.parameters["b"]: a,
+                                                                           R.parameters["gamma"]: g})):
+        reader, symbols, there = kaluza_klein_published(other, system_id)
+        names = dict(zip(symbols, chart.symbols))
+        names.update(same(reader))
+        for point in PENNEY_POINTS:
+            at = {a: point["a"], b: 0 if other == "fisher_jnw" else point["b"],
+                  g: 1 if other == "rn_metric" else point["gamma"], r: point["r"], th: sp.Rational(7, 10)}
+            for i in range(4):
+                mine = sp.N(out(G[i, i]).subs(at), 40)
+                theirs = sp.N(there[i, i].subs(names, simultaneous=True).subs(at), 40)
+                if abs(mine - theirs) > 1e-30:
+                    raise AssertionError(f"penney_scalar: the chart misses the published chart of {other} in slot {i}")
+
+
+# Points of Bronnikov's constants and his u at which the harmonic chart is compared.
+PENNEY_HARMONIC_POINTS = [{"k": sp.Rational(3, 4), "h": sp.Rational(1, 2), "u_1": 1, "u": sp.Rational(2, 3)},
+                          {"k": 2, "h": sp.Rational(1, 3), "u_1": sp.Rational(5, 2), "u": sp.Rational(1, 5)},
+                          {"k": sp.Rational(1, 2), "h": sp.Rational(9, 20), "u_1": sp.Rational(1, 3), "u": 3}]
+
+
+def penney_harmonic_check(chart):
+    """The harmonic chart at PENNEY_HARMONIC_POINTS, with its held names written out: each slope
+    declared for K and H is its definition's; u is harmonic, d_u(sqrt(-g) g^uu) = 0; and the
+    chart is the spherical one pulled back by r = b + 2k/(1 - e^{-2ku}), with a - b = 2k, gamma = h/k and
+    a/b = e^{2 h u_1}, slot by slot, so it carries the same scalar and Maxwell fields. The scalar is
+    then -sqrt(k^2 - h^2) u, the charge q = h/sinh(h u_1) and the mass h coth(h u_1), as Bronnikov's (30)
+    has m^2 = q^2 + h^2."""
+    t, u, th, ph = chart.symbols
+    P = chart.reader.parameters
+    k, h, u1 = P["k"], P["h"], P["u_1"]
+    held = chart.reader.held
+    out = lambda e: sp.sympify(e).subs(held).subs(held).doit()  # noqa: E731
+    rates = vm.RATES[("penney_scalar", "harmonic")]
+    g, ginv = chart.geo.g, chart.geo.ginv
+    source = penney_scalar("spherical")
+    own = cp.Chart(source["system"]["coords"], source["system"]["parameters"], source["chart_line_element"],
+                   held=vm.HELD[("penney_scalar", "spherical")])
+    oP = own.reader.parameters
+    radius = lambda k, h, u1, u: (2 * k / (sp.exp(2 * h * u1) - 1)  # noqa: E731
+                                  + 2 * k / (1 - sp.exp(-2 * k * u)))
+    for point in PENNEY_HARMONIC_POINTS:
+        at = {k: point["k"], h: point["h"], u1: point["u_1"], u: point["u"], th: sp.Rational(7, 10)}
+
+        def number(e):
+            return sp.N(out(e).subs(at), 40)
+        for name, along in rates.items():
+            function = P[name]
+            if abs(number(chart.reader(along["u"]) - sp.diff(held[function], u))) > 1e-30:
+                raise AssertionError(f"penney_scalar: the slope of {name} is not its definition's")
+        density = sp.diff(sp.sqrt(-out(g.det())) * out(ginv[1, 1]), u)
+        if abs(sp.N(density.subs(at), 40)) > 1e-25:
+            raise AssertionError("penney_scalar: the coordinate u is not harmonic")
+        bv = 2 * point["k"] / (sp.exp(2 * point["h"] * point["u_1"]) - 1)
+        there = {oP["a"]: bv + 2 * point["k"], oP["b"]: bv, oP["gamma"]: point["h"] / point["k"],
+                 own.symbols[2]: sp.Rational(7, 10)}
+        R = radius(point["k"], point["h"], point["u_1"], u)
+        J = sp.diff(R, u)
+        for i in range(4):
+            theirs = sp.sympify(own.geo.g[i, i]).subs(own.reader.held).subs(own.reader.held).doit()
+            theirs = theirs.subs(there).subs(own.symbols[1], R) * (J ** 2 if i == 1 else 1)
+            if abs(sp.N(theirs.subs(u, point["u"]), 40) - number(g[i, i])) > 1e-25:
+                raise AssertionError(f"penney_scalar: the harmonic chart is not the spherical one pulled back in slot {i}")
+
+CHARTS["penney_scalar"] = [lambda s=s: penney_scalar(s) for s in PENNEY_CHARTS]
+
 def step(seconds, where, name):
     """A step of the printing under the clock when a budget is given, so that one which runs past it
     stops the script naming the chart and the step rather than leaving it to hang."""
