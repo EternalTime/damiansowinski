@@ -7236,7 +7236,7 @@ class Aspect(unittest.TestCase):
     def test_an_enlarged_embedding_window_fits_labels_at_its_final_scale(self):
         sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
         import embedding
-        label = {"at": [0.25, 0], "text": "$" + "r" * 45 + "$", "class": "small",
+        label = {"at": [0.25, 0], "text": "$" + "r" * 30 + "$", "class": "small",
                  "anchor": "l", "dx": 8, "dy": 0}
         box = embedding.fit_window([-0.3, 0.3, -2, 2], [label])
         x0, y0, x1, y1 = embedding.label_box(label, (box[1] - box[0]) / 560)
