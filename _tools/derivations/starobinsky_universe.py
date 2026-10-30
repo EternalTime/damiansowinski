@@ -1,7 +1,7 @@
 """The homogeneous semiclassical geometry of Starobinsky (1980), Eqs. (4), (7), (12).
 
 All times in the numerical solution are H_0 tau and all lengths are H_0^-1.
-The numerical initial displacement is a linear approximation at the de Sitter saddle.
+The finite initial displacement uses a second-order expansion at the de Sitter saddle.
 The evolution retains the full homogeneous equation, including the anomaly term.
 """
 from functools import lru_cache
@@ -158,13 +158,14 @@ class Trajectory:
         time = np.asarray(time, dtype=float)
         if np.any((time < self.lo) | (time > self.hi)):
             raise ValueError(f"trajectory time outside [{self.lo}, {self.hi}]")
-        native = time+self.shift
+        shape = time.shape
+        native = (time+self.shift).ravel()
         left = self.first.sol(np.minimum(native, self.shift))
         left[0] -= self.N0
         left[4] = self.past_eta.sol(np.minimum(native, self.shift))[0]
-        right = self.last.sol(np.maximum(time, 0))
+        right = self.last.sol(np.maximum(time.ravel(), 0))
         state = np.where(native <= self.shift, left, right)
-        return state
+        return state.reshape((5,)+shape)
 
     def a(self, time, order=0):
         N, h, R, _, _ = self.state(time)

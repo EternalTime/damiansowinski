@@ -3,7 +3,6 @@
 The chart printer checks the FLRW Ricci normalization.
 The collection checker checks every stored tensor and drawing, so those are not repeated here.
 """
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -84,6 +83,17 @@ class NumericalBranch(unittest.TestCase):
         R = self.sol.state(np.linspace(20,160,2001))[2]
         self.assertGreater(np.count_nonzero(R[:-1]*R[1:]<0),10)
         print(f"Starobinsky conformal inverse: worst time gap {gap:.3e}")
+
+    def test_past_mode_matches_the_stated_tidal_boundary(self):
+        N,h,R,S,_ = self.sol.state(self.sol.lo+np.array([0.0,1.0,2.0]))
+        hp = R/6-2*h*h
+        hpp = S/6-4*h*hp
+        mode = hp/(h*(h-1))
+        tidal_exponent = hpp/(h*hp)-2
+        self.assertLess(float(np.max(np.abs(mode-su.EXPONENT))),2e-5)
+        self.assertLess(float(np.max(np.abs(tidal_exponent-(su.EXPONENT-2)))),2e-5)
+        self.assertLess(float(np.max(np.abs(R/12-1))),3e-4)
+        self.assertTrue(np.all(tidal_exponent<0))
 
 
 if __name__ == "__main__":
