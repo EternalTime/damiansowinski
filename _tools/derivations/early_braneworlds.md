@@ -10,7 +10,6 @@ Akama's equation (4) introduces tubular coordinates around an unspecified embedd
 Valery Rubakov and Mikhail Shaposhnikov's two papers in Physics Letters B 125 (1983) concern different constructions.
 The paper on pages 136 to 138, DOI 10.1016/0370-2693(83)91253-4, concerns field theoretic trapping on a scalar wall in a flat five dimensional background.
 The paper on pages 139 to 143, DOI 10.1016/0370-2693(83)91254-6, concerns six dimensional gravity with a cosmological constant.
-Both original full texts remain unread after the publisher refused access.
 The wall's fermion modes follow Rubakov's own derivation in hep-ph/0104152, section 3.1, equations (2) to (5).
 The six dimensional gravitational solution follows George Lavrelashvili's explicit reconstruction in arXiv:1002.4566, equations (1) to (8), also published in Proceedings of A. Razmadze Mathematical Institute 159 (2012), pages 65 to 74.
 
@@ -19,9 +18,7 @@ The equations on PDF pages 5 to 7 specify an electric Einstein-Maxwell solution 
 The 1999 note is distinct from the 1985 body.
 
 Euan J. Squires's 1986 paper, DOI 10.1016/0370-2693(86)90347-3, concerns vacuum Einstein geometries with a cosmological constant and scalar trapping.
-Its original full text remains unread.
 Peter Anthony Bannister's 1987 Durham thesis, The cosmological constant and dimensional reduction, derives the three dimensional example in chapter 3, equations (3) to (6), and the higher dimensional family in chapter 4, equations (27) to (28).
-The scanned equations on printed pages 33 and 35 were read visually.
 Bannister's regular axis is a specified member of the family, selected in equations (35) to (36).
 
 Gary Gibbons and David Wiltshire's 1987 Einstein-Maxwell membranes, DOI 10.1016/0550-3213(87)90125-8, are reproduced in hep-th/0109093.
@@ -98,8 +95,3 @@ Gibbons and Wiltshire find flux controlled chiral fermion zero modes in equation
 For their flat magnetic membrane with both cosmological constants zero, the axisymmetric neutral scalar spectrum extends continuously to arbitrarily small positive mass, equations (6.1) and (6.2).
 The mass gap in the curved cases depends on the boundary conditions discussed after (6.9); the constant scalar zero mode is not square integrable in that discussion.
 Their stability argument concerns radial perturbations of the flat magnetic membrane, section 4; section 7 leaves stability of the curved extensions open.
-
-## Drawings and verification
-
-Numerical parameter choices, diagram domains, chart printing, stored curvature, and the dedicated physics checks follow the History review.
-Each construction retains its source assumptions when those checks are defined.
