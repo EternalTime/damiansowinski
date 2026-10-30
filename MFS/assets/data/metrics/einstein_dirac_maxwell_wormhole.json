@@ -60,7 +60,7 @@
     {
       "id": "ghost_neutrinos",
       "kind": "family",
-      "text": "Massless spinors again, in Taub's static plane symmetric vacuum, carrying a current with no energy or momentum at all [davis1974]."
+      "text": "Massless spinors again, in Taub's static plane symmetric vacuum, carrying a current with no energy or momentum [davis1974]."
     }
   ],
   "references": [

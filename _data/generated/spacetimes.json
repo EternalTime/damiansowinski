@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 206,
+  "count": 207,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -78,6 +78,11 @@
           "id": "taub_nut",
           "kind": "family",
           "text": "Schwarzschild's A I with the NUT parameter $l$ added. The B-metrics take a parameter of the same kind, which removes their singularity as $l$ removes Schwarzschild's, and Jerzy Plebański called that family the anti-NUT solution [podolsky2018]."
+        },
+        {
+          "id": "ghost_neutrinos",
+          "kind": "locally_same",
+          "text": "Taub's plane symmetric vacuum, the A III metric in other coordinates, carrying a current of neutrinos with no energy or momentum, as Talmadge M. Davis and John R. Ray found in 1974 [davis1974]."
         }
       ],
       "references": [
@@ -94,7 +99,8 @@
         "peres1970",
         "schulman1971",
         "gott1974",
-        "kruskal1960"
+        "kruskal1960",
+        "davis1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ab_metrics.json",
@@ -18787,6 +18793,7 @@
         "energy condition violation",
         "electric charge",
         "electromagnetic field",
+        "Dirac field",
         "braneworld",
         "static",
         "stationary",
@@ -18829,6 +18836,11 @@
           "id": "einstein_rosen_bridge",
           "kind": "family",
           "text": "Einstein and Rosen's bridge of 1935, two sheets of space joined at a throat that is a horizon. Written in $u$ with $r = r_0 + u^2$, this wormhole joins its two sheets in the same way, with no horizon [einstein1935, bronnikovkim2003]."
+        },
+        {
+          "id": "ghost_neutrinos",
+          "kind": "family",
+          "text": "Massless spinors again, in Taub's static plane symmetric vacuum, carrying a current with no energy or momentum [davis1974]."
         }
       ],
       "references": [
@@ -18845,7 +18857,8 @@
         "kain2023",
         "tsukamoto2020",
         "visser1989nuclphysb",
-        "einstein1935"
+        "einstein1935",
+        "davis1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_dirac_maxwell_wormhole.json",
@@ -23192,6 +23205,246 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "ghost_neutrinos",
+      "name": "Davis-Ray Ghost Neutrinos",
+      "short_name": "Ghost Neutrinos",
+      "description": "A current of neutrinos along one axis of Taub's static plane symmetric vacuum, which Talmadge M. Davis and John R. Ray found in 1974. The neutrinos carry no energy or momentum, so the geometry around them is that of empty space, with a timelike singularity on one side.",
+      "tags": [
+        "vacuum",
+        "static",
+        "stationary",
+        "planar symmetry",
+        "Dirac field",
+        "Petrov type D",
+        "Weyl class",
+        "Kasner",
+        "negative mass",
+        "curvature singularity",
+        "timelike singularity",
+        "naked singularity",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "levi_civita",
+          "kind": "locally_same",
+          "text": "At $\\sigma = -1/2$ Levi-Civita's static cylinder is locally Taub's plane symmetric vacuum, the geometry the ghost neutrinos flow through [wang1997, taub1951]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "locally_same",
+          "text": "The A III metric of Ehlers and Kundt is Taub's plane symmetric vacuum in other coordinates, the vacuum that carries the ghost neutrinos [martins1996, taub1951]."
+        },
+        {
+          "id": "kasner",
+          "kind": "dual",
+          "text": "Continue Taub's coordinate $r$ through its singularity to negative values and the vacuum the ghost neutrinos flow through becomes Kasner's universe with exponents $(2/3, 2/3, -1/3)$, its singularity spacelike [bedran1997]."
+        },
+        {
+          "id": "einstein_dirac_maxwell_wormhole",
+          "kind": "family",
+          "text": "Massless Dirac fields again, with an electric field beside them, and here their energy holds a wormhole open [blazquez2021]. The ghost neutrinos are massless spinors that carry no energy."
+        }
+      ],
+      "references": [
+        "davis1974",
+        "pasic2014",
+        "collinson1973",
+        "taub1951",
+        "bedran1997",
+        "davis1975plane",
+        "davis1975cylinder",
+        "audretsch1976",
+        "griffiths1980",
+        "dereli2023",
+        "wang1997",
+        "martins1996",
+        "blazquez2021"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ghost_neutrinos.json",
+      "charts": [
+        {
+          "id": "taub",
+          "name": "Taub",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "z = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "A length that sets the units of $t$, $x$, and $y$; rescaling them removes it, so Taub's vacuum has no physical parameter"
+            }
+          ],
+          "convention": "We use Taub's coordinates $(t, x, y, z)$, with $t$ carrying dimensions of time and $z$ the proper distance from the singularity. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(\\dfrac{z}{L}\\right)^{-2/3}c^2dt^2 + dz^2 + \\left(\\dfrac{z}{L}\\right)^{4/3}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L^{2/3}}{z^{2/3}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{z^{4/3}}{L^{4/3}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{z^{4/3}}{L^{4/3}}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64}{27z^4}"
+        },
+        {
+          "id": "areal",
+          "name": "Areal",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "A length that sets the units of $t$, $x$, and $y$; rescaling them removes it, so Taub's vacuum has no physical parameter"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, r)$, with $t$ carrying dimensions of time and $r$ a length, $z = \\tfrac{2}{3}L\\left(r/L\\right)^{3/2}$; $t$ is Taub's $t$ divided by $(2/3)^{1/3}$, and $x$ and $y$ are Taub's multiplied by $(2/3)^{2/3}$. We take components in the chart $x^0 = ct$.",
+          "line_element": "ds^2 = -\\dfrac{L}{r}c^2dt^2 + \\dfrac{r}{L}dr^2 + \\dfrac{r^2}{L^2}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{L}{r}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{L}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{12L^2}{r^6}"
+        },
+        {
+          "id": "null",
+          "name": "Null",
+          "coordinates": [
+            "\\mu",
+            "\\nu",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\mu \\in (-\\infty, \\infty)",
+            "\\nu \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\mu + \\nu > 0",
+            "\\mu + \\nu = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "A length that sets the units of $t$, $x$, and $y$; rescaling them removes it, so Taub's vacuum has no physical parameter"
+            }
+          ],
+          "convention": "We use the null coordinates $(\\mu, \\nu, x, y)$ of Bedran, Calvão, Paiva, and Damião Soares, both dimensionless, $\\mu = -\\ln(v - u)$ and $\\nu = -\\ln(v + u)$ with $u = e^{-r^2/4L^2}\\sinh\\left(ct/2L\\right)$ and $v = e^{-r^2/4L^2}\\cosh\\left(ct/2L\\right)$ in the areal chart, so that $r = L\\sqrt{2(\\mu + \\nu)}$. The singularity is $v^2 - u^2 = 1$ and null infinity is $v = \\pm u$, where $\\mu$ or $\\nu$ runs to infinity.",
+          "line_element": "ds^2 = \\dfrac{2\\sqrt{2}L^2\\,d\\mu\\,d\\nu}{\\sqrt{\\mu + \\nu}} + 2\\left(\\mu + \\nu\\right)\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\mu",
+                "\\nu"
+              ],
+              "value": "\\dfrac{\\sqrt{2}\\,L^2}{\\sqrt{\\mu + \\nu}}"
+            },
+            {
+              "indices": [
+                "\\nu",
+                "\\mu"
+              ],
+              "value": "\\dfrac{\\sqrt{2}\\,L^2}{\\sqrt{\\mu + \\nu}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "2\\mu + 2\\nu"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "2\\mu + 2\\nu"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3}{2L^4\\left(\\mu + \\nu\\right)^3}"
         }
       ]
     },
@@ -30507,6 +30760,11 @@
           "id": "murphy_viscous_universe",
           "kind": "family",
           "text": "Murphy's flat viscous universe with a small anisotropy added. Belinskii and Khalatnikov found that it then begins at a singularity near Kasner's vacuum, where the density vanishes and the gravitational field creates matter [belinskii1975]."
+        },
+        {
+          "id": "ghost_neutrinos",
+          "kind": "dual",
+          "text": "Taub's static plane symmetric vacuum, the geometry of the ghost neutrinos, continues through its timelike singularity into Kasner's universe with exponents $(2/3, 2/3, -1/3)$ [bedran1997]."
         }
       ],
       "references": [
@@ -30531,7 +30789,8 @@
         "martins1996",
         "king1973",
         "kastor2015",
-        "belinskii1975"
+        "belinskii1975",
+        "bedran1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -36771,6 +37030,11 @@
           "id": "twisting_cylindrical_waves",
           "kind": "generalisation",
           "text": "Levi-Civita's field set waving with both polarisations. With $\\omega = 0$ and $\\psi$ a multiple of $\\ln\\rho$ the cylindrical waves of Kompaneets, Jordan and Ehlers stand still as this field."
+        },
+        {
+          "id": "ghost_neutrinos",
+          "kind": "locally_same",
+          "text": "At $\\sigma = -1/2$ the static cylinder is locally Taub's plane symmetric vacuum, through which the ghost neutrinos of Davis and Ray flow with no energy or momentum [davis1974]."
         }
       ],
       "references": [
@@ -36806,7 +37070,8 @@
         "bonnor1969light",
         "podolsky2018",
         "martins1996",
-        "astorino2022swirling"
+        "astorino2022swirling",
+        "davis1974"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",

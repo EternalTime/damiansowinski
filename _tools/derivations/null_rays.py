@@ -18698,6 +18698,49 @@ def charged_godel_diagrams():
 charged_godel_diagrams()
 
 
+
+def ghost_neutrino_diagrams():
+    """Taub's vacuum under the ghost neutrinos, at L = 1: the plane of t and z, the plane of t and r,
+    and the null chart drawn in (mu + nu)/2 = r^2/4L^2 and (mu - nu)/2 = ct/2L. A ray keeps
+    ct -+ (3/4)z^(4/3), ct -+ r^2/2, and mu or nu, which CLOSED_FORMS holds."""
+    plane = {"x": "0", "y": "0"}
+    DIAGRAMS.extend([
+        Diagram("ghost_neutrinos", "taub", "radial", "$t$ and $z$", ("t", "z"), (0, 3, -1.5, 1.5),
+                "$z/L$", "$ct/L$", {"L": 1}, plane),
+        Diagram("ghost_neutrinos", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 3, -1.5, 1.5),
+                "$r/L$", "$ct/L$", {"L": 1}, plane),
+        Diagram("ghost_neutrinos", "null", "null", "$\\mu$ and $\\nu$", ("\\mu", "\\nu"), (0, 3, -1.5, 1.5),
+                "$(\\mu + \\nu)/2$", "$(\\mu - \\nu)/2$", {"L": 1}, plane, to_display=((0.5, 0.5), (0.5, -0.5)),
+                tau="mu - nu", where="mu + nu"),
+    ])
+    CAPTIONS[("ghost_neutrinos", "taub", "radial")] = [
+        "The plane of $t$ and $z$ ($x = 0$, $y = 0$), with $z$ the proper distance from the "
+        "singularity. A ray has $c\\,dt/dz = \\pm(z/L)^{1/3}$ and keeps $ct \\mp \\tfrac{3}{4}L^{-1/3}z^{4/3}$, so light "
+        "reaches $z = 0$ in a finite time and the cones close as $z$ grows.",
+        "The ghost neutrino current is null and runs along $z$, on the rays of one family or the other.",
+    ]
+    CAPTIONS[("ghost_neutrinos", "areal", "radial")] = [
+        "The plane of $t$ and $r$ ($x = 0$, $y = 0$), with $z = \\tfrac{2}{3}L(r/L)^{3/2}$. A ray has "
+        "$c\\,dt/dr = \\pm r/L$ and keeps $ct \\mp r^2/2L$, so the cones are widest at the singularity $r = 0$ "
+        "and close as $r$ grows.",
+    ]
+    CAPTIONS[("ghost_neutrinos", "null", "null")] = [
+        "The plane of $\\mu$ and $\\nu$ ($x = 0$, $y = 0$), drawn in $(\\mu + \\nu)/2 = r^2/4L^2$ across and "
+        "$(\\mu - \\nu)/2 = ct/2L$ up. Every ray keeps $\\mu$ or $\\nu$, the singularity is the line $\\mu + \\nu = 0$, "
+        "and null infinity lies where $\\mu$ or $\\nu$ runs to infinity.",
+    ]
+    CLOSED_FORMS.update({
+        ("ghost_neutrinos", "taub", "radial"):
+            (lambda x0, z: x0 + 0.75 * z ** (4 / 3), lambda x0, z: x0 - 0.75 * z ** (4 / 3), lambda t, z: z > 0.02),
+        ("ghost_neutrinos", "areal", "radial"):
+            (lambda x0, r: x0 + r ** 2 / 2, lambda x0, r: x0 - r ** 2 / 2, None),
+        ("ghost_neutrinos", "null", "null"): (lambda mu, nu: mu, lambda mu, nu: nu, None),
+    })
+
+
+ghost_neutrino_diagrams()
+
+
 def check_table():
     """Every view and figure has a caption, and no two share a place."""
     import projections as pj

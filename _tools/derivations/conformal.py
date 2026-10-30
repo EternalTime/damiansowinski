@@ -31519,6 +31519,99 @@ def check_table():
         raise SystemExit(f"captions for spacetimes that are not drawn: {sorted(stray)}")
 
 
+
+def ghost_neutrinos(ck, src):
+    """Taub's half plane of fixed x and y under the ghost neutrinos, at L = 1, in Taub's chart, the
+    areal chart and the null chart of Bedran, Calvao, Paiva and Damiao Soares.
+
+    In the areal chart the plane is (L/r)(-c^2dt^2 + dr_*^2) with r_* = r^2/2L, and in Taub's
+    r_* = (3/4)L^(-1/3)z^(4/3), the same radius, so p, q = arctan(ct -+ r_*) bring it into Minkowski's
+    triangle with the singularity on X = 0. In the null chart ct = L(mu - nu) and r_* = L(mu + nu), so
+    p = arctan(-2 nu) and q = arctan(2 mu). The affine parameter along a ray is the integral of
+    (L/r) dr_* = dr, without bound, so the far edges are null infinity, as Bedran et al. find;
+    r = 0 is reached at a finite parameter and the Kretschmann scalar diverges there, a timelike
+    singularity with no horizon."""
+    def taub_pq(t, z):
+        return mink_pq(t, 0.75 * np.asarray(z, dtype=float) ** (4 / 3))
+
+    def areal_pq(t, r):
+        return mink_pq(t, np.asarray(r, dtype=float) ** 2 / 2)
+
+    def null_pq(mu, nu):
+        return np.arctan(-2 * np.asarray(nu, dtype=float)), np.arctan(2 * np.asarray(mu, dtype=float))
+
+    def null_tr(t, r):
+        r = np.asarray(r, dtype=float)
+        return null_pq((t + r ** 2 / 2) / 2, (r ** 2 / 2 - t) / 2)
+
+    one = {"L": 1}
+    fixed = {"x": "0", "y": "0"}
+    taub = Plane(src, "ghost_neutrinos", "taub", ("t", "z"), fixed, one)
+    ck.chart("Ghost neutrinos, Taub", taub, taub_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, z: (1, 0))
+    ck.diverges("Ghost neutrinos: the Kretschmann scalar diverges at z = 0", taub.kretschmann(0, 1e-2),
+                taub.kretschmann(0, 1e-3))
+    ck.limit("Ghost neutrinos: the Kretschmann scalar is 64/(27 z^4)", taub.kretschmann(np.zeros(1), np.full(1, 2.0)),
+             [64 / (27 * 16)], 1e-12)
+    areal = Plane(src, "ghost_neutrinos", "areal", ("t", "r"), fixed, one)
+    ck.chart("Ghost neutrinos, areal", areal, areal_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20), lambda t, r: (1, 0))
+    null = Plane(src, "ghost_neutrinos", "null", ("\\mu", "\\nu"), fixed, one)
+    mu = ck.uniform(-5, 10)
+    ck.chart("Ghost neutrinos, null", null, null_pq, mu, -mu + ck.uniform(0.01, 10), lambda m, n: (1, -1))
+    # The three maps draw one triangle: z = (2/3) r^(3/2) and a constant rescaling of t carry Taub's r_*
+    # onto the areal one, and the null chart's mu and nu onto (ct +- r_*)/2L.
+    r = ck.uniform(0.01, 20)
+    ck.limit("Ghost neutrinos: Taub's r_* (3/4)(2 r^(3/2)/3)^(4/3) is (2/3)^(1/3) times r^2/2",
+             0.75 * (2 / 3 * r ** 1.5) ** (4 / 3), (2 / 3) ** (1 / 3) * r ** 2 / 2, 1e-9)
+
+    views = []
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS = (-4, -2, -1, 0, 1, 2, 4)
+    moment = slices.moments("ghost_neutrinos")[0]
+    z_reach = np.linspace(*moment.reach("taub", "z"), 2)
+    for cid, name, fmap, x, to_x, consts, unit in (
+            ("taub", "Taub", taub_pq, "z", lambda z: z, (0.25, 1, 4),
+             "$L = 1$, with $r_* = \\tfrac{3}{4}z^{4/3}$."),
+            ("areal", "Areal", areal_pq, "r", lambda z: (1.5 * z) ** (2 / 3), (0.5, 1, 2),
+             "$L = 1$."),
+            ("null", "Null", None, "r", lambda z: (1.5 * z) ** (2 / 3), (0.5, 1, 2),
+             "$L = 1$, with $p = \\arctan(-2\\nu)$ and $q = \\arctan(2\\mu)$.")):
+        tr = fmap or null_tr
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda c, t, tr=tr: tr(t, c), consts, S_ALL)
+        grid(v, "t", tr, TS, S_POS)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], f"${x} = 0$", "r", dx=-6)
+        v.legend("cover", "the whole spacetime")
+        v.legend("r", f"${x}$ constant")
+        v.legend("t", "$ct$ constant")
+        v.legend("singular", f"${x} = 0$, the singularity")
+        v.legend("scri", "$\\mathscr{I}^\\pm$")
+        along = to_x(z_reach)
+        v.slice(moment, [tr(0 * along, along)])
+        v.set(restriction="Fixed $x$ and $y$, a totally geodesic half plane.",
+              settings=unit)
+        views.append(v)
+    return views
+
+
+DRAWN["ghost_neutrinos"] = ghost_neutrinos
+for _cid in ("taub", "areal", "null"):
+    CAPTIONS[("ghost_neutrinos", _cid)] = [
+        "The half plane of fixed $x$ and $y$, each point a plane, with metric $(L/r)(-c^2dt^2 + dr_*^2)$ and "
+        "$r_* = r^2/2L$, in Minkowski's triangle by $p, q = \\arctan(ct \\mp r_*)$. The edge $X = 0$ is the "
+        "timelike singularity and the far edges are null infinity.",
+    ]
+
+
 def main(argv=None):
     check_table()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

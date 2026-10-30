@@ -890,7 +890,7 @@ Einstein's theory of static gravity from his Prague year: space stays flat and t
 A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.
 
 - id: `einstein_dirac_maxwell_wormhole`
-- tags: wormhole, traversable, throat, no horizon, exotic matter, energy condition violation, electric charge, electromagnetic field, braneworld, static, stationary, spherically symmetric, asymptotically flat, exact solution, Lorentzian, four-dimensional, idealized model
+- tags: wormhole, traversable, throat, no horizon, exotic matter, energy condition violation, electric charge, electromagnetic field, Dirac field, braneworld, static, stationary, spherically symmetric, asymptotically flat, exact solution, Lorentzian, four-dimensional, idealized model
 - signature: (-,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/einstein_dirac_maxwell_wormhole.json
 - chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{M}{r}\right)^2c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_0}{r}\right)\left(1 - \dfrac{Q_e^2}{r_0\,r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
@@ -1041,6 +1041,18 @@ A straight cosmic string carrying a wave of arbitrary shape that runs along it a
 - chart Null Conical: coordinates $(u, v, r, \phi)$, $$ds^2 = -du\,dv + F\,du^2 + dr^2 + b^2r^2d\phi^2$$
 - chart Isotropic: coordinates $(u, v, x, y)$, $$ds^2 = -du\,dv - 2\left(x\,A'' + y\,B''\right)du^2 + \left(\dfrac{\rho}{\ell}\right)^{2b - 2}\left(dx^2 + dy^2\right)$$
 - chart Moving String: coordinates $(u, V, X, Y)$, $$ds^2 = -du\,dV + dX^2 + dY^2 + \left(\left(\dfrac{\rho}{\ell}\right)^{2b - 2} - 1\right)\left(\left(dX - A'\,du\right)^2 + \left(dY - B'\,du\right)^2\right)$$
+
+### Davis-Ray Ghost Neutrinos
+
+A current of neutrinos along one axis of Taub's static plane symmetric vacuum, which Talmadge M. Davis and John R. Ray found in 1974. The neutrinos carry no energy or momentum, so the geometry around them is that of empty space, with a timelike singularity on one side.
+
+- id: `ghost_neutrinos`
+- tags: vacuum, static, stationary, planar symmetry, Dirac field, Petrov type D, Weyl class, Kasner, negative mass, curvature singularity, timelike singularity, naked singularity, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ghost_neutrinos.json
+- chart Taub: coordinates $(t, x, y, z)$, $$ds^2 = -\left(\dfrac{z}{L}\right)^{-2/3}c^2dt^2 + dz^2 + \left(\dfrac{z}{L}\right)^{4/3}\left(dx^2 + dy^2\right)$$
+- chart Areal: coordinates $(t, x, y, r)$, $$ds^2 = -\dfrac{L}{r}c^2dt^2 + \dfrac{r}{L}dr^2 + \dfrac{r^2}{L^2}\left(dx^2 + dy^2\right)$$
+- chart Null: coordinates $(\mu, \nu, x, y)$, $$ds^2 = \dfrac{2\sqrt{2}L^2\,d\mu\,d\nu}{\sqrt{\mu + \nu}} + 2\left(\mu + \nu\right)\left(dx^2 + dy^2\right)$$
 
 ### Global Monopole and Letelier's Cloud of Strings
 

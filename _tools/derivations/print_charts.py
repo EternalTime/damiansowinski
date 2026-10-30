@@ -35926,8 +35926,8 @@ GN_COORDS = {"taub": ["t", "x", "y", "z"], "areal": ["t", "x", "y", "r"],
 
 def ghost_neutrinos(system):
     """Taub's static plane symmetric vacuum, the geometry of Davis and Ray's ghost neutrinos,
-    Phys. Rev. D 9, 331 (1974), in the four charts of Bedran, Calvao, Paiva and Damiao Soares,
-    Phys. Rev. D 55, 3431 (1997), arXiv:gr-qc/9608058: their (2.1), (2.2), (3.2) and (3.4) with
+    Phys. Rev. D 9, 331 (1974), in three charts of Bedran, Calvao, Paiva, and Damiao Soares,
+    Phys. Rev. D 55, 3431 (1997), arXiv:gr-qc/9608058: their (2.1), (2.2) and (3.4) with
     Table 1, turned to signature (-,+,+,+) with c and a length L put back. ghost_neutrinos.md
     beside this file derives each\\; ghost_neutrinos_check holds each to vacuum, to its Kretschmann
     scalar and, but for Taub's own, to the pullback of Taub's chart, all at points."""

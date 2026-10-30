@@ -3817,6 +3817,23 @@ FLAT.update({("charged_godel_universe", system, "inside"):
              for system, radius in (("hyperbolic", math.log(3)/2), ("linear", 0.5),
                                     ("trigonometric", math.atan(0.5)))})
 
+
+def _ghost_areal(z):
+    """Taub's z in the areal chart's r at L = 1, z = (2/3) r^(3/2)."""
+    return (1.5 * z) ** (2 / 3)
+
+
+# Taub's plane y = 0 at t = 0, read in his z: the line t = 0 in z and in the areal r, and in the
+# null chart the line mu = nu, with mu + nu = r^2/2L^2 at L = 1.
+FLAT.update({
+    ("ghost_neutrinos", "taub", "radial"): lambda: one(
+        "ghost_neutrinos", lambda m: along(0.0, *m.reach("taub", "z"))),
+    ("ghost_neutrinos", "areal", "radial"): lambda: one(
+        "ghost_neutrinos", lambda m: along(0.0, *(_ghost_areal(z) for z in m.reach("taub", "z")))),
+    ("ghost_neutrinos", "null", "null"): lambda: one(
+        "ghost_neutrinos", lambda m: [[(_ghost_areal(z) ** 2 / 4,) * 2 for z in m.reach("taub", "z")]]),
+})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

@@ -21658,5 +21658,53 @@ def main(argv=None):
     return 0
 
 
+
+def ghost_neutrinos(ck, src):
+    """Taub's plane y = 0 at t = 0 in his coordinates, L = 1: dz^2 + z^(4/3) dx^2, a strip of width
+    2 pi L in x wrapped once round an axis, whose circles have radius z^(2/3) and grow at
+    (2/3) z^(-1/3) times the distance out to them: faster than the distance inside z_0 = 8L/27,
+    where no surface of revolution in flat space carries the slice, and ever more slowly beyond it.
+    With w = z^(1/3), dZ/dz = sqrt(1 - (4/9) z^(-2/3)) integrates to Z = (z^(2/3) - 4/9)^(3/2): level
+    on the circle z_0, of radius 4/9, and a horn that steepens without end above it, drawn out to
+    z = 4. It is Levi-Civita's horn, since Taub's vacuum is locally Levi-Civita's at sigma = -1/2.
+    The curvature of the profile diverges on the level circle, so the piece is written to the
+    digits a surface in Minkowski space takes."""
+    sl = Slice(src, "ghost_neutrinos", "taub", "z", "x", {"t": 0, "y": 0}, {"L": 1})
+    stop, top, size = 8 / 27, 4.0, 4.0
+    ck.add("Ghost neutrinos: g_zz = (d rho/dz)^2 at z = 8/27", abs(float(sl.defect_at(np.array([stop]))[0])), 1e-12)
+    ck.stops("Ghost neutrinos, inside z = 8/27", sl, np.geomspace(1e-6, stop, 202)[:-1])
+    horn = Piece("strip", "sheet", sl, stop, top, 0.0, 1,
+                 (("stops", "the circles grow faster than the distance out to them, and nothing in flat space "
+                            "carries the slice on toward the singularity"),
+                  ("edge", "the surface runs on, steepening, to $z \\to \\infty$")),
+                 [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size,
+                 digits=LORENTZ_DIGITS)
+    ck.isometry("Ghost neutrinos, the plane y = 0", horn)
+    ck.radius("Ghost neutrinos, the plane y = 0, the circle's radius z^(2/3)", horn, lambda z: np.cbrt(z) ** 2, size)
+    ck.form("Ghost neutrinos, the plane y = 0, Z = (z^(2/3) - 4/9)^(3/2)", horn,
+            lambda z: np.maximum(np.cbrt(z) ** 2 - 4 / 9, 0) ** 1.5, size)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *horn.at(stop), "$z = 8L/27$", dx=10)
+    ring_label(fig, [0, 0, 0], *horn.at(1.0), "$z = L$", dx=10)
+    ring_label(fig, [0, 0, 0], *horn.at(top), "$4L$")
+    fig.legend("fill", "cover", "the strip $0 \\le x < 2\\pi L$ at $t = 0$")
+    fig.legend("line", "r", "$z$ constant, $L$ to $4L$")
+    fig.legend("line", "chartedge", "$z = 8L/27$")
+    fig.legend("line", "meridian", "$x$ constant")
+    return [view("strip", "The plane $y = 0$", "$L$", [surface], fig.done(),
+                 settings="$L = 1$.",
+                 stops=["Inside $z = 8L/27$ the circles grow faster than the distance out to them."])]
+
+
+DRAWN["ghost_neutrinos"] = ghost_neutrinos
+CAPTIONS[("ghost_neutrinos", "strip")] = [
+    "The plane $y = 0$ at one moment, a strip of width $2\\pi L$ in $x$ wrapped once round an axis, every distance "
+    "along it the metric distance: the horn $Z = L\\left((z/L)^{2/3} - 4/9\\right)^{3/2}$, level on the circle "
+    "$z = 8L/27$.",
+]
+
+
 if __name__ == "__main__":
     sys.exit(main())
+

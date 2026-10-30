@@ -22,7 +22,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1f09e40f452ad594",
+    "version": "c20ad99a389c2bea",
     "diagrams": "955db54b31a1e1c3",
     "conformal": "dacd55113d63661a",
     "embedding": "4829fb64992692bb",
@@ -1745,6 +1745,7 @@
       "energy condition violation",
       "electric charge",
       "electromagnetic field",
+      "Dirac field",
       "braneworld",
       "static",
       "stationary",
@@ -1755,7 +1756,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f9f379603b6bf27d",
+    "version": "ff58e2731ef9e606",
     "diagrams": "8ed3da1d15c6836e",
     "conformal": "29a0a2bdfee14a28",
     "embedding": "5f6b7e20a1d2a9dd",
@@ -2116,6 +2117,33 @@
     "version": "155d8d1dab088905",
     "diagrams": "d86ff0a92ec2a5b0",
     "embedding": "eb113e431f8fa107"
+  },
+  {
+    "id": "ghost_neutrinos",
+    "name": "Ghost Neutrinos",
+    "tags": [
+      "vacuum",
+      "static",
+      "stationary",
+      "planar symmetry",
+      "Dirac field",
+      "Petrov type D",
+      "Weyl class",
+      "Kasner",
+      "negative mass",
+      "curvature singularity",
+      "timelike singularity",
+      "naked singularity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "5188f12ce10627ac",
+    "diagrams": "f0a2d2a7211281f0",
+    "conformal": "f4ed73afc00b554e",
+    "embedding": "dd42edb65e2da2d2"
   },
   {
     "id": "global_monopole",
@@ -2780,7 +2808,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "d39d933f450312ad",
+    "version": "b9a539c04dc40eca",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -3418,7 +3446,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cf43b0dfbf8a9095",
+    "version": "676b8e30fb30eddf",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
