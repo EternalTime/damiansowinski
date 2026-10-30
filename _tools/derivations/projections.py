@@ -1320,6 +1320,29 @@ CAPTIONS = {
         "Poincaré chart, whose $t = \\tan(\\omega T)/\\omega$ and $r = R/\\cos\\omega T$ both run to infinity there: "
         "a ray leaves that chart at a finite value of its affine parameter, and in the global chart it swings on.",
     ],
+    ("cahen_wallach", "brinkmann", "push"): [
+        "The surface $y = 0$ of the Brinkmann chart of the vacuum member, $v$ left out, $x$ across and $cu$ up. The "
+        "wave pushes along $x$: light from the origin runs out as $x = sL\\sinh(cu/L)$ for any slope $s$, and light "
+        "parallel to the axis as $x = a\\cosh(cu/L)$, with $a$ any length.",
+    ],
+    ("cahen_wallach", "brinkmann", "pull"): [
+        "The surface $x = 0$ of the Brinkmann chart of the vacuum member, $y$ across and $cu$ up. The wave pulls "
+        "along $y$: light from the origin swings as $y = sL\\sin(cu/L)$ for any slope $s$ and meets again at "
+        "$cu = \\pi L$.",
+    ],
+    ("cahen_wallach", "rosen", "push"): [
+        "The surface $q = 0$ of the Rosen chart, $p$ across and $cu$ up. Light from the origin of the Brinkmann chart "
+        "runs straight up, since $x = p\\sinh(kcu)$, and light parallel to the axis along $p = a\\coth(kcu)$, with "
+        "$a$ any length.",
+    ],
+    ("cahen_wallach", "rosen", "pull"): [
+        "The surface $p = 0$ of the Rosen chart, $q$ across and $cu$ up. Light from the origin of the Brinkmann chart "
+        "runs straight up, and the chart ends at the foci of that light, $u = 0$ and $kcu = \\pi$.",
+    ],
+    ("cahen_wallach", "rotating", "turning"): [
+        "Light leaving the origin of the rotating chart, $v$ left out. The wave pulls every ray back as the axes "
+        "turn, so each ray runs round a circle through the axis and closes onto it at $cu = \\pi L$.",
+    ],
     ("maximally_supersymmetric_plane_wave", "brinkmann", "focus"): [
         "The surface $x_2 = x_3 = \\dots = x_8 = 0$ of the Brinkmann chart seen from the side, $v$ left out, with "
         "$x_1$ across and $cu$ up, in units of $1/\\mu$. Light that leaves the event at the origin with any number "
@@ -1678,6 +1701,15 @@ FIGURES = [
                {**nr.SCHRODINGER, "omega": 1}, {"X": "0"}, fields=("christoffel",)),
     # The maximally supersymmetric plane wave in units of 1/mu: one family of light rays in each
     # chart that keeps a time, on the surface where every direction across the wave but the first is zero.
+    # Cahen and Wallach's vacuum member in units of L, in the plane where it pushes and the plane where it
+    # pulls, and the conformally flat member turning in its rotating chart.
+    *[Projection("cahen_wallach", chart, plane, label,
+                 lambda spec, chart=chart, plane=plane: cw_rays(spec, chart, plane), params, {held: "0"},
+                 fields=("christoffel",))
+      for chart, params, pairs in (("brinkmann", {"lambda_1": 1, "lambda_2": -1}, ("y", "x")), ("rosen", {"k": 1}, ("q", "p")))
+      for (plane, label), held in zip((("push", "where the wave pushes"), ("pull", "where the wave pulls")), pairs)],
+    Projection("cahen_wallach", "rotating", "turning", "light turning with the axes", lambda spec: cw_turning(spec),
+               {"omega": 1}, {"v": "0"}, fields=("christoffel",)),
     *[Projection("maximally_supersymmetric_plane_wave", chart, "focus", "light focused by the wave",
                  lambda spec, chart=chart: msw_rays(spec, chart), {"mu": 1},
                  {f"{letter}_{i}": "0" for i in range(2, 9)}, fields=("christoffel",))
@@ -2608,6 +2640,201 @@ def trap_rays(spec, depths=(1.0, 0.8, 0.6, 0.45, 0.35, 0.3), span=math.pi):
 # coordinate and the first direction across the wave, the window of that time, and the two
 # families' closed forms in units mu = c = 1, the drawing's units. Family A leaves the axis at
 # the time 0 with slope s across it; family B is parallel to the axis at the time 0, at distance a.
+# Cahen and Wallach's waves in units of L: the vacuum member lambda_1 = 1, lambda_2 = -1 in the
+# Brinkmann chart and k = 1 in the Rosen chart, each drawn in the plane of the direction that pushes
+# and in the plane of the one that pulls. A family is (closed form, its derivative, the u it is
+# launched from, the numbers it is drawn at); every ray is traced both ways from there.
+CW_FAMILIES = {
+    ("brinkmann", "push"): (("u", "v", "x"), (0.0, 3.0), {"y": "0"}, [
+        ("above", lambda s, t: s * np.sinh(t), lambda s, t: s * np.cosh(t), 0.0, (0.5, 1.0, 2.0)),
+        ("below", lambda a, t: a * np.cosh(t), lambda a, t: a * np.sinh(t), 0.0, (0.5, 1.0, 1.5))]),
+    ("brinkmann", "pull"): (("u", "v", "y"), (0.0, 2 * math.pi), {"x": "0"}, [
+        ("above", lambda s, t: s * np.sin(t), lambda s, t: s * np.cos(t), 0.0, (0.5, 1.0, 2.0)),
+        ("below", lambda a, t: a * np.cos(t), lambda a, t: -a * np.sin(t), 0.0, (0.5, 1.0, 1.5))]),
+    ("rosen", "push"): (("u", "v", "p"), (0.0, math.pi), {"q": "0"}, [
+        ("above", lambda s, t: s + 0 * t, lambda s, t: 0 * t, math.pi / 2, (0.5, 1.0, 2.0)),
+        ("below", lambda a, t: a / np.tanh(t), lambda a, t: -a / np.sinh(t) ** 2, math.pi / 2, (0.5, 1.0, 1.5))]),
+    ("rosen", "pull"): (("u", "v", "q"), (0.0, math.pi), {"p": "0"}, [
+        ("above", lambda s, t: s + 0 * t, lambda s, t: 0 * t, math.pi / 2, (0.5, 1.0, 2.0)),
+        ("below", lambda a, t: a / np.tan(t), lambda a, t: -a / np.sin(t) ** 2, math.pi / 2, (0.5, 1.0, 1.5))]),
+}
+CW_HALF = 2.2
+CW_DISC = 2.6            # the radius of the embedding diagram's discs, its `top`
+
+
+def cw_trace_setup(spec, names3):
+    """The published Christoffel symbols of the surface, checked to keep a ray launched in it there."""
+    sl = Slice(spec.metric, spec.system, names3, "cartesian", spec.params, spec.fixed)
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    names = entry["coords"]
+    keep = [names.index(c) for c in names3]
+    syms = [reader.symbol[c] for c in names3]
+    gamma = {}
+    for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+        ix = tuple(names.index(n) for n in c["indices"])
+        value = sl.prep(reader(c["value"]))
+        if value == 0 or not all(i in keep for i in ix[1:]):
+            continue
+        if ix[0] not in keep:
+            raise SystemExit(f"{key(spec)}: Gamma^{c['indices'][0]}_{c['indices'][1]}{c['indices'][2]} "
+                             "does not vanish on the surface, so a ray launched in it leaves it")
+        if value.free_symbols - set(syms):
+            raise SystemExit(f"{key(spec)}: a Christoffel symbol depends on a coordinate off the surface")
+        gamma[tuple(keep.index(i) for i in ix)] = sp.lambdify(syms, value, "numpy")
+    return sl, gamma
+
+
+def cw_rays(spec, chart, plane):
+    """Light rays of Cahen and Wallach's vacuum member on the surface of one direction across the
+    wave, the other at zero, seen from the side with the null coordinate left out: that direction
+    across the page and cu up it, in units of L. The reflection of the other direction keeps every
+    geodesic launched in the surface in it, which is checked on the published Christoffel symbols.
+    Each ray is a null geodesic integrated with those symbols from a point of its closed form, its
+    null component solved from the published metric, checked null all the way and against the
+    closed form, which the tracing never uses: in the Brinkmann chart x = s sinh(cu/L) and
+    a cosh(cu/L) where the wave pushes, y = s sin(cu/L) and a cos(cu/L) where it pulls, and in the
+    Rosen chart the same rays through x = p sinh(kcu), y = q sin(kcu)."""
+    names3, (t0, t1), _, families = CW_FAMILIES[(chart, plane)]
+    sl, gamma = cw_trace_setup(spec, names3)
+    if abs(sl.metric((0.7, 0.3, 0.9))[1, 1]) > 0:
+        raise SystemExit(f"{key(spec)}: the null coordinate is not null")
+
+    def rhs(_, w):
+        k = w[3:]
+        acc = np.zeros(3)
+        for (a, b, c), f in gamma.items():
+            acc[a] -= float(f(*w[:3])) * k[b] * k[c]
+        return np.concatenate([k, acc])
+
+    eps = 1e-6
+    lo, hi = (t0 + eps, t1 - eps) if chart == "rosen" else (t0, t1)
+
+    def trace(t_start, z, slope, sense, form):
+        g = sl.metric((t_start, 0.0, z))
+        kn = -(g[0, 0] + 2 * g[0, 2] * slope + g[2, 2] * slope ** 2) / (2 * (g[0, 1] + g[1, 2] * slope))
+        start = [t_start, 0.0, z, sense, sense * kn, sense * slope]
+
+        def leave(_, w):
+            return min(w[0] - lo + 1e-9, hi - w[0] + 1e-9, CW_HALF - abs(w[2]) + 1e-9)
+        leave.terminal = True
+        sol = solve_ivp(rhs, (0, 400), start, events=leave, rtol=1e-12, atol=1e-12, method="DOP853", max_step=0.005)
+        t, n, x = sol.y[:3]
+        if sol.status != 1 or min(abs(t[-1] - lo), abs(t[-1] - hi), abs(CW_HALF - abs(x[-1]))) > 1e-6:
+            raise SystemExit(f"{key(spec)}: a ray stops before the edge of the window")
+        k = sol.y[3:].T
+        null = max(abs(float(kk @ sl.metric(p) @ kk)) for p, kk in zip(sol.y[:3].T[::10], k[::10]))
+        if not null < 1e-9:
+            raise SystemExit(f"{key(spec)}: a ray misses null by {null:.1e}")
+        miss = float(np.abs(x - form(t)).max())
+        if not miss < 1e-8:
+            raise SystemExit(f"{key(spec)}: a ray misses its closed form by {miss:.1e}")
+        return np.column_stack([x, t])
+
+    fig = Figure(spec.view, spec.label, Camera(-90, 90))
+    fig.flat()
+    flat = lambda P: np.column_stack([P, np.zeros(len(P))])
+    fig.line("axis", flat(np.array([[0.0, t0], [0.0, t1]])))
+    if chart == "rosen":
+        for edge in (t0, t1):
+            fig.line("edge", flat(np.array([[-CW_HALF, edge], [CW_HALF, edge]])))
+    widest = 0.0
+    for cls, form, rate, launch, values in families:
+        for value in values:
+            for side in (-1, 1):
+                f = lambda t, a=side * value: form(a, t)
+                start = max(launch, lo)
+                z, slope = float(f(np.array(start))), float(rate(side * value, np.array(start)))
+                on = trace(start, z, slope, 1, f)
+                if start > lo + 1e-3:
+                    back = trace(start, z, slope, -1, f)
+                    on = np.vstack([back[::-1], on[1:]])
+                widest = max(widest, float(np.abs(on[:, 0]).max()))
+                fig.line(cls, flat(on))
+    # Each wave front of the embedding diagram, the plane of x and y at one u, crosses the surface in the
+    # line of that u, out to the radius of the flat disc it is drawn as: x = p sinh(cu/L) and
+    # y = q sin(cu/L) in the Rosen chart, for 0 < cu/L < pi.
+    for m in slices.moments(spec.metric):
+        if chart == "brinkmann":
+            reach = CW_DISC
+        elif 0 < m.time < math.pi:
+            reach = CW_DISC / (math.sinh(m.time) if plane == "push" else math.sin(m.time))
+        else:
+            continue
+        reach = min(reach, widest)
+        fig.slice(m, lines=[np.array([[-reach, m.time, 0.0], [reach, m.time, 0.0]])])
+    if chart == "brinkmann" and plane == "pull":
+        for k in (1, 2):
+            fig.point("string", np.array([0.0, k * math.pi, 0.0]))
+        fig.label(np.array([0.0, math.pi, 0.0]), "$cu = \\pi L$", "l", cls="small", dx=8)
+        fig.label(np.array([0.0, 2 * math.pi, 0.0]), "$cu = 2\\pi L$", "l", cls="small", dx=8)
+        fig.legend("point", "string", "the foci")
+    if chart == "rosen":
+        fig.label(np.array([CW_HALF, t0, 0.0]), "$u = 0$", "br", cls="small", dy=-4)
+        fig.label(np.array([CW_HALF, t1, 0.0]), "$kcu = \\pi$", "tr", cls="small", dy=4)
+        fig.legend("line", "edge", "the edges of the chart")
+    fig.legend("line", "above", "light from the origin")
+    fig.legend("line", "below", "light parallel to the axis at $u = 0$")
+    fig.legend("line", "axis", "the axis")
+    return fig.done(pad=0.03), sl
+
+
+def cw_turning(spec):
+    """Light leaving the origin of the rotating chart of the conformally flat member, omega = 1/L,
+    in the three coordinates x, y and cu with v left out, a figure that turns. Each ray is a null
+    geodesic of all four coordinates, integrated with the published Christoffel symbols from the
+    origin with dx/d(cu) = s cos(phi) and dy/d(cu) = s sin(phi), its dv solved from the published
+    metric, and checked null and against its closed form, which the tracing never uses: in the
+    Brinkmann chart X + iY = s e^(i phi) sin(cu/L) L, so here x + iy = s L sin(cu/L) e^(i(phi - cu/L)),
+    a circle through the axis, which the ray closes back onto at cu = pi L."""
+    sl = Slice(spec.metric, spec.system, ("u", "x", "y"), "cartesian", spec.params, spec.fixed)
+    _, entry, reader = nr.load(spec.metric, spec.system)
+    names = entry["coords"]
+    syms = [reader.symbol[c] for c in names]
+    subs = {reader.c: 1, **{reader.parameters[k]: nr.number(v) for k, v in spec.params.items()}}
+    gamma = {}
+    for c in entry["christoffel"]["variants"]["ull"]["nonzero"]:
+        ix = tuple(names.index(n) for n in c["indices"])
+        gamma[ix] = sp.lambdify(syms, reader(c["value"]).subs(subs), "numpy")
+    gfun = sp.lambdify(syms, nr.published_matrix(reader, entry, "metric_components").subs(subs), "numpy")
+
+    def rhs(_, w):
+        k = w[4:]
+        acc = np.zeros(4)
+        for (a, b, c), f in gamma.items():
+            acc[a] -= float(f(*w[:4])) * k[b] * k[c]
+        return np.concatenate([k, acc])
+
+    top = math.pi
+    fig = Figure(spec.view, spec.label, Camera(-62, 20))
+    fig.line("axis", np.array([[0.0, 0.0, 0.0], [0.0, 0.0, top]]))
+    for s in (0.5, 1.0):
+        for phi in np.arange(0, 2 * math.pi, math.pi / 3):
+            kx, ky = s * math.cos(phi), s * math.sin(phi)
+            g = np.array(gfun(0.0, 0.0, 0.0, 0.0), dtype=float)
+            # k = (1, k_v, kx, ky) null, with g_vv = 0: solve for k_v.
+            kv = -(g[0, 0] + 2 * g[0, 2] * kx + 2 * g[0, 3] * ky + g[2, 2] * kx ** 2 + g[3, 3] * ky ** 2
+                   + 2 * g[2, 3] * kx * ky) / (2 * (g[0, 1] + g[1, 2] * kx + g[1, 3] * ky))
+            sol = solve_ivp(rhs, (0, top), [0.0, 0.0, 0.0, 0.0, 1.0, kv, kx, ky], rtol=1e-12, atol=1e-12,
+                            method="DOP853", max_step=0.005, dense_output=True)
+            if sol.status != 0:
+                raise SystemExit(f"{key(spec)}: a ray stops before cu = pi L")
+            u, x, y = sol.y[0], sol.y[2], sol.y[3]
+            null = max(abs(float(kk @ np.array(gfun(*p), dtype=float) @ kk))
+                       for p, kk in zip(sol.y[:4].T[::10], sol.y[4:].T[::10]))
+            if not null < 1e-9:
+                raise SystemExit(f"{key(spec)}: a ray misses null by {null:.1e}")
+            want = s * np.sin(u) * np.exp(1j * (phi - u))
+            miss = float(np.abs(x + 1j * y - want).max())
+            if not miss < 1e-8:
+                raise SystemExit(f"{key(spec)}: a ray misses its closed form by {miss:.1e}")
+            fig.line("above" if s == 1.0 else "below", np.column_stack([x, y, u]))
+    fig.label(np.array([0.0, 0.0, top]), "$cu = \\pi L$", "l", cls="small", dx=8)
+    fig.legend("line", "above", "light at the slope $1$, every $60°$")
+    fig.legend("line", "below", "light at the slope $1/2$")
+    fig.legend("line", "axis", "the axis")
+    return fig.done(pad=0.03), sl
+
+
 MSW_RAYS = {
     "brinkmann": (("u", "v", "x_1"), (0.0, 2 * math.pi),
                   lambda s, t: s * np.sin(t), lambda a, t: a * np.cos(t)),

@@ -3229,6 +3229,7 @@ class StacksAndMovies(unittest.TestCase):
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
               "big_rip": 1.0,
               "maximally_supersymmetric_plane_wave": 0.8,
+              "cahen_wallach": 2.0,
               "holographic_superconductor": 1.0})   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
@@ -3270,6 +3271,7 @@ class StacksAndMovies(unittest.TestCase):
               ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
+              ("cahen_wallach", "ring"): "$cu/L$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$", ("holographic_superconductor", "ring"): "$-\\rho$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
@@ -5958,7 +5960,7 @@ class Slices(unittest.TestCase):
                         v = math.tan((T + X) / 2 - math.pi / 4) - (0.5 if u > 1e-9 else 0.0)
                         want = hotta_tanaka_moment(t)
                         self.assertLess(abs(u - want[0]) + abs(v - want[1]), 5e-4, where)
-                    elif metric_id == "maximally_supersymmetric_plane_wave":
+                    elif metric_id in ("maximally_supersymmetric_plane_wave", "cahen_wallach"):
                         # The wave front at mu c u = t meets the axis at the event v = 0, which
                         # p = arctan(2 mu v) - pi/2 and q = mu c u + pi/2 put at T = t, X = t + pi.
                         (X, T), = points

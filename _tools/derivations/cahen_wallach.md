@@ -44,3 +44,8 @@ $\partial_u + a\,\partial_v$ with $a > 0$ is Killing and timelike about the axis
 ## Drawings
 
 The values drawn are $\lambda_1 = 1/L^2$, $\lambda_2 = -1/L^2$ for the Brinkmann chart, the vacuum member that the photon sphere of a Schwarzschild black hole sees (Fransen, arXiv:2301.06999, section 3), $k = 1/L$ for the Rosen chart and $\omega = 1/L$ for the rotating chart.
+The conformal diagram is drawn for the conformally flat member, in the Brinkmann chart at $\lambda_1 = \lambda_2 = -1/L^2$ and in the rotating chart, where Berenstein and Nastase's map onto the Einstein static universe is exact; the Rosen chart carries the vacuum member, which has no such map, and has no conformal view.
+
+## Curvature figure
+
+The figure maps the Kretschmann scalar or the Ricci scalar, and both vanish identically for every member, as for every plane wave (Figueroa-O'Farrill's (15)), so the spacetime has no curvature figure.

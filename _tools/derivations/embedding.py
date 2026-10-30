@@ -17863,6 +17863,81 @@ def maximally_supersymmetric_plane_wave(ck, src):
             view("ring", "A ring of particles", "$1/\\mu$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
+
+def cahen_wallach(ck, src):
+    """The wave front at six values of u of the Brinkmann chart, c u = 0 to 1.5 in units of L, for the
+    vacuum member lambda_1 = 1/L^2, lambda_2 = -1/L^2: a surface of constant u has the metric
+    dx^2 + dy^2 whatever v is on it, flat. The ring is 360 free particles at rest at u = 0 on
+    x^2 + y^2 = L^2, each run with the published Christoffel symbols, u being affine on every geodesic
+    since no Gamma^u is published: x'' = -Gamma^x_uu, y'' = -Gamma^y_uu. The wave pushes along x as
+    x'' = x and pulls along y as y'' = -y, so the ring is the ellipse of semi-axes cosh(cu) and cos(cu),
+    its area falling as the product, the tidal stretching and squeezing of a gravitational wave."""
+    name = "cahen_wallach"
+    gamma, R = published_christoffel(src, name, "brinkmann")
+    ck.exact("Cahen-Wallach wave: no published Gamma^u, so u is an affine parameter",
+             not any(ix[0] == "u" for ix in gamma))
+    ck.exact("Cahen-Wallach wave: the only published Gamma^x and Gamma^y are Gamma^x_uu and Gamma^y_uu",
+             {ix for ix in gamma if ix[0] in ("x", "y")} == {("x", "u", "u"), ("y", "u", "u")})
+    names = {R._plain(n): s for n, s in R.symbol.items()}
+    values = {R.parameters["lambda_1"]: 1, R.parameters["lambda_2"]: -1}
+    args = (names["x"], names["y"])
+    g1 = sp.lambdify(args, gamma[("x", "u", "u")].subs(values), "numpy")
+    g2 = sp.lambdify(args, gamma[("y", "u", "u")].subs(values), "numpy")
+    from scipy.integrate import solve_ivp
+    alpha = np.linspace(0, 2 * math.pi, 361)[:-1]
+    n = len(alpha)
+
+    def rhs(u, w):
+        x, y = w[:n], w[n:2 * n]
+        return np.concatenate([w[2 * n:3 * n], w[3 * n:], -g1(x, y) * np.ones(n), -g2(x, y) * np.ones(n)])
+    start = np.concatenate([np.cos(alpha), np.sin(alpha), np.zeros(2 * n)])
+    run = solve_ivp(rhs, (0, 1.6), start, rtol=1e-12, atol=1e-13, dense_output=True, max_step=0.01)
+    us = np.linspace(0, 1.5, 61)
+    ck.add("Cahen-Wallach wave: the ring is the ellipse of semi-axes cosh(cu) and cos(cu)",
+           float(np.max([np.max(np.abs(np.column_stack([run.sol(u)[:n], run.sol(u)[n:2 * n]])
+                                       - np.column_stack([math.cosh(u) * np.cos(alpha), math.cos(u) * np.sin(alpha)])))
+                         for u in us])), 1e-8)
+    top = 2.6
+    us, keys = movie_values([0.0, 0.3, 0.6, 0.9, 1.2, 1.5], 0.1)
+    frames = []
+    for u in [round(u, 9) for u in us]:
+        sl = FlatPlane(src, name, "brinkmann", "x", "y", {"u": repr(u), "v": 0},
+                       params={"lambda_1": 1, "lambda_2": -1})
+        where = f"Cahen-Wallach wave, cu = {u:g}"
+        plane = disc(sl, "plane", top, "the axis of the wave", "the wave front runs on, flat, to infinity", [], 2 * top)
+        ck.isometry(where, plane)
+        w = run.sol(u)
+        cx, cy = np.append(w[:n], w[0]), np.append(w[n:2 * n], w[n])
+        ring, dots = particles(ck, where, sl, plane, cx, cy)
+        frames.append(Surface([plane], label=f"$cu = {u:g}L$", time=u, curves=[ring], dots=dots))
+    surfaces = [frames[i] for i in keys]
+
+    def wave_rows(u):
+        w = run.sol(np.atleast_1d(u))
+        return np.abs(w[0]), np.abs(w[n + 90])
+
+    def wave_ring(u, a, b):
+        # Every particle of the ring, run with the published Christoffel symbols, on the row.
+        w = run.sol(u)
+        return float(np.max(np.abs(np.column_stack([w[:n], w[n:2 * n]]) - np.column_stack([a * np.cos(alpha),
+                                                                                        b * np.sin(alpha)]))))
+    tube = stack(ck, "Cahen-Wallach wave", surfaces, wave_rows, 2.0, wave_ring, 2 * top,
+                 "the tube runs on after $cu = 1.5L$")
+    tube_fig = stack_figure(tube, 2 * top, "$cu/L$", [
+        ("fill", "cover", "the ring at each $u$ up to $cu = 1.5L$"),
+        ("line", "particles", "the ring at the six moments of the flat view"),
+        ("line", "worldline", "twelve particles' world lines"),
+        ("line", "axis", "the axis")])
+    fig, played = ring_movie(frames, 2 * top, "$cu/L$")
+    fig.legend("fill", "cover", "the wave front, flat")
+    fig.legend("line", "particles", "the ring, twelve particles marked")
+    fig.legend("line", "meridian", "lines from the axis every $30°$")
+    settings = "$\\lambda_1 = -\\lambda_2 = 1/L^2$, the vacuum member."
+    return [view("tube", "The ring's world tube", "$L$", [tube], tube_fig, settings=settings,
+                 height="$cu/L$, a height of $2L$ for each $L$ of $cu$"),
+            view("ring", "A ring of particles", "$L$", surfaces, fig.done(), movie=played, settings=settings)]
+
+
 def kerr_scalar_hair(ck, src):
     """Herdeiro and Radu's configuration IV, the black hole every one of its diagrams draws, on the
     equatorial slice of constant t, where g_tvarphi drops out: rho = e^(F_2) r, the circumference
@@ -18211,6 +18286,7 @@ DRAWN = {
     "belinski_zakharov": belinski_zakharov,
     "light_beam": light_beam,
     "maximally_supersymmetric_plane_wave": maximally_supersymmetric_plane_wave,
+    "cahen_wallach": cahen_wallach,
     "krasnikov": krasnikov,
     "tippett_tsang": tippett_tsang,
     "nordstrom_scalar": nordstrom_scalar,
@@ -20950,6 +21026,15 @@ CAPTIONS = {
         "c^4\\rho^2/4GE$, twice $8GE/c^4$ for this ring. A ring of radius $\\rho$ focuses at a $u$ growing as "
         "$\\rho^2$, so the shock focuses like a lens whose focal length grows with the square of the distance from "
         "its axis.",
+    ],
+    ("cahen_wallach", "tube"): [
+        "The world tube of a ring of free particles at rest on $x^2 + y^2 = L^2$ at $u = 0$ in the vacuum member, "
+        "widening along $x$ as $\\cosh(cu/L)$ and narrowing along $y$ as $\\cos(cu/L)$.",
+    ],
+    ("cahen_wallach", "ring"): [
+        "The flat wave front of the vacuum member up to $cu = 1.5L$, with a ring of free particles at "
+        "rest on $x^2 + y^2 = L^2$ at $u = 0$. Pushed along $x$ and pulled along $y$, the ring becomes an ellipse "
+        "reaching $L\\cosh(cu/L)$ along $x$ and $L\\cos(cu/L)$ along $y$.",
     ],
     ("maximally_supersymmetric_plane_wave", "tube"): [
         "The world tube of a ring of free particles in the maximally supersymmetric plane wave ($\\mu = 1$), at rest "
