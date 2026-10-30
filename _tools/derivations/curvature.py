@@ -5062,6 +5062,126 @@ def eternal_traversable_wormhole(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Penney's charged scalar solution
+
+PENNEY_B = Fraction(1, 4)         # b in units of a, as every drawing of the spacetime takes it
+PENNEY_GAMMA = Fraction(1, 2)     # gamma, as every drawing takes it
+PENNEY_REACH = 5                  # the plot runs from the singularity r = a to r = 5a, the box of the spacetime diagrams
+
+
+def penney_scalar(ck, src):
+    """A mass with an electric charge and a massless scalar field at a = 1, b = 1/4 and gamma = 1/2,
+    its Kretschmann and Ricci scalars against r in the spherical chart.
+
+    The published K and R depend on r alone, and the harmonic chart publishes the same two of the
+    same spacetime, so one figure serves both charts. Two panels share the axis of r, from the
+    singularity r = a to 5a, the box of the spacetime diagrams: K on a logarithmic axis from 10^-4 to
+    10^2 and R on one from 10^-5 to 10, since both are positive on the range and both diverge at
+    r = a. Reissner and Nordstrom's K at r_s = a + b and r_q^2 = ab, read from rn_metric.json, is the
+    comparison, since gamma = 1 is their metric with those values, its outer horizon at r = a; their R
+    vanishes and has no place on a logarithmic axis. No horizon is marked, since the published
+    g^rr is positive at every r drawn.
+
+    What the caption states is checked here: the published scalars at gamma = 1 are Reissner and
+    Nordstrom's; their K at r = a is 29/(4a^4); the published g_thetatheta vanishes at r = a; K and R
+    are positive on the range and diverge there as (r - a)^(2 gamma - 4) and (r - a)^(gamma - 2),
+    measured in sixty digits; K crosses Reissner and Nordstrom's once on the range, at the radius
+    stated, and far out tends to gamma^2 of it, since the mass is gamma(a + b)/2 and the charge
+    gamma sqrt(ab) enters at the next order; and R falls off as (1 - gamma^2)(a - b)^2/2r^4."""
+    x_axis = axis("$r/a$", 1, PENNEY_REACH)
+    K_scale = {"kind": "log", "from": 1e-4, "to": 1e2}
+    R_scale = {"kind": "log", "from": 1e-5, "to": 1e1}
+    panels = [{"id": "K", "name": "$K\\,a^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,a^2$", "aspect": 2, "scale": R_scale, "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, "penney_scalar", [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    names = ["a", "b", "\\gamma"]
+    K = nr_published(src, "penney_scalar", "spherical", "kretschmann", ["r"], names)
+    R = nr_published(src, "penney_scalar", "spherical", "ricci_scalar", ["r"], names)
+    grr = nr_published(src, "penney_scalar", "spherical", "inverse_metric_components", ["r"], names, ("r", "r"))
+    g_thth = nr_published(src, "penney_scalar", "spherical", "metric_components", ["r"], names,
+                          ("\\theta", "\\theta"))
+    K_rn = nr_published(src, "rn_metric", "spherical", "kretschmann", ["r"], ["r_s", "r_q"])
+    b, gamma = float(PENNEY_B), float(PENNEY_GAMMA)
+    own = [1, b, gamma]
+    rn = [1 + b, math.sqrt(b)]
+    rs = np.linspace(1, PENNEY_REACH, SAMPLES)[1:]
+    curves = (line_curves(ck, "penney_scalar Reissner-Nordstrom", "K", "reference", K_rn, "r", x_axis, K_scale,
+                          height["K"], {"r_s": rn[0], "r_q": rn[1]})
+              + line_curves(ck, "penney_scalar", "K", "K", K, "r", x_axis, K_scale, height["K"],
+                            {"a": 1, "b": b, "\\gamma": gamma})
+              + line_curves(ck, "penney_scalar", "R", "R", R, "r", x_axis, R_scale, height["R"],
+                            {"a": 1, "b": b, "\\gamma": gamma}))
+    ck("penney_scalar has no horizon on the range",
+       not zeros(ck, "penney_scalar g^rr", grr, 1, PENNEY_REACH, own) and np.all(grr(rs, *own) > 0))
+    at_one = np.linspace(1.05, PENNEY_REACH, 41)
+    ck("penney_scalar at gamma = 1 is Reissner and Nordstrom's with r_s = a + b and r_q^2 = ab",
+       np.allclose(K(at_one, 1, b, 1.0), K_rn(at_one, *rn), rtol=1e-12)
+       and np.allclose(R(at_one, 1, b, 1.0), 0, atol=0))
+    horizon = float(K_rn.exact([1, *rn]))
+    ck("Reissner and Nordstrom's K at r = a is 29/4a^4", abs(horizon - 29 / 4) < 1e-12, f"{horizon}")
+    # g_thetatheta goes as (r - a)^(1 - gamma), so it halves as r - a falls by a factor 4 toward r = a.
+    near = [float(g_thth.exact([1 + 4.0 ** -k, *own])) for k in (20, 21, 22)]
+    ck("penney_scalar the spheres shrink to a point at r = a",
+       near[0] < 1e-5 and all(abs(y / x - 0.5) < 1e-5 for x, y in zip(near, near[1:])), f"{near}")
+    ck("penney_scalar K and R are positive on the range", np.all(K(rs, *own) > 0) and np.all(R(rs, *own) > 0))
+    ck("Reissner and Nordstrom's K stays inside its panel", not any(beyond(K_rn, x_axis, K_scale, rn)))
+
+    def power(fn, expected, label):
+        """The slope of log fn against log(r - a) toward r = a, measured in sixty digits at radii
+        1 + 2^-k that a double holds exactly, near enough that the corrections of order (r - a)^(1/2)
+        from a - bE fall below the tolerance."""
+        ks = (34, 43, 52)
+        logs = [float(sp.log(fn.exact([1 + 2.0 ** -k, *own]))) for k in ks]
+        slopes = [(y - x) / ((k1 - k2) * math.log(2)) for (x, k1), (y, k2) in zip(zip(logs, ks), zip(logs[1:], ks[1:]))]
+        ck(f"penney_scalar {label} diverges as (r - a)^{expected}",
+           all(abs(s / expected - 1) < 1e-5 for s in slopes), f"{slopes}")
+    power(K, 2 * gamma - 4, "K")
+    power(R, gamma - 2, "R")
+    crosses = zeros(ck, "penney_scalar K = K_RN", lambda r, *_: K(r, *own) / K_rn(r, *rn) - 1, 1, PENNEY_REACH, [])
+    ck("penney_scalar K crosses Reissner and Nordstrom's once on the range", len(crosses) == 1, f"{crosses}")
+    cross = crosses[0]
+    ratio = K(rs, *own) / K_rn(rs, *rn) - 1
+    ck("penney_scalar K stands above Reissner and Nordstrom's inside the crossing and below it outside",
+       np.all(ratio[rs < cross] > 0) and np.all(ratio[rs > cross] < 0))
+    far = 1e4
+    ck("penney_scalar K tends to gamma^2 of Reissner and Nordstrom's far out, 1/4 at gamma = 1/2",
+       abs(float(K.exact([far, *own])) / float(K_rn.exact([far, *rn])) / gamma ** 2 - 1) < 1e-3)
+    ck("penney_scalar R falls off as (1 - gamma^2)(a - b)^2/2r^4, 27a^2/128r^4 here",
+       abs(float(R.exact([far, *own])) * far ** 4 / ((1 - gamma ** 2) * (1 - b) ** 2 / 2) - 1) < 1e-3
+       and (1 - gamma ** 2) * (1 - b) ** 2 / 2 == 27 / 128)
+
+    def edge(fn, scale):
+        """Where a curve leaves the top of its panel, found by bisection in log(r - a); it falls at
+        every r drawn, so it leaves once."""
+        up, down = beyond(fn, x_axis, scale, own)
+        ck(f"penney_scalar {fn.field} falls across the range and leaves its panel once, at the top",
+           np.all(np.diff(fn(rs, *own)) < 0) and len(up) == 1 and up[0][0] == 1 and not down, f"{up} {down}")
+        lo, hi = -40.0, math.log(PENNEY_REACH - 1)
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if float(fn(1 + math.exp(mid), *own)) > scale["to"] else (lo, mid)
+        return 1 + math.exp(hi)
+    K_edge, R_edge = edge(K, K_scale), edge(R, R_scale)
+    legend = [["line", "K", "$K$"], ["line", "R", "$R$"],
+              ["line", "reference", "$K$ of Reissner and Nordström's black hole"]]
+    return [{
+        "id": "scalar", "label": "$\\gamma = 1/2$", "kind": "line", "x": x_axis, "panels": panels,
+        "curves": curves, "marks": [], "legend": legend,
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of a charged mass with a scalar field, "
+            f"beside Reissner and Nordström's black hole ($\\gamma = 1$), whose $K$ is ${horizon:g}/a^4$ at $r = a$. "
+            "Here $K$ diverges there as $(r - a)^{-3}$.",
+            "$R$ grows as $(r - a)^{-3/2}$.",
+        ],
+        "ricci_sentences": [[1, 0]],
+        "per_scalar": scalar_clips(
+            f"We draw $K\\,a^4$ from $10^{{-4}}$ to $10^{{2}}$, logarithmic, cut inside $r = {K_edge:.3f}\\,a$.",
+            f"We draw $R\\,a^2$ from $10^{{-5}}$ to $10^{{1}}$, logarithmic, cut inside $r = {R_edge:.3f}\\,a$."),
+        "settings": "$b = a/4$, $\\gamma = 1/2$, and $a = 1$.",
+        "clip": f"$K$ cut inside $r = {K_edge:.3f}\\,a$, $R$ inside $r = {R_edge:.3f}\\,a$.",
+    }]
+
 # ---------------------------------------------------------------- Fisher, Janis, Newman and Winicour's scalar field
 
 FJNW_GAMMA = Fraction(1, 2)       # gamma, as every drawing of the spacetime takes it
@@ -15555,6 +15675,7 @@ RICCI_BESIDE = {
     ("einstein_cluster", "core"): "",
     ("fisher_jnw", "scalar"): "",
     ("fisher_jnw", "growing"): "",
+    ("penney_scalar", "scalar"): "",
     ("gravastar", "gravastar"): "",
     ("hayward", "hole"): "Schwarzschild's $R = 0$",
     ("regular_black_hole_pure_gravity", "hole"): "Tangherlini's $R = 0$",
@@ -18043,6 +18164,7 @@ DRAWN = {
     "erez_rosen": erez_rosen,
     "eternal_traversable_wormhole": eternal_traversable_wormhole,
     "fisher_jnw": fisher_jnw,
+    "penney_scalar": penney_scalar,
     "global_monopole": global_monopole,
     "gowdy": gowdy,
     "gravastar": gravastar,

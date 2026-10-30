@@ -65,3 +65,9 @@ On the plane of $t$ and $r$ the metric is $F(-c^2dt^2 + dr_*^2)$ with $F = -g_{t
 So $p, q = \arctan((ct \mp r_*)/\ell)$ with $\ell = 4a$ bring the spacetime into Minkowski's triangle, with $r = a$ on its edge $X = 0$, a timelike singularity with no horizon, as for Fisher's solution.
 The harmonic view draws the same spacetime, $r/a = 1/4 + (3/4)/(1 - e^{-2ku})$ with times and lengths $3/8$ of their count in $a$.
 `conformal.penney_scalar` samples the harmonic chart only to $u = e^{1.5}/k$: beyond it $K^2 - k^2$ is a difference of numbers that agree to within $e^{-2ku}$, and the published $g^{uu}$, which holds its square, loses digits past the check's part in $10^8$ by $u = 6/k$.
+
+## Step 8: the curvature figure
+
+`curvature.penney_scalar` draws the published $K$ and $R$ of the spherical chart against $r$ from $a$ to $5a$, beside Reissner and Nordström's $K$ at $r_s = a + b$ and $r_q^2 = ab$, the case $\gamma = 1$, whose value on its horizon $r = a$ is $29/4a^4$.
+Near $r = a$, $K$ diverges as $(r - a)^{2\gamma - 4}$ and $R$ as $(r - a)^{\gamma - 2}$, with corrections of order $(r - a)^{1/2}$ from $a - bE$, so the powers are measured at $r - a = 2^{-34}a$, $2^{-43}a$ and $2^{-52}a$.
+Far out $K$ falls to $\gamma^2$ of the black hole's, since the mass is $\gamma(a + b)/2$, and $R$ falls off as $(1 - \gamma^2)(a - b)^2/2r^4$.
