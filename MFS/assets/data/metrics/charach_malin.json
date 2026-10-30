@@ -45,15 +45,15 @@
         },
         {
           "symbol": "P = P(t,\\theta)",
-          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_t^2 P=\\dfrac{t\\,\\partial_\\theta^2 P - \\partial_t P}{t}$"
         },
         {
           "symbol": "\\lambda = \\lambda(t,\\theta)",
-          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_t\\lambda=t\\left(\\left(\\partial_t P\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + 2\\left(\\partial_\\theta\\Phi\\right)^2 + 2\\left(\\partial_t\\Phi\\right)^2\\right)$ and $\\partial_\\theta\\lambda=2t\\left(\\partial_t P\\,\\partial_\\theta P + 2\\partial_\\theta\\Phi\\,\\partial_t\\Phi\\right)$; its spatial constraint has zero integral around the circle"
         },
         {
           "symbol": "\\Phi = \\Phi(t,\\theta)",
-          "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$"
+          "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$, with $\\partial_t^2\\Phi=\\dfrac{t\\,\\partial_\\theta^2\\Phi - \\partial_t\\Phi}{t}$"
         }
       ],
       "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the symmetry-orbit area in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
@@ -2246,15 +2246,15 @@
         },
         {
           "symbol": "P = P(\\tau,\\theta)",
-          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_\\tau^2 P=e^{-2\\tau}\\partial_\\theta^2 P$"
         },
         {
           "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
-          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_\\tau\\lambda=-\\left(e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + 2e^{2\\tau}\\left(\\partial_\\tau\\Phi\\right)^2 + 2\\left(\\partial_\\theta\\Phi\\right)^2\\right)e^{-2\\tau}$ and $\\partial_\\theta\\lambda=-2\\partial_\\tau P\\,\\partial_\\theta P - 4\\partial_\\tau\\Phi\\,\\partial_\\theta\\Phi$; its spatial constraint has zero integral around the circle"
         },
         {
           "symbol": "\\Phi = \\Phi(\\tau,\\theta)",
-          "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$"
+          "description": "Normalised massless scalar $\\Phi=\\sqrt{8\\pi}\\,\\varphi$, with $\\varphi$ the physical scalar and $R_{ab}=\\partial_a\\Phi\\,\\partial_b\\Phi$, with $\\partial_\\tau^2\\Phi=e^{-2\\tau}\\partial_\\theta^2\\Phi$"
         }
       ],
       "convention": "The time $\\tau=-\\ln t$ has future towards decreasing $\\tau$, with $(\\theta,x,y)$ the periodic coordinates of the areal chart. A dot denotes differentiation with respect to an affine parameter.",
@@ -4447,15 +4447,15 @@
         },
         {
           "symbol": "P = P(t,\\theta)",
-          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_t^2 P=\\dfrac{2e^{P}\\left(\\partial_t\\chi\\right)^2 - 2e^{P}\\left(\\partial_\\theta\\chi\\right)^2 + t\\,\\partial_\\theta^2 P - \\partial_t P}{t}$"
         },
         {
           "symbol": "\\lambda = \\lambda(t,\\theta)",
-          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_t\\lambda=t\\left(\\partial_t P\\right)^2 + t\\left(\\partial_\\theta P\\right)^2 + 4e^{P}\\left(\\partial_\\theta\\chi\\right)^2 + 4e^{P}\\left(\\partial_t\\chi\\right)^2$ and $\\partial_\\theta\\lambda=2t\\,\\partial_t P\\,\\partial_\\theta P + 8e^{P}\\partial_\\theta\\chi\\,\\partial_t\\chi$; its spatial constraint has zero integral around the circle"
         },
         {
           "symbol": "\\chi = \\chi(t,\\theta)",
-          "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$"
+          "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$, with $\\partial_t^2\\chi=-\\left(\\partial_t P\\,\\partial_t\\chi - \\partial_\\theta P\\,\\partial_\\theta\\chi - \\partial_\\theta^2\\chi\\right)$"
         }
       ],
       "convention": "The coordinates $(t,\\theta,x,y)$ have $t$ equal to the symmetry-orbit area in units of $4\\pi^2L^2$, with future towards increasing $t$. Opposite spatial faces are identified, and a dot denotes differentiation with respect to an affine parameter.",
@@ -6648,15 +6648,15 @@
         },
         {
           "symbol": "P = P(\\tau,\\theta)",
-          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$"
+          "description": "Dimensionless gravitational polarisation, periodic in $\\theta$, with $\\partial_\\tau^2 P=\\left(\\partial_\\theta^2 P + 2e^{3\\tau}e^{P}\\left(\\partial_\\tau\\chi\\right)^2 - 2e^{\\tau}e^{P}\\left(\\partial_\\theta\\chi\\right)^2\\right)e^{-2\\tau}$"
         },
         {
           "symbol": "\\lambda = \\lambda(\\tau,\\theta)",
-          "description": "Dimensionless longitudinal function, periodic in $\\theta$"
+          "description": "Dimensionless longitudinal function, periodic in $\\theta$, with $\\partial_\\tau\\lambda=-\\left(e^{2\\tau}\\left(\\partial_\\tau P\\right)^2 + \\left(\\partial_\\theta P\\right)^2 + 4e^{3\\tau}e^{P}\\left(\\partial_\\tau\\chi\\right)^2 + 4e^{\\tau}e^{P}\\left(\\partial_\\theta\\chi\\right)^2\\right)e^{-2\\tau}$ and $\\partial_\\theta\\lambda=-2\\partial_\\tau P\\,\\partial_\\theta P - 8e^{\\tau}e^{P}\\partial_\\tau\\chi\\,\\partial_\\theta\\chi$; its spatial constraint has zero integral around the circle"
         },
         {
           "symbol": "\\chi = \\chi(\\tau,\\theta)",
-          "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$"
+          "description": "Dimensionless electromagnetic potential with $A=L\\chi\\,dy$ and $F=dA$, in the normalisation $R_{ab}=2(F_{ad}F_b{}^d-\\tfrac14g_{ab}F_{de}F^{de})$, with $\\partial_\\tau^2\\chi=-\\left(e^{2\\tau}\\partial_\\tau P\\,\\partial_\\tau\\chi - \\partial_\\theta P\\,\\partial_\\theta\\chi + e^{2\\tau}\\partial_\\tau\\chi - \\partial_\\theta^2\\chi\\right)e^{-2\\tau}$"
         }
       ],
       "convention": "The time $\\tau=-\\ln t$ has future towards decreasing $\\tau$, with $(\\theta,x,y)$ the periodic coordinates of the areal chart. A dot denotes differentiation with respect to an affine parameter.",
