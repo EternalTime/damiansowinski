@@ -21596,6 +21596,99 @@ for _system in ("hyperbolic", "linear", "trigonometric"):
         "The circles widen and then narrow; the Euclidean surface ends before the first null circle."]
 
 
+def bekenstein_universes(ck, src):
+    """The equator of space in Bekenstein's closed and open universes, in units of l = 4 pi N mu/3.
+    A moment of the conformal time eta in the closed chart has g_chichi = a^2 and g_phiphi =
+    a^2 sin^2 chi with a = l - A cos eta: the sphere of radius a, rho = a sin chi and
+    z = -a cos chi, drawn whole from the pole to the antipode, at A = l/2 from eta = -3 to 3,
+    nearly a period, a frame every 0.1 of eta. In the open chart g_phiphi = a^2 sinh^2 chi grows
+    faster than the distance out to it at every chi > 0, which is checked, so the moment is drawn in
+    three dimensional Minkowski space, where it climbs at dZ/dchi = a sinh chi: the hyperboloid
+    Z = a(cosh chi - 1), at A = 3l/2 from eta = -1.2 to 1.2, a frame every 0.04 of eta, out to
+    chi = 1. A moment of the flat chart is a plane, which is checked, and so has no relief to draw."""
+    views = []
+    xs = np.linspace(1e-3, 6, 300)
+    for e in (-1.0, 0.0, 1.0):
+        sl = Slice(src, "bekenstein_universes", "flat", "r", "\\phi", {"eta": repr(e), **EQUATOR},
+                   {"ell": 1, "a_b": 0.5})
+        ck.plane(f"Bekenstein flat, eta = {e:g}", sl, xs)
+
+    size = 3.6
+
+    def closed(e):
+        a = 1 - 0.5 * math.cos(e)
+        sl = Slice(src, "bekenstein_universes", "closed", "\\chi", "\\phi", {"eta": repr(float(e)), **EQUATOR},
+                   {"ell": 1, "A": 0.5})
+        sphere = Piece("sphere", "sheet", sl, 0.0, math.pi, -a, 1,
+                       (("axis", "the pole $\\chi = 0$"), ("axis", "the antipode $\\chi = \\pi$")),
+                       [(math.pi / 4, "r", None), (math.pi / 2, "chartedge", None), (3 * math.pi / 4, "r", None)], size)
+        where = f"Bekenstein closed, eta = {e:.4f}"
+        ck.isometry(where, sphere)
+        ck.radius(f"{where}, rho = a sin chi", sphere, lambda x, a=a: a * np.sin(x), size)
+        ck.form(f"{where}, the sphere z = -a cos chi", sphere, lambda x, a=a: -a * np.cos(x), size)
+        return Surface([sphere], label=f"$\\eta = {e + 0.0:.2f}$", time=e)
+
+    named = [-3.0, -1.5, 0.0, 1.5, 3.0]
+    times, keys = movie_values(named, 0.1)
+    frames = [closed(e) for e in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator of space at one moment")
+    fig.legend("line", "r", "$\\chi = \\pi/4$ and $3\\pi/4$")
+    fig.legend("line", "chartedge", "the equator $\\chi = \\pi/2$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("closed", "Closed universe", "$\\ell$", surfaces, fig.done(),
+                      movie=movie(frames, "$\\eta$", times),
+                      settings="$\\ell = 1$ and $A = 1/2$.",
+                      stops=["In the flat universe every moment is flat, and its equator is a plane."]))
+
+    top = 1.0
+    open_size = 2 * (1.5 * math.cosh(1.2) - 1) * math.sinh(top)
+
+    def opened(e):
+        a = 1.5 * math.cosh(e) - 1
+        sl = Slice(src, "bekenstein_universes", "open", "\\chi", "\\phi", {"eta": repr(float(e)), **EQUATOR},
+                   {"ell": 1, "A": 1.5}, space="minkowski")
+        flat = Slice(src, "bekenstein_universes", "open", "\\chi", "\\phi", {"eta": repr(float(e)), **EQUATOR},
+                     {"ell": 1, "A": 1.5})
+        where = f"Bekenstein open, eta = {e:.4f}"
+        ck.stops(f"{where}, in flat space", flat, np.linspace(1e-3, 6, 200))
+        sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
+                      (("axis", "the centre $\\chi = 0$"), ("edge", "the sheet runs on, to $\\chi \\to \\infty$")),
+                      [(0.5, "r", None), (top, "r", None)], open_size)
+        ck.isometry(where, sheet)
+        ck.radius(f"{where}, rho = a sinh chi", sheet, lambda x, a=a: a * np.sinh(x), open_size)
+        ck.form(f"{where}, the hyperboloid Z = a(cosh chi - 1)", sheet, lambda x, a=a: a * (np.cosh(x) - 1),
+                open_size)
+        return Surface([sheet], label=f"$\\eta = {e + 0.0:.2f}$", time=e)
+
+    named = [-1.2, -0.6, 0.0, 0.6, 1.2]
+    times, keys = movie_values(named, 0.04)
+    frames = [opened(e) for e in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, open_size, meridians=12)
+    fig.legend("fill", "cover", "the equator of space at one moment, out to $\\chi = 1$")
+    fig.legend("line", "r", "$\\chi = 1/2$ and $1$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    views.append(view("open", "Open universe", "$\\ell$", surfaces, fig.done(),
+                      movie=movie(frames, "$\\eta$", times),
+                      settings="$\\ell = 1$ and $A = 3/2$, with lengths measured by $dX^2 + dY^2 - dZ^2$.",
+                      stops=["At every $\\chi > 0$ the circles grow faster than the distance out to them, so no "
+                             "surface of revolution in flat space carries the moment; Minkowski space carries it."]))
+    return views
+
+
+DRAWN["bekenstein_universes"] = bekenstein_universes
+CAPTIONS[("bekenstein_universes", "closed")] = [
+    "The equator ($\\theta = \\pi/2$) of the closed universe from $\\eta = -3$ to $3$, each moment a sphere of radius "
+    "$a = \\ell - A\\cos\\eta$, smallest at the bounce, $\\eta = 0$.",
+]
+CAPTIONS[("bekenstein_universes", "open")] = [
+    "The equator ($\\theta = \\pi/2$) of the open universe, each moment a hyperboloid in Minkowski space, "
+    "smallest at the bounce, $\\eta = 0$.",
+]
+
+
 def draw(metric_id, ck):
     src = Sources()
     if metric_id in STATED:

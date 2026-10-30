@@ -3701,6 +3701,12 @@ FLAT = {
         "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
     ("lqc_bounce", "harmonic", "taux"): lambda: one(
         "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
+    # Bekenstein's universes at each moment of the conformal time their movies stand at, the closed
+    # universe's sphere from the pole to the antipode and the open universe's sheet out to chi = 1.
+    ("bekenstein_universes", "closed", "radial"): lambda: one(
+        "bekenstein_universes", lambda m: along(m.time, *m.reach("closed", "\\chi")), view_id="closed"),
+    ("bekenstein_universes", "open", "radial"): lambda: one(
+        "bekenstein_universes", lambda m: along(m.time, *m.reach("open", "\\chi")), view_id="open"),
     # Murphy's moments are moments of the proper time t, whole lines of it; on the scale factor charts the
     # same moment is the a of a^2 = W(e^(2t)), in units of 1/H_s, for q = 2.
     ("murphy_viscous_universe", "scale_factor_spherical", "radial"): lambda: one(
@@ -4160,6 +4166,9 @@ FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z]
 # label's em MathJax sets mathematics at where it cannot measure the label's own font, a
 # hundredth more, rounded up to a twentieth. "$X = X_s$" stood 1.45 em from the edge of
 # Whittaker's sphere until 3 October 2026, its two X's 0.97 em wide and counted 0.7.
+HIDDEN.update({key: "the flat universe, whose moments are planes and are not embedded, another member of the family "
+                    "than the closed and open universes whose moments are"
+               for key in (("bekenstein_universes", "flat", "radial"), ("bekenstein_universes", "flat"))})
 HIDDEN.update({("charged_godel_universe", system, "beyond"):
                "the cylinder lies beyond the first null circle and outside the Euclidean embedding"
                for system in ("hyperbolic", "linear", "trigonometric")})

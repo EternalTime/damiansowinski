@@ -5132,6 +5132,16 @@ DIAGRAMS = [
             "$r/\\ell$", "$\\eta/\\ell$", {}, EQUATOR, tau="eta", areal=True, dust=KT_SPIN, reference="$a = 1$",
             input="The scale factor $a(\\eta)$ solved from this chart's own $G^r{}_r = -4/3\\ell^2a^6$, the pressure "
                   "of the spins, starting from $a = 1$ and $\\partial_\\eta a = 0$ at the dashed line."),
+    # Bekenstein's universes in units of l = 4 pi N mu/3, each in its conformal time, in which the rays are
+    # lines at 45 degrees: the closed universe through one whole period, A = 1/2; the flat one with its
+    # bounce radius a_b = 1/2; the open one with A = 3/2, so its bounce radius is 1/2 as well.
+    Diagram("bekenstein_universes", "closed", "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
+            (0, math.pi, -math.pi, math.pi), "$\\chi$", "$\\eta$", {"ell": 1, "A": 0.5}, EQUATOR, tau="eta",
+            areal=True, no_throat=True),
+    Diagram("bekenstein_universes", "flat", "radial", "$\\eta$ and $r$", ("\\eta", "r"), (0, 4, -2, 2),
+            "$r$", "$\\eta$", {"ell": 1, "a_b": 0.5}, EQUATOR, tau="eta", areal=True),
+    Diagram("bekenstein_universes", "open", "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
+            (0, 3, -1.5, 1.5), "$\\chi$", "$\\eta$", {"ell": 1, "A": 1.5}, EQUATOR, tau="eta", areal=True),
     # Ellis's small universes: the torus of dust on one cell, its edges one line, and unrolled over six
     # cells with our past light cone from the event at which the conformal time is 3L, where a = 9/4.
     Diagram("small_universes", "torus", "cell", "one cell", ("t", "x"), (0, 1, 0, 1),
@@ -12090,6 +12100,21 @@ CAPTIONS = {
         "both ends, so the universe is conformal to the whole of Minkowski space. The dotted curve is the Hubble "
         "sphere, where $|\\nabla R|^2 = 0$ for the areal radius $R = ar$.",
     ],
+    ("bekenstein_universes", "closed", "radial"): [
+        "The plane of $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) through one period. Its metric is "
+        "$a^2(-d\\eta^2 + d\\chi^2)$, so rays run at 45°. The dotted apparent horizons, $\\tan\\chi = |a/a'|$, "
+        "meet the equator at the bounce and at greatest expansion.",
+    ],
+    ("bekenstein_universes", "flat", "radial"): [
+        "The plane of $\\eta$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$). Its metric is $a^2(-d\\eta^2 + dr^2)$, "
+        "so rays run at 45°. The dotted apparent horizons, $r = |a/a'|$, come nearest the centre at "
+        "$r = \\sqrt{2a_b/\\ell}$.",
+    ],
+    ("bekenstein_universes", "open", "radial"): [
+        "The plane of $\\eta$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$). Its metric is "
+        "$a^2(-d\\eta^2 + d\\chi^2)$, so rays run at 45°. The dotted apparent horizons, "
+        "$\\tanh\\chi = |a/a'|$, lie at infinity at the bounce.",
+    ],
     ("poincare_dodecahedral", "comoving", "through"): [
         "A closed universe of dust along a great circle through us and the centre of a face of our cell, in the "
         "plane $\\theta = \\pi/2$, with $x = \\chi$ on the right at $\\phi = 0$ and $x = -\\chi$ on the left at "
@@ -17632,6 +17657,8 @@ CLOSED_FORMS = {
     ("kopczynski_trautman", "comoving_spherical", "radial"):
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
     ("kopczynski_trautman", "conformal", "radial"): (lambda e, r: e + r, lambda e, r: e - r, None),
+    **{("bekenstein_universes", system, "radial"): (lambda e, r: e + r, lambda e, r: e - r, None)
+       for system in ("closed", "flat", "open")},
     # The small universes' open dust: the conformal time of the parametric solution, found by Newton's method.
     # The Poincare dodecahedral universe: psi(t) of the closed dust, and the conformal chart's own eta.
     ("poincare_dodecahedral", "comoving", "through"): (lambda t, c: _pd_psi(t) + c, lambda t, c: _pd_psi(t) - c,

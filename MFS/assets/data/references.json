@@ -1,5 +1,5 @@
 {
-  "version": "9e7ac41be6c9fab1",
+  "version": "b2a45068ee1c4a10",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33244,6 +33244,64 @@
         "doi": "10.1007/s10714-023-03175-8",
         "eprint": "2305.12367",
         "archiveprefix": "arXiv"
+      }
+    },
+    "bekenstein1975": {
+      "type": "article",
+      "fields": {
+        "title": "Nonsingular general-relativistic cosmologies",
+        "author": "Bekenstein, Jacob D.",
+        "journal": "Physical Review D",
+        "volume": "11",
+        "number": "8",
+        "pages": "2072--2075",
+        "year": "1975",
+        "doi": "10.1103/PhysRevD.11.2072",
+        "url": "https://doi.org/10.1103/PhysRevD.11.2072"
+      }
+    },
+    "bekenstein1974": {
+      "type": "article",
+      "fields": {
+        "title": "Exact solutions of {Einstein}-conformal scalar equations",
+        "author": "Bekenstein, Jacob D.",
+        "journal": "Annals of Physics",
+        "volume": "82",
+        "number": "2",
+        "pages": "535--547",
+        "year": "1974",
+        "doi": "10.1016/0003-4916(74)90124-9",
+        "url": "https://doi.org/10.1016/0003-4916(74)90124-9"
+      }
+    },
+    "novello2008": {
+      "type": "article",
+      "fields": {
+        "title": "Bouncing cosmologies",
+        "author": "Novello, Mario and Perez Bergliaffa, Santiago Esteban",
+        "journal": "Physics Reports",
+        "volume": "463",
+        "number": "4",
+        "pages": "127--213",
+        "year": "2008",
+        "doi": "10.1016/j.physrep.2008.04.006",
+        "url": "https://doi.org/10.1016/j.physrep.2008.04.006",
+        "eprint": "0802.1634",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "cimaglia2024": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmologies with Perfect Fluids and Scalar Fields in {Einstein}'s Gravity: Phantom Scalars and Nonsingular Universes",
+        "author": "Cimaglia, Michela and Gengo, Massimo and Pizzocchero, Livio",
+        "journal": "Universe",
+        "volume": "10",
+        "number": "12",
+        "pages": "467",
+        "year": "2024",
+        "doi": "10.3390/universe10120467",
+        "url": "https://doi.org/10.3390/universe10120467"
       }
     }
   }

@@ -17061,6 +17061,101 @@ def lqc_bounce(ck, src):
     return [v]
 
 
+def bekenstein_universes(ck, src):
+    """Bekenstein's universes in units of l = 4 pi N mu/3, each in its conformal time, in which the
+    metric is a^2 times the static metric of its space, so a conformal diagram of the static space
+    is one of the universe, every null direction kept.
+
+    The closed universe, a = l - A cos eta at A = l/2, has eta over the whole real line, so it is
+    conformal to the whole Einstein static universe: p, q = (eta -+ chi)/2 draw the strip of X = chi
+    and T = eta, the pole on X = 0 and the antipode on X = pi, with a bounce at every T in 2 pi Z and
+    the greatest expansion halfway between. The flat universe, a = a_b + l eta^2/2 at a_b = l/2, is
+    conformal to Minkowski space by p, q = arctan(eta -+ r), the half diamond. The open universe,
+    a = A cosh eta - l at A = 3l/2, is e^eta times the metric of the Milne wedge, ct -+ R = e^(eta -+ chi),
+    so p, q = gd(eta -+ chi), Gudermann's function 2 arctan(e^u) - pi/2, bring it onto the same half
+    diamond. In the flat and open universes a null ray's affine length, the integral of a^2 d eta,
+    diverges at both ends, since a grows without limit, so the edges are null infinities. The published
+    Kretschmann scalar is checked finite all over each plane."""
+    closed = Plane(src, "bekenstein_universes", "closed", ("\\eta", "\\chi"), EQUATOR, {"ell": 1, "A": 0.5})
+    flat = Plane(src, "bekenstein_universes", "flat", ("\\eta", "r"), EQUATOR, {"ell": 1, "a_b": 0.5})
+    opened = Plane(src, "bekenstein_universes", "open", ("\\eta", "\\chi"), EQUATOR, {"ell": 1, "A": 1.5})
+
+    def strip(eta, chi):
+        eta, chi = np.asarray(eta, dtype=float), np.asarray(chi, dtype=float)
+        return (eta - chi) / 2, (eta + chi) / 2
+
+    def gd(u):
+        return 2 * np.arctan(np.exp(u)) - HALF
+
+    def milne(eta, chi):
+        eta, chi = np.asarray(eta, dtype=float), np.asarray(chi, dtype=float)
+        return gd(eta - chi), gd(eta + chi)
+    ck.chart("Bekenstein closed", closed, strip, ck.uniform(-10, 10), ck.uniform(0.001, PI - 0.001), lambda e, c: (1, 0))
+    ck.chart("Bekenstein flat", flat, mink_pq, ck.uniform(-6, 6), ck.uniform(0.01, 6), lambda e, r: (1, 0))
+    ck.chart("Bekenstein open", opened, milne, ck.uniform(-4, 4), ck.uniform(0.01, 4), lambda e, c: (1, 0))
+    ck.finite("Bekenstein closed: the Kretschmann scalar is finite all over the strip",
+              closed.kretschmann(ck.uniform(-10, 10, 400), ck.uniform(0.001, PI - 0.001, 400)))
+    ck.finite("Bekenstein flat: the Kretschmann scalar is finite all over the plane",
+              flat.kretschmann(ck.uniform(-6, 6, 400), ck.uniform(0, 6, 400)))
+    ck.finite("Bekenstein open: the Kretschmann scalar is finite all over the plane",
+              opened.kretschmann(ck.uniform(-4, 4, 400), ck.uniform(0, 4, 400)))
+    s = np.linspace(-8, 8, 160001)
+    for name, a in (("flat", 0.5 + s ** 2 / 2), ("open", 1.5 * np.cosh(s) - 1)):
+        half = np.cumsum(a ** 2) * (s[1] - s[0])
+        ck.limit(f"Bekenstein {name}: the affine length of a ray grows without limit toward both ends",
+                 [float(min(half[-1] - half[80000], half[80000] - half[0]) > 1e3)], [1.0])
+
+    views = []
+    T0, T1 = -PI - 0.3, PI + 0.3
+    v = View("closed", "Closed Universe", [-0.35, PI + 0.35, T0, T1], "closed")
+    v.fill("region", [[0, T0], [PI, T0], [PI, T1], [0, T1]])
+    v.fill("cover", [[0, T0], [PI, T0], [PI, T1], [0, T1]])
+    v.line("centre", [[[0, T0], [0, T1]], [[PI, T0], [PI, T1]]])
+    for chi in (Q4, HALF, 3 * Q4):
+        v.line("r", [[[chi, T0], [chi, T1]]])
+    v.line("surface", [[[0, 0], [PI, 0]]])
+    v.line("t", [[[0, -PI], [PI, -PI]], [[0, PI], [PI, PI]]])
+    v.label_xt([0, 2.3], "pole", "r", "coord", dx=-6)
+    v.label_xt([PI, 2.3], "antipode", "l", "coord", dx=6)
+    v.legend("cover", "the whole spacetime, periodic in $\\eta$")
+    v.legend("r", "$\\chi = \\pi/4$, $\\pi/2$, and $3\\pi/4$")
+    v.legend("surface", "the bounce")
+    v.legend("t", "the greatest expansion")
+    v.legend("centre", "the pole and its antipode")
+    for m in slices.moments("bekenstein_universes", "closed"):
+        lo, hi = m.reach("closed", "\\chi")
+        v.slice(m, xt=[[[lo, m.time], [hi, m.time]]])
+    v.set(settings="$\\ell = 1$, $A = 1/2$, $X = \\chi$, and $T = \\eta$.", fade={"top": 0.7, "bottom": 0.7})
+    views.append(v)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    for vid, label, system, fmap, settings in (
+            ("flat", "Flat Universe", "flat", mink_pq,
+             "$\\ell = 1$, $a_b = 1/2$, and $p, q = \\arctan(\\eta \\mp r)$."),
+            ("open", "Open Universe", "open", milne,
+             "$\\ell = 1$, $A = 3/2$, and $p, q = 2\\arctan e^{\\eta \\mp \\chi} - \\pi/2$.")):
+        v = View(vid, label, box, system)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda r, e, fmap=fmap: fmap(e, r), (0.5, 1, 2), S_ALL)
+        grid(v, "t", fmap, (-2, -1, 1, 2), S_POS)
+        grid(v, "surface", fmap, (0,), S_POS)
+        triangle_edges(v, centre="$r = 0$" if vid == "flat" else "$\\chi = 0$")
+        coordinate = "r" if vid == "flat" else "\\chi"
+        v.legend("cover", "the whole spacetime")
+        v.legend("r", f"${coordinate} = 1/2$, $1$, and $2$")
+        v.legend("t", "$\\eta = \\pm 1$ and $\\pm 2$")
+        v.legend("surface", "the bounce")
+        v.legend("centre", f"${coordinate} = 0$")
+        if vid == "open":
+            for m in slices.moments("bekenstein_universes", "open"):
+                along_chi = np.linspace(*m.reach("open", "\\chi"), 60)
+                v.slice(m, [milne(np.full_like(along_chi, m.time), along_chi)])
+        v.set(settings=settings)
+        views.append(v)
+    return views
+
+
 def murphy_viscous_universe(ck, src):
     """Murphy's universe with viscosity for radiation, q = 2, in units of c/H_s.
 
@@ -27166,6 +27261,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "lqc_bounce": lqc_bounce,
+    "bekenstein_universes": bekenstein_universes,
     "murphy_viscous_universe": murphy_viscous_universe,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
@@ -30741,6 +30837,18 @@ CAPTIONS = {
     ],
     ("murphy_viscous_universe", "cosmic"): [
         "The plane $y = z = 0$ in the proper time, with $a^2 = W(e^{2H_st})$ and $W$ the Lambert function.",
+    ],
+    ("bekenstein_universes", "closed"): [
+        "The closed universe, each point a 2-sphere, $a^2$ times the Einstein static universe, whose whole strip "
+        "it fills. Light runs at 45°, and a bounce comes at every multiple of $2\\pi$ in $\\eta$.",
+    ],
+    ("bekenstein_universes", "flat"): [
+        "The flat universe, each point a 2-sphere, conformal to the whole of Minkowski space. Every ray crosses "
+        "the bounce, and $\\mathscr{I}^\\pm$ lie at infinite affine distance.",
+    ],
+    ("bekenstein_universes", "open"): [
+        "The open universe, each point a 2-sphere, conformal to the inside of a light cone of Minkowski space. "
+        "Every ray crosses the bounce, and $\\mathscr{I}^\\pm$ lie at infinite affine distance.",
     ],
     ("lqc_bounce", "comoving"): [
         "The bounce of loop quantum cosmology, each point in the diagram a 2-sphere. The metric is "

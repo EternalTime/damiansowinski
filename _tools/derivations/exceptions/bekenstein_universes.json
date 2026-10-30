@@ -1,0 +1,22 @@
+{
+  "hidden": [
+    {
+      "reason": "The flat universe, whose moments are planes with no relief and so are not embedded, is another member of the family than the closed and open universes whose moments are.",
+      "drawings": [
+        "bekenstein_universes/flat/radial",
+        "conformal bekenstein_universes/flat"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The closed and open universes are two members of the family, and each drawing marks the moments of its own universe alone.",
+      "drawings": {
+        "bekenstein_universes/closed/radial": ["open"],
+        "conformal bekenstein_universes/closed": ["open"],
+        "bekenstein_universes/open/radial": ["closed"],
+        "conformal bekenstein_universes/open": ["closed"]
+      }
+    }
+  ]
+}

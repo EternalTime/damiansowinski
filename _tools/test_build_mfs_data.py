@@ -3245,6 +3245,7 @@ class StacksAndMovies(unittest.TestCase):
     MOVIES = chosen_entries({("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("lqc_bounce", "universe"): "$t$",
+              ("bekenstein_universes", "closed"): "$\\eta$", ("bekenstein_universes", "open"): "$\\eta$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
