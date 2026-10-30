@@ -2445,6 +2445,27 @@
     "embedding": "cc9efb7cafec7946"
   },
   {
+    "id": "hauser_wave",
+    "name": "Hauser's Twisting Wave",
+    "tags": [
+      "vacuum",
+      "four-dimensional",
+      "gravitational wave",
+      "Petrov type N",
+      "algebraically special",
+      "null congruence",
+      "shear-free",
+      "expanding",
+      "not asymptotically flat",
+      "self-similar",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "ba8445abb87a7eae",
+    "diagrams": "8db2da3173c1ed79"
+  },
+  {
     "id": "hayward",
     "name": "Hayward",
     "tags": [
@@ -3419,7 +3440,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d9a1cdc632d4a86d",
+    "version": "be2005dc590cc489",
     "diagrams": "707ada311baa183e",
     "embedding": "aa93f3cc510fade8"
   },
@@ -4732,7 +4753,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cd9e80048c06275b",
+    "version": "1b93c87164dbbb92",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "a484d91e42495a51"
   },
@@ -5056,7 +5077,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4d989a7b8c4d807f",
+    "version": "0e0cf2e6e7b09448",
     "diagrams": "53ff4d90bff08988",
     "conformal": "0326c9d2101aa7a6",
     "embedding": "7b7a1d9f63195b3e"

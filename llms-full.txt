@@ -1180,6 +1180,16 @@ The gravitational field outside a slowly rotating star, through second order in 
 - chart Lense-Thirring: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)c^2dt^2 + \left(1 + \dfrac{2m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) - \dfrac{4am\sin^2\theta}{r}c\,dt\,d\phi$$
 - chart Painlevé-Gullstrand: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \left(dr + \sqrt{\dfrac{2m}{r}}\,c\,dt\right)^2 + r^2\left(d\theta^2 + \sin^2\theta\left(d\phi - \dfrac{2am}{r^3}c\,dt\right)^2\right)$$
 
+### Hauser's Twisting Type N Wave
+
+The one vacuum gravitational wave of Petrov type N whose rays twist that is known in closed form. Isidore Hauser found it in 1974; its single free function solves a linear equation of second order, and its rays spread and twist about one another everywhere off the singular sets where the field ends.
+
+- id: `hauser_wave`
+- tags: vacuum, four-dimensional, gravitational wave, Petrov type N, algebraically special, null congruence, shear-free, expanding, not asymptotically flat, self-similar, exact solution, Lorentzian, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hauser_wave.json
+- chart Kerr-Debney-Schild: coordinates $(t, r, x, y)$, $$ds^2 = L^2\left(-2\left(4x^2dt + 8xt\,dx - 8x\,dy\right)\left(dr + 64x^2ff'\,dx - 16x^2f\left(3f - 4tf'\right)dy\right) - 2H\left(4x^2dt + 8xt\,dx - 8x\,dy\right)^2 + \dfrac{r^2 + 256x^6f^4}{4x^3f^2}\left(dx^2 + dy^2\right)\right)$$
+
 ### Hayward Regular Black Hole
 
 A black hole with two horizons and a regular centre, Schwarzschild's metric far away and de Sitter space at the core. Sean Hayward wrote it down in 2006 and let its mass change in time, so that a region of trapped surfaces forms, evaporates, and leaves neither a singularity nor an event horizon.
