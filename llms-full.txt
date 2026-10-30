@@ -1922,6 +1922,17 @@ The weak gravitational field of a slowly moving body with a number in front of e
 - chart Eddington (areal radius): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\left(\beta - \gamma\right)m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Rotating body (isotropic): coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{2\beta m^2}{r^2}\right)c^2dt^2 + \left(1 + \dfrac{2\gamma m}{r}\right)\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right) - \dfrac{4\Delta am\sin^2\theta}{r}c\,dt\,d\phi$$
 
+### Penney's Charged Scalar Solution
+
+The static, spherically symmetric field of a mass carrying both an electric charge and a massless scalar field, found by R. Penney in 1969. With the scalar field switched off it is Reissner and Nordström's charged black hole, and with the charge switched off it is Fisher's solution; with both present, every sphere that would be a horizon is a singularity in plain view.
+
+- id: `penney_scalar`
+- tags: static, stationary, spherically symmetric, electric charge, point charge, scalar charge, scalar field, massless scalar field, minimally coupled scalar field, Einstein-Maxwell, Einstein-scalar, electromagnetic field, mass, naked singularity, curvature singularity, no horizon, no-hair theorem, instability, scalar-tensor theory, conformal transformation, harmonic coordinates, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/penney_scalar.json
+- chart Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{(a - b)^2E}{(a - bE)^2}c^2dt^2 + \dfrac{(a - bE)^2}{(a - b)^2E}\left(dr^2 + (r - a)(r - b)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -\dfrac{H^2 - h^2}{q^2}c^2dt^2 + \dfrac{q^2\left(K^2 - k^2\right)}{H^2 - h^2}\left(\left(K^2 - k^2\right)du^2 + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Penrose's Spherical Impulsive Wave
 
 Flat spacetime cut along the future light cone of one event and joined again with a warp, which leaves a spherical gravitational wave one instant thick expanding at the speed of light. With the warp of a cosmic string it is the wave a string sends out when it snaps, with the cone of the string ahead of the wave and plain flat space behind it.

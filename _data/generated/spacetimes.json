@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 201,
+  "count": 202,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -15611,6 +15611,11 @@
           "id": "three_brane_throat",
           "kind": "family",
           "text": "The three-brane of ten dimensions has a horizon with no singularity behind it. Gibbons, Horowitz, and Townsend found it by the analysis that turns the singularity of some extreme dilaton black holes into a horizon in more dimensions [gibbons1995]."
+        },
+        {
+          "id": "penney_scalar",
+          "kind": "family",
+          "text": "A charged mass with a massless scalar field that does not couple to the Maxwell field, found by R. Penney in 1969. Its only black hole is the one with the scalar field switched off [banerjee1998]."
         }
       ],
       "references": [
@@ -15636,7 +15641,8 @@
         "faraoni2016",
         "cvetic1996static",
         "cvetic1996dyonic",
-        "gibbons1995"
+        "gibbons1995",
+        "banerjee1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -19875,6 +19881,11 @@
           "id": "kodama_kink",
           "kind": "family",
           "text": "Takeshi Kodama's wormhole of 1978, held open by a ghost field with a potential whose two vacua sit on the two sides of the throat [kodama1978preprint]. Its mass is positive [kodama1978]."
+        },
+        {
+          "id": "penney_scalar",
+          "kind": "family",
+          "text": "With an electric charge, the scalar field of negative energy gives the extended Penney solution, which holds traversable wormholes and cold black holes [bronnikov2024]."
         }
       ],
       "references": [
@@ -19900,7 +19911,8 @@
         "caldwell2002",
         "caldwell2003",
         "kodama1978preprint",
-        "kodama1978"
+        "kodama1978",
+        "bronnikov2024"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -20864,6 +20876,11 @@
           "id": "scalar_field_black_hole",
           "kind": "family",
           "text": "Schwarzschild's hole in a scalar field that grows along one axis. Its horizon stays regular, which the no hair theorems allow because the spacetime is not asymptotically flat [herdeiro2025]."
+        },
+        {
+          "id": "penney_scalar",
+          "kind": "generalisation",
+          "text": "Fisher's solution with an electric charge added, found by R. Penney in 1969. With the scalar field switched off it is Reissner and Nordström's black hole [banerjee1998]."
         }
       ],
       "references": [
@@ -20895,7 +20912,8 @@
         "belinskii1973",
         "dicke1962",
         "faraoni2018",
-        "herdeiro2025"
+        "herdeiro2025",
+        "banerjee1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -47446,6 +47464,236 @@
       ]
     },
     {
+      "id": "penney_scalar",
+      "name": "Penney's Charged Scalar Solution",
+      "short_name": "Penney",
+      "description": "The static, spherically symmetric field of a mass carrying both an electric charge and a massless scalar field, found by R. Penney in 1969. With the scalar field switched off it is Reissner and Nordström's charged black hole, and with the charge switched off it is Fisher's solution; with both present, every sphere that would be a horizon is a singularity in plain view.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "electric charge",
+        "point charge",
+        "scalar charge",
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-Maxwell",
+        "Einstein-scalar",
+        "electromagnetic field",
+        "mass",
+        "naked singularity",
+        "curvature singularity",
+        "no horizon",
+        "no-hair theorem",
+        "instability",
+        "scalar-tensor theory",
+        "conformal transformation",
+        "harmonic coordinates",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The mass $M$ has $2GM/c^2 = \\gamma(a + b)$ and the charge $Q$ has $GQ^2/(4\\pi\\varepsilon_0c^4) = \\gamma^2ab$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "The case $\\gamma = 1$, with no scalar field. The spheres $r = a$ and $r = b$ are then its two horizons, and any scalar charge turns the outer one into a singularity [banerjee1998]."
+        },
+        {
+          "id": "fisher_jnw",
+          "kind": "special_case",
+          "text": "The case $b = 0$, with no charge. Its parameter $b$ is Penney's $a$, and its $\\gamma$ is the same exponent."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The case $b = 0$ and $\\gamma = 1$: neither charge nor scalar field, and $r = a$ is the horizon."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "Another charged mass with a scalar field, here coupled to the Maxwell field, with a regular horizon around its singularity."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "Give the scalar field of Penney's solution a negative energy and its family holds traversable wormholes, as Ellis and Bronnikov's holds them without charge [bronnikov2024]."
+        }
+      ],
+      "references": [
+        "penney1968",
+        "penney1969",
+        "reissner1916",
+        "nordstrom1918",
+        "fisher1948",
+        "janis1968",
+        "banerjee1998",
+        "astorino2013",
+        "bronnikov1973",
+        "bronnikov2024",
+        "bronnikov1979",
+        "maeda2018",
+        "janis1969"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/penney_scalar.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (a, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = a \\;\\text{(the singularity, for } \\gamma < 1\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Value of $r$ at the singularity, a length, with $a > b$; at $\\gamma = 1$ the outer horizon"
+            },
+            {
+              "symbol": "b",
+              "description": "A length with $0 < b < a$; at $\\gamma = 1$ the inner horizon, and $b = 0$ is Fisher's solution with his $b$ equal to $a$"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "A pure number with $0 < \\gamma \\le 1$; $\\gamma = 1$ is Reissner and Nordström's metric. The scalar field is $\\varphi = \\sqrt{(1 - \\gamma^2)c^4/16\\pi G}\\,\\ln\\left((r - a)/(r - b)\\right)$, which vanishes at $\\gamma = 1$"
+            },
+            {
+              "symbol": "E = \\left(\\dfrac{r - a}{r - b}\\right)^{\\gamma}",
+              "description": "A pure number rising from 0 at the singularity to 1 far away; $-g_{tt} = (a - b)^2E/(a - bE)^2$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi)$, with $t$ carrying dimensions of time and $r$ a length, and write $E = \\left((r - a)/(r - b)\\right)^{\\gamma}$. The areal radius is $(a - bE)\\sqrt{(r - a)(r - b)/E}/(a - b)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{(a - b)^2E}{(a - bE)^2}c^2dt^2 + \\dfrac{(a - bE)^2}{(a - b)^2E}\\left(dr^2 + (r - a)(r - b)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{(a - b)^2E}{(a - bE)^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{(a - bE)^2}{(a - b)^2E}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{(a - bE)^2(r - a)(r - b)}{(a - b)^2E}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{(a - bE)^2(r - a)(r - b)}{(a - b)^2E}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{E\\left(a - b\\right)^4\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)}{2\\left(a - b\\,E\\right)^2\\left(r - a\\right)^2\\left(r - b\\right)^2}",
+          "kretschmann": "K = \\dfrac{E^2\\left(a - b\\right)^6\\left(48b^4\\,\\gamma^2\\,r^2\\,E^4 - 96a^2\\,b^2\\,\\gamma^2\\,r^2\\,E^2 + 48a^4\\,\\gamma^2\\,r^2 + 16b^4\\,\\gamma\\,r\\,E^4\\left(a - b - 3a\\,\\gamma - 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) - 32a\\,b^3\\,\\gamma\\,r\\,E^3\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) + 96a^2\\,b^2\\,\\gamma^2\\,r\\,E^2\\left(a + b\\right) + 32a^3\\,b\\,\\gamma\\,r\\,E\\left(1 + 2\\gamma\\right)\\left(1 - 2\\gamma\\right)\\left(a - b\\right) - 16a^4\\,\\gamma\\,r\\left(a - b + 3a\\,\\gamma + 3b\\,\\gamma + 2a\\,\\gamma^2 - 2b\\,\\gamma^2\\right) + b^4\\,E^4\\left(3a^2 - 6a\\,b + 3b^2 - 8a^2\\,\\gamma + 8b^2\\,\\gamma + 14a^2\\,\\gamma^2 + 20a\\,b\\,\\gamma^2 + 14b^2\\,\\gamma^2 - 16a^2\\,\\gamma^3 + 16b^2\\,\\gamma^3 + 7a^2\\,\\gamma^4 - 14a\\,b\\,\\gamma^4 + 7b^2\\,\\gamma^4\\right) - 4a\\,b^3\\,E^3\\left(a - b\\right)\\left(3a - 3b - 4a\\,\\gamma - 4b\\,\\gamma - 4a\\,\\gamma^2 + 4b\\,\\gamma^2 + 16a\\,\\gamma^3 + 16b\\,\\gamma^3 - 11a\\,\\gamma^4 + 11b\\,\\gamma^4\\right) + 2a^2\\,b^2\\,E^2\\left(9a^2 - 18a\\,b + 9b^2 - 30a^2\\,\\gamma^2 + 12a\\,b\\,\\gamma^2 - 30b^2\\,\\gamma^2 + 61a^2\\,\\gamma^4 - 122a\\,b\\,\\gamma^4 + 61b^2\\,\\gamma^4\\right) - 4a^3\\,b\\,E\\left(a - b\\right)\\left(3a - 3b + 4a\\,\\gamma + 4b\\,\\gamma - 4a\\,\\gamma^2 + 4b\\,\\gamma^2 - 16a\\,\\gamma^3 - 16b\\,\\gamma^3 - 11a\\,\\gamma^4 + 11b\\,\\gamma^4\\right) + a^4\\left(3a^2 - 6a\\,b + 3b^2 + 8a^2\\,\\gamma - 8b^2\\,\\gamma + 14a^2\\,\\gamma^2 + 20a\\,b\\,\\gamma^2 + 14b^2\\,\\gamma^2 + 16a^2\\,\\gamma^3 - 16b^2\\,\\gamma^3 + 7a^2\\,\\gamma^4 - 14a\\,b\\,\\gamma^4 + 7b^2\\,\\gamma^4\\right)\\right)}{4\\left(a - b\\,E\\right)^8\\left(r - a\\right)^4\\left(r - b\\right)^4}"
+        },
+        {
+          "id": "harmonic",
+          "name": "Harmonic",
+          "coordinates": [
+            "t",
+            "u",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "u \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "u \\to 0 \\;\\text{(spatial infinity)}",
+            "u \\to \\infty \\;\\text{(the singularity, for } h < k\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "A length, $k = (a - b)/2$, with $k > h$"
+            },
+            {
+              "symbol": "h",
+              "description": "A length, $h = \\gamma k$, with $0 < h < k$; $h = k$ is Reissner and Nordström's metric"
+            },
+            {
+              "symbol": "u_1",
+              "description": "An inverse length, with $a/b = e^{2hu_1}$; the mass is $GM/c^2 = h\\coth(hu_1)$"
+            },
+            {
+              "symbol": "q = \\dfrac{h}{\\sinh(hu_1)}",
+              "description": "The charge as a length, $q^2 = GQ^2/(4\\pi\\varepsilon_0c^4) = \\gamma^2ab$"
+            },
+            {
+              "symbol": "K = k\\coth(ku)",
+              "description": "A length falling from $1/u$ near spatial infinity to $k$ at the singularity"
+            },
+            {
+              "symbol": "H = h\\coth(h(u + u_1))",
+              "description": "A length falling from the mass $GM/c^2$ at spatial infinity to $h$ at the singularity"
+            }
+          ],
+          "convention": "We use coordinates $(t, u, \\theta, \\phi)$, with $t$ carrying dimensions of time and $u$ an inverse length, Bronnikov's harmonic coordinate, with $e^{-2ku} = (r - a)/(r - b)$ for $a - b = 2k$, $\\gamma = h/k$, and $a/b = e^{2hu_1}$. The scalar field is $\\varphi = -\\sqrt{(k^2 - h^2)c^4/4\\pi G}\\,u$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\dfrac{H^2 - h^2}{q^2}c^2dt^2 + \\dfrac{q^2\\left(K^2 - k^2\\right)}{H^2 - h^2}\\left(\\left(K^2 - k^2\\right)du^2 + d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(H - h\\right)\\left(H + h\\right)}{q^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}{\\left(H - h\\right)\\left(H + h\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)}{\\left(H - h\\right)\\left(H + h\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{q^2\\left(K - k\\right)\\left(K + k\\right)\\sin^2\\theta}{\\left(H - h\\right)\\left(H + h\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(k + h\\right)\\left(k - h\\right)\\left(H - h\\right)\\left(H + h\\right)}{q^2\\left(K - k\\right)^2\\left(K + k\\right)^2}",
+          "kretschmann": "K = \\dfrac{4\\left(H - h\\right)^2\\left(H + h\\right)^2\\left(12H^2\\,K^2 - 24H^3\\,K - 8k^2\\,H\\,K + 8h^2\\,H\\,K + 14H^4 + 6k^2\\,H^2 - 10h^2\\,H^2 + 3k^4 - 4k^2\\,h^2 + 3h^4\\right)}{q^4\\left(K - k\\right)^4\\left(K + k\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "penrose_impulsive_wave",
       "name": "Penrose's Spherical Impulsive Wave",
       "short_name": "Penrose Impulsive Wave",
@@ -51932,6 +52180,11 @@
           "id": "jackiw_teitelboim_black_hole",
           "kind": "limit",
           "text": "The black hole of Jackiw and Teitelboim's gravity in two dimensions. Bring the mass down toward the charge and zoom in on the horizon: in that limit the plane of $t$ and $r$ becomes that black hole, with the area of the sphere as its dilaton [mertens2023]."
+        },
+        {
+          "id": "penney_scalar",
+          "kind": "generalisation",
+          "text": "Reissner and Nordström's black hole with a massless scalar field added, found by R. Penney in 1969. Any scalar charge, however small, removes the horizon and leaves a naked singularity [banerjee1998]."
         }
       ],
       "references": [
@@ -51983,7 +52236,8 @@
         "blazquez2021",
         "bah2021",
         "lewandowski2023",
-        "mertens2023"
+        "mertens2023",
+        "banerjee1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -55020,6 +55274,11 @@
           "id": "kerr_disc_source",
           "kind": "generalisation",
           "text": "Kerr's spacetime cut at the disc in its ring and glued shut, with a layer of matter on the disc. At $a = 0$ the disc is a point and the spacetime is Schwarzschild's."
+        },
+        {
+          "id": "penney_scalar",
+          "kind": "generalisation",
+          "text": "Schwarzschild's black hole with both an electric charge and a massless scalar field, found by R. Penney in 1969. With both switched on, the sphere of the horizon has zero area and infinite curvature [banerjee1998]."
         }
       ],
       "references": [
@@ -55154,7 +55413,8 @@
         "astorino2022swirling",
         "cardoso2025",
         "buchdahl1964",
-        "bonnor1967oscillating"
+        "bonnor1967oscillating",
+        "banerjee1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

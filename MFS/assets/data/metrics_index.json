@@ -1466,7 +1466,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cfae5965fc3292c9",
+    "version": "f67b7bf6f0315bf1",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -1848,7 +1848,7 @@
       "idealized model",
       "scalar-tensor theory"
     ],
-    "version": "f3220cedd5baa453",
+    "version": "f33510602de5a100",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a",
@@ -1983,7 +1983,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f827c3bcec544df0",
+    "version": "71e1c3f11e804846",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "3cdd1185c95f1f46",
@@ -4334,6 +4334,44 @@
     "embedding": "7438e54f373b2e03"
   },
   {
+    "id": "penney_scalar",
+    "name": "Penney",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "electric charge",
+      "point charge",
+      "scalar charge",
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "Einstein-Maxwell",
+      "Einstein-scalar",
+      "electromagnetic field",
+      "mass",
+      "naked singularity",
+      "curvature singularity",
+      "no horizon",
+      "no-hair theorem",
+      "instability",
+      "scalar-tensor theory",
+      "conformal transformation",
+      "harmonic coordinates",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "030b958e62940dfb",
+    "diagrams": "8326e68cbda09f9d",
+    "conformal": "9ff380f65ea53fc3",
+    "embedding": "121146402ebb3077",
+    "curvature": "b470ec8b28581789"
+  },
+  {
     "id": "penrose_impulsive_wave",
     "name": "Penrose Impulsive Wave",
     "tags": [
@@ -4720,7 +4758,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6e449049234f2f53",
+    "version": "f3e35a565ae4e78e",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -5020,7 +5058,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "5a27862ddc5d071b",
+    "version": "58e1028fe4db0aee",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",

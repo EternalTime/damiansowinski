@@ -1,5 +1,5 @@
 {
-  "version": "26d783582f61e283",
+  "version": "c4fa7a759083fcdc",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -32707,6 +32707,112 @@
         "eprint": "2412.01771",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2412.01771"
+      }
+    },
+    "penney1968": {
+      "type": "article",
+      "fields": {
+        "title": "Axially Symmetric Zero-Mass Meson Solutions of {Einstein} Equations",
+        "author": "Penney, R.",
+        "journal": "Physical Review",
+        "volume": "174",
+        "number": "5",
+        "pages": "1578--1579",
+        "year": "1968",
+        "doi": "10.1103/PhysRev.174.1578",
+        "url": "https://doi.org/10.1103/PhysRev.174.1578"
+      }
+    },
+    "penney1969": {
+      "type": "article",
+      "fields": {
+        "title": "Generalization of the {Reissner-Nordstr\\\"om} Solution to the {Einstein} Field Equations",
+        "author": "Penney, R.",
+        "journal": "Physical Review",
+        "volume": "182",
+        "number": "5",
+        "pages": "1383--1384",
+        "year": "1969",
+        "doi": "10.1103/PhysRev.182.1383",
+        "url": "https://doi.org/10.1103/PhysRev.182.1383"
+      }
+    },
+    "banerjee1998": {
+      "type": "article",
+      "fields": {
+        "title": "No scalar hair theorem for a charged spherical black hole",
+        "author": "Banerjee, N. and Sen, S.",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "10",
+        "pages": "104024",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.104024",
+        "eprint": "gr-qc/9803019",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.58.104024"
+      }
+    },
+    "astorino2013": {
+      "type": "article",
+      "fields": {
+        "title": "Embedding hairy black holes in a magnetic universe",
+        "author": "Astorino, Marco",
+        "journal": "Physical Review D",
+        "volume": "87",
+        "number": "8",
+        "pages": "084029",
+        "year": "2013",
+        "doi": "10.1103/PhysRevD.87.084029",
+        "eprint": "1301.6794",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.87.084029"
+      }
+    },
+    "bronnikov2024": {
+      "type": "article",
+      "fields": {
+        "title": "On the stability of electrovacuum space-times in scalar-tensor gravity",
+        "author": "Bronnikov, Kirill A. and Bolokhov, Sergei V. and Skvortsova, Milena V. and Ibadov, Rustam and Shaymanova, Feruza Y.",
+        "journal": "The European Physical Journal C",
+        "volume": "84",
+        "number": "10",
+        "pages": "1027",
+        "year": "2024",
+        "doi": "10.1140/epjc/s10052-024-13420-2",
+        "eprint": "2407.12144",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-024-13420-2"
+      }
+    },
+    "maeda2018": {
+      "type": "article",
+      "fields": {
+        "title": "All static and electrically charged solutions with {Einstein} base manifold in the arbitrary-dimensional {Einstein-Maxwell} system with a massless scalar field",
+        "author": "Maeda, Hideki and Mart\\'inez, Crist\\'ian",
+        "journal": "The European Physical Journal C",
+        "volume": "78",
+        "number": "10",
+        "pages": "860",
+        "year": "2018",
+        "doi": "10.1140/epjc/s10052-018-6334-7",
+        "eprint": "1603.03436",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-018-6334-7"
+      }
+    },
+    "janis1969": {
+      "type": "article",
+      "fields": {
+        "title": "Comments on {Einstein} Scalar Solutions",
+        "author": "Janis, Allen I. and Robinson, David C. and Winicour, Jeffrey",
+        "journal": "Physical Review",
+        "volume": "186",
+        "number": "5",
+        "pages": "1729--1731",
+        "year": "1969",
+        "doi": "10.1103/PhysRev.186.1729",
+        "url": "https://doi.org/10.1103/PhysRev.186.1729"
       }
     }
   }
