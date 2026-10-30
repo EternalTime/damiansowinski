@@ -2046,9 +2046,10 @@ class EmbeddingDiagrams(unittest.TestCase):
             self.assertIn("draws nothing", str(raised.exception))
 
     def test_every_spacetime_draws_and_a_file_that_draws_nothing_says_why(self):
-        # Every spacetime but Lentz's has a surface drawn, and none says beside its views that it
-        # draws nothing.
-        self.assertEqual(set(self.embedding), {m["id"] for m in self.metrics if chosen(m["id"])} - {"lentz"})
+        # Every spacetime but those WITHOUT_EMBEDDING names has a surface drawn, and none says beside
+        # its views that it draws nothing.
+        self.assertEqual(set(self.embedding),
+                         {m["id"] for m in self.metrics if chosen(m["id"])} - build.WITHOUT_EMBEDDING)
         for name, data in self.embedding.items():
             self.assertTrue(data["views"], name)
             self.assertNotIn("stops", data, f"{name} keeps what it does not draw in its views")

@@ -18466,8 +18466,11 @@ DRAWN = {
 # The spacetimes with no embedding diagram, for which nothing is written. Every slice of constant
 # t in Lentz's class is flat, h_ij = delta_ij, for every potential phi, and his soliton exists only
 # as a numerical integral over rhomboid sources whose sizes, charges and places his paper does not
-# give, so the plane of its path could carry nothing of the soliton.
-NOT_DRAWN = {"lentz"}
+# give, so the plane of its path could carry nothing of the soliton. No slice of Hauser's twisting
+# wave has an angle: its one symmetry is the translation d_y and its wave surfaces are null, so a
+# surface drawn by reading that translation as an angle would show a periodicity the spacetime does
+# not have (hauser_wave.md Step 8).
+NOT_DRAWN = {"lentz", "hauser_wave"}
 
 CAPTIONS = {
     ("stiff_fluid_universes", "plane"): ["A transverse symmetry plane at one moment. Proper lengths within it are $\\ell\\sqrt{t}$ times coordinate lengths."],

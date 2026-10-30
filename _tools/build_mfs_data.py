@@ -1520,7 +1520,7 @@ def check_texts(metrics, diagrams, conformal, embedding, curvature):
 
 # The spacetimes drawn without an embedding diagram, which _tools/derivations/embedding.py names
 # in its own NOT_DRAWN; the tests hold the two equal. Every other spacetime has a file.
-WITHOUT_EMBEDDING = frozenset({"lentz"})
+WITHOUT_EMBEDDING = frozenset({"lentz", "hauser_wave"})
 
 
 def embedding_problems(metrics, embedding):

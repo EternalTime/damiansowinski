@@ -138,7 +138,10 @@ NOT_DRAWN = {"charged_godel_universe", "godel", "stockum_dust", "som_raychaudhur
              "ozsvath_dust",
              # Bonnor and Faulkes's oscillating sphere: an interior whose metric depends on t and r, as
              # Tolman and Bondi's does, with F(t) known only numerically, so no compactification is drawn.
-             "oscillating_sphere", "newman_tamburino"}
+             "oscillating_sphere", "newman_tamburino",
+             # Hauser's twisting wave: not asymptotically flat, singular on hypersurfaces, and with one
+             # Killing vector, so no plane of two coordinates carries its causal structure to a boundary.
+             "hauser_wave"}
 
 
 # ---------------------------------------------------------------- the drawing

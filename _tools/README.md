@@ -1123,8 +1123,9 @@ It does not read the embedding files yet, so a caption, setting or label of an e
 ## Embedding diagrams
 
 `MFS/assets/data/embedding/<metric_id>.json` holds the embedding diagram of one spacetime: a slice of it, the equatorial plane at one moment or another surface of one moment, drawn as a surface in ordinary flat three dimensional space so that every distance along the surface is the metric distance, or, where no surface in flat space carries it, in three dimensional Minkowski space.
-Every spacetime has one but Lentz's soliton.
+Every spacetime has one but Lentz's soliton and Hauser's twisting wave.
 Every slice of constant $t$ in Lentz's class is flat for every potential $\phi$, and his soliton exists only as a numerical integral over rhomboid sources whose sizes, charges and places his paper leaves to a figure, so nothing of the soliton can be computed to draw on the plane, and the page shows no embedding diagram for it.
+No slice of Hauser's twisting wave has an angle: its one symmetry is the translation $\partial_y$ and its wave surfaces are null, so a surface drawn by reading that translation as an angle would show a periodicity the spacetime does not have, and the page shows no embedding diagram for it either.
 Three draw a quantity as a height over a plane in place of a slice, since their slices are flat and what makes each spacetime what it is shows in a number on the plane: Alcubierre's warp drive draws the expansion $\theta$ of the observers who ride its slices, Natário's the energy density $\varepsilon$ those observers measure, and the Krasnikov tube $1 - k$, how far it tips the light cone.
 The moving mirror draws one as well: a moment of its two dimensions is a half line, so its view draws the flux of energy the mirror of Good, Anderson and Evans radiates, read from the published conformal factor of the chart that brings that mirror to rest, as a height over the plane of $t$ and $x$.
 No height is a distance, and each of the three views says under `height` what its height stands for.
