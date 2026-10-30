@@ -1,0 +1,134 @@
+{
+  "id": "exponential_scalar_universes",
+  "name": "Universes with an Exponential Scalar Potential",
+  "short_name": "Exponential Scalar Universes",
+  "description": "Spatially flat power law cosmologies with a positive exponential scalar potential, alone or with a barotropic fluid.",
+  "tags": [
+    "cosmology",
+    "expanding universe",
+    "homogeneous",
+    "isotropic",
+    "FLRW",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "conformally flat",
+    "spherically symmetric",
+    "scalar field",
+    "minimally coupled scalar field",
+    "inflation",
+    "perfect fluid"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use $c=1$ and $\\kappa^2=8\\pi G$, with cosmic time $t$, conformal time $\\eta$, and $a_0=a(t_0)$. The dimensionless exponent is $p$, and $t_0>0$ is the reference time.",
+  "history": "Larry Abbott and Mark B. Wise used the microwave background to constrain power law inflation in 1984 [abbott_wise1984]. They studied expansion $a(t)\\propto t^p$, where $t$ is cosmic time and $p>1$, and calculated the gravitational waves generated during that expansion [abbott_wise1984]. Those waves produce large scale temperature anisotropies, linking the rate of expansion to microwave temperature fluctuations [abbott_wise1984]. Francesco Lucchin and Sabino Matarrese obtained exact power law inflation from a scalar field with an exponential potential in 1985 [lucchin_matarrese1985].¶For a canonically normalized homogeneous scalar $\\phi$, the potential is $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$, with $V_0>0$, $\\lambda>0$, and $\\kappa^2=8\\pi G$ [copeland_liddle_wands1998]. In units $c=1$, the exact scalar dominated solution has $p=2/\\lambda^2$ and $\\phi=2\\ln(t/t_0)/(\\lambda\\kappa)$, for a reference time $t_0$ [heard_wands2002]. The potential amplitude fixes $t_0$ once we set $\\phi(t_0)=0$. The kinetic and potential energy densities both decrease as $t^{-2}$, retaining a constant ratio [heard_wands2002]. Positive potential requires $0<\\lambda^2<6$, and the expansion accelerates for $\\lambda^2<2$ [heard_wands2002].¶Jonathan Halliwell established attraction toward power law inflation in 1987 [halliwell1987]. Adrian Benedict Burd and John David Barrow investigated stability in isotropic and anisotropic models in 1988 [burd_barrow1988]. Within the expanding spatially flat scalar only model, the exact power law solution attracts homogeneous scalar perturbations throughout $0<\\lambda^2<6$ [heard_wands2002]. With an additional barotropic fluid, its stability requires $\\lambda^2<3\\gamma$ for $0<\\gamma<2$, where $\\gamma$ sets the fluid equation of state $p_\\gamma=(\\gamma-1)\\rho_\\gamma$ [copeland_liddle_wands1998].¶Christof Wetterich obtained another scaling behaviour in 1988 while investigating dilatation symmetry [wetterich1988]. For a scalar coupled to matter only through gravity, he found solutions whose scalar density remains a fixed fraction of the total energy density [wetterich1988]. In canonical normalization this fraction is $\\Omega_\\phi=\\rho_\\phi/(\\rho_\\phi+\\rho_\\gamma)=3\\gamma/\\lambda^2$, with $0<\\gamma<2$ and $\\lambda^2>3\\gamma$ [copeland_liddle_wands1998]. The scale factor evolves as $a(t)\\propto t^{2/(3\\gamma)}$, so radiation gives $t^{1/2}$ and dust gives $t^{2/3}$ [wetterich1988]. Both the scalar density and the fluid density decrease as $t^{-2}$ [wetterich1988].¶Edmund J. Copeland, Andrew R. Liddle, and David Wands mapped these branches in a phase plane analysis in 1998 [copeland_liddle_wands1998]. They established that the fluid scaling solution is the late time attractor wherever it exists in expanding spatially flat models with $0<\\gamma<2$ [copeland_liddle_wands1998]. Radiation has $\\gamma=4/3$ and $\\Omega_\\phi=4/\\lambda^2$, while dust has $\\gamma=1$ and $\\Omega_\\phi=3/\\lambda^2$ [copeland_liddle_wands1998]. The fluid scaling solution accelerates when $\\gamma<2/3$, with the potential slope still constrained by $\\lambda^2>3\\gamma$ [heard_wands2002]. At $\\lambda^2=3\\gamma$, its fluid density vanishes and the two branches meet [copeland_liddle_wands1998].¶We define conformal time by $d\\eta=dt/a(t)$ [abbott_wise1984]. When the exact power law holds for $0<t<\\infty$, a future event horizon exists for $p>1$, since $\\int_t^\\infty dt'/a(t')$ is finite. The past integral $\\int_0^t dt'/a(t')$ is finite for $1/3<p<1$, giving a particle horizon. Choosing the finite conformal endpoint as zero, we have $-\\infty<\\eta<0$ for $p>1$ and $0<\\eta<\\infty$ for $1/3<p<1$. At $p=1$, $\\eta=(t_0/a_0)\\ln(t/t_0)$ spans the entire real line, with $a_0=a(t_0)$. Both horizon integrals diverge in this coasting case.",
+  "references": [
+    "abbott_wise1984",
+    "lucchin_matarrese1985",
+    "copeland_liddle_wands1998",
+    "heard_wands2002",
+    "halliwell1987",
+    "burd_barrow1988",
+    "wetterich1988"
+  ],
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "The spatially flat Friedmann universe with $a(t)\\propto t^p$, supported by an exponential scalar potential alone or together with a barotropic fluid."
+    },
+    {
+      "id": "minkowski",
+      "kind": "conformal",
+      "text": "Conformal time brings the flat spatial geometry to $ds^2=a^2(-d\\eta^2+dx^2+dy^2+dz^2)$, with a conformal time interval fixed by the exponent $p$."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "cosmic_cartesian",
+      "parameters": [
+        {
+          "symbol": "p",
+          "description": "Expansion exponent, $p>1/3$."
+        },
+        {
+          "symbol": "a_0",
+          "description": "Positive dimensionless scale factor at $t=t_0$."
+        },
+        {
+          "symbol": "t_0",
+          "description": "Positive reference time, with dimensions of length in units $c=1$."
+        },
+        {
+          "symbol": "a = a_0\\left(t/t_0\\right)^p",
+          "description": "Dimensionless scale factor."
+        }
+      ],
+      "convention": "We use comoving Cartesian coordinates $(x,y,z)$, each with dimensions of length."
+    },
+    {
+      "id": "cosmic_spherical",
+      "parameters": [
+        {
+          "symbol": "p",
+          "description": "Expansion exponent, $p>1/3$."
+        },
+        {
+          "symbol": "a_0",
+          "description": "Positive dimensionless scale factor at $t=t_0$."
+        },
+        {
+          "symbol": "t_0",
+          "description": "Positive reference time, with dimensions of length in units $c=1$."
+        },
+        {
+          "symbol": "a = a_0\\left(t/t_0\\right)^p",
+          "description": "Dimensionless scale factor."
+        }
+      ],
+      "convention": "We use the comoving radius $r$ with dimensions of length and the dimensionless angles $(\\theta,\\phi)$."
+    },
+    {
+      "id": "conformal",
+      "parameters": [
+        {
+          "symbol": "p",
+          "description": "Expansion exponent, $p>1/3$ and $p\\ne1$."
+        },
+        {
+          "symbol": "a_0",
+          "description": "Positive dimensionless scale factor at $t=t_0$."
+        },
+        {
+          "symbol": "t_0",
+          "description": "Positive reference time, with dimensions of length in units $c=1$."
+        },
+        {
+          "symbol": "a = a_0\\left((1-p)a_0\\eta/t_0\\right)^{p/(1-p)}",
+          "description": "Dimensionless scale factor."
+        }
+      ],
+      "convention": "We set $\\eta=t_0(t/t_0)^{1-p}/[a_0(1-p)]$, with comoving Cartesian coordinates $(x,y,z)$ of length."
+    },
+    {
+      "id": "coasting",
+      "parameters": [
+        {
+          "symbol": "a_0",
+          "description": "Positive dimensionless scale factor at $t=t_0$."
+        },
+        {
+          "symbol": "t_0",
+          "description": "Positive reference time, with dimensions of length in units $c=1$."
+        },
+        {
+          "symbol": "a = a_0e^{a_0\\eta/t_0}",
+          "description": "Dimensionless scale factor."
+        }
+      ],
+      "convention": "We set $p=1$ and $\\eta=(t_0/a_0)\\ln(t/t_0)$, with comoving Cartesian coordinates $(x,y,z)$ of length."
+    }
+  ]
+}
