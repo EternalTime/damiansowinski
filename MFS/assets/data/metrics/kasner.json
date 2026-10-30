@@ -92,6 +92,11 @@
       "id": "kasner_magnetic",
       "kind": "generalisation",
       "text": "Kasner's universe with a uniform magnetic field along one axis. The field carries it from one set of Kasner exponents at early times to another at late times, and the exponent $p_3$ along the field becomes $-p_3/(1 + 2p_3)$ [kastor2015]."
+    },
+    {
+      "id": "murphy_viscous_universe",
+      "kind": "family",
+      "text": "Murphy's flat viscous universe with a small anisotropy added. Belinskii and Khalatnikov found that it then begins at a singularity near Kasner's vacuum, where the density vanishes and the gravitational field creates matter [belinskii1975]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "ferrando2006",
     "martins1996",
     "king1973",
-    "kastor2015"
+    "kastor2015",
+    "belinskii1975"
   ],
   "coordinates": [
     {

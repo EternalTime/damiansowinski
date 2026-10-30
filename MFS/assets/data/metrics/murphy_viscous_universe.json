@@ -26,7 +26,33 @@
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Pull a fluid apart quickly and it pushes back with less than its pressure. The second viscosity of the fluid measures that lag, and in a universe that expands it lowers the pressure in proportion to the rate of expansion [belinskii1975]. With enough of it the total pressure falls to minus the energy density, the equation of state of a universe that expands at one constant rate for ever [belinskii1975]. George L. Murphy built a whole universe on that lag in 1973 [murphy1973].¶Murphy, a physicist at Westminster College in New Wilmington, Pennsylvania, sent his model to Physical Review D on 2 August 1973 [murphy1973]. It is a flat, uniform universe filled with a fluid which \"possesses pressure and second viscosity\", and its Einstein equations \"can be integrated exactly\" [murphy1973]. The pressure of the fluid is $p = w\\rho c^2$ and its bulk viscosity is proportional to its density, $\\zeta = \\beta\\rho c^2$ with $\\beta$ a constant time [brevik2013]. One solution is the steady state, and Murphy found it unstable [murphy1973]. The others start from it in the infinite past and \"expand more and more slowly as viscosity dies out\", and at any finite time in the past their curvature is finite [murphy1973].¶Friedmann's equation and the conservation of energy combine into one equation for the Hubble rate, $\\dot{H} = -qH^2(1 - H/H_s)$, with $q = 3(1 + w)/2$ and $H_s = 2q/9\\beta$ [brevik2013]. Its fixed point $H = H_s$ is the steady state, and every other expanding solution has $H = H_s/(1 + a^q)$, reached at the proper time $H_st = \\ln a + a^q/q$. As $t \\to -\\infty$ the scale factor falls to zero as $e^{H_st}$, while the density tends to $3H_s^2/8\\pi G$ and the Ricci scalar to de Sitter's $12H_s^2/c^2$. As $t \\to \\infty$ the viscosity fades and $a$ grows as $t^{2/3(1 + w)}$, the expansion of the same fluid without viscosity. For $q > 1$ the early universe accelerates while $a^q < 1/(q - 1)$, where the viscous pressure breaks the strong energy condition, and decelerates after.¶Vladimir Belinskii and Isaak Khalatnikov, at the Landau Institute in Moscow, followed the same fluid into the anisotropic universes of Bianchi type I in 1975 [belinskii1975]. In their plane of the Hubble rate and the energy density, Murphy's universe is a single curve, the separatrix that leaves the steady state along the isotropic Friedmann solutions [belinskii1975]. \"The inclusion of an arbitrarily small anisotropy\" makes a beginning of that kind impossible [belinskii1975]. Their expanding universes start from a singularity at which the density vanishes, so that at the big bang \"the gravitational field creates matter\" [belinskii1975]. The viscosity goes on producing entropy late in the isotropic expansion, which they related to the large entropy per baryon of the universe today [belinskii1975].¶John D. Barrow wrote down in 1986 a class of exact universes that \"begin in a de Sitter state but subsequently deflate towards the flat Friedman model\", and called the universe they describe deflationary [barrow1986]. With them he showed that the cosmic no hair conjecture fails even for isotropic universes once the strong energy condition is relaxed [barrow1986]. William A. Hiscock and Jay Salmonson integrated in 1991 a flat universe of a dissipative Boltzmann gas with the bulk stress of the theory of Eckart and of the causal theory of Israel and Stewart [hiscock1991]. For large viscosities the first universe ends with a negative total pressure and the second with a total pressure near zero, and they concluded that bulk viscous inflation \"may be an artifact of using a pathological fluid theory such as the Eckart theory\" [hiscock1991].¶A comoving observer in Murphy's universe has an infinite past, so does anything lie beyond $t \\to -\\infty$? Arvind Borde, Alan H. Guth, and Alexander Vilenkin showed in 2003 that a light ray traced back through a universe whose Hubble rate stays positive on average has a finite affine length, with no energy condition assumed [borde2003]. In Murphy's universe that length is proportional to $\\int a\\,dt$, which converges because $a$ falls as $e^{H_st}$ [borde2003]. So its light rays reach the steady state after a finite affine distance, as they reach the past boundary of de Sitter's expanding coordinates. In conformal time the universe spans the whole real line for $w > -1/3$, and its conformal diagram is the diamond of Minkowski space with $a = 0$ along its past null edge.",
-  "related": [],
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "Friedmann's universe with its scale factor left free and its space allowed to curve. Its flat case with $H = H_s/(1 + a^q)$ is Murphy's universe."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "The steady state that Murphy's universe leaves in the infinite past, de Sitter space in its flat slices. The viscous fluid holds it exactly when $H = H_s$, a solution Murphy found unstable [murphy1973]."
+    },
+    {
+      "id": "big_rip",
+      "kind": "family",
+      "text": "Another flat universe of one fluid whose pressure breaks the strong energy condition. Phantom energy tears it apart at a finite time in the future, while viscosity carries Murphy's universe out of the steady state in the infinite past."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "Another flat universe with finite curvature at every time, whose contraction turns into expansion at a bounce in loop quantum cosmology."
+    },
+    {
+      "id": "kasner",
+      "kind": "family",
+      "text": "Kasner's vacuum is where Belinskii and Khalatnikov's anisotropic universes of the same viscous fluid begin, at a singularity where the density vanishes [belinskii1975]."
+    }
+  ],
   "references": [
     "belinskii1975",
     "murphy1973",

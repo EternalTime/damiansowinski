@@ -161,6 +161,11 @@
       "id": "oscillating_sphere",
       "kind": "family",
       "text": "A ball of fluid whose density is uniform while its pressure varies with radius, conformally flat as a Friedmann universe is [sussman2000stephani]."
+    },
+    {
+      "id": "murphy_viscous_universe",
+      "kind": "special_case",
+      "text": "The flat Friedmann universe of a fluid whose bulk viscosity is proportional to its density, which George L. Murphy found in 1973 [murphy1973]. Its Hubble rate holds at the constant rate of the steady state in the infinite past and falls to the fluid's own as the universe grows."
     }
   ],
   "references": [
@@ -234,7 +239,8 @@
     "ashtekar2006improved",
     "binetruy2000brane",
     "mukohyama2000",
-    "sussman2000stephani"
+    "sussman2000stephani",
+    "murphy1973"
   ],
   "coordinates": [
     {

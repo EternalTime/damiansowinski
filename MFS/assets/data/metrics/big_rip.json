@@ -51,6 +51,11 @@
       "id": "simpson_visser",
       "kind": "family",
       "text": "A black hole whose singularity opens into a bounce. Kirill Bronnikov and Rahul Kumar Walia found it a source in a phantom scalar field with a potential and a magnetic field, and the phantom field is the kind behind phantom energy [bronnikov2022, caldwell2002]."
+    },
+    {
+      "id": "murphy_viscous_universe",
+      "kind": "family",
+      "text": "A flat universe of one fluid whose viscous pressure tends to minus its energy density in the infinite past, so that it starts from the steady state and slows into the ordinary expansion of the fluid [murphy1973]."
     }
   ],
   "references": [
@@ -63,7 +68,8 @@
     "barrow2004",
     "fernandezjambrina2004",
     "ellis1973",
-    "bronnikov2022"
+    "bronnikov2022",
+    "murphy1973"
   ],
   "coordinates": [
     {

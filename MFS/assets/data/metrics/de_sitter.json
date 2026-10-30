@@ -169,6 +169,11 @@
       "id": "cahen_wallach",
       "kind": "family",
       "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
+    },
+    {
+      "id": "murphy_viscous_universe",
+      "kind": "family",
+      "text": "A flat universe of a viscous fluid that tends to de Sitter space in its flat slices as $t \\to -\\infty$ and slows toward the expansion of the fluid alone [murphy1973]. Its viscous pressure plays the part of the cosmological constant at early times and fades later."
     }
   ],
   "references": [
@@ -218,7 +223,8 @@
     "vilenkin1982",
     "feldbrugge2017",
     "chiba2005",
-    "cahen1970"
+    "cahen1970",
+    "murphy1973"
   ],
   "coordinates": [
     {
