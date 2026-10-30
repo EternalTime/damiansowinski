@@ -36593,6 +36593,118 @@ def vaidya_patel_kerr_check(chart, system):
 CHARTS["vaidya_patel_kerr"] = [lambda s=s: vaidya_patel_kerr(s) for s in VPK_CHARTS]
 
 
+# -- Scalar and electromagnetic Gowdy universes ---------------------------------------
+
+CHARACH_MALIN_CHARTS = tuple(f"{matter}_{time}" for matter in ("scalar", "electromagnetic")
+                            for time in ("areal", "logarithmic"))
+
+
+def charach_malin(system):
+    """The 2016 scalar and 2009 Einstein-Maxwell torus, with dimensionless coordinates.
+
+    The curvature stays off shell; the parameter descriptions state the sourced equations.
+    Numerical derivative data check the matter normalisation without symbolic identities.
+    """
+    matter, time = system.split("_")
+    x = "t" if time == "areal" else r"\tau"
+    parameters = ["L", f"P = P({x},\\theta)", f"\\lambda = \\lambda({x},\\theta)",
+                  (r"\Phi" if matter == "scalar" else r"\chi") + f" = "
+                  + (r"\Phi" if matter == "scalar" else r"\chi") + f"({x},\\theta)"]
+    orbit = r"\left(e^{P}dx^2+e^{-P}dy^2\right)"
+    line = (r"ds^2=L^2\left(\dfrac{e^{\lambda/2}}{\sqrt{t}}\left(-dt^2+d\theta^2\right)+t"
+            + orbit + r"\right)" if time == "areal" else
+            r"ds^2=L^2\left(e^{(\lambda+\tau)/2}\left(-e^{-2\tau}d\tau^2+d\theta^2\right)+e^{-\tau}"
+            + orbit + r"\right)")
+    coords = [x, r"\theta", "x", "y"]
+    reader = vm.Reader(coords, parameters, ())
+    u, v = (reader.symbol[s] for s in coords[:2])
+    P, lam = (reader.parameters[s] for s in ("P", "lambda"))
+    lead = [reader.parameters["L"], lam, P]
+    for f in (lam, P):
+        lead += [sp.diff(f, u), sp.diff(f, v), sp.diff(f, u, 2), sp.diff(f, u, v), sp.diff(f, v, 2)]
+    return {"metric_id": "charach_malin", "system": {
+        "id": system, "name": f"{matter.title()}, {time.title()} Time", "coords": coords,
+        "domains": [x + (r" \in (0,\infty)" if time == "areal" else r" \in (-\infty,\infty)")]
+                   + [s + r" \in [0,2\pi)" for s in coords[1:]],
+        "parameters": parameters, "line_element": line}, "chart_line_element": line,
+        "printer": {"lead": lead, "factors": lead},
+        "check": lambda chart: charach_malin_check(chart, system)}
+
+
+def charach_malin_equations(reader, system):
+    """Sourced wave equations and longitudinal constraints, including their explicit pullback."""
+    # Reader exposes its coordinate symbols through the names passed to its constructor.
+    u = reader.symbol["t" if system.endswith("areal") else r"\tau"]
+    v = reader.symbol[r"\theta"]
+    P, lam = (reader.parameters[s] for s in ("P", "lambda"))
+    scalar = system.startswith("scalar")
+    f = reader.parameters["Phi" if scalar else "chi"]
+    pu, pv, fu, fv = (sp.diff(a, b) for a, b in ((P, u), (P, v), (f, u), (f, v)))
+    log = system.endswith("logarithmic")
+    w = sp.exp(-2 * u) if log else sp.Integer(1)
+    scale = sp.exp(P + u) if log else sp.exp(P) / u
+    waves = {sp.diff(P, u, 2): w * sp.diff(P, v, 2) - (0 if log else pu / u)}
+    if scalar:
+        waves[sp.diff(f, u, 2)] = w * sp.diff(f, v, 2) - (0 if log else fu / u)
+        energy = pu ** 2 + w * pv ** 2 + 2 * (fu ** 2 + w * fv ** 2)
+        momentum = 2 * pu * pv + 4 * fu * fv
+    else:
+        waves[sp.diff(P, u, 2)] += 2 * scale * (fu ** 2 - w * fv ** 2)
+        waves[sp.diff(f, u, 2)] = w * sp.diff(f, v, 2) - pu * fu + w * pv * fv - (fu if log else 0)
+        energy = pu ** 2 + w * pv ** 2 + 4 * scale * (fu ** 2 + w * fv ** 2)
+        momentum = 2 * pu * pv + 8 * scale * fu * fv
+    first = {u: -energy if log else u * energy, v: -momentum if log else u * momentum}
+    return (u, v), (P, lam, f), waves, first
+
+
+def charach_malin_check(chart, system):
+    """Independent matter equations at three rational derivative data, to forty digits."""
+    (u, v), (P, lam, f), waves, first = charach_malin_equations(chart.reader, system)
+    L = chart.reader.parameters["L"]
+    g, gi = chart.geo.g, chart.geo.ginv
+    F = sp.zeros(4)
+    if system.startswith("electromagnetic"):
+        for a in (0, 1):
+            F[a, 3], F[3, a] = L * sp.diff(f, (u, v)[a]), -L * sp.diff(f, (u, v)[a])
+        up = gi * F * gi
+        invariant = sum(F[a, b] * up[a, b] for a in range(4) for b in range(4))
+        source = 2 * (F * gi * F.T - g * invariant / 4)
+        volume = L ** 4 * sp.exp(lam / 2) * (sp.exp(-3 * u / 2) if system.endswith("logarithmic") else sp.sqrt(u))
+        maxwell = [sum(sp.diff(volume * up[a, b], chart.symbols[a]) for a in (0, 1)) / volume
+                   for b in range(4)]
+    else:
+        gradient = sp.Matrix([sp.diff(f, s) for s in chart.symbols])
+        source, maxwell = gradient * gradient.T, []
+    ricci = chart.geo.ricci_ll()
+    for n in (1, 2, 3):
+        point = {u: sp.Rational(n + 2, 4), v: sp.Rational(n, 5), L: sp.Rational(n + 3, 3)}
+        for k, field in enumerate((P, lam, f)):
+            point[field] = sp.Rational(n + k, 9)
+            for i in range(3):
+                for j in range(3 - i):
+                    if i + j:
+                        point[sp.diff(field, u, i, v, j)] = sp.Rational((k + 1) * (n + 2 * i - j), 13)
+        def at(expr):
+            return sp.sympify(expr).subs(point, simultaneous=True).evalf(50)
+        for derivative, value in waves.items():
+            point[derivative] = at(value)
+        for a in (u, v):
+            point[sp.diff(lam, a)] = at(first[a])
+            for b in (u, v):
+                point[sp.diff(lam, a, b)] = at(sp.diff(first[a], b))
+        for a in range(4):
+            for b in range(4):
+                if abs(at(ricci[a][b] - source[a, b])) > 1e-38:
+                    raise AssertionError(f"charach_malin/{system}: matter normalisation at {n}, Ricci {a},{b}")
+        if any(abs(at(value)) > 1e-38 for value in maxwell):
+            raise AssertionError(f"charach_malin/{system}: source-free Maxwell equation at {n}")
+        if system.startswith("electromagnetic") and abs(at(chart.geo.ricci_scalar())) > 1e-38:
+            raise AssertionError(f"charach_malin/{system}: Maxwell trace at {n}")
+
+
+CHARTS["charach_malin"] = [lambda s=s: charach_malin(s) for s in CHARACH_MALIN_CHARTS]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--metric", action="append", choices=sorted(CHARTS), default=[])

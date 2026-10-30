@@ -2552,6 +2552,11 @@ DIMENSIONS.update({("vaidya_patel_kerr", chart): {
                           ("einstein_boyer_lindquist", ("t", "r", "\\alpha", "\\phi")),
                           ("expanding_vaidya", ("u", "\\alpha", "\\beta", "t")))})
 
+DIMENSIONS.update({("charach_malin", system): {
+    ("t" if system.endswith("areal") else r"\tau"): "1", r"\theta": "1", "x": "1", "y": "1",
+    "L": "L", "P": "1", r"\lambda": "1", (r"\Phi" if system.startswith("scalar") else r"\chi"): "1",
+} for system in ("scalar_areal", "scalar_logarithmic", "electromagnetic_areal", "electromagnetic_logarithmic")})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),
