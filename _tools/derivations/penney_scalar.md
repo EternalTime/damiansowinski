@@ -58,3 +58,10 @@ At $b = a/4$ and $\gamma = 1/2$, $g_{rr} - (d\rho/dr)^2$ vanishes where $E^2 - 1
 Beyond $r_e$ the surface is drawn in flat space and inside it in three dimensional Minkowski space, as on Fisher's page, and the two pieces lie level at $r_e$.
 Toward the singular point the surface runs along a light cone, where a chord's proper length is the small difference of its extents in $\rho$ and $Z$, so the profile stops at $r - a = 10^{-7}a$, a circle of radius $0.019\,a$.
 `embedding.penney_scalar` checks the heights against quadratures of $g_{rr} - (d\rho/dr)^2$ written by hand and the harmonic chart against the same circles and heights.
+
+## Step 7: the conformal diagram
+
+On the plane of $t$ and $r$ the metric is $F(-c^2dt^2 + dr_*^2)$ with $F = -g_{tt}$, and $r_*$ of Step 5 is finite at $r = a$ for every $\gamma < 1$, since $F$ vanishes there as $(r - a)^\gamma$.
+So $p, q = \arctan((ct \mp r_*)/\ell)$ with $\ell = 4a$ bring the spacetime into Minkowski's triangle, with $r = a$ on its edge $X = 0$, a timelike singularity with no horizon, as for Fisher's solution.
+The harmonic view draws the same spacetime, $r/a = 1/4 + (3/4)/(1 - e^{-2ku})$ with times and lengths $3/8$ of their count in $a$.
+`conformal.penney_scalar` samples the harmonic chart only to $u = e^{1.5}/k$: beyond it $K^2 - k^2$ is a difference of numbers that agree to within $e^{-2ku}$, and the published $g^{uu}$, which holds its square, loses digits past the check's part in $10^8$ by $u = 6/k$.

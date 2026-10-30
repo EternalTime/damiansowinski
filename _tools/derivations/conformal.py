@@ -17829,6 +17829,104 @@ def fisher_jnw(ck, src):
     return views
 
 
+def _penney_rstar(r):
+    """Penney's tortoise coordinate at a = 1, b = 1/4 and gamma = 1/2, the integral of
+    (a - bE)^2/((a - b)^2 E) from the singularity: with P = sqrt((r - a)(r - b)),
+    r_* = ((a^2 + b^2) P - 2ab (r - a))/(a - b)^2 + (a + b) ln((sqrt(r - a) + sqrt(r - b))/sqrt(a - b))."""
+    r = np.asarray(r, dtype=float)
+    P = np.sqrt((r - 1) * (r - 0.25))
+    return ((17 / 16) * P - 0.5 * (r - 1)) / 0.5625 + 1.25 * np.log((np.sqrt(r - 1) + np.sqrt(r - 0.25)) / math.sqrt(0.75))
+
+
+def penney_scalar(ck, src):
+    """Penney's charged scalar solution at b = a/4 and gamma = 1/2, the whole spacetime, each point a
+    2-sphere, one view for each of its two charts.
+
+    On the plane of t and r the metric is F (-c^2dt^2 + dr_*^2) with F = (a - b)^2 E/(a - bE)^2 and
+    dr_*/dr = 1/F, whose integral from a is finite for every gamma < 1, since F vanishes there as
+    (r - a)^gamma: _penney_rstar is it at gamma = 1/2, zero at r = a and without bound. So
+    p, q = arctan((ct -+ r_*)/l) with l = 4a bring it into Minkowski's triangle with r = a on X = 0,
+    a timelike line where the spheres have zero area and the Kretschmann scalar diverges, and no
+    horizon: the triangle of Fisher's solution. The harmonic chart is drawn at k = 1, h = 1/2 and
+    u_1 = ln 4, the same spacetime with a = 8k/3, so r/a = 1/4 + (3/4)/(1 - e^(-2ku)) and its times
+    and lengths are 3/8 of their count in a; u grows toward the singularity, u -> infinity. One event
+    is checked to land on one point through both maps, and to carry one Kretschmann scalar."""
+    ell = 4.0
+    star = _penney_rstar
+    to_r = {"spherical": lambda r: np.asarray(r, dtype=float),
+            "harmonic": lambda u: 0.25 + 0.75 / (1 - np.exp(-2 * np.asarray(u, dtype=float)))}
+    maps = {"spherical": lambda t, r: mink_pq(t, star(to_r["spherical"](r)), ell),
+            "harmonic": lambda t, u: mink_pq(0.375 * np.asarray(t, dtype=float), star(to_r["harmonic"](u)), ell)}
+    coords = {"spherical": "r", "harmonic": "u"}
+    planes = {cid: Plane(src, "penney_scalar", cid, ("t", coords[cid]), {**EQUATOR, "phi": "0"},
+                         nr.PENNEY_HARMONIC if cid == "harmonic" else nr.PENNEY) for cid in coords}
+    # The harmonic chart is sampled to u = e^1.5: beyond it K^2 - k^2 is a difference of numbers that agree to
+    # within e^(-2ku), and its square in g^uu loses digits past the check's part in 10^8 by u = 6.
+    spans = {"spherical": 1 + np.exp(ck.uniform(-6, 3.5)), "harmonic": np.exp(ck.uniform(-4, 1.5))}
+    for cid, plane in planes.items():
+        ck.chart(f"Penney, {cid}", plane, maps[cid], ck.uniform(-40, 40), spans[cid], lambda t, x: (1, 0))
+        K = plane.kretschmann
+        if cid == "harmonic":
+            ck.diverges("Penney, harmonic: the Kretschmann scalar diverges as u -> infinity", K(0, 6.0), K(0, 9.0))
+        else:
+            ck.diverges("Penney, spherical: the Kretschmann scalar diverges on the edge r = a",
+                        K(0, 1 + 1e-2), K(0, 1 + 1e-3))
+    r = 1 + np.exp(ck.uniform(-6, 3.5))
+    g = planes["spherical"].metric(0 * r, r)
+    h = 1e-6 * (r - 1)
+    ck.limit("Penney: the tortoise coordinate has dr_*/dr = sqrt(-g_rr/g_tt)",
+             (star(r + h) - star(r - h)) / (2 * h) / np.sqrt(-g[2] / g[0]), np.ones_like(r), 1e-6)
+    ck.limit("Penney: the tortoise coordinate vanishes at the singularity", star(1.0), [0.0], 1e-12)
+    # One event, one point and one curvature: the sphere r at the time t, in each chart's own
+    # coordinate and unit, where the harmonic chart's K is (8/3)^4 times smaller in its unit k.
+    t, r = ck.uniform(-20, 20), 1 + np.exp(ck.uniform(-4, 3))
+    u = -np.log((r - 1) / (r - 0.25)) / 2
+    ck.limit("Penney: the harmonic chart lands on the points of the spherical chart",
+             np.array(maps["harmonic"](t / 0.375, u)), np.array(maps["spherical"](t, r)), 1e-9)
+    ck.limit("Penney: the harmonic chart carries the spherical chart's Kretschmann scalar",
+             planes["harmonic"].kretschmann(0 * u, u) * (8 / 3) ** 4 / planes["spherical"].kretschmann(0 * r, r),
+             np.ones_like(r), 1e-8)
+
+    box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    moment = slices.moments("penney_scalar")[0]
+    reach = np.array(moment.reach("spherical", "r"))
+    TS = (-8, -4, -2, 0, 2, 4, 8)
+    table = (
+        ("spherical", "Spherical", "r", (1.5, 2, 4, 8), "$1.5\\,a$, $2a$, $4a$, and $8a$", 2, "$r = 2a$",
+         "$r = a$", lambda r: r, 1),
+        ("harmonic", "Harmonic", "u", (0.0625, 0.125, 0.25, 0.5, 1), "$1/16k$, $1/8k$, $1/4k$, $1/2k$, and $1/k$",
+         0.25, "$u = 1/4k$", "$u \\to \\infty$", lambda r: -np.log((r - 1) / (r - 0.25)) / 2, 1 / 0.375))
+    views = []
+    for cid, name, x, lines, listed, marked, mark, edge, of_r, unit in table:
+        fmap = maps[cid]
+        v = View(cid, name, box, cid)
+        v.fill("region", TRIANGLE)
+        v.fill("cover", TRIANGLE)
+        grid(v, "r", lambda c, t, fmap=fmap, unit=unit: fmap(unit * t, c), lines, S_ALL)
+        grid(v, "t", lambda t, s: mink_pq(t, s, ell), TS, S_POS)
+        v.line("singular", [[[0, -PI], [0, PI]]], zig=True)
+        v.line("scri", [[[0, PI], [PI, 0]], [[PI, 0], [0, -PI]]])
+        for at, text, anchor, dx, dy in (((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6),
+                                         ((0, -PI), "$i^-$", "t", 0, 6)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": rounded(at)})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "tl", dx=5, dy=3)
+        v.label_xt([0, 0.25], edge, "r", dx=-6)
+        label_on(v, fmap(0, marked), mark)
+        v.legend("cover", "the whole spacetime")
+        v.legend("r", f"${x}$ constant, at {listed}")
+        v.legend("t", "$ct$ constant")
+        v.legend("singular", f"the singularity {edge}")
+        v.legend("scri", "null infinity")
+        along = of_r(reach)
+        v.slice(moment, [fmap(0 * along, along)])
+        v.set(settings=("$b = a/4$, $\\gamma = 1/2$, $a = 1$" if cid == "spherical" else
+                        "$h = k/2$, $ku_1 = \\ln 4$, $k = 1$")
+              + "; $p, q = \\arctan((ct \\mp r_*)/4a)$.")
+        views.append(v)
+    return views
+
 def brans_dicke_sphere(ck, src):
     """Brans and Dicke's static sphere at omega = 6 and C = -1/4, where lambda = 1, the whole
     spacetime, each point a 2-sphere, one view for each of its three charts.
@@ -26795,6 +26893,7 @@ DRAWN = {
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
     "fisher_jnw": fisher_jnw,
+    "penney_scalar": penney_scalar,
     "brans_dicke_sphere": brans_dicke_sphere,
     "exponential_metric": exponential_metric,
     "witten_black_hole": witten_black_hole,
@@ -30778,6 +30877,14 @@ CAPTIONS = {
         "$dr_*/du = -k^2e^{2bu}/\\sinh^2(ku)$, and $r_*$ falls to zero as $u \\to \\infty$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The edge $X = 0$ is $u \\to \\infty$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. Spatial infinity $i^0$ is $u = 0$, and the scalar field "
         "$\\phi_0e^{-su}$ grows without bound toward the edge.",
+    ],
+    ("penney_scalar", "spherical"): [
+        "A charged mass with a massless scalar field, each point a 2-sphere. With $r_*$ zero at $r = a$ the "
+        "spacetime fills Minkowski's triangle, whose edge $X = 0$ is a timelike singularity with no horizon.",
+    ],
+    ("penney_scalar", "harmonic"): [
+        "The same spacetime in Bronnikov's harmonic coordinate, each point a 2-sphere, with spatial infinity at "
+        "$u = 0$ and the timelike singularity, with no horizon, at $u \\to \\infty$ on the edge $X = 0$.",
     ],
     ("fisher_jnw", "spherical"): [
         "A static mass with a massless scalar field ($\\gamma = 1/2$), each point in the diagram a 2-sphere of "
