@@ -4031,7 +4031,7 @@
     {
       "id": "misner_brill_lindquist",
       "kind": "family",
-      "text": "At zero momenta and spins, the puncture construction reduces to Brill and Lindquist's neutral data. The inversion construction reduces to the time-symmetric throat geometry of Misner [cook2000, brandt1997]."
+      "text": "At zero momenta and spins, the puncture construction reduces to Brill and Lindquist's neutral data. The inversion construction reduces to the time symmetric throat geometry of Misner [cook2000, brandt1997]."
     },
     {
       "id": "schwarzschild",
@@ -4041,7 +4041,7 @@
     {
       "id": "einstein_rosen_bridge",
       "kind": "family",
-      "text": "The original inversion-symmetric data have two isometric asymptotically flat ends joined through a throat [bowen1980]."
+      "text": "The original inversion symmetric data have two isometric asymptotically flat ends joined through a throat [bowen1980]."
     },
     {
       "id": "kerr",
