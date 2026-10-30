@@ -13,7 +13,11 @@ No quotation or equation is attributed to an unread page.
 The equations below follow the completely read texts of Delgaty and Lake, arXiv:gr-qc/9809013v1, Thirukkanesh and Maharaj, arXiv:0904.0781v1, and Khugaev, Dadhich, and Molina, arXiv:1603.07118v1.
 The first reproduces the named metrics and records their equivalences.
 The second derives the neutral field equations and the complete Finch-Skea and Durgapal-Bannerji solutions.
-The third derives the spheroidal spatial geometry and identifies the original Vaidya-Tikekar choice as $K=2$ in its convention $g_{rr}=(1+Kr^2/L^2)/(1-r^2/L^2)$.
+The third derives the spheroidal spatial geometry and identifies the original Vaidya-Tikekar choice as $K=+2$ in its convention $g_{rr}=(1+Kr^2/L^2)/(1-r^2/L^2)$.
+In arXiv:1603.07118v1, PDF page 3, first paragraph, the original case is $K=2$; PDF page 4, equation (8), uses the plus sign and defines $\alpha=R^{-2}$ immediately afterwards.
+The curvature length $R$ in that source is denoted $L$ here.
+Writing $g_{rr}=(1-K_-r^2/L^2)/(1-r^2/L^2)$ assigns $K_-=-K=-2$ to the same geometry.
+Its lapse, density, pressure, and matching conditions are unchanged by this relabeling.
 
 ## Metric potentials and matter
 
