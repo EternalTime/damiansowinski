@@ -22073,6 +22073,14 @@ def kowalski_glikman(ck, src):
 DRAWN["kowalski_glikman"] = kowalski_glikman
 CAPTIONS[("kowalski_glikman", "plane")] = _kowalski_glikman.EMBEDDING_CAPTION
 
+import shell_void as _shell_void
+
+def shell_void(ck, src):
+    return _shell_void.embedding_views(ck, src, sys.modules[__name__])
+
+DRAWN["shell_void"] = shell_void
+CAPTIONS.update(_shell_void.embedding_captions())
+
 if __name__ == "__main__":
     sys.exit(main())
 

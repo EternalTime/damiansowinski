@@ -19088,6 +19088,11 @@ hm_drawings.register_null(sys.modules[__name__])
 # Euclidean coordinate charts have positive definite metrics and no nonzero null tangent.
 NOT_DRAWN = {("hawking_moss", system): reason for system, reason in hm_drawings.NOT_DRAWN.items()}
 
+import shell_void as _shell_void
+DECLARED_FUNCTIONS.update(_shell_void.declared_functions())
+DIAGRAMS.extend(_shell_void.diagram_specs(Diagram, EQUATOR, SIDEWAYS))
+CAPTIONS.update(_shell_void.diagram_captions())
+CLOSED_FORMS.update(_shell_void.null_forms())
 
 if __name__ == "__main__":
     sys.exit(main())

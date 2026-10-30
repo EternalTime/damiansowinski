@@ -18781,5 +18781,12 @@ def kowalski_glikman(ck, src):
 
 DRAWN["kowalski_glikman"] = kowalski_glikman
 
+import shell_void as _shell_void
+
+def shell_void(ck, src):
+    return _shell_void.curvature_views(ck, src, sys.modules[__name__])
+
+DRAWN["shell_void"] = shell_void
+
 if __name__ == "__main__":
     sys.exit(main())

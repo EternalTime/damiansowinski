@@ -15516,8 +15516,9 @@ def shell_void(system):
     else:
         coords, params = ["t", "r", r"\theta", r"\phi"], ["a = a(t)", "k", "R = R(t)"]
         line = r"ds^2=-dt^2+a^2\left(\dfrac{dr^2}{1-kr^2}+r^2" + sphere + r"\right)"
-    return {"metric_id": "shell_void", "system": {"id": system, "coords": coords,
-            "parameters": params, "line_element": line}, "chart_line_element": line,
+    return {"metric_id": "shell_void", "system": {"id": system, "name": "Minkowski Interior" if system == "interior" else "Dust Friedmann Exterior",
+            "coords": coords, "domains": next(c["domains"] for c in json.loads((METRICS / "shell_void.json").read_text())["coordinates"] if c["id"] == system),
+            "parameters": params, "line_element": line}, "chart_line_element": line, "printer": {},
             "check": lambda chart: shell_void_check(chart, system)}
 
 

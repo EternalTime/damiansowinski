@@ -264,6 +264,8 @@ REGIONS = {
                "painleve_gullstrand is exact for its line element as written, which is "
                "a vacuum only to first order in the spin",
     },
+    "shell_void": {"regions": [["interior"], ["exterior"]],
+                   "why": "an empty cavity and a dust exterior separated by an accreting shell"},
     "israel_shell": {
         "regions": [["interior"], ["exterior", "exterior_ingoing"]],
         "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
@@ -456,6 +458,9 @@ OVERRULED = {
         False, "behind the wave the space is Minkowski's and its chart is spherical, but the front carries "
                "the two ends of the string and the space ahead of it is the string's cone, so the "
                "spacetime keeps only the rotations about the string"),
+    ("shell_void", "conformally flat"): (False, "the dust shell has distributional Weyl curvature although both smooth bulks are conformally flat"),
+    ("shell_void", "stationary"): (False, "the accreting shell moves through the two smooth regions"),
+    ("shell_void", "static"): (False, "the accreting shell moves through the two smooth regions"),
     ("israel_shell", "vacuum"): (
         False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
                "jumps across it; the spacetime has matter on r = R"),

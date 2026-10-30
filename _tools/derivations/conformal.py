@@ -31938,5 +31938,9 @@ hm_drawings.register_conformal(sys.modules[__name__])
 # An axial conformal diamond cannot represent its full causal identifications.
 NOT_DRAWN.add("kowalski_glikman")
 
+# The shell initial value problem fixes only a finite future segment; its past extension
+# and the global exterior branch remain free, so there is no unique causal boundary.
+NOT_DRAWN.add("shell_void")
+
 if __name__ == "__main__":
     sys.exit(main())

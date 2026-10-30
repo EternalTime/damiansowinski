@@ -5009,3 +5009,14 @@ eb_drawings.register_slices(sys.modules[__name__])
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)
+
+
+def _shell_void_slice(system):
+    import shell_void
+    return shell_void.flat_slice_marks(sys.modules[__name__], system)
+
+FLAT.update({
+    ("shell_void", "interior", "through"): lambda: _shell_void_slice("interior"),
+    ("shell_void", "exterior", "radial"): lambda: _shell_void_slice("exterior"),
+})
+FLAT_METRICS.add("shell_void")
