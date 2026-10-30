@@ -118,6 +118,11 @@
       "id": "cahen_wallach",
       "kind": "special_case",
       "text": "The pp-wave whose profile is quadratic across the wave and the same on every front, which makes its curvature covariantly constant [blau2003homogeneous]."
+    },
+    {
+      "id": "hauser_wave",
+      "kind": "family",
+      "text": "Hauser's twisting wave, a type N vacuum whose rays spread and twist [godazgar2021]."
     }
   ],
   "references": [
@@ -163,7 +168,8 @@
     "sachs1962",
     "blau2002",
     "lin2004",
-    "blau2003homogeneous"
+    "blau2003homogeneous",
+    "godazgar2021"
   ],
   "coordinates": [
     {

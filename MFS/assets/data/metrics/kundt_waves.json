@@ -61,6 +61,11 @@
       "id": "bertotti_robinson",
       "kind": "family",
       "text": "Another member of Kundt's class that is no wave, a universe filled with a uniform electromagnetic field [podolskybelan2004]."
+    },
+    {
+      "id": "hauser_wave",
+      "kind": "family",
+      "text": "Hauser's twisting wave, the type N vacuum whose rays both spread and twist, the one of its kind known in closed form [godazgar2021]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "ozsvath1985",
     "siklos1985",
     "pravda2002",
-    "coley2002"
+    "coley2002",
+    "godazgar2021"
   ],
   "coordinates": [
     {

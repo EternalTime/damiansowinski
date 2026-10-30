@@ -80,6 +80,11 @@
       "id": "newman_tamburino",
       "kind": "family",
       "text": "The same untwisted, spreading rays allowed to shear, every such vacuum found by Ezra Newman and Louis Tamburino in 1962 [newman1962tamburino]."
+    },
+    {
+      "id": "hauser_wave",
+      "kind": "family",
+      "text": "Hauser's twisting wave, the one vacuum of type N whose rays spread and twist that is written in closed form [godazgar2021]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "podolsky1999expanding",
     "bondi1962",
     "sachs1962",
-    "newman1962tamburino"
+    "newman1962tamburino",
+    "godazgar2021"
   ],
   "coordinates": [
     {
