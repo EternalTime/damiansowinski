@@ -60,4 +60,21 @@ The generator's chart checks will carry these source identities when the page is
 
 ## Drawings
 
-Drawing generation follows the chart implementation and its source checks.
+The page-local generator `chodos_detweiler.py` defines both charts.
+Its pointwise checks compare the five source coefficients and the squared proper circumferences at three rational points with distinct values of $c,t,t_0,\tau,L$.
+The chart printer computed every tensor and read its printed values back before writing either chart.
+Both charts publish $R=0$ and $K=9/(2c^4t^4)$.
+The chart-generation pass took 0.392 seconds.
+
+The drawing units are $ct_0=1$, with $L=2\pi ct_0$ and $\tau=4t_0$.
+These values set the presentation scale and the constant coordinate normalization.
+They introduce no new cosmological parameters.
+The spacetime planes are $t,x$ and $t,w$, and $t,X$ and $t,W$ in the rescaled chart.
+The two ends of each drawn spatial period are identified.
+
+A single conformal plane cannot represent all four spatial directions: the null slopes of an expanding circle and of the shrinking circle have different time dependence.
+As for the Kasner page, this absence is registered in the conformal generator's `NOT_DRAWN`.
+The embedding is a fixed-time cylinder cut from the $x,w$ two-torus, with $y=z=0$ and $0\le x\le\pi ct_0<L$.
+Its full circular direction is $w$, whose period is $2\pi ct_0$ at the chosen $L$.
+The cylinder is an isometric embedding of this cut alone; identifying its two end circles would restore the complete flat two-torus.
+Its displayed height increases along $x$, and its radius measures the physical size of the fifth circle.
