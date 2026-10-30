@@ -50,3 +50,18 @@ The defect tends to 4r² at the axis; its apparent 0/0 in the first expression i
 The existing half_angles helper rewrites both expressions before quadrature, so the integrand is evaluated continuously at the axis without sampling a singular expression.
 No shared Slice implementation is changed and neither endpoint is entered as a horizon in Slice.exact.
 The local finite-endpoint slope uses rho'=1 at the axis and a real height derivative tending to zero at the numerically located outer endpoint.
+
+## Drawn domains and curvature
+
+The spacetime diagrams unroll the cylinder of t and φ at half and three halves of the first null radius on each branch.
+Their null slopes are c dt/dφ=-H-D and D-H; the curve moving right at half that radius is a circular null geodesic.
+The diagrams identify their angular edges and distinguish a closed circular timelike curve from a freely falling light ray.
+Every drawing fixes ω=1; the hyperbolic branch also fixes m=1 and the trigonometric branch k=1.
+The trigonometric chart covers the first open polar interval 0<r<π/k; the axis is regular as a limiting point of its spatial embedding.
+The curvature generator reads both scalars from the stored chart, with no curvature recomputation.
+It draws each scalar against proper radius on 0≤ωr≤2, separately on each branch, and checks spatial constancy at radii on both sides of the first null circle.
+The resulting Kretschmann values are 24, 44 and 72 in units of ω⁴, and the Ricci values are 0, 2 and 4 in units of ω², for the hyperbolic, linear and trigonometric drawing parameters respectively.
+These constant scalars show that the first null circle is not a curvature singularity.
+The conformal generator records this spacetime in NOT_DRAWN because a global time-oriented radial conformal square does not encode its closed angular timelike curves.
+All views are stationary snapshots, so no movie or stack registry entry is required.
+The shared view_text count is below 400 for every view.
