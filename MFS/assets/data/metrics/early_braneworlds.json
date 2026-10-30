@@ -1,0 +1,74 @@
+{
+  "id": "early_braneworlds",
+  "name": "Early Braneworlds",
+  "short_name": "Early Braneworlds",
+  "description": "Vortices, scalar walls, electric trapping, vacuum geometries, and magnetic membranes in three to six dimensions, developed from 1982 to 1987.",
+  "tags": [
+    "brane",
+    "higher dimensions",
+    "Kaluza-Klein",
+    "Einstein equations",
+    "electromagnetic field",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,\\ldots,+)",
+  "convention": "We keep factors of $c$ explicit and take the Ricci tensor as $R_{AB}=R^C{}_{ACB}$. The vortex and scalar wall have flat backgrounds. Each gravity solution carries its own matter and cosmological constant.",
+  "history": "A vortex in six dimensional flat spacetime was Keiichi Akama's model of our four dimensional world [akama1983pregeometry]. He presented the construction at the Nara symposium on gauge theory and gravitation in 1982; the proceedings appeared in 1983. The Higgs field and gauge field form a vortex with two transverse directions, confining low energy excitations near its four dimensional core. Akama allowed the core to bend gently and derived an effective Einstein action from quantum fluctuations around it [akama1983pregeometry].¶Valery Rubakov and Mikhail Shaposhnikov used a scalar domain wall to trap massless chiral fermions in five dimensions in 1983 [rubakov1983, rubakov2001extra]. A Yukawa interaction makes the fermion wavefunction decay as the scalar field approaches its two vacuum values away from the wall. They neglected gravitational backreaction in this construction [rubakov2001extra]. In a separate calculation that year, they solved the six dimensional vacuum Einstein equations with a cosmological constant and found warped solutions with a flat four dimensional factor [rubakov1983cosmological, lavrelashvili2012]. The transverse surface reaches a finite radial endpoint where the four dimensional warp factor vanishes and the angular circumference diverges. George Lavrelashvili found scalar perturbations that grow around this solution [lavrelashvili2012].¶Matt Visser used gravity itself as the trapping force in 1985 [visser1985]. His example has flat spatial slices and a clock rate that grows with distance from a central hypersurface. A constant electric field along the extra direction and a cosmological constant support the geometry. Massive geodesics have turning points in the extra direction, and scalar waves have bound states. Time and the three ordinary spatial coordinates carry different scale factors, so the background breaks Lorentz symmetry along the hypersurfaces [visser1985].¶Euan J. Squires studied gravitational trapping in vacuum geometries with a cosmological constant in 1986 [squires1986]. He allowed the time coordinate and each spatial coordinate to have their own scale factor along an extra direction. The field equations tie these factors to powers of hyperbolic sine and cosine, with two constraints on their exponents [bannister1987]. He investigated scalar bound states and an approximately flat spacetime of one fewer dimension [squires1986, bannister1987]. Peter Anthony Bannister worked through the three dimensional example in 1987, with a hyperbolic cosine lapse and a hyperbolic sine spatial scale factor [bannister1987].¶Gary Gibbons and David Wiltshire constructed smooth magnetic membranes in Einstein-Maxwell theory in 1987 [gibbonswiltshire1987]. Their four dimensional Minkowski membrane sits inside a six dimensional spacetime, with two noncompact transverse directions. Magnetic flux curves the transverse surface: its circles grow away from the axis, reach a maximum circumference, and narrow toward zero at infinite proper distance. The surface has infinite area and is geodesically complete. They also allowed curvature on the membrane and a cosmological constant in the surrounding spacetime [gibbonswiltshire1987].¶The magnetic membrane supports localized chiral fermions [gibbonswiltshire1987]. With a quantized flux, the number of normalizable fermion zero modes is set by the flux integer. For the flat membrane with vanishing bulk cosmological constant, neutral scalar waves include a continuum extending to arbitrarily small mass. A positive cosmological constant on the membrane, or a negative one in the bulk, changes the scalar spectrum and permits a mass gap under the boundary conditions Gibbons and Wiltshire specified. The flat magnetic solution is stable against the radial perturbations they considered; stability of the curved extensions requires a separate analysis [gibbonswiltshire1987].",
+  "related": [
+    {
+      "id": "randall_sundrum",
+      "kind": "programme",
+      "text": "The four dimensional slices share a warp factor in Randall and Sundrum's geometry. Visser's electric example warps time alone [visser1985]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "The scalar wall used for five dimensional fermion trapping belongs to the same defect family as a gravitating domain wall [rubakov1983, rubakov2001extra]."
+    },
+    {
+      "id": "melvin",
+      "kind": "family",
+      "text": "Gibbons and Wiltshire extended Melvin's magnetic flux tube to membranes in higher dimensions [gibbonswiltshire1987]."
+    },
+    {
+      "id": "ads_soliton",
+      "kind": "family",
+      "text": "Bannister's regular axis in the Squires family has the geometry of the five dimensional anti-de Sitter soliton [bannister1987]."
+    }
+  ],
+  "references": [
+    "akama1983pregeometry",
+    "rubakov1983",
+    "rubakov2001extra",
+    "rubakov1983cosmological",
+    "lavrelashvili2012",
+    "visser1985",
+    "squires1986",
+    "bannister1987",
+    "gibbonswiltshire1987"
+  ],
+  "coordinates": [
+    {
+      "id": "scalar_wall",
+      "name": "Scalar Wall Background",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z",
+        "w"
+      ],
+      "domains": [
+        "t \\in (-\\infty,\\infty)",
+        "x \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)",
+        "w \\in (-\\infty,\\infty)"
+      ],
+      "parameters": [],
+      "convention": "We use time $t$, Cartesian lengths $x$, $y$, and $z$ along the wall, and the transverse length $w$. We take components in $x^0=ct$. Gravity is neglected in the scalar wall construction.",
+      "line_element": "ds^2=-c^2dt^2+dx^2+dy^2+dz^2+dw^2"
+    }
+  ]
+}
