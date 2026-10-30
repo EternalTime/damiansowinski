@@ -1,0 +1,136 @@
+{
+  "id": "static_five_soliton",
+  "name": "Static soliton of five dimensional gravity",
+  "short_name": "Static five dimensional soliton",
+  "description": "A neutral static vacuum family with a radially varying fifth dimension.",
+  "tags": [
+    "vacuum",
+    "stationary",
+    "static",
+    "five-dimensional",
+    "Kaluza-Klein",
+    "scalar field",
+    "naked singularity"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "We take $x^0=ct$ for components and keep $c$ explicit in the line element. The fifth direction is spacelike, and the exponents obey $a^2+ab+b^2=1$.",
+  "history": "The circumference of a compact fifth dimension varies with distance from a static spherical source. Its local size acts as a scalar field in four dimensions, coupled to the curvature of spacetime [kramer1971projective]. The five dimensional geometry satisfies the vacuum Einstein equations, and its diagonal form carries zero electric and magnetic charge [lake2006static]. The circle approaches a constant circumference at spatial infinity [lake2006static].¶Dietrich Kramer constructed the static spherical family in 1971 while studying projective field theory [kramer1971projective]. He related its scalar field equations to those of a massless scalar through a conformal rescaling and wrote the spherical solution explicitly. Alan Chodos and Steven Detweiler obtained the broader family of solutions with spherical symmetry and a translation symmetry along the fifth dimension in 1982 [chodos1982]. Their time independent solutions allow electric and scalar charge in addition to mass [overduin1997].¶David J. Gross and Malcolm J. Perry wrote the neutral family in isotropic coordinates in 1983 [grossperry1983, lake2006static]. Aharon Davidson and David A. Owen studied the changing size of its compact fifth dimension in 1985 [davidsonowen1985]. The family has a length scale and one independent dimensionless parameter [lake2006static]. For a radial coordinate $r$ and a positive length $r_s$, write $f=1-r_s/r$; the time and circle coefficients are $g_{tt}=-f^a$ and $g_{yy}=f^b$, with $a^2+ab+b^2=1$ [overduin1997].¶Two points on this ellipse have a regular inner boundary [lake2006static]. At $a=1$, $b=0$, the fifth dimension has constant size and the geometry is Schwarzschild's black string. Its horizon extends along the fifth dimension. At $a=0$, $b=1$, time separates from the Euclidean Schwarzschild geometry, and the circle closes smoothly at $r=r_s$ when the coordinate $y$ has period $4\\pi r_s$. The latter solution has constant $g_{tt}=-1$, so a particle released from rest remains at rest.¶At the other points, curvature diverges at the inner endpoint, and radial light rays expose the singularity to the exterior [lake2006static]. Kayll Lake classified these geometries in 2006 using coordinates adapted to their two orthogonal Killing vectors. The area of the symmetry spheres may shrink to zero or pass through a minimum before growing without bound toward the singularity. Reduction along the fifth dimension and a conformal rescaling yield the spherical geometry of a massless scalar field, whose exponent $\\gamma=a+b/2$ obeys $\\gamma^2=1-3b^2/4$ [kramer1971projective].",
+  "references": [
+    "kramer1971projective",
+    "lake2006static",
+    "chodos1982",
+    "overduin1997",
+    "grossperry1983",
+    "davidsonowen1985"
+  ],
+  "coordinates": [
+    {
+      "id": "spherical",
+      "name": "Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi",
+        "y"
+      ],
+      "convention": "We use $(t,r,\\theta,\\phi,y)$, with $t$ a time, $r$ and $y$ lengths, and $\\theta$ and $\\phi$ angles.",
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Positive length scale."
+        },
+        {
+          "symbol": "a",
+          "description": "Dimensionless time exponent, with $a^2+ab+b^2=1$."
+        },
+        {
+          "symbol": "b",
+          "description": "Dimensionless circle exponent on the same ellipse."
+        },
+        {
+          "symbol": "f = 1 - \\dfrac{r_s}{r}",
+          "description": "Dimensionless radial function."
+        }
+      ]
+    },
+    {
+      "id": "isotropic",
+      "name": "Isotropic",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\theta",
+        "\\phi",
+        "y"
+      ],
+      "convention": "We use $(t,\\rho,\\theta,\\phi,y)$, with $t$ a time, $\\rho$ and $y$ lengths, and $\\theta$ and $\\phi$ angles.",
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Positive length scale."
+        },
+        {
+          "symbol": "a",
+          "description": "Dimensionless time exponent, with $a^2+ab+b^2=1$."
+        },
+        {
+          "symbol": "b",
+          "description": "Dimensionless circle exponent on the same ellipse."
+        },
+        {
+          "symbol": "h = \\dfrac{4\\rho-r_s}{4\\rho+r_s}",
+          "description": "Dimensionless radial function."
+        }
+      ]
+    },
+    {
+      "id": "lake",
+      "name": "Lake",
+      "coords": [
+        "t",
+        "h",
+        "\\theta",
+        "\\phi",
+        "y"
+      ],
+      "convention": "We use $(t,h,\\theta,\\phi,y)$, with $t$ a time, $y$ a length, and $h$, $\\theta$, and $\\phi$ dimensionless.",
+      "parameters": [
+        {
+          "symbol": "r_s",
+          "description": "Positive length scale."
+        },
+        {
+          "symbol": "a",
+          "description": "Dimensionless time exponent, with $a^2+ab+b^2=1$."
+        },
+        {
+          "symbol": "b",
+          "description": "Dimensionless circle exponent on the same ellipse."
+        }
+      ]
+    }
+  ],
+  "related": [
+    {
+      "id": "black_string",
+      "kind": "special_case",
+      "text": "At $a=1$, $b=0$, the circle has constant size and the solution is the uniform Schwarzschild black string [lake2006static]."
+    },
+    {
+      "id": "fisher_jnw",
+      "kind": "family",
+      "text": "Reduction along $y$ and a conformal rescaling produce the massless scalar geometry with exponent $\\gamma=a+b/2$, for $0<\\gamma<1$ [kramer1971projective]."
+    },
+    {
+      "id": "kaluza_klein_black_hole",
+      "kind": "family",
+      "text": "The norm of the fifth translation acts as a scalar field in four dimensions, and the mixed metric components supply the gauge potential [overduin1997]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "Gross and Perry studied the neutral scalar family and magnetic monopoles in five dimensional vacuum gravity [grossperry1983, lake2006static]."
+    }
+  ]
+}
