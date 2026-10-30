@@ -3682,6 +3682,15 @@ FLAT = {
         "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
     ("lqc_bounce", "harmonic", "taux"): lambda: one(
         "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
+    # Murphy's moments are moments of the scale factor, the time of two charts; on the cosmic chart the
+    # same moment is t = ln a + a^2/2 in units of 1/H_s, for q = 2.
+    ("murphy_viscous_universe", "scale_factor_spherical", "radial"): lambda: one(
+        "murphy_viscous_universe", lambda m: along(m.time, *m.reach("scale_factor_spherical", "r"))),
+    ("murphy_viscous_universe", "scale_factor", "ax"): lambda: one(
+        "murphy_viscous_universe", lambda m: across(m.time, *m.reach("scale_factor_spherical", "r"))),
+    ("murphy_viscous_universe", "cosmic", "tx"): lambda: one(
+        "murphy_viscous_universe",
+        lambda m: across(math.log(m.time) + m.time ** 2 / 2, *m.reach("scale_factor_spherical", "r"))),
     # Kopczynski and Trautman's universe at each moment of its movie, out to the dust at r = l on each chart.
     ("kopczynski_trautman", "comoving_spherical", "radial"): lambda: one(
         "kopczynski_trautman", lambda m: along(m.time, *m.reach("comoving_spherical", "r"))),

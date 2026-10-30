@@ -3244,6 +3244,7 @@ class StacksAndMovies(unittest.TestCase):
     MOVIES = chosen_entries({("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("lqc_bounce", "universe"): "$t$",
+              ("murphy_viscous_universe", "universe"): "$a$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$",
@@ -4605,6 +4606,14 @@ class Slices(unittest.TestCase):
             system = key.split("/")[1]
             height = math.asinh(t) if system == "harmonic" else t
             return (lambda X: height), ([lo, hi] if system == "comoving_spherical" else [-hi, hi])
+        if key.startswith("murphy_viscous_universe/"):
+            # A moment of the scale factor a, out to the observer at r = c/H_s: the line of that a on the
+            # scale factor charts, through the centre on the Cartesian one, and of H_s t = ln a + a^2/2 on
+            # the cosmic chart, for q = 2.
+            lo, hi = self.reach(surface)
+            system = key.split("/")[1]
+            height = math.log(t) + t * t / 2 if system == "cosmic" else t
+            return (lambda X: height), ([lo, hi] if system == "scale_factor_spherical" else [-hi, hi])
         if key == "ppn_metric/cartesian/axis":
             # The line through the body's centre: the equator at t = 0 on both sides of the body.
             lo, hi = self.reach(surface)
@@ -6240,6 +6249,11 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
                                                 - 2 * lqc_bounce_eta(t)), 2e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "murphy_viscous_universe":
+                        # p, q = arctan(eta -+ x), so tan p + tan q = 2 eta = 2(a - 1/a) on a moment of a, for q = 2.
+                        for X, T in points:
+                            self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
+                                                - 2 * (t - 1 / t)), 2e-3, f"{where} at {(X, T)}")
                     elif metric_id == "kopczynski_trautman":
                         # p, q = arctan((eta -+ r)/l), so tan p + tan q = 2 eta(t)/l on a moment of the dust's time.
                         for X, T in points:

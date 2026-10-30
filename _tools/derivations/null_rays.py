@@ -5107,7 +5107,7 @@ DIAGRAMS = [
             lines=(("shell", "x0", "1", MURPHY_TURN),)),
     Diagram("murphy_viscous_universe", "scale_factor_spherical", "radial", "$a$ and $r$", ("a", "r"), (0, 3, 0, 3),
             "$r\\;[c/H_s]$", "$a$", MURPHY, EQUATOR, tau="a", areal=True, lines=(("shell", "x0", "1", MURPHY_TURN),)),
-    Diagram("murphy_viscous_universe", "cosmic", "tx", "$t$ and $x$", ("t", "x"), (-3, 3, -3, 3),
+    Diagram("murphy_viscous_universe", "cosmic", "tx", "$t$ and $x$", ("t", "x"), (-4.5, 4.5, -3, 6),
             "$x\\;[c/H_s]$", "$t\\;[1/H_s]$", MURPHY, {"y": "0", "z": "0"}, families=SIDEWAYS,
             functions={"a": "sqrt(LambertW(exp(2*t)))"}, input=MURPHY_INPUT,
             lines=(("shell", "x0", "1/2", MURPHY_TURN),)),

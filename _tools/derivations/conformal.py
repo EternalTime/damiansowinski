@@ -17059,6 +17059,90 @@ def lqc_bounce(ck, src):
     return [v]
 
 
+def murphy_viscous_universe(ck, src):
+    """Murphy's universe with viscosity for radiation, q = 2, in units of c/H_s.
+
+    The metric is a^2(-d eta^2 + dl^2) with c d eta = c dt/a = (1 + a^2) da/a^2, so eta = a - 1/a,
+    which runs over the whole real line: p, q = arctan(eta -+ r) bring the universe onto the whole of
+    Minkowski's half diamond, and the plane y = z = 0 of the Cartesian charts onto the whole diamond.
+    The proper time of the cosmic chart is a^2 = W(e^(2t)), Lambert's W. The past null edges are
+    a -> 0, the steady state, where the published Kretschmann scalar is checked to tend to de
+    Sitter's 24 (H_s = c = 1) and finite all over the plane; the future null edges are null infinity,
+    where eta -> infinity as a."""
+    pars = {"q": 2, "H_s": 1}
+    sph = Plane(src, "murphy_viscous_universe", "scale_factor_spherical", ("a", "r"), EQUATOR, pars)
+    car = Plane(src, "murphy_viscous_universe", "scale_factor", ("a", "x"), {"y": "0", "z": "0"}, pars)
+    cos = Plane(src, "murphy_viscous_universe", "cosmic", ("t", "x"), {"y": "0", "z": "0"}, pars,
+                functions={"a": "sqrt(LambertW(exp(2*t)))"})
+
+    def eta_a(a):
+        a = np.asarray(a, dtype=float)
+        return a - 1 / a
+
+    def a_of_t(t):
+        return np.sqrt(np.real(special.lambertw(np.exp(np.asarray(t, dtype=float) * 2))))
+
+    def on_a(a, x):
+        return mink_pq(eta_a(a), x)
+
+    def on_t(t, x):
+        return mink_pq(eta_a(a_of_t(t)), x)
+    ck.chart("Murphy scale factor, spherical", sph, on_a, ck.uniform(0.05, 8), ck.uniform(0.01, 6), lambda a, r: (1, 0))
+    ck.chart("Murphy scale factor, Cartesian", car, on_a, ck.uniform(0.05, 8), ck.uniform(-6, 6), lambda a, x: (1, 0))
+    ck.chart("Murphy cosmic time", cos, on_t, ck.uniform(-4, 4), ck.uniform(-6, 6), lambda t, x: (1, 0))
+    t = ck.uniform(-4, 4, 200)
+    a = a_of_t(t)
+    ck.limit("Murphy: the cosmic time is ln a + a^2/2", np.log(a) + a ** 2 / 2, t, 1e-9)
+    ck.limit("Murphy: the conformal time runs to -infinity as a -> 0 and to infinity as a grows",
+             [eta_a(1e-9) * 1e-9, eta_a(1e9) * 1e-9], [-1.0, 1.0], 1e-9)
+    K = sph.kretschmann
+    everywhere = K(ck.uniform(0.01, 8, 400), ck.uniform(0, 6, 400))
+    ck.finite("Murphy: the Kretschmann scalar is finite all over the plane", everywhere)
+    ck.limit("Murphy: the Kretschmann scalar tends to de Sitter's 24 as a -> 0", K(np.full(1, 1e-6), np.ones(1)), [24.0], 1e-6)
+
+    views = []
+    for vid, label, system, fmap, times, half in (
+            ("spherical", "Scale Factor, Spherical", "scale_factor_spherical", on_a, (0.25, 0.5, 2, 4), True),
+            ("cartesian", "Scale Factor", "scale_factor", on_a, (0.25, 0.5, 2, 4), False),
+            ("cosmic", "Cosmic Time", "cosmic", on_t, (-2, -1, 2, 4), False)):
+        box = [-0.35, PI + 0.35, -PI - 0.25, PI + 0.25] if half else [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+        v = View(vid, label, box, system)
+        shape = TRIANGLE if half else DIAMOND
+        v.fill("region", shape)
+        v.fill("cover", shape)
+        span = S_POS if half else S_ALL
+        grid(v, "r", lambda r, s, fmap=fmap: fmap(s, r), (1, 2, 4) if half else (-4, -2, -1, 1, 2, 4),
+             spread(0, np.inf, 500, 12) if system != "cosmic" else S_ALL)
+        grid(v, "t", fmap, times, span)
+        grid(v, "surface", fmap, (1 if system != "cosmic" else 0.5,), span)
+        future = [[[0, PI], [PI, 0]]] + ([] if half else [[[0, PI], [-PI, 0]]])
+        past = [[[PI, 0], [0, -PI]]] + ([] if half else [[[-PI, 0], [0, -PI]]])
+        v.line("scri", future)
+        v.line("chartedge", past)
+        if half:
+            v.line("centre", [[[0, -PI], [0, PI]]])
+            v.label_xt([0, 0.25], "$r = 0$", "r", dx=-6)
+            v.legend("centre", "$r = 0$")
+        for at, text, anchor, dx, dy in ((((PI, 0), "$i^0$", "l", 6, 0), ((0, PI), "$i^+$", "b", 0, -6))
+                                         + ((((-PI, 0), "$i^0$", "r", -6, 0),) if not half else ())):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.legend("scri", "null infinity $\\mathscr{I}^+$")
+        v.legend("chartedge", "$a \\to 0$, the steady state, at a finite affine distance")
+        v.legend("cover", "the whole spacetime")
+        v.legend("r", "comoving observers")
+        v.legend("t", "$a$ constant" if system != "cosmic" else "$t$ constant")
+        v.legend("surface", "$a = 1$, the end of the acceleration")
+        for m in slices.moments("murphy_viscous_universe"):
+            lo, hi = m.reach("scale_factor_spherical", "r")
+            along = np.linspace(lo, hi, 60) if half else np.linspace(-hi, hi, 120)
+            v.slice(m, [mink_pq(np.full_like(along, float(eta_a(m.time))), along)])
+        v.set(settings="$q = 2$, $H_s = 1$, $p, q = \\arctan(\\eta \\mp x)$.")
+        views.append(v)
+    return views
+
+
 def kopczynski_trautman(ck, src):
     """Kopczynski and Trautman's universe, in units of l.
 
@@ -27025,6 +27109,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "lqc_bounce": lqc_bounce,
+    "murphy_viscous_universe": murphy_viscous_universe,
     "kopczynski_trautman": kopczynski_trautman,
     "small_universes": small_universes,
     "poincare_dodecahedral": poincare_dodecahedral,
@@ -30588,6 +30673,16 @@ CAPTIONS = {
         "Every edge but the axis is at infinity: a light ray reaches $\\rho \\to \\infty$ only at an infinite value of its "
         "affine parameter, and the fluid reaches $t \\to \\pm\\infty$ only after an infinite proper time. The Kretschmann "
         "scalar is finite on the whole half plane and greatest at the marked event, where it is $792\\,a^4$.",
+    ],
+    ("murphy_viscous_universe", "spherical"): [
+        "Each point a 2-sphere. The conformal time $c\\eta = (c/H_s)(a - 1/a)$ runs over the whole real line, so "
+        "the universe fills Minkowski's half diamond.",
+    ],
+    ("murphy_viscous_universe", "cartesian"): [
+        "The plane $y = z = 0$, the whole diamond of Minkowski space, with $c\\eta = (c/H_s)(a - 1/a)$.",
+    ],
+    ("murphy_viscous_universe", "cosmic"): [
+        "The plane $y = z = 0$ in the proper time, with $a^2 = W(e^{2H_st})$ and $W$ Lambert's function.",
     ],
     ("lqc_bounce", "comoving"): [
         "The bounce of loop quantum cosmology, each point in the diagram a 2-sphere. The metric is "

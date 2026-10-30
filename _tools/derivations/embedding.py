@@ -12745,6 +12745,43 @@ def lqc_bounce(ck, src):
                  movie=movie(frames, "$t$", times), settings="$t_b = 1$, with $ct_b$ the unit of every length.")]
 
 
+def murphy_viscous_universe(ck, src):
+    """The equator of space in Murphy's universe with viscosity, for radiation, q = 2, in units of
+    c/H_s. A moment of the scale factor a has g_rr = a^2 and g_phiphi = a^2 r^2: a flat plane on which
+    the comoving observer at the radius r stands the distance a r from the centre. It is drawn out to
+    r = c/H_s at five moments from a = 1/4, near the steady state, to a = 3, through a = 1, where the
+    acceleration ends, and played as a movie with a frame every 0.1 of a."""
+    named = (0.25, 0.5, 1.0, 2.0, 3.0)
+    size = 2 * 3.0
+
+    def name(a):
+        return f"$a = {a:g}$"
+
+    def moment(a):
+        sl = Slice(src, "murphy_viscous_universe", "scale_factor_spherical", "r", "\\phi",
+                   {"a": repr(float(a)), **EQUATOR}, {"q": 2, "H_s": 1})
+        disc = Piece("disc", "sheet", sl, 0.0, 1.0, 0.0, 1,
+                     (("axis", "the comoving observer at $r = 0$"), ("edge", "the plane runs on, to $r \\to \\infty$")),
+                     [(0.25, "r", None), (0.5, "r", None), (0.75, "r", None), (1.0, "r", None)], size)
+        where = f"Murphy at a = {a:g}"
+        ck.plane(where, sl, np.linspace(1e-3, 20, 200))
+        ck.isometry(where, disc)
+        ck.radius(f"{where}, rho = a r", disc, lambda r, a=a: a * r, size)
+        ck.form(f"{where}, a plane", disc, lambda r: 0 * r, size)
+        return Surface([disc], label=name(a), time=a)
+
+    times, keys = movie_values(list(named), 0.1)
+    times = [round(t, 10) for t in times]
+    frames = [moment(t) for t in times]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator, out to $r = c/H_s$")
+    fig.legend("line", "r", "comoving observers, circles of radius $ar$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("universe", "The universe leaving the steady state", "$c/H_s$", surfaces, fig.done(),
+                 movie=movie(frames, "$a$", times), settings="$q = 2$, $H_s = 1$.")]
+
+
 def kopczynski_trautman(ck, src):
     """The equator of space in Kopczynski and Trautman's universe. A moment of the proper time t has
     g_rr = a^2 and g_phiphi = a^2 r^2 with a = (1 + c^2t^2/l^2)^(1/3): a flat plane on which the grain
@@ -18295,6 +18332,7 @@ DRAWN = {
     "einstein_1912_static": einstein_1912_static,
     "lqc_bounce": lqc_bounce,
     "kopczynski_trautman": kopczynski_trautman,
+    "murphy_viscous_universe": murphy_viscous_universe,
     "ab_metrics": ab_metrics,
     "small_universes": small_universes,
     "poincare_dodecahedral": poincare_dodecahedral,
@@ -19715,6 +19753,10 @@ CAPTIONS = {
         "$t = 0$, where $a = 1$, and grows again. Near the bounce $a \\approx 1 + t^2/6t_b^2$, and the rate of "
         "expansion $H = t/3(t_b^2 + t^2)$ grows until $t = t_b$, where the density has fallen to half its greatest "
         "value, and falls after it as in a classical universe of a stiff fluid, with $a$ growing as $|t|^{1/3}$.",
+    ],
+    ("murphy_viscous_universe", "universe"): [
+        "The equator ($\\theta = \\pi/2$) of space as $a$ runs from $1/4$ to $3$, each moment a flat plane. "
+        "The expansion leaves the steady rate $H_s$, ends its acceleration at $a = 1$, and slows as $H = H_s/(1 + a^2)$.",
     ],
     ("kopczynski_trautman", "universe"): [
         "The equator ($\\theta = \\pi/2$) of space in Kopczyński and Trautman's universe as the dust's time runs "
