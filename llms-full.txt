@@ -738,6 +738,17 @@ A thin spherical shell of charged dust, with flat spacetime inside it and Reissn
 - chart Outgoing Eddington-Finkelstein Exterior: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r} + \dfrac{r_q^2}{r^2}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Isotropic Exterior: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = -\dfrac{\left(\rho^2 - ab\right)^2}{\left(\rho + a\right)^2\left(\rho + b\right)^2}c^2dt^2 + \left(1 + \dfrac{a}{\rho}\right)^2\left(1 + \dfrac{b}{\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Chodos and Detweiler's five-dimensional universe
+
+Three expanding spatial circles and one contracting circle in a five-dimensional vacuum universe.
+
+- id: `chodos_detweiler`
+- tags: vacuum, five-dimensional, higher dimensions, Kaluza-Klein, compact dimension, cosmology, Kasner, anisotropic, spatially homogeneous, homogeneous, time-dependent, curvature singularity, spacelike singularity, big bang, exact solution, Lorentzian, Einstein equations, idealized model, torus, topology
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/chodos_detweiler.json
+- chart Synchronous: coordinates $(t, x, y, z, w)$, $$ds^2 = -c^2dt^2 + \dfrac{t}{t_0}\left(dx^2 + dy^2 + dz^2\right) + \dfrac{t_0}{t}dw^2$$
+- chart Rescaled: coordinates $(t, X, Y, Z, W)$, $$ds^2 = -c^2dt^2 + \dfrac{t}{\tau}\left(dX^2 + dY^2 + dZ^2\right) + \dfrac{\tau}{t}dW^2$$
+
 ### Coleman-De Luccia Bubble
 
 The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De Luccia in 1980. A bubble of lower vacuum energy appears by quantum tunnelling, its wall accelerates outward toward the speed of light, and the inside of the bubble is an open universe with no singularity at its start.

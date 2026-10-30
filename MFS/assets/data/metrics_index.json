@@ -1366,6 +1366,36 @@
     "embedding": "2c30edaa0cee4bdc"
   },
   {
+    "id": "chodos_detweiler",
+    "name": "Chodos-Detweiler",
+    "tags": [
+      "vacuum",
+      "five-dimensional",
+      "higher dimensions",
+      "Kaluza-Klein",
+      "compact dimension",
+      "cosmology",
+      "Kasner",
+      "anisotropic",
+      "spatially homogeneous",
+      "homogeneous",
+      "time-dependent",
+      "curvature singularity",
+      "spacelike singularity",
+      "big bang",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "torus",
+      "topology"
+    ],
+    "version": "4ea851e1e886b65e",
+    "diagrams": "2a4bedd9f03f65c9",
+    "embedding": "25a6946371b2db7b",
+    "curvature": "cd65ae35623dd817"
+  },
+  {
     "id": "coleman_de_luccia",
     "name": "Coleman-De Luccia",
     "tags": [
@@ -2865,7 +2895,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "64378363792c294d",
+    "version": "c4460131d6d4f8dc",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -2916,7 +2946,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "b9a539c04dc40eca",
+    "version": "a4d84ffc64e15b50",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -2978,7 +3008,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "1f0b98c1c3d1cfaa",
+    "version": "d47aa7f2b5c067f9",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
