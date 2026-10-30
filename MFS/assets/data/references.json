@@ -1,5 +1,5 @@
 {
-  "version": "88626ba577c6d984",
+  "version": "4bf1bfefb7cd19ed",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33674,6 +33674,52 @@
         "eprint": "astro-ph/0111344",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1086/338506"
+      }
+    },
+    "bowen1980": {
+      "type": "article",
+      "fields": {
+        "title": "Time-asymmetric initial data for black holes and black-hole collisions",
+        "author": "Bowen, Jeffrey M. and York Jr., James W.",
+        "journal": "Physical Review D",
+        "volume": "21",
+        "number": "8",
+        "pages": "2047--2056",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.21.2047",
+        "url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.21.2047"
+      }
+    },
+    "gleiser1998by": {
+      "type": "article",
+      "fields": {
+        "title": "Evolving the {Bowen-York} initial data for spinning black holes",
+        "author": "Gleiser, Reinaldo J. and Nicasio, Carlos O. and Price, Richard H. and Pullin, Jorge",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "6",
+        "pages": "3401--3407",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.3401",
+        "eprint": "gr-qc/9710096",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9710096"
+      }
+    },
+    "garat2000": {
+      "type": "article",
+      "fields": {
+        "title": "Nonexistence of conformally flat slices of the {Kerr} spacetime",
+        "author": "Garat, Alcides and Price, Richard H.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "12",
+        "pages": "124011",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.124011",
+        "eprint": "gr-qc/0002013",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0002013"
       }
     }
   }

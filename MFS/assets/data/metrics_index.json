@@ -923,6 +923,30 @@
     "curvature": "875808198beb89a7"
   },
   {
+    "id": "bowen_york",
+    "name": "Bowen-York Initial Data",
+    "tags": [
+      "three-dimensional",
+      "conformally flat",
+      "Riemannian",
+      "no time",
+      "initial data",
+      "spatial slice",
+      "constraint equations",
+      "Hamiltonian constraint",
+      "black hole",
+      "multiple black holes",
+      "black hole collision",
+      "angular momentum",
+      "asymptotically flat",
+      "numerical relativity",
+      "Einstein equations"
+    ],
+    "version": "ff06c9dd2ce3184b",
+    "embedding": "e7aaa8a310bc863a",
+    "curvature": "45d1178e85583f8b"
+  },
+  {
     "id": "bowers_liang",
     "name": "Bowers-Liang Star",
     "tags": [
@@ -1875,7 +1899,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1cfd1873a09d9833",
+    "version": "3c16a742317e3bb1",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704",
@@ -3030,7 +3054,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "ae03299fa6f22959",
+    "version": "ee024fdfae274cab",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -4034,7 +4058,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "26c681ce6b42c7df",
+    "version": "86aa045d2006eb74",
     "embedding": "0c96027fa617beeb",
     "curvature": "680446e324dac4e2"
   },
@@ -5270,7 +5294,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "2685f4a8559b35d8",
+    "version": "691f475f35da200c",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",

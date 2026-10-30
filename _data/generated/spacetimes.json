@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 212,
+  "count": 213,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -10314,6 +10314,208 @@
       ]
     },
     {
+      "id": "bowen_york",
+      "name": "Bowen-York Black Hole Initial Data",
+      "short_name": "Bowen-York Initial Data",
+      "description": "Conformally flat maximal spatial initial data for black holes with linear momentum and spin.",
+      "tags": [
+        "three-dimensional",
+        "conformally flat",
+        "Riemannian",
+        "no time",
+        "initial data",
+        "spatial slice",
+        "constraint equations",
+        "Hamiltonian constraint",
+        "black hole",
+        "multiple black holes",
+        "black hole collision",
+        "angular momentum",
+        "asymptotically flat",
+        "numerical relativity",
+        "Einstein equations"
+      ],
+      "signature": "(+,+,+)",
+      "convention": "We use $G=c=1$, with $\\gamma_{ij}=\\psi^4\\delta_{ij}$ the spatial metric and $K_{ij}=\\psi^{-2}\\widehat A_{ij}$ its trace free extrinsic curvature. The Ricci tensor is $R_{ij}=R^k{}_{ikj}$, its intrinsic scalar is $R=R^i{}_i$, and a dot denotes differentiation with respect to spatial arc length.",
+      "related": [
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "At zero momenta and spins, the puncture construction reduces to Brill and Lindquist's neutral data. The inversion construction reduces to the time symmetric throat geometry of Misner [cook2000, brandt1997]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "For one hole with vanishing momentum and spin, the spatial metric is a constant Schwarzschild-time slice in isotropic coordinates [brandt1997]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "The original inversion symmetric data have two isometric asymptotically flat ends joined through a throat [bowen1980]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "A spinning hole carries an initial distortion whose evolution emits gravitational radiation as the hole approaches Kerr [gleiser1998by]."
+        }
+      ],
+      "references": [
+        "bowen1980",
+        "cook2000",
+        "brandt1997",
+        "gleiser1998by",
+        "garat2000"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bowen_york.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian",
+          "coordinates": [
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\text{Puncture centres or excised throat interiors are excluded}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(x,y,z)",
+              "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity. For one centre, with Euclidean radius $r=|\\boldsymbol{x}|$ and radial unit vector $n^i=x^i/r$, $\\widehat A^{ij}=\\frac{3}{2r^2}[P^i n^j+P^j n^i-(\\delta^{ij}-n^i n^j)P^k n_k]+\\frac{3}{r^3}[\\epsilon^{ikl}S_k n_l n^j+\\epsilon^{jkl}S_k n_l n^i]$, where $P^i$ is a constant linear momentum of length dimension and $S^i$ a constant spin of area dimension; conformal indices use $\\delta_{ij}$. The puncture prescription is $\\psi=\\sum_A m_A/(2r_A)+u$, with $m_A$ bare mass lengths, $r_A$ distances to the punctures and $u\\to1$ at infinity. A single inversion throat adds the tensor image $\\mp\\frac{3a^2}{2r^4}[P^i n^j+P^j n^i+(\\delta^{ij}-5n^i n^j)P^k n_k]$."
+            }
+          ],
+          "convention": "We use Cartesian coordinates $(x,y,z)$, each a length.",
+          "line_element": "ds^2 = \\psi^4\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\psi^4"
+            }
+          ],
+          "ricci_scalar": "R = -\\frac{8\\left(\\partial_x^2\\psi + \\partial_y^2\\psi + \\partial_z^2\\psi\\right)}{\\psi^5}",
+          "kretschmann": "K = \\dfrac{32\\psi^2\\left(\\partial_x^2\\psi\\,\\partial_y^2\\psi + \\partial_x^2\\psi\\,\\partial_z^2\\psi + \\partial_y^2\\psi\\,\\partial_z^2\\psi + \\left(\\partial_x\\partial_y\\psi\\right)^2 + \\left(\\partial_x\\partial_z\\psi\\right)^2 + \\left(\\partial_x^2\\psi\\right)^2 + \\left(\\partial_y\\partial_z\\psi\\right)^2 + \\left(\\partial_y^2\\psi\\right)^2 + \\left(\\partial_z^2\\psi\\right)^2\\right) - 32\\psi\\left(6\\partial_x\\partial_y\\psi\\,\\partial_x\\psi\\,\\partial_y\\psi + 6\\partial_x\\partial_z\\psi\\,\\partial_x\\psi\\,\\partial_z\\psi + 6\\partial_y\\partial_z\\psi\\,\\partial_y\\psi\\,\\partial_z\\psi + 2\\left(\\partial_x\\psi\\right)^2\\,\\partial_x^2\\psi - \\left(\\partial_x\\psi\\right)^2\\,\\partial_y^2\\psi - \\left(\\partial_x\\psi\\right)^2\\,\\partial_z^2\\psi + 2\\left(\\partial_y\\psi\\right)^2\\,\\partial_y^2\\psi - \\left(\\partial_y\\psi\\right)^2\\,\\partial_z^2\\psi + 2\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi - \\partial_x^2\\psi\\left(\\partial_y\\psi\\right)^2 - \\partial_x^2\\psi\\left(\\partial_z\\psi\\right)^2 - \\partial_y^2\\psi\\left(\\partial_z\\psi\\right)^2\\right) + 96\\left(\\left(\\partial_x\\psi\\right)^2 + \\left(\\partial_y\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)^2}{\\psi^{12}}"
+        },
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "r \\in (0, \\infty)",
+            "\\theta \\in (0, \\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\text{Puncture centres or excised throat interiors are excluded}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(r,\\theta,\\phi)",
+              "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity. For one centre, with Euclidean radius $r=|\\boldsymbol{x}|$ and radial unit vector $n^i=x^i/r$, $\\widehat A^{ij}=\\frac{3}{2r^2}[P^i n^j+P^j n^i-(\\delta^{ij}-n^i n^j)P^k n_k]+\\frac{3}{r^3}[\\epsilon^{ikl}S_k n_l n^j+\\epsilon^{jkl}S_k n_l n^i]$, where $P^i$ is a constant linear momentum of length dimension and $S^i$ a constant spin of area dimension; conformal indices use $\\delta_{ij}$. The puncture prescription is $\\psi=\\sum_A m_A/(2r_A)+u$, with $m_A$ bare mass lengths, $r_A$ distances to the punctures and $u\\to1$ at infinity. A single inversion throat adds the tensor image $\\mp\\frac{3a^2}{2r^4}[P^i n^j+P^j n^i+(\\delta^{ij}-5n^i n^j)P^k n_k]$."
+            }
+          ],
+          "convention": "We use spherical coordinates $(r,\\theta,\\phi)$, with $r$ a length and both angles dimensionless.",
+          "line_element": "ds^2 = \\psi^4\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\psi^4\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\frac{8\\left(\\partial_r^2\\psi + \\frac{2\\partial_r\\psi}{r} + \\frac{\\partial_\\theta^2\\psi + \\cot\\theta\\,\\partial_\\theta\\psi}{r^2} + \\frac{\\partial_\\phi^2\\psi}{r^2\\sin^2\\theta}\\right)}{\\psi^5}",
+          "kretschmann": "K = \\dfrac{32\\left(\\psi^2\\left(r^2\\,\\partial_\\theta\\psi\\,\\partial_r^2\\psi\\,\\sin^3\\theta\\cos\\theta + 3r\\,\\partial_\\theta\\psi\\,\\partial_r\\psi\\,\\sin^3\\theta\\cos\\theta + \\partial_\\theta\\psi\\,\\partial_\\theta^2\\psi\\,\\sin^3\\theta\\cos\\theta + r^2\\,\\partial_\\phi^2\\psi\\,\\partial_r^2\\psi\\,\\sin^2\\theta + r^2\\,\\partial_\\theta^2\\psi\\,\\partial_r^2\\psi\\,\\sin^4\\theta + 2r^3\\,\\partial_r\\psi\\,\\partial_r^2\\psi\\,\\sin^4\\theta - 2\\partial_\\phi\\psi\\,\\partial_\\theta\\partial_\\phi\\psi\\,\\sin\\theta\\cos\\theta + 2\\partial_\\phi^2\\psi\\,\\partial_\\theta\\psi\\,\\sin\\theta\\cos\\theta - 2r\\,\\partial_\\phi\\psi\\,\\partial_r\\partial_\\phi\\psi\\,\\sin^2\\theta + 3r\\,\\partial_\\phi^2\\psi\\,\\partial_r\\psi\\,\\sin^2\\theta - 2r\\,\\partial_\\theta\\psi\\,\\partial_r\\partial_\\theta\\psi\\,\\sin^4\\theta + 3r\\,\\partial_\\theta^2\\psi\\,\\partial_r\\psi\\,\\sin^4\\theta + \\partial_\\phi^2\\psi\\,\\partial_\\theta^2\\psi\\,\\sin^2\\theta + r^2\\left(\\partial_r\\partial_\\phi\\psi\\right)^2\\,\\sin^2\\theta + r^2\\left(\\partial_r\\partial_\\theta\\psi\\right)^2\\,\\sin^4\\theta + 3r^2\\left(\\partial_r\\psi\\right)^2\\,\\sin^4\\theta + r^4\\left(\\partial_r^2\\psi\\right)^2\\,\\sin^4\\theta + \\left(\\partial_\\theta\\partial_\\phi\\psi\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta\\psi\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta^2\\psi\\right)^2\\,\\sin^4\\theta + \\left(\\partial_\\phi\\psi\\right)^2 + \\left(\\partial_\\phi^2\\psi\\right)^2\\right) - \\psi\\left(6r^2\\,\\partial_\\phi\\psi\\,\\partial_r\\partial_\\phi\\psi\\,\\partial_r\\psi\\,\\sin^2\\theta + 6r^2\\,\\partial_\\theta\\psi\\,\\partial_r\\partial_\\theta\\psi\\,\\partial_r\\psi\\,\\sin^4\\theta - r^2\\,\\partial_\\theta\\psi\\left(\\partial_r\\psi\\right)^2\\,\\sin^3\\theta\\cos\\theta + 6\\partial_\\phi\\psi\\,\\partial_\\theta\\partial_\\phi\\psi\\,\\partial_\\theta\\psi\\,\\sin^2\\theta - r^2\\,\\partial_\\phi^2\\psi\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta - r^2\\,\\partial_\\theta^2\\psi\\left(\\partial_r\\psi\\right)^2\\,\\sin^4\\theta - r^2\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_r^2\\psi\\,\\sin^2\\theta - r^2\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_r^2\\psi\\,\\sin^4\\theta + 2r^4\\left(\\partial_r\\psi\\right)^2\\,\\partial_r^2\\psi\\,\\sin^4\\theta - 4\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\theta\\psi\\,\\sin\\theta\\cos\\theta - 5r\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_r\\psi\\,\\sin^2\\theta - 5r\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_r\\psi\\,\\sin^4\\theta - \\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\theta^2\\psi\\,\\sin^2\\theta + 2\\left(\\partial_\\theta\\psi\\right)^2\\,\\partial_\\theta^2\\psi\\,\\sin^4\\theta - \\partial_\\phi^2\\psi\\left(\\partial_\\theta\\psi\\right)^2\\,\\sin^2\\theta - \\left(\\partial_\\theta\\psi\\right)^3\\,\\sin^3\\theta\\cos\\theta - 2r^3\\left(\\partial_r\\psi\\right)^3\\,\\sin^4\\theta + 2\\left(\\partial_\\phi\\psi\\right)^2\\,\\partial_\\phi^2\\psi\\right) + 3\\left(r^2\\left(\\partial_r\\psi\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta\\psi\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\phi\\psi\\right)^2\\right)^2\\right)\\csc^4\\theta}{\\psi^{12}\\,r^4}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "\\rho",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "\\rho \\in (0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\text{Puncture centres or excised throat interiors are excluded}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\psi = \\psi(\\rho,z)",
+              "description": "The positive dimensionless conformal factor, satisfying $\\nabla^2\\psi=-\\widehat A_{ij}\\widehat A^{ij}/(8\\psi^7)$ with the Euclidean Laplacian. For one spinning throat of radius $a$, the length unit, the spin parameter is $S=a^2$ and the linear momentum is $P=0$; $\\partial_r\\psi=-\\psi/(2a)$ at $r=a$ and $\\psi\\to1$ at infinity. For one centre, with Euclidean radius $r=|\\boldsymbol{x}|$ and radial unit vector $n^i=x^i/r$, $\\widehat A^{ij}=\\frac{3}{2r^2}[P^i n^j+P^j n^i-(\\delta^{ij}-n^i n^j)P^k n_k]+\\frac{3}{r^3}[\\epsilon^{ikl}S_k n_l n^j+\\epsilon^{jkl}S_k n_l n^i]$, where $P^i$ is a constant linear momentum of length dimension and $S^i$ a constant spin of area dimension; conformal indices use $\\delta_{ij}$. The puncture prescription is $\\psi=\\sum_A m_A/(2r_A)+u$, with $m_A$ bare mass lengths, $r_A$ distances to the punctures and $u\\to1$ at infinity. A single inversion throat adds the tensor image $\\mp\\frac{3a^2}{2r^4}[P^i n^j+P^j n^i+(\\delta^{ij}-5n^i n^j)P^k n_k]$."
+            }
+          ],
+          "convention": "We use axisymmetric cylindrical coordinates $(\\rho,z,\\phi)$, with $\\rho$ and $z$ lengths and $\\phi$ dimensionless.",
+          "line_element": "ds^2 = \\psi^4\\left(d\\rho^2 + dz^2 + \\rho^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\psi^4"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\psi^4\\,\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\frac{8\\left(\\partial_\\rho^2\\psi + \\frac{\\partial_\\rho\\psi}{\\rho} + \\partial_z^2\\psi\\right)}{\\psi^5}",
+          "kretschmann": "K = \\dfrac{32\\psi^2\\left(\\rho^2\\,\\partial_\\rho^2\\psi\\,\\partial_z^2\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_\\rho^2\\psi + \\rho\\,\\partial_\\rho\\psi\\,\\partial_z^2\\psi + \\rho^2\\left(\\partial_\\rho\\partial_z\\psi\\right)^2 + \\rho^2\\left(\\partial_\\rho^2\\psi\\right)^2 + \\rho^2\\left(\\partial_z^2\\psi\\right)^2 + \\left(\\partial_\\rho\\psi\\right)^2\\right) - 32\\psi\\,\\rho\\left(6\\rho\\,\\partial_\\rho\\partial_z\\psi\\,\\partial_\\rho\\psi\\,\\partial_z\\psi - \\rho\\,\\partial_\\rho^2\\psi\\left(\\partial_z\\psi\\right)^2 + 2\\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_\\rho^2\\psi - \\rho\\left(\\partial_\\rho\\psi\\right)^2\\,\\partial_z^2\\psi + 2\\rho\\left(\\partial_z\\psi\\right)^2\\,\\partial_z^2\\psi - \\partial_\\rho\\psi\\left(\\partial_z\\psi\\right)^2 - \\left(\\partial_\\rho\\psi\\right)^3\\right) + 96\\rho^2\\left(\\left(\\partial_\\rho\\psi\\right)^2 + \\left(\\partial_z\\psi\\right)^2\\right)^2}{\\psi^{12}\\rho^2}"
+        }
+      ]
+    },
+    {
       "id": "bowers_liang",
       "name": "Bowers and Liang's Anisotropic Star",
       "short_name": "Bowers-Liang Star",
@@ -20071,6 +20273,11 @@
           "id": "eternal_traversable_wormhole",
           "kind": "family",
           "text": "A wormhole in two dimensions that stays open for ever, its two boundaries coupled so that light crosses between them [maldacena2018]."
+        },
+        {
+          "id": "bowen_york",
+          "kind": "family",
+          "text": "The inversion symmetric throat construction extends the spatial bridge to black hole initial data with linear momentum and spin [bowen1980, cook2000]."
         }
       ],
       "references": [
@@ -20105,7 +20312,9 @@
         "shenker2014",
         "kodama1978preprint",
         "kodama1979preprint",
-        "maldacena2018"
+        "maldacena2018",
+        "bowen1980",
+        "cook2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -32827,6 +33036,11 @@
           "id": "vaidya_patel_kerr",
           "kind": "generalisation",
           "text": "Kerr's black hole set radiating, its rotation parameter growing as its mass falls, and set in Einstein's universe and in an expanding one [vaidya1989kerr, vaidya1977kerr]."
+        },
+        {
+          "id": "bowen_york",
+          "kind": "family",
+          "text": "Conformally flat initial data for a spinning hole contain a radiative distortion. Its perturbative evolution approaches Kerr while emitting gravitational waves [gleiser1998by]."
         }
       ],
       "references": [
@@ -32903,7 +33117,8 @@
         "dinverno2000",
         "israel1970",
         "vaidya1989kerr",
-        "vaidya1977kerr"
+        "vaidya1977kerr",
+        "gleiser1998by"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -43621,6 +43836,11 @@
           "id": "btz_multi_holes_wormholes",
           "kind": "family",
           "text": "Brill's moment of rest for many black holes in three dimensions, cut from the hyperbolic plane and glued. The one constraint there is that the slice has constant negative curvature [brill1996]."
+        },
+        {
+          "id": "bowen_york",
+          "kind": "family",
+          "text": "Linear momentum and spin enter through a conformal extrinsic curvature that solves the momentum constraint. The Hamiltonian constraint then determines the spatial conformal factor [cook2000, brandt1997]."
         }
       ],
       "references": [
@@ -57658,6 +57878,11 @@
           "id": "cahen_wallach",
           "kind": "limit",
           "text": "The Penrose limit along a light ray on the photon sphere, a vacuum plane wave that pushes rays off the orbit at the rate $c^3/(\\sqrt{27}\\,GM)$ and pulls them back across it at the same rate [fransen2023]."
+        },
+        {
+          "id": "bowen_york",
+          "kind": "family",
+          "text": "A single hole with vanishing momentum and spin has Schwarzschild's isotropic spatial geometry. Nonzero momentum or spin specifies dynamical black hole initial data [brandt1997, cook2000]."
         }
       ],
       "references": [
@@ -57794,7 +58019,8 @@
         "buchdahl1964",
         "bonnor1967oscillating",
         "banerjee1998",
-        "fransen2023"
+        "fransen2023",
+        "brandt1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",

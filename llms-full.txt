@@ -570,6 +570,18 @@ The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, wh
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 - \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)dv^2 + 2\,dv\,dr + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 - chart Hyperspherical, Anti-de Sitter Branch: coordinates $(t, r, \psi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{2\ell^2}\left(1 + \sqrt{1 + \dfrac{4\ell^2 r_0^2}{r^4}}\right)} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
 
+### Bowen-York Black Hole Initial Data
+
+Conformally flat maximal spatial initial data for black holes with linear momentum and spin.
+
+- id: `bowen_york`
+- tags: three-dimensional, conformally flat, Riemannian, no time, initial data, spatial slice, constraint equations, Hamiltonian constraint, black hole, multiple black holes, black hole collision, angular momentum, asymptotically flat, numerical relativity, Einstein equations
+- signature: (+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bowen_york.json
+- chart Cartesian: coordinates $(x, y, z)$, $$ds^2 = \psi^4\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Spherical: coordinates $(r, \theta, \phi)$, $$ds^2 = \psi^4\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Cylindrical: coordinates $(\rho, z, \phi)$, $$ds^2 = \psi^4\left(d\rho^2 + dz^2 + \rho^2d\phi^2\right)$$
+
 ### Bowers and Liang's Anisotropic Star
 
 A static star of uniform density whose pressure across the radius differs from its pressure along the radius. Richard Bowers and Edison Liang solved it in 1974: with the sideways pressure the greater of the two, it holds more mass and reddens its light more than Schwarzschild's star of the same density can.
