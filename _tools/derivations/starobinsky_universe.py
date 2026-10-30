@@ -276,6 +276,9 @@ def register_slices(sl):
         sl.FLAT[(ID,system,"radial")] = (
             lambda view=view,source=source,coordinate=coordinate:
             sl.one(ID,lambda m:sl.along(0.0,*m.reach(source,coordinate)),view_id=view))
+    sl.FLAT_METRICS.add(ID)
+    for system in ("flat_de_sitter","open_de_sitter"):
+        sl.HIDDEN[(ID,system,"radial")] = "a different member of the semiclassical family from the two embedded slices"
 
 
 CONFORMAL_CAPTIONS = {
