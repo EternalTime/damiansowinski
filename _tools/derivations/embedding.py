@@ -18290,7 +18290,64 @@ def stiff_fluid_universes(ck, src):
                  system="areal", settings="$a=b=1$, $t=1/2$, $x=0$, $\\ell=1$.")]
 
 
+def static_five_soliton(ck, src):
+    """The whole type of spatial slice at a+b=5/7, on both ambient signatures.
+
+    Lake's h makes the inner endpoint h=0 explicit. The circle radius is
+    h^(2/7)/(1-h^2), and the flat-space defect changes sign at h=1/6,
+    corresponding to r=36/35. Geometric knots retain the inner singular branch.
+    """
+    params = {"r_s": 1, "a": sp.Rational(8, 7), "b": -sp.Rational(3, 7)}
+    fixed = {"t": 0, "y": 0, **EQUATOR}
+    sl = Slice(src, "static_five_soliton", "lake", "h", r"\phi", fixed, params)
+    ml = Slice(src, "static_five_soliton", "lake", "h", r"\phi", fixed, params, space="minkowski")
+    level, tip, top = 1/6, 1e-4, math.sqrt(3/4)
+    sl.known = ml.known = {level: sp.Rational(1,6), top: sp.sqrt(3)/2}
+    radius = lambda h: np.asarray(h, dtype=float)**(2/7)/(1-np.asarray(h, dtype=float)**2)
+    size = 2*float(radius(top))
+    join = "$r=36r_s/35$, the level circle between the two ambient signatures"
+    far = Piece("far", "sheet", sl, level, top, 0.0, 1,
+                (("join", join), ("edge", r"the surface continues to $r\to\infty$")),
+                [(level,"space",None), (math.sqrt(1/3),"r",None), (math.sqrt(1/2),"r",None),
+                 (top,"r",None)], size, digits=1e-14,
+                knots=[level+(top-level)*q for q in np.geomspace(1e-5,1,60)[:-1]])
+    sink = ml.rise(tip,level)
+    knots = sorted(set(np.geomspace(tip,level,240)[1:-1]) |
+                   {level-(level-tip)*q for q in np.geomspace(1e-5,0.5,40)})
+    near = Piece("near", "sheet", ml, tip, level, -sink, 1,
+                 (("edge", r"the surface continues to the singularity $h=0$"), ("join",join)),
+                 [(level,"space",None)], size, digits=1e-14, knots=knots)
+    for piece in (far,near):
+        ck.isometry(f"Static five soliton {piece.id}",piece)
+        ck.radius(f"Static five soliton {piece.id} sphere radius",piece,radius,size)
+    ck.join("Static five soliton level circle",near,level,far,level)
+    ck.add("Static five soliton level at h=1/6",abs(float(sl.defect_at(np.array([level]))[0])),1e-10)
+    ck.stops("Static five soliton inner part requires Minkowski space",sl,np.geomspace(tip,level,100)[:-1])
+    # Independent height quadratures of the radial slice, in w=h^(2/7).
+    def defect(h):
+        R = h**(2/7)/(1-h*h)
+        dR = R*(2/(7*h)+2*h/(1-h*h))
+        return 4*h**(4/7)/(1-h*h)**4-dR*dR
+    def flat_height(h):
+        return np.array([quad(lambda q: math.sqrt(max(defect(q),0)),level,float(q),
+                              epsabs=1e-12,epsrel=1e-11)[0] for q in np.atleast_1d(h)])
+    def inner_height(h):
+        return np.array([-quad(lambda q: math.sqrt(max(-defect(q),0)),float(q),level,
+                               epsabs=1e-12,epsrel=1e-11)[0] for q in np.atleast_1d(h)])
+    ck.form("Static five soliton outer height",far,flat_height,size)
+    ck.form("Static five soliton inner height",near,inner_height,size)
+    surface=Surface([near,far])
+    fig=figure_of([surface],{"sheet":"cover"},size)
+    ring_label(fig,[0,0,0],*far.at(level),"$36r_s/35$",dx=10)
+    ring_label(fig,[0,0,0],*far.at(math.sqrt(1/2)),"$2r_s$")
+    fig.legend("fill","cover","spatial equator")
+    fig.legend("line","space","change of ambient signature")
+    return [view("equator","Spatial equator","$r_s$",[surface],fig.done(),
+                 settings=r"$r_s=1$, $a=8/7$, $b=-3/7$. Inner lengths: $dX^2+dY^2-dZ^2$.")]
+
+
 DRAWN = {
+    "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
     "moving_mirror": moving_mirror,
@@ -18505,6 +18562,10 @@ DRAWN = {
 NOT_DRAWN = {"lentz", "hauser_wave"}
 
 CAPTIONS = {
+    ("static_five_soliton", "equator"): [
+        r"The spatial equator ($t=y=0$, $\theta=\pi/2$), in Minkowski space inside $r=36r_s/35$ and Euclidean space beyond. "
+        r"The circles approach zero radius at the singularity $h=0$.",
+    ],
     ("stiff_fluid_universes", "plane"): ["A transverse symmetry plane at one moment. Proper lengths within it are $\\ell\\sqrt{t}$ times coordinate lengths."],
     ("ab_metrics", "neck"): [
         "The surface of $r$ and $\\phi$ of B I ($z = 0$) at moments of the de Sitter slicing from $\\tau = -0.8$ "

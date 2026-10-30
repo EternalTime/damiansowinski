@@ -27185,7 +27185,57 @@ def stiff_fluid_universes(ck, src):
     return [v]
 
 
+def static_five_soliton(ck, src):
+    """The generic member's radial quotient, with its timelike singular endpoint.
+
+    At gamma=a+b/2=13/14 the integral of f^(-gamma) converges at r=r_s.
+    Each coordinate map therefore compactifies to the same Minkowski triangle.
+    """
+    params={"r_s":1,"a":"8/7","b":"-3/7"}
+    to_r={"spherical":lambda x:np.asarray(x,dtype=float),
+          "isotropic":lambda x:np.asarray(x,dtype=float)*(1+1/(4*np.asarray(x,dtype=float)))**2,
+          "lake":lambda x:1/(1-np.asarray(x,dtype=float)**2)}
+    of_r={"spherical":lambda r:r,
+          "isotropic":lambda r:(r-0.5+np.sqrt(r*(r-1)))/2,
+          "lake":lambda r:np.sqrt(1-1/r)}
+    coords={"spherical":"r","isotropic":r"\rho","lake":"h"}
+    ell=16.0
+    maps={s:(lambda t,x,s=s:mink_pq(t,nr._static_five_rstar(to_r[s](x)),ell)) for s in coords}
+    r=1+np.exp(ck.uniform(-6,3))
+    t=ck.uniform(-30,30)
+    want=np.array(maps["spherical"](t,r))
+    for s,x in coords.items():
+        plane=Plane(src,"static_five_soliton",s,("t",x),{**EQUATOR,"y":0},params)
+        ck.chart(f"Static five soliton {s}",plane,maps[s],t,of_r[s](r),lambda t,x:(1,0))
+        ck.limit(f"Static five soliton {s} same event",np.array(maps[s](t,of_r[s](r))),want,1e-8)
+    moment=slices.moments("static_five_soliton")[0]
+    h=np.linspace(*moment.reach("lake","h"),301)
+    rr=to_r["lake"](h)
+    views=[]
+    for s,x in coords.items():
+        v=View(s,s.title(),[-0.4,PI+0.4,-PI-0.3,PI+0.3],s)
+        v.fill("region",TRIANGLE)
+        v.fill("cover",TRIANGLE)
+        grid(v,"r",lambda r,t,s=s:maps[s](t,of_r[s](r)),(1.01,1.1,2,4),S_ALL)
+        grid(v,"t",lambda t,star:mink_pq(t,star,ell),(-24,-12,0,12,24),S_POS)
+        v.line("singular",[[[0,-PI],[0,PI]]],zig=True)
+        v.line("scri",[[[0,PI],[PI,0]],[[PI,0],[0,-PI]]])
+        v.label_xt([0,0.3],"$r=r_s$","r",dx=-5)
+        v.label_xt([HALF,HALF],r"$\mathscr{I}^+$","bl",dx=5)
+        v.label_xt([HALF,-HALF],r"$\mathscr{I}^-$","tl",dx=5)
+        for at,text,anchor in (((PI,0),"$i^0$","l"),((0,PI),"$i^+$","b"),((0,-PI),"$i^-$","t")):
+            v.layers.append({"kind":"point","class":"infinity","at":rounded(at)})
+            v.label_xt(at,text,anchor)
+        v.legend("singular","timelike singularity")
+        v.legend("scri","null infinity")
+        v.slice(moment,[maps[s](0*rr,of_r[s](rr))])
+        v.set(settings=r"$r_s=1$, $a=8/7$, $b=-3/7$; $p,q=\arctan((ct\mp r_*)/16r_s)$, $dr_*/dr=f^{-13/14}$, $r_*(r_s)=0$.")
+        views.append(v)
+    return views
+
+
 DRAWN = {
+    "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
     "big_rip": big_rip,
@@ -27363,6 +27413,9 @@ KISELEV_STATIC_CAPTION = [
 ]
 
 CAPTIONS = {
+    **{("static_five_soliton",s): [
+        r"The radial quotient ($\theta=\pi/2$, $\phi=y=0$), with a visible timelike singularity on its left boundary."
+    ] for s in ("spherical","isotropic","lake")},
     ("stiff_fluid_universes", "fluid"): ["The scalar solution continues through the upper edge with finite curvature at finite $x$."],
     ("siklos", "kaigorodov"): [
         "Kaigorodov's spacetime on its slice $y = 0$ with the lines of $u$ divided out, each point in the diagram "

@@ -2731,6 +2731,12 @@ def _hotta_tanaka(system, fixed):
 
 
 FLAT = {
+    **{("static_five_soliton",system,"radial"):
+       (lambda system=system: one("static_five_soliton",lambda m: along(0.0,*[
+           {"spherical":lambda h:1/(1-h*h),
+            "isotropic":lambda h:(1+h)/(4*(1-h)),
+            "lake":lambda h:h}[system](h) for h in m.reach("lake","h")])))
+       for system in ("spherical","isotropic","lake")},
     ("stiff_fluid_universes", "areal", "tx"): lambda: [
         Mark(m, points=[(0.5,0.0)]) for m in moments("stiff_fluid_universes", label="$t=1/2$")],
     ("stiff_fluid_universes", "comoving", "fluid"): lambda: [

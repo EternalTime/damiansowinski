@@ -3115,6 +3115,12 @@ BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi}
                    "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
+    Diagram("static_five_soliton", "spherical", "radial", "$t$ and $r$", ("t","r"), (1,5,-2,2),
+            "$r/r_s$", "$ct/r_s$", {"r_s":1,"a":"8/7","b":"-3/7"}, {**EQUATOR,"y":0}, areal=True),
+    Diagram("static_five_soliton", "isotropic", "radial", r"$t$ and $\rho$", ("t",r"\rho"), (0.25,4.25,-2,2),
+            r"$\rho/r_s$", "$ct/r_s$", {"r_s":1,"a":"8/7","b":"-3/7"}, {**EQUATOR,"y":0}, areal=True),
+    Diagram("static_five_soliton", "lake", "radial", "$t$ and $h$", ("t","h"), (0,1,-0.5,0.5),
+            "$h$", "$ct/r_s$", {"r_s":1,"a":"8/7","b":"-3/7"}, {**EQUATOR,"y":0}, areal=True),
     Diagram("stiff_fluid_universes", "areal", "tx", "Areal time", ("t", "x"), (-0.8, 0.8, -0.3, 1.3),
             "$x$", "$t$", {"a": 1, "b": 1, "ell": 1}, {"y": "0", "z": "0"},
             families=SIDEWAYS, singular_zero="t", curves=(("surface", "-t**2/2", "$\\chi=0$, one fluid world line", "signed"),),
@@ -6791,6 +6797,15 @@ def _ht_captions():
 HT_CAPTIONS = _ht_captions()
 
 CAPTIONS = {
+    ("static_five_soliton","spherical","radial"): [
+        r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with a timelike singularity at $r=r_s$.",
+    ],
+    ("static_five_soliton","isotropic","radial"): [
+        r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with the singular endpoint at $\rho=r_s/4$.",
+    ],
+    ("static_five_soliton","lake","radial"): [
+        r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), from the singularity $h=0$ toward spatial infinity $h=1$.",
+    ],
     **LB_CAPTIONS,
     **HT_CAPTIONS,
     **{("aichelburg_sexl", "null_cartesian", view): _as_caption(rho[2:]) for view, rho in AS_RHO.items()},
@@ -16987,6 +17002,16 @@ def _bd_rstar(r):
     return 2 * A ** (1 - sigma) * hyp2f1(2, 1 - sigma, 2 - sigma, A) / (1 - sigma)
 
 
+def _static_five_rstar(r):
+    """Integral of f^(-13/14) dr from r=1, at a=8/7 and b=-3/7.
+
+    With w=f^(1/14), it is 14 times the integral of (1-w^14)^(-2) dw.
+    """
+    from scipy.special import hyp2f1
+    f = np.maximum(1-1/np.asarray(r,dtype=float),0)
+    return 14*f**(1/14)*hyp2f1(1/14,2,15/14,f)
+
+
 def _fjnw_rstar(r):
     """The tortoise coordinate of Fisher, Janis, Newman and Winicour's metric at gamma = 1/2 and b = 1,
     zero at the singularity: dr_*/dr = (1 - 1/r)^(-1/2)."""
@@ -17084,6 +17109,14 @@ def _kt_eta(t):
 
 
 CLOSED_FORMS = {
+    ("static_five_soliton","spherical","radial"):
+        (lambda t,r: t+_static_five_rstar(r), lambda t,r: t-_static_five_rstar(r),lambda t,r:r>1.0005),
+    ("static_five_soliton","isotropic","radial"):
+        (lambda t,x: t+_static_five_rstar(x*(1+1/(4*x))**2),
+         lambda t,x: t-_static_five_rstar(x*(1+1/(4*x))**2),lambda t,x:x>0.251),
+    ("static_five_soliton","lake","radial"):
+        (lambda t,h: t+_static_five_rstar(1/(1-h*h)),
+         lambda t,h: t-_static_five_rstar(1/(1-h*h)),lambda t,h:(h>0.01)&(h<0.98)),
     # Bonnor's beam: a ray with the beam keeps ct - z, or u, and a null curve against it keeps
     # ct + z + A (ct - z), or v + A u, with A the declared profile's value on the plane.
     ("light_beam", "cartesian", "axis"): (lambda t, z: t + z, lambda t, z: t - z, None),

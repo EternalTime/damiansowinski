@@ -18211,7 +18211,37 @@ def stiff_fluid_universes(ck, src):
     return out
 
 
+def static_five_soliton(ck, src):
+    """Stored curvature of the generic member and the regular exceptional members.
+
+    No curvature is recomputed. Both regular members have K=12 r_s^2/r^6;
+    the chosen generic member diverges with power -18/7 at the inner endpoint.
+    """
+    scale={"kind":"log","from":1e-4,"to":1e4}
+    x_axis=axis("$r/r_s$",1,5)
+    panels=[{"id":"K","name":"$K r_s^4$","aspect":1,"scale":scale,"ticks":value_ticks(scale)}]
+    names=["r_s","a","b"]
+    K=nr_published(src,"static_five_soliton","spherical","kretschmann",["r"],names)
+    R=nr_published(src,"static_five_soliton","spherical","ricci_scalar",["r"],names)
+    ck("Static five soliton Ricci scalar vanishes",R.expr==0)
+    curves=[]
+    for cls,aa,bb in (("K",8/7,-3/7),("reference",1,0)):
+        curves+=line_curves(ck,f"Static five soliton {cls}","K",cls,K,"r",x_axis,scale,PLOT_W,
+                            {"r_s":1,"a":aa,"b":bb})
+    r=np.linspace(1.001,5,101)
+    ck("Static five soliton regular members have equal curvature",
+       np.allclose(K(r,1,1,0),K(r,1,0,1),rtol=1e-12))
+    shape_checks(ck,"Static five soliton",[1])
+    return [{"id":"radial","label":"Radial curvature","system":"spherical","kind":"line",
+             "x":x_axis,"panels":panels,"curves":curves,"marks":[],
+             "legend":[["line","K","$a=8/7$, $b=-3/7$"],
+                       ["line","reference","$a=1$, $b=0$; $a=0$, $b=1$"]],
+             "caption":[r"The Kretschmann scalar $K$, divergent at $r=r_s$ for the generic member and finite there for the two regular members."],
+             "settings":"$r_s=1$.","clip":"Logarithmic scale; curves continue beyond the panel."}]
+
+
 DRAWN = {
+    "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "newman_tamburino": newman_tamburino,
     "ab_metrics": ab_metrics,
