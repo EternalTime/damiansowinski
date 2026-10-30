@@ -1,5 +1,5 @@
 {
-  "version": "f6337a136f8cc40f",
+  "version": "88626ba577c6d984",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -33573,6 +33573,77 @@
         "doi": "10.1142/S0217732317501899",
         "eprint": "1710.01059",
         "archiveprefix": "arXiv"
+      }
+    },
+    "charach_malin1979": {
+      "type": "article",
+      "fields": {
+        "author": "Charach, Ch. and Malin, S.",
+        "title": "Cosmological model with gravitational and scalar waves",
+        "journal": "Physical Review D",
+        "volume": "19",
+        "number": "4",
+        "pages": "1058--1064",
+        "year": "1979",
+        "doi": "10.1103/PhysRevD.19.1058"
+      }
+    },
+    "charach1979": {
+      "type": "article",
+      "fields": {
+        "author": "Charach, Ch.",
+        "title": "Electromagnetic Gowdy universe",
+        "journal": "Physical Review D",
+        "volume": "19",
+        "number": "12",
+        "pages": "3516--3523",
+        "year": "1979",
+        "doi": "10.1103/PhysRevD.19.3516"
+      }
+    },
+    "szybka_wyrebowski2016": {
+      "type": "article",
+      "fields": {
+        "author": "Szybka, S. J. and Wyr\\k{e}bowski, M. J.",
+        "title": "Backreaction for Einstein-Rosen waves coupled to a massless scalar field",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "2",
+        "pages": "024059",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.024059",
+        "eprint": "1509.00346",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
+      }
+    },
+    "charach_malin1980": {
+      "type": "article",
+      "fields": {
+        "author": "Charach, Ch. and Malin, S.",
+        "title": "Cosmological model with gravitational, electromagnetic, and scalar waves",
+        "journal": "Physical Review D",
+        "volume": "21",
+        "number": "12",
+        "pages": "3284--3294",
+        "year": "1980",
+        "doi": "10.1103/PhysRevD.21.3284"
+      }
+    },
+    "nungesser_rendall2009": {
+      "type": "article",
+      "fields": {
+        "author": "Nungesser, Ernesto and Rendall, Alan D.",
+        "title": "Strong cosmic censorship for solutions of the Einstein-Maxwell field equations with polarized Gowdy symmetry",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "26",
+        "number": "10",
+        "pages": "105019",
+        "year": "2009",
+        "doi": "10.1088/0264-9381/26/10/105019",
+        "eprint": "0901.4000",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
       }
     },
     "lyndenbellpineault1978b": {
