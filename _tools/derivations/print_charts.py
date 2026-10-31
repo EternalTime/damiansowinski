@@ -36976,6 +36976,9 @@ CHARTS["static_five_soliton"] = [lambda s=s: static_five_soliton(s) for s in STA
 import extended_inflation as extended
 CHARTS["extended_inflation"] = [lambda s=s: extended.chart_spec(s) for s in extended.CHARTS]
 
+import hosotani_universe as hosotani
+CHARTS["hosotani_universe"] = [lambda s=s: hosotani.chart_spec(s) for s in hosotani.SYSTEMS]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])

@@ -100,6 +100,11 @@
       "id": "vaidya_patel_kerr",
       "kind": "generalisation",
       "text": "A Kerr black hole placed in Einstein's universe, which is what remains when its mass is set to zero [vaidya1977kerr]."
+    },
+    {
+      "id": "hosotani_universe",
+      "kind": "conformal",
+      "text": "A closed universe filled with a homogeneous Yang-Mills magnetic field. Dividing its metric by the squared spatial radius makes it conformal to a region of Einstein's static universe [gibbons1994ym]."
     }
   ],
   "references": [
@@ -128,7 +133,8 @@
     "bohmerlobo2008",
     "lachiezerey1995",
     "luminet2003",
-    "vaidya1977kerr"
+    "vaidya1977kerr",
+    "gibbons1994ym"
   ],
   "coordinates": [
     {

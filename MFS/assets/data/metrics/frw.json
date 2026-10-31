@@ -206,6 +206,11 @@
       "id": "exponential_scalar_universes",
       "kind": "special_case",
       "text": "The flat Friedmann geometry with power law expansion, sourced by a scalar field with a positive exponential potential alone or with a barotropic fluid."
+    },
+    {
+      "id": "hosotani_universe",
+      "kind": "special_case",
+      "text": "Hosotani's closed universe has $a=\\ell\\sin\\eta$ and $p=\\rho/3$, with a homogeneous magnetic $SU(2)$ gauge field as its source [gibbons1994ym]."
     }
   ],
   "references": [
@@ -283,7 +288,8 @@
     "murphy1973",
     "vaidya1977kerr",
     "mello2017",
-    "starobinsky1980"
+    "starobinsky1980",
+    "gibbons1994ym"
   ],
   "coordinates": [
     {

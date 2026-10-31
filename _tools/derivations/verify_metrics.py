@@ -2602,6 +2602,10 @@ DIMENSIONS.update({("kowalski_glikman", system): {
 import electron_bubble as _electron_bubble
 DIMENSIONS.update(_electron_bubble.DIMENSIONS)
 
+DIMENSIONS.update({("hosotani_universe", system): {
+    time: "L" if time == "t" else "1", r"\chi": "1", r"\theta": "1", r"\phi": "1", r"\ell": "L"}
+    for system, time in (("cosmic_hyperspherical", "t"), ("conformal_hyperspherical", r"\eta"))})
+
 FIELD_DIMENSIONS = {
     "metric_components": sp.Integer(1),
     "inverse_metric_components": sp.Integer(1),
