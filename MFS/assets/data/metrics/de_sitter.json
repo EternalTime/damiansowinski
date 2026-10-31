@@ -179,6 +179,11 @@
       "id": "starobinsky_universe",
       "kind": "generalisation",
       "text": "Starobinsky's semiclassical family contains de Sitter space at zero departure amplitude [starobinsky1980]."
+    },
+    {
+      "id": "hawking_moss",
+      "kind": "dual",
+      "text": "At a positive maximum of a scalar potential, the Euclidean sphere is the Hawking-Moss saddle. Its radius is set by the potential at that maximum [weinberg2007hm]."
     }
   ],
   "references": [
@@ -230,7 +235,8 @@
     "chiba2005",
     "cahen1970",
     "murphy1973",
-    "starobinsky1980"
+    "starobinsky1980",
+    "weinberg2007hm"
   ],
   "coordinates": [
     {

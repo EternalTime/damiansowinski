@@ -72,6 +72,11 @@
       "id": "einstein_static",
       "kind": "conformal",
       "text": "The conformal chart is the Einstein static universe's metric times $\\ell^2/\\cos^2\\eta$, so the half above the waist is conformal to the slab $0 \\le \\eta < \\pi/2$ of it, with its radius equal to $\\ell$."
+    },
+    {
+      "id": "hawking_moss",
+      "kind": "family",
+      "text": "The Hawking-Moss saddle is a whole Euclidean 4-sphere with a scalar field at a barrier maximum. Its action is compared with a false vacuum sphere to describe a vacuum transition [weinberg2007hm]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "coleman1980",
     "gott1998",
     "bousso1996",
-    "laflamme1987"
+    "laflamme1987",
+    "weinberg2007hm"
   ],
   "coordinates": [
     {

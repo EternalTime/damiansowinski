@@ -66,6 +66,11 @@
       "id": "universe_from_nothing",
       "kind": "family",
       "text": "Coleman's bounce carried from a false vacuum to the whole universe: half a 4-sphere joined at its equator to the waist of a closed de Sitter universe, which Vilenkin had created from nothing [vilenkin1982]."
+    },
+    {
+      "id": "hawking_moss",
+      "kind": "family",
+      "text": "Along suitable families of thick bounces, the scalar field at both poles approaches the barrier maximum. The homogeneous endpoint is the Hawking-Moss saddle [brown2007hm]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "degrassi2012",
     "caldwell1996",
     "gott1998",
-    "vilenkin1982"
+    "vilenkin1982",
+    "brown2007hm"
   ],
   "coordinates": [
     {

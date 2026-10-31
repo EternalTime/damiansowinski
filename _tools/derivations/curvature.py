@@ -18770,6 +18770,9 @@ import starobinsky_universe as _starobinsky
 
 DRAWN["starobinsky_universe"] = _starobinsky.curvature_diagram
 
+import hawking_moss_drawings as hm_drawings
+hm_drawings.register_curvature(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

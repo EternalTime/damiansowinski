@@ -116,7 +116,7 @@ def curvature(ck, src):
     return [{"id": "sphere", "label": "Barrier maximum sphere", "system": "four_sphere", "kind": "line", "x": x,
              "panels": panels, "curves": curves, "marks": [],
              "legend": [["line", "K", "Kretschmann scalar"], ["line", "R", "Ricci scalar"]],
-             "caption": [r"The Kretschmann scalar $K$ and Ricci scalar $R$ across the Euclidean sphere.",
+             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Euclidean sphere.",
                          r"The constant Kretschmann scalar $K\ell^4=24$.",
                          r"The constant Ricci scalar $R\ell^2=12$."],
              "ricci_sentences": [[2, 0]],
