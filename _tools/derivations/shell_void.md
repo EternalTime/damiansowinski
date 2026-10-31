@@ -118,3 +118,7 @@ The radial coordinate $r=f(\chi)$ covers a hemisphere in the closed case and obe
 A constant rescaling makes $r$ a length and $a$ dimensionless in the alternative comoving coordinate.
 The flat specialization of the proper radial coordinate has $a=t_0(t/t_0)^{2/3}$ and horizontal plotting distance $t_0\chi$.
 The two flat exterior diagrams represent the same shell in their respective radial coordinates.
+
+The interior null coordinates used to check the ray families are $(T+r)/R_0$ and $(T-r)/R_0$, with $R_0=0.15t_0$ the initial cavity radius.
+This normalization makes each coordinate dimensionless on the scale of the cavity.
+Their constant-coordinate curves are the Minkowski null rays in the interior.

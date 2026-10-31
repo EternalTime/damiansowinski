@@ -122,8 +122,13 @@ def diagram_captions():
 
 
 def null_forms():
+    """Dimensionless cavity null coordinates in units of its initial radius.
+
+    The cavity diameter stays below one t0 in the interval drawn; using R0 as
+    the null-coordinate unit makes the family separation test measure its size.
+    """
     return {
-        ("shell_void", "interior", "through"): (lambda T,r:T+r, lambda T,r:T-r, None),
+        ("shell_void", "interior", "through"): (lambda T,r:(T+r)/R0, lambda T,r:(T-r)/R0, None),
         ("shell_void", "exterior_proper", "radial"): (lambda t,r:3*np.cbrt(t)+r, lambda t,r:3*np.cbrt(t)-r, None),
         ("shell_void", "exterior", "radial"): (lambda t,r:3*np.cbrt(t)+r, lambda t,r:3*np.cbrt(t)-r, None),
     }
