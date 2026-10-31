@@ -179,6 +179,11 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "hawking_moss": {
+        "regions": [["four_sphere", "thermal", "thermal_angle"]],
+        "why": "The saddle is the Euclidean barrier-top sphere; the three Lorentzian charts are exact "
+               "constant-field continuations, not the saddle's Riemannian region.",
+    },
     "lynden_bell_pineault": {
         "regions": [["weyl", "spherical"], ["rotating"]],
         "why": "counter-rotating static discs and single-stream rotating discs are distinct families; "

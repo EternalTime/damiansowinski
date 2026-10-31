@@ -1,0 +1,13 @@
+{
+  "hidden": [
+    {
+      "reason": "The embedded Euclidean meridian sphere contains no Lorentzian moment of any constant-field continuation.",
+      "drawings": [
+        "hawking_moss/static_continuation/radial",
+        "hawking_moss/wall_continuation/radial",
+        "hawking_moss/closed_continuation/radial",
+        "conformal hawking_moss/static_continuation"
+      ]
+    }
+  ]
+}

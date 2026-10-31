@@ -19083,5 +19083,11 @@ _thakurta_rows, _thakurta_captions = thakurta_null_specs(sys.modules[__name__])
 DIAGRAMS.extend(_thakurta_rows)
 CAPTIONS.update(_thakurta_captions)
 
+import hawking_moss_drawings as hm_drawings
+hm_drawings.register_null(sys.modules[__name__])
+# Euclidean coordinate charts have positive definite metrics and no nonzero null tangent.
+NOT_DRAWN = {("hawking_moss", system): reason for system, reason in hm_drawings.NOT_DRAWN.items()}
+
+
 if __name__ == "__main__":
     sys.exit(main())
