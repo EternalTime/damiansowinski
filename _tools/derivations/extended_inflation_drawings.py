@@ -114,4 +114,3 @@ def curvature(ck, src, cr):
                          "divergent at $t=0$ and decreasing with cosmic time."],
              "ricci_sentences": [], "per_scalar": cr.scalar_clips("Log scale.", "Log scale."),
              "settings": SETTINGS, "clip": "Log scales."}]
-

@@ -5,9 +5,6 @@ The held scale factor has its exact power-law derivative in both charts.
 """
 import sympy as sp
 
-import verify_metrics as vm
-
-
 CHARTS = ("cosmic", "conformal")
 SCALE = {
     "cosmic": r"a = \left(\dfrac{t}{t_0}\right)^p",
@@ -26,6 +23,8 @@ RATES = {
 
 
 def chart_spec(system):
+    import verify_metrics as vm
+
     time = "t" if system == "cosmic" else r"\eta"
     coords = [time, "r", r"\theta", r"\phi"]
     parameters = ["p", "t_0", SCALE[system]]
@@ -54,6 +53,8 @@ def check_chart(chart, system):
     The positive Jordan vacuum energy is constant in the action.
     No symbolic determinant or simplify call is used here.
     """
+    import verify_metrics as vm
+
     X, P, geo = chart.symbols, chart.reader.parameters, chart.geo
     x, r, theta, _ = X
     p, t0, c = P["p"], P["t_0"], chart.reader.c
@@ -93,4 +94,3 @@ def check_chart(chart, system):
             J = sp.diag(scale, 1, 1, 1)
             pulled = J.T*pulled*J
         near(list(geo.g-pulled), "cosmic metric pulled back")
-
