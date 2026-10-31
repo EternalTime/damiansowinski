@@ -313,6 +313,11 @@
       "id": "electron_bubble",
       "kind": "composite",
       "text": "The flat interior meets a Kerr-Newman exterior on a rotating oblate shell [lopez1984electron]."
+    },
+    {
+      "id": "exponential_scalar_universes",
+      "kind": "conformal",
+      "text": "The power law scalar cosmologies are conformal to regions of Minkowski space whose time interval depends on the expansion exponent $p$."
     }
   ],
   "references": [

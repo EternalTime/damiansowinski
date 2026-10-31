@@ -201,6 +201,11 @@
       "id": "extended_inflation",
       "kind": "special_case",
       "text": "A false vacuum and an evolving Brans-Dicke scalar support $a(t) \\propto t^{\\omega + 1/2}$ in the spatially flat universe."
+    },
+    {
+      "id": "exponential_scalar_universes",
+      "kind": "special_case",
+      "text": "The flat Friedmann geometry with power law expansion, sourced by a scalar field with a positive exponential potential alone or with a barotropic fluid."
     }
   ],
   "references": [

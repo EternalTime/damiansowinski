@@ -19105,5 +19105,10 @@ CAPTIONS.update(_electron_bubble.diagram_captions())
 CLOSED_FORMS.update(_electron_bubble.null_forms())
 
 
+import exponential_scalar_universes as _exponential_scalar
+DIAGRAMS.extend(_exponential_scalar.diagram_specs(Diagram, SIDEWAYS))
+CAPTIONS.update(_exponential_scalar.diagram_captions())
+CLOSED_FORMS.update(_exponential_scalar.null_forms())
+
 if __name__ == "__main__":
     sys.exit(main())

@@ -46,6 +46,7 @@ These domains assume the exact expansion over $0<t<\infty$.
 The spherical origin is a regular spatial axis at every positive time.
 The curvature scalars are $R=6p(2p-1)/t^2$ and $K=12p^2[(p-1)^2+p^2]/t^4$.
 Thus $t=0$ is a curvature singularity throughout $p>1/3$, including $p=1/2$ where $R=0$.
+The strictly decreasing $K$ has a timelike gradient, so a Killing field must be tangent to a spacelike constant time slice.
 
 ## Drawings and checks
 

@@ -31961,5 +31961,15 @@ CAPTIONS[("electron_bubble", "axis")] = [
 # A two-coordinate reduction suppresses one of the two independent torus winding classes.
 NOT_DRAWN.add("torus_universe_2plus1")
 
+import exponential_scalar_universes as _exponential_scalar
+
+
+def exponential_scalar_universes(ck, src):
+    return _exponential_scalar.conformal_views(ck, src, sys.modules[__name__])
+
+
+DRAWN[_exponential_scalar.METRIC] = exponential_scalar_universes
+CAPTIONS.update(_exponential_scalar.conformal_captions())
+
 if __name__ == "__main__":
     sys.exit(main())

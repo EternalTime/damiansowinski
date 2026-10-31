@@ -439,6 +439,14 @@ REGIONS = {
 WHOLE = {("brane_wall_universe", "gaussian_normal")}
 
 OVERRULED = {
+    ("exponential_scalar_universes", "stationary"): (
+        False, "K decreases strictly as t^-4 with a timelike gradient for p > 1/3, so every Killing "
+               "field is tangent to a spacelike constant-t slice; sampling the conditional conformal "
+               "domains independently can evaluate a^2 beyond (1-p) eta > 0"),
+    ("exponential_scalar_universes", "static"): (
+        False, "the monotone Kretschmann scalar has a timelike gradient, excluding a timelike Killing "
+               "field; the physical conformal domain has (1-p) eta > 0 and a^2 > 0"),
+
     ("cahen_wallach", "stationary"): (
         True, "the Brinkmann chart's d_u is a Killing vector whose norm, (lambda_1 x^2 + lambda_2 y^2)c^2, takes "
               "a sign the parameters leave open, but d_u + a d_v with a > 0 is a Killing vector too, of norm "

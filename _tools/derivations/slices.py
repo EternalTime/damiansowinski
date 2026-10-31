@@ -3897,6 +3897,13 @@ for _bubble_chart in _electron_bubble.CHARTS:
             type("BubbleSlice", (), {"system": system})(), sys.modules[__name__]))
 
 
+import exponential_scalar_universes as _exponential_scalar
+FLAT.update({
+    (_exponential_scalar.METRIC, system, vid):
+        lambda system=system, vid=vid: _exponential_scalar.slice_marks(sys.modules[__name__], system, vid)
+    for system, vid, _ in _exponential_scalar.PLANES
+})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
