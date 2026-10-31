@@ -18817,5 +18817,10 @@ def exponential_scalar_universes(ck, src):
 
 DRAWN[_exponential_scalar.METRIC] = exponential_scalar_universes
 
+
+import hosotani_drawings as hosotani_drawings
+hosotani_drawings.register_curvature(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

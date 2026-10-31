@@ -74,7 +74,10 @@ class ClosedRadiation(unittest.TestCase):
                 self.assertAlmostEqual(addot / a, -ell**2 / a**4, places=10)
                 self.assertAlmostEqual((ell * math.cos(eta))**2 + a**2, ell**2)
                 self.assertAlmostEqual(a**2, (ell * (1 - math.cos(eta))) * (ell * (1 + math.cos(eta))))
-                self.assertEqual(adot > 0, eta <= math.pi / 2)
+                if eta != math.pi / 2:
+                    self.assertEqual(adot > 0, eta < math.pi / 2)
+                else:
+                    self.assertAlmostEqual(adot, 0)
 
     def test_stored_einstein_tensor_has_the_fixed_magnetic_source(self):
         for entry in charts():
@@ -94,14 +97,23 @@ class ClosedRadiation(unittest.TestCase):
         cosmic, conformal = charts()
         self.assertEqual(cosmic["coords"][1:], conformal["coords"][1:])
         self.assertIn(r"\chi \in [0, \pi]", cosmic["domains"])
+        def metric_at(entry, time, ell, chi):
+            reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+            at = {reader.parameters["ell"]: ell,
+                  **{reader.symbol[vm.Reader._plain(c)]: value
+                     for c, value in zip(entry["coords"], (time, chi, 1.1, 0.4))}}
+            metric = np.zeros((4, 4))
+            for component in entry["metric_components"]:
+                i, j = [entry["coords"].index(c) for c in component["indices"]]
+                metric[i, j] = float(reader(component["value"]).subs(at))
+            return metric
         for eta, chi in ((0.4, 0.2), (1.3, 1.8), (2.8, 2.6)):
             ell = 1.4
             t = ell * (1 - math.cos(eta))
             a = ell * math.sin(eta)
-            self.assertAlmostEqual(t * (2 * ell - t), a**2)
-            self.assertAlmostEqual(-(ell * math.sin(eta))**2, -a**2)
-            self.assertAlmostEqual(a**2 * math.sin(chi)**2, t * (2 * ell - t) * math.sin(chi)**2)
-        # K is finite at turnaround and diverges at each endpoint; R vanishes.
+            J = np.diag([a, 1, 1, 1])
+            np.testing.assert_allclose(J.T @ metric_at(cosmic, t, ell, chi) @ J,
+                                       metric_at(conformal, eta, ell, chi), atol=1e-12)
         for entry in (cosmic, conformal):
             self.assertEqual(entry["ricci_scalar"], "0")
 

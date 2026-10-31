@@ -19113,5 +19113,10 @@ DIAGRAMS.extend(_exponential_scalar.diagram_specs(Diagram, SIDEWAYS))
 CAPTIONS.update(_exponential_scalar.diagram_captions())
 CLOSED_FORMS.update(_exponential_scalar.null_forms())
 
+
+import hosotani_drawings as hosotani_drawings
+hosotani_drawings.register_null(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

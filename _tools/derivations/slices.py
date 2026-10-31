@@ -5024,6 +5024,10 @@ import early_braneworlds_drawings as eb_drawings
 eb_drawings.register_slices(sys.modules[__name__])
 
 
+import hosotani_drawings as hosotani_drawings
+hosotani_drawings.register_slices(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)
