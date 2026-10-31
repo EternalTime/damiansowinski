@@ -2620,7 +2620,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a42912afc1db70f9",
+    "version": "92089b84d0d9168a",
     "diagrams": "dfa07fae80435e7d",
     "conformal": "878abf6db42c0334",
     "embedding": "cc9efb7cafec7946"
@@ -3664,6 +3664,29 @@
     "diagrams": "9b7443d6837fcf68",
     "embedding": "ab25187ae9e24882",
     "curvature": "ca83d2a4a206563e"
+  },
+  {
+    "id": "kramer_fluid",
+    "name": "Kramer Fluid",
+    "tags": [
+      "perfect fluid",
+      "rotating",
+      "rigid rotation",
+      "stationary",
+      "axisymmetric",
+      "stellar interior",
+      "equation of state",
+      "Petrov type D",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "858419db466c0de2",
+    "diagrams": "067a41cc1c84f153",
+    "embedding": "3ae957ee3b2b129f",
+    "curvature": "84c690d82886e3e9"
   },
   {
     "id": "krasnikov",
@@ -6445,7 +6468,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "abe5376ac5cbaa25",
+    "version": "a70eec1316a6f00b",
     "diagrams": "b8a9287744afbad1",
     "conformal": "f4c269030698315c",
     "embedding": "c64f1f900fa70a89",
@@ -6832,7 +6855,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1ea70d3051d6b453",
+    "version": "1728c4836e0ebadc",
     "diagrams": "7d4e79254c15cf2f",
     "embedding": "0bbd48dbcc626017"
   },

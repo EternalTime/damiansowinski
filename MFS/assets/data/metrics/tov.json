@@ -93,6 +93,11 @@
       "id": "spheroidal_stars",
       "kind": "special_case",
       "text": "Exact fluid spheres with a regular centre and a surface where pressure vanishes. Their lapse and mass functions solve the equations of equilibrium [delgaty1998]."
+    },
+    {
+      "id": "kramer_fluid",
+      "kind": "family",
+      "text": "A bounded perfect fluid in rigid rotation. Its energy density exceeds the magnitude of its negative pressure throughout the interior [chinea1999kramer]."
     }
   ],
   "references": [
@@ -133,7 +138,8 @@
     "volkov1999",
     "bowers1974",
     "buchdahl1964",
-    "delgaty1998"
+    "delgaty1998",
+    "chinea1999kramer"
   ],
   "coordinates": [
     {

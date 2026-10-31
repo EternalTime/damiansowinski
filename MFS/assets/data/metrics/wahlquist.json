@@ -49,6 +49,11 @@
       "id": "interior_schwarzschild",
       "kind": "family",
       "text": "Schwarzschild's star has uniform energy density. Whittaker's sphere, which is Wahlquist's fluid at rest, has uniform $\\mu + 3p$, the density of gravitational mass [whittaker1968]."
+    },
+    {
+      "id": "kramer_fluid",
+      "kind": "family",
+      "text": "An exact rigidly rotating body with the same linear equation of state. Its negative pressure rises from the centre to zero on a closed surface [chinea1999kramer]."
     }
   ],
   "references": [
@@ -66,7 +71,8 @@
     "hartle1967",
     "bradley2000b",
     "sarnobat2006",
-    "houri2020"
+    "houri2020",
+    "chinea1999kramer"
   ],
   "coordinates": [
     {

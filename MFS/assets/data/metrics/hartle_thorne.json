@@ -62,6 +62,11 @@
       "id": "erez_rosen",
       "kind": "family",
       "text": "An exact static field with a mass and a quadrupole moment. To first order in its quadrupole parameter it is Hartle and Thorne's exterior without rotation, after a stretch by Zipoy and Voorhees's $\\delta$ and a change of coordinates [boshkayev2019]."
+    },
+    {
+      "id": "kramer_fluid",
+      "kind": "family",
+      "text": "An exact interior for a rigidly rotating perfect fluid with negative pressure. Its rotation remains finite throughout the bounded family [chinea1999kramer]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "bradley2000",
     "bardeen1969",
     "will2014",
-    "boshkayev2019"
+    "boshkayev2019",
+    "chinea1999kramer"
   ],
   "coordinates": [
     {

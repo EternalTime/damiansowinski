@@ -1649,6 +1649,17 @@ An eleven dimensional supergravity wave with parallel null 4-form flux and 32 Ki
 - chart Brinkmann: coordinates $(u, v, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$, $$ds^2 = -\mu^2\left(\frac{x_1^2 + x_2^2 + x_3^2}{9} + \frac{x_4^2 + x_5^2 + x_6^2 + x_7^2 + x_8^2 + x_9^2}{36}\right)c^2du^2 - 2c\,du\,dv + dx_1^2 + dx_2^2 + dx_3^2 + dx_4^2 + dx_5^2 + dx_6^2 + dx_7^2 + dx_8^2 + dx_9^2$$
 - chart Rosen: coordinates $(u, w, y_1, y_2, y_3, y_4, y_5, y_6, y_7, y_8, y_9)$, $$ds^2 = -2c\,du\,dw + \sin^2\left(\mu cu/3\right)\left(dy_1^2 + dy_2^2 + dy_3^2\right) + \sin^2\left(\mu cu/6\right)\left(dy_4^2 + dy_5^2 + dy_6^2 + dy_7^2 + dy_8^2 + dy_9^2\right)$$
 
+### Kramer's Rotating Perfect Fluid
+
+A bounded perfect fluid in rigid rotation, with negative pressure and positive energy density.
+
+- id: `kramer_fluid`
+- tags: perfect fluid, rotating, rigid rotation, stationary, axisymmetric, stellar interior, equation of state, Petrov type D, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kramer_fluid.json
+- chart Radial Coordinate: coordinates $(\tau, \eta, \xi, \phi)$, $$ds^2=\dfrac{1}{2m}\left((\eta-1-F)d\tau^2+4(\eta-1-F+FQ)d\tau\,d\phi+4(\eta-1-F(Q-1)^2)d\phi^2+\dfrac{d\eta^2}{\eta-1}+\dfrac{d\xi^2}{F}\right)$$
+- chart Square Root Radial Coordinate: coordinates $(\tau, w, \xi, \phi)$, $$ds^2=\dfrac{1}{2m}\left((w^2-F)d\tau^2+4(w^2+FJ)d\tau\,d\phi+4(w^2-FJ^2)d\phi^2+4dw^2+\dfrac{d\xi^2}{F}\right)$$
+
 ### Krasnikov Tube
 
 A tube of modified spacetime laid down along the path of an outbound ship, flat inside but with its light cones tipped so far open that the trip home can be superluminal. The outbound leg is no faster than light, yet the round trip can be made arbitrarily short by clocks left at home, and holding the tube open takes negative energy density.

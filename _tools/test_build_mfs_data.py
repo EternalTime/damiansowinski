@@ -5707,6 +5707,10 @@ class Slices(unittest.TestCase):
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
             return (lambda X: 0.0), [-x, x]
+        if key == "kramer_fluid/published/equator":
+            # The embedded radial coordinate is w; the same endpoint is eta=1+w^2.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [1 + lo * lo, 1 + hi * hi]
         if key == "godel/cartesian/tx":
             hi = self.reach(surface)[1]
             return (lambda X: 0.0), [-2 * hi, 2 * hi]

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 229,
+  "count": 230,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -29520,6 +29520,11 @@
           "id": "erez_rosen",
           "kind": "family",
           "text": "An exact static field with a mass and a quadrupole moment. To first order in its quadrupole parameter it is Hartle and Thorne's exterior without rotation, after a stretch by Zipoy and Voorhees's $\\delta$ and a change of coordinates [boshkayev2019]."
+        },
+        {
+          "id": "kramer_fluid",
+          "kind": "family",
+          "text": "An exact interior for a rigidly rotating perfect fluid with negative pressure. Its rotation remains finite throughout the bounded family [chinea1999kramer]."
         }
       ],
       "references": [
@@ -29540,7 +29545,8 @@
         "bradley2000",
         "bardeen1969",
         "will2014",
-        "boshkayev2019"
+        "boshkayev2019",
+        "chinea1999kramer"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hartle_thorne.json",
@@ -40218,6 +40224,235 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "kramer_fluid",
+      "name": "Kramer's Rotating Perfect Fluid",
+      "short_name": "Kramer Fluid",
+      "description": "A bounded perfect fluid in rigid rotation, with negative pressure and positive energy density.",
+      "tags": [
+        "perfect fluid",
+        "rotating",
+        "rigid rotation",
+        "stationary",
+        "axisymmetric",
+        "stellar interior",
+        "equation of state",
+        "Petrov type D",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use the standard Ricci contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$, and Euler's number $e$ as the base of natural logarithms.",
+      "related": [
+        {
+          "id": "wahlquist",
+          "kind": "family",
+          "text": "Rigid rotation with the same linear equation of state, $\\varepsilon+3p=\\mathrm{constant}$. The two fluids belong to the stationary axisymmetric family of algebraic type D [racz1996fluid]."
+        },
+        {
+          "id": "tov",
+          "kind": "family",
+          "text": "Spherical fluid equilibrium with pressure balancing gravity. Kramer's body has rigid rotation and negative pressure within a closed surface [chinea1999kramer]."
+        },
+        {
+          "id": "hartle_thorne",
+          "kind": "family",
+          "text": "The exterior field of a slowly rotating body, through second order in its angular velocity. Kramer's exact fluid has finite rotation throughout its bounded family [chinea1999kramer]."
+        }
+      ],
+      "references": [
+        "kramer1984fluid",
+        "chinea1999kramer",
+        "racz1996fluid"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kramer_fluid.json",
+      "charts": [
+        {
+          "id": "published",
+          "name": "Radial Coordinate",
+          "coordinates": [
+            "\\tau",
+            "\\eta",
+            "\\xi",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty,\\infty)",
+            "\\eta \\in [1,\\eta_e]",
+            "|\\xi|\\leq\\arccos\\left(\\dfrac{(\\eta+1)e^{\\eta}}{b}\\right)",
+            "\\phi \\in [0,2\\pi)",
+            "m>0,\\quad 2e<b<b_\\star",
+            "\\eta=1\\;\\text{(regular rotation axis, where the polar chart fails)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "A positive inverse squared length, with length scale $\\ell=1/\\sqrt{2m}$"
+            },
+            {
+              "symbol": "b",
+              "description": "A dimensionless rotation parameter, $2e<b<b_\\star$, where $b_\\star=(\\eta_\\star+1)e^{\\eta_\\star}\\simeq8.603$ and $\\eta_\\star>1$ is the nontrivial root of $(\\eta_\\star+1)(2e^{\\eta_\\star-1}-e^{2\\eta_\\star-2})=2$"
+            },
+            {
+              "symbol": "Q = e^{\\eta-1}",
+              "description": "A dimensionless exponential of the radial coordinate"
+            },
+            {
+              "symbol": "F = b\\cos\\xi\\,e^{-\\eta}",
+              "description": "A dimensionless function; the pressure $p=m(1+\\eta-F)/(2\\kappa_0)$ and energy density $\\varepsilon=m(1-3\\eta+3F)/(2\\kappa_0)$ obey $\\varepsilon+3p=2m/\\kappa_0$, with $\\kappa_0=8\\pi G/c^4$ the Einstein coupling"
+            },
+            {
+              "symbol": "\\eta_e",
+              "description": "The equatorial surface radius, defined by $(\\eta_e+1)e^{\\eta_e}=b$"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\tau,\\eta,\\xi,\\phi)$, with $\\tau$ along the fluid world lines and $\\phi$ the azimuth. The radial coordinate is $\\eta$, and the latitude is $\\xi$. Components use these coordinates directly, with no rescaling by $c$; a dot denotes differentiation with respect to an affine parameter, and dimensional time is $T=\\ell\\tau/c$.",
+          "line_element": "ds^2=\\dfrac{1}{2m}\\left((\\eta-1-F)d\\tau^2+4(\\eta-1-F+FQ)d\\tau\\,d\\phi+4(\\eta-1-F(Q-1)^2)d\\phi^2+\\dfrac{d\\eta^2}{\\eta-1}+\\dfrac{d\\xi^2}{F}\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{F - \\eta + 1}{2m}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{F\\,Q - F + \\eta - 1}{m}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{F\\,Q - F + \\eta - 1}{m}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{1}{2m\\left(\\eta - 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{1}{2m\\,F}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2F\\,Q^2 - 4F\\,Q + 2F - 2\\eta + 2}{m}"
+            }
+          ],
+          "ricci_scalar": "R = m\\left(3F - 3\\eta - 1\\right)",
+          "kretschmann": "K = \\dfrac{m^2\\left(27F^2\\sin^2\\xi - 15F^2 - 6F\\,\\eta\\sin^2\\xi + 6F\\,\\eta + 10F\\sin^2\\xi - 10F + 3\\eta^2\\sin^2\\xi - 3\\eta^2 - 2\\eta\\sin^2\\xi + 2\\eta + 3\\sin^2\\xi - 3\\right)}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+        },
+        {
+          "id": "radial",
+          "name": "Square Root Radial Coordinate",
+          "coordinates": [
+            "\\tau",
+            "w",
+            "\\xi",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty,\\infty)",
+            "w \\in [0,\\sqrt{\\eta_e-1}]",
+            "|\\xi|\\leq\\arccos\\left(\\dfrac{(\\eta+1)e^{\\eta}}{b}\\right)",
+            "\\phi \\in [0,2\\pi)",
+            "m>0,\\quad 2e<b<b_\\star",
+            "\\eta=1\\;\\text{(regular rotation axis, where the polar chart fails)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "A positive inverse squared length, with length scale $\\ell=1/\\sqrt{2m}$"
+            },
+            {
+              "symbol": "b",
+              "description": "A dimensionless rotation parameter, $2e<b<b_\\star$, where $b_\\star=(\\eta_\\star+1)e^{\\eta_\\star}\\simeq8.603$ and $\\eta_\\star>1$ is the nontrivial root of $(\\eta_\\star+1)(2e^{\\eta_\\star-1}-e^{2\\eta_\\star-2})=2$"
+            },
+            {
+              "symbol": "\\eta = 1+w^2",
+              "description": "The dimensionless original radial coordinate"
+            },
+            {
+              "symbol": "J = 2e^{w^2/2}\\sinh(w^2/2)",
+              "description": "The dimensionless difference $J=e^{w^2}-1$"
+            },
+            {
+              "symbol": "F = b\\cos\\xi\\,e^{-1-w^2}",
+              "description": "A dimensionless function; the pressure $p=m(1+\\eta-F)/(2\\kappa_0)$ and energy density $\\varepsilon=m(1-3\\eta+3F)/(2\\kappa_0)$ obey $\\varepsilon+3p=2m/\\kappa_0$, with $\\kappa_0=8\\pi G/c^4$ the Einstein coupling"
+            },
+            {
+              "symbol": "\\eta_e",
+              "description": "The equatorial surface radius, defined by $(\\eta_e+1)e^{\\eta_e}=b$"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\tau,w,\\xi,\\phi)$, with $\\tau$ along the fluid world lines and $\\phi$ the azimuth. We set $w=\\sqrt{\\eta-1}$ and keep the latitude $\\xi$. Components use these coordinates directly, with no rescaling by $c$; a dot denotes differentiation with respect to an affine parameter, and dimensional time is $T=\\ell\\tau/c$.",
+          "line_element": "ds^2=\\dfrac{1}{2m}\\left((w^2-F)d\\tau^2+4(w^2+FJ)d\\tau\\,d\\phi+4(w^2-FJ^2)d\\phi^2+4dw^2+\\dfrac{d\\xi^2}{F}\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{w^2 - F}{2m}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "\\phi"
+              ],
+              "value": "\\dfrac{F\\,J + w^2}{m}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\tau"
+              ],
+              "value": "\\dfrac{F\\,J + w^2}{m}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "\\dfrac{2}{m}"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "\\dfrac{1}{2m\\,F}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{2w^2 - 2F\\,J^2}{m}"
+            }
+          ],
+          "ricci_scalar": "R = m\\left(3F - 3w^2 - 4\\right)",
+          "kretschmann": "K = \\dfrac{m^2\\left(27F^2\\sin^2\\xi - 15F^2 - 6F\\,w^2\\sin^2\\xi + 6F\\,w^2 + 4F\\sin^2\\xi - 4F + 3w^4\\sin^2\\xi - 3w^4 + 4w^2\\sin^2\\xi - 4w^2 + 4\\sin^2\\xi - 4\\right)}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
         }
       ]
     },
@@ -72539,6 +72774,11 @@
           "id": "spheroidal_stars",
           "kind": "special_case",
           "text": "Exact fluid spheres with a regular centre and a surface where pressure vanishes. Their lapse and mass functions solve the equations of equilibrium [delgaty1998]."
+        },
+        {
+          "id": "kramer_fluid",
+          "kind": "family",
+          "text": "A bounded perfect fluid in rigid rotation. Its energy density exceeds the magnitude of its negative pressure throughout the interior [chinea1999kramer]."
         }
       ],
       "references": [
@@ -72579,7 +72819,8 @@
         "volkov1999",
         "bowers1974",
         "buchdahl1964",
-        "delgaty1998"
+        "delgaty1998",
+        "chinea1999kramer"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tov.json",
@@ -77091,6 +77332,11 @@
           "id": "interior_schwarzschild",
           "kind": "family",
           "text": "Schwarzschild's star has uniform energy density. Whittaker's sphere, which is Wahlquist's fluid at rest, has uniform $\\mu + 3p$, the density of gravitational mass [whittaker1968]."
+        },
+        {
+          "id": "kramer_fluid",
+          "kind": "family",
+          "text": "An exact rigidly rotating body with the same linear equation of state. Its negative pressure rises from the centre to zero on a closed surface [chinea1999kramer]."
         }
       ],
       "references": [
@@ -77108,7 +77354,8 @@
         "hartle1967",
         "bradley2000b",
         "sarnobat2006",
-        "houri2020"
+        "houri2020",
+        "chinea1999kramer"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wahlquist.json",

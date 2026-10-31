@@ -78,7 +78,7 @@ class KramerFluid(unittest.TestCase):
         # twice the vorticity, independently of the source's expression for its magnitude.
         u = self.g[:,0]/sp.sqrt(-self.g[0,0])
         du = sp.Matrix(4,4,lambda i,j:(sp.diff(u[j],R.symbol[self.chart['coords'][i]])
-                                      -sp.diff(u[i],R.symbol[self.chart['coords'][j]]))/2
+                                      -sp.diff(u[i],R.symbol[self.chart['coords'][j]])))/2
         for bv in (sp.Rational(11,2),sp.Rational(61,10),sp.Rational(17,2)):
             at = {w:sp.Float('1e-9',65),xi:0,m:sp.Rational(1,2),b:bv}
             g = self.g.subs(at).evalf(55)

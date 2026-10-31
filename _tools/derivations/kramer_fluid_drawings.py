@@ -74,9 +74,9 @@ def embedding(eb, ck, src):
 
 def register_slices(sl):
     sl.FLAT[(METRIC, 'radial', 'equator')] = lambda: sl.one(
-        METRIC, lambda m: sl.along(0., *m.reach('radial', 'w')))
+        METRIC, lambda m: sl.along(0., *m.reach('radial', 'w')), label=r'$\tau=0$')
     sl.FLAT[(METRIC, 'published', 'equator')] = lambda: sl.one(
-        METRIC, lambda m: sl.along(0., *[1+q*q for q in m.reach('radial', 'w')]))
+        METRIC, lambda m: sl.along(0., *[1+q*q for q in m.reach('radial', 'w')]), label=r'$\tau=0$')
     sl.FLAT_METRICS.add(METRIC)
 
 

@@ -37,7 +37,7 @@ def spec(system):
                 r'+4(w^2-FJ^2)d\phi^2+4dw^2+\dfrac{d\xi^2}{F}\right)')
     probe = vm.Reader(coords, parameters(system), (), held=vm.HELD[(METRIC, system)], rates=vm.RATES[(METRIC, system)])
     return {'metric_id': METRIC, 'system': {'id': system,
-            'name': 'Square Root Radial Coordinate' if radial else 'Published Radial Coordinate',
+            'name': 'Square Root Radial Coordinate' if radial else 'Radial Coordinate',
             'coords': coords, 'parameters': parameters(system), 'line_element': line,
             'domains': [r'\tau \in (-\infty,\infty)',
                         r'w \in [0,\sqrt{\eta_e-1}]' if radial else r'\eta \in [1,\eta_e]',

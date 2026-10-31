@@ -1,5 +1,5 @@
 {
-  "version": "b76c827c333c974c",
+  "version": "8d29f225012dd9c9",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -34790,6 +34790,52 @@
         "doi": "10.1016/0370-2693(94)90652-1",
         "eprint": "hep-th/9311098",
         "archiveprefix": "arXiv"
+      }
+    },
+    "kramer1984fluid": {
+      "type": "article",
+      "fields": {
+        "title": "A new solution for a rotating perfect fluid in general relativity",
+        "author": "Kramer, Dietrich",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "1",
+        "number": "1",
+        "pages": "L3--L7",
+        "year": "1984",
+        "doi": "10.1088/0264-9381/1/1/002",
+        "url": "https://doi.org/10.1088/0264-9381/1/1/002"
+      }
+    },
+    "chinea1999kramer": {
+      "type": "article",
+      "fields": {
+        "title": "On some geometric features of the {Kramer} interior solution for a rotating perfect fluid",
+        "author": "Chinea, F. J. and Pareja, M. J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "12",
+        "pages": "3823--3834",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/12/305",
+        "eprint": "gr-qc/9909048",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/12/305"
+      }
+    },
+    "racz1996fluid": {
+      "type": "article",
+      "fields": {
+        "title": "Generating new perfect-fluid solutions from known ones",
+        "author": "R\\'acz, Istv\\'an and Zsigrai, J\\'ozsef",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "10",
+        "pages": "2783--2795",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/10/015",
+        "eprint": "gr-qc/9602045",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/13/10/015"
       }
     }
   }

@@ -29,7 +29,7 @@
   "coordinates": [
     {
       "id": "published",
-      "name": "Published Radial Coordinate",
+      "name": "Radial Coordinate",
       "coords": [
         "\\tau",
         "\\eta",
