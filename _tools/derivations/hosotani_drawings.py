@@ -19,8 +19,9 @@ def register_null(nr):
                          (-0.15, PI + 0.15, -0.15, hi + 0.15), r"$\chi$", ylabel,
                          {"ell": 1}, nr.EQUATOR, tau="t" if time == "t" else "eta",
                          families=nr.SIDEWAYS, areal=True, no_throat=True,
-                         # dt/dchi vanishes at the singular endpoints in cosmic time.
-                         step=0.0001 if system == COSMIC else 0.0025)
+                         # The terminal cosmic-time sample controls the drift; a bounded
+                         # comparison passes at 5e-5, and this leaves a factor-two margin.
+                         step=0.000025 if system == COSMIC else 0.0025)
         key = (METRIC, system, "radial")
         nr.DIAGRAMS.append(row)
         nr.CAPTIONS[key] = [

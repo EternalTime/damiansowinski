@@ -82,7 +82,7 @@ class ClosedRadiation(unittest.TestCase):
     def test_stored_einstein_tensor_has_the_fixed_magnetic_source(self):
         for entry in charts():
             reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
-            time = reader.symbol[vm.Reader._plain(entry["coords"][0])]
+            time = reader.symbol[entry["coords"][0]]
             ell = reader.parameters["ell"]
             stored = entry["einstein_tensor"]["variants"]["ul"]["nonzero"]
             self.assertEqual(len(stored), 4)
@@ -100,7 +100,7 @@ class ClosedRadiation(unittest.TestCase):
         def metric_at(entry, time, ell, chi):
             reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
             at = {reader.parameters["ell"]: ell,
-                  **{reader.symbol[vm.Reader._plain(c)]: value
+                  **{reader.symbol[c]: value
                      for c, value in zip(entry["coords"], (time, chi, 1.1, 0.4))}}
             metric = np.zeros((4, 4))
             for component in entry["metric_components"]:
