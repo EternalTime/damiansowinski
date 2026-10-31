@@ -146,7 +146,7 @@ def embedding_views(ck, src, em):
         ck.isometry(label, disc)
         ck.radius(label+": rho = a r", disc, lambda r: r, size)
         ck.form(label+": Z = 0", disc, lambda r: 0*r, size)
-        surface = em.Surface([disc], label="$t=t_0$", time=1)
+        surface = em.Surface([disc])
         fig = em.figure_of([surface], {"sheet": "cover"}, size, meridians=12)
         fig.legend("fill", "cover", r"$t=t_0$, $\theta=\pi/2$")
         fig.legend("line", "r", "$r/t_0=1/2,1,3/2,2$")
@@ -217,7 +217,7 @@ def slice_marks(slices, system, vid):
     def line(moment):
         hi = moment.reach('cosmic_spherical', 'r')[1]
         return slices.along(clock, 0 if system == 'cosmic_spherical' else -hi, hi)
-    return slices.one(METRIC, line, view_id=vid)
+    return slices.one(METRIC, line, label="$t=t_0$", view_id=vid)
 
 
 def conformal_views(ck, src, cf):
@@ -270,7 +270,7 @@ def conformal_views(ck, src, cf):
         v.legend('singular', '$t=0$')
         v.legend('scri', r'$\eta=0$, future infinity' if p > 1 else 'future null infinity')
         v.legend('centre', '$r=0$')
-        moment = cf.slices.moments(METRIC, vid)[0]
+        moment = cf.slices.moments(METRIC, vid, label="$t=t_0$")[0]
         reach = np.linspace(*moment.reach('cosmic_spherical', 'r'), 81)
         v.slice(moment, [cf.mink_pq(np.full_like(reach, float(eta_of(1, p))), reach)])
         v.set(settings='$p='+('2/3' if vid == 'tracking' else f'{p:g}')+'$, $a_0=t_0=1$, '+r'$U,V=\arctan(\eta\mp r)$, $T=U+V$, $X=V-U$.')
