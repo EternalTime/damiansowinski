@@ -36973,6 +36973,8 @@ def static_five_soliton_check(chart, system):
 
 
 CHARTS["static_five_soliton"] = [lambda s=s: static_five_soliton(s) for s in STATIC_FIVE_CHARTS]
+import extended_inflation as extended
+CHARTS["extended_inflation"] = [lambda s=s: extended.chart_spec(s) for s in extended.CHARTS]
 
 
 def main():

@@ -3004,6 +3004,11 @@ RATES[("thakurta", "kruskal")] = {
     "r": {"U": r"2m(r-2m)/(rU)", "V": r"2m(r-2m)/(rV)"},
     "eta": {"U": "-2m/U", "V": "2m/V"}}
 
+import extended_inflation as _extended_inflation
+DIMENSIONS.update(_extended_inflation.DIMENSIONS)
+HELD.update({("extended_inflation", system): ("a",) for system in _extended_inflation.CHARTS})
+RATES.update(_extended_inflation.RATES)
+
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across
 # it: the delta is read as a smooth pulse while the tensors are built and taken to its limit
