@@ -1,0 +1,197 @@
+{
+  "id": "electron_bubble",
+  "name": "The Electron as a Rotating Bubble",
+  "short_name": "Electron Bubble",
+  "description": "A rotating charged oblate shell joining a flat interior to a Kerr-Newman exterior, a classical model of the spinning electron.",
+  "tags": [
+    "rotating",
+    "stationary",
+    "axisymmetric",
+    "thin shell",
+    "junction conditions",
+    "electric charge",
+    "electromagnetic field",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The mass enters as $m = GM/c^2$, the signed charge length obeys $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$, and $a = J/(Mc)$. The family has $m > 0$, $q^2 > m^2$, and $a \\ge 0$. The shell lies at $r_0 = q^2/(2m)$. Tensor components apply in the smooth regions away from the shell. The Ricci tensor is $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Carlos A. López enclosed a flat spacetime within a rotating charged shell in 1984 [lopez1984electron].\nThe exterior is the Kerr-Newman gravitational and electromagnetic field.\nThe boundary is an oblate ellipsoid with surface tension.\nLópez proposed this configuration as a classical model of the spinning electron.\n\nThe shell's position follows from continuity of the geometry.\nWith mass length $m=GM/c^2$ and squared charge length $q^2=GQ^2/(4\\pi\\epsilon_0c^4)$, its oblate radial coordinate is $r_0=q^2/(2m)$ [burinskii2002sources].\nIts polar semiaxis is $r_0$, and its equatorial semiaxis is $\\sqrt{r_0^2+a^2}$, where $a=J/(Mc)$ measures angular momentum per unit mass.\nThe full polar diameter $2r_0$ equals the classical electron radius when $M$ and $Q$ take the electron's mass and charge [lopez1984electron, burinskii2002sources].\n\nThe shell rotates rigidly with angular velocity $\\Omega=ca/(r_0^2+a^2)$ [burinskii2002sources].\nAn observer at rest in the flat interior measures an equatorial speed $v=ca/\\sqrt{r_0^2+a^2}$.\nThe speed approaches $c$ as the shell becomes more oblate.\nAt the electron's angular momentum $J=\\hbar/2$, with $\\hbar$ the reduced Planck constant, the equatorial size is close to half its reduced Compton wavelength [burinskii2016bubble].\n\nThe gravitational matching assigns the shell zero comoving energy density and finite tension in both tangential directions [burinskii2002sources].\nIts tension varies with latitude.\nThe jump in the normal derivative of the metric fixes this surface stress, while the smooth exterior contains the electromagnetic stress.\nA vanishing interior electromagnetic field and the rotating Kerr-Newman exterior require boundary structure beyond an ordinary electric surface charge and current sheet [burinskii2016bubble].\nA surface dipole layer is a formal option whose electromagnetic stress needs a specified regularization.\nIn September 1985, Øyvind Geelmuyden Grøn reconstructed López's source through the geometry of surface layers [gron1985electron].\n\nStatic electromagnetic mass models use spherically symmetric charged matter.\nThe density and pressure of a charged perfect fluid can have an electromagnetic origin, with a boundary matched to the Reissner-Nordström exterior [tiwari1984mass].\nRonald Gautreau constructed static spherical electron models in 1985 by setting the matter terms to zero in the charged fluid equations [gautreau1985electron].\nGrøn connected repulsive gravitation in electromagnetic mass models to negative gravitational mass and also identified repulsion in López's spinning source [gron1985repulsion].\n\nFor $m>0$ and $q^2>m^2$, the rotating bubble has no horizon.\nThe exterior occupies $r\\ge r_0$, and a ball of flat spacetime fills the enclosed volume.\nThe common time coordinate has a timelike gradient throughout both regions, so it orders causal paths across the shell [lopez1984electron, burinskii2002sources].",
+  "related": [
+    {
+      "id": "kerr_newman",
+      "kind": "piece",
+      "text": "The gravitational and electromagnetic field outside the rotating shell is Kerr-Newman's [lopez1984electron, burinskii2002sources]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "piece",
+      "text": "Flat spacetime fills the oblate volume enclosed by the charged shell [lopez1984electron]."
+    },
+    {
+      "id": "charged_shell",
+      "kind": "family",
+      "text": "A charged shell separates a flat interior from an exterior electromagnetic field."
+    }
+  ],
+  "references": [
+    "lopez1984electron",
+    "burinskii2002sources",
+    "burinskii2016bubble",
+    "gron1985electron",
+    "tiwari1984mass",
+    "gautreau1985electron",
+    "gron1985repulsion"
+  ],
+  "coordinates": [
+    {
+      "id": "exterior",
+      "name": "Boyer-Lindquist Exterior",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+        },
+        {
+          "symbol": "q",
+          "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+        },
+        {
+          "symbol": "a",
+          "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+        },
+        {
+          "symbol": "r_0 = q^2/(2m)",
+          "description": "Oblate radius of the timelike shell"
+        }
+      ]
+    },
+    {
+      "id": "interior",
+      "name": "Flat Oblate Interior",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+        },
+        {
+          "symbol": "q",
+          "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+        },
+        {
+          "symbol": "a",
+          "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+        },
+        {
+          "symbol": "r_0 = q^2/(2m)",
+          "description": "Oblate radius of the timelike shell"
+        }
+      ]
+    },
+    {
+      "id": "exterior_kerr",
+      "name": "Kerr Angular Exterior",
+      "coords": [
+        "T",
+        "r",
+        "\\theta",
+        "\\psi"
+      ],
+      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+        },
+        {
+          "symbol": "q",
+          "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+        },
+        {
+          "symbol": "a",
+          "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+        },
+        {
+          "symbol": "r_0 = q^2/(2m)",
+          "description": "Oblate radius of the timelike shell"
+        }
+      ]
+    },
+    {
+      "id": "interior_kerr",
+      "name": "Flat Kerr Angular Interior",
+      "coords": [
+        "T",
+        "r",
+        "\\theta",
+        "\\psi"
+      ],
+      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+        },
+        {
+          "symbol": "q",
+          "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+        },
+        {
+          "symbol": "a",
+          "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+        },
+        {
+          "symbol": "r_0 = q^2/(2m)",
+          "description": "Oblate radius of the timelike shell"
+        }
+      ]
+    },
+    {
+      "id": "cartesian",
+      "name": "Flat Cartesian Interior",
+      "coords": [
+        "T",
+        "x",
+        "y",
+        "z"
+      ],
+      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+        },
+        {
+          "symbol": "q",
+          "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+        },
+        {
+          "symbol": "a",
+          "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+        },
+        {
+          "symbol": "r_0 = q^2/(2m)",
+          "description": "Oblate radius of the timelike shell"
+        }
+      ]
+    }
+  ]
+}
