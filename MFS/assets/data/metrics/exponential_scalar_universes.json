@@ -76,7 +76,7 @@
         },
         {
           "symbol": "a = a_0\\left(t/t_0\\right)^p",
-          "description": "Dimensionless scale factor. The scalar is $\\phi=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=2(3p-1)/(\\kappa^2\\lambda^2)$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
+          "description": "Dimensionless scale factor. The scalar is $\\phi(t)=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=2(3p-1)/(\\kappa^2\\lambda^2)$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
         }
       ],
       "convention": "We use comoving Cartesian coordinates $(x,y,z)$, each with dimensions of length.",
@@ -1007,10 +1007,10 @@
         },
         {
           "symbol": "a = a_0\\left(t/t_0\\right)^p",
-          "description": "Dimensionless scale factor. The scalar is $\\phi=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=2(3p-1)/(\\kappa^2\\lambda^2)$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
+          "description": "Dimensionless scale factor. The scalar is $\\phi(t)=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=2(3p-1)/(\\kappa^2\\lambda^2)$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
         }
       ],
-      "convention": "We use the comoving radius $r$ with dimensions of length and the dimensionless angles $(\\theta,\\phi)$.",
+      "convention": "We use the comoving radius $r$ with dimensions of length and the dimensionless angles $(\\theta,\\phi)$. We denote the azimuthal angle by $\\phi$ and the homogeneous scalar by $\\phi(t)$.",
       "line_element": "ds^2 = -dt^2+a^2\\left(dr^2+r^2d\\theta^2+r^2\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -2083,7 +2083,7 @@
         },
         {
           "symbol": "a = a_0\\left((1-p)a_0\\eta/t_0\\right)^{p/(1-p)}",
-          "description": "Dimensionless scale factor. The scalar is $\\phi=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=2(3p-1)/(\\kappa^2\\lambda^2)$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
+          "description": "Dimensionless scale factor. The scalar is $\\phi(t)=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=2(3p-1)/(\\kappa^2\\lambda^2)$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
         }
       ],
       "convention": "We set $\\eta=t_0(t/t_0)^{1-p}/[a_0(1-p)]$, with comoving Cartesian coordinates $(x,y,z)$ of length.",
@@ -3026,7 +3026,7 @@
         },
         {
           "symbol": "a = a_0e^{a_0\\eta/t_0}",
-          "description": "Dimensionless scale factor. The scalar is $\\phi=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=4/(\\kappa^2\\lambda^2)$ at $p=1$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
+          "description": "Dimensionless scale factor. The scalar is $\\phi(t)=2\\ln(t/t_0)/(\\lambda\\kappa)$, with $V_0t_0^2=4/(\\kappa^2\\lambda^2)$ at $p=1$. The parameter $\\lambda$ is the dimensionless slope in $V(\\phi)=V_0e^{-\\lambda\\kappa\\phi}$."
         }
       ],
       "convention": "We set $p=1$ and $\\eta=(t_0/a_0)\\ln(t/t_0)$, with comoving Cartesian coordinates $(x,y,z)$ of length.",
