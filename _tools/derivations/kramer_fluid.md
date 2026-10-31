@@ -20,10 +20,24 @@ No rescaling of the source stress or of the geometry is required.
 The source's dimensionless time is $\tau$, so components use index 0 for $\tau$ directly.
 Dimensional elapsed time is $T=\tau/(c\sqrt{2m})$.
 The cross coefficient of $d\tau\,d\phi$ is twice $g_{\tau\phi}$.
-The auxiliary names $Q=e^{\eta-1}$ and $F=b\cos\xi e^{-\eta}$ have their exact first derivatives declared, so the curvature is rational in them.
-The exponential is named $Q$ because $E$ is the reader's Euler constant.
+The auxiliary names $Q=e^{\eta-1}$, $J=e^{w^2}-1=2e^{w^2/2}\sinh(w^2/2)$, and $F=b\cos\xi e^{-\eta}$ have their exact first derivatives declared, so the curvature is rational in them.
 
 ## Drawings
 
 The drawings take $m=1/2$ and $b=6.1$.
 The rotation axis is regular with azimuthal period $2\pi$.
+
+The equatorial disk has $g_{ww}=4\ell^2$ and $g_{\phi\phi}=4\ell^2[w^2-4(b/e)\sinh^2(w^2/2)]$.
+The hyperbolic form preserves precision near the axis and agrees with the sourced exponential form at independent points.
+Its embedding in Euclidean space satisfies $z'(w)^2=g_{ww}-[d\sqrt{g_{\phi\phi}}/dw]^2\geq0$ throughout the drawn disk.
+The equatorial quotient divides the circles of $\phi$ out and has time coefficient $g_{\tau\tau}-g_{\tau\phi}^2/g_{\phi\phi}$.
+Its null curves lift to spacetime null geodesics of zero angular momentum on the reflection plane.
+The regular axis is approached by the limit in $w$, where this time coefficient is $-\ell^2 b/e$.
+The diagrams terminate at the pressure boundary, with no exterior attached.
+
+## Conformal extent
+
+Only the bounded stationary body is established by Chinea and Pareja.
+An exterior junction and a global completion are unspecified.
+Axial symmetry leaves a causal quotient of three dimensions, so a two dimensional equatorial projection does not characterize the full four dimensional causal structure.
+The conformal diagram is therefore in NOT_DRAWN.

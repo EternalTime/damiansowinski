@@ -8,7 +8,7 @@ SYSTEMS = ('published', 'radial')
 def parameters(system):
     radial = system == 'radial'
     return ['m', 'b'] + ([r'\eta = 1+w^2'] if radial else []) + [
-        r'Q = e^{w^2}' if radial else r'Q = e^{\eta-1}',
+        r'J = 2e^{w^2/2}\sinh(w^2/2)' if radial else r'Q = e^{\eta-1}',
         r'F = b\cos\xi\,e^{-1-w^2}' if radial else r'F = b\cos\xi\,e^{-\eta}', r'\eta_e']
 
 
@@ -16,11 +16,11 @@ def register_dimensions(vm):
     for system in SYSTEMS:
         key = (METRIC, system)
         x = 'w' if system == 'radial' else r'\eta'
-        vm.HELD[key] = ('Q', 'F')
-        vm.RATES[key] = {'Q': {x: '2wQ' if system == 'radial' else 'Q'},
+        vm.HELD[key] = ('J' if system == 'radial' else 'Q', 'F')
+        vm.RATES[key] = {'J' if system == 'radial' else 'Q': {x: '2w(J+1)' if system == 'radial' else 'Q'},
                          'F': {x: '-2wF' if system == 'radial' else '-F', r'\xi': r'-F\tan\xi'}}
         vm.DIMENSIONS[key] = {r'\tau': '1', x: '1', r'\xi': '1', r'\phi': '1',
-                              'm': 'L^-2', 'b': '1', 'Q': '1', 'F': '1', r'\eta_e': '1', r'\eta': '1'}
+                              'm': 'L^-2', 'b': '1', 'J' if system == 'radial' else 'Q': '1', 'F': '1', r'\eta_e': '1', r'\eta': '1'}
 
 
 def spec(system):
@@ -32,7 +32,10 @@ def spec(system):
     line = (r'ds^2=\dfrac{1}{2m}\left((\eta-1-F)d\tau^2'
             r'+4(\eta-1-F+FQ)d\tau\,d\phi'
             r'+4(\eta-1-F(Q-1)^2)d\phi^2+' + radial_term + r'+\dfrac{d\xi^2}{F}\right)')
-    probe = vm.Reader(coords, parameters(system), (), held=('Q', 'F'), rates=vm.RATES[(METRIC, system)])
+    if radial:
+        line = (r'ds^2=\dfrac{1}{2m}\left((w^2-F)d\tau^2+4(w^2+FJ)d\tau\,d\phi'
+                r'+4(w^2-FJ^2)d\phi^2+4dw^2+\dfrac{d\xi^2}{F}\right)')
+    probe = vm.Reader(coords, parameters(system), (), held=vm.HELD[(METRIC, system)], rates=vm.RATES[(METRIC, system)])
     return {'metric_id': METRIC, 'system': {'id': system,
             'name': 'Square Root Radial Coordinate' if radial else 'Published Radial Coordinate',
             'coords': coords, 'parameters': parameters(system), 'line_element': line,
@@ -42,7 +45,7 @@ def spec(system):
                         r'\phi\in[0,2\pi)', r'm>0,\quad 2e<b<b_\star',
                         r'\eta=1\;\text{(regular rotation axis, where the polar chart fails)}']},
             'chart_line_element': line,
-            'printer': {'lead': [probe.parameters['m'], probe.parameters['F'], probe.parameters['Q'], probe.symbol[x]]},
+            'printer': {'lead': [probe.parameters['m'], probe.parameters['F'], probe.parameters['J' if radial else 'Q'], probe.symbol[x]]},
             'reduce': lambda value: vm.norm(probe.by_rates(value)),
             'check': lambda chart: check(chart, system)}
 
@@ -50,7 +53,7 @@ def spec(system):
 def check(chart, system):
     """Point checks against the source metric and isotropic fluid, without symbolic checks."""
     R = chart.reader
-    m, b, Q, F = (R.parameters[k] for k in ('m', 'b', 'Q', 'F'))
+    m, b, exponential, F = (R.parameters[k] for k in ('m', 'b', 'J' if system == 'radial' else 'Q', 'F'))
     x, xi = chart.symbols[1:3]
     eta = 1+x*x if system == 'radial' else x
     G = sp.Matrix(chart.geo.einstein_ll())
@@ -59,7 +62,7 @@ def check(chart, system):
         h = ev-1
         fv = bv*sp.cos(xiv)*sp.exp(-ev)
         at = {m: mv, b: bv, x: sp.sqrt(h) if system == 'radial' else ev, xi: xiv,
-              Q: sp.exp(h), F: fv, chart.symbols[0]: 0, chart.symbols[3]: 0}
+              exponential: sp.exp(h)-(1 if system == 'radial' else 0), F: fv, chart.symbols[0]: 0, chart.symbols[3]: 0}
         def matrix(value):
             return sp.Matrix(value).subs(at).evalf(40)
         def near(left, right, label):

@@ -4007,8 +4007,8 @@
           "description": "The dimensionless original radial coordinate"
         },
         {
-          "symbol": "Q = e^{w^2}",
-          "description": "A dimensionless exponential of the squared radial coordinate"
+          "symbol": "J = 2e^{w^2/2}\\sinh(w^2/2)",
+          "description": "The dimensionless difference $J=e^{w^2}-1$, in a form regular to evaluate near the axis"
         },
         {
           "symbol": "F = b\\cos\\xi\\,e^{-1-w^2}",
@@ -4020,7 +4020,7 @@
         }
       ],
       "convention": "We use dimensionless coordinates $(\\tau,w,\\xi,\\phi)$, with $\\tau$ along the fluid world lines and $\\phi$ the azimuth. We set $w=\\sqrt{\\eta-1}$ and keep the latitude $\\xi$. Components use these coordinates directly, with no rescaling by $c$; a dot denotes differentiation with respect to an affine parameter, and dimensional time is $T=\\ell\\tau/c$.",
-      "line_element": "ds^2=\\dfrac{1}{2m}\\left((\\eta-1-F)d\\tau^2+4(\\eta-1-F+FQ)d\\tau\\,d\\phi+4(\\eta-1-F(Q-1)^2)d\\phi^2+4dw^2+\\dfrac{d\\xi^2}{F}\\right)",
+      "line_element": "ds^2=\\dfrac{1}{2m}\\left((w^2-F)d\\tau^2+4(w^2+FJ)d\\tau\\,d\\phi+4(w^2-FJ^2)d\\phi^2+4dw^2+\\dfrac{d\\xi^2}{F}\\right)",
       "metric_components": [
         {
           "indices": [
@@ -4034,14 +4034,14 @@
             "\\tau",
             "\\phi"
           ],
-          "value": "\\dfrac{F\\,Q - F + w^2}{m}"
+          "value": "\\dfrac{F\\,J + w^2}{m}"
         },
         {
           "indices": [
             "\\phi",
             "\\tau"
           ],
-          "value": "\\dfrac{F\\,Q - F + w^2}{m}"
+          "value": "\\dfrac{F\\,J + w^2}{m}"
         },
         {
           "indices": [
@@ -4062,7 +4062,7 @@
             "\\phi",
             "\\phi"
           ],
-          "value": "\\dfrac{2w^2 - 2F + 4F\\,Q - 2F\\,Q^2}{m}"
+          "value": "\\dfrac{2w^2 - 2F\\,J^2}{m}"
         }
       ],
       "inverse_metric_components": [
@@ -4071,21 +4071,21 @@
             "\\tau",
             "\\tau"
           ],
-          "value": "\\dfrac{2m\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)}{F\\,Q^2\\,w^2}"
+          "value": "\\dfrac{2m\\left(F\\,J^2 - w^2\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
         },
         {
           "indices": [
             "\\tau",
             "\\phi"
           ],
-          "value": "\\dfrac{m\\left(F\\,Q - F + w^2\\right)}{F\\,Q^2\\,w^2}"
+          "value": "\\dfrac{m\\left(F\\,J + w^2\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
         },
         {
           "indices": [
             "\\phi",
             "\\tau"
           ],
-          "value": "\\dfrac{m\\left(F\\,Q - F + w^2\\right)}{F\\,Q^2\\,w^2}"
+          "value": "\\dfrac{m\\left(F\\,J + w^2\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
         },
         {
           "indices": [
@@ -4106,7 +4106,7 @@
             "\\phi",
             "\\phi"
           ],
-          "value": "\\dfrac{m\\left(F - w^2\\right)}{2F\\,Q^2\\,w^2}"
+          "value": "\\dfrac{m\\left(F - w^2\\right)}{2F\\,w^2\\left(J + 1\\right)^2}"
         }
       ],
       "christoffel": {
@@ -4121,7 +4121,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(F + 1\\right)\\left(Q - 1\\right)}{Q\\,w}"
+                "value": "\\dfrac{J\\left(F + 1\\right)}{w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4129,7 +4129,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(F + 1\\right)\\left(Q - 1\\right)}{Q\\,w}"
+                "value": "\\dfrac{J\\left(F + 1\\right)}{w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4137,7 +4137,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\sin\\xi\\cos\\xi}{2Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\sin\\xi\\cos\\xi}{2\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4145,7 +4145,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\sin\\xi\\cos\\xi}{2Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\sin\\xi\\cos\\xi}{2\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4153,7 +4153,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2F\\,Q^2 - 4F\\,Q + 2F + 2Q\\,w^2 - 2Q + 2}{Q\\,w}"
+                "value": "-\\dfrac{2F\\,J^2 + 2J\\,w^2 - 2J + 2w^2}{w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4161,7 +4161,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{2F\\,Q^2 - 4F\\,Q + 2F + 2Q\\,w^2 - 2Q + 2}{Q\\,w}"
+                "value": "-\\dfrac{2F\\,J^2 + 2J\\,w^2 - 2J + 2w^2}{w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4169,7 +4169,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(1 - Q\\right)\\sin\\xi\\cos\\xi}{Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{J\\sin\\xi\\cos\\xi}{\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4177,7 +4177,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(1 - Q\\right)\\sin\\xi\\cos\\xi}{Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{J\\sin\\xi\\cos\\xi}{\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4217,7 +4217,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "w\\left(F\\,Q^2 - F - 1\\right)"
+                "value": "w\\left(F\\,J^2 + 2F\\,J - 1\\right)"
               },
               {
                 "indices": [
@@ -4233,7 +4233,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F^2\\left(1 - Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,J\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4241,7 +4241,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F^2\\left(1 - Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,J\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4273,7 +4273,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2F^2\\left(Q - 1\\right)^2\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{2F^2\\,J^2\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4281,7 +4281,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F + 1}{2Q\\,w}"
+                "value": "\\dfrac{F + 1}{2w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4289,7 +4289,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F + 1}{2Q\\,w}"
+                "value": "\\dfrac{F + 1}{2w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4297,7 +4297,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\sin\\xi\\cos\\xi}{4Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\sin\\xi\\cos\\xi}{4\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4305,7 +4305,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\sin\\xi\\cos\\xi}{4Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\sin\\xi\\cos\\xi}{4\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4313,7 +4313,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{1 + Q\\,w^2 + F - F\\,Q}{Q\\,w}"
+                "value": "\\dfrac{1 + w^2 + J\\,w^2 - F\\,J}{w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4321,7 +4321,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{1 + Q\\,w^2 + F - F\\,Q}{Q\\,w}"
+                "value": "\\dfrac{1 + w^2 + J\\,w^2 - F\\,J}{w\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4329,7 +4329,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{J\\sin\\xi\\cos\\xi}{2\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4337,7 +4337,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{J\\sin\\xi\\cos\\xi}{2\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               }
             ]
           },
@@ -4446,7 +4446,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,J\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4454,7 +4454,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,J\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4462,7 +4462,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,J\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4470,7 +4470,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,J\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4478,7 +4478,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,J\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4486,7 +4486,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,J\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4518,7 +4518,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2w\\left(F\\,Q^2 - F - 1\\right)}{m}"
+                "value": "\\dfrac{2w\\left(F\\,J^2 + 2F\\,J - 1\\right)}{m}"
               },
               {
                 "indices": [
@@ -4526,7 +4526,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2w\\left(F\\,Q^2 - F - 1\\right)}{m}"
+                "value": "-\\dfrac{2w\\left(F\\,J^2 + 2F\\,J - 1\\right)}{m}"
               },
               {
                 "indices": [
@@ -4534,7 +4534,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{2w\\left(F\\,Q^2 - F - 1\\right)}{m}"
+                "value": "-\\dfrac{2w\\left(F\\,J^2 + 2F\\,J - 1\\right)}{m}"
               },
               {
                 "indices": [
@@ -4550,7 +4550,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\left(Q - 1\\right)^2\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,J^2\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4558,7 +4558,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\left(Q - 1\\right)^2\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,J^2\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4566,7 +4566,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\left(Q - 1\\right)^2\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,J^2\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               }
             ]
           }
@@ -4585,7 +4585,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{2}"
+                "value": "-\\dfrac{\\left(F + 1\\right)\\left(F\\,J + w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4594,7 +4594,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{2}"
+                "value": "\\dfrac{\\left(F + 1\\right)\\left(F\\,J + w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4603,7 +4603,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{2}"
+                "value": "\\dfrac{\\left(F + 1\\right)\\left(F\\,J + w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4612,7 +4612,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{2}"
+                "value": "-\\dfrac{\\left(F + 1\\right)\\left(F\\,J + w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4621,7 +4621,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4630,7 +4630,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4639,7 +4639,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4648,7 +4648,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4657,7 +4657,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{2F\\,Q - 3F - 1}{Q}"
+                "value": "\\dfrac{2F\\,J - F - 1}{J + 1}"
               },
               {
                 "indices": [
@@ -4666,7 +4666,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{2F\\,Q - 3F - 1}{Q}"
+                "value": "-\\dfrac{2F\\,J - F - 1}{J + 1}"
               },
               {
                 "indices": [
@@ -4675,7 +4675,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4684,7 +4684,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4693,7 +4693,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4702,7 +4702,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4711,7 +4711,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2 - 2Q - 2Q\\,w^2 + 6F - 4F\\,Q - 2F\\,Q^2}{Q}"
+                "value": "-\\dfrac{2F\\,J^2 + 8F\\,J + 2J\\,w^2 + 2J + 2w^2}{J + 1}"
               },
               {
                 "indices": [
@@ -4720,7 +4720,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{2 - 2Q - 2Q\\,w^2 + 6F - 4F\\,Q - 2F\\,Q^2}{Q}"
+                "value": "\\dfrac{2F\\,J^2 + 8F\\,J + 2J\\,w^2 + 2J + 2w^2}{J + 1}"
               },
               {
                 "indices": [
@@ -4729,7 +4729,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2F\\,J^2 + w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4738,7 +4738,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2F\\,J^2 + w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4747,7 +4747,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4756,7 +4756,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4765,7 +4765,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4774,7 +4774,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4783,7 +4783,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{1 - Q + 3F - F\\,Q}{4F\\,Q}"
+                "value": "-\\dfrac{F\\,J - 2F + J}{4F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4792,7 +4792,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{1 - Q + 3F - F\\,Q}{4F\\,Q}"
+                "value": "\\dfrac{F\\,J - 2F + J}{4F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4801,7 +4801,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J^2 + 2w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4810,7 +4810,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J^2 + 2w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4819,7 +4819,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,Q^2 - 4F\\,Q + 3F + Q\\,w^2 - Q + 1}{2F\\,Q}"
+                "value": "-\\dfrac{F\\,J^2 - 2F\\,J + J\\,w^2 - J + w^2}{2F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4828,7 +4828,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,Q^2 - 4F\\,Q + 3F + Q\\,w^2 - Q + 1}{2F\\,Q}"
+                "value": "\\dfrac{F\\,J^2 - 2F\\,J + J\\,w^2 - J + w^2}{2F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -4837,7 +4837,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\left(2F^2\\,Q - F^2\\,Q^2 - F^2 - F\\,Q^2 + 2F\\,Q + F\\,w^2 - F + w^2\\right)"
+                "value": "-\\left(F\\,w^2 - F^2\\,J^2 - F\\,J^2 + w^2\\right)"
               },
               {
                 "indices": [
@@ -4846,7 +4846,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\left(2F^2\\,Q - F^2\\,Q^2 - F^2 - F\\,Q^2 + 2F\\,Q + F\\,w^2 - F + w^2\\right)"
+                "value": "\\left(F\\,w^2 - F^2\\,J^2 - F\\,J^2 + w^2\\right)"
               },
               {
                 "indices": [
@@ -4855,7 +4855,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J^2 - w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4864,7 +4864,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J^2 - w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4909,7 +4909,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{2}"
+                "value": "-\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4918,7 +4918,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{2}"
+                "value": "\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4927,7 +4927,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{2}"
+                "value": "\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4936,7 +4936,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{2}"
+                "value": "-\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{2}"
               },
               {
                 "indices": [
@@ -4945,7 +4945,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(2Q - 3\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2J - 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4954,7 +4954,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(2Q - 3\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2J - 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4963,7 +4963,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4972,7 +4972,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -4999,7 +4999,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5008,7 +5008,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5017,7 +5017,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "F\\left(F\\,Q^2 - 2F\\,Q + F + Q^2\\,w^2 + Q^2 - 2Q + 2w^2 + 1\\right)"
+                "value": "F\\left(F\\,J^2 + J^2\\,w^2 + J^2 + 2J\\,w^2 + 3w^2\\right)"
               },
               {
                 "indices": [
@@ -5026,7 +5026,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-F\\left(F\\,Q^2 - 2F\\,Q + F + Q^2\\,w^2 + Q^2 - 2Q + 2w^2 + 1\\right)"
+                "value": "-F\\left(F\\,J^2 + J^2\\,w^2 + J^2 + 2J\\,w^2 + 3w^2\\right)"
               },
               {
                 "indices": [
@@ -5035,7 +5035,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5044,7 +5044,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5089,7 +5089,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F^2\\,w\\left(Q - 3\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F^2\\,w\\left(J - 2\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5098,7 +5098,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{F^2\\,w\\left(Q - 3\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,w\\left(J - 2\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5107,7 +5107,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2F^2\\,Q - 2F^2 - F\\,w^2 - w^2}{2}"
+                "value": "\\dfrac{2F^2\\,J - F\\,w^2 - w^2}{2}"
               },
               {
                 "indices": [
@@ -5116,7 +5116,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{2F^2\\,Q - 2F^2 - F\\,w^2 - w^2}{2}"
+                "value": "-\\dfrac{2F^2\\,J - F\\,w^2 - w^2}{2}"
               },
               {
                 "indices": [
@@ -5125,7 +5125,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{2F^2\\,Q - 2F^2 - F\\,w^2 - w^2}{2}"
+                "value": "-\\dfrac{2F^2\\,J - F\\,w^2 - w^2}{2}"
               },
               {
                 "indices": [
@@ -5134,7 +5134,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{2F^2\\,Q - 2F^2 - F\\,w^2 - w^2}{2}"
+                "value": "\\dfrac{2F^2\\,J - F\\,w^2 - w^2}{2}"
               },
               {
                 "indices": [
@@ -5143,7 +5143,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F^2\\,Q\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5152,7 +5152,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F^2\\,Q\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F^2\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5179,7 +5179,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F^2\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F^2\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5188,7 +5188,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F^2\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5197,7 +5197,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{6F^2\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{6F^2\\,J\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5206,7 +5206,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{6F^2\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{6F^2\\,J\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5215,7 +5215,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\left(2F^2\\,Q^2 - 4F^2\\,Q + 2F^2 - F\\,Q^2\\,w^2 + F\\,w^2 + w^2\\right)"
+                "value": "-\\left(2F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J\\,w^2 + w^2\\right)"
               },
               {
                 "indices": [
@@ -5224,7 +5224,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\left(2F^2\\,Q^2 - 4F^2\\,Q + 2F^2 - F\\,Q^2\\,w^2 + F\\,w^2 + w^2\\right)"
+                "value": "\\left(2F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J\\,w^2 + w^2\\right)"
               },
               {
                 "indices": [
@@ -5251,7 +5251,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5260,7 +5260,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5269,7 +5269,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{3F + 1}{2Q}"
+                "value": "\\dfrac{3F + 1}{2\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -5278,7 +5278,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{3F + 1}{2Q}"
+                "value": "-\\dfrac{3F + 1}{2\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -5287,7 +5287,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5296,7 +5296,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5305,7 +5305,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{3F - Q\\,w^2 - Q + 1}{Q}"
+                "value": "\\dfrac{w^2 + J + J\\,w^2 - 3F}{J + 1}"
               },
               {
                 "indices": [
@@ -5314,7 +5314,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{3F - Q\\,w^2 - Q + 1}{Q}"
+                "value": "-\\dfrac{w^2 + J + J\\,w^2 - 3F}{J + 1}"
               },
               {
                 "indices": [
@@ -5323,7 +5323,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5332,7 +5332,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5341,7 +5341,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{3F + 1}{8F\\,Q}"
+                "value": "-\\dfrac{3F + 1}{8F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -5350,7 +5350,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{3F + 1}{8F\\,Q}"
+                "value": "\\dfrac{3F + 1}{8F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -5359,7 +5359,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{1 + Q\\,w^2 + 3F - 3F\\,Q}{4F\\,Q}"
+                "value": "\\dfrac{1 + w^2 + J\\,w^2 - 3F\\,J}{4F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -5368,7 +5368,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{1 + Q\\,w^2 + 3F - 3F\\,Q}{4F\\,Q}"
+                "value": "-\\dfrac{1 + w^2 + J\\,w^2 - 3F\\,J}{4F\\left(J + 1\\right)}"
               }
             ]
           },
@@ -5490,7 +5490,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5499,7 +5499,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "-\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5508,7 +5508,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "-\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5517,7 +5517,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5526,7 +5526,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5535,7 +5535,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "-\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5544,7 +5544,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "-\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5553,7 +5553,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\left(F\\,Q - F + Q - 2w^2 - 1\\right)}{m}"
+                "value": "\\dfrac{F\\left(F\\,J + J - 2w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5562,7 +5562,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5571,7 +5571,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5580,7 +5580,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5589,7 +5589,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5598,7 +5598,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5607,7 +5607,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5616,7 +5616,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5625,7 +5625,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5670,7 +5670,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5679,7 +5679,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5688,7 +5688,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5697,7 +5697,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5706,7 +5706,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5715,7 +5715,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5724,7 +5724,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5733,7 +5733,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5742,7 +5742,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5751,7 +5751,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "-\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5760,7 +5760,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "-\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5769,7 +5769,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5778,7 +5778,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5787,7 +5787,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "-\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5796,7 +5796,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "-\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5805,7 +5805,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{w^2 + F\\,w^2 + 2F^2 - 2F^2\\,Q}{4m\\,F}"
+                "value": "\\dfrac{w^2 + F\\,w^2 - 2F^2\\,J}{4m\\,F}"
               },
               {
                 "indices": [
@@ -5814,7 +5814,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,Q^2\\,w^2\\left(F + 1\\right)}{2m}"
+                "value": "\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(F + 1\\right)}{2m}"
               },
               {
                 "indices": [
@@ -5823,7 +5823,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,Q^2\\,w^2\\left(F + 1\\right)}{2m}"
+                "value": "-\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(F + 1\\right)}{2m}"
               },
               {
                 "indices": [
@@ -5832,7 +5832,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,Q^2\\,w^2\\left(F + 1\\right)}{2m}"
+                "value": "-\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(F + 1\\right)}{2m}"
               },
               {
                 "indices": [
@@ -5841,7 +5841,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,Q^2\\,w^2\\left(F + 1\\right)}{2m}"
+                "value": "\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(F + 1\\right)}{2m}"
               },
               {
                 "indices": [
@@ -5850,7 +5850,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5859,7 +5859,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5868,7 +5868,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5877,7 +5877,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5886,7 +5886,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5895,7 +5895,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5904,7 +5904,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5913,7 +5913,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -5958,7 +5958,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2F\\left(F\\,Q^2 - 2F\\,Q + F + Q^2\\,w^2 + Q^2 - 2Q + 2w^2 + 1\\right)}{m}"
+                "value": "\\dfrac{2F\\left(F\\,J^2 + J^2\\,w^2 + J^2 + 2J\\,w^2 + 3w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5967,7 +5967,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{2F\\left(F\\,Q^2 - 2F\\,Q + F + Q^2\\,w^2 + Q^2 - 2Q + 2w^2 + 1\\right)}{m}"
+                "value": "-\\dfrac{2F\\left(F\\,J^2 + J^2\\,w^2 + J^2 + 2J\\,w^2 + 3w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5976,7 +5976,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2F\\left(F\\,Q^2 - 2F\\,Q + F + Q^2\\,w^2 + Q^2 - 2Q + 2w^2 + 1\\right)}{m}"
+                "value": "-\\dfrac{2F\\left(F\\,J^2 + J^2\\,w^2 + J^2 + 2J\\,w^2 + 3w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5985,7 +5985,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{2F\\left(F\\,Q^2 - 2F\\,Q + F + Q^2\\,w^2 + Q^2 - 2Q + 2w^2 + 1\\right)}{m}"
+                "value": "\\dfrac{2F\\left(F\\,J^2 + J^2\\,w^2 + J^2 + 2J\\,w^2 + 3w^2\\right)}{m}"
               },
               {
                 "indices": [
@@ -5994,7 +5994,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6003,7 +6003,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6012,7 +6012,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6021,7 +6021,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6030,7 +6030,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6039,7 +6039,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6048,7 +6048,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6057,7 +6057,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6066,7 +6066,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2F^2\\,Q^2 - 4F^2\\,Q + 2F^2 - F\\,Q^2\\,w^2 + F\\,w^2 + w^2}{2m\\,F}"
+                "value": "-\\dfrac{2F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J\\,w^2 + w^2}{2m\\,F}"
               },
               {
                 "indices": [
@@ -6075,7 +6075,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{2F^2\\,Q^2 - 4F^2\\,Q + 2F^2 - F\\,Q^2\\,w^2 + F\\,w^2 + w^2}{2m\\,F}"
+                "value": "\\dfrac{2F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J\\,w^2 + w^2}{2m\\,F}"
               },
               {
                 "indices": [
@@ -6084,7 +6084,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2F^2\\,Q^2 - 4F^2\\,Q + 2F^2 - F\\,Q^2\\,w^2 + F\\,w^2 + w^2}{2m\\,F}"
+                "value": "\\dfrac{2F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J\\,w^2 + w^2}{2m\\,F}"
               },
               {
                 "indices": [
@@ -6093,7 +6093,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{2F^2\\,Q^2 - 4F^2\\,Q + 2F^2 - F\\,Q^2\\,w^2 + F\\,w^2 + w^2}{2m\\,F}"
+                "value": "-\\dfrac{2F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J\\,w^2 + w^2}{2m\\,F}"
               }
             ]
           }
@@ -6117,14 +6117,14 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\left(F\\,Q - F + w^2\\right)"
+                "value": "-\\left(F\\,J + w^2\\right)"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\left(F\\,Q - F + w^2\\right)"
+                "value": "-\\left(F\\,J + w^2\\right)"
               },
               {
                 "indices": [
@@ -6145,7 +6145,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "2F\\,Q^2\\,w^2 + 2F\\,Q^2 - 4F\\,Q + 2F - 2w^2"
+                "value": "2F\\,J^2\\,w^2 + 2F\\,J^2 + 4F\\,J\\,w^2 + 2F\\,w^2 - 2w^2"
               }
             ]
           },
@@ -6164,7 +6164,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "2m\\left(F\\,Q - F + w^2\\right)"
+                "value": "2m\\left(F\\,J + w^2\\right)"
               },
               {
                 "indices": [
@@ -6197,21 +6197,21 @@
                   "\\tau",
                   "\\tau"
                 ],
-                "value": "\\dfrac{2m^2\\left(F^2\\,Q^2 - 2F^2\\,Q + F^2 - F\\,Q^2 + 2F\\,Q\\,w^2 + 2F\\,Q - 2F\\,w^2 - F + w^4 + w^2\\right)}{F\\,Q^2\\,w^2}"
+                "value": "\\dfrac{2m^2\\left(F^2\\,J^2 - F\\,J^2 + 2F\\,J\\,w^2 + w^4 + w^2\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
               },
               {
                 "indices": [
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{m^2\\left(F - w^2 - 1\\right)\\left(F\\,Q - F + w^2\\right)}{F\\,Q^2\\,w^2}"
+                "value": "\\dfrac{m^2\\left(F\\,J + w^2\\right)\\left(F - w^2 - 1\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{m^2\\left(F - w^2 - 1\\right)\\left(F\\,Q - F + w^2\\right)}{F\\,Q^2\\,w^2}"
+                "value": "\\dfrac{m^2\\left(F\\,J + w^2\\right)\\left(F - w^2 - 1\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
               },
               {
                 "indices": [
@@ -6232,7 +6232,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{m^2\\left(F - w^2\\right)\\left(F - w^2 - 1\\right)}{2F\\,Q^2\\,w^2}"
+                "value": "\\dfrac{m^2\\left(F - w^2\\right)\\left(F - w^2 - 1\\right)}{2F\\,w^2\\left(J + 1\\right)^2}"
               }
             ]
           }
@@ -6258,14 +6258,14 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F - 3w^2 - 2\\right)\\left(F\\,Q - F + w^2\\right)}{2}"
+                "value": "-\\dfrac{\\left(F\\,J + w^2\\right)\\left(3F - 3w^2 - 2\\right)}{2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F - 3w^2 - 2\\right)\\left(F\\,Q - F + w^2\\right)}{2}"
+                "value": "-\\dfrac{\\left(F\\,J + w^2\\right)\\left(3F - 3w^2 - 2\\right)}{2}"
               },
               {
                 "indices": [
@@ -6286,7 +6286,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "3F^2\\,Q^2 - 6F^2\\,Q + 3F^2 - F\\,Q^2\\,w^2 - 2F\\,Q^2 + 6F\\,Q\\,w^2 + 4F\\,Q - 6F\\,w^2 - 2F + 3w^4 + 2w^2"
+                "value": "3F^2\\,J^2 - F\\,J^2\\,w^2 - 2F\\,J^2 + 4F\\,J\\,w^2 - F\\,w^2 + 3w^4 + 2w^2"
               }
             ]
           },
@@ -6305,7 +6305,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "2m\\left(F\\,Q - F + w^2\\right)"
+                "value": "2m\\left(F\\,J + w^2\\right)"
               },
               {
                 "indices": [
@@ -6338,21 +6338,21 @@
                   "\\tau",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{m^2\\left(F^2\\,Q^2 - 2F^2\\,Q + F^2 - 3F\\,Q^2\\,w^2 - 2F\\,Q^2 + 2F\\,Q\\,w^2 + 4F\\,Q - 2F\\,w^2 - 2F + w^4 + 2w^2\\right)}{F\\,Q^2\\,w^2}"
+                "value": "-\\dfrac{m^2\\left(F^2\\,J^2 - 3F\\,J^2\\,w^2 - 2F\\,J^2 - 4F\\,J\\,w^2 - 3F\\,w^2 + w^4 + 2w^2\\right)}{F\\,w^2\\left(J + 1\\right)^2}"
               },
               {
                 "indices": [
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{m^2\\left(F - w^2 - 2\\right)\\left(F\\,Q - F + w^2\\right)}{2F\\,Q^2\\,w^2}"
+                "value": "-\\dfrac{m^2\\left(F\\,J + w^2\\right)\\left(F - w^2 - 2\\right)}{2F\\,w^2\\left(J + 1\\right)^2}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{m^2\\left(F - w^2 - 2\\right)\\left(F\\,Q - F + w^2\\right)}{2F\\,Q^2\\,w^2}"
+                "value": "-\\dfrac{m^2\\left(F\\,J + w^2\\right)\\left(F - w^2 - 2\\right)}{2F\\,w^2\\left(J + 1\\right)^2}"
               },
               {
                 "indices": [
@@ -6373,7 +6373,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{m^2\\left(F - w^2\\right)\\left(F - w^2 - 2\\right)}{4F\\,Q^2\\,w^2}"
+                "value": "-\\dfrac{m^2\\left(F - w^2\\right)\\left(F - w^2 - 2\\right)}{4F\\,w^2\\left(J + 1\\right)^2}"
               }
             ]
           }
@@ -6392,7 +6392,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{6}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J + w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6401,7 +6401,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{6}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J + w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6410,7 +6410,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{6}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J + w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6419,7 +6419,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F + w^2\\right)}{6}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J + w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6428,7 +6428,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6437,7 +6437,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6446,7 +6446,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6455,7 +6455,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q - F + w^2\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J + w^2\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6464,7 +6464,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2Q - 3\\right)}{3Q}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2J - 1\\right)}{3\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -6473,7 +6473,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2Q - 3\\right)}{3Q}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2J - 1\\right)}{3\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -6482,7 +6482,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6491,7 +6491,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6500,7 +6500,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6509,7 +6509,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(w^2 + 2F - 2F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(w^2 - 2F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6518,7 +6518,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2\\left(3F + 1\\right)\\left(Q - 1\\right)}{Q}"
+                "value": "-\\dfrac{2J\\left(3F + 1\\right)}{J + 1}"
               },
               {
                 "indices": [
@@ -6527,7 +6527,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{2\\left(3F + 1\\right)\\left(Q - 1\\right)}{Q}"
+                "value": "\\dfrac{2J\\left(3F + 1\\right)}{J + 1}"
               },
               {
                 "indices": [
@@ -6536,7 +6536,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2F\\,J^2 + w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6545,7 +6545,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2F\\,J^2 + w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6554,7 +6554,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6563,7 +6563,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6572,7 +6572,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6581,7 +6581,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(2w^2 + F - F\\,Q\\right)\\sin\\xi\\cos\\xi}{2Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2w^2 - F\\,J\\right)\\sin\\xi\\cos\\xi}{2w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6590,7 +6590,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(Q - 3\\right)}{12F\\,Q}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(J - 2\\right)}{12F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -6599,7 +6599,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(Q - 3\\right)}{12F\\,Q}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(J - 2\\right)}{12F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -6608,7 +6608,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J^2 + 2w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6617,7 +6617,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J^2 + 2w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6626,7 +6626,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(Q - 1\\right)}{2F\\,Q}"
+                "value": "\\dfrac{J\\left(3F + 1\\right)}{2F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -6635,7 +6635,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(Q - 1\\right)}{2F\\,Q}"
+                "value": "-\\dfrac{J\\left(3F + 1\\right)}{2F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -6644,7 +6644,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)}{3}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J^2 - w^2\\right)}{3}"
               },
               {
                 "indices": [
@@ -6653,7 +6653,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)}{3}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J^2 - w^2\\right)}{3}"
               },
               {
                 "indices": [
@@ -6662,7 +6662,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F\\,J^2 - w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6671,7 +6671,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(F\\,Q^2 - 2F\\,Q + F - w^2\\right)\\sin\\xi\\cos\\xi}{Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F\\,J^2 - w^2\\right)\\sin\\xi\\cos\\xi}{w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6716,7 +6716,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{6}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6725,7 +6725,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{6}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6734,7 +6734,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{6}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6743,7 +6743,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{6}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6752,7 +6752,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(2Q - 3\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2J - 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6761,7 +6761,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(2Q - 3\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2J - 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6770,7 +6770,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6779,7 +6779,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6806,7 +6806,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6815,7 +6815,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{4\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6824,7 +6824,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)}{3}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J^2 + 2w^2\\right)}{3}"
               },
               {
                 "indices": [
@@ -6833,7 +6833,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)}{3}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J^2 + 2w^2\\right)}{3}"
               },
               {
                 "indices": [
@@ -6842,7 +6842,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6851,7 +6851,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6896,7 +6896,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F^2\\,w\\left(Q - 3\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F^2\\,w\\left(J - 2\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6905,7 +6905,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{F^2\\,w\\left(Q - 3\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,w\\left(J - 2\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6914,7 +6914,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{6}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6923,7 +6923,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{6}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6932,7 +6932,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{6}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6941,7 +6941,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{6}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{6}"
               },
               {
                 "indices": [
@@ -6950,7 +6950,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F^2\\,Q\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6959,7 +6959,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F^2\\,Q\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F^2\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6986,7 +6986,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F^2\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F^2\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -6995,7 +6995,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F^2\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F^2\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7004,7 +7004,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{6F^2\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{6F^2\\,J\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7013,7 +7013,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{6F^2\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{6F^2\\,J\\,w\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7022,7 +7022,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)}{3}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J^2 + w^2\\right)}{3}"
               },
               {
                 "indices": [
@@ -7031,7 +7031,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)}{3}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J^2 + w^2\\right)}{3}"
               },
               {
                 "indices": [
@@ -7058,7 +7058,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7067,7 +7067,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(w^2 - F\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7076,7 +7076,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{3F + 1}{2Q}"
+                "value": "\\dfrac{3F + 1}{2\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7085,7 +7085,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{3F + 1}{2Q}"
+                "value": "-\\dfrac{3F + 1}{2\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7094,7 +7094,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7103,7 +7103,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(2F + w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7112,7 +7112,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(Q - 3\\right)}{3Q}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(J - 2\\right)}{3\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7121,7 +7121,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(Q - 3\\right)}{3Q}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(J - 2\\right)}{3\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7130,7 +7130,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7139,7 +7139,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4Q\\,w\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{\\left(F + 2w^2\\right)\\sin\\xi\\cos\\xi}{4w\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7148,7 +7148,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{3F + 1}{8F\\,Q}"
+                "value": "-\\dfrac{3F + 1}{8F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7157,7 +7157,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{3F + 1}{8F\\,Q}"
+                "value": "\\dfrac{3F + 1}{8F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7166,7 +7166,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2Q - 3\\right)}{12F\\,Q}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2J - 1\\right)}{12F\\left(J + 1\\right)}"
               },
               {
                 "indices": [
@@ -7175,7 +7175,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2Q - 3\\right)}{12F\\,Q}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2J - 1\\right)}{12F\\left(J + 1\\right)}"
               }
             ]
           },
@@ -7297,7 +7297,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7306,7 +7306,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7315,7 +7315,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7324,7 +7324,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7333,7 +7333,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7342,7 +7342,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7351,7 +7351,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7360,7 +7360,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,Q - F - 2w^2\\right)}{3m}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(F\\,J - 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7369,7 +7369,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7378,7 +7378,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7387,7 +7387,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7396,7 +7396,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7405,7 +7405,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7414,7 +7414,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7423,7 +7423,7 @@
                   "\\tau",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7432,7 +7432,7 @@
                   "w",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - 2Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(1 - 2J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7477,7 +7477,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7486,7 +7486,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7495,7 +7495,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7504,7 +7504,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7513,7 +7513,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7522,7 +7522,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7531,7 +7531,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7540,7 +7540,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,w\\left(3 - Q\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(2 - J\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7549,7 +7549,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7558,7 +7558,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7567,7 +7567,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7576,7 +7576,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7585,7 +7585,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7594,7 +7594,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7603,7 +7603,7 @@
                   "\\tau",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7612,7 +7612,7 @@
                   "\\xi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q - 2F - w^2\\right)}{12m\\,F}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J - w^2\\right)}{12m\\,F}"
               },
               {
                 "indices": [
@@ -7621,7 +7621,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,Q^2\\,w^2\\left(3F + 1\\right)}{6m}"
+                "value": "\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(3F + 1\\right)}{6m}"
               },
               {
                 "indices": [
@@ -7630,7 +7630,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,Q^2\\,w^2\\left(3F + 1\\right)}{6m}"
+                "value": "-\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(3F + 1\\right)}{6m}"
               },
               {
                 "indices": [
@@ -7639,7 +7639,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,Q^2\\,w^2\\left(3F + 1\\right)}{6m}"
+                "value": "-\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(3F + 1\\right)}{6m}"
               },
               {
                 "indices": [
@@ -7648,7 +7648,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,Q^2\\,w^2\\left(3F + 1\\right)}{6m}"
+                "value": "\\dfrac{F\\,w^2\\left(J + 1\\right)^2\\left(3F + 1\\right)}{6m}"
               },
               {
                 "indices": [
@@ -7657,7 +7657,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7666,7 +7666,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7675,7 +7675,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7684,7 +7684,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7693,7 +7693,7 @@
                   "\\tau",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7702,7 +7702,7 @@
                   "\\phi",
                   "\\tau"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7711,7 +7711,7 @@
                   "w",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7720,7 +7720,7 @@
                   "\\xi",
                   "w"
                 ],
-                "value": "\\dfrac{F\\,Q\\,w\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{F\\,w\\left(J + 1\\right)\\sin\\xi\\cos\\xi}{2m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7765,7 +7765,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)}{3m}"
+                "value": "\\dfrac{2\\left(3F + 1\\right)\\left(F\\,J^2 + 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7774,7 +7774,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{2\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)}{3m}"
+                "value": "-\\dfrac{2\\left(3F + 1\\right)\\left(F\\,J^2 + 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7783,7 +7783,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{2\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)}{3m}"
+                "value": "-\\dfrac{2\\left(3F + 1\\right)\\left(F\\,J^2 + 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7792,7 +7792,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{2\\left(3F + 1\\right)\\left(F\\,Q^2 - 2F\\,Q + F + 2w^2\\right)}{3m}"
+                "value": "\\dfrac{2\\left(3F + 1\\right)\\left(F\\,J^2 + 2w^2\\right)}{3m}"
               },
               {
                 "indices": [
@@ -7801,7 +7801,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7810,7 +7810,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7819,7 +7819,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7828,7 +7828,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7837,7 +7837,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7846,7 +7846,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7855,7 +7855,7 @@
                   "w",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "-\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7864,7 +7864,7 @@
                   "\\phi",
                   "w"
                 ],
-                "value": "\\dfrac{3F\\,w\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
+                "value": "\\dfrac{3F\\,J\\,w\\sin\\xi\\cos\\xi}{m\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}"
               },
               {
                 "indices": [
@@ -7873,7 +7873,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)}{6m\\,F}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J^2 + w^2\\right)}{6m\\,F}"
               },
               {
                 "indices": [
@@ -7882,7 +7882,7 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)}{6m\\,F}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J^2 + w^2\\right)}{6m\\,F}"
               },
               {
                 "indices": [
@@ -7891,7 +7891,7 @@
                   "\\xi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)}{6m\\,F}"
+                "value": "\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J^2 + w^2\\right)}{6m\\,F}"
               },
               {
                 "indices": [
@@ -7900,17 +7900,17 @@
                   "\\phi",
                   "\\xi"
                 ],
-                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,Q^2 - 4F\\,Q + 2F + w^2\\right)}{6m\\,F}"
+                "value": "-\\dfrac{\\left(3F + 1\\right)\\left(2F\\,J^2 + w^2\\right)}{6m\\,F}"
               }
             ]
           }
         }
       },
       "geodesics": [
-        "\\ddot{\\tau} + \\dfrac{2\\left(F + 1\\right)\\left(Q - 1\\right)}{Q\\,w}\\dot{\\tau}\\dot{w} + \\dfrac{\\sin\\xi\\cos\\xi}{Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}\\dot{\\xi} - \\dfrac{4F\\,Q^2 - 8F\\,Q + 4F + 4Q\\,w^2 - 4Q + 4}{Q\\,w}\\dot{w}\\dot{\\phi} + \\dfrac{2\\left(1 - Q\\right)\\sin\\xi\\cos\\xi}{Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\xi}\\dot{\\phi} = 0",
-        "\\ddot{w} - \\dfrac{w\\left(F + 1\\right)}{4}\\dot{\\tau}^2 - w\\left(F + 1\\right)\\dot{\\tau}\\dot{\\phi} - \\dfrac{w}{4F}\\dot{\\xi}^2 + w\\left(F\\,Q^2 - F - 1\\right)\\dot{\\phi}^2 = 0",
-        "\\ddot{\\xi} + \\dfrac{F^2\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}^2 + \\dfrac{2F^2\\left(1 - Q\\right)\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}\\dot{\\phi} + 2w\\,\\dot{w}\\dot{\\xi} - \\dfrac{\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\xi}^2 + \\dfrac{2F^2\\left(Q - 1\\right)^2\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\phi}^2 = 0",
-        "\\ddot{\\phi} + \\dfrac{F + 1}{Q\\,w}\\dot{\\tau}\\dot{w} - \\dfrac{\\sin\\xi\\cos\\xi}{2Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}\\dot{\\xi} + \\dfrac{2 + 2Q\\,w^2 + 2F - 2F\\,Q}{Q\\,w}\\dot{w}\\dot{\\phi} + \\dfrac{\\left(Q - 1\\right)\\sin\\xi\\cos\\xi}{Q\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\xi}\\dot{\\phi} = 0"
+        "\\ddot{\\tau} + \\dfrac{2J\\left(F + 1\\right)}{w\\left(J + 1\\right)}\\dot{\\tau}\\dot{w} + \\dfrac{\\sin\\xi\\cos\\xi}{\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}\\dot{\\xi} - \\dfrac{4F\\,J^2 + 4J\\,w^2 - 4J + 4w^2}{w\\left(J + 1\\right)}\\dot{w}\\dot{\\phi} - \\dfrac{2J\\sin\\xi\\cos\\xi}{\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\xi}\\dot{\\phi} = 0",
+        "\\ddot{w} - \\dfrac{w\\left(F + 1\\right)}{4}\\dot{\\tau}^2 - w\\left(F + 1\\right)\\dot{\\tau}\\dot{\\phi} - \\dfrac{w}{4F}\\dot{\\xi}^2 + w\\left(F\\,J^2 + 2F\\,J - 1\\right)\\dot{\\phi}^2 = 0",
+        "\\ddot{\\xi} + \\dfrac{F^2\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}^2 - \\dfrac{2F^2\\,J\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}\\dot{\\phi} + 2w\\,\\dot{w}\\dot{\\xi} - \\dfrac{\\sin\\xi\\cos\\xi}{2\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\xi}^2 + \\dfrac{2F^2\\,J^2\\sin\\xi\\cos\\xi}{\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{F + 1}{w\\left(J + 1\\right)}\\dot{\\tau}\\dot{w} - \\dfrac{\\sin\\xi\\cos\\xi}{2\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\tau}\\dot{\\xi} + \\dfrac{2 + 2w^2 + 2J\\,w^2 - 2F\\,J}{w\\left(J + 1\\right)}\\dot{w}\\dot{\\phi} + \\dfrac{J\\sin\\xi\\cos\\xi}{\\left(J + 1\\right)\\left(\\sin\\xi + 1\\right)\\left(\\sin\\xi - 1\\right)}\\dot{\\xi}\\dot{\\phi} = 0"
       ]
     }
   ],
