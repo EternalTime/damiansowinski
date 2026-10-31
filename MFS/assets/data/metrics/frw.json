@@ -196,6 +196,11 @@
       "id": "shell_void",
       "kind": "composite",
       "text": "A Friedmann dust region surrounds an empty cavity and its accreting shell."
+    },
+    {
+      "id": "extended_inflation",
+      "kind": "special_case",
+      "text": "A false vacuum and an evolving Brans-Dicke scalar support $a(t) \\propto t^{\\omega + 1/2}$ in the spatially flat universe."
     }
   ],
   "references": [

@@ -65,6 +65,11 @@
       "id": "morris_thorne",
       "kind": "family",
       "text": "The general traversable wormhole. Brans and Dicke's sphere has a throat where its singularity would be when $\\gamma > 1$ [agnese1995]."
+    },
+    {
+      "id": "extended_inflation",
+      "kind": "family",
+      "text": "Brans-Dicke gravity also supports an expanding false vacuum universe with a homogeneous gravitational scalar."
     }
   ],
   "references": [

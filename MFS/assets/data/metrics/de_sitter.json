@@ -184,6 +184,11 @@
       "id": "hawking_moss",
       "kind": "dual",
       "text": "At a positive maximum of a scalar potential, the Euclidean sphere is the Hawking-Moss saddle. Its radius is set by the potential at that maximum [weinberg2007hm]."
+    },
+    {
+      "id": "extended_inflation",
+      "kind": "limit_source",
+      "text": "De Sitter expansion is the limit $\\omega \\to \\infty$ at fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface."
     }
   ],
   "references": [

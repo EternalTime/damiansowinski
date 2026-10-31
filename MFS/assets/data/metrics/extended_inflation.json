@@ -12,14 +12,15 @@
     "scalar field",
     "Brans-Dicke",
     "curvature singularity",
-    "spacelike singularity",
+    "null singularity",
     "time-dependent",
     "exact solution",
     "Lorentzian",
     "four-dimensional",
     "conformally flat",
     "spherically symmetric",
-    "idealized model"
+    "idealized model",
+    "scalar-tensor theory"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We use the Jordan metric and keep factors of $c$ explicit. The Ricci tensor is $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
@@ -2193,5 +2194,21 @@
       ]
     }
   ],
-  "related": []
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "The spatially flat Friedmann-Lemaître-Robertson-Walker geometry has $a(t) \\propto t^{\\omega + 1/2}$ during the false vacuum phase."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "family",
+      "text": "The gravitational scalar evolves with cosmic time in extended inflation and with radius outside the static sphere."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "limit",
+      "text": "At fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface, the limit $\\omega \\to \\infty$ approaches de Sitter expansion."
+    }
+  ]
 }
