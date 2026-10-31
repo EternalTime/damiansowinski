@@ -5331,5 +5331,9 @@ DIMENSIONS.update(_exponential_scalar.DIMENSIONS)
 HELD.update(_exponential_scalar.HELD)
 RATES.update(_exponential_scalar.RATES)
 
+import kramer_fluid as kf
+kf.register_dimensions(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

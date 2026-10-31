@@ -14,7 +14,14 @@ The endpoint $b=b_\star$ has a degenerate equatorial orbit and is excluded.
 
 ## Fluid normalization
 
-The source coupling is to be compared with the Einstein tensor of equation (1).
+The full Einstein tensor agrees with $G_{ab}=\kappa_0[(\varepsilon+p)u_a u_b+p g_{ab}]$ at independent points in both charts, with $u^a=\delta^a_0/\sqrt{-g_{00}}$.
+Thus the source normalization is $\kappa_0=\kappa=8\pi G/c^4$ when $p$ and $\varepsilon$ are pressure and energy density in the same physical units.
+No rescaling of the source stress or of the geometry is required.
+The source's dimensionless time is $\tau$, so components use index 0 for $\tau$ directly.
+Dimensional elapsed time is $T=\tau/(c\sqrt{2m})$.
+The cross coefficient of $d\tau\,d\phi$ is twice $g_{\tau\phi}$.
+The auxiliary names $Q=e^{\eta-1}$ and $F=b\cos\xi e^{-\eta}$ have their exact first derivatives declared, so the curvature is rational in them.
+The exponential is named $Q$ because $E$ is the reader's Euler constant.
 
 ## Drawings
 

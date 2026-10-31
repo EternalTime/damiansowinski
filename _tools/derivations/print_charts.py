@@ -37040,5 +37040,9 @@ CHARTS[_exponential_scalar.METRIC] = [
     for system in _exponential_scalar.CHARTS
 ]
 
+import kramer_fluid as kf
+kf.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()
