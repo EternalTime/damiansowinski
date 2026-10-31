@@ -115,7 +115,8 @@ class ClosedRadiation(unittest.TestCase):
             np.testing.assert_allclose(J.T @ metric_at(cosmic, t, ell, chi) @ J,
                                        metric_at(conformal, eta, ell, chi), atol=1e-12)
         for entry in (cosmic, conformal):
-            self.assertEqual(entry["ricci_scalar"], "0")
+            reader = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
+            self.assertEqual(reader(entry["ricci_scalar"].split("=", 1)[-1]), 0)
 
 
 if __name__ == "__main__":
