@@ -4528,6 +4528,12 @@ class Slices(unittest.TestCase):
             # Its axial intersection is one pole in r or both poles in Cartesian z.
             return (lambda X: 0.0), ([-1.0, 1.0] if "/cartesian/" in key else [1.0])
 
+        if key.startswith("exponential_scalar_universes/"):
+            chart = key.split("/")[1]
+            p = {"inflation": 2, "tracking": 2/3, "coasting": 1}[mark["view"]]
+            clock = 1 if chart.startswith("cosmic") else 0 if p == 1 else 1/(1-p)
+            lo, hi = self.reach(surface)
+            return (lambda X: clock), [lo if chart == "cosmic_spherical" else -hi, hi]
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
@@ -5948,6 +5954,16 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp+tq)/2+1), 2e-4*scale, where)
                             self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
                             self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
+                    elif metric_id == "exponential_scalar_universes":
+                        p = {"inflation": 2, "tracking": 2/3, "coasting": 1}[mark["view"]]
+                        eta = 0 if p == 1 else 1/(1-p)
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            u, v = math.tan((T-X)/2), math.tan((T+X)/2)
+                            tolerance = 2e-4*(1+u*u+v*v)
+                            self.assertLess(abs((u+v)/2-eta), tolerance, where)
+                            self.assertLessEqual(lo-tolerance, (v-u)/2, where)
+                            self.assertLessEqual((v-u)/2, hi+tolerance, where)
                     elif metric_id == "charach_malin":
                         # p,q=atan(1 -+ theta) on each static matter slice.
                         lo, hi = self.reach(surface)

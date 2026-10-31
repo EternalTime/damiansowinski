@@ -189,7 +189,7 @@ def diagram_specs(Diagram, sideways):
                             (clock, radial), box, f'${radial}/t_0$', f'${clock}/t_0$', params, fixed,
                             tau='t' if cosmic else 'eta', mirror=spherical,
                             families=sideways if not spherical else ('ingoing', 'outgoing'),
-                            curves=curve, cones=(5, 5)))
+                            curves=curve, cones=(5, 5), step=0.00025 if spherical else 0.0025))
     return rows
 
 
@@ -204,7 +204,8 @@ def diagram_captions():
 def null_forms():
     """First integrals of the null slopes, checked against traced rays."""
     return {(METRIC, system, vid):
-            ((lambda t, r, p=p: eta_of(t, p)+r), (lambda t, r, p=p: eta_of(t, p)-r), None)
+            ((lambda t, r, p=p: eta_of(t, p)+r), (lambda t, r, p=p: eta_of(t, p)-r),
+             (lambda t, r: t > 0.02) if system == 'cosmic_spherical' else None)
             if system.startswith('cosmic') else ((lambda e, r: e+r), (lambda e, r: e-r), None)
             for system, vid, p in PLANES}
 
@@ -213,8 +214,10 @@ def slice_marks(slices, system, vid):
     """The embedding moment t=t_0 in the null chart at the same parameters."""
     p = dict((x[0], x[2]) for x in EXAMPLES)[vid]
     clock = 1 if system.startswith('cosmic') else float(eta_of(1, p))
-    return slices.one(METRIC, lambda m: slices.along(clock, 0, m.reach('cosmic_spherical', 'r')[1]),
-                      view_id=vid)
+    def line(moment):
+        hi = moment.reach('cosmic_spherical', 'r')[1]
+        return slices.along(clock, 0 if system == 'cosmic_spherical' else -hi, hi)
+    return slices.one(METRIC, line, view_id=vid)
 
 
 def conformal_views(ck, src, cf):

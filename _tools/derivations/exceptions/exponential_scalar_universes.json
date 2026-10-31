@@ -1,0 +1,49 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The three expansion exponents define different spacetimes; each moment belongs to its own exponent.",
+      "drawings": {
+        "exponential_scalar_universes/cosmic_cartesian/inflation": [
+          "coasting",
+          "tracking"
+        ],
+        "conformal exponential_scalar_universes/cosmic_cartesian_inflation": [
+          "coasting",
+          "tracking"
+        ],
+        "exponential_scalar_universes/cosmic_spherical/tracking": [
+          "coasting",
+          "inflation"
+        ],
+        "conformal exponential_scalar_universes/cosmic_spherical_tracking": [
+          "coasting",
+          "inflation"
+        ],
+        "exponential_scalar_universes/conformal/inflation": [
+          "coasting",
+          "tracking"
+        ],
+        "conformal exponential_scalar_universes/conformal_inflation": [
+          "coasting",
+          "tracking"
+        ],
+        "exponential_scalar_universes/conformal/tracking": [
+          "coasting",
+          "inflation"
+        ],
+        "conformal exponential_scalar_universes/conformal_tracking": [
+          "coasting",
+          "inflation"
+        ],
+        "exponential_scalar_universes/coasting/coasting": [
+          "inflation",
+          "tracking"
+        ],
+        "conformal exponential_scalar_universes/coasting_coasting": [
+          "inflation",
+          "tracking"
+        ]
+      }
+    }
+  ]
+}
