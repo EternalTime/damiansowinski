@@ -4518,6 +4518,10 @@ class Slices(unittest.TestCase):
             inside = key.split("/")[1] == "interior"
             level = 1.0043869706139898 if inside else 2.0
             return (lambda X: level), list(self.reach(surface, "interior" if inside else "exterior"))
+        if key.startswith("extended_inflation/"):
+            # The fixed reference surface is t=t_0=1, eta=-1 at p=2.
+            level = 1.0 if "/cosmic/" in key else -1.0
+            return (lambda X: level), list(self.reach(surface))
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
@@ -5929,7 +5933,16 @@ class Slices(unittest.TestCase):
                     points = [p for line in mark["lines"] for p in line] + mark["points"]
                     self.assertTrue(all(X0 <= X <= X1 and T0 <= T <= T1 for X, T in points), where)
                     t = surface.get("time")
-                    if metric_id == "charach_malin":
+                    if metric_id == "extended_inflation":
+                        # tan((T-X)/2)=eta-r and tan((T+X)/2)=eta+r, with eta=-1.
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
+                            scale = 1 + tp*tp + tq*tq
+                            self.assertLess(abs((tp+tq)/2+1), 2e-4*scale, where)
+                            self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
+                            self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
+                    elif metric_id == "charach_malin":
                         # p,q=atan(1 -+ theta) on each static matter slice.
                         lo, hi = self.reach(surface)
                         for X, T in points:

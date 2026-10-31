@@ -40,7 +40,7 @@ def embedding(ck, src, em):
     ck.isometry("extended inflation: the flat equator", plane)
     ck.form("extended inflation: zero embedding height", plane, lambda r: 0*r, size)
     ck.radius("extended inflation: proper radius at the reference surface", plane, lambda r: r, size)
-    surface = em.Surface([plane], label="$t=t_0$", time=1.0)
+    surface = em.Surface([plane])
     fig = em.figure_of([surface], {"sheet": "cover"}, size, meridians=12)
     fig.legend("fill", "cover", "the spatial equator")
     fig.legend("line", "r", "$r=ct_0$ and $2ct_0$")
@@ -85,7 +85,7 @@ def conformal(ck, src, cf):
         v.legend("chartedge", r"$t\to\infty$")
         v.legend("horizon", "the central observer's event horizon")
         v.legend("cover", "the false vacuum region")
-        for moment in cf.slices.moments(METRIC):
+        for moment in cf.slices.moments(METRIC, label="$t=t_0$"):
             reach = moment.reach("cosmic", "r")
             r = np.linspace(*reach, 101)
             v.slice(moment, lines=[cf.mink_pq(np.full_like(r, -1.0), r)])
