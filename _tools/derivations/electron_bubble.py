@@ -111,3 +111,148 @@ def chart_check(chart, system):
 
 def register_charts(pc):
     pc.CHARTS[METRIC] = [lambda system=system: chart_spec(system) for system in CHARTS]
+
+
+def diagram_specs(nr):
+    """Axial null geodesics in each retained smooth coordinate region."""
+    rows = []
+    for system in CHARTS:
+        cartesian = system == "cartesian"
+        kerr = system.endswith("kerr")
+        exterior = system.startswith("exterior")
+        time, angle = ("T", "psi") if kerr else ("t", "phi")
+        fixed = {"x": "0", "y": "0"} if cartesian else {"theta": "0", angle: "0"}
+        box = (-1.4, 1.4, -1.4, 1.4) if cartesian else ((0, 4, -2, 2) if exterior else (0, 1.4, -.7, .7))
+        coordinate = "z" if cartesian else "r"
+        clock = "T" if cartesian else time
+        where = "1-z**2" if cartesian else None
+        rows.append(nr.Diagram(METRIC, system, "axis", "The rotation axis", (clock, coordinate), box,
+                               f"${coordinate}/m$", f"$c{clock}/m$", {"m": 1, "q": "sqrt(2)", "a": 2},
+                               fixed, tau=clock, where=where,
+                               lines=(("shell", "r", "1", "the shell"),) if not cartesian else
+                                     (("shell", "r", "1", "the shell"), ("shell", "r", "-1", None))))
+    return rows
+
+
+def diagram_captions():
+    out = {}
+    for system in CHARTS:
+        time = "T" if system.endswith("kerr") or system == "cartesian" else "t"
+        plane = r"$x=y=0$" if system == "cartesian" else r"$\theta=0$"
+        region = "flat interior" if system.startswith("interior") or system == "cartesian" else "retained exterior"
+        out[(METRIC, system, "axis")] = [
+            f"The rotation axis ({plane}) in the {region}, with null geodesics in $c{time}$ and "
+            + ("$z$" if system == "cartesian" else "$r$") + r"; the shell at $r_0=m$."
+        ]
+    return out
+
+
+def null_forms():
+    """Axial ray integrals in the exact parameter choice of the drawings."""
+    import numpy as np
+    forms = {}
+    for system in CHARTS:
+        if system == "exterior":
+            plus = lambda t, r: t+r+np.log(((r-1)**2+5)/5)
+            minus = lambda t, r: t-r-np.log(((r-1)**2+5)/5)
+        elif system == "exterior_kerr":
+            plus = lambda T, r: T+r
+            minus = lambda T, r: T-r-2*np.log(((r-1)**2+5)/5)
+        else:
+            plus = lambda t, r: t+r
+            minus = lambda t, r: t-r
+        forms[(METRIC, system, "axis")] = (plus, minus, None)
+    return forms
+
+
+def axis_star(z):
+    """Optical axial distance, joined continuously to flat z at |z|=r0=1."""
+    import numpy as np
+    z = np.asarray(z, dtype=float)
+    radius = np.abs(z)
+    return np.sign(z) * np.where(radius <= 1, radius, radius + np.log(((radius-1)**2+5)/5))
+
+
+def embedding_views(ck, src, em):
+    """The shell at one common time, embedded by rho=sqrt(5)sin(theta), z=cos(theta).
+
+    Its induced spatial metric is the continuous limit from the flat oblate interior.
+    Isometry is checked against those stored metric components, including both poles.
+    """
+    import math
+    import numpy as np
+    sl = em.Slice(src, METRIC, "interior", r"\theta", r"\phi", {"t": 0, "r": 1},
+                  {"m": 1, "q": "sqrt(2)", "a": 2})
+    piece = em.Piece("shell", "shell", sl, 0, math.pi, 1, -1,
+                     (("axis", "the north pole"), ("axis", "the south pole")),
+                     [(math.pi/2, "r", None)], 5)
+    ck.isometry("electron bubble, the induced shell geometry", piece)
+    ck.radius("electron bubble, the oblate equatorial radius", piece, lambda theta: np.sqrt(5)*np.sin(theta), 5)
+    ck.form("electron bubble, the polar height", piece, np.cos, 5)
+    surface = em.Surface([piece])
+    fig = em.figure_of([surface], {"shell": "cover"}, 5)
+    fig.legend("fill", "cover", "the shell")
+    fig.legend("line", "r", "the equator")
+    return [em.view("shell", "The oblate shell", "$m$", [surface], fig.done(),
+                    settings=r"$m=1$, $q^2=2m^2$, $a=2m$.")]
+
+
+def flat_slices(spec, sl):
+    """The embedded shell's poles at the common instant t=T=0."""
+    return [sl.Mark(m, points=[(0, -1), (0, 1)] if spec.system == "cartesian" else [(0, 1)])
+            for m in sl.moments(METRIC)]
+
+
+def conformal_views(ck, src, cf):
+    """The totally geodesic joined axis, compactified by arctan(t +/- z_star).
+
+    z_star=z inside; outside its derivative is B/Delta on each half-axis.
+    The complete joined axis is a diamond with regular interior and two timelike
+    shell crossings, no Kerr ring or second radial sheet.
+    """
+    import numpy as np
+    params = {"m": 1, "q": "sqrt(2)", "a": 2}
+
+    def mapped(t, z):
+        return np.arctan((t-axis_star(z))/2), np.arctan((t+axis_star(z))/2)
+
+    exterior = cf.Plane(src, METRIC, "exterior", ("t", "r"), {"theta": "0", "phi": "0"}, params)
+    ck.chart("electron bubble exterior axis", exterior, mapped, ck.uniform(-8, 8), ck.uniform(1.01, 8),
+             lambda t, r: (1, 0))
+    inside = cf.Plane(src, METRIC, "cartesian", ("T", "z"), {"x": "0", "y": "0"}, params)
+    ck.chart("electron bubble flat axis", inside, mapped, ck.uniform(-8, 8), ck.uniform(-.99, .99),
+             lambda t, z: (1, 0))
+    v = cf.View("axis", "The joined axis", [-cf.PI-.3, cf.PI+.3, -cf.PI-.3, cf.PI+.3])
+    v.fill("region", cf.DIAMOND)
+    v.fill("cover", cf.DIAMOND)
+    cf.grid(v, "r", lambda z, t: mapped(t, z), (-4, -2, 0, 2, 4), cf.S_ALL)
+    cf.grid(v, "surface", lambda z, t: mapped(t, z), (-1, 1), cf.S_ALL)
+    cf.grid(v, "t", lambda t, s: (np.arctan((t-s)/2), np.arctan((t+s)/2)), (-4, 0, 4), cf.S_ALL)
+    v.line("scri", [[[0, cf.PI], [cf.PI, 0], [0, -cf.PI], [-cf.PI, 0], [0, cf.PI]]])
+    v.legend("cover", "the joined axis")
+    v.legend("surface", "the shell at both poles")
+    v.legend("scri", "null infinity")
+    v.slice(cf.slices.moments(METRIC)[0], points=[mapped(0, -1), mapped(0, 1)])
+    v.set(restriction="The rotation axis only, each point a single event.",
+          settings=r"$m=1$, $q^2=2m^2$, $a=2m$.")
+    return [v]
+
+
+def curvature_views(ck, src, cv):
+    """Stored exterior bulk K along the axis and equator; no shell scalar."""
+    import numpy as np
+    x = cv.axis("$r/m$", 1, 6)
+    scale = {"kind": "symlog", "from": -100, "to": 100, "linear": .001}
+    published = cv.nr_published(src, METRIC, "exterior", "kretschmann", ["r", "theta"], ["m", "q", "a"])
+    curves = []
+    for cls, theta in (("axis", 0), ("equator", np.pi/2)):
+        held = cv.Held(published, {"theta": theta})
+        curves += cv.line_curves(ck, METRIC, "K", cls, held, "r", x, scale, cv.PLOT_W,
+                                 {"m": 1, "q": np.sqrt(2), "a": 2})
+    return [{"id": "exterior", "label": "Smooth exterior", "kind": "line", "x": x,
+             "panels": [{"id": "K", "name": "$Km^4$", "aspect": 1, "scale": scale,
+                         "ticks": cv.value_ticks(scale)}], "curves": curves, "marks": [],
+             "legend": [["line", "axis", "the rotation axis"], ["line", "equator", "the equator"]],
+             "caption": [r"The smooth exterior Kretschmann scalar ($\theta=0$ and $\theta=\pi/2$), from its outer limit at the shell."],
+             "settings": r"$m=1$, $q^2=2m^2$, $a=2m$.",
+             "clip": "Signed logarithmic scale, linear near zero; both curves within the panel."}]

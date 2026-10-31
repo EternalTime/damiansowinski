@@ -53,7 +53,8 @@ A product such as the square of its delta curvature is undefined as an ordinary 
 
 The angular velocity is $d\phi/dt=ca/B_0$, and the speed measured in the interior inertial frame is $ca\sin\theta/\sqrt{B_0}$.
 It is subluminal at every latitude.
-The dedicated numerical check of the extrinsic curvature and the matching remains to be completed.
+The dedicated point check differentiates the two source matrices by complex steps, constructs the extrinsic-curvature jump, and compares the Israel tensor with the tension above.
+It also checks the proper-distance normalization against the independent thin limit.
 
 ## Electromagnetic boundary
 
@@ -91,4 +92,18 @@ The physical model retains one exterior and a flat ball, with no negative radial
 
 ## Drawings
 
-Parameters, null slices, embedding, and curvature views remain to be selected from this causal domain.
+Every drawing uses $m=1$, $q^2=2m^2$, and $a=2m$, so $r_0=m$.
+These are illustrative classical parameters, not numerical electron parameters.
+The five null views are on the rotation axis, with the shell at the boundary of the retained smooth region.
+The Cartesian view draws the flat axis between $z=-m$ and $z=m$.
+The oblate shell at $t=T=0$ has induced metric $\Sigma_0d\theta^2+B_0\sin^2\theta d\phi^2$.
+Its embedding is $\rho=\sqrt{5}m\sin\theta$, $z=m\cos\theta$, checked against the stored interior metric at its continuous boundary limit.
+The shell's two poles mark the same moment on the axial diagrams.
+The integration constants of the angular transformation are chosen so that $T=t$ on the shell.
+The conformal diagram is the joined totally geodesic axis, not the four dimensional orbit space.
+In units of $m$, its optical distance is $z_*=z$ inside and $z_*={\rm sgn}(z)[|z|+\ln(((|z|-1)^2+5)/5)]$ outside.
+Then $p,q=\arctan((ct\mp z_*)/2m)$ cover the axial diamond with null infinity on all four edges.
+The curvature figure reads the stored smooth exterior Kretschmann scalar on the axis and equator over $m\le r\le6m$.
+Its endpoint at $r=m$ is the outer bulk limit; no scalar is assigned to the distributional shell.
+No movie or extra coordinate extension is needed.
+Every view uses a square window with a margin; the embedding window is enlarged without cropping.
