@@ -417,6 +417,11 @@ REGIONS = {
         "why": "whittaker is the fluid at rest, the limit of no rotation, which is static and "
                "spherically symmetric where the rotating fluid is neither",
     },
+    "torus_universe_2plus1": {
+        "regions": [["proper_time", "mean_curvature", "minkowski", "null_boundary"], ["static"]],
+        "why": "the expanding boost and translation quotients and the static translation quotients "
+               "are distinct families; only the latter have a global timelike translation",
+    },
     "vaidya_patel_kerr": {
         "regions": [["vaidya_patel", "retarded"],
                     ["einstein_vaidya", "einstein_boyer_lindquist"],

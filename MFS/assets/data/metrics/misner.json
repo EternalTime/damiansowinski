@@ -82,6 +82,11 @@
       "id": "moncrief_taub_nut",
       "kind": "family",
       "text": "A compact Killing horizon separates a globally hyperbolic vacuum cosmology from an acausal extension [moncriefisenberg1983]."
+    },
+    {
+      "id": "torus_universe_2plus1",
+      "kind": "family",
+      "text": "Two commuting boost and translation identifications close the spacelike sections into tori. Their extension across a null boundary has timelike tori and closed timelike curves [louko_marolf1994]."
     }
   ],
   "references": [
@@ -106,7 +111,8 @@
     "lachiezerey1995",
     "gott1998",
     "brill1996",
-    "moncriefisenberg1983"
+    "moncriefisenberg1983",
+    "louko_marolf1994"
   ],
   "coordinates": [
     {

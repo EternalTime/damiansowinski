@@ -9,7 +9,7 @@
     "conformally flat",
     "three-dimensional",
     "cosmology",
-    "compact space",
+    "compact",
     "topology"
   ],
   "signature": "(-,+,+)",
@@ -27,7 +27,18 @@
   "coordinates": [
     {
       "id": "proper_time",
-      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The proper time is $t>0$, with $\\Delta=a\\mu-b\\lambda>0$ and spatial area $A=ct\\Delta$. The torus modulus is $m=(b+ict\\mu)/(a+ict\\lambda)$. Reversing the time orientation gives the contracting family.",
+      "name": "Proper Time",
+      "coords": [
+        "t",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (0,\\infty)",
+        "x \\in [0,1)",
+        "y \\in [0,1)",
+        "a\\mu-b\\lambda>0"
+      ],
       "parameters": [
         {
           "symbol": "a",
@@ -45,11 +56,372 @@
           "symbol": "\\mu",
           "description": "Boost rapidity around the second torus circuit."
         }
+      ],
+      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The proper time is $t>0$, with $\\Delta=a\\mu-b\\lambda>0$ and spatial area $A=ct\\Delta$. The torus modulus is $m=(b+ict\\mu)/(a+ict\\lambda)$. Reversing the time orientation gives the contracting family.",
+      "line_element": "ds^2=-c^2dt^2+\\left(a\\,dx+b\\,dy\\right)^2+c^2t^2\\left(\\lambda\\,dx+\\mu\\,dy\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\lambda^2\\,c^2\\,t^2 + a^2"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "\\lambda\\,\\mu\\,c^2\\,t^2 + a\\,b"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "\\lambda\\,\\mu\\,c^2\\,t^2 + a\\,b"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\mu^2\\,c^2\\,t^2 + b^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{\\mu^2\\,c^2\\,t^2 + b^2}{c^2\\,t^2\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "-\\dfrac{\\lambda\\,\\mu\\,c^2\\,t^2 + a\\,b}{c^2\\,t^2\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "-\\dfrac{\\lambda\\,\\mu\\,c^2\\,t^2 + a\\,b}{c^2\\,t^2\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{\\lambda^2\\,c^2\\,t^2 + a^2}{c^2\\,t^2\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "\\lambda^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "\\mu^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{b\\,\\lambda}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\,\\lambda}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\mu}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{b\\,\\mu}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,\\lambda}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,\\lambda}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,\\mu}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{a\\,\\mu}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\lambda^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\lambda^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\lambda^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "y"
+                ],
+                "value": "\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "t"
+                ],
+                "value": "\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "x"
+                ],
+                "value": "\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "t"
+                ],
+                "value": "\\lambda\\,\\mu\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\mu^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\mu^2\\,c\\,t"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\mu^2\\,c\\,t"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\lambda^2\\,c\\,t\\,\\dot{x}^2 + 2\\lambda\\,\\mu\\,c\\,t\\,\\dot{x}\\dot{y} + \\mu^2\\,c\\,t\\,\\dot{y}^2 = 0",
+        "\\ddot{x} - \\dfrac{2b\\,\\lambda}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{t}\\dot{x} - \\dfrac{2b\\,\\mu}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{t}\\dot{y} = 0",
+        "\\ddot{y} + \\dfrac{2a\\,\\lambda}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{t}\\dot{x} + \\dfrac{2a\\,\\mu}{c\\,t\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{t}\\dot{y} = 0"
       ]
     },
     {
       "id": "mean_curvature",
-      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The mean curvature coordinate is $\\tau=1/(ct)$, decreasing toward the expanding future. Its modulus is $m=(b+i\\mu/\\tau)/(a+i\\lambda/\\tau)$ and its area is $A=(a\\mu-b\\lambda)/\\tau$.",
+      "name": "Mean Curvature Time",
+      "coords": [
+        "\\tau",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "\\tau \\in (0,\\infty)",
+        "x \\in [0,1)",
+        "y \\in [0,1)",
+        "a\\mu-b\\lambda>0"
+      ],
       "parameters": [
         {
           "symbol": "a",
@@ -67,11 +439,388 @@
           "symbol": "\\mu",
           "description": "Boost rapidity around the second torus circuit."
         }
+      ],
+      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The mean curvature coordinate is $\\tau=1/(ct)$, decreasing toward the expanding future. Its modulus is $m=(b+i\\mu/\\tau)/(a+i\\lambda/\\tau)$ and its area is $A=(a\\mu-b\\lambda)/\\tau$.",
+      "line_element": "ds^2=-\\frac{d\\tau^2}{\\tau^4}+\\left(a\\,dx+b\\,dy\\right)^2+\\frac{1}{\\tau^2}\\left(\\lambda\\,dx+\\mu\\,dy\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-\\dfrac{1}{\\tau^4}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{a^2\\,\\tau^2 + \\lambda^2}{\\tau^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "\\dfrac{a\\,b\\,\\tau^2 + \\lambda\\,\\mu}{\\tau^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "\\dfrac{a\\,b\\,\\tau^2 + \\lambda\\,\\mu}{\\tau^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{b^2\\,\\tau^2 + \\mu^2}{\\tau^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-\\tau^4"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{b^2\\,\\tau^2 + \\mu^2}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "-\\dfrac{a\\,b\\,\\tau^2 + \\lambda\\,\\mu}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "-\\dfrac{a\\,b\\,\\tau^2 + \\lambda\\,\\mu}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{a^2\\,\\tau^2 + \\lambda^2}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{2}{\\tau}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\lambda^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\lambda\\,\\mu\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\lambda\\,\\mu\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\mu^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{b\\,\\lambda}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{b\\,\\lambda}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{b\\,\\mu}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{b\\,\\mu}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{a\\,\\lambda}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{a\\,\\lambda}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{a\\,\\mu}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{a\\,\\mu}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{2}{\\tau^5}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda^2}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda^2}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\lambda^2}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\lambda\\,\\mu}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda\\,\\mu}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\lambda\\,\\mu}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\lambda\\,\\mu}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda\\,\\mu}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\lambda\\,\\mu}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mu^2}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\tau^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\mu^2}{\\tau^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} - \\dfrac{2}{\\tau}\\dot{\\tau}^2 - \\lambda^2\\,\\tau\\,\\dot{x}^2 - 2\\lambda\\,\\mu\\,\\tau\\,\\dot{x}\\dot{y} - \\mu^2\\,\\tau\\,\\dot{y}^2 = 0",
+        "\\ddot{x} + \\dfrac{2b\\,\\lambda}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{\\tau}\\dot{x} + \\dfrac{2b\\,\\mu}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{\\tau}\\dot{y} = 0",
+        "\\ddot{y} - \\dfrac{2a\\,\\lambda}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{\\tau}\\dot{x} - \\dfrac{2a\\,\\mu}{\\tau\\left(a\\,\\mu - b\\,\\lambda\\right)}\\dot{\\tau}\\dot{y} = 0"
       ]
     },
     {
       "id": "minkowski",
-      "convention": "The developing map is $cT=ct\\cosh q$, $X=ct\\sinh q$, $Y=ax+by$, with $q=\\lambda x+\\mu y$. The first identification is $(cT,X,Y)\\sim(cT\\cosh\\lambda+X\\sinh\\lambda,X\\cosh\\lambda+cT\\sinh\\lambda,Y+a)$. The second has $\\mu$ and $b$ in place of $\\lambda$ and $a$. Both act on the wedge $cT>|X|$, with $a\\mu-b\\lambda>0$.",
+      "name": "Minkowski Cover",
+      "coords": [
+        "T",
+        "X",
+        "Y"
+      ],
+      "domains": [
+        "T \\in (0,\\infty)",
+        "X \\in (-cT,cT)",
+        "Y \\in (-\\infty,\\infty)",
+        "a\\mu-b\\lambda>0"
+      ],
       "parameters": [
         {
           "symbol": "a",
@@ -89,11 +838,150 @@
           "symbol": "\\mu",
           "description": "Boost rapidity around the second torus circuit."
         }
+      ],
+      "convention": "The developing map is $cT=ct\\cosh q$, $X=ct\\sinh q$, $Y=ax+by$, with $q=\\lambda x+\\mu y$. The first identification is $(cT,X,Y)\\sim(cT\\cosh\\lambda+X\\sinh\\lambda,X\\cosh\\lambda+cT\\sinh\\lambda,Y+a)$. The second has $\\mu$ and $b$ in place of $\\lambda$ and $a$. Both act on the wedge $cT>|X|$, with $a\\mu-b\\lambda>0$.",
+      "line_element": "ds^2=-c^2dT^2+dX^2+dY^2",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} = 0",
+        "\\ddot{X} = 0",
+        "\\ddot{Y} = 0"
       ]
     },
     {
       "id": "null_boundary",
-      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. For any reference length $\\ell>0$, write $q=\\lambda x+\\mu y$, $cT=(\\ell e^q+u e^{-q}/\\ell)/2$, $X=(\\ell e^q-u e^{-q}/\\ell)/2$, and $Y=ax+by$. The area is $A=\\sqrt{u}(a\\mu-b\\lambda)$, with $u>0$ and $a\\mu-b\\lambda>0$. The extension to $u<0$ has timelike tori.",
+      "name": "Null Boundary Coordinates",
+      "coords": [
+        "u",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (0,\\infty)",
+        "x \\in [0,1)",
+        "y \\in [0,1)",
+        "a\\mu-b\\lambda>0"
+      ],
       "parameters": [
         {
           "symbol": "a",
@@ -111,11 +999,455 @@
           "symbol": "\\mu",
           "description": "Boost rapidity around the second torus circuit."
         }
+      ],
+      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. For any reference length $\\ell>0$, write $q=\\lambda x+\\mu y$, $cT=(\\ell e^q+u e^{-q}/\\ell)/2$, $X=(\\ell e^q-u e^{-q}/\\ell)/2$, and $Y=ax+by$. The area is $A=\\sqrt{u}(a\\mu-b\\lambda)$, with $u>0$ and $a\\mu-b\\lambda>0$. The extension to $u<0$ has timelike tori.",
+      "line_element": "ds^2=-du\\left(\\lambda\\,dx+\\mu\\,dy\\right)+u\\left(\\lambda\\,dx+\\mu\\,dy\\right)^2+\\left(a\\,dx+b\\,dy\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "-\\dfrac{\\lambda}{2}"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "-\\dfrac{\\lambda}{2}"
+        },
+        {
+          "indices": [
+            "u",
+            "y"
+          ],
+          "value": "-\\dfrac{\\mu}{2}"
+        },
+        {
+          "indices": [
+            "y",
+            "u"
+          ],
+          "value": "-\\dfrac{\\mu}{2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\lambda^2\\,u + a^2"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "\\lambda\\,\\mu\\,u + a\\,b"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "\\lambda\\,\\mu\\,u + a\\,b"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\mu^2\\,u + b^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-4u"
+        },
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "\\dfrac{2b}{a\\,\\mu - b\\,\\lambda}"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "\\dfrac{2b}{a\\,\\mu - b\\,\\lambda}"
+        },
+        {
+          "indices": [
+            "u",
+            "y"
+          ],
+          "value": "-\\dfrac{2a}{a\\,\\mu - b\\,\\lambda}"
+        },
+        {
+          "indices": [
+            "y",
+            "u"
+          ],
+          "value": "-\\dfrac{2a}{a\\,\\mu - b\\,\\lambda}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{\\mu^2}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "-\\dfrac{\\lambda\\,\\mu}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "-\\dfrac{\\lambda\\,\\mu}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{\\lambda^2}{\\left(a\\,\\mu - b\\,\\lambda\\right)^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\lambda"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\lambda"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-\\mu"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-\\mu"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "2\\lambda^2\\,u"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y"
+                ],
+                "value": "2\\lambda\\,\\mu\\,u"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x"
+                ],
+                "value": "2\\lambda\\,\\mu\\,u"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "2\\mu^2\\,u"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{b\\,\\lambda^2}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\lambda\\,\\mu}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{b\\,\\lambda\\,\\mu}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{b\\,\\mu^2}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,\\lambda^2}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,\\lambda\\,\\mu}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{a\\,\\lambda\\,\\mu}{a\\,\\mu - b\\,\\lambda}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{a\\,\\mu^2}{a\\,\\mu - b\\,\\lambda}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda^2}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda^2}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\lambda\\,\\mu}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\lambda\\,\\mu}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\lambda\\,\\mu}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda\\,\\mu}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{\\lambda\\,\\mu}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{\\lambda\\,\\mu}{2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\mu^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mu^2}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "\\dfrac{\\mu^2}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} - 2\\lambda\\,\\dot{u}\\dot{x} - 2\\mu\\,\\dot{u}\\dot{y} + 2\\lambda^2\\,u\\,\\dot{x}^2 + 4\\lambda\\,\\mu\\,u\\,\\dot{x}\\dot{y} + 2\\mu^2\\,u\\,\\dot{y}^2 = 0",
+        "\\ddot{x} - \\dfrac{b\\,\\lambda^2}{a\\,\\mu - b\\,\\lambda}\\dot{x}^2 - \\dfrac{2b\\,\\lambda\\,\\mu}{a\\,\\mu - b\\,\\lambda}\\dot{x}\\dot{y} - \\dfrac{b\\,\\mu^2}{a\\,\\mu - b\\,\\lambda}\\dot{y}^2 = 0",
+        "\\ddot{y} + \\dfrac{a\\,\\lambda^2}{a\\,\\mu - b\\,\\lambda}\\dot{x}^2 + \\dfrac{2a\\,\\lambda\\,\\mu}{a\\,\\mu - b\\,\\lambda}\\dot{x}\\dot{y} + \\dfrac{a\\,\\mu^2}{a\\,\\mu - b\\,\\lambda}\\dot{y}^2 = 0"
       ]
     },
     {
       "id": "static",
-      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The two spatial translations have lengths $r_1,r_2>0$ and angle $0<\\varphi<\\pi$. The constant modulus is $m=(r_2/r_1)e^{i\\varphi}$ and the area is $A=r_1r_2\\sin\\varphi$.",
+      "name": "Static Torus",
+      "coords": [
+        "t",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty,\\infty)",
+        "x \\in [0,1)",
+        "y \\in [0,1)",
+        "r_1>0",
+        "r_2>0",
+        "0<\\phi<\\pi"
+      ],
       "parameters": [
         {
           "symbol": "r_1",
@@ -126,9 +1458,165 @@
           "description": "Length of the second spatial translation."
         },
         {
-          "symbol": "\\varphi",
+          "symbol": "\\phi",
           "description": "Angle between the two spatial translations."
         }
+      ],
+      "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The two spatial translations have lengths $r_1,r_2>0$ and angle $0<\\phi<\\pi$. The constant modulus is $m=(r_2/r_1)e^{i\\phi}$ and the area is $A=r_1r_2\\sin\\phi$.",
+      "line_element": "ds^2=-c^2dt^2+\\left(r_1\\,dx+r_2\\cos\\phi\\,dy\\right)^2+r_2^2\\sin^2\\phi\\,dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "r_1^2"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "r_1\\,r_2\\cos\\phi"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "r_1\\,r_2\\cos\\phi"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "r_2^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "-\\dfrac{1}{r_1^2\\left(\\cos\\phi + 1\\right)\\left(\\cos\\phi - 1\\right)}"
+        },
+        {
+          "indices": [
+            "x",
+            "y"
+          ],
+          "value": "\\dfrac{\\cos\\phi}{r_1\\,r_2\\left(\\cos\\phi + 1\\right)\\left(\\cos\\phi - 1\\right)}"
+        },
+        {
+          "indices": [
+            "y",
+            "x"
+          ],
+          "value": "\\dfrac{\\cos\\phi}{r_1\\,r_2\\left(\\cos\\phi + 1\\right)\\left(\\cos\\phi - 1\\right)}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "-\\dfrac{1}{r_2^2\\left(\\cos\\phi + 1\\right)\\left(\\cos\\phi - 1\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} = 0",
+        "\\ddot{y} = 0"
       ]
     }
   ],

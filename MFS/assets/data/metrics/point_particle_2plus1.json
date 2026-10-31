@@ -67,6 +67,11 @@
       "id": "vuorio_warped_ads",
       "kind": "family",
       "text": "With a mass for the graviton, empty space in three dimensions need not be flat. Vuorio's universe is such a vacuum, whose light cones tip over as Gödel's do [vuorio1985]."
+    },
+    {
+      "id": "torus_universe_2plus1",
+      "kind": "locally_same",
+      "text": "The same flat vacuum in three dimensions, with space closed into a torus by two commuting identifications [louko_marolf1994]."
     }
   ],
   "references": [
@@ -91,7 +96,8 @@
     "brill1996",
     "emparan2002holograms",
     "emparan2020qbtz",
-    "vuorio1985"
+    "vuorio1985",
+    "louko_marolf1994"
   ],
   "coordinates": [
     {

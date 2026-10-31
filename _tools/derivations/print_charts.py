@@ -37028,5 +37028,8 @@ CHARTS["kowalski_glikman"] = [
 import electron_bubble as _electron_bubble
 _electron_bubble.register_charts(sys.modules[__name__])
 
+import torus_universe_2plus1 as _torus
+CHARTS[_torus.METRIC] = [lambda system=system: _torus.chart_spec(system) for system in _torus.CHARTS]
+
 if __name__ == "__main__":
     main()

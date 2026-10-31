@@ -5319,5 +5319,8 @@ import hawking_moss as hm
 hm.register_dimensions(sys.modules[__name__])
 
 
+import torus_universe_2plus1 as _torus
+DIMENSIONS.update(_torus.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())
