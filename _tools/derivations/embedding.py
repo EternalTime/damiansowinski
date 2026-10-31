@@ -22084,6 +22084,19 @@ import extended_inflation_drawings as extended_drawings
 DRAWN["extended_inflation"] = lambda ck, src: extended_drawings.embedding(ck, src, sys.modules[__name__])
 CAPTIONS[("extended_inflation", "plane")] = [extended_drawings.EMBEDDING_CAPTION]
 
+import electron_bubble as _electron_bubble
+
+
+def electron_bubble(ck, src):
+    return _electron_bubble.embedding_views(ck, src, sys.modules[__name__])
+
+
+DRAWN["electron_bubble"] = electron_bubble
+CAPTIONS[("electron_bubble", "shell")] = [
+    r"The oblate shell at $t=0$, with polar semiaxis $m$ and equatorial semiaxis $\sqrt{5}m$."
+]
+
+
 if __name__ == "__main__":
     sys.exit(main())
 

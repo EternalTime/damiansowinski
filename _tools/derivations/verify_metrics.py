@@ -2577,6 +2577,2747 @@ DIMENSIONS.update({("charach_malin", system): {
 import chodos_detweiler as _chodos_detweiler
 DIMENSIONS.update(_chodos_detweiler.DIMENSIONS)
 
+# Moncrief's torus coordinates are pure numbers and L carries the overall length.
+DIMENSIONS.update({("moncrief_taub_nut", chart): {
+    **{c: "1" for c in coords}, "L": "L", "\\kappa": "1",
+    **({"\\delta": "1"} if chart != "areal" else {}),
+    **{f: "1" for f in funcs}}
+    for chart, coords, funcs in (
+        ("areal", ("t", "\\theta", "\\psi", "\\phi"), ("b", "f", "q")),
+        ("extension_plus", ("T", "\\theta", "\\chi", "\\phi"), ("B", "F", "Q")),
+        ("extension_minus", ("T", "\\theta", "\\chi", "\\phi"), ("B", "F", "Q")))})
+
+# Starobinsky's semiclassical family: geometric cosmic and conformal times are lengths.
+DIMENSIONS.update({("starobinsky_universe", system): {
+    "\\theta": "1", "\\phi": "1", "H_0": "1/L",
+    ("\\eta" if system == "conformal" else "\\tau"): "L",
+    **({"r": "L", "a": "1", "k": "1/L**2", "M": "1/L"} if system in ("cosmic", "conformal")
+       else {"r": "L"} if system == "flat_de_sitter" else {"\\chi": "1"})}
+    for system in ("cosmic", "conformal", "closed_de_sitter", "flat_de_sitter", "open_de_sitter")})
+
+DIMENSIONS.update({("kowalski_glikman", system): {
+    "u": "T", null: "L", **{f"{letter}_{i}": "L" for i in range(1, 10)}, "\\mu": "1/L"}
+    for system, null, letter in (("brinkmann", "v", "x"), ("rosen", "w", "y"))})
 
 import electron_bubble as _electron_bubble
 DIMENSIONS.update(_electron_bubble.DIMENSIONS)
+
+FIELD_DIMENSIONS = {
+    "metric_components": sp.Integer(1),
+    "inverse_metric_components": sp.Integer(1),
+    "christoffel": 1 / LENGTH,
+    "riemann": 1 / LENGTH ** 2,
+    "ricci_tensor": 1 / LENGTH ** 2,
+    "ricci_scalar": 1 / LENGTH ** 2,
+    "einstein_tensor": 1 / LENGTH ** 2,
+    "kretschmann": 1 / LENGTH ** 4,
+    "weyl_tensor": 1 / LENGTH ** 2,
+}
+
+
+def time_coordinates(declared, coords):
+    """The coordinates the chart multiplies by c, which are exactly the times."""
+    return {name for name in coords
+            if sp.sympify(declared[name], locals=BASE_DIMENSIONS) == TIME}
+
+# A rational parametrisation of the surface an entry's constrained parameters live on,
+# written as {parameter name: expression in a fresh symbol}. See the header.
+PARAMETER_RELATIONS = {
+    # The ellipse through (1, 0), parametrised by the line b = u(a - 1).
+    # The limit u -> infinity reaches (1, -1); both regular members are checked explicitly.
+    **{("static_five_soliton", system): {
+        "a": "(u**2 - 1)/(u**2 + u + 1)",
+        "b": "-u*(u + 2)/(u**2 + u + 1)",
+    } for system in ("spherical", "isotropic", "lake")},
+    # The Kasner circle, where the plane sum p_i = 1 cuts the sphere sum p_i^2 = 1.
+    # Every point of it is reached, and the exponent ordering p_1 <= p_2 <= p_3 holds
+    # on u >= 1, which is the range Belinskii, Khalatnikov and Lifshitz bounce within.
+    ("kasner", "cartesian"): {
+        "p_1": "-u/(1 + u + u**2)",
+        "p_2": "(1 + u)/(1 + u + u**2)",
+        "p_3": "u*(1 + u)/(1 + u + u**2)",
+    },
+    # The same circle through Levi-Civita's mass parameter, written s here: the exponents of
+    # the Kasner form along t, phi and z. Every point of the circle but (0, 0, 1), the limit of
+    # large s, is reached.
+    ("levi_civita", "kasner"): {
+        "p_0": "2*s/(4*s**2 - 2*s + 1)",
+        "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+        "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
+    },
+    # Belinskii and Khalatnikov's surface, sum p_i = 1 and sum p_i^2 = 1 - q^2, a sphere of which
+    # Kasner's circle is the equator q = 0. A point of it is the point u of Kasner's circle drawn
+    # toward the isotropic point (1/3, 1/3, 1/3) by the factor (3v^2 - 2)/(3v^2 + 2), which leaves
+    # q = 4v/(3v^2 + 2): rational in u and v, and every point with q not zero is reached.
+    ("kasner_scalar", "synchronous"): {
+        "p_1": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(-u/(1 + u + u**2) - 1/3)",
+        "p_2": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*((1 + u)/(1 + u + u**2) - 1/3)",
+        "p_3": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(u*(1 + u)/(1 + u + u**2) - 1/3)",
+        "q": "4*v/(3*v**2 + 2)",
+    },
+    ("kasner_scalar", "logarithmic"): {
+        "p_1": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(-u/(1 + u + u**2) - 1/3)",
+        "p_2": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*((1 + u)/(1 + u + u**2) - 1/3)",
+        "p_3": "1/3 + (3*v**2 - 2)/(3*v**2 + 2)*(u*(1 + u)/(1 + u + u**2) - 1/3)",
+        "q": "4*v/(3*v**2 + 2)",
+    },
+    # Kasner's vacuum of five dimensions, sum s_a = sum s_a^2 = 1: the second point where the line
+    # from (1, 0, 0, 0) along (-(a + b + 1), a, b, 1) meets the sphere.
+    # Kasner's universe with a magnetic field: its exponents are those of the vacuum it starts
+    # from, on Kasner's circle, with the field along the axis of p_3, which is positive for u > 0.
+    ("kasner_magnetic", "kasner_time"): {
+        "p_1": "-u/(1 + u + u**2)",
+        "p_2": "(1 + u)/(1 + u + u**2)",
+        "p_3": "u*(1 + u)/(1 + u + u**2)",
+    },
+    ("kasner_scalar", "kaluza_klein"): {
+        "s_1": "1 - 2*(a + b + 1)**2/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_2": "2*a*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_3": "2*b*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+        "s_5": "2*(a + b + 1)/((a + b + 1)**2 + a**2 + b**2 + 1)",
+    },
+}
+
+# The order each small parameter of a system counts as, and the highest order the system keeps.
+# See the header.
+ORDERS = {
+    # Hartle and Thorne's exterior: the spin is first order and the quadrupole moment second.
+    ("hartle_thorne", "hartle_thorne"): ({"a": 1, "q": 2}, 2),
+    # Lense and Thirring's field is linear in the source: the mass is first order, and the
+    # angular momentum, which enters as the product a m, comes with it.
+    ("hartle_thorne", "lense_thirring"): ({"m": 1}, 1),
+    # The parametrised post-Newtonian metric, counted in powers of v/c: the mass m = GM/c^2 over a
+    # distance is second order and the spin a = J/(Mc) over one is first, and the time coordinate
+    # is named, so that each component is kept as far as the post-Newtonian metric fixes it.
+    ("ppn_metric", "isotropic"): ({"m": 2}, 2, "t"),
+    ("ppn_metric", "cartesian"): ({"m": 2}, 2, "t"),
+    ("ppn_metric", "areal"): ({"m": 2}, 2, "t"),
+    ("ppn_metric", "rotating"): ({"m": 2, "a": 1}, 2, "t"),
+    # The field of many bodies, whose small quantities are its potentials, functions of the
+    # coordinates: Newton's potential U and the superpotential chi are second order, the vector
+    # potential third and psi fourth, and each derivative along the time counts one order more.
+    ("eih_many_bodies", "harmonic"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
+    ("eih_many_bodies", "standard"): ({"U": 2, "chi": 2, "V_1": 3, "V_2": 3, "V_3": 3, "psi": 4}, 2, "t"),
+    # The perturbed Friedmann universe, kept to first order in its potentials, functions of all
+    # four coordinates; the third item None says no time is slow, so each derivative of a potential
+    # counts as the potential does.
+    ("bardeen_perturbations", "longitudinal"): ({"Phi": 1, "Psi": 1}, 1, None),
+    ("bardeen_perturbations", "longitudinal_curved"): ({"Phi": 1, "Psi": 1}, 1, None),
+    ("bardeen_perturbations", "synchronous"): ({"psi": 1, "E": 1}, 1, None),
+}
+
+# The defined names a system holds as functions of the coordinates while its tensors are built.
+# See "Adding a spacetime, as far as the checker is concerned" in _tools/README.md.
+HELD = {
+    # The conformal factor of the curved space of a perturbed Friedmann universe, a quadratic in the
+    # coordinates: held, every value is printed in it, as the space's own Christoffel symbols
+    # k x/(2 Omega) are, where written out it multiplies through every term. It has a relation with
+    # x, y and z, so it has no rates, and each comparison writes it out.
+    ("bardeen_perturbations", "longitudinal_curved"): ("Omega",),
+    # Tolman's phase, half a logarithm of radicals, which stands only inside a cosine or a sine
+    # and whose derivative along r is algebraic.
+    ("tolman_vii", "spherical"): ("psi",),
+    ("tolman_vii", "tolman"): ("psi",),
+    # Buchdahl's f, held so that every value is a rational function of f, r and R.
+    ("buchdahl_sphere", "isotropic"): ("f",),
+    # Z = g^rr of Tolman's solution V at n = 1/2 holds r^(7/3), and its slope is (7Z - 4)/(3r).
+    ("misner_zapolsky", "tolman_v"): ("Z",),
+    # Bowers and Liang's N and P hold a power Q of Z and of 1 - r_s/R, and each has an algebraic
+    # slope written in N, P and Z, so every value is a rational function of them and of r.
+    ("bowers_liang", "areal"): ("N", "P"),
+    # Weyl's two functions for the first Morgan-Morgan disc, polynomials in xi, eta and arccot(xi):
+    # held, every value is written in them and their derivatives, as Weyl's chart writes it.
+    ("morgan_morgan", "oblate_spheroidal"): ("psi", "gamma"),
+    # Weyl's two functions for Erez and Rosen's quadrupole, polynomials in the coordinates and in
+    # the logarithm of Schwarzschild's 1 - 2m/r: held, as the first Morgan-Morgan disc's are.
+    ("erez_rosen", "prolate_spheroidal"): ("psi", "gamma"),
+    ("erez_rosen", "spherical"): ("psi", "gamma"),
+    # Weyl's two functions for Bach and Weyl's ring, complete elliptic integrals over radicals:
+    # held, as Erez and Rosen's are.
+    **{("bach_weyl_ring", chart): ("psi", "gamma") for chart in ("weyl", "toroidal", "oblate_spheroidal")},
+    # The distortion U and V of Schwarzschild's black hole in a tidal field, polynomials in the
+    # coordinates, and Weyl's own psi and gamma in his chart: held, so that every value is written
+    # in them and their derivatives, as Erez and Rosen's are.
+    ("distorted_schwarzschild", "prolate_spheroidal"): ("U", "V"),
+    ("distorted_schwarzschild", "spherical"): ("U", "V"),
+    ("distorted_schwarzschild", "weyl"): ("psi", "gamma"),
+    # Weyl's psi and gamma for the black hole in a scalar universe, held as the tidal field's are.
+    ("scalar_field_black_hole", "weyl"): ("psi", "gamma"),
+    # Wahlquist's h_1 and h_2, and Mars's U and V, each a function of one coordinate that holds
+    # that coordinate bare beside its sine, so that its derivatives are algebraic in the function.
+    ("wahlquist", "wahlquist"): ("h_1", "h_2"),
+    ("wahlquist", "mars"): ("U", "V"),
+    ("wahlquist", "mars_ingoing"): ("U", "V"),
+    ("wahlquist", "whittaker"): ("F",),
+    # Podolsky and Belan's x, u and v as functions of the inertial coordinates of the flat space
+    # Kundt's waves cross: x is a square root, and every derivative of the three is rational in them.
+    ("kundt_waves", "kerr_schild"): ("x", "u", "v"),
+    # The areal radius of Kruskal's chart, Lambert's function of UV: held, a value is
+    # written in r and e^(-r/r_s), as the line element is.
+    ("white_hole", "exterior_kruskal"): ("r",),
+    # The same radius in Kruskal's T and X, Lambert's function of X^2 - T^2.
+    ("rp3_geon", "kruskal"): ("r",),
+    # The radius of AII in Kruskal's chart, the same function of UV.
+    ("ab_metrics", "a2_kruskal"): ("r",),
+    ("datt_ruban_t_models", "exterior_kruskal"): ("r",),
+    # The mass function of Born and Infeld's point charge, an incomplete elliptic integral of the
+    # first kind whose derivative along r is algebraic, the energy of the field in a shell.
+    ("born_infeld_charge", "static"): ("m",),
+    ("born_infeld_charge", "eddington_finkelstein_outgoing"): ("m",),
+    ("born_infeld_charge", "eddington_finkelstein_ingoing"): ("m",),
+    # The isotropic radius of the exponential metric's areal chart, Lambert's function of m/R:
+    # held, a value is a rational function of r, R and m.
+    ("exponential_metric", "areal"): ("r",),
+    # The potential U of each of Bonnor's stars that names it: held, a value is a rational function
+    # of U and the coordinates, as the line element is.
+    **{("bonnor_charged_dust", chart): ("U",) for chart in
+       ("sphere_1965", "sphere_1975", "spheroid_interior", "spheroid_exterior", "quasi_black_hole")},
+    # Maitra's two functions, each a logarithm of 1 + s beside powers of the root s: held, a value
+    # is a rational function of r, a, s, k and e^gamma.
+    ("maitra_dust", "cylindrical"): ("k", "gamma"),
+    # Ernst and Wild's hole in the four functions of a stationary field with an axis, the squared
+    # lapse N, F, P and the dragging rate omega, and Kerr's Delta: held, every value is written in
+    # the five and their derivatives, as the line element is. Written out, the Riemann tensor did
+    # not print in five minutes; held, the whole chart takes seconds.
+    ("kerr_melvin", "boyer_lindquist"): ("Delta", "omega", "N", "F", "P"),
+    ("kerr_melvin", "rotating"): ("Delta", "omega", "N", "F", "P"),
+    # The harmonic functions H_i of the black holes of string theory, and f of the charts off
+    # extremality: held, a value is a rational function of them and r, as the line element is.
+    ("string_bh_three_four_charges", "five_charges"): ("f", "H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "five_extreme"): ("H_1", "H_2", "H_3"),
+    ("string_bh_three_four_charges", "four_charges"): ("f", "H_1", "H_2", "H_3", "H_4"),
+    ("string_bh_three_four_charges", "four_extreme"): ("H_1", "H_2", "H_3", "H_4"),
+    # The areal radius of the three-brane on Gibbons, Horowitz and Townsend's chart, a fourth root
+    # of 1 - w^4: held, a value is a rational function of w and r.
+    ("three_brane_throat", "horizon"): ("r",),
+    # Podolsky and Ovcharenko's Kerr hole in Bertotti and Robinson's field, in the same four functions
+    # of a stationary field with an axis, the squared lapse N, F, W and the dragging rate omega, with
+    # their Q and P: held, every value is written in the six and their derivatives. The static chart
+    # holds the conformal factor Omega, f and P, as its line element writes them.
+    ("kerr_bertotti_robinson", "boyer_lindquist"): ("Q", "P", "omega", "N", "F", "W"),
+    ("kerr_bertotti_robinson", "static"): ("Omega", "f", "P"),
+    # The areal radius of Haggard and Rovelli's Kruskal chart, as white_hole's, and of Lemaitre's
+    # chart, a power 2/3 of rho - c tau: its values are rational in r and rho - c tau, each square
+    # of rho - c tau written 4r^3/(9 r_s), and compare once r is written out.
+    ("black_to_white_hole", "kruskal"): ("r",),
+    ("black_to_white_hole", "lemaitre"): ("r",),
+    # Newman and Tamburino's a = A s, through which alone the metric holds u, so that no value is
+    # expanded in A_0 and b; and L, half the logarithm of (r + a)/(r - a), a logarithm of radicals,
+    # since s = sqrt(x^2 + y^2). Both have algebraic slopes.
+    ("newman_tamburino", "spherical"): ("a", "L"),
+    # Penney's E, a power gamma of (r - a)/(r - b), whose slope is rational in E and r.
+    ("penney_scalar", "spherical"): ("E",),
+    # Bronnikov's k coth(ku) and h coth(h(u + u_1)), each with a slope in itself alone.
+    ("penney_scalar", "harmonic"): ("K", "H"),
+    **{("stiff_fluid_universes", chart): ("F",) for chart in ("areal", "comoving", "characteristic")},
+
+    # Vaidya and Patel's radiating Kerr metric: the rotation parameter A = sqrt(k^2 + a u) and the mass
+    # m = C/A^3, held so that every value is rational in them, with the slopes RATES declares.
+    ("vaidya_patel_kerr", "retarded"): ("A", "m"),
+    ("vaidya_patel_kerr", "vaidya_patel"): ("A", "m", "q"),
+    # Vaidya's own charts of Kerr in a universe: u and t enter only through the radius r = t - u.
+    ("vaidya_patel_kerr", "einstein_vaidya"): ("r",),
+    ("vaidya_patel_kerr", "expanding_vaidya"): ("r",),
+}
+
+# The first derivatives of held names along the coordinates they vary with, written in the names
+# themselves. A system listed here never has its held names written out: the reader checks each
+# declared derivative against the name's definition, and every comparison is then made between
+# rational functions of the names, which are functions of the coordinates with no relation among
+# them. It is for names that are another chart's coordinates and hold a root, as Podolsky and
+# Belan's x = sqrt(X^2 + Z^2 - c^2T^2) is: written out, each of the chart's four hundred values
+# is a polynomial of the sixth degree in that root, and the chart did not finish in ten minutes.
+RATES = {
+    # Compere and Long's vacua: B, the radius of a circle about the axis in the static chart, and
+    # W = sqrt(r^2 + sigma^2) in the two Bondi charts. Each is fixed by its rates up to a constant,
+    # and the metric is flat for every value of that constant, so no value holds a relation of the
+    # name that the rates leave out.
+    ("supertranslation_hair", "static"): {
+        "B": {"\\rho": "\\sin\\theta", "\\theta": "\\left(\\rho - C - C''\\right)\\cos\\theta"},
+    },
+    **{("supertranslation_hair", chart): {"W": {"r": "\\dfrac{r}{W}", "\\theta": "\\dfrac{\\sigma\\,\\partial_\\theta\\sigma}{W}"}}
+       for chart in ("bondi_retarded", "bondi_advanced")},
+    # 2x du is the null covector of the Kerr-Schild form, (1 + u^2) c dT - 2u dX - (1 - u^2) dZ.
+    ("kundt_waves", "kerr_schild"): {
+        "x": {"T": "-c\\left(v + u\\left(1 + uv\\right)\\right)", "X": "1 + 2uv",
+              "Z": "v - u\\left(1 + uv\\right)"},
+        "u": {"T": "\\dfrac{c\\left(1 + u^2\\right)}{2x}", "X": "-\\dfrac{u}{x}",
+              "Z": "-\\dfrac{1 - u^2}{2x}"},
+        "v": {"T": "\\dfrac{c\\left(1 + 2v\\left(v + u\\left(1 + uv\\right)\\right)\\right)}{2x}",
+              "X": "-\\dfrac{v\\left(1 + 2uv\\right)}{x}",
+              "Z": "\\dfrac{1 - 2v\\left(v - u\\left(1 + uv\\right)\\right)}{2x}"},
+    },
+    # Erez and Rosen's psi and gamma: psi's derivatives are polynomials in the logarithm L with
+    # rational coefficients, and gamma's are Weyl's quadrature. Written out and differentiated
+    # twice, gamma made the Kretschmann scalar of the prolate spheroidal chart run past 120 seconds.
+    ("erez_rosen", "prolate_spheroidal"): {
+        "psi": {"x": "\\dfrac{1}{x^2 - 1} + \\dfrac{q\\left(3y^2 - 1\\right)}{4}"
+                     "\\left(3x\\,L + \\dfrac{6x^2 - 4}{x^2 - 1}\\right)",
+                "y": "\\dfrac{3q\\,y}{4}\\left(\\left(3x^2 - 1\\right)L + 6x\\right)"},
+        "gamma": {"x": "\\dfrac{1 - y^2}{x^2 - y^2}\\left(x\\left(x^2 - 1\\right)\\left(\\partial_x\\psi\\right)^2"
+                       " - x\\left(1 - y^2\\right)\\left(\\partial_y\\psi\\right)^2"
+                       " - 2y\\left(x^2 - 1\\right)\\partial_x\\psi\\,\\partial_y\\psi\\right)",
+                  "y": "\\dfrac{x^2 - 1}{x^2 - y^2}\\left(y\\left(x^2 - 1\\right)\\left(\\partial_x\\psi\\right)^2"
+                       " - y\\left(1 - y^2\\right)\\left(\\partial_y\\psi\\right)^2"
+                       " + 2x\\left(1 - y^2\\right)\\partial_x\\psi\\,\\partial_y\\psi\\right)"},
+    },
+    ("erez_rosen", "spherical"): {
+        "psi": {"r": "\\dfrac{m}{r^2 - 2mr} + \\dfrac{q\\left(3\\cos^2\\theta - 1\\right)}{4m^2}"
+                     "\\left(3\\left(r - m\\right)L + \\dfrac{m\\left(6r^2 - 12mr + 2m^2\\right)}{r^2 - 2mr}\\right)",
+                "\\theta": "-\\dfrac{3q\\sin\\theta\\cos\\theta}{4m^2}"
+                         "\\left(\\left(3r^2 - 6mr + 2m^2\\right)L + 6m\\left(r - m\\right)\\right)"},
+        "gamma": {"r": "\\dfrac{\\sin\\theta}{r^2 - 2mr + m^2\\sin^2\\theta}\\left(\\left(r - m\\right)\\sin\\theta"
+                       "\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_r\\psi\\right)^2"
+                       " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
+                       " + 2\\left(r^2 - 2mr\\right)\\cos\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)",
+                  "\\theta": "-\\dfrac{\\left(r^2 - 2mr\\right)\\sin\\theta}{r^2 - 2mr + m^2\\sin^2\\theta}"
+                           "\\left(\\cos\\theta\\left(\\left(r^2 - 2mr\\right)\\left(\\partial_r\\psi\\right)^2"
+                           " - \\left(\\partial_\\theta\\psi\\right)^2\\right)"
+                           " - 2\\left(r - m\\right)\\sin\\theta\\,\\partial_r\\psi\\,\\partial_\\theta\\psi\\right)"},
+    },
+    # Bach and Weyl's ring: psi's derivatives hold the two complete elliptic integrals, whose own
+    # derivatives are written in the two again, and gamma's are Weyl's quadrature in each chart.
+    ("bach_weyl_ring", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{m}{\\pi\\rho\\,l_2}\\left(\\mathrm{K}\\left(\\kappa\\right)"
+                         " - \\dfrac{\\left(a^2 - \\rho^2 + z^2\\right)\\mathrm{E}\\left(\\kappa\\right)}"
+                         "{\\left(1 - \\kappa\\right)l_2^2}\\right)",
+                "z": "\\dfrac{2m\\,z\\,\\mathrm{E}\\left(\\kappa\\right)}{\\pi\\left(1 - \\kappa\\right)l_2^3}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
+    # The toroidal chart's rates of psi are written with no psi in them: psi, the radical and K are
+    # related, and a rate written in all three would be compared as if they were not.
+    ("bach_weyl_ring", "toroidal"): {
+        "psi": {"\\zeta": "-\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}\\left("
+                          "\\dfrac{\\mathrm{K}\\left(\\kappa\\right)}{2}\\left(\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma} - \\coth\\zeta\\right)"
+                          " + \\dfrac{e^{\\zeta}\\mathrm{E}\\left(\\kappa\\right)}{2\\sinh\\zeta}\\right)",
+                "\\sigma": "-\\dfrac{\\sqrt{2}\\,m}{\\pi a}e^{-\\zeta/2}\\sqrt{\\cosh\\zeta - \\cos\\sigma}"
+                           "\\dfrac{\\mathrm{K}\\left(\\kappa\\right)\\sin\\sigma}{2\\left(\\cosh\\zeta - \\cos\\sigma\\right)}"},
+        "gamma": {"\\zeta": "\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)"
+                            "\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right)"
+                            " - 2\\sinh\\zeta\\sin\\sigma\\,\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)",
+                  "\\sigma": "\\dfrac{\\sinh\\zeta}{\\cosh\\zeta - \\cos\\sigma}\\left(\\sinh\\zeta\\sin\\sigma"
+                             "\\left(\\left(\\partial_\\zeta\\psi\\right)^2 - \\left(\\partial_\\sigma\\psi\\right)^2\\right)"
+                             " + 2\\left(1 - \\cosh\\zeta\\cos\\sigma\\right)\\partial_\\zeta\\psi\\,\\partial_\\sigma\\psi\\right)"},
+    },
+    ("bach_weyl_ring", "oblate_spheroidal"): {
+        "psi": {"\\xi": "\\dfrac{2m\\,\\xi\\,\\mathrm{E}\\left(\\kappa\\right)}{\\pi a\\sqrt{1 + \\xi^2}\\left(\\xi^2 + \\eta^2\\right)}",
+                "\\eta": "\\dfrac{2m\\,\\eta\\sqrt{1 + \\xi^2}\\left(\\mathrm{E}\\left(\\kappa\\right) - \\left(1 - \\kappa\\right)\\mathrm{K}\\left(\\kappa\\right)\\right)}"
+                         "{\\pi a\\left(1 - \\eta^2\\right)\\left(\\xi^2 + \\eta^2\\right)}"},
+        "gamma": {"\\xi": "\\dfrac{1 - \\eta^2}{\\xi^2 + \\eta^2}\\left(\\xi\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2"
+                          " - \\xi\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2"
+                          " - 2\\eta\\left(1 + \\xi^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)",
+                  "\\eta": "\\dfrac{1 + \\xi^2}{\\xi^2 + \\eta^2}\\left(\\eta\\left(1 + \\xi^2\\right)\\left(\\partial_\\xi\\psi\\right)^2"
+                           " - \\eta\\left(1 - \\eta^2\\right)\\left(\\partial_\\eta\\psi\\right)^2"
+                           " + 2\\xi\\left(1 - \\eta^2\\right)\\partial_\\xi\\psi\\,\\partial_\\eta\\psi\\right)"},
+    },
+    ("misner_zapolsky", "tolman_v"): {"Z": {"r": "\\dfrac{7Z - 4}{3r}"}},
+    # The black hole in a tidal field in Weyl's chart: psi's derivatives are rational in rho, z and the
+    # prolate spheroidal x and y the chart names, and gamma's are Weyl's quadrature. Written out and
+    # differentiated twice, the roots in x and y left the Kretschmann scalar unchecked at 120 seconds.
+    ("distorted_schwarzschild", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{\\rho\\,x}{m^2\\left(x^2 - 1\\right)\\left(x^2 - y^2\\right)} - \\dfrac{3q\\rho}{2m^2}",
+                "z": "\\dfrac{y}{m\\left(x^2 - y^2\\right)} + \\dfrac{3q\\,z}{m^2}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
+    # The black hole in a scalar universe in Weyl's chart: psi is Schwarzschild's rod, whose slopes are
+    # rational in rho, z, x and y, and gamma's slopes are the quadrature with the field b z.
+    ("scalar_field_black_hole", "weyl"): {
+        "psi": {"\\rho": "\\dfrac{\\rho\\,x}{m^2\\left(x^2 - 1\\right)\\left(x^2 - y^2\\right)}",
+                "z": "\\dfrac{y}{m\\left(x^2 - y^2\\right)}"},
+        "gamma": {"\\rho": "\\rho\\left(\\left(\\partial_\\rho\\psi\\right)^2 - \\left(\\partial_z\\psi\\right)^2 - b^2\\right)",
+                  "z": "2\\rho\\,\\partial_\\rho\\psi\\,\\partial_z\\psi"},
+    },
+    # N' = Q r_s r Z^(Q - 1)/R^3 with Z^Q = N P, and P = Z^Q/N.
+    ("bowers_liang", "areal"): {"N": {"r": "\\dfrac{Q r_s r N P}{R^3 Z}"},
+                                "P": {"r": "-\\dfrac{Q r_s r P\\left(P + 2\\right)}{R^3 Z}"}},
+    # Buchdahl's f = r_s/(4 sqrt(r^2 + R^2)): its slope fixes it up to the factor r_s, and the field
+    # equations hold for every value of that factor, so no value holds a relation the rate leaves out.
+    ("buchdahl_sphere", "isotropic"): {"f": {"r": "-\\dfrac{r f}{r^2 + R^2}"}},
+    # dm/dr is the energy of the field in a shell, r_q^2/(r^2 + W), which is 4 pi G r^2 rho/c^4.
+    **{("born_infeld_charge", chart): {"m": {"r": "\\dfrac{r_q^2}{r^2 + W}"}}
+       for chart in ("static", "eddington_finkelstein_outgoing", "eddington_finkelstein_ingoing")},
+    # The slope of the potential of each of Bonnor's stars: the flat Laplacian of U is
+    # -4 pi G rho U^3/c^2, so the slope is the mass inside, and each is rational in U and the coordinates.
+    ("bonnor_charged_dust", "sphere_1965"): {"U": {"r": "-\\dfrac{m\\,r\\,U^3}{\\left(r_0 + m\\right)^3}"}},
+    ("bonnor_charged_dust", "sphere_1975"): {"U": {"r": "-\\dfrac{m\\,r}{r_0^3}"}},
+    ("bonnor_charged_dust", "spheroid_interior"): {"U": {"u": "-\\dfrac{m\\,u^3}{a\\,u_0^3\\cosh u_0}"}},
+    ("bonnor_charged_dust", "spheroid_exterior"): {"U": {"u": "-\\dfrac{m}{a\\cosh u}"}},
+    ("bonnor_charged_dust", "quasi_black_hole"): {"U": {"r": "-\\dfrac{r\\left(U - 1\\right)^3}{m^2}"}},
+    # Maitra's k and gamma: k' = (s - 1) a/2r and gamma' = -k'^2/2r, Chan and Santos's (47) and (49).
+    ("maitra_dust", "cylindrical"): {
+        "k": {"r": "\\dfrac{2r}{a\\left(1 + s\\right)}"},
+        "gamma": {"r": "-\\dfrac{2r}{a^2\\left(1 + s\\right)^2}"},
+    },
+    # The harmonic functions of the black holes of string theory fall as r^-2 in five dimensions
+    # and as r^-1 in four, and f rises the same way, so each slope is the name less one over r.
+    ("string_bh_three_four_charges", "five_charges"): {
+        "f": {"r": "\\dfrac{2\\left(1 - f\\right)}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)}},
+    ("string_bh_three_four_charges", "five_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{2\\left(H_{i} - 1\\right)}}{{r}}"} for i in (1, 2, 3)},
+    ("string_bh_three_four_charges", "four_charges"): {
+        "f": {"r": "\\dfrac{1 - f}{r}"},
+        **{f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)}},
+    ("string_bh_three_four_charges", "four_extreme"): {
+        f"H_{i}": {"r": f"-\\dfrac{{H_{i} - 1}}{{r}}"} for i in (1, 2, 3, 4)},
+    # r = L (1 - w^4)^(-1/4), so dr/dw = w^3 r/(1 - w^4): L is the constant of integration, and the
+    # line element is written in w and r alone, so the two have no relation a value could hold.
+    ("three_brane_throat", "horizon"): {"r": {"w": "\\dfrac{w^3r}{1 - w^4}"}},
+    # Newman and Tamburino's a and L: da = b c s du + a (x dx + y dy)/s^2, with s = sqrt(x^2 + y^2),
+    # and dL = (r da - a dr)/(r^2 - a^2), so each slope is algebraic in a, L, r, x and y. The metric
+    # holds u only through a, so no value holds u, and L stands in no relation with the coordinates.
+    ("newman_tamburino", "spherical"): {
+        "a": {"u": "b\\,c\\,s", "x": "\\dfrac{a\\,x}{s^2}", "y": "\\dfrac{a\\,y}{s^2}"},
+        "L": {"u": "\\dfrac{b\\,c\\,r\\,s}{r^2 - a^2}", "r": "-\\dfrac{a}{r^2 - a^2}",
+              "x": "\\dfrac{a\\,r\\,x}{s^2\\left(r^2 - a^2\\right)}", "y": "\\dfrac{a\\,r\\,y}{s^2\\left(r^2 - a^2\\right)}"},
+    },
+    # Penney's E = ((r - a)/(r - b))^gamma: dE/dr = gamma (a - b) E/((r - a)(r - b)), rational in E and r.
+    ("penney_scalar", "spherical"): {"E": {"r": "\\dfrac{\\gamma\\left(a - b\\right)E}{\\left(r - a\\right)\\left(r - b\\right)}"}},
+    # K' = -(K^2 - k^2) and H' = -(H^2 - h^2), each in its own name, so no relation is left out.
+    ("penney_scalar", "harmonic"): {"K": {"u": "k^2 - K^2"}, "H": {"u": "h^2 - H^2"}},
+    ("stiff_fluid_universes", "areal"): {"F": {"t": r"F((a^2-1/2)/t+b^2t)", "x": "2abF"}},
+    ("stiff_fluid_universes", "comoving"): {"F": {"t": r"F((a^2-1/2)/t-b^2t)", r"\chi": "2abF"}},
+    ("stiff_fluid_universes", "characteristic"): {"F": {
+        "u": r"F((a^2-1/2)/(u+v)+b^2(u+v)/4-ab)",
+        "v": r"F((a^2-1/2)/(u+v)+b^2(u+v)/4+ab)"}},
+
+    # A^2 = k^2 + a u, so A' = a/(2A), and m A^3 = C, so m' = -3 m A'/A = -3 a m/(2A^2). In Vaidya
+    # and Patel's chart q = u - T + (a/2) sin^2 alpha is held too, with its three slopes, so u and T
+    # stand in every value only through A, m and q, as r does in the retarded chart.
+    ("vaidya_patel_kerr", "retarded"): {"A": {"u": "\\dfrac{a}{2A}"}, "m": {"u": "-\\dfrac{3am}{2A^2}"}},
+    ("vaidya_patel_kerr", "vaidya_patel"): {"A": {"u": "\\dfrac{a}{2A}"}, "m": {"u": "-\\dfrac{3am}{2A^2}"},
+                                            "q": {"u": "1", "T": "-1", "\\alpha": "a\\sin\\alpha\\cos\\alpha"}},
+    **{("vaidya_patel_kerr", chart): {"r": {"u": "-1", "t": "1"}} for chart in ("einstein_vaidya", "expanding_vaidya")},
+}
+
+
+# The non-rotating conformal Schwarzschild family, in geometrized length coordinates.
+for _chart, _time, _radial in (("conformal", r"\eta", "r"), ("cosmic", "t", "r"),
+                              ("areal", "t", "R"), ("isotropic", r"\eta", r"\sigma"),
+                              ("tortoise", r"\eta", "x")):
+    DIMENSIONS[("thakurta", _chart)] = {_time: "L", _radial: "L", r"\theta": "1", r"\phi": "1", "m": "L", "a": "1"}
+DIMENSIONS[("thakurta", "tortoise")]["r"] = "L"
+DIMENSIONS[("thakurta", "kruskal")] = {"U": "1", "V": "1", r"\theta": "1", r"\phi": "1", "m": "L", "r": "L", r"\eta": "L", r"\eta_0": "L"}
+HELD[("thakurta", "tortoise")] = ("r",)
+HELD[("thakurta", "kruskal")] = ("r", "eta")
+RATES[("thakurta", "tortoise")] = {"r": {"x": r"1-2m/r"}}
+RATES[("thakurta", "kruskal")] = {
+    "r": {"U": r"2m(r-2m)/(rU)", "V": r"2m(r-2m)/(rV)"},
+    "eta": {"U": "-2m/U", "V": "2m/V"}}
+
+import extended_inflation as _extended_inflation
+DIMENSIONS.update(_extended_inflation.DIMENSIONS)
+HELD.update({("extended_inflation", system): ("a",) for system in _extended_inflation.CHARTS})
+RATES.update(_extended_inflation.RATES)
+
+
+# The systems whose delta stands on a curved background, where what multiplies it varies across
+# it: the delta is read as a smooth pulse while the tensors are built and taken to its limit
+# where two values are compared. See on_the_shock.
+IMPULSES = {
+    ("hotta_tanaka", "conformally_flat"), ("hotta_tanaka", "global"), ("hotta_tanaka", "kruskal"),
+    ("hotta_tanaka", "null_cylindrical"), ("btz_shock_wave", "discontinuous"),
+}
+
+
+class Pulse(sp.Function):
+    """A smooth pulse of its first argument, differentiated as often as its second says: what a
+    delta is read as while the tensors of a system in IMPULSES are built, so that no product of
+    it is reduced before the whole value stands. on_the_shock takes it to the delta."""
+    nargs = 2
+    is_real = True
+
+    def fdiff(self, argindex=1):
+        if argindex != 1:
+            raise sp.function.ArgumentIndexError(self, argindex)
+        return Pulse(self.args[0], self.args[1] + 1)
+
+
+def on_the_shock(expression):
+    """A value that holds a pulse, or a delta, in the limit where the pulse is a delta.
+
+    The value is a polynomial in the pulse d(x) and its derivatives, with coefficients that vary
+    with x. A term with one factor is a distribution, and exactly
+    f(x) d^(k)(x) = sum_j (-1)^j C(k, j) f^(j)(0) d^(k-j)(x), so the shock keeps the coefficient
+    and its derivatives on x = 0 alone. A product of N factors is no distribution, but it has a
+    limit when its coefficient vanishes on the shock fast enough: counting d^(k) as weight k + 1,
+    a product of weight W times x^n scales as the width of the pulse to the power n + 1 - W, so
+    it goes to zero for n >= W, and for n = W - 1 it goes to a multiple of d(x) whose factor is
+    the integral of s^n times the pulses, which for two factors of a pulse even about the shock
+    is odd and vanishes. Such a term is dropped. Any other product is left standing, since no
+    reading of the delta fixes it, and the comparison it enters then fails.
+
+    The argument of the delta is a coordinate, or a sum of two with a unit coefficient on one of
+    them, as eta - chi: the first such coordinate is written as the argument less the rest, so
+    the coefficient on the shock is a function of the others.
+    """
+    expression = sp.sympify(expression).replace(
+        lambda e: isinstance(e, Pulse), lambda e: sp.DiracDelta(e.args[0], e.args[1]))
+    for argument in sorted({d.args[0] for d in expression.atoms(sp.DiracDelta)}, key=sp.default_sort_key):
+        x = sp.Dummy("x", real=True)
+        if argument.is_Symbol:
+            pivot, written = argument, x
+        else:
+            unit = [s for s in sorted(argument.free_symbols, key=sp.default_sort_key)
+                    if sp.diff(argument, s) in (1, -1)]
+            if not unit:
+                continue
+            first = [s for s in unit if sp.diff(argument, s) == 1]
+            pivot = (first or unit)[0]
+            slope = sp.diff(argument, pivot)
+            written = sp.expand((x - (argument - slope * pivot)) / slope)
+        e = expression.subs(pivot, written)
+        orders = sorted({(d.args[1] if len(d.args) > 1 else sp.Integer(0))
+                         for d in e.atoms(sp.DiracDelta) if d.args[0] == x})
+        if not orders:
+            raise NotImplementedError(f"the delta of {argument} is lost in writing {pivot} out")
+        D = {k: sp.Dummy(f"D{k}") for k in range(int(max(orders)) + 1)}
+        e = e.replace(lambda d: isinstance(d, sp.DiracDelta) and d.args[0] == x,
+                      lambda d: D[int(d.args[1]) if len(d.args) > 1 else 0])
+        numerator, denominator = sp.fraction(sp.together(e))
+        if any(denominator.has(d) for d in D.values()):
+            raise NotImplementedError(f"the delta of {argument} stands below a fraction line")
+        gens = [D[k] for k in sorted(D)]
+
+        def on(f):
+            value = norm(f).subs(x, 0)
+            if value.has(sp.nan, sp.zoo, sp.oo):
+                raise NotImplementedError(f"a coefficient of the delta of {argument} is not finite on the shock")
+            return value
+
+        out = sp.Integer(0)
+        for monomial, coefficient in sp.Poly(sp.expand(numerator), *gens).terms():
+            c = coefficient / denominator
+            factors = sum(monomial)
+            if factors == 0:
+                out += c
+            elif factors == 1:
+                k = monomial.index(1)
+                for j in range(k + 1):
+                    out += (-1) ** j * sp.binomial(k, j) * on(sp.diff(c, x, j)) * D[k - j]
+            else:
+                weight = sum((k + 1) * power for k, power in enumerate(monomial))
+                need = weight - 1 if factors == 2 else weight
+                if any(on(sp.diff(c, x, j)) != 0 for j in range(need)):
+                    out += c * sp.Mul(*[g ** power for g, power in zip(gens, monomial)])
+        expression = out.xreplace({D[k]: sp.DiracDelta(x, k) for k in D}).subs(x, argument)
+    return expression
+
+
+GREEK = [
+    "theta", "phi", "eta", "omega", "Omega", "ell", "pi", "lambda", "mu", "nu",
+    "rho", "sigma", "tau", "chi", "psi", "alpha", "beta", "gamma", "delta",
+    "epsilon", "kappa", "xi", "zeta", "Lambda", "Phi", "Theta", "Psi", "Sigma", "Delta", "Xi",
+]
+
+# The Dirac delta and its derivatives the reader reads, as \delta, \delta' and \delta''.
+DIRAC_ORDERS = 3
+
+TRIG = ["sinh", "cosh", "tanh", "coth", "sin", "cos", "tan", "cot", "sec", "csc"]
+
+
+class EllipticF(sp.Function):
+    """The incomplete elliptic integral of the first kind, F(phi | m), the integral of
+    1/sqrt(1 - m sin^2 t) from t = 0 to phi, with the parameter m a number: what the reader
+    reads \\mathrm{F}\\left(\\varphi \\mid m\\right) as. It is sympy's elliptic_f under a name of its
+    own, so that it carries its own numbers, which lambdify takes whatever module it is given, and
+    differentiates along its amplitude alone, by the integrand."""
+    nargs = 2
+    is_real = True
+
+    @staticmethod
+    def _imp_(phi, m):
+        # lambdify hands over mpmath's numbers where a drawing asks for more digits than a float has.
+        import mpmath
+        if isinstance(phi, mpmath.mpf):
+            return mpmath.ellipf(phi, m)
+        from scipy.special import ellipkinc
+        return ellipkinc(phi, m)
+
+    def fdiff(self, argindex=1):
+        if argindex != 1:
+            raise sp.function.ArgumentIndexError(self, argindex)
+        phi, m = self.args
+        return 1 / sp.sqrt(1 - m * sp.sin(phi) ** 2)
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        phi, m = (argument._to_mpmath(prec + 20) for argument in self.args)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipf(phi, m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
+class EllipticK(sp.Function):
+    """The complete elliptic integral of the first kind, K(m), the integral of
+    1/sqrt(1 - m sin^2 t) from t = 0 to pi/2, with m the parameter, the square of the modulus:
+    what the reader reads \\mathrm{K}\\left(m\\right) as. It is sympy's elliptic_k under a name of
+    its own, as EllipticF is, so that it carries its own numbers for lambdify, and its derivative
+    is (E - (1 - m) K)/(2 m (1 - m))."""
+    nargs = 1
+    is_real = True
+
+    @classmethod
+    def eval(cls, m):
+        if m == 0:
+            return sp.pi / 2
+
+    @staticmethod
+    def _imp_(m):
+        import mpmath
+        if isinstance(m, mpmath.mpf):
+            return mpmath.ellipk(m)
+        from scipy.special import ellipk
+        return ellipk(m)
+
+    def fdiff(self, argindex=1):
+        (m,) = self.args
+        return (EllipticE(m) - (1 - m) * EllipticK(m)) / (2 * m * (1 - m))
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        m = self.args[0]._to_mpmath(prec + 20)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipk(m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
+class EllipticE(sp.Function):
+    """The complete elliptic integral of the second kind, E(m), the integral of
+    sqrt(1 - m sin^2 t) from t = 0 to pi/2, with m the parameter: what the reader reads
+    \\mathrm{E}\\left(m\\right) as. Its derivative is (E - K)/(2 m)."""
+    nargs = 1
+    is_real = True
+
+    @classmethod
+    def eval(cls, m):
+        if m == 0:
+            return sp.pi / 2
+
+    @staticmethod
+    def _imp_(m):
+        import mpmath
+        if isinstance(m, mpmath.mpf):
+            return mpmath.ellipe(m)
+        from scipy.special import ellipe
+        return ellipe(m)
+
+    def fdiff(self, argindex=1):
+        (m,) = self.args
+        return (EllipticE(m) - EllipticK(m)) / (2 * m)
+
+    def _eval_evalf(self, prec):
+        import mpmath
+        m = self.args[0]._to_mpmath(prec + 20)
+        with mpmath.workprec(prec + 20):
+            value = mpmath.ellipe(m)
+        return sp.Expr._from_mpmath(value, prec)
+
+
+FUNCTIONS = {
+    "sin": sp.sin, "cos": sp.cos, "tan": sp.tan, "cot": sp.cot,
+    "sec": sp.sec, "csc": sp.csc, "sinh": sp.sinh, "cosh": sp.cosh,
+    "tanh": sp.tanh, "coth": sp.coth, "exp": sp.exp, "log": sp.log,
+    "ln": sp.log, "sqrt": sp.sqrt, "Abs": sp.Abs, "sign": sp.sign,
+    # \\arctan, under a spelling that ends in no other function's name, so that the reader does
+    # not part a tan from it.
+    "ATAN": sp.atan,
+    # \\arcsin and \\mathrm{arsinh}, spelled the same way, for Wahlquist's h_1 and h_2.
+    "ASINH": sp.asinh, "ASIN": sp.asin,
+    # Lambert's function, the principal branch, written \\mathrm{W}: Kruskal's chart of the white
+    # hole defines the areal radius by it, (1 - r/r_s) e^(r/r_s) = UV.
+    "LAMBERTW": sp.LambertW,
+    # The incomplete elliptic integral of the first kind, \\mathrm{F}(\\varphi \\mid m), for the mass
+    # function of Born and Infeld's point charge.
+    "ELLIPF": EllipticF,
+    # The complete elliptic integrals of the first and second kinds, \\mathrm{K}(m) and
+    # \\mathrm{E}(m) with m the parameter, for the potential of Bach and Weyl's ring.
+    "ELLIPK": EllipticK, "ELLIPE": EllipticE,
+}
+
+
+def norm(expression):
+    """A canonical form of the expression, in which one that vanishes is exactly zero.
+
+    Every tensor is built through this, so it has to be fast as well as exact. What it
+    does, and why, measured on Kerr in Boyer-Lindquist coordinates on 2026-09-22:
+
+    - sympy's general simplify, which this used to call twice, ran Kerr's Riemann
+      tensor for over ninety minutes of processor time without finishing.
+    - sin and cos in terms of symbols, and then sympy's cancel, is exact for the
+      zero test but takes 40s on a single Riemann component, because it multiplies
+      every denominator of a sum together and then takes a gcd of the product.
+    - The same in a field of rational functions, which cancels a gcd after every
+      addition, takes 2 to 9s per component, and 192s for the Kretschmann scalar.
+    - What is here keeps every denominator as a product of irreducible factors, so a
+      common denominator is a maximum over multiplicities and cancelling is trial
+      division by those few factors; no gcd is ever taken. Kerr's Riemann tensor takes
+      0.5s, its Kretschmann scalar 1.4s, and the whole system 17s, including the
+      comparison of every published value. sympy's inv() on the metric was then the
+      slowest step left, which is why Geometry takes the adjugate instead.
+
+    sin and cos are reduced by cos^2 = 1 - sin^2 rather than by a Weierstrass
+    substitution or by rewriting through exp, because both of those raise the degree of
+    every polynomial and neither prints back as anything a reader would recognise. A
+    radical is split into the roots of the irreducible factors of its radicand, which
+    assumes each factor is positive; _factored_root says why that is the right reading
+    for this collection, and it is what lets the interior Schwarzschild radicals, which
+    sympy would never combine unaided, cancel. Anything _canonical has no generators
+    for, which is nothing in the collection as it stands, falls back to simplify.
+    """
+    if isinstance(expression, sp.MatrixBase):
+        return expression.applyfunc(norm)
+    expression = sp.sympify(expression)
+    if expression.is_Number:
+        return expression
+    try:
+        return _canonical(expression)
+    except (BasePolynomialError, NotImplementedError, ZeroDivisionError):
+        return _simplified(expression)
+
+
+def _simplified(expression):
+    """The general simplifier, for the rare expression _canonical has no generators for.
+
+    sympy's simplify leaves forms such as sin(2x)tan(x) + cos(2x) - 1 standing, which is
+    why it is followed by a second pass through expand_trig.
+    """
+    simplified = sp.simplify(expression)
+    if simplified == 0:
+        return sp.Integer(0)
+    harder = sp.simplify(sp.expand_trig(sp.expand(simplified)))
+    if harder == 0:
+        return sp.Integer(0)
+    return harder if sp.count_ops(harder) < sp.count_ops(simplified) else simplified
+
+
+# Every function the reader knows that is not sin, cos or exp, in terms of those three.
+_IN_SIN_COS_EXP = {
+    sp.tan: lambda u: sp.sin(u) / sp.cos(u),
+    sp.cot: lambda u: sp.cos(u) / sp.sin(u),
+    sp.sec: lambda u: 1 / sp.cos(u),
+    sp.csc: lambda u: 1 / sp.sin(u),
+    sp.sinh: lambda u: (sp.exp(u) - sp.exp(-u)) / 2,
+    sp.cosh: lambda u: (sp.exp(u) + sp.exp(-u)) / 2,
+    sp.tanh: lambda u: (sp.exp(u) - sp.exp(-u)) / (sp.exp(u) + sp.exp(-u)),
+    sp.coth: lambda u: (sp.exp(u) + sp.exp(-u)) / (sp.exp(u) - sp.exp(-u)),
+}
+
+
+def _canonical(expression):
+    """The expression written as N / (f_1^k_1 ... f_m^k_m), in the one way it can be.
+
+    The expression is read as a rational function of generators: every symbol, every
+    sin(u) and cos(u), every exp(v) and power with a symbolic exponent after it has been
+    split into integer powers of one exp or power per term of the exponent, the square
+    root of every irreducible factor of a radicand, and every other function application.
+    Two kinds of generator are algebraic rather than free: cos(u) wherever sin(u) is also
+    present, since cos^2 = 1 - sin^2, and a square root w of b, since w^2 = b. The
+    numerator N is a polynomial in the generators, and the denominator is kept as a
+    product of powers of irreducible, normalised factors. _Fraction explains how that is
+    kept canonical. A root above the square, w with w^q = b, as the cube root in Senovilla's
+    cosh^(-2/3), is a generator of the same kind, reduced to powers below q in the numerator;
+    below the line it may stand only as a factor of its own, 1/w = w^(q-1)/b, and a sum that
+    holds one there is left to the general simplifier. Such roots are taken as independent of
+    one another, which the roots of distinct irreducible factors are; were two of them not,
+    a value that vanishes could be left standing, and none that does not could be lost.
+    """
+    for function, rewrite in _IN_SIN_COS_EXP.items():
+        if expression.has(function):
+            expression = expression.replace(function, rewrite)
+    if expression.has(sp.LambertW):
+        expression = _lambert(expression)
+    if expression.has(sp.Abs, sp.sign, sp.DiracDelta):
+        expression = _on_a_kink(expression)
+    if any(not atom.args[0].is_Symbol for atom in expression.atoms(sp.sin, sp.cos)):
+        expression = sp.expand_trig(expression)
+    # A logarithm's argument is put in one form, since expand spreads (x^2 + y^2)/rho_0^2 into two
+    # fractions and the logarithm of each spelling would otherwise be a generator of its own.
+    if expression.has(sp.log):
+        expression = expression.replace(lambda x: isinstance(x, sp.log), lambda x: sp.log(sp.factor(x.args[0])))
+    # So is an arctangent's, and sympy then takes out its sign, arctan(-u) = -arctan(u), so that the
+    # flare of Interstellar's wormhole reads arctan(2(l - a)/(pi M)) and arctan(2a/(pi M) - 2l/(pi M)) as
+    # one generator and its negative.
+    if expression.has(sp.atan):
+        expression = expression.replace(lambda x: isinstance(x, sp.atan), lambda x: sp.atan(sp.factor(x.args[0])))
+    # The reader writes a mixed partial in the order the coordinates are listed and diff
+    # writes it in its own; doit puts both in diff's, so they become one generator.
+    if expression.has(sp.Derivative):
+        expression = expression.replace(lambda x: isinstance(x, sp.Derivative), lambda x: x.doit())
+    # Innermost first, so a radicand is itself in this form before it is factored.
+    expression = expression.replace(
+        lambda x: x.is_Pow and x.exp.is_Rational and not x.exp.is_Integer and not x.base.is_Number,
+        _factored_root)
+    # A power of a sum or a product with a symbolic exponent, as (1 - 2m/r)^q, is split the same way,
+    # and so is one of a reciprocal, as the (1/ell)^(2b) sympy makes of (rho/ell)^(2b - 2).
+    expression = expression.replace(
+        lambda x: x.func is sp.Pow and not x.exp.is_Number
+        and (x.base.is_Add or x.base.is_Mul or (x.base.is_Pow and x.base.exp.is_Integer)),
+        _factored_root)
+
+    expression, halved = _whole_exponents(expression)
+
+    generators = set()
+    radicals = {}
+    _collect_generators(expression, generators, radicals)
+    algebraic = []
+    for cosine in [g for g in generators if g.func is sp.cos]:
+        if sp.sin(cosine.args[0]) in generators:
+            algebraic.append((cosine, 1 - sp.sin(cosine.args[0]) ** 2))
+    # sgn(x)^2 = 1 wherever x is not zero, which is where a function of x is read.
+    for sign in [g for g in generators if g.func is sp.sign]:
+        algebraic.append((sign, sp.Integer(1)))
+    for base, q in radicals.items():
+        if base == -1 and q != 2:
+            raise NotImplementedError("a root of -1 above the square")
+        root = sp.I if base == -1 else sp.root(base, q)
+        if not (root is sp.I or (root.is_Pow and (q == 2 or root.base == base))):
+            raise NotImplementedError(f"the root {q} of {base} does not stay a power")
+        generators.add(root)
+        algebraic.append((root, base, q))
+    # A radicand that holds another algebraic generator is reduced before that one is,
+    # so the conjugates it leaves behind can still be reduced on the inner one.
+    roots = [pair[0] for pair in algebraic]
+    algebraic.sort(key=lambda pair: -sum(1 for root in roots if sp.sympify(pair[1]).has(root)))
+
+    ring = PolyRing(sorted(generators, key=sp.default_sort_key), sp.QQ, "lex")
+    index = {symbol: i for i, symbol in enumerate(ring.symbols)}
+    reader = _FractionReader(ring, index, radicals)
+    value = reader(expression)
+    relations = [(index[pair[0]], reader(pair[1]), pair[2] if len(pair) == 3 else 2) for pair in algebraic]
+    for _ in range(2 * len(relations) + 2):
+        if not any(value.holds(i, q) for i, _, q in relations):
+            break
+        for i, base, q in relations:
+            if value.holds(i, q):
+                value = value.reduce(i, base, q)
+    else:
+        raise NotImplementedError("the algebraic generators do not settle")
+    value = value.cancelled()
+    if not value.numerator:
+        return sp.Integer(0)
+    return value.as_expr().xreplace(halved) if halved else value.as_expr()
+
+
+def _lambert(expression):
+    """The expression with every exponential of Lambert's function written by its defining
+    relation, W(x) e^(W(x)) = x, so that e^(k W(x)) = (x/W(x))^k for a whole k, and W(x) is the one
+    generator left: its derivative, W/(x(1 + W)), is rational in it. Kruskal's chart of the white
+    hole holds e^(-r/r_s) with r = r_s(1 + W(-UV/e)), which this makes a rational function
+    of W, U and V, among which no relation is left."""
+    def written(power):
+        out, rest = sp.Integer(1), sp.Integer(0)
+        for term in sp.Add.make_args(sp.expand(power.args[0])):
+            k, w = term.as_coeff_Mul()
+            if isinstance(w, sp.LambertW) and k.is_Integer:
+                out *= (w.args[0] / w) ** k
+            else:
+                rest += term
+        return out * sp.exp(rest)
+    # The argument is put in one form first, since two spellings of it would be two generators.
+    expression = expression.replace(lambda x: isinstance(x, sp.LambertW), lambda x: sp.LambertW(sp.expand(x.args[0])))
+    return expression.replace(lambda x: isinstance(x, sp.exp) and x.args[0].has(sp.LambertW), written)
+
+
+def _whole_exponents(expression):
+    """The expression with every exponential that stands to a fractional power written on the
+    root all its powers are whole powers of, and the names it was given: (expression, {name: root}).
+
+    cosh(3 rho/2L), as the anti-de Sitter soliton's polar chart has it, is exp(rho/L) to the
+    powers 3/2 and -3/2, and its square holds exp(rho/L) to the powers 3 and -3. Every power of
+    one exponential in the expression is a whole power of exp(rho/2L), so that one is named and
+    taken as the generator. An expression whose exponentials all stand to whole powers, which is
+    every other in the collection, is handed back as it came.
+    """
+    scale = {}
+    for power in expression.atoms(sp.Pow, sp.exp):
+        if _is_transcendental_power(power):
+            for generator, coefficient in _exponent_terms(power):
+                if _is_transcendental_power(generator) and coefficient.is_Rational:
+                    scale[generator] = sp.ilcm(scale.get(generator, 1), coefficient.q)
+    scale = {generator: q for generator, q in scale.items() if q != 1}
+    if not scale:
+        return expression, {}
+    names = {}
+
+    def rebuilt(power):
+        out = sp.Integer(1)
+        for generator, coefficient in _exponent_terms(power):
+            if generator in scale:
+                q = scale[generator]
+                root = (sp.exp(generator.args[0] / q) if generator.func is sp.exp
+                        else sp.Pow(generator.base, generator.exp / q))
+                if root not in names:
+                    names[root] = sp.Symbol(f"_w{len(names)}", positive=True)
+                out *= names[root] ** (coefficient * q)
+            else:
+                out *= generator ** coefficient
+        return out
+    expression = expression.replace(_is_transcendental_power, rebuilt)
+    return expression, {name: root for root, name in names.items()}
+
+
+def _on_a_kink(expression):
+    """A metric with a kink, as the domain wall's (1 - k|z|)^2, read as a distribution.
+
+    |x| of a coordinate is written x sgn(x), so that diff gives its derivative sgn(x) and
+    the derivative of that, 2 delta(x), and sgn(x)^2 = 1 is one of _canonical's relations.
+    Such a metric is continuous with a jump in its first derivative, so its curvature is a
+    bounded function plus a delta of x times a function continuous at x = 0, which is the
+    value of that function at x = 0 times the delta; that is the reduction made here, term
+    by term in the power of delta(x), with sgn(x)^2 taken as 1 and x sgn(x) as |x|. A delta
+    times a function that jumps at x = 0, which no reading as a distribution fixes, stops
+    the reader. A square of a delta, which only the Kretschmann scalar holds, is left as it
+    is; `off_support` compares such a scalar where x is not zero, as the entry states it.
+    A delta whose argument is not a bare coordinate, or which carries a prime, is passed
+    over, as the Aichelburg-Sexl shock's are, since nothing multiplying it varies across it.
+    """
+    expression = expression.replace(lambda e: isinstance(e, sp.Abs) and e.args[0].is_Symbol,
+                                    lambda e: e.args[0] * sp.sign(e.args[0]))
+    for delta in sorted(expression.atoms(sp.DiracDelta), key=sp.default_sort_key):
+        if len(delta.args) != 1 or not delta.args[0].is_Symbol:
+            continue
+        x = delta.args[0]
+        D, s = sp.Dummy("D"), sp.Dummy("s")
+        e = expression.xreplace({delta: D, sp.sign(x): s})
+        if not e.has(x) and not e.has(s):
+            continue
+        numerator, denominator = sp.fraction(sp.together(e))
+        if denominator.has(D):
+            raise NotImplementedError(f"{delta} stands below a fraction line")
+        terms = []
+        for (power,), coefficient in sp.Poly(sp.expand(numerator), D).as_dict().items():
+            coefficient = coefficient if hasattr(coefficient, "free_symbols") else sp.sympify(coefficient)
+            if power != 1:
+                terms.append(D ** power * coefficient / denominator)
+                continue
+            on = [_even_in(sp.expand(side.subs(x, 0)), s) for side in (coefficient, denominator)]
+            if any(side.has(s) for side in on) or on[1] == 0:
+                raise NotImplementedError(f"{delta} multiplies a function that jumps at {x} = 0")
+            terms.append(D * on[0] / on[1])
+        expression = sp.Add(*terms).xreplace({D: delta, s: sp.sign(x)})
+    return expression
+
+
+def _even_in(expression, s):
+    """The expression with every power of s, a sign, reduced by s^2 = 1."""
+    return sp.expand(expression.replace(lambda e: e.is_Pow and e.base == s and e.exp.is_Integer,
+                                        lambda e: s ** (int(e.exp) % 2)))
+
+
+def _factored_root(power):
+    """b^e as the product of f^(k e) over the irreducible factors f^k of b, for e a fraction
+    or an exponent that holds a parameter, as the q of (1 - 2m/r)^q.
+
+    That is an identity only where every factor is positive, and it is what lets
+    sqrt((R - r_s)(R^3 - r^2 r_s)) and R^2 sqrt(1 - r_s/R) sqrt(1 - r^2 r_s/R^3) meet as
+    one product of two generators. Every radicand the collection prints is positive factor
+    by factor on the region its entry describes, the interior of a star or the outside of
+    a horizon, so reading them that way is reading them where the entry is claimed.
+    A factor normalised to the opposite sign of the one the entry means comes out with a
+    factor of i, and so disagrees rather than agreeing by accident.
+    """
+    out = sp.Integer(1)
+    for part, sign in zip(sp.fraction(norm(power.base)), (1, -1)):
+        content, factors = sp.factor_list(part)
+        out *= sp.Pow(content, sign * power.exp)
+        for factor, multiplicity in factors:
+            out *= sp.Pow(factor, sign * multiplicity * power.exp)
+    return out
+
+
+def _exponent_terms(power):
+    """exp(2x + y) as [(exp(x), 2), (exp(y), 1)], and t**(2p - 1) as [(t**p, 2), (t, -1)].
+
+    A number that expand has multiplied into a denominator's sum is taken out again, so that
+    exp(x/(8(u + v))) is [(exp(x/(u + v)), 1/8)] and its square the same generator to the power
+    1/4, as the conformal factor of Bonnor's dust cloud needs, whose exponent is over 8r^8 with
+    r^2 = rho^2 + z^2."""
+    base, exponent = (sp.E, power.args[0]) if power.func is sp.exp else power.as_base_exp()
+    terms = []
+    for term in sp.Add.make_args(sp.expand(exponent)):
+        coefficient, rest = term.as_coeff_Mul()
+        if not coefficient.is_Rational:
+            coefficient, rest = sp.Integer(1), term
+        else:
+            numerator, denominator = sp.fraction(rest)
+            if denominator.is_Add:
+                content, denominator = denominator.primitive()
+                coefficient, rest = coefficient / content, numerator / denominator
+        if rest == 1:
+            terms.append((base, coefficient))
+        else:
+            terms.append((sp.exp(rest) if base is sp.E else sp.Pow(base, rest), coefficient))
+    return terms
+
+
+def _is_transcendental_power(expression):
+    return expression.func is sp.exp or (expression.is_Pow and not expression.exp.is_Number)
+
+
+def _collect_generators(expression, generators, radicals):
+    """The generators a rational function of the expression is taken in."""
+    if expression.is_Rational:
+        return
+    if expression.is_Add or expression.is_Mul:
+        for argument in expression.args:
+            _collect_generators(argument, generators, radicals)
+    elif expression.is_Pow and expression.exp.is_Integer:
+        _collect_generators(expression.base, generators, radicals)
+    elif expression.is_Pow and expression.exp.is_Rational:
+        base = expression.base
+        radicals[base] = sp.ilcm(radicals.get(base, 1), expression.exp.q)
+        _collect_generators(base, generators, radicals)
+    elif expression is sp.I:
+        radicals[sp.Integer(-1)] = 2
+    elif _is_transcendental_power(expression):
+        for generator, coefficient in _exponent_terms(expression):
+            if not coefficient.is_Integer:
+                raise NotImplementedError(f"{expression} is not an integer power of a generator")
+            if _is_transcendental_power(generator):
+                generators.add(generator)
+            else:
+                # The whole part of the exponent leaves the base itself, which is read as it stands.
+                _collect_generators(generator, generators, radicals)
+    else:
+        generators.add(expression)
+
+
+class _FractionReader:
+    """An expression, read into a _Fraction over the given ring."""
+
+    def __init__(self, ring, index, radicals=None):
+        self.ring = ring
+        self.index = index
+        self.radicals = radicals or {}
+        self.factored = {}
+
+    def generator(self, symbol):
+        polynomial = self.ring.gens[self.index[symbol]]
+        return _Fraction(self, polynomial, {})
+
+    def constant(self, value):
+        return _Fraction(self, self.ring(value), {})
+
+    def __call__(self, expression):
+        expression = sp.sympify(expression)
+        if expression in self.index:
+            return self.generator(expression)
+        if expression.is_Rational:
+            return self.constant(sp.QQ(expression.p, expression.q))
+        if expression.is_Add:
+            return _Fraction.sum([self(argument) for argument in expression.args], self)
+        if expression.is_Mul:
+            out = self.constant(1)
+            for argument in expression.args:
+                out = out * self(argument)
+            return out
+        if expression.is_Pow and expression.exp.is_Integer:
+            return self(expression.base) ** int(expression.exp)
+        if expression.is_Pow and expression.exp.is_Rational:
+            q = self.radicals.get(expression.base, 2)
+            root = sp.I if expression.base == -1 else sp.root(expression.base, q)
+            return self.generator(root) ** int(expression.exp * q)
+        if expression is sp.I:
+            return self.generator(sp.I)
+        if _is_transcendental_power(expression):
+            out = self.constant(1)
+            for generator, coefficient in _exponent_terms(expression):
+                out = out * self(generator) ** int(coefficient)
+            return out
+        raise NotImplementedError(f"{expression} is not a generator")
+
+    def factor(self, polynomial):
+        """(content, {normalised irreducible factor: multiplicity}), memoised."""
+        if polynomial not in self.factored:
+            content, factors = polynomial.factor_list()
+            normalised = {}
+            for factor, multiplicity in factors:
+                scale, factor = _normalised(factor)
+                content *= scale ** multiplicity
+                normalised[factor] = normalised.get(factor, 0) + multiplicity
+            self.factored[polynomial] = (content, normalised)
+        return self.factored[polynomial]
+
+
+def _normalised(polynomial):
+    """(scale, p) with polynomial = scale * p, p primitive with a positive leading term."""
+    content, primitive = polynomial.primitive()
+    if primitive.LC < 0:
+        content, primitive = -content, -primitive
+    return content, primitive
+
+
+class _Fraction:
+    """numerator / prod(factor**multiplicity), the factors irreducible and normalised.
+
+    Keeping the denominator factored is what makes this fast: a common denominator is
+    the maximum multiplicity of each factor, and cancelling is trial division by the
+    few factors there are, so no polynomial gcd is ever taken. Once every factor is free
+    of the algebraic generators and the numerator has been reduced by their relations,
+    removing each factor the numerator is divisible by leaves a form that is unique, and
+    so an expression that vanishes has the numerator zero.
+    """
+
+    def __init__(self, reader, numerator, denominator):
+        self.reader = reader
+        self.numerator = numerator
+        self.denominator = {f: k for f, k in denominator.items() if k}
+
+    @staticmethod
+    def sum(terms, reader):
+        common = {}
+        for term in terms:
+            for factor, multiplicity in term.denominator.items():
+                common[factor] = max(common.get(factor, 0), multiplicity)
+        numerator = reader.ring.zero
+        for term in terms:
+            if not term.numerator:
+                continue
+            cofactor = term.numerator
+            for factor, multiplicity in common.items():
+                missing = multiplicity - term.denominator.get(factor, 0)
+                if missing:
+                    cofactor = cofactor * factor ** missing
+            numerator += cofactor
+        return _Fraction(reader, numerator, common)
+
+    def __add__(self, other):
+        return _Fraction.sum([self, other], self.reader)
+
+    def __sub__(self, other):
+        return self + other * self.reader.constant(-1)
+
+    def __mul__(self, other):
+        denominator = dict(self.denominator)
+        for factor, multiplicity in other.denominator.items():
+            denominator[factor] = denominator.get(factor, 0) + multiplicity
+        return _Fraction(self.reader, self.numerator * other.numerator, denominator)
+
+    def __pow__(self, exponent):
+        if exponent < 0:
+            return self.inverse() ** -exponent
+        return _Fraction(self.reader, self.numerator ** exponent,
+                         {f: k * exponent for f, k in self.denominator.items()})
+
+    def inverse(self):
+        if not self.numerator:
+            raise ZeroDivisionError("the inverse of zero")
+        content, factors = self.reader.factor(self.numerator)
+        numerator = self.reader.ring(1 / content)
+        for factor, multiplicity in self.denominator.items():
+            numerator = numerator * factor ** multiplicity
+        return _Fraction(self.reader, numerator, factors)
+
+    def holds(self, i, q=2):
+        """Whether generator i, a root of order q, is still anywhere it should not be."""
+        return (self.numerator.degree(i) > q - 1
+                or any(factor.degree(i) > 0 for factor in self.denominator))
+
+    def reduce(self, i, base, q=2):
+        """Fold generator i, w with w^q = base, out of every denominator factor and down
+        to powers below q in the numerator."""
+        if q != 2:
+            return self._reduce_root(i, base, q)
+        free = {f: k for f, k in self.denominator.items() if f.degree(i) <= 0}
+        out = _Fraction(self.reader, self.reader.ring.one, free)
+        for factor, multiplicity in self.denominator.items():
+            if factor.degree(i) <= 0:
+                continue
+            folded = _fold(self.reader, factor, i, base)
+            even, odd = _split(folded.numerator, i)
+            unfolded = _Fraction(self.reader, self.reader.ring.one, folded.denominator)
+            if odd:
+                # 1/(A + Bw) = (A - Bw)/(A^2 - B^2 base), and the right side is free of w.
+                square = (_Fraction(self.reader, even ** 2, {})
+                          - _Fraction(self.reader, odd ** 2, {}) * base)
+                conjugate = _Fraction(self.reader, even - odd * self.reader.ring.gens[i], {})
+                reciprocal = unfolded.inverse() * conjugate * square.inverse()
+            else:
+                reciprocal = unfolded.inverse() * _Fraction(self.reader, even, {}).inverse()
+            out = out * reciprocal ** multiplicity
+        numerator = _fold(self.reader, self.numerator, i, base)
+        return out * numerator
+
+    def _reduce_root(self, i, base, q):
+        """The same for a root above the square, which may stand below the line only as a
+        factor of its own: 1/w = w^(q-1)/base."""
+        w = self.reader.ring.gens[i]
+        free = {f: k for f, k in self.denominator.items() if f.degree(i) <= 0}
+        out = _Fraction(self.reader, self.reader.ring.one, free)
+        for factor, multiplicity in self.denominator.items():
+            if factor.degree(i) <= 0:
+                continue
+            if factor != w:
+                raise NotImplementedError(f"a root above the square stands in the sum {factor.as_expr()} "
+                                          "below a fraction line")
+            out = out * (_Fraction(self.reader, w ** (q - 1), {}) * base.inverse()) ** multiplicity
+        return out * _fold(self.reader, self.numerator, i, base, q)
+
+    def cancelled(self):
+        numerator = self.numerator
+        denominator = {}
+        for factor, multiplicity in self.denominator.items():
+            while multiplicity and numerator:
+                (quotient,), remainder = numerator.div([factor])
+                if remainder:
+                    break
+                numerator, multiplicity = quotient, multiplicity - 1
+            denominator[factor] = multiplicity
+        return _Fraction(self.reader, numerator, denominator)
+
+    def as_expr(self):
+        denominator = sp.Mul(*(factor.as_expr() ** multiplicity for factor, multiplicity
+                               in sorted(self.denominator.items(), key=lambda item: str(item[0]))))
+        return self.numerator.as_expr() / denominator
+
+
+def _split(polynomial, i):
+    """polynomial = A + B w, for w the generator i, which appears at most linearly."""
+    parts = [{}, {}]
+    for monomial, coefficient in polynomial.terms():
+        k = monomial[i]
+        parts[k][monomial[:i] + (0,) + monomial[i + 1:]] = coefficient
+    ring = polynomial.ring
+    return ring.from_dict(parts[0]), ring.from_dict(parts[1])
+
+
+def _fold(reader, polynomial, i, base, q=2):
+    """polynomial with every w^k, w the generator i, replaced by w^(k mod q) base^(k div q)."""
+    by_degree = {}
+    for monomial, coefficient in polynomial.terms():
+        free = monomial[:i] + (0,) + monomial[i + 1:]
+        by_degree.setdefault(monomial[i], {})[free] = coefficient
+    terms = []
+    w = reader.ring.gens[i]
+    for k, part in by_degree.items():
+        term = _Fraction(reader, polynomial.ring.from_dict(part) * w ** (k % q), {})
+        terms.append(term * base ** (k // q) if k >= q else term)
+    return _Fraction.sum(terms, reader)
+
+
+class LatexError(Exception):
+    pass
+
+
+class DimensionError(Exception):
+    pass
+
+
+class Timeout(Exception):
+    pass
+
+
+class budget:
+    """Abandon a computation that runs past `seconds` rather than let it hang, naming it as `what`.
+
+    Budgets nest: one opened inside another hands the outer one back its handler and what is left
+    of its time on leaving, and passes the alarm on when the outer one falls due first. A budget
+    that has run out fires again every second until its block is left, so an except that swallows
+    the first Timeout cannot hold it off."""
+
+    def __init__(self, seconds, what="sympy"):
+        self.seconds = seconds
+        self.what = what
+
+    def __enter__(self):
+        self._outer = signal.getsignal(signal.SIGALRM)
+        self._outer_left = signal.getitimer(signal.ITIMER_REAL)[0]
+        self._entered = time.monotonic()
+        signal.signal(signal.SIGALRM, self._fire)
+        first = min(self.seconds, self._outer_left) if self._outer_left else self.seconds
+        signal.setitimer(signal.ITIMER_REAL, first, 1)
+
+    def __exit__(self, *_):
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, self._outer)
+        if self._outer_left:
+            # An outer budget already spent has fired, and fires again in a second if that was swallowed.
+            left = self._outer_left - (time.monotonic() - self._entered)
+            signal.setitimer(signal.ITIMER_REAL, left if left > 0 else 1, 1)
+        return False
+
+    def _fire(self, *frame):
+        if time.monotonic() - self._entered >= self.seconds - 0.01 or not callable(self._outer):
+            raise Timeout(f"{self.what} did not finish inside {self.seconds}s")
+        self._outer(*frame)
+
+
+def matching_brace(text, opening):
+    depth = 0
+    for position in range(opening, len(text)):
+        if text[position] == "{":
+            depth += 1
+        elif text[position] == "}":
+            depth -= 1
+            if depth == 0:
+                return position
+    raise LatexError(f"unbalanced braces in {text!r}")
+
+
+def expand_fractions(text):
+    while True:
+        found = re.search(r"\\[dt]?frac\s*\{", text)
+        if not found:
+            return text
+        first = text.index("{", found.start())
+        first_end = matching_brace(text, first)
+        second = text.index("{", first_end)
+        second_end = matching_brace(text, second)
+        numerator = text[first + 1:first_end]
+        denominator = text[second + 1:second_end]
+        text = f"{text[:found.start()]}(({numerator})/({denominator})){text[second_end + 1:]}"
+
+
+def expand_braced_call(text, command, replacement):
+    """Turn \\command{body} into replacement(body), innermost first."""
+    while True:
+        found = re.search(r"\\" + command + r"\s*\{", text)
+        if not found:
+            return text
+        opening = text.index("{", found.start())
+        closing = matching_brace(text, opening)
+        body = text[opening + 1:closing]
+        text = f"{text[:found.start()]}{replacement}({body}){text[closing + 1:]}"
+
+
+def powered_trig_calls(text, names):
+    """Turn trig ** n (argument) into (trig(argument))**n, the argument a balanced bracket,
+    which is how \\cosh^2\\left(\\sqrt{\\Lambda}\\,t\\right) reads once the brackets are bare.
+    The power may be negative or a fraction, as Senovilla's \\cosh^{-2/3}(3a\\rho) is."""
+    pattern = re.compile(r"\b(" + names + r")\s*\*\*\s*\(?\s*(-?\d+(?:\s*/\s*\d+)?)\s*\)?\s*\(")
+    while True:
+        found = pattern.search(text)
+        if not found:
+            return text
+        opening = found.end() - 1
+        depth = 0
+        for closing in range(opening, len(text)):
+            depth += {"(": 1, ")": -1}.get(text[closing], 0)
+            if depth == 0:
+                break
+        else:
+            raise LatexError(f"unbalanced bracket after {found.group(1)} in {text!r}")
+        body = text[opening + 1:closing]
+        text = f"{text[:found.start()]}({found.group(1)}({body}))**({found.group(2)}){text[closing + 1:]}"
+
+
+PARTIAL = re.compile(
+    r"\\partial_\s*\{?\s*(?:\\([A-Za-z]+)|([A-Za-z]))\s*\}?\s*(?:\^\s*\{?\s*(\d+)\s*\}?)?\s*")
+PARTIAL_TARGET = re.compile(r"\\?([A-Za-z]+)")
+# The single token expand_partials writes, split into the function and the coordinates.
+PARTIAL_NAME = re.compile(r"\b([A-Za-z]+(?:_[0-9]+)?)_partial_([A-Za-z]+(?:_[A-Za-z]+)*)\b")
+# A numeral subscript after the name a run of \\partial binds to, as the 1 of Wahlquist's h_1.
+PARTIAL_SUBSCRIPT = re.compile(r"\s*_\s*(?:\{\s*([0-9]+)\s*\}|([0-9]+))")
+
+
+def expand_partials(text, subscripted=()):
+    """A run of \\partial factors into the one name the reader declares for it.
+
+    \\partial_x^2 H becomes H_partial_x_x and \\partial_x\\partial_y H becomes
+    H_partial_x_y, so a published partial derivative is a single token by the time the
+    parser sees it. The run binds to the one function name that follows it, and takes that
+    name's numeral subscript with it where `subscripted` lists the two together as a declared
+    function, as \\partial_\\xi h_1 becomes h_1_partial_xi.
+    """
+    out = []
+    position = 0
+    while True:
+        found = PARTIAL.search(text, position)
+        if not found:
+            out.append(text[position:])
+            return "".join(out)
+        out.append(text[position:found.start()])
+        variables = []
+        at = found.start()
+        while True:
+            factor = PARTIAL.match(text, at)
+            if factor is None:
+                break
+            variables += [factor.group(1) or factor.group(2)] * int(factor.group(3) or 1)
+            at = factor.end()
+        target = PARTIAL_TARGET.match(text, at)
+        if target is None:
+            raise LatexError(f"the \\partial in {text!r} names no function")
+        name, position = target.group(1), target.end()
+        subscript = PARTIAL_SUBSCRIPT.match(text, position)
+        numeral = subscript and (subscript.group(1) or subscript.group(2))
+        if numeral and f"{name}_{numeral}" in subscripted:
+            name, position = f"{name}_{numeral}", subscript.end()
+        out.append(f" {name}_partial_{'_'.join(variables)} ")
+
+
+def expand_superscript_braces(text):
+    """^{body} into **(body), so that ^{-1} and e^{-r^2} survive the parser."""
+    out = []
+    position = 0
+    while position < len(text):
+        if text[position] == "^" and position + 1 < len(text) and text[position + 1] == "{":
+            closing = matching_brace(text, position + 1)
+            out.append("**(" + expand_superscript_braces(text[position + 2:closing]) + ")")
+            position = closing + 1
+        else:
+            out.append(text[position])
+            position += 1
+    return "".join(out)
+
+
+class Reader:
+    """The LaTeX dialect the metric files are written in, translated into sympy.
+
+    Every name the reader is willing to produce has to be declared up front, so a
+    typo in a published value becomes an error here rather than a silent new symbol.
+    """
+
+    def __init__(self, coords, parameters, time_coords=frozenset(), relations=None, kept=None, held=(),
+                 rates=None, pulse=False):
+        self.coords = list(coords)
+        # A system in IMPULSES reads its delta as a smooth pulse, which surface() takes to its limit.
+        self.pulse = pulse
+        self.time_coords = set(time_coords)
+        self.symbol = {}
+        self.differential = {}
+        self.dot = {}
+        self.ddot = {}
+        for name in self.coords:
+            plain = self._plain(name)
+            self.symbol[name] = sp.Symbol(plain, real=True)
+            self.differential[name] = sp.Symbol("d" + plain)
+            self.dot[name] = sp.Symbol(plain + "_dot")
+            self.ddot[name] = sp.Symbol(plain + "_ddot")
+        self.c = sp.Symbol("c", positive=True)
+        self.parameters = {}
+        self.parameter_names = []
+        self.functions = {}
+        # A name the entry defines, as Weyl's R = \sqrt{\rho^2 + z^2}: read as the expression it names.
+        self.defined = {}
+        self.primed = set()
+        # A parameter spelled with a command and a subscript, as \chi_0 is, is read whole: the
+        # Greek letters are turned into words below, and \chi_0 would otherwise be read as chi
+        # times a stray _0, which is zero. The subscript may be a command too, as in \Delta_\theta.
+        self.spelled = {}
+        for declaration in parameters:
+            self._declare_parameter(declaration)
+            spelling = declaration.split("=")[0].strip()
+            if re.fullmatch(r"\\[A-Za-z]+_\\?\w+", spelling):
+                self.spelled[spelling] = self._plain(spelling)
+        self.allowed = (
+            set(self.symbol.values())
+            | set(self.differential.values())
+            | set(self.dot.values())
+            | set(self.ddot.values())
+            | {self.c}
+        )
+        for value in self.parameters.values():
+            self.allowed |= value.free_symbols
+        self.local = {str(s): s for s in self.allowed}
+        self.local.update(self.parameters)
+        self.local.update(FUNCTIONS)
+        # \delta(u) is the Dirac delta, and each prime on it one derivative with respect to its
+        # argument, unless the system names a parameter \delta of its own, as the cosmic
+        # string names its deficit angle.
+        self.dirac = "delta" not in self.parameters
+        if self.dirac:
+            for order in range(DIRAC_ORDERS):
+                self.local[f"DIRAC{order}"] = lambda argument, k=order: (
+                    Pulse(argument, sp.Integer(k)) if pulse else sp.DiracDelta(argument, k))
+        self.known = set(self.local) | ({KEYWORD_LAMBDA} if "lambda" in self.local else set())
+        self.transforms = standard_transformations + (
+            split_symbols_custom(lambda name, _=None: name not in self.known),
+            implicit_multiplication,
+        )
+        # A defined name whose definition holds a function of the coordinates, as Szekeres's E
+        # holds S(r), P(r) and Q(r), is held as a function of the coordinates it varies with
+        # while the tensors are built, and written out by surface() where two values are compared.
+        # So is a name the system lists in HELD, as Tolman's phase is: a logarithm of radicals
+        # that stands only inside a cosine, and whose derivative is algebraic.
+        self.held = {}
+        stray = [name for name in held if name not in self.defined]
+        if stray:
+            raise LatexError(f"{stray} are held, and the system defines no such names")
+        for plain, definition in self.defined.items():
+            value = self.defined[plain] = self(definition)
+            if value.atoms(sp.core.function.AppliedUndef) or plain in held:
+                names = [name for name in self.coords if value.has(self.symbol[name])]
+                function = sp.Function(plain, real=True)(*(self.symbol[name] for name in names))
+                self.functions[plain] = (function, names)
+                self.held[function] = value
+                value = function
+            self.parameters[plain] = self.local[plain] = value
+            self.known.add(plain)
+        # A definition may hold a name defined before it, as the squared lapse of Ernst and Wild's
+        # hole holds H, which holds Kerr's A, which holds Delta: each is written out here, so that
+        # one substitution of the held names leaves none, in the checker and in every drawing.
+        for function in list(self.held):
+            value = self.held[function]
+            for _ in self.held:
+                if not value.atoms(sp.core.function.AppliedUndef) & set(self.held):
+                    break
+                value = value.subs(self.held).doit()
+            self.held[function] = value
+        # A held name whose first derivatives the system declares in RATES is never written out:
+        # each declared derivative is checked here against the name's own definition, and
+        # surface() then writes every derivative of the name by them.
+        self.rates = {}
+        for plain, along in (rates or {}).items():
+            if plain not in self.functions or self.functions[plain][0] not in self.held:
+                raise LatexError(f"rates are declared for {plain!r}, which is not a held name")
+            function, names = self.functions[plain]
+            if set(along) != set(names):
+                raise LatexError(f"the rates of {plain!r} are along {sorted(along)}, and it varies with {names}")
+            self.rates[function] = {}
+            for name, text in along.items():
+                rate = self(text)
+                # A definition may hold a name defined before it, so each is written out twice over.
+                out = lambda e: e.subs(self.held).subs(self.held).doit()  # noqa: E731
+                written = sp.diff(out(self.held[function]), self.symbol[name]) - out(rate)
+                if norm(written) != 0:
+                    raise LatexError(f"the declared derivative of {plain!r} along {name!r} is not its definition's")
+                self.rates[function][self.symbol[name]] = rate
+        self.relations = {}
+        for name, value in (relations or {}).items():
+            if name not in self.parameters:
+                raise LatexError(f"a relation is declared for {name!r}, which is not a parameter")
+            self.relations[self.parameters[name]] = sp.sympify(value)
+        # A system kept to an order counts each of its small parameters as a power of one symbol.
+        self.order = None
+        # The declared functions a post-Newtonian system counts as small, each with its order.
+        self.potentials = {}
+        # A post-Newtonian system: the time coordinate whose indices carry an order each, and the
+        # order a component without one is kept to, which is the lowest order of the curvature.
+        self.slow = None
+        if kept:
+            weights, highest, *named = kept
+            # A declared function of the coordinates is counted as small, at its own order, only
+            # where the line says how its derivatives count: a post-Newtonian system names its slow
+            # time, along which each derivative counts one order more, since the sources move
+            # slowly, as the potentials of many bodies do; a line whose third item is None counts
+            # every derivative as the function does, as the potentials of a perturbed Friedmann
+            # universe do. A line of two items counts constants alone, so a function named there,
+            # as a post-Newtonian line that forgot its time would name one, is refused.
+            slow = named[0] if named else None
+            potentials = {name for name in weights if named and name in self.functions
+                          and self.functions[name][0] not in self.held}
+            stray = [name for name in weights if name not in potentials
+                     and (name not in self.parameters or not self.parameters[name].is_Symbol)]
+            if stray:
+                raise LatexError(f"an order is declared for {stray}, which are not constants of the system")
+            small = sp.Dummy("epsilon", positive=True)
+            if slow is not None:
+                if slow not in self.coords:
+                    raise LatexError(f"post-Newtonian orders are declared along {slow!r}, which is not a coordinate")
+                self.slow = (self.coords.index(slow), highest)
+                # Every tensor is built two orders further, as far as any component is kept.
+                highest += 2
+            self.order = ({self.parameters[name]: small ** weight * self.parameters[name]
+                           for name, weight in weights.items() if name not in potentials}, small, highest)
+            self.potentials = {self.functions[name][0]: weights[name] for name in potentials}
+
+    def surface(self, expression):
+        """The expression on the surface the entry's constrained parameters live on, and to
+        the order the system keeps."""
+        expression = expression.subs(self.relations)
+        if self.rates:
+            return norm(self.by_rates(expression))
+        expression = expression.subs(self.held).doit() if self.held else expression
+        expression = on_the_shock(expression) if self.pulse else expression
+        return self.truncated(expression) if self.order else expression
+
+    def written(self, expression):
+        """The expression with its held names written out one at a time: each held name and each
+        derivative of one in it is written out on its own and put in canonical form before it is
+        set back. It is what surface() gives, reached another way, for a chart whose names run to
+        pages: differentiated inside the whole expression, the squared lapse of Ernst and Wild's
+        hole spread its quotients through every term, and a value that took two minutes this way
+        did not finish that way."""
+        held = set(self.held)
+        out = {}
+        for atom in expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held):
+            out[atom] = norm(atom.subs(self.held).doit())
+        return expression.xreplace(out)
+
+    def by_rates(self, expression):
+        """The expression with every derivative of a held name written by the declared first
+        derivatives, to any order, so that it holds the names and no derivative of them. The
+        names are functions of the coordinates with no relation among them, as the coordinates
+        of another chart are, so two values that agree agree as rational functions of them. A
+        declared function that is not a held name, as the supertranslation field C beside the held
+        B of Compere and Long's vacua, keeps its derivatives as they stand."""
+        expression = sp.sympify(expression)
+        declared = {function for function, _ in self.functions.values()} - set(self.held)
+        for _ in range(8):
+            derivatives = {d for d in expression.atoms(sp.Derivative) if d.expr not in declared}
+            if not derivatives:
+                return expression
+            written = {}
+            for d in derivatives:
+                if d.expr not in self.rates:
+                    raise LatexError(f"{d} is a derivative of a name with no declared rates")
+                (variable, order), *rest = d.variable_count
+                written[d] = sp.Derivative(self.rates[d.expr][variable], (variable, order - 1), *rest).doit()
+            expression = expression.xreplace(written)
+        raise LatexError("the derivatives of the held names do not settle")
+
+    def truncated(self, expression):
+        """The Taylor polynomial of the expression through the order the system keeps, in
+        canonical form: each small parameter is scaled by its power of one symbol, and the
+        polynomial in that symbol is cut. A matrix is cut entry by entry. The expression is
+        differentiated as it stands and put in canonical form only once the symbol is set to
+        zero, where its denominators are those of the zeroth order: the canonical form of the
+        whole would factor every denominator, and one that holds the small parameters, as
+        Hartle and Thorne's 1 + 2h_2 P_2 does, does not factor in ten minutes."""
+        if self.order is None:
+            return norm(expression)
+        if isinstance(expression, sp.MatrixBase):
+            return expression.applyfunc(self.truncated)
+        return self.through(expression, self.order[2])
+
+    def through(self, expression, highest):
+        """The Taylor polynomial of the expression through the order `highest`."""
+        small = self.order[1]
+        term = self._scaled(expression)
+        out = sp.Integer(0)
+        for k in range(highest + 1):
+            out += norm(term.subs(small, 0)) / sp.factorial(k)
+            term = sp.diff(term, small)
+        return norm(out)
+
+    def _scaled(self, expression):
+        """The expression with each small parameter scaled by its power of the one symbol, and
+        each small function and each of its derivatives by theirs, a derivative along the slow
+        time of a post-Newtonian system one power more for each time it is taken."""
+        scaled, small, _ = self.order
+        expression = sp.sympify(expression)
+        if not self.potentials:
+            return expression.xreplace(scaled)
+        rule = dict(scaled)
+        time = self.symbol[self.coords[self.slow[0]]] if self.slow else None
+        for function, weight in self.potentials.items():
+            rule[function] = small ** weight * function
+        for derivative in expression.atoms(sp.Derivative):
+            if derivative.expr in self.potentials:
+                slow = sum(count for variable, count in derivative.variable_count if variable == time)
+                rule[derivative] = small ** (self.potentials[derivative.expr] + slow) * derivative
+        return expression.xreplace(rule)
+
+    def kept_order(self, field, index=()):
+        """The order a component of a post-Newtonian system is kept to: `field` is the tensor,
+        "christoffel", "riemann", "ricci_tensor", "einstein_tensor", "weyl_tensor", "ricci_scalar"
+        or "kretschmann", and `index` the positions of its indices among the coordinates. See
+        "Systems kept to an order" in the header."""
+        time, base = self.slow
+        if field == "kretschmann":
+            return 2 * base
+        times = sum(1 for i in index if i == time)
+        if field in ("einstein_tensor", "weyl_tensor"):
+            times %= 2
+        return base + min(times, 2)
+
+    def zeroth(self, g):
+        """A metric at zeroth order, every small parameter set to zero."""
+        small = self.order[1]
+        return norm(g.applyfunc(lambda e: self._scaled(e).subs(small, 0)))
+
+    def inverse(self, g):
+        """The inverse of a metric to the order the system keeps, as the series
+        g_0^-1 - g_0^-1 d g_0^-1 + ..., with g_0 the metric at zeroth order and d the rest of
+        its polynomial, each term cut as it is formed."""
+        highest = self.order[2]
+        g = self.truncated(g)
+        zeroth = self.zeroth(g)
+        zeroth_inverse = norm(zeroth.adjugate() / zeroth.det())
+        rest = norm(g - zeroth)
+        out = term = zeroth_inverse
+        for _ in range(highest):
+            term = self.truncated(-term * rest * zeroth_inverse)
+            out += term
+        return norm(out)
+
+    @staticmethod
+    def _plain(name):
+        return name.replace("\\", "").strip()
+
+    def _declare_parameter(self, declaration):
+        """`a` is a constant; `a = a(t)` is a function of the coordinates it names; and
+        `R = \\sqrt{\\rho^2 + z^2}` is a name for the expression on its right, in the
+        coordinates and the parameters declared before it, which every published value
+        that writes the name is read as.
+
+        For the second kind the printed rate is a derivative with respect to the chart
+        coordinate, which is c times the named one when that one is a time, so the rate
+        carries the matching power of c. A function of one coordinate answers to a dot
+        and to a prime, a dot up to the second derivative and a prime up to the third,
+        and a function of any number of coordinates answers to \\partial at any order,
+        which _declare_partials resolves when a published value names one.
+        """
+        name, _, right = declaration.partition("=")
+        plain = self._plain(name)
+        self.parameter_names.append(plain)
+        if right.strip() and not re.fullmatch(re.escape(name.strip()) + r"\s*\([^()]*\)", right.strip()):
+            self.defined[plain] = right
+            return
+        argument = re.search(r"\(([^()]*)\)", declaration)
+        if argument is None:
+            self.parameters[plain] = sp.Symbol(plain, real=True)
+            return
+        names = [name.strip() for name in argument.group(1).split(",")]
+        unknown = [name for name in names if name not in self.symbol]
+        if unknown:
+            raise LatexError(f"parameter {declaration!r} varies with {unknown}, "
+                             f"which are not coordinates of this system")
+        function = sp.Function(plain, real=True)(*(self.symbol[name] for name in names))
+        self.parameters[plain] = function
+        self.functions[plain] = (function, names)
+        if len(names) > 1:
+            return
+        variable = self.symbol[names[0]]
+        scale = self._scale(names[0])
+        first = sp.Derivative(function, variable) / scale
+        second = sp.Derivative(function, variable, 2) / scale ** 2
+        # A third prime is as far as a chart goes: the travelling wave on a string writes its
+        # g_uu with A'', and a Christoffel symbol differentiates that once more.
+        third = sp.Derivative(function, variable, 3) / scale ** 3
+        # Both spellings appear: a dot in the comoving chart, a prime in the conformal one.
+        for suffix, value in (("_dot", first), ("_prime", first),
+                              ("_ddot", second), ("_pprime", second), ("_ppprime", third)):
+            self.parameters[plain + suffix] = value
+        self.primed.add(plain)
+
+    def _scale(self, name):
+        """What a derivative along this coordinate is divided by to be one along the chart."""
+        return self.c if name in self.time_coords else sp.Integer(1)
+
+    def _declare_partials(self, text):
+        """Declare every partial derivative the preprocessed text names, at any order.
+
+        No order is fixed in advance, because the order a curvature reaches depends on
+        the entry: a curvature is two derivatives of the metric, so it reaches the
+        third derivative of a function whose first derivative the line element already
+        carries, as Tolman-Bondi's g_rr carries \\partial_r R. A partial derivative is
+        still only declared for a function the entry declares and along coordinates it
+        declares that function of, so a typo is an error here rather than a new symbol.
+        """
+        for found in PARTIAL_NAME.finditer(text):
+            name = found.group(0)
+            if name in self.local:
+                continue
+            plain, variables = found.group(1), found.group(2).split("_")
+            if plain not in self.functions:
+                raise LatexError(f"{text!r} differentiates {plain}, "
+                                 f"which is not declared as a function of the coordinates")
+            function, arguments = self.functions[plain]
+            by_plain = {self._plain(argument): argument for argument in arguments}
+            stray = [variable for variable in variables if variable not in by_plain]
+            if stray:
+                raise LatexError(f"{text!r} differentiates {plain} along {stray}, "
+                                 f"and it is declared a function of {arguments} only")
+            # One object for every spelling, since mixed partials commute.
+            run = sorted((by_plain[variable] for variable in variables), key=self.coords.index)
+            value = sp.Derivative(function, *(self.symbol[argument] for argument in run))
+            for argument in run:
+                value /= self._scale(argument)
+            self.parameters[name] = value
+            self.local[name] = value
+            self.known.add(name)
+
+    def _preprocess(self, latex):
+        text = latex
+        text = text.replace("\\left", " ").replace("\\right", " ")
+        for spelling in sorted(self.spelled, key=len, reverse=True):
+            text = text.replace(spelling, f" {self.spelled[spelling]} ")
+        text = re.sub(r"\\[,;:!>]", " ", text)
+        text = re.sub(r"\\ ", " ", text)
+        text = text.replace("\\cdot", "*")
+        # |z| is the absolute value of a coordinate and \mathrm{sgn}(z) its sign, as a metric
+        # with a kink writes them; _on_a_kink says how they are read.
+        text = re.sub(r"\|\s*(\\?[A-Za-z]+)\s*\|", r" Abs(\1) ", text)
+        text = text.replace("\\mathrm{sgn}", " sign ")
+        if self.dirac:
+            text = re.sub(r"\\delta\s*('*)\s*\(", lambda m: f" DIRAC{len(m.group(1))}(", text)
+        for name in sorted(self.primed, key=len, reverse=True):
+            text = re.sub(re.escape(name) + r"'''", f" {name}_ppprime ", text)
+            text = re.sub(re.escape(name) + r"''", f" {name}_pprime ", text)
+            text = re.sub(re.escape(name) + r"'", f" {name}_prime ", text)
+        text = expand_partials(text, [name for name in self.functions if "_" in name])
+        text = expand_fractions(text)
+        text = expand_braced_call(text, "sqrt", "sqrt")
+        text = expand_braced_call(text, "ddot", "DDOT")
+        text = expand_braced_call(text, "dot", "DOT")
+        # A dotted name may be accented, as \dot{\tilde\phi} is, and reads as the name tildephi, or
+        # carry a subscript, as the Kaluza-Klein monopole's \dot{x_5}.
+        text = re.sub(r"DDOT\s*\(\s*((?:\\?[A-Za-z]+)+(?:_[A-Za-z0-9]+)?)\s*\)",
+                      lambda m: f" {self._plain(m.group(1))}_ddot ", text)
+        text = re.sub(r"DOT\s*\(\s*((?:\\?[A-Za-z]+)+(?:_[A-Za-z0-9]+)?)\s*\)",
+                      lambda m: f" {self._plain(m.group(1))}_dot ", text)
+        # d\Omega^2 is the unit two sphere, written out so the reader sees differentials.
+        text = re.sub(r"d\\Omega\s*\^\s*2", "(dtheta**2 + sin(theta)**2*dphi**2)", text)
+        # Differentials become single atoms before anything is allowed to pad with spaces.
+        for name in sorted(self.coords, key=len, reverse=True):
+            text = text.replace("d" + name, "d" + self._plain(name))
+        for command in sorted(GREEK + TRIG, key=len, reverse=True):
+            text = text.replace("\\" + command, " " + command + " ")
+        text = text.replace("\\exp", " exp ").replace("\\ln", " log ").replace("\\log", " log ")
+        text = text.replace("\\arctan", " ATAN ")
+        text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
+        text = text.replace("\\mathrm{W}", " LAMBERTW ")
+        text = text.replace("\\mathrm{F}", " ELLIPF ").replace("\\mid", ",")
+        text = text.replace("\\mathrm{K}", " ELLIPK ").replace("\\mathrm{E}", " ELLIPE ")
+        text = expand_superscript_braces(text)
+        text = text.replace("^", "**")
+        # A trig call written bare, as \sin^2\theta or \cot\theta rather than sin(theta).
+        names = "|".join(sorted(TRIG, key=len, reverse=True))
+        text = re.sub(r"\b(" + names + r")\s*\*\*\s*\(?\s*(-?\d+)\s*\)?\s*([A-Za-z]\w*)",
+                      r"(\1(\3))**\2", text)
+        # The same with a bracketed argument, as \cosh^2\left(\sqrt{\Lambda}\,t\right).
+        text = powered_trig_calls(text, names)
+        text = re.sub(r"\b(" + names + r")\s+([A-Za-z]\w*)", r"\1(\2)", text)
+        # A power of e is the exponential, unless the system declares e as a name of its own, as
+        # Ori's time machine does its parameter e, whose square is then that parameter's.
+        if "e" not in self.local:
+            text = re.sub(r"(?<![A-Za-z_])e\s*\*\*", " E**", text)
+        # 3R\sqrt{..} leaves 3Rsqrt(..), whose one name token would be split letter by letter.
+        for name in FUNCTIONS:
+            text = re.sub(r"(?<=[A-Za-z0-9_])(" + name + r")\s*\(", r" \1(", text)
+        # Python reads 2J as the imaginary number 2j, so a number is parted from a J it multiplies.
+        text = re.sub(r"(?<![A-Za-z_])(\d+)([jJ])", r"\1 \2", text)
+        if "\\" in text:
+            raise LatexError(f"unhandled LaTeX in {latex!r}: {text!r}")
+        return re.sub(r"[A-Za-z][A-Za-z0-9_]*", self._part_subscripted, text)
+
+    def _part_subscripted(self, match):
+        """A name written against the letters before it, as the b_0 of 2ab_0^2, parted from them.
+
+        The parser splits a token it does not know letter by letter, and a subscript split so
+        leaves a stray _0, which multiplies the whole term by zero without a word. So a token
+        that is not a name the system knows and ends in one that carries a subscript is read as
+        what stands before it times that name, and any other unknown token with an underscore
+        is an error rather than a zero."""
+        token = match.group(0)
+        if "_" not in token or token in self.local or PARTIAL_NAME.fullmatch(token):
+            return token
+        for start in range(1, len(token)):
+            if "_" in token[start:] and token[start:] in self.local and "_" not in token[:start]:
+                return f"{token[:start]} {token[start:]}"
+        raise LatexError(f"{match.string!r} holds {token!r}, a subscripted name the system does not declare")
+
+    def __call__(self, latex):
+        text = self._preprocess(latex)
+        self._declare_partials(text)
+        local = dict(self.local)
+        if "lambda" in local:
+            # A system may name a function \lambda, as Gowdy's cosmologies do, and Python keeps
+            # that word for itself, so the parser is handed it under a spelling of its own.
+            text = re.sub(r"(?<![A-Za-z0-9_])lambda(?![A-Za-z0-9_])", KEYWORD_LAMBDA, text)
+            local[KEYWORD_LAMBDA] = local.pop("lambda")
+        try:
+            expression = parse_expr(
+                text, local_dict=local, transformations=self.transforms, evaluate=True
+            )
+        except Exception as error:
+            raise LatexError(f"cannot parse {latex!r} (as {text!r}): {error}") from error
+        unknown = expression.free_symbols - self.allowed
+        if unknown:
+            raise LatexError(f"{latex!r} produced undeclared symbols {sorted(map(str, unknown))}")
+        return expression
+
+
+class Dimensions:
+    """What every symbol of a system carries, and the dimension of an expression in them.
+
+    The declared dimension of a coordinate is the one its own letter carries; the chart
+    coordinate is c times it when it is a time, so a chart coordinate is never a time.
+    Differentials in a line element are written on the bare letter and carry the bare
+    dimension, while the dots in a geodesic equation are chart velocities and carry the
+    chart dimension over the affine parameter.
+    """
+
+    def __init__(self, reader, declared):
+        declared = {Reader._plain(name): value for name, value in declared.items()}
+        wanted = [Reader._plain(name) for name in reader.coords] + reader.parameter_names
+        missing = [name for name in wanted if name not in declared]
+        if missing:
+            raise DimensionError(f"no declared dimension for {missing}")
+        extra = [name for name in declared if name not in wanted]
+        if extra:
+            raise DimensionError(
+                f"a dimension is declared for {extra}, which the system does not use")
+        self.of_symbol = {reader.c: LENGTH / TIME}
+        self.of_function = {}
+        self.chart = {}
+        for name in reader.coords:
+            bare = sp.sympify(declared[Reader._plain(name)], locals=BASE_DIMENSIONS)
+            self.chart[name] = LENGTH if bare == TIME else bare
+            self.of_symbol[reader.symbol[name]] = bare
+            self.of_symbol[reader.differential[name]] = bare
+            self.of_symbol[reader.dot[name]] = self.chart[name] / AFFINE
+            self.of_symbol[reader.ddot[name]] = self.chart[name] / AFFINE ** 2
+        for name in reader.parameter_names:
+            value = reader.parameters[name]
+            dimension = sp.sympify(declared[name], locals=BASE_DIMENSIONS)
+            if name in reader.defined:
+                if name in reader.functions:
+                    self.of_function[name] = dimension
+                continue
+            if value.is_Symbol:
+                self.of_symbol[value] = dimension
+            else:
+                self.of_function[name] = dimension
+        # A defined name carries the dimension of its definition, which has to be the declared one.
+        for name, value in reader.defined.items():
+            dimension = sp.sympify(declared[name], locals=BASE_DIMENSIONS)
+            if sp.simplify(self(value) / dimension) != 1:
+                raise DimensionError(f"{name} is declared {dimension} and its definition carries {self(value)}")
+
+    def __call__(self, expression):
+        if expression.is_Number or isinstance(expression, sp.NumberSymbol):
+            return sp.Integer(1)
+        if expression.is_Symbol:
+            if expression in self.of_symbol:
+                return self.of_symbol[expression]
+            raise DimensionError(f"{expression} has no declared dimension")
+        if isinstance(expression, sp.core.function.AppliedUndef):
+            name = expression.func.__name__
+            if name in self.of_function:
+                return self.of_function[name]
+            raise DimensionError(f"{name} has no declared dimension")
+        if expression.is_Add:
+            first = self(expression.args[0])
+            for term in expression.args[1:]:
+                other = self(term)
+                if other != first:
+                    raise DimensionError(
+                        f"{expression} adds {term}, which carries {other}, "
+                        f"to {expression.args[0]}, which carries {first}")
+            return first
+        if expression.is_Mul:
+            out = sp.Integer(1)
+            for factor in expression.args:
+                out *= self(factor)
+            return out
+        if expression.is_Pow:
+            base, exponent = expression.args
+            if self(exponent) != 1:
+                raise DimensionError(f"the exponent of {expression} carries {self(exponent)}")
+            # A symbolic exponent is read with its base in a fixed unit, as Kasner says
+            # of its t^{2p_i}, so only the numeric part of the exponent counts.
+            numeric, _ = exponent.as_coeff_Add()
+            return self(base) ** numeric
+        if isinstance(expression, sp.Derivative):
+            out = self(expression.expr)
+            for variable, order in expression.variable_count:
+                out /= self(variable) ** order
+            return out
+        if isinstance(expression, sp.Abs):
+            return self(expression.args[0])
+        if isinstance(expression, sp.sign):
+            self(expression.args[0])
+            return sp.Integer(1)
+        if isinstance(expression, (sp.DiracDelta, Pulse)):
+            # The delta carries the inverse of its argument, and each derivative one more.
+            order = expression.args[1] if len(expression.args) > 1 else 0
+            return self(expression.args[0]) ** -(order + 1)
+        if isinstance(expression, sp.Function):
+            for argument in expression.args:
+                if self(argument) != 1:
+                    raise DimensionError(
+                        f"{expression} takes {argument}, which carries {self(argument)}")
+            return sp.Integer(1)
+        raise DimensionError(f"cannot take the dimension of {expression}")
+
+    def index_weight(self, variance, coords, index):
+        """An upper index carries [x^mu]/L and a lower one L/[x^mu]."""
+        out = sp.Integer(1)
+        for slot, position in zip(variance, index):
+            scale = self.chart[coords[position]] / LENGTH
+            out *= scale if slot == "u" else 1 / scale
+        return out
+
+
+def check_dimensions(report, reader, dimensions, where, entry, coords):
+    """Every published expression against the dimension its left hand side fixes."""
+
+    def term_by_term(label, expression, expected):
+        for term in sp.Add.make_args(expression):
+            if term == 0:
+                continue
+            try:
+                carried = dimensions(term)
+            except DimensionError as error:
+                report.dimension(label, str(error))
+                continue
+            if carried != expected:
+                report.dimension(label, f"the term {term} carries {carried}, not {expected}")
+
+    def read(label, latex):
+        try:
+            return reader(latex)
+        except LatexError as error:
+            report.skip(label, str(error))
+            return None
+
+    _, _, right = entry["line_element"].partition("=")
+    form = read(f"{where}.line_element", right)
+    if form is not None:
+        term_by_term(f"{where}.line_element", sp.expand(form), LENGTH ** 2)
+
+    for field, variance, published in published_blocks(entry):
+        base = FIELD_DIMENSIONS[field]
+        for component in published:
+            names = component["indices"]
+            if any(name not in coords for name in names) or len(names) != len(variance):
+                continue
+            label = f"{where}.{field}.{variance} {names}"
+            value = read(label, component["value"])
+            if value is None:
+                continue
+            index = [coords.index(name) for name in names]
+            term_by_term(label, sp.expand(value),
+                         base * dimensions.index_weight(variance, coords, index))
+
+    for field in ("ricci_scalar", "kretschmann"):
+        if field not in entry:
+            continue
+        label = f"{where}.{field}"
+        text, _ = scalar_parts(entry[field])
+        value = read(label, text)
+        if value is not None:
+            term_by_term(label, sp.expand(value), FIELD_DIMENSIONS[field])
+
+    for equation in entry.get("geodesics", []):
+        label = f"{where}.geodesics"
+        left, _, right = equation.partition("=")
+        residual = read(f"{label} {equation!r}", left + "-(" + (right or "0") + ")")
+        if residual is None:
+            continue
+        carried = [name for name in coords if residual.has(reader.ddot[name])]
+        if len(carried) != 1:
+            continue
+        expected = dimensions.chart[carried[0]] / AFFINE ** 2
+        term_by_term(f"{label} {equation!r}", sp.expand(residual), expected)
+
+
+def published_blocks(entry):
+    """Every published tensor block of an entry, as (field, variance, components)."""
+    for field in ("metric_components", "inverse_metric_components"):
+        if field in entry:
+            yield field, "uu" if field.startswith("inverse") else "ll", entry[field]
+    for field in ("christoffel", "riemann", "ricci_tensor", "einstein_tensor", "weyl_tensor"):
+        for variance, block in entry.get(field, {}).get("variants", {}).items():
+            yield field, variance, block["nonzero"]
+
+
+def metric_from_line_element(reader, line_element, coords):
+    """Read g_{mu nu} off the line element, in the chart its own coords name."""
+    _, _, right = line_element.partition("=")
+    form = sp.expand(reader(right))
+    differentials = [reader.differential[name] for name in coords]
+    size = len(coords)
+    g = sp.zeros(size, size)
+    for i in range(size):
+        for j in range(size):
+            if i == j:
+                g[i, j] = form.coeff(differentials[i], 2)
+            else:
+                g[i, j] = form.coeff(differentials[i], 1).coeff(differentials[j], 1) / 2
+    remainder = sp.expand(
+        form - sum(g[i, j] * differentials[i] * differentials[j] for i in range(size) for j in range(size))
+    )
+    if norm(remainder) != 0:
+        raise LatexError(f"{line_element!r} is not a quadratic form in its own differentials")
+    return norm(g)
+
+
+def _adjugate(matrix):
+    """The adjugate and the determinant of a square matrix, by cofactors, every minor put
+    through norm as it is formed and kept, so that no step holds an unreduced product.
+
+    sympy's own adjugate() and det() reduce each product through cancel, which on a metric with
+    three cross terms, as Kerr-de Sitter's Kerr-Schild chart has, did not finish in ten minutes;
+    on a diagonal metric the two agree at once."""
+    n = matrix.shape[0]
+    minors = {}
+
+    def minor(rows, columns):
+        """The determinant of the submatrix of the given rows and columns."""
+        if not rows:
+            return sp.Integer(1)
+        key = (rows, columns)
+        if key not in minors:
+            total = sp.Integer(0)
+            for k, column in enumerate(columns):
+                entry = matrix[rows[0], column]
+                if entry != 0:
+                    total += (-1) ** k * entry * minor(rows[1:], columns[:k] + columns[k + 1:])
+            minors[key] = norm(total)
+        return minors[key]
+
+    every = tuple(range(n))
+    cofactors = sp.Matrix(n, n, lambda i, j: (-1) ** (i + j) * minor(every[:j] + every[j + 1:], every[:i] + every[i + 1:]))
+    return cofactors, minor(every, every)
+
+
+class Geometry:
+    """Every tensor the files publish, computed from g in the chart the coords name."""
+
+    def __init__(self, g, coords, seconds, order=None, settle=None):
+        self.n = len(coords)
+        self.coords = coords
+        self.seconds = seconds
+        # A system kept to an order passes `order`, its Reader: the metric and the inverse are
+        # then their polynomials to that order, and every tensor is cut after each product.
+        # A system with declared rates passes `settle`, which writes every derivative of a held
+        # name by them after each product, so that no tensor carries one into the next.
+        self.settle = settle or (order.truncated if order else norm)
+        self.g = self.settle(norm(g))
+        # The adjugate over the determinant, which sympy's own inv() takes far longer to reach.
+        if order:
+            self.ginv = order.inverse(self.g)
+        else:
+            adjugate, determinant = _adjugate(self.g)
+            self.ginv = norm(adjugate / determinant)
+        self._cache = {}
+        self.unavailable = {}
+
+    def _timed(self, name, build):
+        if name in self._cache:
+            return self._cache[name]
+        if name in self.unavailable:
+            raise Timeout(self.unavailable[name])
+        try:
+            with budget(self.seconds):
+                self._cache[name] = build()
+        except Timeout as error:
+            self.unavailable[name] = str(error)
+            raise
+        return self._cache[name]
+
+    def _zeros(self, rank):
+        if rank == 1:
+            return [sp.Integer(0)] * self.n
+        return [self._zeros(rank - 1) for _ in range(self.n)]
+
+    def christoffel_ull(self):
+        def build():
+            out = self._zeros(3)
+            for mu in range(self.n):
+                for nu in range(self.n):
+                    for rho in range(nu, self.n):
+                        value = self.settle(sum(
+                            self.ginv[mu, alpha] * (
+                                sp.diff(self.g[alpha, rho], self.coords[nu])
+                                + sp.diff(self.g[alpha, nu], self.coords[rho])
+                                - sp.diff(self.g[nu, rho], self.coords[alpha])
+                            )
+                            for alpha in range(self.n)
+                        ) / 2)
+                        out[mu][nu][rho] = value
+                        out[mu][rho][nu] = value
+            return out
+        return self._timed("christoffel_ull", build)
+
+    def christoffel_lll(self):
+        def build():
+            gamma = self.christoffel_ull()
+            out = self._zeros(3)
+            for mu in range(self.n):
+                for nu in range(self.n):
+                    for rho in range(self.n):
+                        out[mu][nu][rho] = self.settle(
+                            sum(self.g[mu, alpha] * gamma[alpha][nu][rho] for alpha in range(self.n))
+                        )
+            return out
+        return self._timed("christoffel_lll", build)
+
+    def riemann_ulll(self):
+        def build():
+            gamma = self.christoffel_ull()
+            out = self._zeros(4)
+            for mu in range(self.n):
+                for nu in range(self.n):
+                    for rho in range(self.n):
+                        for sigma in range(rho + 1, self.n):
+                            value = self.settle(
+                                sp.diff(gamma[mu][nu][sigma], self.coords[rho])
+                                - sp.diff(gamma[mu][nu][rho], self.coords[sigma])
+                                + sum(
+                                    gamma[mu][rho][lam] * gamma[lam][nu][sigma]
+                                    - gamma[mu][sigma][lam] * gamma[lam][nu][rho]
+                                    for lam in range(self.n)
+                                )
+                            )
+                            out[mu][nu][rho][sigma] = value
+                            out[mu][nu][sigma][rho] = -value
+            return out
+        return self._timed("riemann_ulll", build)
+
+    def riemann_llll(self):
+        def build():
+            upper = self.riemann_ulll()
+            out = self._zeros(4)
+            for mu in range(self.n):
+                for nu in range(self.n):
+                    for rho in range(self.n):
+                        for sigma in range(self.n):
+                            out[mu][nu][rho][sigma] = self.settle(sum(
+                                self.g[mu, alpha] * upper[alpha][nu][rho][sigma]
+                                for alpha in range(self.n)
+                            ))
+            return out
+        return self._timed("riemann_llll", build)
+
+    def ricci_ll(self):
+        """R_{mu nu} = R^a_{mu a nu}, the standard contraction on the first lower index."""
+        def build():
+            riemann = self.riemann_ulll()
+            out = self._zeros(2)
+            for nu in range(self.n):
+                for sigma in range(nu, self.n):
+                    value = self.settle(sum(riemann[mu][nu][mu][sigma] for mu in range(self.n)))
+                    out[nu][sigma] = value
+                    out[sigma][nu] = value
+            return out
+        return self._timed("ricci_ll", build)
+
+    def ricci_scalar(self):
+        def build():
+            ricci = self.ricci_ll()
+            return self.settle(sum(
+                self.ginv[a, b] * ricci[a][b] for a in range(self.n) for b in range(self.n)
+            ))
+        return self._timed("ricci_scalar", build)
+
+    def einstein_ll(self):
+        def build():
+            ricci = self.ricci_ll()
+            scalar = self.ricci_scalar()
+            out = self._zeros(2)
+            for a in range(self.n):
+                for b in range(self.n):
+                    out[a][b] = self.settle(ricci[a][b] - scalar * self.g[a, b] / 2)
+            return out
+        return self._timed("einstein_ll", build)
+
+    def kretschmann(self):
+        def build():
+            lower = self.riemann_llll()
+            # The Riemann tensor is antisymmetric in each pair of its indices, so the sum over all
+            # four runs over the pairs a < b and c < d alone, four times, and a pair is raised by
+            # the metric of bivectors, g^{a alpha} g^{b beta} - g^{a beta} g^{b alpha}: one pair at
+            # a time, so that each component is a sum over the pairs and never over n^4 terms.
+            # Raising every component one index at a time took three minutes on Belinski and
+            # Zakharov's wave, and this takes seconds.
+            pairs = [(a, b) for a in range(self.n) for b in range(a + 1, self.n)]
+            lift = {(p, q): self.settle(self.ginv[p[0], q[0]] * self.ginv[p[1], q[1]]
+                                        - self.ginv[p[0], q[1]] * self.ginv[p[1], q[0]])
+                    for p in pairs for q in pairs}
+            half = {(p, q): self.settle(sum(lift[p, r] * lower[r[0]][r[1]][q[0]][q[1]] for r in pairs))
+                    for p in pairs for q in pairs}
+            upper = {(p, q): self.settle(sum(half[p, r] * lift[r, q] for r in pairs))
+                     for p in pairs for q in pairs}
+            return self.settle(4 * sum(lower[p[0]][p[1]][q[0]][q[1]] * upper[p, q] for p in pairs for q in pairs))
+        return self._timed("kretschmann", build)
+
+    def weyl_llll(self):
+        def build():
+            n = self.n
+            if n < 3:
+                # In two dimensions the Riemann tensor is (R/2)(g g - g g), all trace, and the Weyl
+                # tensor, what is left of it with the traces removed, vanishes identically.
+                return self._zeros(4)
+            riemann = self.riemann_llll()
+            ricci = self.ricci_ll()
+            scalar = self.ricci_scalar()
+            out = self._zeros(4)
+            for a in range(n):
+                for b in range(n):
+                    for cc in range(n):
+                        for d in range(n):
+                            correction = (
+                                self.g[a, cc] * ricci[d][b] - self.g[a, d] * ricci[cc][b]
+                                - self.g[b, cc] * ricci[d][a] + self.g[b, d] * ricci[cc][a]
+                            ) / (n - 2)
+                            trace = scalar * (
+                                self.g[a, cc] * self.g[d, b] - self.g[a, d] * self.g[cc, b]
+                            ) / ((n - 1) * (n - 2))
+                            out[a][b][cc][d] = self.settle(riemann[a][b][cc][d] - correction + trace)
+            return out
+        return self._timed("weyl_llll", build)
+
+    def raise_indices(self, tensor, rank, positions):
+        """Raise the given index positions of a fully lowered tensor."""
+        out = tensor
+        for position in positions:
+            source = out
+            out = self._zeros(rank)
+            for index in _indices(self.n, rank):
+                total = 0
+                for alpha in range(self.n):
+                    swapped = list(index)
+                    swapped[position] = alpha
+                    total += self.ginv[index[position], alpha] * _at(source, swapped)
+                _put(out, index, self.settle(total))
+        return out
+
+
+def _indices(n, rank):
+    if rank == 0:
+        yield []
+        return
+    for head in range(n):
+        for tail in _indices(n, rank - 1):
+            yield [head] + tail
+
+
+def _at(tensor, index):
+    for i in index:
+        tensor = tensor[i]
+    return tensor
+
+
+def _put(tensor, index, value):
+    for i in index[:-1]:
+        tensor = tensor[i]
+    tensor[index[-1]] = value
+
+
+class PostNewtonian:
+    """The Geometry of a post-Newtonian system, each tensor handed over cut component by
+    component at the order Reader.kept_order names. The Geometry inside builds every tensor to
+    the highest of those orders, so a product is cut only after it is formed whole."""
+
+    FIELDS = {"christoffel_ull": "christoffel", "christoffel_lll": "christoffel",
+              "riemann_ulll": "riemann", "riemann_llll": "riemann", "ricci_ll": "ricci_tensor",
+              "einstein_ll": "einstein_tensor", "weyl_llll": "weyl_tensor",
+              "ricci_scalar": "ricci_scalar", "kretschmann": "kretschmann"}
+
+    def __init__(self, geometry, reader):
+        self._geometry, self._reader, self._done, self._field = geometry, reader, {}, {}
+
+    def _cut(self, tensor, field, index=()):
+        if isinstance(tensor, list):
+            return [self._cut(item, field, index + (i,)) for i, item in enumerate(tensor)]
+        return self._reader.through(tensor, self._reader.kept_order(field, index))
+
+    def _handed(self, tensor, field):
+        # The tensor is remembered with its field, which raise_indices asks for, and kept alive.
+        self._field[id(tensor)] = (field, tensor)
+        return tensor
+
+    def __getattr__(self, name):
+        found = getattr(self._geometry, name)
+        if name not in self.FIELDS:
+            return found
+
+        def cut():
+            if name not in self._done:
+                self._done[name] = self._handed(self._cut(found(), self.FIELDS[name]), self.FIELDS[name])
+            return self._done[name]
+        return cut
+
+    def raise_indices(self, tensor, rank, positions):
+        """A tensor this Geometry handed over with some of its indices raised, cut again: raising an
+        index leaves the number of time indices of the leading term as it was."""
+        field = self._field[id(tensor)][0]
+        return self._handed(self._cut(self._geometry.raise_indices(tensor, rank, positions), field), field)
+
+
+def geometry_of(g, symbols, seconds, reader):
+    """The Geometry of a system as its Reader keeps it: whole, to an order, or post-Newtonian."""
+    geometry = Geometry(g, symbols, seconds, reader if reader.order else None,
+                        (lambda e: norm(reader.by_rates(e))) if reader.rates else None)
+    return PostNewtonian(geometry, reader) if reader.slow else geometry
+
+
+class Report:
+    def __init__(self):
+        self.disagreements = []
+        self.dimensional = []
+        self.unchecked = []
+        self.checked_systems = 0
+        self.systems = 0
+
+    def disagree(self, where, message):
+        self.disagreements.append(f"{where}: {message}")
+
+    def dimension(self, where, message):
+        self.dimensional.append(f"{where}: {message}")
+
+    def skip(self, where, reason):
+        self.unchecked.append(f"{where}: {reason}")
+
+    def guarded(self, where, seconds, work):
+        """Run a comparison under the clock, so a slow one is named rather than hung on."""
+        try:
+            with budget(seconds):
+                work()
+        except Timeout as error:
+            self.skip(where, f"comparing the published values: {error}")
+
+
+def variance_weight(variance, coords, index, time_coords):
+    """c^(upper time indices - lower time indices) for the x^0 = cT chart."""
+    exponent = 0
+    for slot, position in zip(variance, index):
+        if coords[position] in time_coords:
+            exponent += 1 if slot == "u" else -1
+    return exponent
+
+
+def beyond_order(reader, value):
+    """Whether a published value of a system kept to an order carries a term beyond it."""
+    return reader.order is not None and norm(value - reader.truncated(value)) != 0
+
+
+def agree_held(reader, value, expected):
+    """Whether two values of a system that holds names agree as functions of those names, in
+    which case they agree written out as well and need not be. It is asked only of a system
+    with no declared rates, order, pulse or relation among its parameters, where surface() does
+    nothing but write the names out, held_alone: Ernst and Wild's chart holds five names whose
+    second derivatives run to pages, and its Riemann tensor compared written out did not finish."""
+    return held_alone(reader) and norm(value - expected) == 0
+
+
+def held_alone(reader):
+    """Whether surface() does nothing to a value of this system but write its held names out."""
+    return bool(reader.held) and not (reader.rates or reader.order or reader.pulse or reader.relations)
+
+
+def compare_block(report, reader, where, published, computed, variance, coords, time_coords, c, cut=True):
+    """Every published component against sympy, and every omitted one against zero. In a
+    system kept to an order a value has to be cut at it as well, unless `cut` is off, as it
+    is for the metric and its inverse, which may stand as the line element has them."""
+    rank = len(variance)
+    seen = set()
+    for entry in published:
+        names = entry["indices"]
+        if len(names) != rank:
+            report.disagree(where, f"{names} has {len(names)} indices, expected {rank}")
+            continue
+        try:
+            index = [coords.index(name) for name in names]
+        except ValueError:
+            report.disagree(where, f"{names} names an index that is not one of {coords}")
+            continue
+        seen.add(tuple(index))
+        try:
+            value = reader(entry["value"])
+        except LatexError as error:
+            report.skip(f"{where} {names}", str(error))
+            continue
+        if cut and beyond_order(reader, value):
+            report.disagree(where, f"{names} published as {entry['value']} carries a term beyond the order kept")
+        expected = _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords)
+        if agree_held(reader, value, expected):
+            continue
+        value = reader.surface(value)
+        expected = reader.surface(expected)
+        if norm(value - expected) != 0:
+            report.disagree(where, f"{names} published as {entry['value']} "
+                                   f"({norm(value)}), sympy says {norm(expected)}")
+    for index in _indices(len(coords), rank):
+        if tuple(index) in seen:
+            continue
+        names = [coords[i] for i in index]
+        weighted = reader.surface(
+            _at(computed, index) * c ** variance_weight(variance, coords, index, time_coords))
+        if norm(weighted) != 0:
+            report.disagree(where, f"{names} is missing, sympy says {norm(weighted)}")
+
+
+WHERE = re.compile(r"\s*\\;\\text\{for\}\\;\s*(\\?[A-Za-z]+)\s*\\neq\s*0\s*$")
+
+
+def scalar_parts(published):
+    """A published scalar as (its value, the coordinate it holds away from the zero of, or None).
+
+    The domain wall's Kretschmann scalar is written "K = 0 \\;\\text{for}\\; z \\neq 0": its
+    Riemann tensor carries delta(z), and the square of a delta is no distribution, so the
+    scalar is stated where z is not zero, and compared there by off_support.
+    """
+    text = published.split("=", 1)[1] if "=" in published.split("\\;")[0] else published
+    found = WHERE.search(text)
+    if found is None:
+        return text, None
+    return text[:found.start()], found.group(1)
+
+
+def off_support(expression, x):
+    """The expression where the coordinate x is not zero: every delta of x set to zero."""
+    return expression.replace(lambda e: isinstance(e, sp.DiracDelta) and e.args[0].has(x), lambda e: sp.Integer(0))
+
+
+def compare_scalar(report, reader, where, published, computed):
+    text, away = scalar_parts(published)
+    try:
+        value = reader(text)
+    except LatexError as error:
+        report.skip(where, str(error))
+        return
+    if beyond_order(reader, value):
+        report.disagree(where, f"published as {published.strip()} carries a term beyond the order kept")
+    if away is None and agree_held(reader, value, computed):
+        return
+    value = reader.surface(value)
+    computed = reader.surface(computed)
+    if away is not None:
+        if away not in reader.symbol:
+            report.disagree(where, f"{published!r} holds away from {away}, which is not a coordinate")
+            return
+        computed = off_support(computed, reader.symbol[away])
+    if norm(value - computed) != 0:
+        report.disagree(where, f"published as {published.strip()}, sympy says {norm(computed)}")
+
+
+def compare_geodesics(report, reader, where, published, gamma, coords, time_coords, c):
+    """Each equation against xddot^mu + Gamma^mu_{nu rho} xdot^nu xdot^rho = 0.
+
+    The printed dots are the chart velocities, matching the printed Christoffels, so
+    the weighted symbols are the ones the residual is built from.
+    """
+    if len(published) != len(coords):
+        report.disagree(where, f"{len(published)} equations for {len(coords)} coordinates")
+    for equation in published:
+        left, _, right = equation.partition("=")
+        try:
+            residual = sp.expand(reader(left) - reader(right))
+        except LatexError as error:
+            report.skip(f"{where} {equation!r}", str(error))
+            continue
+        if beyond_order(reader, residual):
+            report.disagree(where, f"{equation!r} carries a term beyond the order kept")
+        held = residual
+        residual = residual if held_alone(reader) else reader.surface(residual)
+        carried = [name for name in coords if residual.has(reader.ddot[name])]
+        if len(carried) != 1:
+            report.disagree(where, f"{equation!r} carries second derivatives of {carried}, expected one")
+            continue
+        name = carried[0]
+        mu = coords.index(name)
+        expected = reader.ddot[name] + sum(
+            gamma[mu][nu][rho]
+            * c ** variance_weight("ull", coords, [mu, nu, rho], time_coords)
+            * reader.dot[coords[nu]] * reader.dot[coords[rho]]
+            for nu in range(len(coords)) for rho in range(len(coords))
+        )
+        if agree_held(reader, held, expected) or agree_held(reader, held, -expected):
+            continue
+        residual = reader.surface(held)
+        expected = reader.surface(expected)
+        if norm(residual - expected) != 0 and norm(residual + expected) != 0:
+            report.disagree(where, f"{name} equation {equation!r} is not the geodesic equation, "
+                                   f"sympy makes the residual {norm(expected)}")
+
+
+VECTOR_VARIANTS = {"ll": (0, "ll"), "ul": ((0,), "ul"), "uu": ((0, 1), "uu")}
+RANK4_VARIANTS = {"llll": (None, "llll"), "ulll": ((0,), "ulll")}
+
+
+def check_system(report, metric_id, entry, seconds, dimensions_only=False):
+    where = f"{metric_id}/{entry['id']}"
+    seconds = max(seconds, SYSTEM_BUDGET_SECONDS.get((metric_id, entry["id"]), 0))
+    coords = entry["coords"]
+    report.systems += 1
+
+    declared = DIMENSIONS.get((metric_id, entry["id"]))
+    if declared is None:
+        report.skip(where, "no dimension declaration in DIMENSIONS")
+        return
+    unknown = [name for name in coords if name not in declared]
+    if unknown:
+        report.skip(where, f"no declared dimension for the coordinates {unknown}")
+        return
+    declaration = time_coordinates(declared, coords)
+
+    parameters = [p["symbol"] for p in entry.get("parameters", [])]
+    relations = PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
+    try:
+        reader = Reader(coords, parameters, declaration, relations, ORDERS.get((metric_id, entry["id"])),
+                        HELD.get((metric_id, entry["id"]), ()), RATES.get((metric_id, entry["id"])),
+                        (metric_id, entry["id"]) in IMPULSES)
+    except LatexError as error:
+        report.skip(where, f"parameters unreadable: {error}")
+        return
+    c = reader.c
+    try:
+        dimensions = Dimensions(reader, declared)
+    except DimensionError as error:
+        report.skip(where, f"dimensions undeclared: {error}")
+        return
+    check_dimensions(report, reader, dimensions, where, entry, coords)
+    if dimensions_only:
+        report.checked_systems += 1
+        print(f"  {where}")
+        return
+    try:
+        g = metric_from_line_element(reader, entry["line_element"], coords)
+    except LatexError as error:
+        report.skip(where, f"line element unreadable: {error}")
+        return
+    # A system kept to an order is a series about its zeroth order, which is what has to be a metric.
+    if _adjugate(reader.zeroth(g) if reader.order else g)[1] == 0:
+        report.skip(where, "the line element gives a degenerate metric")
+        return
+
+    # Everything is computed with the bare coordinates and then weighted into the
+    # x^0 = cT chart by compare_block, which is exact because the rescaling is linear.
+    symbols = [reader.symbol[name] for name in coords]
+    geometry = geometry_of(g, symbols, seconds, reader)
+    report.checked_systems += 1
+    print(f"  {where}")
+
+    published_metric = [(f"{where}.metric_components", entry.get("metric_components"), "ll", g)]
+    if "inverse_metric_components" in entry:
+        published_metric.append((
+            f"{where}.inverse_metric_components", entry["inverse_metric_components"],
+            "uu", geometry.ginv,
+        ))
+    else:
+        # Every system in the collection publishes its inverse metric, since the page
+        # prints one beside the metric; Ellis-Bronnikov was the last without one and now
+        # has one too, so this is not a slot the collection leaves empty on purpose. A
+        # system that omits it is missing something the page would show, and saying so
+        # here keeps that visible rather than passing it in silence.
+        report.skip(f"{where}.inverse_metric_components", "the entry does not publish one")
+    for label, published, variance, matrix in published_metric:
+        as_lists = [[matrix[i, j] for j in range(len(coords))] for i in range(len(coords))]
+        report.guarded(label, seconds, lambda label=label, published=published,
+                       as_lists=as_lists, variance=variance: compare_block(
+            report, reader, label, published, as_lists, variance, coords, declaration, c, cut=False))
+    if reader.truncated(g * geometry.ginv) != sp.eye(len(coords)):
+        report.disagree(where, "the published metric and inverse are not inverse to each other")
+
+    blocks = [
+        ("christoffel", "ull", lambda: geometry.christoffel_ull()),
+        ("christoffel", "lll", lambda: geometry.christoffel_lll()),
+        ("riemann", "ulll", lambda: geometry.raise_indices(geometry.riemann_llll(), 4, (0,))),
+        ("riemann", "llll", lambda: geometry.riemann_llll()),
+        ("ricci_tensor", "ll", lambda: geometry.ricci_ll()),
+        ("ricci_tensor", "ul", lambda: geometry.raise_indices(geometry.ricci_ll(), 2, (0,))),
+        ("ricci_tensor", "uu", lambda: geometry.raise_indices(geometry.ricci_ll(), 2, (0, 1))),
+        ("einstein_tensor", "ll", lambda: geometry.einstein_ll()),
+        ("einstein_tensor", "ul", lambda: geometry.raise_indices(geometry.einstein_ll(), 2, (0,))),
+        ("einstein_tensor", "uu", lambda: geometry.raise_indices(geometry.einstein_ll(), 2, (0, 1))),
+        ("weyl_tensor", "llll", lambda: geometry.weyl_llll()),
+        ("weyl_tensor", "ulll", lambda: geometry.raise_indices(geometry.weyl_llll(), 4, (0,))),
+    ]
+    for field, variance, build in blocks:
+        variants = entry.get(field, {}).get("variants", {})
+        if variance not in variants:
+            continue
+        label = f"{where}.{field}.{variance}"
+        try:
+            computed = build()
+        except Timeout as error:
+            report.skip(label, str(error))
+            continue
+        report.guarded(label, seconds, lambda label=label, computed=computed,
+                       variance=variance, published=variants[variance]["nonzero"]:
+                       compare_block(report, reader, label, published, computed,
+                                     variance, coords, declaration, c))
+
+    for field, build in (("ricci_scalar", geometry.ricci_scalar), ("kretschmann", geometry.kretschmann)):
+        if field not in entry:
+            continue
+        label = f"{where}.{field}"
+        try:
+            computed = build()
+        except Timeout as error:
+            report.skip(label, str(error))
+            continue
+        report.guarded(label, seconds, lambda label=label, computed=computed, field=field:
+                       compare_scalar(report, reader, label, entry[field], computed))
+
+    if "geodesics" in entry:
+        label = f"{where}.geodesics"
+        try:
+            gamma = geometry.christoffel_ull()
+        except Timeout as error:
+            report.skip(label, str(error))
+        else:
+            report.guarded(label, seconds, lambda: compare_geodesics(
+                report, reader, label, entry["geodesics"], gamma, coords, declaration, c))
+    else:
+        report.skip(f"{where}.geodesics", "the entry does not publish any")
+
+
+CONFLICT_COPY = re.compile(r" \d+$")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--system", action="append", default=[],
+                        help="check only <metric_id>/<system_id>, repeatable")
+    parser.add_argument("--metric", action="append", default=[],
+                        help="check every system of <metric_id>, repeatable")
+    parser.add_argument("--budget", type=float, default=DEFAULT_BUDGET_SECONDS,
+                        help="seconds sympy may spend on one tensor")
+    parser.add_argument("--dimensions-only", action="store_true",
+                        help="run the dimensional pass alone and skip the sympy algebra")
+    arguments = parser.parse_args()
+
+    metrics = [json.loads(path.read_text(encoding="utf-8"))
+               for path in sorted(METRICS_DIR.glob("*.json"))
+               if not CONFLICT_COPY.search(path.stem)]
+    # --metric names a spacetime and stands for --system on each chart it publishes, so a
+    # chart added later is checked without an edit here.
+    selected = list(arguments.system)
+    charts = {metric["id"]: [f"{metric['id']}/{entry['id']}" for entry in metric.get("coordinates", [])]
+              for metric in metrics}
+    for metric_id in arguments.metric:
+        if metric_id not in charts:
+            parser.error(f"--metric {metric_id}: no metric with that id in {METRICS_DIR}")
+        if not charts[metric_id]:
+            parser.error(f"--metric {metric_id}: the metric publishes no coordinate systems")
+        selected += charts[metric_id]
+
+    report = Report()
+    files = 0
+    against = "for dimensional balance" if arguments.dimensions_only else "against sympy"
+    print(f"Checking every published coordinate system {against}, in the x^0 = cT chart.\n")
+    for metric in metrics:
+        files += 1
+        for entry in metric.get("coordinates", []):
+            name = f"{metric['id']}/{entry['id']}"
+            if selected and name not in selected:
+                continue
+            check_system(report, metric["id"], entry, arguments.budget,
+                         arguments.dimensions_only)
+
+    print(f"\n{files} metric files, {report.systems} coordinate systems, "
+          f"{report.checked_systems} checked.")
+    if report.unchecked:
+        print(f"\n{len(report.unchecked)} UNCHECKED:")
+        for line in report.unchecked:
+            print(f"  UNCHECKED {line}")
+    if report.dimensional:
+        print(f"\n{len(report.dimensional)} terms whose dimensions do not balance:",
+              file=sys.stderr)
+        for line in report.dimensional:
+            print(f"  {line}", file=sys.stderr)
+    if report.disagreements:
+        print(f"\n{len(report.disagreements)} disagreements:", file=sys.stderr)
+        for line in report.disagreements:
+            print(f"  {line}", file=sys.stderr)
+    if report.dimensional or report.disagreements:
+        return 1
+    print(f"\nEvery published value balances dimensionally"
+          f"{'' if arguments.dimensions_only else ' and agrees with sympy'}.")
+    return 0
+
+
+import lynden_bell_pineault as lbp
+lbp.register_dimensions(sys.modules[__name__])
+import spheroidal_stars as sph_stars
+sph_stars.register_dimensions(sys.modules[__name__])
+
+import early_braneworlds as eb
+eb.register_dimensions(sys.modules[__name__])
+
+import hawking_moss as hm
+hm.register_dimensions(sys.modules[__name__])
+
+
+if __name__ == "__main__":
+    sys.exit(main())

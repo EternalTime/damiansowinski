@@ -3890,6 +3890,13 @@ for _extended_system, _extended_time in (("cosmic", 1.0), ("conformal", -1.0)):
     FLAT[("extended_inflation", _extended_system, "radial")] = lambda t=_extended_time: one(
         "extended_inflation", lambda m: along(t, 0.0, 2.0), label="$t=t_0$")
 
+import electron_bubble as _electron_bubble
+for _bubble_chart in _electron_bubble.CHARTS:
+    FLAT[("electron_bubble", _bubble_chart, "axis")] = (
+        lambda system=_bubble_chart: _electron_bubble.flat_slices(
+            type("BubbleSlice", (), {"system": system})(), sys.modules[__name__]))
+
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

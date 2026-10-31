@@ -106,4 +106,4 @@ Then $p,q=\arctan((ct\mp z_*)/2m)$ cover the axial diamond with null infinity on
 The curvature figure reads the stored smooth exterior Kretschmann scalar on the axis and equator over $m\le r\le6m$.
 Its endpoint at $r=m$ is the outer bulk limit; no scalar is assigned to the distributional shell.
 No movie or extra coordinate extension is needed.
-Every view uses a square window with a margin; the embedding window is enlarged without cropping.
+Every view uses a window between the 1:2 and 2:1 bounds with a margin; the embedding window is enlarged without cropping.

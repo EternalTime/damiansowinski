@@ -19099,5 +19099,11 @@ DIAGRAMS.extend(_extended_rows)
 CAPTIONS.update(_extended_captions)
 CLOSED_FORMS.update(_extended_forms)
 
+import electron_bubble as _electron_bubble
+DIAGRAMS.extend(_electron_bubble.diagram_specs(sys.modules[__name__]))
+CAPTIONS.update(_electron_bubble.diagram_captions())
+CLOSED_FORMS.update(_electron_bubble.null_forms())
+
+
 if __name__ == "__main__":
     sys.exit(main())

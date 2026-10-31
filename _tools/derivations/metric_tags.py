@@ -179,6 +179,1025 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
-
     "electron_bubble": {"regions": [["exterior", "exterior_kerr"], ["interior", "interior_kerr", "cartesian"]],
                         "why": "the flat interior and electrovacuum exterior are distinct smooth regions"},
+    "hawking_moss": {
+        "regions": [["four_sphere", "thermal", "thermal_angle"]],
+        "why": "The saddle is the Euclidean barrier-top sphere; the three Lorentzian charts are exact "
+               "constant-field continuations, not the saddle's Riemannian region.",
+    },
+    "lynden_bell_pineault": {
+        "regions": [["weyl", "spherical"], ["rotating"]],
+        "why": "counter-rotating static discs and single-stream rotating discs are distinct families; "
+               "photons is the massless specialization of the static family, whose smooth exterior is flat",
+    },
+    "btz_multi_holes_wormholes": {
+        "regions": [["sausage", "stereographic", "free_fall"]],
+        "why": "exterior covers the outside of one horizon alone, where the hole is static; the Killing "
+               "vector of that chart extends to no symmetry of the whole spacetime (Brill 1996, section 4; "
+               "Aminneborg, Bengtsson, Brill, Holst and Peldan 1998, section V)",
+    },
+    "btz_shock_wave": {
+        "regions": [["kruskal", "discontinuous"]],
+        "why": "exterior covers one outside alone, where the black hole is static; a shift of its Killing "
+               "time t is a boost of the Kruskal u and v that rescales the shift alpha, so it carries the "
+               "shock to another one and is no symmetry of the whole spacetime (Shenker and Stanford 2014, "
+               "sections 3.1 and 3.2)",
+    },
+    "moving_mirror": {
+        "regions": [["inertial", "null", "mirror_rest"]],
+        "why": "thermal, collapse and rindler are three mirrors, Carlitz and Willey's, the one that imitates a "
+               "collapse, and the uniformly accelerating one, which alone is at rest in a static chart; a mirror "
+               "on a general world line leaves the spacetime to its right no symmetry",
+    },
+    "bubbling_ads": {
+        "regions": [["rings"]],
+        "why": "global and plane_wave are two members of the family, the black disc and the black half plane, "
+               "each with symmetries the general pattern of droplets lacks: the disc is static, and every other "
+               "pattern twists the time, V dphi in Lin, Lunin and Maldacena's metric (2.4)",
+    },
+    "kerr_bertotti_robinson": {
+        "regions": [["boyer_lindquist"]],
+        "why": "static is the hole with no spin, a = 0, a special case of the family, which alone is static",
+    },
+    "neugebauer_meinel": {
+        "regions": [["weyl", "corotating", "bardeen_wagoner", "spheroidal"]],
+        "why": "black_hole_limit is the limit mu -> mu_0 outside the disc, the extreme Kerr metric, "
+               "and no disc of the family",
+    },
+    "kerr_scalar_hair": {
+        "regions": [["herdeiro_radu"]],
+        "why": "kerr_member is the member with no field, Kerr's metric in the same coordinates (Herdeiro and "
+               "Radu 2015, appendix A), a special case that is a vacuum where the family carries the field",
+    },
+    "chandrasekhar_xanthopoulos": {
+        "regions": [["prolate", "angular", "boyer_lindquist"]],
+        "why": "kerr_ingoing runs on through the horizon into one of the extensions, where Kerr's "
+               "metric is stationary; where the waves have passed both Killing vectors are spacelike",
+    },
+    "nordstrom_scalar": {
+        "regions": [["conformal"]],
+        "why": "spherical, uniform and dust are three solutions of the theory, a point mass, a uniform "
+               "field and a universe of dust, each with symmetries its general spacetime lacks",
+    },
+    "einstein_1912_static": {
+        "regions": [["static"]],
+        "why": "uniform, february and march are three solutions of the theory, a uniform field and the "
+               "field outside a body by each of its two equations, each with symmetries its general "
+               "static field lacks; the uniform field is flat",
+    },
+    "black_saturn": {
+        "regions": [["weyl", "polar"]],
+        "why": "ring is the black ring alone, the Saturn with its hole taken away",
+    },
+    "cosmic_string": {
+        "regions": [["conical"]],
+        "why": "interior_cap is Gott's model of the string's own core; the spacetime of "
+               "the entry is the cone outside it",
+    },
+    "gott_time_machine": {
+        "regions": [["centre_of_momentum", "grant_rindler", "grant_milne"]],
+        "why": "string_rest covers the half space of one string in that string's rest "
+               "frame, where it is static; the two halves share no rest frame",
+    },
+    "hartle_thorne": {
+        "regions": [["hartle_thorne", "lense_thirring"]],
+        "why": "those two are kept to an order and are a vacuum through it; "
+               "painleve_gullstrand is exact for its line element as written, which is "
+               "a vacuum only to first order in the spin",
+    },
+    "shell_void": {"regions": [["interior"], ["exterior", "exterior_proper"]],
+                   "why": "an empty cavity and a dust exterior separated by an accreting shell"},
+    "israel_shell": {
+        "regions": [["interior"], ["exterior", "exterior_ingoing"]],
+        "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
+    },
+    "black_to_white_hole": {
+        "regions": [["interior"], ["kruskal", "schwarzschild", "painleve_gullstrand_ingoing",
+                                   "painleve_gullstrand_outgoing", "lemaitre"]],
+        "why": "the flat space inside the shell and the vacuum outside it are two regions of one spacetime",
+    },
+    "charged_shell": {
+        "regions": [["interior"], ["exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic"]],
+        "why": "the flat space inside the shell and the charge's field outside it are two regions of one spacetime",
+    },
+    "kaluza_klein_black_hole": {
+        "regions": [["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic"]],
+        "why": "einstein and einstein_eddington_finkelstein print the metric of four dimensions the "
+               "holes reduce to, which carries a Maxwell field and a scalar field; the entry's "
+               "spacetime is the vacuum of five dimensions",
+    },
+    "topological_star": {
+        "regions": [["bah_heidmann", "bubble", "eddington_finkelstein_ingoing", "extremal"]],
+        "why": "einstein prints the metric of four dimensions the star reduces to, which carries a Maxwell "
+               "field and a scalar field; the entry's spacetime is the solution of five dimensions",
+    },
+    "kasner_scalar": {
+        "regions": [["synchronous", "logarithmic"]],
+        "why": "kaluza_klein prints Kasner's vacuum of five dimensions, whose reduction along its "
+               "fifth dimension is this universe; the entry's spacetime is the one of four "
+               "dimensions, with the scalar field in it",
+    },
+    "kastor_traschen": {
+        "regions": [["cartesian", "comoving"]],
+        "why": "isotropic is the single hole, which alone is spherically symmetric, and "
+               "cylindrical the holes on one axis",
+    },
+    "kundt_waves": {
+        "regions": [["kundt", "podolsky_belan", "ozsvath_robinson_rozga"]],
+        "why": "simplest_wave and kerr_schild are one wave of the family, whose profile alone "
+               "does not depend on u",
+    },
+    "lindquist_wheeler_lattice": {
+        "regions": [["schwarzschild_cell", "cosmological_time"]],
+        "why": "lindquist_wheeler leaves the areal radius of the shells free, a vacuum where each shell "
+               "obeys its equation, as the other two charts take it, and comparison_hypersphere is the "
+               "sphere the cells are tangent to, a closed universe of dust that is no part of the lattice",
+    },
+    "gravitational_instantons": {
+        "regions": [["schwarzschild", "regular"], ["taub_nut"], ["taub_bolt"], ["cp2", "cp2_distance"], ["page"]],
+        "why": "each chart or pair of charts is a space of its own: the Euclidean Schwarzschild solution, "
+               "the self-dual Taub-NUT solution, Taub-bolt, the complex projective plane and Page's space, "
+               "the first three Ricci flat and the last two Einstein spaces with a positive cosmological "
+               "constant; multi_centre leaves V and omega free, and with them it is a vacuum only where "
+               "curl omega = grad V",
+    },
+    "majumdar_papapetrou": {
+        "regions": [["cartesian"]],
+        "why": "isotropic is the single hole, which alone is spherically symmetric, and "
+               "cylindrical the holes on one axis",
+    },
+    "misner_brill_lindquist": {
+        "regions": [["cartesian"]],
+        "why": "isotropic is the single hole, which alone is spherically symmetric, cylindrical and "
+               "bispherical the holes on one axis, and charged the slice with an electric field on it",
+    },
+    "oppenheimer_snyder": {
+        "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
+        "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
+    },
+    "oscillating_sphere": {
+        "regions": [["comoving", "central_time"], ["exterior_schwarzschild"]],
+        "why": "the ball of fluid and the vacuum outside it are two regions of one spacetime",
+    },
+    "quantum_oppenheimer_snyder": {
+        "regions": [["interior_comoving"],
+                    ["static", "painleve_gullstrand", "eddington_finkelstein_ingoing", "eddington_finkelstein_outgoing"]],
+        "why": "the bouncing dust ball and the vacuum outside it are two regions of one spacetime",
+    },
+    "semiclosed_world": {
+        "regions": [["comoving", "conformal"], ["schwarzschild", "isotropic"]],
+        "why": "the dust behind the throat and the vacuum outside it are two regions of one spacetime",
+    },
+    "ab_metrics": {
+        "regions": [["a2_static", "a2_cone", "a2_kruskal", "a2_cartesian"],
+                    ["b1_static", "b1_cone", "b1_neck", "b1_cartesian"], ["a3"], ["b2_static", "b2_neck"], ["b3"]],
+        "why": "AII, BI, AIII, BII and BIII are five spacetimes, each a static vacuum field of type D "
+               "with symmetries of its own",
+    },
+    "white_hole": {
+        "regions": [["interior_comoving", "interior_conformal"],
+                    ["exterior_schwarzschild", "exterior_eddington_finkelstein", "exterior_kruskal"]],
+        "why": "the dust ball and the vacuum outside it are two regions of one spacetime; novikov_comoving "
+               "leaves the mass and the delay of each shell free, and draws Novikov's marginally bound core",
+    },
+    "datt_ruban_t_models": {
+        "regions": [["ruban", "areal"], ["exterior_kruskal"]],
+        "why": "the dust of a T-sphere and the vacuum outside its surface are two regions of one spacetime; "
+               "comoving leaves a and b free, and de_sitter is Ruban's T-model with a cosmological constant",
+    },
+    "ori_time_machine": {
+        "regions": [["foliation", "brinkmann"]],
+        "why": "vacuum_core leaves f free; the core is a vacuum where f is harmonic in x "
+               "and y, as the other two charts take it",
+    },
+    "newman_tamburino": {
+        "regions": [["spherical"], ["cylindrical"]],
+        "why": "the spherical class and the limit of the cylindrical class are two spacetimes, the second "
+               "with two Killing vectors, d_u and d_y, which the first lacks (Steele 2004, section 2)",
+    },
+    "plebanski_hacyan": {
+        "regions": [["sphere", "sphere_rindler"], ["plane", "plane_null", "plane_static"],
+                    ["anti_nariai", "anti_nariai_static"]],
+        "why": "the three products are three spacetimes, a flat plane times a sphere, anti-de Sitter "
+               "space of two dimensions times a flat plane, and anti-Nariai; exceptional leaves f and g "
+               "free, and with them it has no Killing vector",
+    },
+    "point_particle_2plus1": {
+        "regions": [["conical", "wedge", "circumference", "isotropic", "two_bodies", "moving"]],
+        "why": "planet is the inside of a body of finite size, a cap of a sphere; the "
+               "entry's spacetime is the flat cone outside a particle",
+    },
+    "pp_wave": {
+        "regions": [["exact_plane_wave"]],
+        "why": "brinkmann leaves the profile H free; the wave is a vacuum where H is "
+               "harmonic in x and y, as the plane wave's is",
+    },
+    "spinning_string": {
+        "regions": [["proper_radius", "rescaled_radius", "circumference_radius", "helical"]],
+        "why": "extended_source is the inside of a string of finite thickness",
+    },
+    "string_wave": {
+        "regions": [["isotropic", "moving_string"]],
+        "why": "null_conical leaves the profile F free; the wave is a vacuum where F is "
+               "harmonic on the cone, as the other two charts take it",
+    },
+    "van_den_broeck": {
+        "regions": [["cartesian"]],
+        "why": "pocket and proper_radial cover the inside of the bubble alone, where "
+               "f = 1 and nothing depends on the time",
+    },
+    "wormhole_time_machine": {
+        "regions": [["lorentz"], ["wormhole"]],
+        "why": "the flat space outside the mouths and the wormhole whose mouth is moved "
+               "are two regions; short_throat is a mouth in its own rest frame",
+    },
+    "wahlquist": {
+        "regions": [["wahlquist", "mars", "mars_ingoing"]],
+        "why": "whittaker is the fluid at rest, the limit of no rotation, which is static and "
+               "spherically symmetric where the rotating fluid is neither",
+    },
+    "vaidya_patel_kerr": {
+        "regions": [["vaidya_patel", "retarded"],
+                    ["einstein_vaidya", "einstein_boyer_lindquist"],
+                    ["expanding_vaidya"]],
+        "why": "Kerr radiating, Kerr in Einstein's static universe and Kerr in an expanding universe "
+               "are three spacetimes, the first of pure radiation and the others of a fluid",
+    },
+}
+
+# Where the charts cannot decide a tag and the entry's history and sources do.
+# Charts that hold names whose values are written out whole, as the checker writes them, and not
+# name by name: the names of a wall's Gaussian normal chart hold the free scale factor a(t) under
+# a root, and one component of its Ricci tensor written out name by name took 75 s and another 235 s,
+# where written out whole they took 0.4 s and 1.7 s.
+WHOLE = {("brane_wall_universe", "gaussian_normal")}
+
+OVERRULED = {
+    ("cahen_wallach", "stationary"): (
+        True, "the Brinkmann chart's d_u is a Killing vector whose norm, (lambda_1 x^2 + lambda_2 y^2)c^2, takes "
+              "a sign the parameters leave open, but d_u + a d_v with a > 0 is a Killing vector too, of norm "
+              "(lambda_1 x^2 + lambda_2 y^2)c^2 - 2ac, timelike about the axis for every lambda_1 and lambda_2"),
+    ("small_universes", "spherically symmetric"): (
+        False, "the hyperbolic chart is spherical about one observer, and so is the local geometry, but the "
+               "identifications that close space leave only a discrete group of the rotations about any "
+               "point: the torus is globally anisotropic, and a closed hyperbolic space is not even homogeneous"),
+    ("poincare_dodecahedral", "spherically symmetric"): (
+        False, "the comoving and conformal charts are spherical about one observer, and so is the local "
+               "geometry, but the binary icosahedral group that closes space leaves only a finite group of the "
+               "rotations about any point"),
+    ("chandrasekhar_xanthopoulos", "stationary"): (
+        False, "where both waves have passed r lies between Kerr's horizons and inside the ergosphere, "
+               "|cos theta| <= (m - r)/sqrt(m^2 - a^2), an end of theta that is not read, and there "
+               "Kerr's d/dt is spacelike, as both Killing vectors of colliding plane waves are"),
+    ("coleman_de_luccia", "stationary"): (
+        False, "each vacuum is static in its own chart, and the wall between them, at r = r_w, "
+               "accelerates outward through both, so the bubble as a whole has no time translation"),
+    ("coleman_de_luccia", "static"): (
+        False, "each vacuum is static in its own chart, and the wall between them, at r = r_w, "
+               "accelerates outward through both, so the bubble as a whole has no time translation"),
+    ("penrose_impulsive_wave", "spherically symmetric"): (
+        False, "behind the wave the space is Minkowski's and its chart is spherical, but the front carries "
+               "the two ends of the string and the space ahead of it is the string's cone, so the "
+               "spacetime keeps only the rotations about the string"),
+    ("shell_void", "conformally flat"): (False, "the dust shell has distributional Weyl curvature although both smooth bulks are conformally flat"),
+    ("shell_void", "stationary"): (False, "the accreting shell moves through the two smooth regions"),
+    ("shell_void", "static"): (False, "the accreting shell moves through the two smooth regions"),
+    ("israel_shell", "vacuum"): (
+        False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
+               "jumps across it; the spacetime has matter on r = R"),
+    ("kerr_disc_source", "vacuum"): (
+        False, "both charts are Kerr's vacuum off the disc r = 0, but the disc is in no chart: the normal "
+               "derivatives of the metric jump across it once its two faces are glued, and the jump is "
+               "Israel's layer of negative mass turning faster than light"),
+    ("black_to_white_hole", "vacuum"): (
+        False, "flat space inside and Kruskal's vacuum outside, but the thin shell of light between them "
+               "is in no chart, and neither is the quantum region where the black hole turns white; the "
+               "Lambert function hid the vacuum of the Kruskal chart until 3 October 2026"),
+    ("brane_wall_universe", "Einstein space"): (
+        False, "each chart is one side of the wall, where R_ab = -(4/l^2) g_ab, and the wall between the two "
+               "sides carries matter and its tension, so the spacetime is no Einstein space"),
+    ("brane_wall_universe", "stationary"): (
+        False, "each side is a piece of a static black hole, and the wall between them, at r = a, moves "
+               "through it, so the spacetime as a whole has no time translation"),
+    ("brane_wall_universe", "static"): (
+        False, "each side is a piece of a static black hole, and the wall between them, at r = a, moves "
+               "through it, so the spacetime as a whole has no time translation"),
+    ("israel_shell", "stationary"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "falls through both, so the spacetime as a whole has no time translation"),
+    ("israel_shell", "static"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "falls through both, so the spacetime as a whole has no time translation"),
+    ("lindquist_wheeler_lattice", "stationary"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("lindquist_wheeler_lattice", "static"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("lindquist_wheeler_lattice", "spherically symmetric"): (
+        False, "each cell is a piece of Schwarzschild's geometry, static and spherically symmetric in its own "
+               "chart, and its boundary moves through it, so the lattice of cells has no time translation and "
+               "only the discrete symmetry of its tiling"),
+    ("charged_shell", "stationary"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
+    ("charged_shell", "static"): (
+        False, "each side is static in its own chart, and the shell between them, at r = R, "
+               "moves through both, so the spacetime as a whole has no time translation; the balanced "
+               "shell at rest, mu = r_q = r_s/2, is the one member that has"),
+    ("black_saturn", "vacuum"): (
+        True, "V, Omega, W and nu are left free in Weyl's chart and the polar chart; black Saturn "
+              "is the solution of the vacuum equations their parameters define, which "
+              "print_charts.py holds to a vanishing Ricci tensor"),
+    ("double_kerr", "vacuum"): (
+        True, "f, omega and gamma are left free; the two Kerr black holes are a solution of "
+              "the vacuum equations, Ernst's equation for f and omega and a quadrature for gamma"),
+    ("bach_weyl_ring", "vacuum"): (
+        True, "psi and gamma are held as functions while each chart's tensors are built; they are the "
+              "solution of the vacuum equations, Laplace's equation and Weyl's quadrature, that each "
+              "chart's parameters write out, which print_charts.py holds to a vanishing Ricci tensor"),
+    ("morgan_morgan", "vacuum"): (
+        True, "psi and gamma are left free in Weyl's chart; off the disc the field is the solution "
+              "of the vacuum equations, Laplace's equation and a quadrature, that the oblate "
+              "spheroidal chart writes out for the first disc, whose Ricci tensor vanishes"),
+    ("einstein_rosen_waves", "vacuum"): (
+        True, "psi and gamma are left free in both charts; the waves are the solutions of "
+              "the vacuum equations, a wave equation for psi and a quadrature for gamma"),
+    ("twisting_cylindrical_waves", "vacuum"): (
+        True, "psi, omega and gamma are left free in both charts; the waves are the solutions of the "
+              "vacuum equations, two coupled wave equations for psi and omega and a quadrature for gamma, "
+              "which print_charts.py holds to a vanishing Ricci tensor"),
+    ("belinski_zakharov", "vacuum"): (
+        True, "f, P and Q are left free in the canonical chart; Belinski and Zakharov's solitons are the "
+              "solutions of the vacuum equations its parameters state, as the pole chart's wave is"),
+    ("bondi_sachs", "vacuum"): (
+        True, "V, beta, U and gamma are left free in both charts; Bondi and Sachs's radiating metrics "
+              "are the solutions of the vacuum equations, which fix them from the shear"),
+    ("moncrief_taub_nut", "vacuum"): (
+        True, "The free amplitudes satisfy the displayed two wave equations and constraints, "
+              "with analytic horizon conditions; the family consists of their vacuum solutions"),
+    ("gowdy", "vacuum"): (
+        True, "P, Q and lambda are left free in every chart; Gowdy's universes are the "
+              "solutions of the vacuum equations, two wave equations and a quadrature"),
+    ("mixmaster", "vacuum"): (
+        True, "the three scale factors are left free; the Mixmaster universe is the "
+              "vacuum of Bianchi type IX, whose equations fix them"),
+    ("hauser_wave", "vacuum"): (
+        True, "f is left free; Hauser's wave is the vacuum on which f obeys 16(1 + t^2)f'' + 3f = 0, "
+              "and every Ricci component vanishes exactly at points once that equation is used"),
+    ("robinson_trautman", "vacuum"): (
+        True, "P and H are left free in both charts; the spacetimes are the vacuum "
+              "solutions, on which P obeys the Robinson-Trautman equation"),
+    ("spinning_string", "static"): (
+        False, "the time translation is orthogonal to the surfaces of constant "
+               "t + a phi / c, which do not close up round the string, so the string is "
+               "static in every patch and only stationary as a whole"),
+    ("lewis", "static"): (
+        False, "the canonical chart's time translation is orthogonal to the surfaces of constant "
+               "t + 4j phi / (c(1 - 4 sigma)), which do not close up round the axis, so the Weyl "
+               "class is static in every patch and only stationary as a whole, and the Lewis "
+               "class is static in no patch"),
+}
+
+
+def _not_zero(number):
+    """Whether an exact number is surely not zero.
+
+    A rational number is what it is. Another can be zero and not look it: at a point of the
+    Kruskal chart of the A II metric, held by Lambert's function, a component of its Ricci
+    tensor comes to 10 e W(x) exp(W(x))/133 - 1 with x = 133/(10 e), which is zero since
+    W(x) exp(W(x)) = x, and which sympy leaves standing. Such a number is surely not zero
+    only if it is far from zero at sixty digits; one that is near is left to the canonical form.
+    """
+    import sympy as sp
+    if number == 0:
+        return False
+    if number.is_Rational:
+        return True
+    return bool(sp.Abs(sp.N(number, 60)) > sp.Float("1e-40", 60))
+
+
+def _witness(reader, symbols):
+    """A function giving the exact value of an expression in a chart's held names at one point
+    of rational coordinates and parameters, with the names and their derivatives written out by
+    their definitions there. The angles get a rational sine and cosine."""
+    import sympy as sp
+    rng = random.Random(0)
+    free = set(symbols) | {s for value in reader.held.values() for s in value.free_symbols}
+    at = {s: sp.Rational(rng.randint(11, 40), rng.randint(7, 10)) for s in sorted(free, key=str)}
+    trig = {}
+    for s in symbols:
+        trig[sp.sin(s)], trig[sp.cos(s)] = sp.Rational(3, 5), sp.Rational(4, 5)
+    held = set(reader.held)
+    known = {}
+
+    def number(e):
+        return sp.cancel(e.subs(trig).subs(at))
+
+    def frozen(e):
+        """e with each declared function the names are built from, as the scale factor a(t) of a
+        wall's Gaussian normal chart, and each of its derivatives given a rational value of its own,
+        since at one point they are independent numbers. They are set before the coordinates are,
+        which would leave them unevaluated, and left standing they made every value no number, so
+        that every value was written out in full."""
+        undefined = [x for x in e.atoms(sp.Derivative) | e.atoms(sp.core.function.AppliedUndef) if x not in held]
+        for x in sorted(undefined, key=sp.default_sort_key):
+            if x not in at:
+                at[x] = sp.Rational(rng.randint(11, 40), rng.randint(7, 10))
+        e = e.xreplace({x: at[x] for x in e.atoms(sp.Derivative) if x in at})
+        return e.xreplace({x: at[x] for x in e.atoms(sp.core.function.AppliedUndef) if x in at})
+
+    def value(expression):
+        atoms = expression.atoms(sp.Derivative) | (expression.atoms(sp.core.function.AppliedUndef) & held)
+        atoms = {x for x in atoms if x in held or (isinstance(x, sp.Derivative) and x.expr in held)}
+        for atom in atoms - set(known):
+            out = atom
+            for _ in reader.held:
+                out = out.subs(reader.held).doit()
+            known[atom] = number(frozen(out))
+        out = frozen(expression.xreplace({x: known[x] for x in atoms}))
+        # Any symbol the definitions do not hold, as c or the rate of a turning azimuth, gets a
+        # rational value of its own.
+        for s in sorted(out.free_symbols - set(at), key=str):
+            at[s] = sp.Rational(rng.randint(11, 40), rng.randint(7, 10))
+        out = number(out)
+        return out if out.is_number else 0
+    return value
+
+
+def facts_of(metric, facts):
+    """The facts of one metric file's charts, by chart id."""
+    return {entry["id"]: facts[f"{metric['id']}/{entry['id']}"]
+            for entry in metric.get("coordinates", [])}
+
+
+def _time_translation(chart, orthogonal=False):
+    return any(k["timelike"] and k["translation"] and (k["hypersurface_orthogonal"] or not orthogonal)
+               for k in chart["killing"])
+
+
+def _round(chart):
+    return chart["sphere"] is not None and len(chart["sphere"]) >= chart["dimension"] - 2
+
+
+def decided_tags(metric_id, charts):
+    """What the charts of one spacetime decide: (owned, implied).
+
+    `charts` is its facts by chart id. `owned` gives every tag of OWNED as True or False,
+    the tags the spacetime has to carry and the ones it must not. `implied` is the set of
+    further tags it has to carry and that others may carry by hand: an Einstein space has
+    a cosmological constant, and its sign where the parameters decide it.
+    """
+    regions = REGIONS.get(metric_id, {}).get("regions") or [list(charts)]
+    counted = [charts[c] for region in regions for c in region]
+
+    def everywhere(test):
+        return all(test(chart) for chart in counted)
+
+    def in_every_region(test):
+        return all(any(test(charts[c]) for c in region) for region in regions)
+
+    owned = {
+        "vacuum": everywhere(lambda c: c["ricci_flat"]),
+        "Einstein space": everywhere(lambda c: c["einstein"] is not None),
+        "conformally flat": everywhere(lambda c: c["conformally_flat"]),
+        "flat": everywhere(lambda c: c["ricci_flat"] and c["conformally_flat"]),
+        "stationary": in_every_region(_time_translation),
+        "static": in_every_region(lambda c: _time_translation(c, orthogonal=True)),
+        "spherically symmetric": in_every_region(_round),
+    }
+    dimensions = {chart["dimension"] for chart in charts.values()}
+    for n, tag in DIMENSION.items():
+        owned[tag] = n in dimensions
+    unnamed = dimensions - set(DIMENSION)
+    if unnamed:
+        raise ValueError(f"{metric_id} has a chart of {sorted(unnamed)} dimensions, which DIMENSION has no tag for")
+    for (overruled, tag), (value, _) in OVERRULED.items():
+        if overruled == metric_id:
+            owned[tag] = value
+
+    implied = set()
+    if owned["Einstein space"]:
+        implied.add("cosmological constant")
+        signs = {chart["einstein"]["sign"] for chart in counted} - {None}
+        if signs == {1}:
+            implied.add("positive cosmological constant")
+        if signs == {-1}:
+            implied.add("negative cosmological constant")
+    return owned, implied
+
+
+def spelling(tag):
+    """What two spellings of one keyword have in common: the tag without its capitals, its
+    accents, its spaces and its punctuation, each word made singular. "Gravitational waves",
+    "gravitational-wave" and "gravitational wave" are one; so are "alternative theory of
+    gravity" and "alternative theories of gravity"."""
+    text = unicodedata.normalize("NFKD", tag).encode("ascii", "ignore").decode().lower()
+    return "".join(_singular(word) for word in re.findall(r"[a-z0-9]+", text))
+
+
+def _singular(word):
+    if word.endswith("ies") and len(word) > 4:
+        return word[:-3] + "y"
+    if word.endswith(("sses", "xes", "ches", "shes")):
+        return word[:-2]
+    if word.endswith("s") and not word.endswith(("ss", "us", "is")):
+        return word[:-1]
+    return word
+
+
+def keyword_faults(metrics):
+    """What is wrong with the keywords of the collection as a whole, as sentences.
+
+    A keyword carried by one spacetime alone finds nothing a search for the spacetime's name
+    would not, and is either a label of its own or a category the others it is true of lack,
+    so none is kept. The tags of OWNED are the exception, since the charts decide them: the
+    one spacetime of eleven dimensions carries its dimension alone. Two keywords spelled
+    alike, which spelling() says, are one keyword cut in two.
+    """
+    carriers = {}
+    for metric in metrics:
+        for tag in dict.fromkeys(metric["tags"]):
+            carriers.setdefault(tag, []).append(metric["id"])
+    faults = [f"{tag!r} is carried by {ids[0]} alone" for tag, ids in sorted(carriers.items())
+              if len(ids) == 1 and tag not in OWNED]
+    alike = {}
+    for tag in sorted(carriers):
+        alike.setdefault(spelling(tag), []).append(tag)
+    faults += [" and ".join(repr(tag) for tag in tags) + " are spelled alike"
+               for tags in alike.values() if len(tags) > 1]
+    return faults
+
+
+def tag_faults(metric, facts):
+    """What is wrong with one metric file's tags, as sentences; empty if nothing is."""
+    tags = metric["tags"]
+    faults = [f"carries {tag!r} twice" for tag in sorted(set(tags)) if tags.count(tag) > 1]
+    for tag in tags:
+        if tag in RETIRED:
+            into = RETIRED[tag]
+            faults.append(f"carries {tag!r}, which was " + (f"merged into {into!r}" if into else "dropped"))
+    owned, implied = decided_tags(metric["id"], facts_of(metric, facts))
+    for tag, holds in owned.items():
+        if holds and tag not in tags:
+            faults.append(f"lacks {tag!r}, which its charts decide it has")
+        if not holds and tag in tags:
+            faults.append(f"carries {tag!r}, which its charts decide it has not")
+    for tag in sorted(implied - set(tags)):
+        faults.append(f"lacks {tag!r}, which its charts imply")
+    return faults
+
+
+
+INTERVAL = re.compile(r"^(?P<open>[\[(])(?P<body>.*)(?P<close>[\])])$")
+TOKEN = re.compile(r"\\[A-Za-z]+(?:_(?:\{[^{}]*\}|\\[A-Za-z]+|\w))?|[A-Za-z](?:_(?:\{[^{}]*\}|\\[A-Za-z]+|\w))?")
+
+
+def _plain_domain(text):
+    """A domain entry with its prose and its spacing commands taken out.
+
+    A remark in parentheses, as `\\text{(the circles of constant } t, r, z \\text{ are closed
+    timelike curves)}`, goes whole, with the mathematics inside it.
+    """
+    text = re.sub(r"\\text\{\(.*\)\}", " ", text)
+    text = re.sub(r"\\text\{[^{}]*\}", " ", text)
+    text = text.replace("\\left", "").replace("\\right", "")
+    return re.sub(r"\\[,;!]", " ", text).strip()
+
+
+def interval(entry, coord):
+    """(lower, upper) as written if the entry is `coord \\in [lower, upper)`, else None.
+
+    An entry that goes on past its interval, as FRW's `r \\in [0, \\infty) for k <= 0`, is
+    one of several for its coordinate and is not read.
+    """
+    text = _plain_domain(entry)
+    head = coord + " \\in"
+    if not text.startswith(head):
+        return None
+    match = INTERVAL.match(text[len(head):].strip())
+    if match is None:
+        return None
+    body, depth = match.group("body"), 0
+    for at, character in enumerate(body):
+        depth += character in "([{"
+        depth -= character in ")]}"
+        if character == "," and depth == 0:
+            return body[:at].strip(), body[at + 1:].strip()
+    return None
+
+
+def names(entry):
+    """The symbols a domain entry names: every letter and every command, with its subscript."""
+    return set(TOKEN.findall(_plain_domain(entry)))
+
+
+def is_translation(entry, coord):
+    """Whether the coordinate runs over the whole line and no other domain entry names it."""
+    domains = entry.get("domains", [])
+    own = [d for d in domains if _plain_domain(d).startswith(coord + " \\in")]
+    if len(own) != 1 or interval(own[0], coord) != ("-\\infty", "\\infty"):
+        return False
+    return not any(coord in names(d) for d in domains if d is not own[0])
+
+
+def is_whole_sphere(entry, angles):
+    """Whether the last angle runs over [0, 2 pi) and every other over [0, pi]."""
+    domains = entry.get("domains", [])
+
+    def runs(coord):
+        found = [interval(d, coord) for d in domains if _plain_domain(d).startswith(coord + " \\in")]
+        return found[0] if len(found) == 1 else None
+
+    return (all(runs(a) == ("0", "\\pi") for a in angles[:-1])
+            and runs(angles[-1]) == ("0", "2\\pi"))
+
+
+def compute(metric_id, entry, seconds):
+    """The facts of one chart. Raises verify_metrics.Timeout if a tensor does not finish."""
+    import sympy as sp
+    import verify_metrics as vm
+
+    coords = entry["coords"]
+    declared = vm.DIMENSIONS[(metric_id, entry["id"])]
+    relations = vm.PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
+    orders = vm.ORDERS.get((metric_id, entry["id"]))
+    reader = vm.Reader(coords, [p["symbol"] for p in entry.get("parameters", [])],
+                       vm.time_coordinates(declared, coords), relations, orders,
+                       vm.HELD.get((metric_id, entry["id"]), ()),
+                       pulse=(metric_id, entry["id"]) in vm.IMPULSES)
+    g = vm.metric_from_line_element(reader, entry["line_element"], coords)
+    symbols = [reader.symbol[name] for name in coords]
+    # A chart kept to an order, as Hartle and Thorne's is to the second in the spin, has its
+    # tensors cut to that order as the checker cuts them, and vanishes where they do.
+    geometry = vm.geometry_of(g, symbols, seconds, reader)
+    n = len(coords)
+
+    witness = _witness(reader, symbols) if vm.held_alone(reader) else None
+    # Such a chart's value is written out name by name, each put in canonical form on its own,
+    # unless WHOLE names the chart.
+    written = reader.written if witness is not None and (metric_id, entry["id"]) not in WHOLE else reader.surface
+
+    def zero(expression):
+        expression = sp.sympify(expression)
+        # A chart that holds names, as Ernst and Wild's does, has a value written out only once
+        # it vanishes at a point of rational coordinates: one that is surely not zero there is
+        # not zero, and its canonical form, written out, can take minutes.
+        if witness is not None and expression != 0 and _not_zero(witness(expression)):
+            return False
+        return vm.norm(written(expression)) == 0
+
+    ricci = geometry.ricci_ll()
+    ricci_flat = all(zero(ricci[a][b]) for a in range(n) for b in range(a, n))
+
+    einstein = None
+    # A chart that holds names is no Einstein space if its Ricci tensor is not R/n times the metric
+    # at the one point, and then its Ricci scalar, minutes to write out, is never asked for.
+    apart = False
+    if witness is not None and not ricci_flat:
+        there = witness(geometry.ricci_scalar()) / n
+        apart = any(_not_zero(witness(ricci[a][b] - there * g[a, b])) for a in range(n) for b in range(a, n))
+    if not ricci_flat and not apart:
+        k = vm.norm(written(geometry.ricci_scalar())) / n
+        constant = not (k.free_symbols & set(symbols)) and not k.atoms(sp.core.function.AppliedUndef) \
+            and not k.atoms(sp.DiracDelta, sp.sign, sp.Abs)
+        if constant and all(zero(ricci[a][b] - k * g[a, b]) for a in range(n) for b in range(a, n)):
+            einstein = {"k": sp.sstr(sp.factor(k)), "sign": _sign(k)}
+
+    if n >= 4:
+        weyl = geometry.weyl_llll()
+        conformally_flat = all(
+            zero(weyl[a][b][c][d])
+            for a in range(n) for b in range(a + 1, n) for c in range(n) for d in range(c + 1, n)
+        )
+    elif n == 3:
+        conformally_flat = _cotton_vanishes(geometry, zero)
+    else:
+        # Every metric of two dimensions is conformally flat.
+        conformally_flat = True
+
+    killing = []
+    for i, x in enumerate(symbols):
+        if any(g[a, b].has(x) for a in range(n) for b in range(n)):
+            continue
+        timelike = _negative_somewhere(reader.surface(g[i, i]), reader, entry)
+        xi = [g[a, i] for a in range(n)]
+        curl = [[sp.diff(xi[b], symbols[a]) - sp.diff(xi[a], symbols[b]) for b in range(n)]
+                for a in range(n)]
+        orthogonal = all(
+            zero(xi[a] * curl[b][c] + xi[b] * curl[c][a] + xi[c] * curl[a][b])
+            for a in range(n) for b in range(a + 1, n) for c in range(b + 1, n)
+        )
+        killing.append({"coord": coords[i], "timelike": timelike,
+                        "hypersurface_orthogonal": orthogonal,
+                        "translation": is_translation(entry, coords[i])})
+
+    sphere = _sphere(g, symbols, coords, zero, lambda angles: is_whole_sphere(entry, angles))
+
+    return {
+        "stamp": stamp(entry),
+        "relations": relations,
+        "orders": list(orders) if orders else None,
+        "dimension": n,
+        "ricci_flat": ricci_flat,
+        "einstein": einstein,
+        "conformally_flat": conformally_flat,
+        "killing": killing,
+        "sphere": sphere,
+    }
+
+
+def _sign(k):
+    """+1 or -1 where k has one sign for every positive value of its parameters, or None.
+
+    A parameter spelled Lambda is the cosmological constant itself, which the collection
+    lets take either sign, so it is left free and a k that rests on it has no sign here.
+    """
+    import sympy as sp
+    swap = {s: (sp.Symbol(s.name, real=True) if "Lambda" in s.name else sp.Symbol(s.name, positive=True))
+            for s in k.free_symbols}
+    value = sp.factor(k.subs(swap))
+    if value.is_positive:
+        return 1
+    if value.is_negative:
+        return -1
+    return None
+
+
+def _cotton_vanishes(geometry, zero):
+    """In three dimensions: C_{abc} = D_c S_{ab} - D_b S_{ac}, S the Schouten tensor."""
+    import sympy as sp
+    n, g, x = geometry.n, geometry.g, geometry.coords
+    gamma = geometry.christoffel_ull()
+    ricci = geometry.ricci_ll()
+    scalar = geometry.ricci_scalar()
+    schouten = [[ricci[a][b] - scalar * g[a, b] / (2 * (n - 1)) for b in range(n)] for a in range(n)]
+
+    def derivative(a, b, c):
+        return sp.diff(schouten[a][b], x[c]) - sum(
+            gamma[d][c][a] * schouten[d][b] + gamma[d][c][b] * schouten[a][d] for d in range(n))
+
+    return all(zero(derivative(a, b, c) - derivative(a, c, b))
+               for a in range(n) for b in range(n) for c in range(b + 1, n))
+
+
+def _negative_somewhere(norm_squared, reader, entry):
+    """Whether a Killing vector's norm is negative at one of the sampled points of the chart.
+
+    The same points every run, drawn with a fixed seed. Each parameter and each free
+    function takes a positive value between 1/50 and 50. Each coordinate is drawn inside
+    the interval its domain gives it, where the reader can read the ends of that interval:
+    between the two when both are finite, within a factor of 50 of the finite one when
+    the other is infinite, and of either sign when both are. An end the reader cannot
+    read, as r_+ is, is taken to be 0 below and infinite above. A point where the norm is
+    not a real number is passed over.
+
+    So a norm that is negative only where the parameters leave the range the entry means,
+    or only beyond an end that could not be read, can read as timelike, and one negative
+    only on a set the points miss as not. OVERRULED names the spacetimes where the answer
+    is overruled, each with its reason.
+    """
+    import sympy as sp
+    if norm_squared == 0:
+        return False
+    functions = sorted(norm_squared.atoms(sp.core.function.AppliedUndef), key=sp.sstr)
+    held = {f: sp.Symbol(f"F{i}", positive=True) for i, f in enumerate(functions)}
+    expression = norm_squared.subs(held)
+    if expression.atoms(sp.Derivative, sp.DiracDelta):
+        return False
+    coordinate = {reader.symbol[name]: name for name in reader.coords}
+    ends = {symbol: _ends(reader, entry, name) for symbol, name in coordinate.items()}
+    wanted = set(expression.free_symbols)
+    for lower, upper in ends.values():
+        for end in (lower, upper):
+            if end is not None and end is not sp.oo and end is not -sp.oo:
+                wanted |= end.free_symbols
+    wanted |= set(coordinate)
+    ordered = sorted(wanted, key=lambda s: s.name)
+    arguments = sorted(expression.free_symbols, key=lambda s: s.name)
+    evaluate = sp.lambdify(arguments, expression, "mpmath")
+    source = random.Random(SEED)
+
+    def value_of(end, point):
+        try:
+            value = complex(end.subs(point).evalf())
+        except (TypeError, ValueError):
+            return None
+        return value.real if abs(value.imag) < 1e-12 else None
+
+    for _ in range(SAMPLES):
+        point = {s: sp.Float(50 ** source.uniform(-1, 1)) for s in ordered if s not in coordinate}
+        left = [s for s in ordered if s in coordinate]
+        inside = True
+        while left and inside:
+            ready = [s for s in left
+                     if all(e is None or e in (sp.oo, -sp.oo) or e.free_symbols <= set(point)
+                            for e in ends[s])] or left[:1]
+            for symbol in ready:
+                left.remove(symbol)
+                spread, share = 50 ** source.uniform(-1, 1), source.random()
+                lower, upper = ends[symbol]
+                low = None if lower in (None, -sp.oo) else value_of(lower, point) \
+                    if lower.free_symbols <= set(point) else None
+                high = None if upper in (None, sp.oo) else value_of(upper, point) \
+                    if upper.free_symbols <= set(point) else None
+                if lower is None or (lower is not -sp.oo and low is None):
+                    low, lower = 0.0, sp.Integer(0)
+                if lower is -sp.oo and high is None:
+                    value = spread if share < 0.5 else -spread
+                elif lower is -sp.oo:
+                    value = high - spread
+                elif high is None:
+                    value = low + spread
+                elif high > low:
+                    value = low + share * (high - low)
+                else:
+                    inside = False
+                    break
+                point[symbol] = sp.Float(value)
+        if not inside:
+            continue
+        try:
+            value = complex(evaluate(*(float(point[s]) for s in arguments)))
+        except (TypeError, ValueError, ZeroDivisionError, OverflowError):
+            continue
+        if value != value:
+            continue
+        if abs(value.imag) < 1e-12 * max(1.0, abs(value.real)) and value.real < 0:
+            return True
+    return False
+
+
+def _ends(reader, entry, coord):
+    """The two ends of a coordinate's interval as sympy expressions; None for one not read."""
+    import sympy as sp
+    import verify_metrics as vm
+    found = [interval(d, coord) for d in entry.get("domains", [])
+             if _plain_domain(d).startswith(coord + " \\in")]
+    if len(found) != 1 or found[0] is None:
+        return None, None
+
+    def read(text):
+        if text == "\\infty":
+            return sp.oo
+        if text == "-\\infty":
+            return -sp.oo
+        try:
+            value = reader.surface(sp.sympify(reader(text)))
+        except Exception:
+            return None
+        if value.atoms(sp.core.function.AppliedUndef) or value.has(sp.oo, sp.zoo, sp.nan):
+            return None
+        return value
+
+    return read(found[0][0]), read(found[0][1])
+
+
+def _sphere(g, symbols, coords, zero, whole):
+    """The longest chain of angles the chart shows a whole round sphere in, as coordinate names."""
+    import sympy as sp
+    n = len(symbols)
+
+    def linked(chain):
+        """The angles of the chain have no cross terms, and each one's component is the
+        one before it times the square of that one's sine."""
+        for i in chain:
+            if any(g[i, j] != 0 for j in range(n) if j != i):
+                return False
+        expected = g[chain[0], chain[0]]
+        for previous, i in zip(chain, chain[1:]):
+            expected = expected * sp.sin(symbols[previous]) ** 2
+            if not zero(g[i, i] - expected):
+                return False
+        return True
+
+    def alone(chain):
+        """Nothing but the sphere itself depends on the angles of the chain."""
+        angles = [symbols[i] for i in chain]
+        rest = [i for i in range(n) if i not in chain]
+        return not g[chain[0], chain[0]].has(*angles) and not any(
+            g[a, b].has(*angles) for a in rest for b in rest)
+
+    best = []
+
+    def extend(chain):
+        nonlocal best
+        if len(chain) >= 2:
+            if not linked(chain):
+                return
+            if len(chain) > len(best) and alone(chain) and whole([coords[i] for i in chain]):
+                best = list(chain)
+        for i in range(n):
+            if i not in chain:
+                extend(chain + [i])
+
+    for start in range(n):
+        extend([start])
+    return [coords[i] for i in best] or None
+
+
+def compute_within(metric_id, entry, budget, seconds):
+    """compute() in a child process that is stopped after `seconds`.
+
+    The budget bounds each tensor, but not every step of sympy between them: on 3 October
+    2026 a run of --all sat for a quarter of an hour on the toroidal chart of Bach and Weyl's
+    ring and computed nothing after it. A chart that overruns raises verify_metrics.Timeout
+    like one whose tensor does, and the facts kept for it stay as they were."""
+    import multiprocessing
+    import verify_metrics as vm
+
+    context = multiprocessing.get_context("fork")
+    receive, send = context.Pipe(duplex=False)
+
+    def child():
+        try:
+            send.send(("facts", compute(metric_id, entry, budget)))
+        except vm.Timeout as error:
+            send.send(("timeout", str(error)))
+        except BaseException as error:  # noqa: BLE001 - carried to the parent and raised there
+            send.send(("error", f"{type(error).__name__}: {error}"))
+
+    worker = context.Process(target=child, daemon=True)
+    worker.start()
+    send.close()
+    if not receive.poll(seconds):
+        worker.kill()
+        worker.join()
+        raise vm.Timeout(f"the chart took more than {seconds:g} s")
+    kind, value = receive.recv()
+    worker.join()
+    if kind == "timeout":
+        raise vm.Timeout(value)
+    if kind == "error":
+        raise RuntimeError(f"{metric_id}/{entry['id']}: {value}")
+    return value
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--system", action="append", default=[],
+                        help="compute only <metric_id>/<system_id>, repeatable")
+    parser.add_argument("--all", action="store_true", help="compute every chart again")
+    parser.add_argument("--check", action="store_true",
+                        help="compute, compare with metric_tags.json and write nothing")
+    parser.add_argument("--budget", type=float, default=300,
+                        help="seconds sympy may spend on one tensor")
+    parser.add_argument("--chart-seconds", type=float, default=180,
+                        help="seconds one chart may take in all before it is left unfinished")
+    arguments = parser.parse_args()
+
+    sys.path.insert(0, str(HERE))
+    import verify_metrics as vm
+
+    facts = load_facts()
+    seen, differing, unfinished = set(), [], []
+    for metric_id, entry in published_charts():
+        name = f"{metric_id}/{entry['id']}"
+        seen.add(name)
+        if arguments.system and name not in arguments.system:
+            continue
+        relations = vm.PARAMETER_RELATIONS.get((metric_id, entry["id"]), {})
+        current = facts.get(name)
+        orders = vm.ORDERS.get((metric_id, entry["id"]))
+        fresh = (current is not None and current["stamp"] == stamp(entry)
+                 and current["relations"] == relations
+                 and current.get("orders") == (list(orders) if orders else None))
+        if fresh and not (arguments.all or arguments.system or arguments.check):
+            continue
+        started = time.time()
+        try:
+            computed = compute_within(metric_id, entry, arguments.budget, arguments.chart_seconds)
+        except vm.Timeout as error:
+            unfinished.append(f"{name}: {error}")
+            print(f"  UNFINISHED {name}: {error}", flush=True)
+            continue
+        print(f"  {name}  {time.time() - started:.1f}s", flush=True)
+        if current != computed:
+            differing.append(name)
+        if not arguments.check:
+            facts[name] = computed
+            write_facts(facts)
+
+    if not arguments.check and not arguments.system:
+        gone = [name for name in facts if name not in seen]
+        for name in gone:
+            del facts[name]
+        if gone:
+            write_facts(facts)
+    if differing:
+        verb = "differ from" if arguments.check else "were written to"
+        print(f"\n{len(differing)} charts {verb} {FACTS.name}:")
+        for name in differing:
+            print(f"  {name}")
+    if unfinished:
+        print(f"\n{len(unfinished)} UNFINISHED:", file=sys.stderr)
+        return 1
+    return 1 if arguments.check and differing else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

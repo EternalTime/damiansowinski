@@ -18790,5 +18790,15 @@ DRAWN["shell_void"] = shell_void
 import extended_inflation_drawings as extended_drawings
 DRAWN["extended_inflation"] = lambda ck, src: extended_drawings.curvature(ck, src, sys.modules[__name__])
 
+import electron_bubble as _electron_bubble
+
+
+def electron_bubble(ck, src):
+    return _electron_bubble.curvature_views(ck, src, sys.modules[__name__])
+
+
+DRAWN["electron_bubble"] = electron_bubble
+
+
 if __name__ == "__main__":
     sys.exit(main())

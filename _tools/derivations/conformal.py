@@ -31946,5 +31946,18 @@ DRAWN["extended_inflation"] = lambda ck, src: extended_drawings.conformal(ck, sr
 CAPTIONS.update({("extended_inflation", system): [extended_drawings.CONFORMAL_CAPTION]
                  for system in ("cosmic", "conformal")})
 
+import electron_bubble as _electron_bubble
+
+
+def electron_bubble(ck, src):
+    return _electron_bubble.conformal_views(ck, src, sys.modules[__name__])
+
+
+DRAWN["electron_bubble"] = electron_bubble
+CAPTIONS[("electron_bubble", "axis")] = [
+    r"The joined rotation axis, with a flat interior between the shell's two poles and null infinity on all four edges."
+]
+
+
 if __name__ == "__main__":
     sys.exit(main())
