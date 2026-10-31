@@ -5322,5 +5322,10 @@ hm.register_dimensions(sys.modules[__name__])
 import torus_universe_2plus1 as _torus
 DIMENSIONS.update(_torus.DIMENSIONS)
 
+import exponential_scalar_universes as _exponential_scalar
+DIMENSIONS.update(_exponential_scalar.DIMENSIONS)
+HELD.update(_exponential_scalar.HELD)
+RATES.update(_exponential_scalar.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

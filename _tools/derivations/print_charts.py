@@ -37031,5 +37031,11 @@ _electron_bubble.register_charts(sys.modules[__name__])
 import torus_universe_2plus1 as _torus
 CHARTS[_torus.METRIC] = [lambda system=system: _torus.chart_spec(system) for system in _torus.CHARTS]
 
+import exponential_scalar_universes as _exponential_scalar
+CHARTS[_exponential_scalar.METRIC] = [
+    lambda system=system: _exponential_scalar.chart_spec(system)
+    for system in _exponential_scalar.CHARTS
+]
+
 if __name__ == "__main__":
     main()
