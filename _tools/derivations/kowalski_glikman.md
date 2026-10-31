@@ -75,9 +75,10 @@ Projection and isometric spatial embedding are separate constructions.
 
 A spatial surface at fixed $u$ and $v$, with only $x_1$ and $x_4$ varying, has induced metric $dx_1^2+dx_4^2$.
 Its Euclidean embedding is the plane $(x_1,x_4,0)$.
-The static drawing fixes $\mu cu=3$ and $v=0$, reaches the transverse radius $3/\mu$, and uses polar coordinates solely to parametrize this plane.
+The static drawing fixes $u=v=0$, reaches the transverse radius $3/\mu$, and uses polar coordinates solely to parametrize this plane.
 The pulled-back two-metric is $d\rho^2+\rho^2d\varphi^2$; five generator checks compare the embedded distances and planar height with the published metric.
-The same surface is marked at $\mu cu=3$ on both spacetime views, with its transverse ellipse rescaled by the Rosen scale factors.
+The same surface is marked on the floor of the Brinkmann view.
+The wave front $u=0$ is a caustic outside the open Rosen patch; its absence there and the flat transverse embedding are recorded in the spacetime's exceptions.
 A moving ring of particles describes geodesics and is not used as this spatial embedding.
 
 The scalar figure must use the stored zero Ricci and Kretschmann scalars through the existing curvature generator.

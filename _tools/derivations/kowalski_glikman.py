@@ -94,20 +94,20 @@ def check_chart(chart, system):
 
 def embedding_views(ck, src, e):
     """The induced transverse plane, pulled back to polar coordinates and embedded isometrically."""
-    fixed = {"u": 3, "v": 0, **{f"x_{i}": 0 for i in range(2, 10) if i != 4}}
+    fixed = {"u": 0, "v": 0, **{f"x_{i}": 0 for i in range(2, 10) if i != 4}}
     sl = e.Slice(src, ID, "brinkmann", "x_1", None, fixed, {"mu": 1}, turn="x_4")
     piece = e.Piece("plane", "sheet", sl, 0, 3, size=6,
                     ends=(("centre", None), ("edge", r"the transverse plane extending to infinity")),
                     marks=[(r, "r", None) for r in (1, 2, 3)])
     ck.isometry("Eleven dimensional wave: transverse plane", piece)
     ck.form("Eleven dimensional wave: Z=0", piece, lambda r: np.zeros_like(r), 6)
-    surface = e.Surface([piece], label=r"$\mu cu=3$", time=3)
+    surface = e.Surface([piece])
     fig = e.figure_of([surface], {"sheet": "cover"}, 6)
     fig.legend("fill", "cover", "the transverse Euclidean plane")
     fig.legend("line", "r", r"$\mu\rho=1,2,3$")
     fig.legend("line", "meridian", r"$\varphi$ constant")
     return [e.view("plane", "Transverse plane", r"$1/\mu$", [surface], fig.done(),
-                   settings=r"$\mu=1$, $\mu cu=3$, $v=0$; the remaining transverse coordinates zero.")]
+                   settings=r"$\mu=1$, $u=v=0$; the remaining transverse coordinates zero.")]
 
 
 EMBEDDING_CAPTION = [
@@ -199,12 +199,14 @@ def ray_figure(spec, pj):
                 pieces.append(P[::-1] if endpoint == lo else P)
             fig.line(family, np.vstack(pieces))
     fig.line("axis", np.array([[0, 0, lo], [0, 0, hi]]))
-    # The embedded plane is u=3,v=0; its projection is the disc at that value of u.
-    for m in slices.moments(ID):
-        if lo < m.time < hi:
+    # The static embedded plane is u=v=0, the floor of the Brinkmann projection.
+    # That wave front is outside the open Rosen patch, which starts at a caustic.
+    for m in slices.moments(ID, label=r"$u=0$"):
+        moment_time = m.time or 0.0
+        if lo <= moment_time <= hi:
             theta = np.linspace(0, 2*math.pi, 181)
-            a = np.array([math.sin(m.time/3), math.sin(m.time/6)]) if rosen else np.ones(2)
-            ring = np.column_stack([3*np.cos(theta)/a[0], 3*np.sin(theta)/a[1], np.full(len(theta), m.time)])
+            a = np.array([math.sin(moment_time/3), math.sin(moment_time/6)]) if rosen else np.ones(2)
+            ring = np.column_stack([3*np.cos(theta)/a[0], 3*np.sin(theta)/a[1], np.full(len(theta), moment_time)])
             fig.slice(m, fills=[[ring]])
     fig.legend("line", "above", "rays from the Brinkmann origin")
     fig.legend("line", "below", "rays initially parallel to the axis")

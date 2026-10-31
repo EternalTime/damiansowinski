@@ -1,0 +1,11 @@
+{
+  "flat": "At fixed u and v the transverse surface has induced metric dx_1^2 + dx_4^2 and embeds isometrically as a Euclidean plane. Its nonzero tidal curvature acts between successive wave fronts.",
+  "hidden": [
+    {
+      "reason": "The embedded wave front u=0 is a coordinate caustic outside the open Rosen patch 0<u<3*pi/(mu*c).",
+      "drawings": [
+        "kowalski_glikman/rosen/focus"
+      ]
+    }
+  ]
+}
