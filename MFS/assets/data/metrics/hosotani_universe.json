@@ -1,0 +1,81 @@
+{
+  "id": "hosotani_universe",
+  "name": "Hosotani Universe",
+  "short_name": "Hosotani Universe",
+  "description": "A closed universe filled with a homogeneous magnetic SU(2) gauge field, expanding from a curvature singularity and recollapsing.",
+  "tags": [
+    "cosmology",
+    "closed universe",
+    "three sphere",
+    "homogeneous",
+    "isotropic",
+    "expanding universe",
+    "radiation",
+    "Yang-Mills",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model",
+    "conformally flat",
+    "spherically symmetric"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units $c=\\hbar=1$, so cosmic time carries dimensions of length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Magnetic energy fills the round 3-spheres of Yutaka Hosotani's 1984 universe [hosotani1984]. He found an exact solution of the coupled Einstein-Yang-Mills equations with a homogeneous gauge field. Every comoving observer measures the same energy density and isotropic pressure. The spatial rotations act on the field together with internal gauge rotations [gibbons1994ym].¶The gauge group is $SU(2)$, whose group manifold is itself a 3-sphere. The spatial geometry therefore supplies a natural map into the gauge group. A single amplitude $f$ multiplies the invariant gauge connection. Hosotani's configuration has $f=1/2$, a purely magnetic solution between the pure gauge vacua at $f=0$ and $f=1$ [gibbons1994ym].¶As the universe expands, the magnetic strength falls as $a^{-2}$, where $a$ is the spatial radius. Its energy density $\\rho$ falls as $a^{-4}$, and its pressure is $p=\\rho/3$. The radius evolves as $a=\\ell\\sin\\eta$, where $\\eta$ is conformal time and $\\ell$ is the maximum radius [gibbons1994ym]. In units with $c=\\hbar=1$, the gravitational constant $G$ and gauge coupling $e$ fix $\\ell^2=4\\pi G/e^2$. Expansion ends at $a=\\ell$, and contraction takes the universe to a second curvature singularity after a total cosmic lifetime of $2\\ell$.¶The magnetic configuration rests at the top of the reduced gauge potential. Small homogeneous disturbances grow away from $f=1/2$, and Hosotani identified one unstable gauge mode [hosotani1984, gibbons1994ym]. The equilibrium concerns the gauge amplitude; the spatial radius expands and recollapses.¶Gary William Gibbons and Alan R. Steif investigated time dependent homogeneous gauge configurations in work published in 1994 [gibbons1994ym]. They followed the gauge amplitude between vacua with different winding numbers. For a massless fermion coupled to this gauge field, an energy level crosses zero as the amplitude passes through $f=1/2$. At the magnetic equilibrium, the corresponding fermion mode has zero energy.",
+  "references": [
+    "hosotani1984",
+    "gibbons1994ym"
+  ],
+  "related": [
+    {
+      "id": "frw",
+      "kind": "generalisation",
+      "text": "A closed radiation cosmology with $a=\\ell\\sin\\eta$, where $\\eta$ is conformal time and $\\ell$ is the maximum radius. A homogeneous $SU(2)$ magnetic field supplies the radiation stress [gibbons1994ym]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "conformal",
+      "text": "Conformal time separates the evolving radius from the round 3-sphere: $ds^2=a^2(-d\\eta^2+d\\Omega_3^2)$ [gibbons1994ym]."
+    }
+  ],
+  "coordinates": [
+    {
+      "id": "cosmic_hyperspherical",
+      "name": "Cosmic Hyperspherical",
+      "coords": [
+        "t",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Maximum spatial radius, a positive length, with $\\ell^2=4\\pi G/e^2$ for gauge coupling $e$ and the fixed homogeneous $SU(2)$ amplitude $f=1/2$; the spatial radius is $a=\\sqrt{t(2\\ell-t)}=\\ell\\sin\\eta$"
+        }
+      ],
+      "convention": "We use cosmic time $t$ and angles $(\\chi,\\theta,\\phi)$ on the round 3-sphere. A dot in the geodesic equations denotes a derivative with respect to an affine parameter."
+    },
+    {
+      "id": "conformal_hyperspherical",
+      "name": "Conformal Hyperspherical",
+      "coords": [
+        "\\eta",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "Maximum spatial radius, a positive length, with $\\ell^2=4\\pi G/e^2$ for gauge coupling $e$ and the fixed homogeneous $SU(2)$ amplitude $f=1/2$; the spatial radius is $a=\\sqrt{t(2\\ell-t)}=\\ell\\sin\\eta$"
+        }
+      ],
+      "convention": "We use dimensionless conformal time $\\eta$, with $t=\\ell(1-\\cos\\eta)$ and angles $(\\chi,\\theta,\\phi)$ on the round 3-sphere. A dot in the geodesic equations denotes a derivative with respect to an affine parameter."
+    }
+  ]
+}
