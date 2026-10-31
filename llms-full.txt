@@ -2836,6 +2836,20 @@ A smooth spacetime of five dimensions with no horizon and no singularity, which 
 - chart Extremal, Isotropic: coordinates $(t, \rho, \theta, \phi, y)$, $$ds^2 = \left(1 + \dfrac{m}{\rho}\right)^{-1}\left(-c^2dt^2 + dy^2\right) + \left(1 + \dfrac{m}{\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Einstein Metric, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \sqrt{1 - \dfrac{r_B}{r}}\left(-\left(1 - \dfrac{r_S}{r}\right)c^2dt^2 + \dfrac{dr^2}{\left(1 - \dfrac{r_S}{r}\right)\left(1 - \dfrac{r_B}{r}\right)} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### The Torus Universe in Three Dimensions
+
+A compact spatial torus in a flat vacuum spacetime, with expanding, contracting, and static families.
+
+- id: `torus_universe_2plus1`
+- tags: vacuum, flat, conformally flat, three-dimensional, cosmology, compact, topology, multiply connected, torus, closed universe, Lorentzian, exact solution, Einstein equations
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/torus_universe_2plus1.json
+- chart Proper Time: coordinates $(t, x, y)$, $$ds^2=-c^2dt^2+\left(a\,dx+b\,dy\right)^2+c^2t^2\left(\lambda\,dx+\mu\,dy\right)^2$$
+- chart Mean Curvature Time: coordinates $(\tau, x, y)$, $$ds^2=-\frac{d\tau^2}{\tau^4}+\left(a\,dx+b\,dy\right)^2+\frac{1}{\tau^2}\left(\lambda\,dx+\mu\,dy\right)^2$$
+- chart Minkowski Cover: coordinates $(T, X, Y)$, $$ds^2=-c^2dT^2+dX^2+dY^2$$
+- chart Null Boundary Coordinates: coordinates $(u, x, y)$, $$ds^2=-du\left(\lambda\,dx+\mu\,dy\right)+u\left(\lambda\,dx+\mu\,dy\right)^2+\left(a\,dx+b\,dy\right)^2$$
+- chart Static Torus: coordinates $(t, x, y)$, $$ds^2=-c^2dt^2+\left(r_1\,dx+r_2\cos\phi\,dy\right)^2+r_2^2\sin^2\phi\,dy^2$$
+
 ### The Universe from Nothing
 
 Half of a 4-sphere joined at its equator to the waist of de Sitter's closed universe: the geometry of Alexander Vilenkin's universe created by tunnelling from nothing (1982) and of the no-boundary proposal of James Hartle and Stephen Hawking (1983). The south pole of the sphere is a point like any other on it, so the universe has no first moment and no edge, and above the equator it inflates.

@@ -2,7 +2,7 @@
   "id": "torus_universe_2plus1",
   "name": "The Torus Universe in Three Dimensions",
   "short_name": "Torus Universe",
-  "description": "A locally flat vacuum cosmology with a compact spatial torus and evolving area and shape.",
+  "description": "A compact spatial torus in a flat vacuum spacetime, with expanding, contracting, and static families.",
   "tags": [
     "vacuum",
     "flat",
@@ -10,7 +10,13 @@
     "three-dimensional",
     "cosmology",
     "compact",
-    "topology"
+    "topology",
+    "multiply connected",
+    "torus",
+    "closed universe",
+    "Lorentzian",
+    "exact solution",
+    "Einstein equations"
   ],
   "signature": "(-,+,+)",
   "convention": "We use signature $(-,+,+)$, with $c$ explicit and tensor time coordinates scaled by $c$.",
