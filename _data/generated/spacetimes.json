@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 226,
+  "count": 227,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -46516,6 +46516,11 @@
           "id": "moncrief_taub_nut",
           "kind": "family",
           "text": "A compact Killing horizon separates a globally hyperbolic vacuum cosmology from an acausal extension [moncriefisenberg1983]."
+        },
+        {
+          "id": "torus_universe_2plus1",
+          "kind": "family",
+          "text": "Two commuting boost and translation identifications close the spacelike sections into tori. Their extension across a null boundary has timelike tori and closed timelike curves [louko_marolf1994]."
         }
       ],
       "references": [
@@ -46540,7 +46545,8 @@
         "lachiezerey1995",
         "gott1998",
         "brill1996",
-        "moncriefisenberg1983"
+        "moncriefisenberg1983",
+        "louko_marolf1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -55646,6 +55652,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "With a mass for the graviton, empty space in three dimensions need not be flat. Vuorio's universe is such a vacuum, whose light cones tip over as Gödel's do [vuorio1985]."
+        },
+        {
+          "id": "torus_universe_2plus1",
+          "kind": "locally_same",
+          "text": "The same flat vacuum in three dimensions, with space closed into a torus by two commuting identifications [louko_marolf1994]."
         }
       ],
       "references": [
@@ -55670,7 +55681,8 @@
         "brill1996",
         "emparan2002holograms",
         "emparan2020qbtz",
-        "vuorio1985"
+        "vuorio1985",
+        "louko_marolf1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -64946,6 +64958,11 @@
           "id": "poincare_dodecahedral",
           "kind": "family",
           "text": "A closed Friedmann universe made smaller still by identifying points, its space a dodecahedron with each face glued to the face opposite it. It was proposed in 2003 for the weak correlations of the microwave sky at wide angles, and searches for its circles in the sky found none [luminet2003, key2007]."
+        },
+        {
+          "id": "torus_universe_2plus1",
+          "kind": "family",
+          "text": "A flat vacuum cosmology with two compact spatial directions and an evolving torus shape [louko_marolf1994]."
         }
       ],
       "references": [
@@ -64976,7 +64993,8 @@
         "desitter1917",
         "misner1967",
         "anton2023",
-        "key2007"
+        "key2007",
+        "louko_marolf1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/small_universes.json",
@@ -73117,6 +73135,434 @@
           ],
           "ricci_scalar": "R = \\dfrac{3r_B^2\\left(r - r_S\\right)}{8r^{7/2}\\left(r - r_B\\right)^{3/2}}",
           "kretschmann": "K = \\dfrac{768r^4\\,r_S^2 + 768r^4\\,r_S\\,r_B + 192r^4\\,r_B^2 - 3456r^3\\,r_S^2\\,r_B - 2496r^3\\,r_S\\,r_B^2 - 384r^3\\,r_B^3 + 6096r^2\\,r_S^2\\,r_B^2 + 2616r^2\\,r_S\\,r_B^3 + 207r^2\\,r_B^4 - 4824r\\,r_S^2\\,r_B^3 - 918r\\,r_S\\,r_B^4 + 1431r_S^2\\,r_B^4}{64r^7\\left(r - r_B\\right)^3}"
+        }
+      ]
+    },
+    {
+      "id": "torus_universe_2plus1",
+      "name": "The Torus Universe in Three Dimensions",
+      "short_name": "Torus Universe",
+      "description": "A compact spatial torus in a flat vacuum spacetime, with expanding, contracting, and static families.",
+      "tags": [
+        "vacuum",
+        "flat",
+        "conformally flat",
+        "three-dimensional",
+        "cosmology",
+        "compact",
+        "topology",
+        "multiply connected",
+        "torus",
+        "closed universe",
+        "Lorentzian",
+        "exact solution",
+        "Einstein equations"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "We use signature $(-,+,+)$ and keep $c$ explicit; components labelled $t$ and $T$ refer to $ct$ and $cT$.",
+      "related": [
+        {
+          "id": "point_particle_2plus1",
+          "kind": "locally_same",
+          "text": "Away from a point particle, the local geometry is the same flat vacuum in three dimensions. The torus universe closes space by two commuting identifications [carlip2005, louko_marolf1994]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "The torus universe uses two commuting boost and translation identifications. An extension through its null boundary has timelike tori and closed timelike curves, as in Misner's boost quotient [louko_marolf1994]."
+        },
+        {
+          "id": "small_universes",
+          "kind": "family",
+          "text": "The torus branch of Small Universes has three compact spatial directions. The torus universe in three dimensions has two and allows their global shape to evolve."
+        }
+      ],
+      "references": [
+        "martinec1984",
+        "carlip1992torus",
+        "witten1988",
+        "moncrief1989",
+        "hosoya_nakao1990",
+        "louko_marolf1994",
+        "carlip2005"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/torus_universe_2plus1.json",
+      "charts": [
+        {
+          "id": "proper_time",
+          "name": "Proper Time",
+          "coordinates": [
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (0,\\infty)",
+            "x \\in [0,1)",
+            "y \\in [0,1)",
+            "a\\mu-b\\lambda>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Transverse translation around the first torus circuit, a length."
+            },
+            {
+              "symbol": "b",
+              "description": "Transverse translation around the second torus circuit, a length."
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Boost rapidity around the first torus circuit."
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Boost rapidity around the second torus circuit."
+            }
+          ],
+          "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The proper time $t$ carries units of time, with $\\Delta=a\\mu-b\\lambda>0$ and spatial area $A=ct\\Delta$. The torus modulus is $m=(b+ict\\mu)/(a+ict\\lambda)$. Reversing the time orientation gives the contracting family.",
+          "line_element": "ds^2=-c^2dt^2+\\left(a\\,dx+b\\,dy\\right)^2+c^2t^2\\left(\\lambda\\,dx+\\mu\\,dy\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\lambda^2\\,c^2\\,t^2 + a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\lambda\\,\\mu\\,c^2\\,t^2 + a\\,b"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\lambda\\,\\mu\\,c^2\\,t^2 + a\\,b"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\mu^2\\,c^2\\,t^2 + b^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "mean_curvature",
+          "name": "Mean Curvature Time",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\tau \\in (0,\\infty)",
+            "x \\in [0,1)",
+            "y \\in [0,1)",
+            "a\\mu-b\\lambda>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Transverse translation around the first torus circuit, a length."
+            },
+            {
+              "symbol": "b",
+              "description": "Transverse translation around the second torus circuit, a length."
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Boost rapidity around the first torus circuit."
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Boost rapidity around the second torus circuit."
+            }
+          ],
+          "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The mean curvature coordinate, in units of inverse length, is $\\tau=1/(ct)$, decreasing toward the expanding future. Its modulus is $m=(b+i\\mu/\\tau)/(a+i\\lambda/\\tau)$ and its area is $A=(a\\mu-b\\lambda)/\\tau$.",
+          "line_element": "ds^2=-\\frac{d\\tau^2}{\\tau^4}+\\left(a\\,dx+b\\,dy\\right)^2+\\frac{1}{\\tau^2}\\left(\\lambda\\,dx+\\mu\\,dy\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{\\tau^4}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{a^2\\,\\tau^2 + \\lambda^2}{\\tau^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\dfrac{a\\,b\\,\\tau^2 + \\lambda\\,\\mu}{\\tau^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\dfrac{a\\,b\\,\\tau^2 + \\lambda\\,\\mu}{\\tau^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{b^2\\,\\tau^2 + \\mu^2}{\\tau^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "minkowski",
+          "name": "Minkowski Cover",
+          "coordinates": [
+            "T",
+            "X",
+            "Y"
+          ],
+          "domains": [
+            "T \\in (0,\\infty)",
+            "X \\in (-cT,cT)",
+            "Y \\in (-\\infty,\\infty)",
+            "a\\mu-b\\lambda>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Transverse translation around the first torus circuit, a length."
+            },
+            {
+              "symbol": "b",
+              "description": "Transverse translation around the second torus circuit, a length."
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Boost rapidity around the first torus circuit."
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Boost rapidity around the second torus circuit."
+            }
+          ],
+          "convention": "For time $T$ and lengths $X,Y$, the developing map is $cT=ct\\cosh q$, $X=ct\\sinh q$, $Y=ax+by$, with $q=\\lambda x+\\mu y$. The first identification is $(cT,X,Y)\\sim(cT\\cosh\\lambda+X\\sinh\\lambda,X\\cosh\\lambda+cT\\sinh\\lambda,Y+a)$. The second has $\\mu$ and $b$ in place of $\\lambda$ and $a$. Both act on the wedge $cT>|X|$, with $a\\mu-b\\lambda>0$.",
+          "line_element": "ds^2=-c^2dT^2+dX^2+dY^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "null_boundary",
+          "name": "Null Boundary Coordinates",
+          "coordinates": [
+            "u",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (0,\\infty)",
+            "x \\in [0,1)",
+            "y \\in [0,1)",
+            "a\\mu-b\\lambda>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Transverse translation around the first torus circuit, a length."
+            },
+            {
+              "symbol": "b",
+              "description": "Transverse translation around the second torus circuit, a length."
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Boost rapidity around the first torus circuit."
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Boost rapidity around the second torus circuit."
+            }
+          ],
+          "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. For any reference length $\\ell>0$, write $q=\\lambda x+\\mu y$, $cT=(\\ell e^q+u e^{-q}/\\ell)/2$, $X=(\\ell e^q-u e^{-q}/\\ell)/2$, and $Y=ax+by$. The area is $A=\\sqrt{u}(a\\mu-b\\lambda)$, with $u>0$ and $a\\mu-b\\lambda>0$. The coordinate $u$ carries units of length squared.",
+          "line_element": "ds^2=-du\\left(\\lambda\\,dx+\\mu\\,dy\\right)+u\\left(\\lambda\\,dx+\\mu\\,dy\\right)^2+\\left(a\\,dx+b\\,dy\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "-\\dfrac{\\lambda}{2}"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "-\\dfrac{\\lambda}{2}"
+            },
+            {
+              "indices": [
+                "u",
+                "y"
+              ],
+              "value": "-\\dfrac{\\mu}{2}"
+            },
+            {
+              "indices": [
+                "y",
+                "u"
+              ],
+              "value": "-\\dfrac{\\mu}{2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\lambda^2\\,u + a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "\\lambda\\,\\mu\\,u + a\\,b"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "\\lambda\\,\\mu\\,u + a\\,b"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\mu^2\\,u + b^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "static",
+          "name": "Static Torus",
+          "coordinates": [
+            "t",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in [0,1)",
+            "y \\in [0,1)",
+            "r_1>0",
+            "r_2>0",
+            "0<\\phi<\\pi"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_1",
+              "description": "Length of the first spatial translation."
+            },
+            {
+              "symbol": "r_2",
+              "description": "Length of the second spatial translation."
+            },
+            {
+              "symbol": "\\phi",
+              "description": "Angle between the two spatial translations."
+            }
+          ],
+          "convention": "The dimensionless coordinates $x$ and $y$ have period one, with $(x,y)\\sim(x+1,y)\\sim(x,y+1)$. The two spatial translations have lengths $r_1,r_2>0$ and angle $0<\\phi<\\pi$. The constant modulus is $m=(r_2/r_1)e^{i\\phi}$ and the area is $A=r_1r_2\\sin\\phi$.",
+          "line_element": "ds^2=-c^2dt^2+\\left(r_1\\,dx+r_2\\cos\\phi\\,dy\\right)^2+r_2^2\\sin^2\\phi\\,dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "r_1^2"
+            },
+            {
+              "indices": [
+                "x",
+                "y"
+              ],
+              "value": "r_1\\,r_2\\cos\\phi"
+            },
+            {
+              "indices": [
+                "y",
+                "x"
+              ],
+              "value": "r_1\\,r_2\\cos\\phi"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "r_2^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },

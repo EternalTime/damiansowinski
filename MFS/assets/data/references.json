@@ -1,5 +1,5 @@
 {
-  "version": "52b0fc801418d529",
+  "version": "c37326abddb57494",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -34597,6 +34597,80 @@
         "pages": "2129--2131",
         "year": "1985",
         "doi": "10.1103/physrevd.31.2129"
+      }
+    },
+    "martinec1984": {
+      "type": "article",
+      "fields": {
+        "title": "Soluble systems in quantum gravity",
+        "author": "Martinec, Emil",
+        "journal": "Physical Review D",
+        "volume": "30",
+        "number": "6",
+        "pages": "1198--1204",
+        "year": "1984",
+        "doi": "10.1103/PhysRevD.30.1198",
+        "url": "https://doi.org/10.1103/PhysRevD.30.1198"
+      }
+    },
+    "moncrief1989": {
+      "type": "article",
+      "fields": {
+        "title": "Reduction of the {Einstein} equations in 2+1 dimensions to a {Hamiltonian} system over {Teichm\\\"uller} space",
+        "author": "Moncrief, Vincent",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "30",
+        "number": "12",
+        "pages": "2907--2914",
+        "year": "1989",
+        "doi": "10.1063/1.528475",
+        "url": "https://doi.org/10.1063/1.528475"
+      }
+    },
+    "hosoya_nakao1990": {
+      "type": "article",
+      "fields": {
+        "title": "(2+1)-dimensional pure gravity for an arbitrary closed initial surface",
+        "author": "Hosoya, Akio and Nakao, Ken-ichi",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "7",
+        "number": "2",
+        "pages": "163--176",
+        "year": "1990",
+        "doi": "10.1088/0264-9381/7/2/010",
+        "url": "https://doi.org/10.1088/0264-9381/7/2/010"
+      }
+    },
+    "carlip1992torus": {
+      "type": "article",
+      "fields": {
+        "title": "(2+1)-dimensional {Chern-Simons} gravity as a {Dirac} square root",
+        "author": "Carlip, Steven",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "10",
+        "pages": "3584--3590",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.3584",
+        "eprint": "hep-th/9109006",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.45.3584"
+      }
+    },
+    "louko_marolf1994": {
+      "type": "article",
+      "fields": {
+        "title": "The solution space of 2 + 1 gravity on $\\mathbb{R}\\times T^2$ in {Witten}'s connection formulation",
+        "author": "Louko, Jorma and Marolf, Donald M.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "2",
+        "pages": "311--330",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/2/005",
+        "eprint": "gr-qc/9308018",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/11/2/005"
       }
     }
   }

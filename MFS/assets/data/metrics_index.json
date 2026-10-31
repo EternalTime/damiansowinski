@@ -4198,7 +4198,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "fd774c0e94b8bec8",
+    "version": "2b85dcbf4b8a910f",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -4996,7 +4996,7 @@
       "conformally flat",
       "tachyon"
     ],
-    "version": "1a7c2cbf23899ba0",
+    "version": "9761f3ab88ecc6c3",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
     "embedding": "c40545f1ea0c929c"
@@ -5817,7 +5817,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "156439d55b316403",
+    "version": "2da0db9d1f582b85",
     "diagrams": "4fe4b870a1063747",
     "conformal": "60e261619c0672af",
     "embedding": "bc57c8422b6337be"
@@ -6481,6 +6481,28 @@
     "conformal": "21c461f09f96be29",
     "embedding": "30db83ef9fd21560",
     "curvature": "019555d88875ce40"
+  },
+  {
+    "id": "torus_universe_2plus1",
+    "name": "Torus Universe",
+    "tags": [
+      "vacuum",
+      "flat",
+      "conformally flat",
+      "three-dimensional",
+      "cosmology",
+      "compact",
+      "topology",
+      "multiply connected",
+      "torus",
+      "closed universe",
+      "Lorentzian",
+      "exact solution",
+      "Einstein equations"
+    ],
+    "version": "1fbb2b2e0baa77b1",
+    "diagrams": "67cfb5edf797bd84",
+    "curvature": "b8a26f23ab988956"
   },
   {
     "id": "universe_from_nothing",

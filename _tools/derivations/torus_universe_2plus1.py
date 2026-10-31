@@ -127,7 +127,7 @@ def projection_captions():
         ("proper_time", "The torus cell in proper time, with two pairs of identified sides."),
         ("mean_curvature", "The torus cell in mean curvature time, with the expanding future upward."),
         ("minkowski", "The Minkowski covering wedge, with paired boost and translation cuts."),
-        ("null_boundary", "The torus cell in null boundary coordinates, within the spacelike region $u>0$."),
+        ("null_boundary", "The torus cell in null boundary coordinates, with spacelike torus slices at $u>0$."),
         ("static", "The static torus cell, with paired spatial translations."),
     )}
 
@@ -195,7 +195,7 @@ def quotient_figure(spec):
               (r"$u/\ell^2=1/4$", r"$u/\ell^2=4$") if system == "null_boundary" else
               (r"$ct/\ell=1/2$", r"$ct/\ell=2$"))
     for t, label in zip((0.5, 2.0), labels):
-        fig.label(sl.to_drawing(native(t, 0, 0)), label, "r", dx=-6)
+        fig.label(sl.to_drawing(native(t, 0, 0)), label, "l", dx=8)
     orientation = [-1, 0, 0] if system == "mean_curvature" else "tau" if system == "null_boundary" else "vector"
     cones = [pj.future_cone(sl, native(t, x, y), 0.19, orient=orientation)
              for t in (0.8, 1.5) for x, y in ((0.25, 0.25), (0.75, 0.75))]
