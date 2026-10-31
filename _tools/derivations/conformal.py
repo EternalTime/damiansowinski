@@ -31958,6 +31958,8 @@ CAPTIONS[("electron_bubble", "axis")] = [
     r"The joined rotation axis, with a flat interior between the shell's two poles and null infinity on all four edges."
 ]
 
+# A two-coordinate reduction suppresses one of the two independent torus winding classes.
+NOT_DRAWN.add("torus_universe_2plus1")
 
 if __name__ == "__main__":
     sys.exit(main())

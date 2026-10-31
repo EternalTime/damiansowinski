@@ -104,3 +104,129 @@ def chart_check(chart, system):
         actual = np.asarray(metric_at(*arguments), dtype=float)
         if not np.allclose(actual, expected, rtol=2e-12, atol=2e-12):
             raise AssertionError(f"{METRIC}/{system}: the developing map disagrees at sample {k}")
+
+
+EVOLVING = {"a": 1, "b": "1/3", "lambda": 1, "mu": "sqrt(2)"}
+STATIC = {"r_1": 1, "r_2": "11/10", "phi": "pi/3"}
+
+
+def projection_specs(Projection):
+    """Both cuts of one complete torus cell, in every published chart."""
+    heights = {"proper_time": "$z=ct$", "mean_curvature": r"$z=-\ell^2\tau$",
+               "null_boundary": r"$z=u/(2\ell)$", "static": "$z=ct$"}
+    return [Projection(METRIC, system, "cell", "The torus identifications", quotient_figure,
+                       STATIC if system == "static" else EVOLVING,
+                       input=(r"$\ell=1$, the length unit; Minkowski covering coordinates."
+                              if system == "minkowski" else
+                              r"$\ell=1$, the length unit; flat spatial developments at height " + heights[system] + "."))
+            for system in CHARTS]
+
+
+def projection_captions():
+    return {(METRIC, system, "cell"): [caption] for system, caption in (
+        ("proper_time", "The torus cell in proper time, with two pairs of identified sides."),
+        ("mean_curvature", "The torus cell in mean curvature time, with the expanding future upward."),
+        ("minkowski", "The Minkowski covering wedge, with paired boost and translation cuts."),
+        ("null_boundary", "The torus cell in null boundary coordinates, within the spacelike region $u>0$."),
+        ("static", "The static torus cell, with paired spatial translations."),
+    )}
+
+
+def quotient_figure(spec):
+    """Light cones from the full published 2+1 metric, with both deck generators.
+
+    The Euclidean development at one time is intrinsic to that spatial slice.
+    Its time dependent placement is only a drawing map of spacetime.
+    The Minkowski view uses the actual developing map and boost-paired cuts.
+    """
+    import numpy as np
+    import projections as pj
+
+    system = spec.system
+    coords = chart_spec(system)["system"]["coords"]
+
+    class Development(pj.Slice):
+        def to_drawing(self, point):
+            t, x, y = np.broadcast_arrays(*[np.asarray(v, dtype=float) for v in point])
+            if system == "minkowski":
+                return np.stack([x, y, t], -1)
+            if system == "static":
+                X, Y, z = x+0.55*y, 1.1*np.sin(np.pi/3)*y, t
+            else:
+                proper = 1/t if system == "mean_curvature" else np.sqrt(t) if system == "null_boundary" else t
+                X, Y = x+y/3, proper*(x+np.sqrt(2)*y)
+                z = -t if system == "mean_curvature" else t/2 if system == "null_boundary" else t
+            return np.stack([X, Y, z], -1)
+
+        def jacobian(self, point):
+            t, x, y = point
+            if system == "minkowski":
+                return super().jacobian(point)
+            if system == "static":
+                return np.array([[0, 1, 0.55], [0, 0, 1.1*np.sin(np.pi/3)], [1, 0, 0]])
+            q = x+np.sqrt(2)*y
+            proper = 1/t if system == "mean_curvature" else np.sqrt(t) if system == "null_boundary" else t
+            slope = -1/t**2 if system == "mean_curvature" else 1/(2*np.sqrt(t)) if system == "null_boundary" else 1
+            height = -1 if system == "mean_curvature" else 0.5 if system == "null_boundary" else 1
+            return np.array([[0, 1, 1/3], [slope*q, proper, proper*np.sqrt(2)], [height, 0, 0]])
+
+    sl = Development(METRIC, system, coords, "cartesian", spec.params)
+    camera = pj.Camera(-45, 25)
+    fig = pj.Figure(spec.view, spec.label, camera)
+
+    def native(t, x, y):
+        t, x, y = np.broadcast_arrays(t, x, y)
+        if system == "minkowski":
+            q = (x-0.5)+np.sqrt(2)*(y-0.5)
+            return t*np.cosh(q), t*np.sinh(q), (x-0.5)+(y-0.5)/3
+        clock = 1/t if system == "mean_curvature" else t*t if system == "null_boundary" else t
+        return clock, x, y
+
+    edge = np.linspace(0, 1, 161)
+    # The first pair is x=0 and x=1, the second y=0 and y=1.
+    for t in (0.5, 2.0):
+        for side in (0, 1):
+            fig.line("above", sl.to_drawing(native(t, side, edge)))
+            fig.line("below", sl.to_drawing(native(t, edge, side)))
+    times = np.linspace(0.5, 2, 161)
+    for x, y in ((0, 0), (1, 0), (0, 1), (1, 1)):
+        fig.line("floor", sl.to_drawing(native(times, x, y)))
+    labels = ((r"$\ell\tau=2$", r"$\ell\tau=1/2$") if system == "mean_curvature" else
+              (r"$u/\ell^2=1/4$", r"$u/\ell^2=4$") if system == "null_boundary" else
+              (r"$ct/\ell=1/2$", r"$ct/\ell=2$"))
+    for t, label in zip((0.5, 2.0), labels):
+        fig.label(sl.to_drawing(native(t, 0, 0)), label, "r", dx=-6)
+    orientation = [-1, 0, 0] if system == "mean_curvature" else "tau" if system == "null_boundary" else "vector"
+    cones = [pj.future_cone(sl, native(t, x, y), 0.19, orient=orientation)
+             for t in (0.8, 1.5) for x, y in ((0.25, 0.25), (0.75, 0.75))]
+    for apex, rim in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    fig.legend("line", "above", "$x=0\\sim1$")
+    fig.legend("line", "below", "$y=0\\sim1$")
+    fig.legend("cone", "cone", "future light cones")
+    points = np.array([p for layer in fig.layers for p in layer.get("points", [layer.get("at")])])
+    width, height = np.ptp(points, axis=0)
+    # Enlarge the window wherever a narrow view needs more room.
+    pad = max(0.10, (max(width, height)-1.7*min(width, height))/(1.4*max(width, height)))
+    return fig.done(pad=pad), sl
+
+
+def curvature_views(ck, src, c):
+    """Read the two identically vanishing stored scalars, with no curvature derivation."""
+    views = []
+    x_axis = c.axis(r"$ct/\ell$", 0.25, 2.0)
+    scale = {"kind": "linear", "from": -1, "to": 1}
+    for field, symbol, power, name in (("kretschmann", "K", 4, "Kretschmann scalar"),
+                                      ("ricci_scalar", "R", 2, "Ricci scalar")):
+        scalar = c.nr_published(src, METRIC, "proper_time", field, ["t"], [])
+        panel = {"id": symbol, "name": f"${symbol}\\ell^{power}$", "aspect": 1,
+                 "scale": scale, "ticks": c.value_ticks(scale)}
+        curves = c.line_curves(ck, f"torus {symbol}", symbol, symbol, scalar, "t", x_axis,
+                               scale, c.PLOT_W, {})
+        c.shape_checks(ck, f"torus {symbol}", [1])
+        views.append({"id": symbol, "label": f"${symbol}=0$", "kind": "line", "x": x_axis,
+                      "panels": [panel], "curves": curves, "marks": [],
+                      "legend": [["line", symbol, f"${symbol}=0$"]],
+                      "caption": [f"The {name} ${symbol}$ along proper time, zero throughout the torus universe."],
+                      "settings": r"$\ell=1$, the length unit.", "clip": "Linear scale."})
+    return views

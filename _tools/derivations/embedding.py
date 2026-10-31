@@ -18559,7 +18559,9 @@ DRAWN = {
 # wave has an angle: its one symmetry is the translation d_y and its wave surfaces are null, so a
 # surface drawn by reading that translation as an angle would show a periodicity the spacetime does
 # not have (hauser_wave.md Step 8).
-NOT_DRAWN = {"lentz", "hauser_wave"}
+# A compact flat torus has no smooth isometric immersion in Euclidean three-space.
+# Its intrinsic paired-edge developments appear in the spacetime figures.
+NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1"}
 
 CAPTIONS = {
     ("static_five_soliton", "equator"): [

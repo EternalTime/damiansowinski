@@ -3001,3 +3001,7 @@ for _chart, _null, _letter in (("brinkmann", "v", "x"), ("rosen", "w", "y")):
         {"mu": 1}, {f"{_letter}_{i}": "0" for i in range(1, 10) if i not in (1, 4)},
         fields=("christoffel",)))
     CAPTIONS[("kowalski_glikman", _chart, "focus")] = _kowalski_glikman.RAY_CAPTIONS[_chart]
+
+import torus_universe_2plus1 as _torus
+FIGURES.extend(_torus.projection_specs(Projection))
+CAPTIONS.update(_torus.projection_captions())

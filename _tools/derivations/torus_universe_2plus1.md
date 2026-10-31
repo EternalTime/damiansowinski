@@ -72,6 +72,47 @@ A projection to one spatial coordinate suppresses one torus cycle and its null w
 The generic period lattice supplies no preferred radial reduction retaining both cycles.
 The two spatial identifications belong in a spacetime drawing with both spatial coordinates.
 
+## Printed coordinates and figure construction
+
+The printed proper time and static charts keep $c$ explicit and use tensor coordinates $x^0=ct$.
+The mean curvature coordinate is $	au=1/(ct)$ and has dimensions of inverse length.
+The null boundary coordinate $u$ has dimensions of length squared and is not scaled by $c$.
+The five numerical chart checks compare pullbacks of the source's developing maps at three distinct points each.
+No symbolic determinant or symbolic simplification enters those checks.
+
+The full evolving family retains the four constants $a,b,\lambda,\mu$, with $a\mu-b\lambda>0$.
+Neither rapidity nor either transverse translation is set to zero in the printed family.
+The static family retains both side lengths and their angle.
+An integer change of spatial basis of determinant one acts on the lattice and on the modulus by a modular transformation, while preserving the area and the quotient geometry.
+The dedicated tests reconstruct the area and the complex modulus from the printed spatial Gram matrix, and hold its trajectory to a hyperbolic geodesic.
+They also test the two commuting deck generators and closed timelike integer winding curves in the extension $u<0$.
+
+Every chart has one three dimensional spacetime figure, with both pairs of opposite spatial cuts retained.
+The evolving figures use $a=\ell$, $b=\ell/3$, $\lambda=1$, and $\mu=\sqrt{2}$, from $ct/\ell=1/2$ to $2$.
+The static figure uses $r_1=\ell$, $r_2=11\ell/10$, and $\phi=\pi/3$.
+The two edge colours name $x=0\sim1$ and $y=0\sim1$.
+In each spatial development, the lattice vectors are drawn with their full length and angle at that moment.
+The Minkowski figure uses the actual developing map on a centred cell, so its identified edges are related by the boosts and transverse translations.
+The other four figures place intrinsic spatial developments at a height proportional to their displayed clock coordinate.
+Every null cone is transformed by the Jacobian of that drawing map and checked against the full published metric and inverse metric.
+The mean curvature figure takes decreasing $\tau$ as future; the null boundary figure uses the future normal to $u$.
+The generated line coordinates are checked for both identification pairs in every chart.
+The display windows are enlarged to keep every figure between 1:2 and 2:1.
+These are spacetime figures with a continuous time axis, with no sequence of played spatial moments.
+
+`embedding.NOT_DRAWN` records the obstruction proved above to a smooth global isometric immersion in Euclidean three-space.
+The planar paired-edge developments in the spacetime figures are intrinsic cut descriptions of the flat spatial quotient.
+`conformal.NOT_DRAWN` records the lack of a two-coordinate radial reduction retaining both independent winding classes.
+This concerns a global two dimensional conformal diagram of the generic torus cosmology; local conformal flatness still holds.
+The two curvature views are straight zero curves read from the stored Ricci and Kretschmann scalars through `curvature.py`.
+No curvature is recomputed for either figure.
+
+## Source access
+
+The original full texts of Moncrief, Hosoya and Nakao, and Witten remain unread source debts.
+Their verified primary records and the readable primary treatments by Carlip and by Louko and Marolf support the historical attributions and the classical chart family, as recorded in the task's literature ledger.
+The detailed classical formulae above are taken from the fully read accessible treatments.
+
 ## Sources
 
 Emil Martinec, Soluble systems in quantum gravity, Physical Review D 30, 1198-1204 (1984), section 5.

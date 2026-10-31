@@ -18799,6 +18799,14 @@ def electron_bubble(ck, src):
 
 DRAWN["electron_bubble"] = electron_bubble
 
+import torus_universe_2plus1 as _torus
+
+
+def torus_universe_2plus1(ck, src):
+    return _torus.curvature_views(ck, src, sys.modules[__name__])
+
+
+DRAWN[_torus.METRIC] = torus_universe_2plus1
 
 if __name__ == "__main__":
     sys.exit(main())
