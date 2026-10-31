@@ -1,0 +1,118 @@
+{
+  "id": "kramer_fluid",
+  "name": "Kramer's Rotating Perfect Fluid",
+  "short_name": "Kramer Fluid",
+  "description": "A bounded perfect fluid in rigid rotation, with negative pressure and positive energy density.",
+  "tags": [
+    "perfect fluid",
+    "rotating",
+    "rigid rotation",
+    "stationary",
+    "axisymmetric",
+    "stellar interior",
+    "equation of state",
+    "Petrov type D",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use the standard Ricci contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$, and Euler\\'s number $e$ as the base of natural logarithms.",
+  "history": "Pressure is negative throughout the rotating body Dietrich Kramer found in 1984 [kramer1984fluid, chinea1999kramer]. It reaches its lowest value at the centre and rises to zero on a closed surface. The energy density remains positive and exceeds the magnitude of the pressure throughout the fluid [chinea1999kramer].¶The equation of state fixes $\\varepsilon+3p$ at a positive constant, where $\\varepsilon$ is the energy density and $p$ the pressure [chinea1999kramer]. The fluid rotates rigidly about a regular axis. Two commuting symmetries express stationarity and axial symmetry, and reflection across the equatorial plane exchanges the two hemispheres. The distance from the centre to a pole is shorter than the distance from the centre to the equator [chinea1999kramer].¶The parameter $m>0$ sets the length scale through the factor $1/(2m)$ in the line element [chinea1999kramer]. The rotation parameter $b$ must exceed $2e$ for a nonempty fluid body, where $e$ is the base of natural logarithms. At the centre, the vorticity has magnitude $(b+e)\\sqrt{m/(2be)}$ and remains nonzero throughout this family [chinea1999kramer].¶Francisco Javier Chinea Trujillo and María Jesús Pareja García examined the geometry of this body in 1999 [chinea1999kramer]. They found that, for sufficiently large values of $b$, the surface of zero pressure has negative Gaussian curvature near the equator within a surface of constant time. The circumference of its latitude circles then reaches a maximum between each pole and the equator. At the limiting value $b\\simeq8.603$, the equatorial circumference shrinks to zero and the Gaussian curvature there diverges [chinea1999kramer].¶Within the spatial geometry at constant time, the shortest distance from the boundary to the rotation axis increases from pole to equator [chinea1999kramer]. The distance from the centre to the boundary has a local maximum at the equator. Meridional geodesics that cross the equatorial plane at right angles stay within the body between their two boundary intersections [chinea1999kramer].",
+  "references": [
+    "kramer1984fluid",
+    "chinea1999kramer",
+    "racz1996fluid"
+  ],
+  "coordinates": [
+    {
+      "id": "published",
+      "name": "Published Radial Coordinate",
+      "coords": [
+        "\\tau",
+        "\\eta",
+        "\\xi",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "A positive inverse squared length, with length scale $\\ell=1/\\sqrt{2m}$"
+        },
+        {
+          "symbol": "b",
+          "description": "A dimensionless rotation parameter, $2e<b<b_\\star$, where $b_\\star=(\\eta_\\star+1)e^{\\eta_\\star}\\simeq8.603$ and $\\eta_\\star>1$ is the nontrivial root of $(\\eta_\\star+1)(2e^{\\eta_\\star-1}-e^{2\\eta_\\star-2})=2$"
+        },
+        {
+          "symbol": "E = e^{\\eta-1}",
+          "description": "A dimensionless exponential of the radial coordinate"
+        },
+        {
+          "symbol": "F = b\\cos\\xi\\,e^{-\\eta}",
+          "description": "A dimensionless function; the pressure $p=m(1+\\eta-F)/(2\\kappa_0)$ and energy density $\\varepsilon=m(1-3\\eta+3F)/(2\\kappa_0)$ obey $\\varepsilon+3p=2m/\\kappa_0$, with $\\kappa_0>0$ the source coupling"
+        },
+        {
+          "symbol": "\\eta_e",
+          "description": "The equatorial surface radius, defined by $(\\eta_e+1)e^{\\eta_e}=b$"
+        }
+      ],
+      "convention": "We use dimensionless coordinates $(\\tau,\\eta,\\xi,\\phi)$, with $\\tau$ along the fluid world lines and $\\phi$ the azimuth. The radial coordinate is $\\eta$, and the latitude is $\\xi$. Components use these coordinates directly, with no rescaling by $c$; a dot denotes differentiation with respect to an affine parameter, and dimensional time is $T=\\ell\\tau/c$."
+    },
+    {
+      "id": "radial",
+      "name": "Square Root Radial Coordinate",
+      "coords": [
+        "\\tau",
+        "w",
+        "\\xi",
+        "\\phi"
+      ],
+      "parameters": [
+        {
+          "symbol": "m",
+          "description": "A positive inverse squared length, with length scale $\\ell=1/\\sqrt{2m}$"
+        },
+        {
+          "symbol": "b",
+          "description": "A dimensionless rotation parameter, $2e<b<b_\\star$, where $b_\\star=(\\eta_\\star+1)e^{\\eta_\\star}\\simeq8.603$ and $\\eta_\\star>1$ is the nontrivial root of $(\\eta_\\star+1)(2e^{\\eta_\\star-1}-e^{2\\eta_\\star-2})=2$"
+        },
+        {
+          "symbol": "\\eta = 1+w^2",
+          "description": "The dimensionless original radial coordinate"
+        },
+        {
+          "symbol": "E = e^{w^2}",
+          "description": "A dimensionless exponential of the squared radial coordinate"
+        },
+        {
+          "symbol": "F = b\\cos\\xi\\,e^{-1-w^2}",
+          "description": "A dimensionless function; the pressure $p=m(1+\\eta-F)/(2\\kappa_0)$ and energy density $\\varepsilon=m(1-3\\eta+3F)/(2\\kappa_0)$ obey $\\varepsilon+3p=2m/\\kappa_0$, with $\\kappa_0>0$ the source coupling"
+        },
+        {
+          "symbol": "\\eta_e",
+          "description": "The equatorial surface radius, defined by $(\\eta_e+1)e^{\\eta_e}=b$"
+        }
+      ],
+      "convention": "We use dimensionless coordinates $(\\tau,w,\\xi,\\phi)$, with $\\tau$ along the fluid world lines and $\\phi$ the azimuth. We set $w=\\sqrt{\\eta-1}$ and keep the latitude $\\xi$. Components use these coordinates directly, with no rescaling by $c$; a dot denotes differentiation with respect to an affine parameter, and dimensional time is $T=\\ell\\tau/c$."
+    }
+  ],
+  "related": [
+    {
+      "id": "wahlquist",
+      "kind": "family",
+      "text": "Rigid rotation with the same linear equation of state, $\\varepsilon+3p=\\mathrm{constant}$. The two fluids belong to the stationary axisymmetric family of algebraic type D [racz1996fluid]."
+    },
+    {
+      "id": "tov",
+      "kind": "family",
+      "text": "Spherical fluid equilibrium with pressure balancing gravity. Kramer's body has rigid rotation and negative pressure within a closed surface [chinea1999kramer]."
+    },
+    {
+      "id": "hartle_thorne",
+      "kind": "family",
+      "text": "The exterior field of a slowly rotating body, through second order in its angular velocity. Kramer's exact fluid has finite rotation throughout its bounded family [chinea1999kramer]."
+    }
+  ]
+}
