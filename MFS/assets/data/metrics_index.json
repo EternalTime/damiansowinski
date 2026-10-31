@@ -1418,7 +1418,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "cd45bf36967dd19e",
+    "version": "f769c51354250514",
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -1593,7 +1593,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "5f407d302477f113",
+    "version": "3c0110f649f1a3df",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2566,6 +2566,38 @@
     ],
     "version": "ba8445abb87a7eae",
     "diagrams": "8db2da3173c1ed79"
+  },
+  {
+    "id": "hawking_moss",
+    "name": "Hawking-Moss",
+    "tags": [
+      "gravitational instanton",
+      "Euclidean quantum gravity",
+      "Riemannian",
+      "Lorentzian",
+      "quantum cosmology",
+      "tunnelling",
+      "de Sitter",
+      "inflation",
+      "vacuum energy",
+      "bounce",
+      "cosmology",
+      "cosmological constant",
+      "positive cosmological constant",
+      "constant curvature",
+      "exact solution",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "Einstein space",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "9f266704a12edb9f",
+    "diagrams": "1595ec6b66273613",
+    "conformal": "32be75dd18ea06d1",
+    "embedding": "603810d2fd81ec88",
+    "curvature": "a722ed880328aefb"
   },
   {
     "id": "hayward",
@@ -6389,7 +6421,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "9744a0006142a83f",
+    "version": "674bc74b3a047076",
     "diagrams": "ecd549f04fdf7ba8",
     "conformal": "eba618d692af4a23",
     "embedding": "5c081e057e4b8c91"

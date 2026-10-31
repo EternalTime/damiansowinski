@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 221,
+  "count": 222,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -15029,6 +15029,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "Coleman's bounce carried from a false vacuum to the whole universe: half a 4-sphere joined at its equator to the waist of a closed de Sitter universe, which Vilenkin had created from nothing [vilenkin1982]."
+        },
+        {
+          "id": "hawking_moss",
+          "kind": "family",
+          "text": "Along suitable families of thick bounces, the scalar field at both poles approaches the barrier maximum. The homogeneous endpoint is the Hawking-Moss saddle [brown2007hm]."
         }
       ],
       "references": [
@@ -15052,7 +15057,8 @@
         "degrassi2012",
         "caldwell1996",
         "gott1998",
-        "vilenkin1982"
+        "vilenkin1982",
+        "brown2007hm"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -16976,6 +16982,11 @@
           "id": "starobinsky_universe",
           "kind": "generalisation",
           "text": "Starobinsky's semiclassical family contains de Sitter space at zero departure amplitude [starobinsky1980]."
+        },
+        {
+          "id": "hawking_moss",
+          "kind": "dual",
+          "text": "At a positive maximum of a scalar potential, the Euclidean sphere is the Hawking-Moss saddle. Its radius is set by the potential at that maximum [weinberg2007hm]."
         }
       ],
       "references": [
@@ -17027,7 +17038,8 @@
         "chiba2005",
         "cahen1970",
         "murphy1973",
-        "starobinsky1980"
+        "starobinsky1980",
+        "weinberg2007hm"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -28965,6 +28977,406 @@
           ],
           "ricci_scalar": "R = -\\dfrac{32f\\,t^2\\,x^3\\left(\\partial_t f\\right)^2 - 32f^2\\,t^2\\,x^3\\,\\partial_t^2 f + 2f\\,r^2\\,x^2\\,\\partial_r^2 H - 48f^2\\,t\\,x^3\\,\\partial_t f + 8f\\,r\\,x^2\\,\\partial_r H + 32f\\,x^3\\left(\\partial_t f\\right)^2 - 32f^2\\,x^3\\,\\partial_t^2 f + 512f^5\\,x^8\\,\\partial_r^2 H + 4H\\,f\\,x^2 + 12f^3\\,x^3 + 3r\\,\\partial_t f}{L^2\\,f\\,x^2\\left(256f^4\\,x^6 + r^2\\right)}",
           "kretschmann": "K = \\dfrac{613416960f^{14}\\,x^{18} + 2r^6\\left(\\partial_t f\\right)^2 - 2285568f^{10}\\,r^2\\,x^{12} + 144f^6\\,r^4\\,x^6 + 182452224H\\,f^{12}\\,x^{17} + 2164260864f^{13}\\,x^{18}\\,\\partial_t^2 f + 13631488H^2\\,f^{10}\\,x^{16} + 17179869184f^{18}\\,x^{28}\\left(\\partial_r^2 H\\right)^2 - 805306368f^{14}\\,x^{22}\\left(\\partial_r H\\right)^2 - 2189426688f^{13}\\,t\\,x^{18}\\,\\partial_t f + 1946157056f^{12}\\,x^{18}\\left(\\partial_t^2 f\\right)^2 + 1409286144f^{12}\\,x^{18}\\left(\\partial_t f\\right)^2 + 100663296f^{12}\\,r\\,x^{17}\\,\\partial_r H + 70778880f^{11}\\,r\\,x^{15}\\,\\partial_t f + 872415232f^{10}\\,x^{18}\\left(\\partial_t f\\right)^4 - 835584H\\,f^8\\,r^2\\,x^{11} + 96H\\,f^4\\,r^4\\,x^5 + 2164260864f^{13}\\,t^2\\,x^{18}\\,\\partial_t^2 f - 2617245696f^{11}\\,t\\,x^{18}\\left(\\partial_t f\\right)^3 - 4325376f^9\\,r^2\\,x^{12}\\,\\partial_t^2 f + 88080384f^9\\,r\\,x^{15}\\left(\\partial_t f\\right)^3 + 393216f^8\\,r^3\\,x^{11}\\,\\partial_r H - 110592f^7\\,r^3\\,x^9\\,\\partial_t f - 768f^5\\,r^4\\,x^6\\,\\partial_t^2 f + 24f^3\\,r^5\\,x^3\\,\\partial_t f + 64f\\,r^5\\,x^3\\left(\\partial_t f\\right)^3 - 73728H^2\\,f^6\\,r^2\\,x^{10} + 16H^2\\,f^2\\,r^4\\,x^4 + 318767104H\\,f^{11}\\,x^{17}\\,\\partial_t^2 f + 268435456f^{14}\\,r^2\\,x^{22}\\left(\\partial_r^2 H\\right)^2 - 402653184f^{13}\\,x^{20}\\,\\partial_r H\\,\\partial_t f + 1946157056f^{12}\\,t^4\\,x^{18}\\left(\\partial_t^2 f\\right)^2 + 3892314112f^{12}\\,t^2\\,x^{18}\\left(\\partial_t^2 f\\right)^2 + 3422552064f^{12}\\,t^2\\,x^{18}\\left(\\partial_t f\\right)^2 - 2617245696f^{11}\\,t^3\\,x^{18}\\left(\\partial_t f\\right)^3 + 872415232f^{10}\\,t^4\\,x^{18}\\left(\\partial_t f\\right)^4 + 1744830464f^{10}\\,t^2\\,x^{18}\\left(\\partial_t f\\right)^4 + 1572864f^{10}\\,r^4\\,x^{16}\\left(\\partial_r^2 H\\right)^2 - 5242880f^{10}\\,r^2\\,x^{16}\\left(\\partial_r H\\right)^2 - 132120576f^{10}\\,r\\,t\\,x^{15}\\left(\\partial_t f\\right)^2 + 10027008f^9\\,r^2\\,t\\,x^{12}\\,\\partial_t f - 524288f^8\\,r^2\\,x^{12}\\left(\\partial_t^2 f\\right)^2 - 5111808f^8\\,r^2\\,x^{12}\\left(\\partial_t f\\right)^2 + 4096f^6\\,r^6\\,x^{10}\\left(\\partial_r^2 H\\right)^2 - 4096f^6\\,r^4\\,x^{10}\\left(\\partial_r H\\right)^2 - 4718592f^6\\,r^2\\,x^{12}\\left(\\partial_t f\\right)^4 - 1152f^5\\,r^4\\,t\\,x^6\\,\\partial_t f - 163840f^5\\,r^3\\,x^9\\left(\\partial_t f\\right)^3 + 1024f^4\\,r^4\\,x^6\\left(\\partial_t^2 f\\right)^2 + 4f^2\\,r^8\\,x^4\\left(\\partial_r^2 H\\right)^2 + 16f^2\\,r^6\\,x^4\\left(\\partial_r H\\right)^2 + 1024f^2\\,r^4\\,x^6\\left(\\partial_t f\\right)^4 - 327155712H\\,f^{11}\\,t\\,x^{17}\\,\\partial_t f + 218103808H\\,f^{10}\\,x^{17}\\left(\\partial_t f\\right)^2 + 16777216H\\,f^{10}\\,r\\,x^{16}\\,\\partial_r H + 11010048H\\,f^9\\,r\\,x^{14}\\,\\partial_t f + 8H\\,f\\,r^5\\,x^2\\,\\partial_t f - 3825205248f^{12}\\,t\\,x^{18}\\,\\partial_t f\\,\\partial_t^2 f + 2550136832f^{11}\\,x^{18}\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 134217728f^{11}\\,r\\,x^{17}\\,\\partial_r H\\,\\partial_t^2 f + 113246208f^{10}\\,r\\,x^{15}\\,\\partial_t f\\,\\partial_t^2 f - 4325376f^9\\,r^2\\,t^2\\,x^{12}\\,\\partial_t^2 f + 88080384f^9\\,r\\,t^2\\,x^{15}\\left(\\partial_t f\\right)^3 + 14155776f^7\\,r^2\\,t\\,x^{12}\\left(\\partial_t f\\right)^3 + 245760f^6\\,r^3\\,t\\,x^9\\left(\\partial_t f\\right)^2 - 768f^5\\,r^4\\,t^2\\,x^6\\,\\partial_t^2 f - 3072f^3\\,r^4\\,t\\,x^6\\left(\\partial_t f\\right)^3 - 96f^2\\,r^5\\,t\\,x^3\\left(\\partial_t f\\right)^2 + 8f\\,r^6\\,x^2\\,\\partial_r H\\,\\partial_t f + 64f\\,r^5\\,t^2\\,x^3\\left(\\partial_t f\\right)^3 + 318767104H\\,f^{11}\\,t^2\\,x^{17}\\,\\partial_t^2 f - 917504H\\,f^7\\,r^2\\,x^{11}\\,\\partial_t^2 f + 65536H\\,f^6\\,r^3\\,x^{10}\\,\\partial_r H - 20480H\\,f^5\\,r^3\\,x^8\\,\\partial_t f - 256H\\,f^3\\,r^4\\,x^5\\,\\partial_t^2 f - 3825205248f^{12}\\,t^3\\,x^{18}\\,\\partial_t f\\,\\partial_t^2 f - 201326592f^{11}\\,r\\,t\\,x^{17}\\,\\partial_r H\\,\\partial_t f + 134217728f^{10}\\,r\\,x^{17}\\,\\partial_r H\\left(\\partial_t f\\right)^2 + 1572864f^9\\,r^2\\,x^{14}\\,\\partial_r H\\,\\partial_t f - 524288f^8\\,r^2\\,t^4\\,x^{12}\\left(\\partial_t^2 f\\right)^2 - 1048576f^8\\,r^2\\,t^2\\,x^{12}\\left(\\partial_t^2 f\\right)^2 - 17301504f^8\\,r^2\\,t^2\\,x^{12}\\left(\\partial_t f\\right)^2 + 524288f^7\\,r^3\\,x^{11}\\,\\partial_r H\\,\\partial_t^2 f + 14155776f^7\\,r^2\\,t^3\\,x^{12}\\left(\\partial_t f\\right)^3 - 98304f^6\\,r^3\\,x^9\\,\\partial_t f\\,\\partial_t^2 f - 4718592f^6\\,r^2\\,t^4\\,x^{12}\\left(\\partial_t f\\right)^4 - 9437184f^6\\,r^2\\,t^2\\,x^{12}\\left(\\partial_t f\\right)^4 + 14336f^5\\,r^4\\,x^8\\,\\partial_r H\\,\\partial_t f - 163840f^5\\,r^3\\,t^2\\,x^9\\left(\\partial_t f\\right)^3 + 1024f^4\\,r^4\\,t^4\\,x^6\\left(\\partial_t^2 f\\right)^2 + 2048f^4\\,r^4\\,t^2\\,x^6\\left(\\partial_t^2 f\\right)^2 + 3072f^4\\,r^4\\,t^2\\,x^6\\left(\\partial_t f\\right)^2 - 3072f^3\\,r^4\\,t^3\\,x^6\\left(\\partial_t f\\right)^3 - 64f^2\\,r^5\\,x^3\\,\\partial_t f\\,\\partial_t^2 f + 1024f^2\\,r^4\\,t^4\\,x^6\\left(\\partial_t f\\right)^4 + 2048f^2\\,r^4\\,t^2\\,x^6\\left(\\partial_t f\\right)^4 + 218103808H\\,f^{10}\\,t^2\\,x^{17}\\left(\\partial_t f\\right)^2 + 1769472H\\,f^7\\,r^2\\,t\\,x^{11}\\,\\partial_t f - 1179648H\\,f^6\\,r^2\\,x^{11}\\left(\\partial_t f\\right)^2 - 384H\\,f^3\\,r^4\\,t\\,x^5\\,\\partial_t f + 256H\\,f^2\\,r^4\\,x^5\\left(\\partial_t f\\right)^2 + 2550136832f^{11}\\,t^4\\,x^{18}\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 5100273664f^{11}\\,t^2\\,x^{18}\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 134217728f^{11}\\,r\\,t^2\\,x^{17}\\,\\partial_r H\\,\\partial_t^2 f + 113246208f^{10}\\,r\\,t^2\\,x^{15}\\,\\partial_t f\\,\\partial_t^2 f + 11010048f^8\\,r^2\\,t\\,x^{12}\\,\\partial_t f\\,\\partial_t^2 f - 786432f^7\\,r^3\\,t\\,x^{11}\\,\\partial_r H\\,\\partial_t f - 7340032f^7\\,r^2\\,x^{12}\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 524288f^6\\,r^3\\,x^{11}\\,\\partial_r H\\left(\\partial_t f\\right)^2 + 3072f^4\\,r^4\\,t\\,x^6\\,\\partial_t f\\,\\partial_t^2 f - 2048f^3\\,r^4\\,x^6\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f - 917504H\\,f^7\\,r^2\\,t^2\\,x^{11}\\,\\partial_t^2 f - 256H\\,f^3\\,r^4\\,t^2\\,x^5\\,\\partial_t^2 f + 134217728f^{10}\\,r\\,t^2\\,x^{17}\\,\\partial_r H\\left(\\partial_t f\\right)^2 + 11010048f^8\\,r^2\\,t^3\\,x^{12}\\,\\partial_t f\\,\\partial_t^2 f + 524288f^7\\,r^3\\,t^2\\,x^{11}\\,\\partial_r H\\,\\partial_t^2 f - 98304f^6\\,r^3\\,t^2\\,x^9\\,\\partial_t f\\,\\partial_t^2 f + 3072f^4\\,r^4\\,t^3\\,x^6\\,\\partial_t f\\,\\partial_t^2 f - 64f^2\\,r^5\\,t^2\\,x^3\\,\\partial_t f\\,\\partial_t^2 f - 1179648H\\,f^6\\,r^2\\,t^2\\,x^{11}\\left(\\partial_t f\\right)^2 + 256H\\,f^2\\,r^4\\,t^2\\,x^5\\left(\\partial_t f\\right)^2 - 7340032f^7\\,r^2\\,t^4\\,x^{12}\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f - 14680064f^7\\,r^2\\,t^2\\,x^{12}\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f + 524288f^6\\,r^3\\,t^2\\,x^{11}\\,\\partial_r H\\left(\\partial_t f\\right)^2 - 2048f^3\\,r^4\\,t^4\\,x^6\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f - 4096f^3\\,r^4\\,t^2\\,x^6\\left(\\partial_t f\\right)^2\\,\\partial_t^2 f}{L^4\\,f^2\\,x^4\\left(256f^4\\,x^6 + r^2\\right)^4}"
+        }
+      ]
+    },
+    {
+      "id": "hawking_moss",
+      "name": "Hawking-Moss Instanton",
+      "short_name": "Hawking-Moss",
+      "description": "A homogeneous scalar field at a positive potential maximum on a Euclidean 4-sphere.",
+      "tags": [
+        "gravitational instanton",
+        "Euclidean quantum gravity",
+        "Riemannian",
+        "Lorentzian",
+        "quantum cosmology",
+        "tunnelling",
+        "de Sitter",
+        "inflation",
+        "vacuum energy",
+        "bounce",
+        "cosmology",
+        "cosmological constant",
+        "positive cosmological constant",
+        "constant curvature",
+        "exact solution",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "Einstein space",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "We use $c = \\hbar = 1$, keep $G$ explicit, and take $\\ell$ as the sphere radius at the barrier maximum, with $V_{\\mathrm{top}}$ the potential energy density there and $V_F$ the false vacuum energy density. The Euclidean signature is $(+,+,+,+)$, and a dot denotes a derivative with respect to an affine parameter. The Ricci tensor is $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "dual",
+          "text": "The sphere at the barrier maximum continues to de Sitter space with the same constant scalar field [brown2007hm]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "A family of thick vacuum bubbles can approach the homogeneous field at a barrier maximum [brown2007hm]. The two saddles can also coexist for the same potential."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "A round Euclidean 4-sphere enters both constructions. The Hawking-Moss exponent compares a whole sphere at the barrier maximum with a false vacuum sphere [weinberg2007hm]."
+        }
+      ],
+      "references": [
+        "hawking_moss1982",
+        "weinberg2007hm",
+        "brown2007hm",
+        "saito2025hm"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hawking_moss.json",
+      "charts": [
+        {
+          "id": "four_sphere",
+          "name": "Euclidean 4-Sphere",
+          "coordinates": [
+            "\\xi",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\xi \\in [0, \\pi\\ell]",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+            }
+          ],
+          "convention": "We use the proper distance $\\xi$ from one pole, with $\\chi$, $\\theta$, and $\\phi$ angles on each 3-sphere.",
+          "line_element": "ds^2 = d\\xi^2 + \\ell^2\\sin^2(\\xi/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\sin^2\\left(\\dfrac{\\xi}{\\ell}\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\sin^2\\left(\\dfrac{\\xi}{\\ell}\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\sin^2\\theta\\sin^2\\left(\\dfrac{\\xi}{\\ell}\\right)"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "thermal",
+          "name": "Euclidean Thermal Coordinates",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in [0, 2\\pi\\ell)",
+            "r \\in [0, \\ell]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+            }
+          ],
+          "convention": "We use the Euclidean time $\\tau$ of period $2\\pi\\ell$, the areal radius $r$, and the polar angles $\\theta$ and $\\phi$.",
+          "line_element": "ds^2 = \\left(1 - r^2/\\ell^2\\right)d\\tau^2 + \\dfrac{dr^2}{1 - r^2/\\ell^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\dfrac{\\left(\\ell + r\\right)\\left(\\ell - r\\right)}{\\ell^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\left(\\ell + r\\right)\\left(\\ell - r\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "thermal_angle",
+          "name": "Euclidean Thermal Angle",
+          "coordinates": [
+            "\\tau",
+            "\\eta",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in [0, 2\\pi\\ell)",
+            "\\eta \\in [0, \\pi/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+            }
+          ],
+          "convention": "We use the Euclidean time $\\tau$ of period $2\\pi\\ell$ and the radial angle $\\eta$, where $r = \\ell\\sin\\eta$, with $\\theta$ and $\\phi$ polar angles.",
+          "line_element": "ds^2 = \\cos^2\\eta\\,d\\tau^2 + \\ell^2d\\eta^2 + \\ell^2\\sin^2\\eta\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\cos^2\\eta"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\ell^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\sin^2\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\sin^2\\eta\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "static_continuation",
+          "name": "Static Constant Field Continuation",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\ell)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+            }
+          ],
+          "convention": "We continue $\\tau = it$ with $t$ a length, and use the areal radius $r$ and the polar angles $\\theta$ and $\\phi$ in signature $(-,+,+,+)$.",
+          "line_element": "ds^2 = -\\left(1 - r^2/\\ell^2\\right)dt^2 + \\dfrac{dr^2}{1 - r^2/\\ell^2} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(\\ell + r\\right)\\left(\\ell - r\\right)}{\\ell^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\left(\\ell + r\\right)\\left(\\ell - r\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "wall_continuation",
+          "name": "Wall Constant Field Continuation",
+          "coordinates": [
+            "\\xi",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\xi \\in (0, \\pi\\ell)",
+            "\\psi \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+            }
+          ],
+          "convention": "We continue $\\chi = \\pi/2 + i\\psi$, with $\\psi$ a dimensionless time and $\\xi$ a length, in signature $(+,-,+,+)$.",
+          "line_element": "ds^2 = d\\xi^2 + \\ell^2\\sin^2(\\xi/\\ell)\\left(-d\\psi^2 + \\cosh^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-\\ell^2\\sin^2\\left(\\dfrac{\\xi}{\\ell}\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{2\\psi} + 1\\right)^2e^{-2\\psi}\\sin^2\\left(\\dfrac{\\xi}{\\ell}\\right)}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{2\\psi} + 1\\right)^2e^{-2\\psi}\\sin^2\\theta\\sin^2\\left(\\dfrac{\\xi}{\\ell}\\right)}{4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        },
+        {
+          "id": "closed_continuation",
+          "name": "Closed Constant Field Continuation",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\ell > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "The barrier maximum sphere radius, $\\ell^2 = 3/(8\\pi G V_{\\mathrm{top}})$."
+            }
+          ],
+          "convention": "We continue $\\xi = \\pi\\ell/2 + it$, with $t$ a proper time measured as a length and $\\chi$, $\\theta$, and $\\phi$ angles, in signature $(-,+,+,+)$.",
+          "line_element": "ds^2 = -dt^2 + \\ell^2\\cosh^2(t/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{2t/\\ell} + 1\\right)^2e^{-2t/\\ell}}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{2t/\\ell} + 1\\right)^2e^{-2t/\\ell}\\sin^2\\chi}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{2t/\\ell} + 1\\right)^2e^{-2t/\\ell}\\sin^2\\chi\\sin^2\\theta}{4}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
         }
       ]
     },
@@ -71485,6 +71897,11 @@
           "id": "einstein_static",
           "kind": "conformal",
           "text": "The conformal chart is the Einstein static universe's metric times $\\ell^2/\\cos^2\\eta$, so the half above the waist is conformal to the slab $0 \\le \\eta < \\pi/2$ of it, with its radius equal to $\\ell$."
+        },
+        {
+          "id": "hawking_moss",
+          "kind": "family",
+          "text": "The Hawking-Moss saddle is a whole Euclidean 4-sphere with a scalar field at a barrier maximum. Its action is compared with a false vacuum sphere to describe a vacuum transition [weinberg2007hm]."
         }
       ],
       "references": [
@@ -71499,7 +71916,8 @@
         "coleman1980",
         "gott1998",
         "bousso1996",
-        "laflamme1987"
+        "laflamme1987",
+        "weinberg2007hm"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/universe_from_nothing.json",

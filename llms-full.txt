@@ -1247,6 +1247,21 @@ The one vacuum gravitational wave of Petrov type N whose rays twist that is know
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/hauser_wave.json
 - chart Kerr-Debney-Schild: coordinates $(t, r, x, y)$, $$ds^2 = L^2\left(-2\left(4x^2dt + 8xt\,dx - 8x\,dy\right)\left(dr + 64x^2ff'\,dx - 16x^2f\left(3f - 4tf'\right)dy\right) - 2H\left(4x^2dt + 8xt\,dx - 8x\,dy\right)^2 + \dfrac{r^2 + 256x^6f^4}{4x^3f^2}\left(dx^2 + dy^2\right)\right)$$
 
+### Hawking-Moss Instanton
+
+A homogeneous scalar field at a positive potential maximum on a Euclidean 4-sphere.
+
+- id: `hawking_moss`
+- tags: gravitational instanton, Euclidean quantum gravity, Riemannian, Lorentzian, quantum cosmology, tunnelling, de Sitter, inflation, vacuum energy, bounce, cosmology, cosmological constant, positive cosmological constant, constant curvature, exact solution, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, spherically symmetric
+- signature: (+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hawking_moss.json
+- chart Euclidean 4-Sphere: coordinates $(\xi, \chi, \theta, \phi)$, $$ds^2 = d\xi^2 + \ell^2\sin^2(\xi/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Euclidean Thermal Coordinates: coordinates $(\tau, r, \theta, \phi)$, $$ds^2 = \left(1 - r^2/\ell^2\right)d\tau^2 + \dfrac{dr^2}{1 - r^2/\ell^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Euclidean Thermal Angle: coordinates $(\tau, \eta, \theta, \phi)$, $$ds^2 = \cos^2\eta\,d\tau^2 + \ell^2d\eta^2 + \ell^2\sin^2\eta\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Static Constant Field Continuation: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - r^2/\ell^2\right)dt^2 + \dfrac{dr^2}{1 - r^2/\ell^2} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Wall Constant Field Continuation: coordinates $(\xi, \psi, \theta, \phi)$, $$ds^2 = d\xi^2 + \ell^2\sin^2(\xi/\ell)\left(-d\psi^2 + \cosh^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Closed Constant Field Continuation: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -dt^2 + \ell^2\cosh^2(t/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+
 ### Hayward Regular Black Hole
 
 A black hole with two horizons and a regular centre, Schwarzschild's metric far away and de Sitter space at the core. Sean Hayward wrote it down in 2006 and let its mass change in time, so that a region of trapped surfaces forms, evaporates, and leaves neither a singularity nor an event horizon.
