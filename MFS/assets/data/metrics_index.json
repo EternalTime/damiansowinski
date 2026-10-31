@@ -2130,6 +2130,33 @@
     "curvature": "009ff57df2364612"
   },
   {
+    "id": "exponential_scalar_universes",
+    "name": "Exponential Scalar Universes",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "homogeneous",
+      "isotropic",
+      "FLRW",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "conformally flat",
+      "spherically symmetric",
+      "scalar field",
+      "minimally coupled scalar field",
+      "inflation",
+      "perfect fluid"
+    ],
+    "version": "91033e4840eac817",
+    "diagrams": "3a7074ca557a3b99",
+    "conformal": "75bc47db71571987",
+    "embedding": "517eb8d877b53deb",
+    "curvature": "bd745f61aaed3718"
+  },
+  {
     "id": "extended_inflation",
     "name": "Extended Inflation",
     "tags": [
@@ -2281,7 +2308,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "537d11568204c0af",
+    "version": "478d02ff328b7b85",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -4174,7 +4201,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "0e18610bc725c7b8",
+    "version": "5ace10ed9d1cc403",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"

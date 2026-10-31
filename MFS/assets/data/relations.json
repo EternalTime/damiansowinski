@@ -537,6 +537,8 @@
     ["exponential_metric", "morris_thorne"],
     ["exponential_metric", "ppn_metric"],
     ["exponential_metric", "schwarzschild"],
+    ["exponential_scalar_universes", "frw"],
+    ["exponential_scalar_universes", "minkowski"],
     ["extended_inflation", "frw"],
     ["eye_of_the_storm", "hayward"],
     ["eye_of_the_storm", "kerr"],

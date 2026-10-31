@@ -1064,6 +1064,19 @@ A static, spherically symmetric metric whose components are exponentials of the 
 - chart Areal (curvature coordinates): coordinates $(t, R, \theta, \phi)$, $$ds^2 = -e^{-2m/r}c^2dt^2 + \dfrac{dR^2}{\left(1 - \dfrac{m}{r}\right)^2} + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -e^{-2m\,u}c^2dt^2 + \dfrac{e^{2m\,u}}{u^2}\left(\dfrac{du^2}{u^2} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Universes with an Exponential Scalar Potential
+
+Spatially flat power law cosmologies with a positive exponential scalar potential, alone or with a barotropic fluid.
+
+- id: `exponential_scalar_universes`
+- tags: cosmology, expanding universe, homogeneous, isotropic, FLRW, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, conformally flat, spherically symmetric, scalar field, minimally coupled scalar field, inflation, perfect fluid
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/exponential_scalar_universes.json
+- chart Cosmic Cartesian: coordinates $(t, x, y, z)$, $$ds^2 = -dt^2+a^2\left(dx^2+dy^2+dz^2\right)$$
+- chart Cosmic Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -dt^2+a^2\left(dr^2+r^2d\theta^2+r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Conformal Time: coordinates $(\eta, x, y, z)$, $$ds^2 = a^2\left(-d\eta^2+dx^2+dy^2+dz^2\right)$$
+- chart Coasting Conformal Time: coordinates $(\eta, x, y, z)$, $$ds^2 = a^2\left(-d\eta^2+dx^2+dy^2+dz^2\right)$$
+
 ### Extended Inflation
 
 An accelerating false vacuum universe with an evolving Brans-Dicke gravitational scalar.

@@ -80,5 +80,78 @@ class ExponentialScalar(unittest.TestCase):
         self.assertIn(r'\eta \in (-\infty,\infty)', self.charts['coasting']['domains'])
 
 
+    def test_dust_display_covers_the_entire_positive_time_domain(self):
+        """Exact cubic null curves bound every segment of the rounded drawing.
+
+        The maximum is at a segment endpoint or where the cubic and segment
+        slopes agree. No positive-time interval is excluded from this check.
+        """
+        view = json.loads((ROOT/'MFS/assets/data/diagrams/exponential_scalar_universes.json').read_text())['systems']['cosmic_spherical'][0]
+        radius, time = view['box'][1], view['box'][3]
+        self.assertEqual(view['box'][::2], [0, 0])
+
+        def clip(a, b):
+            lo, hi = 0., 1.
+            for i in (0, 1):
+                delta = b[i]-a[i]
+                if delta == 0:
+                    if not 0 <= a[i] <= 1:
+                        return None
+                else:
+                    low, high = sorted(((0-a[i])/delta, (1-a[i])/delta))
+                    lo, hi = max(lo, low), min(hi, high)
+            if hi < lo:
+                return None
+            return ([a[i]+lo*(b[i]-a[i]) for i in (0,1)],
+                    [a[i]+hi*(b[i]-a[i]) for i in (0,1)])
+
+        vertical, past, covered, rays = 0., 0., 0, 0
+        for family, sign in (('P', 1), ('M', -1)):
+            for line in view['rays'][family]:
+                segments = [pair for a,b in zip(line,line[1:]) if (pair := clip(a,b))]
+                if not segments:
+                    continue
+                anchors = [p for p in line if 0 <= p[0] <= 1 and 0 < p[1] <= 1]
+                anchor = max(anchors or [p for pair in segments for p in pair], key=lambda p:p[1])
+                constant = 3*math.cbrt(time*anchor[1])+sign*radius*anchor[0]
+                bang = constant/(sign*radius)
+                rays += 1
+                for a,b in segments:
+                    if max(a[1],b[1]) > 0 and min(a[1],b[1]) < 0.02/time:
+                        covered += 1
+                    dx = b[0]-a[0]
+                    if dx == 0:
+                        candidates = [a,b]
+                    else:
+                        slope = (b[1]-a[1])/dx
+                        lo, hi = sorted((a[0],b[0]))
+                        xs = [lo,hi]
+                        squared = -9*time*slope/(sign*radius)
+                        if squared >= 0:
+                            for eta in (math.sqrt(squared), -math.sqrt(squared)):
+                                x = (constant-eta)/(sign*radius)
+                                if lo < x < hi:
+                                    xs.append(x)
+                        if lo < bang < hi:
+                            xs.append(bang)
+                        candidates = [(x,a[1]+slope*(x-a[0])) for x in xs]
+                    for x,y in candidates:
+                        eta = constant-sign*radius*x
+                        if eta >= 0:
+                            vertical = max(vertical,abs(y-eta**3/(27*time)))
+                        else:
+                            past = max(past, math.hypot(x-bang,y))
+        # 0.0006 thinning, four-decimal rounding and the maximal drawn slope
+        # (below 1.43) permit 0.0012 in the unit window, below 0.624 pixels
+        # even if both axes are conservatively taken as 520 pixels.
+        self.assertGreater(rays, 0)
+        self.assertGreater(covered, 0)
+        self.assertLessEqual(vertical, 0.0012)
+        self.assertLessEqual(past, 0.0012)
+        print(f'Dust display: {rays} complete rays; {covered} segments meet 0<t<=0.02 t0; '
+              f'vertical bound {vertical:.12g}; past-endpoint bound {past:.12g}; '
+              f'pixel bound {520*max(vertical,past):.6g}.')
+
+
 if __name__ == '__main__':
     unittest.main()
