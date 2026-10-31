@@ -42,7 +42,7 @@ def embedding(ck, src, eb):
     ck.isometry("Hosotani: maximum-radius sphere", sphere)
     ck.radius("Hosotani: rho=ell sin chi", sphere, np.sin, size)
     ck.form("Hosotani: z=-ell cos chi", sphere, lambda chi: -np.cos(chi), size)
-    surface = eb.Surface([sphere], label=r"$t=\ell$", time=1.0)
+    surface = eb.Surface([sphere])
     fig = eb.figure_of([surface], {"sheet": "cover"}, size)
     fig.legend("fill", "cover", r"sphere of radius $\ell$")
     fig.legend("line", "r", r"$\chi=\pi/2$")
@@ -96,7 +96,7 @@ def conformal(ck, src, cd):
     v.legend("singular", "curvature singularities")
     v.legend("centre", "regular centres")
     v.legend("null", "radial light ray")
-    for moment in cd.slices.moments(METRIC):
+    for moment in cd.slices.moments(METRIC, label=r"$t=\ell$"):
         v.slice(moment, xt=[[[0, PI / 2], [PI, PI / 2]]])
     v.set(settings=r"$\ell=1$.")
     return [v]

@@ -4534,6 +4534,11 @@ class Slices(unittest.TestCase):
             clock = 1 if chart.startswith("cosmic") else 0 if p == 1 else 1/(1-p)
             lo, hi = self.reach(surface)
             return (lambda X: clock), [lo if chart == "cosmic_spherical" else -hi, hi]
+
+        if key.startswith("hosotani_universe/"):
+            # One sphere at maximum expansion: t=ell=1, eta=pi/2, over the full polar distance.
+            height = 1.0 if "/cosmic_hyperspherical/" in key else math.pi / 2
+            return (lambda X: height), list(self.reach(surface))
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
@@ -6566,6 +6571,11 @@ class Slices(unittest.TestCase):
                         self.assertTrue(all(X >= -1e-9 for X, _ in points), where)
                         v_end = 4 + 4 * math.tan(qs[-1])
                         self.assertLess(abs((v_end - t) - 6), 2e-2 * (1 + v_end * v_end / 16), where)
+                    elif metric_id == "hosotani_universe":
+                        # The one maximum-radius sphere is eta=pi/2 across 0<=chi<=pi.
+                        self.assertTrue(all(abs(T - math.pi / 2) < 2e-4 for _, T in points), where)
+                        self.assertAlmostEqual(min(X for X, _ in points), 0, delta=2e-4, msg=where)
+                        self.assertAlmostEqual(max(X for X, _ in points), math.pi, delta=2e-4, msg=where)
                     elif metric_id == "tilted_universes":
                         # tan p = V and tan q = U are k e^(r/a) and k' e^(-r/a) on a surface of constant eta, so
                         # their product is one number along the slice, positive above the horizon, and the
