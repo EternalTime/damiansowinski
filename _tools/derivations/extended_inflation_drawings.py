@@ -110,7 +110,7 @@ def curvature(ck, src, cr):
     return [{"id": "cosmic", "label": "Cosmic time", "kind": "line", "x": x_axis,
              "panels": panels, "curves": curves, "marks": [],
              "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
-             "caption": ["The Kretschmann scalar $K$ and Ricci scalar $R$ during accelerated expansion, "
+             "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the accelerating false vacuum background, "
                          "divergent at $t=0$ and decreasing with cosmic time."],
              "ricci_sentences": [], "per_scalar": cr.scalar_clips("Log scale.", "Log scale."),
              "settings": SETTINGS, "clip": "Log scales."}]

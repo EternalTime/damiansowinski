@@ -18787,6 +18787,8 @@ def shell_void(ck, src):
     return _shell_void.curvature_views(ck, src, sys.modules[__name__])
 
 DRAWN["shell_void"] = shell_void
+import extended_inflation_drawings as extended_drawings
+DRAWN["extended_inflation"] = lambda ck, src: extended_drawings.curvature(ck, src, sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())

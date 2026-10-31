@@ -6136,6 +6136,48 @@
    "\\phi"
   ]
  },
+ "extended_inflation/conformal": {
+  "stamp": "bf4e5837f5ec075c",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "extended_inflation/cosmic": {
+  "stamp": "192c0010d8e5ae6a",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "eye_of_the_storm/boyer_lindquist": {
   "stamp": "a286e77201c8801f",
   "relations": {},
