@@ -1050,6 +1050,17 @@ A static, spherically symmetric metric whose components are exponentials of the 
 - chart Areal (curvature coordinates): coordinates $(t, R, \theta, \phi)$, $$ds^2 = -e^{-2m/r}c^2dt^2 + \dfrac{dR^2}{\left(1 - \dfrac{m}{r}\right)^2} + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Harmonic: coordinates $(t, u, \theta, \phi)$, $$ds^2 = -e^{-2m\,u}c^2dt^2 + \dfrac{e^{2m\,u}}{u^2}\left(\dfrac{du^2}{u^2} + d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Extended Inflation
+
+An accelerating false vacuum universe with an evolving Brans-Dicke gravitational scalar.
+
+- id: `extended_inflation`
+- tags: cosmology, FLRW, homogeneous, isotropic, expanding universe, scalar field, Brans-Dicke, curvature singularity, null singularity, time-dependent, exact solution, Lorentzian, four-dimensional, conformally flat, spherically symmetric, idealized model, scalar-tensor theory
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/extended_inflation.json
+- chart Cosmic Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right)$$
+- chart Conformal Spherical: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-c^2d\eta^2 + dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\phi^2\right)$$
+
 ### The Eye of the Storm
 
 Kerr's rotating black hole with its mass $m$ replaced by $me^{-\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass is switched off so fast toward the centre that the curvature falls away to nothing at the core and Kerr's ring singularity is gone, while it keeps horizons of its own, an ergoregion and geodesics that separate as Kerr's do.

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 224,
+  "count": 225,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -11025,6 +11025,11 @@
           "id": "morris_thorne",
           "kind": "family",
           "text": "The general traversable wormhole. Brans and Dicke's sphere has a throat where its singularity would be when $\\gamma > 1$ [agnese1995]."
+        },
+        {
+          "id": "extended_inflation",
+          "kind": "family",
+          "text": "Brans-Dicke gravity also supports an expanding false vacuum universe with a homogeneous gravitational scalar."
         }
       ],
       "references": [
@@ -16992,6 +16997,11 @@
           "id": "hawking_moss",
           "kind": "dual",
           "text": "At a positive maximum of a scalar potential, the Euclidean sphere is the Hawking-Moss saddle. Its radius is set by the potential at that maximum [weinberg2007hm]."
+        },
+        {
+          "id": "extended_inflation",
+          "kind": "limit_source",
+          "text": "De Sitter expansion is the limit $\\omega \\to \\infty$ at fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface."
         }
       ],
       "references": [
@@ -23141,6 +23151,191 @@
       ]
     },
     {
+      "id": "extended_inflation",
+      "name": "Extended Inflation",
+      "short_name": "Extended Inflation",
+      "description": "An accelerating false vacuum universe with an evolving Brans-Dicke gravitational scalar.",
+      "tags": [
+        "cosmology",
+        "FLRW",
+        "homogeneous",
+        "isotropic",
+        "expanding universe",
+        "scalar field",
+        "Brans-Dicke",
+        "curvature singularity",
+        "null singularity",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "conformally flat",
+        "spherically symmetric",
+        "idealized model",
+        "scalar-tensor theory"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use the Jordan metric and keep factors of $c$ explicit. The Ricci tensor is $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "The spatially flat Friedmann-Lemaître-Robertson-Walker geometry has $a(t) \\propto t^{\\omega + 1/2}$ during the false vacuum phase."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "family",
+          "text": "The gravitational scalar evolves with cosmic time in extended inflation and with radius outside the static sphere."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "limit",
+          "text": "At fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface, the limit $\\omega \\to \\infty$ approaches de Sitter expansion."
+        }
+      ],
+      "references": [
+        "mathiazhagan1984",
+        "kolitch1995",
+        "la1989extended",
+        "green1996extended",
+        "weinberg1989extended"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/extended_inflation.json",
+      "charts": [
+        {
+          "id": "cosmic",
+          "name": "Cosmic Spherical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "p > 1,\\quad t_0 > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Expansion exponent, $p = \\omega + 1/2 > 1$, with $\\omega$ the Brans-Dicke coupling parameter"
+            },
+            {
+              "symbol": "t_0",
+              "description": "Reference cosmic time, $t_0 > 0$, at which $a = 1$ and the dimensionless gravitational scalar $\\Phi = 1$, with $\\Phi = (t/t_0)^2$ and physical scalar $\\varphi = \\Phi/G_0$ for reference coupling $G_0 > 0$; the false vacuum energy density is $\\rho_v = c^2(6\\omega+5)(2\\omega+3)/(32\\pi G_0t_0^2)$"
+            },
+            {
+              "symbol": "a = \\left(\\dfrac{t}{t_0}\\right)^p",
+              "description": "Dimensionless scale factor; the Hubble rate is $H = p/t$ and the constant bubble nucleation rate per unit physical volume and time is $\\Gamma$"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and the comoving radius $r$, a length equal to the areal radius at $t = t_0$, with polar angles $\\theta$ and $\\phi$. Components use $x^0 = ct$, and dots in the geodesic equations denote derivatives of these coordinates with respect to an affine parameter $\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6p\\left(2p - 1\\right)}{c^2\\,t^2}",
+          "kretschmann": "K = \\dfrac{12p^2\\left(2p^2 + 1 - 2p\\right)}{c^4\\,t^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Spherical",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, 0)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "p > 1,\\quad t_0 > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "p",
+              "description": "Expansion exponent, $p = \\omega + 1/2 > 1$, with $\\omega$ the Brans-Dicke coupling parameter"
+            },
+            {
+              "symbol": "t_0",
+              "description": "Reference cosmic time, $t_0 > 0$, at which $a = 1$ and the dimensionless gravitational scalar $\\Phi = 1$, with $\\Phi = (t/t_0)^2$ and physical scalar $\\varphi = \\Phi/G_0$ for reference coupling $G_0 > 0$; the false vacuum energy density is $\\rho_v = c^2(6\\omega+5)(2\\omega+3)/(32\\pi G_0t_0^2)$"
+            },
+            {
+              "symbol": "a = \\left(-\\dfrac{(p-1)\\eta}{t_0}\\right)^{-p/(p-1)}",
+              "description": "Dimensionless scale factor; the Hubble rate is $H = p/t$ and the constant bubble nucleation rate per unit physical volume and time is $\\Gamma$"
+            }
+          ],
+          "convention": "We use conformal time $\\eta = -t_0(t/t_0)^{1-p}/(p-1)$, with $d\\eta = dt/a$, and the same comoving radius and polar angles as the cosmic chart. Components use $x^0 = c\\eta$, and dots in the geodesic equations denote derivatives of these coordinates with respect to an affine parameter $\\lambda$.",
+          "line_element": "ds^2 = a^2\\left(-c^2d\\eta^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6p\\left(2p - 1\\right)}{a^2\\,c^2\\,\\eta^2\\left(1 - p\\right)^2}",
+          "kretschmann": "K = \\dfrac{12p^2\\left(2p^2 + 1 - 2p\\right)}{a^4\\,c^4\\,\\eta^4\\left(1 - p\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "eye_of_the_storm",
       "name": "The Eye of the Storm",
       "short_name": "Eye of the Storm",
@@ -24712,6 +24907,11 @@
           "id": "shell_void",
           "kind": "composite",
           "text": "A Friedmann dust region surrounds an empty cavity and its accreting shell."
+        },
+        {
+          "id": "extended_inflation",
+          "kind": "special_case",
+          "text": "A false vacuum and an evolving Brans-Dicke scalar support $a(t) \\propto t^{\\omega + 1/2}$ in the spatially flat universe."
         }
       ],
       "references": [

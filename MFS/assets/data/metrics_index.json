@@ -1045,7 +1045,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "173c534bda78ad90",
+    "version": "078603941f90501c",
     "diagrams": "fd0321d9fcdcb54d",
     "conformal": "c776bb1e86cd5f7d",
     "embedding": "a1c5b02d8ba65163",
@@ -1593,7 +1593,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "3c0110f649f1a3df",
+    "version": "4fdc944d5c9f1341",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2106,6 +2106,34 @@
     "curvature": "009ff57df2364612"
   },
   {
+    "id": "extended_inflation",
+    "name": "Extended Inflation",
+    "tags": [
+      "cosmology",
+      "FLRW",
+      "homogeneous",
+      "isotropic",
+      "expanding universe",
+      "scalar field",
+      "Brans-Dicke",
+      "curvature singularity",
+      "null singularity",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "conformally flat",
+      "spherically symmetric",
+      "idealized model",
+      "scalar-tensor theory"
+    ],
+    "version": "b9280d10001ef60a",
+    "diagrams": "e5e6035cceca44bb",
+    "conformal": "53fb0b11ec2f6e2c",
+    "embedding": "16ee0889d84128dc",
+    "curvature": "3e9c1f930bf3714f"
+  },
+  {
     "id": "eye_of_the_storm",
     "name": "Eye of the Storm",
     "tags": [
@@ -2229,7 +2257,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "1e3d513d68645e8f",
+    "version": "537d11568204c0af",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
