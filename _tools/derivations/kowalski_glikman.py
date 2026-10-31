@@ -97,7 +97,7 @@ def embedding_views(ck, src, e):
     fixed = {"u": 0, "v": 0, **{f"x_{i}": 0 for i in range(2, 10) if i != 4}}
     sl = e.Slice(src, ID, "brinkmann", "x_1", None, fixed, {"mu": 1}, turn="x_4")
     piece = e.Piece("plane", "sheet", sl, 0, 3, size=6,
-                    ends=(("centre", None), ("edge", r"the transverse plane extending to infinity")),
+                    ends=(("axis", None), ("edge", r"the transverse plane extending to infinity")),
                     marks=[(r, "r", None) for r in (1, 2, 3)])
     ck.isometry("Eleven dimensional wave: transverse plane", piece)
     ck.form("Eleven dimensional wave: Z=0", piece, lambda r: np.zeros_like(r), 6)
