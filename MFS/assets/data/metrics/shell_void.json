@@ -11,7 +11,7 @@
     "four-dimensional"
   ],
   "signature": "(-,+,+,+)",
-  "convention": "We use $G=c=1$, with $t_0$ a reference length and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ the unit sphere. We orient the shell normal toward the exterior, with $K_{ij}$ the projected covariant derivative of that normal; the smooth bulk tensors apply away from the shell.",
+  "convention": "We use $G=c=1$, with $t_0$ a reference length and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ the unit sphere. We orient the shell normal toward the exterior, with $K_{ij}$ the projected covariant derivative of that normal; the smooth bulk tensors apply away from the shell. We set the bang at $t=0$ and take $I$ to be the connected cosmic time interval with $a(t)>0$; $I=(0,\\infty)$ for flat or open exteriors, and $I$ ends at the crunch for a closed exterior.",
   "history": "A void grows as its surrounding shell sweeps through cosmic dust. Kei-ichi Maeda and Humitaka Sato formulated this motion relativistically in 1983, treating the compressed matter as an infinitely thin spherical shell [maeda1983void]. The shell expands within a homogeneous dust universe, gathering the matter displaced from its interior [maeda1983void, sugiura2000void].¶In the empty case, the centre lies in Minkowski spacetime, with an expanding Friedmann universe outside the shell [sugiura2000void]. The two regions meet on a sphere whose area is $4\\pi R^2$, where $R$ is the shell's areal radius. The interior clock and the cosmic clock outside it run at rates related by the motion of that sphere [sakaihaines2000void].¶The shell carries mass with zero pressure along its surface [sakaihaines2000void]. Its radius and proper time agree when calculated from either side, while the jump in its extrinsic curvature is fixed by its surface density [sakaihaines2000void]. Matter crossing the expanding shell increases its mass through the energy flux from the exterior dust [sakaihaines2000void]. The shell's stress produces curvature concentrated on its moving surface, alongside the smooth curvature of the surrounding universe [sugiura2000void].¶For a small void in a spatially flat dust universe, Maeda and Sato found the asymptotic law $R\\propto t^{(15+\\sqrt{17})/24}$ in the Newtonian approximation, with $t$ the exterior cosmic time [sakaihaines2000void]. The exponent is about $0.797$, exceeding the background expansion exponent $2/3$. In an open universe the shell's expansion eventually follows the background flow. In a closed universe its speed approaches that of light as the universe recollapses [maeda1983voidII, sakaihaines2000void].¶Nobuyuki Sakai, Maeda, and Sato studied the relation between shell motion and cosmological parameters in 1993 [sakai1993void]. They allowed dust inside the void and a cosmological constant in the surrounding universe. The ratio of the shell's peculiar speed to the local Hubble expansion depends mainly on the exterior matter density, with a further dependence on the density inside the void [sakai1993void].¶Norimasa Sugiura, Ken-ichi Nakao, Daisuke Ida, Sakai, and Hideki Ishihara followed light through compensated spherical voids in 2000 [sugiura2000void]. The shell changes the expansion and shear of a light beam as it crosses, altering the relation between redshift and angular diameter distance [sugiura2000void]. In 2011 Maeda, Sakai, and Roland Triay calculated the appearance of an expanding spherical void in redshift space [maeda2011void]. The outward motion of its shell stretches the apparent void along the observer's line of sight through the Doppler shift [maeda2011void].",
   "references": [
     "maeda1983void",
@@ -49,7 +49,7 @@
         "\\phi"
       ],
       "domains": [
-        "T \\in (-\\infty,\\infty)",
+        "T\\in\\{T(t)\\mid t\\in I\\}",
         "r \\in [0,R)",
         "r=R\\;\\text{(the shell)}",
         "\\theta \\in [0,\\pi]",
@@ -361,7 +361,7 @@
         "\\phi"
       ],
       "domains": [
-        "t \\in (0,\\infty)",
+        "t\\in I",
         "r \\in (R/a,1/\\sqrt{k})\\;\\text{for}\\; k>0",
         "r \\in (R/a,\\infty)\\;\\text{for}\\; k\\le 0",
         "ar=R\\;\\text{(the shell)}",
@@ -1450,7 +1450,7 @@
         "\\phi"
       ],
       "domains": [
-        "t\\in(0,\\infty)",
+        "t\\in I",
         "\\chi\\in(\\chi_s,\\pi)\\;\\text{for}\\;k>0",
         "\\chi\\in(\\chi_s,\\infty)\\;\\text{for}\\;k\\le0",
         "af(\\chi_s)=R\\;\\text{(the shell)}",
@@ -1475,7 +1475,7 @@
           "description": "The shell comoving position, with areal radius $R=a f(\\chi_s)$."
         }
       ],
-      "convention": "The time $t$ and dust scale factor $a=a(t)$ have dimensions of length, and $\\chi$ is a dimensionless proper radial coordinate. For curvature sign $k=-1,0,1$, we take $f=f(\\chi)$ as $\\sinh\\chi$, $\\chi$, and $\\sin\\chi$, respectively. The shell lies at $\\chi=\\chi_s(t)$, with $R=a f(\\chi_s)$.",
+      "convention": "The time $t$ and dust scale factor $a=a(t)$ have dimensions of length, and $\\chi$ is a dimensionless proper radial coordinate; for curvature sign $k=-1,0,1$, we take $f=f(\\chi)$ as $\\sinh\\chi$, $\\chi$, and $\\sin\\chi$, respectively. The shell lies at $\\chi=\\chi_s(t)$, with $R=a f(\\chi_s)$.",
       "line_element": "ds^2=-dt^2+a^2\\left(d\\chi^2+f^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 223,
+  "count": 224,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -24707,6 +24707,11 @@
           "id": "starobinsky_universe",
           "kind": "special_case",
           "text": "Starobinsky's homogeneous universe follows the semiclassical field equation with conformally invariant quantum matter [starobinsky1980]."
+        },
+        {
+          "id": "shell_void",
+          "kind": "composite",
+          "text": "A Friedmann dust region surrounds an empty cavity and its accreting shell."
         }
       ],
       "references": [
@@ -31172,6 +31177,11 @@
           "id": "kerr_disc_source",
           "kind": "programme",
           "text": "Werner Israel's surface layers applied to Kerr's metric in 1970: a layer on the disc in the ring singularity [israel1970]."
+        },
+        {
+          "id": "shell_void",
+          "kind": "family",
+          "text": "An expanding dust exterior feeds the shell as it moves around an empty interior [sakaihaines2000void]."
         }
       ],
       "references": [
@@ -31196,7 +31206,8 @@
         "visser2004",
         "haggard2015fireworks",
         "kraus1999",
-        "israel1970"
+        "israel1970",
+        "sakaihaines2000void"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -45346,6 +45357,11 @@
           "id": "lynden_bell_pineault",
           "kind": "generalisation",
           "text": "The counter rotating family contains flat space when the circular speed and surface density vanish [lyndenbell1978]."
+        },
+        {
+          "id": "shell_void",
+          "kind": "composite",
+          "text": "Minkowski space fills the interior of a spherical dust shell in an expanding Friedmann universe."
         }
       ],
       "references": [
@@ -62554,6 +62570,243 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{24a^4\\left(24\\cosh^4(act)\\cosh^2(3a\\rho) + 33\\cosh^4(act) - 32\\cosh^2(act)\\cosh^2(3a\\rho) + 8\\cosh^4(3a\\rho)\\right)}{\\cosh^{12}(act)\\cosh^8(3a\\rho)}"
+        }
+      ]
+    },
+    {
+      "id": "shell_void",
+      "name": "Void with an Accreting Dust Shell",
+      "short_name": "Shell Void",
+      "description": "An empty spherical cavity surrounded by an accreting dust shell in a Friedmann universe.",
+      "tags": [
+        "cosmology",
+        "dust",
+        "thin shell",
+        "spherically symmetric",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use $G=c=1$, with $t_0$ a reference length and $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ the unit sphere. We orient the shell normal toward the exterior, with $K_{ij}$ the projected covariant derivative of that normal; the smooth bulk tensors apply away from the shell. We set the bang at $t=0$ and take $I$ to be the connected cosmic time interval with $a(t)>0$; $I=(0,\\infty)$ for flat or open exteriors, and $I$ ends at the crunch for a closed exterior.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The homogeneous dust universe outside the moving shell has Friedmann geometry."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The empty interior is a spherical region of Minkowski spacetime."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "Both models join a Minkowski interior to a spherical dust shell. The cosmological shell sweeps mass from its dust exterior [sakaihaines2000void]."
+        }
+      ],
+      "references": [
+        "maeda1983void",
+        "sugiura2000void",
+        "sakaihaines2000void",
+        "maeda1983voidII",
+        "sakai1993void",
+        "maeda2011void"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/shell_void.json",
+      "charts": [
+        {
+          "id": "interior",
+          "name": "Minkowski Interior",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T\\in\\{T(t)\\mid t\\in I\\}",
+            "r \\in [0,R)",
+            "r=R\\;\\text{(the shell)}",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "R = R(T)",
+              "description": "Areal radius of the shell in the interior time $T$; the common shell radius is $R(t)=R(T(t))$."
+            }
+          ],
+          "convention": "The interior time $T$ and radius $r$ have dimensions of length. The shell has areal radius $R=R(T)$.",
+          "line_element": "ds^2=-dT^2+dr^2+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "exterior",
+          "name": "Dust Friedmann Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t\\in I",
+            "r \\in (R/a,1/\\sqrt{k})\\;\\text{for}\\; k>0",
+            "r \\in (R/a,\\infty)\\;\\text{for}\\; k\\le 0",
+            "ar=R\\;\\text{(the shell)}",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Dimensionless dust scale factor, with Hubble rate $H=(da/dt)/a$ and dust density $\\rho$ satisfying $H^2=8\\pi\\rho/3-k/a^2$ and $\\rho a^3=\\mathrm{constant}$."
+            },
+            {
+              "symbol": "k",
+              "description": "Spatial curvature with dimensions of inverse length squared; $k>0$, $k=0$, and $k<0$ select closed, flat, and open exteriors."
+            },
+            {
+              "symbol": "R = R(t)",
+              "description": "Areal radius of the moving shell. In the flat dust case $a=(t/t_0)^{2/3}$, $H=2/(3t)$, $\\rho=1/(6\\pi t^2)$, $v=dR/dt-HR$, $\\gamma=(1-v^2)^{-1/2}$, and $B=\\sqrt{1+2HRv+H^2R^2}$. Its surface density is $\\sigma=H^2R/[4\\pi\\gamma(B+1+HRv)]$, with surface stress $S^i{}_j=\\operatorname{diag}(-\\sigma,0,0)$ in shell proper time $\\tau$. The junction equations are $dR/dt=HR+v$, $dv/dt=(-\\gamma vH+2\\pi\\sigma-\\rho\\gamma^2v^2/\\sigma)/\\gamma^3$, $dT/dt=B$, and $d\\tau/dt=1/\\gamma$. The proper shell mass $m=4\\pi R^2\\sigma$ obeys $dm/dt=4\\pi R^2\\rho\\gamma v$."
+            }
+          ],
+          "convention": "The cosmic time $t$ and comoving radius $r$ have dimensions of length. We write the dimensionless dust scale factor as $a=a(t)$, the spatial curvature as $k$, and the shell areal radius as $R=R(t)$.",
+          "line_element": "ds^2=-dt^2+a^2\\left(\\dfrac{dr^2}{1-kr^2}+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{a^2}{k\\,r^2 - 1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,\\partial_t^2 a + 6\\left(\\partial_t a\\right)^2 + 6k}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(\\partial_t^2 a\\right)^2 + 24k\\left(\\partial_t a\\right)^2 + 12\\left(\\partial_t a\\right)^4 + 12k^2}{a^4}"
+        },
+        {
+          "id": "exterior_proper",
+          "name": "Friedmann Comoving Coordinate",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t\\in I",
+            "\\chi\\in(\\chi_s,\\pi)\\;\\text{for}\\;k>0",
+            "\\chi\\in(\\chi_s,\\infty)\\;\\text{for}\\;k\\le0",
+            "af(\\chi_s)=R\\;\\text{(the shell)}",
+            "\\theta\\in[0,\\pi]",
+            "\\phi\\in[0,2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "The dust scale factor has dimensions of length, with $H=(da/dt)/a$ and $H^2=8\\pi\\rho/3-k/a^2$ for density $\\rho$."
+            },
+            {
+              "symbol": "f = f(\\chi)",
+              "description": "The dimensionless curvature function, $f=\\sin\\chi$ for $k=1$, $f=\\chi$ for $k=0$, and $f=\\sinh\\chi$ for $k=-1$."
+            },
+            {
+              "symbol": "k",
+              "description": "The dimensionless curvature sign, $k\\in\\{-1,0,1\\}$."
+            },
+            {
+              "symbol": "\\chi_s = \\chi_s(t)",
+              "description": "The shell comoving position, with areal radius $R=a f(\\chi_s)$."
+            }
+          ],
+          "convention": "The time $t$ and dust scale factor $a=a(t)$ have dimensions of length, and $\\chi$ is a dimensionless proper radial coordinate; for curvature sign $k=-1,0,1$, we take $f=f(\\chi)$ as $\\sinh\\chi$, $\\chi$, and $\\sin\\chi$, respectively. The shell lies at $\\chi=\\chi_s(t)$, with $R=a f(\\chi_s)$.",
+          "line_element": "ds^2=-dt^2+a^2\\left(d\\chi^2+f^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,f^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,f^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,f^2\\,\\partial_t^2 a + 6f^2\\left(\\partial_t a\\right)^2 - 4f\\,\\partial_\\chi^2 f - 2\\left(\\partial_\\chi f\\right)^2 + 2}{a^2\\,f^2}",
+          "kretschmann": "K = \\dfrac{4 + 4\\left(\\partial_\\chi f\\right)^4 - 8\\left(\\partial_\\chi f\\right)^2 + 12f^4\\left(\\partial_t a\\right)^4 + 8f^2\\left(\\partial_t a\\right)^2 + 8f^2\\left(\\partial_\\chi^2 f\\right)^2 - 16f^3\\,\\partial_\\chi^2 f\\left(\\partial_t a\\right)^2 + 12a^2\\,f^4\\left(\\partial_t^2 a\\right)^2 - 8f^2\\left(\\partial_\\chi f\\right)^2\\left(\\partial_t a\\right)^2}{a^4\\,f^4}"
         }
       ]
     },

@@ -2229,7 +2229,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "d6e82be31458c663",
+    "version": "1e3d513d68645e8f",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2802,7 +2802,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0c3dcba4034d3fee",
+    "version": "8a9449e8351da9d6",
     "diagrams": "e28989ef92105e2d",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
@@ -4122,7 +4122,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "881611a968e66af6",
+    "version": "02841893324ba39f",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -5629,6 +5629,21 @@
     "conformal": "e6b2c492ab043d17",
     "embedding": "e135a6bb032eedc2",
     "curvature": "4280533b4a12efb1"
+  },
+  {
+    "id": "shell_void",
+    "name": "Shell Void",
+    "tags": [
+      "cosmology",
+      "dust",
+      "thin shell",
+      "spherically symmetric",
+      "four-dimensional"
+    ],
+    "version": "7a30cb94975659eb",
+    "diagrams": "d92bd08db057d53b",
+    "embedding": "769501ac6358aff8",
+    "curvature": "fc44387fab49c4ee"
   },
   {
     "id": "btz_shock_wave",

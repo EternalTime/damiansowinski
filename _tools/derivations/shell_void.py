@@ -156,7 +156,7 @@ def embedding_views(ck, src, api):
     for piece in (inside,outside):
         ck.isometry("shell void, "+piece.id,piece)
     ck.join("shell void, the two pieces meet",inside,float(R),outside,float(R/a))
-    surface = api.Surface([inside,outside],label="$t=2t_0$",time=time)
+    surface = api.Surface([inside,outside])
     fig = api.figure_of([surface],{"sheet":"cover"},size)
     api.ring_label(fig,[0,0,0],float(R),0,r"$R=0.244t_0$",dx=12)
     fig.legend("fill","cover","the spatial slice")
@@ -177,7 +177,7 @@ def embedding_captions():
 
 def flat_slice_marks(api,system):
     out=[]
-    for moment in api.moments("shell_void"):
+    for moment in api.moments("shell_void",label="$t=2t_0$"):
         lo,hi=moment.reach("exterior" if system=="exterior_proper" else system,"r")
         t=float(state(2.0)[2]) if system=="interior" else 2.0
         out.append(api.Mark(moment,[[(t,lo),(t,hi)]]))

@@ -4512,6 +4512,12 @@ class Slices(unittest.TestCase):
         if key == "early_braneworlds/magnetic_general/radial":
             # The same magnetic surface: beta=(1+rho^2/a^2)^(1/3), with a=1.
             return (lambda X: 0.0), [(1+rho*rho)**(1/3) for rho in self.reach(surface)]
+        if key.startswith("shell_void/"):
+            # One fixed slice: exterior t=2t0, interior T=1.0043869706139898t0,
+            # the matched clock reading in the independently recorded trajectory audit.
+            inside = key.split("/")[1] == "interior"
+            level = 1.0043869706139898 if inside else 2.0
+            return (lambda X: level), list(self.reach(surface, "interior" if inside else "exterior"))
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))

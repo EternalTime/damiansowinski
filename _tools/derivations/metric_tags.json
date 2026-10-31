@@ -15473,7 +15473,7 @@
   "sphere": null
  },
  "shell_void/exterior": {
-  "stamp": "0b82790e132aa23f",
+  "stamp": "5a125265bbbfc719",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15494,7 +15494,7 @@
   ]
  },
  "shell_void/exterior_proper": {
-  "stamp": "6c529f8e72e5edbd",
+  "stamp": "330c7d578d9825eb",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15512,7 +15512,7 @@
   "sphere": null
  },
  "shell_void/interior": {
-  "stamp": "fc871c93515c25cc",
+  "stamp": "4017a32cf4248cd7",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -15524,7 +15524,7 @@
     "coord": "T",
     "timelike": true,
     "hypersurface_orthogonal": true,
-    "translation": true
+    "translation": false
    },
    {
     "coord": "\\phi",
