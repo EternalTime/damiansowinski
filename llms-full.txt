@@ -1337,6 +1337,17 @@ The inside of a planar charged black hole of anti-de Sitter space that has grown
 - chart Final Kasner Epoch: coordinates $(\tau, t, x, y)$, $$ds^2 = -c^2d\tau^2 + \tau^{2p_t}c^2dt^2 + \tau^{2p_x}\left(dx^2 + dy^2\right)$$
 - chart Kasner Inversion: coordinates $(\rho, t, x, y)$, $$ds^2 = -\dfrac{\ell^2\left(1 + \rho^\beta\right)^2}{\rho^\beta}d\rho^2 + \dfrac{\rho^\beta}{\left(1 + \rho^\beta\right)^2}c^2dt^2 + \rho^{1 - \beta}\left(1 + \rho^\beta\right)^2\left(dx^2 + dy^2\right)$$
 
+### Hosotani Universe
+
+A closed universe filled with a homogeneous magnetic SU(2) gauge field, expanding from a curvature singularity and recollapsing.
+
+- id: `hosotani_universe`
+- tags: cosmology, closed universe, three sphere, homogeneous, isotropic, expanding universe, radiation, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, conformally flat, spherically symmetric, Yang-Mills field, Einstein-Yang-Mills, gauge field, instability
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hosotani_universe.json
+- chart Cosmic Hyperspherical: coordinates $(t, \chi, \theta, \phi)$, $$ds^2=-dt^2+t(2\ell-t)\left(d\chi^2+\sin^2\chi\left(d\theta^2+\sin^2\theta\,d\phi^2\right)\right)$$
+- chart Conformal Hyperspherical: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2=\ell^2\sin^2\eta\left(-d\eta^2+d\chi^2+\sin^2\chi\left(d\theta^2+\sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Hotta-Tanaka Shock Wave
 
 The gravitational field of two massless particles in de Sitter space, the Schwarzschild-de Sitter black hole boosted to the speed of light with its energy held fixed. Spacetime is de Sitter on either side of a single null cone, a cosmological horizon, which carries an impulsive gravitational wave on a sphere of constant area with one particle at each pole.

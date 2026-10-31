@@ -8085,6 +8085,50 @@
   ],
   "sphere": null
  },
+ "hosotani_universe/conformal_hyperspherical": {
+  "stamp": "06c819bd3ba73c27",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "hosotani_universe/cosmic_hyperspherical": {
+  "stamp": "f4ac5c5b4add14a7",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "hotta_tanaka/conformally_flat": {
   "stamp": "97c3ebe95a6125ff",
   "relations": {},

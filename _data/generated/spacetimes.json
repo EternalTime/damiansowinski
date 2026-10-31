@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 228,
+  "count": 229,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -20254,6 +20254,11 @@
           "id": "vaidya_patel_kerr",
           "kind": "generalisation",
           "text": "A Kerr black hole placed in Einstein's universe, which is what remains when its mass is set to zero [vaidya1977kerr]."
+        },
+        {
+          "id": "hosotani_universe",
+          "kind": "conformal",
+          "text": "A closed universe filled with a homogeneous Yang-Mills magnetic field. Dividing its metric by the squared spatial radius makes it conformal to a region of Einstein's static universe [gibbons1994ym]."
         }
       ],
       "references": [
@@ -20282,7 +20287,8 @@
         "bohmerlobo2008",
         "lachiezerey1995",
         "luminet2003",
-        "vaidya1977kerr"
+        "vaidya1977kerr",
+        "gibbons1994ym"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -25743,6 +25749,11 @@
           "id": "exponential_scalar_universes",
           "kind": "special_case",
           "text": "The flat Friedmann geometry with power law expansion, sourced by a scalar field with a positive exponential potential alone or with a barotropic fluid."
+        },
+        {
+          "id": "hosotani_universe",
+          "kind": "special_case",
+          "text": "Hosotani's closed universe has $a=\\ell\\sin\\eta$ and $p=\\rho/3$, with a homogeneous magnetic $SU(2)$ gauge field as its source [gibbons1994ym]."
         }
       ],
       "references": [
@@ -25820,7 +25831,8 @@
         "murphy1973",
         "vaidya1977kerr",
         "mello2017",
-        "starobinsky1980"
+        "starobinsky1980",
+        "gibbons1994ym"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -31387,6 +31399,167 @@
           ],
           "ricci_scalar": "R = -\\dfrac{\\left(1 - \\beta^2\\right)\\rho^{\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^2}",
           "kretschmann": "K = \\dfrac{\\left(\\left(1 + \\beta\\right)^2\\left(7\\beta^2 + 2\\beta + 3\\right)\\rho^{4\\beta} - 4\\left(1 + \\beta\\right)\\left(11\\beta^3 + 5\\beta^2 - \\beta - 3\\right)\\rho^{3\\beta} + 2\\left(61\\beta^4 - 30\\beta^2 + 9\\right)\\rho^{2\\beta} + 4\\left(1 - \\beta\\right)\\left(11\\beta^3 - 5\\beta^2 - \\beta + 3\\right)\\rho^\\beta + \\left(1 - \\beta\\right)^2\\left(7\\beta^2 - 2\\beta + 3\\right)\\right)\\rho^{2\\beta - 4}}{4\\ell^4\\left(1 + \\rho^\\beta\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "hosotani_universe",
+      "name": "Hosotani Universe",
+      "short_name": "Hosotani Universe",
+      "description": "A closed universe filled with a homogeneous magnetic SU(2) gauge field, expanding from a curvature singularity and recollapsing.",
+      "tags": [
+        "cosmology",
+        "closed universe",
+        "three sphere",
+        "homogeneous",
+        "isotropic",
+        "expanding universe",
+        "radiation",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "conformally flat",
+        "spherically symmetric",
+        "Yang-Mills field",
+        "Einstein-Yang-Mills",
+        "gauge field",
+        "instability"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units $c=\\hbar=1$, so cosmic time carries dimensions of length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "A closed radiation cosmology with $a=\\ell\\sin\\eta$, where $\\eta$ is conformal time and $\\ell$ is the maximum radius. A homogeneous $SU(2)$ magnetic field supplies the radiation stress [gibbons1994ym]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "conformal",
+          "text": "Conformal time separates the evolving radius from the round 3-sphere: $ds^2=a^2(-d\\eta^2+d\\Omega_3^2)$ [gibbons1994ym]."
+        }
+      ],
+      "references": [
+        "hosotani1984",
+        "gibbons1994ym"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hosotani_universe.json",
+      "charts": [
+        {
+          "id": "cosmic_hyperspherical",
+          "name": "Cosmic Hyperspherical",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, 2\\ell)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Maximum spatial radius, a positive length, with $\\ell^2=4\\pi G/e^2$ for gauge coupling $e$ and the fixed homogeneous $SU(2)$ amplitude $f=1/2$; the spatial radius is $a=\\sqrt{t(2\\ell-t)}=\\ell\\sin\\eta$"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and angles $(\\chi,\\theta,\\phi)$ on the round 3-sphere. A dot in the geodesic equations denotes a derivative with respect to an affine parameter.",
+          "line_element": "ds^2=-dt^2+t(2\\ell-t)\\left(d\\chi^2+\\sin^2\\chi\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "t\\left(2\\ell - t\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "t\\left(2\\ell - t\\right)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "t\\left(2\\ell - t\\right)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24\\ell^4}{t^4\\left(2\\ell - t\\right)^4}"
+        },
+        {
+          "id": "conformal_hyperspherical",
+          "name": "Conformal Hyperspherical",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\pi)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Maximum spatial radius, a positive length, with $\\ell^2=4\\pi G/e^2$ for gauge coupling $e$ and the fixed homogeneous $SU(2)$ amplitude $f=1/2$; the spatial radius is $a=\\sqrt{t(2\\ell-t)}=\\ell\\sin\\eta$"
+            }
+          ],
+          "convention": "We use dimensionless conformal time $\\eta$, with $t=\\ell(1-\\cos\\eta)$ and angles $(\\chi,\\theta,\\phi)$ on the round 3-sphere. A dot in the geodesic equations denotes a derivative with respect to an affine parameter.",
+          "line_element": "ds^2=\\ell^2\\sin^2\\eta\\left(-d\\eta^2+d\\chi^2+\\sin^2\\chi\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\ell^2\\sin^2\\eta"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\sin^2\\eta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\sin^2\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\sin^2\\eta\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24\\csc^8\\eta}{\\ell^4}"
         }
       ]
     },
