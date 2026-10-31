@@ -14804,6 +14804,9 @@ class Plot:
     # ---- rays
 
     def trace(self, u0, family, sign):
+        if (self.c.spec.metric, self.c.spec.system, self.c.spec.view) == (
+                "exponential_scalar_universes", "cosmic_spherical", "tracking"):
+            return _exponential_scalar.dust_trace(self, u0, family, sign)
         # Every ray may run as far as 5000 steps of the usual 0.0025 take it.
         h = self.c.spec.step
         steps = round(5000 * 0.0025 / h)

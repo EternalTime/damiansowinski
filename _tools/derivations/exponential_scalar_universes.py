@@ -186,7 +186,7 @@ def diagram_specs(Diagram, sideways):
                  (('event', '1/t' if cosmic else '-eta', 'event horizon of the observer at $x=0$'),) if p > 1 else
                  (('past', '3*t**(1/3)' if cosmic else 'eta', 'particle horizon of the observer at $r=0$'),))
         rows.append(Diagram(METRIC, system, vid, dict((x[0], x[1]) for x in EXAMPLES)[vid],
-                            (clock, radial), box, f'${radial}/t_0$', f'${clock}/t_0$', params, fixed,
+                            (clock, radial), box, '$x/t_0$' if spherical else f'${radial}/t_0$', f'${clock}/t_0$', params, fixed,
                             tau='t' if cosmic else 'eta', mirror=spherical,
                             families=sideways if not spherical else ('ingoing', 'outgoing'),
                             curves=curve, cones=(5, 5), step=0.00025 if spherical else 0.0025))
@@ -196,7 +196,7 @@ def diagram_specs(Diagram, sideways):
 def diagram_captions():
     """Compact descriptions of the null planes."""
     return {(METRIC, system, vid): [MATTER_TEXT[vid]+
-        (r", radial null geodesics through $r=0$." if system == 'cosmic_spherical' else
+        (r", radial null geodesics along the signed diameter $x=\pm r$." if system == 'cosmic_spherical' else
          r", null geodesics on $y=z=0$.")]
         for system, vid, _ in PLANES}
 
@@ -204,8 +204,7 @@ def diagram_captions():
 def null_forms():
     """First integrals of the null slopes, checked against traced rays."""
     return {(METRIC, system, vid):
-            ((lambda t, r, p=p: eta_of(t, p)+r), (lambda t, r, p=p: eta_of(t, p)-r),
-             (lambda t, r: t > 0.02) if system == 'cosmic_spherical' else None)
+            ((lambda t, r, p=p: eta_of(t, p)+r), (lambda t, r, p=p: eta_of(t, p)-r), None)
             if system.startswith('cosmic') else ((lambda e, r: e+r), (lambda e, r: e-r), None)
             for system, vid, p in PLANES}
 
@@ -310,3 +309,41 @@ def curvature_views(ck, src, cv):
                       'settings': f'$p={ptext}$, $a_0=t_0=1$.', 'clip': 'Logarithmic vertical scales.',
                       'per_scalar': cv.scalar_clips('Logarithmic scale.', 'Logarithmic scale.')})
     return views
+
+
+def dust_trace(plot, seed, family, direction):
+    """Integrate the published null slope in s=t^(1/3), regular at t=0.
+
+    For the dust example the metric makes ds/dr constant. Its value is read
+    from the published null direction, independently of the closed integrals
+    used by the ray checker. The cubic maps back to cosmic time only after
+    integration, so no positive-time interval needs to be excluded.
+    """
+    import math
+    import numpy as np
+
+    spec = plot.c.spec
+    if spec.params != {'a_0': 1, 't_0': 1, 'p': 2/3} or spec.box != (0, 2.4, 0, 4.8):
+        raise ValueError('the regular dust integrator requires the declared dust drawing units')
+    time, radius = map(float, plot.to_chart(plot.from_unit(seed)))
+    if time <= 0:
+        return np.array([seed], float)
+    root = np.cbrt(time)
+    times = np.array([time, 0.1, 1.0, 4.8])
+    radii = np.full_like(times, radius)
+    tangent = plot.c.null_dirs(times, radii)[family]
+    rates = tangent[:, 0]/(3*np.cbrt(times)**2*tangent[:, 1])
+    rate = float(rates[0])
+    if not np.all(np.isfinite(rates)) or np.max(np.abs(rates-rate)) > 1e-12:
+        raise AssertionError('the published dust metric does not have constant ds/dr')
+    # The two limits in s, intersected with the drawn radius interval.
+    rlimits = sorted((radius-root/rate, radius+(np.cbrt(4.8)-root)/rate))
+    low, high = max(0.0, rlimits[0]), min(2.4, rlimits[1])
+    end = high if direction*tangent[0, 1] > 0 else low
+    # A bound on normalized dt/dr fixes the maximum distance between samples.
+    slope = 3*abs(rate)*np.cbrt(4.8)**2*2.4/4.8
+    count = max(2, math.ceil(abs(end-radius)/2.4*math.sqrt(1+slope*slope)/spec.step)+1)
+    r = np.linspace(radius, end, count)
+    s = np.maximum(root+rate*(r-radius), 0.0)
+    t = s*s*s
+    return (np.column_stack((r,t))-plot.lo)/plot.span
