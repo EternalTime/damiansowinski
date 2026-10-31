@@ -31975,6 +31975,9 @@ CAPTIONS.update(_exponential_scalar.conformal_captions())
 import hosotani_drawings as hosotani_drawings
 hosotani_drawings.register_conformal(sys.modules[__name__])
 
+# Only the bounded rotating body is specified; no global completion is established.
+NOT_DRAWN.add('kramer_fluid')
+
 
 if __name__ == "__main__":
     sys.exit(main())

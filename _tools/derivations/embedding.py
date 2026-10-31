@@ -22113,6 +22113,9 @@ CAPTIONS.update(_exponential_scalar.embedding_captions())
 import hosotani_drawings as hosotani_drawings
 hosotani_drawings.register_embedding(sys.modules[__name__])
 
+import kramer_fluid_drawings as kf_drawings
+kf_drawings.register_embedding(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -5027,6 +5027,9 @@ eb_drawings.register_slices(sys.modules[__name__])
 import hosotani_drawings as hosotani_drawings
 hosotani_drawings.register_slices(sys.modules[__name__])
 
+import kramer_fluid_drawings as kf_drawings
+kf_drawings.register_slices(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")

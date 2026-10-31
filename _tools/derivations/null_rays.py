@@ -19118,5 +19118,9 @@ import hosotani_drawings as hosotani_drawings
 hosotani_drawings.register_null(sys.modules[__name__])
 
 
+import kramer_fluid_drawings as kf_drawings
+kf_drawings.register_null(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())
