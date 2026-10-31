@@ -1514,7 +1514,8 @@ def check_texts(metrics, diagrams, conformal, embedding, curvature):
 
 # The spacetimes drawn without an embedding diagram, which _tools/derivations/embedding.py names
 # in its own NOT_DRAWN; the tests hold the two equal. Every other spacetime has a file.
-WITHOUT_EMBEDDING = frozenset({"lentz", "hauser_wave"})
+# A compact flat torus has no smooth isometric immersion in Euclidean three-space.
+WITHOUT_EMBEDDING = frozenset({"lentz", "hauser_wave", "torus_universe_2plus1"})
 
 
 def embedding_problems(metrics, embedding):
