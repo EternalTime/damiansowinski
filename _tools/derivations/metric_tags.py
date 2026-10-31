@@ -842,6 +842,7 @@ def compute(metric_id, entry, seconds):
     reader = vm.Reader(coords, [p["symbol"] for p in entry.get("parameters", [])],
                        vm.time_coordinates(declared, coords), relations, orders,
                        vm.HELD.get((metric_id, entry["id"]), ()),
+                       rates=vm.RATES.get((metric_id, entry["id"])),
                        pulse=(metric_id, entry["id"]) in vm.IMPULSES)
     g = vm.metric_from_line_element(reader, entry["line_element"], coords)
     symbols = [reader.symbol[name] for name in coords]

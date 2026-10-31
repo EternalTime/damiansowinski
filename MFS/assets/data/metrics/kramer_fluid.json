@@ -37,10 +37,10 @@
         "\\phi"
       ],
       "domains": [
-        "\\tau\\in(-\\infty,\\infty)",
-        "\\eta\\in[1,\\eta_e]",
+        "\\tau \\in (-\\infty,\\infty)",
+        "\\eta \\in [1,\\eta_e]",
         "|\\xi|\\leq\\arccos\\left(\\dfrac{(\\eta+1)e^{\\eta}}{b}\\right)",
-        "\\phi\\in[0,2\\pi)",
+        "\\phi \\in [0,2\\pi)",
         "m>0,\\quad 2e<b<b_\\star",
         "\\eta=1\\;\\text{(regular rotation axis, where the polar chart fails)}"
       ],
@@ -3986,10 +3986,10 @@
         "\\phi"
       ],
       "domains": [
-        "\\tau\\in(-\\infty,\\infty)",
-        "w\\in[0,\\sqrt{\\eta_e-1}]",
+        "\\tau \\in (-\\infty,\\infty)",
+        "w \\in [0,\\sqrt{\\eta_e-1}]",
         "|\\xi|\\leq\\arccos\\left(\\dfrac{(\\eta+1)e^{\\eta}}{b}\\right)",
-        "\\phi\\in[0,2\\pi)",
+        "\\phi \\in [0,2\\pi)",
         "m>0,\\quad 2e<b<b_\\star",
         "\\eta=1\\;\\text{(regular rotation axis, where the polar chart fails)}"
       ],
@@ -4008,7 +4008,7 @@
         },
         {
           "symbol": "J = 2e^{w^2/2}\\sinh(w^2/2)",
-          "description": "The dimensionless difference $J=e^{w^2}-1$, in a form regular to evaluate near the axis"
+          "description": "The dimensionless difference $J=e^{w^2}-1$"
         },
         {
           "symbol": "F = b\\cos\\xi\\,e^{-1-w^2}",
