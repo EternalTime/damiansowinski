@@ -57,7 +57,7 @@
         "\\theta",
         "\\phi"
       ],
-      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "convention": "The common time is $t$, $r$ is the oblate radius, and $\\theta$ and $\\phi$ are the polar and azimuthal angles. The shell is the separate surface $r=r_0$, with polar semiaxis $r_0$ and equatorial semiaxis $\\sqrt{r_0^2+a^2}$. Tensor components apply in the smooth regions away from the shell.",
       "parameters": [
         {
           "symbol": "m",
@@ -74,6 +74,18 @@
         {
           "symbol": "r_0 = q^2/(2m)",
           "description": "Oblate radius of the timelike shell"
+        },
+        {
+          "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+          "description": "Squared oblate distance"
+        },
+        {
+          "symbol": "B = r^2 + a^2",
+          "description": "Squared equatorial radius"
+        },
+        {
+          "symbol": "\\Delta = r^2 + a^2 - 2mr + q^2",
+          "description": "Radial function, positive throughout the retained exterior"
         }
       ]
     },
@@ -86,7 +98,7 @@
         "\\theta",
         "\\phi"
       ],
-      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "convention": "The common time is $t$, $r$ is the oblate radius, and $\\theta$ and $\\phi$ are the polar and azimuthal angles. The shell is the separate surface $r=r_0$, with polar semiaxis $r_0$ and equatorial semiaxis $\\sqrt{r_0^2+a^2}$. Tensor components apply in the smooth regions away from the shell.",
       "parameters": [
         {
           "symbol": "m",
@@ -103,6 +115,14 @@
         {
           "symbol": "r_0 = q^2/(2m)",
           "description": "Oblate radius of the timelike shell"
+        },
+        {
+          "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+          "description": "Squared oblate distance"
+        },
+        {
+          "symbol": "B = r^2 + a^2",
+          "description": "Squared equatorial radius"
         }
       ]
     },
@@ -115,7 +135,7 @@
         "\\theta",
         "\\psi"
       ],
-      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "convention": "The Kerr angular time is $T$, $r$ is the oblate radius, and $\\theta$ and $\\psi$ are angles. The transformation from Boyer-Lindquist coordinates is $c\\,dT=c\\,dt+(2mr-q^2)dr/(r^2+a^2-2mr+q^2)$ and $d\\psi=d\\phi+a\\,dr/(r^2+a^2-2mr+q^2)$ outside, with $m=q=0$ in these two transformation coefficients inside. Tensor components apply in the smooth regions away from the shell.",
       "parameters": [
         {
           "symbol": "m",
@@ -132,6 +152,14 @@
         {
           "symbol": "r_0 = q^2/(2m)",
           "description": "Oblate radius of the timelike shell"
+        },
+        {
+          "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+          "description": "Squared oblate distance"
+        },
+        {
+          "symbol": "B = r^2 + a^2",
+          "description": "Squared equatorial radius"
         }
       ]
     },
@@ -144,7 +172,7 @@
         "\\theta",
         "\\psi"
       ],
-      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "convention": "The Kerr angular time is $T$, $r$ is the oblate radius, and $\\theta$ and $\\psi$ are angles. The transformation from Boyer-Lindquist coordinates is $c\\,dT=c\\,dt+(2mr-q^2)dr/(r^2+a^2-2mr+q^2)$ and $d\\psi=d\\phi+a\\,dr/(r^2+a^2-2mr+q^2)$ outside, with $m=q=0$ in these two transformation coefficients inside. Tensor components apply in the smooth regions away from the shell.",
       "parameters": [
         {
           "symbol": "m",
@@ -161,6 +189,14 @@
         {
           "symbol": "r_0 = q^2/(2m)",
           "description": "Oblate radius of the timelike shell"
+        },
+        {
+          "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+          "description": "Squared oblate distance"
+        },
+        {
+          "symbol": "B = r^2 + a^2",
+          "description": "Squared equatorial radius"
         }
       ]
     },
@@ -173,7 +209,7 @@
         "y",
         "z"
       ],
-      "convention": "Tensor components apply in the smooth regions away from the shell.",
+      "convention": "The inertial time is $T$, and $x$, $y$, and $z$ are Cartesian lengths inside $(x^2+y^2)/(r_0^2+a^2)+z^2/r_0^2 < 1$. The angular map is $x+iy=(r+ia)e^{i\\psi}\\sin\\theta$, $z=r\\cos\\theta$, with $i^2=-1$. Tensor components apply in the smooth regions away from the shell.",
       "parameters": [
         {
           "symbol": "m",

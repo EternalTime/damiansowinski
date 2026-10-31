@@ -75,6 +75,11 @@
       "id": "bonnor_charged_dust",
       "kind": "family",
       "text": "The balanced shell filled in: dust whose charge density equals its mass density all through a ball, at rest at any radius, with the same extremal field outside [bonnor1965]."
+    },
+    {
+      "id": "electron_bubble",
+      "kind": "family",
+      "text": "The oblate shell rotates rigidly and carries tangential tension [burinskii2002sources]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "brady1999",
     "poisson1989",
     "ori1991charged",
-    "bonnor1965"
+    "bonnor1965",
+    "burinskii2002sources"
   ],
   "coordinates": [
     {

@@ -98,6 +98,11 @@
       "id": "kerr_disc_source",
       "kind": "family",
       "text": "Werner Israel cut the Kerr-Newman metric at the disc in its ring and found the layer of mass and charge on the seam [israel1970]."
+    },
+    {
+      "id": "electron_bubble",
+      "kind": "composite",
+      "text": "A rotating charged shell at $r=q^2/(2m)$ joins the exterior to a flat interior [lopez1984electron, burinskii2002sources]."
     }
   ],
   "references": [
@@ -130,7 +135,9 @@
     "gibbons2013",
     "ovcharenko2026b",
     "ghosh2015",
-    "israel1970"
+    "israel1970",
+    "lopez1984electron",
+    "burinskii2002sources"
   ],
   "coordinates": [
     {

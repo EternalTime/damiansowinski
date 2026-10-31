@@ -308,6 +308,11 @@
       "id": "shell_void",
       "kind": "composite",
       "text": "Minkowski space fills the interior of a spherical dust shell in an expanding Friedmann universe."
+    },
+    {
+      "id": "electron_bubble",
+      "kind": "composite",
+      "text": "The flat interior meets a Kerr-Newman exterior on a rotating oblate shell [lopez1984electron]."
     }
   ],
   "references": [
@@ -393,7 +398,8 @@
     "compere2016vacua",
     "haggard2015fireworks",
     "astorino2022swirling",
-    "lyndenbell1978"
+    "lyndenbell1978",
+    "lopez1984electron"
   ],
   "coordinates": [
     {

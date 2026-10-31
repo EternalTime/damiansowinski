@@ -37015,15 +37015,6 @@ CHARTS["chodos_detweiler"] = [
     for system in _chodos_detweiler.CHARTS
 ]
 
-import hawking_moss as hm
-hm.register(sys.modules[__name__])
 
-
-import kowalski_glikman as _kowalski_glikman
-CHARTS["kowalski_glikman"] = [
-    lambda system=system: _kowalski_glikman.chart_spec(system)
-    for system in _kowalski_glikman.CHARTS
-]
-
-if __name__ == "__main__":
-    main()
+import electron_bubble as _electron_bubble
+_electron_bubble.register_charts(sys.modules[__name__])
