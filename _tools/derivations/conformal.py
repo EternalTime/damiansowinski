@@ -31941,6 +31941,10 @@ NOT_DRAWN.add("kowalski_glikman")
 # The shell initial value problem fixes only a finite future segment; its past extension
 # and the global exterior branch remain free, so there is no unique causal boundary.
 NOT_DRAWN.add("shell_void")
+import extended_inflation_drawings as extended_drawings
+DRAWN["extended_inflation"] = lambda ck, src: extended_drawings.conformal(ck, src, sys.modules[__name__])
+CAPTIONS.update({("extended_inflation", system): [extended_drawings.CONFORMAL_CAPTION]
+                 for system in ("cosmic", "conformal")})
 
 if __name__ == "__main__":
     sys.exit(main())

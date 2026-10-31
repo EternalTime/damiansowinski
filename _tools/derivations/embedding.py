@@ -22080,6 +22080,9 @@ def shell_void(ck, src):
 
 DRAWN["shell_void"] = shell_void
 CAPTIONS.update(_shell_void.embedding_captions())
+import extended_inflation_drawings as extended_drawings
+DRAWN["extended_inflation"] = lambda ck, src: extended_drawings.embedding(ck, src, sys.modules[__name__])
+CAPTIONS[("extended_inflation", "plane")] = [extended_drawings.EMBEDDING_CAPTION]
 
 if __name__ == "__main__":
     sys.exit(main())

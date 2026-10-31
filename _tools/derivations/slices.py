@@ -3886,6 +3886,10 @@ FLAT.update({("moncrief_taub_nut", system, "compact"):
              (lambda: one("moncrief_taub_nut", lambda m: along(1.0, 0.0, 2*math.pi), label="$t=1$"))
              for system in ("areal", "extension_plus", "extension_minus")})
 
+for _extended_system, _extended_time in (("cosmic", 1.0), ("conformal", -1.0)):
+    FLAT[("extended_inflation", _extended_system, "radial")] = lambda t=_extended_time: one(
+        "extended_inflation", lambda m: along(t, 0.0, 2.0), label="$t=t_0$")
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

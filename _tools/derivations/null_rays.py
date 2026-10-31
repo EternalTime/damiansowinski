@@ -19093,6 +19093,11 @@ DECLARED_FUNCTIONS.update(_shell_void.declared_functions())
 DIAGRAMS.extend(_shell_void.diagram_specs(Diagram, EQUATOR, SIDEWAYS))
 CAPTIONS.update(_shell_void.diagram_captions())
 CLOSED_FORMS.update(_shell_void.null_forms())
+import extended_inflation_drawings as extended_drawings
+_extended_rows, _extended_captions, _extended_forms = extended_drawings.null_rows(sys.modules[__name__])
+DIAGRAMS.extend(_extended_rows)
+CAPTIONS.update(_extended_captions)
+CLOSED_FORMS.update(_extended_forms)
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -45,7 +45,19 @@ Holding $t$ fixed relative to the singularity while taking that limit would chan
 
 ## Drawings
 
-Null curves, spatial slices, and curvature follow from the homogeneous background.
+All drawings take $\omega=3/2$, hence $p=2$, and $c=t_0=1$.
+This representative accelerating branch is not a claim of observational viability.
+Radial null rays have $r\pm c\eta$ constant, with $\eta=-t_0^2/t$ at $p=2$.
+Each chart has its own radial spacetime diagram.
+The slice $t=t_0$, $\theta=\pi/2$ is a Euclidean plane, embedded as $z=0$ with proper radius $r$.
+One moment is drawn, so no movie is needed.
+The compactification $T\pm X=2\arctan[(c\eta\pm r)/(ct_0)]$ maps the radial region to $0\le X\le\pi$, $X-\pi\le T<0$.
+The regular centre is $X=0$ for $-\pi<T<0$; future infinity is the spacelike boundary $T=0$.
+The open sloping past edge $T=X-\pi$ corresponds to $\eta\to-\infty$, $r\to\infty$ with $c\eta+r$ fixed, hence $t\to0$ and divergent curvature.
+It is a null singular boundary; the past endpoint of every finite comoving radius is its vertex $(X,T)=(0,-\pi)$.
+The spatial-infinity corner $(\pi,0)$ has path-dependent curvature limits and is not claimed to be a regular event.
+The observer at the centre has the formal event horizon $r=-c\eta$, of proper radius $ct/(p-1)$, if the background continues indefinitely.
+The curvature figure reads the stored $R$ and $K$ and plots their time dependence without recomputing tensors.
 
 ## Limits of the approximation
 
