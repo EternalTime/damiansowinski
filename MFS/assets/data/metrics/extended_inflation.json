@@ -1,0 +1,101 @@
+{
+  "id": "extended_inflation",
+  "name": "Extended Inflation",
+  "short_name": "Extended Inflation",
+  "description": "An accelerating false vacuum universe with an evolving Brans-Dicke gravitational scalar.",
+  "tags": [
+    "cosmology",
+    "FLRW",
+    "homogeneous",
+    "isotropic",
+    "expanding universe",
+    "scalar field",
+    "Brans-Dicke",
+    "curvature singularity",
+    "spacelike singularity",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "four-dimensional",
+    "conformally flat",
+    "spherically symmetric",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use the Jordan metric and keep factors of $c$ explicit. The Ricci tensor is $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A false vacuum drives this universe while the strength of gravity steadily decreases. C. Mathiazhagan and V. B. Johri found its expanding solution in Brans-Dicke gravity in 1984, with the cosmic scale factor growing as a power of time [mathiazhagan1984, kolitch1995]. Daile La and Paul J. Steinhardt developed extended inflation in 1989, connecting this expansion to a phase transition through the nucleation of vacuum bubbles [la1989extended]. Their construction involves two scalar fields: one trapped in a metastable vacuum, and another controlling the gravitational coupling [green1996extended].¶The vacuum energy stays constant as the gravitational scalar grows. For flat spatial slices, the exact homogeneous solution has $a(t) \\propto t^{\\omega + 1/2}$ and $\\phi(t) \\propto t^2$, with cosmic time measured from the zero of this power solution [kolitch1995]. The scalar's normalisation is fixed by the false vacuum density and $\\omega$. The dimensionless parameter $\\omega$ controls the scalar's coupling to gravity. Expansion accelerates for $\\omega > 1/2$; the gravitational strength varies in proportion to $\\phi^{-1}$.¶The Hubble rate falls as the universe expands. For a constant nucleation rate per unit physical volume and time, the dimensionless ratio $\\Gamma/H^4$ grows as $t^4$ [green1996extended]. Bubbles become more abundant within a Hubble volume over a Hubble time. The proposed exit mechanism relies on their growth and overlap [la1989extended, green1996extended].¶Large bubbles place a further constraint on the transition. Erick J. Weinberg showed in 1989 that recovering an acceptable universe imposes an upper bound on $\\omega$, below the experimental lower bounds on a freely evolving Brans-Dicke scalar [weinberg1989extended]. The historical requirements of roughly $\\omega \\lesssim 25$ from bubble sizes and $\\omega > 500$ from tests of gravity were incompatible [green1996extended]. A potential that fixes the gravitational scalar after inflation can suppress its subsequent variation. Anne M. Green and Andrew R. Liddle showed in 1996 that the bubble distribution and the spectrum of density perturbations also impose competing constraints during inflation [green1996extended].¶Matter couples minimally to the Jordan metric, whose scale factor follows the power $\\omega + 1/2$. A conformal rescaling by the gravitational scalar leads to an Einstein description with a canonical scalar and an exponential potential [green1996extended]. The rescaling changes the metric, cosmic time, and scale factor together. The homogeneous solution approximates regions that remain in the false vacuum; bubble walls, collisions, and reheating require additional dynamics.",
+  "references": [
+    "mathiazhagan1984",
+    "kolitch1995",
+    "la1989extended",
+    "green1996extended",
+    "weinberg1989extended"
+  ],
+  "coordinates": [
+    {
+      "id": "cosmic",
+      "name": "Cosmic Spherical",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (0, \\infty)",
+        "r \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "p > 1,\\quad t_0 > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "p",
+          "description": "Expansion exponent, $p = \\omega + 1/2 > 1$, with $\\omega$ the Brans-Dicke coupling parameter"
+        },
+        {
+          "symbol": "t_0",
+          "description": "Reference cosmic time, $t_0 > 0$, at which $a = 1$ and the dimensionless gravitational scalar $\\Phi = 1$, with $\\Phi = (t/t_0)^2$ and physical scalar $\\varphi = \\Phi/G_0$ for reference coupling $G_0 > 0$; the false vacuum energy density is $\\rho_v = c^2(6\\omega+5)(2\\omega+3)/(32\\pi G_0t_0^2)$"
+        },
+        {
+          "symbol": "a = \\left(\\dfrac{t}{t_0}\\right)^p",
+          "description": "Dimensionless scale factor; the Hubble rate is $H = p/t$ and the constant bubble nucleation rate per unit physical volume and time is $\\Gamma$"
+        }
+      ],
+      "convention": "We use cosmic time $t$ and the comoving radius $r$, a length equal to the areal radius at $t = t_0$, with polar angles $\\theta$ and $\\phi$. Components use $x^0 = ct$, and dots in the geodesic equations denote derivatives of these coordinates with respect to an affine parameter $\\lambda$."
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal Spherical",
+      "coords": [
+        "\\eta",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty, 0)",
+        "r \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "p > 1,\\quad t_0 > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "p",
+          "description": "Expansion exponent, $p = \\omega + 1/2 > 1$, with $\\omega$ the Brans-Dicke coupling parameter"
+        },
+        {
+          "symbol": "t_0",
+          "description": "Reference cosmic time, $t_0 > 0$, at which $a = 1$ and the dimensionless gravitational scalar $\\Phi = 1$, with $\\Phi = (t/t_0)^2$ and physical scalar $\\varphi = \\Phi/G_0$ for reference coupling $G_0 > 0$; the false vacuum energy density is $\\rho_v = c^2(6\\omega+5)(2\\omega+3)/(32\\pi G_0t_0^2)$"
+        },
+        {
+          "symbol": "a = \\left(-\\dfrac{(p-1)\\eta}{t_0}\\right)^{-p/(p-1)}",
+          "description": "Dimensionless scale factor; the Hubble rate is $H = p/t$ and the constant bubble nucleation rate per unit physical volume and time is $\\Gamma$"
+        }
+      ],
+      "convention": "We use conformal time $\\eta = -t_0(t/t_0)^{1-p}/(p-1)$, with $d\\eta = dt/a$, and the same comoving radius and polar angles as the cosmic chart. Components use $x^0 = c\\eta$, and dots in the geodesic equations denote derivatives of these coordinates with respect to an affine parameter $\\lambda$."
+    }
+  ],
+  "related": []
+}
