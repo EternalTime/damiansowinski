@@ -4522,6 +4522,12 @@ class Slices(unittest.TestCase):
             # The fixed reference surface is t=t_0=1, eta=-1 at p=2.
             level = 1.0 if "/cosmic/" in key else -1.0
             return (lambda X: level), list(self.reach(surface))
+
+        if key.startswith("electron_bubble/"):
+            # At the shell r0=m=1, the two clocks agree at zero.
+            # Its axial intersection is one pole in r or both poles in Cartesian z.
+            return (lambda X: 0.0), ([-1.0, 1.0] if "/cartesian/" in key else [1.0])
+
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))

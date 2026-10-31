@@ -1360,7 +1360,7 @@
       "idealized model",
       "point charge"
     ],
-    "version": "481442897f513ac7",
+    "version": "88de60f2a6ad73f7",
     "diagrams": "0c8055201b356841",
     "conformal": "9a86449fd5dc7244",
     "embedding": "2c30edaa0cee4bdc"
@@ -1978,6 +1978,30 @@
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902",
     "curvature": "91617267c2761ed8"
+  },
+  {
+    "id": "electron_bubble",
+    "name": "Electron Bubble",
+    "tags": [
+      "rotating",
+      "stationary",
+      "axisymmetric",
+      "thin shell",
+      "junction conditions",
+      "electric charge",
+      "electromagnetic field",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "3a2e82c2d154ccf2",
+    "diagrams": "c8b0e54e16a6bfdd",
+    "conformal": "0e13a713f3a4548b",
+    "embedding": "f0b07e38099aa4fc",
+    "curvature": "87df3980405fd124"
   },
   {
     "id": "elliptic_de_sitter",
@@ -3395,7 +3419,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5e3cd61383f0be1a",
+    "version": "989fc28115f470fd",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652",
@@ -4150,7 +4174,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "02841893324ba39f",
+    "version": "0e18610bc725c7b8",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"

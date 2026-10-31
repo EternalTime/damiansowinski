@@ -183,14 +183,14 @@ def embedding_views(ck, src, em):
     import numpy as np
     sl = em.Slice(src, METRIC, "interior", r"\theta", r"\phi", {"t": 0, "r": 1},
                   {"m": 1, "q": "sqrt(2)", "a": 2})
-    piece = em.Piece("shell", "shell", sl, 0, math.pi, 1, -1,
+    piece = em.Piece("shell", "sheet", sl, 0, math.pi, 1, -1,
                      (("axis", "the north pole"), ("axis", "the south pole")),
                      [(math.pi/2, "r", None)], 5)
     ck.isometry("electron bubble, the induced shell geometry", piece)
     ck.radius("electron bubble, the oblate equatorial radius", piece, lambda theta: np.sqrt(5)*np.sin(theta), 5)
     ck.form("electron bubble, the polar height", piece, np.cos, 5)
     surface = em.Surface([piece])
-    fig = em.figure_of([surface], {"shell": "cover"}, 5)
+    fig = em.figure_of([surface], {"sheet": "cover"}, 5)
     fig.legend("fill", "cover", "the shell")
     fig.legend("line", "r", "the equator")
     return [em.view("shell", "The oblate shell", "$m$", [surface], fig.done(),

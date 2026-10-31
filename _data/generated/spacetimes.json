@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 225,
+  "count": 226,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -14382,6 +14382,11 @@
           "id": "bonnor_charged_dust",
           "kind": "family",
           "text": "The balanced shell filled in: dust whose charge density equals its mass density all through a ball, at rest at any radius, with the same extremal field outside [bonnor1965]."
+        },
+        {
+          "id": "electron_bubble",
+          "kind": "family",
+          "text": "The oblate shell rotates rigidly and carries tangential tension [burinskii2002sources]."
         }
       ],
       "references": [
@@ -14403,7 +14408,8 @@
         "brady1999",
         "poisson1989",
         "ori1991charged",
-        "bonnor1965"
+        "bonnor1965",
+        "burinskii2002sources"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell.json",
@@ -22039,6 +22045,506 @@
           ],
           "ricci_scalar": "R = \\dfrac{4\\left(2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\partial_v\\psi - \\partial_u\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\gamma\\right)e^{2\\psi - 2\\gamma}}{v - u}",
           "kretschmann": "K = 4e^{4\\psi - 4\\gamma}\\left(\\left(4\\partial_u\\partial_v\\psi - 4\\partial_u\\partial_v\\gamma\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi + 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi + 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - 2\\partial_v\\psi - 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 - 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi - 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{\\left(v - u\\right)\\partial_u^2\\psi - 2\\left(v - u\\right)\\partial_u\\partial_v\\psi + \\left(v - u\\right)\\partial_v^2\\psi - 2\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 + 2\\partial_v\\psi + 2\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi + \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 - 2\\partial_u\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi + 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi}{v - u}\\right)^2 + \\left(2\\partial_v\\gamma\\,\\partial_v\\psi + 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 2\\partial_v\\psi\\,\\partial_u\\psi - 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + 2\\partial_u\\partial_v\\psi - \\partial_u^2\\psi\\right)^2 + \\left(\\dfrac{2\\partial_u\\psi - 2\\partial_v\\psi - 4\\left(v - u\\right)\\partial_v\\psi\\,\\partial_u\\psi}{v - u}\\right)^2 - 2\\left(\\dfrac{2\\left(v - u\\right)\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_v\\gamma - 2\\left(v - u\\right)\\partial_u\\gamma\\,\\partial_u\\psi - 2\\partial_u\\gamma - \\left(v - u\\right)\\left(\\partial_v\\psi\\right)^2 + \\left(v - u\\right)\\left(\\partial_u\\psi\\right)^2 - \\left(v - u\\right)\\partial_v^2\\psi + \\left(v - u\\right)\\partial_u^2\\psi}{v - u}\\right)^2 - 2\\left(2\\partial_v\\gamma\\,\\partial_v\\psi - 2\\partial_u\\gamma\\,\\partial_u\\psi - 3\\left(\\partial_v\\psi\\right)^2 + 3\\left(\\partial_u\\psi\\right)^2 - \\partial_v^2\\psi + \\partial_u^2\\psi\\right)^2\\right)"
+        }
+      ]
+    },
+    {
+      "id": "electron_bubble",
+      "name": "The Electron as a Rotating Bubble",
+      "short_name": "Electron Bubble",
+      "description": "A rotating charged oblate shell joining a flat interior to a Kerr-Newman exterior, a classical model of the spinning electron.",
+      "tags": [
+        "rotating",
+        "stationary",
+        "axisymmetric",
+        "thin shell",
+        "junction conditions",
+        "electric charge",
+        "electromagnetic field",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep $c$ explicit and use $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$ with signature $(-,+,+,+)$. Tensor components apply in the smooth regions away from the shell.",
+      "related": [
+        {
+          "id": "kerr_newman",
+          "kind": "piece",
+          "text": "The gravitational and electromagnetic field outside the rotating shell is Kerr-Newman's [lopez1984electron, burinskii2002sources]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "Flat spacetime fills the oblate volume enclosed by the charged shell [lopez1984electron]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "family",
+          "text": "A charged shell separates a flat interior from an exterior electromagnetic field."
+        }
+      ],
+      "references": [
+        "lopez1984electron",
+        "burinskii2002sources",
+        "burinskii2016bubble",
+        "gron1985electron",
+        "tiwari1984mass",
+        "gautreau1985electron",
+        "gron1985repulsion"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/electron_bubble.json",
+      "charts": [
+        {
+          "id": "exterior",
+          "name": "Boyer-Lindquist Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+            },
+            {
+              "symbol": "q",
+              "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+            },
+            {
+              "symbol": "r_0 = q^2/(2m)",
+              "description": "Oblate radius of the timelike shell"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Squared oblate distance"
+            },
+            {
+              "symbol": "B = r^2 + a^2",
+              "description": "Squared equatorial radius"
+            },
+            {
+              "symbol": "\\Delta = r^2 + a^2 - 2mr + q^2",
+              "description": "Radial function, positive throughout the retained exterior"
+            }
+          ],
+          "convention": "$t$ is the common time, $r$ is the oblate radial length, and $\\theta$ and $\\phi$ are the polar and azimuthal angles.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{\\Sigma}{\\Delta}dr^2 + \\Sigma d\\theta^2 + B\\sin^2\\theta\\,d\\phi^2 + \\dfrac{2mr - q^2}{\\Sigma}\\left(c\\,dt - a\\sin^2\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2 - 2r\\,m + a^2\\cos^2\\theta + q^2}{r^2 + a^2\\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{a\\left(2r\\,m - q^2\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-\\dfrac{a\\left(2r\\,m - q^2\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^2 + a^2\\cos^2\\theta}{r^2 - 2r\\,m + a^2 + q^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 + a^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(r^4 - r^2\\,a^2\\sin^2\\theta + 2r^2\\,a^2 + 2r\\,a^2\\,m\\sin^2\\theta - a^2\\,q^2\\sin^2\\theta - a^4\\sin^2\\theta + a^4\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48r^6\\,m^2 - 96r^5\\,m\\,q^2 + 720r^4\\,a^2\\,m^2\\sin^2\\theta - 720r^4\\,a^2\\,m^2 + 56r^4\\,q^4 - 960r^3\\,a^2\\,m\\,q^2\\sin^2\\theta + 960r^3\\,a^2\\,m\\,q^2 + 272r^2\\,a^2\\,q^4\\sin^2\\theta - 1440r^2\\,a^4\\,m^2\\sin^2\\theta + 720r^2\\,a^4\\,m^2\\sin^4\\theta - 272r^2\\,a^2\\,q^4 + 720r^2\\,a^4\\,m^2 + 960r\\,a^4\\,m\\,q^2\\sin^2\\theta - 480r\\,a^4\\,m\\,q^2\\sin^4\\theta - 480r\\,a^4\\,m\\,q^2 - 112a^4\\,q^4\\sin^2\\theta + 56a^4\\,q^4\\sin^4\\theta + 144a^6\\,m^2\\sin^2\\theta - 144a^6\\,m^2\\sin^4\\theta + 48a^6\\,m^2\\sin^6\\theta + 56a^4\\,q^4 - 48a^6\\,m^2}{\\left(r^2 - a^2\\sin^2\\theta + a^2\\right)^6}"
+        },
+        {
+          "id": "interior",
+          "name": "Flat Oblate Interior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, r_0)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+            },
+            {
+              "symbol": "q",
+              "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+            },
+            {
+              "symbol": "r_0 = q^2/(2m)",
+              "description": "Oblate radius of the timelike shell"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Squared oblate distance"
+            },
+            {
+              "symbol": "B = r^2 + a^2",
+              "description": "Squared equatorial radius"
+            }
+          ],
+          "convention": "$t$ is the common time, $r$ is the oblate radial length, and $\\theta$ and $\\phi$ are the polar and azimuthal angles.",
+          "line_element": "ds^2 = -c^2dt^2 + \\dfrac{\\Sigma}{B}dr^2 + \\Sigma d\\theta^2 + B\\sin^2\\theta\\,d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^2 + a^2\\cos^2\\theta}{r^2 + a^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 + a^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r^2 + a^2\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "exterior_kerr",
+          "name": "Kerr Angular Exterior",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\psi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in (r_0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+            },
+            {
+              "symbol": "q",
+              "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+            },
+            {
+              "symbol": "r_0 = q^2/(2m)",
+              "description": "Oblate radius of the timelike shell"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Squared oblate distance"
+            },
+            {
+              "symbol": "B = r^2 + a^2",
+              "description": "Squared equatorial radius"
+            }
+          ],
+          "convention": "$T$ is Kerr angular time, $r$ is the oblate radial length, and $\\theta$ and $\\psi$ are angles.",
+          "line_element": "ds^2 = -c^2dT^2 + dr^2 + \\Sigma d\\theta^2 + B\\sin^2\\theta\\,d\\psi^2 - 2a\\sin^2\\theta\\,dr\\,d\\psi + \\dfrac{2mr - q^2}{\\Sigma}\\left(c\\,dT + dr - a\\sin^2\\theta\\,d\\psi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{r^2 - 2r\\,m + a^2\\cos^2\\theta + q^2}{r^2 + a^2\\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "T",
+                "r"
+              ],
+              "value": "\\dfrac{2r\\,m - q^2}{r^2 + a^2\\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "r",
+                "T"
+              ],
+              "value": "\\dfrac{2r\\,m - q^2}{r^2 + a^2\\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "T",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{a\\left(2r\\,m - q^2\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "T"
+              ],
+              "value": "-\\dfrac{a\\left(2r\\,m - q^2\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^2 + 2r\\,m + a^2\\cos^2\\theta - q^2}{r^2 + a^2\\cos^2\\theta}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{a\\left(r^2 + 2r\\,m - a^2\\sin^2\\theta + a^2 - q^2\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "r"
+              ],
+              "value": "-\\dfrac{a\\left(r^2 + 2r\\,m - a^2\\sin^2\\theta + a^2 - q^2\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 + a^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{\\left(r^4 - r^2\\,a^2\\sin^2\\theta + 2r^2\\,a^2 + 2r\\,a^2\\,m\\sin^2\\theta - a^2\\,q^2\\sin^2\\theta - a^4\\sin^2\\theta + a^4\\right)\\sin^2\\theta}{r^2 - a^2\\sin^2\\theta + a^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48r^6\\,m^2 - 96r^5\\,m\\,q^2 + 720r^4\\,a^2\\,m^2\\sin^2\\theta - 720r^4\\,a^2\\,m^2 + 56r^4\\,q^4 - 960r^3\\,a^2\\,m\\,q^2\\sin^2\\theta + 960r^3\\,a^2\\,m\\,q^2 + 272r^2\\,a^2\\,q^4\\sin^2\\theta - 1440r^2\\,a^4\\,m^2\\sin^2\\theta + 720r^2\\,a^4\\,m^2\\sin^4\\theta - 272r^2\\,a^2\\,q^4 + 720r^2\\,a^4\\,m^2 + 960r\\,a^4\\,m\\,q^2\\sin^2\\theta - 480r\\,a^4\\,m\\,q^2\\sin^4\\theta - 480r\\,a^4\\,m\\,q^2 - 112a^4\\,q^4\\sin^2\\theta + 56a^4\\,q^4\\sin^4\\theta + 144a^6\\,m^2\\sin^2\\theta - 144a^6\\,m^2\\sin^4\\theta + 48a^6\\,m^2\\sin^6\\theta + 56a^4\\,q^4 - 48a^6\\,m^2}{\\left(r^2 - a^2\\sin^2\\theta + a^2\\right)^6}"
+        },
+        {
+          "id": "interior_kerr",
+          "name": "Flat Kerr Angular Interior",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\psi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in (0, r_0)",
+            "\\theta \\in [0, \\pi]",
+            "\\psi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+            },
+            {
+              "symbol": "q",
+              "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+            },
+            {
+              "symbol": "r_0 = q^2/(2m)",
+              "description": "Oblate radius of the timelike shell"
+            },
+            {
+              "symbol": "\\Sigma = r^2 + a^2\\cos^2\\theta",
+              "description": "Squared oblate distance"
+            },
+            {
+              "symbol": "B = r^2 + a^2",
+              "description": "Squared equatorial radius"
+            }
+          ],
+          "convention": "$T$ is Kerr angular time, $r$ is the oblate radial length, and $\\theta$ and $\\psi$ are angles.",
+          "line_element": "ds^2 = -c^2dT^2 + dr^2 + \\Sigma d\\theta^2 + B\\sin^2\\theta\\,d\\psi^2 - 2a\\sin^2\\theta\\,dr\\,d\\psi",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "\\psi"
+              ],
+              "value": "-a\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "r"
+              ],
+              "value": "-a\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2 + a^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\left(r^2 + a^2\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "cartesian",
+          "name": "Flat Cartesian Interior",
+          "coordinates": [
+            "T",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\dfrac{x^2 + y^2}{r_0^2 + a^2} + \\dfrac{z^2}{r_0^2} < 1"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass length, $m = GM/c^2 > 0$, with $M$ the mass and $G$ Newton's constant"
+            },
+            {
+              "symbol": "q",
+              "description": "Signed charge length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4) > m^2$, with $Q$ the charge and $\\epsilon_0$ the vacuum permittivity"
+            },
+            {
+              "symbol": "a",
+              "description": "Spin length, $a = J/(Mc) \\ge 0$, with $J$ the angular momentum"
+            },
+            {
+              "symbol": "r_0 = q^2/(2m)",
+              "description": "Oblate radius of the timelike shell"
+            }
+          ],
+          "convention": "$T$ is inertial time, and $x$, $y$, and $z$ are Cartesian lengths.",
+          "line_element": "ds^2 = -c^2dT^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -37026,6 +37532,11 @@
           "id": "kerr_disc_source",
           "kind": "family",
           "text": "Werner Israel cut the Kerr-Newman metric at the disc in its ring and found the layer of mass and charge on the seam [israel1970]."
+        },
+        {
+          "id": "electron_bubble",
+          "kind": "composite",
+          "text": "A rotating charged shell at $r=q^2/(2m)$ joins the exterior to a flat interior [lopez1984electron, burinskii2002sources]."
         }
       ],
       "references": [
@@ -37058,7 +37569,9 @@
         "gibbons2013",
         "ovcharenko2026b",
         "ghosh2015",
-        "israel1970"
+        "israel1970",
+        "lopez1984electron",
+        "burinskii2002sources"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_newman.json",
@@ -45562,6 +46075,11 @@
           "id": "shell_void",
           "kind": "composite",
           "text": "Minkowski space fills the interior of a spherical dust shell in an expanding Friedmann universe."
+        },
+        {
+          "id": "electron_bubble",
+          "kind": "composite",
+          "text": "The flat interior meets a Kerr-Newman exterior on a rotating oblate shell [lopez1984electron]."
         }
       ],
       "references": [
@@ -45647,7 +46165,8 @@
         "compere2016vacua",
         "haggard2015fireworks",
         "astorino2022swirling",
-        "lyndenbell1978"
+        "lyndenbell1978",
+        "lopez1984electron"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",

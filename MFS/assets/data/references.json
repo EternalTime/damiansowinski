@@ -1,5 +1,5 @@
 {
-  "version": "ad4742ca558feb97",
+  "version": "52b0fc801418d529",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -34505,6 +34505,98 @@
         "year": "1989",
         "doi": "10.1103/physrevd.40.3950",
         "url": "https://doi.org/10.1103/physrevd.40.3950"
+      }
+    },
+    "lopez1984electron": {
+      "type": "article",
+      "fields": {
+        "author": "Carlos A. L\\'opez",
+        "title": "Extended model of the electron in general relativity",
+        "journal": "Physical Review D",
+        "volume": "30",
+        "number": "2",
+        "pages": "313--316",
+        "year": "1984",
+        "doi": "10.1103/physrevd.30.313"
+      }
+    },
+    "burinskii2002sources": {
+      "type": "article",
+      "fields": {
+        "author": "Alexander Burinskii and Emilio Elizalde and Sergi R. Hildebrandt and Giulio Magli",
+        "title": "Regular sources of the Kerr-Schild class for rotating and nonrotating black hole solutions",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "6",
+        "pages": "064039",
+        "year": "2002",
+        "doi": "10.1103/physrevd.65.064039",
+        "eprint": "gr-qc/0109085"
+      }
+    },
+    "burinskii2016bubble": {
+      "type": "article",
+      "fields": {
+        "author": "Alexander Burinskii",
+        "title": "Source of the Kerr--Newman solution as a supersymmetric domain-wall bubble: 50 years of the problem",
+        "journal": "Physics Letters B",
+        "volume": "754",
+        "pages": "99--103",
+        "year": "2016",
+        "doi": "10.1016/j.physletb.2016.01.017",
+        "eprint": "1602.04215"
+      }
+    },
+    "gron1985electron": {
+      "type": "article",
+      "fields": {
+        "author": "{\\O}. Gr{\\o}n",
+        "title": "New derivation of Lopez's source of the Kerr-Newman field",
+        "journal": "Physical Review D",
+        "volume": "32",
+        "number": "6",
+        "pages": "1588--1589",
+        "year": "1985",
+        "doi": "10.1103/physrevd.32.1588"
+      }
+    },
+    "tiwari1984mass": {
+      "type": "article",
+      "fields": {
+        "author": "R. N. Tiwari and J. R. Rao and R. R. Kanakamedala",
+        "title": "Electromagnetic mass models in general relativity",
+        "journal": "Physical Review D",
+        "volume": "30",
+        "number": "2",
+        "pages": "489--491",
+        "year": "1984",
+        "doi": "10.1103/physrevd.30.489"
+      }
+    },
+    "gautreau1985electron": {
+      "type": "article",
+      "fields": {
+        "author": "Ronald Gautreau",
+        "title": "Gravitational models of a Lorentz extended electron",
+        "journal": "Physical Review D",
+        "volume": "31",
+        "number": "8",
+        "pages": "1860--1863",
+        "year": "1985",
+        "doi": "10.1103/physrevd.31.1860"
+      }
+    },
+    "gron1985repulsion": {
+      "type": "article",
+      "fields": {
+        "author": "{\\O}. Gr{\\o}n",
+        "title": "Repulsive gravitation and electron models",
+        "journal": "Physical Review D",
+        "volume": "31",
+        "number": "8",
+        "pages": "2129--2131",
+        "year": "1985",
+        "doi": "10.1103/physrevd.31.2129"
       }
     }
   }
