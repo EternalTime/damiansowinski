@@ -253,6 +253,6 @@ def curvature_views(ck, src, cv):
              "panels": [{"id": "K", "name": "$Km^4$", "aspect": 1, "scale": scale,
                          "ticks": cv.value_ticks(scale)}], "curves": curves, "marks": [],
              "legend": [["line", "axis", "the rotation axis"], ["line", "equator", "the equator"]],
-             "caption": [r"The smooth exterior Kretschmann scalar ($\theta=0$ and $\theta=\pi/2$), from its outer limit at the shell."],
+             "caption": [r"The smooth exterior Kretschmann scalar $K$ ($\theta=0$ and $\theta=\pi/2$), from its outer limit at the shell."],
              "settings": r"$m=1$, $q^2=2m^2$, $a=2m$.",
              "clip": "Signed logarithmic scale, linear near zero; both curves within the panel."}]
