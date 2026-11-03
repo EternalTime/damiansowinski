@@ -53,5 +53,1792 @@
       "text": "A compact direction changes over space around the Kaluza-Klein monopole, and a compact torus changes shape around the stringy cosmic string [sorkin1983, vafa1996ftheory]."
     }
   ],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "cartesian",
+      "name": "Cartesian transverse coordinates",
+      "coords": [
+        "t",
+        "w",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "w \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "H = H(x,y)",
+          "description": "Positive transverse factor fixed by the torus shape and the string positions."
+        }
+      ],
+      "convention": "We use $(t,w,x,y)$ with $x$ and $y$ across the string and $z=x+iy$. The examples of six strings approach a cone far from the strings.",
+      "line_element": "ds^2 = -c^2dt^2 + dw^2 + H\\left(dx^2 + dy^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "H"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "H"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{H}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{H}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x H}{2H}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\partial_x H}{2H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_x H}{2H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x H}{2H}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y H}{2H}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_y H}{2H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\partial_y H}{2H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y H}{2H}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x H}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\partial_x H}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_x H}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_x H}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y H}{2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\partial_y H}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\partial_y H}{2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y H}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{H^3}",
+      "kretschmann": "K = \\dfrac{\\left(H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2\\right)^2}{H^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{2H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{2H^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{2H^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "w",
+                  "x"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "x",
+                  "w"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "w",
+                  "y"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "y",
+                  "w"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "w",
+                  "w",
+                  "x"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "w",
+                  "x",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "w",
+                  "w",
+                  "y"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "w",
+                  "y",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{12H^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{6H^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{6H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{6H^3}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2}{6H^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "w",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "x",
+                  "w"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "w",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "y",
+                  "w"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "w",
+                  "w",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "w",
+                  "x",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "w",
+                  "w",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "w",
+                  "y",
+                  "w"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "\\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{6H}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{w} = 0",
+        "\\ddot{x} + \\dfrac{\\partial_x H}{2H}\\dot{x}^2 + \\dfrac{\\partial_y H}{H}\\dot{x}\\dot{y} - \\dfrac{\\partial_x H}{2H}\\dot{y}^2 = 0",
+        "\\ddot{y} - \\dfrac{\\partial_y H}{2H}\\dot{x}^2 + \\dfrac{\\partial_x H}{H}\\dot{x}\\dot{y} + \\dfrac{\\partial_y H}{2H}\\dot{y}^2 = 0"
+      ]
+    },
+    {
+      "id": "polar",
+      "name": "Polar transverse coordinates",
+      "coords": [
+        "t",
+        "w",
+        "r",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "w \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "H = H(r,\\phi)",
+          "description": "Positive transverse factor fixed by the torus shape and the string positions."
+        }
+      ],
+      "convention": "We use $(t,w,r,\\phi)$ with $z=re^{i\\phi}$ across the string. The examples of six strings approach a cone far from the strings.",
+      "line_element": "ds^2 = -c^2dt^2 + dw^2 + H\\left(dr^2 + r^2d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "H"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "H\\,r^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{H}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{H\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r H}{2H}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\phi H}{2H}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_\\phi H}{2H}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\phi H}{2H}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(2H + r\\,\\partial_r H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi H}{2H\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2H + r\\,\\partial_r H}{2H\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{2H + r\\,\\partial_r H}{2H\\,r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r H}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_\\phi H}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_\\phi H}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\partial_\\phi H}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(2H + r\\,\\partial_r H\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(2H + r\\,\\partial_r H\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\left(2H + r\\,\\partial_r H\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\,\\partial_\\phi H}{2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{2H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{2H^2\\,r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^3\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^4\\,r^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{H^3\\,r^2}",
+      "kretschmann": "K = \\dfrac{\\left(H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2\\right)^2}{H^6\\,r^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^3\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{2H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{2H^3\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{2H^3\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "r",
+                  "w",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "r",
+                  "r",
+                  "w"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "w",
+                  "w",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "w",
+                  "r",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{12H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{6H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{6H^2\\,r^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "t",
+                  "w"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "w",
+                  "w",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "t",
+                  "w"
+                ],
+                "value": "-\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "t",
+                  "w",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2}{6H^3\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "r",
+                  "w",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "r",
+                  "r",
+                  "w"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "w",
+                  "w",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "w",
+                  "r",
+                  "w"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "\\phi",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "w",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "w",
+                  "\\phi",
+                  "w"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{12H^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{6H}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{w} = 0",
+        "\\ddot{r} + \\dfrac{\\partial_r H}{2H}\\dot{r}^2 + \\dfrac{\\partial_\\phi H}{H}\\dot{r}\\dot{\\phi} - \\dfrac{r\\left(2H + r\\,\\partial_r H\\right)}{2H}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - \\dfrac{\\partial_\\phi H}{2H\\,r^2}\\dot{r}^2 + \\dfrac{2H + r\\,\\partial_r H}{H\\,r}\\dot{r}\\dot{\\phi} + \\dfrac{\\partial_\\phi H}{2H}\\dot{\\phi}^2 = 0"
+      ]
+    }
+  ]
 }

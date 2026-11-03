@@ -37563,6 +37563,10 @@ CHARTS[_ori_piran_chart.METRIC] = [lambda system=system: _ori_piran_chart.chart_
 import linear_dilaton as _linear_dilaton
 CHARTS[_linear_dilaton.METRIC] = [lambda system=system: _linear_dilaton.chart_spec(system)
                                     for system in _linear_dilaton.CHARTS]
+import stringy_cosmic_strings as _stringy_cosmic_strings
+CHARTS[_stringy_cosmic_strings.METRIC] = [lambda system=system: _stringy_cosmic_strings.chart_spec(system)
+                                          for system in _stringy_cosmic_strings.SYSTEMS]
+
 
 if __name__ == "__main__":
     main()
