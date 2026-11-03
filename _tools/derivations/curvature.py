@@ -18388,7 +18388,36 @@ def quevedo_mashhoon(ck, src):
              "clip": "We draw $KM^4$ on a logarithmic scale; every value drawn lies within it."}]
 
 
+def brown_teitelboim(ck, src):
+    """The two constant bulk curvatures on the equator at the minimum wall radius."""
+    name = "brown_teitelboim"
+    x = axis("$r$", 0, 1)
+    ks = {"kind": "linear", "from": 0, "to": 25}
+    rs = {"kind": "linear", "from": 0, "to": 14}
+    panels = [{"id": "K", "name": "$K$", "aspect": 2, "scale": ks, "ticks": value_ticks(ks)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu$", "aspect": 2, "scale": rs, "ticks": value_ticks(rs)}]
+    shape_checks(ck, name, [2, 2])
+    curves = []
+    for side, lam, interval in (("inside", 0.75, (0.001, 0.499)), ("outside", 3, (0.501, 0.999))):
+        suffix = "i" if side == "inside" else "o"
+        params = {"Lambda_"+suffix: lam}
+        for field, panel, scale in (("kretschmann", "K", ks), ("ricci_scalar", "R", rs)):
+            scalar = nr_published(src, name, "static_"+side, field, ["r"], list(params))
+            curves += line_curves(ck, name+" "+side, panel, panel, scalar, "r", x, scale, PLOT_W/2, params, interval)
+            want = 8*lam*lam/3 if panel == "K" else 4*lam
+            ck(name+" "+side+" "+panel+" is constant", abs(float(scalar.exact([sum(interval)/2,lam]))-want) < 1e-12)
+    return [{"id": "bulk", "label": "The two bulk regions", "kind": "line", "x": x,
+             "panels": panels, "curves": curves, "marks": [{"class": "front", "x": 0.5}],
+             "legend": [["line", "K", "Kretschmann scalar"], ["line", "R", "Ricci scalar"], ["line", "front", "the membrane"]],
+             "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the two bulk regions against $r$ at the membrane's minimum radius ($R_0 = 1/2$)."],
+             "ricci_sentences": [],
+             "per_scalar": scalar_clips("A linear scale from $0$ to $25$.", "A linear scale from $0$ to $14$."),
+             "settings": "$\\Lambda_i = 3/4$, $\\Lambda_o = 3$, $R_0 = 1/2$.",
+             "clip": "Linear scales, from $0$ to $25$ for $K$ and from $0$ to $14$ for $R^\\mu{}_\\mu$."}]
+
+
 DRAWN = {
+    "brown_teitelboim": brown_teitelboim,
     "york_equilibrium": york_equilibrium,
     "quevedo_mashhoon": quevedo_mashhoon,
     "static_five_soliton": static_five_soliton,
