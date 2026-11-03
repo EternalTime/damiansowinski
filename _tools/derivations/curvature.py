@@ -536,8 +536,8 @@ def york_equilibrium(ck, src):
         got = float(Ric.exact([radius] + vals))
         want = -2 * params["epsilon"] / (15 * math.pi * radius**6)
         ck(f"York cavity scalar trace at r = {radius}", abs(got / want - 1) < 1e-10)
-    legend = [["line", "K", "$K$, the Kretschmann scalar"],
-              ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
+    legend = [["line", "K", "$K$"],
+              ["line", "R", "$R^\\mu{}_\\mu$"]]
     return [{
         "id": "cavity", "label": "The radiation cavity", "kind": "line", "x": x_axis,
         "panels": panels, "curves": curves, "marks": [], "legend": legend,
