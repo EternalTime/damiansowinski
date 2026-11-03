@@ -1,12 +1,18 @@
 """The regular neck and the shared slice of the symmetric dust example."""
 import json
+import math
+import re
+import sys
 from pathlib import Path
 import unittest
 
 import sympy as sp
+from scipy.integrate import quad
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "MFS/assets/data"
+sys.path.insert(0, str(ROOT / "_tools/derivations"))
+import verify_metrics as vm
 
 
 class DustNeck(unittest.TestCase):
@@ -21,6 +27,27 @@ class DustNeck(unittest.TestCase):
         self.assertEqual(sp.limit(density_8pi, r, 0), sp.Rational(3, 52))
         self.assertEqual(sp.diff(radius, r).subs(r, 0), 0)
         self.assertGreater(sp.diff(radius, r, 2).subs(r, 0), 0)
+
+    def test_bang_time_places_maximum_expansion_at_zero(self):
+        chart = json.loads((DATA / "metrics/hellaby_kruskal.json").read_text())["coordinates"][0]
+        reader = vm.Reader(chart["coords"], [p["symbol"] for p in chart["parameters"]], ())
+        definitions = {}
+        for name in ("M", "f", "a"):
+            parameter = next(p for p in chart["parameters"] if p["symbol"].startswith(name + " ="))
+            equation = re.search(r"\$([^$]+)\$", parameter["description"]).group(1)
+            definitions[name] = reader(equation.split("=", 1)[1].replace("M_1r", "M_1 r"))
+        r = reader.symbol["r"]
+        for radial in (0.5, 1.0):
+            point = {r: radial, reader.parameters["M_0"]: 1,
+                     reader.parameters["M_1"]: sp.Rational(1, 10), reader.parameters["r_s"]: 1}
+            mass = float(definitions["M"].subs(point))
+            energy = float(definitions["f"].subs(point))
+            bang = float(definitions["a"].subs({reader.parameters["M"]: mass,
+                                                  reader.parameters["f"]: energy}))
+            maximum = -2 * mass / energy
+            half_cycle, _ = quad(lambda radius: 1 / math.sqrt(2 * mass / radius + energy),
+                                 0, maximum, epsabs=1e-10)
+            self.assertAlmostEqual(bang + half_cycle, 0.0, places=9)
 
     def test_light_crosses_the_neck_and_slice_matches_embedding(self):
         diagram = json.loads((DATA / "diagrams/hellaby_kruskal.json").read_text())
