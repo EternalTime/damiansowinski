@@ -356,12 +356,11 @@ def curvature(cv, ck, src):
         "id": "radial", "label": "Along $r$", "kind": "line", "x": x_axis,
         "panels": panels, "curves": curves, "marks": [{"class": "horizon", "x": 1.0}], "legend": legend,
         "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the point charge against $r$ "
-                    "($kQ^2 = \\pi$), the same at every $t$ and $\\phi$. $K = 3R^2$. $K$ grows as $r^{-4}$ toward the "
-                    "charge, smooth through the horizon. $R$ grows as $r^{-2}$ toward the charge, smooth through the "
-                    "horizon."],
-        "ricci_sentences": [[0, 3]],
+                    "($kQ^2 = \\pi$), the same at every $t$ and $\\phi$ and smooth through the horizon. "
+                    "$K = 3R^2$, growing as $r^{-4}$ toward the charge. $R$ grows as $r^{-2}$ toward the charge."],
+        "ricci_sentences": [[0, 2]],
         "per_scalar": cv.scalar_clips("A logarithmic scale from $10^{-3}$ to $10^4$.",
                                       "A logarithmic scale from $10^{-2}$ to $10^2$."),
         "settings": SETTINGS,
-        "clip": "Both logarithmic, none cut.",
+        "clip": "Both on logarithmic scales; every value drawn lies within them.",
     }]
