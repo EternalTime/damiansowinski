@@ -37051,5 +37051,9 @@ import mallett_radiating_star as _mallett
 CHARTS[_mallett.METRIC] = [lambda system=system: _mallett.chart_spec(system) for system in _mallett.CHARTS]
 
 
+import skyrmion_hair_chart as _skyrmion_hair_chart
+CHARTS["skyrmion_hair"] = [_skyrmion_hair_chart.chart_spec]
+
+
 if __name__ == "__main__":
     main()
