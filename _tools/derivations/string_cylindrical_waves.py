@@ -25,7 +25,7 @@ def register_dimensions(vm):
         key = (METRIC, system)
         coords = {'prolate': (r'\tau', r'\sigma'), 'cylindrical': ('t', r'\rho'),
                   'hyperbolic': (r'\psi', r'\theta')}[system]
-        if system != 'prolate':
+        if system == 'cylindrical':
             vm.HELD[key] = ('X', 'Y', 'omega')
         dims = {name: '1' for name in coords + (r'\phi', 'z')}
         dims.update({r'\ell': 'L', r'\alpha': '1', 'p': '1', 'q': '1',
