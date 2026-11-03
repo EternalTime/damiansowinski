@@ -559,6 +559,9 @@ OVERRULED = {
     ("mixmaster", "vacuum"): (
         True, "the three scale factors are left free; the Mixmaster universe is the "
               "vacuum of Bianchi type IX, whose equations fix them"),
+    ("atiyah_hitchin", "vacuum"): (
+        True, "a, b and c are left free in the radius chart; the space is their solution of the "
+              "equations of self duality, which the modulus chart writes out and whose Ricci tensor vanishes"),
     ("hauser_wave", "vacuum"): (
         True, "f is left free; Hauser's wave is the vacuum on which f obeys 16(1 + t^2)f'' + 3f = 0, "
               "and every Ricci component vanishes exactly at points once that equation is used"),

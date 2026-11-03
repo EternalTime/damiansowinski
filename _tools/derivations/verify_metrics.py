@@ -5358,6 +5358,9 @@ scw.register_dimensions(sys.modules[__name__])
 import mallett_radiating_star as _mallett
 DIMENSIONS.update(_mallett.DIMENSIONS)
 
+import atiyah_hitchin as _atiyah_hitchin
+_atiyah_hitchin.register_dimensions(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

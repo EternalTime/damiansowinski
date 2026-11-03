@@ -567,6 +567,42 @@
    "\\phi"
   ]
  },
+ "atiyah_hitchin/modulus": {
+  "stamp": "f824d2f1c604e60f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": true,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "atiyah_hitchin/radius": {
+  "stamp": "99678c489f99d97d",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "bach_weyl_ring/oblate_spheroidal": {
   "stamp": "90aef1f335c0cb2d",
   "relations": {},

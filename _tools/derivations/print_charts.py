@@ -37120,6 +37120,9 @@ CHARTS["skyrmion_hair"] = [_skyrmion_hair_chart.chart_spec, _skyrmion_hair_chart
 import string_cylindrical_waves as scw
 scw.register(sys.modules[__name__])
 
+import atiyah_hitchin as _atiyah_hitchin
+_atiyah_hitchin.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()
