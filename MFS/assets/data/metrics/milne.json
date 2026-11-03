@@ -56,6 +56,11 @@
       "id": "topological_star",
       "kind": "family",
       "text": "Inside Bah and Heidmann's black string, next to the bubble that ends it, the plane of $r$ and the circle is Milne's universe of two dimensions, a cone of flat spacetime closing on its tip [bah2021]."
+    },
+    {
+      "id": "linear_dilaton",
+      "kind": "family",
+      "text": "The Einstein frame of the timelike linear dilaton vacuum also expands in proportion to time. Its spatial slices are flat and its spacetime has nonzero curvature [devega1994linear]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "coleman1980",
     "bucher1995",
     "ellis1974",
-    "bah2021"
+    "bah2021",
+    "devega1994linear"
   ],
   "coordinates": [
     {

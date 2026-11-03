@@ -62,6 +62,11 @@
       "id": "eternal_traversable_wormhole",
       "kind": "family",
       "text": "A wormhole in another gravity with a dilaton in two dimensions, Jackiw-Teitelboim gravity, on the strip of anti-de Sitter space [maldacena2018]."
+    },
+    {
+      "id": "linear_dilaton",
+      "kind": "family",
+      "text": "The string frame far from the hole has a spatial linear dilaton [karananas2021linear, mandal1991]. The expanding universe has a timelike dilaton gradient [devega1994linear, angius2022linear]."
     }
   ],
   "references": [
@@ -80,7 +85,10 @@
     "horowitz1993",
     "davies1977",
     "good2016",
-    "maldacena2018"
+    "maldacena2018",
+    "karananas2021linear",
+    "devega1994linear",
+    "angius2022linear"
   ],
   "coordinates": [
     {

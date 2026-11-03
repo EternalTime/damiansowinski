@@ -97,6 +97,11 @@
       "id": "skyrmion_hair",
       "kind": "family",
       "text": "A black hole with a Skyrme field held by its gravity outside its horizon [dvali2016skyrmion]."
+    },
+    {
+      "id": "linear_dilaton",
+      "kind": "family",
+      "text": "A flat string frame can carry a dilaton linear in a coordinate. The Einstein frame with a timelike gradient expands linearly in time, while the extremal magnetic throat has a spatial gradient [devega1994linear, giddings1992]."
     }
   ],
   "references": [
@@ -124,7 +129,8 @@
     "cvetic1996dyonic",
     "gibbons1995",
     "banerjee1998",
-    "dvali2016skyrmion"
+    "dvali2016skyrmion",
+    "devega1994linear"
   ],
   "coordinates": [
     {

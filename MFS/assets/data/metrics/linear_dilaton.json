@@ -1414,5 +1414,26 @@
       ]
     }
   ],
-  "related": []
+  "related": [
+    {
+      "id": "milne",
+      "kind": "family",
+      "text": "The Milne universe also expands in proportion to time. Its spatial slices have negative curvature and its spacetime is flat; the Einstein frame here has flat spatial slices and nonzero spacetime curvature [devega1994linear]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "A two dimensional black hole whose string frame approaches a flat metric with a spatial linear dilaton far from the hole [karananas2021linear, mandal1991]. The cosmology here has a timelike dilaton gradient."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "family",
+      "text": "A static universe with space closed into a three sphere. In their string cosmologies without dynamic matter, Ignatios Antoniadis, Constantin Bachas, John R. Ellis, and Dimitri V. Nanopoulos identified static Einstein universes alongside expanding examples [antoniadis1988cosmology]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The string frame of the extreme magnetic black hole has a long throat whose dilaton is linear in distance [giddings1992]. The gradient along the throat is spatial."
+    }
+  ]
 }
