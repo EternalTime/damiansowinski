@@ -37047,5 +37047,9 @@ import superconducting_string as _superconducting_string
 CHARTS[_superconducting_string.METRIC] = _superconducting_string.chart_spec
 
 
+import mallett_radiating_star as _mallett
+CHARTS[_mallett.METRIC] = [lambda system=system: _mallett.chart_spec(system) for system in _mallett.CHARTS]
+
+
 if __name__ == "__main__":
     main()
