@@ -1,0 +1,33 @@
+{
+  "id": "string_cylindrical_waves",
+  "name": "Cylindrical Waves and a Cosmic String",
+  "short_name": "String and Cylindrical Waves",
+  "description": "Outside a straight cosmic string, cylindrical gravitational waves form a vacuum geometry whose angle deficit is larger far from the axis.",
+  "tags": [
+    "vacuum",
+    "cosmic string",
+    "gravitational wave",
+    "cylindrical symmetry",
+    "time-dependent",
+    "Petrov type D",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "For a circle around a positive tension cosmic string, the ratio of circumference to proper radius approaches a value below $2\\pi$ as the radius tends to zero. The missing angle marks the string on the axis [gurtug_sakalli2003]. Cylindrical gravitational waves surround the string in a vacuum geometry [gurtug_sakalli2003, xanthopoulos1986cylindrical]. ¶ In cylindrical coordinates $(t,\\rho,\\phi,z)$, the line element is $ds^2=A(-dt^2+d\\rho^2)+\\rho^2X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2$ [gurtug_sakalli2003]. Here $A=\\alpha^2X/(\\tau^2+\\sigma^2)$, $X=(1-p\\tau)^2+q^2\\sigma^2$, and $Y=p^2(1+\\tau^2)+q^2(\\sigma^2-1)$. The twist is $\\omega=2q(\\sigma^2-1)(1-p\\tau)/(pY)$, with $q^2-p^2=1$. The auxiliary coordinates obey $t=\\tau\\sigma$ and $\\rho^2=(1+\\tau^2)(\\sigma^2-1)$. ¶ At the axis the deficit is $2\\pi(1-1/|\\alpha p|)$ [gurtug_sakalli2003]. It vanishes when $|\\alpha p|=1$, leaving a regular axis. Far from the axis at fixed time, the corresponding deficit is $2\\pi(1-1/|\\alpha q|)$ [gurtug_sakalli2003]. At fixed $t$ and $\\rho$, the limit $p\\to\\infty$ with $\\alpha p=k>1$ approaches the locally flat exterior of a straight string [gurtug_sakalli2003]. Scaling time and radius by $k$ leaves the angular factor $1/k^2$. ¶ Basilis C. Xanthopoulos obtained this solution in 1986 through a complex transformation of the Kerr metric [xanthopoulos1986rotating]. His family is of Petrov type D and has no curvature singularities [gurtug_sakalli2003, xanthopoulos1986cylindrical]. Athanasios Economou and Dimitri Tsoubelis found a broader family of cylindrical soliton waves, with Xanthopoulos's geometry as a subfamily [kleidis2010, economou_tsoubelis1988]. Xanthopoulos described the waves as nonradiating [garriga_verdaguer1987, xanthopoulos1986cylindrical]. At fixed time, the C-energy flux tends to zero far from the axis [gurtug_sakalli2003]. At null infinity, the waves carry a nonzero C-energy flux [kleidis2010]. ¶ Xanthopoulos interpreted the axis as a rotating cosmic string [xanthopoulos1986rotating]. Jiří Bičák, Joseph Katz, and Donald Lynden-Bell evaluated the Komar angular momentum and found it zero for this geometry [bicak_katz_lyndenbell2008]. The cross term in the line element couples the angular and longitudinal directions [gurtug_sakalli2003].",
+  "references": [
+    "gurtug_sakalli2003",
+    "xanthopoulos1986cylindrical",
+    "xanthopoulos1986rotating",
+    "garriga_verdaguer1987",
+    "bicak_katz_lyndenbell2008",
+    "kleidis2010",
+    "economou_tsoubelis1988"
+  ],
+  "coordinates": [],
+  "related": []
+}
