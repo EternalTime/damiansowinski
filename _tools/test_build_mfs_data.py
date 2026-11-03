@@ -5713,6 +5713,10 @@ class Slices(unittest.TestCase):
             hi = self.reach(surface)[1]
             x = math.sqrt(2 * (math.sqrt(1 + hi * hi) - 1))
             return (lambda X: 0.0), [-x, x]
+        if key == "string_cylindrical_waves/prolate/radial":
+            # The embedding uses theta, with sigma=cosh(theta).
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [math.cosh(lo), math.cosh(hi)]
         if key == "kramer_fluid/published/equator":
             # The embedded radial coordinate is w; the same endpoint is eta=1+w^2.
             lo, hi = self.reach(surface)
