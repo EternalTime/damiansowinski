@@ -3128,6 +3128,12 @@ DIAGRAMS = [
     Diagram("skyrmion_hair", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$aF_\\pi r$", "$aF_\\pi t$", {"r_h": 0.1}, EQUATOR, areal=True,
             functions=SKYRME_FUNCTIONS, input=SKYRME_INPUT, where="r - 0.1", edge_horizon=True),
+    # Page's scalar field is evaluated in a cavity wider than its characteristic wavelength.
+    Diagram("york_equilibrium", "areal", "radial", "$t$ and $r$", ("t", "r"),
+            (2, 50, -24, 24), "$r/M$", "$t/M$", {"M": 1, "R": 50, "epsilon": "1/10"},
+            EQUATOR, areal=True, where="(r - 2*M)*(R - r)",
+            lines=(("surface", "r", "50", "the reflecting wall, $r = R$"),)),
+
     Diagram("static_five_soliton", "spherical", "radial", "$t$ and $r$", ("t","r"), (1,5,-2,2),
             "$r/r_s$", "$ct/r_s$", {"r_s":1,"a":"8/7","b":"-3/7"}, {**EQUATOR,"y":0}, areal=True),
     Diagram("static_five_soliton", "isotropic", "radial", r"$t$ and $\rho$", ("t",r"\rho"), (0.25,4.25,-2,2),
@@ -6815,6 +6821,11 @@ CAPTIONS = {
     ],
     ("skyrmion_hair", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), with the horizon at $aF_\\pi r = 0.1$.",
+    ],
+    ("york_equilibrium", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) for the scalar field in a "
+        "reflecting cavity. The cones narrow toward the horizon $r = 2M$, and the wall lies at $r = R$. "
+        "The metric includes the field's back reaction through first order in $\\epsilon$.",
     ],
     ("static_five_soliton","spherical","radial"): [
         r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with a timelike singularity at $r=r_s$.",
