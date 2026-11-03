@@ -32,8 +32,10 @@ class DustNeck(unittest.TestCase):
         embedding = json.loads((DATA / "embedding/hellaby_kruskal.json").read_text())
         pieces = embedding["views"][0]["surfaces"][0]["pieces"]
         self.assertEqual(len(pieces), 2)
-        for piece in pieces:
-            self.assertEqual(piece["points"][0][:2], [0.0, 2.0])
+        self.assertEqual(pieces[0]["points"][-1][:2], [0.0, 2.0])
+        self.assertEqual(pieces[1]["points"][0][:2], [0.0, 2.0])
+        self.assertEqual(pieces[0]["points"][0][0], -0.9)
+        self.assertEqual(pieces[1]["points"][-1][0], 0.9)
 
 
 if __name__ == "__main__":

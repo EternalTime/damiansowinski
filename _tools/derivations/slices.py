@@ -5077,7 +5077,7 @@ HIDDEN[("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation")
 
 
 FLAT[("hellaby_kruskal", "comoving", "neck")] = lambda: one(
-    "hellaby_kruskal", lambda m: along(0.0, -m.reach("comoving", "r")[1], m.reach("comoving", "r")[1]))
+    "hellaby_kruskal", lambda m: along(0.0, *m.reach("comoving", "r")))
 FLAT_METRICS.add("hellaby_kruskal")
 
 

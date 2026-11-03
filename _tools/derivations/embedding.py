@@ -22385,11 +22385,13 @@ def hellaby_kruskal(ck, src):
     top = 0.9
     radius = 2 * (1 + top**2 / 10)**3 * math.exp(top**2)
     size = 2 * radius
-    pieces = [Piece(name, cls, sl, 0.0, top, 0.0, sense,
-                    (("throat", "the neck, $r=0$"), ("edge", "the surface continues outward")),
-                    [(0.0, "throat", None), (top, mark, None)], size)
-              for name, cls, sense, mark in (("right", "sheet", 1, "r"),
-                                               ("left", "sheet2", -1, "r2"))]
+    pieces = [
+        Piece("left", "sheet2", sl, -top, 0.0, -sl.rise(-top, 0.0), 1,
+              (("edge", "the surface continues outward"), ("throat", "the neck, $r=0$")),
+              [(-top, "r2", None), (0.0, "throat", None)], size),
+        Piece("right", "sheet", sl, 0.0, top, 0.0, 1,
+              (("throat", "the neck, $r=0$"), ("edge", "the surface continues outward")),
+              [(0.0, "throat", None), (top, "r", None)], size)]
     surface = Surface(pieces)
     for p in pieces:
         ck.isometry("Dust wormhole " + p.id, p)
