@@ -6889,11 +6889,11 @@ CAPTIONS = {
         "The metric includes the field's back reaction through first order in $\\epsilon$.",
     ],
     ("quevedo_mashhoon", "prolate_spheroidal", "equator"): [
-        "The equatorial plane ($y=0$), with the circles of $\\phi$ divided out. "
-        "The curves are the projections of light rays of zero angular momentum."],
+        "The equatorial plane ($y=0$), with the circles of $\\phi$ divided out and "
+        "light rays of zero angular momentum projected onto the plane."],
     ("quevedo_mashhoon", "spherical", "equator"): [
-        "The equatorial plane ($\\theta=\\pi/2$), with the circles of $\\phi$ divided out. "
-        "The curves are the projections of light rays of zero angular momentum."],
+        "The equatorial plane ($\\theta=\\pi/2$), with the circles of $\\phi$ divided out and "
+        "light rays of zero angular momentum projected onto the plane."],
     ("static_five_soliton","spherical","radial"): [
         r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with a timelike singularity at $r=r_s$.",
     ],
