@@ -134,39 +134,57 @@ def logs(x, k=K):
 
 @lru_cache(maxsize=2)
 def tables(k=K, n=9001):
-    """sigma, omega and ln S on a grid of ln z, each a cubic spline."""
+    """ln S and ln eta and their exact rates along x = ln z on a grid, each a cubic spline, with
+    the rates' decay past the last point: there y tends to 1 and both rates fall as a power of z."""
     D, _, xs, _ = solve(k)
     grid = np.linspace(CENTRE, FAR, n)
-    values = np.array([logs(x, k) for x in grid])
-    lS, le = values[:, 1], values[:, 2]
-    sigma = 2 * k / (1 + k) * (math.log(2 * D) + 2 * grid - le)
-    omega = -2 / (1 + k) * le - 4 * lS
-    return grid, {name: CubicSpline(grid, v) for name, v in (("sigma", sigma), ("omega", omega), ("lnS", lS))}
+    states = np.array([logs(x, k) for x in grid])
+    slopes = np.array([rates(x, Y, D, k) for x, Y in zip(grid, states)])
+    splines = {name: (CubicSpline(grid, states[:, i]), CubicSpline(grid, slopes[:, i]))
+               for name, i in (("lnS", 1), ("lneta", 2))}
+    decay = {name: math.log(slopes[-2, i] / slopes[-1, i]) / (grid[-1] - grid[-2])
+             for name, i in (("lnS", 1), ("lneta", 2))}
+    return grid, D, splines, decay
+
+
+def logs_and_rates(x, k=K):
+    """ln S and ln eta with their first two derivatives along x = ln z. Below the grid the
+    centre's limiting rates hold; beyond it each rate decays as e^(-q x), q from the last points."""
+    grid, D, splines, decay = tables(k)
+    out = {}
+    for name, (value, rate) in splines.items():
+        inside = np.clip(x, grid[0], grid[-1])
+        v, v1, v2 = value(inside), rate(inside), rate(inside, 1)
+        low, high = x < grid[0], x > grid[-1]
+        q = decay[name]
+        r_end = rate(grid[-1])
+        beyond = r_end * np.exp(-q * (x - grid[-1]))
+        v = np.where(low, value(grid[0]) + rate(grid[0]) * (x - grid[0]),
+                     np.where(high, value(grid[-1]) + (r_end - beyond) / q, v))
+        v1 = np.where(low, rate(grid[0]), np.where(high, beyond, v1))
+        v2 = np.where(low, 0.0, np.where(high, -q * beyond, v2))
+        out[name] = (v, v1, v2)
+    return D, out
 
 
 def jet(z, k=K):
-    """sigma, omega and S with their first two derivatives along z itself, at the z given.
-    Below the centre's starting point and beyond the outermost point the functions follow their
-    limiting powers of z: e^sigma = 1 and S, eta as Harada and Maeda's series at the centre, and
-    S, eta constant far out, where sigma grows as 4k/(1+k) ln z."""
+    """sigma, omega and S with their first two derivatives along z itself, at the z given, from
+    e^sigma = (2D z^2/eta)^(2k/(1+k)) and e^omega = eta^(-2/(1+k)) S^-4."""
     z = np.asarray(z, dtype=float)
     shape = z.shape
     flat = np.atleast_1d(z).ravel()
-    grid, splines = tables(k)
-    x = np.log(np.maximum(flat, 1e-300))
-    inside = np.clip(x, grid[0], grid[-1])
-    out = {}
-    for name, spline in splines.items():
-        v0, v1, v2 = spline(inside), spline(inside, 1), spline(inside, 2)
-        edge = np.where(x < grid[0], spline(grid[0], 1), np.where(x > grid[-1], spline(grid[-1], 1), v1))
-        out[name] = (v0 + edge * (x - inside), np.where(inside != x, edge, v1), np.where(inside != x, 0.0, v2))
+    x = np.log(np.where(flat > 0, flat, np.nan))
+    D, out = logs_and_rates(x, k)
+    lS, lS1, lS2 = out["lnS"]
+    le, le1, le2 = out["lneta"]
+    c = 2 * k / (1 + k)
+    along_x = {"sigma": (c * (math.log(2 * D) + 2 * x - le), c * (2 - le1), -c * le2),
+               "omega": (-2 / (1 + k) * le - 4 * lS, -2 / (1 + k) * le1 - 4 * lS1, -2 / (1 + k) * le2 - 4 * lS2)}
     result = {}
-    for name in ("sigma", "omega"):
-        v, dx, dxx = out[name]
-        result[name], result["d" + name], result["d2" + name] = v, dx / flat, (dxx - dx) / flat ** 2
-    lS, dx, dxx = out["lnS"]
+    for name, (v, v1, v2) in along_x.items():
+        result[name], result["d" + name], result["d2" + name] = v, v1 / flat, (v2 - v1) / flat ** 2
     S = np.exp(lS)
-    result["S"], result["dS"], result["d2S"] = S, S * dx / flat, S * (dxx + dx * dx - dx) / flat ** 2
+    result["S"], result["dS"], result["d2S"] = S, S * lS1 / flat, S * (lS2 + lS1 * lS1 - lS1) / flat ** 2
     return {key: value.reshape(shape) for key, value in result.items()}
 
 
