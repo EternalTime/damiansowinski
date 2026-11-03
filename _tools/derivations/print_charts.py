@@ -37541,5 +37541,9 @@ import atiyah_hitchin as _atiyah_hitchin
 _atiyah_hitchin.register(sys.modules[__name__])
 
 
+import quevedo_mashhoon as qm
+CHARTS[qm.METRIC] = [lambda system=system: qm.chart_spec(system) for system in qm.SYSTEMS]
+
+
 if __name__ == "__main__":
     main()
