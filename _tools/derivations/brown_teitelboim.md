@@ -37,4 +37,12 @@ The inequality for a decrease is conditional; Bousso and Polchinski section 3.1 
 
 ## Drawings
 
-The spacetime views, conformal diagram, embedding diagram and curvature figure are to be recorded here with their choices and any justified omissions as they are built.
+The spacetime views use $\Lambda_i=3/4$, $\Lambda_o=3$ and $R_0=1/2$, so $\ell_i=2$, $\ell_o=1$, $\chi_i=2\arcsin(1/4)$ and $\chi_o=\pi/6$.
+Each view hatches the part across its membrane.
+The proper-time view draws the membrane's radius and the adjacent interior.
+The conformal view compactifies the two de Sitter-sliced patches with $x=\log[\tan(\chi/(2\ell))/\tan(\chi_w/(2\ell))]$, $p=\arctan(\eta-x)$ and $q=\arctan(\eta+x)$.
+The wall is $x=0$ on both sides, with one continuous $\eta$.
+The edges mark the sliced charts' boundaries; the drawing does not claim to cover the complete bubble spacetime.
+The embedding joins the two equatorial spherical caps at the instant of minimum wall radius and stops at $r=0.95$ inside the exterior static horizon.
+The curvature figure reads the stored scalars on each side and excludes the membrane itself, where the thin-wall curvature is distributional.
+Every drawing kind is represented.
