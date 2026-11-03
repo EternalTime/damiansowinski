@@ -439,6 +439,9 @@ REGIONS = {
 WHOLE = {("brane_wall_universe", "gaussian_normal")}
 
 OVERRULED = {
+    ("quevedo_mashhoon", "vacuum"): (
+        True, "the displayed functions are held free for the tensor formulas; their sourced definitions "
+              "give the vacuum solution of Boshkayev, Quevedo and Ruffini, arXiv:1207.3043"),
     ("exponential_scalar_universes", "stationary"): (
         False, "K decreases strictly as t^-4 with a timelike gradient for p > 1/3, so every Killing "
                "field is tangent to a spacelike constant-t slice; sampling the conditional conformal "
