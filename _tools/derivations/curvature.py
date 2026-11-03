@@ -541,7 +541,7 @@ def york_equilibrium(ck, src):
     return [{
         "id": "cavity", "label": "The radiation cavity", "kind": "line", "x": x_axis,
         "panels": panels, "curves": curves, "marks": [], "legend": legend,
-        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the radiation cavity "
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the cavity "
                     "against $r$, calculated through first order in $\\epsilon$. "
                     "$K$ falls outward. $R^\\mu{}_\\mu$ is negative and rises toward zero."],
         "ricci_sentences": [[0, 2]],
