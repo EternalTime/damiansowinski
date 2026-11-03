@@ -3965,6 +3965,11 @@ FLAT.update({
     for system, vid, _ in _exponential_scalar.PLANES
 })
 
+import linear_dilaton_figures as _linear_dilaton_figures
+FLAT.update({(_linear_dilaton_figures.METRIC, system, "plane"):
+             (lambda system=system: _linear_dilaton_figures.slice_marks(sys.modules[__name__], system))
+             for system in _linear_dilaton_figures.SYSTEMS})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

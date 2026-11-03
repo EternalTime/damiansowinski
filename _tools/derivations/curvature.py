@@ -18990,6 +18990,13 @@ def torus_universe_2plus1(ck, src):
 
 DRAWN[_torus.METRIC] = torus_universe_2plus1
 
+import linear_dilaton_figures as _linear_dilaton_figures
+
+def linear_dilaton(ck, src):
+    return _linear_dilaton_figures.curvature_views(ck, src, sys.modules[__name__])
+
+DRAWN[_linear_dilaton_figures.METRIC] = linear_dilaton
+
 import exponential_scalar_universes as _exponential_scalar
 
 

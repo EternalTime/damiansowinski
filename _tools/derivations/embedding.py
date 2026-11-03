@@ -22478,6 +22478,14 @@ CAPTIONS[("hellaby_kruskal", "neck")] = [
     "The equatorial surface through the neck at maximum expansion ($t=0$, $\\theta=\\pi/2$)."]
 
 
+import linear_dilaton_figures as _linear_dilaton_figures
+
+def linear_dilaton(ck, src):
+    return _linear_dilaton_figures.embedding_views(ck, src, sys.modules[__name__])
+
+DRAWN[_linear_dilaton_figures.METRIC] = linear_dilaton
+CAPTIONS.update(_linear_dilaton_figures.embedding_captions())
+
 if __name__ == "__main__":
     sys.exit(main())
 

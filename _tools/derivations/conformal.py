@@ -32224,6 +32224,14 @@ CAPTIONS[("electron_bubble", "axis")] = [
 # A two-coordinate reduction suppresses one of the two independent torus winding classes.
 NOT_DRAWN.add("torus_universe_2plus1")
 
+import linear_dilaton_figures as _linear_dilaton_figures
+
+def linear_dilaton(ck, src):
+    return _linear_dilaton_figures.conformal_views(ck, src, sys.modules[__name__])
+
+DRAWN[_linear_dilaton_figures.METRIC] = linear_dilaton
+CAPTIONS.update(_linear_dilaton_figures.conformal_captions())
+
 import exponential_scalar_universes as _exponential_scalar
 
 
