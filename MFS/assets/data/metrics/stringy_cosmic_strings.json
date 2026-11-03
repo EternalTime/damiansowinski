@@ -1,0 +1,57 @@
+{
+  "id": "stringy_cosmic_strings",
+  "name": "Stringy Cosmic Strings",
+  "short_name": "Stringy Cosmic Strings",
+  "description": "A straight string with finite energy per unit length, a curved transverse space, and a hidden torus whose shape changes with position around it.",
+  "tags": [
+    "topological defect",
+    "angular deficit",
+    "compact dimension",
+    "string theory",
+    "scalar field",
+    "static",
+    "stationary",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units with $c=1$. The coordinates describe regions away from the poles of the modular invariant.",
+  "history": "A hidden torus changes shape from place to place around a straight string. After a circuit of the string, its shape returns with the two cycles of the torus relabelled, leaving the same physical torus [harveyroyston2008, greene1990stringy]. Brian R. Greene, Alfred Shapere, Cumrun Vafa, and Shing-Tung Yau introduced these stringy cosmic strings in 1990 [harveyroyston2008, greene1990stringy]. The torus is part of the compact space hidden at each point of the four dimensional spacetime [vafa1996ftheory].¶Write $z=x+iy$ for position across the string and $\\tau=\\tau_1+i\\tau_2$ for the shape of the torus, with $\\tau_2>0$. The four dimensional line element is $ds^2=-dt^2+dw^2+H(z,\\bar z)\\,dz\\,d\\bar z$, with $w$ along the string [harveyroyston2008]. For strings at the poles $z_i$ of $j(\\tau(z))=P(z)/Q(z)$, $H=\\tau_2|\\eta(\\tau)|^4\\prod_i|z-z_i|^{-1/6}$, where $j$ is the modular invariant normalized by $j(i)=1$, $\\eta$ is the Dedekind eta function, and $P$ and $Q$ are polynomials [harveyroyston2008]. The polynomials obey conditions at the values $j=0$ and $j=1$ that keep the shape holomorphic across those points [harveyroyston2008].¶The energy per unit length of an isolated straight string of a broken global $U(1)$ symmetry grows logarithmically with distance from its core [steinschabesburd1988]. For stringy cosmic strings, the relabelling identifies shapes related by $SL(2,\\mathbb Z)$ and permits finite energy per unit length [vafa1996ftheory]. The same physical shape can therefore return after a circuit even when its label $\\tau$ changes [vafa1996ftheory]. In some of these solutions the hidden space decompactifies near a core while the full higher dimensional geometry remains nonsingular [vafa1996ftheory, greene1990stringy].¶Gary W. Gibbons, Michael B. Green, and Malcolm J. Perry found a seven brane of type IIB supergravity with the same transverse geometry [gibbonsgreenperry1996]. For their single pole solution the space far from the brane approaches a cone with deficit angle $\\pi/6$ [gibbonsgreenperry1996]. In the family with a finite limiting shape at infinity, $N$ poles contribute a total deficit $N\\pi/6$; twelve poles give an asymptotic cylinder and twenty four close the transverse space into a sphere [harveyroyston2008]. The sphere has a total deficit of $4\\pi$ [harveyroyston2008].¶In type IIB the field $\\tau$ combines the axion and the dilaton and transforms like the shape of a torus [vafa1996ftheory]. Vafa used the geometry of a torus over the transverse sphere to construct a compact seven brane configuration in F-theory [vafa1996ftheory]. The sphere carries twenty four seven branes, and the torus over it forms a K3 surface [vafa1996ftheory].",
+  "references": [
+    "harveyroyston2008",
+    "greene1990stringy",
+    "vafa1996ftheory",
+    "steinschabesburd1988",
+    "gibbonsgreenperry1996",
+    "gott1985",
+    "deser1984",
+    "barriola1989",
+    "sorkin1983"
+  ],
+  "related": [
+    {
+      "id": "cosmic_string",
+      "kind": "family",
+      "text": "The exterior of the Vilenkin-Gott string is a flat cone, and the stringy cosmic string has a curved transverse space that approaches a cone far away [gott1985, gibbonsgreenperry1996]."
+    },
+    {
+      "id": "point_particle_2plus1",
+      "kind": "family",
+      "text": "A point particle removes a wedge from a flat plane, and enough particles close space on itself [deser1984, gibbonsgreenperry1996]."
+    },
+    {
+      "id": "global_monopole",
+      "kind": "family",
+      "text": "A global monopole's scalar field spreads its energy away from its core, and the stringy cosmic string also carries a scalar field across its transverse space [barriola1989, vafa1996ftheory]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "A compact direction changes over space around the Kaluza-Klein monopole, and a compact torus changes shape around the stringy cosmic string [sorkin1983, vafa1996ftheory]."
+    }
+  ],
+  "coordinates": []
+}
