@@ -4539,6 +4539,9 @@ class Slices(unittest.TestCase):
             # One sphere at maximum expansion: t=ell=1, eta=pi/2, over the full polar distance.
             height = 1.0 if "/cosmic_hyperspherical/" in key else math.pi / 2
             return (lambda X: height), list(self.reach(surface))
+        if key.startswith("ori_piran/"):
+            # The single embedded slice has t = -ell; the zooming view draws it at tau = 0, z = r/ell.
+            return (lambda X: 0.0 if "/zooming/" in key else -1.0), list(self.reach(surface))
         if key.startswith("charach_malin/"):
             # The single embedded slice has t=1; logarithmic views plot -tau=ln(t)=0.
             return (lambda X: 0.0 if "_logarithmic/" in key else 1.0), list(self.reach(surface))
