@@ -614,7 +614,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c83ed58838d4e9e6",
+    "version": "3f9b623ed208a5a0",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "163c135cc969d5f9"
@@ -3053,7 +3053,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "b5a5e4e88db29959",
+    "version": "a197371a68d1c59e",
     "diagrams": "90d54985332dcf14",
     "conformal": "47650710de79f09c",
     "embedding": "d67797d3b49aa7ba",
@@ -3087,7 +3087,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "924a4b58279e603c",
+    "version": "d58f91d72cddd2ca",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -3242,7 +3242,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b81012d201c71c19",
+    "version": "ce4a46dee0d9d339",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
     "embedding": "c4aa8198bba8d575",
@@ -4022,7 +4022,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "9029711d646b5e06",
+    "version": "7b126b7bfaa7cfa6",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7",
@@ -4622,6 +4622,35 @@
     "curvature": "309c49a3a59ba6c9"
   },
   {
+    "id": "myers_compactified",
+    "name": "Myers Compactified Hole",
+    "tags": [
+      "electrovacuum",
+      "static",
+      "stationary",
+      "electric charge",
+      "charged black hole",
+      "black hole",
+      "extremal",
+      "horizon",
+      "event horizon",
+      "harmonic function",
+      "higher dimensions",
+      "five-dimensional",
+      "Kaluza-Klein",
+      "compact dimension",
+      "exact solution",
+      "Lorentzian",
+      "Einstein-Maxwell",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "8b39114211797b1e",
+    "diagrams": "13ed4d37fc04163e",
+    "embedding": "38c8718a8d5c3e37",
+    "curvature": "9ccccc4c993a2f30"
+  },
+  {
     "id": "myers_perry",
     "name": "Myers-Perry",
     "tags": [
@@ -4655,7 +4684,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "e7da9e23002bf822",
+    "version": "cbd35db008e952e9",
     "diagrams": "fbe2465fce912260",
     "conformal": "1a4a12f584d5c79c",
     "embedding": "d6b5347d467d964c",
@@ -5808,7 +5837,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "0341d68c59c92e8d",
+    "version": "b0f4bb928ceaa343",
     "diagrams": "d1e087098b20d92d",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
