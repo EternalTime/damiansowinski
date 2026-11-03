@@ -35731,7 +35731,7 @@ def york_equilibrium():
                                "M>0,\\quad R>2M"],
                    "parameters": YORK_PARAMS, "line_element": YORK_LINE},
         "chart_line_element": YORK_LINE,
-        "printer": {},
+        "printer": {"overrides": {sp.pi: "\\pi"}},
         "check": york_equilibrium_check,
     }
 
