@@ -37052,7 +37052,7 @@ CHARTS[_mallett.METRIC] = [lambda system=system: _mallett.chart_spec(system) for
 
 
 import skyrmion_hair_chart as _skyrmion_hair_chart
-CHARTS["skyrmion_hair"] = [_skyrmion_hair_chart.chart_spec]
+CHARTS["skyrmion_hair"] = [_skyrmion_hair_chart.chart_spec, _skyrmion_hair_chart.tortoise_spec]
 
 
 if __name__ == "__main__":

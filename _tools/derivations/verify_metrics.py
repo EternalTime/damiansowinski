@@ -225,6 +225,7 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
     # Natural units c = hbar = 1, with Newton's constant explicit.
+    ("skyrmion_hair", "tortoise"): {"t": "L", "\\xi": "L", "\\theta": "1", "\\phi": "1", "F": "1", "r": "L"},
     ("skyrmion_hair", "areal"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "N": "1", "C": "1", "f": "1",
         "m": "1/L", "r_h": "L", "G": "L**2", "M": "1/L", "\\alpha": "1", "F_\\pi": "1/L", "a": "1",

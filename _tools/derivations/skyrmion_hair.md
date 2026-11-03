@@ -29,3 +29,8 @@ The areal chart is the exterior $r>r_h$ of the spherical solution.
 The conformal diagram is not drawn: the sourced numerical chart ends at the horizon and does not establish the causal structure inside it.
 
 ## Checks
+
+The tortoise coordinate is the radius used for the perturbation equation in Shiiki and Sawado, equation (54), https://arxiv.org/html/gr-qc/0501025.
+Writing it as $\xi=x^*/(aF_\pi)$ gives $d\xi/dr=1/(NC)$ and the radial metric $N^2C(-dt^2+d\xi^2)$.
+For the drawing the additive constant is fixed by $aF_\pi r=1$ at $aF_\pi\xi=0$.
+The code integrates $dr/d\xi=NC$ from that sphere and inverts the monotone result on the finite interval used for the drawing.

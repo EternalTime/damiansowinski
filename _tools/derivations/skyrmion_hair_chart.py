@@ -45,3 +45,34 @@ def check(chart):
         for i in range(2):
             if abs(complex((mixed[i, i] - expected[i]).xreplace(point).evalf(30))) > 1e-20:
                 raise AssertionError('skyrmion_hair/areal: radial Einstein equation')
+
+
+def tortoise_spec():
+    """The tortoise radius in Shiiki and Sawado's equation (54)."""
+    coords = ['t', '\\xi', '\\theta', '\\phi']
+    parameters = ['F = F(\\xi)', 'r = r(\\xi)']
+    probe = vm.Reader(coords, parameters, ())
+    x = probe.symbol['\\xi']
+    f, r = probe.parameters['F'], probe.parameters['r']
+    first = [sp.Derivative(v, x) for v in (f, r)]
+    lead = [sp.Derivative(v, (x, 2)) for v in (f, r)] + first + [f, r]
+    line = ('ds^2 = F\\left(-dt^2 + d\\xi^2\\right)'
+            ' + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)')
+    return {
+        'metric_id': 'skyrmion_hair',
+        'system': {'id': 'tortoise', 'name': 'Tortoise', 'coords': coords,
+                   'domains': ['t \\in (-\\infty, \\infty)', '\\xi \\in (-\\infty, \\infty)',
+                               '\\theta \\in [0, \\pi]', '\\phi \\in [0, 2\\pi)'],
+                   'parameters': parameters, 'line_element': line},
+        'chart_line_element': line,
+        'printer': {'lead': lead, 'factors': [f, r] + first},
+        'check': check_tortoise,
+    }
+
+
+def check_tortoise(chart):
+    """The radial plane is conformally flat and the sphere has area 4 pi r^2."""
+    f, r = chart.reader.parameters['F'], chart.reader.parameters['r']
+    expected = sp.diag(-f, f, r**2, r**2*sp.sin(chart.reader.symbol['\\theta'])**2)
+    if chart.geo.g != expected:
+        raise AssertionError('skyrmion_hair/tortoise: metric transformation')

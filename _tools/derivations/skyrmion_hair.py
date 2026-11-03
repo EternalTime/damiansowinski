@@ -108,6 +108,38 @@ def jet(x):
     return {key: value.reshape(shape) for key, value in result.items()}
 
 
+
+@lru_cache(maxsize=1)
+def tortoise_solutions():
+    """Integrate dr/dxi = N C with xi = 0 at x = 1, in drawing units."""
+    def rhs(_, state):
+        values = jet(state[0])
+        return [float(values['N']*values['C'])]
+    result = []
+    for endpoint in (-1.75, 3.4):
+        solution = solve_ivp(rhs, (0, endpoint), [1.0], method='DOP853',
+                             rtol=2e-10, atol=1e-12, dense_output=True)
+        if not solution.success:
+            raise RuntimeError(solution.message)
+        result.append(solution)
+    return result
+
+
+def tortoise_radius(xi):
+    xi = np.asarray(xi, dtype=float)
+    left, right = tortoise_solutions()
+    return np.where((xi >= -1.75) & (xi <= 3.4),
+                    np.where(xi < 0, left.sol(xi)[0], right.sol(xi)[0]), np.nan)
+
+
+def tortoise(x):
+    """Invert the monotone numerical map inside its plotted interval."""
+    left, right = tortoise_solutions()
+    low, high = left.y[0, -1], right.y[0, -1]
+    if not low <= x <= high:
+        raise ValueError('Radius outside the numerical tortoise interval')
+    return brentq(lambda xi: float(tortoise_radius(xi)) - x, -1.75, 3.4)
+
 def declared_functions():
     """SymPy functions with the solved first and second derivatives for drawing."""
     import sympy as sp
@@ -132,6 +164,18 @@ def declared_functions():
         first = make('skyrme_d' + key, 'd' + key, second)
         base = make('skyrme_' + key, key, first)
         result.update({fn.__name__: fn for fn in (base, first, second)})
+    def radial_fdiff(self, argindex=1):
+        if argindex != 1:
+            raise sp.ArgumentIndexError(self, argindex)
+        r = self.func(self.args[0])
+        return result['skyrme_N'](r)*result['skyrme_C'](r)
+
+    radial = type('skyrme_r', (sp.Function,), {
+        'nargs': 1, 'is_real': True, '_imp_': staticmethod(tortoise_radius),
+        'fdiff': radial_fdiff,
+        '_eval_evalf': lambda self, prec: sp.Float(float(tortoise_radius(float(self.args[0]))), prec),
+    })
+    result[radial.__name__] = radial
     return result
 
 
