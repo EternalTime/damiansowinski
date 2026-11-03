@@ -3842,29 +3842,9 @@
         {
           "symbol": "\\tau = t/\\sigma",
           "description": "An auxiliary time coordinate"
-        },
-        {
-          "symbol": "\\Delta = 1+\\tau^2",
-          "description": "A positive function of the prolate time"
-        },
-        {
-          "symbol": "\\delta = \\sigma^2-1",
-          "description": "A positive function of the prolate radius away from the axis"
-        },
-        {
-          "symbol": "X = (1-p\\tau)^2+q^2\\sigma^2",
-          "description": "A positive dimensionless function"
-        },
-        {
-          "symbol": "Y = X-2(1-p\\tau)",
-          "description": "A positive dimensionless function"
-        },
-        {
-          "symbol": "\\omega = 2q(1-p\\tau)\\delta/(pY)",
-          "description": "The dimensionless coupling between the angular and longitudinal directions"
         }
       ],
-      "line_element": "ds^2=\\ell^2\\left(\\alpha^2X(-dt^2+d\\rho^2)/(\\tau^2+\\sigma^2)+\\rho^2 X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2\\right)",
+      "line_element": "ds^2=\\ell^2\\left(\\dfrac{\\alpha^2\\left((1-p\\tau)^2+q^2\\sigma^2\\right)}{\\tau^2+\\sigma^2}(-dt^2+d\\rho^2)+\\dfrac{\\rho^2\\left((1-p\\tau)^2+q^2\\sigma^2\\right)}{\\left(p^2(1+\\tau^2)+q^2(\\sigma^2-1)\\right)}d\\phi^2+\\dfrac{\\left(p^2(1+\\tau^2)+q^2(\\sigma^2-1)\\right)}{\\left((1-p\\tau)^2+q^2\\sigma^2\\right)}(dz-2q(\\sigma^2-1)(1-p\\tau)/(p\\left(p^2(1+\\tau^2)+q^2(\\sigma^2-1)\\right))\\,d\\phi)^2\\right)",
       "convention": "We use dimensionless coordinates $(t,\\rho,\\phi,z)$, related to the prolate coordinates by $t=\\tau\\sigma$ and $\\rho^2=(1+\\tau^2)(\\sigma^2-1)$. The axis is at $\\rho=0$, where this polar chart ends. A dot denotes differentiation with respect to an affine parameter."
     },
     {

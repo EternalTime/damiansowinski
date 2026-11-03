@@ -12,6 +12,7 @@ def parameters(system):
     if system == 'cylindrical':
         names += [r'D = \sqrt{(1+\rho^2-t^2)^2+4t^2}',
                   r'\sigma = \sqrt{(D+1+\rho^2-t^2)/2}', r'\tau = t/\sigma']
+        return names
     elif system == 'hyperbolic':
         names += [r'\tau = \sinh\psi', r'\sigma = \cosh\theta']
     names += [r'\Delta = 1+\tau^2', r'\delta = \sigma^2-1',
@@ -26,13 +27,20 @@ def register_dimensions(vm):
         coords = {'prolate': (r'\tau', r'\sigma'), 'cylindrical': ('t', r'\rho'),
                   'hyperbolic': (r'\psi', r'\theta')}[system]
         if system == 'cylindrical':
-            vm.HELD[key] = ('X', 'Y', 'omega')
+            vm.HELD[key] = ('sigma', 'tau')
+            vm.RATES[key] = {
+                'tau': {'t': r'\sigma(1+\tau^2)/(\tau^2+\sigma^2)',
+                        r'\rho': r'-\tau\rho/(\tau^2+\sigma^2)'},
+                'sigma': {'t': r'-\tau(\sigma^2-1)/(\tau^2+\sigma^2)',
+                          r'\rho': r'\sigma\rho/(\tau^2+\sigma^2)'}}
         dims = {name: '1' for name in coords + (r'\phi', 'z')}
         dims.update({r'\ell': 'L', r'\alpha': '1', 'p': '1', 'q': '1',
                      r'\Delta': '1', r'\delta': '1', 'X': '1', 'Y': '1', r'\omega': '1'})
         if system != 'prolate':
             dims.update({r'\tau': '1', r'\sigma': '1'})
         if system == 'cylindrical':
+            for name in (r'\Delta', r'\delta', 'X', 'Y', r'\omega'):
+                del dims[name]
             dims['D'] = '1'
         vm.DIMENSIONS[key] = dims
 
@@ -47,16 +55,43 @@ def spec(system):
     radius = r'\rho^2' if system == 'cylindrical' else r'\Delta\delta'
     line = (r'ds^2=\ell^2\left(' + plane + '+' + radius + r' X\,d\phi^2/Y'
             r'+(Y/X)(dz-\omega\,d\phi)^2\right)')
+    if system == 'cylindrical':
+        X = r'\left((1-p\tau)^2+q^2\sigma^2\right)'
+        Y = r'\left(p^2(1+\tau^2)+q^2(\sigma^2-1)\right)'
+        twist = r'2q(\sigma^2-1)(1-p\tau)/(p'+Y+r')'
+        line = (r'ds^2=\ell^2\left(\dfrac{\alpha^2'+X+r'}{\tau^2+\sigma^2}'
+                r'(-dt^2+d\rho^2)+\dfrac{\rho^2'+X+'}{'+Y+r'}d\phi^2'
+                r'+\dfrac{'+Y+'}{'+X+r'}(dz-'+twist+r'\,d\phi)^2\right)')
     domain = {'prolate': [r'\tau\in(-\infty,\infty)', r'\sigma\in(1,\infty)'],
               'cylindrical': [r't\in(-\infty,\infty)', r'\rho\in(0,\infty)'],
               'hyperbolic': [r'\psi\in(-\infty,\infty)', r'\theta\in(0,\infty)']}[system]
     domain += [r'\phi\in[0,2\pi)', r'z\in(-\infty,\infty)', r'\ell>0,\quad\alpha>0,\quad p>0']
     names = {'prolate': 'Prolate Coordinates', 'cylindrical': 'Cylindrical',
              'hyperbolic': 'Hyperbolic Coordinates'}
+    options = {}
+    if system == 'cylindrical':
+        import verify_metrics as vm
+        probe = vm.Reader(coords, parameters(system), (), held=vm.HELD[(METRIC, system)],
+                          rates=vm.RATES[(METRIC, system)])
+        options['reduce'] = lambda value: cylindrical_reduce(vm, probe, value)
     return {'metric_id': METRIC, 'system': {'id': system, 'name': names[system], 'coords': coords,
             'domains': domain, 'parameters': parameters(system), 'line_element': line},
             'chart_line_element': line, 'printer': {},
-            'check': lambda chart: check(chart, system)}
+            'check': lambda chart: check(chart, system), **options}
+
+
+def cylindrical_reduce(vm, reader, value):
+    """Apply the coordinate derivatives and the prolate-to-cylindrical identity."""
+    value = vm.norm(reader.by_rates(value))
+    tau, sigma = reader.parameters['tau'], reader.parameters['sigma']
+    rho = reader.symbol[r'\rho']
+    T, S = sp.symbols('prolate_tau prolate_sigma', real=True)
+    held = {tau: T, sigma: S}
+    numerator, denominator = sp.fraction(value.xreplace(held))
+    relation = rho**2-(1+T**2)*(S**2-1)
+    numerator = sp.rem(sp.Poly(numerator, rho), sp.Poly(relation, rho)).as_expr()
+    denominator = sp.rem(sp.Poly(denominator, rho), sp.Poly(relation, rho)).as_expr()
+    return vm.norm((numerator/denominator).xreplace({T: tau, S: sigma}))
 
 
 def source_metric(system, first, second, p, alpha, ell):
