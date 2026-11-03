@@ -46,7 +46,7 @@
     {
       "id": "oppenheimer_snyder",
       "kind": "family",
-      "text": "A uniform ball of dust collapsing inside Schwarzschild's vacuum [oppenheimersnyder1939]."
+      "text": "A uniform ball of dust collapsing inside the Schwarzschild vacuum [oppenheimersnyder1939]."
     },
     {
       "id": "szekeres",
@@ -113,7 +113,7 @@
         },
         {
           "symbol": "M_1",
-          "description": "Positive inverse length squared."
+          "description": "Positive parameter, an inverse length squared."
         },
         {
           "symbol": "r_s",
