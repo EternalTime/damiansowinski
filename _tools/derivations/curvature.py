@@ -19184,5 +19184,9 @@ import hellaby_kruskal as _hellaby_kruskal
 DRAWN["hellaby_kruskal"] = lambda ck, src: _hellaby_kruskal.curvature_views(ck, src, sys.modules[__name__])
 
 
+import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
+_stringy_cosmic_strings_drawings.register_curvature(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

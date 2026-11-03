@@ -32271,5 +32271,9 @@ _charged_three_dimensions_drawings.register_conformal(sys.modules[__name__])
 NOT_DRAWN.add("hellaby_kruskal")
 
 
+import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
+_stringy_cosmic_strings_drawings.register_conformal(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

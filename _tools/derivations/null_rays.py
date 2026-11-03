@@ -19387,5 +19387,9 @@ CAPTIONS[("hellaby_kruskal", "comoving", "neck")] = [
     "The plane of $t$ and $r$ through the neck ($\\theta=\\pi/2$, $\\phi=0$)."]
 
 
+import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
+_stringy_cosmic_strings_drawings.register_null(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())
