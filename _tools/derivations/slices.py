@@ -3649,6 +3649,9 @@ FLAT = {
     **{("zipoy_voorhees", "prolate_spheroidal", f"equator_{shape}"): lambda shape=shape: one(
         "zipoy_voorhees", lambda m: along(0.0, *(r - 1 for r in m.reach("spherical", "r"))), view_id=shape)
        for shape in ("oblate", "prolate")},
+    # The rotating deformed field's equatorial slice at t = 0, in its prolate chart.
+    ("quevedo_mashhoon", "prolate_spheroidal", "equator"): lambda: one(
+        "quevedo_mashhoon", lambda m: along(0.0, *m.reach("prolate_spheroidal", "x"))),
     **{("distorted_schwarzschild", system, f"{plane}_{shape}"):
        lambda system=system, plane=plane, shape=shape: distorted_hole(system, plane, shape)
        for system in ("prolate_spheroidal", "spherical", "weyl") for plane in ("axis", "equator")

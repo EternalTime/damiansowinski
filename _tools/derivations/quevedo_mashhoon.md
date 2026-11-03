@@ -31,6 +31,7 @@ The chart does not establish a global extension across that boundary, so a confo
 The drawings select $M=1$, $a=2M/5$, $q=2/5$ and $\delta=1$.
 The spacetime view divides out the axial circles on the equator, so its null curves project rays of zero angular momentum.
 The embedding takes the equatorial slice of constant $t$ from $x=2$ to $x=6$.
+On the spacetime view it is the segment $t=0$ over the same interval, clipped to the view's window.
 The embedding defect is positive at representative points throughout that interval and the generator checks the full surface against the stored metric.
 
 ## Compact scalar
