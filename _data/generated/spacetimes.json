@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 243,
+  "count": 244,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -18248,6 +18248,11 @@
           "id": "skyrmion_hair",
           "kind": "family",
           "text": "A black hole with a Skyrme field held by its gravity outside its horizon [dvali2016skyrmion]."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "A flat string frame can carry a dilaton linear in a coordinate. The Einstein frame with a timelike gradient expands linearly in time, while the extremal magnetic throat has a spatial gradient [devega1994linear, giddings1992]."
         }
       ],
       "references": [
@@ -18275,7 +18280,8 @@
         "cvetic1996dyonic",
         "gibbons1995",
         "banerjee1998",
-        "dvali2016skyrmion"
+        "dvali2016skyrmion",
+        "devega1994linear"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -21246,6 +21252,11 @@
           "id": "linet_tian",
           "kind": "family",
           "text": "Static fields around a line of mass with $\\Lambda > 0$. Jerry Griffiths and Jiří Podolský matched one across a torus to a region of this universe, whose dust takes the place of one singular axis [griffiths2010linettian]."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "A linear dilaton accompanies an expanding string universe in the Einstein frame. Ignatios Antoniadis, Constantin Bachas, John R. Ellis, and Dimitri V. Nanopoulos also identified static Einstein universes in string cosmologies without dynamic matter [antoniadis1988cosmology]."
         }
       ],
       "references": [
@@ -21276,7 +21287,8 @@
         "luminet2003",
         "vaidya1977kerr",
         "gibbons1994ym",
-        "griffiths2010linettian"
+        "griffiths2010linettian",
+        "antoniadis1988cosmology"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -44436,6 +44448,178 @@
       ]
     },
     {
+      "id": "linear_dilaton",
+      "name": "Linear Dilaton Vacuum",
+      "short_name": "Linear Dilaton",
+      "description": "A spacetime that is flat in the string frame, with a dilaton falling linearly in time, and expands in proportion to time in the Einstein frame.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "homogeneous",
+        "isotropic",
+        "FLRW",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "conformally flat",
+        "scalar field",
+        "dilaton",
+        "string theory"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units in which the speed of light is one.",
+      "related": [
+        {
+          "id": "milne",
+          "kind": "family",
+          "text": "The Milne universe also expands in proportion to time. Its spatial slices have negative curvature and its spacetime is flat; the Einstein frame here has flat spatial slices and nonzero spacetime curvature [devega1994linear]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "A two dimensional black hole whose string frame approaches a flat metric with a spatial linear dilaton far from the hole [karananas2021linear, mandal1991]. The cosmology here has a timelike dilaton gradient."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "A static universe with space closed into a three sphere. In their string cosmologies without dynamic matter, Ignatios Antoniadis, Constantin Bachas, John R. Ellis, and Dimitri V. Nanopoulos identified static Einstein universes alongside expanding examples [antoniadis1988cosmology]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The string frame of the extreme magnetic black hole has a long throat whose dilaton is linear in distance [giddings1992]. The gradient along the throat is spatial."
+        }
+      ],
+      "references": [
+        "angius2022linear",
+        "myers1987linear",
+        "aharony2007linear",
+        "devega1994linear",
+        "antoniadis1988cosmology",
+        "antoniadis1989expanding",
+        "karananas2021linear",
+        "mandal1991",
+        "giddings1992"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/linear_dilaton.json",
+      "charts": [
+        {
+          "id": "cosmic",
+          "name": "Cosmic Time",
+          "coordinates": [
+            "\\tau",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\tau \\in (0,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "q",
+              "description": "Positive inverse length setting the slope of the dilaton."
+            }
+          ],
+          "convention": "We use cosmic time $\\tau$ in the Einstein frame, with comoving Cartesian spatial coordinates $(x,y,z)$ of length.",
+          "line_element": "ds^2 = -d\\tau^2+q^2\\tau^2\\left(dx^2+dy^2+dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "q^2\\,\\tau^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "q^2\\,\\tau^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "q^2\\,\\tau^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6}{\\tau^2}",
+          "kretschmann": "K = \\dfrac{12}{\\tau^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "q",
+              "description": "Positive inverse length setting the slope of the dilaton."
+            }
+          ],
+          "convention": "We use the Einstein frame in conformal time $\\eta$, the time of the string frame, with comoving Cartesian spatial coordinates $(x,y,z)$ of length. The Einstein frame is related to the string frame by the conformal factor $e^{-2\\Phi}$.",
+          "line_element": "ds^2 = e^{2q\\eta}\\left(-d\\eta^2+dx^2+dy^2+dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-e^{2\\eta\\,q}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "e^{2\\eta\\,q}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "e^{2\\eta\\,q}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{2\\eta\\,q}"
+            }
+          ],
+          "ricci_scalar": "R = 6q^2e^{-2\\eta\\,q}",
+          "kretschmann": "K = 12q^4e^{-4\\eta\\,q}"
+        }
+      ]
+    },
+    {
       "id": "linet_tian",
       "name": "Linet-Tian Static Cylinder",
       "short_name": "Linet-Tian",
@@ -48126,6 +48310,11 @@
           "id": "topological_star",
           "kind": "family",
           "text": "Inside Bah and Heidmann's black string, next to the bubble that ends it, the plane of $r$ and the circle is Milne's universe of two dimensions, a cone of flat spacetime closing on its tip [bah2021]."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "The Einstein frame of the timelike linear dilaton vacuum also expands in proportion to time. Its spatial slices are flat and its spacetime has nonzero curvature [devega1994linear]."
         }
       ],
       "references": [
@@ -48157,7 +48346,8 @@
         "coleman1980",
         "bucher1995",
         "ellis1974",
-        "bah2021"
+        "bah2021",
+        "devega1994linear"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/milne.json",
@@ -81923,6 +82113,11 @@
           "id": "eternal_traversable_wormhole",
           "kind": "family",
           "text": "A wormhole in another gravity with a dilaton in two dimensions, Jackiw-Teitelboim gravity, on the strip of anti-de Sitter space [maldacena2018]."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "The string frame far from the hole has a spatial linear dilaton [karananas2021linear, mandal1991]. The expanding universe has a timelike dilaton gradient [devega1994linear, angius2022linear]."
         }
       ],
       "references": [
@@ -81941,7 +82136,10 @@
         "horowitz1993",
         "davies1977",
         "good2016",
-        "maldacena2018"
+        "maldacena2018",
+        "karananas2021linear",
+        "devega1994linear",
+        "angius2022linear"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",

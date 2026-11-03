@@ -1,5 +1,5 @@
 {
-  "version": "ed1b9066367b36b0",
+  "version": "88c8217b8fe4c564",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36214,6 +36214,112 @@
         "year": "1994",
         "doi": "10.1103/PhysRevLett.72.1782",
         "url": "https://doi.org/10.1103/PhysRevLett.72.1782"
+      }
+    },
+    "myers1987linear": {
+      "type": "article",
+      "fields": {
+        "author": "Myers, Robert C.",
+        "title": "New dimensions for old strings",
+        "journal": "Physics Letters B",
+        "volume": "199",
+        "number": "3",
+        "pages": "371--376",
+        "year": "1987",
+        "doi": "10.1016/0370-2693(87)90936-1",
+        "url": "https://doi.org/10.1016/0370-2693(87)90936-1"
+      }
+    },
+    "devega1994linear": {
+      "type": "article",
+      "fields": {
+        "author": "de Vega, H. J. and Egusquiza, I. L.",
+        "title": "Strings in cosmological and black hole backgrounds: Ring solutions",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "2",
+        "pages": "763--778",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.763",
+        "url": "https://doi.org/10.1103/PhysRevD.49.763",
+        "eprint": "hep-th/9309016",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "angius2022linear": {
+      "type": "article",
+      "fields": {
+        "author": "Angius, Roberta and Delgado, Matilda and Uranga, Angel M.",
+        "title": "Dynamical Cobordism and the beginning of time: supercritical strings and tachyon condensation",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "8",
+        "pages": "285",
+        "year": "2022",
+        "doi": "10.1007/JHEP08(2022)285",
+        "url": "https://doi.org/10.1007/JHEP08(2022)285",
+        "eprint": "2207.13108",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "aharony2007linear": {
+      "type": "article",
+      "fields": {
+        "author": "Aharony, Ofer and Silverstein, Eva",
+        "title": "Supercritical stability, transitions, and (pseudo)tachyons",
+        "journal": "Physical Review D",
+        "volume": "75",
+        "number": "4",
+        "pages": "046003",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.75.046003",
+        "url": "https://doi.org/10.1103/PhysRevD.75.046003",
+        "eprint": "hep-th/0612031",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "antoniadis1988cosmology": {
+      "type": "article",
+      "fields": {
+        "author": "Antoniadis, I. and Bachas, C. and Ellis, John and Nanopoulos, D. V.",
+        "title": "Cosmological string theories and discrete inflation",
+        "journal": "Physics Letters B",
+        "volume": "211",
+        "number": "4",
+        "pages": "393--399",
+        "year": "1988",
+        "doi": "10.1016/0370-2693(88)91882-5",
+        "url": "https://doi.org/10.1016/0370-2693(88)91882-5"
+      }
+    },
+    "antoniadis1989expanding": {
+      "type": "article",
+      "fields": {
+        "author": "Antoniadis, I. and Bachas, C. and Ellis, John and Nanopoulos, D. V.",
+        "title": "An expanding universe in string theory",
+        "journal": "Nuclear Physics B",
+        "volume": "328",
+        "number": "1",
+        "pages": "117--139",
+        "year": "1989",
+        "doi": "10.1016/0550-3213(89)90095-3",
+        "url": "https://doi.org/10.1016/0550-3213(89)90095-3"
+      }
+    },
+    "karananas2021linear": {
+      "type": "article",
+      "fields": {
+        "author": "Karananas, Georgios K. and Kehagias, Alex and Taskas, John",
+        "title": "Islands in linear dilaton black holes",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "3",
+        "pages": "253",
+        "year": "2021",
+        "doi": "10.1007/JHEP03(2021)253",
+        "url": "https://doi.org/10.1007/JHEP03(2021)253",
+        "eprint": "2101.00024",
+        "archiveprefix": "arXiv"
       }
     }
   }
