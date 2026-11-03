@@ -4769,6 +4769,12 @@ class Slices(unittest.TestCase):
             # v = ct + r_* and u = ct - r_*, r_* = (1/2) ln|(r - 1)/(r + 1)|, drawn against v - r and u + r.
             sign = 1 if "ingoing" in key else -1
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) - X)), list(self.reach(surface))
+        if key.startswith("charged_three_dimensions/eddington_finkelstein"):
+            # The static t = 0 at kQ^2 = pi and r_c = 1 is v = r_* and u = -r_*, with r_* = 2 E_1(ln(1/r)) inside
+            # the horizon, drawn against v - r and u + r.
+            from scipy.special import exp1
+            sign = 1 if "ingoing" in key else -1
+            return (lambda X: sign * (2 * float(exp1(math.log(1 / X))) - X)), list(self.reach(surface))
         if key.startswith(("kerr_de_sitter/kerr_", "kerr_de_sitter/kerr_schild")):
             # Static t = 0 is v = r_*, u = -r_* and c tau = s, drawn against v - r, u + r and c tau:
             # dr_*/dr = (r^2 + a^2)/Delta_r and ds/dr = r_s r/((1 - Lambda r^2/3) Delta_r), both zero at
