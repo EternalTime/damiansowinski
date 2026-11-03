@@ -8,9 +8,9 @@ The journal record and abstract of Hellaby 1987 establish the earlier dense two 
 
 ## The neck
 
-At $r=0$, $f=-1$ and $R_r=0$.
-The source's regularity conditions hold the limit of $R_r^2/(1+f)$ finite.
-For $f=-e^{-r^2/r_s}$, the limit is $r_s R_{rr}(t,0)^2$, provided the ordinary regularity conditions hold.
+At $r=0$, $f=-1$ and $Y_r=0$.
+The source's regularity conditions hold the limit of $Y_r^2/(1+f)$ finite.
+For $f=-e^{-r^2/r_s}$, the limit is $r_s Y_{rr}(t,0)^2$, provided the ordinary regularity conditions hold.
 The Tolman-Bondi chart in the collection requires $1+2E>0$ and $R_r>0$ and therefore excludes the neck itself.
 With $f=2E$, the condition $1+2E=0$ is necessary for this regular extremum but does not uniquely pick the model.
 
