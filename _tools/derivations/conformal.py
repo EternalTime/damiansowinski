@@ -1596,7 +1596,7 @@ def york_equilibrium(ck, src):
     the wall. The cavity chart supplies no continuation through the horizon.
     """
     params = {"M": 1, "R": 50, "epsilon": sp.Rational(1, 10000)}
-    plane = Plane(src, "york_equilibrium", "areal", ("t", "r"), EQUATOR, params, induced=True)
+    plane = Plane(src, "york_equilibrium", "areal", ("t", "r"), EQUATOR, params)
     xmax, xmin = math.log(48.0), math.log(1e-6)
 
     def slope(x, _):
