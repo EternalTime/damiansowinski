@@ -5076,6 +5076,11 @@ HIDDEN[("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation")
     "the outgoing radiation is the time reverse of the incoming history embedded")
 
 
+FLAT[("hellaby_kruskal", "comoving", "neck")] = lambda: one(
+    "hellaby_kruskal", lambda m: along(0.0, -m.reach("comoving", "r")[1], m.reach("comoving", "r")[1]))
+FLAT_METRICS.add("hellaby_kruskal")
+
+
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)

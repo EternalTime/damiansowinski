@@ -22376,6 +22376,39 @@ import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_embedding(sys.modules[__name__])
 
 
+def hellaby_kruskal(ck, src):
+    """The equatorial surface at maximum expansion in the sourced symmetric example."""
+    functions = {"R": "2*(1+r**2/10)**3*exp(r**2)",
+                 "f": "-1+r**2*hk_h(r**2)"}
+    sl = Slice(src, "hellaby_kruskal", "comoving", "r", "\\phi",
+               {"t": "0", **EQUATOR}, functions=functions)
+    top = 0.9
+    radius = 2 * (1 + top**2 / 10)**3 * math.exp(top**2)
+    size = 2 * radius
+    pieces = [Piece(name, cls, sl, 0.0, top, 0.0, sense,
+                    (("throat", "the neck, $r=0$"), ("edge", "the surface continues outward")),
+                    [(0.0, "throat", None), (top, mark, None)], size)
+              for name, cls, sense, mark in (("right", "sheet", 1, "r"),
+                                               ("left", "sheet2", -1, "r2"))]
+    surface = Surface(pieces)
+    for p in pieces:
+        ck.isometry("Dust wormhole " + p.id, p)
+    ck.join("Dust wormhole neck", pieces[0], 0.0, pieces[1], 0.0)
+    fig = figure_of([surface], {"sheet": "cover", "sheet2": "cover"}, size)
+    fig.legend("fill", "cover", "the two dust regions")
+    fig.legend("line", "throat", "the neck, $r=0$")
+    fig.legend("line", "r", "$r=0.9M_0$")
+    fig.legend("line", "r2", "$r=-0.9M_0$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("neck", "The neck", "$M_0$", [surface], fig.done(),
+                 settings="$M_1M_0^2=1/10$ and $r_s/M_0^2=1$; lengths in units of $M_0$.")]
+
+
+DRAWN["hellaby_kruskal"] = hellaby_kruskal
+CAPTIONS[("hellaby_kruskal", "neck")] = [
+    "The equatorial surface through the neck at maximum expansion ($t=0$, $\\theta=\\pi/2$)."]
+
+
 if __name__ == "__main__":
     sys.exit(main())
 
