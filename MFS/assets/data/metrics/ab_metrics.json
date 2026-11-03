@@ -76,6 +76,11 @@
       "id": "ghost_neutrinos",
       "kind": "locally_same",
       "text": "Taub's plane symmetric vacuum, the A III metric in other coordinates, carrying a current of neutrinos with no energy or momentum, as Talmadge M. Davis and John R. Ray found in 1974 [davis1974]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "family",
+      "text": "Static cylinders with a cosmological constant. Their member with $\\sigma = 0$ generalises B III to $\\Lambda \\neq 0$, as Jerry Griffiths and Jiří Podolský found [griffiths2010linettian]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "schulman1971",
     "gott1974",
     "kruskal1960",
-    "davis1974"
+    "davis1974",
+    "griffiths2010linettian"
   ],
   "coordinates": [
     {

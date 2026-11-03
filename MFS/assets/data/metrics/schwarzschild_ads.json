@@ -93,6 +93,11 @@
       "id": "york_equilibrium",
       "kind": "family",
       "text": "A black hole in equilibrium with a scalar field inside a reflecting wall, with first order back reaction [hochberg1994potential, york1985equilibrium]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "family",
+      "text": "A line of mass in anti-de Sitter space. Far from the axis its static field has the leading terms of this black hole written in horospherical coordinates [zofka2008]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "shenker2014",
     "kraus1999",
     "hochberg1994potential",
-    "york1985equilibrium"
+    "york1985equilibrium",
+    "zofka2008"
   ],
   "coordinates": [
     {

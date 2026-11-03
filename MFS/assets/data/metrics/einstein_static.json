@@ -105,6 +105,11 @@
       "id": "hosotani_universe",
       "kind": "conformal",
       "text": "A closed universe filled with a homogeneous Yang-Mills magnetic field. Dividing its metric by the squared spatial radius makes it conformal to a region of Einstein's static universe [gibbons1994ym]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "family",
+      "text": "Static fields around a line of mass with $\\Lambda > 0$. Jerry Griffiths and Jiří Podolský matched one across a torus to a region of this universe, whose dust takes the place of one singular axis [griffiths2010linettian]."
     }
   ],
   "references": [
@@ -134,7 +139,8 @@
     "lachiezerey1995",
     "luminet2003",
     "vaidya1977kerr",
-    "gibbons1994ym"
+    "gibbons1994ym",
+    "griffiths2010linettian"
   ],
   "coordinates": [
     {

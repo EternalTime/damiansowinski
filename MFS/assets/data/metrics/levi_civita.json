@@ -99,6 +99,11 @@
       "id": "superconducting_string",
       "kind": "generalisation",
       "text": "A magnetic field surrounds a current carrying string and contributes to its gravity [sen1999superconducting]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "generalisation",
+      "text": "The same line of mass in a universe with a cosmological constant, the static field Bernard Linet and Qingjun Tian found in 1986. With $\\Lambda < 0$ it approaches anti-de Sitter space far from the axis [zofka2008, dasilva2000]."
     }
   ],
   "references": [
@@ -136,7 +141,9 @@
     "martins1996",
     "astorino2022swirling",
     "davis1974",
-    "sen1999superconducting"
+    "sen1999superconducting",
+    "zofka2008",
+    "dasilva2000"
   ],
   "coordinates": [
     {

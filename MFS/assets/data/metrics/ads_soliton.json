@@ -61,6 +61,11 @@
       "id": "early_braneworlds",
       "kind": "family",
       "text": "The Squires family contains a regular axis solution with the geometry of the five dimensional soliton [bannister1987]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "generalisation",
+      "text": "Static fields around a line of mass with a cosmological constant. In four dimensions the soliton is the member with $\\Lambda < 0$ and $\\sigma = 0$, William Bonnor's second anti-de Sitter universe [sarioglu2009comment, bonnor2008second]."
     }
   ],
   "references": [
@@ -84,7 +89,9 @@
     "nishioka2010",
     "hawking1983",
     "bah2021",
-    "bannister1987"
+    "bannister1987",
+    "sarioglu2009comment",
+    "bonnor2008second"
   ],
   "coordinates": [
     {

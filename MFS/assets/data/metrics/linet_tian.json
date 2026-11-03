@@ -2883,7 +2883,7 @@
           "description": "An area, close to $y$ near the axis, with $dY/dy = (1 + \\Lambda Y)^2$; for $\\Lambda > 0$ it grows without bound as $y \\to 1/\\Lambda$"
         }
       ],
-      "convention": "We use Gleiser's coordinates $(t, y, z, \\phi)$, with $t$ carrying dimensions of time, $z$ a length and $\\Lambda y = \\sin^2(\\sqrt{3\\Lambda}\\,\\rho/2)$, where $\\rho$ is the proper distance from the axis, so that $t$, $z$ and $\\phi/C$ are those of the proper distance charts multiplied by constants. We write the metric in $Y = y/(1 - \\Lambda y)$ and evaluate its powers with $Y$ in a fixed unit of area, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use Gleiser's coordinates $(t, y, z, \\phi)$, with $t$ carrying dimensions of time, $z$ a length and $\\Lambda y = \\sin^2(\\sqrt{3\\Lambda}\\,\\rho/2)$, where $\\rho$ is the proper distance from the axis, so that $t$, $z$, and $\\phi/C$ are those of the proper distance charts multiplied by constants. We write the metric in $Y = y/(1 - \\Lambda y)$ and evaluate its powers with $Y$ in a fixed unit of area, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = \\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}dy^2 + \\left(1 + \\Lambda Y\\right)^{-2/3}\\left(-Y^{p_0}c^2dt^2 + Y^{p_3}dz^2 + \\dfrac{Y^{p_2}}{C^2}d\\phi^2\\right)",
       "metric_components": [
         {
@@ -4277,7 +4277,7 @@
           "description": "Dimensionless, rising from $0$ on the axis to $1$ far from it, with $dh/dr = 3(1 - h)/r$"
         }
       ],
-      "convention": "We use the coordinates $(t, r, z, \\phi)$ of Sarıoğlu and Tekin, with $t$ carrying dimensions of time and $r$ and $z$ lengths, where $r = r_0\\cosh^{2/3}(3\\rho/2L)$ with $\\rho$ the proper distance from the axis, so that $t$, $z$ and $\\phi/C$ are those of the cylindrical chart multiplied by constants. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use the coordinates $(t, r, z, \\phi)$ of Sarıoğlu and Tekin, with $t$ carrying dimensions of time and $r$ and $z$ lengths, where $r = r_0\\cosh^{2/3}(3\\rho/2L)$ with $\\rho$ the proper distance from the axis, so that $t$, $z$, and $\\phi/C$ are those of the cylindrical chart multiplied by constants. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-h^{p_0}c^2dt^2 + h^{p_3}dz^2 + \\dfrac{h^{p_2}}{C^2}d\\phi^2\\right) + \\dfrac{L^2}{r^2h}dr^2",
       "metric_components": [
         {

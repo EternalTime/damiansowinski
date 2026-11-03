@@ -103,6 +103,11 @@
       "id": "holographic_superconductor",
       "kind": "family",
       "text": "The flat black hole given a charge and a charged scalar condensate below a critical temperature, the holographic superconductor, whose inside has no inner horizon and ends at a spacelike Kasner singularity [hartnoll2021diving]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "family",
+      "text": "Static fields around a line of mass with a cosmological constant. With $\\sigma = 1/2$ and $\\Lambda < 0$ the field is the flat hole's black string outside its horizon [zofka2008, lemos1995]."
     }
   ],
   "references": [
@@ -135,7 +140,8 @@
     "maldacena1998",
     "kraus1999",
     "gnecchi2014",
-    "hartnoll2021diving"
+    "hartnoll2021diving",
+    "zofka2008"
   ],
   "coordinates": [
     {

@@ -187,6 +187,11 @@
       "id": "cahen_wallach",
       "kind": "family",
       "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "family",
+      "text": "A line of mass in anti-de Sitter space. Its static field approaches this space far from the axis, in horospherical coordinates [dasilva2000, zofka2008]."
     }
   ],
   "references": [
@@ -243,7 +248,9 @@
     "blau2002penrose",
     "berenstein2002",
     "maldacena2018",
-    "cahen1970"
+    "cahen1970",
+    "dasilva2000",
+    "zofka2008"
   ],
   "coordinates": [
     {

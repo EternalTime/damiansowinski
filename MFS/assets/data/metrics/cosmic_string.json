@@ -93,6 +93,11 @@
       "id": "string_cylindrical_waves",
       "kind": "limit_source",
       "text": "A limit of cylindrical waves around a string reaches this conical exterior: take $p\\to\\infty$ with $\\alpha p=k>1$ and scale time and radius by $k$ [gurtug_sakalli2003]."
+    },
+    {
+      "id": "linet_tian",
+      "kind": "generalisation",
+      "text": "A string in a universe with a cosmological constant. Bernard Linet and Qingjun Tian each found the static cylindrical vacuum with $\\Lambda$ in 1986 to describe the field outside one [zofka2008]."
     }
   ],
   "references": [
@@ -123,7 +128,8 @@
     "gleiser1989splitting",
     "podolsky2000snapping",
     "sen1999superconducting",
-    "gurtug_sakalli2003"
+    "gurtug_sakalli2003",
+    "zofka2008"
   ],
   "coordinates": [
     {
