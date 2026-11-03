@@ -1589,7 +1589,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "12a49c29a1c8a1ee",
+    "version": "d5fd26c21962c0ca",
     "diagrams": "c8516d16841cd13d",
     "conformal": "d1d7f8cc8abd9bb8",
     "embedding": "13f67fcc322f9144",
@@ -1980,7 +1980,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3c16a742317e3bb1",
+    "version": "7572b3fb1ad0349c",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704",
@@ -2743,6 +2743,35 @@
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3",
     "curvature": "42c25927dc8304f6"
+  },
+  {
+    "id": "hellaby_kruskal",
+    "name": "Hellaby's Kruskal Universe",
+    "tags": [
+      "dust",
+      "inhomogeneous",
+      "spherically symmetric",
+      "cosmology",
+      "comoving",
+      "time-dependent",
+      "wormhole",
+      "throat",
+      "black hole",
+      "white hole",
+      "curvature singularity",
+      "horizon",
+      "apparent horizon",
+      "time symmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "dc371dc6c5ff9cb7",
+    "diagrams": "0741877f26bd47b5",
+    "embedding": "4698bfd7dbe4ee34",
+    "curvature": "cc8c1ecf6970da50"
   },
   {
     "id": "hiscock",
@@ -4872,7 +4901,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0cef73f2b2a85b46",
+    "version": "a53c2e16061c5122",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6",
@@ -5708,7 +5737,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "417998a8063ae1fc",
+    "version": "eae46f32420e2875",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -5870,7 +5899,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3d81f8405ae166de",
+    "version": "c32013e7c44fff96",
     "diagrams": "1bcf1f96aa6c51fa",
     "conformal": "1d994db28644e6d6",
     "embedding": "74242cc150b7e4a7"
@@ -6399,7 +6428,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "124a2a2b08168024",
+    "version": "30df2c1cf37b61cf",
     "diagrams": "99c54951a880e0fc",
     "embedding": "afe08c1a64cd8527"
   },
@@ -6651,7 +6680,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "96a7f9bb716ddced",
+    "version": "27ae6fbb06fac6c9",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154",
     "curvature": "6ccad476d51a8728"
