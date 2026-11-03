@@ -439,6 +439,12 @@ REGIONS = {
 WHOLE = {("brane_wall_universe", "gaussian_normal")}
 
 OVERRULED = {
+    ("brown_teitelboim", "Einstein space"): (
+        False, "the de Sitter constants differ across the membrane, which also carries surface tension"),
+    ("brown_teitelboim", "stationary"): (
+        False, "the membrane moves through both static de Sitter regions"),
+    ("brown_teitelboim", "static"): (
+        False, "the membrane moves through both static de Sitter regions"),
     ("quevedo_mashhoon", "vacuum"): (
         True, "the displayed functions are held free for the tensor formulas; their sourced definitions "
               "give the vacuum solution of Boshkayev, Quevedo and Ruffini, arXiv:1207.3043"),
