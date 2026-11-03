@@ -4523,6 +4523,12 @@ class Slices(unittest.TestCase):
             level = 1.0 if "/cosmic/" in key else -1.0
             return (lambda X: level), list(self.reach(surface))
 
+        if key.startswith("linear_dilaton/"):
+            # The embedded moment has tau=1/q and eta=0 at q=1.
+            _, hi = self.reach(surface)
+            level = 1.0 if "/cosmic/" in key else 0.0
+            return (lambda X: level), [-hi, hi]
+
         if key.startswith("electron_bubble/"):
             # At the shell r0=m=1, the two clocks agree at zero.
             # Its axial intersection is one pole in r or both poles in Cartesian z.

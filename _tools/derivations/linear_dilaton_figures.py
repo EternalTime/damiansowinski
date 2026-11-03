@@ -20,7 +20,7 @@ def embedding_views(ck, src, em):
     ck.isometry("linear dilaton: spatial plane", plane)
     ck.radius("linear dilaton: radius", plane, lambda x: x, 5.0)
     ck.form("linear dilaton: height", plane, lambda x: 0*x, 5.0)
-    surface = em.Surface([plane], label=r"$\tau=1/q$", time=1)
+    surface = em.Surface([plane])
     fig = em.figure_of([surface], {"sheet": "cover"}, 5.0, em.FLAT_CAMERA)
     fig.legend("fill", "cover", r"$\tau=1/q$, $z=0$")
     fig.legend("line", "r", "Circles of constant radius")
