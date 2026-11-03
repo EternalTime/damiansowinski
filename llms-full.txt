@@ -657,7 +657,7 @@ Taub-NUT with an electric charge, the solution of the Einstein-Maxwell equations
 A spherical charged membrane joins two regions of de Sitter space with different cosmological constants.
 
 - id: `brown_teitelboim`
-- tags: bubble, domain wall, thin shell, matched solution, junction conditions, cosmology, de Sitter, positive cosmological constant, cosmological constant, vacuum energy, spherically symmetric, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, stationary, static
+- tags: bubble, domain wall, thin shell, matched solution, junction conditions, cosmology, de Sitter, positive cosmological constant, cosmological constant, vacuum energy, spherically symmetric, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, conformally flat
 - signature: (-,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/brown_teitelboim.json
 - chart Static, Inside the Membrane: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_i r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_i r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$

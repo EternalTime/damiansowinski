@@ -1170,12 +1170,9 @@
       "Einstein equations",
       "four-dimensional",
       "idealized model",
-      "Einstein space",
-      "conformally flat",
-      "stationary",
-      "static"
+      "conformally flat"
     ],
-    "version": "b40b824d4e076340",
+    "version": "71648b1f80cca573",
     "diagrams": "70e45ce66191ef05",
     "conformal": "f384c26e7cd624d7",
     "embedding": "2f2e71af6bcd66a1",
