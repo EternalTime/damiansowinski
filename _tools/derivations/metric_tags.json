@@ -20061,6 +20061,38 @@
   ],
   "sphere": null
  },
+ "york_equilibrium/areal": {
+  "stamp": "63a9d5dacc22649c",
+  "relations": {},
+  "orders": [
+   {
+    "epsilon": 1
+   },
+   1
+  ],
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "zipoy_voorhees/prolate_spheroidal": {
   "stamp": "baac952cf6009004",
   "relations": {},
