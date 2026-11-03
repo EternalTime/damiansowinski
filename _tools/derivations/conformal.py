@@ -1587,6 +1587,62 @@ def tower_checks(ck, name, plane, T, rmin, span):
 
 # ---------------------------------------------------------------- Schwarzschild
 
+def york_equilibrium(ck, src):
+    """The radial cavity of York's first order scalar field geometry.
+
+    On the totally geodesic equator, dr*/dr = sqrt(g_rr/-g_tt), with r* = 0
+    at the wall. The horizon sends r* to minus infinity. Compactification by
+    arctangents of t - r* and t + r* gives the triangle between the horizon and
+    the wall. The cavity chart supplies no continuation through the horizon.
+    """
+    params = {"M": 1, "R": 50, "epsilon": sp.Rational(1, 10000)}
+    plane = Plane(src, "york_equilibrium", "areal", ("t", "r"), EQUATOR, params, induced=True)
+    xmax, xmin = math.log(48.0), math.log(1e-6)
+
+    def slope(x, _):
+        d = math.exp(float(x))
+        g = plane.metric(0.0, 2.0 + d)
+        return [d * math.sqrt(float(-g[2] / g[0]))]
+
+    sol = solve_ivp(slope, (xmax, xmin), [0.0], method="DOP853", rtol=1e-11, atol=1e-12,
+                    dense_output=True)
+    if not sol.success:
+        raise RuntimeError("York cavity tortoise integral failed: " + sol.message)
+
+    def star(r):
+        r = np.asarray(r, dtype=float)
+        return sol.sol(np.log(np.maximum(r - 2, 1e-6)))[0]
+
+    def fmap(t, r):
+        return mink_pq(t, star(r), 50.0)
+
+    ck.chart("York scalar radiation cavity", plane, fmap, ck.uniform(-100, 100),
+             ck.uniform(2.05, 49.95), lambda t, r: (1, 0))
+    ck.limit("York cavity: the wall has zero tortoise coordinate", star(50.0), [0.0], 1e-9)
+    box = [-PI - 0.25, 0.25, -PI - 0.25, PI + 0.25]
+    triangle = [[-PI, 0], [0, -PI], [0, PI]]
+    v = View("areal", "Areal radius", box, "areal")
+    v.fill("region", triangle)
+    v.fill("cover", triangle)
+    grid(v, "r", lambda r, t: fmap(t, r), (3, 5, 10, 20, 40), S_ALL)
+    radii = 2 + np.exp(np.linspace(math.log(1e-6), xmax, 500))
+    grid(v, "t", fmap, (-100, -50, 0, 50, 100), radii)
+    v.line("horizon", [[[-PI, 0], [0, PI]], [[-PI, 0], [0, -PI]]])
+    v.line("surface", [[[0, -PI], [0, PI]]])
+    v.label_xt([-HALF, HALF], "$r = 2M$", "br", dx=-4, dy=-4)
+    v.label_xt([0, 0], "$r = R$", "l", dx=5)
+    v.legend("cover", "the radiation cavity outside the horizon")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$t$ constant")
+    v.legend("horizon", "the horizon $r = 2M$")
+    v.legend("surface", "the reflecting wall $r = R$")
+    moment = slices.moments("york_equilibrium")[0]
+    p, q = fmap(np.zeros_like(radii), radii)
+    v.slice(moment, [(p, q)])
+    v.set(settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.")
+    return [v]
+
+
 def schwarzschild(ck, src):
     """Kruskal and Szekeres's extension, compactified by p = arctan U, q = arctan V.
 
@@ -27414,6 +27470,11 @@ KISELEV_STATIC_CAPTION = [
 ]
 
 CAPTIONS = {
+    ("york_equilibrium", "areal"): [
+        "The radial plane of the scalar radiation cavity, each point a 2-sphere. "
+        "Light travels at $45°$ between the horizon and the reflecting wall. "
+        "The tortoise coordinate is integrated from the first order metric and vanishes at the wall.",
+    ],
     **{("static_five_soliton",s): [
         r"The radial quotient ($\theta=\pi/2$, $\phi=y=0$), with a visible timelike singularity on its left boundary."
     ] for s in ("spherical","isotropic","lake")},
