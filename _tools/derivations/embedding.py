@@ -22401,6 +22401,42 @@ CAPTIONS[("myers_compactified", "equator")] = [
     "The equatorial reflection plane at $t = 0$ and $z = 0$ ($\\mu = 1$, $L = 4\\sqrt{\\mu}$)."
 ]
 
+
+def ori_piran(ck, src):
+    """The equatorial plane of the comoving chart at t = -ell, for the relativistic Larson-Penston
+    solution at k = 1/100, from r = 1e-6 ell to r = 0.4 ell.
+
+    The circle of r has radius rho = r S(z) and the distance out to the next is e^(omega/2) dr, so
+    dz/dr = sqrt(e^omega - (d(rS)/dr)^2), which is real on the whole slice before the singularity:
+    there e^(-omega) (d(rS)/dr)^2 = 1 - 2m/R + e^(-sigma) (dR/dt)^2 stays below 1, from 1 at the
+    centre to 0.940 at r = 0.4 ell. The slice closes on the regular centre as rho falls as r^(1 - 2/(3(1+k))).
+    Circles of constant r mark the sonic point and the past light cone of the singularity where they
+    cross it, each named by its label.
+    """
+    sl = Slice(src, "ori_piran", "comoving", "r", "\\phi", {"t": -1, **EQUATOR}, {}, functions=nr.OP_COMOVING)
+    lo, top, size = 1e-6, 0.4, 5.0
+    piece = Piece("before", "sheet", sl, lo, top, 0.0, 1,
+                  (("edge", "the surface closes inward on the regular centre"),
+                   ("edge", "the slice continues outward")),
+                  [(nr.OP_SONIC, "r", None), (nr.OP_NULL, "r", None), (top, "r", None)], size)
+    surface = Surface([piece])
+    ck.isometry("Self similar collapse before the singularity", piece)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *piece.at(nr.OP_SONIC), "$V_z^2 = k$")
+    ring_label(fig, [0, 0, 0], *piece.at(nr.OP_NULL), "$V_z^2 = 1$")
+    fig.legend("fill", "cover", "the equatorial plane at $t = -\\ell$")
+    fig.legend("line", "r", "$r$ constant")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("before", "Before the Singularity", "$\\ell$", [surface], fig.done(),
+                 settings="$\\ell = 1$, $t = -\\ell$.", input=nr.OP_INPUT)]
+
+
+DRAWN["ori_piran"] = ori_piran
+CAPTIONS[("ori_piran", "before")] = [
+    "The equatorial plane ($\\theta = \\pi/2$) at $t = -\\ell$, from the regular centre to $r = 0.4\\ell$, "
+    "with rings at the sonic point and at the past light cone of the singularity."
+]
+
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_embedding(sys.modules[__name__])
 import charged_three_dimensions_drawings as _charged_three_dimensions_drawings
