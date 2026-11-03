@@ -6676,7 +6676,7 @@ def _lb_outside_caption(n, last):
 
 LB_CAPTIONS = {
     ("brown_teitelboim", "radius_inside", "radial"): [
-        "The membrane radius against its proper time ($\\theta = \\pi/2$, $\\phi = 0$), with the interior."
+        "The membrane radius against its proper time ($\\theta = \\pi/2$, $\\phi = 0$), with the light cones and rays of the region it encloses."
     ],
     ("stiff_fluid_universes", "areal", "tx"): [
         "Light rays across the symmetry planes ($a=b=1$, $\\ell=1$, $y=z=0$). The fluid moves toward decreasing $x$; its world lines obey $x=\\chi-t^2/2$. The singularity is $t=0$.",
