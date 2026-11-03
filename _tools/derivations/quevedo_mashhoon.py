@@ -67,14 +67,73 @@ def chart_spec(system):
                      sp.Derivative(fn, (u, 2)), sp.Derivative(fn, u, v),
                      sp.Derivative(fn, (v, 2))])
     lead.extend([u, v, probe.parameters['sigma'], probe.parameters['M'], probe.parameters['a']])
-    return {'metric_id': METRIC,
+    spec = {'metric_id': METRIC,
             'system': {'id': system, 'name': saved['name'], 'coords': coords,
                        'domains': saved['domains'], 'parameters': [p['symbol'] for p in saved['parameters']],
                        'line_element': saved['line_element']},
             'chart_parameters': parameters, 'chart_line_element': saved['line_element'],
             'printer': {'lead': lead, 'factors': lead},
-            'pretty': lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine='exp'),
-            'check': lambda chart: check_chart(chart, system)}
+            'pretty': lambda value: sp.powsimp(sp.factor(sp.sympify(value)), combine='exp')}
+
+    def check(chart):
+        check_chart(chart, system)
+        value, text = compact_kretschmann(chart)
+        # The contraction is exact, kept as products of six-index-pair blocks
+        # so that no massive expanded numerator has to be simplified.
+        chart.geo.kretschmann = lambda: value
+        spec['kretschmann'] = text
+
+    spec['check'] = check
+    spec['scalar_check'] = check_scalar_at_points
+    return spec
+
+
+def compact_kretschmann(chart):
+    """The Riemann contraction as 4 tr((G R)^2) on antisymmetric pairs."""
+    import sympy as sp
+    from itertools import combinations
+    pairs = list(combinations(range(4), 2))
+    lower, inverse = chart.geo.riemann_llll(), chart.geo.ginv
+    bivector = [[inverse[a, c] * inverse[b, d] - inverse[a, d] * inverse[b, c]
+                 for c, d in pairs] for a, b in pairs]
+    components = [[lower[a][b][c][d] for c, d in pairs] for a, b in pairs]
+    blocks, rendered = {}, {}
+    for i in range(6):
+        for j in range(6):
+            terms = [(bivector[i][k], components[k][j]) for k in range(6)
+                     if bivector[i][k] != 0 and components[k][j] != 0]
+            if terms:
+                blocks[i, j] = sp.Add(*(a*b for a, b in terms), evaluate=False)
+                rendered[i, j] = ' + '.join('\\left(' + chart.printer(a) + '\\right)'
+                                           '\\left(' + chart.printer(b) + '\\right)' for a, b in terms)
+    squares = [(blocks[i, i], rendered[i, i]) for i in range(6) if (i, i) in blocks]
+    cross = [(blocks[i, j], blocks[j, i], rendered[i, j], rendered[j, i])
+             for i in range(6) for j in range(i + 1, 6) if (i, j) in blocks and (j, i) in blocks]
+    value = 4 * (sp.Add(*(a*a for a, _ in squares), evaluate=False)
+                 + 2*sp.Add(*(a*b for a, b, _, _ in cross), evaluate=False))
+    square_text = ' + '.join('\\left(' + text + '\\right)^2' for _, text in squares) or '0'
+    cross_text = ' + '.join('\\left(' + a + '\\right)\\left(' + b + '\\right)'
+                            for _, _, a, b in cross) or '0'
+    return value, '4\\left(' + square_text + ' + 2\\left(' + cross_text + '\\right)\\right)'
+
+
+def check_scalar_at_points(chart, field, difference):
+    """Compare the compact printed contraction at two numerical points."""
+    import random
+    import sympy as sp
+    from sympy.core.function import AppliedUndef
+    if field != 'kretschmann':
+        raise AssertionError(field)
+    atoms = difference.atoms(sp.Derivative) | difference.atoms(AppliedUndef) | difference.free_symbols
+    rng = random.Random(1985)
+    for _ in range(2):
+        values = {atom: sp.Rational(rng.randint(20, 80), 17)
+                  for atom in sorted(atoms, key=sp.default_sort_key)}
+        values[chart.symbols[1]] = sp.Rational(13, 5)
+        values[chart.symbols[2]] = sp.Rational(2, 5)
+        error = complex(difference.xreplace(values).evalf(40))
+        if abs(error) > 1e-20:
+            raise AssertionError(f'{METRIC}: compact Kretschmann contraction differs by {error}')
 
 
 def check_chart(chart, system):

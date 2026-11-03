@@ -31,3 +31,10 @@ The drawings select $M=1$, $a=2M/5$, $q=2/5$ and $\delta=1$.
 Both spacetime views divide out the axial circles on the equator, so their null curves project rays of zero angular momentum.
 The embedding takes the equatorial slice of constant $t$ from $r=5M/2$ to $r=7M$.
 The embedding defect is positive at representative points throughout that interval and the generator checks the full surface against the stored metric.
+
+## Compact scalar
+
+The six ordered pairs $a<b$ carry the Riemann tensor as a symmetric matrix $\mathsf R$ and the inverse metric induces $\mathsf G^{ab,cd}=g^{ac}g^{bd}-g^{ad}g^{bc}$.
+The stored scalar is $K=4\operatorname{tr}((\mathsf G\mathsf R)^2)$, printed as products of the nonzero matrix blocks to avoid expanding a large numerator.
+The printer compares this expression at points with the same exact contraction before writing it.
+A Schwarzschild control reproduced $48M^2/r^6$ at two points and confirmed that the printed expression reads back.
