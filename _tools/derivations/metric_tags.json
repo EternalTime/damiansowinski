@@ -11189,6 +11189,48 @@
   "killing": [],
   "sphere": null
  },
+ "mallett_radiating_star/eddington_finkelstein_ingoing": {
+  "stamp": "6a5d53c9238fed20",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "mallett_radiating_star/eddington_finkelstein_outgoing": {
+  "stamp": "df3bc781801d29d9",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "mass_inflation/advanced": {
   "stamp": "e96f7684d28b6d49",
   "relations": {},
