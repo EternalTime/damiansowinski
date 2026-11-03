@@ -32278,5 +32278,8 @@ import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
 _stringy_cosmic_strings_drawings.register_conformal(sys.modules[__name__])
 
 
+import klebanov_witten_drawings as _klebanov_witten_drawings
+_klebanov_witten_drawings.register_conformal(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

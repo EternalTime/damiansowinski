@@ -5122,6 +5122,8 @@ FLAT_METRICS.add("hellaby_kruskal")
 import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
 _stringy_cosmic_strings_drawings.register_slices(sys.modules[__name__])
 
+import klebanov_witten_drawings as _klebanov_witten_drawings
+_klebanov_witten_drawings.register_slices(sys.modules[__name__])
 
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
