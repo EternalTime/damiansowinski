@@ -2629,9 +2629,9 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
 
 
 DECLARED_FUNCTIONS.update(skyrme_hole.declared_functions())
-SKYRME_FUNCTIONS = {"N": "skyrme_N(r)", "C": "skyrme_C(r)"}
+SKYRME_FUNCTIONS = {"N": "skyrme_N(r)", "C": "skyrme_C(r)", "f": "skyrme_f(r)", "m": "skyrme_m(r)"}
 SKYRME_INPUT = ("The massless pion solution at $\\alpha = 0.01$ and $aF_\\pi r_h = 0.1$, "
-                "with $aF_\\pi = 1$ in the units of the drawing.")
+                "with $G = aF_\\pi = 1$ in the units of the drawing.")
 
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
 # potential Neugebauer, Kleinwaechter and Meinel plot, in units of its coordinate radius rho_0.

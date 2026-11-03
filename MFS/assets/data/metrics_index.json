@@ -303,7 +303,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "49cb1b3fdf7bc30c",
+    "version": "8391df93f0e75fe4",
     "diagrams": "04a29fa582f0c7a2",
     "conformal": "acaf9c7da5b177a4",
     "embedding": "b0d9da588a8a0e63",
@@ -1632,7 +1632,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f67b7bf6f0315bf1",
+    "version": "cd8c6809489e34f6",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -5598,7 +5598,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "65a9e159eeecb92d",
+    "version": "c8f9637ee081afbc",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -5901,6 +5901,26 @@
     "conformal": "09d52a3611b8d1c6",
     "embedding": "044c6a18e30bb001",
     "curvature": "6af7b095e9a8141d"
+  },
+  {
+    "id": "skyrmion_hair",
+    "name": "Skyrmion Black Hole",
+    "tags": [
+      "black hole",
+      "soliton",
+      "numerical solution",
+      "asymptotically flat",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "four-dimensional",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "2b4655e50150ba36",
+    "diagrams": "7015098d9e985a01",
+    "embedding": "ca6b7b34a244d7d2",
+    "curvature": "591671a95f796521"
   },
   {
     "id": "small_universes",

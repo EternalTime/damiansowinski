@@ -18889,7 +18889,7 @@ def skyrmion_hair(ck, src):
              "ricci_sentences": [[0, 1]],
              "per_scalar": scalar_clips("$K/(aF_\\pi)^4$ is logarithmic from $10^{-5}$ to $10^6$.",
                                         "$R/(aF_\\pi)^2$ is logarithmic from $10^{-4}$ to $10^{-1}$."),
-             "settings": "$aF_\\pi=1$, $\\alpha=0.01$ and $aF_\\pi r_h=0.1$.",
+             "settings": "$G=aF_\\pi=1$, $\\alpha=0.01$, and $aF_\\pi r_h=0.1$.",
              "input": "The numerical massless pion solution on the larger $f_h$ branch.",
              "clip": "Both panels use logarithmic scales; each curve lies within its panel."}]
 

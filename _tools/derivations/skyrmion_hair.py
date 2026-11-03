@@ -77,7 +77,7 @@ def jet(x):
     x = np.asarray(x, dtype=float)
     shape = x.shape
     values = np.atleast_1d(x).ravel()
-    result = {key: np.full(values.shape, np.nan) for key in ('N', 'dN', 'd2N', 'C', 'dC', 'd2C')}
+    result = {key: np.full(values.shape, np.nan) for key in ('N', 'dN', 'd2N', 'C', 'dC', 'd2C', 'f', 'df', 'd2f', 'm', 'dm', 'd2m')}
     valid = (values >= HORIZON) & (values <= FAR)
     if not np.any(valid):
         return {key: value.reshape(shape) for key, value in result.items()}
@@ -99,7 +99,8 @@ def jet(x):
     q_p = ALPHA/4*((u_p/xx - u/xx**2)*p**2 + 2*u*p*p_p/xx)
     n = np.exp(logn - logn_far)
     data = {'N': n, 'dN': n*q, 'd2N': n*(q*q + q_p),
-            'C': c, 'dC': c_p, 'd2C': c_pp}
+            'C': c, 'dC': c_p, 'd2C': c_pp, 'f': f, 'df': p, 'd2f': p_p,
+            'm': mu, 'dm': mu_p, 'd2m': mu_pp}
     # The horizon itself is the exact zero; the nearby lapse uses its limiting value.
     data['C'] = np.where(values[valid] == HORIZON, 0.0, data['C'])
     for key in result:
@@ -126,7 +127,7 @@ def declared_functions():
                                                float(self._imp_(float(self.args[0]))), prec)})
 
     result = {}
-    for key in ('N', 'C'):
+    for key in ('N', 'C', 'f', 'm'):
         second = make('skyrme_d2' + key, 'd2' + key)
         first = make('skyrme_d' + key, 'd' + key, second)
         base = make('skyrme_' + key, key, first)

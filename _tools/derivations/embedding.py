@@ -22173,7 +22173,7 @@ def skyrmion_hair(ck, src):
     fig.legend("line", "r", "$aF_\\pi r$ constant")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("exterior", "Exterior", "$1/(aF_\\pi)$", [surface], fig.done(),
-                 settings="$aF_\\pi=1$; $\\alpha=0.01$ and $aF_\\pi r_h=0.1$.",
+                 settings="$G=aF_\\pi=1$; $\\alpha=0.01$ and $aF_\\pi r_h=0.1$.",
                  input="The numerical massless pion solution on the larger $f_h$ branch.")]
 
 

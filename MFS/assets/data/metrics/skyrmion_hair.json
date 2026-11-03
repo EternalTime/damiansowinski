@@ -2,7 +2,7 @@
   "id": "skyrmion_hair",
   "name": "Black Hole with Skyrmion Hair",
   "short_name": "Skyrmion Black Hole",
-  "description": "A static spherical black hole surrounded by a self-gravitating Skyrme field, with a fractional baryon number outside its horizon.",
+  "description": "A static spherical black hole surrounded by a Skyrme field held by its gravity, with a fractional baryon number outside its horizon.",
   "tags": [
     "black hole",
     "soliton",
