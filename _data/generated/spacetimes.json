@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 245,
+  "count": 246,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -15996,6 +15996,11 @@
           "id": "brown_teitelboim",
           "kind": "family",
           "text": "A charged membrane separates de Sitter regions with different four form flux and cosmological constant [hirano2018bt]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "family",
+          "text": "Another tunnelling described by a Euclidean solution round in four dimensions, a closed universe budding off flat space, which Steven B. Giddings and Andrew Strominger found with an axion's field in 1988 [giddings1988]. Sidney Coleman argued later that year that such wormholes make the cosmological constant vanish [coleman1988]."
         }
       ],
       "references": [
@@ -16021,7 +16026,9 @@
         "gott1998",
         "vilenkin1982",
         "brown2007hm",
-        "hirano2018bt"
+        "hirano2018bt",
+        "giddings1988",
+        "coleman1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -22503,6 +22510,11 @@
           "id": "hellaby_kruskal",
           "kind": "family",
           "text": "A neck joining two regions of a universe of dust, with a white hole in its past and a black hole in its future [hellaby1987]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "family",
+          "text": "Steven B. Giddings and Andrew Strominger's wormhole of 1988, two flat spaces of four dimensions with no time joined at a smallest 3-sphere that an axion's field holds open [giddings1988]. Cut at that 3-sphere, it describes a closed universe budding off flat space [giddings1988]."
         }
       ],
       "references": [
@@ -22540,7 +22552,8 @@
         "maldacena2018",
         "bowen1980",
         "cook2000",
-        "hellaby1987"
+        "hellaby1987",
+        "giddings1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -24037,6 +24050,11 @@
           "id": "penney_scalar",
           "kind": "family",
           "text": "With an electric charge, the scalar field of negative energy gives the extended Penney solution, which holds traversable wormholes and cold black holes [bronnikov2024]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "family",
+          "text": "A wormhole with no time in it, Steven B. Giddings and Andrew Strominger's of 1988: four dimensions of space whose two flat regions meet at a 3-sphere that an axion's field holds open [giddings1988]. A slice through its throat levels off at a finite height, about $1.311$ times the throat's radius."
         }
       ],
       "references": [
@@ -24063,7 +24081,8 @@
         "caldwell2003",
         "kodama1978preprint",
         "kodama1978",
-        "bronnikov2024"
+        "bronnikov2024",
+        "giddings1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -26772,6 +26791,11 @@
           "id": "hosotani_universe",
           "kind": "special_case",
           "text": "Hosotani's closed universe has $a=\\ell\\sin\\eta$ and $p=\\rho/3$, with a homogeneous magnetic $SU(2)$ gauge field as its source [gibbons1994ym]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "dual",
+          "text": "This universe, closed, with the energy of an axion's field in it and continued to imaginary time, is Steven B. Giddings and Andrew Strominger's wormhole between two flat spaces of four dimensions [giddings1988]. Cut at its throat, the wormhole continues back to this universe at its greatest radius $a$, \"created at its moment of time symmetry and maximal radius\" [giddings1988]."
         }
       ],
       "references": [
@@ -26850,7 +26874,8 @@
         "vaidya1977kerr",
         "mello2017",
         "starobinsky1980",
-        "gibbons1994ym"
+        "gibbons1994ym",
+        "giddings1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -27555,6 +27580,271 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{3}{2L^4\\left(\\mu + \\nu\\right)^3}"
+        }
+      ]
+    },
+    {
+      "id": "giddings_strominger",
+      "name": "Giddings-Strominger Wormhole",
+      "short_name": "Giddings-Strominger",
+      "description": "A space of four dimensions and no time, Steven B. Giddings and Andrew Strominger's axion wormhole of 1988: two regions of flat space joined at a throat, a 3-sphere of radius $a$ held open by the field strength of an axion. Cut in half at the throat, it describes a closed baby universe budding off flat space.",
+      "tags": [
+        "wormhole",
+        "throat",
+        "gravitational instanton",
+        "Euclidean quantum gravity",
+        "Riemannian",
+        "no time",
+        "tunnelling",
+        "quantum cosmology",
+        "closed universe",
+        "three sphere",
+        "topology",
+        "string theory",
+        "asymptotically flat",
+        "no singularity",
+        "exact solution",
+        "Einstein equations",
+        "idealized model",
+        "spherically symmetric",
+        "four-dimensional",
+        "conformally flat"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "The length $a$ is the radius of the throat and the space's only parameter. All four coordinates are spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "The wormhole with a time that Homer Ellis and Kirill Bronnikov found in 1973, its throat held open by a phantom scalar field [ellis1973, bronnikov1973]. Embedded in flat space, a slice through its throat climbs as $\\ell\\,\\mathrm{arccosh}(r/\\ell)$, with $\\ell$ its throat radius, and never levels off."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "With redshift function $\\Phi = 0$ and shape function $b = a^4/r^3$, Michael Morris and Kip Thorne's wormhole has at each moment the radial profile of this space, $dr^2/(1 - a^4/r^4)$, with 2-spheres for its 3-spheres, and the same embedding diagram. Its throat needs matter whose tension exceeds its energy density [morris1988]."
+        },
+        {
+          "id": "frw",
+          "kind": "dual",
+          "text": "The closed Friedmann universe with the energy of an axion's field in it, continued to imaginary time, is this space [giddings1988]. Cut at the throat, this space continues back to that universe at radius $a$, \"created at its moment of time symmetry and maximal radius\" [giddings1988]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "The spaces of four dimensions with no time that Stephen Hawking defined as gravitational instantons in 1977, smooth solutions of Einstein's equations without matter [hawking1977]. Giddings and Strominger drew their wormhole, which has an axion's field in it, as \"a gravitational instanton with two asymptotically Euclidean regions\" [giddings1988]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "Albert Einstein and Nathan Rosen's bridge of 1935, two sheets of space joined at a smallest sphere, which is a horizon [einstein1935]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "Another tunnelling described by a Euclidean solution round in four dimensions, a bubble of lower vacuum energy appearing in a false vacuum, which Sidney Coleman and Frank De Luccia worked out with gravity in 1980 [coleman1980]. Coleman turned to these wormholes in 1988 and argued that they make the cosmological constant vanish [coleman1988]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "A gravitational instanton given a time: Euclidean Taub-NUT space with $-c^2dt^2$ added, a static vacuum of five dimensions that four dimensions see as a magnetic monopole [sorkin1983, grossperry1983]."
+        }
+      ],
+      "references": [
+        "hebecker2018",
+        "giddings1988",
+        "witten2026",
+        "lavrelashvili1987",
+        "hawking1988",
+        "coleman1988",
+        "halliwell1989",
+        "hertog2019",
+        "loges2022",
+        "ellis1973",
+        "bronnikov1973",
+        "morris1988",
+        "hawking1977",
+        "einstein1935",
+        "coleman1980",
+        "sorkin1983",
+        "grossperry1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/giddings_strominger.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "r",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "r \\in [a, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = a \\;\\text{(the throat, where the two halves meet)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the throat, the smallest 3-sphere, a length"
+            }
+          ],
+          "convention": "We use the areal radius $r$, a length, and angles $(\\chi, \\theta, \\phi)$ on the 3-sphere of radius $r$. The chart covers one half of the wormhole, and the other half is its copy glued on at $r = a$.",
+          "line_element": "ds^2 = \\dfrac{dr^2}{1 - \\dfrac{a^4}{r^4}} + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r^4}{r^4 - a^4}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6a^4}{r^6}",
+          "kretschmann": "K = \\dfrac{60a^8}{r^{12}}"
+        },
+        {
+          "id": "proper",
+          "name": "Proper Distance (Giddings-Strominger)",
+          "coordinates": [
+            "\\rho",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\rho \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the throat, the smallest 3-sphere, a length"
+            },
+            {
+              "symbol": "r = r(\\rho)",
+              "description": "Areal radius, a length, the radius of the 3-sphere at the proper distance $\\rho$ from the throat; on the wormhole it solves $(\\partial_\\rho r)^2 = 1 - a^4/r^4$ with $r(0) = a$"
+            }
+          ],
+          "convention": "We use the proper distance $\\rho$ from the throat, a length, negative on the far half, and angles $(\\chi, \\theta, \\phi)$ on the 3-sphere of radius $r$. The radius $r$ is a free function of $\\rho$, and no component assumes the equation $(\\partial_\\rho r)^2 = 1 - a^4/r^4$, whose solution with $r(0) = a$ is the wormhole.",
+          "line_element": "ds^2 = d\\rho^2 + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6r\\,\\partial_\\rho^2 r + 6\\left(\\partial_\\rho r\\right)^2 - 6}{r^2}",
+          "kretschmann": "K = \\dfrac{12r^2\\left(\\partial_\\rho^2 r\\right)^2 - 24\\left(\\partial_\\rho r\\right)^2 + 12\\left(\\partial_\\rho r\\right)^4 + 12}{r^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal (Loges-Shiu-Sudhir)",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta = 0 \\;\\text{(the throat)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Radius of the throat, the smallest 3-sphere, a length"
+            }
+          ],
+          "convention": "We use the pure number $\\eta$, negative on the far half, and angles $(\\chi, \\theta, \\phi)$ on the 3-sphere of radius $r$, with $r^2 = a^2\\cosh(2\\eta)$.",
+          "line_element": "ds^2 = a^2\\cosh(2\\eta)\\left(d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "a^2\\cosh(2\\eta)"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2\\cosh(2\\eta)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\cosh(2\\eta)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\cosh(2\\eta)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{a^2\\cosh^3(2\\eta)}",
+          "kretschmann": "K = \\dfrac{60}{a^4\\cosh^6(2\\eta)}"
         }
       ]
     },
@@ -29640,6 +29930,11 @@
           "id": "atiyah_hitchin",
           "kind": "family",
           "text": "Atiyah and Hitchin's space of two slowly moving magnetic monopoles, smooth and hyperkähler. Far from its core it is the self dual Taub-NUT instanton with a negative mass [atiyahhitchin1985, gibbonsmanton1995]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "family",
+          "text": "A wormhole of four dimensions with no time that an axion's field holds open, which Steven B. Giddings and Andrew Strominger drew as \"a gravitational instanton with two asymptotically Euclidean regions\" [giddings1988]."
         }
       ],
       "references": [
@@ -29661,7 +29956,8 @@
         "grossperry1983",
         "vilenkin1982",
         "atiyahhitchin1985",
-        "gibbonsmanton1995"
+        "gibbonsmanton1995",
+        "giddings1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
@@ -35234,6 +35530,11 @@
           "id": "stringy_cosmic_strings",
           "kind": "family",
           "text": "A straight string whose hidden torus changes shape across space [vafa1996ftheory]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "family",
+          "text": "Another space of four dimensions with no time, Steven B. Giddings and Andrew Strominger's wormhole of 1988, two flat regions joined at a 3-sphere that an axion's field holds open [giddings1988]."
         }
       ],
       "references": [
@@ -35267,7 +35568,8 @@
         "sen1997enhanced",
         "horowitzmaeda2002",
         "myers1987compact",
-        "vafa1996ftheory"
+        "vafa1996ftheory",
+        "giddings1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -51148,6 +51450,11 @@
           "id": "eternal_traversable_wormhole",
           "kind": "family",
           "text": "A traversable wormhole in two dimensions whose negative energy comes from quantum fields, under a coupling of its two boundaries [maldacena2018]."
+        },
+        {
+          "id": "giddings_strominger",
+          "kind": "family",
+          "text": "Steven B. Giddings and Andrew Strominger's wormhole of 1988, four dimensions of space and no time, two flat regions joined at a 3-sphere of radius $a$ that an axion's field holds open [giddings1988]. Its radial profile is this wormhole's with $\\Phi = 0$ and $b = a^4/r^3$, with 3-spheres for 2-spheres."
         }
       ],
       "references": [
@@ -51178,7 +51485,8 @@
         "blazquez2021",
         "james2015",
         "kodama1978preprint",
-        "maldacena2018"
+        "maldacena2018",
+        "giddings1988"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",

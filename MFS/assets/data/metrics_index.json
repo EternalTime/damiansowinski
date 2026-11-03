@@ -1475,7 +1475,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "905f729dc16b20a3",
+    "version": "6598ef80477e01a3",
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -2009,7 +2009,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7572b3fb1ad0349c",
+    "version": "a3315928fec31738",
     "diagrams": "8393e9b253125f33",
     "conformal": "c45f19da93e85da3",
     "embedding": "626bd0932cbe6704",
@@ -2119,7 +2119,7 @@
       "idealized model",
       "scalar-tensor theory"
     ],
-    "version": "f33510602de5a100",
+    "version": "8ee31c25a2b3b19c",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a",
@@ -2365,7 +2365,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "17f5bc331a53dfc2",
+    "version": "bf63a2632dcffb05",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2420,6 +2420,35 @@
     "conformal": "f4ed73afc00b554e",
     "embedding": "dd42edb65e2da2d2",
     "curvature": "94a423a07033db04"
+  },
+  {
+    "id": "giddings_strominger",
+    "name": "Giddings-Strominger",
+    "tags": [
+      "wormhole",
+      "throat",
+      "gravitational instanton",
+      "Euclidean quantum gravity",
+      "Riemannian",
+      "no time",
+      "tunnelling",
+      "quantum cosmology",
+      "closed universe",
+      "three sphere",
+      "topology",
+      "string theory",
+      "asymptotically flat",
+      "no singularity",
+      "exact solution",
+      "Einstein equations",
+      "idealized model",
+      "spherically symmetric",
+      "four-dimensional",
+      "conformally flat"
+    ],
+    "version": "82dc9f36b18a4972",
+    "embedding": "4b38378c863cbe5e",
+    "curvature": "2430253afb672a6f"
   },
   {
     "id": "global_monopole",
@@ -2624,7 +2653,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "3d3ad949b63cf595",
+    "version": "a75f78f2993f057e",
     "embedding": "f7b5f03abe971ff6",
     "curvature": "23007b402fd37c38"
   },
@@ -3145,7 +3174,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "eddba368e4042f82",
+    "version": "c2c73f58eb7a826a",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -4615,7 +4644,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f60078088af78c26",
+    "version": "794bda622601963a",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922",
