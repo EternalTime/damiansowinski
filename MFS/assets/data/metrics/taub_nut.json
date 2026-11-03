@@ -111,6 +111,11 @@
       "id": "moncrief_taub_nut",
       "kind": "family",
       "text": "Inhomogeneous toroidal vacuum cosmologies admit extensions of Taub-NUT type across compact Cauchy horizons [moncrief1981nut]."
+    },
+    {
+      "id": "atiyah_hitchin",
+      "kind": "family",
+      "text": "Atiyah and Hitchin's space of two monopoles, which far from its core is Taub-NUT in Euclidean signature, self dual and with a negative mass. Its exponentially small corrections keep it smooth where that negative mass alone would leave a singularity [gibbonsmanton1995, tong2005]."
     }
   ],
   "references": [
@@ -144,7 +149,9 @@
     "clement2016",
     "astorino2022swirling",
     "newman1962tamburino",
-    "moncrief1981nut"
+    "moncrief1981nut",
+    "gibbonsmanton1995",
+    "tong2005"
   ],
   "coordinates": [
     {

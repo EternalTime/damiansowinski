@@ -111,6 +111,11 @@
       "id": "static_five_soliton",
       "kind": "family",
       "text": "The neutral scalar solitons belong to the family of static vacuum geometries studied by Gross and Perry [grossperry1983, lake2006static]."
+    },
+    {
+      "id": "atiyah_hitchin",
+      "kind": "family",
+      "text": "The orientifold plane of type IIA string theory, seen in M-theory. Sen set a row of these monopoles beside it to make D6-branes on the plane [sen1997enhanced]."
     }
   ],
   "references": [
@@ -140,7 +145,8 @@
     "nilsson1984",
     "bah2021",
     "chyba1985",
-    "lake2006static"
+    "lake2006static",
+    "sen1997enhanced"
   ],
   "coordinates": [
     {

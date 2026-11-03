@@ -54,6 +54,11 @@
       "id": "gravitational_instantons",
       "kind": "generalisation",
       "text": "Gibbons and Hawking's metrics of many centres, which stand among the gravitational instantons of 1977 and 1978. The Eguchi-Hanson space is their case of two centres with no constant in the potential [gibbonshawking1979, eguchigilkeyhanson1980]."
+    },
+    {
+      "id": "atiyah_hitchin",
+      "kind": "family",
+      "text": "Atiyah and Hitchin's space of two magnetic monopoles, on the other branch of the same classification, where the rotations turn the complex structures. It closes on a 2-sphere as well, once the two identical monopoles are exchanged [weinbergyi2007]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "lebrun1988",
     "page1978k3",
     "gibbonspope1979",
-    "sorkin1983"
+    "sorkin1983",
+    "weinbergyi2007"
   ],
   "coordinates": [
     {

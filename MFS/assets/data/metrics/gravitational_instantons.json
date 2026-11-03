@@ -64,6 +64,11 @@
       "id": "universe_from_nothing",
       "kind": "family",
       "text": "Half of the 4-sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
+    },
+    {
+      "id": "atiyah_hitchin",
+      "kind": "family",
+      "text": "Atiyah and Hitchin's space of two slowly moving magnetic monopoles, smooth and hyperkähler. Far from its core it is the self dual Taub-NUT instanton with a negative mass [atiyahhitchin1985, gibbonsmanton1995]."
     }
   ],
   "references": [
@@ -83,7 +88,9 @@
     "chenteo2011",
     "sorkin1983",
     "grossperry1983",
-    "vilenkin1982"
+    "vilenkin1982",
+    "atiyahhitchin1985",
+    "gibbonsmanton1995"
   ],
   "coordinates": [
     {
