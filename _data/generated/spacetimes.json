@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 232,
+  "count": 233,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3597,6 +3597,11 @@
           "id": "kerr_scalar_hair",
           "kind": "family",
           "text": "Black holes with hair again, this time of a massive complex scalar field, which stays outside the horizon because it turns with it, $\\omega = m\\Omega_H$ [herdeiro2014]."
+        },
+        {
+          "id": "skyrmion_hair",
+          "kind": "family",
+          "text": "A black hole inside a gravitating skyrmion, with a field extending beyond its horizon [dvali2016skyrmion]."
         }
       ],
       "references": [
@@ -3620,7 +3625,8 @@
         "choptuik1996",
         "gleiser1989",
         "lee1989",
-        "herdeiro2014"
+        "herdeiro2014",
+        "dvali2016skyrmion"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bartnik_mckinnon.json",
@@ -17283,6 +17289,11 @@
           "id": "penney_scalar",
           "kind": "family",
           "text": "A charged mass with a massless scalar field that does not couple to the Maxwell field, found by R. Penney in 1969. Its only black hole is the one with the scalar field switched off [banerjee1998]."
+        },
+        {
+          "id": "skyrmion_hair",
+          "kind": "family",
+          "text": "A black hole with a Skyrme field held by its gravity outside its horizon [dvali2016skyrmion]."
         }
       ],
       "references": [
@@ -17309,7 +17320,8 @@
         "cvetic1996static",
         "cvetic1996dyonic",
         "gibbons1995",
-        "banerjee1998"
+        "banerjee1998",
+        "dvali2016skyrmion"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -62231,6 +62243,11 @@
           "id": "spheroidal_stars",
           "kind": "composite",
           "text": "Static fluid stars joined to Schwarzschild's vacuum at their surfaces. Vanishing pressure and continuity of the lapse fix the matching [delgaty1998]."
+        },
+        {
+          "id": "skyrmion_hair",
+          "kind": "family",
+          "text": "A black hole with a skyrmion field outside its horizon. Its geometry approaches Schwarzschild's far away [dvali2016skyrmion]."
         }
       ],
       "references": [
@@ -62370,7 +62387,8 @@
         "fransen2023",
         "brandt1997",
         "mello2017",
-        "delgaty1998"
+        "delgaty1998",
+        "dvali2016skyrmion"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -65847,6 +65865,209 @@
           ],
           "ricci_scalar": "R = -\\dfrac{a^2\\left(2\\rho - 3r_s\\right)}{\\rho^5}",
           "kretschmann": "K = \\dfrac{3r_s^2\\left(4r^4 - 4a^2r^2 + 3a^4\\right) + 16a^2\\,r_s\\left(r^2 - a^2\\right)\\rho + 12a^4\\rho^2}{\\rho^{10}}"
+        }
+      ]
+    },
+    {
+      "id": "skyrmion_hair",
+      "name": "Black Hole with Skyrmion Hair",
+      "short_name": "Skyrmion Black Hole",
+      "description": "A static spherical black hole surrounded by a Skyrme field held by its gravity, with a fractional baryon number outside its horizon.",
+      "tags": [
+        "black hole",
+        "soliton",
+        "numerical solution",
+        "asymptotically flat",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use $c=\\hbar=1$ and keep $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The vacuum black hole of the same total mass, which this geometry approaches far from the hole [dvali2016skyrmion]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "A spherical black hole with a scalar field coupled to its electromagnetic field [horowitz1992, garfinkle1991]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "A spherical Yang-Mills field held together by its gravity, with a regular centre [volkov1999, bartnik1988]."
+        }
+      ],
+      "references": [
+        "shiiki2005skyrme",
+        "dvali2016skyrmion",
+        "luckock1986",
+        "droz1991",
+        "horowitz1992",
+        "garfinkle1991",
+        "volkov1999",
+        "bartnik1988"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/skyrmion_hair.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_h, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "N = N(r)",
+              "description": "Dimensionless lapse, normalized to $N\\to 1$ far away. In $x=aF_\\pi r$, its equation is $N_x/N=(\\alpha/4)(x+8\\sin^2 f/x)f_x^2$."
+            },
+            {
+              "symbol": "C = C(r)",
+              "description": "Dimensionless radial function, $C=1-2Gm(r)/r$, with $C(r_h)=0$ and $C>0$ outside the horizon."
+            },
+            {
+              "symbol": "f = f(r)",
+              "description": "Dimensionless Skyrme profile, with $f(\\infty)=0$ and horizon value $f_h$. The horizon value is $f_h=f(r_h)$. With $f_x=\\partial_x f$ and $u=x^2+8\\sin^2 f$, it obeys $(NCu f_x)_x=N\\sin(2f)(1+4Cf_x^2+4\\sin^2 f/x^2)$, where $x=aF_\\pi r$."
+            },
+            {
+              "symbol": "m = m(r)",
+              "description": "Mass function approaching $M$ at infinity. In $x=aF_\\pi r$, $\\mu=aF_\\pi Gm$ has $\\mu_x=\\partial_x\\mu$ and obeys $\\mu_x=(\\alpha/8)[C(x^2+8\\sin^2 f)f_x^2+2\\sin^2 f+4\\sin^4 f/x^2]$."
+            },
+            {
+              "symbol": "r_h",
+              "description": "Areal radius of the event horizon."
+            },
+            {
+              "symbol": "G",
+              "description": "Newton gravitational constant."
+            },
+            {
+              "symbol": "M",
+              "description": "Total mass measured at infinity."
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Dimensionless gravitational coupling, $\\alpha=4\\pi GF_\\pi^2$."
+            },
+            {
+              "symbol": "F_\\pi",
+              "description": "Pion decay constant of the Skyrme model."
+            },
+            {
+              "symbol": "a",
+              "description": "Dimensionless Skyrme coupling; $x=aF_\\pi r$ is the dimensionless radius."
+            }
+          ],
+          "convention": "The chart covers the static exterior, with $r$ the areal radius.",
+          "line_element": "ds^2 = -N^2 C\\,dt^2 + \\dfrac{dr^2}{C} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2\\,C"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{C}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2N - 2N\\,C - 4r\\,N\\,\\partial_r C - 4r\\,C\\,\\partial_r N - 3r^2\\,\\partial_r N\\,\\partial_r C - r^2\\,N\\,\\partial_r^2 C - 2r^2\\,C\\,\\partial_r^2 N}{r^2\\,N}",
+          "kretschmann": "K = \\dfrac{4r^4\\,C^2\\left(\\partial_r^2 N\\right)^2 + 4r^4\\,N\\,C\\,\\partial_r^2 C\\,\\partial_r^2 N + 12r^4\\,C\\,\\partial_r N\\,\\partial_r C\\,\\partial_r^2 N + r^4\\,N^2\\left(\\partial_r^2 C\\right)^2 + 6r^4\\,N\\,\\partial_r N\\,\\partial_r C\\,\\partial_r^2 C + 9r^4\\left(\\partial_r N\\right)^2\\left(\\partial_r C\\right)^2 + 8r^2\\,C^2\\left(\\partial_r N\\right)^2 + 8r^2\\,N\\,C\\,\\partial_r N\\,\\partial_r C + 4r^2\\,N^2\\left(\\partial_r C\\right)^2 + 4N^2\\,C^2 - 8N^2\\,C + 4N^2}{r^4\\,N^2}"
+        },
+        {
+          "id": "tortoise",
+          "name": "Tortoise",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "F = F(\\xi)",
+              "description": "The function $F=N(r)^2C(r)$, using the lapse and radial function of the areal chart."
+            },
+            {
+              "symbol": "r = r(\\xi)",
+              "description": "The areal radius, determined by $dr/d\\xi=N(r)C(r)$."
+            }
+          ],
+          "convention": "The tortoise radius obeys $d\\xi/dr=1/(N C)$ in the exterior. Its additive constant is arbitrary.",
+          "line_element": "ds^2 = F\\left(-dt^2 + d\\xi^2\\right) + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "F"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2F^3 - 2F^2\\left(\\partial_\\xi r\\right)^2 + r^2\\left(\\partial_\\xi F\\right)^2 - 4F^2\\,r\\,\\partial_\\xi^2 r - F\\,r^2\\,\\partial_\\xi^2 F}{F^3\\,r^2}",
+          "kretschmann": "K = \\dfrac{F^2\\,r^4\\left(\\partial_\\xi^2 F\\right)^2 - 2F\\,r^4\\left(\\partial_\\xi F\\right)^2\\,\\partial_\\xi^2 F + 8F^4\\,r^2\\left(\\partial_\\xi^2 r\\right)^2 - 8F^3\\,r^2\\,\\partial_\\xi F\\,\\partial_\\xi r\\,\\partial_\\xi^2 r + r^4\\left(\\partial_\\xi F\\right)^4 + 4F^2\\,r^2\\left(\\partial_\\xi F\\right)^2\\left(\\partial_\\xi r\\right)^2 + 4F^4\\left(\\partial_\\xi r\\right)^4 - 8F^5\\left(\\partial_\\xi r\\right)^2 + 4F^6}{F^6\\,r^4}"
         }
       ]
     },
