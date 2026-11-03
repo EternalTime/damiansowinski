@@ -74,5 +74,58 @@
     "ruban1968",
     "krasinski1999datt"
   ],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "comoving",
+      "name": "Comoving Synchronous",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "r \\in (-\\infty, \\infty)",
+        "a(r) < t < -a(r)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "R = R(t,r)",
+          "description": "Areal radius, a length, determined by $R=M(1-\\cos\\eta)/(-f)$ and $t=a+M(\\eta-\\sin\\eta)/(-f)^{3/2}$, with $0<\\eta<2\\pi$."
+        },
+        {
+          "symbol": "f = f(r)",
+          "description": "Twice the energy per unit mass of a shell, $f=-e^{-r^2/r_s}$."
+        },
+        {
+          "symbol": "M = M(r)",
+          "description": "Gravitational mass function, $M=M_0(1+M_1r^2)^3$."
+        },
+        {
+          "symbol": "a = a(r)",
+          "description": "Bang time, $a=-\\pi M/(-f)^{3/2}$."
+        },
+        {
+          "symbol": "M_0",
+          "description": "Positive mass parameter, a length."
+        },
+        {
+          "symbol": "M_1",
+          "description": "Positive inverse length squared."
+        },
+        {
+          "symbol": "r_s",
+          "description": "Positive radial parameter with dimensions of length squared."
+        },
+        {
+          "symbol": "\\eta",
+          "description": "Dimensionless parameter of the elliptic evolution."
+        }
+      ],
+      "convention": "We use comoving coordinates $(t,r,\\theta,\\phi)$, with $t$ and $r$ lengths and the two angles on each shell. At $r=0$ the radial metric component is the finite limit $g_{rr}=r_s(\\partial_r^2R)^2$ evaluated at the neck. A prime denotes a derivative with respect to $r$.",
+      "line_element": "ds^2=-dt^2+\\dfrac{(\\partial_r R)^2}{1+f}dr^2+R^2(d\\theta^2+\\sin^2\\theta\\,d\\phi^2)"
+    }
+  ]
 }
