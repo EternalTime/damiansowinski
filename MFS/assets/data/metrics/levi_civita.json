@@ -94,6 +94,11 @@
       "id": "ghost_neutrinos",
       "kind": "locally_same",
       "text": "At $\\sigma = -1/2$ the static cylinder is locally Taub's plane symmetric vacuum, through which the ghost neutrinos of Davis and Ray flow with no energy or momentum [davis1974]."
+    },
+    {
+      "id": "superconducting_string",
+      "kind": "generalisation",
+      "text": "A magnetic field surrounds a current carrying string and contributes to its gravity [sen1999superconducting]."
     }
   ],
   "references": [
@@ -130,7 +135,8 @@
     "podolsky2018",
     "martins1996",
     "astorino2022swirling",
-    "davis1974"
+    "davis1974",
+    "sen1999superconducting"
   ],
   "coordinates": [
     {

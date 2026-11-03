@@ -83,6 +83,11 @@
       "id": "penrose_impulsive_wave",
       "kind": "composite",
       "text": "A string that snaps. Ahead of the wave it sends out the cone is still there, and behind the wave space is flat with no wedge missing [gleiser1989splitting, podolsky2000snapping]."
+    },
+    {
+      "id": "superconducting_string",
+      "kind": "generalisation",
+      "text": "A current along a string produces a magnetic field and curves the exterior [sen1999superconducting]."
     }
   ],
   "references": [
@@ -111,7 +116,8 @@
     "garfinkle1990",
     "staruszkiewicz1963",
     "gleiser1989splitting",
-    "podolsky2000snapping"
+    "podolsky2000snapping",
+    "sen1999superconducting"
   ],
   "coordinates": [
     {
