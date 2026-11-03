@@ -31979,6 +31979,9 @@ hosotani_drawings.register_conformal(sys.modules[__name__])
 # Only the bounded rotating body is specified; no global completion is established.
 NOT_DRAWN.add('kramer_fluid')
 
+import string_cylindrical_waves_drawings as scw_drawings
+scw_drawings.register_conformal(sys.modules[__name__])
+
 
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_conformal(sys.modules[__name__])

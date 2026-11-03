@@ -5041,6 +5041,9 @@ hosotani_drawings.register_slices(sys.modules[__name__])
 import kramer_fluid_drawings as kf_drawings
 kf_drawings.register_slices(sys.modules[__name__])
 
+import string_cylindrical_waves_drawings as scw_drawings
+scw_drawings.register_slices(sys.modules[__name__])
+
 
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_slices(sys.modules[__name__])
