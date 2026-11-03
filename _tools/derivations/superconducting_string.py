@@ -22,8 +22,8 @@ def chart_spec():
     return {"metric_id": METRIC, "system": {
         "id": SYSTEM, "name": "Cylindrical Exterior", "coords": COORDS,
         "parameters": PARAMETERS,
-        "domains": [r"t\in(-\infty,\infty)", r"r\in(r_c,\infty)",
-                    r"\phi\in[0,2\pi)", r"z\in(-\infty,\infty)",
+        "domains": [r"t \in (-\infty,\infty)", r"r \in (r_c,\infty)",
+                    r"\phi \in [0,2\pi)", r"z \in (-\infty,\infty)",
                     r"\ell>0,\quad r_c>0,\quad W>0,\quad k\geq 0,\quad -1<m<1"],
         "line_element": LINE}, "chart_line_element": LINE,
         "printer": {}, "reduce": probe.surface, "check": check_chart}

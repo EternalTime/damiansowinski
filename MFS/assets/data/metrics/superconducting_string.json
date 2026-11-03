@@ -42,10 +42,10 @@
         "z"
       ],
       "domains": [
-        "t\\in(-\\infty,\\infty)",
-        "r\\in(r_c,\\infty)",
-        "\\phi\\in[0,2\\pi)",
-        "z\\in(-\\infty,\\infty)",
+        "t \\in (-\\infty,\\infty)",
+        "r \\in (r_c,\\infty)",
+        "\\phi \\in [0,2\\pi)",
+        "z \\in (-\\infty,\\infty)",
         "\\ell>0,\\quad r_c>0,\\quad W>0,\\quad k\\geq 0,\\quad -1<m<1"
       ],
       "parameters": [
