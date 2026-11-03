@@ -195,11 +195,15 @@ INSIDE, BEYOND, TIMES, NULLS = (0.2, 0.5, 0.8), (1.5, 3.0, 10.0), (-8, -4, 0, 4,
 
 def register_conformal(cf):
     cf.DRAWN[METRIC] = lambda ck, src: conformal(cf, ck, src)
-    whole = ("The whole spacetime ($\\phi = 0$), each point a circle: two static regions with $Q$ and $-Q$ at "
-             "$r = 0$, the expanding region above and the contracting one below, each ending on null infinity.")
-    cf.CAPTIONS[(METRIC, "static")] = [whole]
-    cf.CAPTIONS[(METRIC, "outgoing")] = [whole]
-    cf.CAPTIONS[(METRIC, "ingoing")] = [whole]
+    cf.CAPTIONS[(METRIC, "static")] = [
+        "The whole spacetime ($\\phi = 0$) in the static chart, each point a circle: every line of constant $ct$ "
+        "leaves the crossing of the horizons, and beyond $r_c$ each line of constant $r$ is a moment of space."]
+    cf.CAPTIONS[(METRIC, "outgoing")] = [
+        "The whole spacetime ($\\phi = 0$) in the outgoing chart, each point a circle: each outgoing ray of "
+        "constant $u$ leaves the charge, crosses the future horizon and reaches null infinity."]
+    cf.CAPTIONS[(METRIC, "ingoing")] = [
+        "The whole spacetime ($\\phi = 0$) in the ingoing chart, each point a circle: each ingoing ray of "
+        "constant $v$ comes from null infinity, crosses the past horizon and ends at the charge."]
 
 
 def conformal(cf, ck, src):
