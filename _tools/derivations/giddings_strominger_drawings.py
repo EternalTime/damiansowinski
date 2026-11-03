@@ -106,9 +106,9 @@ def curvature(cv, ck, src):
     panels = [{"id": "K", "name": "$K\\,a^4$", "aspect": 2, "scale": K_scale, "ticks": cv.value_ticks(K_scale)},
               {"id": "R", "name": "$R\\,a^2$", "aspect": 2, "scale": R_scale, "ticks": cv.value_ticks(R_scale)}]
     cv.shape_checks(ck, METRIC, [p["aspect"] for p in panels])
-    K = cv.nr_published(src, METRIC, "conformal", "kretschmann", ["\\eta"], ["a"])
-    R = cv.nr_published(src, METRIC, "conformal", "ricci_scalar", ["\\eta"], ["a"])
-    sphere = cv.nr_published(src, METRIC, "conformal", "metric_components", ["\\eta"], ["a"], ("\\chi", "\\chi"))
+    K = cv.nr_published(src, METRIC, "conformal", "kretschmann", ["eta"], ["a"])
+    R = cv.nr_published(src, METRIC, "conformal", "ricci_scalar", ["eta"], ["a"])
+    sphere = cv.nr_published(src, METRIC, "conformal", "metric_components", ["eta"], ["a"], ("\\chi", "\\chi"))
     eta, a = K.coords[0], K.params[0]
     ck(f"{METRIC} the 3-sphere at eta has the areal radius a sqrt(cosh 2eta)",
        sp.simplify(sphere.expr - a ** 2 * sp.cosh(2 * eta)) == 0)
@@ -128,20 +128,18 @@ def curvature(cv, ck, src):
         outward = np.diff(fn(xs[xs >= 0], 1))
         ck(f"{METRIC} {name} {'falls' if name == 'K' else 'rises'} outward on either half",
            np.all(outward < 0) if name == "K" else np.all(outward > 0))
-        curves += cv.line_curves(ck, METRIC, name, name, fn, "\\eta", x_axis, scale, cv.PLOT_W / 2, {"a": 1})
+        curves += cv.line_curves(ck, METRIC, name, name, fn, "eta", x_axis, scale, cv.PLOT_W / 2, {"a": 1})
         ck(f"{METRIC} {name} stays inside its panel", not any(cv.beyond(fn, x_axis, scale, [1])))
-    k_clip = "We draw $K\\,a^4$ on a logarithmic scale from $10^{-5}$ to $10^{2}$; every value drawn lies within it."
-    r_clip = ("We draw $R\\,a^2$ on a signed logarithmic scale, linear within $10^{-3}$ of zero, from $-10$ to $0$; "
-              "every value drawn lies within it.")
+    k_clip = "$K\\,a^4$ logarithmic, $10^{-5}$ to $10^{2}$, none cut."
+    r_clip = "$R\\,a^2$ signed logarithmic, $-10$ to $0$, linear within $10^{-3}$, none cut."
     return [{
         "id": "throat", "label": "both halves of the throat", "kind": "line", "x": x_axis,
         "panels": panels, "curves": curves, "marks": [],
-        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"]],
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
         "caption": [
-            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the Giddings-Strominger wormhole against the "
-            "conformal coordinate $\\eta$ ($a = 1$), across both halves from the throat $\\eta = 0$ to the areal "
-            "radius $r = 3.17a$. $K$ is greatest at the throat, $60/a^4$.",
-            "$R$ is negative everywhere and least at the throat, $-6/a^2$.",
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the wormhole against $\\eta$, across both halves "
+            "out to $r = 3.17a$. $K$ is greatest at the throat $\\eta = 0$, $60/a^4$.",
+            "$R$ is negative, least at the throat, $-6/a^2$.",
         ],
         "ricci_sentences": [[1, 0]], "per_scalar": cv.scalar_clips(k_clip, r_clip),
         "settings": "$a = 1$, the unit of every length.",
