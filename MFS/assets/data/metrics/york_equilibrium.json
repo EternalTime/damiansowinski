@@ -81,7 +81,7 @@
           "description": "The value of $\\rho$ at the wall, $B=\\rho(R)$"
         }
       ],
-      "convention": "The coordinate $r$ is the areal radius and $t$ is the time matched to the Schwarzschild exterior at the reflecting wall. A dot in the geodesic equations denotes differentiation with respect to an affine parameter. The field corrections and all derived quantities hold through first order in $\\epsilon$.",
+      "convention": "The coordinate $r$ is the areal radius and $t$ is the time matched to the Schwarzschild exterior at the reflecting wall. A dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
       "line_element": "ds^2=-\\left(1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)\\right)\\left(1+2\\epsilon\\left(\\rho-B\\right)\\right)dt^2+\\dfrac{dr^2}{1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)}+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
