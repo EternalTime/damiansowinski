@@ -50,6 +50,11 @@
       "id": "kerr",
       "kind": "family",
       "text": "The rotating black hole. A string through it leaves a cone as well, measured in a frame that turns with the hole, as Ruth Gregory, David Kubizňák, and Danielle Wills found in 2013 [gregory2013]."
+    },
+    {
+      "id": "york_equilibrium",
+      "kind": "family",
+      "text": "A black hole in equilibrium with a thermal scalar field whose energy changes the geometry at first order in $\\hbar$ [hochberg1994potential, york1985equilibrium]."
     }
   ],
   "references": [
@@ -68,7 +73,9 @@
     "lonsdale1988",
     "galtsov1989",
     "devilliers1998",
-    "vilenkin2018"
+    "vilenkin2018",
+    "hochberg1994potential",
+    "york1985equilibrium"
   ],
   "coordinates": [
     {

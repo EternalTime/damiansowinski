@@ -88,6 +88,11 @@
       "id": "brane_wall_universe",
       "kind": "family",
       "text": "One dimension up, a wall moving through this black hole carries a universe, and the wall's motion is that universe's expansion [kraus1999]."
+    },
+    {
+      "id": "york_equilibrium",
+      "kind": "family",
+      "text": "A black hole in equilibrium with a scalar field inside a reflecting wall, with first order back reaction [hochberg1994potential, york1985equilibrium]."
     }
   ],
   "references": [
@@ -118,7 +123,9 @@
     "chamblin1999",
     "surya2001",
     "shenker2014",
-    "kraus1999"
+    "kraus1999",
+    "hochberg1994potential",
+    "york1985equilibrium"
   ],
   "coordinates": [
     {

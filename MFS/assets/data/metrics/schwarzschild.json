@@ -544,6 +544,11 @@
       "id": "skyrmion_hair",
       "kind": "family",
       "text": "A black hole with a skyrmion field outside its horizon. Its geometry approaches Schwarzschild's far away [dvali2016skyrmion]."
+    },
+    {
+      "id": "york_equilibrium",
+      "kind": "generalisation",
+      "text": "The first order gravitational back reaction of a thermal conformal scalar field [hochberg1994potential, york1985equilibrium]."
     }
   ],
   "references": [
@@ -684,7 +689,9 @@
     "brandt1997",
     "mello2017",
     "delgaty1998",
-    "dvali2016skyrmion"
+    "dvali2016skyrmion",
+    "hochberg1994potential",
+    "york1985equilibrium"
   ],
   "coordinates": [
     {
