@@ -67,8 +67,8 @@ def diagram_captions():
 
 def null_forms():
     import numpy as np
-    return {(METRIC, "cosmic", "plane"): (lambda t, x: np.log(t)-x, lambda t, x: np.log(t)+x, None),
-            (METRIC, "conformal", "plane"): (lambda t, x: t-x, lambda t, x: t+x, None)}
+    return {(METRIC, "cosmic", "plane"): (lambda t, x: np.log(t)+x, lambda t, x: np.log(t)-x, None),
+            (METRIC, "conformal", "plane"): (lambda t, x: t+x, lambda t, x: t-x, None)}
 
 
 def conformal_views(ck, src, cf):
