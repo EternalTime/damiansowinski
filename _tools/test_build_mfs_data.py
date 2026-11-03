@@ -5452,6 +5452,12 @@ class Slices(unittest.TestCase):
             of = {"conical": lambda r: r, "wedge": lambda r: r, "circumference": lambda r: 0.75 * r,
                   "isotropic": lambda r: (0.75 * r) ** (4 / 3)}[system]
             return (lambda X: 0.0), [of(r) for r in self.reach(surface, "conical", reference=True)]
+        if key in ("linet_tian/gleiser/radial", "linet_tian/sarioglu_tekin/radial"):
+            # Linet and Tian's moments t = 0, embedded in the proper distance rho: Gleiser's y = 3 sin^2(rho/2) at
+            # Lambda = 1/3, and Sarioglu and Tekin's r = cosh^(2/3)(rho/2) at L = 3 and r_0 = 1.
+            of = ((lambda rho: 3 * math.sin(rho / 2) ** 2) if "gleiser" in key
+                  else (lambda rho: math.cosh(rho / 2) ** (2 / 3)))
+            return (lambda X: 0.0), [of(rho) for rho in self.reach(surface)]
         if key == "levi_civita/kasner/radial":
             # The Kasner form's r is the proper distance from the axis, rho^Sigma/Sigma with
             # Sigma = 3/4 at sigma = 1/4, of the circles the embedding reaches in Weyl's rho.
