@@ -60,7 +60,7 @@ def register_null(nr):
 def register_conformal(cf):
     cf.DRAWN[METRIC] = lambda ck, src: conformal(cf, ck, src)
     cf.CAPTIONS[(METRIC, VIEW)] = [
-        r'The plane of $t$ and $r$ ($\phi=w=0$) in the six string cone.']
+        r'The radial half plane brought to a finite diagram, with the coincident core and infinity at its boundary ($\phi=w=0$).']
 
 
 def conformal(cf, ck, src):
