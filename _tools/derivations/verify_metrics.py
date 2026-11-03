@@ -224,6 +224,12 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    # Geometrized units G = c = 1: Harada and Maeda's comoving t and r are lengths, and the zooming
+    # tau and z are pure numbers, with ell the length the comoving coordinates are counted in.
+    ("ori_piran", "comoving"): {"t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "1",
+                                "\\omega": "1", "S": "1", "k": "1", "D": "1"},
+    ("ori_piran", "zooming"): {"\\tau": "1", "z": "1", "\\theta": "1", "\\phi": "1", "\\sigma": "1",
+                               "\\omega": "1", "S": "1", "\\ell": "L"},
     # Natural units c = hbar = 1, with Newton's constant explicit.
     ("skyrmion_hair", "tortoise"): {"t": "L", "\\xi": "L", "\\theta": "1", "\\phi": "1", "F": "1", "r": "L"},
     ("skyrmion_hair", "areal"): {
