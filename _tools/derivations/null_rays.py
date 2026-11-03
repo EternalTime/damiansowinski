@@ -19287,7 +19287,7 @@ DECLARED_FUNCTIONS.update(_hellaby_kruskal.declared_functions(lw_r))
 DIAGRAMS.append(Diagram(
     "hellaby_kruskal", "comoving", "neck", "The neck", ("t", "r"),
     (-1.5, 1.5, -1.5, 1.5), "$r/M_0$", "$t/M_0$", {}, EQUATOR,
-    functions={"R": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)"},
+    functions={"Y": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)"},
     families=SIDEWAYS, kretschmann=False, lines=(("surface", "r", "0", "the neck, $r=0$"),),
     input="$M_1M_0^2=1/10$ and $r_s/M_0^2=1$; lengths in units of $M_0$."))
 CAPTIONS[("hellaby_kruskal", "comoving", "neck")] = [

@@ -7,7 +7,7 @@ METRIC = "hellaby_kruskal"
 SYSTEM = "comoving"
 DIMENSIONS = {(METRIC, SYSTEM): {
     "t": "L", "r": "L", "\\theta": "1", "\\phi": "1",
-    "R": "L", "f": "1", "M": "L", "a": "L", "M_0": "L",
+    "Y": "L", "f": "1", "M": "L", "a": "L", "M_0": "L",
     "M_1": "L**-2", "r_s": "L**2", "\\eta": "1",
 }}
 
@@ -15,10 +15,10 @@ DIMENSIONS = {(METRIC, SYSTEM): {
 def chart_spec():
     """The sourced spherical chart, with radius and energy held for tensor printing."""
     coords = ["t", "r", "\\theta", "\\phi"]
-    parameters = ["R = R(t,r)", "f = f(r)", "M = M(r)", "a = a(r)",
+    parameters = ["Y = Y(t,r)", "f = f(r)", "M = M(r)", "a = a(r)",
                   "M_0", "M_1", "r_s", "\\eta"]
-    line = (r"ds^2=-dt^2+\dfrac{(\partial_r R)^2}{1+f}dr^2"
-            r"+R^2(d\theta^2+\sin^2\theta\,d\phi^2)")
+    line = (r"ds^2=-dt^2+\dfrac{(\partial_r Y)^2}{1+f}dr^2"
+            r"+Y^2(d\theta^2+\sin^2\theta\,d\phi^2)")
     return {"metric_id": METRIC, "system": {
         "id": SYSTEM, "name": "Comoving Synchronous", "coords": coords,
         "domains": [r"r \in (-\infty, \infty)", r"a(r) < t < -a(r)",
@@ -31,7 +31,7 @@ def chart_spec():
 def dust_check(chart):
     """Check the dust Einstein tensor at points of the sourced example."""
     t, r, theta, _ = chart.symbols
-    R, f = (chart.reader.parameters[k] for k in ("R", "f"))
+    Y, f = (chart.reader.parameters[k] for k in ("Y", "f"))
     x, eta = sp.symbols("_x _eta", real=True)
     mass = (1 + x**2 / 10)**3
     u = sp.exp(-x**2)
@@ -49,9 +49,9 @@ def dust_check(chart):
         rp = radial_radius.subs(point)
         velocity = sp.sin(ee) * sp.sqrt(u.subs(point)) / (1 - sp.cos(ee))
         rtr = (2 * mr / rr - 2 * m * rp / rr**2 + fp) / (2 * velocity)
-        values = {R: rr, f: ff, sp.diff(R, r): rp, sp.diff(R, t): velocity,
-                  sp.diff(R, t, 2): -m / rr**2, sp.diff(R, r, t): rtr,
-                  sp.diff(R, r, t, 2): -mr / rr**2 + 2 * m * rp / rr**3,
+        values = {Y: rr, f: ff, sp.diff(Y, r): rp, sp.diff(Y, t): velocity,
+                  sp.diff(Y, t, 2): -m / rr**2, sp.diff(Y, r, t): rtr,
+                  sp.diff(Y, r, t, 2): -mr / rr**2 + 2 * m * rp / rr**3,
                   sp.diff(f, r): fp, theta: sp.Rational(7, 10)}
         density = 2 * mr / (rr**2 * rp)
         for i in range(4):
@@ -122,7 +122,7 @@ def curvature_views(ck, src, cv):
 
     xa = cv.axis(r"$r/M_0$", -1.5, 1.5)
     ya = cv.axis(r"$t/M_0$", -1.5, 1.5)
-    functions = {"R": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)"}
+    functions = {"Y": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)"}
     views = []
     for field, letter, power, name in (("kretschmann", "K", 4, "Kretschmann"),
                                         ("ricci_scalar", "R", 2, "Ricci")):

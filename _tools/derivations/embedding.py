@@ -22378,7 +22378,7 @@ _atiyah_hitchin_drawings.register_embedding(sys.modules[__name__])
 
 def hellaby_kruskal(ck, src):
     """The equatorial surface at maximum expansion in the sourced symmetric example."""
-    functions = {"R": "2*(1+r**2/10)**3*exp(r**2)",
+    functions = {"Y": "2*(1+r**2/10)**3*exp(r**2)",
                  "f": "-1+r**2*hk_h(r**2)"}
     sl = Slice(src, "hellaby_kruskal", "comoving", "r", "\\phi",
                {"t": "0", **EQUATOR}, functions=functions)
