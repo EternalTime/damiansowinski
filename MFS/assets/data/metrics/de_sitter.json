@@ -194,6 +194,11 @@
       "id": "mallett_radiating_star",
       "kind": "generalisation",
       "text": "A spherical source with a changing mass and radial radiation in a de Sitter background."
+    },
+    {
+      "id": "brown_teitelboim",
+      "kind": "composite",
+      "text": "Two regions of de Sitter space joined across a charged membrane, with different cosmological constants [hirano2018bt]."
     }
   ],
   "references": [
@@ -246,7 +251,8 @@
     "cahen1970",
     "murphy1973",
     "starobinsky1980",
-    "weinberg2007hm"
+    "weinberg2007hm",
+    "hirano2018bt"
   ],
   "coordinates": [
     {

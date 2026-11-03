@@ -65,6 +65,11 @@
       "id": "early_braneworlds",
       "kind": "family",
       "text": "Rubakov and Shaposhnikov trapped fermions on a domain wall in flat five dimensional spacetime [rubakov1983, rubakov2001extra]."
+    },
+    {
+      "id": "brown_teitelboim",
+      "kind": "family",
+      "text": "A charged spherical wall that separates regions of different cosmological constant [hirano2018bt]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "coleman1980",
     "kraus1999",
     "rubakov1983",
-    "rubakov2001extra"
+    "rubakov2001extra",
+    "hirano2018bt"
   ],
   "coordinates": [
     {

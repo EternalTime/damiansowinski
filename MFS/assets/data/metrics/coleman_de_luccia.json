@@ -71,6 +71,11 @@
       "id": "hawking_moss",
       "kind": "family",
       "text": "Along suitable families of thick bounces, the scalar field at both poles approaches the barrier maximum. The homogeneous endpoint is the Hawking-Moss saddle [brown2007hm]."
+    },
+    {
+      "id": "brown_teitelboim",
+      "kind": "family",
+      "text": "A charged membrane separates de Sitter regions with different four form flux and cosmological constant [hirano2018bt]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "caldwell1996",
     "gott1998",
     "vilenkin1982",
-    "brown2007hm"
+    "brown2007hm",
+    "hirano2018bt"
   ],
   "coordinates": [
     {
