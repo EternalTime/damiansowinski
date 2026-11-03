@@ -14657,6 +14657,30 @@
    "\\phi"
   ]
  },
+ "quevedo_mashhoon/prolate_spheroidal": {
+  "stamp": "d41c944b3d81348c",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": false,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "randall_sundrum/conformal": {
   "stamp": "1b04dd79cf90d5d4",
   "relations": {},
