@@ -30,7 +30,8 @@ class MagneticExterior(unittest.TestCase):
     def printed_expression(self, pattern):
         match = re.search(pattern, self.page["history"])
         self.assertIsNotNone(match, pattern)
-        text = match.group(1).replace(r"\pm ", "").replace("x", r"(r/\ell)")
+        text = (match.group(1).replace(r"\pm ", "").replace("x", r"(r/\ell)")
+                .replace("[", "(").replace("]", ")"))
         return self.written(self.reader(text))
 
     def test_metric_field_current_and_maxwell_flux(self):
