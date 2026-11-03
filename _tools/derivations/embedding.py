@@ -2122,7 +2122,7 @@ def york_equilibrium(ck, src):
     fig.legend("line", "surface", "the reflecting wall $r = R$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("cavity", "The radiation cavity", "$M$", [surface], fig.done(),
-                 settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.")]
+                 settings="$M = 1$, $R = 50M$, and $\\epsilon = 1/10000$.")]
 
 
 def schwarzschild(ck, src):

@@ -1676,7 +1676,7 @@ def york_equilibrium(ck, src):
     p, q = fmap(np.zeros_like(radii), radii)
     pt, qt = mink_pq(0.0, tail, 50.0)
     v.slice(moment, [(np.r_[HALF, pt, p], np.r_[-HALF, qt, q])])
-    v.set(settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.")
+    v.set(settings="$M = 1$, $R = 50M$, and $\\epsilon = 1/10000$.")
     return [v]
 
 

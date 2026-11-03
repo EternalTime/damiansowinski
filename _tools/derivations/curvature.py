@@ -547,7 +547,7 @@ def york_equilibrium(ck, src):
         "ricci_sentences": [[0, 2]],
         "per_scalar": scalar_clips("A logarithmic scale from $10^{-10}$ to $1$.",
                                     "A signed logarithmic scale from $-10^{-7}$ to $0$, linear within $10^{-13}$."),
-        "settings": "$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.",
+        "settings": "$M = 1$, $R = 50M$, and $\\epsilon = 1/10000$.",
         "clip": "$K$ is logarithmic from $10^{-10}$ to $1$; $R^\\mu{}_\\mu$ is signed logarithmic "
                 "from $-10^{-7}$ to $0$, linear within $10^{-13}$.",
     }]
