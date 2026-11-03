@@ -2737,7 +2737,31 @@ def _hotta_tanaka(system, fixed):
     return out
 
 
+def brown_teitelboim_moment(system):
+    """The minimum-radius equator, carried from static to the other charts."""
+    inside = system.endswith("inside")
+    ell = 2 if inside else 1
+    source = "static_inside" if inside else "static_outside"
+    def lines(m):
+        lo, hi = m.reach(source, "r")
+        if system.startswith("static_") or system == "radius_inside":
+            return along(0.0, lo, hi)
+        if system.startswith("sliced_"):
+            return along(0.0, ell*math.asin(lo/ell), ell*math.asin(hi/ell))
+        r = np.linspace(lo, hi, N)
+        rho = r/np.sqrt(1-r*r/ell**2)
+        if system.startswith("flat_"):
+            time = -ell*np.log1p(rho*rho/ell**2)/2
+        else:
+            time = -np.sqrt(ell*ell+rho*rho)
+        return [np.column_stack((time, rho))]
+    return one("brown_teitelboim", lines, label="$\\eta = 0$")
+
+
 FLAT = {
+    **{("brown_teitelboim", system, "radial"): (lambda system=system: brown_teitelboim_moment(system))
+       for system in ("static_inside", "static_outside", "sliced_inside", "sliced_outside", "flat_inside",
+                      "flat_outside", "conformal_inside", "conformal_outside", "radius_inside")},
     **{("static_five_soliton",system,"radial"):
        (lambda system=system: one("static_five_soliton",lambda m: along(0.0,*[
            {"spherical":lambda h:1/(1-h*h),

@@ -5610,6 +5610,19 @@ class Slices(unittest.TestCase):
             # radius, its tortoise coordinate and its tau = ln(rho/ell), which bartnik_mckinnon.py
             # integrates and test_bartnik_mckinnon.py holds to these numbers.
             return (lambda X: 0.0), [0.0, BARTNIK_MCKINNON_REACH[key.split("/")[1]]]
+        if key.startswith("brown_teitelboim/"):
+            system = key.split("/")[1]
+            inside = system.endswith("inside")
+            ell = 2 if inside else 1
+            lo, hi = self.reach(surface, "static_inside" if inside else "static_outside")
+            if system.startswith("sliced_"):
+                return (lambda X: 0.0), [ell*math.asin(r/ell) for r in (lo, hi)]
+            if system.startswith(("flat_", "conformal_")):
+                ends = [r/math.sqrt(1-r*r/ell**2) for r in (lo, hi)]
+                if system.startswith("flat_"):
+                    return (lambda X: -ell*math.log1p(X*X/ell**2)/2), ends
+                return (lambda X: -math.sqrt(ell*ell+X*X)), ends
+            return (lambda X: 0.0), [lo, hi]
         if key == "gravastar/interior_tortoise/radial":
             # The tortoise coordinate of the circles the embedding reaches inside the shell, at L = 2 and
             # C = 64/195: x = (L/sqrt(C)) artanh(r/L).

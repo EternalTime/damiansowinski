@@ -46,3 +46,8 @@ The edges mark the sliced charts' boundaries; the drawing does not claim to cove
 The embedding joins the two equatorial spherical caps at the instant of minimum wall radius and stops at $r=0.95$ inside the exterior static horizon.
 The curvature figure reads the stored scalars on each side and excludes the membrane itself, where the thin-wall curvature is distributional.
 Every drawing kind is represented.
+
+The embedded moment is $t_i=t_o=0$, where $\eta=\tau=0$ on the joined slice.
+On the expanding charts its coordinates obey $\rho=r/\sqrt{1-r^2/\ell^2}$ and $T=-\frac{\ell}{2}\log(1+\rho^2/\ell^2)$.
+On the conformally flat charts $\zeta=-\sqrt{\ell^2+\rho^2}$, with the same $\rho$.
+The marked line ends at the reaches of the two embedding pieces or the edge of the displayed view.

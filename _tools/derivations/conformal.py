@@ -27471,6 +27471,10 @@ def brown_teitelboim(ck, src):
     v.legend("surface", "the membrane")
     v.legend("chartedge", "the boundaries of the sliced charts")
     v.set(settings="$\\ell_i = 2$, $\\ell_o = 1$, $R_0 = 1/2$.")
+    for moment in slices.moments("brown_teitelboim", label="$\\eta = 0$"):
+        rim = moment.reach("static_outside", "r")[1]
+        x = math.log(math.tan(math.asin(rim)/2)/math.tan(chi_o/2))
+        v.slice(moment, xt=[[[-pi, 0], [0, 0], [2*math.atan(x), 0]]])
     return [v]
 
 
