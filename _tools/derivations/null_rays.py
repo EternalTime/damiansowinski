@@ -235,6 +235,7 @@ import kodama_kink as kk  # noqa: E402
 import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
 import skyrmion_hair as skyrme_hole  # noqa: E402
+import ori_piran as ori_piran_solution  # noqa: E402
 import black_saturn as bsat  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
 import brill_wave  # noqa: E402
@@ -2639,6 +2640,19 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
 DECLARED_FUNCTIONS.update(skyrme_hole.declared_functions())
 SKYRME_FUNCTIONS = {"N": "skyrme_N(r)", "C": "skyrme_C(r)", "f": "skyrme_f(r)", "m": "skyrme_m(r)"}
 SKYRME_TORTOISE = {"F": "skyrme_N(skyrme_r(xi))**2*skyrme_C(skyrme_r(xi))", "r": "skyrme_r(xi)"}
+DECLARED_FUNCTIONS.update(ori_piran_solution.declared_functions())
+# Self similar collapse drawn as the relativistic Larson-Penston solution at k = 1/100, whose
+# functions of z = r/(-t) ori_piran.py integrates; the sonic point and the null orbit of the
+# scaling symmetry, the past light cone of the singularity, are lines of constant z.
+# The only singular point of either window is the corner t = r = 0, and the printed Kretschmann
+# scalar, expanded, loses every digit to cancellation where z is large, so no view marks it.
+OP_COMOVING = {"sigma": "op_sigma(-r/t)", "omega": "op_omega(-r/t)", "S": "op_S(-r/t)"}
+OP_ZOOMING = {"sigma": "op_sigma(z)", "omega": "op_omega(z)", "S": "op_S(z)"}
+OP_SONIC, OP_NULL = (float(f"{math.exp(x):.6f}") for x in ori_piran_solution.marked_lines())
+OP_INPUT = ("The relativistic Larson-Penston solution at $k = 0.01$, its functions of $z$ integrated "
+            "numerically from a regular centre through an analytic sonic point.")
+OP_SONIC_LEGEND = "the sonic point, $V_z^2 = k$"
+OP_NULL_LEGEND = "the past light cone of the singularity, $V_z^2 = 1$"
 SKYRME_INPUT = ("The massless pion solution at $\\alpha = 0.01$ and $aF_\\pi r_h = 0.1$, "
                 "with $G = aF_\\pi = 1$ in the units of the drawing.")
 
@@ -3165,6 +3179,13 @@ BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi}
                    "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
+    Diagram("ori_piran", "comoving", "radial", "$t$ and $r$", ("t", "r"), (0, 0.6, -1, 0),
+            "$r/\\ell$", "$t/\\ell$", {}, EQUATOR, areal=True, functions=OP_COMOVING, input=OP_INPUT, kretschmann=False,
+            curves=(("mark", f"{OP_SONIC}*(-t)", OP_SONIC_LEGEND), ("past", f"{OP_NULL}*(-t)", OP_NULL_LEGEND))),
+    Diagram("ori_piran", "zooming", "radial", "$\\tau$ and $z$", ("\\tau", "z"), (0, 0.3, 0, 0.3),
+            "$z$", "$\\tau$", {"ell": 1}, EQUATOR, areal=True, tau="tau", functions=OP_ZOOMING, input=OP_INPUT,
+            kretschmann=False,
+            lines=(("mark", "r", str(OP_SONIC), OP_SONIC_LEGEND), ("past", "r", str(OP_NULL), OP_NULL_LEGEND))),
     Diagram("skyrmion_hair", "tortoise", "radial", "$t$ and $\\xi$", ("t", "\\xi"), (-1.65, 3.3, -2.5, 2.5),
             "$aF_\\pi\\xi$", "$aF_\\pi t$", {}, EQUATOR, areal=True,
             functions=SKYRME_TORTOISE, input=SKYRME_INPUT),
@@ -6941,6 +6962,14 @@ CAPTIONS = {
     ] for side in ("inside", "outside") for kind, labels in (
         ("static", "$t$ and $r$"), ("sliced", "$\\eta$ and $\\chi$"),
         ("flat", "$T$ and $\\rho$"), ("conformal", "$\\zeta$ and $\\rho$"))},
+    ("ori_piran", "comoving", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) before the singularity forms at $t = r = 0$, "
+        "with the sonic point and the past light cone of the singularity as lines through it.",
+    ],
+    ("ori_piran", "zooming", "radial"): [
+        "The plane of $\\tau$ and $z$ ($\\theta = \\pi/2$, $\\phi = 0$), where the scaling symmetry is a shift of "
+        "$\\tau$, with the sonic point and the past light cone of the singularity at fixed $z$.",
+    ],
     ("skyrmion_hair", "tortoise", "radial"): [
         "The plane of $t$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$). Light rays run at 45°, with $t \\pm \\xi$ constant, and the horizon is at $\\xi = -\\infty$.",
     ],
