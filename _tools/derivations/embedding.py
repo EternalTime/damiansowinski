@@ -22477,6 +22477,9 @@ DRAWN["hellaby_kruskal"] = hellaby_kruskal
 CAPTIONS[("hellaby_kruskal", "neck")] = [
     "The equatorial surface through the neck at maximum expansion ($t=0$, $\\theta=\\pi/2$)."]
 
+import giddings_strominger_drawings as _giddings_strominger_drawings
+_giddings_strominger_drawings.register_embedding(sys.modules[__name__])
+
 
 import linear_dilaton_figures as _linear_dilaton_figures
 

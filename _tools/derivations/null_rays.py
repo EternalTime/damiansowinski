@@ -19386,6 +19386,9 @@ DIAGRAMS.append(Diagram(
 CAPTIONS[("hellaby_kruskal", "comoving", "neck")] = [
     "The plane of $t$ and $r$ through the neck ($\\theta=\\pi/2$, $\\phi=0$)."]
 
+import giddings_strominger_drawings as _giddings_strominger_drawings
+_giddings_strominger_drawings.register_null(sys.modules[__name__])
+
 
 import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
 _stringy_cosmic_strings_drawings.register_null(sys.modules[__name__])

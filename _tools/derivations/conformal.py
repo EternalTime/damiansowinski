@@ -32270,6 +32270,9 @@ _charged_three_dimensions_drawings.register_conformal(sys.modules[__name__])
 # The explicit dust example has no established global conformal boundary in the cited source.
 NOT_DRAWN.add("hellaby_kruskal")
 
+import giddings_strominger_drawings as _giddings_strominger_drawings
+_giddings_strominger_drawings.register_conformal(sys.modules[__name__])
+
 
 import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
 _stringy_cosmic_strings_drawings.register_conformal(sys.modules[__name__])
