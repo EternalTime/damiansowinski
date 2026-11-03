@@ -905,6 +905,12 @@ DIMENSIONS = {
     ("coleman_de_luccia", "static_outside"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda_F": "1/L**2", "r_w": "L",
     },
+    ("brown_teitelboim", "static_inside"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda_i": "1/L**2", "r_w": "L",
+    },
+    ("brown_teitelboim", "static_outside"): {
+        "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda_o": "1/L**2", "r_w": "L",
+    },
     ("malament_hogarth", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
     },

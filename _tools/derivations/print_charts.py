@@ -37459,6 +37459,9 @@ CHARTS["extended_inflation"] = [lambda s=s: extended.chart_spec(s) for s in exte
 import hosotani_universe as hosotani
 CHARTS["hosotani_universe"] = [lambda s=s: hosotani.chart_spec(s) for s in hosotani.SYSTEMS]
 
+import brown_teitelboim as brown_teitelboim
+CHARTS["brown_teitelboim"] = [lambda s=s: brown_teitelboim.chart_spec(s) for s in brown_teitelboim.SYSTEMS]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])

@@ -1,0 +1,55 @@
+"""Static de Sitter regions of the charged membrane bubble.
+
+Hirano, arXiv:1804.09985, equations (2.28)-(2.29) and (3.3).
+The wall is excluded from the smooth bulk tensors and is matched by Israel's condition.
+"""
+import sympy as sp
+
+SYSTEMS = ("static_inside", "static_outside")
+
+
+def chart_spec(system):
+    import verify_metrics as vm
+
+    inside = system == "static_inside"
+    lam = r"\Lambda_i" if inside else r"\Lambda_o"
+    coords = ["t", "r", r"\theta", r"\phi"]
+    parameters = [lam, "r_w = r_w(t)"]
+    f = rf"1 - \dfrac{{{lam} r^2}}{{3}}"
+    sphere = r"r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)"
+    line = rf"ds^2 = -\left({f}\right)c^2dt^2 + \dfrac{{dr^2}}{{{f}}} + {sphere}"
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "brown_teitelboim",
+        "system": {
+            "id": system,
+            "name": "Static, Inside the Membrane" if inside else "Static, Outside the Membrane",
+            "coords": coords,
+            "parameters": parameters,
+            "domains": [r"t \in (-\infty, \infty)",
+                        r"r \in [0, r_w)" if inside else r"r \in (r_w, \sqrt{3/\Lambda_o})",
+                        r"r < \sqrt{3/\Lambda_i}" if inside else r"\Lambda_o > 0",
+                        r"\theta \in [0, \pi]", r"\phi \in [0, 2\pi)",
+                        r"r = r_w \;\text{(the membrane)}"],
+            "line_element": line,
+        },
+        "chart_line_element": line.replace("c^2dt^2", "dt^2"),
+        "printer": {"lead": [probe.parameters[vm.Reader._plain(lam)], probe.symbol["r"]]},
+        "kretschmann": rf"\dfrac{{8{lam}^2}}{{3}}",
+        "check": lambda chart: check_chart(chart, system),
+    }
+
+
+def check_chart(chart, system):
+    """Check the de Sitter Einstein equation at independent points."""
+    lam = chart.reader.parameters["Lambda_i" if system == "static_inside" else "Lambda_o"]
+    _, r, theta, phi = chart.symbols
+    ricci = chart.geo.ricci_ll()
+    for curvature, radius, angle in ((sp.Rational(3, 4), sp.Rational(1, 2), sp.Rational(2, 3)),
+                                     (sp.Rational(1, 3), sp.Rational(4, 5), sp.Rational(7, 8))):
+        point = {lam: curvature, r: radius, theta: angle, phi: sp.Rational(1, 4)}
+        for i in range(4):
+            for j in range(4):
+                diff = ricci[i][j] - lam * chart.geo.g[i, j]
+                if abs(complex(sp.N(diff.subs(point), 35))) > 1e-25:
+                    raise AssertionError(f"brown_teitelboim/{system}: Ricci equation {i},{j}")

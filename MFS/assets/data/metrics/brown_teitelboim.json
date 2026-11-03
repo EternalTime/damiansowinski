@@ -50,5 +50,52 @@
     "bousso2000flux",
     "caldwell1996"
   ],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "static_inside",
+      "name": "Static, Inside the Membrane",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [],
+      "parameters": [
+        {
+          "symbol": "\\Lambda_i",
+          "description": "Positive cosmological constant inside the membrane, an inverse length squared"
+        },
+        {
+          "symbol": "r_w = r_w(t)",
+          "description": "Areal radius of the membrane in the static time of this region"
+        }
+      ],
+      "convention": "We use static coordinates $(t,r,\\theta,\\phi)$ inside the membrane, with $t$ the static time and $r$ the areal radius. The wall sits at $r=r_w(t)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+      "line_element": ""
+    },
+    {
+      "id": "static_outside",
+      "name": "Static, Outside the Membrane",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [],
+      "parameters": [
+        {
+          "symbol": "\\Lambda_o",
+          "description": "Positive cosmological constant outside the membrane, an inverse length squared"
+        },
+        {
+          "symbol": "r_w = r_w(t)",
+          "description": "Areal radius of the membrane in the static time of this region"
+        }
+      ],
+      "convention": "We use static coordinates $(t,r,\\theta,\\phi)$ outside the membrane, with $t$ the static time and $r$ the areal radius. The wall sits at $r=r_w(t)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+      "line_element": ""
+    }
+  ]
 }
