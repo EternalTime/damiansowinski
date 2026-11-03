@@ -6,12 +6,14 @@ The wall is excluded from the smooth bulk tensors and is matched by Israel's con
 import sympy as sp
 
 SYSTEMS = ("static_inside", "static_outside", "sliced_inside", "sliced_outside",
-           "flat_inside", "flat_outside", "conformal_inside", "conformal_outside")
+           "flat_inside", "flat_outside", "conformal_inside", "conformal_outside", "radius_inside")
 
 
 def chart_spec(system):
     import verify_metrics as vm
 
+    if system == "radius_inside":
+        return radius_spec()
     if system.startswith("sliced_"):
         return sliced_spec(system)
     if system.startswith(("flat_", "conformal_")):
@@ -153,3 +155,34 @@ def check_expanding(chart, system):
                 diff = ricci[i][j] - 3 * chart.geo.g[i, j] / ell**2
                 if abs(complex(sp.N(diff.subs(point), 35))) > 1e-25:
                     raise AssertionError(f"brown_teitelboim/{system}: Ricci equation {i},{j}")
+
+
+def radius_spec():
+    """Hirano's interior sliced chart in wall time and areal radius."""
+    import verify_metrics as vm
+    coords = [r"\tau", "r", r"\theta", r"\phi"]
+    parameters = [r"\ell_i", "R_0"]
+    c = r"\cosh\left(\dfrac{\tau}{R_0}\right)"
+    t = r"\tanh\left(\dfrac{\tau}{R_0}\right)"
+    d = rf"1-\dfrac{{r^2}}{{\ell_i^2 {c}^2}}"
+    line = (rf"ds^2 = \dfrac{{\left(dr-\dfrac{{r}}{{R_0}}{t}d\tau\right)^2}}{{{c}^2\left({d}\right)}}"
+            rf"-\dfrac{{r^2}}{{R_0^2 {c}^2}}d\tau^2+r^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)")
+    return {"metric_id": "brown_teitelboim", "system": {"id": "radius_inside",
+            "name": "Wall Proper Time and Areal Radius, Inside the Membrane", "coords": coords,
+            "parameters": parameters, "domains": [r"\tau \in (-\infty, \infty)",
+            r"r \in (0, R_0\cosh(\tau/R_0))", r"R_0 < \ell_i", r"\theta \in [0, \pi]", r"\phi \in [0, 2\pi)",
+            r"r = R_0\cosh(\tau/R_0) \;\text{(the membrane)}"], "line_element": line},
+            "chart_line_element": line, "printer": {}, "kretschmann": r"\dfrac{24}{\ell_i^4}",
+            "check": check_radius}
+
+
+def check_radius(chart):
+    ell, r0 = chart.reader.parameters["ell_i"], chart.reader.parameters["R_0"]
+    tau, r, theta, phi = chart.symbols
+    ricci = chart.geo.ricci_ll()
+    point = {ell: 2, r0: sp.Rational(1,2), tau: sp.Rational(1,3), r: sp.Rational(1,4),
+             theta: sp.Rational(2,3), phi: sp.Rational(1,5)}
+    for i in range(4):
+        for j in range(4):
+            if abs(complex(sp.N((ricci[i][j] - 3*chart.geo.g[i,j]/ell**2).subs(point), 35))) > 1e-25:
+                raise AssertionError(f"brown_teitelboim/radius_inside: Ricci equation {i},{j}")

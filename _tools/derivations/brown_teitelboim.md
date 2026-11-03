@@ -5,7 +5,9 @@
 Shinji Hirano, arXiv:1804.09985, equations (2.5)-(2.6), (2.16), (2.19), and (3.3), prints the expanding, conformally flat, de Sitter sliced and static forms of de Sitter space.
 The 1987 and 1988 Brown and Teitelboim articles have verified bibliographic records and readable abstracts, but their full texts were not available.
 The derivation below uses Hirano's readable treatment for the equations and credits Brown and Teitelboim for the original construction.
-Each of the eight charts describes one smooth side of the membrane.
+The eight sourced charts each describe one smooth side of the membrane.
+A ninth chart transforms the interior de Sitter slices to the areal radius $r=\ell_i\sin(\chi/\ell_i)\cosh\eta$ and wall proper time $\tau=R_0\eta$, so its membrane follows $r=R_0\cosh(\tau/R_0)$.
+It covers the interior part with $0<\chi<\chi_i<\pi\ell_i/2$.
 The surface itself is not included in the bulk tensor components.
 
 The static charts use $\Lambda_i$ and $\Lambda_o$ and retain the portions where their own lapse is positive.
