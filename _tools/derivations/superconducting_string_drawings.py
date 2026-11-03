@@ -100,5 +100,5 @@ def curvature(cv, ck, src):
     return [{'id': 'exterior', 'label': 'Exterior', 'kind': 'line', 'x': x,
              'panels': [panel], 'curves': curves, 'marks': [],
              'legend': [['line', 'K', 'Kretschmann scalar $K$']],
-             'caption': [r'The Kretschmann scalar $K$ in the exterior, at every $t$, $\phi$ and $z$.'],
+             'caption': [r'The Kretschmann scalar $K$ in the exterior, at every $t$, $\phi$, and $z$.'],
              'settings': SETTINGS, 'clip': r'$1\leq r/\ell\leq 6$ on a logarithmic scale.'}]
