@@ -20,14 +20,13 @@ def embedding(eb, ck, src):
     piece = eb.Piece('cone', 'sheet', sl, .25, 6, 0., 1,
                      (('edge', 'the coincident core lies at $r=0$'),
                       ('edge', 'the cone continues outward')),
-                     [(.25, 'inner', None), (1, 'r', None), (4, 'r', None), (6, 'outer', None)], size)
+                     [(.25, 'chartedge', None), (1, 'r', None), (4, 'r', None), (6, 'chartedge', None)], size)
     ck.isometry('Six string cone', piece)
     surface = eb.Surface([piece])
     fig = eb.figure_of([surface], {'sheet': 'cover'}, size)
     fig.legend('fill', 'cover', 'the transverse cone')
-    fig.legend('line', 'inner', r'$r=\ell/4$')
+    fig.legend('line', 'chartedge', r'$r=\ell/4$ and $r=6\ell$')
     fig.legend('line', 'r', '$r$ constant')
-    fig.legend('line', 'outer', r'$r=6\ell$')
     fig.legend('line', 'meridian', r'$\phi$ constant')
     return [eb.view(VIEW, 'Six string cone', r'$\ell$', [surface], fig.done(), settings=SETTING,
                     input=r'The constant shape limit has $H=\ell/r$.',
