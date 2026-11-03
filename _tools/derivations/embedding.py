@@ -18596,7 +18596,7 @@ NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1"}
 CAPTIONS = {
     ("york_equilibrium", "cavity"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the radiation cavity at one moment of $t$, "
-        "drawn in flat space with distances along the surface read from the first order metric. "
+        "drawn in flat space from the first order metric. "
         "The surface ends at the reflecting wall and approaches the horizon at $r = 2M$.",
     ],
     ("static_five_soliton", "equator"): [
