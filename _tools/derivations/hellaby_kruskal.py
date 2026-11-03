@@ -59,3 +59,57 @@ def dust_check(chart):
                 residual = sp.sympify(tensor[i][j]).xreplace(values) - (density if i == j == 0 else 0)
                 if abs(complex(sp.N(residual, 30))) > 1e-20:
                     raise AssertionError(f"{METRIC}: dust Einstein tensor at {i},{j}")
+
+
+def declared_functions(lw_r):
+    """Regular forms of the chosen cycloid and (1 - exp(-s))/s, with s=r^2."""
+    from functools import lru_cache
+    import numpy as np
+
+    t, s = sp.symbols("_t _s", real=True)
+    mass = (1 + s / 10)**3
+    radius = 2 * mass * sp.exp(s) * lw_r(t * sp.exp(-3 * s / 2) / (2 * mass), 1)
+    made = {}
+
+    @lru_cache(maxsize=None)
+    def radius_jet(i, j):
+        return sp.lambdify((t, s), sp.diff(radius, t, i, s, j), "numpy")
+
+    def radius_type(i, j):
+        name = "hk_radius" if i == j == 0 else f"hk_radius_{i}{j}"
+        if name not in made:
+            def value(tval, sval):
+                return radius_jet(i, j)(tval, sval)
+
+            def fdiff(self, argindex=1):
+                return radius_type(i + (argindex == 1), j + (argindex == 2))(*self.args)
+
+            made[name] = type(name, (sp.Function,), {
+                "nargs": 2, "is_real": True, "_imp_": staticmethod(value), "fdiff": fdiff})
+        return made[name]
+
+    def h_value(sval, order):
+        sval = np.asarray(sval, dtype=float)
+        with np.errstate(all="ignore"):
+            if order == 0:
+                regular = -np.expm1(-sval) / sval
+                series = 1 - sval / 2 + sval**2 / 6 - sval**3 / 24 + sval**4 / 120
+            else:
+                regular = (np.exp(-sval) * (sval + 1) - 1) / sval**2
+                series = -0.5 + sval / 3 - sval**2 / 8 + sval**3 / 30
+            return np.where(np.abs(sval) < 1e-4, series, regular)
+
+    class hk_h1(sp.Function):
+        nargs = 1
+        is_real = True
+        _imp_ = staticmethod(lambda value: h_value(value, 1))
+
+    class hk_h(sp.Function):
+        nargs = 1
+        is_real = True
+        _imp_ = staticmethod(lambda value: h_value(value, 0))
+
+        def fdiff(self, argindex=1):
+            return hk_h1(self.args[0])
+
+    return {"hk_radius": radius_type(0, 0), "hk_h": hk_h, "hk_h1": hk_h1}
