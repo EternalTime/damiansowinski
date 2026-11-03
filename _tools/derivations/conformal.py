@@ -27444,7 +27444,38 @@ def static_five_soliton(ck, src):
     return views
 
 
+def brown_teitelboim(ck, src):
+    """Compactify the two de Sitter-sliced regions with one continuous wall time."""
+    chi_i, chi_o = 2 * math.asin(1/4), math.pi/6
+    def chart(ell, wall):
+        def mapped(eta, chi):
+            x = np.log(np.tan(np.asarray(chi)/(2*ell))/math.tan(wall/(2*ell)))
+            return np.arctan(np.asarray(eta)-x), np.arctan(np.asarray(eta)+x)
+        return mapped
+    left, right = chart(2, chi_i), chart(1, chi_o)
+    pi = math.pi
+    for side, ell, wall, lo, hi, mapper in (("inside", 2, chi_i, 0.01, chi_i-0.01, left),
+                                           ("outside", 1, chi_o, chi_o+0.01, pi-0.01, right)):
+        suffix = "i" if side == "inside" else "o"
+        plane = Plane(src, "brown_teitelboim", "sliced_"+side, ("\\eta", "\\chi"), EQUATOR,
+                      {"ell_"+suffix: ell, "chi_"+suffix: wall})
+        ck.chart("membrane bubble "+side, plane, mapper, ck.uniform(-4,4), ck.uniform(lo,hi), lambda eta, chi:(1,0))
+    eta = np.linspace(-8,8,81)
+    ck.limit("membrane: the two maps meet at the same wall time",
+             np.concatenate(xt(*left(eta, np.full_like(eta, chi_i)))),
+             np.concatenate(xt(*right(eta, np.full_like(eta, chi_o)))), 1e-12)
+    v = View("slices", "de Sitter slices", [-pi-0.2, pi+0.2, -pi-0.2, pi+0.2])
+    v.fill("region", [[-pi,0], [0,pi], [pi,0], [0,-pi]])
+    v.line("chartedge", [[[-pi,0],[0,pi],[pi,0],[0,-pi],[-pi,0]]])
+    v.line("surface", [[[0,-pi],[0,pi]]])
+    v.legend("surface", "the membrane")
+    v.legend("chartedge", "the boundaries of the sliced charts")
+    v.set(settings="$\\ell_i = 2$, $\\ell_o = 1$, $R_0 = 1/2$.")
+    return [v]
+
+
 DRAWN = {
+    "brown_teitelboim": brown_teitelboim,
     "york_equilibrium": york_equilibrium,
     "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
@@ -27625,6 +27656,7 @@ KISELEV_STATIC_CAPTION = [
 ]
 
 CAPTIONS = {
+    ("brown_teitelboim", "slices"): [r"The two de Sitter-sliced regions joined at the membrane ($R_0 = 1/2$)."],
     ("york_equilibrium", "areal"): [
         "The radial plane of the scalar radiation cavity, each point a 2-sphere. "
         "Light travels at $45°$ between the horizon and the reflecting wall. "
