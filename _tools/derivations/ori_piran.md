@@ -28,7 +28,7 @@ The centre's series is integrated outward from $z = 10^{-12}$, and the analytic 
 Three starting guesses reach the same solution, and steps of $10^{-5}$ to $10^{-7}$ off the sonic line and matching points of $10^{-3}$ and $5\times10^{-3}$ change $D$ in its eighth figure.
 The result is $D = 1.4377137$, $y = 0.4145670$ at the sonic point, the sonic point at $z_s = 0.0099012$ and the null orbit of the scaling symmetry, $V_z^2 = 1$, at $z_1 = 0.2013946$.
 Harada and Maeda give $D \approx 1.439$ at $k = 0.01$ and say that it coincides with Ori and Piran's; the integration here differs from it by $0.09$ per cent.
-These are computed diagnostics, not numbers taken from a paper, and the History prints Harada and Maeda's value with their wording.
+These are computed diagnostics, not numbers taken from a paper; the History prints $D \approx 1.44$, the value both round to, with Harada and Maeda's citation.
 Matching along the larger slope did not converge from the same starting guesses.
 
 Along the solution $2m/R < 1$ and $e^{-\omega}(\partial_rR)^2 < 1$ for every $t < 0$, so no sphere is trapped before the singularity forms and the slice of constant $t$ embeds in flat space.
