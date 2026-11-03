@@ -18712,6 +18712,8 @@ CAPTIONS = {
         "drawn in flat space from the first order metric. "
         "The surface ends at the reflecting wall and approaches the horizon at $r = 2M$.",
     ],
+    ("quevedo_mashhoon", "equator"): [
+        "The equatorial spatial slice ($t=0$, $y=0$, $2\\le x\\le 6$), embedded as a surface of revolution."],
     ("static_five_soliton", "equator"): [
         r"The spatial equator ($t=y=0$, $\theta=\pi/2$), in Minkowski space inside $r=36r_s/35$ and Euclidean space beyond. "
         r"The circles approach zero radius at the singularity $h=0$.",
