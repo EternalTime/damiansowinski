@@ -15088,7 +15088,7 @@ def linet_tian(ck, src):
     radius = lambda r: (2 * np.sin(np.asarray(r, dtype=float) / 2)) ** (2 / 3)
     size = 2 * float(radius(np.pi))
     horn = Piece("positive", "sheet", sl, stop, top, 0.0, 1,
-                 (("stops", "the circles grow faster than the distance out to them, and nothing in flat space "
+                 (("stops", "the circles grow faster than the distance out to them, and nothing in Euclidean space "
                             "carries the slice on toward the singular axis"),
                   ("edge", "the tube runs on to the far axis $\\rho = \\pi\\ell$, where the circles of $\\psi$ close")),
                  [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)],
@@ -15108,7 +15108,7 @@ def linet_tian(ck, src):
                       settings="$\\sigma = 1/4$, $B = C = 1$, $\\ell = 1/\\sqrt{3\\Lambda}$.",
                       stops=["Inside $\\rho = 0.29\\,\\ell$ the circles grow faster than the distance out to them, "
                              "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution "
-                             "in flat space carries the slice on to the axis."]))
+                             "in Euclidean space carries the slice on to the axis."]))
 
     name = "Linet-Tian, Lambda < 0, Bonnor's universe"
     sl = Slice(src, "linet_tian", "cylindrical", "\\rho", "\\phi", {"t": 0, "z": 0}, nr.LT_NEGATIVE, space="minkowski")
@@ -15142,7 +15142,7 @@ def linet_tian(ck, src):
                                "$dX^2 + dY^2 - dZ^2$.",
                       stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, "
                              "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
-                             "revolution in flat space carries the surface; Minkowski space carries it."]))
+                             "revolution in Euclidean space carries the surface; Minkowski space carries it."]))
     return views
 
 
