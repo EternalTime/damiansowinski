@@ -6323,6 +6323,45 @@ DIAGRAMS = [
             "$r/b$", "$\\tau$", {"b": 1}, {"x": "0", "z": "0"}, tau="tau"),
 ]
 
+# A membrane with minimum radius 1/2, interior de Sitter radius 2 and exterior radius 1.
+BT_WALL_STATIC = {
+    "inside": "sqrt(1/4 + 15*tanh(t/2)**2/4)",
+    "outside": "sqrt(1/4 + 3*tanh(t)**2/4)",
+}
+BT_WALL_FLAT = {
+    "inside": "2*sqrt(1 + exp(-T) - sqrt(15)*exp(-T/2)/2)",
+    "outside": "sqrt(1 + exp(-2*T) - sqrt(3)*exp(-T))",
+}
+BT_WALL_CONFORMAL = {
+    "inside": "sqrt(4 + zeta**2 + sqrt(15)*zeta)",
+    "outside": "sqrt(1 + zeta**2 + sqrt(3)*zeta)",
+}
+BT_INPUT = "The minimum wall radius is $R_0 = 1/2$."
+for _bt_side in ("inside", "outside"):
+    _bt_inside = _bt_side == "inside"
+    _bt_ell = 2 if _bt_inside else 1
+    _bt_suffix = "i" if _bt_inside else "o"
+    _bt_chi = "2*asin(1/4)" if _bt_inside else "pi/6"
+    DIAGRAMS.extend([
+        Diagram("brown_teitelboim", "static_" + _bt_side, "radial", "$t$ and $r$", ("t", "r"),
+                (0, 1, -0.5, 0.5), "$r$", "$ct$", {"Lambda_" + _bt_suffix: "3/4" if _bt_inside else 3}, EQUATOR,
+                functions={"r_w": BT_WALL_STATIC[_bt_side]}, input=BT_INPUT, areal=True,
+                curves=(("shell", BT_WALL_STATIC[_bt_side], "the membrane"),)),
+        Diagram("brown_teitelboim", "sliced_" + _bt_side, "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
+                (0, 2, -1, 1), "$\\chi$", "$\\tau$", {"ell_" + _bt_suffix: _bt_ell, "chi_" + _bt_suffix: _bt_chi},
+                EQUATOR, to_display=((0, 1), (0.5, 0)), tau="eta",
+                input=BT_INPUT + " The wall's proper time is $\\tau = \\eta/2$.",
+                lines=(("shell", "r", _bt_chi, "the membrane"),)),
+        Diagram("brown_teitelboim", "flat_" + _bt_side, "radial", "$T$ and $\\rho$", ("T", "\\rho"),
+                (0, 2, -1, 1), "$\\rho$", "$T$", {"ell_" + _bt_suffix: _bt_ell}, EQUATOR,
+                tau="T", functions={"s_w": BT_WALL_FLAT[_bt_side]}, input=BT_INPUT,
+                curves=(("shell", BT_WALL_FLAT[_bt_side], "the membrane"),)),
+        Diagram("brown_teitelboim", "conformal_" + _bt_side, "radial", "$\\zeta$ and $\\rho$", ("\\zeta", "\\rho"),
+                (0, 2, -2.1, -0.1), "$\\rho$", "$\\zeta$", {"ell_" + _bt_suffix: _bt_ell}, EQUATOR,
+                tau="zeta", functions={"s_w": BT_WALL_CONFORMAL[_bt_side]}, input=BT_INPUT,
+                curves=(("shell", BT_WALL_CONFORMAL[_bt_side], "the membrane"),)),
+    ])
+
 
 # ---------------------------------------------------------------- the captions
 
@@ -6884,6 +6923,11 @@ def _ht_captions():
 HT_CAPTIONS = _ht_captions()
 
 CAPTIONS = {
+    **{("brown_teitelboim", kind + "_" + side, "radial"): [
+        "The plane of " + labels + " ($\\theta = \\pi/2$, $\\phi = 0$), " + side + " the membrane."
+    ] for side in ("inside", "outside") for kind, labels in (
+        ("static", "$t$ and $r$"), ("sliced", "$\\eta$ and $\\chi$"),
+        ("flat", "$T$ and $\\rho$"), ("conformal", "$\\zeta$ and $\\rho$"))},
     ("skyrmion_hair", "tortoise", "radial"): [
         "The plane of $t$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$). Light rays run at 45°, with $t \\pm \\xi$ constant, and the horizon is at $\\xi = -\\infty$.",
     ],
