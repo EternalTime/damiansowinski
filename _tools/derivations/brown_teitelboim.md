@@ -1,0 +1,38 @@
+# Brown-Teitelboim membrane bubble
+
+## Sources and charts
+
+Shinji Hirano, arXiv:1804.09985, equations (2.5)-(2.6), (2.16), (2.19), and (3.3), prints the expanding, conformally flat, de Sitter sliced and static forms of de Sitter space.
+The 1987 and 1988 Brown and Teitelboim articles have verified bibliographic records and readable abstracts, but their full texts were not available.
+The derivation below uses Hirano's readable treatment for the equations and credits Brown and Teitelboim for the original construction.
+Each of the eight charts describes one smooth side of the membrane.
+The surface itself is not included in the bulk tensor components.
+
+The static charts use $\Lambda_i$ and $\Lambda_o$ and retain the portions where their own lapse is positive.
+The de Sitter sliced charts use the corresponding lengths $\ell_i = \sqrt{3/\Lambda_i}$ and $\ell_o = \sqrt{3/\Lambda_o}$ and place the wall at their respective constant $\chi_i$ and $\chi_o$.
+Their induced radii agree at the membrane, as Hirano (2.34) states.
+The expanding and conformally flat charts use the same radii and a comoving membrane radius $s_w$ in their own time coordinates.
+Each chart's bounds name the side it describes.
+
+## Matching the membrane
+
+In units $c=1$, let $H_i^2=\Lambda_i/3$, $H_o^2=\Lambda_o/3$, and $\beta=4\pi G\sigma$.
+The induced metric is continuous across the wall.
+With the common normal and sign convention in the History, the junction condition is $K_{ab}(o)-K_{ab}(i)=\beta h_{ab}$.
+For a spherical wall of areal radius $R(\tau)$ the angular component is
+
+$$\epsilon_i\sqrt{\dot R^2+1-H_i^2R^2}-\epsilon_o\sqrt{\dot R^2+1-H_o^2R^2}=\beta R,$$
+
+where $\epsilon_i$ and $\epsilon_o$ record the orientation of the areal radius on the two sides.
+Squaring preserves the magnitude of the permitted velocity but the original signed equation must still be checked for a chosen branch.
+For a wall born at rest, the solution is $R(\tau)=R_0\cosh(\tau/R_0)$, with
+
+$$R_0^{-2}=H_o^2+\left(\frac{H_o^2-H_i^2-\beta^2}{2\beta}\right)^2.$$
+
+Hirano (2.28)-(2.37) gives the junction, equal wall radii and the equivalent nucleation radius in terms of charge and flux.
+The page's charged membrane has $E_i=E_o-q$, and Hirano (2.3) gives $\Lambda_i-\Lambda_o=-8\pi Gq(E_o-q/2)$.
+The inequality for a decrease is conditional; Bousso and Polchinski section 3.1 also permits an upward transition.
+
+## Drawings
+
+The spacetime views, conformal diagram, embedding diagram and curvature figure are to be recorded here with their choices and any justified omissions as they are built.
