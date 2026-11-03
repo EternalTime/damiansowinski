@@ -94,27 +94,41 @@ def local_states(k):
 def check_comoving(chart):
     """The Einstein tensor equals 8 pi times the fluid's stresses, rho = eta/(8 pi r^2) and
     P = k rho at rest in the chart, on two local solutions of Harada and Maeda's equations, with
-    e^sigma and e^omega their closed forms; and the mixed G^t_r vanishes there."""
+    e^sigma and e^omega their closed forms; and G_tr vanishes there. Each function and each of
+    its derivatives in the Einstein tensor is replaced by its number at the point."""
     P = chart.reader.parameters
-    t, r = chart.symbols[0], chart.symbols[1]
+    t, r, th = chart.symbols[0], chart.symbols[1], chart.symbols[2]
     sigma, omega, S = P["sigma"], P["omega"], P["S"]
     k = sp.Rational(1, 100)
+    G = chart.geo.einstein_ll()
+    entries = {(i, j): sp.sympify(G[i][j]) for i, j in ((0, 0), (1, 1), (2, 2), (3, 3), (0, 1))}
+    atoms = set()
+    for value in entries.values():
+        atoms |= value.atoms(sp.Derivative) | {f for f in value.atoms(sp.Function) if f in (sigma, omega, S)}
     for state in local_states(k):
         X = sp.log(r / (-t)) - state["x"]
         lS = state["lS"][0] + state["lS"][1] * X + state["lS"][2] * X ** 2 / 2
         le = state["le"][0] + state["le"][1] * X + state["le"][2] * X ** 2 / 2
-        eta = sp.exp(le)
         model = {sigma: 2 * k / (1 + k) * (sp.log(2 * state["D"]) + 2 * sp.log(r / (-t)) - le),
                  omega: -2 / (1 + k) * le - 4 * lS, S: sp.exp(lS)}
-        point = {t: -1, r: sp.exp(state["x"]), chart.symbols[2]: sp.Rational(9, 10)}
-        g = chart.geo.g.subs(model).doit()
-        G = chart.geo.einstein_ll()
-        rho = eta / (8 * sp.pi * r ** 2)
-        u = sp.Matrix([-sp.sqrt(-g[0, 0]), 0, 0, 0])
-        T = (1 + k) * rho * u * u.T + k * rho * g
-        for i, j in ((0, 0), (1, 1), (2, 2), (3, 3), (0, 1)):
-            got = sp.N(sp.sympify(G[i][j]).subs(model).doit().subs(point), 30)
-            want = sp.N((8 * sp.pi * T[i, j]).subs(point), 30)
+        point = {t: -1, r: sp.exp(state["x"]), th: sp.Rational(9, 10)}
+        numbers = {}
+        for atom in atoms:
+            if isinstance(atom, sp.Derivative):
+                value = sp.diff(model[atom.expr], *atom.variable_count)
+            else:
+                value = model[atom]
+            numbers[atom] = sp.N(value.subs(point), 40)
+        rho = sp.N((sp.exp(le) / (8 * sp.pi * r ** 2)).subs(point), 40)
+        lapse = sp.N(sp.exp(model[sigma]).subs(point), 40)
+        g = {(0, 0): -lapse, (1, 1): sp.N(sp.exp(model[omega]).subs(point), 40),
+             (2, 2): sp.N(((r * model[S]) ** 2).subs(point), 40)}
+        g[(3, 3)] = g[(2, 2)] * sp.sin(point[th]) ** 2
+        g[(0, 1)] = 0
+        for (i, j), value in entries.items():
+            got = sp.N(value.xreplace(numbers).subs(point), 30)
+            fluid = k * rho * g[(i, j)] + ((1 + k) * rho * lapse if (i, j) == (0, 0) else 0)
+            want = sp.N(8 * sp.pi * fluid, 30)
             if abs(got - want) > 1e-9 * (1 + abs(want)):
                 raise AssertionError(f"{METRIC}/comoving: Einstein equation {i}{j}, {got} against {want}")
 

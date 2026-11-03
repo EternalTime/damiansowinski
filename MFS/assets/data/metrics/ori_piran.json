@@ -68,6 +68,18 @@
     {
       "id": "comoving",
       "name": "Comoving",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, 0)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
       "parameters": [
         {
           "symbol": "\\sigma = \\sigma(t, r)",
@@ -90,7 +102,1933 @@
           "description": "The constant $D = 4\\pi\\rho_c t^2$, with $\\rho_c$ the central density. A regular centre has $y \\to 1/3$ and $\\eta \\simeq 2Dz^2$ as $z \\to 0$, and a regular sonic point, where $V_z^2 = k$, has $4yk = (1+k)^2\\eta^{-(1-k)/(1+k)}S^{-4}$. The flat Friedmann solution has $D = 2/(3(1+k)^2)$, and the relativistic Larson-Penston solution and the other members are known only numerically."
         }
       ],
-      "convention": "We use Harada and Maeda's comoving coordinates $(t, r)$, both lengths, with $r$ labelling the shells of fluid and the singularity forming at $t = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+      "convention": "We use Harada and Maeda's comoving coordinates $(t, r)$, both lengths, with $r$ labelling the shells of fluid and the singularity forming at $t = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = -e^{\\sigma}dt^2 + e^{\\omega}dr^2 + r^2S^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{\\sigma}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "e^{\\omega}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "S^2\\,r^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "S^2\\,r^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-e^{-\\sigma}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "e^{-\\omega}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{S^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{S^2\\,r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_r\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{-\\sigma}e^{\\omega}\\partial_t\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "S\\,r^2e^{-\\sigma}\\partial_t S"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "S\\,r^2e^{-\\sigma}\\partial_t S\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{-\\omega}e^{\\sigma}\\partial_r\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_t\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\partial_r\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-S\\,r\\left(r\\,\\partial_r S + S\\right)e^{-\\omega}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-S\\,r\\left(r\\,\\partial_r S + S\\right)e^{-\\omega}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_t S}{S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t S}{S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_t S}{S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t S}{S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r S + S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r S + S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r S + S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r S + S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{\\sigma}\\partial_t\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{\\sigma}\\partial_r\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{\\sigma}\\partial_r\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{\\sigma}\\partial_r\\sigma}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{\\omega}\\partial_t\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{\\omega}\\partial_t\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{\\omega}\\partial_t\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-S\\,r^2\\,\\partial_t S"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "S\\,r^2\\,\\partial_t S"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "S\\,r^2\\,\\partial_t S"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-S\\,r^2\\,\\partial_t S\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "S\\,r^2\\,\\partial_t S\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "S\\,r^2\\,\\partial_t S\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{\\omega}\\partial_r\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-S\\,r\\left(r\\,\\partial_r S + S\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "S\\,r\\left(r\\,\\partial_r S + S\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "S\\,r\\left(r\\,\\partial_r S + S\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-S\\,r\\left(r\\,\\partial_r S + S\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "S\\,r\\left(r\\,\\partial_r S + S\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "S\\,r\\left(r\\,\\partial_r S + S\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-S^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "S^2\\,r^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "S^2\\,r^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2\\right)e^{-\\omega}}{4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2\\right)e^{-\\omega}}{4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\omega}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\omega}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\omega}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\omega}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(r^2e^{-\\omega}\\left(\\partial_r S\\right)^2\\,\\sin^2\\theta - r^2e^{-\\sigma}\\left(\\partial_t S\\right)^2\\,\\sin^2\\theta + 2S\\,r\\,e^{-\\omega}\\partial_r S\\,\\sin^2\\theta + S^2e^{-\\omega}\\sin^2\\theta - \\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(r^2e^{-\\omega}\\left(\\partial_r S\\right)^2\\,\\sin^2\\theta - r^2e^{-\\sigma}\\left(\\partial_t S\\right)^2\\,\\sin^2\\theta + 2S\\,r\\,e^{-\\omega}\\partial_r S\\,\\sin^2\\theta + S^2e^{-\\omega}\\sin^2\\theta - \\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2}{4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2}{4}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2e^{\\sigma}\\partial_r^2\\sigma - 2e^{\\omega}\\partial_t^2\\omega + e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - e^{\\omega}\\left(\\partial_t\\omega\\right)^2}{4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\omega}\\partial_t^2 S - r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\sigma\\right)e^{-\\omega}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{S\\,r\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{S\\,r\\left(2r\\,e^{\\sigma}\\partial_r^2 S - r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S\\,e^{\\sigma}\\partial_r\\omega + 4e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "S^2\\,r^2\\left(r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-S^2\\,r^2\\left(r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-S^2\\,r^2\\left(r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "S^2\\,r^2\\left(r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 8r\\,e^{\\omega}\\partial_t^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 4r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 4S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2\\right)e^{-\\omega}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega + 8r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 4r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 4r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 4S\\,e^{\\sigma}\\partial_r\\omega + 16e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 2r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 8S\\,r\\,e^{\\sigma}\\partial_r S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 2r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 8S\\,r\\,e^{\\sigma}\\partial_r S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 4S\\,e^{\\sigma}\\partial_r\\sigma - 4r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - 4r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 8r\\,e^{\\omega}\\partial_t^2 S + 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\omega}e^{-\\sigma}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S\\right)e^{-\\sigma}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\omega}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega + 8r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 4r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 4r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 4S\\,e^{\\sigma}\\partial_r\\omega + 16e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 2r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 8S\\,r\\,e^{\\sigma}\\partial_r S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 2r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 8S\\,r\\,e^{\\sigma}\\partial_r S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2S^2\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 8r\\,e^{\\omega}\\partial_t^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 4r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 4S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2\\right)e^{-\\omega}e^{-2\\sigma}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S\\right)e^{-\\omega}e^{-\\sigma}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S\\right)e^{-\\omega}e^{-\\sigma}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega + 8r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 4r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 4r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 4S\\,e^{\\sigma}\\partial_r\\omega + 16e^{\\sigma}\\partial_r S\\right)e^{-\\sigma}e^{-2\\omega}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 2r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 8S\\,r\\,e^{\\sigma}\\partial_r S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2S^4\\,r^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 2r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 8S\\,r\\,e^{\\sigma}\\partial_r S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\csc^2\\theta}{2S^4\\,r^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 24S\\,r\\,e^{\\sigma}\\partial_r S - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 4S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 4S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 4S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - 4S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - 4S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 8S\\,r^2e^{\\sigma}\\partial_r^2 S + 8S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\omega}e^{-\\sigma}}{2S^2\\,r^2}",
+      "kretschmann": "K = \\dfrac{\\left(4S^4\\,r^4e^{2\\sigma}\\left(\\partial_r^2\\sigma\\right)^2 - 8S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2\\sigma\\,\\partial_t^2\\omega + 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2\\sigma\\,\\partial_t\\sigma\\,\\partial_t\\omega + 4S^4\\,r^4e^{2\\sigma}\\partial_r^2\\sigma\\left(\\partial_r\\sigma\\right)^2 - 4S^4\\,r^4e^{2\\sigma}\\partial_r^2\\sigma\\,\\partial_r\\sigma\\,\\partial_r\\omega - 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2\\sigma\\left(\\partial_t\\omega\\right)^2 + 4S^4\\,r^4e^{2\\omega}\\left(\\partial_t^2\\omega\\right)^2 - 4S^4\\,r^4e^{2\\omega}\\partial_t^2\\omega\\,\\partial_t\\sigma\\,\\partial_t\\omega - 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t^2\\omega\\left(\\partial_r\\sigma\\right)^2 + 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t^2\\omega\\,\\partial_r\\sigma\\,\\partial_r\\omega + 4S^4\\,r^4e^{2\\omega}\\partial_t^2\\omega\\left(\\partial_t\\omega\\right)^2 + 32S^2\\,r^4e^{2\\omega}\\left(\\partial_t^2 S\\right)^2 - 32S^2\\,r^4e^{2\\omega}\\partial_t^2 S\\,\\partial_t\\sigma\\,\\partial_t S - 32S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t^2 S\\,\\partial_r\\sigma\\,\\partial_r S - 32S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t^2 S\\,\\partial_r\\sigma + 32S^2\\,r^4e^{2\\sigma}\\left(\\partial_r^2 S\\right)^2 - 32S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2 S\\,\\partial_t\\omega\\,\\partial_t S - 32S^2\\,r^4e^{2\\sigma}\\partial_r^2 S\\,\\partial_r\\omega\\,\\partial_r S - 32S^3\\,r^3e^{2\\sigma}\\partial_r^2 S\\,\\partial_r\\omega + 128S^2\\,r^3e^{2\\sigma}\\partial_r^2 S\\,\\partial_r S + S^4\\,r^4e^{2\\omega}\\left(\\partial_t\\sigma\\right)^2\\left(\\partial_t\\omega\\right)^2 + 8S^2\\,r^4e^{2\\omega}\\left(\\partial_t\\sigma\\right)^2\\left(\\partial_t S\\right)^2 + 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\left(\\partial_r\\sigma\\right)^2\\,\\partial_t\\omega - 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\,\\partial_r\\sigma\\,\\partial_t\\omega\\,\\partial_r\\omega + 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\,\\partial_r\\sigma\\,\\partial_t S\\,\\partial_r S + 16S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\,\\partial_r\\sigma\\,\\partial_t S - 2S^4\\,r^4e^{2\\omega}\\partial_t\\sigma\\left(\\partial_t\\omega\\right)^3 + S^4\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^4 - 2S^4\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^3\\,\\partial_r\\omega - 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_t\\omega\\right)^2 + S^4\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_r\\omega\\right)^2 - 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_t S\\right)^2 + 8S^2\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_r S\\right)^2 + 16S^3\\,r^3e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2\\,\\partial_r S + 8S^4\\,r^2e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\left(\\partial_t\\omega\\right)^2\\,\\partial_r\\omega - 32S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\,\\partial_t\\omega\\,\\partial_t S\\,\\partial_r S - 32S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\,\\partial_t\\omega\\,\\partial_t S + 64S^2\\,r^3e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\left(\\partial_t S\\right)^2 + 64S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\,\\partial_t S\\,\\partial_t\\partial_r S + S^4\\,r^4e^{2\\omega}\\left(\\partial_t\\omega\\right)^4 + 8S^2\\,r^4e^{2\\omega}\\left(\\partial_t\\omega\\right)^2\\left(\\partial_t S\\right)^2 - 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_t\\omega\\right)^2\\left(\\partial_r S\\right)^2 - 32S^3\\,r^3e^{\\omega}e^{\\sigma}\\left(\\partial_t\\omega\\right)^2\\,\\partial_r S - 16S^4\\,r^2e^{\\omega}e^{\\sigma}\\left(\\partial_t\\omega\\right)^2 + 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_r\\omega\\,\\partial_t S\\,\\partial_r S + 16S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_r\\omega\\,\\partial_t S + 64S^3\\,r^2e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_t S + 64S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_r S\\,\\partial_t\\partial_r S + 64S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_t\\partial_r S + 8S^2\\,r^4e^{2\\sigma}\\left(\\partial_r\\omega\\right)^2\\left(\\partial_r S\\right)^2 + 16S^3\\,r^3e^{2\\sigma}\\left(\\partial_r\\omega\\right)^2\\,\\partial_r S + 8S^4\\,r^2e^{2\\sigma}\\left(\\partial_r\\omega\\right)^2 - 64S^2\\,r^3e^{2\\sigma}\\partial_r\\omega\\left(\\partial_r S\\right)^2 - 64S^3\\,r^2e^{2\\sigma}\\partial_r\\omega\\,\\partial_r S + 16r^4e^{2\\omega}\\left(\\partial_t S\\right)^4 - 32r^4e^{\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2\\left(\\partial_r S\\right)^2 - 64S\\,r^3e^{\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2\\,\\partial_r S - 96S^2\\,r^2e^{\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2 + 32r^2e^{2\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2 - 128S^2\\,r^3e^{\\omega}e^{\\sigma}\\partial_t S\\,\\partial_t\\partial_r S + 16r^4e^{2\\sigma}\\left(\\partial_r S\\right)^4 + 64S\\,r^3e^{2\\sigma}\\left(\\partial_r S\\right)^3 + 224S^2\\,r^2e^{2\\sigma}\\left(\\partial_r S\\right)^2 - 32r^2e^{2\\sigma}e^{\\omega}\\left(\\partial_r S\\right)^2 + 64S^3\\,r\\,e^{2\\sigma}\\partial_r S - 64S\\,r\\,e^{2\\sigma}e^{\\omega}\\partial_r S + 16S^4e^{2\\sigma} - 64S^2\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_t\\partial_r S\\right)^2 - 32S^2e^{2\\sigma}e^{\\omega} + 16e^{2\\omega}e^{2\\sigma}\\right)e^{-2\\omega}e^{-2\\sigma}}{4S^4\\,r^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(e^{\\omega}e^{\\sigma} - S^2e^{\\sigma} - 6S\\,r\\,e^{\\sigma}\\partial_r S - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S\\right)e^{-\\omega}}{S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 4r\\,e^{\\omega}\\partial_t^2 S + 4r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 2r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 2r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 2S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 2r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,e^{\\sigma}\\partial_r\\omega + 8e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S\\,r\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 4r\\,e^{\\omega}\\partial_t^2 S + 4r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 2r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 2r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 2S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 2r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,e^{\\sigma}\\partial_r\\omega + 8e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r^2e^{\\sigma}\\partial_r^2 S - S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 6S\\,r\\,e^{\\sigma}\\partial_r S + S^2e^{\\sigma} - e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S\\right)e^{-\\sigma}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r\\,\\partial_r\\sigma\\,\\partial_t S + r\\,\\partial_t\\omega\\,\\partial_r S + S\\,\\partial_t\\omega - 2\\partial_t S - 2r\\,\\partial_t\\partial_r S\\right)e^{-\\omega}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 4r\\,e^{\\omega}\\partial_t^2 S + 4r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 2r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 2r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 2S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 2r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,e^{\\sigma}\\partial_r\\omega + 8e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{4S\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 4r\\,e^{\\omega}\\partial_t^2 S + 4r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 2r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 2r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 2S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 2r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,e^{\\sigma}\\partial_r\\omega + 8e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{4S\\,r}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(e^{\\omega}e^{\\sigma} - S^2e^{\\sigma} - 6S\\,r\\,e^{\\sigma}\\partial_r S - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2S\\,r^2e^{\\sigma}\\partial_r^2 S\\right)e^{-\\omega}e^{-2\\sigma}}{S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S\\right)e^{-\\omega}e^{-\\sigma}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2r\\,\\partial_t\\partial_r S + 2\\partial_t S - S\\,\\partial_t\\omega - r\\,\\partial_t\\omega\\,\\partial_r S - r\\,\\partial_r\\sigma\\,\\partial_t S\\right)e^{-\\omega}e^{-\\sigma}}{S\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S\\,r^2e^{\\omega}\\partial_t^2 S - S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 - 2S\\,r\\,e^{\\sigma}\\partial_r S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\omega}}{S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 4r\\,e^{\\omega}\\partial_t^2 S + 4r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 2r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 2r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 2S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 2r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,e^{\\sigma}\\partial_r\\omega + 8e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}}{4S^3\\,r^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S\\,r\\,e^{\\sigma}\\partial_r^2\\sigma - 2S\\,r\\,e^{\\omega}\\partial_t^2\\omega - 4r\\,e^{\\omega}\\partial_t^2 S + 4r\\,e^{\\sigma}\\partial_r^2 S + S\\,r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 2r\\,e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S\\,r\\,e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S\\,r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega + 2r\\,e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + 2S\\,e^{\\sigma}\\partial_r\\sigma - S\\,r\\,e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 2r\\,e^{\\omega}\\partial_t\\omega\\,\\partial_t S - 2r\\,e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,e^{\\sigma}\\partial_r\\omega + 8e^{\\sigma}\\partial_r S\\right)e^{-\\omega}e^{-\\sigma}\\csc^2\\theta}{4S^3\\,r^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\sigma}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\sigma}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\omega}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\omega}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\sigma}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\sigma}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\sigma}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S - 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma + 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega + 4S\\,r^2e^{\\sigma}\\partial_r^2 S - 4S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\sigma}}{24S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{12}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}}{12S^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}}{24}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{S^2\\,r^2\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{S^2\\,r^2\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{S^2\\,r^2\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{S^2\\,r^2\\left(2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma - 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega + 4S\\,r^2e^{\\omega}\\partial_t^2 S - 4S\\,r^2e^{\\sigma}\\partial_r^2 S + S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 2S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S + S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - 2S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S - 2S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 + 2S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + 2S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 2S^2\\,r\\,e^{\\sigma}\\partial_r\\omega - 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{\\partial_t\\sigma}{2}\\dot{t}^2 + \\partial_r\\sigma\\,\\dot{t}\\dot{r} + \\dfrac{e^{-\\sigma}e^{\\omega}\\partial_t\\omega}{2}\\dot{r}^2 + S\\,r^2e^{-\\sigma}\\partial_t S\\,\\dot{\\theta}^2 + S\\,r^2e^{-\\sigma}\\partial_t S\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{e^{-\\omega}e^{\\sigma}\\partial_r\\sigma}{2}\\dot{t}^2 + \\partial_t\\omega\\,\\dot{t}\\dot{r} + \\dfrac{\\partial_r\\omega}{2}\\dot{r}^2 - S\\,r\\left(r\\,\\partial_r S + S\\right)e^{-\\omega}\\dot{\\theta}^2 - S\\,r\\left(r\\,\\partial_r S + S\\right)e^{-\\omega}\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\partial_t S}{S}\\dot{t}\\dot{\\theta} + \\dfrac{2r\\,\\partial_r S + 2S}{S\\,r}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\partial_t S}{S}\\dot{t}\\dot{\\phi} + \\dfrac{2r\\,\\partial_r S + 2S}{S\\,r}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
     },
     {
       "id": "zooming",
