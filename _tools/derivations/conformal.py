@@ -27511,7 +27511,7 @@ CAPTIONS = {
     ("york_equilibrium", "areal"): [
         "The radial plane of the scalar radiation cavity, each point a 2-sphere. "
         "Light travels at $45°$ between the horizon and the reflecting wall. "
-        "The tortoise coordinate is integrated from the first order metric and vanishes at the wall.",
+        "The tortoise coordinate vanishes at the wall.",
     ],
     **{("static_five_soliton",s): [
         r"The radial quotient ($\theta=\pi/2$, $\phi=y=0$), with a visible timelike singularity on its left boundary."

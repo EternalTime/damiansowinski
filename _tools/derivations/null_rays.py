@@ -15645,6 +15645,10 @@ def settings(spec, entry):
         # A value that is the root of an equation, as the angle of a lattice's cell is, is shown to four figures.
         shown = (f"{float(value):.4g}" if value.is_Float and len(repr(float(value)).replace(".", "").strip("0")) > 6
                  else sp.latex(value, ln_notation=True))
+        if spec.metric == "york_equilibrium" and plain == "R":
+            shown = sp.latex(value / number(spec.params["M"]), ln_notation=True) + names["M"]
+        elif spec.metric == "york_equilibrium" and plain == "epsilon":
+            shown = str(value)
         parts.append(f"${names[plain]} = {shown}$")
     return ", ".join(parts)
 
