@@ -22221,6 +22221,9 @@ CAPTIONS[("skyrmion_hair", "exterior")] = [
     "The surface climbs with slope $\\sqrt{1/C-1}$ and continues inward to the horizon."
 ]
 
+import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
+_atiyah_hitchin_drawings.register_embedding(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

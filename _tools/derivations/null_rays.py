@@ -19183,6 +19183,9 @@ CAPTIONS.update({
         "Outgoing null radiation carries mass away."],
 })
 
+import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
+_atiyah_hitchin_drawings.register_null(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

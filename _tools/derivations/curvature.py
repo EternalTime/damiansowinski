@@ -18954,6 +18954,9 @@ def skyrmion_hair(ck, src):
 
 DRAWN["skyrmion_hair"] = skyrmion_hair
 
+import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
+_atiyah_hitchin_drawings.register_curvature(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

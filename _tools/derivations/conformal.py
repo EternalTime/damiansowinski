@@ -32089,6 +32089,10 @@ sc_drawings.register_conformal(sys.modules[__name__])
 # Senovilla's subcritical and supercritical collapse models have different causal boundaries.
 NOT_DRAWN.add("mallett_radiating_star")
 
+# The Atiyah-Hitchin space is Riemannian: no light cones and no null infinity.
+import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
+_atiyah_hitchin_drawings.register_conformal(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())
