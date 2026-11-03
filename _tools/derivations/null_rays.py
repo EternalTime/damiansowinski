@@ -2630,6 +2630,7 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
 
 DECLARED_FUNCTIONS.update(skyrme_hole.declared_functions())
 SKYRME_FUNCTIONS = {"N": "skyrme_N(r)", "C": "skyrme_C(r)", "f": "skyrme_f(r)", "m": "skyrme_m(r)"}
+SKYRME_TORTOISE = {"F": "skyrme_N(skyrme_r(xi))**2*skyrme_C(skyrme_r(xi))", "r": "skyrme_r(xi)"}
 SKYRME_INPUT = ("The massless pion solution at $\\alpha = 0.01$ and $aF_\\pi r_h = 0.1$, "
                 "with $G = aF_\\pi = 1$ in the units of the drawing.")
 
@@ -3121,6 +3122,9 @@ BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi}
                    "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
+    Diagram("skyrmion_hair", "tortoise", "radial", "$t$ and $\\xi$", ("t", "\\xi"), (-1.65, 3.3, -2.5, 2.5),
+            "$aF_\\pi\\xi$", "$aF_\\pi t$", {}, EQUATOR, areal=True,
+            functions=SKYRME_TORTOISE, input=SKYRME_INPUT),
     Diagram("skyrmion_hair", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$aF_\\pi r$", "$aF_\\pi t$", {"r_h": 0.1}, EQUATOR, areal=True,
             functions=SKYRME_FUNCTIONS, input=SKYRME_INPUT, where="r - 0.1", edge_horizon=True),
@@ -6806,6 +6810,9 @@ def _ht_captions():
 HT_CAPTIONS = _ht_captions()
 
 CAPTIONS = {
+    ("skyrmion_hair", "tortoise", "radial"): [
+        "The plane of $t$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$). Light rays run at 45°, with $t \\pm \\xi$ constant, and the horizon is at $\\xi = -\\infty$.",
+    ],
     ("skyrmion_hair", "areal", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), with the horizon at $aF_\\pi r = 0.1$.",
     ],
@@ -17522,6 +17529,7 @@ CLOSED_FORMS = {
         (lambda t, r: t + _bm_tortoise(r), lambda t, r: t - _bm_tortoise(r), None),
     ("bartnik_mckinnon", "isotropic", "radial"):
         (lambda t, rho: t + _bm_tortoise(rho, "from_isotropic"), lambda t, rho: t - _bm_tortoise(rho, "from_isotropic"), None),
+    ("skyrmion_hair", "tortoise", "radial"): (lambda t, xi: t + xi, lambda t, xi: t - xi, None),
     ("bartnik_mckinnon", "tortoise", "radial"): (lambda t, xi: t + xi, lambda t, xi: t - xi, None),
     ("bartnik_mckinnon", "flow", "radial"):
         (lambda t, tau: t + _bm_tortoise(np.exp(tau), "from_isotropic"),

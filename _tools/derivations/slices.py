@@ -1069,6 +1069,13 @@ def _kodama_kink_areal(m):
     return along(0.0, k.r0, float(k.values([hi])["r"][0][0]))
 
 
+def _skyrme_tortoise_slice(m):
+    """The areal slice carried to the tortoise coordinate."""
+    import skyrmion_hair
+    lo, hi = m.reach("areal", "r")
+    return along(0.0, skyrmion_hair.tortoise(lo), skyrmion_hair.tortoise(hi))
+
+
 def _bm_radial(which, r):
     """The isotropic radius or the tortoise coordinate of the sphere of areal radius r on Bartnik
     and McKinnon's soliton with one zero, in units of ell."""
@@ -3674,6 +3681,8 @@ FLAT = {
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # Bartnik and McKinnon's soliton with one zero at t = 0, from its centre to the edge of its embedding
     # diagram, in the areal radius and in the three radial coordinates that are functions of it.
+    ("skyrmion_hair", "tortoise", "radial"): lambda: one(
+        "skyrmion_hair", _skyrme_tortoise_slice, view_id="exterior"),
     ("skyrmion_hair", "areal", "radial"): lambda: one(
         "skyrmion_hair", lambda m: along(0.0, *m.reach("areal", "r")), view_id="exterior"),
     ("bartnik_mckinnon", "areal", "radial"): lambda: one("bartnik_mckinnon", lambda m: along(0.0, *m.reach("areal", "r")), view_id="n1"),

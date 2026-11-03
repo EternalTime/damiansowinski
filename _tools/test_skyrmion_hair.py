@@ -62,6 +62,24 @@ class SkyrmionExterior(unittest.TestCase):
                 scale = np.maximum(1e-4, np.abs(middle[derivative]))
                 self.assertLess(float(np.max(np.abs(numerical-middle[derivative])/scale)), 2e-5)
 
+    def test_tortoise_transformation(self):
+        from scipy.integrate import quad
+        for x in (0.101, 0.2, 1.0, 2.0, 4.0):
+            xi = hole.tortoise(x)
+            self.assertAlmostEqual(float(hole.tortoise_radius(xi)), x, places=9)
+            def reciprocal(v):
+                j = hole.jet(v)
+                return 1/float(j['N']*j['C'])
+            expected = quad(reciprocal, 1.0, x, epsabs=1e-9)[0]
+            self.assertAlmostEqual(xi, expected, delta=3e-8)
+        grid = np.array([[-1.0, 0.0], [1.0, 2.0]])
+        self.assertEqual(hole.tortoise_radius(grid).shape, grid.shape)
+        self.assertTrue(np.all(np.isfinite(hole.tortoise_radius(grid))))
+        chart = next(c for c in json.loads((ROOT / 'MFS/assets/data/metrics/skyrmion_hair.json').read_text())['coordinates'] if c['id'] == 'tortoise')
+        components = {tuple(v['indices']): v['value'] for v in chart['metric_components']}
+        self.assertEqual(components[('t', 't')], '-F')
+        self.assertEqual(components[('\\xi', '\\xi')], 'F')
+
     def test_field_equation_in_divergence_form(self):
         # This checks the flux form independently of the second-order equation used to shoot.
         for x in (0.2, 0.4, 0.8, 1.5, 3.0):

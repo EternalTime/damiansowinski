@@ -16314,6 +16314,33 @@
    "\\phi"
   ]
  },
+ "skyrmion_hair/tortoise": {
+  "stamp": "b62f739990565dd0",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "small_universes/horn": {
   "stamp": "46c8cf5b69da1e73",
   "relations": {},

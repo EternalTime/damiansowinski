@@ -127,9 +127,15 @@ def tortoise_solutions():
 
 def tortoise_radius(xi):
     xi = np.asarray(xi, dtype=float)
+    shape = xi.shape
+    values = np.atleast_1d(xi).ravel()
+    result = np.full(values.shape, np.nan)
     left, right = tortoise_solutions()
-    return np.where((xi >= -1.75) & (xi <= 3.4),
-                    np.where(xi < 0, left.sol(xi)[0], right.sol(xi)[0]), np.nan)
+    for mask, solution in (((values >= -1.75) & (values < 0), left),
+                           ((values >= 0) & (values <= 3.4), right)):
+        if np.any(mask):
+            result[mask] = solution.sol(values[mask])[0]
+    return result.reshape(shape)
 
 
 def tortoise(x):
