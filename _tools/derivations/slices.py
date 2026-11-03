@@ -2868,6 +2868,7 @@ FLAT = {
     ("topological_black_hole", "brane", "tz"): lambda: _tbh(brane=True),
     ("topological_black_hole", "static", "massless"): lambda: _tbh_horizon(),
     ("topological_black_hole", "hyperbolic", "massless"): lambda: _tbh_horizon(),
+    ("york_equilibrium", "areal", "radial"): lambda: one("york_equilibrium", lambda m: along(0.0, *m.reach("areal", "r"))),
     ("schwarzschild", "spherical", "radial"): lambda: one("schwarzschild", lambda m: along(0.0, *m.reach("spherical", "r"))),
     ("schwarzschild", "eddington_finkelstein_ingoing", "finkelstein"): lambda: schwarzschild_t(1),
     ("schwarzschild", "eddington_finkelstein_ingoing", "chart"): lambda: schwarzschild_t(1),
