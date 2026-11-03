@@ -37546,6 +37546,8 @@ CHARTS[qm.METRIC] = [lambda system=system: qm.chart_spec(system) for system in q
 import myers_compactified as _myers_compactified
 CHARTS[_myers_compactified.METRIC] = [lambda system=system: _myers_compactified.chart_spec(system)
                                        for system in _myers_compactified.CHARTS]
+import hellaby_kruskal as _hellaby_kruskal
+CHARTS[_hellaby_kruskal.METRIC] = _hellaby_kruskal.chart_spec
 
 
 if __name__ == "__main__":

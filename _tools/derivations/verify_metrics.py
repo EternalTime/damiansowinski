@@ -5410,6 +5410,8 @@ _atiyah_hitchin.register_dimensions(sys.modules[__name__])
 
 import myers_compactified as _myers_compactified
 DIMENSIONS.update(_myers_compactified.DIMENSIONS)
+import hellaby_kruskal as _hellaby_kruskal
+DIMENSIONS.update(_hellaby_kruskal.DIMENSIONS)
 
 
 if __name__ == "__main__":
