@@ -1,0 +1,218 @@
+{
+  "id": "linet_tian",
+  "name": "Linet-Tian Static Cylinder",
+  "short_name": "Linet-Tian",
+  "description": "The static vacuum field with cylindrical symmetry and a cosmological constant, the field outside an infinitely long straight line of mass, which Bernard Linet and Qingjun Tian found independently in 1986. With a negative constant it approaches anti-de Sitter space far from its axis; with a positive one the proper distance from the axis is bounded by $\\pi/\\sqrt{3\\Lambda}$, and the surfaces of constant distance are tori.",
+  "tags": [
+    "Einstein space",
+    "cosmological constant",
+    "static",
+    "stationary",
+    "four-dimensional",
+    "cylindrical symmetry",
+    "line mass",
+    "cosmic string",
+    "curvature singularity",
+    "conical singularity",
+    "torus",
+    "anti-de Sitter",
+    "Petrov type I",
+    "Petrov type D",
+    "instability",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The exponents $p_0$, $p_2$ and $p_3$ are those of Levi-Civita's cylinder in proper distance, with $p_0 + p_2 + p_3 = p_0^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "The static vacuum around an infinitely long straight line of mass, in a universe with a cosmological constant $\\Lambda$, depends only on the proper distance $\\rho$ from the axis. Its line element is $ds^2 = d\\rho^2 + Q^{2/3}\\left(-P^{2p_t}c^2dt^2 + P^{2p_z}dz^2 + P^{2p_\\phi}d\\phi^2/C^2\\right)$, where $Q = \\sin(\\sqrt{3\\Lambda}\\,\\rho)/\\sqrt{3\\Lambda}$ and $P = 2\\tan(\\sqrt{3\\Lambda}\\,\\rho/2)/\\sqrt{3\\Lambda}$ [dasilva2000, zofka2008]. The exponents are $p_t = -(4\\sigma^2 - 8\\sigma + 1)/(3\\Sigma)$, $p_z = (8\\sigma^2 - 4\\sigma - 1)/(3\\Sigma)$, and $p_\\phi = -2(2\\sigma^2 + 2\\sigma - 1)/(3\\Sigma)$, where $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$ [dasilva2000]. Near the axis and as $\\Lambda \\to 0$ both $Q$ and $P$ tend to $\\rho$, and the metric becomes the static cylinder of Tullio Levi-Civita, with $\\sigma$ his mass parameter and $C$ its conicity [dasilva2000, griffiths2010linettian]. For a negative $\\Lambda$ the sine and the tangent become hyperbolic functions of $\\sqrt{3|\\Lambda|}\\,\\rho$ [dasilva2000, zofka2008]. With $\\Lambda \\neq 0$ the Weyl tensor vanishes for no member, so de Sitter and anti-de Sitter space, which are conformally flat, are not among them [dasilva2000, griffiths2010linettian].¶Bernard Linet in Paris and Qingjun Tian in Chicago found these solutions independently, each to describe the field outside a cosmic string [zofka2008, linet1986, tian1986]. Linet's paper was received in October 1985 and Tian's that December [linet1986, tian1986]. Tian wrote that \"all static and cylindrically symmetric vacuum solutions of Einstein's field equation with cosmological constant\" are found [tian1986]. Andrzej Krasiński had given empty space fields with a cosmological constant in 1975, as exteriors for a rotating perfect fluid, with a cross term between time and the angle about the axis [krasinski1975]. Reinaldo Gleiser showed in 2021 that one of Krasiński's four types becomes static under a linear change of its Killing vectors and is then the Linet-Tian family [gleiser2021krasinski, krasinski1975]. Krasiński had left the static case aside, writing that the generalisation of the static vacuum to a nonzero $\\Lambda$ is \"unexpectedly very involved\" [krasinski1975].¶With a negative constant the metric is regular everywhere away from the axis, and far from it every member approaches anti-de Sitter space in horospherical coordinates [zofka2008, dasilva2000, tian1986]. Its axis is singular for every $\\sigma$ except $0$ and $1/2$, as in Levi-Civita's field [dasilva2000]. Martin Žofka and Jiří Bičák built nonsingular cylindrical shells as sources of the field in 2008 [zofka2008]. With $\\Lambda < 0$, $\\sigma = 0$, and $C = 1$ the axis is regular too, and the spacetime has no singularity anywhere [bronnikov2020, sarioglu2009comment]. William Bonnor described this member in 2008 as a second anti-de Sitter universe, \"static, cylindrically symmetric and of Petrov class D\" [bonnor2008second]. Özgür Sarıoğlu and Bayram Tekin identified it with the soliton of anti-de Sitter space found by Gary Horowitz and Robert Myers, through a change of radius that Roberto Emparan suggested [sarioglu2009comment, horowitz1998].¶A positive constant gives $\\rho$ a finite range, from $0$ to $\\pi/\\sqrt{3\\Lambda}$, and the far end is a second curvature singularity unless $\\sigma$ is $-1/2$, $1/4$, or $1$ [dasilva2000, griffiths2010linettian]. Jerry Griffiths and Jiří Podolský showed in 2010 that $z$ is then periodic like $\\phi$, so every surface of constant $\\rho$ is a torus, and each singular end is a closed axis with its own conicity [griffiths2010linettian]. They replaced one singular axis with a toroidal region of the Einstein static universe full of dust, matched to the vacuum across a torus [griffiths2010linettian]. The dust then has a mass per unit length of $\\sigma(1 - \\sigma)/(1 - 4\\sigma^2)$, approximately $\\sigma$ for small values [griffiths2010linettian]. Reflected about the middle of the range of $\\rho$, with $\\phi$ and $z$ exchanged and $C = 1$, the metric with $\\sigma$ becomes the one with $(1 - 4\\sigma)/(4(1 - \\sigma))$, so its far axis carries a source of that strength [griffiths2010linettian]. For a positive constant Tian found three exteriors of a string: a universe with a curvature singularity, one with a conical singularity, and one with no singularity [tian1986].¶Every member with $\\Lambda \\neq 0$ is of Petrov type I except those with $\\sigma = -1/2$, $0$, $1/4$, $1/2$, and $1$, which are of type D and carry a fourth Killing vector [dasilva2000]. At $\\sigma = 0$ that vector is a boost along the axis, and at $\\sigma = \\pm 1/2$ it is a rotation in the plane of $z$ and $\\phi$, which gives those two members plane symmetry [dasilva2000, zofka2008]. With $\\Lambda < 0$ the surface $\\rho = 0$ of the member with $\\sigma = 1/2$ is a horizon, and Žofka and Bičák transformed that member into the static, uncharged black string of José Lemos [dasilva2000, zofka2008, lemos1995]. Griffiths and Podolský found the member with $\\sigma = 0$ to be a generalisation of the B III metric with a cosmological constant, among the solutions of Jerzy Plebański and Marek Demiański without expansion [griffiths2010linettian]. Gleiser found unstable modes of gravitational perturbations with a negative constant in 2017, for a large set of boundary conditions [gleiser2017stability]. With a positive constant he established the linear instability of the family in 2021 [gleiser2021perturbations].",
+  "related": [
+    {
+      "id": "levi_civita",
+      "kind": "special_case",
+      "text": "At $\\Lambda = 0$ both functions of the line element are the proper distance $\\rho$, and the field is Tullio Levi-Civita's cylinder with $\\sigma$ his mass parameter [dasilva2000, griffiths2010linettian]."
+    },
+    {
+      "id": "ads_soliton",
+      "kind": "special_case",
+      "text": "With $\\Lambda < 0$, $\\sigma = 0$, and $C = 1$ the axis is regular and the field is the soliton of anti-de Sitter space, which William Bonnor called a second anti-de Sitter universe [sarioglu2009comment, bonnor2008second]."
+    },
+    {
+      "id": "cosmic_string",
+      "kind": "special_case",
+      "text": "At $\\Lambda = 0$ and $\\sigma = 0$ the field is flat with an angular deficit about the axis, the cosmic string that Bernard Linet and Qingjun Tian set in a universe with a cosmological constant [griffiths2010linettian, zofka2008]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "family",
+      "text": "The flat member of these holes, the static black string of José Lemos, is the field with $\\sigma = 1/2$ and $\\Lambda < 0$, its horizon at $\\rho = 0$ [zofka2008, lemos1995]."
+    },
+    {
+      "id": "schwarzschild_ads",
+      "kind": "family",
+      "text": "Written in horospherical coordinates, this black hole shares the leading terms of the field far from the axis when $\\Lambda < 0$, and the radial dependence of its next terms [zofka2008]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "Every member with $\\Lambda < 0$ approaches anti-de Sitter space far from its axis, in horospherical coordinates [dasilva2000, zofka2008]."
+    },
+    {
+      "id": "einstein_static",
+      "kind": "family",
+      "text": "When $\\Lambda > 0$, a toroidal region of the static universe full of dust can replace one of the two singular axes, and for small $\\sigma$ the dust carries a mass per unit length close to $\\sigma$ [griffiths2010linettian]."
+    },
+    {
+      "id": "ab_metrics",
+      "kind": "family",
+      "text": "The member with $\\sigma = 0$ is a generalisation of the B III metric with a cosmological constant, of type D and in the family of Jerzy Plebański and Marek Demiański without expansion [griffiths2010linettian]."
+    }
+  ],
+  "references": [
+    "dasilva2000",
+    "zofka2008",
+    "griffiths2010linettian",
+    "linet1986",
+    "tian1986",
+    "krasinski1975",
+    "gleiser2021krasinski",
+    "bronnikov2020",
+    "sarioglu2009comment",
+    "bonnor2008second",
+    "horowitz1998",
+    "lemos1995",
+    "gleiser2017stability",
+    "gleiser2021perturbations"
+  ],
+  "coordinates": [
+    {
+      "id": "toroidal",
+      "name": "Toroidal",
+      "parameters": [
+        {
+          "symbol": "\\Lambda",
+          "description": "Cosmological constant, positive here, an inverse length squared"
+        },
+        {
+          "symbol": "B",
+          "description": "Conicity about the axis $\\rho = \\pi/\\sqrt{3\\Lambda}$, dimensionless; with $\\psi$ periodic in $2\\pi$ it fixes the angular deficit there"
+        },
+        {
+          "symbol": "C",
+          "description": "Conicity, dimensionless; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis, which at $\\sigma = 0$ is $2\\pi(1 - 1/C)$"
+        },
+        {
+          "symbol": "p_0",
+          "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+        },
+        {
+          "symbol": "p_2",
+          "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+        },
+        {
+          "symbol": "p_3",
+          "description": "Exponent along $\\psi$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+        },
+        {
+          "symbol": "P = \\dfrac{2}{\\sqrt{3\\Lambda}}\\tan\\left(\\dfrac{\\sqrt{3\\Lambda}\\,\\rho}{2}\\right)",
+          "description": "A length, close to $\\rho$ near the axis and growing without bound as $\\rho \\to \\pi/\\sqrt{3\\Lambda}$, with $dP/d\\rho = 1 + 3\\Lambda P^2/4$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\rho, \\psi, \\phi)$, with $t$ carrying dimensions of time, $\\rho$ the proper distance from the axis $\\rho = 0$, a length, and $\\psi$ and $\\phi$ angles. The factor $(1 + 3\\Lambda P^2/4)^{-2/3}$ is $\\cos^{4/3}(\\sqrt{3\\Lambda}\\,\\rho/2)$, and we evaluate the powers of $P$ with $P$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical",
+      "parameters": [
+        {
+          "symbol": "\\Lambda",
+          "description": "Cosmological constant, negative here, an inverse length squared"
+        },
+        {
+          "symbol": "C",
+          "description": "Conicity, dimensionless; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis, which at $\\sigma = 0$ is $2\\pi(1 - 1/C)$"
+        },
+        {
+          "symbol": "p_0",
+          "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+        },
+        {
+          "symbol": "p_2",
+          "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+        },
+        {
+          "symbol": "p_3",
+          "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+        },
+        {
+          "symbol": "P = \\dfrac{2}{\\sqrt{-3\\Lambda}}\\tanh\\left(\\dfrac{\\sqrt{-3\\Lambda}\\,\\rho}{2}\\right)",
+          "description": "A length, close to $\\rho$ near the axis and tending to $2/\\sqrt{-3\\Lambda}$ far from it, with $dP/d\\rho = 1 + 3\\Lambda P^2/4$"
+        }
+      ],
+      "convention": "We use coordinates $(t, \\rho, z, \\phi)$, with $t$ carrying dimensions of time and $\\rho$, the proper distance from the axis, and $z$ lengths. The factor $(1 + 3\\Lambda P^2/4)^{-2/3}$ is $\\cosh^{4/3}(\\sqrt{-3\\Lambda}\\,\\rho/2)$, and we evaluate the powers of $P$ with $P$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "gleiser",
+      "name": "Gleiser",
+      "parameters": [
+        {
+          "symbol": "\\Lambda",
+          "description": "Cosmological constant, of either sign, an inverse length squared"
+        },
+        {
+          "symbol": "C",
+          "description": "Conicity, dimensionless; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis, which at $\\sigma = 0$ is $2\\pi(1 - 1/C)$"
+        },
+        {
+          "symbol": "p_0",
+          "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+        },
+        {
+          "symbol": "p_2",
+          "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+        },
+        {
+          "symbol": "p_3",
+          "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+        }
+      ],
+      "convention": "We use Gleiser's coordinates $(t, y, z, \\phi)$, with $t$ carrying dimensions of time, $z$ a length and $\\Lambda y = \\sin^2(\\sqrt{3\\Lambda}\\,\\rho/2)$, where $\\rho$ is the proper distance from the axis, so that $t$, $z$ and $\\phi/C$ are those of the proper distance charts multiplied by constants. We evaluate the powers of $y$ and of $1 - \\Lambda y$ with lengths in a fixed unit, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    },
+    {
+      "id": "sarioglu_tekin",
+      "name": "Sarıoğlu-Tekin",
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Radius of anti-de Sitter space, a length, with $\\Lambda = -3/L^2$"
+        },
+        {
+          "symbol": "r_0",
+          "description": "Value of $r$ on the axis, a length"
+        },
+        {
+          "symbol": "C",
+          "description": "Conicity, dimensionless; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis, which at $\\sigma = 0$ is $2\\pi(1 - 1/C)$"
+        },
+        {
+          "symbol": "p_0",
+          "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+        },
+        {
+          "symbol": "p_2",
+          "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+        },
+        {
+          "symbol": "p_3",
+          "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+        },
+        {
+          "symbol": "h = 1 - \\dfrac{r_0^3}{r^3}",
+          "description": "Dimensionless, rising from $0$ on the axis to $1$ far from it, with $dh/dr = 3(1 - h)/r$"
+        }
+      ],
+      "convention": "We use the coordinates $(t, r, z, \\phi)$ of Sarıoğlu and Tekin, with $t$ carrying dimensions of time and $r$ and $z$ lengths, where $r = r_0\\cosh^{2/3}(3\\rho/2L)$ with $\\rho$ the proper distance from the axis, so that $t$, $z$ and $\\phi/C$ are those of the cylindrical chart multiplied by constants. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$."
+    }
+  ]
+}
