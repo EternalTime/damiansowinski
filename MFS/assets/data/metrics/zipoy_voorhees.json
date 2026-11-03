@@ -86,7 +86,7 @@
     {
       "id": "quevedo_mashhoon",
       "kind": "generalisation",
-      "text": "A rotating deformed vacuum field whose static limit with its separate deformation parameter set to zero is the Zipoy-Voorhees field [boshkayev2012qm]."
+      "text": "A rotating deformed vacuum field that becomes the Zipoy-Voorhees field at $a=0$ and $q=0$ [boshkayev2012qm]."
     }
   ],
   "references": [
