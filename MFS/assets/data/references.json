@@ -1,5 +1,5 @@
 {
-  "version": "7913bdea24b51467",
+  "version": "0e77670499eb035e",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35754,6 +35754,84 @@
         "eprint": "2503.18028",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/j.dark.2025.101917"
+      }
+    },
+    "horowitzmaeda2002": {
+      "type": "article",
+      "fields": {
+        "title": "Inhomogeneous near-extremal black branes",
+        "author": "Horowitz, Gary T. and Maeda, Kengo",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "10",
+        "pages": "104028",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.104028",
+        "eprint": "hep-th/0201241",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.65.104028"
+      }
+    },
+    "myers1987compact": {
+      "type": "article",
+      "fields": {
+        "title": "Higher-dimensional black holes in compactified space-times",
+        "author": "Myers, R. C.",
+        "journal": "Physical Review D",
+        "volume": "35",
+        "number": "2",
+        "pages": "455--466",
+        "year": "1987",
+        "doi": "10.1103/PhysRevD.35.455",
+        "url": "https://doi.org/10.1103/PhysRevD.35.455"
+      }
+    },
+    "suzuki2012caged": {
+      "type": "article",
+      "fields": {
+        "title": "Caged black hole with {Maxwell} charge",
+        "author": "Suzuki, Ryotaku and Kinoshita, Shunichiro and Shiromizu, Tetsuya",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "4",
+        "pages": "044018",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.044018",
+        "eprint": "1205.4596",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.044018"
+      }
+    },
+    "kol2006caged": {
+      "type": "article",
+      "fields": {
+        "title": "The phase transition between caged black holes and black strings",
+        "author": "Kol, Barak",
+        "journal": "Physics Reports",
+        "volume": "422",
+        "number": "4",
+        "pages": "119--165",
+        "year": "2006",
+        "doi": "10.1016/j.physrep.2005.10.001",
+        "eprint": "hep-th/0411240",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physrep.2005.10.001"
+      }
+    },
+    "gilmore2009caged": {
+      "type": "article",
+      "fields": {
+        "title": "Caged black hole thermodynamics: charge, the extremal limit, and finite size effects",
+        "author": "Gilmore, James B. and Ross, Andreas and Smolkin, Michael",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2009",
+        "number": "09",
+        "pages": "104",
+        "year": "2009",
+        "doi": "10.1088/1126-6708/2009/09/104",
+        "eprint": "0908.3490",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2009/09/104"
       }
     }
   }

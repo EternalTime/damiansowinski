@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 238,
+  "count": 239,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -7107,6 +7107,11 @@
           "id": "static_five_soliton",
           "kind": "generalisation",
           "text": "The neutral scalar family includes the uniform black string as its member with a regular horizon and constant circle size [lake2006static]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "A charged extremal black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -7135,7 +7140,9 @@
         "gibbons1995",
         "bah2021",
         "herdeiro2014",
-        "lake2006static"
+        "lake2006static",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -33709,6 +33716,11 @@
           "id": "static_five_soliton",
           "kind": "family",
           "text": "A static diagonal geometry supports an independent scalar charge in five dimensional vacuum gravity [lake2006static]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "A five dimensional Einstein-Maxwell black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -33728,7 +33740,9 @@
         "hovdebo2006",
         "gibbons1988",
         "cvetic1996static",
-        "lake2006static"
+        "lake2006static",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json",
@@ -34375,6 +34389,11 @@
           "id": "atiyah_hitchin",
           "kind": "family",
           "text": "The orientifold plane of type IIA string theory, seen in M-theory. Sen set a row of these monopoles beside it to make D6-branes on the plane [sen1997enhanced]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "A charged black hole in five dimensions with a compact spatial circle and a 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -34405,7 +34424,9 @@
         "bah2021",
         "chyba1985",
         "lake2006static",
-        "sen1997enhanced"
+        "sen1997enhanced",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -35743,6 +35764,11 @@
           "id": "lindquist_wheeler_lattice",
           "kind": "family",
           "text": "A universe of uncharged black holes with no cosmological constant, known only approximately: each hole keeps Schwarzschild's geometry inside its cell, and the lattice of cells expands and recollapses [lindquist1957]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "A static extremal charged black hole in five dimensions, with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -35761,7 +35787,9 @@
         "gibbons2010",
         "brill1963",
         "sperhake2015",
-        "lindquist1957"
+        "lindquist1957",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json",
@@ -44618,6 +44646,11 @@
           "id": "bach_weyl_ring",
           "kind": "family",
           "text": "A ring of uncharged matter with the same Newtonian potential as a circle of infinitely many extremal black holes. Oldřich Semerák found that the charged ring lies a finite distance from its centre and Bach and Weyl's an infinite one [semerak2016]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "An extremal charged hole in five dimensions with one spatial direction curled into a circle, made from a periodic row of higher dimensional holes [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -44658,7 +44691,9 @@
         "cvetic1996dyonic",
         "dufflu1991",
         "gibbons1995",
-        "semerak2016"
+        "semerak2016",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -51112,6 +51147,239 @@
       ]
     },
     {
+      "id": "myers_compactified",
+      "name": "Myers Compactified Black Hole",
+      "short_name": "Myers Compactified Hole",
+      "description": "An extremal electrically charged black hole localized on a compact spatial circle in five dimensional Einstein-Maxwell theory, with a round 3-sphere horizon and an infinite throat.",
+      "tags": [
+        "electrovacuum",
+        "static",
+        "stationary",
+        "electric charge",
+        "charged black hole",
+        "black hole",
+        "extremal",
+        "horizon",
+        "event horizon",
+        "harmonic function",
+        "higher dimensions",
+        "five-dimensional",
+        "Kaluza-Klein",
+        "compact dimension",
+        "exact solution",
+        "Lorentzian",
+        "Einstein-Maxwell",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "family",
+          "text": "The extremal charged holes in four dimensions, held at rest by the same balance of electric repulsion and gravity [horowitzmaeda2002, majumdar1947, papapetrou1947]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "A horizon that wraps the compact direction; the uncharged black hole and nonuniform string branches meet in a separate family of vacuum solutions [kol2006caged]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "A spherical black hole in higher dimensions with no charge; its five dimensional horizon is a 3-sphere [kol2006caged, tangherlini1963]."
+        },
+        {
+          "id": "myers_perry",
+          "kind": "family",
+          "text": "Rotating vacuum black holes in higher dimensions, with a spherical horizon in five dimensions [kol2006caged, myers1986]."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "family",
+          "text": "Extremal charged black holes in a universe with a positive cosmological constant, moving with its expansion or contraction [kastor1993]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "A five dimensional vacuum geometry with a compact circle that closes at its centre; the monopole has no horizon [horowitz2012, grossperry1983]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "family",
+          "text": "Charged black holes seen from four dimensions in a five dimensional vacuum geometry with a compact circle [horowitz2012]."
+        }
+      ],
+      "references": [
+        "horowitzmaeda2002",
+        "myers1987compact",
+        "gilmore2009caged",
+        "suzuki2012caged",
+        "kol2006caged",
+        "majumdar1947",
+        "papapetrou1947",
+        "tangherlini1963",
+        "myers1986",
+        "kastor1993",
+        "horowitz2012",
+        "grossperry1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_compactified.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (0,\\infty)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "z \\in [-L/2,L/2)",
+            "r=z=0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(r,z)",
+              "description": "The dimensionless harmonic function $U=1+\\frac{\\pi\\mu}{Lr}\\frac{\\sinh(2\\pi r/L)}{\\cosh(2\\pi r/L)-\\cos(2\\pi z/L)}$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "A positive parameter with units of length squared that fixes the mass and charge"
+            },
+            {
+              "symbol": "L",
+              "description": "The circumference of the compact direction far from the hole"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\theta, \\phi, z)$, with $t$ carrying dimensions of time and $r$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=-\\dfrac{dt^2}{U^2}+U\\left(dr^2+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)+dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "U"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "U"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "U\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "U\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2U\\,r\\,\\partial_r^2 U + 2U\\,r\\,\\partial_z^2 U + 4U\\,\\partial_r U + r\\left(\\partial_r U\\right)^2 + r\\left(\\partial_z U\\right)^2}{2U^3\\,r}",
+          "kretschmann": "K = \\dfrac{127r^2\\left(\\partial_z U\\right)^4 + 127r^2\\left(\\partial_r U\\right)^4 + 64U^2\\left(\\partial_r U\\right)^2 + 32U\\,r\\left(\\partial_r U\\right)^3 + 28U^2\\,r^2\\left(\\partial_z^2 U\\right)^2 + 28U^2\\,r^2\\left(\\partial_r^2 U\\right)^2 + 48U^2\\,r^2\\left(\\partial_r\\partial_z U\\right)^2 + 254r^2\\left(\\partial_r U\\right)^2\\left(\\partial_z U\\right)^2 + 16U^2\\,r\\,\\partial_r U\\,\\partial_z^2 U + 16U^2\\,r\\,\\partial_r U\\,\\partial_r^2 U + 32U\\,r\\,\\partial_r U\\left(\\partial_z U\\right)^2 + 8U^2\\,r^2\\,\\partial_r^2 U\\,\\partial_z^2 U - 104U\\,r^2\\left(\\partial_z U\\right)^2\\,\\partial_z^2 U + 16U\\,r^2\\left(\\partial_r U\\right)^2\\,\\partial_z^2 U - 104U\\,r^2\\left(\\partial_r U\\right)^2\\,\\partial_r^2 U + 16U\\,r^2\\,\\partial_r^2 U\\left(\\partial_z U\\right)^2 - 240U\\,r^2\\,\\partial_r U\\,\\partial_r\\partial_z U\\,\\partial_z U}{4U^6\\,r^2}"
+        },
+        {
+          "id": "spherical",
+          "name": "Spherical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "\\rho \\in (0,\\infty)",
+            "\\chi \\in [0,\\pi]",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "-L/2 < \\rho\\cos\\chi < L/2",
+            "\\rho=0 \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(\\rho,\\chi)",
+              "description": "The dimensionless harmonic function $U=1+\\frac{\\pi\\mu}{Lr}\\frac{\\sinh(2\\pi r/L)}{\\cosh(2\\pi r/L)-\\cos(2\\pi z/L)}$, with $r=\\rho\\sin\\chi$ and $z=\\rho\\cos\\chi$"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "A positive parameter with units of length squared that fixes the mass and charge"
+            },
+            {
+              "symbol": "L",
+              "description": "The circumference of the compact direction far from the hole"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=-\\dfrac{dt^2}{U^2}+U\\left(d\\rho^2+\\rho^2\\left(d\\chi^2+\\sin^2\\chi\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{U^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "U"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "U\\,\\rho^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "U\\,\\rho^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "U\\,\\rho^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{\\left(2U\\,\\rho^2\\,\\partial_\\rho^2 U\\,\\sin\\chi + 6U\\,\\rho\\,\\partial_\\rho U\\,\\sin\\chi + \\rho^2\\left(\\partial_\\rho U\\right)^2\\,\\sin\\chi + 4U\\,\\partial_\\chi U\\,\\cos\\chi + 2U\\,\\partial_\\chi^2 U\\,\\sin\\chi + \\left(\\partial_\\chi U\\right)^2\\,\\sin\\chi\\right)\\csc\\chi}{2U^3\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{\\left(127\\left(\\partial_\\chi U\\right)^4\\,\\sin^2\\chi + 64U^2\\left(\\partial_\\chi U\\right)^2 + 127\\rho^4\\left(\\partial_\\rho U\\right)^4\\,\\sin^2\\chi + 28U^2\\left(\\partial_\\chi^2 U\\right)^2\\,\\sin^2\\chi - 16U^2\\left(\\partial_\\chi U\\right)^2\\,\\sin^2\\chi + 32U\\left(\\partial_\\chi U\\right)^3\\,\\sin\\chi\\cos\\chi + 48U\\,\\rho^3\\left(\\partial_\\rho U\\right)^3\\,\\sin^2\\chi + 28U^2\\,\\rho^4\\left(\\partial_\\rho^2 U\\right)^2\\,\\sin^2\\chi + 48U^2\\,\\rho^2\\left(\\partial_\\rho\\partial_\\chi U\\right)^2\\,\\sin^2\\chi + 108U^2\\,\\rho^2\\left(\\partial_\\rho U\\right)^2\\,\\sin^2\\chi - 104U\\left(\\partial_\\chi U\\right)^2\\,\\partial_\\chi^2 U\\,\\sin^2\\chi + 254\\rho^2\\left(\\partial_\\chi U\\right)^2\\left(\\partial_\\rho U\\right)^2\\,\\sin^2\\chi + 72U^2\\,\\rho\\,\\partial_\\chi^2 U\\,\\partial_\\rho U\\,\\sin^2\\chi - 96U^2\\,\\rho\\,\\partial_\\chi U\\,\\partial_\\rho\\partial_\\chi U\\,\\sin^2\\chi + 16U^2\\,\\partial_\\chi U\\,\\partial_\\chi^2 U\\,\\sin\\chi\\cos\\chi + 168U\\,\\rho\\left(\\partial_\\chi U\\right)^2\\,\\partial_\\rho U\\,\\sin^2\\chi + 24U^2\\,\\rho^3\\,\\partial_\\rho U\\,\\partial_\\rho^2 U\\,\\sin^2\\chi + 8U^2\\,\\rho^2\\,\\partial_\\chi^2 U\\,\\partial_\\rho^2 U\\,\\sin^2\\chi + 144U^2\\,\\rho\\,\\partial_\\chi U\\,\\partial_\\rho U\\,\\sin\\chi\\cos\\chi - 104U\\,\\rho^4\\left(\\partial_\\rho U\\right)^2\\,\\partial_\\rho^2 U\\,\\sin^2\\chi + 16U\\,\\rho^2\\left(\\partial_\\chi U\\right)^2\\,\\partial_\\rho^2 U\\,\\sin^2\\chi + 16U\\,\\rho^2\\,\\partial_\\chi^2 U\\left(\\partial_\\rho U\\right)^2\\,\\sin^2\\chi + 16U^2\\,\\rho^2\\,\\partial_\\chi U\\,\\partial_\\rho^2 U\\,\\sin\\chi\\cos\\chi + 32U\\,\\rho^2\\,\\partial_\\chi U\\left(\\partial_\\rho U\\right)^2\\,\\sin\\chi\\cos\\chi - 240U\\,\\rho^2\\,\\partial_\\chi U\\,\\partial_\\rho U\\,\\partial_\\rho\\partial_\\chi U\\,\\sin^2\\chi\\right)\\csc^2\\chi}{4U^6\\,\\rho^4}"
+        }
+      ]
+    },
+    {
       "id": "myers_perry",
       "name": "Myers-Perry Rotating Black Hole",
       "short_name": "Myers-Perry",
@@ -51179,6 +51447,11 @@
           "id": "string_bh_three_four_charges",
           "kind": "family",
           "text": "Two ways of dressing Tangherlini's hole of five dimensions: spin here, three charges there. Cvetič and Youm's rotating solution has both at once [cvetic1996rotating]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "A static, charged black hole in five dimensions with one spatial direction curled into a circle [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -51201,7 +51474,9 @@
         "grossperry1983",
         "elvang2007",
         "pomeransky2006",
-        "cvetic1996rotating"
+        "cvetic1996rotating",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json",
@@ -64514,6 +64789,11 @@
           "id": "regular_black_hole_pure_gravity",
           "kind": "generalisation",
           "text": "Tangherlini's hole of five dimensions with an infinite tower of curvature terms added to the action. The tower brings a length $\\ell$ and a regular centre, and at $\\ell = 0$ the metric is Tangherlini's [bueno2025regular]."
+        },
+        {
+          "id": "myers_compactified",
+          "kind": "family",
+          "text": "An extremal charged hole with a round 3-sphere horizon in five dimensions and a compact spatial direction [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [
@@ -64540,7 +64820,9 @@
         "elvang2007",
         "horowitz1996",
         "bah2021",
-        "bueno2025regular"
+        "bueno2025regular",
+        "horowitzmaeda2002",
+        "myers1987compact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
