@@ -917,6 +917,18 @@ DIMENSIONS = {
     ("brown_teitelboim", "sliced_outside"): {
         "\\eta": "1", "\\chi": "L", "\\theta": "1", "\\phi": "1", "\\ell_o": "L", "\\chi_o": "L",
     },
+    ("brown_teitelboim", "flat_inside"): {
+        "T": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\ell_i": "L", "s_w": "L",
+    },
+    ("brown_teitelboim", "flat_outside"): {
+        "T": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\ell_o": "L", "s_w": "L",
+    },
+    ("brown_teitelboim", "conformal_inside"): {
+        "\\zeta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\ell_i": "L", "s_w": "L",
+    },
+    ("brown_teitelboim", "conformal_outside"): {
+        "\\zeta": "L", "\\rho": "L", "\\theta": "1", "\\phi": "1", "\\ell_o": "L", "s_w": "L",
+    },
     ("malament_hogarth", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
     },
