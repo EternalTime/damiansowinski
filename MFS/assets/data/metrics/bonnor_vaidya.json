@@ -60,6 +60,11 @@
       "id": "charged_shell",
       "kind": "limit_source",
       "text": "The shell of charged dust, of which a shell of charged light is the limit of no rest mass. The dust turns round at $(q^2 - \\mu^2)/(2m - 2\\mu)$ for a rest mass $\\mu$, which tends to $q^2/2m$ [gao2008]."
+    },
+    {
+      "id": "mallett_radiating_star",
+      "kind": "family",
+      "text": "A spherical radiating body with a positive cosmological constant and no electric charge."
     }
   ],
   "references": [

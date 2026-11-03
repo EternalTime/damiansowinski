@@ -78,6 +78,11 @@
       "id": "hotta_tanaka",
       "kind": "limit",
       "text": "This black hole boosted to the speed of light, a limit taken with the mass going to zero and the energy held fixed. The field ends up on a sphere riding a cosmological horizon, with a massless particle at each pole [hotta1993]."
+    },
+    {
+      "id": "mallett_radiating_star",
+      "kind": "generalisation",
+      "text": "A mass that varies with null time, accompanied by radial radiation in a de Sitter background."
     }
   ],
   "references": [

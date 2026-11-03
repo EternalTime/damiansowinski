@@ -189,6 +189,11 @@
       "id": "extended_inflation",
       "kind": "limit_source",
       "text": "De Sitter expansion is the limit $\\omega \\to \\infty$ at fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface."
+    },
+    {
+      "id": "mallett_radiating_star",
+      "kind": "generalisation",
+      "text": "A spherical source with a changing mass and radial radiation in a de Sitter background."
     }
   ],
   "references": [

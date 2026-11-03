@@ -140,6 +140,11 @@
       "id": "vaidya_patel_kerr",
       "kind": "family",
       "text": "The radiating star set spinning, its rotation parameter growing as its mass radiates away [vaidya1989kerr]."
+    },
+    {
+      "id": "mallett_radiating_star",
+      "kind": "generalisation",
+      "text": "A radiating spherical body in a universe with a positive cosmological constant."
     }
   ],
   "references": [
