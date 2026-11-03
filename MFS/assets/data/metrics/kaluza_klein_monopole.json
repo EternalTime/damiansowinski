@@ -121,6 +121,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "A charged black hole in five dimensions with a compact spatial circle and a 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "stringy_cosmic_strings",
+      "kind": "family",
+      "text": "A straight string whose hidden torus changes shape across space [vafa1996ftheory]."
     }
   ],
   "references": [
@@ -153,7 +158,8 @@
     "lake2006static",
     "sen1997enhanced",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "vafa1996ftheory"
   ],
   "coordinates": [
     {

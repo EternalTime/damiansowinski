@@ -77,6 +77,11 @@
       "id": "charged_three_dimensions",
       "kind": "family",
       "text": "Give the particle a charge, and its electric field, spread over the whole plane, curves spacetime everywhere around it [gott1986charged]."
+    },
+    {
+      "id": "stringy_cosmic_strings",
+      "kind": "family",
+      "text": "Straight strings whose transverse space can close into a sphere as the particles close their space [gibbonsgreenperry1996, deser1984]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "emparan2020qbtz",
     "vuorio1985",
     "louko_marolf1994",
-    "gott1986charged"
+    "gott1986charged",
+    "gibbonsgreenperry1996"
   ],
   "coordinates": [
     {

@@ -49,6 +49,11 @@
       "id": "kiselev",
       "kind": "family",
       "text": "A black hole with a power of $r$ added to Schwarzschild's metric function for matter around it. At $w = -1/3$ the power is zero and the term is the monopole's constant deficit [kiselev2003, visser2020]."
+    },
+    {
+      "id": "stringy_cosmic_strings",
+      "kind": "family",
+      "text": "A straight string with a scalar field for the shape of a hidden torus and finite energy per unit length [vafa1996ftheory]."
     }
   ],
   "references": [
@@ -67,7 +72,8 @@
     "pen1994",
     "pen1997",
     "kiselev2003",
-    "visser2020"
+    "visser2020",
+    "vafa1996ftheory"
   ],
   "coordinates": [
     {

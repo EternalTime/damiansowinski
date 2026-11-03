@@ -98,6 +98,11 @@
       "id": "linet_tian",
       "kind": "generalisation",
       "text": "A string in a universe with a cosmological constant. Bernard Linet and Qingjun Tian each found the static cylindrical vacuum with $\\Lambda$ in 1986 to describe the field outside one [zofka2008]."
+    },
+    {
+      "id": "stringy_cosmic_strings",
+      "kind": "family",
+      "text": "A string whose hidden torus changes shape across space. Far from a single string its transverse space approaches a cone with deficit angle $\\pi/6$ [gibbonsgreenperry1996]."
     }
   ],
   "references": [
@@ -129,7 +134,8 @@
     "podolsky2000snapping",
     "sen1999superconducting",
     "gurtug_sakalli2003",
-    "zofka2008"
+    "zofka2008",
+    "gibbonsgreenperry1996"
   ],
   "coordinates": [
     {
