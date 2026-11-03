@@ -4930,7 +4930,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a53c2e16061c5122",
+    "version": "9cc5e8a3e52721de",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6",
@@ -4959,6 +4959,34 @@
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "984dd972b1a2fddf"
+  },
+  {
+    "id": "ori_piran",
+    "name": "Ori-Piran Collapse",
+    "tags": [
+      "perfect fluid",
+      "equation of state",
+      "self-similar",
+      "gravitational collapse",
+      "naked singularity",
+      "curvature singularity",
+      "null singularity",
+      "cosmic censorship",
+      "Cauchy horizon",
+      "event horizon",
+      "inhomogeneous",
+      "numerical solution",
+      "time-dependent",
+      "spherically symmetric",
+      "four-dimensional",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "8c258dd2255932ab",
+    "diagrams": "ec9b72e6af3c3217",
+    "embedding": "9a304f49d36440a1",
+    "curvature": "8e1d493c97612476"
   },
   {
     "id": "ozsvath_dust",
@@ -5620,7 +5648,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d114a736484ecea8",
+    "version": "f423b2604fe7ecdd",
     "diagrams": "ef50bbbb10b2fcf3",
     "conformal": "7870256e2aa08cb4",
     "embedding": "c4852dac6f3f346e",
@@ -6743,7 +6771,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "27ae6fbb06fac6c9",
+    "version": "a33fa4171cb40329",
     "diagrams": "b997809f786afa14",
     "embedding": "aefa04627c7f6154",
     "curvature": "6ccad476d51a8728"
@@ -6969,7 +6997,7 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "151fd7b1285c0bbd",
+    "version": "fd328c4a63b79360",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",

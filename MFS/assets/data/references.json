@@ -1,5 +1,5 @@
 {
-  "version": "a013f746e38639e9",
+  "version": "ed1b9066367b36b0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36043,6 +36043,177 @@
         "eprint": "hep-th/0004134",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1126-6708/2000/06/006"
+      }
+    },
+    "harada2001convergence": {
+      "type": "article",
+      "fields": {
+        "title": "Convergence to a self-similar solution in general relativistic gravitational collapse",
+        "author": "Harada, Tomohiro and Maeda, Hideki",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "8",
+        "pages": "084022",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.084022",
+        "eprint": "gr-qc/0101064",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.63.084022"
+      }
+    },
+    "carr2003spacetime": {
+      "type": "article",
+      "fields": {
+        "title": "Spacetime structure of self-similar spherically symmetric perfect fluid solutions",
+        "author": "Carr, B. J. and Gundlach, Carsten",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "2",
+        "pages": "024035",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.024035",
+        "eprint": "gr-qc/0209092",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.67.024035"
+      }
+    },
+    "guo2023naked": {
+      "type": "article",
+      "fields": {
+        "title": "Naked Singularities in the Einstein-Euler System",
+        "author": "Guo, Yan and Hadzic, Mahir and Jang, Juhi",
+        "journal": "Annals of PDE",
+        "volume": "9",
+        "number": "1",
+        "pages": "4",
+        "year": "2023",
+        "doi": "10.1007/s40818-022-00144-3",
+        "eprint": "2112.10826",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s40818-022-00144-3"
+      }
+    },
+    "oripiran1987": {
+      "type": "article",
+      "fields": {
+        "title": "Naked singularities in self-similar spherical gravitational collapse",
+        "author": "Ori, Amos and Piran, Tsvi",
+        "journal": "Physical Review Letters",
+        "volume": "59",
+        "number": "19",
+        "pages": "2137--2140",
+        "year": "1987",
+        "doi": "10.1103/PhysRevLett.59.2137",
+        "url": "https://doi.org/10.1103/PhysRevLett.59.2137"
+      }
+    },
+    "oripiran1990": {
+      "type": "article",
+      "fields": {
+        "title": "Naked singularities and other features of self-similar general-relativistic gravitational collapse",
+        "author": "Ori, Amos and Piran, Tsvi",
+        "journal": "Physical Review D",
+        "volume": "42",
+        "number": "4",
+        "pages": "1068--1090",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.42.1068",
+        "url": "https://doi.org/10.1103/PhysRevD.42.1068"
+      }
+    },
+    "gundlach2025critical": {
+      "type": "misc",
+      "fields": {
+        "title": "Critical Phenomena in Gravitational Collapse",
+        "author": "Gundlach, Carsten and Hilditch, David and Martín-García, José M.",
+        "year": "2025",
+        "eprint": "2507.07636",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2507.07636"
+      }
+    },
+    "harada1998final": {
+      "type": "article",
+      "fields": {
+        "title": "Final fate of the spherically symmetric collapse of a perfect fluid",
+        "author": "Harada, Tomohiro",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "10",
+        "pages": "104015",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.104015",
+        "eprint": "gr-qc/9807038",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.58.104015"
+      }
+    },
+    "gundlach2002nonspherical": {
+      "type": "article",
+      "fields": {
+        "title": "Critical gravitational collapse of a perfect fluid: Nonspherical perturbations",
+        "author": "Gundlach, Carsten",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "8",
+        "pages": "084021",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.084021",
+        "eprint": "gr-qc/9906124",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.65.084021"
+      }
+    },
+    "li2025scalar": {
+      "type": "misc",
+      "fields": {
+        "title": "Scalar perturbations to naked singularities of perfect fluid",
+        "author": "Li, Junbin and Zhu, Xi-Ping",
+        "year": "2025",
+        "eprint": "2505.20766",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2505.20766"
+      }
+    },
+    "li2026instability": {
+      "type": "misc",
+      "fields": {
+        "title": "Instability of naked singularities of perfect fluid under $C^{1,\\alpha}$ gravitational perturbations",
+        "author": "Li, Junbin and Li, Tingting and Zhu, Xi-Ping",
+        "year": "2026",
+        "eprint": "2609.23357",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.23357"
+      }
+    },
+    "harada2001stability": {
+      "type": "article",
+      "fields": {
+        "title": "Stability criterion for self-similar solutions with perfect fluids in general relativity",
+        "author": "Harada, Tomohiro",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "18",
+        "number": "21",
+        "pages": "4549--4567",
+        "year": "2001",
+        "doi": "10.1088/0264-9381/18/21/311",
+        "eprint": "gr-qc/0109042",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/18/21/311"
+      }
+    },
+    "evanscoleman1994": {
+      "type": "article",
+      "fields": {
+        "title": "Critical phenomena and self-similarity in the gravitational collapse of radiation fluid",
+        "author": "Evans, Charles R. and Coleman, Jason S.",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "12",
+        "pages": "1782--1785",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.1782",
+        "url": "https://doi.org/10.1103/PhysRevLett.72.1782"
       }
     }
   }

@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 242,
+  "count": 243,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -54881,6 +54881,11 @@
           "id": "hellaby_kruskal",
           "kind": "family",
           "text": "Inhomogeneous dust around a neck joining two regions, expanding from a white hole and collapsing into a black hole [hellaby1987]."
+        },
+        {
+          "id": "ori_piran",
+          "kind": "family",
+          "text": "A ball of fluid with pressure collapsing the same way at every scale. Its singularity is visible from outside when the fluid is soft enough [oripiran1987]."
         }
       ],
       "references": [
@@ -54908,7 +54913,8 @@
         "lewandowski2023",
         "barcelo2014mutiny",
         "bonnor1967oscillating",
-        "hellaby1987"
+        "hellaby1987",
+        "oripiran1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -55357,6 +55363,230 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "ori_piran",
+      "name": "Self Similar Fluid Collapse to a Naked Singularity",
+      "short_name": "Ori-Piran Collapse",
+      "description": "A spherical ball of perfect fluid, its pressure a fixed fraction $k$ of its density, collapsing the same way at every scale and, for small enough $k$, forming a central singularity that light escapes.",
+      "tags": [
+        "perfect fluid",
+        "equation of state",
+        "self-similar",
+        "gravitational collapse",
+        "naked singularity",
+        "curvature singularity",
+        "null singularity",
+        "cosmic censorship",
+        "Cauchy horizon",
+        "event horizon",
+        "inhomogeneous",
+        "numerical solution",
+        "time-dependent",
+        "spherically symmetric",
+        "four-dimensional",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units with $G = c = 1$, and the fluid has density $\\rho$ and pressure $P = k\\rho$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tolman_bondi",
+          "kind": "family",
+          "text": "The same spherical collapse with no pressure, $k = 0$. A dust cloud whose density varies with radius already sends light out from its central singularity to infinity [christodoulou1984]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "Collapse of radiation falling in along light rays. Some collapses of null dust also leave a naked singularity at the centre [papapetrou1985]."
+        },
+        {
+          "id": "roberts",
+          "kind": "family",
+          "text": "Another collapse that looks the same at every scale, of a massless scalar field. At $p = 1$ its singularity lies along a light ray [brady1994]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "A uniform ball of dust collapsing behind a horizon. Ori and Piran found their fluid balls \"quite different from the homogeneous Oppenheimer-Snyder dust collapse solution on which our intuition is so heavily based\" [oripiran1990]."
+        }
+      ],
+      "references": [
+        "harada2001convergence",
+        "carr2003spacetime",
+        "guo2023naked",
+        "oripiran1987",
+        "oripiran1990",
+        "gundlach2025critical",
+        "harada1998final",
+        "penrose1969",
+        "gundlach2002nonspherical",
+        "li2025scalar",
+        "li2026instability",
+        "christodoulou1984",
+        "papapetrou1985",
+        "brady1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ori_piran.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, 0)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma = \\sigma(t, r)",
+              "description": "Lapse exponent, dimensionless, a function of $z = r/(-t)$ alone, $e^{\\sigma} = (2Dz^2/\\eta)^{2k/(1+k)}$, which is 1 at the centre."
+            },
+            {
+              "symbol": "\\omega = \\omega(t, r)",
+              "description": "Radial exponent, dimensionless, a function of $z$ alone, $e^{\\omega} = \\eta^{-2/(1+k)}S^{-4}$, with $\\eta = 8\\pi r^2\\rho$ the density scaled by the square of $r$."
+            },
+            {
+              "symbol": "S = S(t, r)",
+              "description": "Areal radius divided by $r$, dimensionless, a function of $z$ alone. With $M = 2m/r$, where $m$ is the Misner-Sharp mass, $y = M/(\\eta S^3)$, and a prime for $d/d\\ln z$, it obeys $(\\ln S)' = -(1-y)/(1+k)$ and $(\\ln M)' = k(y^{-1}-1)/(1+k)$, under the constraint $(1-y)^2V_z^2 - (k+y)^2 + (1+k)^2\\eta^{-2/(1+k)}S^{-6}(1 - M/S) = 0$, where $V_z = -ze^{(\\omega-\\sigma)/2}$ is the speed of the surfaces of constant $z$ through the fluid."
+            },
+            {
+              "symbol": "k",
+              "description": "Ratio of pressure to density, $P = k\\rho$ with $0 < k < 1$, so the speed of sound is $\\sqrt{k}$."
+            },
+            {
+              "symbol": "D",
+              "description": "The constant $D = 4\\pi\\rho_c t^2$, with $\\rho_c$ the central density. A regular centre has $y \\to 1/3$ and $\\eta \\simeq 2Dz^2$ as $z \\to 0$, and a regular sonic point, where $V_z^2 = k$, has $4yk = (1+k)^2\\eta^{-(1-k)/(1+k)}S^{-4}$. The flat Friedmann solution has $D = 2/(3(1+k)^2)$, and the relativistic Larson-Penston solution and the other members are known only numerically."
+            }
+          ],
+          "convention": "We use Harada and Maeda's comoving coordinates $(t, r)$, both lengths, with $r$ labelling the shells of fluid and the singularity forming at $t = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -e^{\\sigma}dt^2 + e^{\\omega}dr^2 + r^2S^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{\\sigma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "e^{\\omega}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "S^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "S^2\\,r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 24S\\,r\\,e^{\\sigma}\\partial_r S - 4r^2e^{\\sigma}\\left(\\partial_r S\\right)^2 + 4r^2e^{\\omega}\\left(\\partial_t S\\right)^2 + 4S^2\\,r\\,e^{\\sigma}\\partial_r\\omega + 4S\\,r^2e^{\\sigma}\\partial_r\\omega\\,\\partial_r S + 4S\\,r^2e^{\\omega}\\partial_t\\omega\\,\\partial_t S + S^2\\,r^2e^{\\omega}\\left(\\partial_t\\omega\\right)^2 - 4S^2\\,r\\,e^{\\sigma}\\partial_r\\sigma - 4S\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r S + S^2\\,r^2e^{\\sigma}\\partial_r\\sigma\\,\\partial_r\\omega - S^2\\,r^2e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2 - 4S\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t S - S^2\\,r^2e^{\\omega}\\partial_t\\sigma\\,\\partial_t\\omega - 8S\\,r^2e^{\\sigma}\\partial_r^2 S + 8S\\,r^2e^{\\omega}\\partial_t^2 S + 2S^2\\,r^2e^{\\omega}\\partial_t^2\\omega - 2S^2\\,r^2e^{\\sigma}\\partial_r^2\\sigma\\right)e^{-\\omega}e^{-\\sigma}}{2S^2\\,r^2}",
+          "kretschmann": "K = \\dfrac{\\left(4S^4\\,r^4e^{2\\sigma}\\left(\\partial_r^2\\sigma\\right)^2 - 8S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2\\sigma\\,\\partial_t^2\\omega + 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2\\sigma\\,\\partial_t\\sigma\\,\\partial_t\\omega + 4S^4\\,r^4e^{2\\sigma}\\partial_r^2\\sigma\\left(\\partial_r\\sigma\\right)^2 - 4S^4\\,r^4e^{2\\sigma}\\partial_r^2\\sigma\\,\\partial_r\\sigma\\,\\partial_r\\omega - 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2\\sigma\\left(\\partial_t\\omega\\right)^2 + 4S^4\\,r^4e^{2\\omega}\\left(\\partial_t^2\\omega\\right)^2 - 4S^4\\,r^4e^{2\\omega}\\partial_t^2\\omega\\,\\partial_t\\sigma\\,\\partial_t\\omega - 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t^2\\omega\\left(\\partial_r\\sigma\\right)^2 + 4S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t^2\\omega\\,\\partial_r\\sigma\\,\\partial_r\\omega + 4S^4\\,r^4e^{2\\omega}\\partial_t^2\\omega\\left(\\partial_t\\omega\\right)^2 + 32S^2\\,r^4e^{2\\omega}\\left(\\partial_t^2 S\\right)^2 - 32S^2\\,r^4e^{2\\omega}\\partial_t^2 S\\,\\partial_t\\sigma\\,\\partial_t S - 32S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t^2 S\\,\\partial_r\\sigma\\,\\partial_r S - 32S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t^2 S\\,\\partial_r\\sigma + 32S^2\\,r^4e^{2\\sigma}\\left(\\partial_r^2 S\\right)^2 - 32S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_r^2 S\\,\\partial_t\\omega\\,\\partial_t S - 32S^2\\,r^4e^{2\\sigma}\\partial_r^2 S\\,\\partial_r\\omega\\,\\partial_r S - 32S^3\\,r^3e^{2\\sigma}\\partial_r^2 S\\,\\partial_r\\omega + 128S^2\\,r^3e^{2\\sigma}\\partial_r^2 S\\,\\partial_r S + S^4\\,r^4e^{2\\omega}\\left(\\partial_t\\sigma\\right)^2\\left(\\partial_t\\omega\\right)^2 + 8S^2\\,r^4e^{2\\omega}\\left(\\partial_t\\sigma\\right)^2\\left(\\partial_t S\\right)^2 + 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\left(\\partial_r\\sigma\\right)^2\\,\\partial_t\\omega - 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\,\\partial_r\\sigma\\,\\partial_t\\omega\\,\\partial_r\\omega + 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\,\\partial_r\\sigma\\,\\partial_t S\\,\\partial_r S + 16S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t\\sigma\\,\\partial_r\\sigma\\,\\partial_t S - 2S^4\\,r^4e^{2\\omega}\\partial_t\\sigma\\left(\\partial_t\\omega\\right)^3 + S^4\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^4 - 2S^4\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^3\\,\\partial_r\\omega - 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_t\\omega\\right)^2 + S^4\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_r\\omega\\right)^2 - 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_t S\\right)^2 + 8S^2\\,r^4e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2\\left(\\partial_r S\\right)^2 + 16S^3\\,r^3e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2\\,\\partial_r S + 8S^4\\,r^2e^{2\\sigma}\\left(\\partial_r\\sigma\\right)^2 + 2S^4\\,r^4e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\left(\\partial_t\\omega\\right)^2\\,\\partial_r\\omega - 32S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\,\\partial_t\\omega\\,\\partial_t S\\,\\partial_r S - 32S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\,\\partial_t\\omega\\,\\partial_t S + 64S^2\\,r^3e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\left(\\partial_t S\\right)^2 + 64S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_r\\sigma\\,\\partial_t S\\,\\partial_t\\partial_r S + S^4\\,r^4e^{2\\omega}\\left(\\partial_t\\omega\\right)^4 + 8S^2\\,r^4e^{2\\omega}\\left(\\partial_t\\omega\\right)^2\\left(\\partial_t S\\right)^2 - 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_t\\omega\\right)^2\\left(\\partial_r S\\right)^2 - 32S^3\\,r^3e^{\\omega}e^{\\sigma}\\left(\\partial_t\\omega\\right)^2\\,\\partial_r S - 16S^4\\,r^2e^{\\omega}e^{\\sigma}\\left(\\partial_t\\omega\\right)^2 + 16S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_r\\omega\\,\\partial_t S\\,\\partial_r S + 16S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_r\\omega\\,\\partial_t S + 64S^3\\,r^2e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_t S + 64S^2\\,r^4e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_r S\\,\\partial_t\\partial_r S + 64S^3\\,r^3e^{\\omega}e^{\\sigma}\\partial_t\\omega\\,\\partial_t\\partial_r S + 8S^2\\,r^4e^{2\\sigma}\\left(\\partial_r\\omega\\right)^2\\left(\\partial_r S\\right)^2 + 16S^3\\,r^3e^{2\\sigma}\\left(\\partial_r\\omega\\right)^2\\,\\partial_r S + 8S^4\\,r^2e^{2\\sigma}\\left(\\partial_r\\omega\\right)^2 - 64S^2\\,r^3e^{2\\sigma}\\partial_r\\omega\\left(\\partial_r S\\right)^2 - 64S^3\\,r^2e^{2\\sigma}\\partial_r\\omega\\,\\partial_r S + 16r^4e^{2\\omega}\\left(\\partial_t S\\right)^4 - 32r^4e^{\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2\\left(\\partial_r S\\right)^2 - 64S\\,r^3e^{\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2\\,\\partial_r S - 96S^2\\,r^2e^{\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2 + 32r^2e^{2\\omega}e^{\\sigma}\\left(\\partial_t S\\right)^2 - 128S^2\\,r^3e^{\\omega}e^{\\sigma}\\partial_t S\\,\\partial_t\\partial_r S + 16r^4e^{2\\sigma}\\left(\\partial_r S\\right)^4 + 64S\\,r^3e^{2\\sigma}\\left(\\partial_r S\\right)^3 + 224S^2\\,r^2e^{2\\sigma}\\left(\\partial_r S\\right)^2 - 32r^2e^{2\\sigma}e^{\\omega}\\left(\\partial_r S\\right)^2 + 64S^3\\,r\\,e^{2\\sigma}\\partial_r S - 64S\\,r\\,e^{2\\sigma}e^{\\omega}\\partial_r S + 16S^4e^{2\\sigma} - 64S^2\\,r^4e^{\\omega}e^{\\sigma}\\left(\\partial_t\\partial_r S\\right)^2 - 32S^2e^{2\\sigma}e^{\\omega} + 16e^{2\\omega}e^{2\\sigma}\\right)e^{-2\\omega}e^{-2\\sigma}}{4S^4\\,r^4}"
+        },
+        {
+          "id": "zooming",
+          "name": "Zooming",
+          "coordinates": [
+            "\\tau",
+            "z",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\sigma = \\sigma(z)",
+              "description": "Lapse exponent, dimensionless, the same function of $z$ as in the comoving chart."
+            },
+            {
+              "symbol": "\\omega = \\omega(z)",
+              "description": "Radial exponent, dimensionless, the same function of $z$ as in the comoving chart."
+            },
+            {
+              "symbol": "S = S(z)",
+              "description": "Areal radius divided by $\\ell z e^{-\\tau}$, dimensionless, the same function of $z$ as in the comoving chart."
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Any length, the unit $t$ and $r$ are counted in."
+            }
+          ],
+          "convention": "We use Harada and Maeda's zooming coordinates $(\\tau, z)$, both pure numbers, with $t = -\\ell e^{-\\tau}$ and $r = \\ell ze^{-\\tau}$ in the comoving coordinates. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\ell^2e^{-2\\tau}\\left(\\left(z^2\\,e^{\\omega} - e^{\\sigma}\\right)d\\tau^2 - 2z\\,e^{\\omega}d\\tau\\,dz + e^{\\omega}dz^2 + z^2S^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)e^{-2\\tau}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "z"
+              ],
+              "value": "-\\ell^2\\,z\\,e^{-2\\tau}e^{\\omega}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\tau"
+              ],
+              "value": "-\\ell^2\\,z\\,e^{-2\\tau}e^{\\omega}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\ell^2e^{-2\\tau}e^{\\omega}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 24z\\,S\\,e^{\\sigma}\\partial_z S + 16z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 4z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + 4z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,S^2e^{\\sigma}\\partial_z\\sigma - 4z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 4z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 - 8z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + 8z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{2\\ell^2\\,z^2\\,S^2}",
+          "kretschmann": "K = \\dfrac{\\left(4z^4\\,S^4e^{2\\sigma}\\left(\\partial_z^2\\sigma\\right)^2 - 8z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\,\\partial_z^2\\omega + 4z^4\\,S^4e^{2\\sigma}\\partial_z^2\\sigma\\left(\\partial_z\\sigma\\right)^2 + 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\,\\partial_z\\sigma\\,\\partial_z\\omega - 4z^4\\,S^4e^{2\\sigma}\\partial_z^2\\sigma\\,\\partial_z\\sigma\\,\\partial_z\\omega - 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\left(\\partial_z\\omega\\right)^2 - 16z^5\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\,\\partial_z\\omega + 4z^8\\,S^4e^{2\\omega}\\left(\\partial_z^2\\omega\\right)^2 - 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\omega\\left(\\partial_z\\sigma\\right)^2 - 4z^8\\,S^4e^{2\\omega}\\partial_z^2\\omega\\,\\partial_z\\sigma\\,\\partial_z\\omega + 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\omega\\,\\partial_z\\sigma\\,\\partial_z\\omega + 4z^8\\,S^4e^{2\\omega}\\partial_z^2\\omega\\left(\\partial_z\\omega\\right)^2 + 16z^7\\,S^4e^{2\\omega}\\partial_z^2\\omega\\,\\partial_z\\omega + 32z^8\\,S^2e^{2\\omega}\\left(\\partial_z^2 S\\right)^2 - 64z^6\\,S^2e^{\\omega}e^{\\sigma}\\left(\\partial_z^2 S\\right)^2 + 32z^4\\,S^2e^{2\\sigma}\\left(\\partial_z^2 S\\right)^2 - 32z^8\\,S^2e^{2\\omega}\\partial_z^2 S\\,\\partial_z\\sigma\\,\\partial_z S + 32z^6\\,S^2e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\sigma\\,\\partial_z S - 32z^5\\,S^3e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\sigma + 32z^6\\,S^2e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\omega\\,\\partial_z S - 32z^4\\,S^2e^{2\\sigma}\\partial_z^2 S\\,\\partial_z\\omega\\,\\partial_z S + 64z^5\\,S^3e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\omega - 32z^3\\,S^3e^{2\\sigma}\\partial_z^2 S\\,\\partial_z\\omega + 128z^7\\,S^2e^{2\\omega}\\partial_z^2 S\\,\\partial_z S - 256z^5\\,S^2e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z S + 128z^3\\,S^2e^{2\\sigma}\\partial_z^2 S\\,\\partial_z S + z^4\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^4 + 2z^6\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^3\\,\\partial_z\\omega - 2z^4\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^3\\,\\partial_z\\omega + z^8\\,S^4e^{2\\omega}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z\\omega\\right)^2 - 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z\\omega\\right)^2 + z^4\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z\\omega\\right)^2 - 8z^5\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2\\,\\partial_z\\omega + 8z^8\\,S^2e^{2\\omega}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z S\\right)^2 + 8z^4\\,S^2e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z S\\right)^2 + 16z^5\\,S^3e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2\\,\\partial_z S + 16z^3\\,S^3e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2\\,\\partial_z S + 8z^2\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2 - 2z^8\\,S^4e^{2\\omega}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^3 + 2z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^3 - 8z^7\\,S^4e^{2\\omega}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^2 + 8z^5\\,S^4e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^2 - 32z^6\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega\\left(\\partial_z S\\right)^2 - 32z^5\\,S^3e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega\\,\\partial_z S - 64z^7\\,S^2e^{2\\omega}\\partial_z\\sigma\\left(\\partial_z S\\right)^2 + 64z^5\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\left(\\partial_z S\\right)^2 - 64z^4\\,S^3e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + z^8\\,S^4e^{2\\omega}\\left(\\partial_z\\omega\\right)^4 + 8z^7\\,S^4e^{2\\omega}\\left(\\partial_z\\omega\\right)^3 + 8z^8\\,S^2e^{2\\omega}\\left(\\partial_z\\omega\\right)^2\\left(\\partial_z S\\right)^2 + 8z^4\\,S^2e^{2\\sigma}\\left(\\partial_z\\omega\\right)^2\\left(\\partial_z S\\right)^2 - 16z^5\\,S^3e^{\\omega}e^{\\sigma}\\left(\\partial_z\\omega\\right)^2\\,\\partial_z S + 16z^3\\,S^3e^{2\\sigma}\\left(\\partial_z\\omega\\right)^2\\,\\partial_z S + 16z^6\\,S^4e^{2\\omega}\\left(\\partial_z\\omega\\right)^2 - 16z^4\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\omega\\right)^2 + 8z^2\\,S^4e^{2\\sigma}\\left(\\partial_z\\omega\\right)^2 + 64z^5\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\omega\\left(\\partial_z S\\right)^2 - 64z^3\\,S^2e^{2\\sigma}\\partial_z\\omega\\left(\\partial_z S\\right)^2 + 128z^4\\,S^3e^{\\omega}e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 64z^2\\,S^3e^{2\\sigma}\\partial_z\\omega\\,\\partial_z S + 16z^8e^{2\\omega}\\left(\\partial_z S\\right)^4 - 32z^6e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^4 + 16z^4e^{2\\sigma}\\left(\\partial_z S\\right)^4 - 64z^5\\,S\\,e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^3 + 64z^3\\,S\\,e^{2\\sigma}\\left(\\partial_z S\\right)^3 + 128z^6\\,S^2e^{2\\omega}\\left(\\partial_z S\\right)^2 - 288z^4\\,S^2e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^2 + 224z^2\\,S^2e^{2\\sigma}\\left(\\partial_z S\\right)^2 + 32z^4e^{2\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^2 - 32z^2e^{2\\sigma}e^{\\omega}\\left(\\partial_z S\\right)^2 + 64z\\,S^3e^{2\\sigma}\\partial_z S - 64z\\,S\\,e^{2\\sigma}e^{\\omega}\\partial_z S + 16S^4e^{2\\sigma} - 32S^2e^{2\\sigma}e^{\\omega} + 16e^{2\\omega}e^{2\\sigma}\\right)e^{-2\\omega}e^{-2\\sigma}e^{4\\tau}}{4\\ell^4\\,z^4\\,S^4}"
         }
       ]
     },
@@ -62386,6 +62616,11 @@
           "id": "brill_waves",
           "kind": "family",
           "text": "Gravitational waves with nothing else in them, known at one moment. Evolved on a computer they disperse when weak and collapse to a black hole when strong, with the threshold of Holz's wave at $a = 4.70$ [hilditch2017]."
+        },
+        {
+          "id": "ori_piran",
+          "kind": "family",
+          "text": "A ball of fluid with $P = k\\rho$ collapsing the same way at every scale. For radiation, $k = 1/3$, Charles Evans and Jason Coleman found in 1994 that the critical solution at the threshold of black hole formation is one of these self similar fluids, a solution Ori and Piran had already found [harada2001stability, evanscoleman1994]."
         }
       ],
       "references": [
@@ -62404,7 +62639,9 @@
         "christodoulou1994",
         "christodoulou1999",
         "choptuik1996",
-        "hilditch2017"
+        "hilditch2017",
+        "harada2001stability",
+        "evanscoleman1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/roberts.json",
@@ -75881,6 +76118,11 @@
           "id": "hellaby_kruskal",
           "kind": "special_case",
           "text": "A Tolman-Bondi universe with a neck joining two regions of dust, where $1+2E=0$ [hellaby2002, hellaby1987]."
+        },
+        {
+          "id": "ori_piran",
+          "kind": "family",
+          "text": "Spherical collapse with pressure, $P = k\\rho$, that looks the same at every scale. For a soft enough fluid its central singularity is naked too [oripiran1987]."
         }
       ],
       "references": [
@@ -75916,7 +76158,8 @@
         "ruban1969",
         "krasinski1999datt",
         "hellaby2002",
-        "hellaby1987"
+        "hellaby1987",
+        "oripiran1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
@@ -78350,6 +78593,11 @@
           "id": "mallett_radiating_star",
           "kind": "generalisation",
           "text": "A radiating spherical body in a universe with a positive cosmological constant."
+        },
+        {
+          "id": "ori_piran",
+          "kind": "family",
+          "text": "A ball of fluid with pressure collapsing the same way at every scale, whose central singularity is naked when the pressure is a small enough fraction of the density [oripiran1987]."
         }
       ],
       "references": [
@@ -78388,7 +78636,8 @@
         "bondi1962",
         "compere2016final",
         "haggard2015fireworks",
-        "vaidya1989kerr"
+        "vaidya1989kerr",
+        "oripiran1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
