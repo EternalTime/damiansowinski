@@ -29,11 +29,11 @@ def chart_spec(system):
                    r"\theta \in [0,\pi]", r"\phi \in [0,2\pi)",
                    r"-L/2 < \rho\cos\chi < L/2", r"\rho=0 \;\text{(the horizon)}"]
         name = "Spherical"
-    line = r"ds^2=-\dfrac{c^2dt^2}{U^2}+U\left(" + space + r"\right)"
+    line = r"ds^2=-\dfrac{dt^2}{U^2}+U\left(" + space + r"\right)"
     return {"metric_id": METRIC,
             "system": {"id": system, "name": name, "coords": coords, "parameters": params,
                        "domains": domains, "line_element": line},
-            "chart_line_element": line.replace("c^2dt^2", "dt^2"), "printer": {},
+            "chart_line_element": line, "printer": {},
             "check": lambda chart: check_chart(chart, system)}
 
 

@@ -112,7 +112,7 @@
         }
       ],
       "convention": "We use coordinates $(t, r, \\theta, \\phi, z)$, with $t$ carrying dimensions of time and $r$ and $z$ lengths. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
-      "line_element": "ds^2=-\\dfrac{c^2dt^2}{U^2}+U\\left(dr^2+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)+dz^2\\right)",
+      "line_element": "ds^2=-\\dfrac{dt^2}{U^2}+U\\left(dr^2+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)+dz^2\\right)",
       "metric_components": [
         {
           "indices": [
@@ -3378,7 +3378,7 @@
         }
       ],
       "convention": "We use coordinates $(t, \\rho, \\chi, \\theta, \\phi)$, with $t$ carrying dimensions of time and $\\rho$ a length. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
-      "line_element": "ds^2=-\\dfrac{c^2dt^2}{U^2}+U\\left(d\\rho^2+\\rho^2\\left(d\\chi^2+\\sin^2\\chi\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+      "line_element": "ds^2=-\\dfrac{dt^2}{U^2}+U\\left(d\\rho^2+\\rho^2\\left(d\\chi^2+\\sin^2\\chi\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
       "metric_components": [
         {
           "indices": [
