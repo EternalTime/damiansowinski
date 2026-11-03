@@ -511,6 +511,11 @@ def york_equilibrium(ck, src):
     names = list(params)
     K = nr_published(src, metric, chart, "kretschmann", ["r"], names)
     Ric = nr_published(src, metric, chart, "ricci_scalar", ["r"], names)
+    # The held derivatives cancel in the Ricci scalar. Keep the original for
+    # the sixty-digit check and evaluate an equivalent simplified form for
+    # the curve, so floating point subtraction does not lose its small value.
+    stable_R = sp.simplify(Ric.expr)
+    Ric.f = sp.lambdify(Ric.coords + Ric.params, stable_R, nr.numeric_modules(stable_R))
     x_axis = axis("$r/M$", 2, 50)
     K_scale = {"kind": "log", "from": 1e-10, "to": 1}
     R_scale = {"kind": "symlog", "from": -1e-7, "to": 0, "linear": 1e-13}
