@@ -232,7 +232,7 @@ DIMENSIONS = {
     },
     ("york_equilibrium", "areal"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "M": "L", "R": "L",
-        "\\epsilon": "1", "K": "1", "w": "1", "b": "1", "\\mu": "1", "\\rho": "1", "B": "1",
+        "\\epsilon": "1", "N": "1", "w": "1", "b": "1", "\\mu": "1", "\\rho": "1", "B": "1",
     },
     # Both parameters are dimensionless: v_s is the bubble velocity in units of c, so that
     # c v_s f is the shift, and f is the shape function. The solution names no length of its

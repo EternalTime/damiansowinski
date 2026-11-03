@@ -35703,10 +35703,10 @@ CHARTS["murphy_viscous_universe"] = [lambda s=s: murphy_viscous_universe(s) for 
 # -- Scalar field in thermal equilibrium with a black hole -----------------------------
 
 YORK_PARAMS = [
-    "M", "R", "\\epsilon", "K = 3840\\pi", "w = \\dfrac{2M}{r}", "b = \\dfrac{2M}{R}",
-    "\\mu = \\dfrac{1}{2K}\\left(\\dfrac{2}{3}w^{-3}+2w^{-2}+6w^{-1}-8\\ln\\left(w\\right)-10w-6w^2+22w^3-\\dfrac{44}{3}\\right)",
-    "\\rho = \\dfrac{1}{2K}\\left(\\dfrac{2}{3}w^{-2}+4w^{-1}-8\\ln\\left(w\\right)-\\dfrac{40}{3}w-10w^2-\\dfrac{28}{3}w^3+28\\right)",
-    "B = \\dfrac{1}{2K}\\left(\\dfrac{2}{3}b^{-2}+4b^{-1}-8\\ln\\left(b\\right)-\\dfrac{40}{3}b-10b^2-\\dfrac{28}{3}b^3+28\\right)",
+    "M", "R", "\\epsilon", "N = 3840\\pi", "w = \\dfrac{2M}{r}", "b = \\dfrac{2M}{R}",
+    "\\mu = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}w^{-3}+2w^{-2}+6w^{-1}-8\\ln\\left(w\\right)-10w-6w^2+22w^3-\\dfrac{44}{3}\\right)",
+    "\\rho = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}w^{-2}+4w^{-1}-8\\ln\\left(w\\right)-\\dfrac{40}{3}w-10w^2-\\dfrac{28}{3}w^3+28\\right)",
+    "B = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}b^{-2}+4b^{-1}-8\\ln\\left(b\\right)-\\dfrac{40}{3}b-10b^2-\\dfrac{28}{3}b^3+28\\right)",
 ]
 YORK_LINE = ("ds^2=-\\left(1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)\\right)"
              "\\left(1+2\\epsilon\\left(\\rho-B\\right)\\right)dt^2"
