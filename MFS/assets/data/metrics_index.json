@@ -170,6 +170,34 @@
     "embedding": "0e56a5456f5e3b52"
   },
   {
+    "id": "atiyah_hitchin",
+    "name": "Atiyah-Hitchin",
+    "tags": [
+      "vacuum",
+      "four-dimensional",
+      "gravitational instanton",
+      "Riemannian",
+      "no time",
+      "self-dual",
+      "nuts and bolts",
+      "Taub-NUT",
+      "magnetic monopole",
+      "dyon",
+      "soliton",
+      "Kähler",
+      "string theory",
+      "supersymmetric",
+      "topology",
+      "no singularity",
+      "exact solution",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "4fc0b377278eb354",
+    "embedding": "172d5fe27c513dd1",
+    "curvature": "bacbfc82a4fe2273"
+  },
+  {
     "id": "bach_weyl_ring",
     "name": "Bach-Weyl Ring",
     "tags": [
@@ -1787,7 +1815,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "b0c56b0311d76519",
+    "version": "c00d404dbee62201",
     "embedding": "4717367b2f2467bd",
     "curvature": "22c75e43617d680d"
   },
@@ -2567,7 +2595,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "68f9be4929fe0e04",
+    "version": "3d3ad949b63cf595",
     "embedding": "f7b5f03abe971ff6",
     "curvature": "23007b402fd37c38"
   },
@@ -3059,7 +3087,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "df634ea1307d13c1",
+    "version": "924a4b58279e603c",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -6311,7 +6339,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "7bce58d2f839124f",
+    "version": "63941cecb0cb3b9e",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078",
     "curvature": "67bff764e3e14927"

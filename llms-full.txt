@@ -287,6 +287,17 @@ A Schwarzschild black hole with a straight cosmic string through it. Off the axi
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + b^2\sin^2\theta\,d\phi^2\right)$$
 
+### Atiyah-Hitchin Space
+
+A space of four dimensions with no time in it, the moduli space of two slowly moving magnetic monopoles that Michael Atiyah and Nigel Hitchin found in 1985: a smooth solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. It closes on a 2-sphere at its core, and far away it is the self dual Taub-NUT space with a negative mass.
+
+- id: `atiyah_hitchin`
+- tags: vacuum, four-dimensional, gravitational instanton, Riemannian, no time, self-dual, nuts and bolts, Taub-NUT, magnetic monopole, dyon, soliton, Kähler, string theory, supersymmetric, topology, no singularity, exact solution, Einstein equations, idealized model
+- signature: (+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/atiyah_hitchin.json
+- chart Elliptic Modulus: coordinates $(k, \theta, \phi, \psi)$, $$ds^2 = \dfrac{4n^2E\left(K - E\right)\left(E - \left(1 - k^2\right)K\right)}{k^2\left(1 - k^2\right)^2K}dk^2 + \dfrac{4n^2K\left(K - E\right)\left(E - \left(1 - k^2\right)K\right)}{E}\left(\sin\psi\,d\theta - \cos\psi\sin\theta\,d\phi\right)^2 + \dfrac{4n^2KE\left(K - E\right)}{E - \left(1 - k^2\right)K}\left(\cos\psi\,d\theta + \sin\psi\sin\theta\,d\phi\right)^2 + \dfrac{4n^2KE\left(E - \left(1 - k^2\right)K\right)}{K - E}\left(d\psi + \cos\theta\,d\phi\right)^2$$
+- chart Gibbons-Manton Radius: coordinates $(r, \theta, \phi, \psi)$, $$ds^2 = \dfrac{b^2}{r^2}dr^2 + a^2\left(\sin\psi\,d\theta - \cos\psi\sin\theta\,d\phi\right)^2 + b^2\left(\cos\psi\,d\theta + \sin\psi\sin\theta\,d\phi\right)^2 + c^2\left(d\psi + \cos\theta\,d\phi\right)^2$$
+
 ### Bach-Weyl Ring
 
 The static vacuum field of a thin circular ring of matter in Weyl's class, written down by Rudolf Bach in 1922 in a paper with a supplement by Hermann Weyl. Its Weyl potential is Newton's potential of a hoop, a complete elliptic integral. The ring is a naked singularity that lies a finite distance away from outside and an infinite distance away from inside.

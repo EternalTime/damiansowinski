@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 235,
+  "count": 236,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -2492,6 +2492,273 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "atiyah_hitchin",
+      "name": "Atiyah-Hitchin Space",
+      "short_name": "Atiyah-Hitchin",
+      "description": "A space of four dimensions with no time in it, the moduli space of two slowly moving magnetic monopoles that Michael Atiyah and Nigel Hitchin found in 1985: a smooth solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. It closes on a 2-sphere at its core, and far away it is the self dual Taub-NUT space with a negative mass.",
+      "tags": [
+        "vacuum",
+        "four-dimensional",
+        "gravitational instanton",
+        "Riemannian",
+        "no time",
+        "self-dual",
+        "nuts and bolts",
+        "Taub-NUT",
+        "magnetic monopole",
+        "dyon",
+        "soliton",
+        "Kähler",
+        "string theory",
+        "supersymmetric",
+        "topology",
+        "no singularity",
+        "exact solution",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "The length $n$ is the space's only parameter. All four coordinates are spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "Hawking's self dual Taub-NUT instanton is smooth, Ricci flat, and self dual, as this space is. Far from its core this space is that instanton with its mass made negative, singular at $r = 2n$, and corrections that fall off as $e^{-r/n}$ remove the singularity [gibbonsmanton1995, tong2005]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "family",
+          "text": "In Atiyah and Hitchin's classification of 1985, Eguchi and Hanson's space is the smooth solution on the branch where the rotations leave the complex structures fixed, and this space is one of those on the branch where they turn them [weinbergyi2007, atiyahmantonschroers2012]. Both close on a 2-sphere."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "Taub-NUT continued to Euclidean signature, in its self dual case and with the sign of its mass reversed, is this space far from its core, up to corrections that fall off as $e^{-r/n}$ [gibbonsmanton1995, ghezelbashmann2004]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Euclidean Taub-NUT space with a time added. In M-theory, $N$ of these monopoles set beside this space are $N$ D6-branes on the orientifold plane of type IIA string theory [sen1997enhanced]."
+        }
+      ],
+      "references": [
+        "atiyahhitchin1988",
+        "bachmaier2025",
+        "manton1982",
+        "weinbergyi2007",
+        "tong2005",
+        "gibbonsmanton1986",
+        "atiyahhitchin1985",
+        "hananypioline2000",
+        "ghezelbashmann2004",
+        "atiyahhitchin1985trans",
+        "gibbonsmanton1995",
+        "seibergwitten1997",
+        "hawking1977",
+        "manton1985",
+        "dorey1997",
+        "sen1997enhanced",
+        "schroerssinger2021",
+        "atiyahmantonschroers2012"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/atiyah_hitchin.json",
+      "charts": [
+        {
+          "id": "modulus",
+          "name": "Elliptic Modulus",
+          "coordinates": [
+            "k",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "k \\in [0, 1)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, \\pi)",
+            "(k, \\theta, \\phi, \\psi) \\sim (k, \\pi - \\theta, \\phi + \\pi, -\\psi) \\;\\text{(the exchange of the two monopoles)}",
+            "k = 0 \\;\\text{(the core, a real projective plane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The space's one length: far from the core $c \\to -2n$, and the core $k = 0$ is a 2-sphere of radius $\\pi n$ with opposite points identified"
+            },
+            {
+              "symbol": "K = \\mathrm{K}\\left(k^2\\right)",
+              "description": "The complete elliptic integral of the first kind, $\\mathrm{K}(\\kappa) = \\int_0^{\\pi/2}d\\alpha/\\sqrt{1 - \\kappa\\sin^2\\alpha}$, at the parameter $\\kappa = k^2$: $K = \\pi/2$ at the core, and it grows without bound as $k \\to 1$, far from the core"
+            },
+            {
+              "symbol": "E = \\mathrm{E}\\left(k^2\\right)",
+              "description": "The complete elliptic integral of the second kind, $\\mathrm{E}(\\kappa) = \\int_0^{\\pi/2}\\sqrt{1 - \\kappa\\sin^2\\alpha}\\,d\\alpha$, at $\\kappa = k^2$: $E = \\pi/2$ at the core, and $E \\to 1$ far from it"
+            }
+          ],
+          "convention": "We use coordinates $(k, \\theta, \\phi, \\psi)$, with $k = \\sin(\\beta/2)$ the modulus of the elliptic integrals in Gibbons and Manton's angle $\\beta$, a pure number, and $\\theta$, $\\phi$, and $\\psi$ Euler angles. Their radius is $r = 2nK$, and the coefficients of the three squared forms are $a^2$, $b^2$, and $c^2$, with $bc = -4n^2KE$, $ca = -4n^2K(E - (1 - k^2)K)$, and $ab = 4n^2K(K - E)$.",
+          "line_element": "ds^2 = \\dfrac{4n^2E\\left(K - E\\right)\\left(E - \\left(1 - k^2\\right)K\\right)}{k^2\\left(1 - k^2\\right)^2K}dk^2 + \\dfrac{4n^2K\\left(K - E\\right)\\left(E - \\left(1 - k^2\\right)K\\right)}{E}\\left(\\sin\\psi\\,d\\theta - \\cos\\psi\\sin\\theta\\,d\\phi\\right)^2 + \\dfrac{4n^2KE\\left(K - E\\right)}{E - \\left(1 - k^2\\right)K}\\left(\\cos\\psi\\,d\\theta + \\sin\\psi\\sin\\theta\\,d\\phi\\right)^2 + \\dfrac{4n^2KE\\left(E - \\left(1 - k^2\\right)K\\right)}{K - E}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "k",
+                "k"
+              ],
+              "value": "\\dfrac{4E\\,n^2\\left(K - E\\right)\\left(K\\,k^2 - K + E\\right)}{K\\,k^2\\left(k + 1\\right)^2\\left(k - 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{4K\\,n^2\\left(K - E\\right)\\left(E^2\\cos^2\\psi + \\left(K\\,k^2 - K + E\\right)^2\\sin^2\\psi\\right)}{E\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4K^2\\,n^2\\left(k + 1\\right)\\left(k - 1\\right)\\left(K - E\\right)\\left(K\\,k^2 - K + 2E\\right)\\sin\\psi\\cos\\psi\\sin\\theta}{E\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{4K^2\\,n^2\\left(k + 1\\right)\\left(k - 1\\right)\\left(K - E\\right)\\left(K\\,k^2 - K + 2E\\right)\\sin\\psi\\cos\\psi\\sin\\theta}{E\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4K\\,n^2\\left(\\left(K - E\\right)^2\\left(E^2\\sin^2\\psi + \\left(K\\,k^2 - K + E\\right)^2\\cos^2\\psi\\right)\\sin^2\\theta + E^2\\left(K\\,k^2 - K + E\\right)^2\\cos^2\\theta\\right)}{E\\left(K - E\\right)\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{4K\\,E\\,n^2\\left(K\\,k^2 - K + E\\right)\\cos\\theta}{K - E}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4K\\,E\\,n^2\\left(K\\,k^2 - K + E\\right)\\cos\\theta}{K - E}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{4K\\,E\\,n^2\\left(K\\,k^2 - K + E\\right)}{K - E}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3K^{14}\\,k^{16} - 24K^{14}\\,k^{14} + 84K^{14}\\,k^{12} - 168K^{14}\\,k^{10} + 210K^{14}\\,k^8 - 168K^{14}\\,k^6 + 84K^{14}\\,k^4 - 24K^{14}\\,k^2 + 3K^{14} - 21K^{13}\\,E\\,k^{16} + 189K^{13}\\,E\\,k^{14} - 735K^{13}\\,E\\,k^{12} + 1617K^{13}\\,E\\,k^{10} - 2205K^{13}\\,E\\,k^8 + 1911K^{13}\\,E\\,k^6 - 1029K^{13}\\,E\\,k^4 + 315K^{13}\\,E\\,k^2 - 42K^{13}\\,E + 61K^{12}\\,E^2\\,k^{16} - 639K^{12}\\,E^2\\,k^{14} + 2826K^{12}\\,E^2\\,k^{12} - 6953K^{12}\\,E^2\\,k^{10} + 10470K^{12}\\,E^2\\,k^8 - 9921K^{12}\\,E^2\\,k^6 + 5794K^{12}\\,E^2\\,k^4 - 1911K^{12}\\,E^2\\,k^2 + 273K^{12}\\,E^2 - 96K^{11}\\,E^3\\,k^{16} + 1218K^{11}\\,E^3\\,k^{14} - 6288K^{11}\\,E^3\\,k^{12} + 17622K^{11}\\,E^3\\,k^{10} - 29700K^{11}\\,E^3\\,k^8 + 31086K^{11}\\,E^3\\,k^6 - 19848K^{11}\\,E^3\\,k^4 + 7098K^{11}\\,E^3\\,k^2 - 1092K^{11}\\,E^3 + 88K^{10}\\,E^4\\,k^{16} - 1432K^{10}\\,E^4\\,k^{14} + 8931K^{10}\\,E^4\\,k^{12} - 29170K^{10}\\,E^4\\,k^{10} + 55933K^{10}\\,E^4\\,k^8 - 65460K^{10}\\,E^4\\,k^6 + 46125K^{10}\\,E^4\\,k^4 - 18018K^{10}\\,E^4\\,k^2 + 3003K^{10}\\,E^4 - 48K^9\\,E^5\\,k^{16} + 1072K^9\\,E^5\\,k^{14} - 8427K^9\\,E^5\\,k^{12} + 33005K^9\\,E^5\\,k^{10} - 73468K^9\\,E^5\\,k^8 + 97578K^9\\,E^5\\,k^6 - 76739K^9\\,E^5\\,k^4 + 33033K^9\\,E^5\\,k^2 - 6006K^9\\,E^5 + 16K^8\\,E^6\\,k^{16} - 512K^8\\,E^6\\,k^{14} + 5329K^8\\,E^6\\,k^{12} - 25941K^8\\,E^6\\,k^{10} + 68763K^8\\,E^6\\,k^8 - 105582K^8\\,E^6\\,k^6 + 93963K^8\\,E^6\\,k^4 - 45045K^8\\,E^6\\,k^2 + 9009K^8\\,E^6 + 128K^7\\,E^7\\,k^{14} - 2144K^7\\,E^7\\,k^{12} + 13948K^7\\,E^7\\,k^{10} - 45832K^7\\,E^7\\,k^8 + 83496K^7\\,E^7\\,k^6 - 85632K^7\\,E^7\\,k^4 + 46332K^7\\,E^7\\,k^2 - 10296K^7\\,E^7 + 424K^6\\,E^8\\,k^{12} - 4728K^6\\,E^8\\,k^{10} + 21073K^6\\,E^8\\,k^8 - 47676K^6\\,E^8\\,k^6 + 57934K^6\\,E^8\\,k^4 - 36036K^6\\,E^8\\,k^2 + 9009K^6\\,E^8 + 768K^5\\,E^9\\,k^{10} - 6075K^5\\,E^9\\,k^8 + 18855K^5\\,E^9\\,k^6 - 28563K^5\\,E^9\\,k^4 + 21021K^5\\,E^9\\,k^2 - 6006K^5\\,E^9 + 831K^4\\,E^{10}\\,k^8 - 4665K^4\\,E^{10}\\,k^6 + 9840K^4\\,E^{10}\\,k^4 - 9009K^4\\,E^{10}\\,k^2 + 3003K^4\\,E^{10} + 546K^3\\,E^{11}\\,k^6 - 2184K^3\\,E^{11}\\,k^4 + 2730K^3\\,E^{11}\\,k^2 - 1092K^3\\,E^{11} + 273K^2\\,E^{12}\\,k^4 - 546K^2\\,E^{12}\\,k^2 + 273K^2\\,E^{12} - 21K\\,E^{13}\\,k^4 + 63K\\,E^{13}\\,k^2 - 42K\\,E^{13} + 3E^{14}\\,k^4 - 3E^{14}\\,k^2 + 3E^{14}}{2E^6\\,n^4\\left(K - E\\right)^6\\left(K\\,k^2 - K + E\\right)^6}"
+        },
+        {
+          "id": "radius",
+          "name": "Gibbons-Manton Radius",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "r \\in [\\pi n, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, \\pi)",
+            "(r, \\theta, \\phi, \\psi) \\sim (r, \\pi - \\theta, \\phi + \\pi, -\\psi) \\;\\text{(the exchange of the two monopoles)}",
+            "r = \\pi n \\;\\text{(the core, a real projective plane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The space's one length: the core is at $r = \\pi n$, and far from it $c \\to -2n$"
+            },
+            {
+              "symbol": "a = a(r)",
+              "description": "A length, $a^2$ the coefficient of the square of the first form, $\\sin\\psi\\,d\\theta - \\cos\\psi\\sin\\theta\\,d\\phi$; on the space $a \\to 2(r - \\pi n)$ near the core and $a \\to r\\sqrt{1 - 2n/r}$ far from it"
+            },
+            {
+              "symbol": "b = b(r)",
+              "description": "A length, $b^2$ the coefficient of the square of the second form, $\\cos\\psi\\,d\\theta + \\sin\\psi\\sin\\theta\\,d\\phi$; on the space $b \\to \\pi n$ at the core and $b \\to r\\sqrt{1 - 2n/r}$ far from it"
+            },
+            {
+              "symbol": "c = c(r)",
+              "description": "A length, negative, $c^2$ the coefficient of the square of the third form, $d\\psi + \\cos\\theta\\,d\\phi$; on the space $c \\to -\\pi n$ at the core and $c \\to -2n/\\sqrt{1 - 2n/r}$ far from it"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\psi)$, with $r$ Gibbons and Manton's radius, a length, $\\theta$, $\\phi$, and $\\psi$ Euler angles, and a prime the derivative $d/dr$. The lengths $a$, $b$, and $c$ are free functions of $r$, and no component assumes the equations of self duality, $2rc\\,a' = a^2 - (b - c)^2$, $2rac\\,b' = b\\left(b^2 - (c - a)^2\\right)$, and $2rab\\,c' = b\\left(c^2 - (a - b)^2\\right)$, whose solution is the space.",
+          "line_element": "ds^2 = \\dfrac{b^2}{r^2}dr^2 + a^2\\left(\\sin\\psi\\,d\\theta - \\cos\\psi\\sin\\theta\\,d\\phi\\right)^2 + b^2\\left(\\cos\\psi\\,d\\theta + \\sin\\psi\\sin\\theta\\,d\\phi\\right)^2 + c^2\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{b^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\psi + b^2\\cos^2\\psi"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\phi"
+              ],
+              "value": "-\\left(a^2 - b^2\\right)\\sin\\psi\\cos\\psi\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\theta"
+              ],
+              "value": "-\\left(a^2 - b^2\\right)\\sin\\psi\\cos\\psi\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(a^2\\cos^2\\psi + b^2\\sin^2\\psi\\right)\\sin^2\\theta + c^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "c^2\\cos\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "c^2\\cos\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "c^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{a^4\\,b^2 - 2a^2\\,b^4 - 2a^2\\,b^2\\,c^2 + 4a^2\\,b^2\\,c\\,r^2\\,c'' + 4a^2\\,b^2\\,c\\,r\\,c' + 4a^2\\,b\\,c^2\\,r^2\\,b'' + 4a^2\\,b\\,c^2\\,r\\,b' - 4a^2\\,c^2\\,r^2\\left(b'\\right)^2 + 4a\\,b^2\\,c^2\\,r^2\\,a'' + 4a\\,b^2\\,c^2\\,r\\,a' + 4a\\,b^2\\,c\\,r^2\\,a'\\,c' + b^6 - 2b^4\\,c^2 + b^2\\,c^4}{2a^2\\,b^4\\,c^2}",
+          "kretschmann": "K = \\dfrac{11a^8\\,b^4 - 12a^6\\,b^6 - 12a^6\\,b^4\\,c^2 + 16a^6\\,b^4\\,r^2\\left(c'\\right)^2 + 40a^6\\,b^3\\,c\\,r^2\\,b'\\,c' + 16a^6\\,b^2\\,c^2\\,r^2\\left(b'\\right)^2 - 56a^5\\,b^4\\,c\\,r^2\\,a'\\,c' - 56a^5\\,b^3\\,c^2\\,r^2\\,a'\\,b' + 2a^4\\,b^8 + 12a^4\\,b^6\\,c^2 - 32a^4\\,b^6\\,r^2\\left(c'\\right)^2 + 16a^4\\,b^5\\,c\\,r^2\\,b'\\,c' + 2a^4\\,b^4\\,c^4 + 16a^4\\,b^4\\,c^2\\,r^4\\left(c''\\right)^2 + 32a^4\\,b^4\\,c^2\\,r^3\\,c'\\,c'' + 48a^4\\,b^4\\,c^2\\,r^2\\left(a'\\right)^2 + 16a^4\\,b^4\\,c^2\\,r^2\\left(c'\\right)^2 + 16a^4\\,b^3\\,c^3\\,r^2\\,b'\\,c' - 32a^4\\,b^3\\,c^2\\,r^4\\,b'\\,c'\\,c'' - 32a^4\\,b^3\\,c^2\\,r^3\\,b'\\left(c'\\right)^2 + 16a^4\\,b^2\\,c^4\\,r^4\\left(b''\\right)^2 + 32a^4\\,b^2\\,c^4\\,r^3\\,b'\\,b'' - 16a^4\\,b^2\\,c^4\\,r^2\\left(b'\\right)^2 + 32a^4\\,b^2\\,c^2\\,r^4\\left(b'\\right)^2\\left(c'\\right)^2 - 32a^4\\,b\\,c^4\\,r^4\\left(b'\\right)^2\\,b'' - 32a^4\\,b\\,c^4\\,r^3\\left(b'\\right)^3 + 16a^4\\,c^4\\,r^4\\left(b'\\right)^4 + 16a^3\\,b^6\\,c\\,r^2\\,a'\\,c' - 16a^3\\,b^5\\,c^2\\,r^2\\,a'\\,b' - 16a^3\\,b^4\\,c^3\\,r^2\\,a'\\,c' + 16a^3\\,b^3\\,c^4\\,r^2\\,a'\\,b' - 12a^2\\,b^{10} + 12a^2\\,b^8\\,c^2 + 16a^2\\,b^8\\,r^2\\left(c'\\right)^2 - 56a^2\\,b^7\\,c\\,r^2\\,b'\\,c' + 12a^2\\,b^6\\,c^4 + 48a^2\\,b^6\\,c^2\\,r^2\\left(b'\\right)^2 - 16a^2\\,b^5\\,c^3\\,r^2\\,b'\\,c' - 12a^2\\,b^4\\,c^6 + 16a^2\\,b^4\\,c^4\\,r^4\\left(a''\\right)^2 + 32a^2\\,b^4\\,c^4\\,r^3\\,a'\\,a'' + 16a^2\\,b^4\\,c^4\\,r^2\\left(a'\\right)^2 + 48a^2\\,b^4\\,c^4\\,r^2\\left(c'\\right)^2 + 16a^2\\,b^4\\,c^2\\,r^4\\left(a'\\right)^2\\left(c'\\right)^2 - 56a^2\\,b^3\\,c^5\\,r^2\\,b'\\,c' - 32a^2\\,b^3\\,c^4\\,r^4\\,a'\\,a''\\,b' - 32a^2\\,b^3\\,c^4\\,r^3\\left(a'\\right)^2\\,b' + 16a^2\\,b^2\\,c^6\\,r^2\\left(b'\\right)^2 + 32a^2\\,b^2\\,c^4\\,r^4\\left(a'\\right)^2\\left(b'\\right)^2 + 40a\\,b^8\\,c\\,r^2\\,a'\\,c' - 56a\\,b^7\\,c^2\\,r^2\\,a'\\,b' + 16a\\,b^6\\,c^3\\,r^2\\,a'\\,c' + 16a\\,b^5\\,c^4\\,r^2\\,a'\\,b' - 56a\\,b^4\\,c^5\\,r^2\\,a'\\,c' + 40a\\,b^3\\,c^6\\,r^2\\,a'\\,b' + 11b^{12} - 12b^{10}\\,c^2 + 2b^8\\,c^4 + 16b^8\\,c^2\\,r^2\\left(a'\\right)^2 - 12b^6\\,c^6 - 32b^6\\,c^4\\,r^2\\left(a'\\right)^2 + 11b^4\\,c^8 + 16b^4\\,c^6\\,r^2\\left(a'\\right)^2}{4a^4\\,b^8\\,c^4}"
         }
       ]
     },
@@ -19501,6 +19768,11 @@
           "id": "gravitational_instantons",
           "kind": "generalisation",
           "text": "Gibbons and Hawking's metrics of many centres, which stand among the gravitational instantons of 1977 and 1978. The Eguchi-Hanson space is their case of two centres with no constant in the potential [gibbonshawking1979, eguchigilkeyhanson1980]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "Atiyah and Hitchin's space of two magnetic monopoles, on the other branch of the same classification, where the rotations turn the complex structures. It closes on a 2-sphere as well, once the two identical monopoles are exchanged [weinbergyi2007]."
         }
       ],
       "references": [
@@ -19523,7 +19795,8 @@
         "lebrun1988",
         "page1978k3",
         "gibbonspope1979",
-        "sorkin1983"
+        "sorkin1983",
+        "weinbergyi2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/eguchi_hanson.json",
@@ -28652,6 +28925,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "Half of the 4-sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "Atiyah and Hitchin's space of two slowly moving magnetic monopoles, smooth and hyperkähler. Far from its core it is the self dual Taub-NUT instanton with a negative mass [atiyahhitchin1985, gibbonsmanton1995]."
         }
       ],
       "references": [
@@ -28671,7 +28949,9 @@
         "chenteo2011",
         "sorkin1983",
         "grossperry1983",
-        "vilenkin1982"
+        "vilenkin1982",
+        "atiyahhitchin1985",
+        "gibbonsmanton1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
@@ -34052,6 +34332,11 @@
           "id": "static_five_soliton",
           "kind": "family",
           "text": "The neutral scalar solitons belong to the family of static vacuum geometries studied by Gross and Perry [grossperry1983, lake2006static]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "The orientifold plane of type IIA string theory, seen in M-theory. Sen set a row of these monopoles beside it to make D6-branes on the plane [sen1997enhanced]."
         }
       ],
       "references": [
@@ -34081,7 +34366,8 @@
         "nilsson1984",
         "bah2021",
         "chyba1985",
-        "lake2006static"
+        "lake2006static",
+        "sen1997enhanced"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -70498,6 +70784,11 @@
           "id": "moncrief_taub_nut",
           "kind": "family",
           "text": "Inhomogeneous toroidal vacuum cosmologies admit extensions of Taub-NUT type across compact Cauchy horizons [moncrief1981nut]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "Atiyah and Hitchin's space of two monopoles, which far from its core is Taub-NUT in Euclidean signature, self dual and with a negative mass. Its exponentially small corrections keep it smooth where that negative mass alone would leave a singularity [gibbonsmanton1995, tong2005]."
         }
       ],
       "references": [
@@ -70531,7 +70822,9 @@
         "clement2016",
         "astorino2022swirling",
         "newman1962tamburino",
-        "moncrief1981nut"
+        "moncrief1981nut",
+        "gibbonsmanton1995",
+        "tong2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",

@@ -1,5 +1,5 @@
 {
-  "version": "69e9e84d1b3e741e",
+  "version": "83b672efaf23bc0c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35288,6 +35288,259 @@
         "eprint": "gr-qc/9307022",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/9307022"
+      }
+    },
+    "bachmaier2025": {
+      "type": "article",
+      "fields": {
+        "title": "Simulations of magnetic monopole collisions",
+        "author": "Bachmaier, Maximilian and Dvali, Gia and Seitz, Josef and Valbuena-Berm\\'udez, Juan Sebasti\\'an",
+        "journal": "Physical Review D",
+        "volume": "111",
+        "number": "7",
+        "pages": "075014",
+        "year": "2025",
+        "doi": "10.1103/PhysRevD.111.075014",
+        "eprint": "2502.01756",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.111.075014"
+      }
+    },
+    "manton1982": {
+      "type": "article",
+      "fields": {
+        "title": "A remark on the scattering of {BPS} monopoles",
+        "author": "Manton, N. S.",
+        "journal": "Physics Letters B",
+        "volume": "110",
+        "number": "1",
+        "pages": "54--56",
+        "year": "1982",
+        "doi": "10.1016/0370-2693(82)90950-9",
+        "url": "https://doi.org/10.1016/0370-2693(82)90950-9"
+      }
+    },
+    "weinbergyi2007": {
+      "type": "article",
+      "fields": {
+        "title": "Magnetic monopole dynamics, supersymmetry, and duality",
+        "author": "Weinberg, Erick J. and Yi, Piljin",
+        "journal": "Physics Reports",
+        "volume": "438",
+        "number": "2--4",
+        "pages": "65--236",
+        "year": "2007",
+        "doi": "10.1016/j.physrep.2006.11.002",
+        "eprint": "hep-th/0609055",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physrep.2006.11.002"
+      }
+    },
+    "tong2005": {
+      "type": "misc",
+      "fields": {
+        "title": "{TASI} lectures on solitons: Instantons, monopoles, vortices and kinks",
+        "author": "Tong, David",
+        "year": "2005",
+        "eprint": "hep-th/0509216",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0509216"
+      }
+    },
+    "gibbonsmanton1986": {
+      "type": "article",
+      "fields": {
+        "title": "Classical and quantum dynamics of {BPS} monopoles",
+        "author": "Gibbons, G. W. and Manton, N. S.",
+        "journal": "Nuclear Physics B",
+        "volume": "274",
+        "number": "1",
+        "pages": "183--224",
+        "year": "1986",
+        "doi": "10.1016/0550-3213(86)90624-3",
+        "url": "https://doi.org/10.1016/0550-3213(86)90624-3"
+      }
+    },
+    "atiyahhitchin1985": {
+      "type": "article",
+      "fields": {
+        "title": "Low energy scattering of non-{A}belian monopoles",
+        "author": "Atiyah, M. F. and Hitchin, N. J.",
+        "journal": "Physics Letters A",
+        "volume": "107",
+        "number": "1",
+        "pages": "21--25",
+        "year": "1985",
+        "doi": "10.1016/0375-9601(85)90238-5",
+        "url": "https://doi.org/10.1016/0375-9601(85)90238-5"
+      }
+    },
+    "hananypioline2000": {
+      "type": "article",
+      "fields": {
+        "title": "({A}nti-){I}nstantons and the {Atiyah-Hitchin} manifold",
+        "author": "Hanany, Amihay and Pioline, Boris",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "07",
+        "pages": "001",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/07/001",
+        "eprint": "hep-th/0005160",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/07/001"
+      }
+    },
+    "ghezelbashmann2004": {
+      "type": "article",
+      "fields": {
+        "title": "{Atiyah-Hitchin} {M}-branes",
+        "author": "Ghezelbash, A. M. and Mann, R. B.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "10",
+        "pages": "012",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/10/012",
+        "eprint": "hep-th/0408189",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/10/012"
+      }
+    },
+    "atiyahhitchin1985trans": {
+      "type": "article",
+      "fields": {
+        "title": "Low-energy scattering of non-{A}belian magnetic monopoles",
+        "author": "Atiyah, Michael Francis and Hitchin, Nigel James",
+        "journal": "Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences",
+        "volume": "315",
+        "number": "1533",
+        "pages": "459--469",
+        "year": "1985",
+        "doi": "10.1098/rsta.1985.0052",
+        "url": "https://doi.org/10.1098/rsta.1985.0052"
+      }
+    },
+    "atiyahhitchin1988": {
+      "type": "book",
+      "fields": {
+        "title": "The Geometry and Dynamics of Magnetic Monopoles",
+        "author": "Atiyah, Michael Francis and Hitchin, Nigel",
+        "publisher": "Princeton University Press",
+        "year": "1988",
+        "doi": "10.1515/9781400859306",
+        "url": "https://doi.org/10.1515/9781400859306"
+      }
+    },
+    "gibbonsmanton1995": {
+      "type": "article",
+      "fields": {
+        "title": "The moduli space metric for well-separated {BPS} monopoles",
+        "author": "Gibbons, G. W. and Manton, N. S.",
+        "journal": "Physics Letters B",
+        "volume": "356",
+        "number": "1",
+        "pages": "32--38",
+        "year": "1995",
+        "doi": "10.1016/0370-2693(95)00813-Z",
+        "eprint": "hep-th/9506052",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(95)00813-Z"
+      }
+    },
+    "seibergwitten1997": {
+      "type": "incollection",
+      "fields": {
+        "title": "Gauge dynamics and compactification to three dimensions",
+        "author": "Seiberg, Nathan and Witten, Edward",
+        "booktitle": "The Mathematical Beauty of Physics: A Memorial Volume for Claude Itzykson",
+        "editor": "Drouffe, J. M. and Zuber, J. B.",
+        "publisher": "World Scientific",
+        "series": "Advanced Series in Mathematical Physics",
+        "volume": "24",
+        "pages": "333--366",
+        "year": "1997",
+        "eprint": "hep-th/9607163",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9607163"
+      }
+    },
+    "manton1985": {
+      "type": "article",
+      "fields": {
+        "title": "Monopole interactions at long range",
+        "author": "Manton, N. S.",
+        "journal": "Physics Letters B",
+        "volume": "154",
+        "number": "5--6",
+        "pages": "397--400",
+        "year": "1985",
+        "doi": "10.1016/0370-2693(85)90417-4",
+        "url": "https://doi.org/10.1016/0370-2693(85)90417-4"
+      }
+    },
+    "dorey1997": {
+      "type": "article",
+      "fields": {
+        "title": "Instantons, three-dimensional gauge theory, and the {Atiyah-Hitchin} manifold",
+        "author": "Dorey, N. and Khoze, V. V. and Mattis, M. P. and Tong, D. and Vandoren, S.",
+        "journal": "Nuclear Physics B",
+        "volume": "502",
+        "number": "1--2",
+        "pages": "59--93",
+        "year": "1997",
+        "doi": "10.1016/S0550-3213(97)00454-9",
+        "eprint": "hep-th/9703228",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(97)00454-9"
+      }
+    },
+    "sen1997enhanced": {
+      "type": "article",
+      "fields": {
+        "title": "A note on enhanced gauge symmetries in {M}- and string theory",
+        "author": "Sen, Ashoke",
+        "journal": "Journal of High Energy Physics",
+        "volume": "1997",
+        "number": "09",
+        "pages": "001",
+        "year": "1997",
+        "doi": "10.1088/1126-6708/1997/09/001",
+        "eprint": "hep-th/9707123",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/1997/09/001"
+      }
+    },
+    "schroerssinger2021": {
+      "type": "article",
+      "fields": {
+        "title": "{$D_k$} gravitational instantons as superpositions of {Atiyah-Hitchin} and {Taub-NUT} geometries",
+        "author": "Schroers, B. J. and Singer, M. A.",
+        "journal": "The Quarterly Journal of Mathematics",
+        "volume": "72",
+        "number": "1--2",
+        "pages": "277--337",
+        "year": "2021",
+        "doi": "10.1093/qmath/haab002",
+        "eprint": "2004.02759",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/qmath/haab002"
+      }
+    },
+    "atiyahmantonschroers2012": {
+      "type": "article",
+      "fields": {
+        "title": "Geometric models of matter",
+        "author": "Atiyah, M. F. and Manton, N. S. and Schroers, B. J.",
+        "journal": "Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences",
+        "volume": "468",
+        "number": "2141",
+        "pages": "1252--1279",
+        "year": "2012",
+        "doi": "10.1098/rspa.2011.0616",
+        "eprint": "1108.5151",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1098/rspa.2011.0616"
       }
     }
   }
