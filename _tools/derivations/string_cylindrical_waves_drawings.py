@@ -104,3 +104,27 @@ def register_slices(sl):
     sl.FLAT[(METRIC, 'prolate', 'radial')] = lambda: sl.one(
         METRIC, lambda m: sl.along(0., *np.cosh(m.reach('hyperbolic', r'\theta'))), label=r'$\tau=0$')
     sl.FLAT_METRICS.add(METRIC)
+
+
+def register_curvature(cv):
+    cv.DRAWN[METRIC] = lambda ck, src: curvature(cv, ck, src)
+
+
+def curvature(cv, ck, src):
+    """Read the stored Kretschmann scalar on the prolate coordinate plane."""
+    x, y = cv.axis(r'$\sigma$', 1., 4.), cv.axis(r'$\tau$', -1.5, 1.5)
+    nx = ny = 96
+    stored = cv.Published(src, METRIC, 'prolate', 'kretschmann', ['sigma', 'tau'], ['p', 'alpha', 'ell'])
+    _, _, values = cv.cells(stored, x, y, nx, ny, [1., 2., 1.])
+    ck('String waves: the stored curvature is finite on the displayed plane', np.all(np.isfinite(values)))
+    low, high = float(np.min(values)), float(np.max(values))
+    width = max(high-low, .01)
+    scale = {'kind': 'linear', 'from': low-.05*width, 'to': high+.05*width}
+    return [{'id': 'K', 'kind': 'map', 'x': x, 'y': y,
+             'colour': {'name': r'$K\ell^4$', 'scale': scale, 'ticks': cv.value_ticks(scale)},
+             'map': {'metric': METRIC, 'system': 'prolate', 'scalar': 'kretschmann',
+                     'x': r'\sigma', 'y': r'\tau', 'params': {'p': 1., 'alpha': 2., 'ell': 1.},
+                     'nx': nx, 'ny': ny, 'cells': [[cv.rounded(v) for v in row] for row in values]},
+             'marks': [], 'legend': [],
+             'caption': [r'The Kretschmann scalar $K$ in $\sigma$ and $\tau$.'],
+             'settings': r'$p=1$, $\alpha=2$, $\ell=1$.', 'clip': 'Linear colour scale.'}]
