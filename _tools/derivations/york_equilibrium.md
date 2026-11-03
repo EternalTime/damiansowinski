@@ -14,3 +14,13 @@ The field stress is the infinite space approximation; York's 1993 author preprin
 The difference between Hochberg's preprint prose and its energy formulas is recorded in the task literature ledger, and neither disputed radius is asserted here.
 
 ## Checks and drawings
+
+The chart printer holds $\mu$ and $\rho$ as functions while it forms the tensors, and truncates every result through $\epsilon^1$.
+Its point checks compare the mass and redshift derivatives with Page's stress as written by Taylor and Breen, and check the horizon integration constants and the matching of $\rho$ at the wall.
+The dedicated test reads the printed components, checks the zero-field Schwarzschild limit and the wall lapse, and independently checks Page's energy-density relation at four radii.
+
+The drawings take $M=1$, $R=50M$ and $\epsilon=10^{-4}$.
+The cavity extends from $2M$ to its reflecting wall, farther out than York's characteristic wavelength, and the correction remains small there.
+The equatorial surface uses the radial component of the published first order metric and stops at the wall.
+The conformal view integrates $dr_*/dr=\sqrt{g_{rr}/(-g_{tt})}$ from the wall and compactifies the cavity alone, with no continuation assumed inside the horizon.
+The curvature plots read the printed scalar formulas and keep the same expansion order.
