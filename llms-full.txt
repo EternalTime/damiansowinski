@@ -2315,6 +2315,18 @@ A closed Friedmann universe whose space is a dodecahedron with each face glued t
 - chart Conformal Time: coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Toroidal: coordinates $(t, v, \alpha, \gamma)$, $$ds^2 = -c^2dt^2 + a^2\left(\dfrac{dv^2}{2v\left(1 - 2v\right)} + \left(1 - 2v\right)d\alpha^2 + 2v\,d\gamma^2\right)$$
 
+### Point Charge in Three Dimensions
+
+The static spacetime of a point electric charge in two dimensions of space and one of time, whose field fills the plane and curves spacetime everywhere, with a horizon on the circle $r = r_c$ beyond which $r$ is a time.
+
+- id: `charged_three_dimensions`
+- tags: electric charge, point charge, electromagnetic field, electrovacuum, Einstein-Maxwell, 2+1 dimensional gravity, lower-dimensional gravity, circularly symmetric, horizon, Killing horizon, cosmological horizon, trapped surface, curvature singularity, Kruskal extension, closed universe, Robinson-Trautman, exact solution, Lorentzian, Einstein equations, idealized model, static, stationary, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/charged_three_dimensions.json
+- chart Static: coordinates $(t, r, \phi)$, $$ds^2 = -\dfrac{kQ^2}{2\pi}\ln\left(\dfrac{r_c}{r}\right)c^2dt^2 + \dfrac{2\pi\,dr^2}{kQ^2\ln\left(\dfrac{r_c}{r}\right)} + r^2d\phi^2$$
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \phi)$, $$ds^2 = -\dfrac{kQ^2}{2\pi}\ln\left(\dfrac{r_c}{r}\right)c^2du^2 - 2c\,du\,dr + r^2d\phi^2$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \phi)$, $$ds^2 = -\dfrac{kQ^2}{2\pi}\ln\left(\dfrac{r_c}{r}\right)c^2dv^2 + 2c\,dv\,dr + r^2d\phi^2$$
+
 ### Point Particles in Three Dimensions
 
 Gravity with one dimension of space removed, where a mass makes no field around itself. Spacetime is flat everywhere off a particle's world line, and space around the particle is a cone, missing a wedge whose angle is set by the mass.

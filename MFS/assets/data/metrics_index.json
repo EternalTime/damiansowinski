@@ -260,7 +260,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "6687a2cdcfb790a0",
+    "version": "3d0eee641e09b06c",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -5202,6 +5202,40 @@
     "embedding": "d0dbf15e01a964ff"
   },
   {
+    "id": "charged_three_dimensions",
+    "name": "Point Charge in Three Dimensions",
+    "tags": [
+      "electric charge",
+      "point charge",
+      "electromagnetic field",
+      "electrovacuum",
+      "Einstein-Maxwell",
+      "2+1 dimensional gravity",
+      "lower-dimensional gravity",
+      "circularly symmetric",
+      "horizon",
+      "Killing horizon",
+      "cosmological horizon",
+      "trapped surface",
+      "curvature singularity",
+      "Kruskal extension",
+      "closed universe",
+      "Robinson-Trautman",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "static",
+      "stationary",
+      "three-dimensional"
+    ],
+    "version": "d5494b4b9ac4e33c",
+    "diagrams": "0f6648b80d39d5f1",
+    "conformal": "c2773bc4c56d232b",
+    "embedding": "2bf24f5315ce27aa",
+    "curvature": "29131a4d3bed543f"
+  },
+  {
     "id": "point_particle_2plus1",
     "name": "Point Particles in Three Dimensions",
     "tags": [
@@ -5225,7 +5259,7 @@
       "conformally flat",
       "tachyon"
     ],
-    "version": "9761f3ab88ecc6c3",
+    "version": "5341d9f79992b3a6",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
     "embedding": "c40545f1ea0c929c"
@@ -5437,7 +5471,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f3e35a565ae4e78e",
+    "version": "6400a0a920ba119a",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
