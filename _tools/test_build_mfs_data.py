@@ -5156,6 +5156,8 @@ class Slices(unittest.TestCase):
         if key == "gowdy/logarithmic/plane":
             # The same moment against theta and -tau = ln t.
             return (lambda X: math.log(t)), list(self.reach(surface))
+        if key == "mallett_radiating_star/eddington_finkelstein_ingoing/accretion":
+            return (lambda X: 0.0), list(self.reach(surface))
         if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
             return (lambda X: t), list(self.reach(surface))
         if key.startswith("charged_shell/"):

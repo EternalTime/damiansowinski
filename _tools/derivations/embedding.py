@@ -22136,7 +22136,7 @@ def mallett_radiating_star(ck, src):
                   [(r, "r", None) for r in (1.0, 2.0, 4.0, 6.0, 8.0)], size)
     ck.isometry("Radiating de Sitter, v-r=0", piece)
     ck.radius("Radiating de Sitter, areal radius", piece, lambda r: r, size)
-    surface = Surface([piece], label="$v-r=0$", time=0)
+    surface = Surface([piece])
     fig = figure_of([surface], {"sheet": "cover"}, size)
     fig.legend("fill", "cover", "the equatorial slice $v-r=0$")
     fig.legend("line", "r", "$r$ constant, at $1$, $2$, $4$, $6$ and $8$")

@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "The outgoing radiation is the time reverse of the incoming history whose moment is embedded.",
+      "drawings": ["mallett_radiating_star/eddington_finkelstein_outgoing/radiation"]
+    }
+  ]
+}
