@@ -18385,7 +18385,7 @@ def quevedo_mashhoon(ck, src):
              "panels": [panel], "curves": curves, "marks": [], "legend": [["line", "K", "$K$"]],
              "caption": ["The Kretschmann scalar $K$ on the equator of the rotating deformed field."],
              "settings": "$M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$.",
-             "clip": "$K M^4$ is logarithmic, with every value within the panel."}]
+             "clip": "We draw $KM^4$ on a logarithmic scale; every value drawn lies within it."}]
 
 
 DRAWN = {
