@@ -19,4 +19,9 @@ A conformal diagram is not drawn: the mass history is free and its global comple
 Senovilla (2023), Figures 1 and 2, gives collapse histories with different causal boundaries on opposite sides of the mass threshold.
 The unbounded linear mass used in the local null plots is not assumed to be a global solution with nonnegative mass.
 
+The curvature maps evaluate the stored scalars over $0<r<8$ and $-4<u<4$, using the outgoing local mass history.
+
 ## Checks
+
+The chart generator compares the metric and its inverse at two points.
+The dedicated test reads the published Ricci tensor and metric components to check the null flux, and checks the subcritical, degenerate, and supercritical threshold.

@@ -18828,6 +18828,38 @@ kf_drawings.register_curvature(sys.modules[__name__])
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_curvature(sys.modules[__name__])
 
+def mallett_radiating_star(ck, src):
+    """Plot the stored scalar curvatures on the outgoing null plane."""
+    metric, system = "mallett_radiating_star", "eddington_finkelstein_outgoing"
+    funcs, params = {"m": "1/2 - u/50"}, {"Lambda": 0.05}
+    x, y = axis("$r$", 0, 8), axis("$u$", -4, 4)
+    nx = ny = 100
+    shape_checks(ck, metric, [1.0])
+    result = []
+    for field, label, scale in (("kretschmann", "$K$", {"kind": "log", "from": 1e-3, "to": 1e5}),
+                                ("ricci_scalar", "$R$", {"kind": "linear", "from": 0, "to": 0.4})):
+        published = nr_published(src, metric, system, field, ["r", "u"], [r"\Lambda"], functions=funcs)
+        xs, ys, values = cells(published, x, y, nx, ny, [params["Lambda"]])
+        ck(f"{metric} {field} finite", np.all(np.isfinite(values)))
+        agrees(ck, f"{metric} {field}", published,
+               [[xs[i], ys[j], params["Lambda"]] for i, j in ((10, 10), (50, 50), (90, 90))],
+               [values[j, i] for i, j in ((10, 10), (50, 50), (90, 90))])
+        result.append({"id": field, "label": label, "system": system, "kind": "map", "x": x, "y": y,
+            "colour": {"name": label, "scale": scale, "ticks": value_ticks(scale)},
+            "map": {"metric": metric, "system": system, "scalar": field, "x": "r", "y": "u",
+                    "params": params, "functions": funcs, "nx": nx, "ny": ny,
+                    "cells": [[rounded(v) for v in row] for row in values]},
+            "marks": [], "legend": [],
+            "caption": [("The Kretschmann scalar $K$" if field == "kretschmann" else "The Ricci scalar $R$")
+                        + " over the plane of $u$ and $r$, the same at every angle."],
+            "settings": "$\\Lambda=1/20$.", "input": "$m(u)=1/2-u/50$.",
+            "clip": ("Logarithmic colours from $10^{-3}$ to $10^5$; larger values take the top colour."
+                     if field == "kretschmann" else "Linear colours from $0$ to $0.4$.")})
+    return result
+
+
+DRAWN["mallett_radiating_star"] = mallett_radiating_star
+
 
 if __name__ == "__main__":
     sys.exit(main())
