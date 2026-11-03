@@ -35768,6 +35768,423 @@ def step(seconds, where, name):
     return contextlib.nullcontext() if seconds is None else vm.budget(seconds, f"{where}: the step {name!r}")
 
 
+# -- Linet and Tian's cylinder ---------------------------------------------------------------------
+
+LT_CHARTS = ("toroidal", "cylindrical", "gleiser", "sarioglu_tekin")
+LT_KASNER = ["p_0", "p_2", "p_3"]
+LT_P = {"toroidal": "P = \\dfrac{2}{\\sqrt{3\\Lambda}}\\tan\\left(\\dfrac{\\sqrt{3\\Lambda}\\,\\rho}{2}\\right)",
+        "cylindrical": "P = \\dfrac{2}{\\sqrt{-3\\Lambda}}\\tanh\\left(\\dfrac{\\sqrt{-3\\Lambda}\\,\\rho}{2}\\right)"}
+LT_FACTOR = "\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{-2/3}"
+LT_AXIS = "\\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+LT_FAR = "\\;\\text{(a curvature singularity unless } p_0\\,p_2\\,p_3 = -4/27\\text{)}"
+# The Kretschmann scalar on Kasner's circle: 8 Lambda^2/3, the value of a space of constant curvature,
+# plus the square of the Weyl tensor, which for this static metric is a sum of squares and vanishes
+# nowhere in the open range of the radius.
+LT_KRETSCHMANN = {
+    "toroidal": ("\\dfrac{8\\Lambda^2}{3} + \\dfrac{\\Lambda^2\\left(4 + 3\\Lambda P^2\\right)^2}{12}"
+                 " - \\dfrac{p_0\\,p_2\\,p_3\\left(4 - 3\\Lambda P^2\\right)\\left(4 + 3\\Lambda P^2\\right)^3}{16P^4}"),
+    "gleiser": ("\\dfrac{8\\Lambda^2}{3} + \\dfrac{4\\Lambda^2\\left(1 + \\Lambda Y\\right)^2}{3}"
+                " - \\dfrac{9p_0\\,p_2\\,p_3\\left(1 - \\Lambda Y\\right)\\left(1 + \\Lambda Y\\right)^3}{Y^2}"),
+    "sarioglu_tekin": ("\\dfrac{24}{L^4} + \\dfrac{12\\left(1 - h\\right)^2}{L^4}"
+                       " - \\dfrac{81p_0\\,p_2\\,p_3\\left(1 + h\\right)\\left(1 - h\\right)^3}{L^4h^2}"),
+}
+LT_KRETSCHMANN["cylindrical"] = LT_KRETSCHMANN["toroidal"]
+
+
+def lt_powers(names, state, prepare=None):
+    """A pretty printer for the charts of Linet and Tian's cylinder, whose every value is a rational
+    function times one power, with an exponent that holds the Kasner exponents, of each base the chart
+    names. Each such power is held as a placeholder while the value is factored, so that factoring
+    never writes y y^{p_0} back as y^{p_0 + 1}; the whole part of each exponent stays in the rational
+    function and the rest is written on the name, below the line where every term of it is negative.
+    `names` maps the text of each name to its base; `state["printer"]` is the chart's printer."""
+    table = {}
+
+    def base_of(expression):
+        for text, base in names.items():
+            if sp.cancel(expression - base) == 0:
+                return text
+        return None
+
+    def pretty(value):
+        value = sp.sympify(value)
+        held, swap = {}, {}
+        for e in value.atoms(sp.Pow):
+            if e.exp.is_Number:
+                continue
+            text = base_of(e.base)
+            if text is None:
+                raise AssertionError(f"{e} is a power of none of {list(names)}")
+            whole, part = sp.expand(e.exp).as_coeff_Add()
+            mark = held.setdefault((text, part), sp.Dummy(positive=True))
+            swap[e] = names[text] ** whole * mark
+        value = value.xreplace(swap)
+        if prepare:
+            value = prepare(value)
+        value = sp.factor(value)
+        if prepare:
+            value = prepare(value)
+        exponents = {text: sp.Integer(0) for text in names}
+        rest = sp.Integer(1)
+        marks = {mark: key for key, mark in held.items()}
+        whole = []
+        for f in sp.Mul.make_args(value):
+            base, k = f.as_base_exp()
+            if base in marks:
+                text, part = marks[base]
+                exponents[text] += k * part
+            else:
+                if any(m in f.free_symbols for m in marks):
+                    raise AssertionError(f"{value} is not one product of powers of {list(names)}")
+                whole.append(f)
+        # A numeric power of a base that also carries a symbolic one joins it, so the name is written
+        # whole, as (1 - Lambda y)^{2/3 - p_0} is in the line element.
+        for f in whole:
+            base, k = f.as_base_exp()
+            text = base_of(base) if k.is_Number else None
+            if text is not None and exponents[text] != 0:
+                exponents[text] += k
+            else:
+                rest *= f
+        printer = state["printer"]
+        out = sp.factor(rest)
+        sides = {1: "", -1: ""}
+        for text in names:
+            e = sp.expand(exponents[text])
+            if e == 0:
+                continue
+            below = all(c.as_coeff_Mul()[0].is_negative for c in sp.Add.make_args(e))
+            sides[-1 if below else 1] += text + "^{" + printer.positive_first(-e if below else e) + "}"
+        for side, text in sides.items():
+            if text:
+                placeholder = table.setdefault(text, sp.Symbol(f"LTPOWER{len(table)}", positive=True))
+                printer.overrides[placeholder] = text
+                out *= placeholder ** side
+        return out
+
+    return pretty
+
+
+def linet_tian(system):
+    """Linet and Tian's static cylinder with a cosmological constant, J. Math. Phys. 27, 1817 and
+    Phys. Rev. D 33, 3549 (1986), in the exponents of Levi-Civita's Kasner chart, p_0 + p_2 + p_3 =
+    p_0^2 + p_2^2 + p_3^2 = 1, which every value assumes:
+
+    toroidal        Lambda > 0, Griffiths and Podolsky, Phys. Rev. D 81, 064015 (2010), their (3.5)
+                    and (3.6), with their two conicities written below the line\\;
+    cylindrical     Lambda < 0, the same form with tanh, as Zofka and Bicak, Class. Quantum Grav. 25,
+                    015011 (2008), substitute in their (1.1)\\;
+    gleiser         Gleiser, Class. Quantum Grav. 38, 247001 (2021), his (1), whose p_i are twice
+                    p - 1/3, with y = sin^2(sqrt(3 Lambda) rho/2)/Lambda, for either sign\\;
+    sarioglu_tekin  Sarioglu and Tekin, Phys. Rev. D 79, 087502 (2009), their (1) at n = 3, with
+                    Lambda = -3/L^2 and r = r_0 cosh^{2/3}(3 rho/2L), their (3).
+
+    In both proper distance charts cos^{4/3} or cosh^{4/3} of half the argument is written
+    (1 + 3 Lambda P^2/4)^{-2/3} and P is held with the slope 1 + 3 Lambda P^2/4, and in Sarioglu and
+    Tekin's h is held with the slope 3(1 - h)/r, vm.HELD and vm.RATES, so every value is rational in
+    the coordinate and the held name. The tensors are printed for free exponents and the Ricci and
+    Einstein tensors, the scalars and the Weyl tensor on Kasner's circle, by linet_tian_on_circle\\;
+    linet_tian_check holds each chart at points to R_mu nu = Lambda g_mu nu, to its Kretschmann scalar,
+    to Levi-Civita's Kasner chart as Lambda -> 0 and to the proper distance charts pulled back.
+    linet_tian.md beside this file is the derivation."""
+    state = {}
+    key = ("linet_tian", system)
+    reals = "(-\\infty, \\infty)"
+    if system in ("toroidal", "cylindrical"):
+        toroidal = system == "toroidal"
+        coords = ["t", "\\rho", "\\psi" if toroidal else "z", "\\phi"]
+        parameters = ["\\Lambda"] + (["B"] if toroidal else []) + ["C"] + LT_KASNER + [LT_P[system]]
+        third = "\\dfrac{P^{2p_3}}{B^2}d\\psi^2" if toroidal else "P^{2p_3}dz^2"
+
+        def line(c2):
+            return (f"ds^2 = d\\rho^2 + {LT_FACTOR}\\left(-P^{{2p_0}}{c2}dt^2 + {third}"
+                    " + \\dfrac{P^{2p_2}}{C^2}d\\phi^2\\right)")
+        if toroidal:
+            domains = [f"t \\in {reals}", "\\rho \\in (0, \\pi/\\sqrt{3\\Lambda})", "\\psi \\in [0, 2\\pi)",
+                       "\\phi \\in [0, 2\\pi)", "\\rho = 0 " + LT_AXIS, "\\rho = \\pi/\\sqrt{3\\Lambda} " + LT_FAR]
+            name = "Toroidal"
+        else:
+            domains = [f"t \\in {reals}", "\\rho \\in (0, \\infty)", f"z \\in {reals}", "\\phi \\in [0, 2\\pi)",
+                       "\\rho = 0 " + LT_AXIS]
+            name = "Cylindrical"
+        probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+        held = probe.parameters["P"]
+        names = {"P": held}
+        lead = [held, probe.parameters["Lambda"]]
+        reduce = lambda value: vm.norm(probe.by_rates(value))
+        factor = "\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}"
+        metric = {("t", "t"): f"-\\dfrac{{P^{{2p_0}}}}{{{factor}}}", ("\\rho", "\\rho"): "1",
+                  (coords[2], coords[2]): (f"\\dfrac{{P^{{2p_3}}}}{{B^2{factor}}}" if toroidal
+                                           else f"\\dfrac{{P^{{2p_3}}}}{{{factor}}}"),
+                  ("\\phi", "\\phi"): f"\\dfrac{{P^{{2p_2}}}}{{C^2{factor}}}"}
+        inverse = {("t", "t"): f"-\\dfrac{{{factor}}}{{P^{{2p_0}}}}", ("\\rho", "\\rho"): "1",
+                   (coords[2], coords[2]): (f"\\dfrac{{B^2{factor}}}{{P^{{2p_3}}}}" if toroidal
+                                            else f"\\dfrac{{{factor}}}{{P^{{2p_3}}}}"),
+                   ("\\phi", "\\phi"): f"\\dfrac{{C^2{factor}}}{{P^{{2p_2}}}}"}
+    elif system == "gleiser":
+        coords = ["t", "y", "z", "\\phi"]
+        parameters = ["\\Lambda", "C"] + LT_KASNER + ["Y = \\dfrac{y}{1 - \\Lambda y}"]
+        # Gleiser's y^{p}(1 - Lambda y)^{2/3 - p} is (1 + Lambda Y)^{-2/3} Y^{p} in Y = y/(1 - Lambda y),
+        # and his dy^2/(3y(1 - Lambda y)) is (1 + Lambda Y)^2 dy^2/(3Y). Y is held with the slope
+        # (1 + Lambda Y)^2, so every value is rational in Y with one symbolic power of it, whose exponent
+        # carries no fraction, and the chart reads as the proper distance charts do, P^2 being 4Y/3.
+
+        def line(c2):
+            return ("ds^2 = \\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}dy^2 + \\left(1 + \\Lambda Y\\right)^{-2/3}"
+                    "\\left(-Y^{p_0}" + c2 + "dt^2 + Y^{p_3}dz^2 + \\dfrac{Y^{p_2}}{C^2}d\\phi^2\\right)")
+        domains = [f"t \\in {reals}", "y \\in (0, 1/\\Lambda) \\;\\text{for}\\; \\Lambda > 0",
+                   "y \\in (0, \\infty) \\;\\text{for}\\; \\Lambda < 0", f"z \\in {reals}", "\\phi \\in [0, 2\\pi)",
+                   "y = 0 " + LT_AXIS,
+                   "y = 1/\\Lambda \\;\\text{(for } \\Lambda > 0\\text{, a curvature singularity unless } "
+                   "p_0\\,p_2\\,p_3 = -4/27\\text{)}"]
+        name = "Gleiser"
+        probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+        held = probe.parameters["Y"]
+        names = {"Y": held}
+        lead = [held, probe.parameters["Lambda"]]
+        reduce = lambda value: vm.norm(probe.by_rates(value))
+        factor = "\\left(1 + \\Lambda Y\\right)^{2/3}"
+        metric = {("t", "t"): f"-\\dfrac{{Y^{{p_0}}}}{{{factor}}}", ("y", "y"): "\\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}",
+                  ("z", "z"): f"\\dfrac{{Y^{{p_3}}}}{{{factor}}}", ("\\phi", "\\phi"): f"\\dfrac{{Y^{{p_2}}}}{{C^2{factor}}}"}
+        inverse = {("t", "t"): f"-\\dfrac{{{factor}}}{{Y^{{p_0}}}}", ("y", "y"): "\\dfrac{3Y}{\\left(1 + \\Lambda Y\\right)^2}",
+                   ("z", "z"): f"\\dfrac{{{factor}}}{{Y^{{p_3}}}}", ("\\phi", "\\phi"): f"\\dfrac{{C^2{factor}}}{{Y^{{p_2}}}}"}
+    else:
+        coords = ["t", "r", "z", "\\phi"]
+        parameters = ["L", "r_0", "C"] + LT_KASNER + ["h = 1 - \\dfrac{r_0^3}{r^3}"]
+
+        def line(c2):
+            return ("ds^2 = \\dfrac{r^2}{L^2}\\left(-h^{p_0}" + c2 + "dt^2 + h^{p_3}dz^2 + \\dfrac{h^{p_2}}{C^2}d\\phi^2\\right)"
+                    " + \\dfrac{L^2}{r^2h}dr^2")
+        domains = [f"t \\in {reals}", "r \\in (r_0, \\infty)", f"z \\in {reals}", "\\phi \\in [0, 2\\pi)",
+                   "r = r_0 " + LT_AXIS]
+        name = "Sarıoğlu-Tekin"
+        probe = vm.Reader(coords, parameters, (), held=vm.HELD[key], rates=vm.RATES[key])
+        held = probe.parameters["h"]
+        names = {"h": held}
+        lead = [probe.symbol["r"], held, probe.parameters["L"]]
+        reduce = lambda value: vm.norm(probe.by_rates(value))
+        metric = {("t", "t"): "-\\dfrac{r^2h^{p_0}}{L^2}", ("r", "r"): "\\dfrac{L^2}{r^2h}",
+                  ("z", "z"): "\\dfrac{r^2h^{p_3}}{L^2}", ("\\phi", "\\phi"): "\\dfrac{r^2h^{p_2}}{L^2C^2}"}
+        inverse = {("t", "t"): "-\\dfrac{L^2}{r^2h^{p_0}}", ("r", "r"): "\\dfrac{r^2h}{L^2}",
+                   ("z", "z"): "\\dfrac{L^2}{r^2h^{p_3}}", ("\\phi", "\\phi"): "\\dfrac{L^2C^2}{r^2h^{p_2}}"}
+    kasner = [probe.parameters[name] for name in ("p_0", "p_2", "p_3")]
+    prepare = None
+    if system in ("toroidal", "cylindrical"):
+        # 4 + 3 Lambda P^2 is written 4 times the sum the line element names, so that its fractional
+        # powers carry no constant the printer would have to write as a radical.
+        lam_p = probe.parameters["Lambda"]
+        cosine = sp.Symbol("LTCOS", positive=True)
+        quartic = 4 + 3 * lam_p * held ** 2
+
+        def prepare(value):
+            def same(e):
+                return not e.is_Number and e.is_Add and sp.cancel(e - quartic) == 0
+            value = value.replace(lambda e: e.is_Pow and same(e.base), lambda e: (4 * cosine) ** e.exp)
+            return value.replace(same, lambda e: 4 * cosine)
+    pretty = lt_powers(names, state, prepare)
+
+    def check(chart):
+        state["printer"] = chart.printer
+        if system in ("toroidal", "cylindrical"):
+            chart.printer.named[cosine] = "1 + \\dfrac{3\\Lambda P^2}{4}"
+        linet_tian_check(chart, system)
+
+    return {
+        "metric_id": "linet_tian",
+        "system": {"id": system, "name": name, "coords": coords, "domains": domains, "parameters": parameters,
+                   "line_element": line("c^2")},
+        "chart_line_element": line(""),
+        "printer": {"lead": lead + kasner, "factors": kasner + lead[::-1],
+                    "collect": lambda poly, pr: cp.collect_by(poly, lead[:1], pr)},
+        "pretty": pretty,
+        **({"reduce": reduce} if reduce else {}),
+        "components": {"metric_components": metric, "inverse_metric_components": inverse},
+        "check": check,
+        "after": lambda math, chart: linet_tian_on_circle(math, chart, system),
+    }
+
+
+def lt_lambda(chart, system):
+    """The cosmological constant of the chart: its own Lambda, or -3/L^2 in Sarioglu and Tekin's."""
+    parameters = chart.reader.parameters
+    return -3 / parameters["L"] ** 2 if system == "sarioglu_tekin" else parameters["Lambda"]
+
+
+def lt_circle(chart, s):
+    """The point s of Kasner's circle, Levi-Civita's mass parameter, as values of the three exponents."""
+    parameters = chart.reader.parameters
+    S = 4 * s ** 2 - 2 * s + 1
+    return {parameters["p_0"]: 2 * s / S, parameters["p_2"]: (1 - 2 * s) / S, parameters["p_3"]: 2 * s * (2 * s - 1) / S}
+
+
+def lt_held_value(chart, system, at):
+    """The held name of a chart at a point, from its definition: P for the proper distance charts, Y for
+    Gleiser's and h for Sarioglu and Tekin's."""
+    parameters = chart.reader.parameters
+    if system == "toroidal":
+        k = sp.sqrt(3 * at[parameters["Lambda"]])
+        return {parameters["P"]: 2 * sp.tan(k * at[chart.symbols[1]] / 2) / k}
+    if system == "cylindrical":
+        k = sp.sqrt(-3 * at[parameters["Lambda"]])
+        return {parameters["P"]: 2 * sp.tanh(k * at[chart.symbols[1]] / 2) / k}
+    if system == "sarioglu_tekin":
+        return {parameters["h"]: 1 - at[parameters["r_0"]] ** 3 / at[chart.symbols[1]] ** 3}
+    y = at[chart.symbols[1]]
+    return {parameters["Y"]: y / (1 - at[parameters["Lambda"]] * y)}
+
+
+def lt_at(chart, system, value, at):
+    """A value of the chart as a number at a point of its coordinates and parameters."""
+    value = sp.sympify(value).xreplace(lt_held_value(chart, system, at))
+    return sp.N(value.subs(at), 40)
+
+
+LT_POINTS = {
+    # (parameters, radii): Lambda = 1/3 puts the far axis of the toroidal chart at rho = pi.
+    "toroidal": ({"Lambda": sp.Rational(1, 3), "B": sp.Rational(5, 4), "C": sp.Rational(3, 2)}, [0.5, 1.2, 2.5]),
+    "cylindrical": ({"Lambda": -sp.Rational(1, 3), "C": sp.Rational(3, 2)}, [0.5, 1.2, 2.5]),
+    "gleiser": ({"Lambda": sp.Rational(1, 3), "C": sp.Rational(3, 2)}, [0.4, 1.3, 2.7]),
+    "sarioglu_tekin": ({"L": 3, "r_0": 1, "C": sp.Rational(3, 2)}, [1.2, 2.0, 5.0]),
+}
+
+
+def linet_tian_check(chart, system):
+    """Each chart at points, for three members of Kasner's circle: R_mu nu = Lambda g_mu nu, the
+    Kretschmann scalar of LT_KRETSCHMANN and above the value 8 Lambda^2/3 of a space of constant
+    curvature, Levi-Civita's Kasner chart as Lambda -> 0, and Gleiser's and Sarioglu and Tekin's charts
+    the proper distance charts pulled back, each metric component a constant times the other's.
+    Numbers only: no symbolic determinant and no simplification."""
+    parameters = chart.reader.parameters
+    values, radii = LT_POINTS[system]
+    base = {parameters[name]: value for name, value in values.items()}
+    lam = lt_lambda(chart, system)
+    ricci = chart.geo.ricci_ll()
+    kretschmann = chart.geo.kretschmann()
+    printed = chart.reader(LT_KRETSCHMANN[system])
+    g = chart.geo.g
+    for s in (sp.Integer(0), sp.Rational(1, 4), sp.Rational(1, 3)):
+        for radius in radii:
+            at = {**base, **lt_circle(chart, s), chart.symbols[0]: 0, chart.symbols[1]: sp.Float(radius, 40),
+                  chart.symbols[2]: 0, chart.symbols[3]: 0}
+            scale = abs(complex(lt_at(chart, system, lam, at)))
+            for a in range(4):
+                gap = abs(complex(lt_at(chart, system, vm._at(ricci, (a, a)) - lam * g[a, a], at)))
+                if gap > 1e-25 * max(1, abs(complex(lt_at(chart, system, g[a, a], at)))):
+                    raise AssertionError(f"linet_tian/{system}: R_{a}{a} - Lambda g_{a}{a} = {gap} at s = {s}, {radius}")
+            K = lt_at(chart, system, kretschmann, at)
+            if abs(complex(K - lt_at(chart, system, printed, at))) > 1e-25 * abs(complex(K)):
+                raise AssertionError(f"linet_tian/{system}: the Kretschmann scalar is not LT_KRETSCHMANN at s = {s}")
+            if not complex(K).real - 8 * scale ** 2 / 3 > 1e-12 * scale ** 2:
+                raise AssertionError(f"linet_tian/{system}: K reaches 8 Lambda^2/3 at s = {s}, {radius}")
+    if system in ("toroidal", "cylindrical"):
+        linet_tian_levi_civita(chart, system)
+    if system in ("gleiser", "sarioglu_tekin"):
+        linet_tian_pullback(chart, system)
+
+
+def linet_tian_levi_civita(chart, system):
+    """As Lambda -> 0 the proper distance chart is Levi-Civita's Kasner chart, -rho^{2p_0}, rho^{2p_3}
+    and rho^{2p_2}/C^2, at a point of the circle away from the flat members."""
+    parameters = chart.reader.parameters
+    rho = chart.symbols[1]
+    s = sp.Rational(1, 5)
+    tiny = sp.Rational(1, 10 ** 14) * (1 if system == "toroidal" else -1)
+    at = {parameters["Lambda"]: tiny, parameters["C"]: 1, **lt_circle(chart, s), rho: sp.Float("0.7", 40)}
+    if "B" in parameters:
+        at[parameters["B"]] = 1
+    exponents = [parameters["p_0"], 0, parameters["p_3"], parameters["p_2"]]
+    for a in (0, 2, 3):
+        kasner = (-1 if a == 0 else 1) * rho ** (2 * exponents[a])
+        ratio = complex(lt_at(chart, system, chart.geo.g[a, a] / kasner, at))
+        if abs(ratio - 1) > 1e-10:
+            raise AssertionError(f"linet_tian/{system}: g_{a}{a} is not Levi-Civita's as Lambda -> 0 ({ratio})")
+
+
+def linet_tian_pullback(chart, system):
+    """Gleiser's y = sin^2(sqrt(3 Lambda) rho/2)/Lambda, for either sign, and Sarioglu and Tekin's
+    r = r_0 cosh^{2/3}(3 rho/2L): the radial component pulled back is d rho^2, and each other component
+    is the proper distance chart's times a constant, the same at every radius."""
+    parameters = chart.reader.parameters
+    radial = chart.symbols[1]
+    signs = (1, -1) if system == "gleiser" else (-1,)
+    for sign in signs:
+        other = linet_tian("toroidal" if sign > 0 else "cylindrical")
+        source = cp.Chart(other["system"]["coords"], other["system"]["parameters"], other["chart_line_element"])
+        op = source.reader.parameters
+        lam = sp.Rational(sign, 3)
+        k = sp.sqrt(3 * abs(lam))
+        s = sp.Rational(1, 3)
+        rho = sp.Symbol("rho_lt", positive=True)
+        if system == "gleiser":
+            image = (sp.sin(k * rho / 2) ** 2 / lam) if sign > 0 else (sp.sinh(k * rho / 2) ** 2 / (-lam))
+            mine = {parameters["Lambda"]: lam, parameters["C"]: 1}
+        else:
+            ell = 3
+            image = parameters["r_0"] * sp.cosh(3 * rho / (2 * ell)) ** sp.Rational(2, 3)
+            mine = {parameters["L"]: ell, parameters["r_0"]: 1, parameters["C"]: 1}
+        theirs = {op["Lambda"]: lam, op["C"]: 1, **lt_circle(source, s)}
+        if "B" in op:
+            theirs[op["B"]] = 1
+        mine.update(lt_circle(chart, s))
+        slope = sp.diff(image, rho)
+        ratios = []
+        for radius in (0.6, 1.4):
+            here = {rho: sp.Float(radius, 40)}
+            r_value = sp.sympify(image.subs(mine).subs(here)).evalf(40)
+            at = {**mine, radial: r_value, chart.symbols[0]: 0, chart.symbols[2]: 0, chart.symbols[3]: 0}
+            there = {**theirs, source.symbols[1]: sp.Float(radius, 40), source.symbols[0]: 0, source.symbols[2]: 0,
+                     source.symbols[3]: 0}
+            pulled = lt_at(chart, system, chart.geo.g[1, 1], at) * sp.N(slope.subs(mine).subs(here), 40) ** 2
+            if abs(complex(pulled - 1)) > 1e-25:
+                raise AssertionError(f"linet_tian/{system}: the radial component pulled back is not d rho^2 ({pulled})")
+            ratios.append([lt_at(chart, system, chart.geo.g[a, a], at)
+                           / lt_at(source, "toroidal" if sign > 0 else "cylindrical", source.geo.g[a, a], there)
+                           for a in (0, 2, 3)])
+        if any(abs(complex(x / y - 1)) > 1e-25 for x, y in zip(*ratios)):
+            raise AssertionError(f"linet_tian/{system}: a component is not a constant times the proper distance chart's")
+
+
+def linet_tian_on_circle(math, chart, system):
+    """On Kasner's circle the Ricci tensor is Lambda g_mu nu and the Einstein tensor -Lambda g_mu nu,
+    each checked on the checker's own parametrisation of the circle, the Ricci scalar is 4 Lambda,
+    the Kretschmann scalar is LT_KRETSCHMANN's, and the Weyl tensor is the Riemann tensor less
+    Lambda (g g - g g)/3, which is written from the free exponents and holds on the circle."""
+    relations = vm.PARAMETER_RELATIONS[("linet_tian", system)]
+    surface = {chart.reader.parameters[name]: sp.sympify(value) for name, value in relations.items()}
+
+    def on_circle(value):
+        value = sp.sympify(value).subs(surface)
+        return vm.norm(chart.reduce(value) if chart.reduce else value)
+
+    lam = lt_lambda(chart, system)
+    g, ginv, n = chart.geo.g, chart.geo.ginv, len(chart.symbols)
+    ricci = chart.geo.ricci_ll()
+    for index in vm._indices(n, 2):
+        if on_circle(vm._at(ricci, index) - lam * g[index[0], index[1]]) != 0:
+            raise AssertionError(f"linet_tian/{system}: the Ricci tensor is not Lambda g in slot {index}")
+    if on_circle(chart.reader(LT_KRETSCHMANN[system]) - chart.geo.kretschmann()) != 0:
+        raise AssertionError(f"linet_tian/{system}: the Kretschmann scalar is misprinted")
+    lower = [[lam * g[i, j] for j in range(n)] for i in range(n)]
+    mixed = [[lam if i == j else 0 for j in range(n)] for i in range(n)]
+    upper = [[lam * ginv[i, j] for j in range(n)] for i in range(n)]
+    for field, sign in (("ricci_tensor", 1), ("einstein_tensor", -1)):
+        variants = math[field]["variants"]
+        for variant, tensor in (("ll", lower), ("ul", mixed), ("uu", upper)):
+            variants[variant]["nonzero"] = chart.block([[sign * v for v in row] for row in tensor], 2)
+    math["ricci_scalar"] = "R = " + chart.text(4 * lam)
+    math["kretschmann"] = "K = " + LT_KRETSCHMANN[system]
+    riemann = chart.geo.riemann_llll()
+    weyl = [[[[vm.norm(riemann[a][b][c][d] - lam * (g[a, c] * g[b, d] - g[a, d] * g[b, c]) / 3)
+               for d in range(n)] for c in range(n)] for b in range(n)] for a in range(n)]
+    variants = math["weyl_tensor"]["variants"]
+    variants["llll"]["nonzero"] = chart.block(weyl, 4)
+    variants["ulll"]["nonzero"] = chart.block(chart.geo.raise_indices(weyl, 4, (0,)), 4)
+    return math
+
+
+CHARTS["linet_tian"] = [lambda s=s: linet_tian(s) for s in LT_CHARTS]
+
+
 def write(spec, seconds=None):
     start = time.time()
     where = f"{spec['metric_id']}/{spec['system']['id']}"

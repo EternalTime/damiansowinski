@@ -10938,6 +10938,154 @@
    "\\phi"
   ]
  },
+ "linet_tian/cylindrical": {
+  "stamp": "89e36d0a69c42a68",
+  "relations": {
+   "p_0": "2*s/(4*s**2 - 2*s + 1)",
+   "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+   "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)"
+  },
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "Lambda",
+   "sign": null
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "linet_tian/gleiser": {
+  "stamp": "8663591a054c8d64",
+  "relations": {
+   "p_0": "2*s/(4*s**2 - 2*s + 1)",
+   "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+   "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)"
+  },
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "Lambda",
+   "sign": null
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "linet_tian/sarioglu_tekin": {
+  "stamp": "fff3e27122bb537c",
+  "relations": {
+   "p_0": "2*s/(4*s**2 - 2*s + 1)",
+   "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+   "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)"
+  },
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "-3/L**2",
+   "sign": -1
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
+ "linet_tian/toroidal": {
+  "stamp": "e2068e1f5c50cefa",
+  "relations": {
+   "p_0": "2*s/(4*s**2 - 2*s + 1)",
+   "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+   "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)"
+  },
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "Lambda",
+   "sign": null
+  },
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\psi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "lqc_bounce/comoving_spherical": {
   "stamp": "6018a230e2227eb6",
   "relations": {},

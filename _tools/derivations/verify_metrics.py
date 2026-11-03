@@ -413,6 +413,25 @@ DIMENSIONS = {
     ("levi_civita", "kasner"): {
         "t": "T", "r": "L", "\\phi": "1", "z": "L", "p_0": "1", "p_2": "1", "p_3": "1", "\\ell": "L",
     },
+    # Linet and Tian's cylinder: the cosmological constant is an inverse area, P and r_0 lengths, y an
+    # area and h a pure number; the exponents are pure numbers, and a power whose exponent holds one is
+    # read with its base in a fixed unit, so the conicities B and C carry an inverse length.
+    ("linet_tian", "toroidal"): {
+        "t": "T", "\\rho": "L", "\\psi": "1", "\\phi": "1", "\\Lambda": "1/L**2", "B": "1/L", "C": "1/L",
+        "p_0": "1", "p_2": "1", "p_3": "1", "P": "L",
+    },
+    ("linet_tian", "cylindrical"): {
+        "t": "T", "\\rho": "L", "z": "L", "\\phi": "1", "\\Lambda": "1/L**2", "C": "1/L",
+        "p_0": "1", "p_2": "1", "p_3": "1", "P": "L",
+    },
+    ("linet_tian", "gleiser"): {
+        "t": "T", "y": "L**2", "z": "L", "\\phi": "1", "\\Lambda": "1/L**2", "C": "1/L",
+        "p_0": "1", "p_2": "1", "p_3": "1", "Y": "L**2",
+    },
+    ("linet_tian", "sarioglu_tekin"): {
+        "t": "T", "r": "L", "z": "L", "\\phi": "1", "L": "L", "r_0": "L", "C": "1/L",
+        "p_0": "1", "p_2": "1", "p_3": "1", "h": "1",
+    },
     # f and gamma are pure numbers and omega is a length: with x^0 = ct the line element's
     # c dt - omega dphi is a length term by term.
     ("double_kerr", "weyl"): {
@@ -2659,6 +2678,12 @@ PARAMETER_RELATIONS = {
         "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
         "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
     },
+    # The same circle for Linet and Tian's cylinder, whose charts carry Levi-Civita's Kasner exponents.
+    **{("linet_tian", chart): {
+        "p_0": "2*s/(4*s**2 - 2*s + 1)",
+        "p_2": "(1 - 2*s)/(4*s**2 - 2*s + 1)",
+        "p_3": "2*s*(2*s - 1)/(4*s**2 - 2*s + 1)",
+    } for chart in ("toroidal", "cylindrical", "gleiser", "sarioglu_tekin")},
     # Belinskii and Khalatnikov's surface, sum p_i = 1 and sum p_i^2 = 1 - q^2, a sphere of which
     # Kasner's circle is the equator q = 0. A point of it is the point u of Kasner's circle drawn
     # toward the isotropic point (1/3, 1/3, 1/3) by the factor (3v^2 - 2)/(3v^2 + 2), which leaves
@@ -2834,6 +2859,13 @@ HELD = {
     # Vaidya's own charts of Kerr in a universe: u and t enter only through the radius r = t - u.
     ("vaidya_patel_kerr", "einstein_vaidya"): ("r",),
     ("vaidya_patel_kerr", "expanding_vaidya"): ("r",),
+    # Linet and Tian's P = 2 tan(sqrt(3 Lambda) rho/2)/sqrt(3 Lambda), or its tanh for a negative constant,
+    # whose slope 1 + 3 Lambda P^2/4 is in P alone, and Sarioglu and Tekin's h = 1 - r_0^3/r^3, whose
+    # slope 3(1 - h)/r holds no r_0, so every value is rational in the coordinate and the name.
+    ("linet_tian", "toroidal"): ("P",),
+    ("linet_tian", "cylindrical"): ("P",),
+    ("linet_tian", "gleiser"): ("Y",),
+    ("linet_tian", "sarioglu_tekin"): ("h",),
 }
 
 # The first derivatives of held names along the coordinates they vary with, written in the names
@@ -3006,6 +3038,11 @@ RATES = {
     ("vaidya_patel_kerr", "vaidya_patel"): {"A": {"u": "\\dfrac{a}{2A}"}, "m": {"u": "-\\dfrac{3am}{2A^2}"},
                                             "q": {"u": "1", "T": "-1", "\\alpha": "a\\sin\\alpha\\cos\\alpha"}},
     **{("vaidya_patel_kerr", chart): {"r": {"u": "-1", "t": "1"}} for chart in ("einstein_vaidya", "expanding_vaidya")},
+    # Linet and Tian's P has the slope 1 + 3 Lambda P^2/4 for either sign of the constant, sec^2 or
+    # sech^2 of half the argument, and Sarioglu and Tekin's h the slope 3(1 - h)/r.
+    **{("linet_tian", chart): {"P": {"\\rho": "1 + \\dfrac{3\\Lambda P^2}{4}"}} for chart in ("toroidal", "cylindrical")},
+    ("linet_tian", "sarioglu_tekin"): {"h": {"r": "\\dfrac{3\\left(1 - h\\right)}{r}"}},
+    ("linet_tian", "gleiser"): {"Y": {"y": "\\left(1 + \\Lambda Y\\right)^2"}},
 }
 
 
