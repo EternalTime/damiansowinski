@@ -37556,5 +37556,10 @@ import hellaby_kruskal as _hellaby_kruskal
 CHARTS[_hellaby_kruskal.METRIC] = _hellaby_kruskal.chart_spec
 
 
+import ori_piran_chart as _ori_piran_chart
+CHARTS[_ori_piran_chart.METRIC] = [lambda system=system: _ori_piran_chart.chart_spec(system)
+                                     for system in _ori_piran_chart.SYSTEMS]
+
+
 if __name__ == "__main__":
     main()
