@@ -26,7 +26,28 @@
     "quevedomashhoon1991",
     "boshkayev2012qm"
   ],
-  "related": [],
+  "related": [
+    {
+      "id": "kerr",
+      "kind": "special_case",
+      "text": "Kerr's rotating vacuum field, with $q=0$ and $\\delta=1$ [bini2009, boshkayev2012qm]."
+    },
+    {
+      "id": "erez_rosen",
+      "kind": "special_case",
+      "text": "Erez and Rosen's static field, with $a=0$ and $\\delta=1$ [bini2009]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "special_case",
+      "text": "The static field with $a=0$ and $q=0$, retaining the deformation parameter $\\delta$ [boshkayev2012qm]."
+    },
+    {
+      "id": "hartle_thorne",
+      "kind": "family",
+      "text": "The exterior field of a slowly rotating, slightly deformed body. A slow rotation and small deformation limit of the broader family agrees after a change of coordinates [bini2009]."
+    }
+  ],
   "coordinates": [
     {
       "id": "prolate_spheroidal",

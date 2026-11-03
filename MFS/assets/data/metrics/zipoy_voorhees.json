@@ -82,6 +82,11 @@
       "id": "swirling_universe_black_hole",
       "kind": "family",
       "text": "Schwarzschild's hole in a swirling universe, made by a transformation that sets Zipoy and Voorhees's metric in that universe too [astorino2022swirling]."
+    },
+    {
+      "id": "quevedo_mashhoon",
+      "kind": "generalisation",
+      "text": "A rotating deformed vacuum field whose static limit with its separate deformation parameter set to zero is the Zipoy-Voorhees field [boshkayev2012qm]."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "memmen2021",
     "boshkayev2019",
     "geroch1982",
-    "astorino2022swirling"
+    "astorino2022swirling",
+    "boshkayev2012qm"
   ],
   "coordinates": [
     {

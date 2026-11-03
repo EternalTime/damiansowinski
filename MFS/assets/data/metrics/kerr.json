@@ -261,6 +261,11 @@
       "id": "string_cylindrical_waves",
       "kind": "dual",
       "text": "A complex transformation of the Kerr metric produces Xanthopoulos's cylindrical waves around a string [xanthopoulos1986rotating]."
+    },
+    {
+      "id": "quevedo_mashhoon",
+      "kind": "generalisation",
+      "text": "The rotating vacuum field with an independent deformation parameter. At $q=0$ and $\\delta=1$ it is Kerr’s field [bini2009]."
     }
   ],
   "references": [
@@ -340,6 +345,8 @@
     "vaidya1977kerr",
     "gleiser1998by",
     "xanthopoulos1986rotating"
+,
+    "bini2009"
   ],
   "coordinates": [
     {

@@ -63,6 +63,11 @@
       "id": "bach_weyl_ring",
       "kind": "family",
       "text": "A Weyl field too, built on Newton's potential of a hoop, where Erez and Rosen's is built on a rod's with a quadrupole term added."
+    },
+    {
+      "id": "quevedo_mashhoon",
+      "kind": "generalisation",
+      "text": "A rotating deformed vacuum field with Erez and Rosen’s field at $a=0$ and $\\delta=1$ [bini2009]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "quevedo1989",
     "quevedomashhoon1985",
     "quevedoparkes1989",
-    "memmen2021"
+    "memmen2021",
+    "bini2009"
   ],
   "coordinates": [
     {

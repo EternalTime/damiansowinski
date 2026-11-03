@@ -67,6 +67,11 @@
       "id": "kramer_fluid",
       "kind": "family",
       "text": "An exact interior for a rigidly rotating perfect fluid with negative pressure. Its rotation remains finite throughout the bounded family [chinea1999kramer]."
+    },
+    {
+      "id": "quevedo_mashhoon",
+      "kind": "family",
+      "text": "An exact rotating deformed vacuum field, related to the exterior solution in the limit of slow rotation and small deformation [bini2009]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "bardeen1969",
     "will2014",
     "boshkayev2019",
-    "chinea1999kramer"
+    "chinea1999kramer",
+    "bini2009"
   ],
   "coordinates": [
     {
