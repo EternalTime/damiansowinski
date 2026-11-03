@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 241,
+  "count": 242,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12410,6 +12410,629 @@
       ]
     },
     {
+      "id": "brown_teitelboim",
+      "name": "Brown-Teitelboim Membrane Bubble",
+      "short_name": "Brown-Teitelboim Bubble",
+      "description": "A spherical charged membrane joins two regions of de Sitter space with different cosmological constants.",
+      "tags": [
+        "bubble",
+        "domain wall",
+        "thin shell",
+        "matched solution",
+        "junction conditions",
+        "cosmology",
+        "de Sitter",
+        "positive cosmological constant",
+        "cosmological constant",
+        "vacuum energy",
+        "spherically symmetric",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model",
+        "conformally flat"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units with $c=1$.",
+      "related": [
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "A bubble of lower vacuum energy bounded by a wall, here a charged membrane that changes a four form across it [hirano2018bt, bousso2000flux]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "piece",
+          "text": "The geometry on each side of the membrane, with a different cosmological constant inside and outside [hirano2018bt]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A gravitating wall with flat spacetime on both sides, carrying no charge and no change in the cosmological constant [hirano2018bt, caldwell1996]."
+        }
+      ],
+      "references": [
+        "hirano2018bt",
+        "brown1987neutralization",
+        "brown1988membrane",
+        "israel1966",
+        "bousso2000flux",
+        "caldwell1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brown_teitelboim.json",
+      "charts": [
+        {
+          "id": "static_inside",
+          "name": "Static, Inside the Membrane",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, r_w)",
+            "r < \\sqrt{3/\\Lambda_i}",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_w \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda_i",
+              "description": "Positive cosmological constant inside the membrane, an inverse length squared"
+            },
+            {
+              "symbol": "r_w = r_w(t)",
+              "description": "Areal radius of the membrane in the static time of this region"
+            }
+          ],
+          "convention": "We use static coordinates $(t,r,\\theta,\\phi)$ inside the membrane, with $t$ the static time and $r$ the areal radius. The wall sits at $r=r_w(t)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{\\Lambda_i r^2}{3}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{\\Lambda_i r^2}{3}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\Lambda_i\\,r^2 - 3}{3}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{3}{\\Lambda_i\\,r^2 - 3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda_i",
+          "kretschmann": "K = \\dfrac{8\\Lambda_i^2}{3}"
+        },
+        {
+          "id": "static_outside",
+          "name": "Static, Outside the Membrane",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_w, \\sqrt{3/\\Lambda_o})",
+            "\\Lambda_o > 0",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_w \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda_o",
+              "description": "Positive cosmological constant outside the membrane, an inverse length squared"
+            },
+            {
+              "symbol": "r_w = r_w(t)",
+              "description": "Areal radius of the membrane in the static time of this region"
+            }
+          ],
+          "convention": "We use static coordinates $(t,r,\\theta,\\phi)$ outside the membrane, with $t$ the static time and $r$ the areal radius. The wall sits at $r=r_w(t)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{\\Lambda_o r^2}{3}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{\\Lambda_o r^2}{3}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\Lambda_o\\,r^2 - 3}{3}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{3}{\\Lambda_o\\,r^2 - 3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda_o",
+          "kretschmann": "K = \\dfrac{8\\Lambda_o^2}{3}"
+        },
+        {
+          "id": "sliced_inside",
+          "name": "de Sitter Slices, Inside the Membrane",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\chi \\in (0, \\chi_i)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = \\chi_i \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_i",
+              "description": "de Sitter radius on this side, $\\ell_i = \\sqrt{3/\\Lambda_i}$"
+            },
+            {
+              "symbol": "\\chi_i",
+              "description": "The value of $\\chi$ at the membrane on this side"
+            }
+          ],
+          "convention": "We use the de Sitter slices $(\\eta,\\chi,\\theta,\\phi)$ inside the membrane. The membrane sits at $\\chi=\\chi_i$, and $\\eta$ is dimensionless. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = d\\chi^2 + \\ell_i^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_i}\\right)\\left(-d\\eta^2 + \\cosh^2\\eta\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\ell_i^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_i}\\right)"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell_i^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_i}\\right)\\cosh^2\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell_i^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_i}\\right)\\cosh^2\\eta\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_i^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_i^4}"
+        },
+        {
+          "id": "sliced_outside",
+          "name": "de Sitter Slices, Outside the Membrane",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\chi \\in (\\chi_o, \\pi \\ell_o)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = \\chi_o \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_o",
+              "description": "de Sitter radius on this side, $\\ell_o = \\sqrt{3/\\Lambda_o}$"
+            },
+            {
+              "symbol": "\\chi_o",
+              "description": "The value of $\\chi$ at the membrane on this side"
+            }
+          ],
+          "convention": "We use the de Sitter slices $(\\eta,\\chi,\\theta,\\phi)$ outside the membrane. The membrane sits at $\\chi=\\chi_o$, and $\\eta$ is dimensionless. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = d\\chi^2 + \\ell_o^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_o}\\right)\\left(-d\\eta^2 + \\cosh^2\\eta\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\ell_o^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_o}\\right)"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell_o^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_o}\\right)\\cosh^2\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell_o^2\\sin^2\\left(\\dfrac{\\chi}{\\ell_o}\\right)\\cosh^2\\eta\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_o^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_o^4}"
+        },
+        {
+          "id": "flat_inside",
+          "name": "Expanding, Inside the Membrane",
+          "coordinates": [
+            "T",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, s_w)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = s_w \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_i",
+              "description": "de Sitter radius on this side, $\\ell_i = \\sqrt{3/\\Lambda_i}$"
+            },
+            {
+              "symbol": "s_w = s_w(T)",
+              "description": "Comoving radius of the membrane in this chart"
+            }
+          ],
+          "convention": "We use coordinates $(T,\\rho,\\theta,\\phi)$ inside the membrane, with $T$ and $\\rho$ carrying dimensions of length. The membrane sits at $\\rho=s_w(T)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -dT^2 + e^{2T/\\ell_i}\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2T/\\ell_i}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2e^{2T/\\ell_i}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{2T/\\ell_i}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_i^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_i^4}"
+        },
+        {
+          "id": "flat_outside",
+          "name": "Expanding, Outside the Membrane",
+          "coordinates": [
+            "T",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "\\rho \\in (s_w, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = s_w \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_o",
+              "description": "de Sitter radius on this side, $\\ell_o = \\sqrt{3/\\Lambda_o}$"
+            },
+            {
+              "symbol": "s_w = s_w(T)",
+              "description": "Comoving radius of the membrane in this chart"
+            }
+          ],
+          "convention": "We use coordinates $(T,\\rho,\\theta,\\phi)$ outside the membrane, with $T$ and $\\rho$ carrying dimensions of length. The membrane sits at $\\rho=s_w(T)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -dT^2 + e^{2T/\\ell_o}\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{2T/\\ell_o}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^2e^{2T/\\ell_o}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{2T/\\ell_o}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_o^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_o^4}"
+        },
+        {
+          "id": "conformal_inside",
+          "name": "Conformal, Inside the Membrane",
+          "coordinates": [
+            "\\zeta",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\zeta \\in (-\\infty, 0)",
+            "\\rho \\in [0, s_w)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = s_w \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_i",
+              "description": "de Sitter radius on this side, $\\ell_i = \\sqrt{3/\\Lambda_i}$"
+            },
+            {
+              "symbol": "s_w = s_w(\\zeta)",
+              "description": "Comoving radius of the membrane in this chart"
+            }
+          ],
+          "convention": "We use coordinates $(\\zeta,\\rho,\\theta,\\phi)$ inside the membrane, with $\\zeta$ and $\\rho$ carrying dimensions of length. The membrane sits at $\\rho=s_w(\\zeta)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell_i^2}{\\zeta^2}\\left(-d\\zeta^2 + d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\zeta",
+                "\\zeta"
+              ],
+              "value": "-\\dfrac{\\ell_i^2}{\\zeta^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\ell_i^2}{\\zeta^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell_i^2\\,\\rho^2}{\\zeta^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell_i^2\\,\\rho^2\\sin^2\\theta}{\\zeta^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_i^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_i^4}"
+        },
+        {
+          "id": "conformal_outside",
+          "name": "Conformal, Outside the Membrane",
+          "coordinates": [
+            "\\zeta",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\zeta \\in (-\\infty, 0)",
+            "\\rho \\in (s_w, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = s_w \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_o",
+              "description": "de Sitter radius on this side, $\\ell_o = \\sqrt{3/\\Lambda_o}$"
+            },
+            {
+              "symbol": "s_w = s_w(\\zeta)",
+              "description": "Comoving radius of the membrane in this chart"
+            }
+          ],
+          "convention": "We use coordinates $(\\zeta,\\rho,\\theta,\\phi)$ outside the membrane, with $\\zeta$ and $\\rho$ carrying dimensions of length. The membrane sits at $\\rho=s_w(\\zeta)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell_o^2}{\\zeta^2}\\left(-d\\zeta^2 + d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\zeta",
+                "\\zeta"
+              ],
+              "value": "-\\dfrac{\\ell_o^2}{\\zeta^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\ell_o^2}{\\zeta^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\ell_o^2\\,\\rho^2}{\\zeta^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell_o^2\\,\\rho^2\\sin^2\\theta}{\\zeta^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_o^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_o^4}"
+        },
+        {
+          "id": "radius_inside",
+          "name": "Wall Proper Time and Areal Radius, Inside the Membrane",
+          "coordinates": [
+            "\\tau",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "r \\in (0, R_0\\cosh(\\tau/R_0))",
+            "R_0 < \\ell_i",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R_0\\cosh(\\tau/R_0) \\;\\text{(the membrane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell_i",
+              "description": "The de Sitter radius inside the membrane"
+            },
+            {
+              "symbol": "R_0",
+              "description": "The minimum areal radius of the membrane"
+            }
+          ],
+          "convention": "The coordinate $\\tau$ is the membrane proper time extended along the de Sitter slices, and $r$ is the areal radius. The wall sits at $r=R_0\\cosh(\\tau/R_0)$. A dot in a geodesic is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\left(dr-\\dfrac{r}{R_0}\\tanh\\left(\\dfrac{\\tau}{R_0}\\right)d\\tau\\right)^2}{\\cosh\\left(\\dfrac{\\tau}{R_0}\\right)^2\\left(1-\\dfrac{r^2}{\\ell_i^2 \\cosh\\left(\\dfrac{\\tau}{R_0}\\right)^2}\\right)}-\\dfrac{r^2}{R_0^2 \\cosh\\left(\\dfrac{\\tau}{R_0}\\right)^2}d\\tau^2+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{16r^2\\left(\\ell_i + r\\right)\\left(\\ell_i - r\\right)e^{4\\tau/R_0}}{R_0^2\\left(e^{2\\tau/R_0} + 1\\right)^2\\left(\\ell_i\\,e^{2\\tau/R_0} + 2r\\,e^{\\tau/R_0} + \\ell_i\\right)\\left(\\ell_i\\,e^{2\\tau/R_0} - 2r\\,e^{\\tau/R_0} + \\ell_i\\right)}"
+            },
+            {
+              "indices": [
+                "\\tau",
+                "r"
+              ],
+              "value": "-\\dfrac{4\\ell_i^2\\,r\\left(e^{\\tau/R_0} + 1\\right)\\left(e^{\\tau/R_0} - 1\\right)e^{2\\tau/R_0}}{R_0\\left(e^{2\\tau/R_0} + 1\\right)\\left(\\ell_i\\,e^{2\\tau/R_0} + 2r\\,e^{\\tau/R_0} + \\ell_i\\right)\\left(\\ell_i\\,e^{2\\tau/R_0} - 2r\\,e^{\\tau/R_0} + \\ell_i\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{4\\ell_i^2\\,r\\left(e^{\\tau/R_0} + 1\\right)\\left(e^{\\tau/R_0} - 1\\right)e^{2\\tau/R_0}}{R_0\\left(e^{2\\tau/R_0} + 1\\right)\\left(\\ell_i\\,e^{2\\tau/R_0} + 2r\\,e^{\\tau/R_0} + \\ell_i\\right)\\left(\\ell_i\\,e^{2\\tau/R_0} - 2r\\,e^{\\tau/R_0} + \\ell_i\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{4\\ell_i^2e^{2\\tau/R_0}}{\\left(\\ell_i\\,e^{2\\tau/R_0} + 2r\\,e^{\\tau/R_0} + \\ell_i\\right)\\left(\\ell_i\\,e^{2\\tau/R_0} - 2r\\,e^{\\tau/R_0} + \\ell_i\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell_i^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell_i^4}"
+        }
+      ]
+    },
+    {
       "id": "bubbling_ads",
       "name": "Bubbling Anti-de Sitter Space",
       "short_name": "Bubbling Anti-de Sitter",
@@ -15368,6 +15991,11 @@
           "id": "hawking_moss",
           "kind": "family",
           "text": "Along suitable families of thick bounces, the scalar field at both poles approaches the barrier maximum. The homogeneous endpoint is the Hawking-Moss saddle [brown2007hm]."
+        },
+        {
+          "id": "brown_teitelboim",
+          "kind": "family",
+          "text": "A charged membrane separates de Sitter regions with different four form flux and cosmological constant [hirano2018bt]."
         }
       ],
       "references": [
@@ -15392,7 +16020,8 @@
         "caldwell1996",
         "gott1998",
         "vilenkin1982",
-        "brown2007hm"
+        "brown2007hm",
+        "hirano2018bt"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -17343,6 +17972,11 @@
           "id": "mallett_radiating_star",
           "kind": "generalisation",
           "text": "A spherical source with a changing mass and radial radiation in a de Sitter background."
+        },
+        {
+          "id": "brown_teitelboim",
+          "kind": "composite",
+          "text": "Two regions of de Sitter space joined across a charged membrane, with different cosmological constants [hirano2018bt]."
         }
       ],
       "references": [
@@ -17395,7 +18029,8 @@
         "cahen1970",
         "murphy1973",
         "starobinsky1980",
-        "weinberg2007hm"
+        "weinberg2007hm",
+        "hirano2018bt"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -79132,6 +79767,11 @@
           "id": "early_braneworlds",
           "kind": "family",
           "text": "Rubakov and Shaposhnikov trapped fermions on a domain wall in flat five dimensional spacetime [rubakov1983, rubakov2001extra]."
+        },
+        {
+          "id": "brown_teitelboim",
+          "kind": "family",
+          "text": "A charged spherical wall that separates regions of different cosmological constant [hirano2018bt]."
         }
       ],
       "references": [
@@ -79154,7 +79794,8 @@
         "coleman1980",
         "kraus1999",
         "rubakov1983",
-        "rubakov2001extra"
+        "rubakov2001extra",
+        "hirano2018bt"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",

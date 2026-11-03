@@ -1,5 +1,5 @@
 {
-  "version": "396aa6d6886f3498",
+  "version": "a013f746e38639e9",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35983,6 +35983,66 @@
         "eprint": "2108.12470",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.105.064004"
+      }
+    },
+    "hirano2018bt": {
+      "type": "article",
+      "fields": {
+        "author": "Hirano, Shinji",
+        "title": "Brown-Teitelboim instantons and thermodynamics of de Sitter and anti-de Sitter space",
+        "journal": "Physical Review D",
+        "volume": "98",
+        "number": "4",
+        "pages": "046020",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.98.046020",
+        "eprint": "1804.09985",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.98.046020"
+      }
+    },
+    "brown1987neutralization": {
+      "type": "article",
+      "fields": {
+        "author": "Brown, J. David and Teitelboim, Claudio",
+        "title": "Dynamical neutralization of the cosmological constant",
+        "journal": "Physics Letters B",
+        "volume": "195",
+        "number": "2",
+        "pages": "177--182",
+        "year": "1987",
+        "doi": "10.1016/0370-2693(87)91190-7",
+        "url": "https://doi.org/10.1016/0370-2693(87)91190-7"
+      }
+    },
+    "brown1988membrane": {
+      "type": "article",
+      "fields": {
+        "author": "Brown, J. David and Teitelboim, Claudio",
+        "title": "Neutralization of the cosmological constant by membrane creation",
+        "journal": "Nuclear Physics B",
+        "volume": "297",
+        "number": "4",
+        "pages": "787--836",
+        "year": "1988",
+        "doi": "10.1016/0550-3213(88)90559-7",
+        "url": "https://doi.org/10.1016/0550-3213(88)90559-7"
+      }
+    },
+    "bousso2000flux": {
+      "type": "article",
+      "fields": {
+        "author": "Bousso, Raphael and Polchinski, Joseph",
+        "title": "Quantization of four-form fluxes and dynamical neutralization of the cosmological constant",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "06",
+        "pages": "006",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/06/006",
+        "eprint": "hep-th/0004134",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/06/006"
       }
     }
   }
