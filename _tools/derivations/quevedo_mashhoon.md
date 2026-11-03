@@ -24,3 +24,10 @@ Its mass and quadrupole are $M\delta$ and $-M^3\delta(\delta^2-1)/3$.
 The two charts cover an exterior region and end at $x=1$.
 Bini et al. section 3 find direction dependent curvature behavior there and discuss the difficulty of obtaining a global conformal diagram.
 The charts do not establish a global extension across that boundary, so a conformal diagram is not drawn.
+
+## Drawings
+
+The drawings select $M=1$, $a=2M/5$, $q=2/5$ and $\delta=1$.
+Both spacetime views divide out the axial circles on the equator, so their null curves project rays of zero angular momentum.
+The embedding takes the equatorial slice of constant $t$ from $r=5M/2$ to $r=7M$.
+The embedding defect is positive at representative points throughout that interval and the generator checks the full surface against the stored metric.

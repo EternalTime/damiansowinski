@@ -18460,8 +18460,35 @@ def static_five_soliton(ck, src):
                  settings=r"$r_s=1$, $a=8/7$, $b=-3/7$. Inner lengths: $dX^2+dY^2-dZ^2$.")]
 
 
+def quevedo_mashhoon(ck, src):
+    """An equatorial slice of the rotating deformed vacuum field.
+
+    The interval r/M from 5/2 to 7 stays outside the coordinate boundary and
+    has positive circumference and embedding defect at the parameters shared
+    with the light ray views. The slice is a single sheet, not an extension
+    across the inner edge.
+    """
+    sl = Slice(src, "quevedo_mashhoon", "spherical", "r", "\\phi",
+               {"t": 0, "theta": "pi/2"}, nr.QM_PARAMS, functions=nr.QM_FUNCTIONS["spherical"])
+    inner, outer = 2.5, 7.0
+    size = 2 * float(sl.rho_at(outer))
+    sheet = Piece("equator", "sheet", sl, inner, outer, 0.0, 1,
+                  (("edge", "$r=5M/2$"), ("edge", "$r=7M$")),
+                  [(r, "r", None) for r in (3.0, 4.0, 5.0, 6.0, outer)], size)
+    ck.isometry("Quevedo-Mashhoon, the equatorial slice", sheet)
+    surface = Surface([sheet])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(outer), "$7M$")
+    fig.legend("fill", "cover", "the equatorial slice")
+    fig.legend("line", "r", "$r=3$, $4$, $5$, $6$, and $7M$")
+    fig.legend("line", "meridian", "$\\phi$ constant")
+    return [view("equator", "The equator", "$M$", [surface], fig.done(),
+                 settings="$M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$.")]
+
+
 DRAWN = {
     "york_equilibrium": york_equilibrium,
+    "quevedo_mashhoon": quevedo_mashhoon,
     "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
