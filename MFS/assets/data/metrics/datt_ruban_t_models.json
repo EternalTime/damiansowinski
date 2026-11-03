@@ -70,6 +70,11 @@
       "id": "rn_metric",
       "kind": "family",
       "text": "Ruban's T-models of charged dust join the Reissner-Nordström field on a surface that swings between its two horizons, and their shells collide within half a swing [krasinski2012]."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "family",
+      "text": "Spherical dust with a radius that changes from shell to shell, with a neck joining two regions [hellaby2002]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "datt1938",
     "kompaneets1964",
     "kantowski1966",
-    "szekeres1975"
+    "szekeres1975",
+    "hellaby2002"
   ],
   "coordinates": [
     {

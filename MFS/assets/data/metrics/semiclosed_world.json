@@ -76,6 +76,11 @@
       "id": "datt_ruban_t_models",
       "kind": "family",
       "text": "Ruban's T-sphere, a tube of dust behind the horizon in which every shell's binding energy cancels its rest mass, so the mass outside stays the same however much dust is added [ruban1968]."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "family",
+      "text": "A neck joining two regions of dust, each extending outward from the neck [hellaby1987]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "hsu2008monsters",
     "chakravarty2021",
     "omurchadha1993",
-    "ruban1968"
+    "ruban1968",
+    "hellaby1987"
   ],
   "coordinates": [
     {

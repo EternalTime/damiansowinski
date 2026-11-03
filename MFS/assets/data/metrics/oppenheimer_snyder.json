@@ -117,6 +117,11 @@
       "id": "oscillating_sphere",
       "kind": "family",
       "text": "A ball of uniform density with pressure inside it, which can collapse, turn round, or oscillate for ever [bonnor1967oscillating]."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "family",
+      "text": "Inhomogeneous dust around a neck joining two regions, expanding from a white hole and collapsing into a black hole [hellaby1987]."
     }
   ],
   "references": [
@@ -143,7 +148,8 @@
     "ruban1968",
     "lewandowski2023",
     "barcelo2014mutiny",
-    "bonnor1967oscillating"
+    "bonnor1967oscillating",
+    "hellaby1987"
   ],
   "coordinates": [
     {

@@ -549,6 +549,11 @@
       "id": "york_equilibrium",
       "kind": "generalisation",
       "text": "The first order gravitational back reaction of a thermal conformal scalar field [hochberg1994potential, york1985equilibrium]."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "generalisation",
+      "text": "A universe of dust with a neck joining two regions, whose vacuum member is the extended Schwarzschild solution [hellaby2002]."
     }
   ],
   "references": [
@@ -691,7 +696,8 @@
     "delgaty1998",
     "dvali2016skyrmion",
     "hochberg1994potential",
-    "york1985equilibrium"
+    "york1985equilibrium",
+    "hellaby2002"
   ],
   "coordinates": [
     {

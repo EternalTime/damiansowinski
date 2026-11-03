@@ -81,6 +81,11 @@
       "id": "bardeen_perturbations",
       "kind": "family",
       "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "special_case",
+      "text": "A Tolman-Bondi universe with a neck joining two regions of dust, where $1+2E=0$ [hellaby2002, hellaby1987]."
     }
   ],
   "references": [
@@ -114,7 +119,9 @@
     "novikov1965",
     "lindquist1957",
     "ruban1969",
-    "krasinski1999datt"
+    "krasinski1999datt",
+    "hellaby2002",
+    "hellaby1987"
   ],
   "coordinates": [
     {

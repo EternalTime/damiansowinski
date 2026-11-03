@@ -72,6 +72,11 @@
       "id": "bardeen_perturbations",
       "kind": "family",
       "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "special_case",
+      "text": "Concentric shells of dust with a neck joining two regions [hellaby2002]."
     }
   ],
   "references": [

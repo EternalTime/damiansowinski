@@ -121,6 +121,11 @@
       "id": "bowen_york",
       "kind": "family",
       "text": "The inversion symmetric throat construction extends the spatial bridge to black hole initial data with linear momentum and spin [bowen1980, cook2000]."
+    },
+    {
+      "id": "hellaby_kruskal",
+      "kind": "family",
+      "text": "A neck joining two regions of a universe of dust, with a white hole in its past and a black hole in its future [hellaby1987]."
     }
   ],
   "references": [
@@ -157,7 +162,8 @@
     "kodama1979preprint",
     "maldacena2018",
     "bowen1980",
-    "cook2000"
+    "cook2000",
+    "hellaby1987"
   ],
   "coordinates": [
     {
