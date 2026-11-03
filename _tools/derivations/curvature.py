@@ -19086,5 +19086,9 @@ import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_curvature(sys.modules[__name__])
 
 
+import hellaby_kruskal as _hellaby_kruskal
+DRAWN["hellaby_kruskal"] = lambda ck, src: _hellaby_kruskal.curvature_views(ck, src, sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

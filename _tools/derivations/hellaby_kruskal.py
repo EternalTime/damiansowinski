@@ -113,3 +113,34 @@ def declared_functions(lw_r):
             return hk_h1(self.args[0])
 
     return {"hk_radius": radius_type(0, 0), "hk_h": hk_h, "hk_h1": hk_h1}
+
+
+def curvature_views(ck, src, cv):
+    """Map the two stored curvature scalars across the regular neck."""
+    import math
+    import numpy as np
+
+    xa = cv.axis(r"$r/M_0$", -1.5, 1.5)
+    ya = cv.axis(r"$t/M_0$", -1.5, 1.5)
+    functions = {"R": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)"}
+    views = []
+    for field, letter, power, name in (("kretschmann", "K", 4, "Kretschmann"),
+                                        ("ricci_scalar", "R", 2, "Ricci")):
+        stored = cv.Published(src, METRIC, SYSTEM, field, ["r", "t"], [], functions=functions)
+        _, _, values = cv.cells(stored, xa, ya, 80, 80, [])
+        ck(f"{METRIC} {name} values are finite and positive", np.all(np.isfinite(values)) and np.all(values > 0))
+        low = math.floor(math.log10(float(np.min(values))))
+        high = math.ceil(math.log10(float(np.max(values))))
+        scale = {"kind": "log", "from": 10.0**low, "to": 10.0**high}
+        cv.shape_checks(ck, f"{METRIC} {name}", [1])
+        views.append({"id": letter, "label": f"{name} scalar", "kind": "map", "system": SYSTEM,
+            "x": xa, "y": ya,
+            "colour": {"name": f"${letter}M_0^{power}$", "scale": scale, "ticks": cv.value_ticks(scale)},
+            "map": {"metric": METRIC, "system": SYSTEM, "scalar": field, "x": "r", "y": "t",
+                    "params": {}, "functions": functions, "nx": 80, "ny": 80,
+                    "cells": [[cv.rounded(v) for v in row] for row in values]},
+            "marks": [], "legend": [],
+            "caption": [f"The {name} scalar ${letter}$ across the neck in the plane of $t$ and $r$."],
+            "settings": r"$M_1M_0^2=1/10$ and $r_s/M_0^2=1$; lengths in units of $M_0$.",
+            "clip": f"Logarithmic colours from $10^{{{low}}}$ to $10^{{{high}}}$."})
+    return views
