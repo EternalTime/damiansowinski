@@ -150,7 +150,9 @@ NOT_DRAWN = {"skyrmion_hair", "charged_godel_universe", "godel", "stockum_dust",
              # Kerr radiating and Kerr in a universe: three spacetimes, two of them time dependent, the
              # radiating one with no horizon in closed form and the expanding one with F left free, and
              # the static one with a naked antipodal singularity; vaidya_patel_kerr.md gives the reasons.
-             "vaidya_patel_kerr"}
+             "vaidya_patel_kerr",
+             # Both sourced charts cover the exterior only; the interior causal extension is not specified.
+             "myers_compactified"}
 
 
 # ---------------------------------------------------------------- the drawing

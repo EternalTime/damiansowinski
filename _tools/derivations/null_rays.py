@@ -4354,6 +4354,17 @@ DIAGRAMS = [
     Diagram("rn_metric", "spherical", "radial", "$t$ and $r$", ("t", "r"), (0, 2, -1, 1),
             "$r/r_s$", "$t/r_s$", {"r_s": 1, "r_q": "12/25"}, EQUATOR, orient="ingoing",
             areal=True),
+    # A single extremal hole on a compact circle, on the reflection plane z = 0.
+    Diagram("myers_compactified", "cylindrical", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$r/\\sqrt{\\mu}$", "$ct/\\sqrt{\\mu}$", {"mu": 1, "L": 4},
+            {"theta": "pi/2", "phi": "0", "z": "0"},
+            functions={"U": "1 + pi*mu*sinh(2*pi*r/L)/(L*r*(cosh(2*pi*r/L)-cos(2*pi*z/L)))"},
+            input="$\\mu = 1$ and $L = 4\\sqrt{\\mu}$."),
+    Diagram("myers_compactified", "spherical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
+            "$\\rho/\\sqrt{\\mu}$", "$ct/\\sqrt{\\mu}$", {"mu": 1, "L": 4},
+            {"chi": "pi/2", "theta": "pi/2", "phi": "0"},
+            functions={"U": "1 + pi*mu*sinh(2*pi*rho*sin(chi)/L)/(L*rho*sin(chi)*(cosh(2*pi*rho*sin(chi)/L)-cos(2*pi*rho*cos(chi)/L)))"},
+            input="$\\mu = 1$ and $L = 4\\sqrt{\\mu}$."),
     # Majumdar and Papapetrou's two holes, each of mass parameter m = 1, at z = +-2 on the axis,
     # the pair the embedding diagram's midplane is cut between; and one hole alone, U = 1 + m/r.
     Diagram("majumdar_papapetrou", "cartesian", "tz", "the axis", ("t", "z"), (-5, 5, -5, 5),
@@ -10046,6 +10057,12 @@ CAPTIONS = {
         "The cones are narrowest at $z = 0$, midway between the bodies, where $U = 1/5$ and light moves at "
         "$0.70\\,c$ in $t$, and they open toward $45°$ along the axis. On the axis $\\partial_t\\partial_z\\chi$ vanishes, so this plane is the same in both charts. The bodies circle in the plane "
         "$z = 0$, ten $m$ from the axis on either side.",
+    ],
+    ("myers_compactified", "cylindrical", "radial"): [
+        "The plane of $t$ and $r$ through the hole ($z = 0$, $\\theta = \\pi/2$, $\\phi = 0$).",
+    ],
+    ("myers_compactified", "spherical", "radial"): [
+        "The plane of $t$ and $\\rho$ through the hole ($\\chi = \\theta = \\pi/2$, $\\phi = 0$).",
     ],
     ("majumdar_papapetrou", "cartesian", "tz"): [
         "The plane of $t$ and $z$ on the axis through both holes ($x = y = 0$), which light launched along "

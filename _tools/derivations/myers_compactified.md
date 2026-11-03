@@ -16,4 +16,6 @@ Both charts printed their tensors under a 20 second per step budget, and both po
 
 ## Drawings
 
-The spacetime, conformal, embedding, and curvature views and any physically justified omissions are to be recorded here.
+The two spacetime diagrams draw the same reflection plane $z = 0$ in the two sourced charts, with $\mu = 1$ and $L = 4\sqrt{\mu}$.
+No conformal diagram is drawn: both sourced charts cover only the exterior, and the causal extension through the extremal horizon is not specified by these charts.
+The embedding and curvature views are to be recorded here.
