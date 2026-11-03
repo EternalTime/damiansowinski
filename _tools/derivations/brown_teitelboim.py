@@ -5,12 +5,14 @@ The wall is excluded from the smooth bulk tensors and is matched by Israel's con
 """
 import sympy as sp
 
-SYSTEMS = ("static_inside", "static_outside")
+SYSTEMS = ("static_inside", "static_outside", "sliced_inside", "sliced_outside")
 
 
 def chart_spec(system):
     import verify_metrics as vm
 
+    if system.startswith("sliced_"):
+        return sliced_spec(system)
     inside = system == "static_inside"
     lam = r"\Lambda_i" if inside else r"\Lambda_o"
     coords = ["t", "r", r"\theta", r"\phi"]
@@ -51,5 +53,53 @@ def check_chart(chart, system):
         for i in range(4):
             for j in range(4):
                 diff = ricci[i][j] - lam * chart.geo.g[i, j]
+                if abs(complex(sp.N(diff.subs(point), 35))) > 1e-25:
+                    raise AssertionError(f"brown_teitelboim/{system}: Ricci equation {i},{j}")
+
+
+def sliced_spec(system):
+    """Hirano's de Sitter slices, equations (2.16) and (2.19)."""
+    import chart_printer as cp
+    import verify_metrics as vm
+
+    inside = system == "sliced_inside"
+    suffix = "i" if inside else "o"
+    ell = rf"\ell_{suffix}"
+    wall = rf"\chi_{suffix}"
+    coords = [r"\eta", r"\chi", r"\theta", r"\phi"]
+    parameters = [ell, wall]
+    factor = rf"{ell}^2\sin^2\left(\dfrac{{\chi}}{{{ell}}}\right)"
+    sphere = r"d\theta^2 + \sin^2\theta\,d\phi^2"
+    line = (rf"ds^2 = d\chi^2 + {factor}\left(-d\eta^2 + "
+            rf"\cosh^2\eta\left({sphere}\right)\right)")
+    probe = vm.Reader(coords, parameters, ())
+    return {
+        "metric_id": "brown_teitelboim",
+        "system": {"id": system,
+                   "name": "de Sitter Slices, " + ("Inside" if inside else "Outside") + " the Membrane",
+                   "coords": coords, "parameters": parameters,
+                   "domains": [r"\eta \in (-\infty, \infty)",
+                               rf"\chi \in (0, {wall})" if inside else rf"\chi \in ({wall}, \pi {ell})",
+                               r"\theta \in [0, \pi]", r"\phi \in [0, 2\pi)",
+                               rf"\chi = {wall} \;\text{{(the membrane)}}"],
+                   "line_element": line},
+        "chart_line_element": line,
+        "printer": {"lead": [probe.parameters[vm.Reader._plain(ell)]]},
+        "pretty": cp.hyperbolic(probe.symbol[r"\eta"]),
+        "kretschmann": rf"\dfrac{{24}}{{{ell}^4}}",
+        "check": lambda chart: check_sliced(chart, system),
+    }
+
+
+def check_sliced(chart, system):
+    ell = chart.reader.parameters["ell_i" if system == "sliced_inside" else "ell_o"]
+    eta, chi, theta, phi = chart.symbols
+    ricci = chart.geo.ricci_ll()
+    for radius, distance, rapidity, angle in ((2, sp.Rational(1, 2), sp.Rational(1, 3), sp.Rational(2, 3)),
+                                              (3, 1, sp.Rational(2, 5), sp.Rational(4, 5))):
+        point = {ell: radius, chi: distance, eta: rapidity, theta: angle, phi: sp.Rational(1, 5)}
+        for i in range(4):
+            for j in range(4):
+                diff = ricci[i][j] - 3 * chart.geo.g[i, j] / ell**2
                 if abs(complex(sp.N(diff.subs(point), 35))) > 1e-25:
                     raise AssertionError(f"brown_teitelboim/{system}: Ricci equation {i},{j}")

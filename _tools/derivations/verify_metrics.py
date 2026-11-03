@@ -911,6 +911,12 @@ DIMENSIONS = {
     ("brown_teitelboim", "static_outside"): {
         "t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "\\Lambda_o": "1/L**2", "r_w": "L",
     },
+    ("brown_teitelboim", "sliced_inside"): {
+        "\\eta": "1", "\\chi": "L", "\\theta": "1", "\\phi": "1", "\\ell_i": "L", "\\chi_i": "L",
+    },
+    ("brown_teitelboim", "sliced_outside"): {
+        "\\eta": "1", "\\chi": "L", "\\theta": "1", "\\phi": "1", "\\ell_o": "L", "\\chi_o": "L",
+    },
     ("malament_hogarth", "cartesian"): {
         "t": "T", "x": "L", "y": "L", "z": "L", "\\Omega": "1",
     },
