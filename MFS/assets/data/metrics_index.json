@@ -2093,7 +2093,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bb3d02a784ebf317",
+    "version": "d773b2d35735fb82",
     "diagrams": "94462e128eea5d3d",
     "conformal": "73d1aa078d3b894f",
     "embedding": "e21547bef3d58f8e",
@@ -3248,7 +3248,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "61d7762660277333",
+    "version": "e5c8979b89c7b4ae",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -5193,7 +5193,7 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "29189c796fbca572",
+    "version": "37a5e55e49243555",
     "diagrams": "e2a43d52eddddef5",
     "embedding": "2e6f3f376a50fc0b",
     "curvature": "37020e83a2131421"

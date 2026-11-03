@@ -23182,7 +23182,7 @@
         {
           "id": "quevedo_mashhoon",
           "kind": "generalisation",
-          "text": "A rotating deformed vacuum field with Erez and Rosen’s field at $a=0$ and $\\delta=1$ [bini2009]."
+          "text": "A rotating deformed vacuum field with the Erez-Rosen field at $a=0$ and $\\delta=1$ [bini2009]."
         }
       ],
       "references": [
@@ -35935,7 +35935,7 @@
         {
           "id": "quevedo_mashhoon",
           "kind": "generalisation",
-          "text": "The rotating vacuum field with an independent deformation parameter. At $q=0$ and $\\delta=1$ it is Kerr’s field [bini2009]."
+          "text": "The rotating vacuum field with an independent deformation parameter. At $q=0$ and $\\delta=1$ it is the Kerr field [bini2009]."
         }
       ],
       "references": [
@@ -58021,12 +58021,12 @@
         {
           "id": "kerr",
           "kind": "special_case",
-          "text": "Kerr's rotating vacuum field, with $q=0$ and $\\delta=1$ [bini2009, boshkayev2012qm]."
+          "text": "The rotating Kerr vacuum field, with $q=0$ and $\\delta=1$ [bini2009, boshkayev2012qm]."
         },
         {
           "id": "erez_rosen",
           "kind": "special_case",
-          "text": "Erez and Rosen's static field, with $a=0$ and $\\delta=1$ [bini2009]."
+          "text": "The static Erez-Rosen field, with $a=0$ and $\\delta=1$ [bini2009]."
         },
         {
           "id": "zipoy_voorhees",
