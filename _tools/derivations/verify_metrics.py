@@ -5449,5 +5449,8 @@ import hellaby_kruskal as _hellaby_kruskal
 DIMENSIONS.update(_hellaby_kruskal.DIMENSIONS)
 
 
+import linear_dilaton as _linear_dilaton
+DIMENSIONS.update(_linear_dilaton.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())

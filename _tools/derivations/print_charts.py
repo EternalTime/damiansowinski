@@ -37560,6 +37560,9 @@ import ori_piran_chart as _ori_piran_chart
 CHARTS[_ori_piran_chart.METRIC] = [lambda system=system: _ori_piran_chart.chart_spec(system)
                                      for system in _ori_piran_chart.SYSTEMS]
 
+import linear_dilaton as _linear_dilaton
+CHARTS[_linear_dilaton.METRIC] = [lambda system=system: _linear_dilaton.chart_spec(system)
+                                    for system in _linear_dilaton.CHARTS]
 
 if __name__ == "__main__":
     main()

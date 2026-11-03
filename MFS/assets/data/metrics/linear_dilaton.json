@@ -32,6 +32,1387 @@
     "mandal1991",
     "giddings1992"
   ],
-  "coordinates": [],
+  "coordinates": [
+    {
+      "id": "cosmic",
+      "name": "Cosmic Time",
+      "coords": [
+        "\\tau",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\tau \\in (0,\\infty)",
+        "x \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "q",
+          "description": "Positive inverse length setting the slope of the dilaton."
+        }
+      ],
+      "convention": "We use the Einstein frame and comoving Cartesian spatial coordinates with dimensions of length.",
+      "line_element": "ds^2 = -d\\tau^2+q^2\\tau^2\\left(dx^2+dy^2+dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "q^2\\,\\tau^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "q^2\\,\\tau^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "q^2\\,\\tau^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{1}{q^2\\,\\tau^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "\\dfrac{1}{q^2\\,\\tau^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{q^2\\,\\tau^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{\\tau}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{\\tau}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "\\dfrac{1}{\\tau}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{\\tau}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{1}{\\tau}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{1}{\\tau}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "x",
+                  "x"
+                ],
+                "value": "-q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "y",
+                  "y"
+                ],
+                "value": "-q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z"
+                ],
+                "value": "-q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\tau",
+                  "x"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\tau"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\tau",
+                  "y"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\tau"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "q^2\\,\\tau"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "q^2\\,\\tau"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "q^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-q^4\\,\\tau^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "q^4\\,\\tau^2"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2q^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{\\tau^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2}{q^2\\,\\tau^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "\\dfrac{2}{q^2\\,\\tau^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2}{q^2\\,\\tau^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{6}{\\tau^2}",
+      "kretschmann": "K = \\dfrac{12}{\\tau^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-q^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{3}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{\\tau^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{3}{\\tau^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{q^2\\,\\tau^4}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{1}{q^2\\,\\tau^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{1}{q^2\\,\\tau^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} + q^2\\,\\tau\\,\\dot{x}^2 + q^2\\,\\tau\\,\\dot{y}^2 + q^2\\,\\tau\\,\\dot{z}^2 = 0",
+        "\\ddot{x} + \\dfrac{2}{\\tau}\\dot{\\tau}\\dot{x} = 0",
+        "\\ddot{y} + \\dfrac{2}{\\tau}\\dot{\\tau}\\dot{y} = 0",
+        "\\ddot{z} + \\dfrac{2}{\\tau}\\dot{\\tau}\\dot{z} = 0"
+      ]
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal Time",
+      "coords": [
+        "\\eta",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "\\eta \\in (-\\infty,\\infty)",
+        "x \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)"
+      ],
+      "parameters": [
+        {
+          "symbol": "q",
+          "description": "Positive inverse length setting the slope of the dilaton."
+        }
+      ],
+      "convention": "We use the Einstein frame and comoving Cartesian spatial coordinates with dimensions of length.",
+      "line_element": "ds^2 = e^{2q\\eta}\\left(-d\\eta^2+dx^2+dy^2+dz^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-e^{2\\eta\\,q}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "e^{2\\eta\\,q}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "e^{2\\eta\\,q}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{2\\eta\\,q}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\eta",
+            "\\eta"
+          ],
+          "value": "-e^{-2\\eta\\,q}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "e^{-2\\eta\\,q}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "e^{-2\\eta\\,q}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "e^{-2\\eta\\,q}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "q"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "q"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "x",
+                  "x"
+                ],
+                "value": "-q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "y",
+                  "y"
+                ],
+                "value": "-q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "\\eta",
+                  "z",
+                  "z"
+                ],
+                "value": "-q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\eta",
+                  "x"
+                ],
+                "value": "q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\eta"
+                ],
+                "value": "q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\eta",
+                  "y"
+                ],
+                "value": "q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\eta"
+                ],
+                "value": "q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\eta",
+                  "z"
+                ],
+                "value": "q\\,e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\eta"
+                ],
+                "value": "q\\,e^{2\\eta\\,q}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "q^2"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "x",
+                  "y"
+                ],
+                "value": "q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "y",
+                  "y",
+                  "x"
+                ],
+                "value": "-q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "x",
+                  "z"
+                ],
+                "value": "q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "z",
+                  "z",
+                  "x"
+                ],
+                "value": "-q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "x",
+                  "y"
+                ],
+                "value": "-q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x",
+                  "y",
+                  "x"
+                ],
+                "value": "q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "y",
+                  "z"
+                ],
+                "value": "q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "z",
+                  "z",
+                  "y"
+                ],
+                "value": "-q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "x",
+                  "z"
+                ],
+                "value": "-q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "x",
+                  "z",
+                  "x"
+                ],
+                "value": "q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "y",
+                  "z"
+                ],
+                "value": "-q^2e^{2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "y",
+                  "z",
+                  "y"
+                ],
+                "value": "q^2e^{2\\eta\\,q}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2q^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2q^2e^{-2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2q^2e^{-2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2q^2e^{-2\\eta\\,q}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "2q^2e^{-4\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "2q^2e^{-4\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "2q^2e^{-4\\eta\\,q}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 6q^2e^{-2\\eta\\,q}",
+      "kretschmann": "K = 12q^4e^{-4\\eta\\,q}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "3q^2"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-q^2"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-q^2"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "-3q^2e^{-2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-q^2e^{-2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-q^2e^{-2\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-q^2e^{-2\\eta\\,q}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\eta",
+                  "\\eta"
+                ],
+                "value": "3q^2e^{-4\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-q^2e^{-4\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-q^2e^{-4\\eta\\,q}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-q^2e^{-4\\eta\\,q}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\eta} + q\\,\\dot{\\eta}^2 + q\\,\\dot{x}^2 + q\\,\\dot{y}^2 + q\\,\\dot{z}^2 = 0",
+        "\\ddot{x} + 2q\\,\\dot{\\eta}\\dot{x} = 0",
+        "\\ddot{y} + 2q\\,\\dot{\\eta}\\dot{y} = 0",
+        "\\ddot{z} + 2q\\,\\dot{\\eta}\\dot{z} = 0"
+      ]
+    }
+  ],
   "related": []
 }
