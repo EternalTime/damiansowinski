@@ -5345,6 +5345,9 @@ RATES.update(_exponential_scalar.RATES)
 import kramer_fluid as kf
 kf.register_dimensions(sys.modules[__name__])
 
+import string_cylindrical_waves as scw
+scw.register_dimensions(sys.modules[__name__])
+
 
 import mallett_radiating_star as _mallett
 DIMENSIONS.update(_mallett.DIMENSIONS)

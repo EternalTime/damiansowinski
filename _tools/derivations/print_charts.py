@@ -37054,6 +37054,9 @@ CHARTS[_mallett.METRIC] = [lambda system=system: _mallett.chart_spec(system) for
 import skyrmion_hair_chart as _skyrmion_hair_chart
 CHARTS["skyrmion_hair"] = [_skyrmion_hair_chart.chart_spec, _skyrmion_hair_chart.tortoise_spec]
 
+import string_cylindrical_waves as scw
+scw.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()
