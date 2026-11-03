@@ -22343,6 +22343,35 @@ CAPTIONS[("skyrmion_hair", "exterior")] = [
     "The surface climbs with slope $\\sqrt{1/C-1}$ and continues inward to the horizon."
 ]
 
+
+def myers_compactified(ck, src):
+    """The equatorial reflection plane, from the throat out into the exterior."""
+    potential = "1 + pi*mu*sinh(2*pi*r/L)/(L*r*(cosh(2*pi*r/L)-cos(2*pi*z/L)))"
+    sl = Slice(src, "myers_compactified", "cylindrical", "r", "\\phi",
+               {"t": 0, "theta": "pi/2", "z": 0}, {"mu": 1, "L": 4}, functions={"U": potential})
+    lo, top, size = 0.1, 4.0, 10.0
+    radii = (lo, 0.25, 0.5, 1.0, 2.0, 3.0, top)
+    piece = Piece("equator", "sheet", sl, lo, top, 0.0, 1,
+                  (("edge", "the throat continues without end toward the horizon $r = 0$"),
+                   ("edge", "the surface continues outward to $r \\to \\infty$")),
+                  [(r, "r", None) for r in radii], size)
+    ck.isometry("Compactified black hole equator", piece)
+    surface = Surface([piece])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *piece.at(1.0), "$r = \\sqrt{\\mu}$")
+    ring_label(fig, [0, 0, 0], *piece.at(top), "$r = 4\\sqrt{\\mu}$")
+    fig.legend("fill", "cover", "the equatorial reflection plane at $t = 0$ and $z = 0$")
+    fig.legend("line", "r", "$r$ constant, at $1/10$, $1/4$, $1/2$, $1$, $2$, $3$ and $4$ times $\\sqrt{\\mu}$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "Equatorial reflection plane", "$\\sqrt{\\mu}$", [surface], fig.done(),
+                 settings="$\\mu = 1$ and $L = 4\\sqrt{\\mu}$.")]
+
+
+DRAWN["myers_compactified"] = myers_compactified
+CAPTIONS[("myers_compactified", "equator")] = [
+    "The equatorial reflection plane at $t = 0$ and $z = 0$ ($\\mu = 1$, $L = 4\\sqrt{\\mu}$)."
+]
+
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_embedding(sys.modules[__name__])
 

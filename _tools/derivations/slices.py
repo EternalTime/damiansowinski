@@ -3220,6 +3220,10 @@ FLAT = {
     # One hole's equator lies on the plane of t and r about it; the two holes' midplane z = 0 is
     # the plane of t and x through its centre, the plane of t and rho out from the axis, and one
     # event of the axis.
+    ("myers_compactified", "cylindrical", "radial"): lambda: one(
+        "myers_compactified", lambda m: along(0.0, *m.reach("cylindrical", "r")), view_id="equator"),
+    ("myers_compactified", "spherical", "radial"): lambda: one(
+        "myers_compactified", lambda m: along(0.0, *m.reach("cylindrical", "r")), view_id="equator"),
     ("majumdar_papapetrou", "isotropic", "radial"): lambda: one(
         "majumdar_papapetrou", lambda m: along(0.0, *m.reach("isotropic", "r")), view_id="one_hole"),
     ("majumdar_papapetrou", "cartesian", "tx"): lambda: one(
