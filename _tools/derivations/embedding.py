@@ -18486,7 +18486,35 @@ def quevedo_mashhoon(ck, src):
                  settings="$M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$.")]
 
 
+def brown_teitelboim(ck, src):
+    """The equator at the minimum radius: two spherical caps meet at the membrane."""
+    wall, top, size = 0.5, 0.95, 2.0
+    inner = Slice(src, "brown_teitelboim", "static_inside", "r", "\\phi", {"t": 0, **EQUATOR}, {"Lambda_i": "3/4"})
+    outer = Slice(src, "brown_teitelboim", "static_outside", "r", "\\phi", {"t": 0, **EQUATOR}, {"Lambda_o": 3})
+    core = Piece("interior", "star", inner, 0, wall, 0, 1,
+                 (("axis", "the centre"), ("crease", "the membrane")), [], size)
+    edge = Piece("exterior", "sheet", outer, wall, top, core.at(wall)[1], 1,
+                 (("crease", "the membrane"), ("edge", "the slice continues toward the horizon")),
+                 [(wall, "surface", None)], size)
+    surface = Surface([core, edge])
+    ck.isometry("membrane bubble interior", core)
+    ck.isometry("membrane bubble exterior", edge)
+    ck.add("membrane bubble: both sides meet at the membrane", float(np.max(np.abs(np.array(core.at(wall)) - np.array(edge.at(wall))))), JOIN)
+    ck.form("membrane bubble: interior is a sphere of radius 2", core,
+            lambda r: 2 - np.sqrt(4 - r*r), size)
+    ck.form("membrane bubble: exterior is a sphere of radius 1", edge,
+            lambda r: edge.z[0] + np.sqrt(1-wall*wall) - np.sqrt(1-r*r), size)
+    fig = figure_of([surface], {"star": "star", "sheet": "cover"}, size, Camera(-90, 32))
+    fig.legend("fill", "star", "inside the membrane")
+    fig.legend("fill", "cover", "outside the membrane")
+    fig.legend("line", "surface", "the membrane")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("equator", "The equator", "$r$", [surface], fig.done(),
+                 settings="$\\Lambda_i = 3/4$, $\\Lambda_o = 3$, $R_0 = 1/2$.")]
+
+
 DRAWN = {
+    "brown_teitelboim": brown_teitelboim,
     "york_equilibrium": york_equilibrium,
     "quevedo_mashhoon": quevedo_mashhoon,
     "static_five_soliton": static_five_soliton,
@@ -18707,6 +18735,7 @@ DRAWN = {
 NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1"}
 
 CAPTIONS = {
+    ("brown_teitelboim", "equator"): [r"The equatorial slice at the membrane's minimum radius ($\theta = \pi/2$, $R_0 = 1/2$)."],
     ("york_equilibrium", "cavity"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the radiation cavity at one moment of $t$, "
         "drawn in flat space from the first order metric. "
