@@ -3725,6 +3725,12 @@ FLAT = {
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # Bartnik and McKinnon's soliton with one zero at t = 0, from its centre to the edge of its embedding
     # diagram, in the areal radius and in the three radial coordinates that are functions of it.
+    # Self similar fluid collapse at t = -ell, the comoving chart's moment, from near the regular
+    # centre to the edge of its embedding; in the zooming chart t = -ell is tau = 0 and z = r/ell.
+    ("ori_piran", "comoving", "radial"): lambda: one(
+        "ori_piran", lambda m: along(-1.0, *m.reach("comoving", "r")), label="$t = -\\ell$", view_id="before"),
+    ("ori_piran", "zooming", "radial"): lambda: one(
+        "ori_piran", lambda m: along(0.0, *m.reach("comoving", "r")), label="$t = -\\ell$", view_id="before"),
     ("skyrmion_hair", "tortoise", "radial"): lambda: one(
         "skyrmion_hair", _skyrme_tortoise_slice, view_id="exterior"),
     ("skyrmion_hair", "areal", "radial"): lambda: one(
