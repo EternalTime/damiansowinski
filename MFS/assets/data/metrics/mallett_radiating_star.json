@@ -1,0 +1,119 @@
+{
+  "id": "mallett_radiating_star",
+  "name": "Radiating Star in de Sitter Space",
+  "short_name": "Mallett Radiating Star",
+  "description": "A spherical source of null radiation in a spacetime with a positive cosmological constant.",
+  "tags": [
+    "null dust",
+    "radiating",
+    "accreting",
+    "spherically symmetric",
+    "time-dependent",
+    "black hole",
+    "mass",
+    "cosmological constant",
+    "positive cosmological constant",
+    "de Sitter",
+    "curvature singularity",
+    "horizon",
+    "event horizon",
+    "apparent horizon",
+    "cosmological horizon",
+    "energy conditions",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We work in units with $G = c = 1$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A radiating spherical body sits in a universe with a positive cosmological constant. In outgoing null coordinates its spacetime has the line element $ds^2=-\\left(1-2m(u)/r-\\Lambda r^2/3\\right)du^2-2\\,du\\,dr+r^2d\\Omega^2$, where $u$ is retarded time, $r$ is the areal radius, and $m(u)$ is the mass in units of length [campos2025cosmological, mallett1985radiating]. Ronald L. Mallett presented an exact solution for a radiating body in a de Sitter background in 1985 [campos2025cosmological, mallett1985radiating].¶The radiation travels along outgoing null surfaces $u=\\mathrm{constant}$. The outgoing energy density is nonnegative when $m'(u)\\leq 0$, and the mass is nonincreasing [senovilla2023ultramassive, campos2025cosmological]. The mass falls as outgoing radiation carries energy away, with $8\\pi T_{uu}=-2m'(u)/r^2$ in units $G=c=1$ [senovilla2023ultramassive, campos2025cosmological].¶The same family admits an ingoing null description with advanced time $v$ and mass $m(v)$ [senovilla2023ultramassive]. When $m'(v)\\geq 0$, the incoming null radiation satisfies the dominant energy condition and the mass is nondecreasing [senovilla2023ultramassive]. A decreasing mass in advanced time describes an inward flux of negative energy, a model used for evaporation near a black hole [mbonye1999horizons].¶Mallett studied an evaporating black hole during inflation in 1986, following its apparent and event horizons [mbonye1999horizons, mallett1986erratum, mallett1986evolution]. Manasse R. Mbonye extended the analysis to higher dimensions, following the apparent and event horizons of the black hole and the cosmological region for negative ingoing energy [mbonye1999horizons]. In the ingoing description, the apparent horizons lie at the positive roots of $1-2m(v)/r-\\Lambda r^2/3=0$ [mbonye1999horizons]. For $0<9\\Lambda m^2<1$ there are two such radii, associated with the black hole and the cosmological region [senovilla2023ultramassive]. The event horizons depend on the global evolution and need not coincide with those instantaneous radii [senovilla2023ultramassive, mbonye1999horizons].¶José M. M. Senovilla studied incoming radiation that builds up the mass of a black hole in a de Sitter background [senovilla2023ultramassive]. In his model, the two marginally trapped tubes meet when $9\\Lambda m^2=1$. If the incoming mass rises beyond this threshold, the resulting spacetime has a future singularity reached by every observer in the model [senovilla2023ultramassive].¶Thiago de L. Campos, C. Molina, and J. A. S. Lima studied the mass loss as seen by cosmological observers [campos2025cosmological]. They followed a family of observers constructed from curves that comove in de Sitter space. In their evaporation model, some of these observers see a nonzero mass even as their cosmological time tends to infinity [campos2025cosmological].",
+  "related": [
+    {
+      "id": "vaidya",
+      "kind": "special_case",
+      "text": "A radiating spherical body with $\\Lambda=0$."
+    },
+    {
+      "id": "schwarzschild_de_sitter",
+      "kind": "special_case",
+      "text": "A constant mass in a universe with a positive cosmological constant. With $m$ constant, the radiation vanishes."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "special_case",
+      "text": "The background with $m=0$, a universe with a positive cosmological constant."
+    },
+    {
+      "id": "bonnor_vaidya",
+      "kind": "family",
+      "text": "A spherical radiating body with charge and no cosmological constant. Its mass and charge can vary with retarded time [bonnor1970]."
+    }
+  ],
+  "references": [
+    "campos2025cosmological",
+    "mallett1985radiating",
+    "senovilla2023ultramassive",
+    "mbonye1999horizons",
+    "mallett1986erratum",
+    "mallett1986evolution",
+    "bonnor1970"
+  ],
+  "coordinates": [
+    {
+      "id": "eddington_finkelstein_outgoing",
+      "name": "Outgoing Eddington-Finkelstein",
+      "coords": [
+        "u",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "m = m(u)",
+          "description": "Mass as a function of null time, measured as a length"
+        },
+        {
+          "symbol": "\\Lambda",
+          "description": "Positive cosmological constant"
+        }
+      ],
+      "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded null coordinate $u$ a length and $r$ the areal radius. The mass $m(u)$ is a function of $u$ alone. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+    },
+    {
+      "id": "eddington_finkelstein_ingoing",
+      "name": "Ingoing Eddington-Finkelstein",
+      "coords": [
+        "v",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "v \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "m = m(v)",
+          "description": "Mass as a function of null time, measured as a length"
+        },
+        {
+          "symbol": "\\Lambda",
+          "description": "Positive cosmological constant"
+        }
+      ],
+      "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced null coordinate $v$ a length and $r$ the areal radius. The mass $m(v)$ is a function of $v$ alone. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+    }
+  ]
+}
