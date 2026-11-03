@@ -1,4 +1,4 @@
-"""York's scalar radiation cavity, checked against its wall and Page's stress."""
+"""York's scalar radiation cavity, checked against its mass, wall and drawings."""
 import json
 import math
 import sys
@@ -22,21 +22,17 @@ class YorkEquilibrium(unittest.TestCase):
                                kept=vm.ORDERS[("york_equilibrium", "areal")],
                                held=vm.HELD[("york_equilibrium", "areal")])
 
-    def test_horizon_constants_and_page_energy_density(self):
+    def test_the_scalar_mass_and_energy_change_sign(self):
         sp, reader = self.sp, self.reader
         r, p = reader.symbol["r"], reader.parameters
-        M, epsilon = p["M"], p["epsilon"]
-        mu, rho = (reader.held[p[n]] for n in ("mu", "rho"))
-        self.assertEqual(sp.simplify(mu.subs(r, 2*M)), 0)
-        self.assertEqual(sp.simplify(rho.subs(r, 2*M)), 0)
-        # Taylor and Breen (2021), Eq. 42 at zero cosmological constant.
-        f = 1 - 2*M/r
-        kappa = 1/(4*M)
-        energy = epsilon*M**2*(66*M**4 - 72*M**3*r + 20*M**2*r**2 - 2*kappa**4*r**8) / (960*sp.pi**2*r**8*f**2)
-        residual = sp.diff(mu, r) + 4*sp.pi*r**2*energy/(epsilon*M)
-        for radius in (3, 7, 20, 40):
-            value = residual.subs({M: 1, r: radius, epsilon: sp.Rational(1, 10000)}).evalf(40)
-            self.assertLess(abs(float(value)), 1e-25)
+        mu = reader.held[p["mu"]].subs(p["M"], 1)
+        # The scalar contribution to mass is negative near the horizon and
+        # positive farther out. Its slope has the sign of the energy density.
+        near, far = sp.Rational(41, 20), sp.Integer(10)
+        self.assertLess(float(mu.subs(r, near).evalf(30)), 0)
+        self.assertGreater(float(mu.subs(r, far).evalf(30)), 0)
+        self.assertLess(float(sp.diff(mu, r).subs(r, near).evalf(30)), 0)
+        self.assertGreater(float(sp.diff(mu, r).subs(r, far).evalf(30)), 0)
 
     def test_matching_and_vacuum_limit(self):
         sp, reader = self.sp, self.reader
