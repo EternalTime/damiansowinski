@@ -37540,6 +37540,9 @@ scw.register(sys.modules[__name__])
 import atiyah_hitchin as _atiyah_hitchin
 _atiyah_hitchin.register(sys.modules[__name__])
 
+import charged_three_dimensions as _charged_three_dimensions
+_charged_three_dimensions.register(sys.modules[__name__])
+
 
 import quevedo_mashhoon as qm
 CHARTS[qm.METRIC] = [lambda system=system: qm.chart_spec(system) for system in qm.SYSTEMS]

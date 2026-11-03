@@ -5406,6 +5406,8 @@ DIMENSIONS.update(_mallett.DIMENSIONS)
 
 import atiyah_hitchin as _atiyah_hitchin
 _atiyah_hitchin.register_dimensions(sys.modules[__name__])
+import charged_three_dimensions as _charged_three_dimensions
+_charged_three_dimensions.register_dimensions(sys.modules[__name__])
 
 
 import myers_compactified as _myers_compactified
