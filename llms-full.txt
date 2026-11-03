@@ -2078,8 +2078,8 @@ An extremal electrically charged black hole localized on a compact spatial circl
 - tags: electrovacuum, static, stationary, electric charge, charged black hole, black hole, extremal, horizon, event horizon, harmonic function, higher dimensions, five-dimensional, Kaluza-Klein, compact dimension, exact solution, Lorentzian, Einstein-Maxwell, Einstein equations, idealized model
 - signature: (-,+,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/myers_compactified.json
-- chart Cylindrical: coordinates $(t, r, \theta, \phi, z)$, $$ds^2=-\dfrac{c^2dt^2}{U^2}+U\left(dr^2+r^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)+dz^2\right)$$
-- chart Spherical: coordinates $(t, \rho, \chi, \theta, \phi)$, $$ds^2=-\dfrac{c^2dt^2}{U^2}+U\left(d\rho^2+\rho^2\left(d\chi^2+\sin^2\chi\left(d\theta^2+\sin^2\theta\,d\phi^2\right)\right)\right)$$
+- chart Cylindrical: coordinates $(t, r, \theta, \phi, z)$, $$ds^2=-\dfrac{dt^2}{U^2}+U\left(dr^2+r^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)+dz^2\right)$$
+- chart Spherical: coordinates $(t, \rho, \chi, \theta, \phi)$, $$ds^2=-\dfrac{dt^2}{U^2}+U\left(d\rho^2+\rho^2\left(d\chi^2+\sin^2\chi\left(d\theta^2+\sin^2\theta\,d\phi^2\right)\right)\right)$$
 
 ### Myers-Perry Rotating Black Hole
 
