@@ -137,6 +137,9 @@ NOT_DRAWN = {"skyrmion_hair", "charged_godel_universe", "godel", "stockum_dust",
              "misner_brill_lindquist", "brill_waves", "bowen_york",
              "kundt_waves", "wahlquist", "tippett_tsang", "petrov_homogeneous", "eih_many_bodies",
              "kerr_bertotti_robinson", "bardeen_perturbations", "super_entropic", "holographic_superconductor",
+             # The exterior charts end at the direction-dependent singular surface; their global
+             # extension and a conformal compactification are not established by these charts.
+             "quevedo_mashhoon",
              "ozsvath_dust",
              # Bonnor and Faulkes's oscillating sphere: an interior whose metric depends on t and r, as
              # Tolman and Bondi's does, with F(t) known only numerically, so no compactification is drawn.

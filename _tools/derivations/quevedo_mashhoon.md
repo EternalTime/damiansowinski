@@ -18,3 +18,9 @@ At $\delta=1$ the mass quadrupole is $M_2=-Ma^2+2q\sigma^3/15$, Bini et al. equa
 At $\delta=1$, $q=0$, the geometry is Kerr's, while $a=0$ leaves Erez and Rosen's metric.
 At $a=q=0$, $f=((x-1)/(x+1))^\delta$, $\omega=0$ and $h=((x^2-1)/(x^2-y^2))^{\delta^2}$, the prolate Zipoy-Voorhees chart with rod parameter $M$.
 Its mass and quadrupole are $M\delta$ and $-M^3\delta(\delta^2-1)/3$.
+
+## Conformal diagram
+
+The two charts cover an exterior region and end at $x=1$.
+Bini et al. section 3 find direction dependent curvature behavior there and discuss the difficulty of obtaining a global conformal diagram.
+The charts do not establish a global extension across that boundary, so a conformal diagram is not drawn.
