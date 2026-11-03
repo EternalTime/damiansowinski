@@ -1,0 +1,37 @@
+{
+  "id": "linear_dilaton",
+  "name": "Linear Dilaton Vacuum",
+  "short_name": "Linear Dilaton",
+  "description": "A spacetime that is flat in the string frame, with a dilaton falling linearly in time, and expands in proportion to time in the Einstein frame.",
+  "tags": [
+    "cosmology",
+    "expanding universe",
+    "homogeneous",
+    "isotropic",
+    "FLRW",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "four-dimensional",
+    "conformally flat",
+    "scalar field",
+    "dilaton",
+    "string theory"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units in which the speed of light is one.",
+  "history": "Flat spacetime admits a dilaton that varies from event to event. The dilaton $\\Phi$ sets the string coupling $g_s = e^\\Phi$ [angius2022linear]. Robert C. Myers constructed a string background in arbitrary spacetime dimensions in 1987 with a dilaton linear in the coordinates [angius2022linear, myers1987linear]. When the central charge balances, a timelike linear dilaton defines a worldsheet theory conformal to all orders in the string length squared [angius2022linear, aharony2007linear].¶Take four uncompactified dimensions, in units where the speed of light is one. Additional degrees of freedom can contribute to the central charge [devega1994linear, aharony2007linear]. In the string frame, the line element is $ds_S^2 = -d\\eta^2 + d\\mathbf{x}^2$ and the dilaton is $\\Phi = -q\\eta$ [devega1994linear, angius2022linear]. Here $\\eta$ is time, $\\mathbf{x}$ denotes Cartesian spatial coordinates, and $q > 0$ has units of inverse length. The Einstein frame uses $g^E_{\\mu\\nu} = e^{-2\\Phi}g^S_{\\mu\\nu}$ [angius2022linear]. The two frames describe the same background.¶With cosmic time $\\tau = e^{q\\eta}/q$, its line element is $ds_E^2 = -d\\tau^2 + q^2\\tau^2 d\\mathbf{x}^2$ [devega1994linear, angius2022linear]. Its flat spatial slices expand in proportion to $\\tau$, and its Ricci scalar is $R = 6/\\tau^2$. As $\\tau$ approaches zero, the curvature diverges and the string coupling grows without bound [angius2022linear].¶Ignatios Antoniadis, Constantin Bachas, John R. Ellis, and Dimitri V. Nanopoulos found \"only two discrete classes\" of Robertson-Walker string cosmologies without dynamic matter in 1988: \"static Einstein universes and linearly expanding Milne universes\" [antoniadis1988cosmology]. The Milne universe and this Einstein frame universe both expand linearly; the Milne universe has negatively curved spatial slices and is flat as a spacetime. Linearly expanding homogeneous and isotropic universes also arise in bosonic, heterotic, and type II string theories [antoniadis1989expanding].¶A dilaton that varies along a spatial direction also accompanies a flat string frame [angius2022linear]. Far from Edward Witten's two dimensional black hole the string frame approaches a flat metric and the dilaton is linear in the spatial coordinate [karananas2021linear, mandal1991]. Georgios K. Karananas, Alex Kehagias, and John Taskas found a four dimensional black hole with a planar horizon whose string frame contains Witten's two dimensional hole [karananas2021linear]. The throat of the extreme magnetically charged dilaton black hole also carries a dilaton linear in distance [giddings1992].",
+  "references": [
+    "angius2022linear",
+    "myers1987linear",
+    "aharony2007linear",
+    "devega1994linear",
+    "antoniadis1988cosmology",
+    "antoniadis1989expanding",
+    "karananas2021linear",
+    "mandal1991",
+    "giddings1992"
+  ],
+  "coordinates": [],
+  "related": []
+}
