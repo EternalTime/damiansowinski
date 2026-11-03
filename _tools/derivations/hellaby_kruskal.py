@@ -122,7 +122,8 @@ def curvature_views(ck, src, cv):
 
     xa = cv.axis(r"$r/M_0$", -1.5, 1.5)
     ya = cv.axis(r"$t/M_0$", -1.5, 1.5)
-    functions = {"Y": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)"}
+    functions = {"Y": "hk_radius(t,r**2)", "f": "-1+r**2*hk_h(r**2)",
+                 "M": "(1+r**2/10)**3", "a": "-pi*(1+r**2/10)**3*exp(3*r**2/2)"}
     views = []
     for field, letter, power, name in (("kretschmann", "K", 4, "Kretschmann"),
                                         ("ricci_scalar", "R", 2, "Ricci")):
