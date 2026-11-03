@@ -32217,6 +32217,8 @@ NOT_DRAWN.add("mallett_radiating_star")
 # The Atiyah-Hitchin space is Riemannian: no light cones and no null infinity.
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_conformal(sys.modules[__name__])
+import charged_three_dimensions_drawings as _charged_three_dimensions_drawings
+_charged_three_dimensions_drawings.register_conformal(sys.modules[__name__])
 
 
 # The explicit dust example has no established global conformal boundary in the cited source.

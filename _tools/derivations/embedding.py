@@ -22374,6 +22374,8 @@ CAPTIONS[("myers_compactified", "equator")] = [
 
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_embedding(sys.modules[__name__])
+import charged_three_dimensions_drawings as _charged_three_dimensions_drawings
+_charged_three_dimensions_drawings.register_embedding(sys.modules[__name__])
 
 
 def hellaby_kruskal(ck, src):

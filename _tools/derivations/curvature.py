@@ -19084,6 +19084,8 @@ DRAWN["myers_compactified"] = myers_compactified
 
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_curvature(sys.modules[__name__])
+import charged_three_dimensions_drawings as _charged_three_dimensions_drawings
+_charged_three_dimensions_drawings.register_curvature(sys.modules[__name__])
 
 
 import hellaby_kruskal as _hellaby_kruskal

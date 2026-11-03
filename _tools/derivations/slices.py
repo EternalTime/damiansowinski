@@ -5075,6 +5075,9 @@ FLAT_METRICS.add("mallett_radiating_star")
 HIDDEN[("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation")] = (
     "the outgoing radiation is the time reverse of the incoming history embedded")
 
+import charged_three_dimensions_drawings as _charged_three_dimensions_drawings  # noqa: E402
+_charged_three_dimensions_drawings.register_slices(sys.modules[__name__])
+
 
 FLAT[("hellaby_kruskal", "comoving", "neck")] = lambda: one(
     "hellaby_kruskal", lambda m: along(0.0, *m.reach("comoving", "r")))
