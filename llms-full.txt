@@ -1815,6 +1815,17 @@ A wormhole in two spacetime dimensions that stays open for ever. It is anti-de S
 - chart Poincaré: coordinates $(t_P, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-dt_P^2 + dz^2\right)$$
 - chart Thermal: coordinates $(t_R, \rho)$, $$ds^2 = L^2\left(-\sinh^2\rho\,dt_R^2 + d\rho^2\right)$$
 
+### Radiating Star in de Sitter Space
+
+A spherical source of null radiation in a spacetime with a positive cosmological constant.
+
+- id: `mallett_radiating_star`
+- tags: null dust, radiating, accreting, spherically symmetric, time-dependent, black hole, mass, cosmological constant, positive cosmological constant, de Sitter, curvature singularity, horizon, event horizon, apparent horizon, cosmological horizon, energy conditions, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/mallett_radiating_star.json
+- chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2=-\left(1 - \dfrac{2m}{r} - \dfrac{\Lambda r^2}{3}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2=-\left(1 - \dfrac{2m}{r} - \dfrac{\Lambda r^2}{3}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)$$
+
 ### Many Black Holes and Wormholes in Three Dimensions
 
 Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.

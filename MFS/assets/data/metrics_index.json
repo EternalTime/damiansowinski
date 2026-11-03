@@ -803,7 +803,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "447ac2bdd73e00f7",
+    "version": "efd753c27b2af3d7",
     "diagrams": "2122349c176f47ed",
     "conformal": "fe30a252dab8b052",
     "embedding": "c306446463337712",
@@ -1593,7 +1593,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "4fdc944d5c9f1341",
+    "version": "eb4b1e9218538de3",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -4020,6 +4020,37 @@
     "curvature": "22b04e30d2715ac2"
   },
   {
+    "id": "mallett_radiating_star",
+    "name": "Mallett Radiating Star",
+    "tags": [
+      "null dust",
+      "radiating",
+      "accreting",
+      "spherically symmetric",
+      "time-dependent",
+      "black hole",
+      "mass",
+      "cosmological constant",
+      "positive cosmological constant",
+      "de Sitter",
+      "curvature singularity",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "cosmological horizon",
+      "energy conditions",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "79f5ab97e2b3c704",
+    "diagrams": "eb7f1d657599c6a4",
+    "embedding": "ae4773e7dbd366ba",
+    "curvature": "c4423b74d3fb91f9"
+  },
+  {
     "id": "btz_multi_holes_wormholes",
     "name": "Many Black Holes and Wormholes in Three Dimensions",
     "tags": [
@@ -5664,7 +5695,7 @@
       "Birkhoff theorem",
       "black hole pair creation"
     ],
-    "version": "c98a2ae64685c8c3",
+    "version": "c373f436a5517826",
     "diagrams": "01986085179076c1",
     "conformal": "32bdc5cbd0072ca8",
     "embedding": "2693e5d4af5edd89"
@@ -6694,7 +6725,7 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "42754f60133f26d7",
+    "version": "151fd7b1285c0bbd",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",

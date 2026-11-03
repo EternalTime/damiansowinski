@@ -9117,6 +9117,11 @@
           "id": "charged_shell",
           "kind": "limit_source",
           "text": "The shell of charged dust, of which a shell of charged light is the limit of no rest mass. The dust turns round at $(q^2 - \\mu^2)/(2m - 2\\mu)$ for a rest mass $\\mu$, which tends to $q^2/2m$ [gao2008]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "family",
+          "text": "A spherical radiating body with a positive cosmological constant and no electric charge."
         }
       ],
       "references": [
@@ -17008,6 +17013,11 @@
           "id": "extended_inflation",
           "kind": "limit_source",
           "text": "De Sitter expansion is the limit $\\omega \\to \\infty$ at fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "generalisation",
+          "text": "A spherical source with a changing mass and radial radiation in a de Sitter background."
         }
       ],
       "references": [
@@ -44379,6 +44389,214 @@
       ]
     },
     {
+      "id": "mallett_radiating_star",
+      "name": "Radiating Star in de Sitter Space",
+      "short_name": "Mallett Radiating Star",
+      "description": "A spherical source of null radiation in a spacetime with a positive cosmological constant.",
+      "tags": [
+        "null dust",
+        "radiating",
+        "accreting",
+        "spherically symmetric",
+        "time-dependent",
+        "black hole",
+        "mass",
+        "cosmological constant",
+        "positive cosmological constant",
+        "de Sitter",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "cosmological horizon",
+        "energy conditions",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We work in units with $G = c = 1$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "A radiating spherical body with $\\Lambda=0$."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "A constant mass in a universe with a positive cosmological constant. With $m$ constant, the radiation vanishes."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "The background with $m=0$, a universe with a positive cosmological constant."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "family",
+          "text": "A spherical radiating body with charge and no cosmological constant. Its mass and charge can vary with retarded time [bonnor1970]."
+        }
+      ],
+      "references": [
+        "campos2025cosmological",
+        "mallett1985radiating",
+        "senovilla2023ultramassive",
+        "mbonye1999horizons",
+        "mallett1986erratum",
+        "mallett1986evolution",
+        "bonnor1970"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mallett_radiating_star.json",
+      "charts": [
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Lambda > 0,\\quad m \\ge 0",
+            "0 < 9\\Lambda m^2 < 1 \\;\\text{(two positive marginal radii)}",
+            "9\\Lambda m^2 = 1 \\;\\text{(one double positive radius)}",
+            "9\\Lambda m^2 > 1 \\;\\text{(no positive marginal radius)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u)",
+              "description": "Mass as a function of null time, measured as a length"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Positive cosmological constant"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded null coordinate $u$ a length and $r$ the areal radius. The mass $m(u)$ is a function of $u$ alone. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2=-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2\\,r^6 + 144m^2}{3r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Lambda > 0,\\quad m \\ge 0",
+            "0 < 9\\Lambda m^2 < 1 \\;\\text{(two positive marginal radii)}",
+            "9\\Lambda m^2 = 1 \\;\\text{(one double positive radius)}",
+            "9\\Lambda m^2 > 1 \\;\\text{(no positive marginal radius)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass as a function of null time, measured as a length"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Positive cosmological constant"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced null coordinate $v$ a length and $r$ the areal radius. The mass $m(v)$ is a function of $v$ alone. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2=-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2\\,r^6 + 144m^2}{3r^6}"
+        }
+      ]
+    },
+    {
       "id": "btz_multi_holes_wormholes",
       "name": "Many Black Holes and Wormholes in Three Dimensions",
       "short_name": "Many Black Holes and Wormholes in Three Dimensions",
@@ -62934,6 +63152,11 @@
           "id": "hotta_tanaka",
           "kind": "limit",
           "text": "This black hole boosted to the speed of light, a limit taken with the mass going to zero and the energy held fixed. The field ends up on a sphere riding a cosmological horizon, with a massless particle at each pole [hotta1993]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "generalisation",
+          "text": "A mass that varies with null time, accompanied by radial radiation in a de Sitter background."
         }
       ],
       "references": [
@@ -75176,6 +75399,11 @@
           "id": "vaidya_patel_kerr",
           "kind": "family",
           "text": "The radiating star set spinning, its rotation parameter growing as its mass radiates away [vaidya1989kerr]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "generalisation",
+          "text": "A radiating spherical body in a universe with a positive cosmological constant."
         }
       ],
       "references": [
