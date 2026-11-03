@@ -2116,7 +2116,7 @@ def york_equilibrium(ck, src):
     fig = figure_of([surface], {"sheet": "cover"}, size)
     ring_label(fig, [0, 0, 0], *piece.at(2.0), "$r = 2M$", dx=14)
     ring_label(fig, [0, 0, 0], *piece.at(50.0), "$r = R$")
-    fig.legend("fill", "cover", "the cavity outside the horizon")
+    fig.legend("fill", "cover", "the cavity")
     fig.legend("line", "r", "$r$ constant, at $5$, $10$, $20$, $30$ and $40M$")
     fig.legend("line", "horizon", "the horizon $r = 2M$")
     fig.legend("line", "surface", "the reflecting wall $r = R$")
