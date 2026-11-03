@@ -2594,6 +2594,7 @@ A static spherical black hole surrounded by a Skyrme field held by its gravity, 
 - signature: (-,+,+,+)
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/skyrmion_hair.json
 - chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N^2 C\,dt^2 + \dfrac{dr^2}{C} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Tortoise: coordinates $(t, \xi, \theta, \phi)$, $$ds^2 = F\left(-dt^2 + d\xi^2\right) + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
 ### Small Universes
 
