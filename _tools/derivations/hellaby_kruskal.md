@@ -21,3 +21,7 @@ The chart's tensors are to be printed and checked against the dust equations at 
 ## Drawings
 
 The spatial embedding follows Hellaby and Buckley 2021, equations 21-25.
+
+The cited 2002 example specifies the neck and local evolution, while its full conformal boundary is not established there.
+The mass function grows without bound as $|r|$ grows, so a diagram for an asymptotically empty model cannot be assumed for this example.
+The conformal diagram is not drawn until its global boundary is determined.

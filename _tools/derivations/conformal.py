@@ -32219,5 +32219,9 @@ import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_conformal(sys.modules[__name__])
 
 
+# The explicit dust example has no established global conformal boundary in the cited source.
+NOT_DRAWN.add("hellaby_kruskal")
+
+
 if __name__ == "__main__":
     sys.exit(main())
