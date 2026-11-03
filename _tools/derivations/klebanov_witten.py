@@ -5,11 +5,11 @@ and test the ten-dimensional throat, not additional charts of spacetime.
 """
 
 METRIC = "klebanov_witten"
-ANGLES = [r"\theta_1", r"\phi_1", r"\theta_2", r"\phi_2", r"\psi"]
-BASE_LINE = (r"\dfrac{1}{9}\left(d\psi+\cos\theta_1\,d\phi_1+\cos\theta_2\,d\phi_2\right)^2"
-             r"+\dfrac{1}{6}\left(d\theta_1^2+\sin^2\theta_1\,d\phi_1^2"
-             r"+d\theta_2^2+\sin^2\theta_2\,d\phi_2^2\right)")
-DIMENSIONS = {(METRIC, "poincare"): {"t": "L", "x": "L", "y": "L", "z": "L", "r": "L", "L": "L",
+ANGLES = [r"\theta", r"\phi", r"\alpha", r"\beta", r"\psi"]
+BASE_LINE = (r"\dfrac{1}{9}\left(d\psi+\cos\theta\,d\phi+\cos\alpha\,d\beta\right)^2"
+             r"+\dfrac{1}{6}\left(d\theta^2+\sin^2\theta\,d\phi^2"
+             r"+d\alpha^2+\sin^2\alpha\,d\beta^2\right)")
+DIMENSIONS = {(METRIC, "poincare"): {"t": "T", "x": "L", "y": "L", "z": "L", "r": "L", "L": "L",
                                       **{a: "1" for a in ANGLES}}}
 
 
@@ -27,8 +27,8 @@ def chart_spec():
             r"+\dfrac{L^2}{r^2}dr^2+L^2\left(" + BASE_LINE + r"\right)")
     coords = ["t", "x", "y", "z", "r"] + ANGLES
     domains = [a+r" \in (-\infty,\infty)" for a in coords[:4]]
-    domains += [r"r \in (0,\infty)", r"\theta_1 \in [0,\pi]", r"\phi_1 \in [0,2\pi)",
-                r"\theta_2 \in [0,\pi]", r"\phi_2 \in [0,2\pi)", r"\psi \in [0,4\pi)"]
+    domains += [r"r \in (0,\infty)", r"\theta \in [0,\pi]", r"\phi \in [0,2\pi)",
+                r"\alpha \in [0,\pi]", r"\beta \in [0,2\pi)", r"\psi \in [0,4\pi)"]
     return {"metric_id": METRIC, "system": {"id": "poincare", "name": "Poincaré",
             "coords": coords, "domains": domains, "parameters": ["L"], "line_element": line.replace("{}", "c^2")},
             "chart_line_element": line.replace("{}", ""), "printer": {},

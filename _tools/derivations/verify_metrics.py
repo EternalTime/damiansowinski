@@ -5457,5 +5457,8 @@ import stringy_cosmic_strings as _stringy_cosmic_strings
 DIMENSIONS.update(_stringy_cosmic_strings.DIMENSIONS)
 
 
+import klebanov_witten as _klebanov_witten
+DIMENSIONS.update(_klebanov_witten.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())
