@@ -45,7 +45,8 @@
         "t\\in(-\\infty,\\infty)",
         "r\\in(r_c,\\infty)",
         "\\phi\\in[0,2\\pi)",
-        "z\\in(-\\infty,\\infty)"
+        "z\\in(-\\infty,\\infty)",
+        "\\ell>0,\\quad r_c>0,\\quad W>0,\\quad k\\geq 0,\\quad -1<m<1"
       ],
       "parameters": [
         {
@@ -82,7 +83,1352 @@
         }
       ],
       "convention": "We use cylindrical coordinates $(t,r,\\phi,z)$, with $t$, $r$, and $z$ measured as lengths and $\\phi$ periodic in $2\\pi$. A dot denotes differentiation with respect to an affine parameter.",
-      "line_element": "ds^2 = F^2\\left(P\\left(-dt^2+dr^2\\right)+W^2r^2d\\phi^2\\right)+F^{-2}dz^2"
+      "line_element": "ds^2 = F^2\\left(P\\left(-dt^2+dr^2\\right)+W^2r^2d\\phi^2\\right)+F^{-2}dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-F^2\\,P"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "F^2\\,P"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "F^2\\,W^2\\,r^2"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{F^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{F^2\\,P}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{F^2\\,P}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{F^2\\,W^2\\,r^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "F^2"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(F\\,m + H\\right)}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(F\\,m + H\\right)}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(F\\,m + H\\right)}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(F\\,m + H\\right)}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{W^2\\,r\\left(H\\,m + F\\right)}{F\\,P}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m}{F^5\\,P\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,m + F}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m + F}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,m}{F\\,r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,m}{F\\,r}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{F\\,P\\,m\\left(F\\,m + H\\right)}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{F\\,P\\,m\\left(F\\,m + H\\right)}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{F\\,P\\,m\\left(F\\,m + H\\right)}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{F\\,P\\,m\\left(F\\,m + H\\right)}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-F\\,W^2\\,r\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "F\\,W^2\\,r\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "F\\,W^2\\,r\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m}{F^3\\,r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,m}{F^3\\,r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,m}{F^3\\,r}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{W^2\\,m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{W^2\\,m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m^2\\left(F\\,m + H\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m^2\\left(F\\,m + H\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^2\\,P}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "W^2\\,m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-W^2\\,m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-W^2\\,m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "W^2\\,m\\left(F\\,m + H\\right)\\left(H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{m\\left(F\\,H\\,m^2 + F\\,H - F^2\\,m + 3H^2\\,m\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{W^2\\,m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P\\,W^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,P\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = \\dfrac{8m^2\\left(2F^2\\,H^2\\,m^4 + 6F\\,H^3\\,m^3 + 6F\\,H^3\\,m + 2F^2\\,H^2 + F^4\\,m^2 + 7H^4\\,m^2\\right)}{F^8\\,P^2\\,r^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{W^2\\,m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P\\,r^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^4\\,P\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^6\\,P\\,W^2\\,r^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{m^2\\left(F - H\\right)\\left(F + H\\right)}{F^2\\,P\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m^2\\left(F\\,m + H\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m^2\\left(F\\,m + H\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^2\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(H\\,m + F\\right)}{F^6\\,P\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^2\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^2\\,P}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,P\\,m\\left(H\\,m + F\\right)}{r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "H\\,W^2\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-H\\,W^2\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-H\\,W^2\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "H\\,W^2\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{H\\,m^2\\left(F\\,m + H\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "H\\,W^2\\,m^2\\left(F\\,m + H\\right)"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{H\\,m\\left(F\\,m^2 + 2H\\,m + F\\right)}{F^4\\,r^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{H\\,W^2\\,m\\left(H\\,m + F\\right)}{F^4\\,P}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2m\\left(F\\,m + H\\right)}{F\\,r}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{m\\left(F\\,m + H\\right)}{F\\,r}\\dot{t}^2 + \\dfrac{m\\left(F\\,m + H\\right)}{F\\,r}\\dot{r}^2 - \\dfrac{W^2\\,r\\left(H\\,m + F\\right)}{F\\,P}\\dot{\\phi}^2 + \\dfrac{H\\,m}{F^5\\,P\\,r}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2H\\,m + 2F}{F\\,r}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} - \\dfrac{2H\\,m}{F\\,r}\\dot{r}\\dot{z} = 0"
+      ]
     }
   ],
   "related": [
