@@ -18,4 +18,5 @@ Both charts printed their tensors under a 20 second per step budget, and both po
 
 The two spacetime diagrams draw the same reflection plane $z = 0$ in the two sourced charts, with $\mu = 1$ and $L = 4\sqrt{\mu}$.
 No conformal diagram is drawn: both sourced charts cover only the exterior, and the causal extension through the extremal horizon is not specified by these charts.
-The embedding and curvature views are to be recorded here.
+The embedding draws the equatorial reflection plane $t=z=0$ from $r=0.1\sqrt{\mu}$ to $4\sqrt{\mu}$, with the infinite throat and outer continuation identified at its edges.
+The curvature maps read the published Kretschmann and Ricci scalars over one circle and $0 \le r \le 3\sqrt{\mu}$, at the same parameter values, without recomputing curvature.
