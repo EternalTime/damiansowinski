@@ -51,6 +51,7 @@ def dust_check(chart):
         rtr = (2 * mr / rr - 2 * m * rp / rr**2 + fp) / (2 * velocity)
         values = {R: rr, f: ff, sp.diff(R, r): rp, sp.diff(R, t): velocity,
                   sp.diff(R, t, 2): -m / rr**2, sp.diff(R, r, t): rtr,
+                  sp.diff(R, r, t, 2): -mr / rr**2 + 2 * m * rp / rr**3,
                   sp.diff(f, r): fp, theta: sp.Rational(7, 10)}
         density = 2 * mr / (rr**2 * rp)
         for i in range(4):
