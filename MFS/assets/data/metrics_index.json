@@ -1150,6 +1150,38 @@
     "curvature": "297145c1d6ea679a"
   },
   {
+    "id": "brown_teitelboim",
+    "name": "Brown-Teitelboim Bubble",
+    "tags": [
+      "bubble",
+      "domain wall",
+      "thin shell",
+      "matched solution",
+      "junction conditions",
+      "cosmology",
+      "de Sitter",
+      "positive cosmological constant",
+      "cosmological constant",
+      "vacuum energy",
+      "spherically symmetric",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model",
+      "Einstein space",
+      "conformally flat",
+      "stationary",
+      "static"
+    ],
+    "version": "b40b824d4e076340",
+    "diagrams": "acf06136ae660166",
+    "conformal": "ee8b0e9938979743",
+    "embedding": "2f2e71af6bcd66a1",
+    "curvature": "bb2eddea9277bcf9"
+  },
+  {
     "id": "bubbling_ads",
     "name": "Bubbling Anti-de Sitter",
     "tags": [
@@ -1446,7 +1478,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "f769c51354250514",
+    "version": "905f729dc16b20a3",
     "diagrams": "df6268c48408964f",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -1621,7 +1653,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "eb4b1e9218538de3",
+    "version": "0e24c6cb1217f84e",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -7050,7 +7082,7 @@
       "spherically symmetric",
       "black hole pair creation"
     ],
-    "version": "dd4da1aaaee9af00",
+    "version": "d4d17cc107ee4863",
     "diagrams": "d5e2884c8c7af71d",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"
