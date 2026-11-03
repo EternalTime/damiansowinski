@@ -81,3 +81,24 @@ def conformal(cf, ck, src):
     v.set(restriction=r'The totally geodesic half plane of fixed $\phi$ and $z$ in the exterior.',
           settings=SETTINGS)
     return [v]
+
+
+def register_curvature(cv):
+    cv.DRAWN[METRIC] = lambda ck, src: curvature(cv, ck, src)
+
+
+def curvature(cv, ck, src):
+    """Plot the stored Kretschmann scalar across the displayed exterior."""
+    params = {'m': .2, 'k': .7, 'ell': 1.}
+    K = cv.Published(src, METRIC, SYSTEM, 'kretschmann', ['r'], list(params))
+    x = cv.axis(r'$r/\ell$', 1., 6.)
+    scale = {'kind': 'log', 'from': 1e-6, 'to': 1.}
+    panel = {'id': 'K', 'name': r'$K\ell^4$', 'aspect': 1.,
+             'scale': scale, 'ticks': cv.value_ticks(scale)}
+    cv.shape_checks(ck, METRIC, [1.])
+    curves = cv.line_curves(ck, METRIC, 'K', 'K', K, 'r', x, scale, cv.PLOT_W, params)
+    return [{'id': 'exterior', 'label': 'Exterior', 'kind': 'line', 'x': x,
+             'panels': [panel], 'curves': curves, 'marks': [],
+             'legend': [['line', 'K', 'Kretschmann scalar $K$']],
+             'caption': [r'The Kretschmann scalar $K$ in the exterior, at every $t$, $\phi$ and $z$.'],
+             'settings': SETTINGS, 'clip': r'$1\leq r/\ell\leq 6$ on a logarithmic scale.'}]
