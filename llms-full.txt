@@ -1190,6 +1190,18 @@ A current of neutrinos along one axis of Taub's static plane symmetric vacuum, w
 - chart Areal: coordinates $(t, x, y, r)$, $$ds^2 = -\dfrac{L}{r}c^2dt^2 + \dfrac{r}{L}dr^2 + \dfrac{r^2}{L^2}\left(dx^2 + dy^2\right)$$
 - chart Null: coordinates $(\mu, \nu, x, y)$, $$ds^2 = \dfrac{2\sqrt{2}L^2\,d\mu\,d\nu}{\sqrt{\mu + \nu}} + 2\left(\mu + \nu\right)\left(dx^2 + dy^2\right)$$
 
+### Giddings-Strominger Wormhole
+
+A space of four dimensions and no time, Steven B. Giddings and Andrew Strominger's axion wormhole of 1988: two regions of flat space joined at a throat, a 3-sphere of radius $a$ held open by the field strength of an axion. Cut in half at the throat, it describes a closed baby universe budding off flat space.
+
+- id: `giddings_strominger`
+- tags: wormhole, throat, gravitational instanton, Euclidean quantum gravity, Riemannian, no time, tunnelling, quantum cosmology, closed universe, three sphere, topology, string theory, asymptotically flat, no singularity, exact solution, Einstein equations, idealized model, spherically symmetric, four-dimensional, conformally flat
+- signature: (+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/giddings_strominger.json
+- chart Areal Radius: coordinates $(r, \chi, \theta, \phi)$, $$ds^2 = \dfrac{dr^2}{1 - \dfrac{a^4}{r^4}} + r^2\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Proper Distance (Giddings-Strominger): coordinates $(\rho, \chi, \theta, \phi)$, $$ds^2 = d\rho^2 + r^2\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Conformal (Loges-Shiu-Sudhir): coordinates $(\eta, \chi, \theta, \phi)$, $$ds^2 = a^2\cosh(2\eta)\left(d\eta^2 + d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
+
 ### Global Monopole and Letelier's Cloud of Strings
 
 The static, spherically symmetric field of a global monopole, a hedgehog of three scalar fields that forms where a global O(3) symmetry breaks, and of Letelier's cloud of strings running out from a centre. Every sphere about the centre misses the same fraction of its solid angle, so light passing it is bent through one angle whatever its impact parameter, and with a mass at the centre it holds a black hole.
