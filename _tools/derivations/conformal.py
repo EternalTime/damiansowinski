@@ -27292,6 +27292,7 @@ def static_five_soliton(ck, src):
 
 
 DRAWN = {
+    "york_equilibrium": york_equilibrium,
     "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
