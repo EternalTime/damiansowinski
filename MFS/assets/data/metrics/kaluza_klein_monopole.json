@@ -116,6 +116,11 @@
       "id": "atiyah_hitchin",
       "kind": "family",
       "text": "The orientifold plane of type IIA string theory, seen in M-theory. Sen set a row of these monopoles beside it to make D6-branes on the plane [sen1997enhanced]."
+    },
+    {
+      "id": "myers_compactified",
+      "kind": "family",
+      "text": "A charged black hole in five dimensions with a compact spatial circle and a 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
     }
   ],
   "references": [
@@ -146,7 +151,9 @@
     "bah2021",
     "chyba1985",
     "lake2006static",
-    "sen1997enhanced"
+    "sen1997enhanced",
+    "horowitzmaeda2002",
+    "myers1987compact"
   ],
   "coordinates": [
     {

@@ -78,6 +78,11 @@
       "id": "static_five_soliton",
       "kind": "family",
       "text": "A static diagonal geometry supports an independent scalar charge in five dimensional vacuum gravity [lake2006static]."
+    },
+    {
+      "id": "myers_compactified",
+      "kind": "family",
+      "text": "A five dimensional Einstein-Maxwell black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
     }
   ],
   "references": [
@@ -97,7 +102,9 @@
     "hovdebo2006",
     "gibbons1988",
     "cvetic1996static",
-    "lake2006static"
+    "lake2006static",
+    "horowitzmaeda2002",
+    "myers1987compact"
   ],
   "coordinates": [
     {

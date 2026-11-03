@@ -80,6 +80,11 @@
       "id": "regular_black_hole_pure_gravity",
       "kind": "generalisation",
       "text": "Tangherlini's hole of five dimensions with an infinite tower of curvature terms added to the action. The tower brings a length $\\ell$ and a regular centre, and at $\\ell = 0$ the metric is Tangherlini's [bueno2025regular]."
+    },
+    {
+      "id": "myers_compactified",
+      "kind": "family",
+      "text": "An extremal charged hole with a round 3-sphere horizon in five dimensions and a compact spatial direction [horowitzmaeda2002, myers1987compact]."
     }
   ],
   "references": [
@@ -106,7 +111,9 @@
     "elvang2007",
     "horowitz1996",
     "bah2021",
-    "bueno2025regular"
+    "bueno2025regular",
+    "horowitzmaeda2002",
+    "myers1987compact"
   ],
   "coordinates": [
     {

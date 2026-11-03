@@ -37543,6 +37543,9 @@ _atiyah_hitchin.register(sys.modules[__name__])
 
 import quevedo_mashhoon as qm
 CHARTS[qm.METRIC] = [lambda system=system: qm.chart_spec(system) for system in qm.SYSTEMS]
+import myers_compactified as _myers_compactified
+CHARTS[_myers_compactified.METRIC] = [lambda system=system: _myers_compactified.chart_spec(system)
+                                       for system in _myers_compactified.CHARTS]
 
 
 if __name__ == "__main__":

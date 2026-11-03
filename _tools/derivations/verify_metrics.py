@@ -5408,5 +5408,9 @@ import atiyah_hitchin as _atiyah_hitchin
 _atiyah_hitchin.register_dimensions(sys.modules[__name__])
 
 
+import myers_compactified as _myers_compactified
+DIMENSIONS.update(_myers_compactified.DIMENSIONS)
+
+
 if __name__ == "__main__":
     sys.exit(main())

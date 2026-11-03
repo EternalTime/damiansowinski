@@ -116,6 +116,11 @@
       "id": "bach_weyl_ring",
       "kind": "family",
       "text": "A ring of uncharged matter with the same Newtonian potential as a circle of infinitely many extremal black holes. Oldřich Semerák found that the charged ring lies a finite distance from its centre and Bach and Weyl's an infinite one [semerak2016]."
+    },
+    {
+      "id": "myers_compactified",
+      "kind": "family",
+      "text": "An extremal charged hole in five dimensions with one spatial direction curled into a circle, made from a periodic row of higher dimensional holes [horowitzmaeda2002, myers1987compact]."
     }
   ],
   "references": [
@@ -156,7 +161,9 @@
     "cvetic1996dyonic",
     "dufflu1991",
     "gibbons1995",
-    "semerak2016"
+    "semerak2016",
+    "horowitzmaeda2002",
+    "myers1987compact"
   ],
   "coordinates": [
     {

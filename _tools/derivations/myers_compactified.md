@@ -9,7 +9,10 @@ Robert C. Myers, Physical Review D 35, 455-466 (1987), established the construct
 
 ## Coordinates and checks
 
-The cylindrical and spherical charts, their domains, and their checks are to be recorded here.
+Horowitz and Maeda's cylindrical coordinates cover one circle with $-L/2 ≤ z < L/2$.
+The spherical chart uses $r = \rho\sin\chi$ and $z = \rho\cos\chi$, with $-L/2 < \rho\cos\chi < L/2$ to stay inside one copy of the circle.
+The printer leaves $U$ and its derivatives as named functions of the coordinates, and its pointwise check substitutes the sourced function into the flat spatial Laplacian and the five dimensional Einstein-Maxwell equations.
+Both charts printed their tensors under a 20 second per step budget, and both pointwise checks passed.
 
 ## Drawings
 

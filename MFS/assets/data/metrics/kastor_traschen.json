@@ -71,6 +71,11 @@
       "id": "lindquist_wheeler_lattice",
       "kind": "family",
       "text": "A universe of uncharged black holes with no cosmological constant, known only approximately: each hole keeps Schwarzschild's geometry inside its cell, and the lattice of cells expands and recollapses [lindquist1957]."
+    },
+    {
+      "id": "myers_compactified",
+      "kind": "family",
+      "text": "A static extremal charged black hole in five dimensions, with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
     }
   ],
   "references": [
@@ -89,7 +94,9 @@
     "gibbons2010",
     "brill1963",
     "sperhake2015",
-    "lindquist1957"
+    "lindquist1957",
+    "horowitzmaeda2002",
+    "myers1987compact"
   ],
   "coordinates": [
     {

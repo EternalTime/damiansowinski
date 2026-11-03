@@ -82,6 +82,11 @@
       "id": "static_five_soliton",
       "kind": "generalisation",
       "text": "The neutral scalar family includes the uniform black string as its member with a regular horizon and constant circle size [lake2006static]."
+    },
+    {
+      "id": "myers_compactified",
+      "kind": "family",
+      "text": "A charged extremal black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
     }
   ],
   "references": [
@@ -110,7 +115,9 @@
     "gibbons1995",
     "bah2021",
     "herdeiro2014",
-    "lake2006static"
+    "lake2006static",
+    "horowitzmaeda2002",
+    "myers1987compact"
   ],
   "coordinates": [
     {
