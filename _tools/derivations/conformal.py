@@ -1599,10 +1599,22 @@ def york_equilibrium(ck, src):
     plane = Plane(src, "york_equilibrium", "areal", ("t", "r"), EQUATOR, params)
     xmax, xmin = math.log(48.0), math.log(1e-6)
 
+    # Expand the optical slope only through first order before evaluating it.
+    # Keeping the horizon factor d/(2+d) whole avoids cancellation in g_tt.
+    reader = plane.reader
+    p = reader.parameters
+    radius = reader.symbol["r"]
+    fixed = {p["M"]: 1, p["R"]: 50}
+    mu = sp.lambdify(radius, reader.held[p["mu"]].subs(fixed), "numpy")
+    rho = sp.lambdify(radius, reader.held[p["rho"]].subs(fixed), "numpy")
+    boundary = float(rho(50.0))
+
     def slope(x, _):
         d = math.exp(float(x))
-        g = plane.metric(0.0, 2.0 + d)
-        return [d * math.sqrt(float(-g[2] / g[0]))]
+        r = 2.0 + d
+        f = d / r
+        correction = 2 * float(mu(r)) / (r * f) - (float(rho(r)) - boundary)
+        return [d / f * (1 + 0.0001 * correction)]
 
     sol = solve_ivp(slope, (xmax, xmin), [0.0], method="DOP853", rtol=1e-11, atol=1e-12,
                     dense_output=True)
