@@ -234,6 +234,7 @@ import boson_star as bs  # noqa: E402
 import kodama_kink as kk  # noqa: E402
 import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
+import skyrmion_hair as skyrme_hole  # noqa: E402
 import black_saturn as bsat  # noqa: E402
 import black_to_white_hole as bwh  # noqa: E402
 import brill_wave  # noqa: E402
@@ -2627,6 +2628,11 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "bwh_inside_pg": bwh_inside_pg, "bwh_shell_sch": bwh_shell_sch, "bwh_shell_pg": bwh_shell_pg}
 
 
+DECLARED_FUNCTIONS.update(skyrme_hole.declared_functions())
+SKYRME_FUNCTIONS = {"N": "skyrme_N(r)", "C": "skyrme_C(r)"}
+SKYRME_INPUT = ("The massless pion solution at $\\alpha = 0.01$ and $aF_\\pi r_h = 0.1$, "
+                "with $aF_\\pi = 1$ in the units of the drawing.")
+
 # Neugebauer and Meinel's disc as every one of its diagrams draws it: mu = 3, the disc whose Ernst
 # potential Neugebauer, Kleinwaechter and Meinel plot, in units of its coordinate radius rho_0.
 # There e^(2 V_0) = 0.0303, Omega rho_0 = 0.2133 c and GM/c^2 = 1.716 rho_0, the ergosurface crosses
@@ -3115,6 +3121,9 @@ BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi}
                    "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
+    Diagram("skyrmion_hair", "areal", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
+            "$aF_\\pi r$", "$aF_\\pi t$", {"r_h": 0.1}, EQUATOR, areal=True,
+            functions=SKYRME_FUNCTIONS, input=SKYRME_INPUT, where="r - 0.1", edge_horizon=True),
     Diagram("static_five_soliton", "spherical", "radial", "$t$ and $r$", ("t","r"), (1,5,-2,2),
             "$r/r_s$", "$ct/r_s$", {"r_s":1,"a":"8/7","b":"-3/7"}, {**EQUATOR,"y":0}, areal=True),
     Diagram("static_five_soliton", "isotropic", "radial", r"$t$ and $\rho$", ("t",r"\rho"), (0.25,4.25,-2,2),
@@ -6797,6 +6806,9 @@ def _ht_captions():
 HT_CAPTIONS = _ht_captions()
 
 CAPTIONS = {
+    ("skyrmion_hair", "areal", "radial"): [
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), with the horizon at $aF_\\pi r = 0.1$.",
+    ],
     ("static_five_soliton","spherical","radial"): [
         r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with a timelike singularity at $r=r_s$.",
     ],

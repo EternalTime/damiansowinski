@@ -128,7 +128,8 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 # The spacetimes with no conformal diagram, for which nothing is written.
 # Homogeneous charged dust admits circular timelike curves about each dust worldline;
 # a global time-oriented radial conformal square cannot encode those identifications.
-NOT_DRAWN = {"charged_godel_universe", "godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
+# The sourced numerical chart covers the exterior alone, leaving the interior causal structure unspecified.
+NOT_DRAWN = {"skyrmion_hair", "charged_godel_universe", "godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
              "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",

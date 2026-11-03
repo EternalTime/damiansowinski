@@ -224,6 +224,11 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    # Natural units c = hbar = 1, with Newton's constant explicit.
+    ("skyrmion_hair", "areal"): {
+        "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "N": "1", "C": "1", "f": "1",
+        "m": "1/L", "r_h": "L", "G": "L**2", "M": "1/L", "\\alpha": "1", "F_\\pi": "1/L", "a": "1",
+    },
     # Both parameters are dimensionless: v_s is the bubble velocity in units of c, so that
     # c v_s f is the shift, and f is the shape function. The solution names no length of its
     # own, because the scale f varies on is left to f.
