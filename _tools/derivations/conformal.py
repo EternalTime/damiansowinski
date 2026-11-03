@@ -1638,7 +1638,7 @@ def york_equilibrium(ck, src):
     v.legend("surface", "the reflecting wall $r = R$")
     moment = slices.moments("york_equilibrium")[0]
     p, q = fmap(np.zeros_like(radii), radii)
-    v.slice(moment, [(p, q)])
+    v.slice(moment, [(np.r_[HALF, p], np.r_[-HALF, q])])
     v.set(settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.")
     return [v]
 
