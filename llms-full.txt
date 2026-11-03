@@ -2804,6 +2804,17 @@ Outside a straight cosmic string, cylindrical gravitational waves form a vacuum 
 - chart Prolate Coordinates: coordinates $(\tau, \sigma, \phi, z)$, $$ds^2=\ell^2\left(\alpha^2 X(-d\tau^2/\Delta+d\sigma^2/\delta)+\Delta\delta X\,d\phi^2/Y+(Y/X)(dz-\omega\,d\phi)^2\right)$$
 - chart Hyperbolic Coordinates: coordinates $(\psi, \theta, \phi, z)$, $$ds^2=\ell^2\left(\alpha^2X(-d\psi^2+d\theta^2)+\Delta\delta X\,d\phi^2/Y+(Y/X)(dz-\omega\,d\phi)^2\right)$$
 
+### Stringy Cosmic Strings
+
+A straight string with finite energy per unit length, a curved transverse space, and a hidden torus whose shape changes with position around it.
+
+- id: `stringy_cosmic_strings`
+- tags: topological defect, angular deficit, compact dimension, string theory, scalar field, static, stationary, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/stringy_cosmic_strings.json
+- chart Cartesian transverse coordinates: coordinates $(t, w, x, y)$, $$ds^2 = -c^2dt^2 + dw^2 + H\left(dx^2 + dy^2\right)$$
+- chart Polar transverse coordinates: coordinates $(t, w, r, \phi)$, $$ds^2 = -c^2dt^2 + dw^2 + H\left(dr^2 + r^2d\phi^2\right)$$
+
 ### Sultana-Dyer Black Hole in an Expanding Universe
 
 A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multiplied by the square of the scale factor of a flat universe of dust, which Joseph Sultana and Charles Dyer found in 2005. Its event horizon grows with the universe, and its matter is a dust and a null dust that fall into the hole.

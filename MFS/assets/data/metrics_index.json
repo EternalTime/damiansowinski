@@ -2447,7 +2447,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "205c935c08fbffcd",
+    "version": "586ecc290da20a00",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "0715fc5083d2df7a",
@@ -3145,7 +3145,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "d58f91d72cddd2ca",
+    "version": "eddba368e4042f82",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -5340,7 +5340,7 @@
       "conformally flat",
       "tachyon"
     ],
-    "version": "5341d9f79992b3a6",
+    "version": "e9ccd8a7a23a6c9d",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "354a17ef203ec712",
     "embedding": "c40545f1ea0c929c"
@@ -6370,6 +6370,29 @@
     "curvature": "aa1019fff6007db8"
   },
   {
+    "id": "stringy_cosmic_strings",
+    "name": "Stringy Cosmic Strings",
+    "tags": [
+      "topological defect",
+      "angular deficit",
+      "compact dimension",
+      "string theory",
+      "scalar field",
+      "static",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "4262d0e1c3e26759",
+    "diagrams": "db9f12396b6b2a31",
+    "conformal": "2f4f1f62b5edf0a8",
+    "embedding": "207403249c9d28c4",
+    "curvature": "55082a4c1b9c2c9d"
+  },
+  {
     "id": "sultana_dyer",
     "name": "Sultana-Dyer",
     "tags": [
@@ -7104,7 +7127,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "16b9c07a15350440",
+    "version": "2d738ad0f70f2e8b",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "ef960fe8cb1357e7"
