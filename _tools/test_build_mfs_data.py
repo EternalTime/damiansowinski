@@ -5589,6 +5589,10 @@ class Slices(unittest.TestCase):
                 return (lambda X: 0.0), [lo, hi]
             sign = 1 if chart.endswith("ingoing") else -1
             return (lambda X: sign * (sv_rstar(X, a) - X)), [lo, hi]
+        if key == "skyrmion_hair/tortoise/radial":
+            # The embedding reaches x = 0.101 and x = 4; the independently integrated
+            # tortoise coordinate fixes xi = 0 at x = 1. The dedicated test checks the map.
+            return (lambda X: 0.0), [-1.623855569, 3.211911899]
         if key.startswith("bartnik_mckinnon/") and "/areal/" not in key:
             # The sphere r = 8 ell the embedding reaches, on the soliton with one zero: its isotropic
             # radius, its tortoise coordinate and its tau = ln(rho/ell), which bartnik_mckinnon.py
