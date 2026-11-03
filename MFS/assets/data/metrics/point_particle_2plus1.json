@@ -72,6 +72,11 @@
       "id": "torus_universe_2plus1",
       "kind": "locally_same",
       "text": "The same flat vacuum in three dimensions, with space closed into a torus by two commuting identifications [louko_marolf1994]."
+    },
+    {
+      "id": "charged_three_dimensions",
+      "kind": "family",
+      "text": "Give the particle a charge, and its electric field, spread over the whole plane, curves spacetime everywhere around it [gott1986charged]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "emparan2002holograms",
     "emparan2020qbtz",
     "vuorio1985",
-    "louko_marolf1994"
+    "louko_marolf1994",
+    "gott1986charged"
   ],
   "coordinates": [
     {

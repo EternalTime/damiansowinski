@@ -141,6 +141,11 @@
       "id": "btz_shock_wave",
       "kind": "composite",
       "text": "The black hole without rotation with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago. Its two halves are joined along the horizon with a shift [shenker2014]."
+    },
+    {
+      "id": "charged_three_dimensions",
+      "kind": "family",
+      "text": "Charged, and with its cosmological constant set to zero, this black hole becomes the spacetime of a point charge in a plane [carlip1995]."
     }
   ],
   "references": [
@@ -177,7 +182,8 @@
     "emparan2020qbtz",
     "achucarro1993",
     "anninos2009",
-    "shenker2014"
+    "shenker2014",
+    "carlip1995"
   ],
   "coordinates": [
     {
