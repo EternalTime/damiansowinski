@@ -1597,6 +1597,24 @@ def york_equilibrium(ck, src):
     """
     params = {"M": 1, "R": 50, "epsilon": sp.Rational(1, 10000)}
     plane = Plane(src, "york_equilibrium", "areal", ("t", "r"), EQUATOR, params)
+    # The printed components simplify into logarithms of enormous products.
+    # Expand those logarithms and evaluate all six published components in
+    # 50 digits, preserving their first order form and the whole domain.
+    components = [plane.g[0, 0], plane.g[0, 1], plane.g[1, 1],
+                  plane.gi[0, 0], plane.gi[0, 1], plane.gi[1, 1]]
+    high = sp.lambdify((plane.x0, plane.x1),
+                       [sp.expand_log(e, force=True) for e in components], "mpmath")
+
+    def metric_high_precision(t, r, fvals=None):
+        t, r = np.broadcast_arrays(np.asarray(t, dtype=float), np.asarray(r, dtype=float))
+        values = [[] for _ in components]
+        with mpmath.workdps(50):
+            for time, radius in zip(t.flat, r.flat):
+                for out, value in zip(values, high(mpmath.mpf(float(time)), mpmath.mpf(float(radius)))):
+                    out.append(float(value))
+        return [np.asarray(v).reshape(t.shape) for v in values]
+
+    plane.metric = metric_high_precision
     xmax, xmin = math.log(48.0), math.log(1e-6)
 
     # Expand the optical slope only through first order before evaluating it.
