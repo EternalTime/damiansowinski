@@ -1769,6 +1769,19 @@ A closed universe that holds nothing but $N$ equal masses, one at the centre of 
 - chart Lindquist-Wheeler Comoving: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \dfrac{(\partial_\rho r)^2}{1 - \dfrac{r_s}{\rho}}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Comparison Hypersphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Linet-Tian Static Cylinder
+
+The static vacuum field with cylindrical symmetry and a cosmological constant, the field outside an infinitely long straight line of mass, which Bernard Linet and Qingjun Tian found independently in 1986. With a negative constant it approaches anti-de Sitter space far from its axis; with a positive one the proper distance from the axis is bounded by $\pi/\sqrt{3\Lambda}$, and the surfaces of constant distance are tori.
+
+- id: `linet_tian`
+- tags: Einstein space, cosmological constant, negative cosmological constant, positive cosmological constant, static, stationary, four-dimensional, cylindrical symmetry, line mass, cosmic string, curvature singularity, conical singularity, torus, anti-de Sitter, Petrov type I, Petrov type D, instability, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/linet_tian.json
+- chart Toroidal: coordinates $(t, \rho, \psi, \phi)$, $$ds^2 = d\rho^2 + \left(1 + \dfrac{3\Lambda P^2}{4}\right)^{-2/3}\left(-P^{2p_0}c^2dt^2 + \dfrac{P^{2p_3}}{B^2}d\psi^2 + \dfrac{P^{2p_2}}{C^2}d\phi^2\right)$$
+- chart Cylindrical: coordinates $(t, \rho, z, \phi)$, $$ds^2 = d\rho^2 + \left(1 + \dfrac{3\Lambda P^2}{4}\right)^{-2/3}\left(-P^{2p_0}c^2dt^2 + P^{2p_3}dz^2 + \dfrac{P^{2p_2}}{C^2}d\phi^2\right)$$
+- chart Gleiser: coordinates $(t, y, z, \phi)$, $$ds^2 = \dfrac{\left(1 + \Lambda Y\right)^2}{3Y}dy^2 + \left(1 + \Lambda Y\right)^{-2/3}\left(-Y^{p_0}c^2dt^2 + Y^{p_3}dz^2 + \dfrac{Y^{p_2}}{C^2}d\phi^2\right)$$
+- chart Sarıoğlu-Tekin: coordinates $(t, r, z, \phi)$, $$ds^2 = \dfrac{r^2}{L^2}\left(-h^{p_0}c^2dt^2 + h^{p_3}dz^2 + \dfrac{h^{p_2}}{C^2}d\phi^2\right) + \dfrac{L^2}{r^2h}dr^2$$
+
 ### Relativistic Discs of Lynden-Bell and Pineault
 
 Thin relativistic discs with counter rotating streams or matter rotating in one sense, and a circular speed independent of radius.

@@ -22,7 +22,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c20ad99a389c2bea",
+    "version": "4376554c435a0094",
     "diagrams": "955db54b31a1e1c3",
     "conformal": "dacd55113d63661a",
     "embedding": "4829fb64992692bb",
@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "a7261ae40768e1aa",
+    "version": "1bdf10d987c97746",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -132,7 +132,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "a35317771f063c57",
+    "version": "4a37c58ebfcbac9b",
     "diagrams": "f8d136f5ed61d7d1",
     "conformal": "be0bf05b08f0c825",
     "embedding": "819ee1c2da820b20"
@@ -1872,7 +1872,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "c1734dd695e17d56",
+    "version": "1dfcf0680462aef8",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -3822,7 +3822,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "baf25252de7338e7",
+    "version": "13c8446b41e2c8c8",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
@@ -3915,6 +3915,38 @@
     "diagrams": "79ea70865a3595d1",
     "conformal": "e174596b63171289",
     "embedding": "9b4467004019c7c7"
+  },
+  {
+    "id": "linet_tian",
+    "name": "Linet-Tian",
+    "tags": [
+      "Einstein space",
+      "cosmological constant",
+      "negative cosmological constant",
+      "positive cosmological constant",
+      "static",
+      "stationary",
+      "four-dimensional",
+      "cylindrical symmetry",
+      "line mass",
+      "cosmic string",
+      "curvature singularity",
+      "conical singularity",
+      "torus",
+      "anti-de Sitter",
+      "Petrov type I",
+      "Petrov type D",
+      "instability",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "94765d184fd8f44e",
+    "diagrams": "fa919a808ee48f15",
+    "conformal": "f6ce619c01270e10",
+    "embedding": "060b5e3bcf6af660",
+    "curvature": "aafca637ce5bd059"
   },
   {
     "id": "lynden_bell_pineault",
@@ -5688,7 +5720,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "142bee56ac38b1ea",
+    "version": "9319c7b7232cffa0",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -6635,7 +6667,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "bc62dd6a2a6cf6a6",
+    "version": "6964bf5e0a2cfdc1",
     "diagrams": "70598c77af726b80",
     "conformal": "376fd97d44eb677e",
     "embedding": "930f06c7003fad35"
@@ -6878,7 +6910,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "7d99198d9653d277",
+    "version": "16b9c07a15350440",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "ef960fe8cb1357e7"

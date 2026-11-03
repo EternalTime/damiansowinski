@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 236,
+  "count": 237,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -83,6 +83,11 @@
           "id": "ghost_neutrinos",
           "kind": "locally_same",
           "text": "Taub's plane symmetric vacuum, the A III metric in other coordinates, carrying a current of neutrinos with no energy or momentum, as Talmadge M. Davis and John R. Ray found in 1974 [davis1974]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "Static cylinders with a cosmological constant. Their member with $\\sigma = 0$ generalises B III to $\\Lambda \\neq 0$, as Jerry Griffiths and Jiří Podolský found [griffiths2010linettian]."
         }
       ],
       "references": [
@@ -100,7 +105,8 @@
         "schulman1971",
         "gott1974",
         "kruskal1960",
-        "davis1974"
+        "davis1974",
+        "griffiths2010linettian"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ab_metrics.json",
@@ -1585,6 +1591,11 @@
           "id": "cahen_wallach",
           "kind": "family",
           "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "A line of mass in anti-de Sitter space. Its static field approaches this space far from the axis, in horospherical coordinates [dasilva2000, zofka2008]."
         }
       ],
       "references": [
@@ -1641,7 +1652,9 @@
         "blau2002penrose",
         "berenstein2002",
         "maldacena2018",
-        "cahen1970"
+        "cahen1970",
+        "dasilva2000",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -1822,6 +1835,11 @@
           "id": "early_braneworlds",
           "kind": "family",
           "text": "The Squires family contains a regular axis solution with the geometry of the five dimensional soliton [bannister1987]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "generalisation",
+          "text": "Static fields around a line of mass with a cosmological constant. In four dimensions the soliton is the member with $\\Lambda < 0$ and $\\sigma = 0$, William Bonnor's second anti-de Sitter universe [sarioglu2009comment, bonnor2008second]."
         }
       ],
       "references": [
@@ -1845,7 +1863,9 @@
         "nishioka2010",
         "hawking1983",
         "bah2021",
-        "bannister1987"
+        "bannister1987",
+        "sarioglu2009comment",
+        "bonnor2008second"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_soliton.json",
@@ -20567,6 +20587,11 @@
           "id": "hosotani_universe",
           "kind": "conformal",
           "text": "A closed universe filled with a homogeneous Yang-Mills magnetic field. Dividing its metric by the squared spatial radius makes it conformal to a region of Einstein's static universe [gibbons1994ym]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "Static fields around a line of mass with $\\Lambda > 0$. Jerry Griffiths and Jiří Podolský matched one across a torus to a region of this universe, whose dust takes the place of one singular axis [griffiths2010linettian]."
         }
       ],
       "references": [
@@ -20596,7 +20621,8 @@
         "lachiezerey1995",
         "luminet2003",
         "vaidya1977kerr",
-        "gibbons1994ym"
+        "gibbons1994ym",
+        "griffiths2010linettian"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -41856,6 +41882,11 @@
           "id": "superconducting_string",
           "kind": "generalisation",
           "text": "A magnetic field surrounds a current carrying string and contributes to its gravity [sen1999superconducting]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "generalisation",
+          "text": "The same line of mass in a universe with a cosmological constant, the static field Bernard Linet and Qingjun Tian found in 1986. With $\\Lambda < 0$ it approaches anti-de Sitter space far from the axis [zofka2008, dasilva2000]."
         }
       ],
       "references": [
@@ -41893,7 +41924,9 @@
         "martins1996",
         "astorino2022swirling",
         "davis1974",
-        "sen1999superconducting"
+        "sen1999superconducting",
+        "zofka2008",
+        "dasilva2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -43536,6 +43569,418 @@
           ],
           "ricci_scalar": "R = \\dfrac{6a\\,\\ddot{a} + 6\\dot{a}^2 + 6}{a^2}",
           "kretschmann": "K = \\dfrac{12a^2\\,\\ddot{a}^2 + 24\\dot{a}^2 + 12\\dot{a}^4 + 12}{a^4}"
+        }
+      ]
+    },
+    {
+      "id": "linet_tian",
+      "name": "Linet-Tian Static Cylinder",
+      "short_name": "Linet-Tian",
+      "description": "The static vacuum field with cylindrical symmetry and a cosmological constant, the field outside an infinitely long straight line of mass, which Bernard Linet and Qingjun Tian found independently in 1986. With a negative constant it approaches anti-de Sitter space far from its axis; with a positive one the proper distance from the axis is bounded by $\\pi/\\sqrt{3\\Lambda}$, and the surfaces of constant distance are tori.",
+      "tags": [
+        "Einstein space",
+        "cosmological constant",
+        "negative cosmological constant",
+        "positive cosmological constant",
+        "static",
+        "stationary",
+        "four-dimensional",
+        "cylindrical symmetry",
+        "line mass",
+        "cosmic string",
+        "curvature singularity",
+        "conical singularity",
+        "torus",
+        "anti-de Sitter",
+        "Petrov type I",
+        "Petrov type D",
+        "instability",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The exponents $p_0$, $p_2$, and $p_3$ are those of Levi-Civita's cylinder in proper distance, with $p_0 + p_2 + p_3 = p_0^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "At $\\Lambda = 0$ both functions of the line element are the proper distance $\\rho$, and the field is Tullio Levi-Civita's cylinder with $\\sigma$ his mass parameter [dasilva2000, griffiths2010linettian]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "special_case",
+          "text": "With $\\Lambda < 0$, $\\sigma = 0$, and $C = 1$ the axis is regular and the field is the soliton of anti-de Sitter space, which William Bonnor called a second anti-de Sitter universe [sarioglu2009comment, bonnor2008second]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "At $\\Lambda = 0$ and $\\sigma = 0$ the field is flat with an angular deficit about the axis, the cosmic string that Bernard Linet and Qingjun Tian set in a universe with a cosmological constant [griffiths2010linettian, zofka2008]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The flat member of these holes, the static black string of José Lemos, is the field with $\\sigma = 1/2$ and $\\Lambda < 0$, its horizon at $\\rho = 0$ [zofka2008, lemos1995]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "Written in horospherical coordinates, this black hole shares the leading terms of the field far from the axis when $\\Lambda < 0$, and the radial dependence of its next terms [zofka2008]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Every member with $\\Lambda < 0$ approaches anti-de Sitter space far from its axis, in horospherical coordinates [dasilva2000, zofka2008]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "When $\\Lambda > 0$, a toroidal region of the static universe full of dust can replace one of the two singular axes, and for small $\\sigma$ the dust carries a mass per unit length close to $\\sigma$ [griffiths2010linettian]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "The member with $\\sigma = 0$ is a generalisation of the B III metric with a cosmological constant, of type D and in the family of Jerzy Plebański and Marek Demiański without expansion [griffiths2010linettian]."
+        }
+      ],
+      "references": [
+        "dasilva2000",
+        "zofka2008",
+        "griffiths2010linettian",
+        "linet1986",
+        "tian1986",
+        "krasinski1975",
+        "gleiser2021krasinski",
+        "bronnikov2020",
+        "sarioglu2009comment",
+        "bonnor2008second",
+        "horowitz1998",
+        "lemos1995",
+        "gleiser2017stability",
+        "gleiser2021perturbations"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/linet_tian.json",
+      "charts": [
+        {
+          "id": "toroidal",
+          "name": "Toroidal",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\psi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\pi/\\sqrt{3\\Lambda})",
+            "\\psi \\in [0, 2\\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}",
+            "\\rho = \\pi/\\sqrt{3\\Lambda} \\;\\text{(a curvature singularity unless } p_0\\,p_2\\,p_3 = -4/27\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, positive here, an inverse length squared"
+            },
+            {
+              "symbol": "B",
+              "description": "Conicity about the axis $\\rho = \\pi/\\sqrt{3\\Lambda}$, an inverse length in the unit the powers are read in; with $\\psi$ periodic in $2\\pi$ it fixes the angular deficit there"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $\\psi$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "P = \\dfrac{2}{\\sqrt{3\\Lambda}}\\tan\\left(\\dfrac{\\sqrt{3\\Lambda}\\,\\rho}{2}\\right)",
+              "description": "A length, close to $\\rho$ near the axis and growing without bound as $\\rho \\to \\pi/\\sqrt{3\\Lambda}$, with $dP/d\\rho = 1 + 3\\Lambda P^2/4$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\psi, \\phi)$, with $t$ carrying dimensions of time, $\\rho$ the proper distance from the axis $\\rho = 0$, a length, and $\\psi$ and $\\phi$ angles. The factor $(1 + 3\\Lambda P^2/4)^{-2/3}$ is $\\cos^{4/3}(\\sqrt{3\\Lambda}\\,\\rho/2)$, and we evaluate the powers of $P$ with $P$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = d\\rho^2 + \\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{-2/3}\\left(-P^{2p_0}c^2dt^2 + \\dfrac{P^{2p_3}}{B^2}d\\psi^2 + \\dfrac{P^{2p_2}}{C^2}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{P^{2p_0}}{\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{P^{2p_3}}{B^2\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{P^{2p_2}}{C^2\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3} + \\dfrac{\\Lambda^2\\left(4 + 3\\Lambda P^2\\right)^2}{12} - \\dfrac{p_0\\,p_2\\,p_3\\left(4 - 3\\Lambda P^2\\right)\\left(4 + 3\\Lambda P^2\\right)^3}{16P^4}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, negative here, an inverse length squared"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "P = \\dfrac{2}{\\sqrt{-3\\Lambda}}\\tanh\\left(\\dfrac{\\sqrt{-3\\Lambda}\\,\\rho}{2}\\right)",
+              "description": "A length, close to $\\rho$ near the axis and tending to $2/\\sqrt{-3\\Lambda}$ far from it, with $dP/d\\rho = 1 + 3\\Lambda P^2/4$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, z, \\phi)$, with $t$ carrying dimensions of time and $\\rho$, the proper distance from the axis, and $z$ lengths. The factor $(1 + 3\\Lambda P^2/4)^{-2/3}$ is $\\cosh^{4/3}(\\sqrt{-3\\Lambda}\\,\\rho/2)$, and we evaluate the powers of $P$ with $P$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = d\\rho^2 + \\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{-2/3}\\left(-P^{2p_0}c^2dt^2 + P^{2p_3}dz^2 + \\dfrac{P^{2p_2}}{C^2}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{P^{2p_0}}{\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{P^{2p_3}}{\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{P^{2p_2}}{C^2\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3} + \\dfrac{\\Lambda^2\\left(4 + 3\\Lambda P^2\\right)^2}{12} - \\dfrac{p_0\\,p_2\\,p_3\\left(4 - 3\\Lambda P^2\\right)\\left(4 + 3\\Lambda P^2\\right)^3}{16P^4}"
+        },
+        {
+          "id": "gleiser",
+          "name": "Gleiser",
+          "coordinates": [
+            "t",
+            "y",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in (0, 1/\\Lambda) \\;\\text{for}\\; \\Lambda > 0",
+            "y \\in (0, \\infty) \\;\\text{for}\\; \\Lambda < 0",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "y = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}",
+            "y = 1/\\Lambda \\;\\text{(for } \\Lambda > 0\\text{, a curvature singularity unless } p_0\\,p_2\\,p_3 = -4/27\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, of either sign, an inverse length squared"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "Y = \\dfrac{y}{1 - \\Lambda y}",
+              "description": "An area, close to $y$ near the axis, with $dY/dy = (1 + \\Lambda Y)^2$; for $\\Lambda > 0$ it grows without bound as $y \\to 1/\\Lambda$"
+            }
+          ],
+          "convention": "We use Gleiser's coordinates $(t, y, z, \\phi)$, with $t$ carrying dimensions of time, $z$ a length and $\\Lambda y = \\sin^2(\\sqrt{3\\Lambda}\\,\\rho/2)$, where $\\rho$ is the proper distance from the axis, so that $t$, $z$, and $\\phi/C$ are those of the proper distance charts multiplied by constants. We write the metric in $Y = y/(1 - \\Lambda y)$ and evaluate its powers with $Y$ in a fixed unit of area, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}dy^2 + \\left(1 + \\Lambda Y\\right)^{-2/3}\\left(-Y^{p_0}c^2dt^2 + Y^{p_3}dz^2 + \\dfrac{Y^{p_2}}{C^2}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{Y^{p_0}}{\\left(1 + \\Lambda Y\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{Y^{p_3}}{\\left(1 + \\Lambda Y\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{Y^{p_2}}{C^2\\left(1 + \\Lambda Y\\right)^{2/3}}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3} + \\dfrac{4\\Lambda^2\\left(1 + \\Lambda Y\\right)^2}{3} - \\dfrac{9p_0\\,p_2\\,p_3\\left(1 - \\Lambda Y\\right)\\left(1 + \\Lambda Y\\right)^3}{Y^2}"
+        },
+        {
+          "id": "sarioglu_tekin",
+          "name": "Sarıoğlu-Tekin",
+          "coordinates": [
+            "t",
+            "r",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Value of $r$ on the axis, a length"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "h = 1 - \\dfrac{r_0^3}{r^3}",
+              "description": "Dimensionless, rising from $0$ on the axis to $1$ far from it, with $dh/dr = 3(1 - h)/r$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, z, \\phi)$ of Sarıoğlu and Tekin, with $t$ carrying dimensions of time and $r$ and $z$ lengths, where $r = r_0\\cosh^{2/3}(3\\rho/2L)$ with $\\rho$ the proper distance from the axis, so that $t$, $z$, and $\\phi/C$ are those of the cylindrical chart multiplied by constants. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-h^{p_0}c^2dt^2 + h^{p_3}dz^2 + \\dfrac{h^{p_2}}{C^2}d\\phi^2\\right) + \\dfrac{L^2}{r^2h}dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2h^{p_0}}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2h}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{r^2h^{p_3}}{L^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2h^{p_2}}{L^2C^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4} + \\dfrac{12\\left(1 - h\\right)^2}{L^4} - \\dfrac{81p_0\\,p_2\\,p_3\\left(1 + h\\right)\\left(1 - h\\right)^3}{L^4h^2}"
         }
       ]
     },
@@ -63192,6 +63637,11 @@
           "id": "york_equilibrium",
           "kind": "family",
           "text": "A black hole in equilibrium with a scalar field inside a reflecting wall, with first order back reaction [hochberg1994potential, york1985equilibrium]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "A line of mass in anti-de Sitter space. Far from the axis its static field has the leading terms of this black hole written in horospherical coordinates [zofka2008]."
         }
       ],
       "references": [
@@ -63224,7 +63674,8 @@
         "shenker2014",
         "kraus1999",
         "hochberg1994potential",
-        "york1985equilibrium"
+        "york1985equilibrium",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -74212,6 +74663,11 @@
           "id": "holographic_superconductor",
           "kind": "family",
           "text": "The flat black hole given a charge and a charged scalar condensate below a critical temperature, the holographic superconductor, whose inside has no inner horizon and ends at a spacelike Kasner singularity [hartnoll2021diving]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "Static fields around a line of mass with a cosmological constant. With $\\sigma = 1/2$ and $\\Lambda < 0$ the field is the flat hole's black string outside its horizon [zofka2008, lemos1995]."
         }
       ],
       "references": [
@@ -74244,7 +74700,8 @@
         "maldacena1998",
         "kraus1999",
         "gnecchi2014",
-        "hartnoll2021diving"
+        "hartnoll2021diving",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
@@ -77427,6 +77884,11 @@
           "id": "string_cylindrical_waves",
           "kind": "limit_source",
           "text": "A limit of cylindrical waves around a string reaches this conical exterior: take $p\\to\\infty$ with $\\alpha p=k>1$ and scale time and radius by $k$ [gurtug_sakalli2003]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "generalisation",
+          "text": "A string in a universe with a cosmological constant. Bernard Linet and Qingjun Tian each found the static cylindrical vacuum with $\\Lambda$ in 1986 to describe the field outside one [zofka2008]."
         }
       ],
       "references": [
@@ -77457,7 +77919,8 @@
         "gleiser1989splitting",
         "podolsky2000snapping",
         "sen1999superconducting",
-        "gurtug_sakalli2003"
+        "gurtug_sakalli2003",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",

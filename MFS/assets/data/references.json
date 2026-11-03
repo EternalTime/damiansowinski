@@ -1,5 +1,5 @@
 {
-  "version": "83b672efaf23bc0c",
+  "version": "939dd4604e6774d6",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35541,6 +35541,174 @@
         "eprint": "1108.5151",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1098/rspa.2011.0616"
+      }
+    },
+    "dasilva2000": {
+      "type": "article",
+      "fields": {
+        "title": "{Levi-Civit\\`a} solutions with a cosmological constant",
+        "author": "da Silva, M. F. A. and Wang, Anzhong and Paiva, Filipe M. and Santos, N. O.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "4",
+        "pages": "044003",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.044003",
+        "eprint": "gr-qc/9911013",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.044003"
+      }
+    },
+    "zofka2008": {
+      "type": "article",
+      "fields": {
+        "title": "Cylindrical spacetimes with $\\Lambda \\neq 0$ and their sources",
+        "author": "\\v{Z}ofka, M. and Bi\\v{c}\\'ak, J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "1",
+        "pages": "015011",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/1/015011",
+        "eprint": "0712.2144",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/25/1/015011"
+      }
+    },
+    "griffiths2010linettian": {
+      "type": "article",
+      "fields": {
+        "title": "The {Linet-Tian} solution with a positive cosmological constant in four and higher dimensions",
+        "author": "Griffiths, J. B. and Podolsk\\'y, J.",
+        "journal": "Physical Review D",
+        "volume": "81",
+        "number": "6",
+        "pages": "064015",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.81.064015",
+        "eprint": "1002.4115",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.81.064015"
+      }
+    },
+    "linet1986": {
+      "type": "article",
+      "fields": {
+        "title": "The static, cylindrically symmetric strings in general relativity with cosmological constant",
+        "author": "Linet, B.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "27",
+        "number": "7",
+        "pages": "1817--1818",
+        "year": "1986",
+        "doi": "10.1063/1.527050",
+        "url": "https://doi.org/10.1063/1.527050"
+      }
+    },
+    "tian1986": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic strings with cosmological constant",
+        "author": "Tian, Qingjun",
+        "journal": "Physical Review D",
+        "volume": "33",
+        "number": "12",
+        "pages": "3549--3555",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.33.3549",
+        "url": "https://doi.org/10.1103/PhysRevD.33.3549"
+      }
+    },
+    "krasinski1975": {
+      "type": "article",
+      "fields": {
+        "title": "Some solutions of the {Einstein} field equations for a rotating perfect fluid",
+        "author": "Krasi\\'nski, Andrzej",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "16",
+        "number": "1",
+        "pages": "125--131",
+        "year": "1975",
+        "doi": "10.1063/1.522404",
+        "url": "https://doi.org/10.1063/1.522404"
+      }
+    },
+    "gleiser2021krasinski": {
+      "type": "article",
+      "fields": {
+        "title": "The {Linet}--{Tian} metrics are a restricted set of {Krasi\\'nski}'s solutions of {Einstein}'s field equations for a rotating perfect fluid",
+        "author": "Gleiser, Reinaldo J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "24",
+        "pages": "247001",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/ac33be",
+        "eprint": "2107.04889",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ac33be"
+      }
+    },
+    "sarioglu2009comment": {
+      "type": "article",
+      "fields": {
+        "title": "Comment on `{A} second anti-de {Sitter} universe'",
+        "author": "Sar{\\i}o\\u{g}lu, \\\"Ozg\\\"ur and Tekin, Bayram",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "26",
+        "number": "4",
+        "pages": "048001",
+        "year": "2009",
+        "doi": "10.1088/0264-9381/26/4/048001",
+        "eprint": "0811.3683",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/26/4/048001"
+      }
+    },
+    "bonnor2008second": {
+      "type": "article",
+      "fields": {
+        "title": "A second anti-de {Sitter} universe",
+        "author": "Bonnor, W. B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "22",
+        "pages": "225005",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/22/225005",
+        "url": "https://doi.org/10.1088/0264-9381/25/22/225005"
+      }
+    },
+    "gleiser2017stability": {
+      "type": "article",
+      "fields": {
+        "title": "Linear stability of the {Linet}--{Tian} solution with negative cosmological constant",
+        "author": "Gleiser, Reinaldo J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "34",
+        "number": "6",
+        "pages": "065010",
+        "year": "2017",
+        "doi": "10.1088/1361-6382/aa60f0",
+        "eprint": "1611.06289",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aa60f0"
+      }
+    },
+    "gleiser2021perturbations": {
+      "type": "article",
+      "fields": {
+        "title": "Linear perturbations of the {Linet}--{Tian} metrics with a positive cosmological constant",
+        "author": "Gleiser, Reinaldo J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "19",
+        "pages": "195027",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/ac2133",
+        "eprint": "2104.04834",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ac2133"
       }
     }
   }
