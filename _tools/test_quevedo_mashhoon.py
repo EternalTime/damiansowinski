@@ -51,6 +51,21 @@ class RotatingDeformedMass(unittest.TestCase):
             self.assertIn('M_0=M+', meanings['M'])
             self.assertIn('2q\\sigma^3/15', meanings['q'])
 
+    def test_figure_derivatives_and_coordinate_map(self):
+        x, y = mp.mpf('2.7'), mp.mpf('.3')
+        spin = mp.mpf(2) / 5
+        sigma = mp.sqrt(1 - spin**2)
+        r, theta = 1 + sigma*x, mp.acos(y)
+        prolate = qm.figure_values(x, y, 'prolate_spheroidal', 40)
+        spherical = qm.figure_values(r, theta, 'spherical', 40)
+        for i, name in enumerate(('f', 'omega', 'h')):
+            fn = lambda u, v: qm.potentials(u, v, mp.mpf(1), spin, mp.mpf(2)/5, mp.mpf(1))[i]
+            self.close(prolate[name]['1'], mp.diff(lambda u: fn(u, y), x))
+            self.close(prolate[name]['12'], mp.diff(fn, (x, y), (1, 1)))
+            self.close(spherical[name][''], prolate[name][''])
+            self.close(spherical[name]['1'], prolate[name]['1'] / sigma)
+            self.close(spherical[name]['2'], -mp.sin(theta) * prolate[name]['2'])
+
 
 if __name__ == '__main__':
     unittest.main()
