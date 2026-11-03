@@ -2203,6 +2203,11 @@
           "id": "kerr",
           "kind": "family",
           "text": "The rotating black hole. A string through it leaves a cone as well, measured in a frame that turns with the hole, as Ruth Gregory, David Kubizňák, and Danielle Wills found in 2013 [gregory2013]."
+        },
+        {
+          "id": "york_equilibrium",
+          "kind": "family",
+          "text": "A black hole in equilibrium with a thermal scalar field whose energy changes the geometry at first order in $\\hbar$ [hochberg1994potential, york1985equilibrium]."
         }
       ],
       "references": [
@@ -2221,7 +2226,9 @@
         "lonsdale1988",
         "galtsov1989",
         "devilliers1998",
-        "vilenkin2018"
+        "vilenkin2018",
+        "hochberg1994potential",
+        "york1985equilibrium"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_black_hole.json",
@@ -62278,6 +62285,11 @@
           "id": "skyrmion_hair",
           "kind": "family",
           "text": "A black hole with a skyrmion field outside its horizon. Its geometry approaches Schwarzschild's far away [dvali2016skyrmion]."
+        },
+        {
+          "id": "york_equilibrium",
+          "kind": "generalisation",
+          "text": "The first order gravitational back reaction of a thermal conformal scalar field [hochberg1994potential, york1985equilibrium]."
         }
       ],
       "references": [
@@ -62418,7 +62430,9 @@
         "brandt1997",
         "mello2017",
         "delgaty1998",
-        "dvali2016skyrmion"
+        "dvali2016skyrmion",
+        "hochberg1994potential",
+        "york1985equilibrium"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -62887,6 +62901,11 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "One dimension up, a wall moving through this black hole carries a universe, and the wall's motion is that universe's expansion [kraus1999]."
+        },
+        {
+          "id": "york_equilibrium",
+          "kind": "family",
+          "text": "A black hole in equilibrium with a scalar field inside a reflecting wall, with first order back reaction [hochberg1994potential, york1985equilibrium]."
         }
       ],
       "references": [
@@ -62917,7 +62936,9 @@
         "chamblin1999",
         "surya2001",
         "shenker2014",
-        "kraus1999"
+        "kraus1999",
+        "hochberg1994potential",
+        "york1985equilibrium"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -79598,6 +79619,144 @@
           ],
           "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
           "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}"
+        }
+      ]
+    },
+    {
+      "id": "york_equilibrium",
+      "name": "Black Hole in Thermal Equilibrium with Radiation",
+      "short_name": "York Equilibrium",
+      "description": "A static black hole in thermal equilibrium with a conformal scalar field, including its first order gravitational back reaction.",
+      "tags": [
+        "black hole",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "In units $G=c=1$, the mass function is $m(r)=M(1+\\epsilon\\mu)$ and the redshift potential is $\\rho-B$. The metric and its derived tensors are retained through first order in $\\epsilon=\\hbar/M^2$. The wall is at $R=r_{\\rm B}$; the vacuum exterior has mass $m(R)$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The vacuum geometry underlying the scalar field calculation, recovered as $\\hbar$ tends to zero [hochberg1994potential]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "A black hole in anti-de Sitter space, with thermal radiation confined by its gravitational potential and reflecting boundary conditions [taylor2021backreaction, hawking1983]."
+        },
+        {
+          "id": "string_black_hole",
+          "kind": "family",
+          "text": "A black hole threaded by a cosmic string, whose thermal properties Erik A. Martinez and James W. York, Jr. studied with the Euclidean action [martinez1990]."
+        }
+      ],
+      "references": [
+        "york1993dressed",
+        "york1985equilibrium",
+        "hochberg1994potential",
+        "taylor2021backreaction",
+        "page1982thermal",
+        "howard1984stress",
+        "hochberg1995canonical",
+        "york1986canonical",
+        "andre2021canonical",
+        "hawking1983",
+        "martinez1990"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/york_equilibrium.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (2M,R)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "M>0,\\quad R>2M"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "The renormalized black hole mass as a length, with horizon $r=2M$"
+            },
+            {
+              "symbol": "R",
+              "description": "The areal radius of the reflecting wall, $R=r_{\\rm B}$"
+            },
+            {
+              "symbol": "\\epsilon",
+              "description": "The dimensionless expansion parameter $\\epsilon=\\hbar/M^2$"
+            },
+            {
+              "symbol": "N = 3840\\pi",
+              "description": "The numerical constant $N=3840\\pi$"
+            },
+            {
+              "symbol": "w = \\dfrac{2M}{r}",
+              "description": "The dimensionless inverse areal radius"
+            },
+            {
+              "symbol": "b = \\dfrac{2M}{R}",
+              "description": "The value of $w$ at the wall"
+            },
+            {
+              "symbol": "\\mu = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}w^{-3}+2w^{-2}+6w^{-1}-8\\ln\\left(w\\right)-10w-6w^2+22w^3-\\dfrac{44}{3}\\right)",
+              "description": "The dimensionless scalar field mass correction"
+            },
+            {
+              "symbol": "\\rho = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}w^{-2}+4w^{-1}-8\\ln\\left(w\\right)-\\dfrac{40}{3}w-10w^2-\\dfrac{28}{3}w^3+28\\right)",
+              "description": "The dimensionless scalar field redshift correction"
+            },
+            {
+              "symbol": "B = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}b^{-2}+4b^{-1}-8\\ln\\left(b\\right)-\\dfrac{40}{3}b-10b^2-\\dfrac{28}{3}b^3+28\\right)",
+              "description": "The value of $\\rho$ at the wall, $B=\\rho(R)$"
+            }
+          ],
+          "convention": "The coordinate $r$ is the areal radius and $t$ is the time matched to the Schwarzschild exterior at the reflecting wall. A dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=-\\left(1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)\\right)\\left(1+2\\epsilon\\left(\\rho-B\\right)\\right)dt^2+\\dfrac{dr^2}{1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)}+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{896M^6\\,\\epsilon + R^5\\,\\epsilon\\,r - 448M^5\\,\\epsilon\\,r + 480M^5\\,R\\,\\epsilon - 2M\\,R^5\\,\\epsilon + 320M^4\\,R^2\\,\\epsilon - 240M^4\\,R\\,\\epsilon\\,r + 46080M^3\\,R^3\\,\\pi - 336M^3\\,R^3\\,\\epsilon - 24M^2\\,R^4\\,\\epsilon + 12M\\,R^4\\,\\epsilon\\,r - 160M^3\\,R^2\\,\\epsilon\\,r - 23040M^2\\,R^3\\,r\\,\\pi + 168M^2\\,R^3\\,\\epsilon\\,r + 96M^3\\,R^3\\,\\epsilon\\,\\ln\\left(2\\right) + 92160M^3\\,R^3\\,\\epsilon\\,\\rho\\,\\pi + 46080M^3\\,R^3\\,\\epsilon\\,\\mu\\,\\pi + 96M^3\\,R^3\\,\\epsilon\\,\\ln\\left(\\dfrac{M}{R}\\right) - 48M^2\\,R^3\\,\\epsilon\\,r\\,\\ln\\left(2\\right) - 46080M^2\\,R^3\\,\\epsilon\\,r\\,\\rho\\,\\pi - 48M^2\\,R^3\\,\\epsilon\\,r\\,\\ln\\left(\\dfrac{M}{R}\\right)}{23040M^2\\,R^3\\,r\\,\\pi}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r\\left(2M\\,\\epsilon\\,\\mu - 2M + r\\right)}{\\left(2M - r\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\epsilon\\left(M\\,r\\,\\partial_r^2\\mu + 2M\\,r\\,\\partial_r^2\\rho - r^2\\,\\partial_r^2\\rho + 2M\\,\\partial_r\\mu + M\\,\\partial_r\\rho - 2r\\,\\partial_r\\rho\\right)}{r^2}",
+          "kretschmann": "K = \\dfrac{16M\\left(M\\,\\epsilon\\,r^2\\,\\partial_r^2\\mu + 2M\\,\\epsilon\\,r^2\\,\\partial_r^2\\rho - 4M\\,\\epsilon\\,r\\,\\partial_r\\mu - 5M\\,\\epsilon\\,r\\,\\partial_r\\rho + \\epsilon\\,r^2\\,\\partial_r\\rho - \\epsilon\\,r^3\\,\\partial_r^2\\rho + 6M\\,\\epsilon\\,\\mu + 3M\\right)}{r^6}"
         }
       ]
     },

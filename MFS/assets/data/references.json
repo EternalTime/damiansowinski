@@ -1,5 +1,5 @@
 {
-  "version": "5cfe894373f70569",
+  "version": "ea32b68c55271ae0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35072,99 +35072,127 @@
         "url": "https://doi.org/10.1016/j.nuclphysb.2016.10.017"
       }
     },
-    "gurtug_sakalli2003": {
+    "york1985equilibrium": {
       "type": "article",
       "fields": {
-        "author": "G\\\"urtu\\u{g}, \\\"Ozay and Sakall\\i, \\.{I}zzet",
-        "title": "Cosmic Strings Coupled with a Massless Scalar Field",
-        "journal": "International Journal of Theoretical Physics",
-        "volume": "42",
-        "number": "8",
-        "pages": "1875--1888",
-        "year": "2003",
-        "doi": "10.1023/A:1026199809109",
-        "eprint": "gr-qc/0210044",
-        "archiveprefix": "arXiv"
-      }
-    },
-    "xanthopoulos1986cylindrical": {
-      "type": "article",
-      "fields": {
-        "author": "Xanthopoulos, Basilis C.",
-        "title": "Cylindrical waves and cosmic strings of Petrov type D",
+        "author": "York Jr., James W.",
+        "title": "Black hole in thermal equilibrium with a scalar field: The back-reaction",
         "journal": "Physical Review D",
-        "volume": "34",
-        "number": "12",
-        "pages": "3608--3616",
-        "year": "1986",
-        "doi": "10.1103/PhysRevD.34.3608"
+        "volume": "31",
+        "number": "4",
+        "pages": "775--784",
+        "year": "1985",
+        "doi": "10.1103/PhysRevD.31.775"
       }
     },
-    "xanthopoulos1986rotating": {
+    "york1986canonical": {
       "type": "article",
       "fields": {
-        "author": "Xanthopoulos, Basilis C.",
-        "title": "A rotating cosmic string",
-        "journal": "Physics Letters B",
-        "volume": "178",
-        "number": "2-3",
-        "pages": "163--166",
-        "year": "1986",
-        "doi": "10.1016/0370-2693(86)91489-9"
-      }
-    },
-    "garriga_verdaguer1987": {
-      "type": "article",
-      "fields": {
-        "author": "Garriga, Jaume and Verdaguer, Enric",
-        "title": "Cosmic strings and Einstein-Rosen soliton waves",
+        "author": "York Jr., James W.",
+        "title": "Black-hole thermodynamics and the {Euclidean Einstein} action",
         "journal": "Physical Review D",
-        "volume": "36",
+        "volume": "33",
         "number": "8",
-        "pages": "2250--2258",
-        "year": "1987",
-        "doi": "10.1103/PhysRevD.36.2250"
+        "pages": "2092--2099",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.33.2092"
       }
     },
-    "bicak_katz_lyndenbell2008": {
+    "page1982thermal": {
       "type": "article",
       "fields": {
-        "author": "Bi\\v{c}\\'ak, Ji\\v{r}\\'i and Katz, Joseph and Lynden-Bell, Donald",
-        "title": "Gravitational waves and dragging effects",
-        "journal": "Classical and Quantum Gravity",
+        "author": "Page, Don N.",
+        "title": "Thermal stress tensors in static {Einstein} spaces",
+        "journal": "Physical Review D",
         "volume": "25",
-        "number": "16",
-        "pages": "165017",
-        "year": "2008",
-        "doi": "10.1088/0264-9381/25/16/165017",
-        "eprint": "0807.3072",
+        "number": "6",
+        "pages": "1499--1509",
+        "year": "1982",
+        "doi": "10.1103/PhysRevD.25.1499"
+      }
+    },
+    "howard1984stress": {
+      "type": "article",
+      "fields": {
+        "author": "Howard, K. W. and Candelas, P.",
+        "title": "Quantum Stress Tensor in {Schwarzschild} Space-Time",
+        "journal": "Physical Review Letters",
+        "volume": "53",
+        "number": "5",
+        "pages": "403--406",
+        "year": "1984",
+        "doi": "10.1103/PhysRevLett.53.403"
+      }
+    },
+    "hochberg1994potential": {
+      "type": "article",
+      "fields": {
+        "author": "Hochberg, David and Kephart, Thomas W. and York Jr., James W.",
+        "title": "Effective potential of a black hole in thermal equilibrium with quantum fields",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "10",
+        "pages": "5257--5265",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.5257",
+        "eprint": "gr-qc/9307037",
         "archiveprefix": "arXiv"
       }
     },
-    "kleidis2010": {
+    "taylor2021backreaction": {
       "type": "article",
       "fields": {
-        "author": "Kleidis, Kostas and Kuiroukidis, Apostolos and Nerantzi, Polixeni and Papadopoulos, Demetrios B.",
-        "title": "Charged cosmic strings interacting with gravitational and electromagnetic waves",
-        "journal": "General Relativity and Gravitation",
-        "volume": "42",
-        "number": "1",
-        "pages": "31--49",
-        "year": "2010",
-        "doi": "10.1007/s10714-009-0812-z"
+        "author": "Taylor, Peter and Breen, Cormac",
+        "title": "Semiclassical backreaction on asymptotically anti--de {Sitter} black holes",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "2",
+        "pages": "025006",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.025006",
+        "eprint": "2007.09405",
+        "archiveprefix": "arXiv"
       }
     },
-    "economou_tsoubelis1988": {
+    "andre2021canonical": {
       "type": "article",
       "fields": {
-        "author": "Economou, Athanasios and Tsoubelis, Dimitri",
-        "title": "Rotating cosmic strings and gravitational soliton waves",
+        "author": "Andr\\'e, Rui and Lemos, Jos\\'e P. S.",
+        "title": "Thermodynamics of $d$-dimensional {Schwarzschild} black holes in the canonical ensemble",
         "journal": "Physical Review D",
-        "volume": "38",
-        "number": "2",
-        "pages": "498--505",
-        "year": "1988",
-        "doi": "10.1103/PhysRevD.38.498"
+        "volume": "103",
+        "number": "6",
+        "pages": "064069",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.064069",
+        "eprint": "2101.11010",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "hochberg1995canonical": {
+      "type": "article",
+      "fields": {
+        "author": "Hochberg, David",
+        "title": "Free energy and entropy for semiclassical black holes in the canonical ensemble",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "10",
+        "pages": "5742--5752",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.51.5742",
+        "eprint": "gr-qc/9410034",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "york1993dressed": {
+      "type": "misc",
+      "fields": {
+        "author": "York Jr., James W.",
+        "title": "Energy, Temperature, and Entropy of Black Holes Dressed with Quantum Fields",
+        "year": "1993",
+        "eprint": "gr-qc/9307022",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9307022"
       }
     }
   }
