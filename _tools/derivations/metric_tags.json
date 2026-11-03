@@ -17419,6 +17419,36 @@
   ],
   "sphere": null
  },
+ "superconducting_string/cylindrical": {
+  "stamp": "3d45d8ce2b84111e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": null
+ },
  "supertranslation_hair/bondi_advanced": {
   "stamp": "7d838b917c494a7e",
   "relations": {},
