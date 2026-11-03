@@ -17420,7 +17420,7 @@
   "sphere": null
  },
  "superconducting_string/cylindrical": {
-  "stamp": "3d45d8ce2b84111e",
+  "stamp": "6f1ed571464e9de4",
   "relations": {},
   "orders": null,
   "dimension": 4,
@@ -17432,7 +17432,7 @@
     "coord": "t",
     "timelike": true,
     "hypersurface_orthogonal": true,
-    "translation": false
+    "translation": true
    },
    {
     "coord": "\\phi",
@@ -17444,7 +17444,7 @@
     "coord": "z",
     "timelike": false,
     "hypersurface_orthogonal": true,
-    "translation": false
+    "translation": true
    }
   ],
   "sphere": null
