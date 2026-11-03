@@ -97,6 +97,11 @@
       "id": "vuorio_warped_ads",
       "kind": "family",
       "text": "A vacuum of gravity in three dimensions with a mass for the graviton, with closed timelike curves and no source. They lie beyond a fixed distance from every point [reboucas2009]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "family",
+      "text": "The Komar angular momentum of Xanthopoulos's cylindrical wave geometry is zero [bicak_katz_lyndenbell2008]."
     }
   ],
   "references": [
@@ -129,7 +134,8 @@
     "kopczynski1973",
     "trautman2006",
     "visser1998",
-    "reboucas2009"
+    "reboucas2009",
+    "bicak_katz_lyndenbell2008"
   ],
   "coordinates": [
     {

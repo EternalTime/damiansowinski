@@ -63,6 +63,11 @@
       "id": "brill_waves",
       "kind": "family",
       "text": "A bundle of gravitational waves of finite extent, known at one moment only. Brill proved in 1959, with no approximation, that its mass is positive [brill1959]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "family",
+      "text": "Cylindrical waves around a string carry two polarisations, with a cross term joining the angular and longitudinal directions [gurtug_sakalli2003]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "fernandezjambrina2002",
     "einstein1935",
     "belinskii1978",
-    "brill1959"
+    "brill1959",
+    "gurtug_sakalli2003"
   ],
   "coordinates": [
     {

@@ -49,6 +49,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "Belinski and Zakharov's inverse scattering builds cylindrical solitons with both polarisations, and Akira Tomimatsu followed the turning of their polarisation in 1989 [tomizawa2014]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "family",
+      "text": "A cylindrical vacuum wave around a string has both polarisations, with a regular axis when $|\\alpha p|=1$ [gurtug_sakalli2003]."
     }
   ],
   "references": [
@@ -63,7 +68,8 @@
     "piran1986",
     "dinverno2000",
     "glod2022",
-    "levicivita1919"
+    "levicivita1919",
+    "gurtug_sakalli2003"
   ],
   "coordinates": [
     {

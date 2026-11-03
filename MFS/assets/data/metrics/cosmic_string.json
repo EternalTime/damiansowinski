@@ -88,6 +88,11 @@
       "id": "superconducting_string",
       "kind": "generalisation",
       "text": "A current along a string produces a magnetic field and curves the exterior [sen1999superconducting]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "limit_source",
+      "text": "A limit of cylindrical waves around a string reaches this conical exterior: take $p\\to\\infty$ with $\\alpha p=k>1$ and scale time and radius by $k$ [gurtug_sakalli2003]."
     }
   ],
   "references": [
@@ -117,7 +122,8 @@
     "staruszkiewicz1963",
     "gleiser1989splitting",
     "podolsky2000snapping",
-    "sen1999superconducting"
+    "sen1999superconducting",
+    "gurtug_sakalli2003"
   ],
   "coordinates": [
     {

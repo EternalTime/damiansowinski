@@ -23,11 +23,48 @@
     "gurtug_sakalli2003",
     "xanthopoulos1986cylindrical",
     "xanthopoulos1986rotating",
+    "kleidis2010",
+    "economou_tsoubelis1988",
     "garriga_verdaguer1987",
     "bicak_katz_lyndenbell2008",
-    "kleidis2010",
-    "economou_tsoubelis1988"
+    "garfinkle1990"
   ],
   "coordinates": [],
-  "related": []
+  "related": [
+    {
+      "id": "cosmic_string",
+      "kind": "limit",
+      "text": "The conical exterior appears as $p\\to\\infty$ with $\\alpha p=k>1$, after scaling time and radius by $k$ [gurtug_sakalli2003]."
+    },
+    {
+      "id": "twisting_cylindrical_waves",
+      "kind": "family",
+      "text": "The waves fit the cylindrical metric with two polarisations; $|\\alpha p|=1$ makes the axis regular [gurtug_sakalli2003]."
+    },
+    {
+      "id": "kerr",
+      "kind": "dual",
+      "text": "Xanthopoulos obtained the cylindrical waves through a complex transformation of Kerr's metric [xanthopoulos1986rotating]."
+    },
+    {
+      "id": "einstein_rosen_waves",
+      "kind": "family",
+      "text": "Einstein and Rosen's cylindrical waves have one polarisation; the waves around the string also have a crossed polarisation [gurtug_sakalli2003]."
+    },
+    {
+      "id": "spinning_string",
+      "kind": "family",
+      "text": "Spinning cosmic strings carry angular momentum. The Komar angular momentum of the cylindrical wave geometry is zero [bicak_katz_lyndenbell2008]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "family",
+      "text": "Garfinkle and Vachaspati's wave travels along a cosmic string. Xanthopoulos's waves have cylindrical fronts around the axis [garfinkle1990, gurtug_sakalli2003]."
+    },
+    {
+      "id": "belinski_zakharov",
+      "kind": "family",
+      "text": "The inverse scattering construction leads to cylindrical soliton waves around a string, with Xanthopoulos's waves in a subfamily [kleidis2010]."
+    }
+  ]
 }

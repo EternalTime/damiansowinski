@@ -256,6 +256,11 @@
       "id": "bowen_york",
       "kind": "family",
       "text": "Conformally flat initial data for a spinning hole contain a radiative distortion. Its perturbative evolution approaches Kerr while emitting gravitational waves [gleiser1998by]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "dual",
+      "text": "A complex transformation of Kerr's metric produces Xanthopoulos's cylindrical waves around a string [xanthopoulos1986rotating]."
     }
   ],
   "references": [
@@ -333,7 +338,8 @@
     "israel1970",
     "vaidya1989kerr",
     "vaidya1977kerr",
-    "gleiser1998by"
+    "gleiser1998by",
+    "xanthopoulos1986rotating"
   ],
   "coordinates": [
     {

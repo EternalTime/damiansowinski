@@ -47,6 +47,11 @@
       "id": "spinning_string",
       "kind": "family",
       "text": "A straight string given spin where this one is given a wave. Both leave every curvature scalar at zero [deser1992time, kaloper1997]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "family",
+      "text": "Xanthopoulos's gravitational waves have cylindrical fronts around a string [gurtug_sakalli2003]."
     }
   ],
   "references": [
@@ -67,7 +72,8 @@
     "horowitz1997",
     "lunin2001",
     "aichelburg1971",
-    "deser1992time"
+    "deser1992time",
+    "gurtug_sakalli2003"
   ],
   "coordinates": [
     {

@@ -72,6 +72,11 @@
       "id": "twisting_cylindrical_waves",
       "kind": "family",
       "text": "Their inverse scattering applied around an axis gives cylindrical solitons with both polarisations, whose polarisation turns as they travel [tomizawa2014]."
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "kind": "family",
+      "text": "A cylindrical soliton family around a string contains Xanthopoulos's waves [kleidis2010]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "belinski2001",
     "pomeransky2006",
     "elvang2007",
-    "tomizawa2014"
+    "tomizawa2014",
+    "kleidis2010"
   ],
   "coordinates": [
     {
