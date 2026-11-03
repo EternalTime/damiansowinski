@@ -3082,6 +3082,16 @@ A black hole in two spacetime dimensions, a solution of the low energy equations
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, x)$, $$ds^2 = -\left(1 - m\,e^{-2\lambda x}\right)dv^2 + 2\,dv\,dx$$
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, x)$, $$ds^2 = -\left(1 - m\,e^{-2\lambda x}\right)du^2 - 2\,du\,dx$$
 
+### Black Hole in Thermal Equilibrium with Radiation
+
+A static black hole in thermal equilibrium with a conformal scalar field, including its first order gravitational back reaction.
+
+- id: `york_equilibrium`
+- tags: black hole, static, stationary, spherically symmetric, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/york_equilibrium.json
+- chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2=-\left(1-\dfrac{2M}{r}\left(1+\epsilon\mu\right)\right)\left(1+2\epsilon\left(\rho-B\right)\right)dt^2+\dfrac{dr^2}{1-\dfrac{2M}{r}\left(1+\epsilon\mu\right)}+r^2\left(d\theta^2+\sin^2\theta\,d\phi^2\right)$$
+
 ### Zipoy-Voorhees Deformed Mass
 
 A static, axially symmetric vacuum field whose Weyl potential is Newton's potential of a uniform rod, found by Georges Darmois in 1927, David Zipoy in 1966, and B. H. Voorhees in 1970, and also called the $\gamma$ metric and the $q$ metric. It deforms Schwarzschild's metric by a quadrupole, and for every deformation a naked curvature singularity stands where the horizon was.
