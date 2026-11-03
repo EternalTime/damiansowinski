@@ -2220,6 +2220,17 @@ Amos Ori's vacuum time machine core of 2005: a plane fronted gravitational wave 
 - chart Spacelike Foliation: coordinates $(t, x, y, z)$, $$ds^2 = dx^2 + dy^2 - 2\,dz\,dt + \left(e\left(x^2 + y^2\right) - t\right)dz^2 + 2\left(\left(2e - a\right)x\,dx + \left(2e + a\right)y\,dy\right)dz$$
 - chart Brinkmann: coordinates $(u, v, x, y)$, $$ds^2 = \dfrac{2a\left(x^2 - y^2\right)}{u^2}du^2 - 2\,du\,dv + dx^2 + dy^2$$
 
+### Self Similar Fluid Collapse to a Naked Singularity
+
+A spherical ball of perfect fluid, its pressure a fixed fraction $k$ of its density, collapsing the same way at every scale and, for small enough $k$, forming a central singularity that light escapes.
+
+- id: `ori_piran`
+- tags: perfect fluid, equation of state, self-similar, gravitational collapse, naked singularity, curvature singularity, null singularity, cosmic censorship, Cauchy horizon, event horizon, inhomogeneous, numerical solution, time-dependent, spherically symmetric, four-dimensional, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ori_piran.json
+- chart Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -e^{\sigma}dt^2 + e^{\omega}dr^2 + r^2S^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Zooming: coordinates $(\tau, z, \theta, \phi)$, $$ds^2 = \ell^2e^{-2\tau}\left(\left(z^2\,e^{\omega} - e^{\sigma}\right)d\tau^2 - 2z\,e^{\omega}d\tau\,dz + e^{\omega}dz^2 + z^2S^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Ozsváth's Homogeneous Universes of Dust
 
 István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Einstein's static universe, class III, which holds Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.
