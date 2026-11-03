@@ -1797,6 +1797,17 @@ A closed universe that holds nothing but $N$ equal masses, one at the centre of 
 - chart Lindquist-Wheeler Comoving: coordinates $(\tau, \rho, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + \dfrac{(\partial_\rho r)^2}{1 - \dfrac{r_s}{\rho}}d\rho^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Comparison Hypersphere: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Linear Dilaton Vacuum
+
+A spacetime that is flat in the string frame, with a dilaton falling linearly in time, and expands in proportion to time in the Einstein frame.
+
+- id: `linear_dilaton`
+- tags: cosmology, expanding universe, homogeneous, isotropic, FLRW, time-dependent, exact solution, Lorentzian, four-dimensional, conformally flat, scalar field, dilaton, string theory
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/linear_dilaton.json
+- chart Cosmic Time: coordinates $(\tau, x, y, z)$, $$ds^2 = -d\tau^2+q^2\tau^2\left(dx^2+dy^2+dz^2\right)$$
+- chart Conformal Time: coordinates $(\eta, x, y, z)$, $$ds^2 = e^{2q\eta}\left(-d\eta^2+dx^2+dy^2+dz^2\right)$$
+
 ### Linet-Tian Static Cylinder
 
 The static vacuum field with cylindrical symmetry and a cosmological constant, the field outside an infinitely long straight line of mass, which Bernard Linet and Qingjun Tian found independently in 1986. With a negative constant it approaches anti-de Sitter space far from its axis; with a positive one the proper distance from the axis is bounded by $\pi/\sqrt{3\Lambda}$, and the surfaces of constant distance are tori.

@@ -1689,7 +1689,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cd8c6809489e34f6",
+    "version": "12089eaa1c238359",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -1901,7 +1901,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "1dfcf0680462aef8",
+    "version": "4925cc47825371f0",
     "diagrams": "9afed8951c5aec50",
     "conformal": "c7734072db0d7622",
     "embedding": "07b92b646e316b86"
@@ -3975,6 +3975,30 @@
     "embedding": "9b4467004019c7c7"
   },
   {
+    "id": "linear_dilaton",
+    "name": "Linear Dilaton",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "homogeneous",
+      "isotropic",
+      "FLRW",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "conformally flat",
+      "scalar field",
+      "dilaton",
+      "string theory"
+    ],
+    "version": "819cc1d0fd4ee174",
+    "diagrams": "bae5fece816206f5",
+    "conformal": "03102fc3d555e38f",
+    "embedding": "4b5202e27bf3615d",
+    "curvature": "7c442a37a85059ef"
+  },
+  {
     "id": "linet_tian",
     "name": "Linet-Tian",
     "tags": [
@@ -4378,7 +4402,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "cbefdecb418ada3b",
+    "version": "989f35c248bf0253",
     "diagrams": "434dbc69f632abef",
     "conformal": "608160b20d1a5d0b",
     "embedding": "6358a5e6f5a871e8"
@@ -7246,7 +7270,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "8661750d18d418db",
+    "version": "e3c4df9ba1e02ae4",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"
