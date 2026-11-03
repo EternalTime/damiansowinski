@@ -19050,6 +19050,38 @@ def skyrmion_hair(ck, src):
 
 DRAWN["skyrmion_hair"] = skyrmion_hair
 
+
+def myers_compactified(ck, src):
+    """The stored scalars on a half plane containing one compact circle."""
+    name = "myers_compactified"
+    x_axis, y_axis = axis("$r/\\sqrt{\\mu}$", 0, 3), axis("$z/\\sqrt{\\mu}$", -2, 2)
+    shape_checks(ck, name, [3/4])
+    potential = {"U": "1 + pi*mu*sinh(2*pi*r/L)/(L*r*(cosh(2*pi*r/L)-cos(2*pi*z/L)))"}
+    params = {"mu": 1, "L": 4}
+    nx, ny = 60, 80
+    out = []
+    for field, letter, power in (("kretschmann", "K", 2), ("ricci_scalar", "R", 1)):
+        scalar = nr_published(src, name, "cylindrical", field, ["r", "z"], ["mu", "L"], functions=potential)
+        _, _, values = cells(scalar, x_axis, y_axis, nx, ny, [1, 4])
+        ck(name + " " + letter + " cells are finite", np.all(np.isfinite(values)))
+        bound = 10.0 ** math.ceil(math.log10(max(float(np.max(np.abs(values))), 1e-8)))
+        scale = {"kind": "symlog", "from": -bound, "to": bound, "linear": bound/10000}
+        title = f"${letter}\\mu^{power}$" if power != 1 else f"${letter}\\mu$"
+        out.append({"id": letter, "label": title, "kind": "map", "x": x_axis, "y": y_axis,
+                    "colour": {"name": title, "scale": scale, "ticks": value_ticks(scale)},
+                    "map": {"metric": name, "system": "cylindrical", "scalar": field,
+                            "x": "r", "y": "z", "params": params, "functions": potential,
+                            "nx": nx, "ny": ny, "cells": [[rounded(v) for v in row] for row in values]},
+                    "marks": [], "legend": [],
+                    "caption": [f"The {'Kretschmann' if letter == 'K' else 'Ricci'} scalar ${letter}$ "
+                                "over one circle and the outward radius ($\\mu = 1$, $L = 4\\sqrt{\\mu}$)."],
+                    "settings": "$\\mu = 1$ and $L = 4\\sqrt{\\mu}$.",
+                    "clip": "Signed logarithmic colour scale, linear near zero."})
+    return out
+
+
+DRAWN["myers_compactified"] = myers_compactified
+
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_curvature(sys.modules[__name__])
 
