@@ -89,6 +89,11 @@
       "id": "penney_scalar",
       "kind": "family",
       "text": "With an electric charge, the scalar field of negative energy gives the extended Penney solution, which holds traversable wormholes and cold black holes [bronnikov2024]."
+    },
+    {
+      "id": "giddings_strominger",
+      "kind": "family",
+      "text": "A wormhole with no time in it, Steven B. Giddings and Andrew Strominger's of 1988: four dimensions of space whose two flat regions meet at a 3-sphere that an axion's field holds open [giddings1988]. A slice through its throat levels off at a finite height, about $1.311$ times the throat's radius."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "caldwell2003",
     "kodama1978preprint",
     "kodama1978",
-    "bronnikov2024"
+    "bronnikov2024",
+    "giddings1988"
   ],
   "coordinates": [
     {

@@ -211,6 +211,11 @@
       "id": "hosotani_universe",
       "kind": "special_case",
       "text": "Hosotani's closed universe has $a=\\ell\\sin\\eta$ and $p=\\rho/3$, with a homogeneous magnetic $SU(2)$ gauge field as its source [gibbons1994ym]."
+    },
+    {
+      "id": "giddings_strominger",
+      "kind": "dual",
+      "text": "This universe, closed, with the energy of an axion's field in it and continued to imaginary time, is Steven B. Giddings and Andrew Strominger's wormhole between two flat spaces of four dimensions [giddings1988]. Cut at its throat, the wormhole continues back to this universe at its greatest radius $a$, \"created at its moment of time symmetry and maximal radius\" [giddings1988]."
     }
   ],
   "references": [
@@ -289,7 +294,8 @@
     "vaidya1977kerr",
     "mello2017",
     "starobinsky1980",
-    "gibbons1994ym"
+    "gibbons1994ym",
+    "giddings1988"
   ],
   "coordinates": [
     {

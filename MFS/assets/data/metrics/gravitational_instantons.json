@@ -69,6 +69,11 @@
       "id": "atiyah_hitchin",
       "kind": "family",
       "text": "Atiyah and Hitchin's space of two slowly moving magnetic monopoles, smooth and hyperkähler. Far from its core it is the self dual Taub-NUT instanton with a negative mass [atiyahhitchin1985, gibbonsmanton1995]."
+    },
+    {
+      "id": "giddings_strominger",
+      "kind": "family",
+      "text": "A wormhole of four dimensions with no time that an axion's field holds open, which Steven B. Giddings and Andrew Strominger drew as \"a gravitational instanton with two asymptotically Euclidean regions\" [giddings1988]."
     }
   ],
   "references": [
@@ -90,7 +95,8 @@
     "grossperry1983",
     "vilenkin1982",
     "atiyahhitchin1985",
-    "gibbonsmanton1995"
+    "gibbonsmanton1995",
+    "giddings1988"
   ],
   "coordinates": [
     {

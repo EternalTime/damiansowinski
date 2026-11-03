@@ -126,6 +126,11 @@
       "id": "hellaby_kruskal",
       "kind": "family",
       "text": "A neck joining two regions of a universe of dust, with a white hole in its past and a black hole in its future [hellaby1987]."
+    },
+    {
+      "id": "giddings_strominger",
+      "kind": "family",
+      "text": "Steven B. Giddings and Andrew Strominger's wormhole of 1988, two flat spaces of four dimensions with no time joined at a smallest 3-sphere that an axion's field holds open [giddings1988]. Cut at that 3-sphere, it describes a closed universe budding off flat space [giddings1988]."
     }
   ],
   "references": [
@@ -163,7 +168,8 @@
     "maldacena2018",
     "bowen1980",
     "cook2000",
-    "hellaby1987"
+    "hellaby1987",
+    "giddings1988"
   ],
   "coordinates": [
     {

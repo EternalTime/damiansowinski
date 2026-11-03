@@ -107,6 +107,11 @@
       "id": "eternal_traversable_wormhole",
       "kind": "family",
       "text": "A traversable wormhole in two dimensions whose negative energy comes from quantum fields, under a coupling of its two boundaries [maldacena2018]."
+    },
+    {
+      "id": "giddings_strominger",
+      "kind": "family",
+      "text": "Steven B. Giddings and Andrew Strominger's wormhole of 1988, four dimensions of space and no time, two flat regions joined at a 3-sphere of radius $a$ that an axion's field holds open [giddings1988]. Its radial profile is this wormhole's with $\\Phi = 0$ and $b = a^4/r^3$, with 3-spheres for 2-spheres."
     }
   ],
   "references": [
@@ -137,7 +142,8 @@
     "blazquez2021",
     "james2015",
     "kodama1978preprint",
-    "maldacena2018"
+    "maldacena2018",
+    "giddings1988"
   ],
   "coordinates": [
     {

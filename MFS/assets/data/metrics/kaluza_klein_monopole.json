@@ -126,6 +126,11 @@
       "id": "stringy_cosmic_strings",
       "kind": "family",
       "text": "A straight string whose hidden torus changes shape across space [vafa1996ftheory]."
+    },
+    {
+      "id": "giddings_strominger",
+      "kind": "family",
+      "text": "Another space of four dimensions with no time, Steven B. Giddings and Andrew Strominger's wormhole of 1988, two flat regions joined at a 3-sphere that an axion's field holds open [giddings1988]."
     }
   ],
   "references": [
@@ -159,7 +164,8 @@
     "sen1997enhanced",
     "horowitzmaeda2002",
     "myers1987compact",
-    "vafa1996ftheory"
+    "vafa1996ftheory",
+    "giddings1988"
   ],
   "coordinates": [
     {
