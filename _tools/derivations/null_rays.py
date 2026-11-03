@@ -19122,5 +19122,9 @@ import kramer_fluid_drawings as kf_drawings
 kf_drawings.register_null(sys.modules[__name__])
 
 
+import superconducting_string_drawings as sc_drawings
+sc_drawings.register_null(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

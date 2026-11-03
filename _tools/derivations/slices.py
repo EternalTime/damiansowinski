@@ -5031,6 +5031,10 @@ import kramer_fluid_drawings as kf_drawings
 kf_drawings.register_slices(sys.modules[__name__])
 
 
+import superconducting_string_drawings as sc_drawings
+sc_drawings.register_slices(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)
