@@ -2349,6 +2349,16 @@ Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology 
 - chart Outgoing Eddington-Finkelstein Exterior: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{\alpha m^2}{r^4}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Comoving Dust Interior: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = -c^2d\tau^2 + a^2\left(d\chi^2 + \chi^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Quevedo-Mashhoon Rotating Deformed Mass
+
+The stationary vacuum field of a rotating deformed mass, with independent parameters for rotation and deformation.
+
+- id: `quevedo_mashhoon`
+- tags: vacuum, stationary, axisymmetric, rotating, mass, quadrupole, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/quevedo_mashhoon.json
+- chart Prolate spheroidal: coordinates $(t, x, y, \phi)$, $$ds^2=-f\left(dt-\omega\,d\phi\right)^2+\dfrac{\sigma^2}{f}\left(h(x^2-y^2)\left(\dfrac{dx^2}{x^2-1}+\dfrac{dy^2}{1-y^2}\right)+(x^2-1)(1-y^2)d\phi^2\right)$$
+
 ### Randall-Sundrum Braneworld
 
 A flat wall with three dimensions of space in anti-de Sitter space of five dimensions, found by Lisa Randall and Raman Sundrum in 1999. Every length along the wall's directions shrinks as $e^{-k|y|}$ with the distance $y$ from it, which between two walls turns the Planck scale into the weak scale, and with one wall keeps gravity four dimensional beside a fifth dimension of infinite size.
