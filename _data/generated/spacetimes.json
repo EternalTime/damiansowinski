@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 231,
+  "count": 238,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -83,6 +83,11 @@
           "id": "ghost_neutrinos",
           "kind": "locally_same",
           "text": "Taub's plane symmetric vacuum, the A III metric in other coordinates, carrying a current of neutrinos with no energy or momentum, as Talmadge M. Davis and John R. Ray found in 1974 [davis1974]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "Static cylinders with a cosmological constant. Their member with $\\sigma = 0$ generalises B III to $\\Lambda \\neq 0$, as Jerry Griffiths and Jiří Podolský found [griffiths2010linettian]."
         }
       ],
       "references": [
@@ -100,7 +105,8 @@
         "schulman1971",
         "gott1974",
         "kruskal1960",
-        "davis1974"
+        "davis1974",
+        "griffiths2010linettian"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ab_metrics.json",
@@ -1585,6 +1591,11 @@
           "id": "cahen_wallach",
           "kind": "family",
           "text": "The third kind of Lorentzian symmetric space that does not split, beside de Sitter and anti-de Sitter space, a family of plane waves [cahen1970]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "A line of mass in anti-de Sitter space. Its static field approaches this space far from the axis, in horospherical coordinates [dasilva2000, zofka2008]."
         }
       ],
       "references": [
@@ -1641,7 +1652,9 @@
         "blau2002penrose",
         "berenstein2002",
         "maldacena2018",
-        "cahen1970"
+        "cahen1970",
+        "dasilva2000",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -1822,6 +1835,11 @@
           "id": "early_braneworlds",
           "kind": "family",
           "text": "The Squires family contains a regular axis solution with the geometry of the five dimensional soliton [bannister1987]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "generalisation",
+          "text": "Static fields around a line of mass with a cosmological constant. In four dimensions the soliton is the member with $\\Lambda < 0$ and $\\sigma = 0$, William Bonnor's second anti-de Sitter universe [sarioglu2009comment, bonnor2008second]."
         }
       ],
       "references": [
@@ -1845,7 +1863,9 @@
         "nishioka2010",
         "hawking1983",
         "bah2021",
-        "bannister1987"
+        "bannister1987",
+        "sarioglu2009comment",
+        "bonnor2008second"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_soliton.json",
@@ -2203,6 +2223,11 @@
           "id": "kerr",
           "kind": "family",
           "text": "The rotating black hole. A string through it leaves a cone as well, measured in a frame that turns with the hole, as Ruth Gregory, David Kubizňák, and Danielle Wills found in 2013 [gregory2013]."
+        },
+        {
+          "id": "york_equilibrium",
+          "kind": "family",
+          "text": "A black hole in equilibrium with a thermal scalar field whose energy changes the geometry at first order in $\\hbar$ [hochberg1994potential, york1985equilibrium]."
         }
       ],
       "references": [
@@ -2221,7 +2246,9 @@
         "lonsdale1988",
         "galtsov1989",
         "devilliers1998",
-        "vilenkin2018"
+        "vilenkin2018",
+        "hochberg1994potential",
+        "york1985equilibrium"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_black_hole.json",
@@ -2485,6 +2512,273 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{12r_s^2}{r^6}"
+        }
+      ]
+    },
+    {
+      "id": "atiyah_hitchin",
+      "name": "Atiyah-Hitchin Space",
+      "short_name": "Atiyah-Hitchin",
+      "description": "A space of four dimensions with no time in it, the moduli space of two slowly moving magnetic monopoles that Michael Atiyah and Nigel Hitchin found in 1985: a smooth solution of Einstein's vacuum equations with Riemannian signature and self dual curvature. It closes on a 2-sphere at its core, and far away it is the self dual Taub-NUT space with a negative mass.",
+      "tags": [
+        "vacuum",
+        "four-dimensional",
+        "gravitational instanton",
+        "Riemannian",
+        "no time",
+        "self-dual",
+        "nuts and bolts",
+        "Taub-NUT",
+        "magnetic monopole",
+        "dyon",
+        "soliton",
+        "Kähler",
+        "string theory",
+        "supersymmetric",
+        "topology",
+        "no singularity",
+        "exact solution",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "The length $n$ is the space's only parameter. All four coordinates are spatial, so no component carries a factor of $c$, and a dot in the geodesic equations is a derivative with respect to arc length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "Hawking's self dual Taub-NUT instanton is smooth, Ricci flat, and self dual, as this space is. Far from its core this space is that instanton with its mass made negative, singular at $r = 2n$, and corrections that fall off as $e^{-r/n}$ remove the singularity [gibbonsmanton1995, tong2005]."
+        },
+        {
+          "id": "eguchi_hanson",
+          "kind": "family",
+          "text": "In Atiyah and Hitchin's classification of 1985, Eguchi and Hanson's space is the smooth solution on the branch where the rotations leave the complex structures fixed, and this space is one of those on the branch where they turn them [weinbergyi2007, atiyahmantonschroers2012]. Both close on a 2-sphere."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "Taub-NUT continued to Euclidean signature, in its self dual case and with the sign of its mass reversed, is this space far from its core, up to corrections that fall off as $e^{-r/n}$ [gibbonsmanton1995, ghezelbashmann2004]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Euclidean Taub-NUT space with a time added. In M-theory, $N$ of these monopoles set beside this space are $N$ D6-branes on the orientifold plane of type IIA string theory [sen1997enhanced]."
+        }
+      ],
+      "references": [
+        "atiyahhitchin1988",
+        "bachmaier2025",
+        "manton1982",
+        "weinbergyi2007",
+        "tong2005",
+        "gibbonsmanton1986",
+        "atiyahhitchin1985",
+        "hananypioline2000",
+        "ghezelbashmann2004",
+        "atiyahhitchin1985trans",
+        "gibbonsmanton1995",
+        "seibergwitten1997",
+        "hawking1977",
+        "manton1985",
+        "dorey1997",
+        "sen1997enhanced",
+        "schroerssinger2021",
+        "atiyahmantonschroers2012"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/atiyah_hitchin.json",
+      "charts": [
+        {
+          "id": "modulus",
+          "name": "Elliptic Modulus",
+          "coordinates": [
+            "k",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "k \\in [0, 1)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, \\pi)",
+            "(k, \\theta, \\phi, \\psi) \\sim (k, \\pi - \\theta, \\phi + \\pi, -\\psi) \\;\\text{(the exchange of the two monopoles)}",
+            "k = 0 \\;\\text{(the core, a real projective plane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The space's one length: far from the core $c \\to -2n$, and the core $k = 0$ is a 2-sphere of radius $\\pi n$ with opposite points identified"
+            },
+            {
+              "symbol": "K = \\mathrm{K}\\left(k^2\\right)",
+              "description": "The complete elliptic integral of the first kind, $\\mathrm{K}(\\kappa) = \\int_0^{\\pi/2}d\\alpha/\\sqrt{1 - \\kappa\\sin^2\\alpha}$, at the parameter $\\kappa = k^2$: $K = \\pi/2$ at the core, and it grows without bound as $k \\to 1$, far from the core"
+            },
+            {
+              "symbol": "E = \\mathrm{E}\\left(k^2\\right)",
+              "description": "The complete elliptic integral of the second kind, $\\mathrm{E}(\\kappa) = \\int_0^{\\pi/2}\\sqrt{1 - \\kappa\\sin^2\\alpha}\\,d\\alpha$, at $\\kappa = k^2$: $E = \\pi/2$ at the core, and $E \\to 1$ far from it"
+            }
+          ],
+          "convention": "We use coordinates $(k, \\theta, \\phi, \\psi)$, with $k = \\sin(\\beta/2)$ the modulus of the elliptic integrals in Gibbons and Manton's angle $\\beta$, a pure number, and $\\theta$, $\\phi$, and $\\psi$ Euler angles. Their radius is $r = 2nK$, and the coefficients of the three squared forms are $a^2$, $b^2$, and $c^2$, with $bc = -4n^2KE$, $ca = -4n^2K(E - (1 - k^2)K)$, and $ab = 4n^2K(K - E)$.",
+          "line_element": "ds^2 = \\dfrac{4n^2E\\left(K - E\\right)\\left(E - \\left(1 - k^2\\right)K\\right)}{k^2\\left(1 - k^2\\right)^2K}dk^2 + \\dfrac{4n^2K\\left(K - E\\right)\\left(E - \\left(1 - k^2\\right)K\\right)}{E}\\left(\\sin\\psi\\,d\\theta - \\cos\\psi\\sin\\theta\\,d\\phi\\right)^2 + \\dfrac{4n^2KE\\left(K - E\\right)}{E - \\left(1 - k^2\\right)K}\\left(\\cos\\psi\\,d\\theta + \\sin\\psi\\sin\\theta\\,d\\phi\\right)^2 + \\dfrac{4n^2KE\\left(E - \\left(1 - k^2\\right)K\\right)}{K - E}\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "k",
+                "k"
+              ],
+              "value": "\\dfrac{4E\\,n^2\\left(K - E\\right)\\left(K\\,k^2 - K + E\\right)}{K\\,k^2\\left(k + 1\\right)^2\\left(k - 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{4K\\,n^2\\left(K - E\\right)\\left(E^2\\cos^2\\psi + \\left(K\\,k^2 - K + E\\right)^2\\sin^2\\psi\\right)}{E\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{4K^2\\,n^2\\left(k + 1\\right)\\left(k - 1\\right)\\left(K - E\\right)\\left(K\\,k^2 - K + 2E\\right)\\sin\\psi\\cos\\psi\\sin\\theta}{E\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\theta"
+              ],
+              "value": "-\\dfrac{4K^2\\,n^2\\left(k + 1\\right)\\left(k - 1\\right)\\left(K - E\\right)\\left(K\\,k^2 - K + 2E\\right)\\sin\\psi\\cos\\psi\\sin\\theta}{E\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4K\\,n^2\\left(\\left(K - E\\right)^2\\left(E^2\\sin^2\\psi + \\left(K\\,k^2 - K + E\\right)^2\\cos^2\\psi\\right)\\sin^2\\theta + E^2\\left(K\\,k^2 - K + E\\right)^2\\cos^2\\theta\\right)}{E\\left(K - E\\right)\\left(K\\,k^2 - K + E\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{4K\\,E\\,n^2\\left(K\\,k^2 - K + E\\right)\\cos\\theta}{K - E}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{4K\\,E\\,n^2\\left(K\\,k^2 - K + E\\right)\\cos\\theta}{K - E}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{4K\\,E\\,n^2\\left(K\\,k^2 - K + E\\right)}{K - E}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3K^{14}\\,k^{16} - 24K^{14}\\,k^{14} + 84K^{14}\\,k^{12} - 168K^{14}\\,k^{10} + 210K^{14}\\,k^8 - 168K^{14}\\,k^6 + 84K^{14}\\,k^4 - 24K^{14}\\,k^2 + 3K^{14} - 21K^{13}\\,E\\,k^{16} + 189K^{13}\\,E\\,k^{14} - 735K^{13}\\,E\\,k^{12} + 1617K^{13}\\,E\\,k^{10} - 2205K^{13}\\,E\\,k^8 + 1911K^{13}\\,E\\,k^6 - 1029K^{13}\\,E\\,k^4 + 315K^{13}\\,E\\,k^2 - 42K^{13}\\,E + 61K^{12}\\,E^2\\,k^{16} - 639K^{12}\\,E^2\\,k^{14} + 2826K^{12}\\,E^2\\,k^{12} - 6953K^{12}\\,E^2\\,k^{10} + 10470K^{12}\\,E^2\\,k^8 - 9921K^{12}\\,E^2\\,k^6 + 5794K^{12}\\,E^2\\,k^4 - 1911K^{12}\\,E^2\\,k^2 + 273K^{12}\\,E^2 - 96K^{11}\\,E^3\\,k^{16} + 1218K^{11}\\,E^3\\,k^{14} - 6288K^{11}\\,E^3\\,k^{12} + 17622K^{11}\\,E^3\\,k^{10} - 29700K^{11}\\,E^3\\,k^8 + 31086K^{11}\\,E^3\\,k^6 - 19848K^{11}\\,E^3\\,k^4 + 7098K^{11}\\,E^3\\,k^2 - 1092K^{11}\\,E^3 + 88K^{10}\\,E^4\\,k^{16} - 1432K^{10}\\,E^4\\,k^{14} + 8931K^{10}\\,E^4\\,k^{12} - 29170K^{10}\\,E^4\\,k^{10} + 55933K^{10}\\,E^4\\,k^8 - 65460K^{10}\\,E^4\\,k^6 + 46125K^{10}\\,E^4\\,k^4 - 18018K^{10}\\,E^4\\,k^2 + 3003K^{10}\\,E^4 - 48K^9\\,E^5\\,k^{16} + 1072K^9\\,E^5\\,k^{14} - 8427K^9\\,E^5\\,k^{12} + 33005K^9\\,E^5\\,k^{10} - 73468K^9\\,E^5\\,k^8 + 97578K^9\\,E^5\\,k^6 - 76739K^9\\,E^5\\,k^4 + 33033K^9\\,E^5\\,k^2 - 6006K^9\\,E^5 + 16K^8\\,E^6\\,k^{16} - 512K^8\\,E^6\\,k^{14} + 5329K^8\\,E^6\\,k^{12} - 25941K^8\\,E^6\\,k^{10} + 68763K^8\\,E^6\\,k^8 - 105582K^8\\,E^6\\,k^6 + 93963K^8\\,E^6\\,k^4 - 45045K^8\\,E^6\\,k^2 + 9009K^8\\,E^6 + 128K^7\\,E^7\\,k^{14} - 2144K^7\\,E^7\\,k^{12} + 13948K^7\\,E^7\\,k^{10} - 45832K^7\\,E^7\\,k^8 + 83496K^7\\,E^7\\,k^6 - 85632K^7\\,E^7\\,k^4 + 46332K^7\\,E^7\\,k^2 - 10296K^7\\,E^7 + 424K^6\\,E^8\\,k^{12} - 4728K^6\\,E^8\\,k^{10} + 21073K^6\\,E^8\\,k^8 - 47676K^6\\,E^8\\,k^6 + 57934K^6\\,E^8\\,k^4 - 36036K^6\\,E^8\\,k^2 + 9009K^6\\,E^8 + 768K^5\\,E^9\\,k^{10} - 6075K^5\\,E^9\\,k^8 + 18855K^5\\,E^9\\,k^6 - 28563K^5\\,E^9\\,k^4 + 21021K^5\\,E^9\\,k^2 - 6006K^5\\,E^9 + 831K^4\\,E^{10}\\,k^8 - 4665K^4\\,E^{10}\\,k^6 + 9840K^4\\,E^{10}\\,k^4 - 9009K^4\\,E^{10}\\,k^2 + 3003K^4\\,E^{10} + 546K^3\\,E^{11}\\,k^6 - 2184K^3\\,E^{11}\\,k^4 + 2730K^3\\,E^{11}\\,k^2 - 1092K^3\\,E^{11} + 273K^2\\,E^{12}\\,k^4 - 546K^2\\,E^{12}\\,k^2 + 273K^2\\,E^{12} - 21K\\,E^{13}\\,k^4 + 63K\\,E^{13}\\,k^2 - 42K\\,E^{13} + 3E^{14}\\,k^4 - 3E^{14}\\,k^2 + 3E^{14}}{2E^6\\,n^4\\left(K - E\\right)^6\\left(K\\,k^2 - K + E\\right)^6}"
+        },
+        {
+          "id": "radius",
+          "name": "Gibbons-Manton Radius",
+          "coordinates": [
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\psi"
+          ],
+          "domains": [
+            "r \\in [\\pi n, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\psi \\in [0, \\pi)",
+            "(r, \\theta, \\phi, \\psi) \\sim (r, \\pi - \\theta, \\phi + \\pi, -\\psi) \\;\\text{(the exchange of the two monopoles)}",
+            "r = \\pi n \\;\\text{(the core, a real projective plane)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "n",
+              "description": "The space's one length: the core is at $r = \\pi n$, and far from it $c \\to -2n$"
+            },
+            {
+              "symbol": "a = a(r)",
+              "description": "A length, $a^2$ the coefficient of the square of the first form, $\\sin\\psi\\,d\\theta - \\cos\\psi\\sin\\theta\\,d\\phi$; on the space $a \\to 2(r - \\pi n)$ near the core and $a \\to r\\sqrt{1 - 2n/r}$ far from it"
+            },
+            {
+              "symbol": "b = b(r)",
+              "description": "A length, $b^2$ the coefficient of the square of the second form, $\\cos\\psi\\,d\\theta + \\sin\\psi\\sin\\theta\\,d\\phi$; on the space $b \\to \\pi n$ at the core and $b \\to r\\sqrt{1 - 2n/r}$ far from it"
+            },
+            {
+              "symbol": "c = c(r)",
+              "description": "A length, negative, $c^2$ the coefficient of the square of the third form, $d\\psi + \\cos\\theta\\,d\\phi$; on the space $c \\to -\\pi n$ at the core and $c \\to -2n/\\sqrt{1 - 2n/r}$ far from it"
+            }
+          ],
+          "convention": "We use coordinates $(r, \\theta, \\phi, \\psi)$, with $r$ Gibbons and Manton's radius, a length, $\\theta$, $\\phi$, and $\\psi$ Euler angles, and a prime the derivative $d/dr$. The lengths $a$, $b$, and $c$ are free functions of $r$, and no component assumes the equations of self duality, $2rc\\,a' = a^2 - (b - c)^2$, $2rac\\,b' = b\\left(b^2 - (c - a)^2\\right)$, and $2rab\\,c' = b\\left(c^2 - (a - b)^2\\right)$, whose solution is the space.",
+          "line_element": "ds^2 = \\dfrac{b^2}{r^2}dr^2 + a^2\\left(\\sin\\psi\\,d\\theta - \\cos\\psi\\sin\\theta\\,d\\phi\\right)^2 + b^2\\left(\\cos\\psi\\,d\\theta + \\sin\\psi\\sin\\theta\\,d\\phi\\right)^2 + c^2\\left(d\\psi + \\cos\\theta\\,d\\phi\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{b^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\psi + b^2\\cos^2\\psi"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\phi"
+              ],
+              "value": "-\\left(a^2 - b^2\\right)\\sin\\psi\\cos\\psi\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\theta"
+              ],
+              "value": "-\\left(a^2 - b^2\\right)\\sin\\psi\\cos\\psi\\sin\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(a^2\\cos^2\\psi + b^2\\sin^2\\psi\\right)\\sin^2\\theta + c^2\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "c^2\\cos\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "c^2\\cos\\theta"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "c^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{a^4\\,b^2 - 2a^2\\,b^4 - 2a^2\\,b^2\\,c^2 + 4a^2\\,b^2\\,c\\,r^2\\,c'' + 4a^2\\,b^2\\,c\\,r\\,c' + 4a^2\\,b\\,c^2\\,r^2\\,b'' + 4a^2\\,b\\,c^2\\,r\\,b' - 4a^2\\,c^2\\,r^2\\left(b'\\right)^2 + 4a\\,b^2\\,c^2\\,r^2\\,a'' + 4a\\,b^2\\,c^2\\,r\\,a' + 4a\\,b^2\\,c\\,r^2\\,a'\\,c' + b^6 - 2b^4\\,c^2 + b^2\\,c^4}{2a^2\\,b^4\\,c^2}",
+          "kretschmann": "K = \\dfrac{11a^8\\,b^4 - 12a^6\\,b^6 - 12a^6\\,b^4\\,c^2 + 16a^6\\,b^4\\,r^2\\left(c'\\right)^2 + 40a^6\\,b^3\\,c\\,r^2\\,b'\\,c' + 16a^6\\,b^2\\,c^2\\,r^2\\left(b'\\right)^2 - 56a^5\\,b^4\\,c\\,r^2\\,a'\\,c' - 56a^5\\,b^3\\,c^2\\,r^2\\,a'\\,b' + 2a^4\\,b^8 + 12a^4\\,b^6\\,c^2 - 32a^4\\,b^6\\,r^2\\left(c'\\right)^2 + 16a^4\\,b^5\\,c\\,r^2\\,b'\\,c' + 2a^4\\,b^4\\,c^4 + 16a^4\\,b^4\\,c^2\\,r^4\\left(c''\\right)^2 + 32a^4\\,b^4\\,c^2\\,r^3\\,c'\\,c'' + 48a^4\\,b^4\\,c^2\\,r^2\\left(a'\\right)^2 + 16a^4\\,b^4\\,c^2\\,r^2\\left(c'\\right)^2 + 16a^4\\,b^3\\,c^3\\,r^2\\,b'\\,c' - 32a^4\\,b^3\\,c^2\\,r^4\\,b'\\,c'\\,c'' - 32a^4\\,b^3\\,c^2\\,r^3\\,b'\\left(c'\\right)^2 + 16a^4\\,b^2\\,c^4\\,r^4\\left(b''\\right)^2 + 32a^4\\,b^2\\,c^4\\,r^3\\,b'\\,b'' - 16a^4\\,b^2\\,c^4\\,r^2\\left(b'\\right)^2 + 32a^4\\,b^2\\,c^2\\,r^4\\left(b'\\right)^2\\left(c'\\right)^2 - 32a^4\\,b\\,c^4\\,r^4\\left(b'\\right)^2\\,b'' - 32a^4\\,b\\,c^4\\,r^3\\left(b'\\right)^3 + 16a^4\\,c^4\\,r^4\\left(b'\\right)^4 + 16a^3\\,b^6\\,c\\,r^2\\,a'\\,c' - 16a^3\\,b^5\\,c^2\\,r^2\\,a'\\,b' - 16a^3\\,b^4\\,c^3\\,r^2\\,a'\\,c' + 16a^3\\,b^3\\,c^4\\,r^2\\,a'\\,b' - 12a^2\\,b^{10} + 12a^2\\,b^8\\,c^2 + 16a^2\\,b^8\\,r^2\\left(c'\\right)^2 - 56a^2\\,b^7\\,c\\,r^2\\,b'\\,c' + 12a^2\\,b^6\\,c^4 + 48a^2\\,b^6\\,c^2\\,r^2\\left(b'\\right)^2 - 16a^2\\,b^5\\,c^3\\,r^2\\,b'\\,c' - 12a^2\\,b^4\\,c^6 + 16a^2\\,b^4\\,c^4\\,r^4\\left(a''\\right)^2 + 32a^2\\,b^4\\,c^4\\,r^3\\,a'\\,a'' + 16a^2\\,b^4\\,c^4\\,r^2\\left(a'\\right)^2 + 48a^2\\,b^4\\,c^4\\,r^2\\left(c'\\right)^2 + 16a^2\\,b^4\\,c^2\\,r^4\\left(a'\\right)^2\\left(c'\\right)^2 - 56a^2\\,b^3\\,c^5\\,r^2\\,b'\\,c' - 32a^2\\,b^3\\,c^4\\,r^4\\,a'\\,a''\\,b' - 32a^2\\,b^3\\,c^4\\,r^3\\left(a'\\right)^2\\,b' + 16a^2\\,b^2\\,c^6\\,r^2\\left(b'\\right)^2 + 32a^2\\,b^2\\,c^4\\,r^4\\left(a'\\right)^2\\left(b'\\right)^2 + 40a\\,b^8\\,c\\,r^2\\,a'\\,c' - 56a\\,b^7\\,c^2\\,r^2\\,a'\\,b' + 16a\\,b^6\\,c^3\\,r^2\\,a'\\,c' + 16a\\,b^5\\,c^4\\,r^2\\,a'\\,b' - 56a\\,b^4\\,c^5\\,r^2\\,a'\\,c' + 40a\\,b^3\\,c^6\\,r^2\\,a'\\,b' + 11b^{12} - 12b^{10}\\,c^2 + 2b^8\\,c^4 + 16b^8\\,c^2\\,r^2\\left(a'\\right)^2 - 12b^6\\,c^6 - 32b^6\\,c^4\\,r^2\\left(a'\\right)^2 + 11b^4\\,c^8 + 16b^4\\,c^6\\,r^2\\left(a'\\right)^2}{4a^4\\,b^8\\,c^4}"
         }
       ]
     },
@@ -3597,6 +3891,11 @@
           "id": "kerr_scalar_hair",
           "kind": "family",
           "text": "Black holes with hair again, this time of a massive complex scalar field, which stays outside the horizon because it turns with it, $\\omega = m\\Omega_H$ [herdeiro2014]."
+        },
+        {
+          "id": "skyrmion_hair",
+          "kind": "family",
+          "text": "A black hole inside a gravitating skyrmion, with a field extending beyond its horizon [dvali2016skyrmion]."
         }
       ],
       "references": [
@@ -3620,7 +3919,8 @@
         "choptuik1996",
         "gleiser1989",
         "lee1989",
-        "herdeiro2014"
+        "herdeiro2014",
+        "dvali2016skyrmion"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bartnik_mckinnon.json",
@@ -9117,6 +9417,11 @@
           "id": "charged_shell",
           "kind": "limit_source",
           "text": "The shell of charged dust, of which a shell of charged light is the limit of no rest mass. The dust turns round at $(q^2 - \\mu^2)/(2m - 2\\mu)$ for a rest mass $\\mu$, which tends to $q^2/2m$ [gao2008]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "family",
+          "text": "A spherical radiating body with a positive cosmological constant and no electric charge."
         }
       ],
       "references": [
@@ -15813,6 +16118,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "Belinski and Zakharov's inverse scattering builds cylindrical solitons with both polarisations, and Akira Tomimatsu followed the turning of their polarisation in 1989 [tomizawa2014]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "A cylindrical vacuum wave around a string has both polarisations, with a regular axis when $|\\alpha p|=1$ [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -15827,7 +16137,8 @@
         "piran1986",
         "dinverno2000",
         "glod2022",
-        "levicivita1919"
+        "levicivita1919",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/twisting_cylindrical_waves.json",
@@ -17008,6 +17319,11 @@
           "id": "extended_inflation",
           "kind": "limit_source",
           "text": "De Sitter expansion is the limit $\\omega \\to \\infty$ at fixed vacuum density, initial gravitational coupling, and elapsed time from the reference surface."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "generalisation",
+          "text": "A spherical source with a changing mass and radial radiation in a de Sitter background."
         }
       ],
       "references": [
@@ -17273,6 +17589,11 @@
           "id": "penney_scalar",
           "kind": "family",
           "text": "A charged mass with a massless scalar field that does not couple to the Maxwell field, found by R. Penney in 1969. Its only black hole is the one with the scalar field switched off [banerjee1998]."
+        },
+        {
+          "id": "skyrmion_hair",
+          "kind": "family",
+          "text": "A black hole with a Skyrme field held by its gravity outside its horizon [dvali2016skyrmion]."
         }
       ],
       "references": [
@@ -17299,7 +17620,8 @@
         "cvetic1996static",
         "cvetic1996dyonic",
         "gibbons1995",
-        "banerjee1998"
+        "banerjee1998",
+        "dvali2016skyrmion"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -19466,6 +19788,11 @@
           "id": "gravitational_instantons",
           "kind": "generalisation",
           "text": "Gibbons and Hawking's metrics of many centres, which stand among the gravitational instantons of 1977 and 1978. The Eguchi-Hanson space is their case of two centres with no constant in the potential [gibbonshawking1979, eguchigilkeyhanson1980]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "Atiyah and Hitchin's space of two magnetic monopoles, on the other branch of the same classification, where the rotations turn the complex structures. It closes on a 2-sphere as well, once the two identical monopoles are exchanged [weinbergyi2007]."
         }
       ],
       "references": [
@@ -19488,7 +19815,8 @@
         "lebrun1988",
         "page1978k3",
         "gibbonspope1979",
-        "sorkin1983"
+        "sorkin1983",
+        "weinbergyi2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/eguchi_hanson.json",
@@ -20259,6 +20587,11 @@
           "id": "hosotani_universe",
           "kind": "conformal",
           "text": "A closed universe filled with a homogeneous Yang-Mills magnetic field. Dividing its metric by the squared spatial radius makes it conformal to a region of Einstein's static universe [gibbons1994ym]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "Static fields around a line of mass with $\\Lambda > 0$. Jerry Griffiths and Jiří Podolský matched one across a torus to a region of this universe, whose dust takes the place of one singular axis [griffiths2010linettian]."
         }
       ],
       "references": [
@@ -20288,7 +20621,8 @@
         "lachiezerey1995",
         "luminet2003",
         "vaidya1977kerr",
-        "gibbons1994ym"
+        "gibbons1994ym",
+        "griffiths2010linettian"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_static.json",
@@ -21895,6 +22229,11 @@
           "id": "brill_waves",
           "kind": "family",
           "text": "A bundle of gravitational waves of finite extent, known at one moment only. Brill proved in 1959, with no approximation, that its mass is positive [brill1959]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "Cylindrical waves around a string carry two polarisations, with a cross term joining the angular and longitudinal directions [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -21925,7 +22264,8 @@
         "fernandezjambrina2002",
         "einstein1935",
         "belinskii1978",
-        "brill1959"
+        "brill1959",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -26017,6 +26357,11 @@
           "id": "spinning_string",
           "kind": "family",
           "text": "A straight string given spin where this one is given a wave. Both leave every curvature scalar at zero [deser1992time, kaloper1997]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "Xanthopoulos's gravitational waves have cylindrical fronts around a string [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -26037,7 +26382,8 @@
         "horowitz1997",
         "lunin2001",
         "aichelburg1971",
-        "deser1992time"
+        "deser1992time",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_wave.json",
@@ -28611,6 +28957,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "Half of the 4-sphere, the instanton of de Sitter space, joined at its equator to the waist of de Sitter's closed universe as Vilenkin's universe created from nothing [vilenkin1982]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "Atiyah and Hitchin's space of two slowly moving magnetic monopoles, smooth and hyperkähler. Far from its core it is the self dual Taub-NUT instanton with a negative mass [atiyahhitchin1985, gibbonsmanton1995]."
         }
       ],
       "references": [
@@ -28630,7 +28981,9 @@
         "chenteo2011",
         "sorkin1983",
         "grossperry1983",
-        "vilenkin1982"
+        "vilenkin1982",
+        "atiyahhitchin1985",
+        "gibbonsmanton1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
@@ -29276,6 +29629,11 @@
           "id": "twisting_cylindrical_waves",
           "kind": "family",
           "text": "Their inverse scattering applied around an axis gives cylindrical solitons with both polarisations, whose polarisation turns as they travel [tomizawa2014]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "A cylindrical soliton family around a string contains Xanthopoulos's waves [kleidis2010]."
         }
       ],
       "references": [
@@ -29296,7 +29654,8 @@
         "belinski2001",
         "pomeransky2006",
         "elvang2007",
-        "tomizawa2014"
+        "tomizawa2014",
+        "kleidis2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/belinski_zakharov.json",
@@ -34011,6 +34370,11 @@
           "id": "static_five_soliton",
           "kind": "family",
           "text": "The neutral scalar solitons belong to the family of static vacuum geometries studied by Gross and Perry [grossperry1983, lake2006static]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "The orientifold plane of type IIA string theory, seen in M-theory. Sen set a row of these monopoles beside it to make D6-branes on the plane [sen1997enhanced]."
         }
       ],
       "references": [
@@ -34040,7 +34404,8 @@
         "nilsson1984",
         "bah2021",
         "chyba1985",
-        "lake2006static"
+        "lake2006static",
+        "sen1997enhanced"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -35933,6 +36298,11 @@
           "text": "Conformally flat initial data for a spinning hole contain a radiative distortion. Its perturbative evolution approaches Kerr while emitting gravitational waves [gleiser1998by]."
         },
         {
+          "id": "string_cylindrical_waves",
+          "kind": "dual",
+          "text": "A complex transformation of the Kerr metric produces Xanthopoulos's cylindrical waves around a string [xanthopoulos1986rotating]."
+        },
+        {
           "id": "quevedo_mashhoon",
           "kind": "generalisation",
           "text": "The rotating vacuum field with an independent deformation parameter. At $q=0$ and $\\delta=1$ it is the Kerr field [bini2009]."
@@ -36014,6 +36384,7 @@
         "vaidya1989kerr",
         "vaidya1977kerr",
         "gleiser1998by",
+        "xanthopoulos1986rotating",
         "bini2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
@@ -41524,6 +41895,16 @@
           "id": "ghost_neutrinos",
           "kind": "locally_same",
           "text": "At $\\sigma = -1/2$ the static cylinder is locally Taub's plane symmetric vacuum, through which the ghost neutrinos of Davis and Ray flow with no energy or momentum [davis1974]."
+        },
+        {
+          "id": "superconducting_string",
+          "kind": "generalisation",
+          "text": "A magnetic field surrounds a current carrying string and contributes to its gravity [sen1999superconducting]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "generalisation",
+          "text": "The same line of mass in a universe with a cosmological constant, the static field Bernard Linet and Qingjun Tian found in 1986. With $\\Lambda < 0$ it approaches anti-de Sitter space far from the axis [zofka2008, dasilva2000]."
         }
       ],
       "references": [
@@ -41560,7 +41941,10 @@
         "podolsky2018",
         "martins1996",
         "astorino2022swirling",
-        "davis1974"
+        "davis1974",
+        "sen1999superconducting",
+        "zofka2008",
+        "dasilva2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -43207,6 +43591,418 @@
       ]
     },
     {
+      "id": "linet_tian",
+      "name": "Linet-Tian Static Cylinder",
+      "short_name": "Linet-Tian",
+      "description": "The static vacuum field with cylindrical symmetry and a cosmological constant, the field outside an infinitely long straight line of mass, which Bernard Linet and Qingjun Tian found independently in 1986. With a negative constant it approaches anti-de Sitter space far from its axis; with a positive one the proper distance from the axis is bounded by $\\pi/\\sqrt{3\\Lambda}$, and the surfaces of constant distance are tori.",
+      "tags": [
+        "Einstein space",
+        "cosmological constant",
+        "negative cosmological constant",
+        "positive cosmological constant",
+        "static",
+        "stationary",
+        "four-dimensional",
+        "cylindrical symmetry",
+        "line mass",
+        "cosmic string",
+        "curvature singularity",
+        "conical singularity",
+        "torus",
+        "anti-de Sitter",
+        "Petrov type I",
+        "Petrov type D",
+        "instability",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The exponents $p_0$, $p_2$, and $p_3$ are those of Levi-Civita's cylinder in proper distance, with $p_0 + p_2 + p_3 = p_0^2 + p_2^2 + p_3^2 = 1$, and every component assumes both conditions. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "At $\\Lambda = 0$ both functions of the line element are the proper distance $\\rho$, and the field is Tullio Levi-Civita's cylinder with $\\sigma$ his mass parameter [dasilva2000, griffiths2010linettian]."
+        },
+        {
+          "id": "ads_soliton",
+          "kind": "special_case",
+          "text": "With $\\Lambda < 0$, $\\sigma = 0$, and $C = 1$ the axis is regular and the field is the soliton of anti-de Sitter space, which William Bonnor called a second anti-de Sitter universe [sarioglu2009comment, bonnor2008second]."
+        },
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "At $\\Lambda = 0$ and $\\sigma = 0$ the field is flat with an angular deficit about the axis, the cosmic string that Bernard Linet and Qingjun Tian set in a universe with a cosmological constant [griffiths2010linettian, zofka2008]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "The flat member of these holes, the static black string of José Lemos, is the field with $\\sigma = 1/2$ and $\\Lambda < 0$, its horizon at $\\rho = 0$ [zofka2008, lemos1995]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "Written in horospherical coordinates, this black hole shares the leading terms of the field far from the axis when $\\Lambda < 0$, and the radial dependence of its next terms [zofka2008]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Every member with $\\Lambda < 0$ approaches anti-de Sitter space far from its axis, in horospherical coordinates [dasilva2000, zofka2008]."
+        },
+        {
+          "id": "einstein_static",
+          "kind": "family",
+          "text": "When $\\Lambda > 0$, a toroidal region of the static universe full of dust can replace one of the two singular axes, and for small $\\sigma$ the dust carries a mass per unit length close to $\\sigma$ [griffiths2010linettian]."
+        },
+        {
+          "id": "ab_metrics",
+          "kind": "family",
+          "text": "The member with $\\sigma = 0$ is a generalisation of the B III metric with a cosmological constant, of type D and in the family of Jerzy Plebański and Marek Demiański without expansion [griffiths2010linettian]."
+        }
+      ],
+      "references": [
+        "dasilva2000",
+        "zofka2008",
+        "griffiths2010linettian",
+        "linet1986",
+        "tian1986",
+        "krasinski1975",
+        "gleiser2021krasinski",
+        "bronnikov2020",
+        "sarioglu2009comment",
+        "bonnor2008second",
+        "horowitz1998",
+        "lemos1995",
+        "gleiser2017stability",
+        "gleiser2021perturbations"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/linet_tian.json",
+      "charts": [
+        {
+          "id": "toroidal",
+          "name": "Toroidal",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\psi",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\pi/\\sqrt{3\\Lambda})",
+            "\\psi \\in [0, 2\\pi)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}",
+            "\\rho = \\pi/\\sqrt{3\\Lambda} \\;\\text{(a curvature singularity unless } p_0\\,p_2\\,p_3 = -4/27\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, positive here, an inverse length squared"
+            },
+            {
+              "symbol": "B",
+              "description": "Conicity about the axis $\\rho = \\pi/\\sqrt{3\\Lambda}$, an inverse length in the unit the powers are read in; with $\\psi$ periodic in $2\\pi$ it fixes the angular deficit there"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $\\psi$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "P = \\dfrac{2}{\\sqrt{3\\Lambda}}\\tan\\left(\\dfrac{\\sqrt{3\\Lambda}\\,\\rho}{2}\\right)",
+              "description": "A length, close to $\\rho$ near the axis and growing without bound as $\\rho \\to \\pi/\\sqrt{3\\Lambda}$, with $dP/d\\rho = 1 + 3\\Lambda P^2/4$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\psi, \\phi)$, with $t$ carrying dimensions of time, $\\rho$ the proper distance from the axis $\\rho = 0$, a length, and $\\psi$ and $\\phi$ angles. The factor $(1 + 3\\Lambda P^2/4)^{-2/3}$ is $\\cos^{4/3}(\\sqrt{3\\Lambda}\\,\\rho/2)$, and we evaluate the powers of $P$ with $P$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = d\\rho^2 + \\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{-2/3}\\left(-P^{2p_0}c^2dt^2 + \\dfrac{P^{2p_3}}{B^2}d\\psi^2 + \\dfrac{P^{2p_2}}{C^2}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{P^{2p_0}}{\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{P^{2p_3}}{B^2\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{P^{2p_2}}{C^2\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3} + \\dfrac{\\Lambda^2\\left(4 + 3\\Lambda P^2\\right)^2}{12} - \\dfrac{p_0\\,p_2\\,p_3\\left(4 - 3\\Lambda P^2\\right)\\left(4 + 3\\Lambda P^2\\right)^3}{16P^4}"
+        },
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, negative here, an inverse length squared"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "P = \\dfrac{2}{\\sqrt{-3\\Lambda}}\\tanh\\left(\\dfrac{\\sqrt{-3\\Lambda}\\,\\rho}{2}\\right)",
+              "description": "A length, close to $\\rho$ near the axis and tending to $2/\\sqrt{-3\\Lambda}$ far from it, with $dP/d\\rho = 1 + 3\\Lambda P^2/4$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, z, \\phi)$, with $t$ carrying dimensions of time and $\\rho$, the proper distance from the axis, and $z$ lengths. The factor $(1 + 3\\Lambda P^2/4)^{-2/3}$ is $\\cosh^{4/3}(\\sqrt{-3\\Lambda}\\,\\rho/2)$, and we evaluate the powers of $P$ with $P$ in a fixed unit of length, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = d\\rho^2 + \\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{-2/3}\\left(-P^{2p_0}c^2dt^2 + P^{2p_3}dz^2 + \\dfrac{P^{2p_2}}{C^2}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{P^{2p_0}}{\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{P^{2p_3}}{\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{P^{2p_2}}{C^2\\left(1 + \\dfrac{3\\Lambda P^2}{4}\\right)^{2/3}}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3} + \\dfrac{\\Lambda^2\\left(4 + 3\\Lambda P^2\\right)^2}{12} - \\dfrac{p_0\\,p_2\\,p_3\\left(4 - 3\\Lambda P^2\\right)\\left(4 + 3\\Lambda P^2\\right)^3}{16P^4}"
+        },
+        {
+          "id": "gleiser",
+          "name": "Gleiser",
+          "coordinates": [
+            "t",
+            "y",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in (0, 1/\\Lambda) \\;\\text{for}\\; \\Lambda > 0",
+            "y \\in (0, \\infty) \\;\\text{for}\\; \\Lambda < 0",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "y = 0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}",
+            "y = 1/\\Lambda \\;\\text{(for } \\Lambda > 0\\text{, a curvature singularity unless } p_0\\,p_2\\,p_3 = -4/27\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Lambda",
+              "description": "Cosmological constant, of either sign, an inverse length squared"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "Y = \\dfrac{y}{1 - \\Lambda y}",
+              "description": "An area, close to $y$ near the axis, with $dY/dy = (1 + \\Lambda Y)^2$; for $\\Lambda > 0$ it grows without bound as $y \\to 1/\\Lambda$"
+            }
+          ],
+          "convention": "We use Gleiser's coordinates $(t, y, z, \\phi)$, with $t$ carrying dimensions of time, $z$ a length and $\\Lambda y = \\sin^2(\\sqrt{3\\Lambda}\\,\\rho/2)$, where $\\rho$ is the proper distance from the axis, so that $t$, $z$, and $\\phi/C$ are those of the proper distance charts multiplied by constants. We write the metric in $Y = y/(1 - \\Lambda y)$ and evaluate its powers with $Y$ in a fixed unit of area, so they are dimensionless. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}dy^2 + \\left(1 + \\Lambda Y\\right)^{-2/3}\\left(-Y^{p_0}c^2dt^2 + Y^{p_3}dz^2 + \\dfrac{Y^{p_2}}{C^2}d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{Y^{p_0}}{\\left(1 + \\Lambda Y\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\left(1 + \\Lambda Y\\right)^2}{3Y}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{Y^{p_3}}{\\left(1 + \\Lambda Y\\right)^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{Y^{p_2}}{C^2\\left(1 + \\Lambda Y\\right)^{2/3}}"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2}{3} + \\dfrac{4\\Lambda^2\\left(1 + \\Lambda Y\\right)^2}{3} - \\dfrac{9p_0\\,p_2\\,p_3\\left(1 - \\Lambda Y\\right)\\left(1 + \\Lambda Y\\right)^3}{Y^2}"
+        },
+        {
+          "id": "sarioglu_tekin",
+          "name": "Sarıoğlu-Tekin",
+          "coordinates": [
+            "t",
+            "r",
+            "z",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_0, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the axis, a curvature singularity unless } p_0\\,p_2\\,p_3 = 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Value of $r$ on the axis, a length"
+            },
+            {
+              "symbol": "C",
+              "description": "Conicity, an inverse length in the unit the powers are read in; with $\\phi$ periodic in $2\\pi$ it fixes the angular deficit about the axis"
+            },
+            {
+              "symbol": "p_0",
+              "description": "Exponent along $t$, $p_0 = 2\\sigma/\\Sigma$, with $\\sigma$ the mass parameter of Levi-Civita's cylinder and $\\Sigma = 4\\sigma^2 - 2\\sigma + 1$"
+            },
+            {
+              "symbol": "p_2",
+              "description": "Exponent along $\\phi$, $p_2 = (1 - 2\\sigma)/\\Sigma$"
+            },
+            {
+              "symbol": "p_3",
+              "description": "Exponent along $z$, $p_3 = 2\\sigma(2\\sigma - 1)/\\Sigma$; the two conditions on the exponents leave one free"
+            },
+            {
+              "symbol": "h = 1 - \\dfrac{r_0^3}{r^3}",
+              "description": "Dimensionless, rising from $0$ on the axis to $1$ far from it, with $dh/dr = 3(1 - h)/r$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, z, \\phi)$ of Sarıoğlu and Tekin, with $t$ carrying dimensions of time and $r$ and $z$ lengths, where $r = r_0\\cosh^{2/3}(3\\rho/2L)$ with $\\rho$ the proper distance from the axis, so that $t$, $z$, and $\\phi/C$ are those of the cylindrical chart multiplied by constants. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-h^{p_0}c^2dt^2 + h^{p_3}dz^2 + \\dfrac{h^{p_2}}{C^2}d\\phi^2\\right) + \\dfrac{L^2}{r^2h}dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2h^{p_0}}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2h}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{r^2h^{p_3}}{L^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2h^{p_2}}{L^2C^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{24}{L^4} + \\dfrac{12\\left(1 - h\\right)^2}{L^4} - \\dfrac{81p_0\\,p_2\\,p_3\\left(1 + h\\right)\\left(1 - h\\right)^3}{L^4h^2}"
+        }
+      ]
+    },
+    {
       "id": "lynden_bell_pineault",
       "name": "Relativistic Discs of Lynden-Bell and Pineault",
       "short_name": "Lynden-Bell-Pineault Discs",
@@ -44387,6 +45183,214 @@
           ],
           "ricci_scalar": "R = -\\dfrac{2}{L^2}",
           "kretschmann": "K = \\dfrac{4}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "mallett_radiating_star",
+      "name": "Radiating Star in de Sitter Space",
+      "short_name": "Mallett Radiating Star",
+      "description": "A spherical source of null radiation in a spacetime with a positive cosmological constant.",
+      "tags": [
+        "null dust",
+        "radiating",
+        "accreting",
+        "spherically symmetric",
+        "time-dependent",
+        "black hole",
+        "mass",
+        "cosmological constant",
+        "positive cosmological constant",
+        "de Sitter",
+        "curvature singularity",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "cosmological horizon",
+        "energy conditions",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We work in units with $G = c = 1$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "A radiating spherical body with $\\Lambda=0$."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "A constant mass in a universe with a positive cosmological constant. With $m$ constant, the radiation vanishes."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "special_case",
+          "text": "The background with $m=0$, a universe with a positive cosmological constant."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "family",
+          "text": "A spherical radiating body with charge and no cosmological constant. Its mass and charge can vary with retarded time [bonnor1970]."
+        }
+      ],
+      "references": [
+        "campos2025cosmological",
+        "mallett1985radiating",
+        "senovilla2023ultramassive",
+        "mbonye1999horizons",
+        "mallett1986erratum",
+        "mallett1986evolution",
+        "bonnor1970"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mallett_radiating_star.json",
+      "charts": [
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Lambda > 0,\\quad m \\ge 0",
+            "0 < 9\\Lambda m^2 < 1 \\;\\text{(two positive marginal radii)}",
+            "9\\Lambda m^2 = 1 \\;\\text{(one double positive radius)}",
+            "9\\Lambda m^2 > 1 \\;\\text{(no positive marginal radius)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u)",
+              "description": "Mass as a function of null time, measured as a length"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Positive cosmological constant"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded null coordinate $u$ a length and $r$ the areal radius. The mass $m(u)$ is a function of $u$ alone. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2=-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)du^2 - 2\\,du\\,dr + r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2\\,r^6 + 144m^2}{3r^6}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\Lambda > 0,\\quad m \\ge 0",
+            "0 < 9\\Lambda m^2 < 1 \\;\\text{(two positive marginal radii)}",
+            "9\\Lambda m^2 = 1 \\;\\text{(one double positive radius)}",
+            "9\\Lambda m^2 > 1 \\;\\text{(no positive marginal radius)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass as a function of null time, measured as a length"
+            },
+            {
+              "symbol": "\\Lambda",
+              "description": "Positive cosmological constant"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced null coordinate $v$ a length and $r$ the areal radius. The mass $m(v)$ is a function of $v$ alone. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2=-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} - \\dfrac{\\Lambda r^2}{3}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 4\\Lambda",
+          "kretschmann": "K = \\dfrac{8\\Lambda^2\\,r^6 + 144m^2}{3r^6}"
         }
       ]
     },
@@ -62246,6 +63250,16 @@
           "id": "spheroidal_stars",
           "kind": "composite",
           "text": "Static fluid stars joined to Schwarzschild's vacuum at their surfaces. Vanishing pressure and continuity of the lapse fix the matching [delgaty1998]."
+        },
+        {
+          "id": "skyrmion_hair",
+          "kind": "family",
+          "text": "A black hole with a skyrmion field outside its horizon. Its geometry approaches Schwarzschild's far away [dvali2016skyrmion]."
+        },
+        {
+          "id": "york_equilibrium",
+          "kind": "generalisation",
+          "text": "The first order gravitational back reaction of a thermal conformal scalar field [hochberg1994potential, york1985equilibrium]."
         }
       ],
       "references": [
@@ -62385,7 +63399,10 @@
         "fransen2023",
         "brandt1997",
         "mello2017",
-        "delgaty1998"
+        "delgaty1998",
+        "dvali2016skyrmion",
+        "hochberg1994potential",
+        "york1985equilibrium"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -62854,6 +63871,16 @@
           "id": "brane_wall_universe",
           "kind": "family",
           "text": "One dimension up, a wall moving through this black hole carries a universe, and the wall's motion is that universe's expansion [kraus1999]."
+        },
+        {
+          "id": "york_equilibrium",
+          "kind": "family",
+          "text": "A black hole in equilibrium with a scalar field inside a reflecting wall, with first order back reaction [hochberg1994potential, york1985equilibrium]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "A line of mass in anti-de Sitter space. Far from the axis its static field has the leading terms of this black hole written in horospherical coordinates [zofka2008]."
         }
       ],
       "references": [
@@ -62884,7 +63911,10 @@
         "chamblin1999",
         "surya2001",
         "shenker2014",
-        "kraus1999"
+        "kraus1999",
+        "hochberg1994potential",
+        "york1985equilibrium",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -63167,6 +64197,11 @@
           "id": "hotta_tanaka",
           "kind": "limit",
           "text": "This black hole boosted to the speed of light, a limit taken with the mass going to zero and the energy held fixed. The field ends up on a sphere riding a cosmological horizon, with a massless particle at each pole [hotta1993]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "generalisation",
+          "text": "A mass that varies with null time, accompanied by radial radiation in a de Sitter background."
         }
       ],
       "references": [
@@ -65861,6 +66896,209 @@
       ]
     },
     {
+      "id": "skyrmion_hair",
+      "name": "Black Hole with Skyrmion Hair",
+      "short_name": "Skyrmion Black Hole",
+      "description": "A static spherical black hole surrounded by a Skyrme field held by its gravity, with a fractional baryon number outside its horizon.",
+      "tags": [
+        "black hole",
+        "soliton",
+        "numerical solution",
+        "asymptotically flat",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use $c=\\hbar=1$ and keep $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "The vacuum black hole of the same total mass, which this geometry approaches far from the hole [dvali2016skyrmion]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "A spherical black hole with a scalar field coupled to its electromagnetic field [horowitz1992, garfinkle1991]."
+        },
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "A spherical Yang-Mills field held together by its gravity, with a regular centre [volkov1999, bartnik1988]."
+        }
+      ],
+      "references": [
+        "shiiki2005skyrme",
+        "dvali2016skyrmion",
+        "luckock1986",
+        "droz1991",
+        "horowitz1992",
+        "garfinkle1991",
+        "volkov1999",
+        "bartnik1988"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/skyrmion_hair.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_h, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "N = N(r)",
+              "description": "Dimensionless lapse, normalized to $N\\to 1$ far away. In $x=aF_\\pi r$, its equation is $N_x/N=(\\alpha/4)(x+8\\sin^2 f/x)f_x^2$."
+            },
+            {
+              "symbol": "C = C(r)",
+              "description": "Dimensionless radial function, $C=1-2Gm(r)/r$, with $C(r_h)=0$ and $C>0$ outside the horizon."
+            },
+            {
+              "symbol": "f = f(r)",
+              "description": "Dimensionless Skyrme profile, with $f(\\infty)=0$ and horizon value $f_h$. The horizon value is $f_h=f(r_h)$. With $f_x=\\partial_x f$ and $u=x^2+8\\sin^2 f$, it obeys $(NCu f_x)_x=N\\sin(2f)(1+4Cf_x^2+4\\sin^2 f/x^2)$, where $x=aF_\\pi r$."
+            },
+            {
+              "symbol": "m = m(r)",
+              "description": "Mass function approaching $M$ at infinity. In $x=aF_\\pi r$, $\\mu=aF_\\pi Gm$ has $\\mu_x=\\partial_x\\mu$ and obeys $\\mu_x=(\\alpha/8)[C(x^2+8\\sin^2 f)f_x^2+2\\sin^2 f+4\\sin^4 f/x^2]$."
+            },
+            {
+              "symbol": "r_h",
+              "description": "Areal radius of the event horizon."
+            },
+            {
+              "symbol": "G",
+              "description": "Newton gravitational constant."
+            },
+            {
+              "symbol": "M",
+              "description": "Total mass measured at infinity."
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "Dimensionless gravitational coupling, $\\alpha=4\\pi GF_\\pi^2$."
+            },
+            {
+              "symbol": "F_\\pi",
+              "description": "Pion decay constant of the Skyrme model."
+            },
+            {
+              "symbol": "a",
+              "description": "Dimensionless Skyrme coupling; $x=aF_\\pi r$ is the dimensionless radius."
+            }
+          ],
+          "convention": "The chart covers the static exterior, with $r$ the areal radius.",
+          "line_element": "ds^2 = -N^2 C\\,dt^2 + \\dfrac{dr^2}{C} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2\\,C"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{C}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2N - 2N\\,C - 4r\\,N\\,\\partial_r C - 4r\\,C\\,\\partial_r N - 3r^2\\,\\partial_r N\\,\\partial_r C - r^2\\,N\\,\\partial_r^2 C - 2r^2\\,C\\,\\partial_r^2 N}{r^2\\,N}",
+          "kretschmann": "K = \\dfrac{4r^4\\,C^2\\left(\\partial_r^2 N\\right)^2 + 4r^4\\,N\\,C\\,\\partial_r^2 C\\,\\partial_r^2 N + 12r^4\\,C\\,\\partial_r N\\,\\partial_r C\\,\\partial_r^2 N + r^4\\,N^2\\left(\\partial_r^2 C\\right)^2 + 6r^4\\,N\\,\\partial_r N\\,\\partial_r C\\,\\partial_r^2 C + 9r^4\\left(\\partial_r N\\right)^2\\left(\\partial_r C\\right)^2 + 8r^2\\,C^2\\left(\\partial_r N\\right)^2 + 8r^2\\,N\\,C\\,\\partial_r N\\,\\partial_r C + 4r^2\\,N^2\\left(\\partial_r C\\right)^2 + 4N^2\\,C^2 - 8N^2\\,C + 4N^2}{r^4\\,N^2}"
+        },
+        {
+          "id": "tortoise",
+          "name": "Tortoise",
+          "coordinates": [
+            "t",
+            "\\xi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\xi \\in (-\\infty, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "F = F(\\xi)",
+              "description": "The function $F=N(r)^2C(r)$, using the lapse and radial function of the areal chart."
+            },
+            {
+              "symbol": "r = r(\\xi)",
+              "description": "The areal radius, determined by $dr/d\\xi=N(r)C(r)$."
+            }
+          ],
+          "convention": "The tortoise radius obeys $d\\xi/dr=1/(N C)$ in the exterior. Its additive constant is arbitrary.",
+          "line_element": "ds^2 = F\\left(-dt^2 + d\\xi^2\\right) + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "F"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2F^3 - 2F^2\\left(\\partial_\\xi r\\right)^2 + r^2\\left(\\partial_\\xi F\\right)^2 - 4F^2\\,r\\,\\partial_\\xi^2 r - F\\,r^2\\,\\partial_\\xi^2 F}{F^3\\,r^2}",
+          "kretschmann": "K = \\dfrac{F^2\\,r^4\\left(\\partial_\\xi^2 F\\right)^2 - 2F\\,r^4\\left(\\partial_\\xi F\\right)^2\\,\\partial_\\xi^2 F + 8F^4\\,r^2\\left(\\partial_\\xi^2 r\\right)^2 - 8F^3\\,r^2\\,\\partial_\\xi F\\,\\partial_\\xi r\\,\\partial_\\xi^2 r + r^4\\left(\\partial_\\xi F\\right)^4 + 4F^2\\,r^2\\left(\\partial_\\xi F\\right)^2\\left(\\partial_\\xi r\\right)^2 + 4F^4\\left(\\partial_\\xi r\\right)^4 - 8F^5\\left(\\partial_\\xi r\\right)^2 + 4F^6}{F^6\\,r^4}"
+        }
+      ]
+    },
+    {
       "id": "small_universes",
       "name": "Small Universes",
       "short_name": "Small Universes",
@@ -67058,6 +68296,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "A vacuum of gravity in three dimensions with a mass for the graviton, with closed timelike curves and no source. They lie beyond a fixed distance from every point [reboucas2009]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "The Komar angular momentum of Xanthopoulos's cylindrical wave geometry is zero [bicak_katz_lyndenbell2008]."
         }
       ],
       "references": [
@@ -67090,7 +68333,8 @@
         "kopczynski1973",
         "trautman2006",
         "visser1998",
-        "reboucas2009"
+        "reboucas2009",
+        "bicak_katz_lyndenbell2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",
@@ -68376,6 +69620,292 @@
       ]
     },
     {
+      "id": "string_cylindrical_waves",
+      "name": "Cylindrical Waves and a Cosmic String",
+      "short_name": "String and Cylindrical Waves",
+      "description": "Outside a straight cosmic string, cylindrical gravitational waves form a vacuum geometry whose angle deficit is larger far from the axis.",
+      "tags": [
+        "vacuum",
+        "cosmic string",
+        "gravitational wave",
+        "cylindrical symmetry",
+        "time-dependent",
+        "Petrov type D",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "limit",
+          "text": "The conical exterior appears as $p\\to\\infty$ with $\\alpha p=k>1$, after scaling time and radius by $k$ [gurtug_sakalli2003]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "family",
+          "text": "The waves fit the cylindrical metric with two polarisations; $|\\alpha p|=1$ makes the axis regular [gurtug_sakalli2003]."
+        },
+        {
+          "id": "kerr",
+          "kind": "dual",
+          "text": "Xanthopoulos obtained the cylindrical waves through a complex transformation of the Kerr metric [xanthopoulos1986rotating]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "The Einstein-Rosen cylindrical waves have one polarisation; the waves around the string also have a crossed polarisation [gurtug_sakalli2003]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "Spinning cosmic strings carry angular momentum. The Komar angular momentum of the cylindrical wave geometry is zero [bicak_katz_lyndenbell2008]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "family",
+          "text": "A gravitational wave travels along a cosmic string [garfinkle1990]. Xanthopoulos's waves have cylindrical fronts around the axis [gurtug_sakalli2003]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The inverse scattering construction leads to cylindrical soliton waves around a string, with Xanthopoulos's waves in a subfamily [kleidis2010]."
+        }
+      ],
+      "references": [
+        "gurtug_sakalli2003",
+        "xanthopoulos1986cylindrical",
+        "xanthopoulos1986rotating",
+        "kleidis2010",
+        "economou_tsoubelis1988",
+        "garriga_verdaguer1987",
+        "bicak_katz_lyndenbell2008",
+        "garfinkle1990"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_cylindrical_waves.json",
+      "charts": [
+        {
+          "id": "prolate",
+          "name": "Prolate Coordinates",
+          "coordinates": [
+            "\\tau",
+            "\\sigma",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\tau\\in(-\\infty,\\infty)",
+            "\\sigma\\in(1,\\infty)",
+            "\\phi\\in[0,2\\pi)",
+            "z\\in(-\\infty,\\infty)",
+            "\\ell>0,\\quad\\alpha>0,\\quad p>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A positive length scale"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "A positive dimensionless parameter setting the angle deficits"
+            },
+            {
+              "symbol": "p",
+              "description": "A positive dimensionless wave parameter; changing its sign reverses the time and longitudinal orientations"
+            },
+            {
+              "symbol": "q = \\sqrt{1+p^2}",
+              "description": "A positive dimensionless parameter obeying $q^2-p^2=1$; the other sign reverses the angular orientation"
+            },
+            {
+              "symbol": "\\Delta = 1+\\tau^2",
+              "description": "A positive function of the prolate time"
+            },
+            {
+              "symbol": "\\delta = \\sigma^2-1",
+              "description": "A positive function of the prolate radius away from the axis"
+            },
+            {
+              "symbol": "X = (1-p\\tau)^2+q^2\\sigma^2",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "Y = X-2(1-p\\tau)",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "\\omega = 2q(1-p\\tau)\\delta/(pY)",
+              "description": "The dimensionless coupling between the angular and longitudinal directions"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\tau,\\sigma,\\phi,z)$, with $\\sigma>1$ outside the axis. The cylindrical coordinates $t=\\tau\\sigma$ and $\\rho^2=(1+\\tau^2)(\\sigma^2-1)$ have $t\\in(-\\infty,\\infty)$ and $\\rho>0$. The inverse is $\\sigma=\\sqrt{(D+1+\\rho^2-t^2)/2}$ and $\\tau=t/\\sigma$, where $D=\\sqrt{(1+\\rho^2-t^2)^2+4t^2}$. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=\\ell^2\\left(\\alpha^2 X(-d\\tau^2/\\Delta+d\\sigma^2/\\delta)+\\Delta\\delta X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}{\\tau^2 + 1}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "-\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}{\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\ell^2\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p^2\\,\\sigma^2\\,\\tau^2 + p^4\\,\\sigma^2\\,\\tau^2 + p^2\\,\\sigma^2 + 7p^2\\,\\tau^2 - 4p^3\\,\\tau^3 + p^4\\,\\sigma^2 + p^4\\,\\tau^2 + p^4\\,\\tau^4 - 4p^3\\,\\tau - 8p\\,\\tau + 3p^2 + 4\\right)}{p^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "z"
+              ],
+              "value": "-\\dfrac{2\\ell^2\\,\\sqrt{p^2 + 1}\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p\\,\\tau - 1\\right)}{p\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2\\ell^2\\,\\sqrt{p^2 + 1}\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p\\,\\tau - 1\\right)}{p\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 1\\right)}{p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(p^2\\,\\sigma^2 - p^2\\,\\tau^2 + \\sigma^2 + 2p\\,\\tau - 1\\right)\\left(14p^2\\,\\sigma^2\\,\\tau^2 + 14p^4\\,\\sigma^2\\,\\tau^2 - 28p^3\\,\\sigma^2\\,\\tau - 28p\\,\\sigma^2\\,\\tau + 14p^2\\,\\sigma^2 - 2p^2\\,\\sigma^4 - 6p^2\\,\\tau^2 + 4p^3\\,\\tau^3 - p^4\\,\\sigma^4 - p^4\\,\\tau^4 + 14\\sigma^2 - \\sigma^4 + 4p\\,\\tau - 1\\right)}{\\alpha^4\\,\\ell^4\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^6}"
+        },
+        {
+          "id": "hyperbolic",
+          "name": "Hyperbolic Coordinates",
+          "coordinates": [
+            "\\psi",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\psi\\in(-\\infty,\\infty)",
+            "\\theta\\in(0,\\infty)",
+            "\\phi\\in[0,2\\pi)",
+            "z\\in(-\\infty,\\infty)",
+            "\\ell>0,\\quad\\alpha>0,\\quad p>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A positive length scale"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "A positive dimensionless parameter setting the angle deficits"
+            },
+            {
+              "symbol": "p",
+              "description": "A positive dimensionless wave parameter; changing its sign reverses the time and longitudinal orientations"
+            },
+            {
+              "symbol": "q = \\sqrt{1+p^2}",
+              "description": "A positive dimensionless parameter obeying $q^2-p^2=1$; the other sign reverses the angular orientation"
+            },
+            {
+              "symbol": "\\tau = \\sinh\\psi",
+              "description": "The prolate time coordinate"
+            },
+            {
+              "symbol": "\\sigma = \\cosh\\theta",
+              "description": "The prolate radial coordinate"
+            },
+            {
+              "symbol": "\\Delta = 1+\\tau^2",
+              "description": "A positive function of the prolate time"
+            },
+            {
+              "symbol": "\\delta = \\sigma^2-1",
+              "description": "A positive function of the prolate radius away from the axis"
+            },
+            {
+              "symbol": "X = (1-p\\tau)^2+q^2\\sigma^2",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "Y = X-2(1-p\\tau)",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "\\omega = 2q(1-p\\tau)\\delta/(pY)",
+              "description": "The dimensionless coupling between the angular and longitudinal directions"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\psi,\\theta,\\phi,z)$, with $\\tau=\\sinh\\psi$ and $\\sigma=\\cosh\\theta$. The axis is at $\\theta=0$, where this polar chart ends. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=\\ell^2\\left(\\alpha^2X(-d\\psi^2+d\\theta^2)+\\Delta\\delta X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)e^{-2\\psi}e^{-2\\theta}}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)e^{-2\\psi}e^{-2\\theta}}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{\\theta} + 1\\right)^2\\left(e^{\\theta} - 1\\right)^2\\left(30p^2e^{2\\psi}e^{2\\theta} + p^2e^{2\\psi}e^{4\\theta} - 4p^2e^{2\\theta}e^{4\\psi} + 30p^2e^{2\\theta}e^{6\\psi} + 2p^2e^{4\\psi}e^{4\\theta} + p^2e^{4\\theta}e^{6\\psi} + 8p^3e^{2\\theta}e^{3\\psi} - 8p^3e^{2\\theta}e^{5\\psi} - 8p^3e^{2\\theta}e^{7\\psi} + 2p^4e^{2\\psi}e^{2\\theta} + p^4e^{2\\psi}e^{4\\theta} + 2p^4e^{2\\theta}e^{4\\psi} + 2p^4e^{2\\theta}e^{6\\psi} + p^4e^{2\\theta}e^{8\\psi} + 2p^4e^{4\\psi}e^{4\\theta} + p^4e^{4\\theta}e^{6\\psi} + 64p\\,e^{2\\theta}e^{3\\psi} - 64p\\,e^{2\\theta}e^{5\\psi} + 8p^3e^{\\psi}e^{2\\theta} + 64e^{2\\theta}e^{4\\psi} + p^2e^{2\\psi} + 2p^2e^{4\\psi} + p^2e^{6\\psi} + p^4e^{2\\psi} + p^4e^{2\\theta} + 2p^4e^{4\\psi} + p^4e^{6\\psi}\\right)e^{-2\\psi}e^{-2\\theta}}{16p^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2\\,\\sqrt{p^2 + 1}\\left(e^{\\theta} + 1\\right)^2\\left(e^{\\theta} - 1\\right)^2\\left(p\\,e^{2\\psi} - 2e^{\\psi} - p\\right)e^{\\psi}}{p\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\,\\sqrt{p^2 + 1}\\left(e^{\\theta} + 1\\right)^2\\left(e^{\\theta} - 1\\right)^2\\left(p\\,e^{2\\psi} - 2e^{\\psi} - p\\right)e^{\\psi}}{p\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 2e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}{p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3072\\left(4p^2e^{2\\psi}e^{2\\theta} + p^2e^{2\\psi}e^{4\\theta} - p^2e^{2\\theta}e^{4\\psi} + 4p\\,e^{2\\theta}e^{3\\psi} - 2e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} - 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} - p^2e^{2\\theta} + e^{2\\psi}\\right)\\left(14p^2e^{2\\psi}e^{2\\theta} + 4p^2e^{2\\psi}e^{4\\theta} + 14p^2e^{2\\psi}e^{6\\theta} + 20p^2e^{2\\theta}e^{4\\psi} + 14p^2e^{2\\theta}e^{6\\psi} + 92p^2e^{4\\psi}e^{4\\theta} + 20p^2e^{4\\psi}e^{6\\theta} - 2p^2e^{4\\psi}e^{8\\theta} + 4p^2e^{4\\theta}e^{6\\psi} + 14p^2e^{6\\psi}e^{6\\theta} + 56p^3e^{2\\theta}e^{3\\psi} - 56p^3e^{2\\theta}e^{5\\psi} + 136p^3e^{3\\psi}e^{4\\theta} + 56p^3e^{3\\psi}e^{6\\theta} - 136p^3e^{4\\theta}e^{5\\psi} + 8p^3e^{4\\theta}e^{7\\psi} - 56p^3e^{5\\psi}e^{6\\theta} + 14p^4e^{2\\psi}e^{2\\theta} + 32p^4e^{2\\psi}e^{4\\theta} + 14p^4e^{2\\psi}e^{6\\theta} - 32p^4e^{2\\theta}e^{4\\psi} + 14p^4e^{2\\theta}e^{6\\psi} - 68p^4e^{4\\psi}e^{4\\theta} - 32p^4e^{4\\psi}e^{6\\theta} - p^4e^{4\\psi}e^{8\\theta} + 32p^4e^{4\\theta}e^{6\\psi} - p^4e^{4\\theta}e^{8\\psi} + 14p^4e^{6\\psi}e^{6\\theta} + 56p\\,e^{2\\theta}e^{3\\psi} - 56p\\,e^{2\\theta}e^{5\\psi} + 80p\\,e^{3\\psi}e^{4\\theta} + 56p\\,e^{3\\psi}e^{6\\theta} - 80p\\,e^{4\\theta}e^{5\\psi} - 56p\\,e^{5\\psi}e^{6\\theta} - 8p^3e^{\\psi}e^{4\\theta} + 52e^{2\\theta}e^{4\\psi} + 90e^{4\\psi}e^{4\\theta} + 52e^{4\\psi}e^{6\\theta} - e^{4\\psi}e^{8\\theta} - 2p^2e^{4\\psi} - p^4e^{4\\psi} - p^4e^{4\\theta} - e^{4\\psi}\\right)e^{6\\psi}e^{6\\theta}}{\\alpha^4\\,\\ell^4\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "sultana_dyer",
       "name": "Sultana-Dyer Black Hole in an Expanding Universe",
       "short_name": "Sultana-Dyer",
@@ -68888,6 +70418,140 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{\\ell^2}",
           "kretschmann": "K = \\dfrac{48m^2\\left(q^2 - p^2\\right)\\left(\\left(q^2 + p^2\\right)^2 - 16p^2q^2\\right)}{\\left(q^2 + p^2\\right)^6} + \\dfrac{24}{\\ell^4}"
+        }
+      ]
+    },
+    {
+      "id": "superconducting_string",
+      "name": "Superconducting Cosmic String",
+      "short_name": "Superconducting Cosmic String",
+      "description": "The exterior of a straight superconducting cosmic string carrying a current and surrounded by a magnetic field.",
+      "tags": [
+        "topological defect",
+        "cosmic string",
+        "electrovacuum",
+        "electromagnetic field",
+        "magnetic field",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "static",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use Gaussian electromagnetic units with $c=G=1$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "With zero current and zero cylindrical mass parameter, the exterior becomes the cone around a straight cosmic string [eiroasimeone2004cylindrical]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "At $k = 0$, the exterior is a static vacuum cylinder with Weyl parameter $d = -m$ [eiroasimeone2004cylindrical]."
+        }
+      ],
+      "references": [
+        "sen1999superconducting",
+        "mosspoletti1987superconducting",
+        "witten1985superconducting",
+        "eiroasimeone2004cylindrical",
+        "babul1988curvature",
+        "dimopoulos1998magnetic",
+        "linet1989superconducting"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/superconducting_string.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (r_c,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "z \\in (-\\infty,\\infty)",
+            "\\ell>0,\\quad r_c>0,\\quad W>0,\\quad k\\geq 0,\\quad -1<m<1"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Dimensionless cylindrical field parameter"
+            },
+            {
+              "symbol": "k",
+              "description": "Nonnegative dimensionless current parameter"
+            },
+            {
+              "symbol": "W",
+              "description": "Positive angular scale"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Positive radial scaling length"
+            },
+            {
+              "symbol": "r_c",
+              "description": "Radius of the string core"
+            },
+            {
+              "symbol": "F = \\dfrac{(r/\\ell)^m+k(r/\\ell)^{-m}}{1+k}",
+              "description": "Radial function of the exterior"
+            },
+            {
+              "symbol": "H = \\dfrac{(r/\\ell)^m-k(r/\\ell)^{-m}}{1+k}",
+              "description": "Radial function used in the curvature"
+            },
+            {
+              "symbol": "P = (r/\\ell)^{2m^2}",
+              "description": "Radial power used in the line element"
+            }
+          ],
+          "convention": "We use cylindrical coordinates $(t,r,\\phi,z)$, with $t$, $r$, and $z$ measured as lengths and $\\phi$ periodic in $2\\pi$. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2 = F^2\\left(P\\left(-dt^2+dr^2\\right)+W^2r^2d\\phi^2\\right)+F^{-2}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F^2\\,P"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "F^2\\,P"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "F^2\\,W^2\\,r^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{1}{F^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(2F^2\\,H^2\\,m^4 + 6F\\,H^3\\,m^3 + 6F\\,H^3\\,m + 2F^2\\,H^2 + F^4\\,m^2 + 7H^4\\,m^2\\right)}{F^8\\,P^2\\,r^4}"
         }
       ]
     },
@@ -69810,6 +71474,11 @@
           "id": "moncrief_taub_nut",
           "kind": "family",
           "text": "Inhomogeneous toroidal vacuum cosmologies admit extensions of Taub-NUT type across compact Cauchy horizons [moncrief1981nut]."
+        },
+        {
+          "id": "atiyah_hitchin",
+          "kind": "family",
+          "text": "Atiyah and Hitchin's space of two monopoles, which far from its core is Taub-NUT in Euclidean signature, self dual and with a negative mass. Its exponentially small corrections keep it smooth where that negative mass alone would leave a singularity [gibbonsmanton1995, tong2005]."
         }
       ],
       "references": [
@@ -69843,7 +71512,9 @@
         "clement2016",
         "astorino2022swirling",
         "newman1962tamburino",
-        "moncrief1981nut"
+        "moncrief1981nut",
+        "gibbonsmanton1995",
+        "tong2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -73231,6 +74902,11 @@
           "id": "holographic_superconductor",
           "kind": "family",
           "text": "The flat black hole given a charge and a charged scalar condensate below a critical temperature, the holographic superconductor, whose inside has no inner horizon and ends at a spacelike Kasner singularity [hartnoll2021diving]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "family",
+          "text": "Static fields around a line of mass with a cosmological constant. With $\\sigma = 1/2$ and $\\Lambda < 0$ the field is the flat hole's black string outside its horizon [zofka2008, lemos1995]."
         }
       ],
       "references": [
@@ -73263,7 +74939,8 @@
         "maldacena1998",
         "kraus1999",
         "gnecchi2014",
-        "hartnoll2021diving"
+        "hartnoll2021diving",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
@@ -75275,6 +76952,11 @@
           "id": "vaidya_patel_kerr",
           "kind": "family",
           "text": "The radiating star set spinning, its rotation parameter growing as its mass radiates away [vaidya1989kerr]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "generalisation",
+          "text": "A radiating spherical body in a universe with a positive cosmological constant."
         }
       ],
       "references": [
@@ -76431,6 +78113,21 @@
           "id": "penrose_impulsive_wave",
           "kind": "composite",
           "text": "A string that snaps. Ahead of the wave it sends out the cone is still there, and behind the wave space is flat with no wedge missing [gleiser1989splitting, podolsky2000snapping]."
+        },
+        {
+          "id": "superconducting_string",
+          "kind": "generalisation",
+          "text": "A current along a string produces a magnetic field and curves the exterior [sen1999superconducting]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "limit_source",
+          "text": "A limit of cylindrical waves around a string reaches this conical exterior: take $p\\to\\infty$ with $\\alpha p=k>1$ and scale time and radius by $k$ [gurtug_sakalli2003]."
+        },
+        {
+          "id": "linet_tian",
+          "kind": "generalisation",
+          "text": "A string in a universe with a cosmological constant. Bernard Linet and Qingjun Tian each found the static cylindrical vacuum with $\\Lambda$ in 1986 to describe the field outside one [zofka2008]."
         }
       ],
       "references": [
@@ -76459,7 +78156,10 @@
         "garfinkle1990",
         "staruszkiewicz1963",
         "gleiser1989splitting",
-        "podolsky2000snapping"
+        "podolsky2000snapping",
+        "sen1999superconducting",
+        "gurtug_sakalli2003",
+        "zofka2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
@@ -78914,6 +80614,144 @@
           ],
           "ricci_scalar": "R = 4\\lambda^2m\\,e^{-2\\lambda x}",
           "kretschmann": "K = 16\\lambda^4m^2e^{-4\\lambda x}"
+        }
+      ]
+    },
+    {
+      "id": "york_equilibrium",
+      "name": "Black Hole in Thermal Equilibrium with Radiation",
+      "short_name": "York Equilibrium",
+      "description": "A static black hole in thermal equilibrium with a conformal scalar field, including its first order gravitational back reaction.",
+      "tags": [
+        "black hole",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "In units $G=c=1$, the mass function is $m(r)=M(1+\\epsilon\\mu)$ and the redshift potential is $\\rho-B$. The metric and its derived tensors are retained through first order in $\\epsilon=\\hbar/M^2$. The wall is at $R=r_{\\rm B}$; the vacuum exterior has mass $m(R)$.",
+      "related": [
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The vacuum geometry underlying the scalar field calculation, recovered as $\\hbar$ tends to zero [hochberg1994potential]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "A black hole in anti-de Sitter space, with thermal radiation confined by its gravitational potential and reflecting boundary conditions [taylor2021backreaction, hawking1983]."
+        },
+        {
+          "id": "string_black_hole",
+          "kind": "family",
+          "text": "A black hole threaded by a cosmic string, whose thermal properties Erik A. Martinez and James W. York, Jr. studied with the Euclidean action [martinez1990]."
+        }
+      ],
+      "references": [
+        "york1993dressed",
+        "york1985equilibrium",
+        "hochberg1994potential",
+        "taylor2021backreaction",
+        "page1982thermal",
+        "howard1984stress",
+        "hochberg1995canonical",
+        "york1986canonical",
+        "andre2021canonical",
+        "hawking1983",
+        "martinez1990"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/york_equilibrium.json",
+      "charts": [
+        {
+          "id": "areal",
+          "name": "Areal Radius",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (2M,R)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "M>0,\\quad R>2M"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "The renormalized black hole mass as a length, with horizon $r=2M$"
+            },
+            {
+              "symbol": "R",
+              "description": "The areal radius of the reflecting wall, $R=r_{\\rm B}$"
+            },
+            {
+              "symbol": "\\epsilon",
+              "description": "The dimensionless expansion parameter $\\epsilon=\\hbar/M^2$"
+            },
+            {
+              "symbol": "N = 3840\\pi",
+              "description": "The numerical constant $N=3840\\pi$"
+            },
+            {
+              "symbol": "w = \\dfrac{2M}{r}",
+              "description": "The dimensionless inverse areal radius"
+            },
+            {
+              "symbol": "b = \\dfrac{2M}{R}",
+              "description": "The value of $w$ at the wall"
+            },
+            {
+              "symbol": "\\mu = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}w^{-3}+2w^{-2}+6w^{-1}-8\\ln\\left(w\\right)-10w-6w^2+22w^3-\\dfrac{44}{3}\\right)",
+              "description": "The dimensionless scalar field mass correction"
+            },
+            {
+              "symbol": "\\rho = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}w^{-2}+4w^{-1}-8\\ln\\left(w\\right)-\\dfrac{40}{3}w-10w^2-\\dfrac{28}{3}w^3+28\\right)",
+              "description": "The dimensionless scalar field redshift correction"
+            },
+            {
+              "symbol": "B = \\dfrac{1}{2N}\\left(\\dfrac{2}{3}b^{-2}+4b^{-1}-8\\ln\\left(b\\right)-\\dfrac{40}{3}b-10b^2-\\dfrac{28}{3}b^3+28\\right)",
+              "description": "The value of $\\rho$ at the wall, $B=\\rho(R)$"
+            }
+          ],
+          "convention": "The coordinate $r$ is the areal radius and $t$ is the time matched to the Schwarzschild exterior at the reflecting wall. A dot in the geodesic equations denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=-\\left(1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)\\right)\\left(1+2\\epsilon\\left(\\rho-B\\right)\\right)dt^2+\\dfrac{dr^2}{1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)}+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{896M^6\\,\\epsilon + R^5\\,\\epsilon\\,r - 448M^5\\,\\epsilon\\,r + 480M^5\\,R\\,\\epsilon - 2M\\,R^5\\,\\epsilon + 320M^4\\,R^2\\,\\epsilon - 240M^4\\,R\\,\\epsilon\\,r + 46080M^3\\,R^3\\,\\pi - 336M^3\\,R^3\\,\\epsilon - 24M^2\\,R^4\\,\\epsilon + 12M\\,R^4\\,\\epsilon\\,r - 160M^3\\,R^2\\,\\epsilon\\,r - 23040M^2\\,R^3\\,r\\,\\pi + 168M^2\\,R^3\\,\\epsilon\\,r + 96M^3\\,R^3\\,\\epsilon\\,\\ln\\left(2\\right) + 92160M^3\\,R^3\\,\\epsilon\\,\\rho\\,\\pi + 46080M^3\\,R^3\\,\\epsilon\\,\\mu\\,\\pi + 96M^3\\,R^3\\,\\epsilon\\,\\ln\\left(\\dfrac{M}{R}\\right) - 48M^2\\,R^3\\,\\epsilon\\,r\\,\\ln\\left(2\\right) - 46080M^2\\,R^3\\,\\epsilon\\,r\\,\\rho\\,\\pi - 48M^2\\,R^3\\,\\epsilon\\,r\\,\\ln\\left(\\dfrac{M}{R}\\right)}{23040M^2\\,R^3\\,r\\,\\pi}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r\\left(2M\\,\\epsilon\\,\\mu - 2M + r\\right)}{\\left(2M - r\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\epsilon\\left(M\\,r\\,\\partial_r^2\\mu + 2M\\,r\\,\\partial_r^2\\rho - r^2\\,\\partial_r^2\\rho + 2M\\,\\partial_r\\mu + M\\,\\partial_r\\rho - 2r\\,\\partial_r\\rho\\right)}{r^2}",
+          "kretschmann": "K = \\dfrac{16M\\left(M\\,\\epsilon\\,r^2\\,\\partial_r^2\\mu + 2M\\,\\epsilon\\,r^2\\,\\partial_r^2\\rho - 4M\\,\\epsilon\\,r\\,\\partial_r\\mu - 5M\\,\\epsilon\\,r\\,\\partial_r\\rho + \\epsilon\\,r^2\\,\\partial_r\\rho - \\epsilon\\,r^3\\,\\partial_r^2\\rho + 6M\\,\\epsilon\\,\\mu + 3M\\right)}{r^6}"
         }
       ]
     },
