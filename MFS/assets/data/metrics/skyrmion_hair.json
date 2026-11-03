@@ -1,0 +1,98 @@
+{
+  "id": "skyrmion_hair",
+  "name": "Black Hole with Skyrmion Hair",
+  "short_name": "Skyrmion Black Hole",
+  "description": "A static spherical black hole surrounded by a self-gravitating Skyrme field, with a fractional baryon number outside its horizon.",
+  "tags": [
+    "black hole",
+    "soliton",
+    "numerical solution",
+    "asymptotically flat",
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "four-dimensional",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use $c=1$ and keep $G$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A horizon cuts through a skyrmion, leaving part of its field outside. The field has energy and curves the space around the hole. For a static, spherically symmetric solution, $ds^2=-N(r)^2C(r)dt^2+dr^2/C(r)+r^2d\\Omega^2$, with $C(r)=1-2Gm(r)/r$ and $c=1$ [shiiki2005skyrme]. The horizon lies where $C(r_h)=0$, and the functions approach $N=1$ and $m=M$ far away [dvali2016skyrmion].¶A skyrmion is a localized configuration of a nonlinear field used to model a baryon. In the spherical configuration the field points radially in its internal space, with an angle $f(r)$ that falls to zero at infinity [shiiki2005skyrme]. If its value at the horizon is $f_h$, the baryon number outside the horizon is $B_{\\rm out}=(2f_h-\\sin 2f_h)/(2\\pi)$ [shiiki2005skyrme]. For $0<f_h<\\pi$, the baryon number outside the horizon is fractional [shiiki2005skyrme].¶Hugh Luckock and Ian Moss studied a skyrmion around a Schwarzschild black hole in 1986 [shiiki2005skyrme, luckock1986]. The Schwarzschild geometry in their calculation has a fixed mass, while the skyrmion field occupies the exterior [shiiki2005skyrme, dvali2016skyrmion]. Serge Droz, Markus Heusler, and Norbert Straumann included the gravity of the field and found static black holes with Skyrme hair numerically in 1991 [dvali2016skyrmion, droz1991]. Their solutions approach Schwarzschild's geometry far from the hole [droz1991].¶The field and the geometry obey coupled equations, and the values at the horizon are chosen to meet the conditions at infinity [shiiki2005skyrme]. Two solutions can share the same horizon radius and coupling constants while carrying different field profiles [dvali2016skyrmion]. A linear stability analysis distinguishes a branch stable against spherical perturbations from another with an unstable mode [shiiki2005skyrme, dvali2016skyrmion].¶The massless pion model has a dimensionless coupling $\\alpha=4\\pi G F_\\pi^2$, where $F_\\pi$ is the pion decay constant [shiiki2005skyrme]. For a fixed coupling, skyrmion black holes have been found up to a maximum horizon radius [dvali2016skyrmion]. As the horizon radius shrinks to zero, the solutions approach gravitating skyrmions [shiiki2005skyrme]. Far from the horizon the profile falls as $1/r^2$ [dvali2016skyrmion].",
+  "related": [
+    {
+      "id": "schwarzschild",
+      "kind": "family",
+      "text": "The vacuum black hole approached far from the skyrmion, with the same total mass [dvali2016skyrmion]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "A spherical black hole with a scalar field coupled to its electromagnetic field [horowitz1992, garfinkle1991]."
+    },
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "family",
+      "text": "A spherical Yang-Mills field held together by its gravity, with a regular centre [volkov1999, bartnik1988]."
+    }
+  ],
+  "references": [
+    "shiiki2005skyrme",
+    "dvali2016skyrmion",
+    "luckock1986",
+    "droz1991",
+    "horowitz1992",
+    "garfinkle1991",
+    "volkov1999",
+    "bartnik1988"
+  ],
+  "coordinates": [
+    {
+      "id": "areal",
+      "name": "Areal Radius",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (r_h, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "N = N(r)",
+          "description": "Dimensionless lapse, normalized to $N\\to 1$ far away."
+        },
+        {
+          "symbol": "C = C(r)",
+          "description": "Dimensionless radial function, $C=1-2Gm(r)/r$, with $C(r_h)=0$ and $C>0$ outside the horizon."
+        },
+        {
+          "symbol": "m = m(r)",
+          "description": "Mass inside the sphere of area $4\\pi r^2$, approaching $M$ at infinity."
+        },
+        {
+          "symbol": "f = f(r)",
+          "description": "Dimensionless Skyrme profile, with $f(\\infty)=0$ and $f(r_h)=f_h$."
+        },
+        {
+          "symbol": "r_h",
+          "description": "Areal radius of the event horizon."
+        },
+        {
+          "symbol": "G",
+          "description": "Newton gravitational constant."
+        },
+        {
+          "symbol": "M",
+          "description": "Total mass measured at infinity."
+        }
+      ],
+      "convention": "The chart covers the static exterior, with $r$ the areal radius.",
+      "line_element": "ds^2 = -N^2 C dt^2 + dr^2/C + r^2(d\\theta^2 + \\sin^2\\theta d\\phi^2)"
+    }
+  ]
+}
