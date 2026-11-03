@@ -31598,12 +31598,12 @@ CAPTIONS = {
         "axis, across this plane.",
     ],
     ("linet_tian", "positive"): [
-        "The plane of $t$ and $\\rho$ of the member $\\sigma = 1/4$ with $\\Lambda > 0$, a strip between the singular "
-        "axis and the regular far axis, which light crosses in $ct = 4.59\\,\\ell$.",
+        "The plane of $t$ and $\\rho$ of the member $\\sigma = 1/4$ ($\\Lambda > 0$), a strip between the singular axis "
+        "and the regular far axis.",
     ],
     ("linet_tian", "negative"): [
-        "The plane of $t$ and $\\rho$ of Bonnor's universe, $\\sigma = 0$ with $\\Lambda < 0$, a strip from the regular "
-        "axis to the conformal boundary, which light reaches in $ct = 4.21\\,\\ell$.",
+        "The plane of $t$ and $\\rho$ of Bonnor's universe ($\\sigma = 0$, $\\Lambda < 0$), a strip from the regular "
+        "axis to the conformal boundary.",
     ],
     ("levi_civita", "weyl"): [
         "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "

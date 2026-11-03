@@ -20137,12 +20137,11 @@ CAPTIONS = {
         "lie level where they meet, with one tangent plane.",
     ],
     ("linet_tian", "positive"): [
-        "The member $\\sigma = 1/4$ at one moment ($\\psi = 0$): a horn of circles of radius "
-        "$(2\\sin(\\rho/2\\ell))^{2/3}\\ell$ widening into a tube at the far axis $\\rho = \\pi\\ell$.",
+        "The member $\\sigma = 1/4$ at one moment ($\\psi = 0$), a horn widening into a tube at the far axis "
+        "$\\rho = \\pi\\ell$.",
     ],
     ("linet_tian", "negative"): [
-        "Bonnor's universe, $\\sigma = 0$, at one moment ($z = 0$), in Minkowski space: circles of radius "
-        "$2\\sinh(\\rho/2\\ell)\\cosh^{-1/3}(\\rho/2\\ell)\\,\\ell$ about a regular axis.",
+        "Bonnor's universe ($\\sigma = 0$) at one moment ($z = 0$), drawn in Minkowski space about its regular axis.",
     ],
     ("levi_civita", "field"): [
         "The plane $z = 0$ around Levi-Civita's line of mass at one moment ($\\sigma = 1/4$, $C = 1$), drawn as a "

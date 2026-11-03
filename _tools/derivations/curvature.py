@@ -15080,14 +15080,13 @@ def linet_tian(ck, src):
                np.all(np.diff(sampled_K) < 0) and abs(float(K.exact([40.0] + values)) - floor) < 1e-9)
         curves = line_curves(ck, name, "K", "K", K, "\\rho", x_axis, scale, PLOT_W / aspect, params)
         if vid == "positive":
-            caption = ("The Kretschmann scalar $K$ of the member $\\sigma = 1/4$ with $\\Lambda > 0$ against $\\rho$, "
-                       "diverging toward the singular axis and falling to $4\\Lambda^2$ at the far axis "
-                       "$\\rho = \\pi\\ell$; $R = 4\\Lambda$.")
+            caption = ("The Kretschmann scalar of the member $\\sigma = 1/4$ ($\\Lambda > 0$) against $\\rho$, "
+                       "diverging at the singular axis and finite, $4\\Lambda^2$, at the far axis.")
             clip = "We draw $K\\ell^4$ on a logarithmic scale from $10^{-1}$ to $10^4$; every value drawn lies within it."
             settings = "$\\sigma = 1/4$, $B = C = 1$, $\\ell = 1/\\sqrt{3\\Lambda}$."
         else:
-            caption = ("The Kretschmann scalar $K$ of Bonnor's universe, $\\sigma = 0$ with $\\Lambda < 0$, against "
-                       "$\\rho$, falling from $4\\Lambda^2$ on the regular axis toward $8\\Lambda^2/3$; $R = 4\\Lambda$.")
+            caption = ("The Kretschmann scalar of Bonnor's universe ($\\sigma = 0$, $\\Lambda < 0$) against $\\rho$, "
+                       "falling from $4\\Lambda^2$ on the axis toward $8\\Lambda^2/3$.")
             clip = "We draw $K\\ell^4$ on a linear scale from $0.25$ to $0.5$; every value drawn lies within it."
             settings = "$\\sigma = 0$, $C = 1$, $\\ell = 1/\\sqrt{-3\\Lambda}$."
         views.append({

@@ -12522,21 +12522,20 @@ CAPTIONS = {
         "$\\alpha = \\alpha_1 + \\alpha_2 - 1 = 1/2$, so the two masses add.",
     ],
     ("linet_tian", "toroidal", "radial"): [
-        "The plane of $t$ and $\\rho$ at $\\psi = 0$, $\\phi = 0$ of the member $\\sigma = 1/4$, its rays null geodesics, "
-        "from the singular axis to the far axis $\\rho = \\pi$, where the circles of $\\psi$ close and a ray passes on "
-        "to $\\psi = \\pi$.",
+        "The plane of $t$ and $\\rho$ ($\\psi = 0$, $\\phi = 0$) of the member $\\sigma = 1/4$, from the singular axis "
+        "to the regular far axis $\\rho = \\pi$.",
     ],
     ("linet_tian", "gleiser", "radial"): [
-        "The plane of $t$ and $y$ at $z = 0$, $\\phi = 0$ of the member $\\sigma = 1/4$, the toroidal chart's plane with "
-        "$y = 3\\sin^2(\\rho/2)$, from the singular axis $y = 0$ to the far axis $y = 3$.",
+        "The plane of $t$ and $y$ ($z = 0$, $\\phi = 0$) of the member $\\sigma = 1/4$, from the singular axis $y = 0$ "
+        "to the regular far axis $y = 3$.",
     ],
     ("linet_tian", "cylindrical", "radial"): [
-        "The plane of $t$ and $\\rho$ at $z = 0$, $\\phi = 0$ of Bonnor's universe, $\\sigma = 0$, its rays null "
-        "geodesics, $c\\,dt/d\\rho = \\pm\\cosh^{-2/3}(\\rho/2)$, which flatten far from the regular axis.",
+        "The plane of $t$ and $\\rho$ ($z = 0$, $\\phi = 0$) of Bonnor's universe ($\\sigma = 0$), outward from its "
+        "regular axis.",
     ],
     ("linet_tian", "sarioglu_tekin", "radial"): [
-        "The plane of $t$ and $r$ at $z = 0$, $\\phi = 0$ of Bonnor's universe, $\\sigma = 0$, the cylindrical chart's "
-        "plane with $r = \\cosh^{2/3}(\\rho/2)$, its rays vertical at the regular axis $r = r_0$ and flatter far out.",
+        "The plane of $t$ and $r$ ($z = 0$, $\\phi = 0$) of Bonnor's universe ($\\sigma = 0$), outward from its "
+        "regular axis $r = r_0$.",
     ],
     ("levi_civita", "weyl", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder ($\\sigma = 1/4$). The metric "
