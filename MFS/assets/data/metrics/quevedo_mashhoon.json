@@ -142,12 +142,12 @@
           "description": "Length $\\omega=-2a-2\\sigma(H/R)e^{2q\\delta P_2Q_2}$"
         },
         {
-          "symbol": "\\gamma = \\gamma(x,y)",
-          "description": "Dimensionless function $e^{2\\gamma}=\\tfrac14(1+M/\\sigma)^2 R(x^2-1)^{-\\delta}e^{2\\delta^2\\chi}$"
+          "symbol": "h = h(x,y)",
+          "description": "Dimensionless function $h=e^{2\\gamma}=\\tfrac14(1+M/\\sigma)^2 R(x^2-1)^{-\\delta}e^{2\\delta^2\\chi}$, where $\\gamma$ is the source function"
         }
       ],
       "convention": "The coordinates $x$ and $y$ are dimensionless.",
-      "line_element": "ds^2=-f\\left(dt-\\omega\\,d\\phi\\right)^2+\\dfrac{\\sigma^2}{f}\\left(e^{2\\gamma}(x^2-y^2)\\left(\\dfrac{dx^2}{x^2-1}+\\dfrac{dy^2}{1-y^2}\\right)+(x^2-1)(1-y^2)d\\phi^2\\right)"
+      "line_element": "ds^2=-f\\left(dt-\\omega\\,d\\phi\\right)^2+\\dfrac{\\sigma^2}{f}\\left(h(x^2-y^2)\\left(\\dfrac{dx^2}{x^2-1}+\\dfrac{dy^2}{1-y^2}\\right)+(x^2-1)(1-y^2)d\\phi^2\\right)"
     },
     {
       "id": "spherical",
@@ -271,12 +271,12 @@
           "description": "Length $\\omega=-2a-2\\sigma(H/R)e^{2q\\delta P_2Q_2}$"
         },
         {
-          "symbol": "\\gamma = \\gamma(r,\\theta)",
-          "description": "Dimensionless function $e^{2\\gamma}=\\tfrac14(1+M/\\sigma)^2 R(x^2-1)^{-\\delta}e^{2\\delta^2\\chi}$"
+          "symbol": "h = h(r,\\theta)",
+          "description": "Dimensionless function $h=e^{2\\gamma}=\\tfrac14(1+M/\\sigma)^2 R(x^2-1)^{-\\delta}e^{2\\delta^2\\chi}$, where $\\gamma$ is the source function"
         }
       ],
       "convention": "We use $r=M+\\sigma x$ and $y=\\cos\\theta$.",
-      "line_element": "ds^2=-f\\left(dt-\\omega\\,d\\phi\\right)^2+\\dfrac{1}{f}\\left(e^{2\\gamma}\\left((r-M)^2-\\sigma^2\\cos^2\\theta\\right)\\left(\\dfrac{dr^2}{r^2-2Mr+a^2}+d\\theta^2\\right)+(r^2-2Mr+a^2)\\sin^2\\theta\\,d\\phi^2\\right)"
+      "line_element": "ds^2=-f\\left(dt-\\omega\\,d\\phi\\right)^2+\\dfrac{1}{f}\\left(h\\left((r-M)^2-\\sigma^2\\cos^2\\theta\\right)\\left(\\dfrac{dr^2}{r^2-2Mr+a^2}+d\\theta^2\\right)+(r^2-2Mr+a^2)\\sin^2\\theta\\,d\\phi^2\\right)"
     }
   ]
 }

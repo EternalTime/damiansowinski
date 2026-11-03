@@ -55,10 +55,10 @@ def chart_spec(system):
     coords = saved['coords']
     args = '(x,y)' if system == 'prolate_spheroidal' else '(r,\\theta)'
     parameters = ['\\sigma', 'M', 'a', 'f = f' + args,
-                  '\\omega = \\omega' + args, '\\gamma = \\gamma' + args]
+                  '\\omega = \\omega' + args, 'h = h' + args]
     probe = vm.Reader(coords, parameters, ())
     u, v = probe.symbol[coords[1]], probe.symbol[coords[2]]
-    funcs = [probe.parameters[n] for n in ('f', 'omega', 'gamma')]
+    funcs = [probe.parameters[n] for n in ('f', 'omega', 'h')]
     lead = list(funcs)
     for fn in funcs:
         lead.extend([sp.Derivative(fn, u), sp.Derivative(fn, v),
@@ -96,7 +96,7 @@ def check_chart(chart, system):
             expected = [[-f,0,0,f*omega], [0,xx,0,0], [0,0,yy,0],
                         [f*omega,0,0,sigma*sigma*(x*x-1)*(1-y*y)/f-f*omega*omega]]
             values = {chart.symbols[1]: sp.Float(str(point[0]), 40), chart.symbols[2]: sp.Float(str(point[1]), 40)}
-            for name, val in [('sigma',sigma), ('M',mass), ('a',spin), ('f',f), ('omega',omega), ('gamma',mp.log(eg)/2)]:
+            for name, val in [('sigma',sigma), ('M',mass), ('a',spin), ('f',f), ('omega',omega), ('h',eg)]:
                 values[chart.reader.parameters[name]] = sp.Float(str(val), 40)
             for i in range(4):
                 for j in range(4):
