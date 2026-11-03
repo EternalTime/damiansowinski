@@ -27,5 +27,256 @@
     "boshkayev2012qm"
   ],
   "related": [],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "prolate_spheroidal",
+      "name": "Prolate spheroidal",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (1, \\infty)",
+        "y \\in (-1, 1)",
+        "\\phi \\in [0, 2\\pi)",
+        "f \\ne 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass parameter, a length with $M>0$; the mass at infinity is $M_0=M+\\sigma(\\delta-1)$"
+        },
+        {
+          "symbol": "a",
+          "description": "Rotation parameter, a length with $|a|<M$; for $\\delta=1$ the angular momentum is $Ma$"
+        },
+        {
+          "symbol": "q",
+          "description": "Dimensionless deformation parameter; for $\\delta=1$ the mass quadrupole is $M_2=-Ma^2+2q\\sigma^3/15$"
+        },
+        {
+          "symbol": "\\delta",
+          "description": "Dimensionless Zipoy-Voorhees parameter; $\\delta=1$ selects the three parameter solution"
+        },
+        {
+          "symbol": "\\sigma",
+          "description": "Length $\\sigma=\\sqrt{M^2-a^2}$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Dimensionless constant $\\alpha=-a/(M+\\sigma)$, the continuous form of $(\\sigma-M)/a$"
+        },
+        {
+          "symbol": "P_2",
+          "description": "Legendre polynomial $P_2=(3y^2-1)/2$"
+        },
+        {
+          "symbol": "Q_0",
+          "description": "Legendre function $Q_0=\\tfrac12\\ln((x+1)/(x-1))$"
+        },
+        {
+          "symbol": "Q_1",
+          "description": "Legendre function $Q_1=xQ_0-1$"
+        },
+        {
+          "symbol": "Q_2",
+          "description": "Legendre function $Q_2=(3x^2-1)Q_0/2-3x/2$, with $Q_2^{\\prime}=dQ_2/dx$"
+        },
+        {
+          "symbol": "\\delta_+",
+          "description": "Auxiliary function $\\delta_+=\\tfrac12\\ln((x+y)^2/(x^2-1))+\\tfrac32(1-y^2-xy)+\\tfrac34(x(1-y^2)-y(x^2-1))\\ln((x-1)/(x+1))$"
+        },
+        {
+          "symbol": "\\delta_-",
+          "description": "Auxiliary function $\\delta_-=\\tfrac12\\ln((x-y)^2/(x^2-1))+\\tfrac32(1-y^2+xy)+\\tfrac34(x(1-y^2)+y(x^2-1))\\ln((x-1)/(x+1))$"
+        },
+        {
+          "symbol": "\\lambda",
+          "description": "Auxiliary function $\\lambda=\\alpha(x^2-1)^{1-\\delta}(x+y)^{2\\delta-2}e^{2q\\delta\\delta_+}$"
+        },
+        {
+          "symbol": "\\eta",
+          "description": "Auxiliary function $\\eta=\\alpha(x^2-1)^{1-\\delta}(x-y)^{2\\delta-2}e^{2q\\delta\\delta_-}$"
+        },
+        {
+          "symbol": "A_+",
+          "description": "Auxiliary function $A_+=(x+1)^{\\delta-1}[x(1-\\lambda\\eta)+(1+\\lambda\\eta)]$"
+        },
+        {
+          "symbol": "A_-",
+          "description": "Auxiliary function $A_-=(x-1)^{\\delta-1}[x(1-\\lambda\\eta)-(1+\\lambda\\eta)]$"
+        },
+        {
+          "symbol": "B_+",
+          "description": "Auxiliary function $B_+=(x+1)^{\\delta-1}[y(\\lambda+\\eta)-(\\lambda-\\eta)]$"
+        },
+        {
+          "symbol": "B_-",
+          "description": "Auxiliary function $B_-=(x-1)^{\\delta-1}[y(\\lambda+\\eta)+(\\lambda-\\eta)]$"
+        },
+        {
+          "symbol": "R",
+          "description": "Auxiliary function $R=A_+A_-+B_+B_-$"
+        },
+        {
+          "symbol": "L",
+          "description": "Auxiliary function $L=A_+^2+B_+^2$"
+        },
+        {
+          "symbol": "H",
+          "description": "Auxiliary function $H=(x+1)^{\\delta-1}[x(1-y^2)(\\lambda+\\eta)A_++y(x^2-1)(1-\\lambda\\eta)B_+]$"
+        },
+        {
+          "symbol": "\\chi",
+          "description": "Auxiliary function $\\chi=\\tfrac12(1+q)^2\\ln((x^2-1)/(x^2-y^2))+2q(1-P_2)Q_1+q^2(1-P_2)[(1+P_2)(Q_1^2-Q_2^2)+\\tfrac12(x^2-1)(2Q_2^2-3xQ_1Q_2+3Q_0Q_2-Q_2^{\\prime})]$"
+        },
+        {
+          "symbol": "f = f(x,y)",
+          "description": "Dimensionless function $f=(R/L)e^{-2q\\delta P_2Q_2}$"
+        },
+        {
+          "symbol": "\\omega = \\omega(x,y)",
+          "description": "Length $\\omega=-2a-2\\sigma(H/R)e^{2q\\delta P_2Q_2}$"
+        },
+        {
+          "symbol": "\\gamma = \\gamma(x,y)",
+          "description": "Dimensionless function $e^{2\\gamma}=\\tfrac14(1+M/\\sigma)^2 R(x^2-1)^{-\\delta}e^{2\\delta^2\\chi}$"
+        }
+      ],
+      "convention": "The coordinates $x$ and $y$ are dimensionless.",
+      "line_element": "ds^2=-f\\left(dt-\\omega\\,d\\phi\\right)^2+\\dfrac{\\sigma^2}{f}\\left[e^{2\\gamma}(x^2-y^2)\\left(\\dfrac{dx^2}{x^2-1}+\\dfrac{dy^2}{1-y^2}\\right)+(x^2-1)(1-y^2)d\\phi^2\\right]"
+    },
+    {
+      "id": "spherical",
+      "name": "Spheroidal",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (M+\\sigma, \\infty)",
+        "\\theta \\in (0, \\pi)",
+        "\\phi \\in [0, 2\\pi)",
+        "f \\ne 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass parameter, a length with $M>0$; the mass at infinity is $M_0=M+\\sigma(\\delta-1)$"
+        },
+        {
+          "symbol": "a",
+          "description": "Rotation parameter, a length with $|a|<M$; for $\\delta=1$ the angular momentum is $Ma$"
+        },
+        {
+          "symbol": "q",
+          "description": "Dimensionless deformation parameter; for $\\delta=1$ the mass quadrupole is $M_2=-Ma^2+2q\\sigma^3/15$"
+        },
+        {
+          "symbol": "\\delta",
+          "description": "Dimensionless Zipoy-Voorhees parameter; $\\delta=1$ selects the three parameter solution"
+        },
+        {
+          "symbol": "\\sigma",
+          "description": "Length $\\sigma=\\sqrt{M^2-a^2}$"
+        },
+        {
+          "symbol": "\\alpha",
+          "description": "Dimensionless constant $\\alpha=-a/(M+\\sigma)$, the continuous form of $(\\sigma-M)/a$"
+        },
+        {
+          "symbol": "P_2",
+          "description": "Legendre polynomial $P_2=(3y^2-1)/2$"
+        },
+        {
+          "symbol": "Q_0",
+          "description": "Legendre function $Q_0=\\tfrac12\\ln((x+1)/(x-1))$"
+        },
+        {
+          "symbol": "Q_1",
+          "description": "Legendre function $Q_1=xQ_0-1$"
+        },
+        {
+          "symbol": "Q_2",
+          "description": "Legendre function $Q_2=(3x^2-1)Q_0/2-3x/2$, with $Q_2^{\\prime}=dQ_2/dx$"
+        },
+        {
+          "symbol": "\\delta_+",
+          "description": "Auxiliary function $\\delta_+=\\tfrac12\\ln((x+y)^2/(x^2-1))+\\tfrac32(1-y^2-xy)+\\tfrac34(x(1-y^2)-y(x^2-1))\\ln((x-1)/(x+1))$"
+        },
+        {
+          "symbol": "\\delta_-",
+          "description": "Auxiliary function $\\delta_-=\\tfrac12\\ln((x-y)^2/(x^2-1))+\\tfrac32(1-y^2+xy)+\\tfrac34(x(1-y^2)+y(x^2-1))\\ln((x-1)/(x+1))$"
+        },
+        {
+          "symbol": "\\lambda",
+          "description": "Auxiliary function $\\lambda=\\alpha(x^2-1)^{1-\\delta}(x+y)^{2\\delta-2}e^{2q\\delta\\delta_+}$"
+        },
+        {
+          "symbol": "\\eta",
+          "description": "Auxiliary function $\\eta=\\alpha(x^2-1)^{1-\\delta}(x-y)^{2\\delta-2}e^{2q\\delta\\delta_-}$"
+        },
+        {
+          "symbol": "A_+",
+          "description": "Auxiliary function $A_+=(x+1)^{\\delta-1}[x(1-\\lambda\\eta)+(1+\\lambda\\eta)]$"
+        },
+        {
+          "symbol": "A_-",
+          "description": "Auxiliary function $A_-=(x-1)^{\\delta-1}[x(1-\\lambda\\eta)-(1+\\lambda\\eta)]$"
+        },
+        {
+          "symbol": "B_+",
+          "description": "Auxiliary function $B_+=(x+1)^{\\delta-1}[y(\\lambda+\\eta)-(\\lambda-\\eta)]$"
+        },
+        {
+          "symbol": "B_-",
+          "description": "Auxiliary function $B_-=(x-1)^{\\delta-1}[y(\\lambda+\\eta)+(\\lambda-\\eta)]$"
+        },
+        {
+          "symbol": "R",
+          "description": "Auxiliary function $R=A_+A_-+B_+B_-$"
+        },
+        {
+          "symbol": "L",
+          "description": "Auxiliary function $L=A_+^2+B_+^2$"
+        },
+        {
+          "symbol": "H",
+          "description": "Auxiliary function $H=(x+1)^{\\delta-1}[x(1-y^2)(\\lambda+\\eta)A_++y(x^2-1)(1-\\lambda\\eta)B_+]$"
+        },
+        {
+          "symbol": "\\chi",
+          "description": "Auxiliary function $\\chi=\\tfrac12(1+q)^2\\ln((x^2-1)/(x^2-y^2))+2q(1-P_2)Q_1+q^2(1-P_2)[(1+P_2)(Q_1^2-Q_2^2)+\\tfrac12(x^2-1)(2Q_2^2-3xQ_1Q_2+3Q_0Q_2-Q_2^{\\prime})]$"
+        },
+        {
+          "symbol": "x",
+          "description": "Prolate coordinate $x=(r-M)/\\sigma$"
+        },
+        {
+          "symbol": "y",
+          "description": "Prolate coordinate $y=\\cos\\theta$"
+        },
+        {
+          "symbol": "f = f(r,\\theta)",
+          "description": "Dimensionless function $f=(R/L)e^{-2q\\delta P_2Q_2}$"
+        },
+        {
+          "symbol": "\\omega = \\omega(r,\\theta)",
+          "description": "Length $\\omega=-2a-2\\sigma(H/R)e^{2q\\delta P_2Q_2}$"
+        },
+        {
+          "symbol": "\\gamma = \\gamma(r,\\theta)",
+          "description": "Dimensionless function $e^{2\\gamma}=\\tfrac14(1+M/\\sigma)^2 R(x^2-1)^{-\\delta}e^{2\\delta^2\\chi}$"
+        }
+      ],
+      "convention": "We use $r=M+\\sigma x$ and $y=\\cos\\theta$.",
+      "line_element": "ds^2=-f\\left(dt-\\omega\\,d\\phi\\right)^2+\\dfrac{1}{f}\\left[e^{2\\gamma}\\left((r-M)^2-\\sigma^2\\cos^2\\theta\\right)\\left(\\dfrac{dr^2}{r^2-2Mr+a^2}+d\\theta^2\\right)+(r^2-2Mr+a^2)\\sin^2\\theta\\,d\\phi^2\\right]"
+    }
+  ]
 }
