@@ -244,6 +244,7 @@ import nm_disc  # noqa: E402
 import charged_shell as cshell  # noqa: E402
 import israel_shell as ishell  # noqa: E402
 import kerr_scalar_hair as ksh  # noqa: E402
+import quevedo_mashhoon as qm  # noqa: E402
 import ori_shell  # noqa: E402
 import quantum_os as qos  # noqa: E402
 import slices  # noqa: E402
@@ -2830,6 +2831,42 @@ def _bs_declare():
 
 DECLARED_FUNCTIONS.update(_bs_declare())
 
+QM_SHORT = {"f": "f", "omega": "o", "h": "h"}
+QM_PARAMS = {"M": 1, "a": "2/5", "sigma": "sqrt(21)/5", "q": "2/5", "delta": 1}
+QM_INPUT = "The rotating deformed vacuum field with $M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$."
+QM_FUNCTIONS = {
+    "prolate_spheroidal": {name: f"qmx_{short}(x,y)" for name, short in QM_SHORT.items()},
+    "spherical": {name: f"qmr_{short}(r,theta)" for name, short in QM_SHORT.items()},
+}
+
+
+def _qm_declare():
+    """The sourced functions and their first and second derivatives in both charts."""
+    made = {}
+    for system, prefix in [("prolate_spheroidal", "qmx"), ("spherical", "qmr")]:
+        for name, short in QM_SHORT.items():
+            for order in bsat.ORDERS:
+                label = prefix + "_" + short + order
+
+                def value(u, v, system=system, name=name, order=order):
+                    return qm.figure_values(u, v, system)[name][order]
+
+                def high(self, prec):
+                    digits = mpmath.libmp.prec_to_dps(prec) + 10
+                    u, v = (str(sp.N(arg, digits)) for arg in self.args)
+                    return sp.Float(qm.figure_values(u, v, self._qm_system, digits)[self._qm_name][self._qm_order], prec)
+
+                body = {"nargs": 2, "is_real": True, "_qm_system": system, "_qm_name": name,
+                        "_qm_order": order, "_imp_": staticmethod(value), "_eval_evalf": high}
+                if len(order) < 2:
+                    body["fdiff"] = lambda self, argindex=1, prefix=prefix, short=short, order=order: \
+                        made[prefix + "_" + short + "".join(sorted(order + str(argindex)))](*self.args)
+                made[label] = type(label, (sp.Function,), body)
+    return made
+
+
+DECLARED_FUNCTIONS.update(_qm_declare())
+
 # The conformal factor of Brill's wave, which brill_wave solves from the Hamiltonian constraint for
 # each amplitude: bw_psi(rho, z, a) and the five derivatives in rho and z the published scalars of
 # the slice hold, named for the derivative each takes, as bw_psi_rz for d_rho d_z psi. The amplitude
@@ -5390,6 +5427,13 @@ DIAGRAMS = [
     Diagram("swirling_universe_black_hole", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
             "$\\sqrt{j}\\,\\rho$", "$\\sqrt{j}\\,ct$", {"j": 1}, {"phi": "0", "z": "0"},
             lines=(("surface", "r", "1", "$\\rho = 1/\\sqrt{j}$, where the circles about the axis are widest"),)),
+    # Equatorial projections of rays of zero angular momentum in the two sourced charts.
+    Diagram("quevedo_mashhoon", "prolate_spheroidal", "equator", "the equator, $\\phi$ divided out", ("t", "x"),
+            (2.2, 6.2, -2, 2), "$x$", "$t/M$", QM_PARAMS, {"y": "0"}, quotient="phi",
+            functions=QM_FUNCTIONS["prolate_spheroidal"], input=QM_INPUT, kretschmann=False),
+    Diagram("quevedo_mashhoon", "spherical", "equator", "the equator, $\\phi$ divided out", ("t", "r"),
+            (3, 7, -2, 2), "$r/M$", "$t/M$", QM_PARAMS, {"theta": "pi/2"}, quotient="phi",
+            functions=QM_FUNCTIONS["spherical"], input=QM_INPUT, kretschmann=False),
     # Ernst and Wild's Kerr hole in Melvin's universe. The axis, whose plane of t and r is Kerr's
     # times the constant k, and the equator with the circles of phi divided out, whose plane is
     # Kerr's times H: the rays of both are Kerr's, and the field shows in the ergosurface. The
@@ -6844,6 +6888,12 @@ CAPTIONS = {
         "reflecting cavity. The cones narrow toward the horizon $r = 2M$, and the wall lies at $r = R$. "
         "The metric includes the field's back reaction through first order in $\\epsilon$.",
     ],
+    ("quevedo_mashhoon", "prolate_spheroidal", "equator"): [
+        "The equatorial plane ($y=0$), with the circles of $\\phi$ divided out. "
+        "The curves are the projections of light rays of zero angular momentum."],
+    ("quevedo_mashhoon", "spherical", "equator"): [
+        "The equatorial plane ($\\theta=\\pi/2$), with the circles of $\\phi$ divided out. "
+        "The curves are the projections of light rays of zero angular momentum."],
     ("static_five_soliton","spherical","radial"): [
         r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with a timelike singularity at $r=r_s$.",
     ],
