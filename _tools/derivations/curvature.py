@@ -19113,6 +19113,60 @@ def myers_compactified(ck, src):
 
 DRAWN["myers_compactified"] = myers_compactified
 
+
+def ori_piran(ck, src):
+    """Stored scalars of the comoving chart along the slice t = -ell, the moment the embedding
+    diagram draws, for the relativistic Larson-Penston solution at k = 1/100.
+
+    Both scalars depend on t and r through z = r/(-t) and the scale, so the slice shows their whole
+    shape. K and R are read from the stored formulas with the numerical functions declared, from
+    r = ell/1000, beside the regular centre, to r = ell. Checked here, besides each sampled value
+    in sixty digits: R is 8 pi (1 - 3k) rho = (1 - 3k) eta/r^2, the trace of the field equations,
+    from the solution's own eta; it tends to 2(1 - 3k) D at the centre; and both fall all the way.
+    """
+    import ori_piran as op
+    x_axis = axis("$r/\\ell$", 0.0, 1.0)
+    k_scale = {"kind": "log", "from": 1e-4, "to": 1e2}
+    r_scale = {"kind": "log", "from": 1e-3, "to": 1e1}
+    panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": k_scale, "ticks": value_ticks(k_scale)},
+              {"id": "R", "name": "$R\\,\\ell^2$", "aspect": 2, "scale": r_scale, "ticks": value_ticks(r_scale)}]
+    shape_checks(ck, "ori_piran", [p["aspect"] for p in panels])
+    # Nearer the centre than r = ell/1000 the expanded K loses its digits to cancellation in doubles.
+    within = (1e-3, 1.0)
+    curves, stored = [], {}
+    for field, name, scale in (("kretschmann", "K", k_scale), ("ricci_scalar", "R", r_scale)):
+        stored[name] = Held(Published(src, "ori_piran", "comoving", field, ["r", "t"], [],
+                                      functions=nr.OP_COMOVING), {"t": -1})
+        curves += line_curves(ck, "ori_piran", name, name, stored[name], "r", x_axis, scale,
+                              PLOT_W / 2, {}, within=within)
+    r = np.geomspace(1e-5, 1.0, 400)
+    _, rates = op.logs_and_rates(np.log(r))
+    trace = (1 - 3 * op.K) * np.exp(rates["lneta"][0]) / r ** 2
+    worst = float(np.max(np.abs(stored["R"](r) / trace - 1)))
+    ck("ori_piran R is 8 pi (1 - 3k) rho on the slice", worst < 1e-3, f"worst {worst:.1e}")
+    # The density's own limit at the centre, where the expanded R loses its digits in doubles.
+    _, inner = op.logs_and_rates(np.log(np.array([1e-12])))
+    centre = float((1 - 3 * op.K) * np.exp(inner["lneta"][0][0]) / 1e-24) / (2 * (1 - 3 * op.K) * op.solve()[0])
+    ck("ori_piran 8 pi (1 - 3k) rho tends to 2(1 - 3k) D at the centre", abs(centre - 1) < 1e-6, f"{centre:.9f}")
+    for name in ("K", "R"):
+        values = stored[name](np.geomspace(1e-5, 1.0, 400))
+        ck(f"ori_piran {name} falls along the slice", bool(np.all(np.diff(values) < 0)))
+    return [{"id": "before", "label": "Before the Singularity", "kind": "line", "x": x_axis,
+             "panels": panels, "curves": curves, "marks": [],
+             "legend": [["line", "K", "$K$, Kretschmann scalar"], ["line", "R", "$R$, Ricci scalar"]],
+             "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the collapsing fluid at $t = -\\ell$, "
+                         "from near the regular centre to $r = \\ell$. "
+                         "$R$ is $8\\pi(1 - 3k)\\rho$ and falls with the density."],
+             "ricci_sentences": [[0, 1]],
+             "per_scalar": scalar_clips("$K\\,\\ell^4$ is logarithmic from $10^{-4}$ to $10^2$.",
+                                        "$R\\,\\ell^2$ is logarithmic from $10^{-3}$ to $10$."),
+             "settings": "$\\ell = 1$, $t = -\\ell$.",
+             "input": nr.OP_INPUT,
+             "clip": "Both panels use logarithmic scales; each curve lies within its panel."}]
+
+
+DRAWN["ori_piran"] = ori_piran
+
 import atiyah_hitchin_drawings as _atiyah_hitchin_drawings
 _atiyah_hitchin_drawings.register_curvature(sys.modules[__name__])
 import charged_three_dimensions_drawings as _charged_three_dimensions_drawings
