@@ -5034,6 +5034,12 @@ kf_drawings.register_slices(sys.modules[__name__])
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_slices(sys.modules[__name__])
 
+FLAT[("mallett_radiating_star", "eddington_finkelstein_ingoing", "accretion")] = lambda: one(
+    "mallett_radiating_star", lambda m: [[(m.time + r, r) for r in m.reach("eddington_finkelstein_ingoing", "r")]])
+FLAT_METRICS.add("mallett_radiating_star")
+HIDDEN[("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation")] = (
+    "the outgoing radiation is the time reverse of the incoming history embedded")
+
 
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")

@@ -31982,6 +31982,10 @@ NOT_DRAWN.add('kramer_fluid')
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_conformal(sys.modules[__name__])
 
+# The free mass history leaves the global completion and event horizons undetermined.
+# Senovilla's subcritical and supercritical collapse models have different causal boundaries.
+NOT_DRAWN.add("mallett_radiating_star")
+
 
 if __name__ == "__main__":
     sys.exit(main())

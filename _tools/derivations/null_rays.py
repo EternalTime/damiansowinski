@@ -19125,6 +19125,26 @@ kf_drawings.register_null(sys.modules[__name__])
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_null(sys.modules[__name__])
 
+# Two local null-fluid histories, with a slowly varying mass and positive Lambda.
+DIAGRAMS.extend([
+    Diagram("mallett_radiating_star", "eddington_finkelstein_ingoing", "accretion", "incoming radiation", ("v", "r"),
+            (0, 9, -5, 4), "$r$", "$(v-r)$", {"Lambda": "1/20"}, EQUATOR,
+            to_display=FINKELSTEIN_IN, tau="v-r", orient="ingoing", areal=True,
+            functions={"m": "1/2 + v/50"}, input="$\\Lambda=1/20$ and $m(v)=1/2+v/50$."),
+    Diagram("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation", "outgoing radiation", ("u", "r"),
+            (0, 9, -4, 5), "$r$", "$(u+r)$", {"Lambda": "1/20"}, EQUATOR,
+            to_display=FINKELSTEIN_OUT, tau="u+r", orient="outgoing", areal=True,
+            functions={"m": "1/2 - u/50"}, input="$\\Lambda=1/20$ and $m(u)=1/2-u/50$."),
+])
+CAPTIONS.update({
+    ("mallett_radiating_star", "eddington_finkelstein_ingoing", "accretion"): [
+        "The plane of $v$ and $r$ ($\\theta=\\pi/2$, $\\phi=0$), with $v-r$ vertical. "
+        "Incoming null radiation increases the mass."],
+    ("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation"): [
+        "The plane of $u$ and $r$ ($\\theta=\\pi/2$, $\\phi=0$), with $u+r$ vertical. "
+        "Outgoing null radiation carries mass away."],
+})
+
 
 if __name__ == "__main__":
     sys.exit(main())

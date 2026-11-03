@@ -22120,6 +22120,36 @@ kf_drawings.register_embedding(sys.modules[__name__])
 import superconducting_string_drawings as sc_drawings
 sc_drawings.register_embedding(sys.modules[__name__])
 
+def mallett_radiating_star(ck, src):
+    """The equatorial slice v-r=0 of the incoming radiation history.
+
+    Pulling the metric back along v=r gives g_rr=1+2m(r)/r+Lambda r^2/3.
+    The plotted band excludes the curvature singularity and uses the mass and Lambda of the
+    corresponding null diagram. The radius of every circle is r.
+    """
+    sl = Slice(src, "mallett_radiating_star", "eddington_finkelstein_ingoing", "r", "\\phi",
+               {"theta": "pi/2"}, {"Lambda": "1/20"}, {"m": "1/2 + v/50"}, along={"v": "r"})
+    size, top = 16.0, 8.0
+    piece = Piece("slice", "sheet", sl, 0.1, top, 0.0, 1,
+                  (("edge", "the slice approaches the singularity at $r=0$"),
+                   ("edge", "the slice continues outward")),
+                  [(r, "r", None) for r in (1.0, 2.0, 4.0, 6.0, 8.0)], size)
+    ck.isometry("Radiating de Sitter, v-r=0", piece)
+    ck.radius("Radiating de Sitter, areal radius", piece, lambda r: r, size)
+    surface = Surface([piece], label="$v-r=0$", time=0)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    fig.legend("fill", "cover", "the equatorial slice $v-r=0$")
+    fig.legend("line", "r", "$r$ constant, at $1$, $2$, $4$, $6$ and $8$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("slice", "Incoming radiation", "$1$", [surface], fig.done(),
+                 settings="$\\Lambda=1/20$ and $v-r=0$.", input="$m(v)=1/2+v/50$.")]
+
+
+DRAWN["mallett_radiating_star"] = mallett_radiating_star
+CAPTIONS[("mallett_radiating_star", "slice")] = [
+    "The equatorial slice $v-r=0$ for incoming radiation, from $r=0.1$ to $r=8$."
+]
+
 
 if __name__ == "__main__":
     sys.exit(main())
