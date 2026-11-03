@@ -1,0 +1,2373 @@
+{
+  "id": "ori_piran",
+  "name": "Self Similar Fluid Collapse to a Naked Singularity",
+  "short_name": "Ori-Piran Collapse",
+  "description": "A spherical ball of perfect fluid, its pressure a fixed fraction $k$ of its density, collapsing the same way at every scale and, for small enough $k$, forming a central singularity that light escapes.",
+  "tags": [
+    "perfect fluid",
+    "equation of state",
+    "self-similar",
+    "gravitational collapse",
+    "naked singularity",
+    "curvature singularity",
+    "null singularity",
+    "cosmic censorship",
+    "Cauchy horizon",
+    "event horizon",
+    "inhomogeneous",
+    "numerical solution",
+    "time-dependent",
+    "spherically symmetric",
+    "four-dimensional",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units with $G = c = 1$, and the fluid has density $\\rho$ and pressure $P = k\\rho$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "At the centre of this collapsing ball of fluid the density grows as $\\rho_c = D/(4\\pi t^2)$, with $D$ a constant, as the time $t$ runs up to the singularity at $t = 0$ [harada2001convergence]. Every dimensionless quantity depends on $t$ and on the comoving label $r$ of a shell only through $z = r/(-t)$, so the collapse looks the same at every scale [harada2001convergence, carr2003spacetime]. The pressure is a fixed fraction of the density, $P = k\\rho$ with $0 < k < 1$, the one barotropic equation of state that allows that symmetry [harada2001convergence, carr2003spacetime]. In comoving coordinates, with $G = c = 1$, $ds^2 = -e^{\\sigma(z)}dt^2 + e^{\\omega(z)}dr^2 + r^2S(z)^2d\\Omega^2$ [harada2001convergence]. The areal radius is $rS(z)$, and the density is $\\rho = \\eta(z)/(8\\pi r^2)$ [harada2001convergence].¶Two of Einstein's equations integrate in closed form for $e^{\\sigma}$ and $e^{\\omega}$, and the rest become ordinary differential equations in $z$ for $S$, $\\eta$, and $M = 2m/r$, where $m$ is the Misner-Sharp mass [harada2001convergence, carr2003spacetime]. Solutions with a regular centre form a family with the one parameter $D$ [harada2001convergence]. Farther out each solution meets a sonic point, where the surfaces of constant $z$ move through the fluid at the speed of sound $\\sqrt{k}$, and the equations stay regular there only if one more condition holds [harada2001convergence]. Solutions regular at the centre and analytic at the sonic point form a discrete set [harada2001convergence]. The flat Friedmann universe is one of them, with $D = 2/(3(1+k)^2)$, and the others, with their values of $D$, are known only numerically [harada2001convergence, guo2023naked].¶Amos Ori and Tsvi Piran found in 1987 that \"if the equation of state is soft enough\" such a collapse forms a naked singularity, one that \"resembles the shell-focusing naked singularities that arise in dust collapse\" [oripiran1987]. They reported \"the generic appearance of naked singularities in these solutions\" in 1990 [oripiran1990]. Among the solutions they found for $0 < k \\lesssim 0.4$ is the general relativistic counterpart of the Larson-Penston solution, the self similar collapse of an isothermal gas in Newton's gravity [harada2001convergence, guo2023naked, oripiran1990]. That relativistic Larson-Penston solution exists for $0 < k \\lesssim 0.036$, has $D \\approx 1.439$ at $k = 0.01$, and has a naked singularity for $0 < k \\lesssim 0.0105$ [harada2001convergence, oripiran1990]. Ori and Piran also found analytic self similar solutions with a naked singularity for every $k$ [harada2001convergence, oripiran1990].¶In the relativistic Larson-Penston solution the singularity appears at the centre at $t = 0$, and its mass then grows in proportion to $t$ [harada2001convergence]. Light leaves the singularity and reaches infinity along outgoing radial null geodesics that are also orbits of the scaling symmetry, which Ori and Piran called simple radial null geodesics [guo2023naked, carr2003spacetime]. Every self similar spacetime that is not flat has such a curvature singularity, where the orbits of the scaling symmetry end and the Kretschmann scalar grows as the inverse fourth power of the proper time or distance left along them [carr2003spacetime]. In the conformal diagram Ori and Piran drew, the singularity has an ingoing null branch [gundlach2025critical, oripiran1990]. Outgoing radial light rays that leave it between the Cauchy horizon and the event horizon reach infinity once the self similar solution is joined to an asymptotically flat one [gundlach2025critical].¶Tomohiro Harada followed the collapse numerically in 1998, with no assumption of self similarity [harada1998final]. Globally naked singularities form at the centre from time symmetric initial data of high density when the adiabatic index is below about $1.01$, in agreement with Ori and Piran's $1.0105$ [harada1998final]. Harada and Hideki Maeda found in 2001 that, for $k = 0.008$, $0.01$, and $0.03$, most of the balls of fluid they simulated approach the relativistic Larson-Penston solution near the centre as the singularity forms [harada2001convergence]. Generic spherical collapse of so soft a fluid would then end in a naked singularity, in apparent conflict with Roger Penrose's cosmic censorship conjecture [gundlach2025critical, penrose1969].¶Yan Guo, Mahir Hadzic, and Juhi Jang proved in 2023 that the relativistic Larson-Penston spacetime exists for small enough $k$, with a light ray from its singularity to infinity [guo2023naked]. Joined to an asymptotically flat exterior, it gives a spacetime that forms a naked singularity from smooth initial data [guo2023naked]. Carsten Gundlach found in 2002 that a regular self similar ball of fluid with $0 < k < 1/9$ has a growing mode of differential rotation, so the relativistic Larson-Penston solution is unstable to rotating perturbations [gundlach2025critical, gundlach2002nonspherical]. Junbin Li and Xi-Ping Zhu showed in 2025 that a small perturbation by a massless scalar field, with Hölder continuous first derivatives, makes a closed trapped surface form before such a naked singularity [li2025scalar]. With Tingting Li they showed in 2026 that small gravitational perturbations of the same smoothness, with no symmetry, do the same [li2026instability]. Whether perturbations of the fluid alone, in spherical symmetry, destroy the naked singularity is an open question [li2026instability].",
+  "related": [
+    {
+      "id": "tolman_bondi",
+      "kind": "family",
+      "text": "The same spherical collapse with no pressure, $k = 0$. A dust cloud whose density varies with radius already sends light out from its central singularity to infinity [christodoulou1984]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "Collapse of radiation falling in along light rays. Some collapses of null dust also leave a naked singularity at the centre [papapetrou1985]."
+    },
+    {
+      "id": "roberts",
+      "kind": "family",
+      "text": "Another collapse that looks the same at every scale, of a massless scalar field. At $p = 1$ its singularity lies along a light ray [brady1994]."
+    },
+    {
+      "id": "oppenheimer_snyder",
+      "kind": "family",
+      "text": "A uniform ball of dust collapsing behind a horizon. Ori and Piran found their fluid balls \"quite different from the homogeneous Oppenheimer-Snyder dust collapse solution on which our intuition is so heavily based\" [oripiran1990]."
+    }
+  ],
+  "references": [
+    "harada2001convergence",
+    "carr2003spacetime",
+    "guo2023naked",
+    "oripiran1987",
+    "oripiran1990",
+    "gundlach2025critical",
+    "harada1998final",
+    "penrose1969",
+    "gundlach2002nonspherical",
+    "li2025scalar",
+    "li2026instability",
+    "christodoulou1984",
+    "papapetrou1985",
+    "brady1994"
+  ],
+  "coordinates": [
+    {
+      "id": "comoving",
+      "name": "Comoving",
+      "parameters": [
+        {
+          "symbol": "\\sigma = \\sigma(t, r)",
+          "description": "Lapse exponent, dimensionless, a function of $z = r/(-t)$ alone, $e^{\\sigma} = (2Dz^2/\\eta)^{2k/(1+k)}$, which is 1 at the centre."
+        },
+        {
+          "symbol": "\\omega = \\omega(t, r)",
+          "description": "Radial exponent, dimensionless, a function of $z$ alone, $e^{\\omega} = \\eta^{-2/(1+k)}S^{-4}$, with $\\eta = 8\\pi r^2\\rho$ the density scaled by the square of $r$."
+        },
+        {
+          "symbol": "S = S(t, r)",
+          "description": "Areal radius divided by $r$, dimensionless, a function of $z$ alone. With $M = 2m/r$, where $m$ is the Misner-Sharp mass, $y = M/(\\eta S^3)$, and a prime for $d/d\\ln z$, it obeys $(\\ln S)' = -(1-y)/(1+k)$ and $(\\ln M)' = k(y^{-1}-1)/(1+k)$, under the constraint $(1-y)^2V_z^2 - (k+y)^2 + (1+k)^2\\eta^{-2/(1+k)}S^{-6}(1 - M/S) = 0$, where $V_z = -ze^{(\\omega-\\sigma)/2}$ is the speed of the surfaces of constant $z$ through the fluid."
+        },
+        {
+          "symbol": "k",
+          "description": "Ratio of pressure to density, $P = k\\rho$ with $0 < k < 1$, so the speed of sound is $\\sqrt{k}$."
+        },
+        {
+          "symbol": "D",
+          "description": "The constant $D = 4\\pi\\rho_c t^2$, with $\\rho_c$ the central density. A regular centre has $y \\to 1/3$ and $\\eta \\simeq 2Dz^2$ as $z \\to 0$, and a regular sonic point, where $V_z^2 = k$, has $4yk = (1+k)^2\\eta^{-(1-k)/(1+k)}S^{-4}$. The flat Friedmann solution has $D = 2/(3(1+k)^2)$, and the relativistic Larson-Penston solution and the other members are known only numerically."
+        }
+      ],
+      "convention": "We use Harada and Maeda's comoving coordinates $(t, r)$, both lengths, with $r$ labelling the shells of fluid and the singularity forming at $t = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+    },
+    {
+      "id": "zooming",
+      "name": "Zooming",
+      "coords": [
+        "\\tau",
+        "z",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "\\tau \\in (-\\infty, \\infty)",
+        "z \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\sigma = \\sigma(z)",
+          "description": "Lapse exponent, dimensionless, the same function of $z$ as in the comoving chart."
+        },
+        {
+          "symbol": "\\omega = \\omega(z)",
+          "description": "Radial exponent, dimensionless, the same function of $z$ as in the comoving chart."
+        },
+        {
+          "symbol": "S = S(z)",
+          "description": "Areal radius divided by $\\ell z e^{-\\tau}$, dimensionless, the same function of $z$ as in the comoving chart."
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Any length, the unit $t$ and $r$ are counted in."
+        }
+      ],
+      "convention": "We use Harada and Maeda's zooming coordinates $(\\tau, z)$, both pure numbers, with $t = -\\ell e^{-\\tau}$ and $r = \\ell ze^{-\\tau}$ in the comoving coordinates. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = \\ell^2e^{-2\\tau}\\left(\\left(z^2\\,e^{\\omega} - e^{\\sigma}\\right)d\\tau^2 - 2z\\,e^{\\omega}d\\tau\\,dz + e^{\\omega}dz^2 + z^2S^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)e^{-2\\tau}"
+        },
+        {
+          "indices": [
+            "\\tau",
+            "z"
+          ],
+          "value": "-\\ell^2\\,z\\,e^{-2\\tau}e^{\\omega}"
+        },
+        {
+          "indices": [
+            "z",
+            "\\tau"
+          ],
+          "value": "-\\ell^2\\,z\\,e^{-2\\tau}e^{\\omega}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\ell^2e^{-2\\tau}e^{\\omega}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "\\tau",
+            "\\tau"
+          ],
+          "value": "-\\dfrac{e^{-\\sigma}e^{2\\tau}}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\tau",
+            "z"
+          ],
+          "value": "-\\dfrac{z\\,e^{-\\sigma}e^{2\\tau}}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "\\tau"
+          ],
+          "value": "-\\dfrac{z\\,e^{-\\sigma}e^{2\\tau}}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{\\left(e^{\\sigma} - z^2e^{\\omega}\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{\\ell^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{e^{2\\tau}}{\\ell^2\\,z^2\\,S^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{e^{2\\tau}\\csc^2\\theta}{\\ell^2\\,z^2\\,S^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(z\\,e^{\\sigma}\\partial_z\\sigma - z^3e^{\\omega}\\partial_z\\omega + 2e^{\\sigma}\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\,e^{-\\sigma}e^{\\omega}\\partial_z\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "z^3\\,S\\,e^{-\\sigma}\\partial_z S"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "z^3\\,S\\,e^{-\\sigma}\\partial_z S\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(z\\,e^{\\sigma}\\partial_z\\sigma - z^3e^{\\omega}\\partial_z\\omega - 2e^{\\sigma}\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(z\\,e^{\\sigma}\\partial_z\\sigma - z^3e^{\\omega}\\partial_z\\omega - 2e^{\\sigma}\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega} + e^{\\sigma}\\right)e^{-\\sigma}\\partial_z\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "z\\,S\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "z\\,S\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-1"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{z\\,\\partial_z S + S}{z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\,\\partial_z S + S}{z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{z\\,\\partial_z S + S}{z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\,\\partial_z S + S}{z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega - 2z\\,e^{\\omega}\\right)e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega - 2z\\,e^{\\omega}\\right)e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\ell^2\\,z\\,e^{-2\\tau}e^{\\omega}\\partial_z\\omega"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega + 2z\\,e^{\\omega}\\right)e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\ell^2e^{-2\\tau}e^{\\omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\ell^2e^{-2\\tau}e^{\\omega}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2e^{-2\\tau}e^{\\omega}\\partial_z\\omega}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\,z\\,S\\left(z\\,\\partial_z S + S\\right)e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\,z\\,S\\left(z\\,\\partial_z S + S\\right)e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\ell^2\\,z\\,S\\left(z\\,\\partial_z S + S\\right)e^{-2\\tau}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\,z\\,S\\left(z\\,\\partial_z S + S\\right)e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\,z\\,S\\left(z\\,\\partial_z S + S\\right)e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\ell^2\\,z\\,S\\left(z\\,\\partial_z S + S\\right)e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\,z^2\\,S^2e^{-2\\tau}\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{z\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{z\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{z\\,S\\left(z\\,\\partial_z S + S\\right)\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{z\\,S\\left(z\\,\\partial_z S + S\\right)\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{z^2\\,S\\left(2z\\,\\partial_z^2 S - z\\,\\partial_z\\sigma\\,\\partial_z S - z\\,\\partial_z\\omega\\,\\partial_z S - S\\,\\partial_z\\omega + 4\\partial_z S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{z^2\\,S\\left(2z\\,\\partial_z^2 S - z\\,\\partial_z\\sigma\\,\\partial_z S - z\\,\\partial_z\\omega\\,\\partial_z S - S\\,\\partial_z\\omega + 4\\partial_z S\\right)e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{z\\,S\\left(z\\,\\partial_z S + S\\right)\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{z\\,S\\left(z\\,\\partial_z S + S\\right)\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{z^2\\,S\\left(2z\\,\\partial_z^2 S - z\\,\\partial_z\\sigma\\,\\partial_z S - z\\,\\partial_z\\omega\\,\\partial_z S - S\\,\\partial_z\\omega + 4\\partial_z S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{z^2\\,S\\left(2z\\,\\partial_z^2 S - z\\,\\partial_z\\sigma\\,\\partial_z S - z\\,\\partial_z\\omega\\,\\partial_z S - S\\,\\partial_z\\omega + 4\\partial_z S\\right)e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{z^2\\,S^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{z^2\\,S^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{z\\,S\\left(2z^3e^{\\omega}\\partial_z^2 S - 2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - z^2\\,S\\,e^{\\omega}\\partial_z\\omega + S\\,e^{\\sigma}\\partial_z\\omega + 4z^2e^{\\omega}\\partial_z S - 4e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\,S\\left(2z^3e^{\\omega}\\partial_z^2 S - 2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - z^2\\,S\\,e^{\\omega}\\partial_z\\omega + S\\,e^{\\sigma}\\partial_z\\omega + 4z^2e^{\\omega}\\partial_z S - 4e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{z^2\\,S^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{z^2\\,S^2\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{z\\,S\\left(2z^3e^{\\omega}\\partial_z^2 S - 2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - z^2\\,S\\,e^{\\omega}\\partial_z\\omega + S\\,e^{\\sigma}\\partial_z\\omega + 4z^2e^{\\omega}\\partial_z S - 4e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\,S\\left(2z^3e^{\\omega}\\partial_z^2 S - 2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - z^2\\,S\\,e^{\\omega}\\partial_z\\omega + S\\,e^{\\sigma}\\partial_z\\omega + 4z^2e^{\\omega}\\partial_z S - 4e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{z\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\sigma}\\partial_z S}{2S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}}{2z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(z^2e^{-\\omega}\\left(\\partial_z S\\right)^2\\,\\sin^2\\theta - z^4e^{-\\sigma}\\left(\\partial_z S\\right)^2\\,\\sin^2\\theta + 2z\\,S\\,e^{-\\omega}\\partial_z S\\,\\sin^2\\theta + S^2e^{-\\omega}\\sin^2\\theta - \\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(z^2e^{-\\omega}\\left(\\partial_z S\\right)^2\\,\\sin^2\\theta - z^4e^{-\\sigma}\\left(\\partial_z S\\right)^2\\,\\sin^2\\theta + 2z\\,S\\,e^{-\\omega}\\partial_z S\\,\\sin^2\\theta + S^2e^{-\\omega}\\sin^2\\theta - \\sin^2\\theta\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\left(z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-2\\tau}}{4}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-2\\tau}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-2\\tau}}{4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2e^{\\sigma}\\partial_z^2\\sigma - 2z^2e^{\\omega}\\partial_z^2\\omega + e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\omega}\\partial_z\\omega\\right)e^{-2\\tau}}{4}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^3\\,S\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}e^{-2\\tau}\\partial_z S\\,\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\,S\\left(2z\\,e^{\\sigma}\\partial_z^2 S - z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - S\\,e^{\\sigma}\\partial_z\\omega + 4e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\ell^2\\,z^2\\,S^2\\left(z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2\\left(z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\ell^2\\,z^2\\,S^2\\left(z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\ell^2\\,z^2\\,S^2\\left(z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma - 2z\\,S\\,e^{2\\sigma}\\partial_z^2\\sigma - 2z^5\\,S\\,e^{2\\omega}\\partial_z^2\\omega + 2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z^2\\omega + z^3\\,S\\,e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 - z\\,S\\,e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^5\\,S\\,e^{2\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + z\\,S\\,e^{2\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4z^3e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 4z\\,e^{2\\sigma}\\partial_z\\sigma\\,\\partial_z S - 4S\\,e^{2\\sigma}\\partial_z\\sigma - z^5\\,S\\,e^{2\\omega}\\left(\\partial_z\\omega\\right)^2 + z^3\\,S\\,e^{\\omega}e^{\\sigma}\\left(\\partial_z\\omega\\right)^2 - 4z^5e^{2\\omega}\\partial_z\\omega\\,\\partial_z S + 4z^3e^{\\omega}e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^4\\,S\\,e^{2\\omega}\\partial_z\\omega + 8z^2\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{4z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{z\\left(2S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^2\\,S\\,e^{\\omega}\\partial_z^2\\omega + S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z^2e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 4z\\,S\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4S}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{z\\left(2S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^2\\,S\\,e^{\\omega}\\partial_z^2\\omega + S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^2\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z^2e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 4z\\,S\\,e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}}{4S}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega + 8z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 4z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 4S\\,e^{\\sigma}\\partial_z\\omega + 16e^{\\sigma}\\partial_z S\\right)e^{-\\sigma}}{4z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + 2z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 8z\\,S\\,e^{\\sigma}\\partial_z S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + 2z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 8z\\,S\\,e^{\\sigma}\\partial_z S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(8z^2\\,S\\,e^{\\omega}\\partial_z\\omega + 4z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4S\\,e^{\\sigma}\\partial_z\\sigma - 4z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{4\\ell^2\\,z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2z\\,\\partial_z^2 S - z\\,\\partial_z\\sigma\\,\\partial_z S - z\\,\\partial_z\\omega\\,\\partial_z S - S\\,\\partial_z\\omega + 4\\partial_z S\\right)e^{-\\sigma}e^{2\\tau}}{\\ell^2\\,S}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 8z^3e^{\\omega}\\partial_z^2 S + 8z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4S\\,e^{\\sigma}\\partial_z\\omega - 16z^2e^{\\omega}\\partial_z S + 16e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{4\\ell^2\\,z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + 2z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 8z\\,S\\,e^{\\sigma}\\partial_z S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{2\\ell^2\\,z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + 2z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 8z\\,S\\,e^{\\sigma}\\partial_z S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{2\\ell^2\\,z^2\\,S^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 8z^3e^{\\omega}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 4z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 4S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 16z^2e^{\\omega}\\partial_z S\\right)e^{-\\omega}e^{-2\\sigma}e^{4\\tau}}{4\\ell^4\\,z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 8z^3e^{\\omega}\\partial_z^2 S + 8z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 4S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 4S\\,e^{\\sigma}\\partial_z\\omega - 16z^2e^{\\omega}\\partial_z S + 16e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-2\\sigma}e^{4\\tau}}{4\\ell^4\\,S}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 8z^3e^{\\omega}\\partial_z^2 S + 8z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 4S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 4S\\,e^{\\sigma}\\partial_z\\omega - 16z^2e^{\\omega}\\partial_z S + 16e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-2\\sigma}e^{4\\tau}}{4\\ell^4\\,S}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma - 2z\\,S\\,e^{2\\sigma}\\partial_z^2\\sigma - 2z^5\\,S\\,e^{2\\omega}\\partial_z^2\\omega + 2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z^2\\omega - 8z^5e^{2\\omega}\\partial_z^2 S + 16z^3e^{\\omega}e^{\\sigma}\\partial_z^2 S - 8z\\,e^{2\\sigma}\\partial_z^2 S + z^3\\,S\\,e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 - z\\,S\\,e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^5\\,S\\,e^{2\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + z\\,S\\,e^{2\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 4z^5e^{2\\omega}\\partial_z\\sigma\\,\\partial_z S - 4z^3e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 4z^2\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\sigma - z^5\\,S\\,e^{2\\omega}\\left(\\partial_z\\omega\\right)^2 + z^3\\,S\\,e^{\\omega}e^{\\sigma}\\left(\\partial_z\\omega\\right)^2 - 4z^3e^{\\omega}e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + 4z\\,e^{2\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^4\\,S\\,e^{2\\omega}\\partial_z\\omega - 4z^2\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\omega + 4S\\,e^{2\\sigma}\\partial_z\\omega - 16z^4e^{2\\omega}\\partial_z S + 32z^2e^{\\omega}e^{\\sigma}\\partial_z S - 16e^{2\\sigma}\\partial_z S\\right)e^{-2\\omega}e^{-2\\sigma}e^{4\\tau}}{4\\ell^4\\,z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + 2z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 8z\\,S\\,e^{\\sigma}\\partial_z S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{4\\tau}}{2\\ell^4\\,z^4\\,S^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + 2z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 8z\\,S\\,e^{\\sigma}\\partial_z S - 2S^2e^{\\sigma} + 2e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{4\\tau}\\csc^2\\theta}{2\\ell^4\\,z^4\\,S^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 24z\\,S\\,e^{\\sigma}\\partial_z S + 16z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 4z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + 4z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 4z\\,S^2e^{\\sigma}\\partial_z\\sigma - 4z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 4z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 - 8z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + 8z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{2\\ell^2\\,z^2\\,S^2}",
+      "kretschmann": "K = \\dfrac{\\left(4z^4\\,S^4e^{2\\sigma}\\left(\\partial_z^2\\sigma\\right)^2 - 8z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\,\\partial_z^2\\omega + 4z^4\\,S^4e^{2\\sigma}\\partial_z^2\\sigma\\left(\\partial_z\\sigma\\right)^2 + 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\,\\partial_z\\sigma\\,\\partial_z\\omega - 4z^4\\,S^4e^{2\\sigma}\\partial_z^2\\sigma\\,\\partial_z\\sigma\\,\\partial_z\\omega - 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\left(\\partial_z\\omega\\right)^2 - 16z^5\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\sigma\\,\\partial_z\\omega + 4z^8\\,S^4e^{2\\omega}\\left(\\partial_z^2\\omega\\right)^2 - 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\omega\\left(\\partial_z\\sigma\\right)^2 - 4z^8\\,S^4e^{2\\omega}\\partial_z^2\\omega\\,\\partial_z\\sigma\\,\\partial_z\\omega + 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z^2\\omega\\,\\partial_z\\sigma\\,\\partial_z\\omega + 4z^8\\,S^4e^{2\\omega}\\partial_z^2\\omega\\left(\\partial_z\\omega\\right)^2 + 16z^7\\,S^4e^{2\\omega}\\partial_z^2\\omega\\,\\partial_z\\omega + 32z^8\\,S^2e^{2\\omega}\\left(\\partial_z^2 S\\right)^2 - 64z^6\\,S^2e^{\\omega}e^{\\sigma}\\left(\\partial_z^2 S\\right)^2 + 32z^4\\,S^2e^{2\\sigma}\\left(\\partial_z^2 S\\right)^2 - 32z^8\\,S^2e^{2\\omega}\\partial_z^2 S\\,\\partial_z\\sigma\\,\\partial_z S + 32z^6\\,S^2e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\sigma\\,\\partial_z S - 32z^5\\,S^3e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\sigma + 32z^6\\,S^2e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\omega\\,\\partial_z S - 32z^4\\,S^2e^{2\\sigma}\\partial_z^2 S\\,\\partial_z\\omega\\,\\partial_z S + 64z^5\\,S^3e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z\\omega - 32z^3\\,S^3e^{2\\sigma}\\partial_z^2 S\\,\\partial_z\\omega + 128z^7\\,S^2e^{2\\omega}\\partial_z^2 S\\,\\partial_z S - 256z^5\\,S^2e^{\\omega}e^{\\sigma}\\partial_z^2 S\\,\\partial_z S + 128z^3\\,S^2e^{2\\sigma}\\partial_z^2 S\\,\\partial_z S + z^4\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^4 + 2z^6\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^3\\,\\partial_z\\omega - 2z^4\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^3\\,\\partial_z\\omega + z^8\\,S^4e^{2\\omega}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z\\omega\\right)^2 - 4z^6\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z\\omega\\right)^2 + z^4\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z\\omega\\right)^2 - 8z^5\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2\\,\\partial_z\\omega + 8z^8\\,S^2e^{2\\omega}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z S\\right)^2 + 8z^4\\,S^2e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2\\left(\\partial_z S\\right)^2 + 16z^5\\,S^3e^{\\omega}e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2\\,\\partial_z S + 16z^3\\,S^3e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2\\,\\partial_z S + 8z^2\\,S^4e^{2\\sigma}\\left(\\partial_z\\sigma\\right)^2 - 2z^8\\,S^4e^{2\\omega}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^3 + 2z^6\\,S^4e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^3 - 8z^7\\,S^4e^{2\\omega}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^2 + 8z^5\\,S^4e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\left(\\partial_z\\omega\\right)^2 - 32z^6\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega\\left(\\partial_z S\\right)^2 - 32z^5\\,S^3e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega\\,\\partial_z S - 64z^7\\,S^2e^{2\\omega}\\partial_z\\sigma\\left(\\partial_z S\\right)^2 + 64z^5\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\left(\\partial_z S\\right)^2 - 64z^4\\,S^3e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + z^8\\,S^4e^{2\\omega}\\left(\\partial_z\\omega\\right)^4 + 8z^7\\,S^4e^{2\\omega}\\left(\\partial_z\\omega\\right)^3 + 8z^8\\,S^2e^{2\\omega}\\left(\\partial_z\\omega\\right)^2\\left(\\partial_z S\\right)^2 + 8z^4\\,S^2e^{2\\sigma}\\left(\\partial_z\\omega\\right)^2\\left(\\partial_z S\\right)^2 - 16z^5\\,S^3e^{\\omega}e^{\\sigma}\\left(\\partial_z\\omega\\right)^2\\,\\partial_z S + 16z^3\\,S^3e^{2\\sigma}\\left(\\partial_z\\omega\\right)^2\\,\\partial_z S + 16z^6\\,S^4e^{2\\omega}\\left(\\partial_z\\omega\\right)^2 - 16z^4\\,S^4e^{\\omega}e^{\\sigma}\\left(\\partial_z\\omega\\right)^2 + 8z^2\\,S^4e^{2\\sigma}\\left(\\partial_z\\omega\\right)^2 + 64z^5\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\omega\\left(\\partial_z S\\right)^2 - 64z^3\\,S^2e^{2\\sigma}\\partial_z\\omega\\left(\\partial_z S\\right)^2 + 128z^4\\,S^3e^{\\omega}e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 64z^2\\,S^3e^{2\\sigma}\\partial_z\\omega\\,\\partial_z S + 16z^8e^{2\\omega}\\left(\\partial_z S\\right)^4 - 32z^6e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^4 + 16z^4e^{2\\sigma}\\left(\\partial_z S\\right)^4 - 64z^5\\,S\\,e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^3 + 64z^3\\,S\\,e^{2\\sigma}\\left(\\partial_z S\\right)^3 + 128z^6\\,S^2e^{2\\omega}\\left(\\partial_z S\\right)^2 - 288z^4\\,S^2e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^2 + 224z^2\\,S^2e^{2\\sigma}\\left(\\partial_z S\\right)^2 + 32z^4e^{2\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^2 - 32z^2e^{2\\sigma}e^{\\omega}\\left(\\partial_z S\\right)^2 + 64z\\,S^3e^{2\\sigma}\\partial_z S - 64z\\,S\\,e^{2\\sigma}e^{\\omega}\\partial_z S + 16S^4e^{2\\sigma} - 32S^2e^{2\\sigma}e^{\\omega} + 16e^{2\\omega}e^{2\\sigma}\\right)e^{-2\\omega}e^{-2\\sigma}e^{4\\tau}}{4\\ell^4\\,z^4\\,S^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(e^{2\\sigma}e^{\\omega} - z^2e^{2\\omega}e^{\\sigma} - S^2e^{2\\sigma} + z^2\\,S^2e^{\\omega}e^{\\sigma} - 6z\\,S\\,e^{2\\sigma}\\partial_z S + 10z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z S - 4z^5\\,S\\,e^{2\\omega}\\partial_z S - z^2e^{2\\sigma}\\left(\\partial_z S\\right)^2 + 2z^4e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^2 - z^6e^{2\\omega}\\left(\\partial_z S\\right)^2 + z\\,S^2e^{2\\sigma}\\partial_z\\omega - 2z^3\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\omega + z^2\\,S\\,e^{2\\sigma}\\partial_z\\omega\\,\\partial_z S - z^4\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z^3\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\sigma - z^4\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + z^6\\,S\\,e^{2\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{2\\sigma}\\partial_z^2 S + 4z^4\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z^2 S - 2z^6\\,S\\,e^{2\\omega}\\partial_z^2 S\\right)e^{-\\omega}e^{-\\sigma}}{z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 6z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\omega + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 6z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{\\sigma}\\partial_z\\sigma + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 2z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{z\\,S\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 4z^3e^{\\omega}\\partial_z^2 S + 4z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 2z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 2z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 2z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 2S\\,e^{\\sigma}\\partial_z\\omega - 8z^2e^{\\omega}\\partial_z S + 8e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}}{4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{z\\,S\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 4z^3e^{\\omega}\\partial_z^2 S + 4z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 2z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 2z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 2z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 2S\\,e^{\\sigma}\\partial_z\\omega - 8z^2e^{\\omega}\\partial_z S + 8e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{4}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - z^3\\,S^2e^{\\omega}\\partial_z\\omega + z\\,S^2e^{\\sigma}\\partial_z\\omega + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^3\\,S\\,e^{\\omega}\\partial_z S - 6z\\,S\\,e^{\\sigma}\\partial_z S - S^2e^{\\sigma} + e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{\\ell^2\\,z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2z\\,\\partial_z^2 S - z\\,\\partial_z\\sigma\\,\\partial_z S - z\\,\\partial_z\\omega\\,\\partial_z S - S\\,\\partial_z\\omega + 4\\partial_z S\\right)e^{-\\sigma}e^{2\\tau}}{\\ell^2\\,S}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega}\\partial_z\\omega - e^{\\sigma}\\partial_z\\sigma\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{\\ell^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z^3\\,S^2e^{\\omega}\\partial_z\\omega - z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 2z\\,S\\,e^{\\sigma}\\partial_z S + S^2e^{\\sigma} - e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{\\ell^2\\,z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 4z^3e^{\\omega}\\partial_z^2 S + 4z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 2z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 2z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 2z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 2S\\,e^{\\sigma}\\partial_z\\omega - 8z^2e^{\\omega}\\partial_z S + 8e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{4\\ell^2\\,z\\,S}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 4z^3e^{\\omega}\\partial_z^2 S + 4z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 2z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 2z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 2z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 2S\\,e^{\\sigma}\\partial_z\\omega - 8z^2e^{\\omega}\\partial_z S + 8e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}e^{2\\tau}}{4\\ell^2\\,z\\,S}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(e^{\\omega}e^{\\sigma} - S^2e^{\\sigma} - 6z\\,S\\,e^{\\sigma}\\partial_z S - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + z\\,S^2e^{\\sigma}\\partial_z\\omega + z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z^2 S\\right)e^{-\\omega}e^{-2\\sigma}e^{4\\tau}}{\\ell^4\\,z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(e^{\\omega}e^{\\sigma} - S^2e^{\\sigma} - 2z\\,S\\,e^{\\sigma}\\partial_z S - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S\\right)e^{-\\omega}e^{-2\\sigma}e^{4\\tau}}{\\ell^4\\,z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(e^{\\omega}e^{\\sigma} - S^2e^{\\sigma} - 2z\\,S\\,e^{\\sigma}\\partial_z S - z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S - z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S\\right)e^{-\\omega}e^{-2\\sigma}e^{4\\tau}}{\\ell^4\\,z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(z^4\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - z^2\\,S\\,e^{2\\sigma}\\partial_z\\sigma\\,\\partial_z S - z\\,S^2e^{2\\sigma}\\partial_z\\sigma - z^6\\,S\\,e^{2\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z\\omega\\,\\partial_z S + z^3\\,S^2e^{\\omega}e^{\\sigma}\\partial_z\\omega - z^6e^{2\\omega}\\left(\\partial_z S\\right)^2 + 2z^4e^{\\omega}e^{\\sigma}\\left(\\partial_z S\\right)^2 - z^2e^{2\\sigma}\\left(\\partial_z S\\right)^2 + 2z^3\\,S\\,e^{\\omega}e^{\\sigma}\\partial_z S - 2z\\,S\\,e^{2\\sigma}\\partial_z S + z^2\\,S^2e^{\\omega}e^{\\sigma} - S^2e^{2\\sigma} - z^2e^{2\\omega}e^{\\sigma} + e^{2\\sigma}e^{\\omega}\\right)e^{-2\\omega}e^{-2\\sigma}e^{4\\tau}}{\\ell^4\\,z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 4z^3e^{\\omega}\\partial_z^2 S + 4z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 2z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 2z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 2z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 2S\\,e^{\\sigma}\\partial_z\\omega - 8z^2e^{\\omega}\\partial_z S + 8e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}e^{4\\tau}}{4\\ell^4\\,z^3\\,S^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z\\,S\\,e^{\\sigma}\\partial_z^2\\sigma - 2z^3\\,S\\,e^{\\omega}\\partial_z^2\\omega - 4z^3e^{\\omega}\\partial_z^2 S + 4z\\,e^{\\sigma}\\partial_z^2 S + z\\,S\\,e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^3\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega + 2z^3e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + 2z\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2S\\,e^{\\sigma}\\partial_z\\sigma - z^3\\,S\\,e^{\\omega}\\left(\\partial_z\\omega\\right)^2 - 2z^3e^{\\omega}\\partial_z\\omega\\,\\partial_z S - 2z\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^2\\,S\\,e^{\\omega}\\partial_z\\omega - 2S\\,e^{\\sigma}\\partial_z\\omega - 8z^2e^{\\omega}\\partial_z S + 8e^{\\sigma}\\partial_z S\\right)e^{-\\omega}e^{-\\sigma}e^{4\\tau}\\csc^2\\theta}{4\\ell^4\\,z^3\\,S^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{12z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{12z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{12z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{12z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 8z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z\\,S^2e^{\\sigma}\\partial_z\\sigma + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\sigma}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 8z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z\\,S^2e^{\\sigma}\\partial_z\\sigma + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\sigma}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}}{24z\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 8z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z\\,S^2e^{\\sigma}\\partial_z\\sigma + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 8z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z\\,S^2e^{\\sigma}\\partial_z\\sigma + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 8z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z\\,S^2e^{\\sigma}\\partial_z\\sigma + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\left(4e^{\\omega}e^{\\sigma} - 4S^2e^{\\sigma} - 8z^3\\,S\\,e^{\\omega}\\partial_z S - 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 - 2z\\,S^2e^{\\sigma}\\partial_z\\omega + 4z^3\\,S^2e^{\\omega}\\partial_z\\omega - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z\\,S^2e^{\\sigma}\\partial_z\\sigma + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S + 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S + z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S - 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S + 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega - 2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma\\right)e^{-\\sigma}}{24z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}}{12}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-2\\tau}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "z",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-2\\tau}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "\\tau",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-2\\tau}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\tau",
+                  "z",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-2\\tau}}{12z^2\\,S^2}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\tau",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\tau",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\tau",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\tau",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\tau",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "\\tau"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\theta",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "z",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "z",
+                  "\\theta",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{24}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^2\\,S^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^2\\,S^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\ell^2\\,z^2\\,S^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{12}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,z^2\\,S^2\\left(2z^2\\,S^2e^{\\sigma}\\partial_z^2\\sigma - 2z^4\\,S^2e^{\\omega}\\partial_z^2\\omega + 4z^4\\,S\\,e^{\\omega}\\partial_z^2 S - 4z^2\\,S\\,e^{\\sigma}\\partial_z^2 S + z^2\\,S^2e^{\\sigma}\\left(\\partial_z\\sigma\\right)^2 + z^4\\,S^2e^{\\omega}\\partial_z\\sigma\\,\\partial_z\\omega - z^2\\,S^2e^{\\sigma}\\partial_z\\sigma\\,\\partial_z\\omega - 2z^4\\,S\\,e^{\\omega}\\partial_z\\sigma\\,\\partial_z S - 2z^2\\,S\\,e^{\\sigma}\\partial_z\\sigma\\,\\partial_z S - 2z\\,S^2e^{\\sigma}\\partial_z\\sigma - z^4\\,S^2e^{\\omega}\\left(\\partial_z\\omega\\right)^2 + 2z^4\\,S\\,e^{\\omega}\\partial_z\\omega\\,\\partial_z S + 2z^2\\,S\\,e^{\\sigma}\\partial_z\\omega\\,\\partial_z S - 4z^3\\,S^2e^{\\omega}\\partial_z\\omega + 2z\\,S^2e^{\\sigma}\\partial_z\\omega - 4z^4e^{\\omega}\\left(\\partial_z S\\right)^2 + 4z^2e^{\\sigma}\\left(\\partial_z S\\right)^2 + 8z^3\\,S\\,e^{\\omega}\\partial_z S + 4S^2e^{\\sigma} - 4e^{\\omega}e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}e^{-2\\tau}\\sin^2\\theta}{12}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{\\tau} - \\dfrac{\\left(z\\,e^{\\sigma}\\partial_z\\sigma - z^3e^{\\omega}\\partial_z\\omega + 2e^{\\sigma}\\right)e^{-\\sigma}}{2}\\dot{\\tau}^2 + \\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\sigma}\\dot{\\tau}\\dot{z} + \\dfrac{z\\,e^{-\\sigma}e^{\\omega}\\partial_z\\omega}{2}\\dot{z}^2 + z^3\\,S\\,e^{-\\sigma}\\partial_z S\\,\\dot{\\theta}^2 + z^3\\,S\\,e^{-\\sigma}\\partial_z S\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{z} - \\dfrac{\\left(z^2e^{\\omega} - e^{\\sigma}\\right)\\left(e^{\\sigma}\\partial_z\\sigma - z^2e^{\\omega}\\partial_z\\omega\\right)e^{-\\omega}e^{-\\sigma}}{2}\\dot{\\tau}^2 + \\left(z\\,e^{\\sigma}\\partial_z\\sigma - z^3e^{\\omega}\\partial_z\\omega - 2e^{\\sigma}\\right)e^{-\\sigma}\\dot{\\tau}\\dot{z} + \\dfrac{\\left(z^2e^{\\omega} + e^{\\sigma}\\right)e^{-\\sigma}\\partial_z\\omega}{2}\\dot{z}^2 + z\\,S\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\dot{\\theta}^2 + z\\,S\\left(z^3e^{\\omega}\\partial_z S - z\\,e^{\\sigma}\\partial_z S - S\\,e^{\\sigma}\\right)e^{-\\omega}e^{-\\sigma}\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} - 2\\dot{\\tau}\\dot{\\theta} + \\dfrac{2z\\,\\partial_z S + 2S}{z\\,S}\\dot{z}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} - 2\\dot{\\tau}\\dot{\\phi} + \\dfrac{2z\\,\\partial_z S + 2S}{z\\,S}\\dot{z}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}
