@@ -92,6 +92,11 @@
       "id": "penney_scalar",
       "kind": "family",
       "text": "A charged mass with a massless scalar field that does not couple to the Maxwell field, found by R. Penney in 1969. Its only black hole is the one with the scalar field switched off [banerjee1998]."
+    },
+    {
+      "id": "skyrmion_hair",
+      "kind": "family",
+      "text": "A black hole with a self-gravitating Skyrme field outside its horizon [dvali2016skyrmion]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "cvetic1996static",
     "cvetic1996dyonic",
     "gibbons1995",
-    "banerjee1998"
+    "banerjee1998",
+    "dvali2016skyrmion"
   ],
   "coordinates": [
     {

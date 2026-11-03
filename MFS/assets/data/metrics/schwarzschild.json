@@ -539,6 +539,11 @@
       "id": "spheroidal_stars",
       "kind": "composite",
       "text": "Static fluid stars joined to Schwarzschild's vacuum at their surfaces. Vanishing pressure and continuity of the lapse fix the matching [delgaty1998]."
+    },
+    {
+      "id": "skyrmion_hair",
+      "kind": "family",
+      "text": "A black hole with a skyrmion field outside its horizon. Its geometry approaches Schwarzschild's far away [dvali2016skyrmion]."
     }
   ],
   "references": [
@@ -678,7 +683,8 @@
     "fransen2023",
     "brandt1997",
     "mello2017",
-    "delgaty1998"
+    "delgaty1998",
+    "dvali2016skyrmion"
   ],
   "coordinates": [
     {

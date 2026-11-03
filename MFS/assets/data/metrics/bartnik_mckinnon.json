@@ -69,6 +69,11 @@
       "id": "kerr_scalar_hair",
       "kind": "family",
       "text": "Black holes with hair again, this time of a massive complex scalar field, which stays outside the horizon because it turns with it, $\\omega = m\\Omega_H$ [herdeiro2014]."
+    },
+    {
+      "id": "skyrmion_hair",
+      "kind": "family",
+      "text": "A black hole inside a self-gravitating skyrmion, with a field extending beyond its horizon [dvali2016skyrmion]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "choptuik1996",
     "gleiser1989",
     "lee1989",
-    "herdeiro2014"
+    "herdeiro2014",
+    "dvali2016skyrmion"
   ],
   "coordinates": [
     {
