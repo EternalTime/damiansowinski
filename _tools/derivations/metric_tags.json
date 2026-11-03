@@ -7968,6 +7968,27 @@
    "\\phi"
   ]
  },
+ "hellaby_kruskal/comoving": {
+  "stamp": "55b30ca63899390b",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "hiscock/flat": {
   "stamp": "742f717bb2585d7c",
   "relations": {},

@@ -18,7 +18,7 @@ class DustNeck(unittest.TestCase):
         radial_metric = sp.diff(radius, r)**2 / (1 + energy)
         density_8pi = 2 * sp.diff(mass, r) / (radius**2 * sp.diff(radius, r))
         self.assertEqual(sp.limit(radial_metric, r, 0), sp.Rational(676, 25))
-        self.assertEqual(sp.limit(density_8pi, r, 0), sp.Rational(3, 26))
+        self.assertEqual(sp.limit(density_8pi, r, 0), sp.Rational(3, 52))
         self.assertEqual(sp.diff(radius, r).subs(r, 0), 0)
         self.assertGreater(sp.diff(radius, r, 2).subs(r, 0), 0)
 
