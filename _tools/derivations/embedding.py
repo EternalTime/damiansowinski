@@ -22151,6 +22151,39 @@ CAPTIONS[("mallett_radiating_star", "slice")] = [
 ]
 
 
+def skyrmion_hair(ck, src):
+    """The equatorial static exterior, with the solved C on 0.101 <= x <= 4.
+
+    Here x = a F_pi r and the Euclidean surface has dz/dx = sqrt(1/C - 1).
+    The near end is just outside the horizon so the numerical chart stays on its exterior.
+    """
+    sl = Slice(src, "skyrmion_hair", "areal", "r", "\\phi", {"t": 0, **EQUATOR},
+               {"r_h": 0.1}, functions=nr.SKYRME_FUNCTIONS)
+    lo, top, size = 0.101, 4.0, 8.0
+    piece = Piece("exterior", "sheet", sl, lo, top, 0.0, 1,
+                  (("edge", "the surface continues inward to the horizon at $aF_\\pi r=0.1$"),
+                   ("edge", "the exterior continues outward")),
+                  [(r, "r", None) for r in (0.5, 1.0, 2.0, 3.0, 4.0)], size)
+    surface = Surface([piece])
+    ck.isometry("Skyrmion black hole exterior", piece)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *piece.at(1.0), "$1$")
+    ring_label(fig, [0, 0, 0], *piece.at(4.0), "$4$")
+    fig.legend("fill", "cover", "the equatorial exterior")
+    fig.legend("line", "r", "$aF_\\pi r$ constant")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("exterior", "Exterior", "$1/(aF_\\pi)$", [surface], fig.done(),
+                 settings="$aF_\\pi=1$; $\\alpha=0.01$ and $aF_\\pi r_h=0.1$.",
+                 input="The numerical massless pion solution on the larger $f_h$ branch.")]
+
+
+DRAWN["skyrmion_hair"] = skyrmion_hair
+CAPTIONS[("skyrmion_hair", "exterior")] = [
+    "The equatorial plane ($\\theta=\\pi/2$) at one moment of $t$, from $aF_\\pi r=0.101$ to $4$. "
+    "The surface climbs with slope $\\sqrt{1/C-1}$ and continues inward to the horizon."
+]
+
+
 if __name__ == "__main__":
     sys.exit(main())
 

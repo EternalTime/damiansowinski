@@ -121,7 +121,9 @@ def declared_functions():
             return next_function(self.args[0])
 
         return type(name, (sp.Function,), {'nargs': 1, 'is_real': True,
-                                           '_imp_': staticmethod(value), 'fdiff': fdiff})
+                                           '_imp_': staticmethod(value), 'fdiff': fdiff,
+                                           '_eval_evalf': lambda self, prec: sp.Float(
+                                               float(self._imp_(float(self.args[0]))), prec)})
 
     result = {}
     for key in ('N', 'C'):

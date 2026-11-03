@@ -18861,5 +18861,41 @@ def mallett_radiating_star(ck, src):
 DRAWN["mallett_radiating_star"] = mallett_radiating_star
 
 
+def skyrmion_hair(ck, src):
+    """Stored scalars of the massless pion exterior, evaluated on the numerical profiles.
+
+    The line runs from just outside the horizon to the embedding's outer radius.
+    Each sampled value is read from the stored scalar and is checked by line_curves.
+    """
+    x_axis = axis("$aF_\\pi r$", 0.1, 4.0)
+    k_scale = {"kind": "log", "from": 1e-5, "to": 1e6}
+    r_scale = {"kind": "log", "from": 1e-4, "to": 1e-1}
+    panels = [{"id": "K", "name": "$K/(aF_\\pi)^4$", "aspect": 2,
+               "scale": k_scale, "ticks": value_ticks(k_scale)},
+              {"id": "R", "name": "$R/(aF_\\pi)^2$", "aspect": 2,
+               "scale": r_scale, "ticks": value_ticks(r_scale)}]
+    shape_checks(ck, "skyrmion_hair", [p["aspect"] for p in panels])
+    curves = []
+    for field, name, scale in (("kretschmann", "K", k_scale), ("ricci_scalar", "R", r_scale)):
+        stored = Published(src, "skyrmion_hair", "areal", field, ["r"], [], functions=nr.SKYRME_FUNCTIONS)
+        curves += line_curves(ck, "skyrmion_hair", name, name, stored, "r", x_axis, scale,
+                              PLOT_W/2, {}, within=(0.101, 4.0))
+    return [{"id": "exterior", "label": "Exterior", "kind": "line", "x": x_axis,
+             "panels": panels, "curves": curves, "marks": [],
+             "legend": [["line", "K", "$K$, Kretschmann scalar"], ["line", "R", "$R$, Ricci scalar"]],
+             "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the skyrmion black hole "
+                         "outside the horizon, from $aF_\\pi r=0.101$ to $4$. "
+                         "$R$ is positive throughout this interval."],
+             "ricci_sentences": [[0, 1]],
+             "per_scalar": scalar_clips("$K/(aF_\\pi)^4$ is logarithmic from $10^{-5}$ to $10^6$.",
+                                        "$R/(aF_\\pi)^2$ is logarithmic from $10^{-4}$ to $10^{-1}$."),
+             "settings": "$aF_\\pi=1$, $\\alpha=0.01$ and $aF_\\pi r_h=0.1$.",
+             "input": "The numerical massless pion solution on the larger $f_h$ branch.",
+             "clip": "Both panels use logarithmic scales; each curve lies within its panel."}]
+
+
+DRAWN["skyrmion_hair"] = skyrmion_hair
+
+
 if __name__ == "__main__":
     sys.exit(main())

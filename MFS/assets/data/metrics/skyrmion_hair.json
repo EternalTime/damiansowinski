@@ -72,11 +72,11 @@
         },
         {
           "symbol": "f = f(r)",
-          "description": "Mass function approaching $M$ at infinity. In $x=aF_\\pi r$, $\\mu=aF_\\pi Gm$ obeys $\\mu_x=(\\alpha/8)[C(x^2+8\\sin^2 f)f_x^2+2\\sin^2 f+4\\sin^4 f/x^2]$."
+          "description": "Dimensionless Skyrme profile, with $f(\\infty)=0$ and horizon value $f_h$. The horizon value is $f_h=f(r_h)$. With $f_x=\\partial_x f$ and $u=x^2+8\\sin^2 f$, it obeys $(NCu f_x)_x=N\\sin(2f)(1+4Cf_x^2+4\\sin^2 f/x^2)$, where $x=aF_\\pi r$."
         },
         {
           "symbol": "m = m(r)",
-          "description": "Dimensionless Skyrme profile, with $f(\\infty)=0$ and $f(r_h)=f_h$. With $u=x^2+8\\sin^2 f$, it obeys $(NCu f_x)_x=N\\sin(2f)(1+4Cf_x^2+4\\sin^2 f/x^2)$, where $x=aF_\\pi r$."
+          "description": "Mass function approaching $M$ at infinity. In $x=aF_\\pi r$, $\\mu=aF_\\pi Gm$ has $\\mu_x=\\partial_x\\mu$ and obeys $\\mu_x=(\\alpha/8)[C(x^2+8\\sin^2 f)f_x^2+2\\sin^2 f+4\\sin^4 f/x^2]$."
         },
         {
           "symbol": "r_h",

@@ -3674,6 +3674,8 @@ FLAT = {
     ("tov", "spherical", "through"): lambda: one("tov", lambda m: along(0.0, *m.reach("spherical", "r"))),
     # Bartnik and McKinnon's soliton with one zero at t = 0, from its centre to the edge of its embedding
     # diagram, in the areal radius and in the three radial coordinates that are functions of it.
+    ("skyrmion_hair", "areal", "radial"): lambda: one(
+        "skyrmion_hair", lambda m: along(0.0, *m.reach("areal", "r")), view_id="exterior"),
     ("bartnik_mckinnon", "areal", "radial"): lambda: one("bartnik_mckinnon", lambda m: along(0.0, *m.reach("areal", "r")), view_id="n1"),
     ("bartnik_mckinnon", "areal", "through"): lambda: one("bartnik_mckinnon", lambda m: along(0.0, *m.reach("areal", "r")), view_id="n1"),
     ("bartnik_mckinnon", "isotropic", "radial"): lambda: one(
