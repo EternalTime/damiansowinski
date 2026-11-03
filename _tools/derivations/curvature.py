@@ -18359,8 +18359,38 @@ def static_five_soliton(ck, src):
              "settings":"$r_s=1$.","clip":"Logarithmic scale; curves continue beyond the panel."}]
 
 
+def quevedo_mashhoon(ck, src):
+    """The stored Kretschmann scalar along the equator of the sourced field.
+
+    The same nonzero deformation and spin are used in the spacetime and
+    embedding views. The curve reads the stored scalar and its declared
+    functions on 5/2 <= r/M <= 7, the embedding interval.
+    """
+    params = {"M": 1.0, "a": 0.4, "sigma": math.sqrt(21)/5, "q": 0.4, "delta": 1.0}
+    K = Published(src, "quevedo_mashhoon", "spherical", "kretschmann", ["r", "theta"],
+                  list(params), functions=nr.QM_FUNCTIONS["spherical"])
+    equator = Held(K, {"theta": math.pi/2})
+    x_axis = axis("$r/M$", 2.5, 7.0)
+    samples = equator(np.linspace(2.5, 7.0, SAMPLES), *params.values())
+    ck("quevedo_mashhoon equatorial scalar is finite and positive on the drawn interval",
+       np.all(np.isfinite(samples)) and np.all(samples > 0))
+    lower = 10.0 ** math.floor(math.log10(float(np.min(samples))))
+    upper = 10.0 ** math.ceil(math.log10(float(np.max(samples))))
+    scale = {"kind": "log", "from": lower, "to": upper}
+    panel = {"id": "K", "name": "$K M^4$", "aspect": 1.5, "scale": scale, "ticks": value_ticks(scale)}
+    shape_checks(ck, "quevedo_mashhoon", [panel["aspect"]])
+    curves = line_curves(ck, "quevedo_mashhoon", "K", "K", equator, "r", x_axis,
+                         scale, PLOT_W / panel["aspect"], params)
+    return [{"id": "equator", "label": "The equator", "kind": "line", "x": x_axis,
+             "panels": [panel], "curves": curves, "marks": [], "legend": [["line", "K", "$K$"]],
+             "caption": ["The Kretschmann scalar $K$ on the equator of the rotating deformed field."],
+             "settings": "$M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$.",
+             "clip": "$K M^4$ is logarithmic, with every value within the panel."}]
+
+
 DRAWN = {
     "york_equilibrium": york_equilibrium,
+    "quevedo_mashhoon": quevedo_mashhoon,
     "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "newman_tamburino": newman_tamburino,
