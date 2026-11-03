@@ -2103,7 +2103,7 @@ def york_equilibrium(ck, src):
     The chart is held through first order in epsilon, with the wall at R = 50M;
     it supplies no second exterior and the surface stops at the wall.
     """
-    params = {"M": 1, "R": 50, "epsilon": sp.Rational(1, 10)}
+    params = {"M": 1, "R": 50, "epsilon": sp.Rational(1, 10000)}
     sl = Slice(src, "york_equilibrium", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, params)
     sl.exact[2.0] = sp.Integer(2)
     size = 100.0
@@ -2122,7 +2122,7 @@ def york_equilibrium(ck, src):
     fig.legend("line", "surface", "the reflecting wall $r = R$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("cavity", "The radiation cavity", "$M$", [surface], fig.done(),
-                 settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10$.")]
+                 settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.")]
 
 
 def schwarzschild(ck, src):

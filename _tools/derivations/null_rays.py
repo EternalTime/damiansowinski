@@ -3130,7 +3130,7 @@ DIAGRAMS = [
             functions=SKYRME_FUNCTIONS, input=SKYRME_INPUT, where="r - 0.1", edge_horizon=True),
     # Page's scalar field is evaluated in a cavity wider than its characteristic wavelength.
     Diagram("york_equilibrium", "areal", "radial", "$t$ and $r$", ("t", "r"),
-            (2, 50, -24, 24), "$r/M$", "$t/M$", {"M": 1, "R": 50, "epsilon": "1/10"},
+            (2, 50, -24, 24), "$r/M$", "$t/M$", {"M": 1, "R": 50, "epsilon": "1/10000"},
             EQUATOR, areal=True, where="(r - 2*M)*(R - r)",
             lines=(("surface", "r", "50", "the reflecting wall, $r = R$"),)),
 
