@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 233,
+  "count": 234,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -15824,6 +15824,11 @@
           "id": "belinski_zakharov",
           "kind": "family",
           "text": "Belinski and Zakharov's inverse scattering builds cylindrical solitons with both polarisations, and Akira Tomimatsu followed the turning of their polarisation in 1989 [tomizawa2014]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "A cylindrical vacuum wave around a string has both polarisations, with a regular axis when $|\\alpha p|=1$ [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -15838,7 +15843,8 @@
         "piran1986",
         "dinverno2000",
         "glod2022",
-        "levicivita1919"
+        "levicivita1919",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/twisting_cylindrical_waves.json",
@@ -21917,6 +21923,11 @@
           "id": "brill_waves",
           "kind": "family",
           "text": "A bundle of gravitational waves of finite extent, known at one moment only. Brill proved in 1959, with no approximation, that its mass is positive [brill1959]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "Cylindrical waves around a string carry two polarisations, with a cross term joining the angular and longitudinal directions [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -21947,7 +21958,8 @@
         "fernandezjambrina2002",
         "einstein1935",
         "belinskii1978",
-        "brill1959"
+        "brill1959",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -26033,6 +26045,11 @@
           "id": "spinning_string",
           "kind": "family",
           "text": "A straight string given spin where this one is given a wave. Both leave every curvature scalar at zero [deser1992time, kaloper1997]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "Xanthopoulos's gravitational waves have cylindrical fronts around a string [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -26053,7 +26070,8 @@
         "horowitz1997",
         "lunin2001",
         "aichelburg1971",
-        "deser1992time"
+        "deser1992time",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_wave.json",
@@ -29292,6 +29310,11 @@
           "id": "twisting_cylindrical_waves",
           "kind": "family",
           "text": "Their inverse scattering applied around an axis gives cylindrical solitons with both polarisations, whose polarisation turns as they travel [tomizawa2014]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "A cylindrical soliton family around a string contains Xanthopoulos's waves [kleidis2010]."
         }
       ],
       "references": [
@@ -29312,7 +29335,8 @@
         "belinski2001",
         "pomeransky2006",
         "elvang2007",
-        "tomizawa2014"
+        "tomizawa2014",
+        "kleidis2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/belinski_zakharov.json",
@@ -35941,6 +35965,11 @@
           "id": "bowen_york",
           "kind": "family",
           "text": "Conformally flat initial data for a spinning hole contain a radiative distortion. Its perturbative evolution approaches Kerr while emitting gravitational waves [gleiser1998by]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "dual",
+          "text": "A complex transformation of the Kerr metric produces Xanthopoulos's cylindrical waves around a string [xanthopoulos1986rotating]."
         }
       ],
       "references": [
@@ -36018,7 +36047,8 @@
         "israel1970",
         "vaidya1989kerr",
         "vaidya1977kerr",
-        "gleiser1998by"
+        "gleiser1998by",
+        "xanthopoulos1986rotating"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -67269,6 +67299,11 @@
           "id": "vuorio_warped_ads",
           "kind": "family",
           "text": "A vacuum of gravity in three dimensions with a mass for the graviton, with closed timelike curves and no source. They lie beyond a fixed distance from every point [reboucas2009]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "family",
+          "text": "The Komar angular momentum of Xanthopoulos's cylindrical wave geometry is zero [bicak_katz_lyndenbell2008]."
         }
       ],
       "references": [
@@ -67301,7 +67336,8 @@
         "kopczynski1973",
         "trautman2006",
         "visser1998",
-        "reboucas2009"
+        "reboucas2009",
+        "bicak_katz_lyndenbell2008"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/spinning_string.json",
@@ -68583,6 +68619,292 @@
           ],
           "ricci_scalar": "R = \\dfrac{\\left(b\\,u + b\\,v - 2a\\right)\\left(b\\,u + b\\,v + 2a\\right)}{F\\,\\ell^2\\left(u + v\\right)^2}",
           "kretschmann": "K = \\dfrac{12 + 32a^4 - 16a^2 + 2b^4\\,v^4 + 2b^4\\,u^4 + 4b^2\\,v^2 + 4b^2\\,u^2 + 8b^2\\,u\\,v + 8b^4\\,u^3\\,v + 8b^4\\,u\\,v^3 + 12b^4\\,u^2\\,v^2 - 16a^2\\,b^2\\,v^2 - 16a^2\\,b^2\\,u^2 - 32a^2\\,b^2\\,u\\,v}{F^2\\,\\ell^4\\left(u + v\\right)^4}"
+        }
+      ]
+    },
+    {
+      "id": "string_cylindrical_waves",
+      "name": "Cylindrical Waves and a Cosmic String",
+      "short_name": "String and Cylindrical Waves",
+      "description": "Outside a straight cosmic string, cylindrical gravitational waves form a vacuum geometry whose angle deficit is larger far from the axis.",
+      "tags": [
+        "vacuum",
+        "cosmic string",
+        "gravitational wave",
+        "cylindrical symmetry",
+        "time-dependent",
+        "Petrov type D",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "limit",
+          "text": "The conical exterior appears as $p\\to\\infty$ with $\\alpha p=k>1$, after scaling time and radius by $k$ [gurtug_sakalli2003]."
+        },
+        {
+          "id": "twisting_cylindrical_waves",
+          "kind": "family",
+          "text": "The waves fit the cylindrical metric with two polarisations; $|\\alpha p|=1$ makes the axis regular [gurtug_sakalli2003]."
+        },
+        {
+          "id": "kerr",
+          "kind": "dual",
+          "text": "Xanthopoulos obtained the cylindrical waves through a complex transformation of the Kerr metric [xanthopoulos1986rotating]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "The Einstein-Rosen cylindrical waves have one polarisation; the waves around the string also have a crossed polarisation [gurtug_sakalli2003]."
+        },
+        {
+          "id": "spinning_string",
+          "kind": "family",
+          "text": "Spinning cosmic strings carry angular momentum. The Komar angular momentum of the cylindrical wave geometry is zero [bicak_katz_lyndenbell2008]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "family",
+          "text": "A gravitational wave travels along a cosmic string [garfinkle1990]. Xanthopoulos's waves have cylindrical fronts around the axis [gurtug_sakalli2003]."
+        },
+        {
+          "id": "belinski_zakharov",
+          "kind": "family",
+          "text": "The inverse scattering construction leads to cylindrical soliton waves around a string, with Xanthopoulos's waves in a subfamily [kleidis2010]."
+        }
+      ],
+      "references": [
+        "gurtug_sakalli2003",
+        "xanthopoulos1986cylindrical",
+        "xanthopoulos1986rotating",
+        "kleidis2010",
+        "economou_tsoubelis1988",
+        "garriga_verdaguer1987",
+        "bicak_katz_lyndenbell2008",
+        "garfinkle1990"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_cylindrical_waves.json",
+      "charts": [
+        {
+          "id": "prolate",
+          "name": "Prolate Coordinates",
+          "coordinates": [
+            "\\tau",
+            "\\sigma",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\tau\\in(-\\infty,\\infty)",
+            "\\sigma\\in(1,\\infty)",
+            "\\phi\\in[0,2\\pi)",
+            "z\\in(-\\infty,\\infty)",
+            "\\ell>0,\\quad\\alpha>0,\\quad p>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A positive length scale"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "A positive dimensionless parameter setting the angle deficits"
+            },
+            {
+              "symbol": "p",
+              "description": "A positive dimensionless wave parameter; changing its sign reverses the time and longitudinal orientations"
+            },
+            {
+              "symbol": "q = \\sqrt{1+p^2}",
+              "description": "A positive dimensionless parameter obeying $q^2-p^2=1$; the other sign reverses the angular orientation"
+            },
+            {
+              "symbol": "\\Delta = 1+\\tau^2",
+              "description": "A positive function of the prolate time"
+            },
+            {
+              "symbol": "\\delta = \\sigma^2-1",
+              "description": "A positive function of the prolate radius away from the axis"
+            },
+            {
+              "symbol": "X = (1-p\\tau)^2+q^2\\sigma^2",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "Y = X-2(1-p\\tau)",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "\\omega = 2q(1-p\\tau)\\delta/(pY)",
+              "description": "The dimensionless coupling between the angular and longitudinal directions"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\tau,\\sigma,\\phi,z)$, with $\\sigma>1$ outside the axis. The cylindrical coordinates $t=\\tau\\sigma$ and $\\rho^2=(1+\\tau^2)(\\sigma^2-1)$ have $t\\in(-\\infty,\\infty)$ and $\\rho>0$. The inverse is $\\sigma=\\sqrt{(D+1+\\rho^2-t^2)/2}$ and $\\tau=t/\\sigma$, where $D=\\sqrt{(1+\\rho^2-t^2)^2+4t^2}$. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=\\ell^2\\left(\\alpha^2 X(-d\\tau^2/\\Delta+d\\sigma^2/\\delta)+\\Delta\\delta X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}{\\tau^2 + 1}"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "-\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}{\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\ell^2\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p^2\\,\\sigma^2\\,\\tau^2 + p^4\\,\\sigma^2\\,\\tau^2 + p^2\\,\\sigma^2 + 7p^2\\,\\tau^2 - 4p^3\\,\\tau^3 + p^4\\,\\sigma^2 + p^4\\,\\tau^2 + p^4\\,\\tau^4 - 4p^3\\,\\tau - 8p\\,\\tau + 3p^2 + 4\\right)}{p^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "z"
+              ],
+              "value": "-\\dfrac{2\\ell^2\\,\\sqrt{p^2 + 1}\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p\\,\\tau - 1\\right)}{p\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{2\\ell^2\\,\\sqrt{p^2 + 1}\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p\\,\\tau - 1\\right)}{p\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 1\\right)}{p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{48\\left(p^2\\,\\sigma^2 - p^2\\,\\tau^2 + \\sigma^2 + 2p\\,\\tau - 1\\right)\\left(14p^2\\,\\sigma^2\\,\\tau^2 + 14p^4\\,\\sigma^2\\,\\tau^2 - 28p^3\\,\\sigma^2\\,\\tau - 28p\\,\\sigma^2\\,\\tau + 14p^2\\,\\sigma^2 - 2p^2\\,\\sigma^4 - 6p^2\\,\\tau^2 + 4p^3\\,\\tau^3 - p^4\\,\\sigma^4 - p^4\\,\\tau^4 + 14\\sigma^2 - \\sigma^4 + 4p\\,\\tau - 1\\right)}{\\alpha^4\\,\\ell^4\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^6}"
+        },
+        {
+          "id": "hyperbolic",
+          "name": "Hyperbolic Coordinates",
+          "coordinates": [
+            "\\psi",
+            "\\theta",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\psi\\in(-\\infty,\\infty)",
+            "\\theta\\in(0,\\infty)",
+            "\\phi\\in[0,2\\pi)",
+            "z\\in(-\\infty,\\infty)",
+            "\\ell>0,\\quad\\alpha>0,\\quad p>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A positive length scale"
+            },
+            {
+              "symbol": "\\alpha",
+              "description": "A positive dimensionless parameter setting the angle deficits"
+            },
+            {
+              "symbol": "p",
+              "description": "A positive dimensionless wave parameter; changing its sign reverses the time and longitudinal orientations"
+            },
+            {
+              "symbol": "q = \\sqrt{1+p^2}",
+              "description": "A positive dimensionless parameter obeying $q^2-p^2=1$; the other sign reverses the angular orientation"
+            },
+            {
+              "symbol": "\\tau = \\sinh\\psi",
+              "description": "The prolate time coordinate"
+            },
+            {
+              "symbol": "\\sigma = \\cosh\\theta",
+              "description": "The prolate radial coordinate"
+            },
+            {
+              "symbol": "\\Delta = 1+\\tau^2",
+              "description": "A positive function of the prolate time"
+            },
+            {
+              "symbol": "\\delta = \\sigma^2-1",
+              "description": "A positive function of the prolate radius away from the axis"
+            },
+            {
+              "symbol": "X = (1-p\\tau)^2+q^2\\sigma^2",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "Y = X-2(1-p\\tau)",
+              "description": "A positive dimensionless function"
+            },
+            {
+              "symbol": "\\omega = 2q(1-p\\tau)\\delta/(pY)",
+              "description": "The dimensionless coupling between the angular and longitudinal directions"
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\psi,\\theta,\\phi,z)$, with $\\tau=\\sinh\\psi$ and $\\sigma=\\cosh\\theta$. The axis is at $\\theta=0$, where this polar chart ends. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2=\\ell^2\\left(\\alpha^2X(-d\\psi^2+d\\theta^2)+\\Delta\\delta X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)e^{-2\\psi}e^{-2\\theta}}{4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\alpha^2\\,\\ell^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)e^{-2\\psi}e^{-2\\theta}}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(e^{\\theta} + 1\\right)^2\\left(e^{\\theta} - 1\\right)^2\\left(30p^2e^{2\\psi}e^{2\\theta} + p^2e^{2\\psi}e^{4\\theta} - 4p^2e^{2\\theta}e^{4\\psi} + 30p^2e^{2\\theta}e^{6\\psi} + 2p^2e^{4\\psi}e^{4\\theta} + p^2e^{4\\theta}e^{6\\psi} + 8p^3e^{2\\theta}e^{3\\psi} - 8p^3e^{2\\theta}e^{5\\psi} - 8p^3e^{2\\theta}e^{7\\psi} + 2p^4e^{2\\psi}e^{2\\theta} + p^4e^{2\\psi}e^{4\\theta} + 2p^4e^{2\\theta}e^{4\\psi} + 2p^4e^{2\\theta}e^{6\\psi} + p^4e^{2\\theta}e^{8\\psi} + 2p^4e^{4\\psi}e^{4\\theta} + p^4e^{4\\theta}e^{6\\psi} + 64p\\,e^{2\\theta}e^{3\\psi} - 64p\\,e^{2\\theta}e^{5\\psi} + 8p^3e^{\\psi}e^{2\\theta} + 64e^{2\\theta}e^{4\\psi} + p^2e^{2\\psi} + 2p^2e^{4\\psi} + p^2e^{6\\psi} + p^4e^{2\\psi} + p^4e^{2\\theta} + 2p^4e^{4\\psi} + p^4e^{6\\psi}\\right)e^{-2\\psi}e^{-2\\theta}}{16p^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2\\,\\sqrt{p^2 + 1}\\left(e^{\\theta} + 1\\right)^2\\left(e^{\\theta} - 1\\right)^2\\left(p\\,e^{2\\psi} - 2e^{\\psi} - p\\right)e^{\\psi}}{p\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\ell^2\\,\\sqrt{p^2 + 1}\\left(e^{\\theta} + 1\\right)^2\\left(e^{\\theta} - 1\\right)^2\\left(p\\,e^{2\\psi} - 2e^{\\psi} - p\\right)e^{\\psi}}{p\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 2e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)}{p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{3072\\left(4p^2e^{2\\psi}e^{2\\theta} + p^2e^{2\\psi}e^{4\\theta} - p^2e^{2\\theta}e^{4\\psi} + 4p\\,e^{2\\theta}e^{3\\psi} - 2e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} - 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} - p^2e^{2\\theta} + e^{2\\psi}\\right)\\left(14p^2e^{2\\psi}e^{2\\theta} + 4p^2e^{2\\psi}e^{4\\theta} + 14p^2e^{2\\psi}e^{6\\theta} + 20p^2e^{2\\theta}e^{4\\psi} + 14p^2e^{2\\theta}e^{6\\psi} + 92p^2e^{4\\psi}e^{4\\theta} + 20p^2e^{4\\psi}e^{6\\theta} - 2p^2e^{4\\psi}e^{8\\theta} + 4p^2e^{4\\theta}e^{6\\psi} + 14p^2e^{6\\psi}e^{6\\theta} + 56p^3e^{2\\theta}e^{3\\psi} - 56p^3e^{2\\theta}e^{5\\psi} + 136p^3e^{3\\psi}e^{4\\theta} + 56p^3e^{3\\psi}e^{6\\theta} - 136p^3e^{4\\theta}e^{5\\psi} + 8p^3e^{4\\theta}e^{7\\psi} - 56p^3e^{5\\psi}e^{6\\theta} + 14p^4e^{2\\psi}e^{2\\theta} + 32p^4e^{2\\psi}e^{4\\theta} + 14p^4e^{2\\psi}e^{6\\theta} - 32p^4e^{2\\theta}e^{4\\psi} + 14p^4e^{2\\theta}e^{6\\psi} - 68p^4e^{4\\psi}e^{4\\theta} - 32p^4e^{4\\psi}e^{6\\theta} - p^4e^{4\\psi}e^{8\\theta} + 32p^4e^{4\\theta}e^{6\\psi} - p^4e^{4\\theta}e^{8\\psi} + 14p^4e^{6\\psi}e^{6\\theta} + 56p\\,e^{2\\theta}e^{3\\psi} - 56p\\,e^{2\\theta}e^{5\\psi} + 80p\\,e^{3\\psi}e^{4\\theta} + 56p\\,e^{3\\psi}e^{6\\theta} - 80p\\,e^{4\\theta}e^{5\\psi} - 56p\\,e^{5\\psi}e^{6\\theta} - 8p^3e^{\\psi}e^{4\\theta} + 52e^{2\\theta}e^{4\\psi} + 90e^{4\\psi}e^{4\\theta} + 52e^{4\\psi}e^{6\\theta} - e^{4\\psi}e^{8\\theta} - 2p^2e^{4\\psi} - p^4e^{4\\psi} - p^4e^{4\\theta} - e^{4\\psi}\\right)e^{6\\psi}e^{6\\theta}}{\\alpha^4\\,\\ell^4\\left(p^2e^{2\\psi}e^{4\\theta} + p^2e^{2\\theta}e^{4\\psi} - 4p\\,e^{2\\theta}e^{3\\psi} + 6e^{2\\psi}e^{2\\theta} + e^{2\\psi}e^{4\\theta} + 4p\\,e^{\\psi}e^{2\\theta} + p^2e^{2\\psi} + p^2e^{2\\theta} + e^{2\\psi}\\right)^6}"
         }
       ]
     },
@@ -76786,6 +77108,11 @@
           "id": "superconducting_string",
           "kind": "generalisation",
           "text": "A current along a string produces a magnetic field and curves the exterior [sen1999superconducting]."
+        },
+        {
+          "id": "string_cylindrical_waves",
+          "kind": "limit_source",
+          "text": "A limit of cylindrical waves around a string reaches this conical exterior: take $p\\to\\infty$ with $\\alpha p=k>1$ and scale time and radius by $k$ [gurtug_sakalli2003]."
         }
       ],
       "references": [
@@ -76815,7 +77142,8 @@
         "staruszkiewicz1963",
         "gleiser1989splitting",
         "podolsky2000snapping",
-        "sen1999superconducting"
+        "sen1999superconducting",
+        "gurtug_sakalli2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
