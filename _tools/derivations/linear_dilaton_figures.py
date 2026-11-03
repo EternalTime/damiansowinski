@@ -115,7 +115,9 @@ def conformal_views(ck, src, cf):
 
 
 def conformal_captions():
-    return {(METRIC, system): [r"The Einstein frame on the plane $y=z=0$ ($q=1$)."] for system in SYSTEMS}
+    return {(METRIC, system): [
+        (r"The Einstein frame on the $\tau,x$ plane ($y=z=0$, $q=1$)." if system == "cosmic" else
+         r"The Einstein frame on the $\eta,x$ plane ($y=z=0$, $q=1$).")] for system in SYSTEMS}
 
 
 def curvature_views(ck, src, cv):

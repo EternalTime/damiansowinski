@@ -54,7 +54,7 @@
           "description": "Positive inverse length setting the slope of the dilaton."
         }
       ],
-      "convention": "We use the Einstein frame and comoving Cartesian spatial coordinates with dimensions of length.",
+      "convention": "We use cosmic time $\\tau$ in the Einstein frame, with comoving Cartesian spatial coordinates $(x,y,z)$ of length.",
       "line_element": "ds^2 = -d\\tau^2+q^2\\tau^2\\left(dx^2+dy^2+dz^2\\right)",
       "metric_components": [
         {
@@ -736,7 +736,7 @@
           "description": "Positive inverse length setting the slope of the dilaton."
         }
       ],
-      "convention": "We use the Einstein frame and comoving Cartesian spatial coordinates with dimensions of length.",
+      "convention": "We use the Einstein frame in conformal time $\\eta$, the time of the string frame, with comoving Cartesian spatial coordinates $(x,y,z)$ of length. The Einstein frame is related to the string frame by the conformal factor $e^{-2\\Phi}$.",
       "line_element": "ds^2 = e^{2q\\eta}\\left(-d\\eta^2+dx^2+dy^2+dz^2\\right)",
       "metric_components": [
         {
