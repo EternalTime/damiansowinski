@@ -323,6 +323,15 @@ A flat view is named by its keys in the diagram file, `system/view`, a figure in
 - `kasner/radial`, the plane of $t$ and $r$: the line $ct = 0$ from $r = \rho^\Sigma/\Sigma$ at $\rho = 1/16$ to its value at $\rho = 4$, with $\Sigma = 3/4$, that is from $r = 1/6$ to $3.77$; the Kasner form's $t$ is Weyl's times a constant, so the moment is the same.
 - `weyl` and `kasner`, the triangle: the curve $p, q = \arctan(\mp 4\rho^{1/4})$ between the same two circles.
 
+### Linet-Tian
+
+- The embedding is two moments, each in the unit $\ell = 1/\sqrt{3|\Lambda|}$: `positive`, the surface $\psi = 0$ at $t = 0$ in the toroidal chart at $\sigma = 1/4$ and $\Lambda = 1/3$, from $\rho = 0.29$ to $3.1$; and `negative`, the surface $z = 0$ at $t = 0$ in the cylindrical chart of Bonnor's universe, $\sigma = 0$ and $\Lambda = -1/3$, from the axis to $\rho = 6$.
+- `toroidal/radial`: the line $ct = 0$ along the reach of `positive` in $\rho$.
+- `gleiser/radial`: the line $ct = 0$ from $y = 3\sin^2(\rho/2)$ at $\rho = 0.29$ to its value at $3.1$; Gleiser's $t$ is the toroidal chart's times a constant, so the moment is the same.
+- `cylindrical/radial`: the line $ct = 0$ along the reach of `negative` in $\rho$.
+- `sarioglu_tekin/radial`: the line $ct = 0$ from $r = 1$ to $\cosh^{2/3}(3) = 4.66$, with $r = r_0\cosh^{2/3}(\rho/2)$ at $L = 3$ and $r_0 = 1$.
+- The two conformal half strips: the line $T = 0$ between the same circles, each in its own strip.
+
 ### Damour-Solodukhin wormhole
 
 - The embedding is Flamm's paraboloid, the equator at one moment of $t$, drawn at $t = 0$ at $r_s = 1$, $r$ from the throat $r_s$ to $6\,r_s$ on both sides.
