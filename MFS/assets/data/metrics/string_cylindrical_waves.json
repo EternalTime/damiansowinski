@@ -84,7 +84,7 @@
           "description": "The dimensionless coupling between the angular and longitudinal directions"
         }
       ],
-      "convention": "We use dimensionless coordinates $(\\tau,\\sigma,\\phi,z)$, with $\\sigma>1$ outside the axis. A dot denotes differentiation with respect to an affine parameter.",
+      "convention": "We use dimensionless coordinates $(\\tau,\\sigma,\\phi,z)$, with $\\sigma>1$ outside the axis. The cylindrical coordinates $t=\\tau\\sigma$ and $\\rho^2=(1+\\tau^2)(\\sigma^2-1)$ have $t\\in(-\\infty,\\infty)$ and $\\rho>0$. The inverse is $\\sigma=\\sqrt{(D+1+\\rho^2-t^2)/2}$ and $\\tau=t/\\sigma$, where $D=\\sqrt{(1+\\rho^2-t^2)^2+4t^2}$. A dot denotes differentiation with respect to an affine parameter.",
       "line_element": "ds^2=\\ell^2\\left(\\alpha^2 X(-d\\tau^2/\\Delta+d\\sigma^2/\\delta)+\\Delta\\delta X\\,d\\phi^2/Y+(Y/X)(dz-\\omega\\,d\\phi)^2\\right)",
       "metric_components": [
         {
@@ -3797,55 +3797,6 @@
         "\\ddot{\\phi} + \\dfrac{4 + 2p^2 - 10p\\,\\tau - 4\\sigma^2 - 4p^3\\,\\tau + 2p^5\\,\\tau^5 - 6p^4\\,\\tau^4 + 2p^4\\,\\tau^2 - 2p^4\\,\\sigma^2 + 4p^3\\,\\tau^3 + 6p^2\\,\\tau^2 - 6p^2\\,\\sigma^2 + 2p\\,\\sigma^4\\,\\tau + 8p\\,\\sigma^2\\,\\tau + 2p^5\\,\\sigma^4\\,\\tau + 4p^3\\,\\sigma^4\\,\\tau + 8p^3\\,\\sigma^2\\,\\tau + 4p^5\\,\\sigma^2\\,\\tau^3 - 10p^4\\,\\sigma^2\\,\\tau^2 + 4p^3\\,\\sigma^2\\,\\tau^3 - 10p^2\\,\\sigma^2\\,\\tau^2}{p\\left(\\tau^2 + 1\\right)\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\tau}\\dot{\\phi} + \\dfrac{2\\sqrt{p^2 + 1}\\left(p^2\\,\\sigma^2 - p^2\\,\\tau^2 + \\sigma^2 + 2p\\,\\tau - 1\\right)}{\\left(\\tau^2 + 1\\right)\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\tau}\\dot{z} - \\dfrac{2\\sigma\\left(2p^2\\,\\sigma^2\\,\\tau^2 + 2p^4\\,\\sigma^2\\,\\tau^2 - 2p^3\\,\\sigma^2\\,\\tau - 2p\\,\\sigma^2\\,\\tau + 2p^2\\,\\sigma^4 + 6p^2\\,\\tau^2 - 4p^3\\,\\tau^3 + p^4\\,\\sigma^4 + p^4\\,\\tau^4 - 2p^3\\,\\tau + \\sigma^4 - 6p\\,\\tau + 2p^2 + 3\\right)}{\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\sigma}\\dot{\\phi} + \\dfrac{4p\\,\\sigma\\,\\sqrt{p^2 + 1}\\left(1 - p\\,\\tau\\right)}{\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\sigma}\\dot{z} = 0",
         "\\ddot{z} + \\dfrac{2\\sqrt{p^2 + 1}\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p^2\\,\\sigma^2\\,\\tau^2 + p^4\\,\\sigma^2\\,\\tau^2 - 2p^3\\,\\sigma^2\\,\\tau - 2p\\,\\sigma^2\\,\\tau - p^2\\,\\sigma^2 + 19p^2\\,\\tau^2 - 12p^3\\,\\tau^3 - p^4\\,\\sigma^2 + p^4\\,\\tau^2 + 3p^4\\,\\tau^4 - 2p^3\\,\\tau - 14p\\,\\tau + p^2 + 4\\right)}{p^2\\left(\\tau^2 + 1\\right)\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\tau}\\dot{\\phi} + \\dfrac{2\\left(p^2\\,\\tau^2 - 2p\\,\\tau + p^2 + 2\\right)\\left(p^2\\,\\sigma^2 - p^2\\,\\tau^2 + \\sigma^2 + 2p\\,\\tau - 1\\right)}{p\\left(\\tau^2 + 1\\right)\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\tau}\\dot{z} + \\dfrac{4\\sigma\\left(p^2 + 1\\right)^{3/2}\\left(1 + \\sigma\\right)\\left(1 - \\sigma\\right)\\left(p\\,\\tau - 1\\right)}{p\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\sigma}\\dot{\\phi} - \\dfrac{4\\sigma\\left(p^2 + 1\\right)\\left(p\\,\\tau - 1\\right)}{\\left(p^2\\,\\sigma^2 + p^2\\,\\tau^2 + \\sigma^2 - 2p\\,\\tau + 1\\right)^2}\\dot{\\sigma}\\dot{z} = 0"
       ]
-    },
-    {
-      "id": "cylindrical",
-      "name": "Cylindrical",
-      "coords": [
-        "t",
-        "\\rho",
-        "\\phi",
-        "z"
-      ],
-      "domains": [
-        "t\\in(-\\infty,\\infty)",
-        "\\rho\\in(0,\\infty)",
-        "\\phi\\in[0,2\\pi)",
-        "z\\in(-\\infty,\\infty)",
-        "\\ell>0,\\quad\\alpha>0,\\quad p>0"
-      ],
-      "parameters": [
-        {
-          "symbol": "\\ell",
-          "description": "A positive length scale"
-        },
-        {
-          "symbol": "\\alpha",
-          "description": "A positive dimensionless parameter setting the angle deficits"
-        },
-        {
-          "symbol": "p",
-          "description": "A positive dimensionless wave parameter; changing its sign reverses the time and longitudinal orientations"
-        },
-        {
-          "symbol": "q = \\sqrt{1+p^2}",
-          "description": "A positive dimensionless parameter obeying $q^2-p^2=1$; the other sign reverses the angular orientation"
-        },
-        {
-          "symbol": "D = \\sqrt{(1+\\rho^2-t^2)^2+4t^2}",
-          "description": "A positive auxiliary function of time and radius"
-        },
-        {
-          "symbol": "\\sigma = \\sqrt{(D+1+\\rho^2-t^2)/2}",
-          "description": "An auxiliary coordinate, greater than one off the axis"
-        },
-        {
-          "symbol": "\\tau = t/\\sigma",
-          "description": "An auxiliary time coordinate"
-        }
-      ],
-      "line_element": "ds^2=\\ell^2\\left(\\dfrac{\\alpha^2\\left((1-p\\tau)^2+q^2\\sigma^2\\right)}{\\tau^2+\\sigma^2}(-dt^2+d\\rho^2)+\\dfrac{\\rho^2\\left((1-p\\tau)^2+q^2\\sigma^2\\right)}{\\left(p^2(1+\\tau^2)+q^2(\\sigma^2-1)\\right)}d\\phi^2+\\dfrac{\\left(p^2(1+\\tau^2)+q^2(\\sigma^2-1)\\right)}{\\left((1-p\\tau)^2+q^2\\sigma^2\\right)}(dz-2q(\\sigma^2-1)(1-p\\tau)/(p\\left(p^2(1+\\tau^2)+q^2(\\sigma^2-1)\\right))\\,d\\phi)^2\\right)",
-      "convention": "We use dimensionless coordinates $(t,\\rho,\\phi,z)$, related to the prolate coordinates by $t=\\tau\\sigma$ and $\\rho^2=(1+\\tau^2)(\\sigma^2-1)$. The axis is at $\\rho=0$, where this polar chart ends. A dot denotes differentiation with respect to an affine parameter."
     },
     {
       "id": "hyperbolic",

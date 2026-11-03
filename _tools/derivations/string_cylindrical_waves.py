@@ -4,16 +4,12 @@ import mpmath as mp
 import sympy as sp
 
 METRIC = 'string_cylindrical_waves'
-SYSTEMS = ('prolate', 'cylindrical', 'hyperbolic')
+SYSTEMS = ('prolate', 'hyperbolic')
 
 
 def parameters(system):
     names = [r'\ell', r'\alpha', 'p', r'q = \sqrt{1+p^2}']
-    if system == 'cylindrical':
-        names += [r'D = \sqrt{(1+\rho^2-t^2)^2+4t^2}',
-                  r'\sigma = \sqrt{(D+1+\rho^2-t^2)/2}', r'\tau = t/\sigma']
-        return names
-    elif system == 'hyperbolic':
+    if system == 'hyperbolic':
         names += [r'\tau = \sinh\psi', r'\sigma = \cosh\theta']
     names += [r'\Delta = 1+\tau^2', r'\delta = \sigma^2-1',
               r'X = (1-p\tau)^2+q^2\sigma^2', r'Y = X-2(1-p\tau)',
@@ -24,43 +20,27 @@ def parameters(system):
 def register_dimensions(vm):
     for system in SYSTEMS:
         key = (METRIC, system)
-        coords = {'prolate': (r'\tau', r'\sigma'), 'cylindrical': ('t', r'\rho'),
-                  'hyperbolic': (r'\psi', r'\theta')}[system]
+        coords = {'prolate': (r'\tau', r'\sigma'), 'hyperbolic': (r'\psi', r'\theta')}[system]
         dims = {name: '1' for name in coords + (r'\phi', 'z')}
         dims.update({r'\ell': 'L', r'\alpha': '1', 'p': '1', 'q': '1',
                      r'\Delta': '1', r'\delta': '1', 'X': '1', 'Y': '1', r'\omega': '1'})
         if system != 'prolate':
             dims.update({r'\tau': '1', r'\sigma': '1'})
-        if system == 'cylindrical':
-            for name in (r'\Delta', r'\delta', 'X', 'Y', r'\omega'):
-                del dims[name]
-            dims['D'] = '1'
         vm.DIMENSIONS[key] = dims
 
 
 def spec(system):
     coords = {'prolate': [r'\tau', r'\sigma', r'\phi', 'z'],
-              'cylindrical': ['t', r'\rho', r'\phi', 'z'],
               'hyperbolic': [r'\psi', r'\theta', r'\phi', 'z']}[system]
     plane = {'prolate': r'\alpha^2 X(-d\tau^2/\Delta+d\sigma^2/\delta)',
-             'cylindrical': r'\alpha^2X(-dt^2+d\rho^2)/(\tau^2+\sigma^2)',
              'hyperbolic': r'\alpha^2X(-d\psi^2+d\theta^2)'}[system]
-    radius = r'\rho^2' if system == 'cylindrical' else r'\Delta\delta'
+    radius = r'\Delta\delta'
     line = (r'ds^2=\ell^2\left(' + plane + '+' + radius + r' X\,d\phi^2/Y'
             r'+(Y/X)(dz-\omega\,d\phi)^2\right)')
-    if system == 'cylindrical':
-        X = r'\left((1-p\tau)^2+q^2\sigma^2\right)'
-        Y = r'\left(p^2(1+\tau^2)+q^2(\sigma^2-1)\right)'
-        twist = r'2q(\sigma^2-1)(1-p\tau)/(p'+Y+r')'
-        line = (r'ds^2=\ell^2\left(\dfrac{\alpha^2'+X+r'}{\tau^2+\sigma^2}'
-                r'(-dt^2+d\rho^2)+\dfrac{\rho^2'+X+'}{'+Y+r'}d\phi^2'
-                r'+\dfrac{'+Y+'}{'+X+r'}(dz-'+twist+r'\,d\phi)^2\right)')
     domain = {'prolate': [r'\tau\in(-\infty,\infty)', r'\sigma\in(1,\infty)'],
-              'cylindrical': [r't\in(-\infty,\infty)', r'\rho\in(0,\infty)'],
               'hyperbolic': [r'\psi\in(-\infty,\infty)', r'\theta\in(0,\infty)']}[system]
     domain += [r'\phi\in[0,2\pi)', r'z\in(-\infty,\infty)', r'\ell>0,\quad\alpha>0,\quad p>0']
-    names = {'prolate': 'Prolate Coordinates', 'cylindrical': 'Cylindrical',
-             'hyperbolic': 'Hyperbolic Coordinates'}
+    names = {'prolate': 'Prolate Coordinates', 'hyperbolic': 'Hyperbolic Coordinates'}
     return {'metric_id': METRIC, 'system': {'id': system, 'name': names[system], 'coords': coords,
             'domains': domain, 'parameters': parameters(system), 'line_element': line},
             'chart_line_element': line, 'printer': {},
