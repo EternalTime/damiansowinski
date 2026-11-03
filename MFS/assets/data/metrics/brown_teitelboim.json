@@ -1,0 +1,54 @@
+{
+  "id": "brown_teitelboim",
+  "name": "Brown-Teitelboim Membrane Bubble",
+  "short_name": "Brown-Teitelboim Bubble",
+  "description": "A spherical charged membrane joins two regions of de Sitter space with different cosmological constants.",
+  "tags": [
+    "bubble",
+    "domain wall",
+    "thin shell",
+    "matched solution",
+    "junction conditions",
+    "cosmology",
+    "de Sitter",
+    "positive cosmological constant",
+    "cosmological constant",
+    "vacuum energy",
+    "spherically symmetric",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units with $c=1$.",
+  "history": "A spherical membrane separates two regions of de Sitter space, each with its own cosmological constant. In the decay, the constant is smaller inside the bubble, and the membrane expands after it appears [hirano2018bt, brown1987neutralization, brown1988membrane]. J. David Brown and Claudio Teitelboim proposed this mechanism of cosmological constant neutralization in 1987 and developed it in 1988 [hirano2018bt, brown1987neutralization, brown1988membrane].¶In units with $c=1$, static coordinates on either side of the membrane have the line element $$ds_{i,o}^2=-f_{i,o}(r)dt_{i,o}^2+\\frac{dr^2}{f_{i,o}(r)}+r^2d\\Omega_2^2,\\qquad f_{i,o}(r)=1-\\frac{\\Lambda_{i,o}r^2}{3},$$ where $i$ and $o$ mark the inside and outside, $r$ is the areal radius, and $d\\Omega_2^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$ [hirano2018bt]. The two time coordinates need not agree across the wall, and each static chart covers the region where its $f$ is positive. The membrane's own radius is $r=R(\\tau)$, with $\\tau$ its proper time. Its induced geometry is continuous across the wall, while its tension bends the two sides differently [hirano2018bt].¶The jump in extrinsic curvature obeys Werner Israel's junction condition $$K_{ab}(o)-K_{ab}(i)=4\\pi G\\sigma\\,h_{ab},$$ where $h_{ab}$ is the induced metric, $\\sigma$ is the membrane tension, $G$ is Newton's constant, and $K_{ab}$ uses $K_{ab}=-\\tfrac12(\\nabla_a n_b+\\nabla_b n_a)$ with a common unit normal $n$ directed from inside to outside and indices projected onto the wall [hirano2018bt, israel1966]. Together with continuity of $h_{ab}$ and the two cosmological constants, this condition fixes the allowed membrane radius and its motion through the two geometries [hirano2018bt]. The wall has the geometry of a three dimensional de Sitter space: its radius starts at a minimum and grows as proper time advances [hirano2018bt].¶The membrane carries the charge $q$ of a field whose strength has four antisymmetric indices [hirano2018bt, brown1987neutralization, brown1988membrane]. In four dimensions this four form is a constant $E$ times the spacetime volume form on each side, and its energy contributes to the cosmological constant [bousso2000flux, hirano2018bt]. Across the charged membrane $E$ jumps by the charge, $E_i=E_o-q$, so the effective cosmological constant changes as well [hirano2018bt]. The difference is $\\Lambda_i-\\Lambda_o=-8\\pi Gq(E_o-q/2)$, so $q(E_o-q/2)>0$ makes the inside value smaller [hirano2018bt]. An upward change is also possible [bousso2000flux].¶Raphael Bousso and Joseph Polchinski extended the mechanism to several four forms in 2000 [bousso2000flux]. Their quantized fluxes can furnish a closely spaced set of possible cosmological constants, and multiple fluxes arise in compactifications of M theory [bousso2000flux]. Membranes change the fluxes in steps, allowing different regions to occupy different values in that set [bousso2000flux].",
+  "related": [
+    {
+      "id": "coleman_de_luccia",
+      "kind": "family",
+      "text": "A bubble of lower vacuum energy bounded by a wall, here a charged membrane that changes a four form across it [hirano2018bt, bousso2000flux]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "piece",
+      "text": "The geometry on each side of the membrane, with a different cosmological constant inside and outside [hirano2018bt]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "A gravitating wall with flat spacetime on both sides, carrying no charge and no change in the cosmological constant [hirano2018bt, caldwell1996]."
+    }
+  ],
+  "references": [
+    "hirano2018bt",
+    "brown1987neutralization",
+    "brown1988membrane",
+    "israel1966",
+    "bousso2000flux",
+    "caldwell1996"
+  ],
+  "coordinates": []
+}
