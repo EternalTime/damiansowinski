@@ -2666,6 +2666,30 @@
   "killing": [],
   "sphere": null
  },
+ "brown_teitelboim/radius_inside": {
+  "stamp": "377bd423203cbc5d",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": {
+   "k": "3/ell_i**2",
+   "sign": 1
+  },
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "btz/eddington_finkelstein_ingoing": {
   "stamp": "5dfb4df830ef867d",
   "relations": {},
