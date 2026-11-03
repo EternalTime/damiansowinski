@@ -37554,6 +37554,8 @@ CHARTS[_myers_compactified.METRIC] = [lambda system=system: _myers_compactified.
                                        for system in _myers_compactified.CHARTS]
 import hellaby_kruskal as _hellaby_kruskal
 CHARTS[_hellaby_kruskal.METRIC] = _hellaby_kruskal.chart_spec
+import giddings_strominger as _giddings_strominger
+_giddings_strominger.register(sys.modules[__name__])
 
 
 import ori_piran_chart as _ori_piran_chart

@@ -5447,6 +5447,8 @@ import myers_compactified as _myers_compactified
 DIMENSIONS.update(_myers_compactified.DIMENSIONS)
 import hellaby_kruskal as _hellaby_kruskal
 DIMENSIONS.update(_hellaby_kruskal.DIMENSIONS)
+import giddings_strominger as _giddings_strominger
+_giddings_strominger.register_dimensions(sys.modules[__name__])
 
 
 import linear_dilaton as _linear_dilaton
