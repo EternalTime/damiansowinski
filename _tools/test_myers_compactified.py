@@ -40,6 +40,18 @@ class CompactifiedBlackHole(unittest.TestCase):
         self.assertEqual(sp.simplify(jac.T*jac), sp.diag(1, rho**2))
         self.assertEqual(sp.simplify(r*r), rho**2*sp.sin(chi)**2)
 
+    def test_circle_length_is_written_the_same_way_in_every_view(self):
+        data = ROOT / 'MFS/assets/data'
+        diagrams = json.loads((data / 'diagrams/myers_compactified.json').read_text())
+        views = [view for group in diagrams['systems'].values() for view in group]
+        for folder in ('embedding', 'curvature'):
+            views.extend(json.loads((data / folder / 'myers_compactified.json').read_text())['views'])
+        self.assertEqual(len(views), 5)
+        for view in views:
+            self.assertIn(r'$L = 4\sqrt{\mu}$', view['settings'])
+            if view.get('input'):
+                self.assertIn(r'$L = 4\sqrt{\mu}$', view['input'])
+
     def test_horizon_area_limit(self):
         mu, length = 1.7, 4.0
         for chi in (0.3, 1.2, 2.6):

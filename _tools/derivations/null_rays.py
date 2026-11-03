@@ -15742,6 +15742,8 @@ def settings(spec, entry):
             shown = sp.latex(value / number(spec.params["M"]), ln_notation=True) + names["M"]
         elif spec.metric == "york_equilibrium" and plain == "epsilon":
             shown = str(value)
+        elif spec.metric == "myers_compactified" and plain == "L":
+            shown = sp.latex(value / sp.sqrt(number(spec.params["mu"]))) + r"\sqrt{\mu}"
         parts.append(f"${names[plain]} = {shown}$")
     return ", ".join(parts)
 
