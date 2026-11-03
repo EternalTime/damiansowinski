@@ -1626,7 +1626,9 @@ def york_equilibrium(ck, src):
     v.fill("cover", triangle)
     grid(v, "r", lambda r, t: fmap(t, r), (3, 5, 10, 20, 40), S_ALL)
     radii = 2 + np.exp(np.linspace(math.log(1e-6), xmax, 500))
-    grid(v, "t", fmap, (-100, -50, 0, 50, 100), radii)
+    for t in (-100, -50, 0, 50, 100):
+        p, q = fmap(np.full_like(radii, t), radii)
+        v.curve("t", np.r_[HALF, p], np.r_[-HALF, q])
     v.line("horizon", [[[-PI, 0], [0, PI]], [[-PI, 0], [0, -PI]]])
     v.line("surface", [[[0, -PI], [0, PI]]])
     v.label_xt([-HALF, HALF], "$r = 2M$", "br", dx=-4, dy=-4)
