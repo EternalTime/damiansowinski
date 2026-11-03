@@ -139,21 +139,21 @@
             "r",
             "r"
           ],
-          "value": "\\dfrac{\\left(\\partial_r R\\right)^2}{f + 1}"
+          "value": "\\dfrac{\\left(\\partial_r Y\\right)^2}{f + 1}"
         },
         {
           "indices": [
             "\\theta",
             "\\theta"
           ],
-          "value": "R^2"
+          "value": "Y^2"
         },
         {
           "indices": [
             "\\phi",
             "\\phi"
           ],
-          "value": "R^2\\sin^2\\theta"
+          "value": "Y^2\\sin^2\\theta"
         }
       ],
       "inverse_metric_components": [
@@ -169,21 +169,21 @@
             "r",
             "r"
           ],
-          "value": "\\dfrac{f + 1}{\\left(\\partial_r R\\right)^2}"
+          "value": "\\dfrac{f + 1}{\\left(\\partial_r Y\\right)^2}"
         },
         {
           "indices": [
             "\\theta",
             "\\theta"
           ],
-          "value": "\\dfrac{1}{R^2}"
+          "value": "\\dfrac{1}{Y^2}"
         },
         {
           "indices": [
             "\\phi",
             "\\phi"
           ],
-          "value": "\\dfrac{\\csc^2\\theta}{R^2}"
+          "value": "\\dfrac{\\csc^2\\theta}{Y^2}"
         }
       ],
       "christoffel": {
@@ -198,7 +198,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_r R\\,\\partial_t\\partial_r R}{f + 1}"
+                "value": "\\dfrac{\\partial_r Y\\,\\partial_t\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -206,7 +206,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "R\\,\\partial_t R"
+                "value": "Y\\,\\partial_t Y"
               },
               {
                 "indices": [
@@ -214,7 +214,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "R\\,\\partial_t R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_t Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -222,7 +222,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_t\\partial_r R}{\\partial_r R}"
+                "value": "\\dfrac{\\partial_t\\partial_r Y}{\\partial_r Y}"
               },
               {
                 "indices": [
@@ -230,7 +230,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{\\partial_t\\partial_r R}{\\partial_r R}"
+                "value": "\\dfrac{\\partial_t\\partial_r Y}{\\partial_r Y}"
               },
               {
                 "indices": [
@@ -238,7 +238,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{2\\partial_r^2 R + 2f\\,\\partial_r^2 R - \\partial_r R\\,f'}{2\\left(f + 1\\right)\\partial_r R}"
+                "value": "\\dfrac{2\\partial_r^2 Y + 2f\\,\\partial_r^2 Y - \\partial_r Y\\,f'}{2\\left(f + 1\\right)\\partial_r Y}"
               },
               {
                 "indices": [
@@ -246,7 +246,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{R\\left(f + 1\\right)}{\\partial_r R}"
+                "value": "-\\dfrac{Y\\left(f + 1\\right)}{\\partial_r Y}"
               },
               {
                 "indices": [
@@ -254,7 +254,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{R\\left(f + 1\\right)\\sin^2\\theta}{\\partial_r R}"
+                "value": "-\\dfrac{Y\\left(f + 1\\right)\\sin^2\\theta}{\\partial_r Y}"
               },
               {
                 "indices": [
@@ -262,7 +262,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "\\dfrac{\\partial_t R}{R}"
+                "value": "\\dfrac{\\partial_t Y}{Y}"
               },
               {
                 "indices": [
@@ -270,7 +270,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "\\dfrac{\\partial_t R}{R}"
+                "value": "\\dfrac{\\partial_t Y}{Y}"
               },
               {
                 "indices": [
@@ -278,7 +278,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\partial_t R}{R}"
+                "value": "\\dfrac{\\partial_t Y}{Y}"
               },
               {
                 "indices": [
@@ -286,7 +286,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{\\partial_t R}{R}"
+                "value": "\\dfrac{\\partial_t Y}{Y}"
               },
               {
                 "indices": [
@@ -294,7 +294,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\dfrac{\\partial_r R}{R}"
+                "value": "\\dfrac{\\partial_r Y}{Y}"
               },
               {
                 "indices": [
@@ -302,7 +302,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_r R}{R}"
+                "value": "\\dfrac{\\partial_r Y}{Y}"
               },
               {
                 "indices": [
@@ -310,7 +310,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\partial_r R}{R}"
+                "value": "\\dfrac{\\partial_r Y}{Y}"
               },
               {
                 "indices": [
@@ -318,7 +318,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_r R}{R}"
+                "value": "\\dfrac{\\partial_r Y}{Y}"
               },
               {
                 "indices": [
@@ -355,7 +355,7 @@
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{\\partial_r R\\,\\partial_t\\partial_r R}{f + 1}"
+                "value": "-\\dfrac{\\partial_r Y\\,\\partial_t\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -363,7 +363,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_r R\\,\\partial_t\\partial_r R}{f + 1}"
+                "value": "\\dfrac{\\partial_r Y\\,\\partial_t\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -371,7 +371,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{\\partial_r R\\,\\partial_t\\partial_r R}{f + 1}"
+                "value": "\\dfrac{\\partial_r Y\\,\\partial_t\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -379,7 +379,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-R\\,\\partial_t R"
+                "value": "-Y\\,\\partial_t Y"
               },
               {
                 "indices": [
@@ -387,7 +387,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "R\\,\\partial_t R"
+                "value": "Y\\,\\partial_t Y"
               },
               {
                 "indices": [
@@ -395,7 +395,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "R\\,\\partial_t R"
+                "value": "Y\\,\\partial_t Y"
               },
               {
                 "indices": [
@@ -403,7 +403,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-R\\,\\partial_t R\\,\\sin^2\\theta"
+                "value": "-Y\\,\\partial_t Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -411,7 +411,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "R\\,\\partial_t R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_t Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -419,7 +419,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "R\\,\\partial_t R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_t Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -427,7 +427,7 @@
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2\\partial_r^2 R + 2f\\,\\partial_r^2 R - \\partial_r R\\,f'\\right)\\partial_r R}{2\\left(f + 1\\right)^2}"
+                "value": "\\dfrac{\\left(2\\partial_r^2 Y + 2f\\,\\partial_r^2 Y - \\partial_r Y\\,f'\\right)\\partial_r Y}{2\\left(f + 1\\right)^2}"
               },
               {
                 "indices": [
@@ -435,7 +435,7 @@
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "-R\\,\\partial_r R"
+                "value": "-Y\\,\\partial_r Y"
               },
               {
                 "indices": [
@@ -443,7 +443,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "R\\,\\partial_r R"
+                "value": "Y\\,\\partial_r Y"
               },
               {
                 "indices": [
@@ -451,7 +451,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "R\\,\\partial_r R"
+                "value": "Y\\,\\partial_r Y"
               },
               {
                 "indices": [
@@ -459,7 +459,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-R\\,\\partial_r R\\,\\sin^2\\theta"
+                "value": "-Y\\,\\partial_r Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -467,7 +467,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "R\\,\\partial_r R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_r Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -475,7 +475,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "R\\,\\partial_r R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_r Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -483,7 +483,7 @@
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "-R^2\\sin\\theta\\cos\\theta"
+                "value": "-Y^2\\sin\\theta\\cos\\theta"
               },
               {
                 "indices": [
@@ -491,7 +491,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "R^2\\sin\\theta\\cos\\theta"
+                "value": "Y^2\\sin\\theta\\cos\\theta"
               },
               {
                 "indices": [
@@ -499,7 +499,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "R^2\\sin\\theta\\cos\\theta"
+                "value": "Y^2\\sin\\theta\\cos\\theta"
               }
             ]
           }
@@ -518,7 +518,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_r R\\,\\partial_t^2\\partial_r R}{f + 1}"
+                "value": "\\dfrac{\\partial_r Y\\,\\partial_t^2\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -527,7 +527,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\dfrac{\\partial_r R\\,\\partial_t^2\\partial_r R}{f + 1}"
+                "value": "-\\dfrac{\\partial_r Y\\,\\partial_t^2\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -536,7 +536,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "R\\,\\partial_t^2 R"
+                "value": "Y\\,\\partial_t^2 Y"
               },
               {
                 "indices": [
@@ -545,7 +545,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "-R\\,\\partial_t^2 R"
+                "value": "-Y\\,\\partial_t^2 Y"
               },
               {
                 "indices": [
@@ -554,7 +554,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "R\\,\\partial_t^2 R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_t^2 Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -563,7 +563,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-R\\,\\partial_t^2 R\\,\\sin^2\\theta"
+                "value": "-Y\\,\\partial_t^2 Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -572,7 +572,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_t^2\\partial_r R}{\\partial_r R}"
+                "value": "\\dfrac{\\partial_t^2\\partial_r Y}{\\partial_r Y}"
               },
               {
                 "indices": [
@@ -581,7 +581,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\dfrac{\\partial_t^2\\partial_r R}{\\partial_r R}"
+                "value": "-\\dfrac{\\partial_t^2\\partial_r Y}{\\partial_r Y}"
               },
               {
                 "indices": [
@@ -590,7 +590,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)}{2\\partial_r R}"
+                "value": "\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)}{2\\partial_r Y}"
               },
               {
                 "indices": [
@@ -599,7 +599,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "-\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)}{2\\partial_r R}"
+                "value": "-\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)}{2\\partial_r Y}"
               },
               {
                 "indices": [
@@ -608,7 +608,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\sin^2\\theta}{2\\partial_r R}"
+                "value": "\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\sin^2\\theta}{2\\partial_r Y}"
               },
               {
                 "indices": [
@@ -617,7 +617,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\sin^2\\theta}{2\\partial_r R}"
+                "value": "-\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\sin^2\\theta}{2\\partial_r Y}"
               },
               {
                 "indices": [
@@ -626,7 +626,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "\\dfrac{\\partial_t^2 R}{R}"
+                "value": "\\dfrac{\\partial_t^2 Y}{Y}"
               },
               {
                 "indices": [
@@ -635,7 +635,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "-\\dfrac{\\partial_t^2 R}{R}"
+                "value": "-\\dfrac{\\partial_t^2 Y}{Y}"
               },
               {
                 "indices": [
@@ -644,7 +644,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\partial_t^2 R}{R}"
+                "value": "\\dfrac{\\partial_t^2 Y}{Y}"
               },
               {
                 "indices": [
@@ -653,7 +653,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{\\partial_t^2 R}{R}"
+                "value": "-\\dfrac{\\partial_t^2 Y}{Y}"
               },
               {
                 "indices": [
@@ -662,7 +662,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\dfrac{\\left(f' - 2\\partial_t R\\,\\partial_t\\partial_r R\\right)\\partial_r R}{2R\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(f' - 2\\partial_t Y\\,\\partial_t\\partial_r Y\\right)\\partial_r Y}{2Y\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -671,7 +671,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(f' - 2\\partial_t R\\,\\partial_t\\partial_r R\\right)\\partial_r R}{2R\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(f' - 2\\partial_t Y\\,\\partial_t\\partial_r Y\\right)\\partial_r Y}{2Y\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -680,7 +680,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(f' - 2\\partial_t R\\,\\partial_t\\partial_r R\\right)\\partial_r R}{2R\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(f' - 2\\partial_t Y\\,\\partial_t\\partial_r Y\\right)\\partial_r Y}{2Y\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -689,7 +689,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(f' - 2\\partial_t R\\,\\partial_t\\partial_r R\\right)\\partial_r R}{2R\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(f' - 2\\partial_t Y\\,\\partial_t\\partial_r Y\\right)\\partial_r Y}{2Y\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -698,7 +698,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "-\\left(f\\sin^2\\theta - \\left(\\partial_t R\\right)^2\\,\\sin^2\\theta\\right)"
+                "value": "-\\left(f\\sin^2\\theta - \\left(\\partial_t Y\\right)^2\\,\\sin^2\\theta\\right)"
               },
               {
                 "indices": [
@@ -707,7 +707,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "\\left(f\\sin^2\\theta - \\left(\\partial_t R\\right)^2\\,\\sin^2\\theta\\right)"
+                "value": "\\left(f\\sin^2\\theta - \\left(\\partial_t Y\\right)^2\\,\\sin^2\\theta\\right)"
               },
               {
                 "indices": [
@@ -716,7 +716,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "-\\left(\\left(\\partial_t R\\right)^2 - f\\right)"
+                "value": "-\\left(\\left(\\partial_t Y\\right)^2 - f\\right)"
               },
               {
                 "indices": [
@@ -725,7 +725,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "\\left(\\left(\\partial_t R\\right)^2 - f\\right)"
+                "value": "\\left(\\left(\\partial_t Y\\right)^2 - f\\right)"
               }
             ]
           },
@@ -739,7 +739,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{\\partial_r R\\,\\partial_t^2\\partial_r R}{f + 1}"
+                "value": "-\\dfrac{\\partial_r Y\\,\\partial_t^2\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -748,7 +748,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{\\partial_r R\\,\\partial_t^2\\partial_r R}{f + 1}"
+                "value": "\\dfrac{\\partial_r Y\\,\\partial_t^2\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -757,7 +757,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{\\partial_r R\\,\\partial_t^2\\partial_r R}{f + 1}"
+                "value": "\\dfrac{\\partial_r Y\\,\\partial_t^2\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -766,7 +766,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\dfrac{\\partial_r R\\,\\partial_t^2\\partial_r R}{f + 1}"
+                "value": "-\\dfrac{\\partial_r Y\\,\\partial_t^2\\partial_r Y}{f + 1}"
               },
               {
                 "indices": [
@@ -775,7 +775,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "-R\\,\\partial_t^2 R"
+                "value": "-Y\\,\\partial_t^2 Y"
               },
               {
                 "indices": [
@@ -784,7 +784,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "R\\,\\partial_t^2 R"
+                "value": "Y\\,\\partial_t^2 Y"
               },
               {
                 "indices": [
@@ -793,7 +793,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "R\\,\\partial_t^2 R"
+                "value": "Y\\,\\partial_t^2 Y"
               },
               {
                 "indices": [
@@ -802,7 +802,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "-R\\,\\partial_t^2 R"
+                "value": "-Y\\,\\partial_t^2 Y"
               },
               {
                 "indices": [
@@ -811,7 +811,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "-R\\,\\partial_t^2 R\\,\\sin^2\\theta"
+                "value": "-Y\\,\\partial_t^2 Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -820,7 +820,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "R\\,\\partial_t^2 R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_t^2 Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -829,7 +829,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "R\\,\\partial_t^2 R\\,\\sin^2\\theta"
+                "value": "Y\\,\\partial_t^2 Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -838,7 +838,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-R\\,\\partial_t^2 R\\,\\sin^2\\theta"
+                "value": "-Y\\,\\partial_t^2 Y\\,\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -847,7 +847,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R}{2\\left(f + 1\\right)}"
+                "value": "\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -856,7 +856,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "-\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R}{2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -865,7 +865,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R}{2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -874,7 +874,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R}{2\\left(f + 1\\right)}"
+                "value": "\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -883,7 +883,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
+                "value": "\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -892,7 +892,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -901,7 +901,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -910,7 +910,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{R\\left(2\\partial_t R\\,\\partial_t\\partial_r R - f'\\right)\\partial_r R\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
+                "value": "\\dfrac{Y\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y - f'\\right)\\partial_r Y\\,\\sin^2\\theta}{2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -919,7 +919,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "R^2\\left(\\left(\\partial_t R\\right)^2 - f\\right)\\sin^2\\theta"
+                "value": "Y^2\\left(\\left(\\partial_t Y\\right)^2 - f\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -928,7 +928,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "-R^2\\left(\\left(\\partial_t R\\right)^2 - f\\right)\\sin^2\\theta"
+                "value": "-Y^2\\left(\\left(\\partial_t Y\\right)^2 - f\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -937,7 +937,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "-R^2\\left(\\left(\\partial_t R\\right)^2 - f\\right)\\sin^2\\theta"
+                "value": "-Y^2\\left(\\left(\\partial_t Y\\right)^2 - f\\right)\\sin^2\\theta"
               },
               {
                 "indices": [
@@ -946,7 +946,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "R^2\\left(\\left(\\partial_t R\\right)^2 - f\\right)\\sin^2\\theta"
+                "value": "Y^2\\left(\\left(\\partial_t Y\\right)^2 - f\\right)\\sin^2\\theta"
               }
             ]
           }
@@ -963,28 +963,28 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{2\\partial_r R\\,\\partial_t^2 R + R\\,\\partial_t^2\\partial_r R}{R\\,\\partial_r R}"
+                "value": "-\\dfrac{2\\partial_r Y\\,\\partial_t^2 Y + Y\\,\\partial_t^2\\partial_r Y}{Y\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2\\partial_t R\\,\\partial_t\\partial_r R + R\\,\\partial_t^2\\partial_r R - f'\\right)\\partial_r R}{R\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y + Y\\,\\partial_t^2\\partial_r Y - f'\\right)\\partial_r Y}{Y\\left(f + 1\\right)}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - 2f\\,\\partial_r R}{2\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - 2f\\,\\partial_r Y}{2\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - 2f\\,\\partial_r R\\right)\\sin^2\\theta}{2\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{2\\partial_r Y}"
               }
             ]
           },
@@ -996,28 +996,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{2\\partial_r R\\,\\partial_t^2 R + R\\,\\partial_t^2\\partial_r R}{R\\,\\partial_r R}"
+                "value": "\\dfrac{2\\partial_r Y\\,\\partial_t^2 Y + Y\\,\\partial_t^2\\partial_r Y}{Y\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{2\\partial_t R\\,\\partial_t\\partial_r R + R\\,\\partial_t^2\\partial_r R - f'}{R\\,\\partial_r R}"
+                "value": "\\dfrac{2\\partial_t Y\\,\\partial_t\\partial_r Y + Y\\,\\partial_t^2\\partial_r Y - f'}{Y\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - 2f\\,\\partial_r R}{2R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - 2f\\,\\partial_r Y}{2Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - 2f\\,\\partial_r R}{2R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - 2f\\,\\partial_r Y}{2Y^2\\,\\partial_r Y}"
               }
             ]
           },
@@ -1029,35 +1029,35 @@
                   "t",
                   "t"
                 ],
-                "value": "-\\dfrac{2\\partial_r R\\,\\partial_t^2 R + R\\,\\partial_t^2\\partial_r R}{R\\,\\partial_r R}"
+                "value": "-\\dfrac{2\\partial_r Y\\,\\partial_t^2 Y + Y\\,\\partial_t^2\\partial_r Y}{Y\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(f + 1\\right)\\left(2\\partial_t R\\,\\partial_t\\partial_r R + R\\,\\partial_t^2\\partial_r R - f'\\right)}{R\\left(\\partial_r R\\right)^3}"
+                "value": "\\dfrac{\\left(f + 1\\right)\\left(2\\partial_t Y\\,\\partial_t\\partial_r Y + Y\\,\\partial_t^2\\partial_r Y - f'\\right)}{Y\\left(\\partial_r Y\\right)^3}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - 2f\\,\\partial_r R}{2R^4\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - 2f\\,\\partial_r Y}{2Y^4\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - 2f\\,\\partial_r R\\right)\\csc^2\\theta}{2R^4\\,\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - 2f\\,\\partial_r Y\\right)\\csc^2\\theta}{2Y^4\\,\\partial_r Y}"
               }
             ]
           }
         }
       },
-      "ricci_scalar": "R = \\dfrac{4R\\,\\partial_r R\\,\\partial_t^2 R + 4R\\,\\partial_t R\\,\\partial_t\\partial_r R + 2\\partial_r R\\left(\\partial_t R\\right)^2 + 2R^2\\,\\partial_t^2\\partial_r R - 2R\\,f' - 2f\\,\\partial_r R}{R^2\\,\\partial_r R}",
-      "kretschmann": "K = \\dfrac{4f^2\\left(\\partial_r R\\right)^2 + 4R^4\\left(\\partial_t^2\\partial_r R\\right)^2 + 2R^2\\left(f'\\right)^2 + 4\\left(\\partial_r R\\right)^2\\left(\\partial_t R\\right)^4 - 8f\\left(\\partial_r R\\right)^2\\left(\\partial_t R\\right)^2 + 8R^2\\left(\\partial_t R\\right)^2\\left(\\partial_t\\partial_r R\\right)^2 + 8R^2\\left(\\partial_r R\\right)^2\\left(\\partial_t^2 R\\right)^2 - 8R^2\\,\\partial_t R\\,\\partial_t\\partial_r R\\,f'}{R^4\\left(\\partial_r R\\right)^2}",
+      "ricci_scalar": "R = \\dfrac{4Y\\,\\partial_r Y\\,\\partial_t^2 Y + 4Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 + 2Y^2\\,\\partial_t^2\\partial_r Y - 2Y\\,f' - 2f\\,\\partial_r Y}{Y^2\\,\\partial_r Y}",
+      "kretschmann": "K = \\dfrac{4f^2\\left(\\partial_r Y\\right)^2 + 4Y^4\\left(\\partial_t^2\\partial_r Y\\right)^2 + 2Y^2\\left(f'\\right)^2 + 4\\left(\\partial_r Y\\right)^2\\left(\\partial_t Y\\right)^4 - 8f\\left(\\partial_r Y\\right)^2\\left(\\partial_t Y\\right)^2 + 8Y^2\\left(\\partial_t Y\\right)^2\\left(\\partial_t\\partial_r Y\\right)^2 + 8Y^2\\left(\\partial_r Y\\right)^2\\left(\\partial_t^2 Y\\right)^2 - 8Y^2\\,\\partial_t Y\\,\\partial_t\\partial_r Y\\,f'}{Y^4\\left(\\partial_r Y\\right)^2}",
       "einstein_tensor": {
         "default": "ll",
         "variants": {
@@ -1069,28 +1069,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_t R\\,\\partial_t\\partial_r R + \\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - f\\,\\partial_r R}{R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + \\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - f\\,\\partial_r Y}{Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(f - \\left(\\partial_t R\\right)^2 - 2R\\,\\partial_t^2 R\\right)\\left(\\partial_r R\\right)^2}{R^2\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(f - \\left(\\partial_t Y\\right)^2 - 2Y\\,\\partial_t^2 Y\\right)\\left(\\partial_r Y\\right)^2}{Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{R\\left(f' - 2R\\,\\partial_t^2\\partial_r R - 2\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\,\\partial_t^2 R\\right)}{2\\partial_r R}"
+                "value": "\\dfrac{Y\\left(f' - 2Y\\,\\partial_t^2\\partial_r Y - 2\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\,\\partial_t^2 Y\\right)}{2\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{R\\left(f' - 2R\\,\\partial_t^2\\partial_r R - 2\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\,\\partial_t^2 R\\right)\\sin^2\\theta}{2\\partial_r R}"
+                "value": "\\dfrac{Y\\left(f' - 2Y\\,\\partial_t^2\\partial_r Y - 2\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\,\\partial_t^2 Y\\right)\\sin^2\\theta}{2\\partial_r Y}"
               }
             ]
           },
@@ -1102,28 +1102,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{f\\,\\partial_r R + R\\,f' - \\partial_r R\\left(\\partial_t R\\right)^2 - 2R\\,\\partial_t R\\,\\partial_t\\partial_r R}{R^2\\,\\partial_r R}"
+                "value": "\\dfrac{f\\,\\partial_r Y + Y\\,f' - \\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y}{Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "\\dfrac{f - \\left(\\partial_t R\\right)^2 - 2R\\,\\partial_t^2 R}{R^2}"
+                "value": "\\dfrac{f - \\left(\\partial_t Y\\right)^2 - 2Y\\,\\partial_t^2 Y}{Y^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{f' - 2R\\,\\partial_t^2\\partial_r R - 2\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\,\\partial_t^2 R}{2R\\,\\partial_r R}"
+                "value": "\\dfrac{f' - 2Y\\,\\partial_t^2\\partial_r Y - 2\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\,\\partial_t^2 Y}{2Y\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{f' - 2R\\,\\partial_t^2\\partial_r R - 2\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\,\\partial_t^2 R}{2R\\,\\partial_r R}"
+                "value": "\\dfrac{f' - 2Y\\,\\partial_t^2\\partial_r Y - 2\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\,\\partial_t^2 Y}{2Y\\,\\partial_r Y}"
               }
             ]
           },
@@ -1135,28 +1135,28 @@
                   "t",
                   "t"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_t R\\,\\partial_t\\partial_r R + \\partial_r R\\left(\\partial_t R\\right)^2 - R\\,f' - f\\,\\partial_r R}{R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + \\partial_r Y\\left(\\partial_t Y\\right)^2 - Y\\,f' - f\\,\\partial_r Y}{Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "r",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(f + 1\\right)\\left(2R\\,\\partial_t^2 R + \\left(\\partial_t R\\right)^2 - f\\right)}{R^2\\left(\\partial_r R\\right)^2}"
+                "value": "-\\dfrac{\\left(f + 1\\right)\\left(2Y\\,\\partial_t^2 Y + \\left(\\partial_t Y\\right)^2 - f\\right)}{Y^2\\left(\\partial_r Y\\right)^2}"
               },
               {
                 "indices": [
                   "\\theta",
                   "\\theta"
                 ],
-                "value": "\\dfrac{f' - 2R\\,\\partial_t^2\\partial_r R - 2\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\,\\partial_t^2 R}{2R^3\\,\\partial_r R}"
+                "value": "\\dfrac{f' - 2Y\\,\\partial_t^2\\partial_r Y - 2\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\,\\partial_t^2 Y}{2Y^3\\,\\partial_r Y}"
               },
               {
                 "indices": [
                   "\\phi",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(f' - 2R\\,\\partial_t^2\\partial_r R - 2\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\,\\partial_t^2 R\\right)\\csc^2\\theta}{2R^3\\,\\partial_r R}"
+                "value": "\\dfrac{\\left(f' - 2Y\\,\\partial_t^2\\partial_r Y - 2\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\,\\partial_t^2 Y\\right)\\csc^2\\theta}{2Y^3\\,\\partial_r Y}"
               }
             ]
           }
@@ -1175,7 +1175,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{6R^2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{6Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1184,7 +1184,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{6R^2\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{6Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1193,7 +1193,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1202,7 +1202,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1211,7 +1211,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1220,7 +1220,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1229,7 +1229,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1238,7 +1238,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1247,7 +1247,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1256,7 +1256,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1265,7 +1265,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{6R^2\\,\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{6Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1274,7 +1274,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{6R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{6Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1283,7 +1283,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1292,7 +1292,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12R^2\\,\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1301,7 +1301,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12R^2\\,\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1310,7 +1310,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12R^2\\,\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12Y^2\\,\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1319,7 +1319,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12R^2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1328,7 +1328,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12R^2\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1337,7 +1337,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12R^2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1346,7 +1346,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12R^2\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1355,7 +1355,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{6\\partial_r R}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{6\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1364,7 +1364,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{6\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{6\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1373,7 +1373,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{6\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{6\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1382,7 +1382,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{6\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{6\\partial_r Y}"
               }
             ]
           },
@@ -1396,7 +1396,7 @@
                   "t",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{6R^2\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{6Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1405,7 +1405,7 @@
                   "r",
                   "t"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{6R^2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{6Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1414,7 +1414,7 @@
                   "t",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{6R^2\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{6Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1423,7 +1423,7 @@
                   "r",
                   "t"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{6R^2\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{6Y^2\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1432,7 +1432,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1441,7 +1441,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1450,7 +1450,7 @@
                   "t",
                   "\\theta"
                 ],
-                "value": "\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1459,7 +1459,7 @@
                   "\\theta",
                   "t"
                 ],
-                "value": "-\\dfrac{2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R}{12\\partial_r R}"
+                "value": "-\\dfrac{2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1468,7 +1468,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1477,7 +1477,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1486,7 +1486,7 @@
                   "t",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1495,7 +1495,7 @@
                   "\\phi",
                   "t"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{12\\partial_r R}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{12\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1504,7 +1504,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1513,7 +1513,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1522,7 +1522,7 @@
                   "r",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1531,7 +1531,7 @@
                   "\\theta",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R}{12\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1540,7 +1540,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1549,7 +1549,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1558,7 +1558,7 @@
                   "r",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
+                "value": "-\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1567,7 +1567,7 @@
                   "\\phi",
                   "r"
                 ],
-                "value": "\\dfrac{\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\partial_r R\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
+                "value": "\\dfrac{\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\partial_r Y\\,\\sin^2\\theta}{12\\left(f + 1\\right)}"
               },
               {
                 "indices": [
@@ -1576,7 +1576,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "-\\dfrac{R^2\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{6\\partial_r R}"
+                "value": "-\\dfrac{Y^2\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{6\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1585,7 +1585,7 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "\\dfrac{R^2\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{6\\partial_r R}"
+                "value": "\\dfrac{Y^2\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{6\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1594,7 +1594,7 @@
                   "\\theta",
                   "\\phi"
                 ],
-                "value": "\\dfrac{R^2\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{6\\partial_r R}"
+                "value": "\\dfrac{Y^2\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{6\\partial_r Y}"
               },
               {
                 "indices": [
@@ -1603,17 +1603,17 @@
                   "\\phi",
                   "\\theta"
                 ],
-                "value": "-\\dfrac{R^2\\left(2R\\,\\partial_r R\\,\\partial_t^2 R + 2R\\,\\partial_t R\\,\\partial_t\\partial_r R - 2\\partial_r R\\left(\\partial_t R\\right)^2 - 2R^2\\,\\partial_t^2\\partial_r R - R\\,f' + 2f\\,\\partial_r R\\right)\\sin^2\\theta}{6\\partial_r R}"
+                "value": "-\\dfrac{Y^2\\left(2Y\\,\\partial_r Y\\,\\partial_t^2 Y + 2Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y - 2\\partial_r Y\\left(\\partial_t Y\\right)^2 - 2Y^2\\,\\partial_t^2\\partial_r Y - Y\\,f' + 2f\\,\\partial_r Y\\right)\\sin^2\\theta}{6\\partial_r Y}"
               }
             ]
           }
         }
       },
       "geodesics": [
-        "\\ddot{t} + \\dfrac{\\partial_r R\\,\\partial_t\\partial_r R}{f + 1}\\dot{r}^2 + R\\,\\partial_t R\\,\\dot{\\theta}^2 + R\\,\\partial_t R\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
-        "\\ddot{r} + \\dfrac{2\\partial_t\\partial_r R}{\\partial_r R}\\,\\dot{t}\\dot{r} + \\dfrac{2\\partial_r^2 R + 2f\\,\\partial_r^2 R - \\partial_r R\\,f'}{2\\left(f + 1\\right)\\partial_r R}\\,\\dot{r}^2 - \\dfrac{R\\left(f + 1\\right)}{\\partial_r R}\\,\\dot{\\theta}^2 - \\dfrac{R\\left(f + 1\\right)\\sin^2\\theta}{\\partial_r R}\\,\\dot{\\phi}^2 = 0",
-        "\\ddot{\\theta} + \\dfrac{2\\partial_t R}{R}\\dot{t}\\dot{\\theta} + \\dfrac{2\\partial_r R}{R}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
-        "\\ddot{\\phi} + \\dfrac{2\\partial_t R}{R}\\dot{t}\\dot{\\phi} + \\dfrac{2\\partial_r R}{R}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+        "\\ddot{t} + \\dfrac{\\partial_r Y\\,\\partial_t\\partial_r Y}{f + 1}\\dot{r}^2 + Y\\,\\partial_t Y\\,\\dot{\\theta}^2 + Y\\,\\partial_t Y\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{r} + \\dfrac{2\\partial_t\\partial_r Y}{\\partial_r Y}\\,\\dot{t}\\dot{r} + \\dfrac{2\\partial_r^2 Y + 2f\\,\\partial_r^2 Y - \\partial_r Y\\,f'}{2\\left(f + 1\\right)\\partial_r Y}\\,\\dot{r}^2 - \\dfrac{Y\\left(f + 1\\right)}{\\partial_r Y}\\,\\dot{\\theta}^2 - \\dfrac{Y\\left(f + 1\\right)\\sin^2\\theta}{\\partial_r Y}\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\partial_t Y}{Y}\\dot{t}\\dot{\\theta} + \\dfrac{2\\partial_r Y}{Y}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\partial_t Y}{Y}\\dot{t}\\dot{\\phi} + \\dfrac{2\\partial_r Y}{Y}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
       ]
     }
   ]
