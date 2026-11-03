@@ -145,6 +145,11 @@
       "id": "mallett_radiating_star",
       "kind": "generalisation",
       "text": "A radiating spherical body in a universe with a positive cosmological constant."
+    },
+    {
+      "id": "ori_piran",
+      "kind": "family",
+      "text": "A ball of fluid with pressure collapsing the same way at every scale, whose central singularity is naked when the pressure is a small enough fraction of the density [oripiran1987]."
     }
   ],
   "references": [
@@ -183,7 +188,8 @@
     "bondi1962",
     "compere2016final",
     "haggard2015fireworks",
-    "vaidya1989kerr"
+    "vaidya1989kerr",
+    "oripiran1987"
   ],
   "coordinates": [
     {

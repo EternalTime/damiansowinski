@@ -122,6 +122,11 @@
       "id": "hellaby_kruskal",
       "kind": "family",
       "text": "Inhomogeneous dust around a neck joining two regions, expanding from a white hole and collapsing into a black hole [hellaby1987]."
+    },
+    {
+      "id": "ori_piran",
+      "kind": "family",
+      "text": "A ball of fluid with pressure collapsing the same way at every scale. Its singularity is visible from outside when the fluid is soft enough [oripiran1987]."
     }
   ],
   "references": [
@@ -149,7 +154,8 @@
     "lewandowski2023",
     "barcelo2014mutiny",
     "bonnor1967oscillating",
-    "hellaby1987"
+    "hellaby1987",
+    "oripiran1987"
   ],
   "coordinates": [
     {

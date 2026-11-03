@@ -86,6 +86,11 @@
       "id": "hellaby_kruskal",
       "kind": "special_case",
       "text": "A Tolman-Bondi universe with a neck joining two regions of dust, where $1+2E=0$ [hellaby2002, hellaby1987]."
+    },
+    {
+      "id": "ori_piran",
+      "kind": "family",
+      "text": "Spherical collapse with pressure, $P = k\\rho$, that looks the same at every scale. For a soft enough fluid its central singularity is naked too [oripiran1987]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "ruban1969",
     "krasinski1999datt",
     "hellaby2002",
-    "hellaby1987"
+    "hellaby1987",
+    "oripiran1987"
   ],
   "coordinates": [
     {
