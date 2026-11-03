@@ -55,7 +55,7 @@ def conformal(cf, ck, src):
             cf.grid(v, 't', lambda t, r: mapping(t, r+1), (-2, -1, 0, 1, 2), cf.S_POS)
         else:
             cf.grid(v, 't', mapping, (-2, -1, 0, 1, 2), cf.S_POS)
-        cf.triangle_edges(v, centre_class='surface')
+        cf.triangle_edges(v, centre=f'${coords[1]}={1 if system == "prolate" else 0}$', centre_class='surface')
         v.legend('cover', 'the radial half plane')
         v.legend('r', f'${coords[1]}$ constant')
         v.legend('t', f'${coords[0]}$ constant')
@@ -120,7 +120,7 @@ def curvature(cv, ck, src):
     low, high = float(np.min(values)), float(np.max(values))
     width = max(high-low, .01)
     scale = {'kind': 'linear', 'from': low-.05*width, 'to': high+.05*width}
-    return [{'id': 'K', 'kind': 'map', 'x': x, 'y': y,
+    return [{'id': 'K', 'label': '$K$', 'kind': 'map', 'x': x, 'y': y,
              'colour': {'name': r'$K\ell^4$', 'scale': scale, 'ticks': cv.value_ticks(scale)},
              'map': {'metric': METRIC, 'system': 'prolate', 'scalar': 'kretschmann',
                      'x': r'\sigma', 'y': r'\tau', 'params': {'p': 1., 'alpha': 2., 'ell': 1.},
