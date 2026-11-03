@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 230,
+  "count": 231,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -41506,6 +41506,11 @@
           "id": "ghost_neutrinos",
           "kind": "locally_same",
           "text": "At $\\sigma = -1/2$ the static cylinder is locally Taub's plane symmetric vacuum, through which the ghost neutrinos of Davis and Ray flow with no energy or momentum [davis1974]."
+        },
+        {
+          "id": "superconducting_string",
+          "kind": "generalisation",
+          "text": "A magnetic field surrounds a current carrying string and contributes to its gravity [sen1999superconducting]."
         }
       ],
       "references": [
@@ -41542,7 +41547,8 @@
         "podolsky2018",
         "martins1996",
         "astorino2022swirling",
-        "davis1974"
+        "davis1974",
+        "sen1999superconducting"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -68653,6 +68659,140 @@
       ]
     },
     {
+      "id": "superconducting_string",
+      "name": "Superconducting Cosmic String",
+      "short_name": "Superconducting Cosmic String",
+      "description": "The exterior of a straight superconducting cosmic string carrying a current and surrounded by a magnetic field.",
+      "tags": [
+        "topological defect",
+        "cosmic string",
+        "electrovacuum",
+        "electromagnetic field",
+        "magnetic field",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "static",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use Gaussian electromagnetic units with $c=G=1$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "special_case",
+          "text": "With zero current and zero cylindrical mass parameter, the exterior becomes the cone around a straight cosmic string [eiroasimeone2004cylindrical]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "special_case",
+          "text": "At $k = 0$, the exterior is a static vacuum cylinder with Weyl parameter $d = -m$ [eiroasimeone2004cylindrical]."
+        }
+      ],
+      "references": [
+        "sen1999superconducting",
+        "mosspoletti1987superconducting",
+        "witten1985superconducting",
+        "eiroasimeone2004cylindrical",
+        "babul1988curvature",
+        "dimopoulos1998magnetic",
+        "linet1989superconducting"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/superconducting_string.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (r_c,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "z \\in (-\\infty,\\infty)",
+            "\\ell>0,\\quad r_c>0,\\quad W>0,\\quad k\\geq 0,\\quad -1<m<1"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Dimensionless cylindrical field parameter"
+            },
+            {
+              "symbol": "k",
+              "description": "Nonnegative dimensionless current parameter"
+            },
+            {
+              "symbol": "W",
+              "description": "Positive angular scale"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Positive radial scaling length"
+            },
+            {
+              "symbol": "r_c",
+              "description": "Radius of the string core"
+            },
+            {
+              "symbol": "F = \\dfrac{(r/\\ell)^m+k(r/\\ell)^{-m}}{1+k}",
+              "description": "Radial function of the exterior"
+            },
+            {
+              "symbol": "H = \\dfrac{(r/\\ell)^m-k(r/\\ell)^{-m}}{1+k}",
+              "description": "Radial function used in the curvature"
+            },
+            {
+              "symbol": "P = (r/\\ell)^{2m^2}",
+              "description": "Radial power used in the line element"
+            }
+          ],
+          "convention": "We use cylindrical coordinates $(t,r,\\phi,z)$, with $t$, $r$, and $z$ measured as lengths and $\\phi$ periodic in $2\\pi$. A dot denotes differentiation with respect to an affine parameter.",
+          "line_element": "ds^2 = F^2\\left(P\\left(-dt^2+dr^2\\right)+W^2r^2d\\phi^2\\right)+F^{-2}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-F^2\\,P"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "F^2\\,P"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "F^2\\,W^2\\,r^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{1}{F^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8m^2\\left(2F^2\\,H^2\\,m^4 + 6F\\,H^3\\,m^3 + 6F\\,H^3\\,m + 2F^2\\,H^2 + F^4\\,m^2 + 7H^4\\,m^2\\right)}{F^8\\,P^2\\,r^4}"
+        }
+      ]
+    },
+    {
       "id": "supertranslation_hair",
       "name": "Flat Space with Supertranslation Hair",
       "short_name": "Supertranslation Hair",
@@ -76192,6 +76332,11 @@
           "id": "penrose_impulsive_wave",
           "kind": "composite",
           "text": "A string that snaps. Ahead of the wave it sends out the cone is still there, and behind the wave space is flat with no wedge missing [gleiser1989splitting, podolsky2000snapping]."
+        },
+        {
+          "id": "superconducting_string",
+          "kind": "generalisation",
+          "text": "A current along a string produces a magnetic field and curves the exterior [sen1999superconducting]."
         }
       ],
       "references": [
@@ -76220,7 +76365,8 @@
         "garfinkle1990",
         "staruszkiewicz1963",
         "gleiser1989splitting",
-        "podolsky2000snapping"
+        "podolsky2000snapping",
+        "sen1999superconducting"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
