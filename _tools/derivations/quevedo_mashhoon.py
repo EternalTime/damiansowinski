@@ -9,22 +9,24 @@ METRIC = 'quevedo_mashhoon'
 SYSTEMS = ('prolate_spheroidal', 'spherical')
 
 
-def potentials(x, y, mass, spin, deformation, delta):
+def potentials(x, y, mass, spin, deformation, delta, backend=None):
     """Return f, omega, exp(2 gamma) on the real exterior chart."""
-    sigma = mp.sqrt(mass * mass - spin * spin)
+    backend = backend or {"sqrt": mp.sqrt, "log": mp.log, "exp": mp.exp}
+    sqrt, log, exp = backend["sqrt"], backend["log"], backend["exp"]
+    sigma = sqrt(mass * mass - spin * spin)
     alpha = -spin / (mass + sigma)
     p = (3 * y * y - 1) / 2
-    Q0 = mp.log((x + 1) / (x - 1)) / 2
+    Q0 = log((x + 1) / (x - 1)) / 2
     Q1 = x * Q0 - 1
     Q2 = (3 * x * x - 1) * Q0 / 2 - 3 * x / 2
-    Q2p = 3 * x * Q0 - (3 * x * x - 1) / (2 * (x * x - 1)) - mp.mpf(3) / 2
+    Q2p = 3 * x * Q0 - (3 * x * x - 1) / (2 * (x * x - 1)) - 3 / 2
     def d(sign):
-        return (mp.log((x + sign * y) ** 2 / (x * x - 1)) / 2
-                + mp.mpf(3) / 2 * (1 - y * y - sign * x * y)
-                + mp.mpf(3) / 4 * (x * (1 - y * y) - sign * y * (x * x - 1))
-                * mp.log((x - 1) / (x + 1)))
-    lp = alpha * (x*x-1)**(1-delta) * (x+y)**(2*delta-2) * mp.exp(2*deformation*delta*d(1))
-    lm = alpha * (x*x-1)**(1-delta) * (x-y)**(2*delta-2) * mp.exp(2*deformation*delta*d(-1))
+        return (log((x + sign * y) ** 2 / (x * x - 1)) / 2
+                + 3 / 2 * (1 - y * y - sign * x * y)
+                + 3 / 4 * (x * (1 - y * y) - sign * y * (x * x - 1))
+                * log((x - 1) / (x + 1)))
+    lp = alpha * (x*x-1)**(1-delta) * (x+y)**(2*delta-2) * exp(2*deformation*delta*d(1))
+    lm = alpha * (x*x-1)**(1-delta) * (x-y)**(2*delta-2) * exp(2*deformation*delta*d(-1))
     def ab(sign):
         power = (x + sign)**(delta - 1)
         return (power * (x*(1-lp*lm) + sign*(1+lp*lm)),
@@ -33,13 +35,13 @@ def potentials(x, y, mass, spin, deformation, delta):
     am, bm = ab(-1)
     R, L = ap*am + bp*bm, ap*ap + bp*bp
     H = (x+1)**(delta-1) * (x*(1-y*y)*(lp+lm)*ap + y*(x*x-1)*(1-lp*lm)*bp)
-    chi = ((1+deformation)**2 * mp.log((x*x-1)/(x*x-y*y))/2
+    chi = ((1+deformation)**2 * log((x*x-1)/(x*x-y*y))/2
            + 2*deformation*(1-p)*Q1
            + deformation**2*(1-p)*((1+p)*(Q1*Q1-Q2*Q2)
                + (x*x-1)*(2*Q2*Q2-3*x*Q1*Q2+3*Q0*Q2-Q2p)/2))
-    e = mp.exp(2*deformation*delta*p*Q2)
+    e = exp(2*deformation*delta*p*Q2)
     return R/L/e, -2*spin - 2*sigma*H/R*e, ((1+mass/sigma)**2/4 * R/(x*x-1)**delta
-                                                    * mp.exp(2*delta*delta*chi))
+                                                    * exp(2*delta*delta*chi))
 
 
 def chart_spec(system):
@@ -103,3 +105,57 @@ def check_chart(chart, system):
                     got = mp.mpf(str(sp.N(chart.geo.g[i,j].subs(values, simultaneous=True), 35)))
                     if abs(got-expected[i][j]) > mp.mpf('1e-28') * max(1,abs(expected[i][j])):
                         raise AssertionError(f'{METRIC}/{system}: metric component {i},{j} disagrees at {point}')
+
+
+# One common source of the functions and their derivatives for the figures.
+# The fixed parameters are dimensionless in units of the mass parameter.
+FIGURE_PARAMETERS = {'M': 1, 'a': '2/5', 'q': '2/5', 'delta': 1}
+
+
+def _figure_values(u, v, system, digits=None):
+    """Evaluate both derivatives of the three displayed functions as second order jets."""
+    import numpy as np
+    import black_saturn as bs
+    if digits is None:
+        u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+        one, zero = 1.0, 0.0
+        mass, spin, deform, delta = 1.0, .4, .4, 1.0
+        backend = bs.NUMPY
+    else:
+        one, zero = mp.mpf(1), mp.mpf(0)
+        u, v = mp.mpf(u), mp.mpf(v)
+        mass, spin, deform, delta = one, mp.mpf(2)/5, mp.mpf(2)/5, one
+        backend = bs.MPMATH
+    first, second = bs.Jet(u, one, zero), bs.Jet(v, zero, one)
+    if system == 'spherical':
+        sigma = backend['sqrt'](mass*mass-spin*spin)
+        x, y = (first-mass)/sigma, backend['cos'](second)
+    elif system == 'prolate_spheroidal':
+        x, y = first, second
+    else:
+        raise ValueError(system)
+    result = potentials(x, y, mass, spin, deform, delta, backend)
+    return {name: dict(zip(bs.ORDERS, value.parts())) for name, value in zip(('f', 'omega', 'h'), result)}
+
+
+_LAST = {}
+
+
+def figure_values(u, v, system, digits=None):
+    """Reuse the jet at a point while its six derivative components are read."""
+    import numpy as np
+    if digits is None:
+        u, v = np.asarray(u, dtype=float), np.asarray(v, dtype=float)
+        key = (system, digits, u.shape, u.tobytes(), v.shape, v.tobytes())
+    else:
+        key = (system, digits, repr(u), repr(v))
+    if key not in _LAST:
+        if digits is None:
+            result = _figure_values(u, v, system, digits)
+        else:
+            with mp.workdps(digits):
+                result = _figure_values(u, v, system, digits)
+        if len(_LAST) >= 4:
+            _LAST.clear()
+        _LAST[key] = result
+    return _LAST[key]
