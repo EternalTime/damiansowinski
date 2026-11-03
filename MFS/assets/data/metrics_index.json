@@ -1502,7 +1502,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5403d392a9fdb926",
+    "version": "70cdcbf7267812e5",
     "diagrams": "99c3458f20f3b69a",
     "conformal": "8868c8b173cd5e27",
     "embedding": "54d3ac1624dd55dd",
@@ -1973,7 +1973,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "71019edb6e8830a4",
+    "version": "7cd74b2077e87772",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902",
@@ -2332,7 +2332,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "155d8d1dab088905",
+    "version": "05eedf13f0b96167",
     "diagrams": "d86ff0a92ec2a5b0",
     "embedding": "eb113e431f8fa107"
   },
@@ -2590,7 +2590,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "15f5a78c6be9dedb",
+    "version": "e9f6275fd98ea978",
     "diagrams": "9f49d55edfa17437",
     "conformal": "06e065e27b7e360f",
     "embedding": "ad3b787488c249a5",
@@ -3248,7 +3248,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "ee024fdfae274cab",
+    "version": "c4f97f44d88f0b6e",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -6024,7 +6024,7 @@
       "conformally flat",
       "Einstein-Cartan theory"
     ],
-    "version": "12988fb519e3702b",
+    "version": "d02dfda3e9e77915",
     "diagrams": "9b126a24baab54f6",
     "conformal": "af0aad8daedb8e34",
     "embedding": "8ceb22efb0ed465b"
@@ -6092,6 +6092,28 @@
     "conformal": "f462a84914c217d1",
     "embedding": "6a1bc6f9c3a87571",
     "curvature": "17ddb5c7ece66e27"
+  },
+  {
+    "id": "string_cylindrical_waves",
+    "name": "String and Cylindrical Waves",
+    "tags": [
+      "vacuum",
+      "cosmic string",
+      "gravitational wave",
+      "cylindrical symmetry",
+      "time-dependent",
+      "Petrov type D",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "721208aea201048a",
+    "diagrams": "73bae681255b4613",
+    "conformal": "ce9025843e06dbad",
+    "embedding": "8381d53e4f59c385",
+    "curvature": "aa1019fff6007db8"
   },
   {
     "id": "sultana_dyer",
@@ -6828,7 +6850,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "cf2d71c2ac4d5085",
+    "version": "7d99198d9653d277",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "ef960fe8cb1357e7"
