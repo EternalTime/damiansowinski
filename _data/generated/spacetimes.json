@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 239,
+  "count": 240,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -16785,6 +16785,11 @@
           "id": "rn_metric",
           "kind": "family",
           "text": "Ruban's T-models of charged dust join the Reissner-Nordström field on a surface that swings between its two horizons, and their shells collide within half a swing [krasinski2012]."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "family",
+          "text": "Spherical dust with a radius that changes from shell to shell, with a neck joining two regions [hellaby2002]."
         }
       ],
       "references": [
@@ -16798,7 +16803,8 @@
         "datt1938",
         "kompaneets1964",
         "kantowski1966",
-        "szekeres1975"
+        "szekeres1975",
+        "hellaby2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/datt_ruban_t_models.json",
@@ -21839,6 +21845,11 @@
           "id": "bowen_york",
           "kind": "family",
           "text": "The inversion symmetric throat construction extends the spatial bridge to black hole initial data with linear momentum and spin [bowen1980, cook2000]."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "family",
+          "text": "A neck joining two regions of a universe of dust, with a white hole in its past and a black hole in its future [hellaby1987]."
         }
       ],
       "references": [
@@ -21875,7 +21886,8 @@
         "kodama1979preprint",
         "maldacena2018",
         "bowen1980",
-        "cook2000"
+        "cook2000",
+        "hellaby1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_bridge.json",
@@ -31227,6 +31239,170 @@
           ],
           "ricci_scalar": "R = -\\dfrac{24m^2\\,\\ell^2\\left(r^3 - 4m\\,\\ell^2\\right)}{\\left(r^3 + 2m\\,\\ell^2\\right)^3}",
           "kretschmann": "K = \\dfrac{48m^2\\left(r^{12} - 8m\\,\\ell^2\\,r^9 + 72m^2\\,\\ell^4\\,r^6 - 16m^3\\,\\ell^6\\,r^3 + 32m^4\\,\\ell^8\\right)}{\\left(r^3 + 2m\\,\\ell^2\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "hellaby_kruskal",
+      "name": "Hellaby's Kruskal Universe of Dust",
+      "short_name": "Hellaby's Kruskal Universe",
+      "description": "A spherically symmetric universe of inhomogeneous dust with two regions joined by a dynamical neck.",
+      "tags": [
+        "dust",
+        "inhomogeneous",
+        "spherically symmetric",
+        "cosmology",
+        "comoving",
+        "time-dependent",
+        "wormhole",
+        "throat",
+        "black hole",
+        "white hole",
+        "curvature singularity",
+        "horizon",
+        "apparent horizon",
+        "time symmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units with $G=c=1$ and take the Ricci tensor as $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "tolman_bondi",
+          "kind": "generalisation",
+          "text": "Dust whose density and energy vary from shell to shell. Its energy function $E$ obeys $1+2E=0$ at the neck, where $f=2E$ [hellaby2002]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The vacuum member of the same construction, with the mass constant from shell to shell [hellaby2002]."
+        },
+        {
+          "id": "einstein_rosen_bridge",
+          "kind": "family",
+          "text": "Two sheets of Schwarzschild space joined at a smallest sphere, with a black hole and a white hole in the extended geometry [einstein1935, kruskal1960]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "A uniform ball of dust collapsing inside the Schwarzschild vacuum [oppenheimersnyder1939]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "generalisation",
+          "text": "Dust whose spherical shells need not be concentric, with a neck that joins two regions [hellaby2002]."
+        },
+        {
+          "id": "semiclosed_world",
+          "kind": "family",
+          "text": "A portion of a closed universe of dust joined to Schwarzschild's exterior behind a throat [hsu2008unitarity]."
+        },
+        {
+          "id": "datt_ruban_t_models",
+          "kind": "family",
+          "text": "Spherical dust on a tube of spheres that share one radius at each time [ruban1968, krasinski1999datt]."
+        }
+      ],
+      "references": [
+        "hellaby1987",
+        "hellaby2002",
+        "einstein1935",
+        "kruskal1960",
+        "oppenheimersnyder1939",
+        "hsu2008unitarity",
+        "ruban1968",
+        "krasinski1999datt"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hellaby_kruskal.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving Synchronous",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "r \\in (-\\infty, \\infty)",
+            "a(r) < t < -a(r)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "Y = Y(t,r)",
+              "description": "Areal radius, a length, determined by $Y=M(1-\\cos\\eta)/(-f)$ and $t=a+M(\\eta-\\sin\\eta)/(-f)^{3/2}$, with $0<\\eta<2\\pi$."
+            },
+            {
+              "symbol": "f = f(r)",
+              "description": "Twice the energy per unit mass of a shell, $f=-e^{-r^2/r_s}$."
+            },
+            {
+              "symbol": "M = M(r)",
+              "description": "Gravitational mass function, $M=M_0(1+M_1r^2)^3$."
+            },
+            {
+              "symbol": "a = a(r)",
+              "description": "Bang time, $a=-\\pi M/(-f)^{3/2}$."
+            },
+            {
+              "symbol": "M_0",
+              "description": "Positive mass parameter, a length."
+            },
+            {
+              "symbol": "M_1",
+              "description": "Positive parameter, an inverse length squared."
+            },
+            {
+              "symbol": "r_s",
+              "description": "Positive radial parameter with dimensions of length squared."
+            },
+            {
+              "symbol": "\\eta",
+              "description": "Dimensionless parameter of the elliptic evolution."
+            }
+          ],
+          "convention": "We use comoving coordinates $(t,r,\\theta,\\phi)$, with $t$ and $r$ lengths and the two angles on each shell. At $r=0$ the radial metric component is the finite limit $g_{rr}=r_s(\\partial_r^2Y)^2$ evaluated at the neck. A prime denotes a derivative with respect to $r$. In the geodesic equations a dot on a coordinate is its derivative with respect to an affine parameter.",
+          "line_element": "ds^2=-dt^2+\\dfrac{(\\partial_r Y)^2}{1+f}dr^2+Y^2(d\\theta^2+\\sin^2\\theta\\,d\\phi^2)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\left(\\partial_r Y\\right)^2}{f + 1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "Y^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "Y^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4Y\\,\\partial_r Y\\,\\partial_t^2 Y + 4Y\\,\\partial_t Y\\,\\partial_t\\partial_r Y + 2\\partial_r Y\\left(\\partial_t Y\\right)^2 + 2Y^2\\,\\partial_t^2\\partial_r Y - 2Y\\,f' - 2f\\,\\partial_r Y}{Y^2\\,\\partial_r Y}",
+          "kretschmann": "K = \\dfrac{4f^2\\left(\\partial_r Y\\right)^2 + 4Y^4\\left(\\partial_t^2\\partial_r Y\\right)^2 + 2Y^2\\left(f'\\right)^2 + 4\\left(\\partial_r Y\\right)^2\\left(\\partial_t Y\\right)^4 - 8f\\left(\\partial_r Y\\right)^2\\left(\\partial_t Y\\right)^2 + 8Y^2\\left(\\partial_t Y\\right)^2\\left(\\partial_t\\partial_r Y\\right)^2 + 8Y^2\\left(\\partial_r Y\\right)^2\\left(\\partial_t^2 Y\\right)^2 - 8Y^2\\,\\partial_t Y\\,\\partial_t\\partial_r Y\\,f'}{Y^4\\left(\\partial_r Y\\right)^2}"
         }
       ]
     },
@@ -54059,6 +54235,11 @@
           "id": "oscillating_sphere",
           "kind": "family",
           "text": "A ball of uniform density with pressure inside it, which can collapse, turn round, or oscillate for ever [bonnor1967oscillating]."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "family",
+          "text": "Inhomogeneous dust around a neck joining two regions, expanding from a white hole and collapsing into a black hole [hellaby1987]."
         }
       ],
       "references": [
@@ -54085,7 +54266,8 @@
         "ruban1968",
         "lewandowski2023",
         "barcelo2014mutiny",
-        "bonnor1967oscillating"
+        "bonnor1967oscillating",
+        "hellaby1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -63535,6 +63717,11 @@
           "id": "york_equilibrium",
           "kind": "generalisation",
           "text": "The first order gravitational back reaction of a thermal conformal scalar field [hochberg1994potential, york1985equilibrium]."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "generalisation",
+          "text": "A universe of dust with a neck joining two regions, whose vacuum member is the extended Schwarzschild solution [hellaby2002]."
         }
       ],
       "references": [
@@ -63677,7 +63864,8 @@
         "delgaty1998",
         "dvali2016skyrmion",
         "hochberg1994potential",
-        "york1985equilibrium"
+        "york1985equilibrium",
+        "hellaby2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -65189,6 +65377,11 @@
           "id": "datt_ruban_t_models",
           "kind": "family",
           "text": "Ruban's T-sphere, a tube of dust behind the horizon in which every shell's binding energy cancels its rest mass, so the mass outside stays the same however much dust is added [ruban1968]."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "family",
+          "text": "A neck joining two regions of dust, each extending outward from the neck [hellaby1987]."
         }
       ],
       "references": [
@@ -65207,7 +65400,8 @@
         "hsu2008monsters",
         "chakravarty2021",
         "omurchadha1993",
-        "ruban1968"
+        "ruban1968",
+        "hellaby1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/semiclosed_world.json",
@@ -71452,6 +71646,11 @@
           "id": "bardeen_perturbations",
           "kind": "family",
           "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "special_case",
+          "text": "Concentric shells of dust with a neck joining two regions [hellaby2002]."
         }
       ],
       "references": [
@@ -74772,6 +74971,11 @@
           "id": "bardeen_perturbations",
           "kind": "family",
           "text": "Small potentials laid over a Friedmann universe, lumps of any shape kept to first order in their amplitude."
+        },
+        {
+          "id": "hellaby_kruskal",
+          "kind": "special_case",
+          "text": "A Tolman-Bondi universe with a neck joining two regions of dust, where $1+2E=0$ [hellaby2002, hellaby1987]."
         }
       ],
       "references": [
@@ -74805,7 +75009,9 @@
         "novikov1965",
         "lindquist1957",
         "ruban1969",
-        "krasinski1999datt"
+        "krasinski1999datt",
+        "hellaby2002",
+        "hellaby1987"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tolman_bondi.json",
