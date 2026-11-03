@@ -116,6 +116,11 @@
       "id": "atiyah_hitchin",
       "kind": "family",
       "text": "Atiyah and Hitchin's space of two monopoles, which far from its core is Taub-NUT in Euclidean signature, self dual and with a negative mass. Its exponentially small corrections keep it smooth where that negative mass alone would leave a singularity [gibbonsmanton1995, tong2005]."
+    },
+    {
+      "id": "klebanov_witten",
+      "kind": "family",
+      "text": "The internal circle of the throat twists over two 2-spheres through the connection $d\\psi+\\cos\\theta_1\\,d\\phi_1+\\cos\\theta_2\\,d\\phi_2$. Taub-NUT carries the same angular connection over a single sphere [klebanovwitten1998]."
     }
   ],
   "references": [
@@ -151,7 +156,8 @@
     "newman1962tamburino",
     "moncrief1981nut",
     "gibbonsmanton1995",
-    "tong2005"
+    "tong2005",
+    "klebanovwitten1998"
   ],
   "coordinates": [
     {

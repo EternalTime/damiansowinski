@@ -90,6 +90,11 @@
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "limit",
       "text": "The Penrose limit of the throat along a light ray circling its 5-sphere, a plane wave of ten dimensions that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose, berenstein2002]."
+    },
+    {
+      "id": "klebanov_witten",
+      "kind": "family",
+      "text": "Threebranes at a conifold tip approach anti-de Sitter space of five dimensions times $T^{1,1}$ in their near-horizon limit. The ten-dimensional product has one radius for both factors, compact isometry $SU(2)\\times SU(2)\\times U(1)$, and eight supersymmetries [klebanovwitten1998]."
     }
   ],
   "references": [
@@ -110,7 +115,8 @@
     "witten1998",
     "lin2004",
     "blau2002penrose",
-    "berenstein2002"
+    "berenstein2002",
+    "klebanovwitten1998"
   ],
   "coordinates": [
     {

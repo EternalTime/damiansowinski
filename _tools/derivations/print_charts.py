@@ -37570,5 +37570,8 @@ CHARTS[_stringy_cosmic_strings.METRIC] = [lambda system=system: _stringy_cosmic_
                                           for system in _stringy_cosmic_strings.SYSTEMS]
 
 
+import klebanov_witten as _klebanov_witten
+CHARTS[_klebanov_witten.METRIC] = [_klebanov_witten.chart_spec]
+
 if __name__ == "__main__":
     main()

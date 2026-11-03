@@ -1,0 +1,94 @@
+{
+  "id": "klebanov_witten",
+  "name": "Klebanov-Witten Conifold Throat",
+  "short_name": "Klebanov-Witten",
+  "description": "The throat of threebranes at a conifold singularity: anti-de Sitter space of five dimensions times the compact space $T^{1,1}$. Its internal circle twists over two 2-spheres, and a self-dual five-form flux supports the curvature of the ten dimensions.",
+  "tags": [
+    "static",
+    "stationary",
+    "ten-dimensional",
+    "higher dimensions",
+    "string theory",
+    "supergravity",
+    "supersymmetric",
+    "anti-de Sitter",
+    "AdS/CFT",
+    "holography",
+    "D3-brane",
+    "brane",
+    "topology",
+    "compact dimension",
+    "Kaluza-Klein",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,\\ldots,+)",
+  "convention": "We keep factors of $c$ explicit and use the Ricci contraction $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "The compact dimensions of the Klebanov-Witten throat form a circle bundle over two 2-spheres. Igor R. Klebanov and Edward Witten identified the throat of threebranes at a conifold singularity with anti-de Sitter space of five dimensions times $T^{1,1}$ in 1998 [klebanovwitten1998]. The anti-de Sitter factor contains time and four spatial dimensions. The remaining five dimensions form the compact space $T^{1,1}$.¶Philip Candelas and Xenia C. de la Ossa constructed the conifold's Ricci flat Kähler metric in 1990 [candelas1990conifold, klebanovwitten1998]. It is a cone over $T^{1,1}$, whose angular distances grow in proportion to the distance from its tip. The cone has six spatial dimensions and supplies the geometry transverse to the threebranes. Its tip is a curvature singularity, where the compact base shrinks to a point.¶Larry James Romans had included this compactification among his solutions of chiral supergravity in 1985 [romans1985compactification]. The internal space is the quotient $(SU(2)\\times SU(2))/U(1)$, with the circle embedded diagonally in the two factors. Its isometries form $SU(2)\\times SU(2)\\times U(1)$, and the compactification preserves eight supersymmetries [klebanovwitten1998].¶Klebanov and Witten proposed that string theory on this throat is dual to a conformal gauge theory in four dimensions [klebanovwitten1998]. The gauge group is $SU(N)\\times SU(N)$, where $N$ counts the threebranes. Two pairs of matter fields couple the two gauge groups, and a quartic superpotential preserves the two sphere symmetries. The resulting theory has $\\mathcal{N}=1$ supersymmetry, with four ordinary supersymmetries and four conformal partners.¶The two factors share one curvature scale [klebanovwitten1998]. The compact base has positive Einstein curvature, and its normalization makes the cone Ricci flat. In the throat, the five-form flux supports a nonzero Ricci tensor, with equal and opposite eigenvalues on the two factors. Its ten-dimensional scalar curvature vanishes, and its curvature remains finite at the Poincaré horizon.",
+  "related": [
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "Both throats arise from threebranes and pair anti-de Sitter space of five dimensions with a compact space of the same radius. A round 5-sphere preserves 32 supersymmetries, while $T^{1,1}$ preserves eight and has $SU(2)\\times SU(2)\\times U(1)$ isometry [klebanovwitten1998]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "The noncompact factor is anti-de Sitter space of five dimensions, with the same constant negative curvature construction as the geometry of four dimensions. The compact factor is $T^{1,1}$ [klebanovwitten1998]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "Both geometries contain a spatial circle fibred over a 2-sphere. The internal circle of the throat has a connection with one contribution from each of two 2-spheres [klebanovwitten1998]."
+    },
+    {
+      "id": "taub_nut",
+      "kind": "family",
+      "text": "The angular connection in Taub-NUT and the circle fibre of $T^{1,1}$ both twist over a 2-sphere. The throat's fibre is spatial and extends over two spheres [klebanovwitten1998]."
+    }
+  ],
+  "references": [
+    "klebanovwitten1998",
+    "candelas1990conifold",
+    "romans1985compactification"
+  ],
+  "coordinates": [
+    {
+      "id": "poincare",
+      "name": "Poincaré",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z",
+        "r",
+        "\\theta_1",
+        "\\phi_1",
+        "\\theta_2",
+        "\\phi_2",
+        "\\psi"
+      ],
+      "domains": [
+        "t \\in (-\\infty,\\infty)",
+        "x \\in (-\\infty,\\infty)",
+        "y \\in (-\\infty,\\infty)",
+        "z \\in (-\\infty,\\infty)",
+        "r \\in (0,\\infty)",
+        "\\theta_1 \\in [0,\\pi]",
+        "\\phi_1 \\in [0,2\\pi)",
+        "\\theta_2 \\in [0,\\pi]",
+        "\\phi_2 \\in [0,2\\pi)",
+        "\\psi \\in [0,4\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "The common curvature length of the anti-de Sitter and compact factors, with $L>0$"
+        }
+      ],
+      "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2+dx^2+dy^2+dz^2\\right)+\\dfrac{L^2}{r^2}dr^2+L^2\\left(\\dfrac{1}{9}\\left(d\\psi+\\cos\\theta_1\\,d\\phi_1+\\cos\\theta_2\\,d\\phi_2\\right)^2+\\dfrac{1}{6}\\left(d\\theta_1^2+\\sin^2\\theta_1\\,d\\phi_1^2+d\\theta_2^2+\\sin^2\\theta_2\\,d\\phi_2^2\\right)\\right)",
+      "convention": "We use coordinates $(t,x,y,z,r,\\theta_1,\\phi_1,\\theta_2,\\phi_2,\\psi)$, with $t$ a time, $x$, $y$, $z$, and $r$ lengths, and the remaining coordinates dimensionless angles. The angles $(\\theta_1,\\phi_1)$ and $(\\theta_2,\\phi_2)$ parametrize the two 2-spheres, and $\\psi$ parametrizes the circle fibre. We take components in the chart $x^0=ct$, with a dot denoting differentiation with respect to an affine parameter $\\lambda$."
+    }
+  ]
+}

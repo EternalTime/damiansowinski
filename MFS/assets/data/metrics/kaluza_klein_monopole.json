@@ -131,6 +131,11 @@
       "id": "giddings_strominger",
       "kind": "family",
       "text": "Another space of four dimensions with no time, Steven B. Giddings and Andrew Strominger's wormhole of 1988, two flat regions joined at a 3-sphere that an axion's field holds open [giddings1988]."
+    },
+    {
+      "id": "klebanov_witten",
+      "kind": "family",
+      "text": "The compact five dimensions of the throat carry a circle bundle over two 2-spheres. The monopole's spatial Taub-NUT geometry carries a circle bundle over one 2-sphere [klebanovwitten1998]."
     }
   ],
   "references": [
@@ -165,7 +170,8 @@
     "horowitzmaeda2002",
     "myers1987compact",
     "vafa1996ftheory",
-    "giddings1988"
+    "giddings1988",
+    "klebanovwitten1998"
   ],
   "coordinates": [
     {

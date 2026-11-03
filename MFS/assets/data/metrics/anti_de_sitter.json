@@ -192,6 +192,11 @@
       "id": "linet_tian",
       "kind": "family",
       "text": "A line of mass in anti-de Sitter space. Its static field approaches this space far from the axis, in horospherical coordinates [dasilva2000, zofka2008]."
+    },
+    {
+      "id": "klebanov_witten",
+      "kind": "family",
+      "text": "The throat pairs anti-de Sitter space of five dimensions with a compact circle bundle over two 2-spheres. Threebranes at the tip of the conifold produce this product in their near-horizon limit [klebanovwitten1998]."
     }
   ],
   "references": [
@@ -250,7 +255,8 @@
     "maldacena2018",
     "cahen1970",
     "dasilva2000",
-    "zofka2008"
+    "zofka2008",
+    "klebanovwitten1998"
   ],
   "coordinates": [
     {
