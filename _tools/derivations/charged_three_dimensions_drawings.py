@@ -351,7 +351,7 @@ def curvature(cv, ck, src):
     return [{
         "id": "radial", "label": "Along $r$", "kind": "line", "x": x_axis,
         "panels": panels, "curves": curves, "marks": [{"class": "horizon", "x": 1.0}], "legend": legend,
-        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the charge's field against $r$ "
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the point charge against $r$ "
                     "($kQ^2 = \\pi$), the same at every $t$ and $\\phi$. $K = 3R^2$. $K$ grows as $r^{-4}$ toward the "
                     "charge, smooth through the horizon. $R$ grows as $r^{-2}$ toward the charge, smooth through the "
                     "horizon."],
