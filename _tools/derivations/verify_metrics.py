@@ -3016,6 +3016,11 @@ DIMENSIONS.update(_extended_inflation.DIMENSIONS)
 HELD.update({("extended_inflation", system): ("a",) for system in _extended_inflation.CHARTS})
 RATES.update(_extended_inflation.RATES)
 
+import superconducting_string as _superconducting_string
+DIMENSIONS.update(_superconducting_string.DIMENSIONS)
+HELD.update(_superconducting_string.HELD)
+RATES.update(_superconducting_string.RATES)
+
 
 # The systems whose delta stands on a curved background, where what multiplies it varies across
 # it: the delta is read as a smooth pulse while the tensors are built and taken to its limit

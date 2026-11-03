@@ -37043,6 +37043,9 @@ CHARTS[_exponential_scalar.METRIC] = [
 import kramer_fluid as kf
 kf.register(sys.modules[__name__])
 
+import superconducting_string as _superconducting_string
+CHARTS[_superconducting_string.METRIC] = _superconducting_string.chart_spec
+
 
 if __name__ == "__main__":
     main()
