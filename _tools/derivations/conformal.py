@@ -129,7 +129,9 @@ EQUATOR = {"theta": "pi/2", "phi": "0"}
 # Homogeneous charged dust admits circular timelike curves about each dust worldline;
 # a global time-oriented radial conformal square cannot encode those identifications.
 # The sourced numerical chart covers the exterior alone, leaving the interior causal structure unspecified.
-NOT_DRAWN = {"skyrmion_hair", "charged_godel_universe", "godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
+# Both sourced charts of self similar fluid collapse end at t = 0, where the singularity forms, and the
+# light that escapes it runs in the continuation past t = 0, which neither covers.
+NOT_DRAWN = {"skyrmion_hair", "ori_piran", "charged_godel_universe", "godel", "stockum_dust", "som_raychaudhuri", "vuorio_warped_ads", "maitra_dust", "taub_nut", "kasner", "kasner_scalar", "kasner_magnetic",
              "bianchi", "tolman_bondi", "alcubierre",
              "natario", "krasnikov", "pp_wave", "mixmaster", "lentz", "szekeres", "van_den_broeck",
              "string_wave", "black_saturn", "schrodinger_spacetime", "eguchi_hanson", "gravitational_instantons",
