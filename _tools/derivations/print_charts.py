@@ -35699,6 +35699,69 @@ def murphy_check(chart, system, state):
 CHARTS["murphy_viscous_universe"] = [lambda s=s: murphy_viscous_universe(s) for s in MURPHY_CHARTS]
 
 
+
+# -- Scalar field in thermal equilibrium with a black hole -----------------------------
+
+YORK_PARAMS = [
+    "M", "R", "\\epsilon", "K = 3840\\pi", "w = \\dfrac{2M}{r}", "b = \\dfrac{2M}{R}",
+    "\\mu = \\dfrac{1}{2K}\\left(\\dfrac{2}{3}w^{-3}+2w^{-2}+6w^{-1}-8\\ln\\left(w\\right)-10w-6w^2+22w^3-\\dfrac{44}{3}\\right)",
+    "\\rho = \\dfrac{1}{2K}\\left(\\dfrac{2}{3}w^{-2}+4w^{-1}-8\\ln\\left(w\\right)-\\dfrac{40}{3}w-10w^2-\\dfrac{28}{3}w^3+28\\right)",
+    "B = \\dfrac{1}{2K}\\left(\\dfrac{2}{3}b^{-2}+4b^{-1}-8\\ln\\left(b\\right)-\\dfrac{40}{3}b-10b^2-\\dfrac{28}{3}b^3+28\\right)",
+]
+YORK_LINE = ("ds^2=-\\left(1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)\\right)"
+             "\\left(1+2\\epsilon\\left(\\rho-B\\right)\\right)dt^2"
+             "+\\dfrac{dr^2}{1-\\dfrac{2M}{r}\\left(1+\\epsilon\\mu\\right)}"
+             "+r^2\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)")
+
+
+def york_equilibrium():
+    """The scalar back reaction in the areal radius, through first order in epsilon.
+
+    The scalar functions and the matched wall are Eqs. (6)-(12), (17)-(19) of the author
+    preprint arXiv:gr-qc/9307037. The field is Page's approximation in the Hartle-Hawking state.
+    The two corrections are held as functions so their derivatives remain readable, and ORDERS
+    cuts every derived tensor to first order. The independent stress check is pointwise.
+    """
+    coords = ["t", "r", "\\theta", "\\phi"]
+    return {
+        "metric_id": "york_equilibrium",
+        "system": {"id": "areal", "name": "Areal Radius", "coords": coords,
+                   "domains": ["t \\in (-\\infty,\\infty)", "r \\in (2M,R)",
+                               "\\theta \\in [0,\\pi]", "\\phi \\in [0,2\\pi)",
+                               "M>0,\\quad R>2M"],
+                   "parameters": YORK_PARAMS, "line_element": YORK_LINE},
+        "chart_line_element": YORK_LINE,
+        "printer": {},
+        "check": york_equilibrium_check,
+    }
+
+
+def york_equilibrium_check(chart):
+    """Check the source stress and boundary at points, without symbolic curvature comparisons."""
+    r = chart.symbols[1]
+    p = chart.reader.parameters
+    M, R, epsilon = p["M"], p["R"], p["epsilon"]
+    mu, rho = p["mu"], p["rho"]
+    mu_def, rho_def = chart.reader.held[mu], chart.reader.held[rho]
+    f = 1 - 2 * M / r
+    kappa = 1 / (4 * M)
+    tt = epsilon * M**2 * (66*M**4 - 72*M**3*r + 20*M**2*r**2 - 2*kappa**4*r**8) / (960*sp.pi**2*r**8*f**2)
+    rr = epsilon * M**2 * 2 * (15*M**4 - 12*M**3*r + 2*M**2*r**2 + kappa**4*r**8) / (2880*sp.pi**2*r**8*f**2)
+    residuals = [sp.diff(mu_def, r) + 4*sp.pi*r**2*tt/(epsilon*M),
+                 sp.diff(rho_def, r) - 4*sp.pi*r**2*(rr-tt)/(epsilon*(r-2*M)),
+                 rho_def.subs(r, R) - p["B"]]
+    for radius in (4, 10, 40):
+        point = {M: sp.Integer(1), R: sp.Integer(80), r: sp.Integer(radius), epsilon: sp.Rational(1, 1000)}
+        for value in residuals:
+            if abs(complex(value.subs(point).evalf(40))) > 1e-25:
+                raise AssertionError("york_equilibrium: scalar stress or wall matching disagrees")
+    for value in (mu_def, rho_def):
+        if abs(complex(value.subs({M: 1, r: 2}).evalf(40))) > 1e-25:
+            raise AssertionError("york_equilibrium: a horizon integration constant is nonzero")
+
+
+CHARTS["york_equilibrium"] = york_equilibrium
+
 def step(seconds, where, name):
     """A step of the printing under the clock when a budget is given, so that one which runs past it
     stops the script naming the chart and the step rather than leaving it to hang."""

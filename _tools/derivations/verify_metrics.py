@@ -230,6 +230,10 @@ DIMENSIONS = {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "N": "1", "C": "1", "f": "1",
         "m": "1/L", "r_h": "L", "G": "L**2", "M": "1/L", "\\alpha": "1", "F_\\pi": "1/L", "a": "1",
     },
+    ("york_equilibrium", "areal"): {
+        "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "M": "L", "R": "L",
+        "\\epsilon": "1", "K": "1", "w": "1", "b": "1", "\\mu": "1", "\\rho": "1", "B": "1",
+    },
     # Both parameters are dimensionless: v_s is the bubble velocity in units of c, so that
     # c v_s f is the shift, and f is the shape function. The solution names no length of its
     # own, because the scale f varies on is left to f.
@@ -2691,6 +2695,7 @@ PARAMETER_RELATIONS = {
 # The order each small parameter of a system counts as, and the highest order the system keeps.
 # See the header.
 ORDERS = {
+    ("york_equilibrium", "areal"): ({"epsilon": 1}, 1),
     # Hartle and Thorne's exterior: the spin is first order and the quadrupole moment second.
     ("hartle_thorne", "hartle_thorne"): ({"a": 1, "q": 2}, 2),
     # Lense and Thirring's field is linear in the source: the mass is first order, and the
@@ -2719,6 +2724,7 @@ ORDERS = {
 # The defined names a system holds as functions of the coordinates while its tensors are built.
 # See "Adding a spacetime, as far as the checker is concerned" in _tools/README.md.
 HELD = {
+    ("york_equilibrium", "areal"): ("mu", "rho"),
     # The conformal factor of the curved space of a perturbed Friedmann universe, a quadratic in the
     # coordinates: held, every value is printed in it, as the space's own Christoffel symbols
     # k x/(2 Omega) are, where written out it multiplies through every term. It has a relation with
