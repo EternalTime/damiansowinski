@@ -7241,6 +7241,72 @@
   ],
   "sphere": null
  },
+ "giddings_strominger/areal": {
+  "stamp": "8365448de0b84641",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "giddings_strominger/conformal": {
+  "stamp": "18a2285aca4abd10",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "giddings_strominger/proper": {
+  "stamp": "1dcd9a512421a3b6",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "global_monopole/conical": {
   "stamp": "59ebfc159d972a88",
   "relations": {},
