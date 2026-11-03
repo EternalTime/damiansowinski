@@ -18402,7 +18402,9 @@ def brown_teitelboim(ck, src):
         suffix = "i" if side == "inside" else "o"
         params = {"Lambda_"+suffix: lam}
         for field, panel, scale in (("kretschmann", "K", ks), ("ricci_scalar", "R", rs)):
-            scalar = nr_published(src, name, "static_"+side, field, ["r"], list(params))
+            wall = ("sqrt(1/4 + 15*tanh(t/2)**2/4)" if side == "inside"
+                    else "sqrt(1/4 + 3*tanh(t)**2/4)")
+            scalar = nr_published(src, name, "static_"+side, field, ["r"], list(params), functions={"r_w": wall})
             curves += line_curves(ck, name+" "+side, panel, panel, scalar, "r", x, scale, PLOT_W/2, params, interval)
             want = 8*lam*lam/3 if panel == "K" else 4*lam
             ck(name+" "+side+" "+panel+" is constant", abs(float(scalar.exact([sum(interval)/2,lam]))-want) < 1e-12)

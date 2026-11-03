@@ -20,7 +20,11 @@
     "Lorentzian",
     "Einstein equations",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "Einstein space",
+    "conformally flat",
+    "stationary",
+    "static"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We use units with $c=1$.",
