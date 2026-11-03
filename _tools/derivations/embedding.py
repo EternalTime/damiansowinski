@@ -2096,6 +2096,35 @@ def figure_of(surfaces, fills, size, camera=CAMERA, offsets=None, meridians=24):
     return fig
 
 
+def york_equilibrium(ck, src):
+    """The one exterior equatorial slice of York's scalar radiation cavity.
+
+    The areal radius is the radius of each circle and dz/dr = sqrt(g_rr - 1).
+    The chart is held through first order in epsilon, with the wall at R = 50M;
+    it supplies no second exterior and the surface stops at the wall.
+    """
+    params = {"M": 1, "R": 50, "epsilon": sp.Rational(1, 10)}
+    sl = Slice(src, "york_equilibrium", "areal", "r", "\\phi", {"t": 0, **EQUATOR}, params)
+    sl.exact[2.0] = sp.Integer(2)
+    size = 100.0
+    piece = Piece("cavity", "sheet", sl, 2.0, 50.0, 0.0, 1,
+                  (("edge", "the horizon $r = 2M$"), ("edge", "the reflecting wall $r = R$")),
+                  [(2.0, "horizon", "$r = 2M$")] + [(r, "r", None) for r in (5, 10, 20, 30, 40)]
+                  + [(50.0, "surface", "$r = R$")], size)
+    surface = Surface([piece])
+    ck.isometry("York scalar radiation cavity", piece)
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *piece.at(2.0), "$r = 2M$", dx=14)
+    ring_label(fig, [0, 0, 0], *piece.at(50.0), "$r = R$")
+    fig.legend("fill", "cover", "the cavity outside the horizon")
+    fig.legend("line", "r", "$r$ constant, at $5$, $10$, $20$, $30$ and $40M$")
+    fig.legend("line", "horizon", "the horizon $r = 2M$")
+    fig.legend("line", "surface", "the reflecting wall $r = R$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    return [view("cavity", "The radiation cavity", "$M$", [surface], fig.done(),
+                 settings="$M = 1$, $R = 50M$ and $\\epsilon = 1/10$.")]
+
+
 def schwarzschild(ck, src):
     """Flamm's paraboloid. The slice of constant Schwarzschild t through the equator has
     g_rr = 1/(1 - r_s/r) and g_phiphi = r^2, so dz/dr = sqrt(r_s/(r - r_s)) and z^2 =
@@ -18347,6 +18376,7 @@ def static_five_soliton(ck, src):
 
 
 DRAWN = {
+    "york_equilibrium": york_equilibrium,
     "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "brane_wall_universe": brane_wall_universe,
@@ -18564,6 +18594,11 @@ DRAWN = {
 NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1"}
 
 CAPTIONS = {
+    ("york_equilibrium", "cavity"): [
+        "The equatorial plane ($\\theta = \\pi/2$) of the radiation cavity at one moment of $t$, "
+        "drawn in flat space with distances along the surface read from the first order metric. "
+        "The surface ends at the reflecting wall and approaches the horizon at $r = 2M$.",
+    ],
     ("static_five_soliton", "equator"): [
         r"The spatial equator ($t=y=0$, $\theta=\pi/2$), in Minkowski space inside $r=36r_s/35$ and Euclidean space beyond. "
         r"The circles approach zero radius at the singularity $h=0$.",
