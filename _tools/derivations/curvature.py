@@ -499,6 +499,55 @@ BARDEEN_STEP = Fraction(1, 60)    # the step of g from one frame of the movie to
 BARDEEN_LAST = Fraction(1, 2)     # the last frame's g
 
 
+def york_equilibrium(ck, src):
+    """The two curvature scalars of the first order scalar radiation cavity.
+
+    The chart is spherical, so both scalars vary only along the areal radius.
+    The two panels span the cavity, from just outside the horizon to the wall.
+    The Ricci scalar simplifies to -2 epsilon M^4/(15 pi r^6).
+    """
+    metric, chart = "york_equilibrium", "areal"
+    params = {"M": 1.0, "R": 50.0, "epsilon": 0.0001}
+    names = list(params)
+    K = nr_published(src, metric, chart, "kretschmann", ["r"], names)
+    Ric = nr_published(src, metric, chart, "ricci_scalar", ["r"], names)
+    x_axis = axis("$r/M$", 2, 50)
+    K_scale = {"kind": "log", "from": 1e-10, "to": 1}
+    R_scale = {"kind": "symlog", "from": -1e-7, "to": 0, "linear": 1e-13}
+    panels = [{"id": "K", "name": "$K\\,M^4$", "aspect": 2, "scale": K_scale, "ticks": value_ticks(K_scale)},
+              {"id": "R", "name": "$R^\\mu{}_\\mu\\,M^2$", "aspect": 2, "scale": R_scale,
+               "ticks": value_ticks(R_scale)}]
+    shape_checks(ck, metric, [p["aspect"] for p in panels])
+    height = {p["id"]: PLOT_W / p["aspect"] for p in panels}
+    within = (2.001, 49.999)
+    curves = (line_curves(ck, metric, "K", "K", K, "r", x_axis, K_scale, height["K"], params, within)
+              + line_curves(ck, metric, "R", "R", Ric, "r", x_axis, R_scale, height["R"], params, within))
+    rs = np.linspace(*within, SAMPLES)
+    vals = list(params.values())
+    ck("York cavity K decreases outward", np.all(np.diff(K(rs, *vals)) < 0))
+    ck("York cavity R is negative and increases outward", np.all(Ric(rs, *vals) < 0)
+       and np.all(np.diff(Ric(rs, *vals)) > 0))
+    for radius in (3, 10, 40):
+        got = float(Ric.exact([radius] + vals))
+        want = -2 * params["epsilon"] / (15 * math.pi * radius**6)
+        ck(f"York cavity scalar trace at r = {radius}", abs(got / want - 1) < 1e-10)
+    legend = [["line", "K", "$K$, the Kretschmann scalar"],
+              ["line", "R", "$R^\\mu{}_\\mu$, the Ricci scalar"]]
+    return [{
+        "id": "cavity", "label": "The radiation cavity", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [], "legend": legend,
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the radiation cavity "
+                    "against $r$, calculated through first order in $\\epsilon$. "
+                    "$K$ falls outward. $R^\\mu{}_\\mu$ is negative and rises toward zero."],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": scalar_clips("A logarithmic scale from $10^{-10}$ to $1$.",
+                                    "A signed logarithmic scale from $-10^{-7}$ to $0$, linear within $10^{-13}$."),
+        "settings": "$M = 1$, $R = 50M$ and $\\epsilon = 1/10000$.",
+        "clip": "$K$ is logarithmic from $10^{-10}$ to $1$; $R^\\mu{}_\\mu$ is signed logarithmic "
+                "from $-10^{-7}$ to $0$, linear within $10^{-13}$.",
+    }]
+
+
 def bardeen(ck, src):
     """Bardeen's regular black hole at r_s = 1, its Kretschmann and Ricci scalars against r.
 
@@ -18241,6 +18290,7 @@ def static_five_soliton(ck, src):
 
 
 DRAWN = {
+    "york_equilibrium": york_equilibrium,
     "static_five_soliton": static_five_soliton,
     "stiff_fluid_universes": stiff_fluid_universes,
     "newman_tamburino": newman_tamburino,
