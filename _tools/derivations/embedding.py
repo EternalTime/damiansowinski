@@ -18463,24 +18463,24 @@ def static_five_soliton(ck, src):
 def quevedo_mashhoon(ck, src):
     """An equatorial slice of the rotating deformed vacuum field.
 
-    The interval r/M from 5/2 to 7 stays outside the coordinate boundary and
+    The interval x from 2 to 6 stays outside the coordinate boundary and
     has positive circumference and embedding defect at the parameters shared
     with the light ray views. The slice is a single sheet, not an extension
     across the inner edge.
     """
-    sl = Slice(src, "quevedo_mashhoon", "spherical", "r", "\\phi",
-               {"t": 0, "theta": "pi/2"}, nr.QM_PARAMS, functions=nr.QM_FUNCTIONS["spherical"])
-    inner, outer = 2.5, 7.0
+    sl = Slice(src, "quevedo_mashhoon", "prolate_spheroidal", "x", "\\phi",
+               {"t": 0, "y": 0}, nr.QM_PARAMS, functions=nr.QM_FUNCTIONS["prolate_spheroidal"])
+    inner, outer = 2.0, 6.0
     size = 2 * float(sl.rho_at(outer))
     sheet = Piece("equator", "sheet", sl, inner, outer, 0.0, 1,
-                  (("edge", "$r=5M/2$"), ("edge", "$r=7M$")),
-                  [(r, "r", None) for r in (3.0, 4.0, 5.0, 6.0, outer)], size)
+                  (("edge", "$x=2$"), ("edge", "$x=6$")),
+                  [(x, "r", None) for x in (3.0, 4.0, 5.0, outer)], size)
     ck.isometry("Quevedo-Mashhoon, the equatorial slice", sheet)
     surface = Surface([sheet])
     fig = figure_of([surface], {"sheet": "cover"}, size)
-    ring_label(fig, [0, 0, 0], *sheet.at(outer), "$7M$")
+    ring_label(fig, [0, 0, 0], *sheet.at(outer), "$x=6$")
     fig.legend("fill", "cover", "the equatorial slice")
-    fig.legend("line", "r", "$r=3$, $4$, $5$, $6$, and $7M$")
+    fig.legend("line", "r", "$x=3$, $4$, $5$, and $6$")
     fig.legend("line", "meridian", "$\\phi$ constant")
     return [view("equator", "The equator", "$M$", [surface], fig.done(),
                  settings="$M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$.")]

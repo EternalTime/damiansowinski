@@ -18364,14 +18364,14 @@ def quevedo_mashhoon(ck, src):
 
     The same nonzero deformation and spin are used in the spacetime and
     embedding views. The curve reads the stored scalar and its declared
-    functions on 5/2 <= r/M <= 7, the embedding interval.
+    functions on 2 <= x <= 6, the embedding interval.
     """
     params = {"M": 1.0, "a": 0.4, "sigma": math.sqrt(21)/5, "q": 0.4, "delta": 1.0}
-    K = Published(src, "quevedo_mashhoon", "spherical", "kretschmann", ["r", "theta"],
-                  list(params), functions=nr.QM_FUNCTIONS["spherical"])
-    equator = Held(K, {"theta": math.pi/2})
-    x_axis = axis("$r/M$", 2.5, 7.0)
-    samples = equator(np.linspace(2.5, 7.0, SAMPLES), *params.values())
+    K = Published(src, "quevedo_mashhoon", "prolate_spheroidal", "kretschmann", ["x", "y"],
+                  list(params), functions=nr.QM_FUNCTIONS["prolate_spheroidal"])
+    equator = Held(K, {"y": 0})
+    x_axis = axis("$x$", 2.0, 6.0)
+    samples = equator(np.linspace(2.0, 6.0, SAMPLES), *params.values())
     ck("quevedo_mashhoon equatorial scalar is finite and positive on the drawn interval",
        np.all(np.isfinite(samples)) and np.all(samples > 0))
     lower = 10.0 ** math.floor(math.log10(float(np.min(samples))))
@@ -18379,7 +18379,7 @@ def quevedo_mashhoon(ck, src):
     scale = {"kind": "log", "from": lower, "to": upper}
     panel = {"id": "K", "name": "$K M^4$", "aspect": 1.5, "scale": scale, "ticks": value_ticks(scale)}
     shape_checks(ck, "quevedo_mashhoon", [panel["aspect"]])
-    curves = line_curves(ck, "quevedo_mashhoon", "K", "K", equator, "r", x_axis,
+    curves = line_curves(ck, "quevedo_mashhoon", "K", "K", equator, "x", x_axis,
                          scale, PLOT_W / panel["aspect"], params)
     return [{"id": "equator", "label": "The equator", "kind": "line", "x": x_axis,
              "panels": [panel], "curves": curves, "marks": [], "legend": [["line", "K", "$K$"]],

@@ -2836,14 +2836,13 @@ QM_PARAMS = {"M": 1, "a": "2/5", "sigma": "sqrt(21)/5", "q": "2/5", "delta": 1}
 QM_INPUT = "The rotating deformed vacuum field with $M=1$, $a=2M/5$, $q=2/5$, and $\\delta=1$."
 QM_FUNCTIONS = {
     "prolate_spheroidal": {name: f"qmx_{short}(x,y)" for name, short in QM_SHORT.items()},
-    "spherical": {name: f"qmr_{short}(r,theta)" for name, short in QM_SHORT.items()},
 }
 
 
 def _qm_declare():
-    """The sourced functions and their first and second derivatives in both charts."""
+    """The sourced functions and their first and second derivatives in the prolate chart."""
     made = {}
-    for system, prefix in [("prolate_spheroidal", "qmx"), ("spherical", "qmr")]:
+    for system, prefix in [("prolate_spheroidal", "qmx")]:
         for name, short in QM_SHORT.items():
             for order in bsat.ORDERS:
                 label = prefix + "_" + short + order
@@ -5427,13 +5426,10 @@ DIAGRAMS = [
     Diagram("swirling_universe_black_hole", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 4, -2, 2),
             "$\\sqrt{j}\\,\\rho$", "$\\sqrt{j}\\,ct$", {"j": 1}, {"phi": "0", "z": "0"},
             lines=(("surface", "r", "1", "$\\rho = 1/\\sqrt{j}$, where the circles about the axis are widest"),)),
-    # Equatorial projections of rays of zero angular momentum in the two sourced charts.
+    # Equatorial projections of rays of zero angular momentum.
     Diagram("quevedo_mashhoon", "prolate_spheroidal", "equator", "the equator, $\\phi$ divided out", ("t", "x"),
             (2.2, 6.2, -2, 2), "$x$", "$t/M$", QM_PARAMS, {"y": "0"}, quotient="phi",
             functions=QM_FUNCTIONS["prolate_spheroidal"], input=QM_INPUT, kretschmann=False),
-    Diagram("quevedo_mashhoon", "spherical", "equator", "the equator, $\\phi$ divided out", ("t", "r"),
-            (3, 7, -2, 2), "$r/M$", "$t/M$", QM_PARAMS, {"theta": "pi/2"}, quotient="phi",
-            functions=QM_FUNCTIONS["spherical"], input=QM_INPUT, kretschmann=False),
     # Ernst and Wild's Kerr hole in Melvin's universe. The axis, whose plane of t and r is Kerr's
     # times the constant k, and the equator with the circles of phi divided out, whose plane is
     # Kerr's times H: the rays of both are Kerr's, and the field shows in the ergosurface. The
@@ -6890,9 +6886,6 @@ CAPTIONS = {
     ],
     ("quevedo_mashhoon", "prolate_spheroidal", "equator"): [
         "The equatorial plane ($y=0$), with the circles of $\\phi$ divided out and "
-        "light rays of zero angular momentum projected onto the plane."],
-    ("quevedo_mashhoon", "spherical", "equator"): [
-        "The equatorial plane ($\\theta=\\pi/2$), with the circles of $\\phi$ divided out and "
         "light rays of zero angular momentum projected onto the plane."],
     ("static_five_soliton","spherical","radial"): [
         r"The radial null plane ($\theta=\pi/2$, $\phi=y=0$), with a timelike singularity at $r=r_s$.",

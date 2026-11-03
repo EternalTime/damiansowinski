@@ -6,7 +6,7 @@ The regular form of alpha extends the expression in that paper to zero rotation.
 import mpmath as mp
 
 METRIC = 'quevedo_mashhoon'
-SYSTEMS = ('prolate_spheroidal', 'spherical')
+SYSTEMS = ('prolate_spheroidal',)
 
 
 def potentials(x, y, mass, spin, deformation, delta, backend=None):

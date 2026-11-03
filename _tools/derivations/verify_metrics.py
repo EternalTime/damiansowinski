@@ -496,9 +496,8 @@ DIMENSIONS = {
         "\\delta_+": "1", "\\delta_-": "1", "\\lambda": "1", "\\eta": "1",
         "A_+": "1", "A_-": "1", "B_+": "1", "B_-": "1", "R": "1", "L": "1", "H": "1",
         "\\chi": "1", "f": "1", "\\omega": "L", "h": "1",
-        **({"x": "1", "y": "1"} if system == "prolate_spheroidal" else
-           {"r": "L", "\\theta": "1", "x": "1", "y": "1"}),
-    } for system in ("prolate_spheroidal", "spherical")},
+        "x": "1", "y": "1",
+    } for system in ("prolate_spheroidal",)},
     # Bach and Weyl's ring: m = GM/c^2 and the ring's radius a in Weyl's coordinates are lengths,
     # l_2 is the greatest distance to the ring and kappa the parameter of the elliptic integrals.
     ("bach_weyl_ring", "weyl"): {

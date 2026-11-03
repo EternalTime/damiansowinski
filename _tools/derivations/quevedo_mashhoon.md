@@ -3,6 +3,7 @@
 The prolate interval is equation (1.1) of Donato Bini, Andrea Geralico, Orlando Luongo and Hernando Quevedo, Classical and Quantum Gravity 26, 225006 (2009), arXiv:0909.4150, with the four parameter functions in their Appendix A.
 The spheroidal interval is equations (1)-(11) of Yergali Kurmanov and collaborators, Physics of the Dark Universe 48, 101917 (2025), arXiv:2503.18028, with $m$ renamed $M$.
 Its coordinates are $r=M+\sigma x$ and $y=\cos\theta$, with $\sigma=\sqrt{M^2-a^2}$ and $M>0$, $|a|<M$.
+The spherical form was attempted, but its symbolic tensors did not finish inside a 1200 second mathematics budget, so it is not declared as a chart.
 The remaining parameters $q$ and $\delta$ are real, and the component representation using $f$ and $\omega$ is taken where $f\ne0$.
 The source defines $\alpha=(\sigma-M)/a$; $\alpha=-a/(M+\sigma)$ extends the same expression continuously to $a=0$.
 The named function $h=e^{2\gamma}$ keeps the metric and its derivatives compact.
@@ -21,15 +22,15 @@ Its mass and quadrupole are $M\delta$ and $-M^3\delta(\delta^2-1)/3$.
 
 ## Conformal diagram
 
-The two charts cover an exterior region and end at $x=1$.
+The chart covers an exterior region and ends at $x=1$.
 Bini et al. section 3 find direction dependent curvature behavior there and discuss the difficulty of obtaining a global conformal diagram.
-The charts do not establish a global extension across that boundary, so a conformal diagram is not drawn.
+The chart does not establish a global extension across that boundary, so a conformal diagram is not drawn.
 
 ## Drawings
 
 The drawings select $M=1$, $a=2M/5$, $q=2/5$ and $\delta=1$.
-Both spacetime views divide out the axial circles on the equator, so their null curves project rays of zero angular momentum.
-The embedding takes the equatorial slice of constant $t$ from $r=5M/2$ to $r=7M$.
+The spacetime view divides out the axial circles on the equator, so its null curves project rays of zero angular momentum.
+The embedding takes the equatorial slice of constant $t$ from $x=2$ to $x=6$.
 The embedding defect is positive at representative points throughout that interval and the generator checks the full surface against the stored metric.
 
 ## Compact scalar
