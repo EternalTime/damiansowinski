@@ -1,0 +1,36 @@
+{
+  "id": "hellaby_kruskal",
+  "name": "Hellaby's Kruskal Universe of Dust",
+  "short_name": "Hellaby's Kruskal Universe",
+  "description": "A spherically symmetric universe of inhomogeneous dust with two regions joined by a dynamical neck.",
+  "tags": [
+    "dust",
+    "inhomogeneous",
+    "spherically symmetric",
+    "cosmology",
+    "comoving",
+    "time-dependent",
+    "wormhole",
+    "throat",
+    "black hole",
+    "white hole",
+    "curvature singularity",
+    "horizon",
+    "apparent horizon",
+    "time symmetric",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units with $G=c=1$ and take the Ricci tensor as $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A neck joins two regions of a universe filled with dust [hellaby1987]. The neck opens at a white hole and closes at a black hole, with a big bang in its past and a big crunch in its future [hellaby1987]. Charles Hellaby described such a spacetime in 1987, with the same two sheet topology as the extended Schwarzschild solution and a nonzero density [hellaby1987].¶Each shell of dust keeps its radial coordinate $r$ as its areal radius $R(t,r)$ changes with time $t$. In units with $G=c=1$, the spherical line element is $ds^2=-dt^2+R'^2dr^2/(1+f)+R^2d\\Omega^2$, where a prime means a derivative with respect to $r$ and $f(r)$ is twice the energy per unit mass of a shell [hellaby2002]. The radius obeys $\\dot R^2=2M/R+f$, with $M(r)$ the gravitational mass function and a dot denoting a derivative with respect to $t$ [hellaby2002]. The density $\\rho$ obeys $8\\pi\\rho=2M'/(R^2R')$ away from the neck [hellaby2002].¶Hellaby and Andrzej Krasiński chose $M=M_0(1+M_1r^2)^3$, $f=-e^{-r^2/r_s}$, and $a=-\\pi M/(-f)^{3/2}$ for a symmetric dust wormhole, where $M_0$, $M_1$, and $r_s$ are positive constants and $a(r)$ is the time of the bang [hellaby2002]. At $r=0$, the function $f$ reaches $-1$ and the areal radius reaches a minimum on a spatial slice. Both $R'$ and $1+f$ vanish at the neck, and the radial metric component has a finite limit there [hellaby2002].¶Every shell in this example expands and then contracts, and the moment of maximum expansion is $t=0$ [hellaby2002]. The apparent horizons meet at the neck at that moment, where $R=2M$ [hellaby2002]. A light ray can cross the neck, but a ray that enters the trapped region cannot emerge past the apparent horizon on the other side [hellaby2002].¶When $M_1=0$, the dust density vanishes and the Schwarzschild geometry remains [hellaby2002]. Like the Schwarzschild geometry, the dust model is spherically symmetric, and its mass function increases away from the neck on each side [hellaby2002]. Hellaby and Krasiński extended the discussion to the Szekeres dust models, whose shells need not be concentric [hellaby2002].",
+  "related": [],
+  "references": [
+    "hellaby1987",
+    "hellaby2002"
+  ],
+  "coordinates": []
+}
