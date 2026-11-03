@@ -3794,7 +3794,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "676b8e30fb30eddf",
+    "version": "baf25252de7338e7",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
@@ -6111,6 +6111,31 @@
     "curvature": "4808af17a81a82e5"
   },
   {
+    "id": "superconducting_string",
+    "name": "Superconducting Cosmic String",
+    "tags": [
+      "topological defect",
+      "cosmic string",
+      "electrovacuum",
+      "electromagnetic field",
+      "magnetic field",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "static",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "86fc8fdf33b48575",
+    "diagrams": "c39413299aea5960",
+    "conformal": "0f636bd643eeb0cb",
+    "embedding": "d5e24f61282df4b4",
+    "curvature": "2161a690a629cf8d"
+  },
+  {
     "id": "supertranslation_hair",
     "name": "Supertranslation Hair",
     "tags": [
@@ -6752,7 +6777,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "1016f434b4f6c964",
+    "version": "cf2d71c2ac4d5085",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "ef960fe8cb1357e7"
