@@ -15,3 +15,12 @@ The cylindrical line element is given in the History, and the explicit inverse a
 The cylindrical tensors are not stored: the explicit radical chart did not finish the printer's 300 second chart step.
 
 ## Checks and drawings
+
+The two stored charts were printed from the source expressions and checked against the source metric and the vacuum equations at two numerical points each.
+The page-local tests take the circumference and radial distance from the stored auxiliary line element, at fixed $t=0$, and check both angle deficits and the regular-axis case $\alpha p=1$.
+
+Both radial diagrams show the surface of fixed $\phi$ and $z$ at $p=1$, $\alpha=2$ and $\ell=1$.
+The null directions have $\operatorname{arsinh}\tau\pm\operatorname{arcosh}\sigma$ constant, or $\psi\pm\theta$ constant.
+The conformal views compactify $t\pm\rho$ and mark the string axis.
+The embedding shows the surface $\psi=0$, $z=0$ for $0\leq\theta\leq2$, and its isometry is checked by the embedding generator.
+The curvature map reads the stored Kretschmann scalar on $1\leq\sigma\leq4$ and $|\tau|\leq3/2$, at the same parameter values.
