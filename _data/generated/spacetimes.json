@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 240,
+  "count": 241,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3231,6 +3231,11 @@
           "id": "btz_shock_wave",
           "kind": "composite",
           "text": "The black hole without rotation with a shell of null particles on its horizon, the field of a few quanta thrown in from one side long ago. Its two halves are joined along the horizon with a shift [shenker2014]."
+        },
+        {
+          "id": "charged_three_dimensions",
+          "kind": "family",
+          "text": "Charged, and with its cosmological constant set to zero, this black hole becomes the spacetime of a point charge in a plane [carlip1995]."
         }
       ],
       "references": [
@@ -3267,7 +3272,8 @@
         "emparan2020qbtz",
         "achucarro1993",
         "anninos2009",
-        "shenker2014"
+        "shenker2014",
+        "carlip1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -57802,6 +57808,258 @@
       ]
     },
     {
+      "id": "charged_three_dimensions",
+      "name": "Point Charge in Three Dimensions",
+      "short_name": "Point Charge in Three Dimensions",
+      "description": "The static spacetime of a point electric charge in two dimensions of space and one of time, whose field fills the plane and curves spacetime everywhere, with a horizon on the circle $r = r_c$ beyond which $r$ is a time.",
+      "tags": [
+        "electric charge",
+        "point charge",
+        "electromagnetic field",
+        "electrovacuum",
+        "Einstein-Maxwell",
+        "2+1 dimensional gravity",
+        "lower-dimensional gravity",
+        "circularly symmetric",
+        "horizon",
+        "Killing horizon",
+        "cosmological horizon",
+        "trapped surface",
+        "curvature singularity",
+        "Kruskal extension",
+        "closed universe",
+        "Robinson-Trautman",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "static",
+        "stationary",
+        "three-dimensional"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "We keep factors of $c$ explicit. Einstein's equations read $G_{\\mu\\nu} = kT_{\\mu\\nu}$, with the stress tensor $T_{\\mu\\nu} = (F_{\\mu\\alpha}F_\\nu{}^\\alpha - \\tfrac{1}{4}g_{\\mu\\nu}F_{\\alpha\\beta}F^{\\alpha\\beta})/2\\pi$ of the charge's field $F = (Q/r)\\,dr \\wedge c\\,dt$, whose strength is $E = Q/r$.",
+      "related": [
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "A mass in three dimensions leaves space flat around it, a cone with its tip at the mass [gott1984]. Give the particle a charge, and its field, spread over the plane, curves spacetime everywhere [gott1986charged]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "Give the black hole of Bañados, Teitelboim, and Zanelli an electric charge and set its cosmological constant to zero, and it becomes this spacetime [banados1992, carlip1995]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The Reissner-Nordström black hole keeps its charge inside two horizons. Gott, Simon, and Alpert likened the one horizon at $r_c$ to the inner of the two [gott1986charged]."
+        }
+      ],
+      "references": [
+        "gott1986charged",
+        "deser1985",
+        "cataldo1996",
+        "garcia2009",
+        "melvin1986",
+        "carlip1995",
+        "gott1984",
+        "ida2000blackhole",
+        "mao2024",
+        "banados1992",
+        "podolsky2022"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_three_dimensions.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "k > 0,\\quad r_c > 0",
+            "r = r_c \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Coupling of Einstein's equations, $k = 8\\pi G/c^4$ with $G$ Newton's constant in three dimensions"
+            },
+            {
+              "symbol": "Q",
+              "description": "Electric charge of the source at $r = 0$"
+            },
+            {
+              "symbol": "r_c",
+              "description": "Radius of the horizon, a constant of integration independent of $Q$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\phi)$, with $t$ carrying dimensions of time and $2\\pi r$ the circumference of the circle of radius $r$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{kQ^2}{2\\pi}\\ln\\left(\\dfrac{r_c}{r}\\right)c^2dt^2 + \\dfrac{2\\pi\\,dr^2}{kQ^2\\ln\\left(\\dfrac{r_c}{r}\\right)} + r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{k\\,Q^2\\,\\ln\\left(\\dfrac{r_c}{r}\\right)}{2\\pi}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{2\\pi}{k\\,Q^2\\,\\ln\\left(\\dfrac{r_c}{r}\\right)}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{k\\,Q^2}{2\\pi\\,r^2}",
+          "kretschmann": "K = \\dfrac{3k^2\\,Q^4}{4\\pi^2\\,r^4}"
+        },
+        {
+          "id": "eddington_finkelstein_outgoing",
+          "name": "Outgoing Eddington-Finkelstein",
+          "coordinates": [
+            "u",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "k > 0,\\quad r_c > 0",
+            "r = r_c \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Coupling of Einstein's equations, $k = 8\\pi G/c^4$ with $G$ Newton's constant in three dimensions"
+            },
+            {
+              "symbol": "Q",
+              "description": "Electric charge of the source at $r = 0$"
+            },
+            {
+              "symbol": "r_c",
+              "description": "Radius of the horizon, a constant of integration independent of $Q$"
+            }
+          ],
+          "convention": "We use Podolský and Papajčík's coordinates $(u, r, \\phi)$, with $u$ the retarded time, $c\\,du = c\\,dt - 2\\pi\\,dr/(kQ^2\\ln(r_c/r))$, constant along every outgoing light ray. We take components in the chart $x^0 = cu$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{u}$ means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{kQ^2}{2\\pi}\\ln\\left(\\dfrac{r_c}{r}\\right)c^2du^2 - 2c\\,du\\,dr + r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{k\\,Q^2\\,\\ln\\left(\\dfrac{r_c}{r}\\right)}{2\\pi}"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{k\\,Q^2}{2\\pi\\,r^2}",
+          "kretschmann": "K = \\dfrac{3k^2\\,Q^4}{4\\pi^2\\,r^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "k > 0,\\quad r_c > 0",
+            "r = r_c \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Coupling of Einstein's equations, $k = 8\\pi G/c^4$ with $G$ Newton's constant in three dimensions"
+            },
+            {
+              "symbol": "Q",
+              "description": "Electric charge of the source at $r = 0$"
+            },
+            {
+              "symbol": "r_c",
+              "description": "Radius of the horizon, a constant of integration independent of $Q$"
+            }
+          ],
+          "convention": "We use Mao and Zhao's coordinates $(v, r, \\phi)$, with $v$ the advanced time, $c\\,dv = c\\,dt + 2\\pi\\,dr/(kQ^2\\ln(r_c/r))$, constant along every ingoing light ray. We take components in the chart $x^0 = cv$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{kQ^2}{2\\pi}\\ln\\left(\\dfrac{r_c}{r}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{k\\,Q^2\\,\\ln\\left(\\dfrac{r_c}{r}\\right)}{2\\pi}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{k\\,Q^2}{2\\pi\\,r^2}",
+          "kretschmann": "K = \\dfrac{3k^2\\,Q^4}{4\\pi^2\\,r^4}"
+        }
+      ]
+    },
+    {
       "id": "point_particle_2plus1",
       "name": "Point Particles in Three Dimensions",
       "short_name": "Point Particles in Three Dimensions",
@@ -57874,6 +58132,11 @@
           "id": "torus_universe_2plus1",
           "kind": "locally_same",
           "text": "The same flat vacuum in three dimensions, with space closed into a torus by two commuting identifications [louko_marolf1994]."
+        },
+        {
+          "id": "charged_three_dimensions",
+          "kind": "family",
+          "text": "Give the particle a charge, and its electric field, spread over the whole plane, curves spacetime everywhere around it [gott1986charged]."
         }
       ],
       "references": [
@@ -57899,7 +58162,8 @@
         "emparan2002holograms",
         "emparan2020qbtz",
         "vuorio1985",
-        "louko_marolf1994"
+        "louko_marolf1994",
+        "gott1986charged"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -60587,6 +60851,11 @@
           "id": "penney_scalar",
           "kind": "generalisation",
           "text": "Reissner and Nordström's black hole with a massless scalar field added, found by R. Penney in 1969. Any scalar charge, however small, removes the horizon and leaves a naked singularity [banerjee1998]."
+        },
+        {
+          "id": "charged_three_dimensions",
+          "kind": "family",
+          "text": "J. Richard Gott III, Jonathan Z. Simon, and Mark Alpert likened the horizon of a point charge in two dimensions of space to the inner horizon of this black hole [gott1986charged]."
         }
       ],
       "references": [
@@ -60639,7 +60908,8 @@
         "bah2021",
         "lewandowski2023",
         "mertens2023",
-        "banerjee1998"
+        "banerjee1998",
+        "gott1986charged"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
