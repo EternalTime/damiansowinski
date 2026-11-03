@@ -22776,6 +22776,117 @@ def ads_soliton(ck, src):
     return views
 
 
+# ---------------------------------------------------------------- Linet and Tian's cylinder
+
+def lt_positive_rstar(rho):
+    """The tortoise coordinate of the toroidal plane at sigma = 1/4 and Lambda = 1/3, where
+    -g_tt = (2 sin(rho/2))^{4/3}: r_* = int_0^rho (2 sin(x/2))^{-2/3} dx = 2^{-2/3} B(1/6, 1/2) I(sin^2(rho/2);
+    1/6, 1/2), finite at both ends, and its value at the far axis, 2^{-2/3} B(1/6, 1/2)."""
+    whole = float(special.beta(1 / 6, 0.5)) * 2 ** (-2 / 3)
+    rho = np.asarray(rho, dtype=float)
+    return whole * special.betainc(1 / 6, 0.5, np.sin(rho / 2) ** 2), whole
+
+
+def lt_negative_rstar(rho):
+    """The tortoise coordinate of the cylindrical plane at sigma = 0 and Lambda = -1/3, where
+    -g_tt = cosh^{4/3}(rho/2): r_* = int_0^rho cosh^{-2/3}(x/2) dx = B(1/3, 1/2)(1 - I(sech^2(rho/2); 1/3, 1/2)),
+    and its value at the conformal boundary, B(1/3, 1/2), three times the soliton's 1.4022 in its L."""
+    whole = float(special.beta(1 / 3, 0.5))
+    rho = np.asarray(rho, dtype=float)
+    return whole * (1 - special.betainc(1 / 3, 0.5, 1 / np.cosh(rho / 2) ** 2)), whole
+
+
+def lt_pq(rstar):
+    """A chart of a strip: sigma = (pi/2) r_*/R and eta = (pi/2) c t/R, with R the whole width of r_*, and
+    p, q = (eta -+ sigma)/2."""
+    def pq(t, x):
+        t = np.asarray(t, dtype=float)
+        r, whole = rstar(x)
+        sigma, eta = HALF * r / whole, HALF * t / whole
+        return (eta - sigma) / 2, (eta + sigma) / 2
+    return pq
+
+
+def linet_tian(ck, src):
+    """Two half strips, one for each sign of Lambda, each in the unit ell = 1/sqrt(3|Lambda|).
+
+    The toroidal plane psi = phi = 0 at sigma = 1/4, Lambda = 1/3 and B = C = 1 has the metric
+    (2 sin(rho/2))^{4/3}(-c^2dt^2 + dr_*^2), with r_* of lt_positive_rstar running over a finite width from the
+    singular axis rho = 0, where the published Kretschmann scalar diverges, to the far axis rho = pi, where it
+    stays finite and the circles of psi close, so the plane is a strip unbounded in t, as anti-de Sitter
+    space's static chart is, between a timelike singularity and a regular axis through which the plane runs
+    on to psi = pi. The cylindrical plane z = phi = 0 at sigma = 0, Lambda = -1/3 and C = 1, Bonnor's
+    universe, has cosh^{4/3}(rho/2)(-c^2dt^2 + dr_*^2), r_* of lt_negative_rstar from the regular axis to the
+    conformal boundary at an infinite proper distance; it is the anti-de Sitter soliton's strip in units of
+    ell = L/3. Each map is checked against the published metric, each r_* against the published g_tt."""
+    pos = Plane(src, "linet_tian", "toroidal", ("t", "\\rho"), {"psi": "0", "phi": "0"}, nr.LT_POSITIVE)
+    neg = Plane(src, "linet_tian", "cylindrical", ("t", "\\rho"), {"z": "0", "phi": "0"}, nr.LT_NEGATIVE)
+    pos_pq, neg_pq = lt_pq(lt_positive_rstar), lt_pq(lt_negative_rstar)
+    forward = lambda t, x: (1, 0)
+    ck.chart("Linet-Tian, the toroidal plane", pos, pos_pq, ck.uniform(-10, 10), ck.uniform(0.01, 3.1), forward)
+    ck.chart("Linet-Tian, the cylindrical plane", neg, neg_pq, ck.uniform(-10, 10), ck.uniform(0.01, 20), forward)
+    rho = ck.uniform(0.05, 3.1, 400)
+    h = 1e-6
+    for name, plane, rstar, lapse in (("toroidal", pos, lt_positive_rstar, lambda x: (2 * np.sin(x / 2)) ** (2 / 3)),
+                                      ("cylindrical", neg, lt_negative_rstar, lambda x: np.cosh(x / 2) ** (2 / 3))):
+        g00, _, _, _, _, _ = plane.metric(np.zeros_like(rho), rho)
+        ck.limit(f"Linet-Tian, the {name} plane: -g_tt is the lapse squared", np.sqrt(-g00) / lapse(rho) - 1, 0, 1e-10)
+        slope = (rstar(rho + h)[0] - rstar(rho - h)[0]) / (2 * h)
+        ck.limit(f"Linet-Tian, the {name} plane: dr_*/drho = 1/sqrt(-g_tt)", slope * np.sqrt(-g00) - 1, 0, 1e-6)
+    ck.diverges("Linet-Tian, Lambda > 0: the Kretschmann scalar diverges on the axis rho = 0",
+                pos.kretschmann(0, 1e-2), pos.kretschmann(0, 1e-3))
+    ck.finite("Linet-Tian, Lambda > 0: the far axis rho = pi is regular",
+              pos.kretschmann(ck.uniform(-5, 5, 50), np.full(50, np.pi - 1e-6)))
+    ck.finite("Linet-Tian, Lambda < 0: the axis rho = 0 is regular",
+              neg.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+    ck.limit("Linet-Tian, Lambda < 0: light crosses from the axis to the boundary in ct = B(1/3, 1/2) ell = 4.2065 ell",
+             lt_negative_rstar(np.array([1e3]))[0], [float(special.beta(1 / 3, 0.5))], 1e-9)
+    ck.limit("Linet-Tian, Lambda > 0: light crosses from axis to axis in ct = 2^(-2/3) B(1/6, 1/2) ell = 4.5898 ell",
+             lt_positive_rstar(np.array([np.pi]))[0], [2 ** (-2 / 3) * float(special.beta(1 / 6, 0.5))], 1e-12)
+
+    T0, T1 = -0.3 * PI, 1.3 * PI
+    views = []
+    for vid, label, system, fmap, values, edge, near, far, moment_view in (
+            ("positive", "$\\Lambda > 0$", "toroidal", pos_pq, (0.5, 1, 2, 3), "$\\rho = \\pi$",
+             "the singular axis", "the far axis, regular", "positive"),
+            ("negative", "$\\Lambda < 0$", "cylindrical", neg_pq, (0.5, 1, 2, 4), None,
+             "the regular axis", "the conformal boundary", "negative")):
+        v = View(vid, label, [-0.95, HALF + 0.55, T0, T1], system)
+        v.fill("region", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+        v.fill("cover", [[0, T0], [HALF, T0], [HALF, T1], [0, T1]])
+        if vid == "positive":
+            v.line("singular", [[[0, T0], [0, T1]]], zig=True)
+            v.line("centre", [[[HALF, T0], [HALF, T1]]])
+        else:
+            v.line("centre", [[[0, T0], [0, T1]]])
+            v.line("boundary", [[[HALF, T0], [HALF, T1]]])
+            v.label_xt([HALF, (T0 + T1) / 2 + 0.6], "$\\mathscr{I}$", "l", dx=6)
+        for c in values:
+            X = float(np.subtract(*fmap(0.0, c)[::-1]))
+            v.line("r", [[[X, T0], [X, T1]]])
+        for k in range(-1, 6):
+            v.line("t", [[[0, k * Q4], [HALF, k * Q4]]])
+        v.segment("null", (0, 0), (0, HALF))
+        v.segment("null", (0, HALF), (HALF, HALF))
+        v.label_xt([0, 0], "$t = 0$", "r", "coord", dx=-6)
+        v.set(fade={"top": 0.7, "bottom": 0.7})
+        v.legend("cover", "the whole plane")
+        v.legend("r", "$\\rho$ at " + ", ".join(f"${c:g}$" for c in values[:-1]) + f", and ${values[-1]:g}$")
+        v.legend("t", "$ct$ every quarter of a crossing")
+        v.legend("singular" if vid == "positive" else "centre", near)
+        v.legend("centre" if vid == "positive" else "boundary", far)
+        v.legend("null", "a ray across and back")
+        moment = slices.moments("linet_tian", moment_view)[0]
+        lo, hi = moment.reach(system, "\\rho")
+        v.slice(moment, [fmap(np.zeros(2), np.array([lo, hi]))])
+        v.set(restriction=f"The plane of $t$ and $\\rho$ at {'$\\psi = 0$' if vid == 'positive' else '$z = 0$'}, "
+                          "$\\phi = 0$ only, totally geodesic, each point in the diagram a single event.",
+              settings=("$\\Lambda = 1/3$, $\\sigma = 1/4$, $B = C = 1$, $\\ell = 1/\\sqrt{3\\Lambda}$." if vid == "positive"
+                        else "$\\Lambda = -1/3$, $\\sigma = 0$, $C = 1$, $\\ell = 1/\\sqrt{-3\\Lambda}$."))
+        views.append(v)
+    return views
+
+
 # ---------------------------------------------------------------- the topological star
 
 class TopologicalStringTower(Tower):
@@ -27400,6 +27511,7 @@ DRAWN = {
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
+    "linet_tian": linet_tian,
     "lewis": lewis,
     "kaluza_klein_monopole": kaluza_klein_monopole,
     "kaluza_klein_black_hole": kaluza_klein_black_hole,
@@ -31484,6 +31596,14 @@ CAPTIONS = {
         "timelike singularity with no horizon. The angular momentum $j$ enters only through $d\\phi$, so the "
         "triangle is that of the cylinder at rest, and the closed timelike curves inside $r = \\ell$ run round the "
         "axis, across this plane.",
+    ],
+    ("linet_tian", "positive"): [
+        "The plane of $t$ and $\\rho$ of the member $\\sigma = 1/4$ with $\\Lambda > 0$, a strip between the singular "
+        "axis and the regular far axis, which light crosses in $ct = 4.59\\,\\ell$.",
+    ],
+    ("linet_tian", "negative"): [
+        "The plane of $t$ and $\\rho$ of Bonnor's universe, $\\sigma = 0$ with $\\Lambda < 0$, a strip from the regular "
+        "axis to the conformal boundary, which light reaches in $ct = 4.21\\,\\ell$.",
     ],
     ("levi_civita", "weyl"): [
         "The half plane of fixed $\\phi$ and $z$ of Levi-Civita's cylinder ($\\sigma = 1/4$), each point in the "

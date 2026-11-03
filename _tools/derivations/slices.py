@@ -3570,6 +3570,18 @@ FLAT = {
     ("lewis", "canonical", "radial"): lambda: one("lewis", lambda m: along(0.0, *m.reach("canonical", "r"))),
     **{("lewis", system, view): lambda r=r: one("lewis", _lewis_cylinder(r))
        for system, view, r in (("canonical", "outside", 1.5), ("lewis", "between", 2.0), ("lewis", "beyond", 6.0))},
+    # Linet and Tian's moments t = 0, each read in its proper distance chart: along rho there, along Gleiser's
+    # y = 3 sin^2(rho/2) at Lambda = 1/3 and along Sarioglu and Tekin's r = cosh^(2/3)(rho/2) at L = 3, r_0 = 1.
+    ("linet_tian", "toroidal", "radial"): lambda: one(
+        "linet_tian", lambda m: along(0.0, *m.reach("toroidal", "\\rho")), view_id="positive"),
+    ("linet_tian", "gleiser", "radial"): lambda: one(
+        "linet_tian", lambda m: along(0.0, *(3 * math.sin(x / 2) ** 2 for x in m.reach("toroidal", "\\rho"))),
+        view_id="positive"),
+    ("linet_tian", "cylindrical", "radial"): lambda: one(
+        "linet_tian", lambda m: along(0.0, *m.reach("cylindrical", "\\rho")), view_id="negative"),
+    ("linet_tian", "sarioglu_tekin", "radial"): lambda: one(
+        "linet_tian", lambda m: along(0.0, *(math.cosh(x / 2) ** (2 / 3) for x in m.reach("cylindrical", "\\rho"))),
+        view_id="negative"),
     ("levi_civita", "weyl", "radial"): lambda: one("levi_civita", lambda m: along(0.0, *m.reach("weyl", "\\rho"))),
     ("levi_civita", "kasner", "radial"): lambda: one(
         "levi_civita", lambda m: along(0.0, *(levi_civita_r(x) for x in m.reach("weyl", "\\rho")))),

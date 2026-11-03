@@ -15032,6 +15032,72 @@ def ellis_bronnikov(ck, src):
     }]
 
 
+# ---------------------------------------------------------------- Linet and Tian's cylinder
+
+def linet_tian(ck, src):
+    """The Kretschmann scalar of the two members the other drawings draw, against the proper distance rho from
+    the axis, in the unit ell = 1/sqrt(3|Lambda|); the scalars depend on rho alone.
+
+    Lambda > 0, the toroidal chart at sigma = 1/4 (p_0 = p_2 = 2/3, p_3 = -1/3), from rho = 0.2 to 3.1 on a
+    logarithmic scale from 10^-1 to 10^4: K diverges toward the singular axis and falls to the finite 4 Lambda^2
+    at the far axis rho = pi, where the circles of psi close. Lambda < 0, the cylindrical chart at sigma = 0,
+    Bonnor's universe, from the axis to rho = 6 on a linear scale from 0.25 to 0.5: K falls from 4 Lambda^2 on the
+    regular axis toward 8 Lambda^2/3, the value of anti-de Sitter space, which it never reaches. Both published
+    Ricci scalars are 4 Lambda. Every sample is held in sixty digits to the stored scalar, and to staying above
+    8 Lambda^2/3 and inside its scale."""
+    views = []
+    for vid, system, params, lo, hi, scale, label, aspect in (
+            ("positive", "toroidal", {"Lambda": 1 / 3, "B": 1.0, "C": 1.0, "p_0": 2 / 3, "p_2": 2 / 3, "p_3": -1 / 3},
+             0.2, 3.1, {"kind": "log", "from": 1e-1, "to": 1e4}, "$\\Lambda > 0$", 1.25),
+            ("negative", "cylindrical", {"Lambda": -1 / 3, "C": 1.0, "p_0": 0.0, "p_2": 1.0, "p_3": 0.0},
+             0.05, 6.0, {"kind": "linear", "from": 0.25, "to": 0.5}, "$\\Lambda < 0$", 1.25)):
+        name = f"linet_tian/{system}"
+        x_axis = axis("$\\rho/\\ell$", lo, hi)
+        panels = [{"id": "K", "name": "$K\\ell^4$", "aspect": aspect, "scale": scale, "ticks": value_ticks(scale)}]
+        shape_checks(ck, name, [aspect])
+        K = nr_published(src, "linet_tian", system, "kretschmann", ["rho"], list(params))
+        R = nr_published(src, "linet_tian", system, "ricci_scalar", ["rho"], list(params))
+        values = list(params.values())
+        xs = np.linspace(max(lo, 1e-3), hi, SAMPLES)
+        sampled_K = K(xs, *values)
+        floor = 8 * params["Lambda"] ** 2 / 3
+        ck(f"{name} R is 4 Lambda", abs(float(R.exact([1.0] + values)) - 4 * params["Lambda"]) < 1e-12)
+        ck(f"{name} K stays above 8 Lambda^2/3, the value of a space of constant curvature",
+           np.all(sampled_K > floor), f"least {np.min(sampled_K):.8g} against {floor:.8g}")
+        up, down = beyond(K, x_axis, scale, values)
+        ck(f"{name} K stays inside its panel", not up and not down)
+        if vid == "positive":
+            ck(f"{name} K diverges toward the axis",
+               float(K.exact([0.01] + values)) > 100 * float(K.exact([0.1] + values)) > 0)
+            # The stored form subtracts two terms that grow as 1/cos^4(rho/2) toward the far axis, so it is read
+            # where they are still small against the digits it keeps.
+            far = float(K.exact([math.pi - 1e-2] + values))
+            ck(f"{name} K tends to the finite 4 Lambda^2 at the far axis", abs(far - 4 / 9) < 1e-4, f"{far:.10g}")
+            ck(f"{name} K falls outward", np.all(np.diff(sampled_K) < 0))
+        else:
+            ck(f"{name} K on the regular axis is 4 Lambda^2", abs(float(K.exact([1e-8] + values)) - 4 / 9) < 1e-9)
+            ck(f"{name} K falls outward toward 8 Lambda^2/3",
+               np.all(np.diff(sampled_K) < 0) and abs(float(K.exact([40.0] + values)) - floor) < 1e-9)
+        curves = line_curves(ck, name, "K", "K", K, "\\rho", x_axis, scale, PLOT_W / aspect, params)
+        if vid == "positive":
+            caption = ("The Kretschmann scalar $K$ of the member $\\sigma = 1/4$ with $\\Lambda > 0$ against $\\rho$, "
+                       "diverging toward the singular axis and falling to $4\\Lambda^2$ at the far axis "
+                       "$\\rho = \\pi\\ell$; $R = 4\\Lambda$.")
+            clip = "We draw $K\\ell^4$ on a logarithmic scale from $10^{-1}$ to $10^4$; every value drawn lies within it."
+            settings = "$\\sigma = 1/4$, $B = C = 1$, $\\ell = 1/\\sqrt{3\\Lambda}$."
+        else:
+            caption = ("The Kretschmann scalar $K$ of Bonnor's universe, $\\sigma = 0$ with $\\Lambda < 0$, against "
+                       "$\\rho$, falling from $4\\Lambda^2$ on the regular axis toward $8\\Lambda^2/3$; $R = 4\\Lambda$.")
+            clip = "We draw $K\\ell^4$ on a linear scale from $0.25$ to $0.5$; every value drawn lies within it."
+            settings = "$\\sigma = 0$, $C = 1$, $\\ell = 1/\\sqrt{-3\\Lambda}$."
+        views.append({
+            "id": vid, "system": system, "label": label, "kind": "line", "x": x_axis, "panels": panels,
+            "curves": curves, "marks": [], "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
+            "caption": [caption], "settings": settings, "clip": clip,
+        })
+    return views
+
+
 # ---------------------------------------------------------------- the exponential metric of Papapetrou and Yilmaz
 
 EM_REACH = 6                      # the plot runs from r = 0 to r = 6m in the isotropic chart
@@ -18370,6 +18436,7 @@ DRAWN = {
     "kastor_traschen": kastor_traschen,
     "kiselev": kiselev,
     "levi_civita": levi_civita,
+    "linet_tian": linet_tian,
     "mass_inflation": mass_inflation,
     "majumdar_papapetrou": majumdar_papapetrou,
     "mcvittie": mcvittie,

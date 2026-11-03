@@ -374,6 +374,13 @@ NHEK_CONE = "future cone of no angular momentum"
 # coordinates, which is the point (2/3, 2/3, -1/3) of Kasner's circle, with ell = (3/4)^(2/3).
 LC_WEYL = {"sigma": "1/4", "C": 1}
 LC_KASNER = {"p_0": "2/3", "p_2": "2/3", "p_3": "-1/3", "ell": "(3/4)**(2/3)"}
+# Linet and Tian's cylinder, every length in ell = 1/sqrt(3|Lambda|): with Lambda > 0 at sigma = 1/4, a member of
+# type D whose far end rho = pi ell is a regular axis, read in the toroidal and Gleiser's charts; with Lambda < 0 at
+# sigma = 0, Bonnor's universe, read in the cylindrical and Sarioglu and Tekin's charts, where L = 3 ell.
+LT_POSITIVE = {"Lambda": "1/3", "B": 1, "C": 1, "p_0": "2/3", "p_2": "2/3", "p_3": "-1/3"}
+LT_GLEISER = {"Lambda": "1/3", "C": 1, "p_0": "2/3", "p_2": "2/3", "p_3": "-1/3"}
+LT_NEGATIVE = {"Lambda": "-1/3", "C": 1, "p_0": 0, "p_2": 1, "p_3": 0}
+LT_ST = {"L": 3, "r_0": 1, "C": 1, "p_0": 0, "p_2": 1, "p_3": 0}
 # Lewis's cylinders. The Weyl class is drawn at n = 1/2, sigma = 1/8, in Lewis's chart with
 # a = 4/9, b = 3 ell/2 and q = 1/9, which the canonical chart's alpha = 1 and j = ell/8 are: the
 # circle r = ell is null in both, and Lewis's dt is spacelike beyond r = 4 ell. The Lewis class is
@@ -5402,6 +5409,16 @@ DIAGRAMS = [
             "$\\rho$", "$ct$", LC_WEYL, {"phi": "0", "z": "0"}),
     Diagram("levi_civita", "kasner", "radial", "$t$ and $r$", ("t", "r"), (0, 4, -2, 2),
             "$r$", "$ct$", LC_KASNER, {"phi": "0", "z": "0"}),
+    # Linet and Tian's cylinder at sigma = 1/4 with Lambda > 0, from the singular axis to the far axis rho = pi,
+    # where the circles of psi close, and at sigma = 0 with Lambda < 0, Bonnor's universe, from its regular axis.
+    Diagram("linet_tian", "toroidal", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, math.pi, -math.pi / 2, math.pi / 2),
+            "$\\rho$", "$ct$", LT_POSITIVE, {"psi": "0", "phi": "0"}),
+    Diagram("linet_tian", "gleiser", "radial", "$t$ and $y$", ("t", "y"), (0, 3, -1.5, 1.5),
+            "$y$", "$ct$", LT_GLEISER, {"z": "0", "phi": "0"}),
+    Diagram("linet_tian", "cylindrical", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 6, -3, 3),
+            "$\\rho$", "$ct$", LT_NEGATIVE, {"z": "0", "phi": "0"}),
+    Diagram("linet_tian", "sarioglu_tekin", "radial", "$t$ and $r$", ("t", "r"), (1, 5, -2, 2),
+            "$r$", "$ct$", LT_ST, {"z": "0", "phi": "0"}),
     # Lewis's cylinders: the canonical chart's plane of t and r, which holds its radial light rays as
     # Levi-Civita's does, and in every chart the cylinders of t and phi at one r, unrolled, with phi
     # scaled by r over the chart's unit of length. The time function is the static time t + C phi
@@ -12503,6 +12520,23 @@ CAPTIONS = {
         "cones that close toward the particle and open past 45° beyond $x = \\sqrt{2}\\,d$.",
         "Far from both particles $\\Omega$ falls as $d/|x|$, the conformal factor of one particle with "
         "$\\alpha = \\alpha_1 + \\alpha_2 - 1 = 1/2$, so the two masses add.",
+    ],
+    ("linet_tian", "toroidal", "radial"): [
+        "The plane of $t$ and $\\rho$ at $\\psi = 0$, $\\phi = 0$ of the member $\\sigma = 1/4$, its rays null geodesics, "
+        "from the singular axis to the far axis $\\rho = \\pi$, where the circles of $\\psi$ close and a ray passes on "
+        "to $\\psi = \\pi$.",
+    ],
+    ("linet_tian", "gleiser", "radial"): [
+        "The plane of $t$ and $y$ at $z = 0$, $\\phi = 0$ of the member $\\sigma = 1/4$, the toroidal chart's plane with "
+        "$y = 3\\sin^2(\\rho/2)$, from the singular axis $y = 0$ to the far axis $y = 3$.",
+    ],
+    ("linet_tian", "cylindrical", "radial"): [
+        "The plane of $t$ and $\\rho$ at $z = 0$, $\\phi = 0$ of Bonnor's universe, $\\sigma = 0$, its rays null "
+        "geodesics, $c\\,dt/d\\rho = \\pm\\cosh^{-2/3}(\\rho/2)$, which flatten far from the regular axis.",
+    ],
+    ("linet_tian", "sarioglu_tekin", "radial"): [
+        "The plane of $t$ and $r$ at $z = 0$, $\\phi = 0$ of Bonnor's universe, $\\sigma = 0$, the cylindrical chart's "
+        "plane with $r = \\cosh^{2/3}(\\rho/2)$, its rays vertical at the regular axis $r = r_0$ and flatter far out.",
     ],
     ("levi_civita", "weyl", "radial"): [
         "The plane of $t$ and $\\rho$ ($\\phi = 0$, $z = 0$) of Levi-Civita's cylinder ($\\sigma = 1/4$). The metric "

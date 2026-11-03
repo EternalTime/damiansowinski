@@ -15061,6 +15061,91 @@ def levi_civita(ck, src):
                         "flat space carries the slice on to the axis."])]
 
 
+def linet_tian(ck, src):
+    """Two moments t = 0 of Linet and Tian's cylinder, each the surface of rho and phi, in the unit of
+    length ell = 1/sqrt(3|Lambda|), with the conicities 1.
+
+    Lambda > 0, the toroidal chart at psi = 0 and sigma = 1/4, p_0 = p_2 = 2/3 and p_3 = -1/3: g_rhorho = 1
+    and the circles have the radius (1 + P^2/4)^{-1/3} P^{2/3} = (2 sin(rho/2))^{2/3}, which grows at
+    (2/3) cos(rho/2)/(2 sin(rho/2))^{1/3} times the distance out to them. That is faster than the distance
+    inside rho_0 = 0.288, where it equals 1, and no surface of revolution in flat space carries the slice
+    on to the singular axis; beyond rho_0 the surface is a horn that turns into a tube of radius 2^{2/3},
+    which it reaches with a vertical tangent at rho = pi, the far axis, where the circles of psi close and
+    the moment runs on to psi = pi. The drawing stops at rho = 3.1.
+
+    Lambda < 0, the cylindrical chart at z = 0 and sigma = 0, p_0 = p_3 = 0 and p_2 = 1, Bonnor's universe:
+    the circles have the radius (1 - P^2/4)^{-1/3} P = 2 sinh(rho/2) cosh^{-1/3}(rho/2), which grows at
+    (2 cosh^2 + 1)/(3 cosh^{4/3}) of rho/2, 1 at the regular axis and more at every rho > 0, which is
+    checked, so the surface is drawn in three dimensional Minkowski space, as the anti-de Sitter soliton's
+    is, from the axis to rho = 6, which is 2L with L = 3 ell."""
+    views = []
+    top = 3.1
+    sl = Slice(src, "linet_tian", "toroidal", "\\rho", "\\phi", {"t": 0, "psi": 0}, nr.LT_POSITIVE)
+    stop = float(sp.nsolve(sl.defect, sl.x, 0.29))
+    ck.add("Linet-Tian, Lambda > 0: the circles grow as fast as the distance at (2/3)cos(rho/2) = (2 sin(rho/2))^(1/3)",
+           abs(2 / 3 * math.cos(stop / 2) - (2 * math.sin(stop / 2)) ** (1 / 3)), 1e-12)
+    ck.stops("Linet-Tian, Lambda > 0, inside rho_0", sl, np.geomspace(1e-5, stop, 202)[:-1])
+    radius = lambda r: (2 * np.sin(np.asarray(r, dtype=float) / 2)) ** (2 / 3)
+    size = 2 * float(radius(np.pi))
+    horn = Piece("positive", "sheet", sl, stop, top, 0.0, 1,
+                 (("stops", "the circles grow faster than the distance out to them, and nothing in flat space "
+                            "carries the slice on toward the singular axis"),
+                  ("edge", "the tube runs on to the far axis $\\rho = \\pi\\ell$, where the circles of $\\psi$ close")),
+                 [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)],
+                 size, digits=LORENTZ_DIGITS)
+    ck.isometry("Linet-Tian, Lambda > 0, the surface of rho and phi", horn)
+    ck.radius("Linet-Tian, Lambda > 0, the circle's radius (2 sin(rho/2))^(2/3)", horn, radius, size)
+    surface = Surface([horn])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *horn.at(stop), "$\\rho = 0.29\\,\\ell$", dx=10)
+    ring_label(fig, [0, 0, 0], *horn.at(1.0), "$\\rho = \\ell$", dx=10)
+    ring_label(fig, [0, 0, 0], *horn.at(top), "$3.1\\,\\ell$")
+    fig.legend("fill", "cover", "the surface of $\\rho$ and $\\phi$ at $t = 0$")
+    fig.legend("line", "r", "$\\rho$ at $\\ell$, $2\\ell$, $3\\ell$, and $3.1\\,\\ell$")
+    fig.legend("line", "chartedge", "$\\rho = 0.29\\,\\ell$, where it stops")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("positive", "$\\Lambda > 0$", "$\\ell$", [surface], fig.done(),
+                      settings="$\\sigma = 1/4$, $B = C = 1$, $\\ell = 1/\\sqrt{3\\Lambda}$.",
+                      stops=["Inside $\\rho = 0.29\\,\\ell$ the circles grow faster than the distance out to them, "
+                             "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution "
+                             "in flat space carries the slice on to the axis."]))
+
+    name = "Linet-Tian, Lambda < 0, Bonnor's universe"
+    sl = Slice(src, "linet_tian", "cylindrical", "\\rho", "\\phi", {"t": 0, "z": 0}, nr.LT_NEGATIVE, space="minkowski")
+    ck.stops(f"{name}, the surface of rho and phi in flat space", sl, np.linspace(1e-3, 12, 400))
+
+    def ring(x):
+        x = np.asarray(x, dtype=float)
+        return 2 * np.sinh(x / 2) / np.cosh(x / 2) ** (1 / 3)
+    top = 6.0
+    size = 2 * float(ring(top))
+    sheet = Piece("negative", "sheet", sl, 0.0, top, 0.0, 1,
+                  (("axis", "the axis $\\rho = 0$, regular, where the circles of $\\phi$ shrink to a point"),
+                   ("edge", "the sheet runs on toward the light cone, to $\\rho \\to \\infty$")),
+                  [(x, "r", None) for x in (1.5, 3.0, 4.5, top)], size)
+    ck.isometry(f"{name}, the sheet", sheet)
+    ck.radius(f"{name}: the radius 2 sinh(rho/2) cosh^(-1/3)(rho/2)", sheet, ring, size)
+    xs = np.linspace(0.05, 10, 300)
+    h = 1e-4
+    second = (ring(xs + h) - 2 * ring(xs) + ring(xs - h)) / h ** 2
+    ck.add(f"{name}: the curvature -R''/R is -tanh^2(rho/2)/(9 ell^2), flat at the axis",
+           float(np.max(np.abs(-second / ring(xs) + np.tanh(xs / 2) ** 2 / 9))), 1e-6)
+    surface = Surface([sheet])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *sheet.at(3.0), "$\\rho = 3\\ell$")
+    ring_label(fig, [0, 0, 0], *sheet.at(top), "$6\\ell$")
+    fig.legend("fill", "cover", "the surface of $\\rho$ and $\\phi$ at $t = 0$")
+    fig.legend("line", "r", "$\\rho$ every $1.5\\,\\ell$ to $6\\ell$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
+    views.append(view("negative", "$\\Lambda < 0$", "$\\ell$", [surface], fig.done(),
+                      settings="$\\sigma = 0$, $C = 1$, $\\ell = 1/\\sqrt{-3\\Lambda}$; lengths measured with "
+                               "$dX^2 + dY^2 - dZ^2$.",
+                      stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, "
+                             "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of "
+                             "revolution in flat space carries the surface; Minkowski space carries it."]))
+    return views
+
+
 def curzon_chazy(ck, src):
     """The plane z = 0 of the Curzon-Chazy particle at t = 0 in Weyl's chart, m = 1.
 
@@ -18547,6 +18632,7 @@ DRAWN = {
     "einstein_rosen_bridge": einstein_rosen_bridge,
     "simpson_visser": simpson_visser,
     "levi_civita": levi_civita,
+    "linet_tian": linet_tian,
     "lewis": lewis,
     "kantowski_sachs": kantowski_sachs,
     "curzon_chazy": curzon_chazy,
@@ -20049,6 +20135,14 @@ CAPTIONS = {
         "faster than the distance out to them, and the surface bends over until it lies level at "
         "$r = 1.47\\,\\ell$. Beyond that circle it is Levi-Civita's horn, steeper at every circle, and both parts "
         "lie level where they meet, with one tangent plane.",
+    ],
+    ("linet_tian", "positive"): [
+        "The member $\\sigma = 1/4$ at one moment ($\\psi = 0$): a horn of circles of radius "
+        "$(2\\sin(\\rho/2\\ell))^{2/3}\\ell$ widening into a tube at the far axis $\\rho = \\pi\\ell$.",
+    ],
+    ("linet_tian", "negative"): [
+        "Bonnor's universe, $\\sigma = 0$, at one moment ($z = 0$), in Minkowski space: circles of radius "
+        "$2\\sinh(\\rho/2\\ell)\\cosh^{-1/3}(\\rho/2\\ell)\\,\\ell$ about a regular axis.",
     ],
     ("levi_civita", "field"): [
         "The plane $z = 0$ around Levi-Civita's line of mass at one moment ($\\sigma = 1/4$, $C = 1$), drawn as a "
