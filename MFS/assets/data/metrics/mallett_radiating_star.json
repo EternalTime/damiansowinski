@@ -74,7 +74,11 @@
         "u \\in (-\\infty, \\infty)",
         "r \\in (0, \\infty)",
         "\\theta \\in [0, \\pi]",
-        "\\phi \\in [0, 2\\pi)"
+        "\\phi \\in [0, 2\\pi)",
+        "\\Lambda > 0,\\quad m \\ge 0",
+        "0 < 9\\Lambda m^2 < 1 \\;\\text{(two positive marginal radii)}",
+        "9\\Lambda m^2 = 1 \\;\\text{(one double positive radius)}",
+        "9\\Lambda m^2 > 1 \\;\\text{(no positive marginal radius)}"
       ],
       "parameters": [
         {
@@ -1855,7 +1859,11 @@
         "v \\in (-\\infty, \\infty)",
         "r \\in (0, \\infty)",
         "\\theta \\in [0, \\pi]",
-        "\\phi \\in [0, 2\\pi)"
+        "\\phi \\in [0, 2\\pi)",
+        "\\Lambda > 0,\\quad m \\ge 0",
+        "0 < 9\\Lambda m^2 < 1 \\;\\text{(two positive marginal radii)}",
+        "9\\Lambda m^2 = 1 \\;\\text{(one double positive radius)}",
+        "9\\Lambda m^2 > 1 \\;\\text{(no positive marginal radius)}"
       ],
       "parameters": [
         {
