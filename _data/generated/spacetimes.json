@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 244,
+  "count": 245,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -27608,6 +27608,11 @@
           "id": "kiselev",
           "kind": "family",
           "text": "A black hole with a power of $r$ added to Schwarzschild's metric function for matter around it. At $w = -1/3$ the power is zero and the term is the monopole's constant deficit [kiselev2003, visser2020]."
+        },
+        {
+          "id": "stringy_cosmic_strings",
+          "kind": "family",
+          "text": "A straight string with a scalar field for the shape of a hidden torus and finite energy per unit length [vafa1996ftheory]."
         }
       ],
       "references": [
@@ -27626,7 +27631,8 @@
         "pen1994",
         "pen1997",
         "kiselev2003",
-        "visser2020"
+        "visser2020",
+        "vafa1996ftheory"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/global_monopole.json",
@@ -35223,6 +35229,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "A charged black hole in five dimensions with a compact spatial circle and a 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "stringy_cosmic_strings",
+          "kind": "family",
+          "text": "A straight string whose hidden torus changes shape across space [vafa1996ftheory]."
         }
       ],
       "references": [
@@ -35255,7 +35266,8 @@
         "lake2006static",
         "sen1997enhanced",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "vafa1996ftheory"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -59192,6 +59204,11 @@
           "id": "charged_three_dimensions",
           "kind": "family",
           "text": "Give the particle a charge, and its electric field, spread over the whole plane, curves spacetime everywhere around it [gott1986charged]."
+        },
+        {
+          "id": "stringy_cosmic_strings",
+          "kind": "family",
+          "text": "Straight strings whose transverse space can close into a sphere as the particles close their space [gibbonsgreenperry1996, deser1984]."
         }
       ],
       "references": [
@@ -59218,7 +59235,8 @@
         "emparan2020qbtz",
         "vuorio1985",
         "louko_marolf1994",
-        "gott1986charged"
+        "gott1986charged",
+        "gibbonsgreenperry1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -71714,6 +71732,177 @@
       ]
     },
     {
+      "id": "stringy_cosmic_strings",
+      "name": "Stringy Cosmic Strings",
+      "short_name": "Stringy Cosmic Strings",
+      "description": "A straight string with finite energy per unit length, a curved transverse space, and a hidden torus whose shape changes with position around it.",
+      "tags": [
+        "topological defect",
+        "angular deficit",
+        "compact dimension",
+        "string theory",
+        "scalar field",
+        "static",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We take components in $x^0=ct$, and use the length $\\ell$ as the unit in the drawings.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "family",
+          "text": "The exterior of the Vilenkin-Gott string is a flat cone, and the stringy cosmic string has a curved transverse space that approaches a cone far away [gott1985, gibbonsgreenperry1996]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "A point particle removes a wedge from a flat plane, and enough particles close space on itself [deser1984, gibbonsgreenperry1996]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "family",
+          "text": "A global monopole's scalar field spreads its energy away from its core, and the stringy cosmic string also carries a scalar field across its transverse space [barriola1989, vafa1996ftheory]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "A compact direction changes over space around the Kaluza-Klein monopole, and a compact torus changes shape around the stringy cosmic string [sorkin1983, vafa1996ftheory]."
+        }
+      ],
+      "references": [
+        "harveyroyston2008",
+        "greene1990stringy",
+        "vafa1996ftheory",
+        "steinschabesburd1988",
+        "gibbonsgreenperry1996",
+        "gott1985",
+        "deser1984",
+        "barriola1989",
+        "sorkin1983"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stringy_cosmic_strings.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian transverse coordinates",
+          "coordinates": [
+            "t",
+            "w",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "H = H(x,y)",
+              "description": "Positive transverse factor fixed by the torus shape and the string positions."
+            }
+          ],
+          "convention": "We use $(t,w,x,y)$ with $x$ and $y$ across the string and $z=x+iy$. Six coincident strings have constant shape in the spacetime and embedding diagrams.",
+          "line_element": "ds^2 = -c^2dt^2 + dw^2 + H\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "H"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(\\partial_x H\\right)^2 + \\left(\\partial_y H\\right)^2 - H\\left(\\partial_x^2 H + \\partial_y^2 H\\right)}{H^3}",
+          "kretschmann": "K = \\dfrac{\\left(H\\left(\\partial_x^2 H + \\partial_y^2 H\\right) - \\left(\\partial_x H\\right)^2 - \\left(\\partial_y H\\right)^2\\right)^2}{H^6}"
+        },
+        {
+          "id": "polar",
+          "name": "Polar transverse coordinates",
+          "coordinates": [
+            "t",
+            "w",
+            "r",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "H = H(r,\\phi)",
+              "description": "Positive transverse factor fixed by the torus shape and the string positions."
+            }
+          ],
+          "convention": "We use $(t,w,r,\\phi)$ with $z=re^{i\\phi}$ across the string. Six coincident strings have constant shape in the spacetime and embedding diagrams.",
+          "line_element": "ds^2 = -c^2dt^2 + dw^2 + H\\left(dr^2 + r^2d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "H"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "H\\,r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r^2\\left(\\partial_r H\\right)^2 + \\left(\\partial_\\phi H\\right)^2 - H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right)}{H^3\\,r^2}",
+          "kretschmann": "K = \\dfrac{\\left(H\\left(r^2\\,\\partial_r^2 H + r\\,\\partial_r H + \\partial_\\phi^2 H\\right) - r^2\\left(\\partial_r H\\right)^2 - \\left(\\partial_\\phi H\\right)^2\\right)^2}{H^6\\,r^4}"
+        }
+      ]
+    },
+    {
       "id": "sultana_dyer",
       "name": "Sultana-Dyer Black Hole in an Expanding Universe",
       "short_name": "Sultana-Dyer",
@@ -79960,6 +80149,11 @@
           "id": "linet_tian",
           "kind": "generalisation",
           "text": "A string in a universe with a cosmological constant. Bernard Linet and Qingjun Tian each found the static cylindrical vacuum with $\\Lambda$ in 1986 to describe the field outside one [zofka2008]."
+        },
+        {
+          "id": "stringy_cosmic_strings",
+          "kind": "family",
+          "text": "A string whose hidden torus changes shape across space. Far from a single string its transverse space approaches a cone with deficit angle $\\pi/6$ [gibbonsgreenperry1996]."
         }
       ],
       "references": [
@@ -79991,7 +80185,8 @@
         "podolsky2000snapping",
         "sen1999superconducting",
         "gurtug_sakalli2003",
-        "zofka2008"
+        "zofka2008",
+        "gibbonsgreenperry1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
