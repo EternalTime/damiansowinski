@@ -3179,10 +3179,10 @@ BTZ_SHOCK_INPUT = ("$\\delta(U)$ drawn as the pulse $e^{-U^2/w^2}/(w\\sqrt{\\pi}
                    "null particles of that thickness in $U$ carrying the same shift $\\alpha$.")
 
 DIAGRAMS = [
-    Diagram("ori_piran", "comoving", "radial", "$t$ and $r$", ("t", "r"), (0, 0.6, -1, 0),
+    Diagram("ori_piran", "comoving", "radial", "$t$ and $r$", ("t", "r"), (0, 0.7, -1.2, 0),
             "$r/\\ell$", "$t/\\ell$", {}, EQUATOR, areal=True, functions=OP_COMOVING, input=OP_INPUT, kretschmann=False,
             curves=(("mark", f"{OP_SONIC}*(-t)", OP_SONIC_LEGEND), ("past", f"{OP_NULL}*(-t)", OP_NULL_LEGEND))),
-    Diagram("ori_piran", "zooming", "radial", "$\\tau$ and $z$", ("\\tau", "z"), (0, 0.3, 0, 0.3),
+    Diagram("ori_piran", "zooming", "radial", "$\\tau$ and $z$", ("\\tau", "z"), (0, 0.3, -0.1, 0.2),
             "$z$", "$\\tau$", {"ell": 1}, EQUATOR, areal=True, tau="tau", functions=OP_ZOOMING, input=OP_INPUT,
             kretschmann=False,
             lines=(("mark", "r", str(OP_SONIC), OP_SONIC_LEGEND), ("past", "r", str(OP_NULL), OP_NULL_LEGEND))),
