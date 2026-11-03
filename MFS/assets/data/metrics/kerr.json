@@ -260,7 +260,7 @@
     {
       "id": "string_cylindrical_waves",
       "kind": "dual",
-      "text": "A complex transformation of Kerr's metric produces Xanthopoulos's cylindrical waves around a string [xanthopoulos1986rotating]."
+      "text": "A complex transformation of the Kerr metric produces Xanthopoulos's cylindrical waves around a string [xanthopoulos1986rotating]."
     }
   ],
   "references": [
