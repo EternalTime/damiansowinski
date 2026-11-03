@@ -6346,21 +6346,31 @@ for _bt_side in ("inside", "outside"):
         Diagram("brown_teitelboim", "static_" + _bt_side, "radial", "$t$ and $r$", ("t", "r"),
                 (0, 1, -0.5, 0.5), "$r$", "$ct$", {"Lambda_" + _bt_suffix: "3/4" if _bt_inside else 3}, EQUATOR,
                 functions={"r_w": BT_WALL_STATIC[_bt_side]}, input=BT_INPUT, areal=True,
+                where=(BT_WALL_STATIC[_bt_side] + " - r") if _bt_inside else ("r - " + BT_WALL_STATIC[_bt_side]),
                 curves=(("shell", BT_WALL_STATIC[_bt_side], "the membrane"),)),
         Diagram("brown_teitelboim", "sliced_" + _bt_side, "radial", "$\\eta$ and $\\chi$", ("\\eta", "\\chi"),
                 (0, 2, -1, 1), "$\\chi$", "$\\tau$", {"ell_" + _bt_suffix: _bt_ell, "chi_" + _bt_suffix: _bt_chi},
                 EQUATOR, to_display=((0, 1), (0.5, 0)), tau="eta",
                 input=BT_INPUT + " The wall's proper time is $\\tau = \\eta/2$.",
+                where=(_bt_chi + " - chi") if _bt_inside else ("chi - " + _bt_chi),
                 lines=(("shell", "r", _bt_chi, "the membrane"),)),
         Diagram("brown_teitelboim", "flat_" + _bt_side, "radial", "$T$ and $\\rho$", ("T", "\\rho"),
                 (0, 2, -1, 1), "$\\rho$", "$T$", {"ell_" + _bt_suffix: _bt_ell}, EQUATOR,
                 tau="T", functions={"s_w": BT_WALL_FLAT[_bt_side]}, input=BT_INPUT,
+                where=(BT_WALL_FLAT[_bt_side] + " - rho") if _bt_inside else ("rho - " + BT_WALL_FLAT[_bt_side]),
                 curves=(("shell", BT_WALL_FLAT[_bt_side], "the membrane"),)),
         Diagram("brown_teitelboim", "conformal_" + _bt_side, "radial", "$\\zeta$ and $\\rho$", ("\\zeta", "\\rho"),
                 (0, 2, -2.1, -0.1), "$\\rho$", "$\\zeta$", {"ell_" + _bt_suffix: _bt_ell}, EQUATOR,
                 tau="zeta", functions={"s_w": BT_WALL_CONFORMAL[_bt_side]}, input=BT_INPUT,
+                where=(BT_WALL_CONFORMAL[_bt_side] + " - rho") if _bt_inside else ("rho - " + BT_WALL_CONFORMAL[_bt_side]),
                 curves=(("shell", BT_WALL_CONFORMAL[_bt_side], "the membrane"),)),
     ])
+
+
+DIAGRAMS.append(Diagram("brown_teitelboim", "radius_inside", "radial", "$\\tau$ and $r$", ("\\tau", "r"),
+                        (0, 1, -0.5, 0.5), "$r$", "$\\tau$", {"ell_i": 2, "R_0": "1/2"}, EQUATOR,
+                        tau="tau", where="cosh(2*tau)/2 - r", areal=True,
+                        curves=(("shell", "cosh(2*tau)/2", "the membrane"),)))
 
 
 # ---------------------------------------------------------------- the captions
@@ -6665,6 +6675,9 @@ def _lb_outside_caption(n, last):
 
 
 LB_CAPTIONS = {
+    ("brown_teitelboim", "radius_inside", "radial"): [
+        "The membrane radius against its proper time ($\\theta = \\pi/2$, $\\phi = 0$), with the interior."
+    ],
     ("stiff_fluid_universes", "areal", "tx"): [
         "Light rays across the symmetry planes ($a=b=1$, $\\ell=1$, $y=z=0$). The fluid moves toward decreasing $x$; its world lines obey $x=\\chi-t^2/2$. The singularity is $t=0$.",
     ],
