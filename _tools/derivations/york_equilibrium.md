@@ -17,7 +17,7 @@ The difference between Hochberg's preprint prose and its energy formulas is reco
 
 The chart printer holds $\mu$ and $\rho$ as functions while it forms the tensors, and truncates every result through $\epsilon^1$.
 Its point checks compare the mass and redshift derivatives with Page's stress as written by Taylor and Breen, and check the horizon integration constants and the matching of $\rho$ at the wall.
-The dedicated test reads the printed components, checks the zero-field Schwarzschild limit and the wall lapse, and independently checks Page's energy-density relation at four radii.
+The dedicated test reads the printed components, checks the zero-field Schwarzschild limit and the wall lapse, and checks the signs of the scalar mass and energy density near and far from the horizon.
 
 The drawings take $M=1$, $R=50M$ and $\epsilon=10^{-4}$.
 The cavity extends from $2M$ to its reflecting wall, farther out than York's characteristic wavelength, and the correction remains small there.
