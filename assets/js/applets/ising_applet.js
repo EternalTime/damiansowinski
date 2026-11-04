@@ -3,8 +3,8 @@
   const _c   = n => _cs.getPropertyValue(n).trim();
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
 
-  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
-  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [upR, upG, upB] = _rgb('--sunset-12');
+  const [downR, downG, downB] = _rgb('--plum');
 
   /* ── Simulation constants ── */
   const N  = 400;
@@ -19,7 +19,6 @@
   let lattice        = 'square';
   let J              = 1;
   let h              = 0;
-  let stagger        = false;
 
   /* exp(-dE/T) factorized: dE = 2*(m + h*s) with m = J*sum*s ∈ [-6, 6] */
   const expJ = new Float64Array(13);
@@ -68,11 +67,11 @@
     for (let row = 0; row < N; row++) {
       for (let col = 0; col < N; col++, k++, q += 4) {
         const raw  = spins[k];
-        const disp = stagger ? raw * (((row + col) & 1) ? -1 : 1) : raw;
+        const disp = J < 0 && lattice === 'square' ? raw * (((row + col) & 1) ? -1 : 1) : raw;
         const up   = disp === 1;
-        buf[q]     = up ? _TLR : _PDR;
-        buf[q + 1] = up ? _TLG : _PDG;
-        buf[q + 2] = up ? _TLB : _PDB;
+        buf[q]     = up ? upR : downR;
+        buf[q + 1] = up ? upG : downG;
+        buf[q + 2] = up ? upB : downB;
       }
     }
     offCtx.putImageData(imgData, 0, 0);
@@ -111,8 +110,8 @@
     const H  = y0 + dy * (N - 1) + 15;
     const cols = r => (tri && (r & 1)) ? N - 1 : N;
     const pos  = (r, c) => [x0 + a * c + ((tri && (r & 1)) ? a / 2 : 0), y0 + dy * r];
-    const line = (p, q) =>
-      `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" style="stroke: var(--border-mid); stroke-width: 1.5;"/>`;
+    const line = (p, q, central) =>
+      `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" style="stroke: var(${central ? '--coral' : '--dim'}); stroke-width: ${central ? 2.5 : 1.5};"/>`;
     const nbrs = tri
       ? [[2,1],[2,3],[1,1],[1,2],[3,1],[3,2]]
       : [[1,2],[3,2],[2,1],[2,3]];
@@ -120,21 +119,21 @@
     let bonds = '', nodes = '';
     for (let r = 0; r < N; r++) {
       for (let c = 0; c < cols(r); c++) {
-        if (c < cols(r) - 1) bonds += line(pos(r, c), pos(r, c + 1));
+        if (c < cols(r) - 1) bonds += line(pos(r, c), pos(r, c + 1), r === 2 && (c === 1 || c === 2));
         if (r < N - 1) {
           const targets = tri ? ((r & 1) ? [c, c + 1] : [c - 1, c]) : [c];
           targets.forEach(function (c2) {
-            if (c2 >= 0 && c2 < cols(r + 1)) bonds += line(pos(r, c), pos(r + 1, c2));
+            if (c2 >= 0 && c2 < cols(r + 1)) bonds += line(pos(r, c), pos(r + 1, c2), (r === 2 && c === 2) || (r + 1 === 2 && c2 === 2));
           });
         }
         const isCenter = r === 2 && c === 2;
         const isNbr    = nbrs.some(n => n[0] === r && n[1] === c);
-        const fill     = isCenter ? 'var(--pink-dark)' : isNbr ? 'var(--teal-light)' : 'var(--text-dim)';
+        const fill     = isCenter ? 'var(--hot)' : isNbr ? 'var(--sunset-12)' : 'var(--steel)';
         const [x, y]   = pos(r, c);
         nodes += `<circle cx="${x}" cy="${y}" r="${R}" style="fill: ${fill};"/>`;
       }
     }
-    const caption = tri ? 'Triangular &mdash; 6 neighbors' : 'Square &mdash; 4 neighbors';
+    const caption = tri ? 'Triangular - 6 neighbors' : 'Square - 4 neighbors';
     return `<figure><svg width="150" height="${H}" viewBox="0 0 150 ${H}" xmlns="http://www.w3.org/2000/svg">${bonds}${nodes}</svg><figcaption>${caption}</figcaption></figure>`;
   }
 
@@ -160,12 +159,6 @@
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
-        <div class="applet-shell-ctrl-title">Display</div>
-        <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn active" id="ising-btn-display" onclick="isingToggleDisplay()">Magnetization</button>
-        </div>
-      </div>
-      <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Initialise</div>
         <div class="applet-shell-btn-row">
           <button class="applet-shell-btn" onclick="isingHotStart()">Hot</button>
@@ -176,7 +169,7 @@
         <div class="applet-shell-ctrl-title">Temperature</div>
         <div class="applet-shell-slider-row">
           <span class="applet-shell-side">Cold</span>
-          <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.5">
+          <input type="range" id="ising-temp" min="0.5" max="5.0" step="0.05" value="2.3">
           <span class="applet-shell-side">Hot</span>
         </div>
       </div>
@@ -202,15 +195,15 @@
     `,
 
     docs: {
-      whatis: `In the beginning, there was a model. Wilhelm Lenz conceived it in 1920, pondering the mystery of ferromagnetism: the simplest possible magnet, a lattice of atomic moments — spins — each pointing up ($s_i = +1$) or down ($s_i = -1$), interacting only with its nearest neighbors [lenz1920]. The entire model is contained in a single energy function,
+      whatis: `In the beginning, there was a model. Wilhelm Lenz conceived it in 1920, pondering the mystery of ferromagnetism: the simplest possible magnet, a lattice of atomic moments, or spins, each pointing up ($s_i = +1$) or down ($s_i = -1$), interacting only with its nearest neighbors [lenz1920]. The entire model is contained in a single energy function,
 $$E = -J\\sum_{\\langle ij \\rangle} s_i s_j - h\\sum_i s_i,$$
-where the first sum runs over neighboring pairs and $h$ is an external magnetic field. For ferromagnetic coupling ($J>0$) neighbors lower the energy by aligning, while thermal fluctuations at temperature $T$ fight that order by flipping spins at random. The competition between the two is the entire story.¶Lenz handed the model to his doctoral student Ernst Ising, who solved the one-dimensional chain and found no phase transition at any finite temperature [ising1925]. Ising concluded — incorrectly — that the model had nothing to say about ferromagnetism in any dimension, and left research physics altogether. Peierls proved otherwise for two dimensions in 1936 [peierls1936]; Kramers and Wannier tickled the location of the critical point out of the model with a duality argument in 1941 [kramers1941]; and in 1944 Onsager solved the two-dimensional model exactly [onsager1944], a tour-de-force of mathematical magic confirming the transition at
+where the first sum runs over neighboring pairs and $h$ is an external magnetic field. For ferromagnetic coupling ($J>0$) neighbors lower the energy by aligning, while thermal fluctuations at temperature $T$ fight that order by flipping spins at random. The competition between the two is the entire story.¶Lenz handed the model to his doctoral student Ernst Ising, who solved the one-dimensional chain and found no phase transition at any finite temperature [ising1925]. Ising concluded, incorrectly, that the model could not explain ferromagnetism in three dimensions. Peierls gave a low-temperature argument for order in two dimensions in 1936 [peierls1936]. Kramers and Wannier tickled the location of the critical point out of the square lattice with a duality argument in 1941, assuming the transition exists and is unique [kramers1941]. And in 1944 Onsager found the partition function of the zero-field rectangular lattice exactly [onsager1944], a tour-de-force of mathematical magic. For the infinite square lattice with equal couplings, the transition is at
 $$k_B T_c = \\frac{2J}{\\ln(1+\\sqrt{2})} \\approx 2.269\\,J.$$
-Below $T_c$ the lattice magnetizes; above, order dissolves. Exactly at $T_c$ fluctuations exist on all scales — patches within patches within patches — a self-similarity that is the fingerprint of a continuous phase transition.¶The simulation evolves via single-spin-flip dynamics [glauber1963]: a random spin is selected, the energy change $\\Delta E$ of flipping it is computed, and the flip is accepted with probability $\\min(1, e^{-\\Delta E/k_B T})$. One sweep is one such attempt per site. This Markov chain satisfies detailed balance, so the lattice relaxes toward the Boltzmann distribution at temperature $T$.¶Antiferromagnetic coupling ($J<0$) prefers neighbors to anti-align, forming a checkerboard on the square lattice, invisible to the ordinary magnetization but revealed by its staggered counterpart. On the triangular lattice the checkerboard is impossible: three mutually neighboring spins cannot all anti-align. This frustration destroys the ordered phase entirely, as Wannier showed in 1950 [wannier1950]: the triangular antiferromagnet remains disordered at every temperature, with a macroscopic ground-state entropy.`,
+At zero field and below $T_c$, the infinite square lattice magnetizes; above, order dissolves. Exactly at $T_c$ fluctuations exist on all scales: patches within patches within patches, a self-similarity that is the fingerprint of a continuous phase transition. In this simulation, those scales end at the size of the lattice.¶Glauber studied single-spin-flip dynamics for the Ising chain in 1963 [glauber1963]. This simulation uses the Metropolis rule [metropolis1953]: a random spin is selected, the energy change $\\Delta E$ of flipping it is computed, and the flip is accepted with probability $\\min(1, e^{-\\frac{\\Delta E}{k_B T}})$. One sweep is one such attempt per site on average. At fixed $T>0$ and $h$, this Markov chain satisfies detailed balance and relaxes toward the Boltzmann distribution.¶Antiferromagnetic coupling ($J<0$) prefers neighbors to anti-align, forming a checkerboard on the square lattice, invisible to the ordinary magnetization but revealed by its staggered counterpart. On the triangular lattice the checkerboard is impossible: three mutually neighboring spins cannot all anti-align. At zero field, this frustration destroys long-range order at every positive temperature, as Wannier showed in 1950 [wannier1950]. A macroscopic ground-state entropy remains.`,
 
-      howto: `The canvas shows a $400 \\times 400$ lattice with periodic boundaries: teal pixels are spins up, pink are down.¶Lattice selects square (4 neighbors) or triangular (6 neighbors) connectivity:¶FIG::lattices¶Coupling switches $J$ between ferromagnetic and antiferromagnetic. Display toggles between magnetization (raw spins) and staggered magnetization, which multiplies spins by a checkerboard sign so antiferromagnetic order appears as solid domains. Initialise resets the lattice: Hot scrambles every spin at random, Cold aligns them all.¶Temperature runs the lattice from deep in the ordered phase to well above $T_c \\approx 2.269\\,J/k_B$; cool slowly through the transition to watch domains coarsen, or park at $T_c$ to see fluctuations on every scale. Speed sets the number of sweeps per animation frame. External Field applies $h$, biasing spins up or down; near $T_c$ even a small field tilts the balance decisively.`,
+      howto: `The canvas shows a $400 \\times 400$ lattice with periodic boundaries: each pixel is a spin pointing up or down.¶Lattice selects square (4 neighbors) or triangular (6 neighbors) connectivity:¶FIG::lattices¶Coupling switches $J$ between ferromagnetic and antiferromagnetic. Initialise resets the lattice: Hot scrambles every spin at random, Cold aligns them all.¶Temperature changes the balance between coupling and thermal fluctuations. For the square ferromagnet at zero field, $T_c \\approx \\frac{2.269\\,J}{k_B}$ in the infinite-lattice limit. Cool slowly through this region to watch domains coarsen, or park near $T_c$ to see fluctuations up to the size of the canvas. Speed sets the number of sweeps per animation frame. External Field applies $h$, biasing spins up or down; near $T_c$ even a small field tilts the balance decisively.`,
 
-      references: ['lenz1920', 'ising1925', 'peierls1936', 'kramers1941', 'onsager1944', 'wannier1950', 'glauber1963'],
+      references: ['lenz1920', 'ising1925', 'peierls1936', 'kramers1941', 'onsager1944', 'wannier1950', 'glauber1963', 'metropolis1953'],
 
       figures: { lattices: latticeFig(false) + latticeFig(true) },
     },
@@ -258,20 +251,6 @@ Below $T_c$ the lattice magnetizes; above, order dissolves. Exactly at $T_c$ flu
     document.getElementById('ising-btn-antiferro').classList.toggle('active', type === 'antiferro');
   };
 
-  window.isingToggleDisplay = function () {
-    stagger = !stagger;
-    const btn = document.getElementById('ising-btn-display');
-    if (stagger) {
-      btn.textContent = 'Staggered Magnetization';
-      btn.classList.remove('active');
-      btn.classList.add('active-pink');
-    } else {
-      btn.textContent = 'Magnetization';
-      btn.classList.remove('active-pink');
-      btn.classList.add('active');
-    }
-  };
-
   document.getElementById('ising-temp').addEventListener('input', function () {
     T = parseFloat(this.value); buildExpTable();
   });
@@ -279,7 +258,7 @@ Below $T_c$ the lattice magnetizes; above, order dissolves. Exactly at $T_c$ flu
     sweepsPerFrame = parseInt(this.value);
   });
   document.getElementById('ising-field').addEventListener('input', function () {
-    h = parseFloat(this.value);
+    h = parseFloat(this.value); buildExpTable();
   });
 
 })();

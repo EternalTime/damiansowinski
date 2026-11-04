@@ -75,3 +75,27 @@
   --amber-rgb:        249, 180, 80;
   --slider-track-rgb: 100, 120, 140;
 }
+
+/* Ising roles use these existing Physics+ art colors, copied from PhysicsPlus/colours.css. */
+:root {
+  --hot: #f66298;
+  --coral: #fe7d78;
+  --plum: #a225a2;
+  --steel: #4a73ad;
+  --dim: #846889;
+  --light: #cfc2b8;
+  --bright: #ffffff;
+  --ink: #160125;
+  --sunset-1: #375ec3;
+  --sunset-2: #3a43c0;
+  --sunset-3: #6b3ebe;
+  --sunset-4: #b43fc7;
+  --sunset-5: #d830a8;
+  --sunset-6: #e9429e;
+  --sunset-7: #ff80a1;
+  --sunset-8: #ff706f;
+  --sunset-9: #fb7a63;
+  --sunset-10: #ff9360;
+  --sunset-11: #fd963e;
+  --sunset-12: #ffa342;
+}
