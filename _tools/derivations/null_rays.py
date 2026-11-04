@@ -19410,5 +19410,9 @@ CLOSED_FORMS.update(_global_texture.null_forms())
 import wiggly_string_drawings as _wiggly_string_drawings
 _wiggly_string_drawings.register_null(sys.modules[__name__])
 
+import rotation_halts_drawings as _rotation_halts_drawings
+_rotation_halts_drawings.register_null(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())
