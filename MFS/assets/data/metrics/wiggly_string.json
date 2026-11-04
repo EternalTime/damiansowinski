@@ -1,0 +1,48 @@
+{
+  "id": "wiggly_string",
+  "name": "Vachaspati-Vilenkin Wiggly Cosmic String",
+  "short_name": "Wiggly Cosmic String",
+  "description": "The averaged gravitational field of a cosmic string carrying small waves. Its energy per length exceeds its tension, and the averaged geometry attracts matter initially at rest.",
+  "tags": [
+    "topological defect",
+    "cosmic string",
+    "angular deficit",
+    "cylindrical symmetry",
+    "axisymmetric",
+    "static",
+    "stationary",
+    "weak field",
+    "approximate solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use $G=c=1$, with energy per length $U$ and tension $T$ in geometrical units. The tensors are exact tensors of the truncated line element; the vacuum field equations hold through first order in $U$ and $T$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Small waves on a cosmic string change its averaged gravitational field. Tanmay Vachaspati and Alexander Vilenkin showed in 1991 that wakes behind wiggly strings could produce cosmic structure and large streaming velocities while preserving the near uniformity of the microwave background [vachaspativilenkin1991]. At distances large compared with the waves, the averaged string has an energy per length $U$ and a tension $T$, with $U>T$ [campsemparan2010]. These two quantities determine its gravitational field to first order in the gravitational coupling [campsemparan2010].¶A straight string has its energy per length equal to its tension. The exterior is locally flat, with a conical deficit about the axis, and matter initially at rest feels no gravitational attraction [campsemparan2010]. For the averaged wiggly string the difference $U-T$ is positive, so the Newtonian gravitational potential varies with distance from the axis [campsemparan2010].¶Brandon Carter described the averaged string by an elastic model in 1990, with the equation of state $UT=\\mu_0^2$ [carter1990noisy]. Here $\\mu_0$ is the energy per length and tension of the unperturbed string. Writing $U=\\alpha\\mu_0$, where $\\alpha>1$ measures the excess energy, fixes $T=\\mu_0/\\alpha$. Hence $U-T=\\mu_0(\\alpha-\\alpha^{-1})>0$.¶In units $G=c=1$, the Newtonian potential is $\\Phi=2(U-T)\\ln(r/r_0)$, where $r$ is distance from the axis and $r_0$ is a reference length [campsemparan2010]. Matter released from rest has the inward radial acceleration $d^2r/dt^2=-2(U-T)/r$ to first order. For a straight string $U=T$, and that acceleration vanishes.¶Joan Camps and Roberto Emparan related this field to the static cylindrical vacuum family in 2010 [campsemparan2010]. In their notation its Levi-Civita parameter is $m=2(U-T)$ and its conicity parameter is $C=1+4T$, both through first order. The mass parameter of the Weyl form, $\\sigma=m/2$, is therefore $\\sigma=U-T$ to this order. The transverse spatial field also depends on the sum $U+T$, so the energy and tension enter the geometry in two combinations.",
+  "related": [
+    {
+      "id": "cosmic_string",
+      "kind": "family",
+      "text": "For $U=T$, the Newtonian attraction vanishes and the field reduces to the straight string's conical geometry through first order [campsemparan2010]."
+    },
+    {
+      "id": "string_wave",
+      "kind": "family",
+      "text": "A travelling wave retains its dependence on position along the string and time [garfinkle1990]. The averaged wiggly string has a static cylindrical field [campsemparan2010]."
+    },
+    {
+      "id": "levi_civita",
+      "kind": "family",
+      "text": "The weak field belongs to this cylindrical family, with $\\sigma=U-T$ and $C=1+4T$ through first order in units $G=c=1$ [campsemparan2010]."
+    }
+  ],
+  "references": [
+    "vachaspativilenkin1991",
+    "campsemparan2010",
+    "carter1990noisy",
+    "garfinkle1990"
+  ],
+  "coordinates": []
+}
