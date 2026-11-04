@@ -1,5 +1,5 @@
 {
-  "version": "3eadbde093b8fc3a",
+  "version": "4b010c5341974d4a",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36853,6 +36853,326 @@
         "year": "1990",
         "doi": "10.1103/PhysRevD.41.3869",
         "url": "https://doi.org/10.1103/PhysRevD.41.3869"
+      }
+    },
+    "vilenkin1990": {
+      "type": "article",
+      "fields": {
+        "title": "Effect of small-scale structure on the dynamics of cosmic strings",
+        "author": "Vilenkin, Alexander",
+        "journal": "Physical Review D",
+        "volume": "41",
+        "number": "10",
+        "pages": "3038--3040",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.41.3038",
+        "url": "https://doi.org/10.1103/PhysRevD.41.3038"
+      }
+    },
+    "aguirrebrandenberger1995": {
+      "type": "article",
+      "fields": {
+        "title": "Accretion of hot dark matter onto slowly moving cosmic strings",
+        "author": "Aguirre, Anthony N. and Brandenberger, Robert H.",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "4",
+        "number": "6",
+        "pages": "711--721",
+        "year": "1995",
+        "doi": "10.1142/S0218271895000478",
+        "eprint": "astro-ph/9505031",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271895000478"
+      }
+    },
+    "zanchinlimabrandenberger1996": {
+      "type": "article",
+      "fields": {
+        "title": "Accretion of cold and hot dark matter onto cosmic string filaments",
+        "author": "Zanchin, V. and Lima, J. A. S. and Brandenberger, R.",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "12",
+        "pages": "7129--7137",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.7129",
+        "eprint": "astro-ph/9607062",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.54.7129"
+      }
+    },
+    "gonzalezdiazjimenezmadrid2006": {
+      "type": "article",
+      "fields": {
+        "title": "Wiggly cosmic strings accrete dark energy",
+        "author": "González-Díaz, Pedro F. and Jiménez Madrid, José A.",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "15",
+        "number": "4",
+        "pages": "603--613",
+        "year": "2006",
+        "doi": "10.1142/S0218271806008322",
+        "eprint": "astro-ph/0506717",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271806008322"
+      }
+    },
+    "vachaspati1992": {
+      "type": "article",
+      "fields": {
+        "title": "Structure of wiggly-cosmic-string wakes",
+        "author": "Vachaspati, Tanmay",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "10",
+        "pages": "3487--3496",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.3487",
+        "url": "https://doi.org/10.1103/PhysRevD.45.3487"
+      }
+    },
+    "vollick1992": {
+      "type": "article",
+      "fields": {
+        "title": "Small-scale structure on cosmic strings and galaxy formation",
+        "author": "Vollick, Dan N.",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "6",
+        "pages": "1884--1897",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.1884",
+        "url": "https://doi.org/10.1103/PhysRevD.45.1884"
+      }
+    },
+    "perivolaropoulos2005": {
+      "type": "article",
+      "fields": {
+        "title": "The rise and fall of the cosmic string theory for cosmological perturbations",
+        "author": "Perivolaropoulos, L.",
+        "journal": "Nuclear Physics B Proceedings Supplements",
+        "volume": "148",
+        "pages": "128--140",
+        "year": "2005",
+        "doi": "10.1016/j.nuclphysbps.2005.04.058",
+        "eprint": "astro-ph/0501590",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.nuclphysbps.2005.04.058"
+      }
+    },
+    "hongkimsikivie1992": {
+      "type": "article",
+      "fields": {
+        "title": "Wiggly relativistic strings",
+        "author": "Hong, Jooyoo and Kim, Jaewan and Sikivie, Pierre",
+        "journal": "Physical Review Letters",
+        "volume": "69",
+        "number": "18",
+        "pages": "2611--2614",
+        "year": "1992",
+        "doi": "10.1103/PhysRevLett.69.2611",
+        "eprint": "hep-ph/9210210",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.69.2611"
+      }
+    },
+    "kimsikivie1994": {
+      "type": "article",
+      "fields": {
+        "title": "Stretching wiggly strings",
+        "author": "Kim, Jaewan and Sikivie, Pierre",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "12",
+        "pages": "7410--7420",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.7410",
+        "eprint": "hep-ph/9405227",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.7410"
+      }
+    },
+    "martin1995": {
+      "type": "article",
+      "fields": {
+        "title": "Cancellation of longitudinal contribution in wiggly string equation of state",
+        "author": "Martin, Xavier",
+        "journal": "Physical Review Letters",
+        "volume": "74",
+        "number": "16",
+        "pages": "3102--3104",
+        "year": "1995",
+        "doi": "10.1103/PhysRevLett.74.3102",
+        "url": "https://doi.org/10.1103/PhysRevLett.74.3102"
+      }
+    },
+    "carter1995": {
+      "type": "article",
+      "fields": {
+        "title": "Transonic elastic model for wiggly Goto-Nambu string",
+        "author": "Carter, Brandon",
+        "journal": "Physical Review Letters",
+        "volume": "74",
+        "number": "16",
+        "pages": "3098--3101",
+        "year": "1995",
+        "doi": "10.1103/PhysRevLett.74.3098",
+        "eprint": "hep-th/9411231",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.74.3098"
+      }
+    },
+    "carter1999": {
+      "type": "article",
+      "fields": {
+        "title": "Renormalization of gravitational self-interaction for wiggly strings",
+        "author": "Carter, Brandon",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "8",
+        "pages": "083502",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.083502",
+        "eprint": "hep-th/9806206",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.60.083502"
+      }
+    },
+    "pogosianvachaspati1999": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic microwave background anisotropy from wiggly strings",
+        "author": "Pogosian, Levon and Vachaspati, Tanmay",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "8",
+        "pages": "083504",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.083504",
+        "eprint": "astro-ph/9903361",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.60.083504"
+      }
+    },
+    "arazisimeone2000bransdicke": {
+      "type": "article",
+      "fields": {
+        "title": "Wiggly strings in linearized Brans-Dicke gravity",
+        "author": "Arazi, Andrés and Simeone, Claudio",
+        "journal": "Modern Physics Letters A",
+        "volume": "15",
+        "number": "21",
+        "pages": "1369--1375",
+        "year": "2000",
+        "doi": "10.1142/S0217732300001900",
+        "eprint": "gr-qc/0009075",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732300001900"
+      }
+    },
+    "arazisimeone2000cylindrical": {
+      "type": "article",
+      "fields": {
+        "title": "Cylindrical sources in full Einstein and Brans-Dicke gravity",
+        "author": "Arazi, Andrés and Simeone, Claudio",
+        "journal": "General Relativity and Gravitation",
+        "volume": "32",
+        "number": "12",
+        "pages": "2259--2268",
+        "year": "2000",
+        "doi": "10.1023/A:1001995424662",
+        "eprint": "gr-qc/0005026",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1001995424662"
+      }
+    },
+    "dydabrandenberger2007": {
+      "type": "misc",
+      "fields": {
+        "title": "Cosmic strings and weak gravitational lensing",
+        "author": "Dyda, Sergei and Brandenberger, Robert H.",
+        "year": "2007",
+        "eprint": "0710.1903",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0710.1903"
+      }
+    },
+    "azevedo2017waveguide": {
+      "type": "article",
+      "fields": {
+        "title": "Wiggly cosmic string as a waveguide for massless and massive fields",
+        "author": "Azevedo, Frankbelson dos S. and Moraes, Fernando and Mireles, Francisco and Berche, Bertrand and Fumeron, Sébastien",
+        "journal": "Physical Review D",
+        "volume": "96",
+        "number": "8",
+        "pages": "084047",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.96.084047",
+        "eprint": "1709.09514",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.96.084047"
+      }
+    },
+    "azevedosilva2024": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamics of massive and massless particles in the spacetime of a wiggly cosmic dislocation",
+        "author": "Azevedo, Frankbelson dos S. and Silva, Edilberto O.",
+        "journal": "European Physical Journal C",
+        "volume": "84",
+        "number": "11",
+        "pages": "1171",
+        "year": "2024",
+        "doi": "10.1140/epjc/s10052-024-13572-1",
+        "eprint": "2409.12325",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-024-13572-1"
+      }
+    },
+    "hindmarshwray1990": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational effects of line sources and the zero-width limit",
+        "author": "Hindmarsh, Mark and Wray, Andrew",
+        "journal": "Physics Letters B",
+        "volume": "251",
+        "number": "4",
+        "pages": "498--502",
+        "year": "1990",
+        "doi": "10.1016/0370-2693(90)90786-6",
+        "url": "https://doi.org/10.1016/0370-2693(90)90786-6"
+      }
+    },
+    "ozdemir2001": {
+      "type": "article",
+      "fields": {
+        "title": "Exact metric around a wiggly cosmic string",
+        "author": "Özdemir, N.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "3",
+        "pages": "603--606",
+        "year": "2001",
+        "doi": "10.1023/A:1010213301350",
+        "eprint": "gr-qc/0010043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1010213301350"
+      }
+    },
+    "secukdelice2026": {
+      "type": "article",
+      "fields": {
+        "title": "Straight and wiggly cosmic strings in Horndeski theory",
+        "author": "Seçuk, M. Haluk and Delice, Özgür",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "43",
+        "number": "6",
+        "pages": "065018",
+        "year": "2026",
+        "doi": "10.1088/1361-6382/ae5207",
+        "eprint": "2511.10578",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ae5207"
       }
     },
     "veneziano1991duality": {
