@@ -146,12 +146,55 @@
   }
 
   /* ── Shell wiring ── */
+  const rangeColours = Array.from({ length: 12 }, (_, i) => `--sunset-${i + 1}`);
+
+  function paintRange(input, signed) {
+    const value = Number(input.value);
+    const fraction = (value - Number(input.min)) / (Number(input.max) - Number(input.min));
+    const colour = signed
+      ? (value < 0 ? '--plum' : value > 0 ? '--sunset-12' : '--light')
+      : rangeColours[Math.round(fraction * (rangeColours.length - 1))];
+    input.style.setProperty('--ising-range-colour', `var(${colour})`);
+    input.style.setProperty('--ising-low', `${signed ? Math.min(50, fraction * 100) : 0}%`);
+    input.style.setProperty('--ising-high', `${signed ? Math.max(50, fraction * 100) : fraction * 100}%`);
+  }
+
   const shell = new AppletShell({
     id:    'ising',
     title: 'Ising Model',
     gap:   0,
 
     ctrlHTML: `
+      <style>
+        #ising-btn-square { --ising-choice: var(--coral); }
+        #ising-btn-triangle { --ising-choice: var(--sunset-12); }
+        #ising-btn-ferro { --ising-choice: var(--hot); }
+        #ising-btn-antiferro, #ising-btn-cold {
+          --ising-choice: var(--sunset-1); --ising-choice-words: var(--bright);
+        }
+        #ising-btn-hot { --ising-choice: var(--sunset-12); }
+        #ising-asm-overlay .applet-shell-btn { background: var(--ink); color: var(--light); }
+        #ising-btn-cold, #ising-btn-hot { border-color: var(--ising-choice); }
+        #ising-asm-overlay .applet-shell-btn.active,
+        #ising-asm-overlay .applet-shell-btn:active {
+          background: var(--ising-choice) !important;
+          border-color: var(--ising-choice);
+          color: var(--ising-choice-words, var(--ink));
+        }
+        #ising-asm-overlay input[type=range] { accent-color: var(--ising-range-colour); }
+        #ising-asm-overlay input[type=range]::-webkit-slider-runnable-track {
+          background: linear-gradient(to right, var(--dim) var(--ising-low), var(--ising-range-colour) var(--ising-low), var(--ising-range-colour) var(--ising-high), var(--dim) var(--ising-high));
+        }
+        #ising-asm-overlay input[type=range]::-webkit-slider-thumb {
+          background: var(--ising-range-colour) !important; box-shadow: none;
+        }
+        #ising-asm-overlay input[type=range]::-moz-range-track {
+          background: linear-gradient(to right, var(--dim) var(--ising-low), var(--ising-range-colour) var(--ising-low), var(--ising-range-colour) var(--ising-high), var(--dim) var(--ising-high));
+        }
+        #ising-asm-overlay input[type=range]::-moz-range-thumb {
+          background: var(--ising-range-colour) !important; box-shadow: none;
+        }
+      </style>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Lattice</div>
         <div class="applet-shell-btn-row">
@@ -169,8 +212,8 @@
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Initialise</div>
         <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" onclick="isingHotStart()">Hot</button>
-          <button class="applet-shell-btn" onclick="isingColdStart()">Cold</button>
+          <button class="applet-shell-btn" id="ising-btn-hot" onclick="isingHotStart()">Hot</button>
+          <button class="applet-shell-btn" id="ising-btn-cold" onclick="isingColdStart()">Cold</button>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -260,13 +303,14 @@ At zero field and below $T_c$, the infinite square lattice magnetizes; above, or
   };
 
   document.getElementById('ising-temp').addEventListener('input', function () {
-    T = parseFloat(this.value); buildExpTable();
+    T = parseFloat(this.value); buildExpTable(); paintRange(this, false);
   });
   document.getElementById('ising-speed').addEventListener('input', function () {
-    sweepsPerFrame = parseInt(this.value);
+    sweepsPerFrame = parseInt(this.value); paintRange(this, false);
   });
   document.getElementById('ising-field').addEventListener('input', function () {
-    h = parseFloat(this.value); buildExpTable();
+    h = parseFloat(this.value); buildExpTable(); paintRange(this, true);
   });
+  ['temp', 'speed', 'field'].forEach(name => paintRange(document.getElementById(`ising-${name}`), name === 'field'));
 
 })();
