@@ -50,10 +50,11 @@ The conformal diagram compactifies the same two-dimensional induced plane throug
 It shows that plane's timelike boundary and Poincaré horizon, with its slice named in the caption.
 It does not describe the full ten-dimensional causal structure or identify the other eight dimensions with single events.
 
-The embedding is the spatial surface $(r,\phi)$ at $t=x=y=z=0$, $\theta=\alpha=\pi/2$, and $\beta=\psi=0$.
-Its metric is $L^2dr^2/r^2+(L^2/6)d\phi^2$, so it embeds as a cylinder of radius $L/\sqrt6$ and height $L\ln(r/L)$.
+The embedding is the spatial surface $(r,\psi)$ at $t=x=y=z=0$, $\theta=\alpha=\pi/2$, and $\phi=\beta=0$.
+The fibre angle has period $4\pi$; we parametrize it by $\psi=2\varphi$, with $0\leq\varphi<2\pi$.
+Its metric is $L^2dr^2/r^2+(4L^2/9)d\varphi^2$, so it embeds as a cylinder of radius $2L/3$ and height $L\ln(r/L)$.
 The cylinder extends without end in both directions; its finite reach for drawing is $L/2\leq r\leq5L/2$.
-It resolves one circle of the compact base and the throat's radial direction, not the full spatial geometry of nine dimensions.
+It resolves the circle fibre of the compact base and the throat's radial direction, not the full spatial geometry of nine dimensions.
 The moment $t=0$ on this cylinder is registered on the radial null and conformal diagrams with view id throat, and those slices have the same radial endpoints.
 
 A complete isometric embedding of nine spatial dimensions in Euclidean three-space is NOT_DRAWN because the ambient dimension is too small.
@@ -69,3 +70,8 @@ A radial profile cannot distinguish homogeneous sectors, since neither scalar ch
 The chart check compares the sourced product and its opposite Ricci eigenvalues at three regular points, without a symbolic determinant or symbolic simplification inside the check.
 The dedicated physical checks also compute the base and cone directly, read the throat's derived tensors, and compare its scalar invariants and the curvature decomposition.
 The spacetime and conformal slices carry the embedding's moment version and view id.
+
+The curvature comparison varies the common length $L$ in units of a reference length $\ell$.
+It reads the stored mixed Ricci components $R^t{}_t$ and $R^\theta{}_\theta$, each of multiplicity five, and the stored Ricci scalar.
+The eigenvalues stay opposite as $L$ varies, while their trace remains zero.
+The homogeneous geometry has no radial curvature profile.

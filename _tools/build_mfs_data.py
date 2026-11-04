@@ -520,7 +520,13 @@ def check_drawn_from(at, item, read):
     if stamped is None:
         raise DataError(f"{at} was drawn from {item.get('metric')}/{item.get('system')}, which the file's source "
                         "does not stamp")
-    if item.get("scalar") not in CURVATURE_SCALARS or item["scalar"] not in stamped["fields"]:
+    component = item.get("scalar") == "ricci_tensor" and "panel" in item
+    if component:
+        indices = item.get("indices")
+        if not (isinstance(indices, list) and len(indices) == 2 and indices[0] == indices[1]
+                and indices[0] in stamped["coords"]):
+            raise DataError(f"{at} needs a diagonal mixed Ricci component in its chart")
+    if (item.get("scalar") not in CURVATURE_SCALARS and not component) or item["scalar"] not in stamped["fields"]:
         raise DataError(f"{at} draws {item.get('scalar')!r}, which is no published curvature scalar the source stamps")
     params = item.get("params")
     if not (isinstance(params, dict) and all(finite(v) for v in params.values())):

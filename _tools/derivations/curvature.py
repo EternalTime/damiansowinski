@@ -164,9 +164,10 @@ class Published:
     def __init__(self, sources, metric_id, system_id, field, coords, params, indices=None, functions=None):
         _, entry, reader = nr.load(metric_id, system_id)
         self.metric, self.system, self.field = metric_id, system_id, field
+        self.indices = list(indices) if indices is not None else None
         self.functions = dict(functions or {})
-        if field in ("metric_components", "inverse_metric_components", "riemann", "weyl_tensor", "einstein_tensor"):
-            variant = {"riemann": "ulll", "weyl_tensor": "ulll", "einstein_tensor": "ul"}.get(field)
+        if field in ("metric_components", "inverse_metric_components", "riemann", "weyl_tensor", "einstein_tensor", "ricci_tensor"):
+            variant = {"riemann": "ulll", "weyl_tensor": "ulll", "einstein_tensor": "ul", "ricci_tensor": "ul"}.get(field)
             listed = entry[field]["variants"][variant]["nonzero"] if variant else entry[field]
             value = next(c["value"] for c in listed if c["indices"] == list(indices))
             expr = reader(value)
@@ -467,6 +468,8 @@ def curve_entry(panel, cls, published, coordinate, params, points):
     again, the chart's other coordinates it holds fixed among it, and its points [x, value]."""
     entry = {"panel": panel, "class": cls, "metric": published.metric, "system": published.system,
              "scalar": published.field, "coordinate": coordinate}
+    if published.field == "ricci_tensor":
+        entry["indices"] = list(published.indices)
     if isinstance(published, Held):
         entry["fixed"] = dict(published.fixed)
     entry["params"] = {name: float(value) for name, value in params.items()}
@@ -19190,6 +19193,9 @@ _giddings_strominger_drawings.register_curvature(sys.modules[__name__])
 import stringy_cosmic_strings_drawings as _stringy_cosmic_strings_drawings
 _stringy_cosmic_strings_drawings.register_curvature(sys.modules[__name__])
 
+
+import klebanov_witten_drawings as _klebanov_witten_drawings
+_klebanov_witten_drawings.register_curvature(sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())
