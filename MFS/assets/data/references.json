@@ -1,5 +1,5 @@
 {
-  "version": "4418adb4acd984c5",
+  "version": "37aa2be3052e6ac8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45750,6 +45750,81 @@
         "eprint": "2606.01409",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/gw8y-zrt4"
+      }
+    },
+    "tomizawa_mishima2015": {
+      "type": "article",
+      "fields": {
+        "title": "Nonlinear effects for a cylindrical gravitational two-soliton",
+        "author": "Tomizawa, Shinya and Mishima, Takashi",
+        "journal": "Physical Review D",
+        "volume": "91",
+        "number": "12",
+        "pages": "124058",
+        "year": "2015",
+        "doi": "10.1103/physrevd.91.124058",
+        "eprint": "1502.06331",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.91.124058"
+      }
+    },
+    "nikiel_szybka2025": {
+      "type": "article",
+      "fields": {
+        "title": "Halilsoy and Chandrasekhar standing gravitational waves in the linear approximation",
+        "author": "Nikiel, Kornelia and Szybka, Sebastian J.",
+        "journal": "Physical Review D",
+        "volume": "111",
+        "number": "10",
+        "pages": "104015",
+        "year": "2025",
+        "doi": "10.1103/physrevd.111.104015",
+        "eprint": "2503.01726",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.111.104015"
+      }
+    },
+    "szybka_zychowicz_hunik2026": {
+      "type": "article",
+      "fields": {
+        "title": "Backreaction of Halilsoy and Chandrasekhar waves",
+        "author": "Szybka, Sebastian J. and Zychowicz, Adam A. and Hunik, Dominika",
+        "journal": "Physical Review D",
+        "volume": "113",
+        "number": "8",
+        "pages": "084006",
+        "year": "2026",
+        "doi": "10.1103/5fcm-qmm9",
+        "eprint": "2509.04230",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/5fcm-qmm9"
+      }
+    },
+    "mishima_tomizawa2017": {
+      "type": "article",
+      "fields": {
+        "title": "Construction and application of variations on the cylindrical gravitational waves of Weber, Wheeler, and Bonnor",
+        "author": "Mishima, Takashi and Tomizawa, Shinya",
+        "journal": "Physical Review D",
+        "volume": "96",
+        "number": "2",
+        "pages": "024023",
+        "year": "2017",
+        "doi": "10.1103/physrevd.96.024023",
+        "eprint": "1704.03251",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.96.024023"
+      }
+    },
+    "penna2022": {
+      "type": "misc",
+      "fields": {
+        "title": "Gravitational Pulse Wave Scattering and the Geroch group",
+        "author": "Penna, Robert F.",
+        "year": "2022",
+        "eprint": "2201.07662",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2201.07662"
       }
     }
   }
