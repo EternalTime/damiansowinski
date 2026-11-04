@@ -361,16 +361,15 @@
       smoothBins[b] += HIST_ALPHA * (raw[b] - smoothBins[b]);
     /* the curve at the slider temperature, and the height set by the same law at the
        gas's own temperature, which is what the bars follow */
-    const mb = new Float64Array(N_BINS), gas = new Float64Array(N_BINS);
+    const mbAt = v => (v / T) * Math.exp(-v * v / (2 * T));
+    const gas = new Float64Array(N_BINS);
     let mbSum = 0, gasSum = 0;
     for (let b = 0; b < N_BINS; b++) {
       const v = (b + 0.5) * dv;
-      mb[b]   = (v / T) * Math.exp(-v * v / (2 * T));
       gas[b]  = (v / histT) * Math.exp(-v * v / (2 * histT));
-      mbSum  += mb[b];
+      mbSum  += mbAt(v);
       gasSum += gas[b];
     }
-    if (mbSum > 0) for (let b = 0; b < N_BINS; b++) mb[b] /= mbSum;
     const gasPeak = gasSum > 0 ? Math.max(...gas) / gasSum : 1e-9;
     histYMax += YMAX_ALPHA * (gasPeak * 1.20 - histYMax);
     const ymax = Math.max(histYMax, 1e-9);
@@ -401,11 +400,16 @@
     hctx.shadowBlur  = 10;
     hctx.strokeStyle = _c('--pink-light');
     hctx.lineWidth   = 1.5;
+    /* The curve keeps the bars' scale, the share of the gas a bin centred on each speed
+       would hold, but is sampled once per device pixel across the panel so it reads as a
+       curve rather than a run of segments between bin centres. */
+    const steps = Math.ceil(pw * (window.devicePixelRatio || 1));
     hctx.beginPath();
-    for (let b = 0; b < N_BINS; b++) {
-      const x = PL + (b + 0.5) * bw;
-      const y = PT + ph - Math.min(mb[b] / ymax, 1) * ph;
-      b === 0 ? hctx.moveTo(x, y) : hctx.lineTo(x, y);
+    for (let k = 0; k <= steps; k++) {
+      const x = PL + pw * k / steps;
+      const p = mbSum > 0 ? mbAt(vmax * k / steps) / mbSum : 0;
+      const y = PT + ph - Math.min(p / ymax, 1) * ph;
+      k === 0 ? hctx.moveTo(x, y) : hctx.lineTo(x, y);
     }
     hctx.stroke();
     hctx.restore();
