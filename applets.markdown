@@ -26,7 +26,7 @@ title: Applets
 Computational physics is awesome. 
 It's the art of telling a computer how to simulate phenomena we see in the world. 
 But it's not limited to just those phenomena we know about. 
-We can use explore unknown worlds obeying strange rules, limited solely by our imaginations.
+We can explore unknown worlds obeying strange rules, limited solely by our imaginations.
 Feel free to explore the applets below and see what you can discover.
 They've been organized loosley into categories, but many of them overlap in interesting ways.
 Each has a brief description of the physics and history behind it, just press the "What is this?" button in the applet window to learn more.
