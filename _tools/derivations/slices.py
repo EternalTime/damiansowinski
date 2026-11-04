@@ -3768,6 +3768,10 @@ FLAT = {
         "lqc_bounce", lambda m: across(m.time, *m.reach("comoving_spherical", "r"))),
     ("lqc_bounce", "harmonic", "taux"): lambda: one(
         "lqc_bounce", lambda m: across(math.asinh(m.time), *m.reach("comoving_spherical", "r"))),
+    # The universe with limiting curvature at each moment of its movie, from the pole to the antipode, on the
+    # comoving chart, in units c = H_0 = 1, where the line of that t runs across the whole sphere.
+    ("limiting_curvature", "comoving", "radial"): lambda: one(
+        "limiting_curvature", lambda m: along(m.time, *m.reach("comoving", "\\chi"))),
     # Bekenstein's universes at each moment of the conformal time their movies stand at, the closed
     # universe's sphere from the pole to the antipode and the open universe's sheet out to chi = 1.
     ("bekenstein_universes", "closed", "radial"): lambda: one(
@@ -4314,6 +4318,8 @@ FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z]
 # label's em MathJax sets mathematics at where it cannot measure the label's own font, a
 # hundredth more, rounded up to a twentieth. "$X = X_s$" stood 1.45 em from the edge of
 # Whittaker's sphere until 3 October 2026, its two X's 0.97 em wide and counted 0.7.
+HIDDEN[("limiting_curvature", "de_sitter_bounce", "radial")] = (
+    "de Sitter space, the geometry the universe approaches, another spacetime than the universe whose moments are embedded")
 HIDDEN.update({key: "the flat universe, whose moments are planes and are not embedded, another member of the family "
                     "than the closed and open universes whose moments are"
                for key in (("bekenstein_universes", "flat", "radial"), ("bekenstein_universes", "flat"))})

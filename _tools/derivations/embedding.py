@@ -12805,6 +12805,48 @@ def lqc_bounce(ck, src):
     return [view("universe", "The universe through its bounce", "$ct_b$", surfaces, fig.done(),
                  movie=movie(frames, "$t$", times), settings="$t_b = 1$, with $ct_b$ the unit of every length.")]
 
+def limiting_curvature(ck, src):
+    """The equator of space in Mukhanov and Brandenberger's closed universe with limiting curvature,
+    in units c = H_0 = 1, through its bounce at t = 0 of radius a = 2, the universe limiting_curvature.py
+    solves. A moment of the comoving chart has g_chichi = a^2 and g_phiphi = a^2 sin^2 chi: the sphere of
+    radius a, rho = a sin chi and z = -a cos chi, drawn whole from the pole to the antipode, its
+    equator chi = pi/2 marked, at five moments from t = -2 to 2 and played as a movie with a frame every 0.1 of t. The solver's
+    constraints are checked along the run, and every sphere is checked to have a > 1, the bound a
+    closed universe of the theory keeps."""
+    universe = nr.lc_universe.bounce()
+    named = [-2.0, -1.0, 0.0, 1.0, 2.0]
+    times, keys = movie_values(named, 0.1)
+    times = [round(t, 10) for t in times]
+    ck.exact("limiting_curvature: the solver keeps (2.25) and the Hamiltonian equation to 1e-9",
+             universe.residual(np.linspace(-2, 2, 401)) < 1e-9)
+    radii = [float(universe.a(t)) for t in times]
+    ck.exact("limiting_curvature: every moment's sphere is larger than c/H_0", min(radii) > 1)
+    ck.exact("limiting_curvature: the smallest sphere is the bounce's, a = 2c/H_0",
+             abs(min(radii) - 2.0) < 1e-12 and radii.index(min(radii)) == times.index(0.0))
+    size = 2.4 * max(radii)
+
+    def moment(t, a):
+        sl = Slice(src, "limiting_curvature", "comoving", "\\chi", "\\phi", {"t": repr(float(t)), **EQUATOR},
+                   {"H_0": 1}, {"a": repr(a)})
+        sphere = Piece("sphere", "sheet", sl, 0.0, math.pi, -a, 1,
+                       (("axis", "the pole $\\chi = 0$"), ("axis", "the antipode $\\chi = \\pi$")),
+                       [(math.pi / 2, "chartedge", None)], size)
+        where = f"limiting curvature, H_0 t = {t:.4f}"
+        ck.isometry(where, sphere)
+        ck.radius(f"{where}, rho = a sin chi", sphere, lambda x, a=a: a * np.sin(x), size)
+        ck.form(f"{where}, the sphere z = -a cos chi", sphere, lambda x, a=a: -a * np.cos(x), size)
+        return Surface([sphere], label=f"$H_0t = {t + 0.0:.1f}$", time=t)
+
+    frames = [moment(t, a) for t, a in zip(times, radii)]
+    surfaces = [frames[i] for i in keys]
+    fig = movie_figure(frames, {"sheet": "cover"}, size, meridians=12)
+    fig.legend("fill", "cover", "the equator of space at one moment")
+    fig.legend("line", "chartedge", "the equator $\\chi = \\pi/2$")
+    fig.legend("line", "meridian", "$\\phi$ constant, every $30°$")
+    return [view("bounce", "The universe through its bounce", "$c/H_0$", surfaces, fig.done(),
+                 movie=movie(frames, "$H_0t$", times), settings="$H_0 = 1$.",
+                 input=nr.LC_INPUT)]
+
 
 def murphy_viscous_universe(ck, src):
     """The world tube of a ring of comoving observers in Murphy's universe with viscosity, for
@@ -18637,6 +18679,7 @@ DRAWN = {
     "nordstrom_scalar": nordstrom_scalar,
     "einstein_1912_static": einstein_1912_static,
     "lqc_bounce": lqc_bounce,
+    "limiting_curvature": limiting_curvature,
     "kopczynski_trautman": kopczynski_trautman,
     "murphy_viscous_universe": murphy_viscous_universe,
     "ab_metrics": ab_metrics,
@@ -20078,6 +20121,11 @@ CAPTIONS = {
         "$t = 0$, where $a = 1$, and grows again. Near the bounce $a \\approx 1 + t^2/6t_b^2$, and the rate of "
         "expansion $H = t/3(t_b^2 + t^2)$ grows until $t = t_b$, where the density has fallen to half its greatest "
         "value, and falls after it as in a classical universe of a stiff fluid, with $a$ growing as $|t|^{1/3}$.",
+    ],
+    ("limiting_curvature", "bounce"): [
+        "The equator ($\\theta = \\pi/2$) of space from $H_0t = -2$ to $2$, each moment a sphere of radius $a(t)$ "
+        "with every distance along it the metric distance.",
+        "It is smallest at the bounce, $a = 2c/H_0$, and no closed universe of the theory is smaller than $c/H_0$.",
     ],
     ("murphy_viscous_universe", "ring"): [
         "The plane $y = 0$ from $H_st = -3$ to $3$ for radiation, flat at every moment, with a ring of comoving "

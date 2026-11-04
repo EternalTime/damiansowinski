@@ -3247,6 +3247,7 @@ class StacksAndMovies(unittest.TestCase):
               ("frw", "closed"): "$ct$", ("nordstrom_scalar", "dust"): "$ct$",
               ("kopczynski_trautman", "universe"): "$ct$", ("small_universes", "torus"): "$ct$",
               ("lqc_bounce", "universe"): "$t$",
+              ("limiting_curvature", "bounce"): "$H_0t$",
               ("bekenstein_universes", "closed"): "$\\eta$", ("bekenstein_universes", "open"): "$\\eta$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",

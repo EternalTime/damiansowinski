@@ -5330,11 +5330,11 @@ DIAGRAMS = [
     # Mukhanov and Brandenberger's closed universe with limiting curvature in units c = H_0 = 1, through its
     # bounce at t = 0 from the pole chi = 0 to the antipode chi = pi, and de Sitter's closed slicing, the
     # space the universe approaches, in units of the radius l of its waist.
-    Diagram("limiting_curvature", "comoving", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, -2, 2),
+    Diagram("limiting_curvature", "comoving", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, -2.5, 2.5),
             "$\\chi$", "$H_0t$", {"H_0": 1}, EQUATOR, areal=True, no_throat=True, functions={"a": "lc_a(t)"},
             input=LC_INPUT),
     Diagram("limiting_curvature", "de_sitter_bounce", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
-            (0, math.pi, -2, 2), "$\\chi$", "$ct/\\ell$", {"ell": 1}, EQUATOR, areal=True, no_throat=True),
+            (0, math.pi, -2.5, 2.5), "$\\chi$", "$ct/\\ell$", {"ell": 1}, EQUATOR, areal=True, no_throat=True),
     # Murphy's universe with viscosity for radiation, q = 2, in units of 1/H_s and c/H_s. The scale factor
     # is the time of two charts; the cosmic chart's a(t) is a^2 = W(e^(2t)), Lambert's W, from
     # H_s t = ln a + a^2/2, and the expansion stops accelerating at a = 1, t = 1/2.
