@@ -13,14 +13,14 @@ def diagram_specs(nr):
     rows = [
         nr.Diagram(METRIC, "cosmological", "polar", "Cosmological region", (r"\psi", "s"),
                    (-0.12, half+0.12, -0.12, half+0.12), "$s$", r"$\psi$", PARAMS,
-                   {"rho": "0", "lambda_": "0"}, tau="psi", families=nr.SIDEWAYS),
+                   {"rho": "0", "lambda": "0"}, tau="psi", families=nr.SIDEWAYS),
         nr.Diagram(METRIC, "bang_regular", "polar", "Cosmological region", ("x", "s"),
                    (-0.12, half+0.12, -0.10, 3.35), "$s$", "$x$", PARAMS,
                    {"rho": "0"}, tau="x", families=nr.SIDEWAYS, quotient="w", where="x",
                    cone="future cone of zero angular momentum"),
         nr.Diagram(METRIC, "invariant", "polar", "Cosmological region", ("r", "s"),
                    (-0.12, half+0.12, -0.12, 1.12), "$s$", "$r$", PARAMS,
-                   {"rho": "0", "lambda_": "0"}, tau="r", families=nr.SIDEWAYS,
+                   {"rho": "0", "lambda": "0"}, tau="r", families=nr.SIDEWAYS,
                    where="r*(1-r)"),
         nr.Diagram(METRIC, "whisker", "periodic", "Periodic time", (r"\lambda", r"\chi"),
                    (-0.15, 6.45, -0.15, 2*math.pi+0.15), r"$\chi$", r"$\lambda$", PARAMS,
@@ -39,7 +39,7 @@ def diagram_captions():
         (METRIC, "invariant", "polar"):
             [r"The expanding and recollapsing region in $r=\sin^2\psi$ ($\rho=\lambda=0$, $b=L=1$)."],
         (METRIC, "whisker", "periodic"):
-            [r"Null curves in the static extension, with periodic time $\lambda$ ($s=\pi/4$, $\rho=0$, $b=L=1$)."],
+            [r"Null curves at fixed $s$ in the static extension, with periodic time $\lambda$ ($s=\pi/4$, $\rho=0$, $b=L=1$)."],
     }
 
 
@@ -97,7 +97,7 @@ def conformal_views(ck, src, cf):
     import numpy as np
     half = math.pi/2
     plane = cf.Plane(src, METRIC, "cosmological", (r"\psi", "s"),
-                     {"rho": "0", "lambda_": "0"}, PARAMS)
+                     {"rho": "0", "lambda": "0"}, PARAMS)
     null_map = lambda t, s: (t-s, t+s)
     ck.chart("Nappi-Witten cosmological causal plane", plane, null_map,
              ck.uniform(0.01, half-0.01), ck.uniform(0.01, half-0.01), lambda t, s: (1, 0))
