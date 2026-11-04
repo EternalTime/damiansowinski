@@ -12,7 +12,7 @@ This is the limit of large levels of the gauged Wess-Zumino-Witten model.
 The regular gauge of equation (21) has $x=\tan^2\psi$ and $\lambda'=\lambda-\log(x)/(2b)$ on the cosmological overlap.
 The invariant variable of Bars and Sfetsos, hep-th/9208001 (18)-(23), is $r=\sin^2\psi=x/(1+x)$.
 The static continuation is $r=-\sinh^2\chi$, the continuation stated on the last page of the 1992 discussion and written explicitly for $b=1$ in hep-th/0204189 (3.10).
-The finite-level bosonic metric in hep-th/9208001 (19)-(22) has different curvature and is a quantum correction to this classical geometry.
+The finite level bosonic metric in hep-th/9208001 (19)-(22) has different curvature and is a quantum correction to this classical geometry.
 
 ## Spatial volume and the turnaround
 
@@ -39,7 +39,7 @@ It differs from the potential of equation (14) by a constant antisymmetric tenso
 Its field strength $H=dB$ satisfies $R_{\mu\nu}+2\nabla_\mu\nabla_\nu\Phi-\tfrac14H_{\mu\alpha\beta}H_\nu{}^{\alpha\beta}=0$ with the dilaton of equation (17).
 The regular angle is denoted $w=\lambda'$.
 In that gauge $B_{\rho w}=L^2\sin^2s/D$ and $B_{\rho x}=-L^2b\cos^2s/(2D)$.
-The latter follows after subtracting a closed two-form from the direct coordinate pullback, making the potential regular at $x=0$.
+The latter follows after subtracting a closed two form from the direct coordinate pullback, making the potential regular at $x=0$.
 
 ## The later plane wave
 
@@ -56,10 +56,12 @@ Its Euclidean surface of revolution has radius $L\sin s$ and height $L\cos s$, f
 The same moment has $x=1$ in the regular gauge and $r=1/2$ in the invariant coordinate.
 Each of the three cosmological null views marks the entire interval of $s$ reached by that hemisphere and names its embedding view `turnaround`.
 
-The curvature curves use the stored four-dimensional scalars on that same moment, so their horizontal coordinate is the polar angle $s$.
-The constant-$s$ plane of periodic time and $\chi$ in the static extension carries null curves; freely propagating light also moves across $s$.
+The curvature curves use the stored four dimensional scalars on that same moment, so their horizontal coordinate is the polar angle $s$.
+The constant $s$ plane of periodic time and $\chi$ in the static extension carries null curves; freely propagating light also moves across $s$.
 The regular gauge's cosmological null view divides out $w$ and draws null geodesics of zero angular momentum.
 
-NOT_DRAWN: a global conformal diagram through the static extensions would identify timelike-separated points because their time is periodic, and the coset is non-Hausdorff at the joins.
+NOT_DRAWN: a global conformal diagram through the static extensions would identify timelike separated points because their time is periodic, and the coset is non-Hausdorff at the joins.
 The conformal construction is the closed cosmological causal region with both circular directions suppressed.
-NOT_DRAWN: the maximum-volume embedding moment has $r=1/2$ and lies on none of the static extension, where $r<0$.
+NOT_DRAWN: the maximum volume embedding moment has $r=1/2$ and lies on none of the static extension, where $r<0$.
+
+The conformal null coordinates are $p=(\psi-s)/2$ and $q=(\psi+s)/2$, so the plotted axes are $X=q-p=s$ and $T=q+p=\psi$.
