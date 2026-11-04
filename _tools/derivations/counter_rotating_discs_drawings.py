@@ -29,7 +29,7 @@ def embedding_views(ck, src, em):
                      functions=discs.curzon_functions(-1))
     hi = em.Piece("upper", "sheet", upper, 0, 2, 0, 1,
                   (("join", r"The seam at $z=0$."), ("edge", "The upper vacuum region extends onward.")),
-                  [(0, "shell", None), (1, "r", None), (2, "r", None)], 8)
+                  [(0, "surface", None), (1, "r", None), (2, "r", None)], 8)
     lo = em.Piece("lower", "sheet", lower, -2, 0, -lower.rise(-2, 0), 1,
                   (("edge", "The lower vacuum region extends onward."), ("join", r"The seam at $z=0$.")),
                   [(-2, "r", None), (-1, "r", None)], 8)
@@ -40,7 +40,7 @@ def embedding_views(ck, src, em):
     surface = em.Surface([lo, hi])
     fig = em.figure_of([surface], {"sheet": "cover"}, 8)
     fig.legend("fill", "cover", "Two reflected vacuum halves")
-    fig.legend("line", "shell", "Their circle on the matter seam")
+    fig.legend("line", "surface", "Their circle on the matter seam")
     cylinder = em.view("cylinder", "The joined vacuum halves", "$m$", [surface], fig.done(),
                        settings=r"Curzon seed, $m=1$, $b=3m$, $\rho=2m$.")
     return [disc, cylinder]
