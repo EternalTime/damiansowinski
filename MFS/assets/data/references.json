@@ -1,5 +1,5 @@
 {
-  "version": "c42af419ece63a2d",
+  "version": "3d3324735e34615d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45238,6 +45238,22 @@
         "eprint": "2508.13235",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/j.physletb.2026.141111"
+      }
+    },
+    "barrientos2025free": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating spacetimes with a free scalar field in four and five dimensions",
+        "author": "Barrientos, Jos\\'e and Charmousis, Christos and Cisterna, Adolfo and Hassaine, Mokhtar",
+        "journal": "The European Physical Journal C",
+        "volume": "85",
+        "number": "5",
+        "pages": "537",
+        "year": "2025",
+        "doi": "10.1140/epjc/s10052-025-14282-y",
+        "eprint": "2501.10223",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-025-14282-y"
       }
     }
   }
