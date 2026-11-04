@@ -1,0 +1,75 @@
+{
+  "id": "pre_big_bang",
+  "name": "Pre-Big Bang Dilaton Vacuum",
+  "short_name": "Pre-Big Bang",
+  "description": "A homogeneous, anisotropic universe of low energy string theory whose scale factors are powers of time, $(-t)^{\\beta_i}$ with $\\sum_i\\beta_i^2 = 1$, and whose dilaton changes as the logarithm of $-t$. With every exponent negative it expands faster and faster toward a curvature singularity at $t = 0$, the phase that Maurizio Gasperini and Gabriele Veneziano placed before the big bang.",
+  "tags": [
+    "cosmology",
+    "expanding universe",
+    "anisotropic",
+    "homogeneous",
+    "spatially homogeneous",
+    "Bianchi classification",
+    "Kasner",
+    "time-dependent",
+    "big bang",
+    "inflation",
+    "curvature singularity",
+    "dilaton",
+    "dilaton gravity",
+    "scalar field",
+    "string theory",
+    "low energy string theory",
+    "conformal transformation",
+    "exact solution",
+    "Lorentzian",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units in which the speed of light is one, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Gabriele Veneziano carried a symmetry of strings on circles over to expanding universes at CERN in 1991 [veneziano1991duality]. A closed string on a circle of radius $R$ is equivalent to one on a circle of radius $\\lambda_s^2/R$, with $\\lambda_s$ the fundamental length of string theory, and this target space duality holds only if the dilaton $\\phi$ shifts as well [veneziano1991duality, tseytlin1991dilaton]. Veneziano took a metric $ds^2 = -dt^2 + \\sum_i a_i(t)^2dx_i^2$ and a dilaton $\\phi(t)$, under the low energy action $\\int d^Dx\\,\\sqrt{-g}\\,e^{-\\phi}\\left(R + \\partial_\\mu\\phi\\,\\partial^\\mu\\phi\\right)$ in $D$ dimensions [veneziano1991duality]. He found its field equations unchanged by $a_i \\to 1/a_i$ and $\\phi \\to \\phi - 2\\ln a_i$, one scale factor at a time [veneziano1991duality]. The map leaves the shifted dilaton $\\bar\\phi = \\phi - \\sum_i\\ln a_i$ unchanged and reverses the sign of each expansion rate $H_i = \\dot a_i/a_i$, so it turns an expanding direction into a contracting one [veneziano1991duality, gasperini2003prebigbang]. Arkady A. Tseytlin, at Johns Hopkins, wrote the same shift of the dilaton that year for a torus whose radii change with time [tseytlin1991dilaton].¶In four dimensions the field equations are $R_{\\mu\\nu} + \\nabla_\\mu\\nabla_\\nu\\phi = 0$ and $R + 2\\Box\\phi - (\\nabla\\phi)^2 = 0$ [veneziano1991duality]. On $t < 0$ they are solved by $ds^2 = -dt^2 + \\sum_i(-t)^{2\\beta_i}dx_i^2$ with $\\phi = (\\sum_i\\beta_i - 1)\\ln(-t)$ [gasperini2003prebigbang]. Both equations hold exactly when $\\sum_i\\beta_i^2 = 1$, so two of the three exponents are free [gasperini2003prebigbang]. Space is flat and homogeneous at each moment, of Bianchi type I, and the shifted dilaton is $\\bar\\phi = -\\ln(-t)$ for every choice of the exponents [gasperini2003prebigbang]. With $\\sum_i\\beta_i = 1$ the dilaton is constant and the line element is Kasner's vacuum with its time reversed [lidsey2000superstring]. Veneziano learned after finishing his paper that Mark Mueller had written the general solution of these equations in 1990, for the bosonic string, whose critical dimension is 26 [veneziano1991duality, tseytlin1991dilaton, lidsey2000superstring].¶The string coupling is $g_s^2 = e^\\phi$, which on the approach to $t = 0$ vanishes, settles to a constant, or grows without bound as $\\sum_i\\beta_i$ is greater than, equal to, or less than one [veneziano1991duality, gasperini2003prebigbang]. Each expansion rate $H_i = \\beta_i/t$ diverges there, and the curvature grows as $1/t^2$ for every choice of the exponents except $(1, 0, 0)$ and its permutations, which make the spacetime flat [veneziano1991duality]. With every exponent equal to $-1/\\sqrt3$ space expands alike in every direction as $a = (-t)^{-1/\\sqrt3}$, and the dilaton $\\phi = -(1 + \\sqrt3)\\ln(-t)$ grows with it [gasperini2003prebigbang]. There $\\dot a$, $\\ddot a$, and $\\dot H$ are all positive, an accelerating expansion called superinflation [gasperini2003prebigbang]. Veneziano read these solutions as an evolution from flat space and weak coupling through superinflation to large curvature and strong coupling, and he identified that regime with the big bang [veneziano1991duality]. The semiclassical description ends at the singularity, and Veneziano hoped that quantum string theory carries the evolution through it to $t > 0$ [veneziano1991duality].¶Maurizio Gasperini, in Turin, and Veneziano built a cosmology on the duality in 1992 [gasperini1993prebigbang]. Time reversal is a second symmetry of the same equations, and with the inversion it acts as $a(t) \\to a^{-1}(-t)$, which carries any decelerating expansion of decreasing curvature on $t > 0$ to an accelerating expansion of growing curvature on $t < 0$ [gasperini1993prebigbang]. Gasperini and Veneziano called \"pre-big-bang\" any phase of growing curvature and accelerated evolution, and in their picture the big bang is \"an instant of maximal curvature marking the transition\" from such a phase to the decelerating expansion of the standard cosmology [gasperini1993prebigbang]. They proposed that such a phase leaves its trace in a background of relic gravitons, whose spectrum at high frequency follows the growth of the curvature [gasperini1993prebigbang]. They expected that, without higher order quantum effects of strings, a singularity at the transition cannot be avoided [gasperini1993prebigbang].¶Duality and time reversal together give each solution four branches, $a(t)$, $a(-t)$, $a^{-1}(t)$, and $a^{-1}(-t)$, two expanding and two contracting [gasperini2003prebigbang]. On two of them the curvature grows toward a singularity, and on the other two it falls away from one [gasperini2003prebigbang]. In the isotropic case, of the two branches with growing curvature only the expanding one has a growing dilaton, so it carries the universe away from the weakly coupled vacuum of the string [gasperini2003prebigbang]. Rescaled from this string frame to the Einstein frame, $\\tilde g_{\\mu\\nu} = e^{-\\phi}g_{\\mu\\nu}$, where the dilaton is an ordinary massless scalar field, the isotropic superinflation becomes an accelerating contraction, $\\tilde a = (-\\tilde t)^{1/3}$ in the time $\\tilde t$ of that frame, which is the flat universe of a massless scalar field run backward in time [gasperini2003prebigbang]. Gasperini and Veneziano read the two as one scenario in two conformal frames [gasperini2003prebigbang]. For general exponents the Einstein frame metric is Kasner's universe with a scalar field, its exponents summing to one and their squares to $1 - p_\\phi^2$, with $p_\\phi$ the exponent of the dilaton in that frame [gasperini2003prebigbang].¶At lowest order the branch before the big bang and the branch after it stay apart, separated by the singularity at $t = 0$ [gasperini2003prebigbang]. Ram Brustein and Veneziano found in 1994 that a potential for the dilaton does not join them while the curvature is small, a result they called a \"very-hard-to-go theorem\" [brustein1994exit]. Olaf Hohm and Barton Zwiebach wrote in 2019 the most general cosmological equations for the metric, the antisymmetric tensor field, and the dilaton that keep the duality to every order in $\\alpha' = \\lambda_s^2/2\\pi$ [hohm2019duality, gasperini2023nonsingular]. With those equations Gasperini and Veneziano found in 2023 a large class of backgrounds that pass without a singularity from the accelerating expansion to a decelerating one, each contracting for a short time in the string frame around the bounce [gasperini2023nonsingular]. They warned that string theory may not grant the simple properties they assumed for the function that carries those corrections [gasperini2023nonsingular].",
+  "references": [
+    "veneziano1991duality",
+    "tseytlin1991dilaton",
+    "gasperini2003prebigbang",
+    "lidsey2000superstring",
+    "gasperini1993prebigbang",
+    "brustein1994exit",
+    "hohm2019duality",
+    "gasperini2023nonsingular"
+  ],
+  "coordinates": [
+    {
+      "id": "synchronous",
+      "name": "Synchronous",
+      "parameters": [
+        {
+          "symbol": "\\beta_1",
+          "description": "Exponent along $x$, with $\\beta_1^2 + \\beta_2^2 + \\beta_3^2 = 1$"
+        },
+        {
+          "symbol": "\\beta_2",
+          "description": "Exponent along $y$; with $\\beta_1 + \\beta_2 + \\beta_3 = 1$ the dilaton is constant and the metric is Kasner's"
+        },
+        {
+          "symbol": "\\beta_3",
+          "description": "Exponent along $z$; the condition leaves two of the three exponents free, and with all three negative space expands along every axis"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of the comoving observers, and evaluate the powers $(-t)^{2\\beta_i}$ with $t$ in a fixed unit, so they are dimensionless and the lengths sit in $x$, $y$, and $z$. The dilaton is $\\phi = (\\beta_1 + \\beta_2 + \\beta_3 - 1)\\ln(-t)$, and every component assumes $\\beta_1^2 + \\beta_2^2 + \\beta_3^2 = 1$. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+    },
+    {
+      "id": "conformal",
+      "name": "Conformal Time",
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Exponent of the scale factor in conformal time, $k = \\beta/(1 - \\beta)$: $k = -1/(1 + \\sqrt3)$ for the expanding member, $\\beta = -1/\\sqrt3$, and $k = 1/(\\sqrt3 - 1)$ for the contracting one, $\\beta = 1/\\sqrt3$"
+        }
+      ],
+      "convention": "We use the conformal time $\\eta$ of the two members with $\\beta_1 = \\beta_2 = \\beta_3 = \\beta$, defined by $d\\eta = dt/a$ with the scale factor $a = (-t)^\\beta$ and fixed by $-t = (-\\eta/(1 + k))^{1 + k}$, and the same $x$, $y$, and $z$. The dilaton is $\\phi = (2k - 1)\\ln(-\\eta/(1 + k))$, and the powers are read with $\\eta$ in the unit of $t$. A dot in the geodesic equations is a derivative with respect to an affine parameter."
+    }
+  ],
+  "related": []
+}
