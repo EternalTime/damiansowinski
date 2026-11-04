@@ -1,5 +1,5 @@
 {
-  "version": "5f2e177b1cbadf25",
+  "version": "7dd74feddecc3b59",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -40633,6 +40633,381 @@
         "archiveprefix": "arXiv",
         "primaryclass": "gr-qc",
         "url": "https://doi.org/10.1088/1475-7516/2025/08/042"
+      }
+    },
+    "gubserklebanov1998baryons": {
+      "type": "article",
+      "fields": {
+        "author": "Gubser, Steven S. and Klebanov, Igor R.",
+        "title": "Baryons and domain walls in an {$N=1$} superconformal gauge theory",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "12",
+        "pages": "125025",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.125025",
+        "eprint": "hep-th/9808075",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "ceresole1999spectroscopy": {
+      "type": "article",
+      "fields": {
+        "author": "Ceresole, Anna and Dall'Agata, Gianguido and D'Auria, Riccardo",
+        "title": "KK spectroscopy of type IIB supergravity on {$AdS_5\\times T^{1,1}$}",
+        "journal": "Journal of High Energy Physics",
+        "volume": "1999",
+        "number": "11",
+        "pages": "009",
+        "year": "1999",
+        "doi": "10.1088/1126-6708/1999/11/009",
+        "eprint": "hep-th/9907216",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "berenstein2002spectra": {
+      "type": "article",
+      "fields": {
+        "author": "Berenstein, David and Herzog, Christopher P and Klebanov, Igor R",
+        "title": "Baryon Spectra and AdS/CFT Correspondence",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "06",
+        "pages": "047",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/06/047",
+        "eprint": "hep-th/0202150",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "nakayama2006index": {
+      "type": "article",
+      "fields": {
+        "author": "Nakayama, Yu",
+        "title": "Index for supergravity on {$AdS_5\\times T^{1,1}$} and conifold gauge theory",
+        "journal": "Nuclear Physics B",
+        "volume": "755",
+        "number": "1-3",
+        "pages": "295--312",
+        "year": "2006",
+        "doi": "10.1016/j.nuclphysb.2006.08.012",
+        "eprint": "hep-th/0602284",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "klebanovmurugan2007resolved": {
+      "type": "article",
+      "fields": {
+        "author": "Klebanov, Igor R and Murugan, Arvind",
+        "title": "Gauge/gravity duality and warped resolved conifold",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2007",
+        "number": "03",
+        "pages": "042",
+        "year": "2007",
+        "doi": "10.1088/1126-6708/2007/03/042",
+        "eprint": "hep-th/0701064",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "herzog2010baryonic": {
+      "type": "article",
+      "fields": {
+        "author": "Herzog, Christopher P. and Klebanov, Igor R. and Pufu, Silviu S. and Tesileanu, Tiberiu",
+        "title": "Emergent quantum near-criticality from baryonic black branes",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2010",
+        "number": "03",
+        "pages": "093",
+        "year": "2010",
+        "doi": "10.1007/JHEP03(2010)093",
+        "eprint": "0911.0400",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "cassani2011conifold": {
+      "type": "article",
+      "fields": {
+        "author": "Cassani, Davide and Faedo, Anton F.",
+        "title": "A supersymmetric consistent truncation for conifold solutions",
+        "journal": "Nuclear Physics B",
+        "volume": "843",
+        "number": "2",
+        "pages": "455--484",
+        "year": "2011",
+        "doi": "10.1016/j.nuclphysb.2010.10.010",
+        "eprint": "1008.0883",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "bena2011truncations": {
+      "type": "article",
+      "fields": {
+        "author": "Bena, Iosif and Giecold, Gregory and Graña, Mariana and Halmagyi, Nick and Orsi, Francesco",
+        "title": "Supersymmetric consistent truncations of IIB on {$T^{1,1}$}",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2011",
+        "number": "04",
+        "pages": "021",
+        "year": "2011",
+        "doi": "10.1007/JHEP04(2011)021",
+        "eprint": "1008.0983",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "basu2011nonintegrability": {
+      "type": "article",
+      "fields": {
+        "author": "Basu, Pallab and Pando Zayas, Leopoldo A.",
+        "title": "Analytic nonintegrability in string theory",
+        "journal": "Physical Review D",
+        "volume": "84",
+        "number": "4",
+        "pages": "046006",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.84.046006",
+        "eprint": "1105.2540",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "visinescu2016integrability": {
+      "type": "article",
+      "fields": {
+        "author": "Visinescu, Mihai",
+        "title": "Integrability of geodesics and action-angle variables in Sasaki--Einstein space {$T^{1,1}$}",
+        "journal": "The European Physical Journal C",
+        "volume": "76",
+        "number": "9",
+        "pages": "498",
+        "year": "2016",
+        "doi": "10.1140/epjc/s10052-016-4348-6",
+        "eprint": "1604.03705",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "buchel2024wormholes": {
+      "type": "misc",
+      "fields": {
+        "author": "Buchel, Alex",
+        "title": "Plumbing the wormholes of string theory flux compactifications",
+        "year": "2024",
+        "eprint": "2404.00803",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "buchel2025fluxification": {
+      "type": "article",
+      "fields": {
+        "author": "Buchel, Alex",
+        "title": "Fluxification and scalarization of the conifold black holes",
+        "journal": "Physical Review D",
+        "volume": "111",
+        "number": "4",
+        "pages": "046010",
+        "year": "2025",
+        "doi": "10.1103/PhysRevD.111.046010",
+        "eprint": "2411.15950",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "bergman2025nonbps": {
+      "type": "article",
+      "fields": {
+        "author": "Bergman, Oren and Garcia-Valdecasas, Eduardo and Mignosa, Francesco and Rodriguez-Gomez, Diego",
+        "title": "Non-BPS branes and continuous symmetries",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "02",
+        "pages": "066",
+        "year": "2025",
+        "doi": "10.1007/JHEP02(2025)066",
+        "eprint": "2407.00773",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "castellani2025tst": {
+      "type": "article",
+      "fields": {
+        "author": "Castellani, Federico",
+        "title": "TsT-Generated Solutions in Type IIB Supergravity from Twisted Compactification of {$AdS_5\\times T^{1,1}$}",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "04",
+        "pages": "055",
+        "year": "2025",
+        "doi": "10.1007/JHEP04(2025)055",
+        "eprint": "2411.04199",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "henriksson2025higgs": {
+      "type": "article",
+      "fields": {
+        "author": "Henriksson, Oscar and Jokela, Niko and Junttila, Julia",
+        "title": "Dynamics of a Higgs phase transition in the Klebanov-Witten theory",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "04",
+        "pages": "051",
+        "year": "2025",
+        "doi": "10.1007/JHEP04(2025)051",
+        "eprint": "2411.19667",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "buchel2025baryonic": {
+      "type": "article",
+      "fields": {
+        "author": "Buchel, Alex",
+        "title": "Instability of baryonic black branes",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "05",
+        "pages": "215",
+        "year": "2025",
+        "doi": "10.1007/JHEP05(2025)215",
+        "eprint": "2502.05971",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "calvo2025defects": {
+      "type": "article",
+      "fields": {
+        "author": "Calvo, Hugo and Mignosa, Francesco and Rodriguez-Gomez, Diego",
+        "title": "Continuous symmetry defects and brane/anti-brane systems",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "06",
+        "pages": "196",
+        "year": "2025",
+        "doi": "10.1007/JHEP06(2025)196",
+        "eprint": "2503.04892",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "calvo2025symmetries": {
+      "type": "article",
+      "fields": {
+        "author": "Calvo, Hugo and Mignosa, Francesco and Rodriguez-Gomez, Diego",
+        "title": "R-symmetries, anomalies and non-invertible defects from non-BPS branes",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "10",
+        "pages": "107",
+        "year": "2025",
+        "doi": "10.1007/JHEP10(2025)107",
+        "eprint": "2506.13859",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "bah2026measurement": {
+      "type": "article",
+      "fields": {
+        "author": "Bah, Ibrahima and Bonetti, Federico and Chitoto, Mufaro and Leung, Enoch",
+        "title": "Continuous symmetries and charge measurement of boundary operators in holography",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "08",
+        "pages": "093",
+        "year": "2026",
+        "doi": "10.1007/JHEP08(2026)093",
+        "eprint": "2602.22377",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "nakayama2026spectral": {
+      "type": "article",
+      "fields": {
+        "author": "Nakayama, Yu and Okazaki, Tadashi",
+        "title": "Holographic spectral functions for Sasaki-Einstein 5-manifolds",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "09",
+        "pages": "070",
+        "year": "2026",
+        "doi": "10.1007/JHEP09(2026)070",
+        "eprint": "2603.17452",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "benetti2026probes": {
+      "type": "article",
+      "fields": {
+        "author": "Benetti Genolini, Pietro and Couzens, Christopher and Lüscher, Alice",
+        "title": "Probing black holes with equivariant localization",
+        "journal": "Physical Review D",
+        "volume": "114",
+        "number": "6",
+        "pages": "066004",
+        "year": "2026",
+        "doi": "10.1103/3c75-34v1",
+        "eprint": "2604.26786",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "gonzalez2026giants": {
+      "type": "misc",
+      "fields": {
+        "author": "González Lezcano, Alfredo and Pando Zayas, Leopoldo A. and Ray, Augniva",
+        "title": "The giant graviton expansion in AdS$_5\\times$SE$_5$",
+        "year": "2026",
+        "eprint": "2607.02658",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "choi2026fortuity": {
+      "type": "misc",
+      "fields": {
+        "author": "Choi, Jaehyeok and Choi, Sunjin and Kim, Seok",
+        "title": "Fortuity on the conifold",
+        "year": "2026",
+        "eprint": "2609.19297",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "amariti2026grey": {
+      "type": "misc",
+      "fields": {
+        "author": "Amariti, Antonio and Salto, Riccardo and Toldo, Chiara",
+        "title": "On Grey Galaxies and D3-branes on the Conifold",
+        "year": "2026",
+        "eprint": "2609.38064",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "deddo2026giants": {
+      "type": "misc",
+      "fields": {
+        "author": "Deddo, Evan and Jayaprakash, Sabarenath and Liu, James T. and Pando Zayas, Leopoldo A.",
+        "title": "Giant Gravitons in AdS$_5\\times$SE$_5$ and the Superconformal Index of Toric Quiver Gauge Theories",
+        "year": "2026",
+        "eprint": "2610.40773",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
       }
     }
   }
