@@ -57,8 +57,9 @@ def conformal(ck, src, cf):
     ck.limit("Klebanov-Witten: finite throat curvature", pl.kretschmann(np.zeros(3), np.array([0.001, 1, 1000])), [176]*3, 1e-10)
     pi, half = math.pi, math.pi/2
     v = cf.View("poincare", "Radial AdS slice", [-half-0.4, half+0.4, -pi-0.4, pi+0.4], "poincare")
+    v.fill("region", [[-half, -pi], [half, -pi], [half, pi], [-half, pi]])
     v.fill("cover", [[-half, 0], [half, -pi], [half, pi]])
-    v.line("boundary", [[[half, -pi], [half, pi]]])
+    v.line("boundary", [[[-half, -pi], [-half, pi]], [[half, -pi], [half, pi]]])
     v.line("chartedge", [[[-half, 0], [half, -pi]], [[-half, 0], [half, pi]]])
     for r in (LO, 1, 2, HI):
         ts = np.linspace(-1000, 1000, 2001)
@@ -67,14 +68,14 @@ def conformal(ck, src, cf):
         rr = np.geomspace(0.001, 1000, 501)
         v.curve("t", *pq(np.full_like(rr, t), rr))
     v.legend("cover", "Poincaré patch")
-    v.legend("boundary", "Timelike boundary")
+    v.legend("boundary", "Timelike boundaries")
     v.legend("chartedge", "Poincaré horizon")
     v.legend("r", "$r$ constant")
     v.legend("t", "$t$ constant")
     moment = cf.slices.moments(METRIC, "throat")[0]
     rr = np.linspace(*moment.reach("poincare", "r"), 101)
     v.slice(moment, [pq(np.zeros_like(rr), rr)])
-    v.set(settings="$L=1$.")
+    v.set(settings="$L=1$.", restriction="The induced radial plane of the throat.")
     return [v]
 
 
