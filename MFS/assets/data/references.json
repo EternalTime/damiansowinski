@@ -1,5 +1,5 @@
 {
-  "version": "f188d41aba4675a3",
+  "version": "8eac6e4b40d7a068",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -2559,6 +2559,19 @@
         "pages": "357--364",
         "year": "1950",
         "url": "https://doi.org/10.1103/PhysRev.79.357"
+      }
+    },
+    "metropolis1953": {
+      "type": "article",
+      "fields": {
+        "title": "Equation of State Calculations by Fast Computing Machines",
+        "author": "Metropolis, Nicholas and Rosenbluth, Arianna W. and Rosenbluth, Marshall N. and Teller, Augusta H. and Teller, Edward",
+        "journal": "The Journal of Chemical Physics",
+        "volume": "21",
+        "number": "6",
+        "pages": "1087--1092",
+        "year": "1953",
+        "url": "https://doi.org/10.1063/1.1699114"
       }
     },
     "bernoulli1738": {
@@ -37560,6 +37573,70 @@
         "archiveprefix": "arXiv",
         "primaryclass": "gr-qc",
         "url": "https://arxiv.org/abs/2609.00423"
+      }
+    },
+    "maedaohtatanabe2006": {
+      "type": "article",
+      "fields": {
+        "author": "Maeda, Kei-ichi and Ohta, Nobuyoshi and Tanabe, Makoto",
+        "title": "Supersymmetric rotating black hole in a compactified spacetime",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "10",
+        "pages": "104002",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.104002",
+        "eprint": "hep-th/0607084",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.74.104002"
+      }
+    },
+    "kastorsorbotraschen2012": {
+      "type": "article",
+      "fields": {
+        "author": "Kastor, David and Sorbo, Lorenzo and Traschen, Jennie",
+        "title": "Dynamics of localized Kaluza-Klein black holes in a collapsing universe",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "29",
+        "number": "5",
+        "pages": "055011",
+        "year": "2012",
+        "doi": "10.1088/0264-9381/29/5/055011",
+        "eprint": "1108.4813",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/29/5/055011"
+      }
+    },
+    "frolovzelnikov2012fields": {
+      "type": "article",
+      "fields": {
+        "author": "Frolov, Valeri P. and Zelnikov, Andrei",
+        "title": "Scalar and electromagnetic fields of static sources in higher dimensional Majumdar-Papapetrou spacetimes",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "6",
+        "pages": "064032",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.85.064032",
+        "eprint": "1202.0250",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.85.064032"
+      }
+    },
+    "igatatomizawa2021": {
+      "type": "article",
+      "fields": {
+        "author": "Igata, Takahisa and Tomizawa, Shinya",
+        "title": "Stable circular orbits in caged black hole spacetimes",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "8",
+        "pages": "084011",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.084011",
+        "eprint": "2102.00800",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.103.084011"
       }
     }
   }
