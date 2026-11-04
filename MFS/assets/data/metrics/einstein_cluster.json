@@ -83,6 +83,11 @@
       "id": "bowers_liang",
       "kind": "limit_source",
       "text": "A star of uniform density with pressure both along the radius and across it. In the limit $Q \\to 0$ of Bowers and Liang's exponent the pressure along the radius vanishes, and the star is Florides's uniform cluster [bowers1974, florides1974]."
+    },
+    {
+      "id": "rotation_halts",
+      "kind": "family",
+      "text": "The cylindrical shell also combines oppositely directed particle motions into tangential stress. Cylindrical symmetry permits gravitational waves to couple to its motion, while spherical vacuum regions have no such radiative freedom [gleiser2012radiative]."
     }
   ],
   "references": [
@@ -105,7 +110,8 @@
     "volkov1999",
     "morgan1969",
     "bonnor1975",
-    "bowers1974"
+    "bowers1974",
+    "gleiser2012radiative"
   ],
   "coordinates": [
     {

@@ -68,6 +68,11 @@
       "id": "string_cylindrical_waves",
       "kind": "family",
       "text": "Cylindrical waves around a string carry two polarisations, with a cross term joining the angular and longitudinal directions [gurtug_sakalli2003]."
+    },
+    {
+      "id": "rotation_halts",
+      "kind": "composite",
+      "text": "A counterrotating dust shell joins two cylindrical vacuum regions and couples its radial motion to their waves. The shell has a positive lower circumference bound when its particles carry angular momentum [apostolatos1992rotation, gleiser2012radiative]."
     }
   ],
   "references": [
@@ -99,7 +104,9 @@
     "einstein1935",
     "belinskii1978",
     "brill1959",
-    "gurtug_sakalli2003"
+    "gurtug_sakalli2003",
+    "apostolatos1992rotation",
+    "gleiser2012radiative"
   ],
   "coordinates": [
     {

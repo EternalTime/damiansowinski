@@ -109,6 +109,11 @@
       "id": "wiggly_string",
       "kind": "family",
       "text": "The averaged string realizes the weak field of the cylindrical family, with its mass parameter fixed by the difference between energy per length and tension through first order [campsemparan2010]."
+    },
+    {
+      "id": "rotation_halts",
+      "kind": "composite",
+      "text": "A cylindrical shell of counterrotating particles supplies a matter source for this static exterior at equilibrium. Motion of the shell couples to cylindrical gravitational waves [gleiser2012radiative]."
     }
   ],
   "references": [
@@ -149,7 +154,8 @@
     "sen1999superconducting",
     "zofka2008",
     "dasilva2000",
-    "campsemparan2010"
+    "campsemparan2010",
+    "gleiser2012radiative"
   ],
   "coordinates": [
     {

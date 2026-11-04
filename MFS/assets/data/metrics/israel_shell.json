@@ -82,6 +82,11 @@
       "id": "shell_void",
       "kind": "family",
       "text": "An expanding dust exterior feeds the shell as it moves around an empty interior [sakaihaines2000void]."
+    },
+    {
+      "id": "rotation_halts",
+      "kind": "family",
+      "text": "The same junction conditions govern a cylindrical shell of counterrotating dust. Particle angular momentum produces azimuthal stress, and cylindrical vacuum waves couple to the shell on both sides [gleiser2012radiative]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "haggard2015fireworks",
     "kraus1999",
     "israel1970",
-    "sakaihaines2000void"
+    "sakaihaines2000void",
+    "gleiser2012radiative"
   ],
   "coordinates": [
     {
