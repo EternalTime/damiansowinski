@@ -1,5 +1,5 @@
 {
-  "version": "f72ec9bed4c8ebb2",
+  "version": "df05d1ee39af4f00",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36637,6 +36637,132 @@
         "year": "1990",
         "doi": "10.1103/PhysRevD.41.3869",
         "url": "https://doi.org/10.1103/PhysRevD.41.3869"
+      }
+    },
+    "veneziano1991duality": {
+      "type": "article",
+      "fields": {
+        "author": "Veneziano, Gabriele",
+        "title": "Scale factor duality for classical and quantum strings",
+        "journal": "Physics Letters B",
+        "volume": "265",
+        "number": "3-4",
+        "pages": "287--294",
+        "year": "1991",
+        "doi": "10.1016/0370-2693(91)90055-U",
+        "url": "https://doi.org/10.1016/0370-2693(91)90055-U"
+      }
+    },
+    "tseytlin1991dilaton": {
+      "type": "article",
+      "fields": {
+        "author": "Tseytlin, A. A.",
+        "title": "Duality and dilaton",
+        "journal": "Modern Physics Letters A",
+        "volume": "6",
+        "number": "19",
+        "pages": "1721--1732",
+        "year": "1991",
+        "doi": "10.1142/S021773239100186X",
+        "url": "https://doi.org/10.1142/S021773239100186X",
+        "eprint": "2603.09586",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini2003prebigbang": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, Maurizio and Veneziano, Gabriele",
+        "title": "The pre-big bang scenario in string cosmology",
+        "journal": "Physics Reports",
+        "volume": "373",
+        "number": "1-2",
+        "pages": "1--212",
+        "year": "2003",
+        "doi": "10.1016/S0370-1573(02)00389-7",
+        "url": "https://doi.org/10.1016/S0370-1573(02)00389-7",
+        "eprint": "hep-th/0207130",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "lidsey2000superstring": {
+      "type": "article",
+      "fields": {
+        "author": "Lidsey, James E. and Wands, David and Copeland, Edmund J.",
+        "title": "Superstring cosmology",
+        "journal": "Physics Reports",
+        "volume": "337",
+        "number": "4-5",
+        "pages": "343--492",
+        "year": "2000",
+        "doi": "10.1016/S0370-1573(00)00064-8",
+        "url": "https://doi.org/10.1016/S0370-1573(00)00064-8",
+        "eprint": "hep-th/9909061",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini1993prebigbang": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, Maurizio and Veneziano, Gabriele",
+        "title": "Pre-big-bang in string cosmology",
+        "journal": "Astroparticle Physics",
+        "volume": "1",
+        "number": "3",
+        "pages": "317--339",
+        "year": "1993",
+        "doi": "10.1016/0927-6505(93)90017-8",
+        "url": "https://doi.org/10.1016/0927-6505(93)90017-8",
+        "eprint": "hep-th/9211021",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "brustein1994exit": {
+      "type": "article",
+      "fields": {
+        "author": "Brustein, Ram and Veneziano, Gabriele",
+        "title": "The graceful exit problem in string cosmology",
+        "journal": "Physics Letters B",
+        "volume": "329",
+        "number": "4",
+        "pages": "429--434",
+        "year": "1994",
+        "doi": "10.1016/0370-2693(94)91086-3",
+        "url": "https://doi.org/10.1016/0370-2693(94)91086-3",
+        "eprint": "hep-th/9403060",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "hohm2019duality": {
+      "type": "article",
+      "fields": {
+        "author": "Hohm, Olaf and Zwiebach, Barton",
+        "title": "Duality invariant cosmology to all orders in $\\alpha'$",
+        "journal": "Physical Review D",
+        "volume": "100",
+        "number": "12",
+        "pages": "126011",
+        "year": "2019",
+        "doi": "10.1103/PhysRevD.100.126011",
+        "url": "https://doi.org/10.1103/PhysRevD.100.126011",
+        "eprint": "1905.06963",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini2023nonsingular": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, Maurizio and Veneziano, Gabriele",
+        "title": "Non-singular pre-big bang scenarios from all-order $\\alpha'$ corrections",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "7",
+        "pages": "144",
+        "year": "2023",
+        "doi": "10.1007/JHEP07(2023)144",
+        "url": "https://doi.org/10.1007/JHEP07(2023)144",
+        "eprint": "2305.00222",
+        "archiveprefix": "arXiv"
       }
     }
   }

@@ -444,7 +444,7 @@
       "idealized model",
       "BKL"
     ],
-    "version": "e1e9dfb20c10708e",
+    "version": "77b3b7aca63a05c3",
     "diagrams": "d6268bdae97d9fd7",
     "embedding": "7fea7a854b8ceca4"
   },
@@ -475,7 +475,7 @@
       "spherically symmetric",
       "quantum cosmology"
     ],
-    "version": "ab8abecd3098bf4b",
+    "version": "e45d6c6f5084c2e0",
     "diagrams": "3db667c16a7e7f5b",
     "conformal": "ccbbac884fd12a06",
     "embedding": "ceeab6a7ab8b327f"
@@ -1689,7 +1689,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "12089eaa1c238359",
+    "version": "89f3dd92fab43ac6",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -3249,7 +3249,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "a4d84ffc64e15b50",
+    "version": "c4c4043b2f9274a2",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -3311,7 +3311,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "d47aa7f2b5c067f9",
+    "version": "2e8c224eaa6139a9",
     "diagrams": "8b8ed11a7a64599d",
     "embedding": "592f4ab4aaa693fe"
   },
@@ -4074,7 +4074,7 @@
       "dilaton",
       "string theory"
     ],
-    "version": "522200ced18569b7",
+    "version": "0f3eaf23fa10ef9d",
     "diagrams": "d95113778b14b283",
     "conformal": "381fbc315a237c9a",
     "embedding": "a048b6c2abfe9e5b",
@@ -5445,6 +5445,38 @@
     "version": "058da1c399e466f2",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "c2fea606320f23bc"
+  },
+  {
+    "id": "pre_big_bang",
+    "name": "Pre-Big Bang",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "anisotropic",
+      "homogeneous",
+      "spatially homogeneous",
+      "Bianchi classification",
+      "Kasner",
+      "time-dependent",
+      "big bang",
+      "inflation",
+      "curvature singularity",
+      "dilaton",
+      "dilaton gravity",
+      "scalar field",
+      "string theory",
+      "low energy string theory",
+      "conformal transformation",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "ecc36d1f43f7531a",
+    "diagrams": "7ca79a15633bf3d8",
+    "conformal": "c7af71a8ea6731e5",
+    "embedding": "e6ae29cfe3827d54",
+    "curvature": "42149f18769ad223"
   },
   {
     "id": "quantum_btz",

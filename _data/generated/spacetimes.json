@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 249,
+  "count": 250,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -5318,6 +5318,11 @@
           "id": "kasner_magnetic",
           "kind": "special_case",
           "text": "Bianchi type I holding a uniform magnetic field and no matter, the universe Gerald Rosen found in 1962 [rosen1962, jacobs1969]."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "special_case",
+          "text": "The type I universes of low energy string theory, with scale factors $(-t)^{\\beta_i}$ and a dilaton, where $\\sum_i\\beta_i^2 = 1$ [gasperini2003prebigbang]."
         }
       ],
       "references": [
@@ -5340,7 +5345,8 @@
         "zeldovich1984",
         "king1973",
         "rosen1962",
-        "jacobs1969"
+        "jacobs1969",
+        "gasperini2003prebigbang"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bianchi.json",
@@ -5497,6 +5503,11 @@
           "id": "bekenstein_universes",
           "kind": "family",
           "text": "Another universe whose contraction turns into expansion at a bounce, in Einstein's theory, through a scalar field coupled to curvature and to dust."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "family",
+          "text": "A vacuum of low energy string theory whose isotropic member expands faster and faster toward the big bang in its string frame. In the Einstein frame that expansion is the contraction of this universe long before its bounce [gasperini2003prebigbang]."
         }
       ],
       "references": [
@@ -5515,7 +5526,8 @@
         "simpson2019",
         "hayward2006",
         "binetruy2000nonconventional",
-        "murphy1973"
+        "murphy1973",
+        "gasperini2003prebigbang"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lqc_bounce.json",
@@ -18266,6 +18278,11 @@
           "id": "linear_dilaton",
           "kind": "family",
           "text": "A flat string frame can carry a dilaton linear in a coordinate. The Einstein frame with a timelike gradient expands linearly in time, while the extremal magnetic throat has a spatial gradient [devega1994linear, giddings1992]."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "family",
+          "text": "A universe of the same string theory with the dilaton alone, changing with time. With every exponent negative it expands faster and faster toward a singularity of infinite curvature, and inverting its scale factors and reversing its time pairs it with a decelerating expansion [gasperini1993prebigbang]."
         }
       ],
       "references": [
@@ -18294,7 +18311,8 @@
         "gibbons1995",
         "banerjee1998",
         "dvali2016skyrmion",
-        "devega1994linear"
+        "devega1994linear",
+        "gasperini1993prebigbang"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -36339,6 +36357,11 @@
           "id": "chodos_detweiler",
           "kind": "family",
           "text": "Three expanding circles and one contracting circle form a five dimensional Kasner vacuum with exponents $(1/2,1/2,1/2,-1/2)$ [chyba1985]."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "generalisation",
+          "text": "Kasner's metric with the dilaton of low energy string theory, $\\phi = (\\sum_i\\beta_i - 1)\\ln(-t)$, on $t < 0$. The squares of the exponents still sum to one while their sum is free, and with every exponent negative space expands faster and faster toward $t = 0$ [gasperini2003prebigbang]."
         }
       ],
       "references": [
@@ -36365,7 +36388,8 @@
         "kastor2015",
         "belinskii1975",
         "bedran1997",
-        "chyba1985"
+        "chyba1985",
+        "gasperini2003prebigbang"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -36722,6 +36746,11 @@
           "id": "chodos_detweiler",
           "kind": "family",
           "text": "The five dimensional vacuum chart at $s_1=s_2=s_3=1/2$, $s_5=-1/2$ has the local geometry of this expanding and contracting four torus [chyba1985]."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "conformal",
+          "text": "A vacuum of low energy string theory whose string frame metric, multiplied by $e^{-\\phi}$, is one of these universes run backward in time. Its accelerating isotropic expansion becomes the contraction of the member with all three exponents $1/3$ [gasperini2003prebigbang]."
         }
       ],
       "references": [
@@ -36740,7 +36769,8 @@
         "jacobs1969",
         "ashtekar2009bianchi",
         "hartnoll2021diving",
-        "chyba1985"
+        "chyba1985",
+        "gasperini2003prebigbang"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner_scalar.json",
@@ -45152,6 +45182,11 @@
           "id": "dilaton_black_hole",
           "kind": "family",
           "text": "The string frame of the extreme magnetic black hole has a long throat whose dilaton is linear in distance [giddings1992]. The gradient along the throat is spatial."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "family",
+          "text": "A vacuum of the metric and dilaton of string theory whose scale factors are powers of time, the squares of the exponents summing to one. With every exponent negative it expands faster and faster toward a singularity, and inverting its scale factors and reversing its time, with a shift of the dilaton, pairs it with a decelerating expansion [gasperini1993prebigbang]."
         }
       ],
       "references": [
@@ -45163,7 +45198,8 @@
         "antoniadis1989expanding",
         "karananas2021linear",
         "mandal1991",
-        "giddings1992"
+        "giddings1992",
+        "gasperini1993prebigbang"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/linear_dilaton.json",
@@ -60597,6 +60633,207 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
+      "id": "pre_big_bang",
+      "name": "Pre-Big Bang Dilaton Vacuum",
+      "short_name": "Pre-Big Bang",
+      "description": "A homogeneous, anisotropic universe of low energy string theory whose scale factors are powers of time, $(-t)^{\\beta_i}$ with $\\sum_i\\beta_i^2 = 1$, and whose dilaton changes as the logarithm of $-t$. With every exponent negative it expands faster and faster toward a curvature singularity at $t = 0$, the phase that Maurizio Gasperini and Gabriele Veneziano placed before the big bang.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "anisotropic",
+        "homogeneous",
+        "spatially homogeneous",
+        "Bianchi classification",
+        "Kasner",
+        "time-dependent",
+        "big bang",
+        "inflation",
+        "curvature singularity",
+        "dilaton",
+        "dilaton gravity",
+        "scalar field",
+        "string theory",
+        "low energy string theory",
+        "conformal transformation",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units in which the speed of light is one, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "kasner",
+          "kind": "special_case",
+          "text": "Kasner's vacuum is the member whose exponents also sum to one, where the dilaton is constant. Its time runs the other way, on $t > 0$ [lidsey2000superstring]."
+        },
+        {
+          "id": "kasner_scalar",
+          "kind": "conformal",
+          "text": "Rescaled by $e^{-\\phi}$ to the Einstein frame, where the dilaton is a massless scalar field, each of these universes is Kasner's universe with a scalar field run backward in time [gasperini2003prebigbang]. The accelerating isotropic expansion becomes an accelerating contraction there."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "Another vacuum of the metric and dilaton of string theory, flat in its string frame with the dilaton linear in time. Gabriele Veneziano noted that with a cosmological term in the string action the general solution tends to it in the far past [veneziano1991duality]. Its scale factors are all one, so the inversion of scale factors leaves it as it is."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The static, charged black hole of the same low energy string theory, with a Maxwell field beside the dilaton, whose dilaton changes with distance from the hole. Here the dilaton changes with time alone, and with every exponent negative space expands faster and faster toward a singularity."
+        },
+        {
+          "id": "bianchi",
+          "kind": "generalisation",
+          "text": "Bianchi type I, flat space with a scale factor of its own along each axis. The dilaton of low energy string theory makes each scale factor a power of time [gasperini2003prebigbang]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "A flat universe of a massless scalar field in which the big bang is replaced by a bounce of loop quantum cosmology. Long before the bounce it contracts as $(-t)^{1/3}$, the Einstein frame of the isotropic expansion here [gasperini2003prebigbang]."
+        }
+      ],
+      "references": [
+        "veneziano1991duality",
+        "tseytlin1991dilaton",
+        "gasperini2003prebigbang",
+        "lidsey2000superstring",
+        "gasperini1993prebigbang",
+        "brustein1994exit",
+        "hohm2019duality",
+        "gasperini2023nonsingular"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pre_big_bang.json",
+      "charts": [
+        {
+          "id": "synchronous",
+          "name": "Synchronous",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, 0)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\beta_1",
+              "description": "Exponent along $x$, with $\\beta_1^2 + \\beta_2^2 + \\beta_3^2 = 1$"
+            },
+            {
+              "symbol": "\\beta_2",
+              "description": "Exponent along $y$; with $\\beta_1 + \\beta_2 + \\beta_3 = 1$ the dilaton is constant and the metric is Kasner's"
+            },
+            {
+              "symbol": "\\beta_3",
+              "description": "Exponent along $z$; the condition leaves two of the three exponents free, and with all three negative space expands along every axis"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, y, z)$, with $t$ the proper time of the comoving observers, and evaluate the powers $(-t)^{2\\beta_i}$ with $t$ in a fixed unit, so they are dimensionless and the lengths sit in $x$, $y$, and $z$. The dilaton is $\\phi = (\\beta_1 + \\beta_2 + \\beta_3 - 1)\\ln(-t)$, and every component assumes $\\beta_1^2 + \\beta_2^2 + \\beta_3^2 = 1$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -dt^2 + (-t)^{2\\beta_1}dx^2 + (-t)^{2\\beta_2}dy^2 + (-t)^{2\\beta_3}dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "(-t)^{2\\beta_1}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "(-t)^{2\\beta_2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "(-t)^{2\\beta_3}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\left(\\beta_1 + \\beta_2 + \\beta_3 - 1\\right)^2}{t^2}",
+          "kretschmann": "K = \\dfrac{4\\left(\\beta_1^2\\left(\\beta_1 - 1\\right)^2 + \\beta_2^2\\left(\\beta_2 - 1\\right)^2 + \\beta_3^2\\left(\\beta_3 - 1\\right)^2 + \\beta_1^2\\,\\beta_2^2 + \\beta_1^2\\,\\beta_3^2 + \\beta_2^2\\,\\beta_3^2\\right)}{t^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, 0)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Exponent of the scale factor in conformal time, $k = \\beta/(1 - \\beta)$: $k = -1/(1 + \\sqrt3)$ for the expanding member, $\\beta = -1/\\sqrt3$, and $k = 1/(\\sqrt3 - 1)$ for the contracting one, $\\beta = 1/\\sqrt3$"
+            },
+            {
+              "symbol": "a = \\left(-\\eta/(1 + k)\\right)^k",
+              "description": "Scale factor $(-t)^\\beta$ in conformal time, a pure number that is one at $t = -1$, where $\\eta = -(1 + k)$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$ of the two members with $\\beta_1 = \\beta_2 = \\beta_3 = \\beta$, defined by $d\\eta = dt/a$ and fixed by $-t = (-\\eta/(1 + k))^{1 + k}$, and the same $x$, $y$, and $z$. The dilaton is $\\phi = (2k - 1)\\ln(-\\eta/(1 + k))$, and the powers are read with $\\eta$ in the unit of $t$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-d\\eta^2 + dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "a^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6k\\left(k - 1\\right)}{\\eta^2\\,a^2}",
+          "kretschmann": "K = \\dfrac{12k^2\\left(k^2 + 1\\right)}{\\eta^4\\,a^4}"
         }
       ]
     },
