@@ -1,5 +1,5 @@
 {
-  "version": "649de9fe39328aee",
+  "version": "dce4df290984db0c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45330,6 +45330,185 @@
         "eprint": "gr-qc/0511015",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/0511015"
+      }
+    },
+    "fackerell1971": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic, Spherically Symmetric Star Clusters. V. A Relativistic Version of {Plummer}'s Model",
+        "author": "Fackerell, Edward D.",
+        "journal": "The Astrophysical Journal",
+        "volume": "165",
+        "pages": "489--493",
+        "year": "1971",
+        "doi": "10.1086/150916",
+        "url": "https://doi.org/10.1086/150916"
+      }
+    },
+    "glass1976": {
+      "type": "article",
+      "fields": {
+        "title": "On a spherical star system with a collapsed core",
+        "author": "Glass, E. N. and Mashhoon, Bahram",
+        "journal": "The Astrophysical Journal",
+        "volume": "205",
+        "pages": "570--577",
+        "year": "1976",
+        "doi": "10.1086/154313",
+        "url": "https://doi.org/10.1086/154313"
+      }
+    },
+    "rosquist1995": {
+      "type": "article",
+      "fields": {
+        "title": "Hamiltonian approach to relativistic star models",
+        "author": "Rosquist, Kjell",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "5",
+        "pages": "1305--1326",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/5/019",
+        "eprint": "gr-qc/9411047",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/12/5/019"
+      }
+    },
+    "vogt2003": {
+      "type": "article",
+      "fields": {
+        "title": "Exact general relativistic perfect fluid disks with halos",
+        "author": "Vogt, Daniel and Letelier, Patricio S.",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "8",
+        "pages": "084010",
+        "year": "2003",
+        "doi": "10.1103/physrevd.68.084010",
+        "eprint": "gr-qc/0308031",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.68.084010"
+      }
+    },
+    "simon2008": {
+      "type": "article",
+      "fields": {
+        "title": "Static perfect fluids with Pant-Sah equations of state",
+        "author": "Simon, Walter",
+        "journal": "General Relativity and Gravitation",
+        "volume": "40",
+        "number": "12",
+        "pages": "2591--2618",
+        "year": "2008",
+        "doi": "10.1007/s10714-008-0641-5",
+        "eprint": "0801.2741",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-008-0641-5"
+      }
+    },
+    "nguyen2013": {
+      "type": "article",
+      "fields": {
+        "title": "Analytical families of two-component anisotropic polytropes and their relativistic extensions",
+        "author": "Nguyen, Phuc H. and Lingam, Manasvi",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "436",
+        "number": "3",
+        "pages": "2014--2028",
+        "year": "2013",
+        "doi": "10.1093/mnras/stt1719",
+        "eprint": "1307.8433",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/mnras/stt1719"
+      }
+    },
+    "gauy2018": {
+      "type": "article",
+      "fields": {
+        "title": "Distribution functions for a family of general-relativistic hypervirial models in the collisionless regime",
+        "author": "Gauy, Henrique Matheus and Ramos-Caro, Javier",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "6",
+        "pages": "064012",
+        "year": "2018",
+        "doi": "10.1103/physrevd.97.064012",
+        "eprint": "1707.08666",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.97.064012"
+      }
+    },
+    "garcia2020": {
+      "type": "article",
+      "fields": {
+        "title": "Poisson type relativistic perfect fluid spheres",
+        "author": "García-Reyes, Gonzalo",
+        "journal": "The European Physical Journal Plus",
+        "volume": "135",
+        "number": "11",
+        "pages": "931",
+        "year": "2020",
+        "doi": "10.1140/epjp/s13360-020-00948-x",
+        "eprint": "1812.04958",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjp/s13360-020-00948-x"
+      }
+    },
+    "garcia2025": {
+      "type": "article",
+      "fields": {
+        "title": "Non-static axisymmetric structures embedded in an asymptotically $\\Lambda$CDM universe",
+        "author": "García-Reyes, Gonzalo",
+        "journal": "General Relativity and Gravitation",
+        "volume": "57",
+        "number": "2",
+        "pages": "41",
+        "year": "2025",
+        "doi": "10.1007/s10714-025-03359-4",
+        "url": "https://doi.org/10.1007/s10714-025-03359-4"
+      }
+    },
+    "esfandiar2026": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmological black hole candidates: a detailed analysis of McVittie, Culetu, Sultana–Dyer, and Glass–Mashhoon spacetimes",
+        "author": "Esfandiar, Mahdi and Shojai, Fatimah and Jamshidi, Omid Zamani and Zoorasna, Soran",
+        "journal": "The European Physical Journal C",
+        "volume": "86",
+        "number": "4",
+        "pages": "327",
+        "year": "2026",
+        "doi": "10.1140/epjc/s10052-026-15527-0",
+        "eprint": "2510.18690",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-026-15527-0"
+      }
+    },
+    "tabatabaei2024": {
+      "type": "article",
+      "fields": {
+        "title": "McVittie–Plummer Spacetime: Plummer Sphere Immersed in the FLRW Universe",
+        "author": "Tabatabaei, Javad and Baghram, Shant and Mashhoon, Bahram",
+        "journal": "The Astrophysical Journal",
+        "volume": "975",
+        "number": "2",
+        "pages": "240",
+        "year": "2024",
+        "doi": "10.3847/1538-4357/ad7b37",
+        "eprint": "2406.10990",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3847/1538-4357/ad7b37"
+      }
+    },
+    "wang2026brachistochrone": {
+      "type": "misc",
+      "fields": {
+        "title": "The brachistochrone problem for a constant velocity traveler in static and spherically symmetric spacetimes",
+        "author": "Wang, Longfei and Jia, Junji",
+        "year": "2026",
+        "eprint": "2607.29265",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2607.29265"
       }
     }
   }
