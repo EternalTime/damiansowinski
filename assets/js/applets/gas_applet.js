@@ -206,6 +206,7 @@
     ke /= (2 * N);
     const sc = Math.sqrt(T / Math.max(ke, 1e-12));
     for (let i = 0; i < N; i++) { vx[i] *= sc; vy[i] *= sc; }
+    histT = T;
   }
 
   function collidePair(i, j, d2min, d2touch) {
@@ -364,6 +365,7 @@
   const N_BINS = 30;
   let smoothBins = new Float64Array(N_BINS);
   let histYMax   = 0;
+  let histT      = 1;   // the gas's own temperature, smoothed, which sets the speed axis
   const HIST_ALPHA = 0.10, YMAX_ALPHA = 0.04;
 
   function renderHistogram() {
@@ -371,7 +373,14 @@
     const W  = hc.clientWidth  || 200;
     const H  = hc.clientHeight || 120;
     if (hc.width !== W || hc.height !== H) { hc.width = W; hc.height = H; }
-    const vref = Math.sqrt(T);
+    /* The speed axis follows the temperature of the gas being drawn, smoothed as the height
+       is, so the bars stay framed however the piston or gravity has heated or cooled it;
+       the curve stays at the slider temperature, so a gas hotter than the slider shows as
+       bars lying to the right of it. */
+    let ke = 0;
+    for (let i = 0; i < N; i++) ke += vx[i]*vx[i] + vy[i]*vy[i];
+    histT += YMAX_ALPHA * (ke / (2 * N) - histT);
+    const vref = Math.sqrt(histT);
     const vmax = 6 * vref + 0.5;
     const dv   = vmax / N_BINS;
     const raw  = new Float64Array(N_BINS);
@@ -385,16 +394,20 @@
     if (tot > 0) for (let b = 0; b < N_BINS; b++) raw[b] /= tot;
     for (let b = 0; b < N_BINS; b++)
       smoothBins[b] += HIST_ALPHA * (raw[b] - smoothBins[b]);
-    const mb = new Float64Array(N_BINS);
-    let mbSum = 0;
+    /* the curve at the slider temperature, and the height set by the same law at the
+       gas's own temperature, which is what the bars follow */
+    const mb = new Float64Array(N_BINS), gas = new Float64Array(N_BINS);
+    let mbSum = 0, gasSum = 0;
     for (let b = 0; b < N_BINS; b++) {
       const v = (b + 0.5) * dv;
       mb[b]   = (v / T) * Math.exp(-v * v / (2 * T));
+      gas[b]  = (v / histT) * Math.exp(-v * v / (2 * histT));
       mbSum  += mb[b];
+      gasSum += gas[b];
     }
     if (mbSum > 0) for (let b = 0; b < N_BINS; b++) mb[b] /= mbSum;
-    const mbPeak = Math.max(...mb, 1e-9);
-    histYMax += YMAX_ALPHA * (mbPeak * 1.20 - histYMax);
+    const gasPeak = gasSum > 0 ? Math.max(...gas) / gasSum : 1e-9;
+    histYMax += YMAX_ALPHA * (gasPeak * 1.20 - histYMax);
     const ymax = Math.max(histYMax, 1e-9);
     const PL = 4, PR = 4, PT = 6, PB = 4;
     const pw = W - PL - PR, ph = H - PT - PB;
@@ -570,6 +583,7 @@ the two-dimensional form of the law Maxwell found in three.¶The hard-sphere gas
     ke /= (2 * N);
     const sc = Math.sqrt(T / Math.max(ke, 1e-12));
     for (let i = 0; i < N; i++) { vx[i] *= sc; vy[i] *= sc; }
+    histT      = T;
     smoothBins = new Float64Array(N_BINS);
     histYMax   = 0;
   });
