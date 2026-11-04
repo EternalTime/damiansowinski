@@ -5465,5 +5465,8 @@ DIMENSIONS.update(_stringy_cosmic_strings.DIMENSIONS)
 import klebanov_witten as _klebanov_witten
 DIMENSIONS.update(_klebanov_witten.DIMENSIONS)
 
+import wiggly_string as _wiggly_string
+DIMENSIONS.update(_wiggly_string.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())

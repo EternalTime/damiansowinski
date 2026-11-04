@@ -104,6 +104,11 @@
       "id": "linet_tian",
       "kind": "generalisation",
       "text": "The same line of mass in a universe with a cosmological constant, the static field Bernard Linet and Qingjun Tian found in 1986. With $\\Lambda < 0$ it approaches anti-de Sitter space far from the axis [zofka2008, dasilva2000]."
+    },
+    {
+      "id": "wiggly_string",
+      "kind": "family",
+      "text": "The averaged string realizes the weak field of the cylindrical family, with its mass parameter fixed by the difference between energy per length and tension through first order [campsemparan2010]."
     }
   ],
   "references": [
@@ -143,7 +148,8 @@
     "davis1974",
     "sen1999superconducting",
     "zofka2008",
-    "dasilva2000"
+    "dasilva2000",
+    "campsemparan2010"
   ],
   "coordinates": [
     {

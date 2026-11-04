@@ -108,6 +108,11 @@
       "id": "global_texture",
       "kind": "family",
       "text": "A spherical scalar configuration whose collapse changes the solid angle about its centre. The straight string has a constant angular deficit around its axis [durrer1992textures]."
+    },
+    {
+      "id": "wiggly_string",
+      "kind": "family",
+      "text": "Averaging small waves on the string raises its energy per length above its tension, so the averaged geometry attracts matter initially at rest [campsemparan2010]."
     }
   ],
   "references": [
@@ -141,7 +146,8 @@
     "gurtug_sakalli2003",
     "zofka2008",
     "gibbonsgreenperry1996",
-    "durrer1992textures"
+    "durrer1992textures",
+    "campsemparan2010"
   ],
   "coordinates": [
     {

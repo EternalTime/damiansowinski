@@ -44,5 +44,1385 @@
     "carter1990noisy",
     "garfinkle1990"
   ],
-  "coordinates": []
+  "coordinates": [
+    {
+      "id": "cylindrical",
+      "name": "Cylindrical Transverse Gauge",
+      "coords": [
+        "t",
+        "r",
+        "\\phi",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty,\\infty)",
+        "r \\in (0,\\infty)",
+        "\\phi \\in [0,2\\pi)",
+        "z \\in (-\\infty,\\infty)",
+        "0<T\\le U\\ll1",
+        "\\left|4(U+T)\\ln(r/r_0)\\right|\\ll1"
+      ],
+      "parameters": [
+        {
+          "symbol": "U",
+          "description": "Energy per length of the averaged string, in geometrical units; $U\\ge T>0$."
+        },
+        {
+          "symbol": "T",
+          "description": "Tension of the averaged string; $UT=\\mu_0^2$, where $\\mu_0$ is the energy per length and tension of the unperturbed string."
+        },
+        {
+          "symbol": "r_0",
+          "description": "Reference length in the logarithmic potential."
+        }
+      ],
+      "convention": "We use coordinates $(t,r,\\phi,z)$, with $t$, $r$, and $z$ measured as lengths and $\\phi$ an angle, and $r_0$ is a positive reference length.",
+      "line_element": "ds^2 = -\\left(1+4(U-T)\\ln(r/r_0)\\right)dt^2+\\left(1-4(U+T)\\ln(r/r_0)\\right)\\left(dr^2+r^2d\\phi^2\\right)+\\left(1-4(U-T)\\ln(r/r_0)\\right)dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "-\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "-r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{1}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "-\\dfrac{1}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "-\\dfrac{1}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "\\dfrac{1}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2T + 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2T - 2U}{r}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2T - 2U}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2T - 2U}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{2T - 2U}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2T - 2U}{r}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2T - 2U}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2T + 2U}{r}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(T + U\\right)^2}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{8\\left(T + U\\right)^2}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(T + U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\left(T + U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1 - 4T\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(T + U\\right)^2}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\left(T + U\\right)^2}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(T + U\\right)^2}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{8\\left(T + U\\right)^2}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{2\\left(T - U\\right)\\left(16T^2\\,\\ln(r/r_0)^2 - 16U^2\\,\\ln(r/r_0)^2 + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 4U\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{8\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1280T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^2\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^3 - 4096T^2\\,U^3\\,\\ln(r/r_0)^4 - 6144T^2\\,U^4\\,\\ln(r/r_0)^4 - 4096T^2\\,U^4\\,\\ln(r/r_0)^5 - 3072T^3\\,U^2\\,\\ln(r/r_0)^3 - 4096T^3\\,U^2\\,\\ln(r/r_0)^4 + 24576T^3\\,U^3\\,\\ln(r/r_0)^4 + 16384T^3\\,U^3\\,\\ln(r/r_0)^5 - 6144T^4\\,U^2\\,\\ln(r/r_0)^4 - 4096T^4\\,U^2\\,\\ln(r/r_0)^5 - 128T\\,U^2\\,\\ln(r/r_0)^2 - 512T\\,U^3\\,\\ln(r/r_0)^2 - 1024T\\,U^3\\,\\ln(r/r_0)^3 + 4608T\\,U^4\\,\\ln(r/r_0)^3 + 6144T\\,U^4\\,\\ln(r/r_0)^4 - 12288T\\,U^5\\,\\ln(r/r_0)^4 - 8192T\\,U^5\\,\\ln(r/r_0)^5 - 128T^2\\,U\\,\\ln(r/r_0)^2 - 512T^3\\,U\\,\\ln(r/r_0)^2 - 1024T^3\\,U\\,\\ln(r/r_0)^3 + 4608T^4\\,U\\,\\ln(r/r_0)^3 + 6144T^4\\,U\\,\\ln(r/r_0)^4 - 12288T^5\\,U\\,\\ln(r/r_0)^4 - 8192T^5\\,U\\,\\ln(r/r_0)^5 + 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 128T^3\\,\\ln(r/r_0)^2 - 128T^4\\,\\ln(r/r_0)^2 - 1536T^5\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^4 + 6144T^6\\,\\ln(r/r_0)^4 + 4096T^6\\,\\ln(r/r_0)^5 + 128U^3\\,\\ln(r/r_0)^2 - 128U^4\\,\\ln(r/r_0)^2 - 1536U^5\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^4 + 6144U^6\\,\\ln(r/r_0)^4 + 4096U^6\\,\\ln(r/r_0)^5 + 32T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 16T^2 + 16U^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{512T^2\\,U^2\\,\\ln(r/r_0)^3 - 128T\\,U^2\\,\\ln(r/r_0)^2 - 128T^2\\,U\\,\\ln(r/r_0)^2 - 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 128T^3\\,\\ln(r/r_0)^2 - 256T^4\\,\\ln(r/r_0)^3 + 128U^3\\,\\ln(r/r_0)^2 - 256U^4\\,\\ln(r/r_0)^3 + 32T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T\\,U - 8T^2 - 8U^2}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{1280T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^2\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^3 - 4096T^2\\,U^3\\,\\ln(r/r_0)^4 - 6144T^2\\,U^4\\,\\ln(r/r_0)^4 - 4096T^2\\,U^4\\,\\ln(r/r_0)^5 - 3072T^3\\,U^2\\,\\ln(r/r_0)^3 - 4096T^3\\,U^2\\,\\ln(r/r_0)^4 + 24576T^3\\,U^3\\,\\ln(r/r_0)^4 + 16384T^3\\,U^3\\,\\ln(r/r_0)^5 - 6144T^4\\,U^2\\,\\ln(r/r_0)^4 - 4096T^4\\,U^2\\,\\ln(r/r_0)^5 - 128T\\,U^2\\,\\ln(r/r_0)^2 - 512T\\,U^3\\,\\ln(r/r_0)^2 - 1024T\\,U^3\\,\\ln(r/r_0)^3 + 4608T\\,U^4\\,\\ln(r/r_0)^3 + 6144T\\,U^4\\,\\ln(r/r_0)^4 - 12288T\\,U^5\\,\\ln(r/r_0)^4 - 8192T\\,U^5\\,\\ln(r/r_0)^5 - 128T^2\\,U\\,\\ln(r/r_0)^2 - 512T^3\\,U\\,\\ln(r/r_0)^2 - 1024T^3\\,U\\,\\ln(r/r_0)^3 + 4608T^4\\,U\\,\\ln(r/r_0)^3 + 6144T^4\\,U\\,\\ln(r/r_0)^4 - 12288T^5\\,U\\,\\ln(r/r_0)^4 - 8192T^5\\,U\\,\\ln(r/r_0)^5 + 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 128T^3\\,\\ln(r/r_0)^2 - 128T^4\\,\\ln(r/r_0)^2 - 1536T^5\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^4 + 6144T^6\\,\\ln(r/r_0)^4 + 4096T^6\\,\\ln(r/r_0)^5 + 128U^3\\,\\ln(r/r_0)^2 - 128U^4\\,\\ln(r/r_0)^2 - 1536U^5\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^4 + 6144U^6\\,\\ln(r/r_0)^4 + 4096U^6\\,\\ln(r/r_0)^5 + 32T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 16T^2 + 16U^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8U^2 + 8T^2 + 16T\\,U - 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 256U^4\\,\\ln(r/r_0)^3 - 128U^3\\,\\ln(r/r_0)^2 + 256T^4\\,\\ln(r/r_0)^3 - 128T^3\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 128T^2\\,U\\,\\ln(r/r_0)^2 + 128T\\,U^2\\,\\ln(r/r_0)^2 - 512T^2\\,U^2\\,\\ln(r/r_0)^3}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{8\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{1280T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^2\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^3 - 4096T^2\\,U^3\\,\\ln(r/r_0)^4 - 6144T^2\\,U^4\\,\\ln(r/r_0)^4 - 4096T^2\\,U^4\\,\\ln(r/r_0)^5 - 3072T^3\\,U^2\\,\\ln(r/r_0)^3 - 4096T^3\\,U^2\\,\\ln(r/r_0)^4 + 24576T^3\\,U^3\\,\\ln(r/r_0)^4 + 16384T^3\\,U^3\\,\\ln(r/r_0)^5 - 6144T^4\\,U^2\\,\\ln(r/r_0)^4 - 4096T^4\\,U^2\\,\\ln(r/r_0)^5 - 128T\\,U^2\\,\\ln(r/r_0)^2 - 512T\\,U^3\\,\\ln(r/r_0)^2 - 1024T\\,U^3\\,\\ln(r/r_0)^3 + 4608T\\,U^4\\,\\ln(r/r_0)^3 + 6144T\\,U^4\\,\\ln(r/r_0)^4 - 12288T\\,U^5\\,\\ln(r/r_0)^4 - 8192T\\,U^5\\,\\ln(r/r_0)^5 - 128T^2\\,U\\,\\ln(r/r_0)^2 - 512T^3\\,U\\,\\ln(r/r_0)^2 - 1024T^3\\,U\\,\\ln(r/r_0)^3 + 4608T^4\\,U\\,\\ln(r/r_0)^3 + 6144T^4\\,U\\,\\ln(r/r_0)^4 - 12288T^5\\,U\\,\\ln(r/r_0)^4 - 8192T^5\\,U\\,\\ln(r/r_0)^5 + 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 128T^3\\,\\ln(r/r_0)^2 - 128T^4\\,\\ln(r/r_0)^2 - 1536T^5\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^4 + 6144T^6\\,\\ln(r/r_0)^4 + 4096T^6\\,\\ln(r/r_0)^5 + 128U^3\\,\\ln(r/r_0)^2 - 128U^4\\,\\ln(r/r_0)^2 - 1536U^5\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^4 + 6144U^6\\,\\ln(r/r_0)^4 + 4096U^6\\,\\ln(r/r_0)^5 + 32T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 16T^2 + 16U^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^4}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{512T^2\\,U^2\\,\\ln(r/r_0)^3 - 128T\\,U^2\\,\\ln(r/r_0)^2 - 128T^2\\,U\\,\\ln(r/r_0)^2 - 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 128T^3\\,\\ln(r/r_0)^2 - 256T^4\\,\\ln(r/r_0)^3 + 128U^3\\,\\ln(r/r_0)^2 - 256U^4\\,\\ln(r/r_0)^3 + 32T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T\\,U - 8T^2 - 8U^2}{r^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^4}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{8\\left(T - U\\right)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{1024T^2\\,U^2\\,\\ln(r/r_0)^2 - 2048T^2\\,U^3\\,\\ln(r/r_0)^3 - 6144T^2\\,U^4\\,\\ln(r/r_0)^4 - 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 24576T^3\\,U^3\\,\\ln(r/r_0)^4 - 6144T^4\\,U^2\\,\\ln(r/r_0)^4 - 512T\\,U^3\\,\\ln(r/r_0)^2 + 3072T\\,U^4\\,\\ln(r/r_0)^3 - 12288T\\,U^5\\,\\ln(r/r_0)^4 - 512T^3\\,U\\,\\ln(r/r_0)^2 + 3072T^4\\,U\\,\\ln(r/r_0)^3 - 12288T^5\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1024T^5\\,\\ln(r/r_0)^3 + 6144T^6\\,\\ln(r/r_0)^4 - 1024U^5\\,\\ln(r/r_0)^3 + 6144U^6\\,\\ln(r/r_0)^4 - 192T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T\\,U + 40T^2 + 40U^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}",
+      "kretschmann": "K = \\dfrac{704U^4 - 256U^3 + 64U^2 + 704T^4 - 256T^3 + 64T^2 - 128T\\,U + 256T^3\\,U + 256T^2\\,U + 256T\\,U^3 + 256T\\,U^2 + 2176T^2\\,U^2 - 2048U^5\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1536U^4\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1024U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2048T^5\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1536T^4\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1024T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 67108864U^{12}\\ln(r/r_0)^{10} + 100663296U^{12}\\ln(r/r_0)^9 + 62914560U^{12}\\ln(r/r_0)^8 - 67108864U^{11}\\ln(r/r_0)^9 - 83886080U^{11}\\ln(r/r_0)^8 - 33554432U^{11}\\ln(r/r_0)^7 + 20971520U^{10}\\ln(r/r_0)^8 + 25165824U^{10}\\ln(r/r_0)^7 + 8388608U^{10}\\ln(r/r_0)^6 - 4194304U^9\\,\\ln(r/r_0)^6 - 4718592U^9\\,\\ln(r/r_0)^5 - 1572864U^8\\,\\ln(r/r_0)^6 + 262144U^8\\,\\ln(r/r_0)^5 + 1540096U^8\\,\\ln(r/r_0)^4 + 524288U^7\\,\\ln(r/r_0)^5 + 393216U^7\\,\\ln(r/r_0)^4 - 65536U^7\\,\\ln(r/r_0)^3 - 98304U^6\\,\\ln(r/r_0)^4 - 163840U^6\\,\\ln(r/r_0)^3 - 24576U^6\\,\\ln(r/r_0)^2 + 16384U^5\\,\\ln(r/r_0)^2 + 5120U^4\\,\\ln(r/r_0)^2 + 67108864T^{12}\\ln(r/r_0)^{10} + 100663296T^{12}\\ln(r/r_0)^9 + 62914560T^{12}\\ln(r/r_0)^8 - 67108864T^{11}\\ln(r/r_0)^9 - 83886080T^{11}\\ln(r/r_0)^8 - 33554432T^{11}\\ln(r/r_0)^7 + 20971520T^{10}\\ln(r/r_0)^8 + 25165824T^{10}\\ln(r/r_0)^7 + 8388608T^{10}\\ln(r/r_0)^6 - 4194304T^9\\,\\ln(r/r_0)^6 - 4718592T^9\\,\\ln(r/r_0)^5 - 1572864T^8\\,\\ln(r/r_0)^6 + 262144T^8\\,\\ln(r/r_0)^5 + 1540096T^8\\,\\ln(r/r_0)^4 + 524288T^7\\,\\ln(r/r_0)^5 + 393216T^7\\,\\ln(r/r_0)^4 - 65536T^7\\,\\ln(r/r_0)^3 - 98304T^6\\,\\ln(r/r_0)^4 - 163840T^6\\,\\ln(r/r_0)^3 - 24576T^6\\,\\ln(r/r_0)^2 + 16384T^5\\,\\ln(r/r_0)^2 + 5120T^4\\,\\ln(r/r_0)^2 - 2048T^4\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 6144T^3\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1024T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2048T\\,U^4\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 6144T\\,U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1024T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 268435456T^{11}\\,U\\,\\ln(r/r_0)^{10} - 402653184T^{11}\\,U\\,\\ln(r/r_0)^9 - 251658240T^{11}\\,U\\,\\ln(r/r_0)^8 + 335544320T^{10}\\,U\\,\\ln(r/r_0)^9 + 419430400T^{10}\\,U\\,\\ln(r/r_0)^8 + 167772160T^{10}\\,U\\,\\ln(r/r_0)^7 - 142606336T^9\\,U\\,\\ln(r/r_0)^8 - 150994944T^9\\,U\\,\\ln(r/r_0)^7 - 52428800T^9\\,U\\,\\ln(r/r_0)^6 + 16777216T^8\\,U\\,\\ln(r/r_0)^7 + 25165824T^8\\,U\\,\\ln(r/r_0)^6 + 18350080T^8\\,U\\,\\ln(r/r_0)^5 + 4194304T^7\\,U\\,\\ln(r/r_0)^6 - 4194304T^7\\,U\\,\\ln(r/r_0)^5 - 5636096T^7\\,U\\,\\ln(r/r_0)^4 - 1572864T^6\\,U\\,\\ln(r/r_0)^5 + 393216T^6\\,U\\,\\ln(r/r_0)^4 + 851968T^6\\,U\\,\\ln(r/r_0)^3 + 327680T^5\\,U\\,\\ln(r/r_0)^4 + 327680T^5\\,U\\,\\ln(r/r_0)^3 - 40960T^5\\,U\\,\\ln(r/r_0)^2 - 65536T^4\\,U\\,\\ln(r/r_0)^3 - 98304T^4\\,U\\,\\ln(r/r_0)^2 + 4096T^3\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4096T^3\\,U\\,\\ln(r/r_0)^2 + 4096T^2\\,U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 15360T^2\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 268435456T\\,U^{11}\\ln(r/r_0)^{10} - 402653184T\\,U^{11}\\ln(r/r_0)^9 - 251658240T\\,U^{11}\\ln(r/r_0)^8 + 335544320T\\,U^{10}\\ln(r/r_0)^9 + 419430400T\\,U^{10}\\ln(r/r_0)^8 + 167772160T\\,U^{10}\\ln(r/r_0)^7 - 142606336T\\,U^9\\,\\ln(r/r_0)^8 - 150994944T\\,U^9\\,\\ln(r/r_0)^7 - 52428800T\\,U^9\\,\\ln(r/r_0)^6 + 16777216T\\,U^8\\,\\ln(r/r_0)^7 + 25165824T\\,U^8\\,\\ln(r/r_0)^6 + 18350080T\\,U^8\\,\\ln(r/r_0)^5 + 4194304T\\,U^7\\,\\ln(r/r_0)^6 - 4194304T\\,U^7\\,\\ln(r/r_0)^5 - 5636096T\\,U^7\\,\\ln(r/r_0)^4 - 1572864T\\,U^6\\,\\ln(r/r_0)^5 + 393216T\\,U^6\\,\\ln(r/r_0)^4 + 851968T\\,U^6\\,\\ln(r/r_0)^3 + 327680T\\,U^5\\,\\ln(r/r_0)^4 + 327680T\\,U^5\\,\\ln(r/r_0)^3 - 40960T\\,U^5\\,\\ln(r/r_0)^2 - 65536T\\,U^4\\,\\ln(r/r_0)^3 - 98304T\\,U^4\\,\\ln(r/r_0)^2 + 4096T\\,U^3\\,\\ln(r/r_0)^2 + 134217728T^{10}\\,U^2\\,\\ln(r/r_0)^{10} + 201326592T^{10}\\,U^2\\,\\ln(r/r_0)^9 + 125829120T^{10}\\,U^2\\,\\ln(r/r_0)^8 + 805306368T^9\\,U^3\\,\\ln(r/r_0)^{10} + 1207959552T^9\\,U^3\\,\\ln(r/r_0)^9 + 754974720T^9\\,U^3\\,\\ln(r/r_0)^8 - 469762048T^9\\,U^2\\,\\ln(r/r_0)^9 - 587202560T^9\\,U^2\\,\\ln(r/r_0)^8 - 234881024T^9\\,U^2\\,\\ln(r/r_0)^7 - 1140850688T^8\\,U^4\\,\\ln(r/r_0)^{10} - 1711276032T^8\\,U^4\\,\\ln(r/r_0)^9 - 1069547520T^8\\,U^4\\,\\ln(r/r_0)^8 - 335544320T^8\\,U^3\\,\\ln(r/r_0)^9 - 419430400T^8\\,U^3\\,\\ln(r/r_0)^8 - 167772160T^8\\,U^3\\,\\ln(r/r_0)^7 + 339738624T^8\\,U^2\\,\\ln(r/r_0)^8 + 327155712T^8\\,U^2\\,\\ln(r/r_0)^7 + 117440512T^8\\,U^2\\,\\ln(r/r_0)^6 - 536870912T^7\\,U^5\\,\\ln(r/r_0)^{10} - 805306368T^7\\,U^5\\,\\ln(r/r_0)^9 - 503316480T^7\\,U^5\\,\\ln(r/r_0)^8 + 1476395008T^7\\,U^4\\,\\ln(r/r_0)^9 + 1845493760T^7\\,U^4\\,\\ln(r/r_0)^8 + 738197504T^7\\,U^4\\,\\ln(r/r_0)^7 - 234881024T^7\\,U^3\\,\\ln(r/r_0)^8 - 201326592T^7\\,U^3\\,\\ln(r/r_0)^7 - 75497472T^7\\,U^3\\,\\ln(r/r_0)^6 - 83886080T^7\\,U^2\\,\\ln(r/r_0)^7 - 62914560T^7\\,U^2\\,\\ln(r/r_0)^6 - 20971520T^7\\,U^2\\,\\ln(r/r_0)^5 + 1879048192T^6\\,U^6\\,\\ln(r/r_0)^{10} + 2818572288T^6\\,U^6\\,\\ln(r/r_0)^9 + 1761607680T^6\\,U^6\\,\\ln(r/r_0)^8 - 939524096T^6\\,U^5\\,\\ln(r/r_0)^9 - 1174405120T^6\\,U^5\\,\\ln(r/r_0)^8 - 469762048T^6\\,U^5\\,\\ln(r/r_0)^7 - 360710144T^6\\,U^4\\,\\ln(r/r_0)^8 - 352321536T^6\\,U^4\\,\\ln(r/r_0)^7 - 125829120T^6\\,U^4\\,\\ln(r/r_0)^6 + 150994944T^6\\,U^3\\,\\ln(r/r_0)^7 + 79691776T^6\\,U^3\\,\\ln(r/r_0)^6 + 2097152T^6\\,U^2\\,\\ln(r/r_0)^6 + 9437184T^6\\,U^2\\,\\ln(r/r_0)^5 + 5898240T^6\\,U^2\\,\\ln(r/r_0)^4 - 536870912T^5\\,U^7\\,\\ln(r/r_0)^{10} - 805306368T^5\\,U^7\\,\\ln(r/r_0)^9 - 503316480T^5\\,U^7\\,\\ln(r/r_0)^8 - 939524096T^5\\,U^6\\,\\ln(r/r_0)^9 - 1174405120T^5\\,U^6\\,\\ln(r/r_0)^8 - 469762048T^5\\,U^6\\,\\ln(r/r_0)^7 + 754974720T^5\\,U^5\\,\\ln(r/r_0)^8 + 704643072T^5\\,U^5\\,\\ln(r/r_0)^7 + 255852544T^5\\,U^5\\,\\ln(r/r_0)^6 - 83886080T^5\\,U^4\\,\\ln(r/r_0)^7 - 37748736T^5\\,U^4\\,\\ln(r/r_0)^6 + 7340032T^5\\,U^4\\,\\ln(r/r_0)^5 - 20971520T^5\\,U^3\\,\\ln(r/r_0)^6 - 4194304T^5\\,U^3\\,\\ln(r/r_0)^5 + 2490368T^5\\,U^3\\,\\ln(r/r_0)^4 + 1572864T^5\\,U^2\\,\\ln(r/r_0)^5 - 3538944T^5\\,U^2\\,\\ln(r/r_0)^4 - 2162688T^5\\,U^2\\,\\ln(r/r_0)^3 - 1140850688T^4\\,U^8\\,\\ln(r/r_0)^{10} - 1711276032T^4\\,U^8\\,\\ln(r/r_0)^9 - 1069547520T^4\\,U^8\\,\\ln(r/r_0)^8 + 1476395008T^4\\,U^7\\,\\ln(r/r_0)^9 + 1845493760T^4\\,U^7\\,\\ln(r/r_0)^8 + 738197504T^4\\,U^7\\,\\ln(r/r_0)^7 - 360710144T^4\\,U^6\\,\\ln(r/r_0)^8 - 352321536T^4\\,U^6\\,\\ln(r/r_0)^7 - 125829120T^4\\,U^6\\,\\ln(r/r_0)^6 - 83886080T^4\\,U^5\\,\\ln(r/r_0)^7 - 37748736T^4\\,U^5\\,\\ln(r/r_0)^6 + 7340032T^4\\,U^5\\,\\ln(r/r_0)^5 + 32505856T^4\\,U^4\\,\\ln(r/r_0)^6 - 2621440T^4\\,U^4\\,\\ln(r/r_0)^5 - 8585216T^4\\,U^4\\,\\ln(r/r_0)^4 - 524288T^4\\,U^3\\,\\ln(r/r_0)^5 + 2752512T^4\\,U^3\\,\\ln(r/r_0)^4 + 1376256T^4\\,U^3\\,\\ln(r/r_0)^3 - 163840T^4\\,U^2\\,\\ln(r/r_0)^4 + 425984T^4\\,U^2\\,\\ln(r/r_0)^3 + 188416T^4\\,U^2\\,\\ln(r/r_0)^2 + 805306368T^3\\,U^9\\,\\ln(r/r_0)^{10} + 1207959552T^3\\,U^9\\,\\ln(r/r_0)^9 + 754974720T^3\\,U^9\\,\\ln(r/r_0)^8 - 335544320T^3\\,U^8\\,\\ln(r/r_0)^9 - 419430400T^3\\,U^8\\,\\ln(r/r_0)^8 - 167772160T^3\\,U^8\\,\\ln(r/r_0)^7 - 234881024T^3\\,U^7\\,\\ln(r/r_0)^8 - 201326592T^3\\,U^7\\,\\ln(r/r_0)^7 - 75497472T^3\\,U^7\\,\\ln(r/r_0)^6 + 150994944T^3\\,U^6\\,\\ln(r/r_0)^7 + 79691776T^3\\,U^6\\,\\ln(r/r_0)^6 - 20971520T^3\\,U^5\\,\\ln(r/r_0)^6 - 4194304T^3\\,U^5\\,\\ln(r/r_0)^5 + 2490368T^3\\,U^5\\,\\ln(r/r_0)^4 - 524288T^3\\,U^4\\,\\ln(r/r_0)^5 + 2752512T^3\\,U^4\\,\\ln(r/r_0)^4 + 1376256T^3\\,U^4\\,\\ln(r/r_0)^3 - 131072T^3\\,U^3\\,\\ln(r/r_0)^4 - 1179648T^3\\,U^3\\,\\ln(r/r_0)^3 - 245760T^3\\,U^3\\,\\ln(r/r_0)^2 + 65536T^3\\,U^2\\,\\ln(r/r_0)^3 + 81920T^3\\,U^2\\,\\ln(r/r_0)^2 + 134217728T^2\\,U^{10}\\ln(r/r_0)^{10} + 201326592T^2\\,U^{10}\\ln(r/r_0)^9 + 125829120T^2\\,U^{10}\\ln(r/r_0)^8 - 469762048T^2\\,U^9\\,\\ln(r/r_0)^9 - 587202560T^2\\,U^9\\,\\ln(r/r_0)^8 - 234881024T^2\\,U^9\\,\\ln(r/r_0)^7 + 339738624T^2\\,U^8\\,\\ln(r/r_0)^8 + 327155712T^2\\,U^8\\,\\ln(r/r_0)^7 + 117440512T^2\\,U^8\\,\\ln(r/r_0)^6 - 83886080T^2\\,U^7\\,\\ln(r/r_0)^7 - 62914560T^2\\,U^7\\,\\ln(r/r_0)^6 - 20971520T^2\\,U^7\\,\\ln(r/r_0)^5 + 2097152T^2\\,U^6\\,\\ln(r/r_0)^6 + 9437184T^2\\,U^6\\,\\ln(r/r_0)^5 + 5898240T^2\\,U^6\\,\\ln(r/r_0)^4 + 1572864T^2\\,U^5\\,\\ln(r/r_0)^5 - 3538944T^2\\,U^5\\,\\ln(r/r_0)^4 - 2162688T^2\\,U^5\\,\\ln(r/r_0)^3 - 163840T^2\\,U^4\\,\\ln(r/r_0)^4 + 425984T^2\\,U^4\\,\\ln(r/r_0)^3 + 188416T^2\\,U^4\\,\\ln(r/r_0)^2 + 65536T^2\\,U^3\\,\\ln(r/r_0)^3 + 81920T^2\\,U^3\\,\\ln(r/r_0)^2 - 18432T^2\\,U^2\\,\\ln(r/r_0)^2}{r^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^6}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(96T^2\\,U^2\\,\\ln(r/r_0)^2 + 8T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 24T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48T^4\\,\\ln(r/r_0)^2 - 48U^4\\,\\ln(r/r_0)^2 - 8T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 24U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2T\\,U - 3T^2 - 3U^2\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2\\left(16T\\,\\ln(r/r_0)^2 + 16U\\,\\ln(r/r_0)^2 + 12T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 12U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2\\left(192T\\,U^2\\,\\ln(r/r_0)^3 + 256T\\,U^2\\,\\ln(r/r_0)^4 + 192T^2\\,U\\,\\ln(r/r_0)^3 + 256T^2\\,U\\,\\ln(r/r_0)^4 - 32T\\,U\\,\\ln(r/r_0)^2 - 128T\\,U\\,\\ln(r/r_0)^3 + 16T^2\\,\\ln(r/r_0)^2 + 64T^2\\,\\ln(r/r_0)^3 - 192T^3\\,\\ln(r/r_0)^3 - 256T^3\\,\\ln(r/r_0)^4 + 16U^2\\,\\ln(r/r_0)^2 + 64U^2\\,\\ln(r/r_0)^3 - 192U^3\\,\\ln(r/r_0)^3 - 256U^3\\,\\ln(r/r_0)^4 + 16T\\,\\ln(r/r_0)^2 + 16U\\,\\ln(r/r_0)^2 - 4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4\\ln\\left(\\dfrac{r}{r_0}\\right) + 3\\right)}{\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "-\\dfrac{4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(96T^2\\,U^2\\,\\ln(r/r_0)^2 - 24T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48T^4\\,\\ln(r/r_0)^2 - 48U^4\\,\\ln(r/r_0)^2 + 24T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2T\\,U - 3T^2 - 3U^2\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{12U^2 + 12T^2 + 8T\\,U - 96U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192U^4\\,\\ln(r/r_0)^2 + 192T^4\\,\\ln(r/r_0)^2 + 96T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^2\\,U^2\\,\\ln(r/r_0)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2\\left(1 + 4\\ln\\left(\\dfrac{r}{r_0}\\right) - 12U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 12T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16U\\,\\ln(r/r_0)^2 - 16T\\,\\ln(r/r_0)^2\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{4\\left(T - U\\right)^2\\left(192T\\,U^2\\,\\ln(r/r_0)^3 + 256T\\,U^2\\,\\ln(r/r_0)^4 + 192T^2\\,U\\,\\ln(r/r_0)^3 + 256T^2\\,U\\,\\ln(r/r_0)^4 - 32T\\,U\\,\\ln(r/r_0)^2 - 128T\\,U\\,\\ln(r/r_0)^3 + 16T^2\\,\\ln(r/r_0)^2 + 64T^2\\,\\ln(r/r_0)^3 - 192T^3\\,\\ln(r/r_0)^3 - 256T^3\\,\\ln(r/r_0)^4 + 16U^2\\,\\ln(r/r_0)^2 + 64U^2\\,\\ln(r/r_0)^3 - 192U^3\\,\\ln(r/r_0)^3 - 256U^3\\,\\ln(r/r_0)^4 + 16T\\,\\ln(r/r_0)^2 + 16U\\,\\ln(r/r_0)^2 - 4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4\\ln\\left(\\dfrac{r}{r_0}\\right) + 3\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{12U^2 + 12T^2 + 8T\\,U + 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 96T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192U^4\\,\\ln(r/r_0)^2 + 192T^4\\,\\ln(r/r_0)^2 - 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 96T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^2\\,U^2\\,\\ln(r/r_0)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{12U^2 + 12T^2 + 8T\\,U - 96U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 32T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192U^4\\,\\ln(r/r_0)^2 + 192T^4\\,\\ln(r/r_0)^2 + 96T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 32T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^2\\,U^2\\,\\ln(r/r_0)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2\\left(16T\\,\\ln(r/r_0)^2 + 16U\\,\\ln(r/r_0)^2 + 12T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 12U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{4\\left(T - U\\right)^2\\left(192T\\,U^2\\,\\ln(r/r_0)^3 + 256T\\,U^2\\,\\ln(r/r_0)^4 + 192T^2\\,U\\,\\ln(r/r_0)^3 + 256T^2\\,U\\,\\ln(r/r_0)^4 - 32T\\,U\\,\\ln(r/r_0)^2 - 128T\\,U\\,\\ln(r/r_0)^3 + 16T^2\\,\\ln(r/r_0)^2 + 64T^2\\,\\ln(r/r_0)^3 - 192T^3\\,\\ln(r/r_0)^3 - 256T^3\\,\\ln(r/r_0)^4 + 16U^2\\,\\ln(r/r_0)^2 + 64U^2\\,\\ln(r/r_0)^3 - 192U^3\\,\\ln(r/r_0)^3 - 256U^3\\,\\ln(r/r_0)^4 + 16T\\,\\ln(r/r_0)^2 + 16U\\,\\ln(r/r_0)^2 - 4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4\\ln\\left(\\dfrac{r}{r_0}\\right) + 3\\right)}{r^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "z"
+                ],
+                "value": "\\dfrac{12U^2 + 12T^2 + 8T\\,U + 32U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 96T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192U^4\\,\\ln(r/r_0)^2 + 192T^4\\,\\ln(r/r_0)^2 - 32T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 96T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^2\\,U^2\\,\\ln(r/r_0)^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{6U - 6T - 8U^2 + 16T^2 + 8T\\,U - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536U^5\\,\\ln(r/r_0)^4 - 1024U^5\\,\\ln(r/r_0)^3 + 768U^4\\,\\ln(r/r_0)^3 + 384U^4\\,\\ln(r/r_0)^2 + 1536T^5\\,\\ln(r/r_0)^4 + 2048T^5\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^2 - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536T^4\\,U\\,\\ln(r/r_0)^4 - 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^3\\,U\\,\\ln(r/r_0)^3 + 1408T^3\\,U\\,\\ln(r/r_0)^2 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 1536T\\,U^3\\,\\ln(r/r_0)^3 - 896T\\,U^3\\,\\ln(r/r_0)^2 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 128T^2\\,U^2\\,\\ln(r/r_0)^2}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{6U - 6T - 8U^2 + 16T^2 + 8T\\,U - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536U^5\\,\\ln(r/r_0)^4 - 1024U^5\\,\\ln(r/r_0)^3 + 768U^4\\,\\ln(r/r_0)^3 + 384U^4\\,\\ln(r/r_0)^2 + 1536T^5\\,\\ln(r/r_0)^4 + 2048T^5\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^2 - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536T^4\\,U\\,\\ln(r/r_0)^4 - 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^3\\,U\\,\\ln(r/r_0)^3 + 1408T^3\\,U\\,\\ln(r/r_0)^2 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 1536T\\,U^3\\,\\ln(r/r_0)^3 - 896T\\,U^3\\,\\ln(r/r_0)^2 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 128T^2\\,U^2\\,\\ln(r/r_0)^2}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{6U - 6T - 8U^2 + 16T^2 + 8T\\,U - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536U^5\\,\\ln(r/r_0)^4 - 1024U^5\\,\\ln(r/r_0)^3 + 768U^4\\,\\ln(r/r_0)^3 + 384U^4\\,\\ln(r/r_0)^2 + 1536T^5\\,\\ln(r/r_0)^4 + 2048T^5\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^2 - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536T^4\\,U\\,\\ln(r/r_0)^4 - 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^3\\,U\\,\\ln(r/r_0)^3 + 1408T^3\\,U\\,\\ln(r/r_0)^2 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 1536T\\,U^3\\,\\ln(r/r_0)^3 - 896T\\,U^3\\,\\ln(r/r_0)^2 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 128T^2\\,U^2\\,\\ln(r/r_0)^2}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{6U - 6T - 8U^2 + 16T^2 + 8T\\,U - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536U^5\\,\\ln(r/r_0)^4 - 1024U^5\\,\\ln(r/r_0)^3 + 768U^4\\,\\ln(r/r_0)^3 + 384U^4\\,\\ln(r/r_0)^2 + 1536T^5\\,\\ln(r/r_0)^4 + 2048T^5\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^3 - 768T^4\\,\\ln(r/r_0)^2 - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1536T^4\\,U\\,\\ln(r/r_0)^4 - 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^3\\,U\\,\\ln(r/r_0)^3 + 1408T^3\\,U\\,\\ln(r/r_0)^2 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 1536T\\,U^3\\,\\ln(r/r_0)^3 - 896T\\,U^3\\,\\ln(r/r_0)^2 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 128T^2\\,U^2\\,\\ln(r/r_0)^2}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "t",
+                  "z"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "z",
+                  "z",
+                  "t"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "t",
+                  "z"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "t",
+                  "z",
+                  "t"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{8\\left(8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)\\left(32T\\,U^2\\,\\ln(r/r_0)^2 + 32T^2\\,U\\,\\ln(r/r_0)^2 - 32T^3\\,\\ln(r/r_0)^2 - 32U^3\\,\\ln(r/r_0)^2 - 8T\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + T + U\\right)}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "r",
+                  "z"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "z",
+                  "z",
+                  "r"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "r",
+                  "z"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "r",
+                  "z",
+                  "r"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 - 4096T^2\\,U^3\\,\\ln(r/r_0)^3 - 3072T^2\\,U^3\\,\\ln(r/r_0)^4 + 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 3072T^3\\,U^2\\,\\ln(r/r_0)^4 - 384T\\,U^2\\,\\ln(r/r_0)^2 + 896T\\,U^3\\,\\ln(r/r_0)^2 + 1536T\\,U^3\\,\\ln(r/r_0)^3 - 1536T\\,U^4\\,\\ln(r/r_0)^4 + 384T^2\\,U\\,\\ln(r/r_0)^2 - 1408T^3\\,U\\,\\ln(r/r_0)^2 - 1536T^3\\,U\\,\\ln(r/r_0)^3 + 3072T^4\\,U\\,\\ln(r/r_0)^3 + 1536T^4\\,U\\,\\ln(r/r_0)^4 - 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 768T^4\\,\\ln(r/r_0)^2 + 768T^4\\,\\ln(r/r_0)^3 - 2048T^5\\,\\ln(r/r_0)^3 - 1536T^5\\,\\ln(r/r_0)^4 - 384U^4\\,\\ln(r/r_0)^2 - 768U^4\\,\\ln(r/r_0)^3 + 1024U^5\\,\\ln(r/r_0)^3 + 1536U^5\\,\\ln(r/r_0)^4 - 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U - 16T^2 + 8U^2 + 6T - 6U}{3r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "z",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "\\phi",
+                  "z"
+                ],
+                "value": "-\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "z",
+                  "\\phi",
+                  "z",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{128T^2\\,U^2\\,\\ln(r/r_0)^2 + 2048T^2\\,U^3\\,\\ln(r/r_0)^3 + 3072T^2\\,U^3\\,\\ln(r/r_0)^4 - 4096T^3\\,U^2\\,\\ln(r/r_0)^3 - 3072T^3\\,U^2\\,\\ln(r/r_0)^4 + 384T\\,U^2\\,\\ln(r/r_0)^2 - 1408T\\,U^3\\,\\ln(r/r_0)^2 - 1536T\\,U^3\\,\\ln(r/r_0)^3 + 3072T\\,U^4\\,\\ln(r/r_0)^3 + 1536T\\,U^4\\,\\ln(r/r_0)^4 - 384T^2\\,U\\,\\ln(r/r_0)^2 + 896T^3\\,U\\,\\ln(r/r_0)^2 + 1536T^3\\,U\\,\\ln(r/r_0)^3 - 1536T^4\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 384T^4\\,\\ln(r/r_0)^2 - 768T^4\\,\\ln(r/r_0)^3 + 1024T^5\\,\\ln(r/r_0)^3 + 1536T^5\\,\\ln(r/r_0)^4 + 768U^4\\,\\ln(r/r_0)^2 + 768U^4\\,\\ln(r/r_0)^3 - 2048U^5\\,\\ln(r/r_0)^3 - 1536U^5\\,\\ln(r/r_0)^4 + 48T^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 48U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 8T\\,U + 8T^2 - 16U^2 - 6T + 6U}{3\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{4T - 4U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}\\dot{t}^2 + \\dfrac{2T + 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}\\dot{r}^2 - \\dfrac{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1 + 2T + 2U\\right)}{4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1}\\dot{\\phi}^2 + \\dfrac{2T - 2U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}\\dot{z}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{8T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 8U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2 + 4T + 4U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)}\\dot{r}\\dot{\\phi} = 0",
+        "\\ddot{z} + \\dfrac{4T - 4U}{r\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)}\\dot{r}\\dot{z} = 0"
+      ]
+    }
+  ]
 }

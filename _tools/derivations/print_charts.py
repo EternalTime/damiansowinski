@@ -37577,5 +37577,8 @@ CHARTS[_stringy_cosmic_strings.METRIC] = [lambda system=system: _stringy_cosmic_
 import klebanov_witten as _klebanov_witten
 CHARTS[_klebanov_witten.METRIC] = [_klebanov_witten.chart_spec]
 
+import wiggly_string as _wiggly_string
+CHARTS[_wiggly_string.METRIC] = [_wiggly_string.chart_spec]
+
 if __name__ == "__main__":
     main()

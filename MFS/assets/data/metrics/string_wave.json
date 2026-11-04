@@ -52,6 +52,11 @@
       "id": "string_cylindrical_waves",
       "kind": "family",
       "text": "Xanthopoulos's gravitational waves have cylindrical fronts around a string [gurtug_sakalli2003]."
+    },
+    {
+      "id": "wiggly_string",
+      "kind": "family",
+      "text": "An average over small waves has unequal energy per length and tension, with a static gravitational field fixed by both quantities [campsemparan2010]."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "lunin2001",
     "aichelburg1971",
     "deser1992time",
-    "gurtug_sakalli2003"
+    "gurtug_sakalli2003",
+    "campsemparan2010"
   ],
   "coordinates": [
     {
