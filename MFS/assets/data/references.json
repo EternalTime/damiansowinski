@@ -1,5 +1,5 @@
 {
-  "version": "154745c0edb753a4",
+  "version": "286b54d7a6bffa75",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35188,6 +35188,207 @@
         "year": "2016",
         "doi": "10.1016/j.nuclphysb.2016.10.017",
         "url": "https://doi.org/10.1016/j.nuclphysb.2016.10.017"
+      }
+    },
+    "volkov2017hairy": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Hairy black holes in the XX-th and XXI-st centuries",
+        "author": "Volkov, Mikhail S.",
+        "booktitle": "The Fourteenth Marcel Grossmann Meeting",
+        "editor": "Bianchi, Massimo and Jantzen, Robert T. and Ruffini, Remo",
+        "publisher": "World Scientific",
+        "pages": "1779--1798",
+        "year": "2017",
+        "doi": "10.1142/9789813226609_0184",
+        "eprint": "1601.08230",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/9789813226609_0184"
+      }
+    },
+    "lohiya1988": {
+      "type": "article",
+      "fields": {
+        "title": "On the skyrmion number of Schwarzschild black holes",
+        "author": "Lohiya, D. and Mukherjee, A.",
+        "journal": "Physics Letters A",
+        "volume": "126",
+        "number": "5-6",
+        "pages": "307--310",
+        "year": "1988",
+        "doi": "10.1016/0375-9601(88)90841-9",
+        "url": "https://doi.org/10.1016/0375-9601(88)90841-9"
+      }
+    },
+    "heusler1992nohair": {
+      "type": "article",
+      "fields": {
+        "title": "A no-hair theorem for self-gravitating nonlinear sigma models",
+        "author": "Heusler, Markus",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "33",
+        "number": "10",
+        "pages": "3497--3502",
+        "year": "1992",
+        "doi": "10.1063/1.529899",
+        "url": "https://doi.org/10.1063/1.529899"
+      }
+    },
+    "heusler1992linear": {
+      "type": "article",
+      "fields": {
+        "title": "Linear stability of Einstein-Skyrme black holes",
+        "author": "Heusler, Markus and Droz, Serge and Straumann, Norbert",
+        "journal": "Physics Letters B",
+        "volume": "285",
+        "number": "1-2",
+        "pages": "21--26",
+        "year": "1992",
+        "doi": "10.1016/0370-2693(92)91294-J",
+        "url": "https://doi.org/10.1016/0370-2693(92)91294-J"
+      }
+    },
+    "torii1995catastrophe": {
+      "type": "article",
+      "fields": {
+        "title": "Non-Abelian black holes and catastrophe theory: Neutral type",
+        "author": "Torii, Takashi and Maeda, Kei-ichi and Tachizawa, Takashi",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "4",
+        "pages": "1510--1524",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.51.1510",
+        "eprint": "gr-qc/9406013",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.51.1510"
+      }
+    },
+    "maeda1994stability": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of non-Abelian black holes and catastrophe theory",
+        "author": "Maeda, K. and Tachizawa, T. and Torii, T. and Maki, T.",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "4",
+        "pages": "450--453",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.450",
+        "eprint": "gr-qc/9310015",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.72.450"
+      }
+    },
+    "tamaki2001internal": {
+      "type": "article",
+      "fields": {
+        "title": "Internal structure of the Skyrme black hole",
+        "author": "Tamaki, Takashi and Maeda, Kei-ichi and Torii, Takashi",
+        "journal": "Physical Review D",
+        "volume": "64",
+        "number": "8",
+        "pages": "084019",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.64.084019",
+        "eprint": "gr-qc/0106008",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.64.084019"
+      }
+    },
+    "nielsen2006skyrme": {
+      "type": "article",
+      "fields": {
+        "title": "Skyrme black holes in the isolated horizons formalism",
+        "author": "Nielsen, Alex B.",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "4",
+        "pages": "044038",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.044038",
+        "eprint": "gr-qc/0603127",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.74.044038"
+      }
+    },
+    "dvali2017aharonov": {
+      "type": "article",
+      "fields": {
+        "title": "Aharonov-Bohm protection of black hole's baryon/skyrmion hair",
+        "author": "Dvali, Gia and Gu\\ss{}mann, Alexander",
+        "journal": "Physics Letters B",
+        "volume": "768",
+        "pages": "274--279",
+        "year": "2017",
+        "doi": "10.1016/j.physletb.2017.03.004",
+        "eprint": "1611.09370",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2017.03.004"
+      }
+    },
+    "adam2016hairy": {
+      "type": "article",
+      "fields": {
+        "title": "Hairy black holes in the general Skyrme model",
+        "author": "Adam, C. and Kichakova, O. and Shnir, Ya. and Wereszczynski, A.",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "2",
+        "pages": "024060",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.94.024060",
+        "eprint": "1605.07625",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.94.024060"
+      }
+    },
+    "gudnason2016black": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole Skyrmion in a generalized Skyrme model",
+        "author": "Gudnason, Sven Bjarke and Nitta, Muneto and Sawado, Nobuyuki",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "09",
+        "pages": "055",
+        "year": "2016",
+        "doi": "10.1007/JHEP09(2016)055",
+        "eprint": "1605.07954",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP09(2016)055"
+      }
+    },
+    "gudnason2018higher": {
+      "type": "article",
+      "fields": {
+        "title": "Higher-order Skyrme hair of black holes",
+        "author": "Gudnason, Sven Bjarke and Nitta, Muneto",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2018",
+        "number": "05",
+        "pages": "071",
+        "year": "2018",
+        "doi": "10.1007/JHEP05(2018)071",
+        "eprint": "1803.10786",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP05(2018)071"
+      }
+    },
+    "herdeiro2018skyrmions": {
+      "type": "article",
+      "fields": {
+        "title": "Skyrmions around Kerr black holes and spinning BHs with Skyrme hair",
+        "author": "Herdeiro, C. and Perapechka, I. and Radu, E. and Shnir, Ya.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2018",
+        "number": "10",
+        "pages": "119",
+        "year": "2018",
+        "doi": "10.1007/JHEP10(2018)119",
+        "eprint": "1808.05388",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP10(2018)119"
       }
     },
     "gurtug_sakalli2003": {
