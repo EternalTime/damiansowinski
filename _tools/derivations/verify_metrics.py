@@ -5494,6 +5494,8 @@ PARAMETER_RELATIONS.update(_pre_big_bang.PARAMETER_RELATIONS)
 import nappi_witten as _nappi_witten
 DIMENSIONS.update(_nappi_witten.DIMENSIONS)
 
+import counter_rotating_discs as _counter_rotating_discs
+DIMENSIONS.update(_counter_rotating_discs.DIMENSIONS)
 
 if __name__ == "__main__":
     sys.exit(main())

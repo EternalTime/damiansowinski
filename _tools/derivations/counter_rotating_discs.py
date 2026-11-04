@@ -6,6 +6,12 @@ import sympy as sp
 
 METRIC = "counter_rotating_discs"
 SYSTEMS = ("static", "stationary")
+DIMENSIONS = {
+    (METRIC, "static"): {"t": "L", r"\rho": "L", r"\phi": "1", "z": "L", "U": "1", "k": "1",
+                        "b": "L", "m": "L", r"\delta": "1", "a": "L"},
+    (METRIC, "stationary"): {"t": "L", r"\rho": "L", r"\phi": "1", "z": "L", "f": "1", "g": "1",
+                            "A": "L", "b": "L", "m": "L", "a": "L"},
+}
 
 
 def chart_spec(pc, system):
@@ -71,3 +77,45 @@ def static_matter(rho, b=3.0, m=1.0):
     weight = math.exp(u-k)*uz/(2*math.pi)
     energy, pressure = weight*(1-rho*ur), weight*rho*ur
     return energy, pressure, math.sqrt(pressure/energy), (energy-pressure)/2
+
+
+def seed_matrix(kind, rho, z, m=1.0, a=0.8, b=3.0, delta=1.0):
+    """Analytic metric on the upper retained half, in (t,rho,phi,z); complex-step compatible."""
+    Z = b + z
+    matrix = np.zeros((4, 4), dtype=np.result_type(rho, z, float))
+    if kind in ("curzon", "rod"):
+        if kind == "curzon":
+            R = np.sqrt(rho*rho + Z*Z)
+            U, k = -m/R, -m*m*rho*rho/(2*R**4)
+        else:
+            plus, minus = np.sqrt(rho*rho+(Z+a)**2), np.sqrt(rho*rho+(Z-a)**2)
+            total = plus + minus
+            U = delta/2*np.log((total-2*a)/(total+2*a))
+            k = delta*delta/2*np.log((total*total-4*a*a)/(4*plus*minus))
+        matrix[0, 0] = -np.exp(2*U)
+        matrix[1, 1] = matrix[3, 3] = np.exp(2*k-2*U)
+        matrix[2, 2] = rho*rho*np.exp(-2*U)
+    else:
+        sigma = m*m-a*a
+        s = rho*rho + Z*Z + sigma
+        u = (s + np.sqrt(s*s - 4*sigma*Z*Z))/2
+        r, y = m + np.sqrt(u), Z/np.sqrt(u)
+        Sigma = r*r+a*a*y*y
+        d = Sigma-2*m*r
+        f = d/Sigma
+        A = 2*m*a*r*(1-y*y)/d
+        matrix[0, 0], matrix[0, 2], matrix[2, 0] = -f, -f*A, -f*A
+        matrix[1, 1] = matrix[3, 3] = Sigma/(u-sigma*y*y)
+        matrix[2, 2] = rho*rho/f-f*A*A
+    return matrix
+
+
+def seam_stress(kind, rho, **parameters):
+    """Israel stress with one normal pointing from the lower half to the upper half."""
+    h = seed_matrix(kind, rho, 0.0, **parameters)
+    derivative = seed_matrix(kind, rho, 1j*1e-25, **parameters).imag/1e-25
+    induced = h[:3, :3]
+    jump = derivative[:3, :3]/np.sqrt(h[3, 3])
+    trace = np.trace(np.linalg.solve(induced, jump))
+    stress = -(jump-induced*trace)/(8*np.pi)
+    return h, stress

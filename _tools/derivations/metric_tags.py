@@ -452,6 +452,8 @@ OVERRULED = {
     ("rotation_halts", "three-dimensional"): (
         False, "The intrinsic metric of the material junction has three coordinates; "
                "both bulk regions of the spacetime have four dimensions."),
+    ("counter_rotating_discs", "static"): (
+        False, "the static Weyl chart describes a subfamily; Kerr disc junctions have angular momentum"),
     ("brown_teitelboim", "Einstein space"): (
         False, "the de Sitter constants differ across the membrane, which also carries surface tension"),
     ("brown_teitelboim", "stationary"): (
