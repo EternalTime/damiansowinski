@@ -1,5 +1,5 @@
 {
-  "version": "325db805f5567ee7",
+  "version": "c42af419ece63a2d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45011,6 +45011,233 @@
         "eprint": "2611.04618",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2611.04618"
+      }
+    },
+    "sinamuli2016kerrcft": {
+      "type": "article",
+      "fields": {
+        "title": "Super-entropic black holes and the {Kerr-CFT} correspondence",
+        "author": "Sinamuli, Musema and Mann, Robert B.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "8",
+        "pages": "148",
+        "year": "2016",
+        "doi": "10.1007/JHEP08(2016)148",
+        "eprint": "1512.07597",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2016)148"
+      }
+    },
+    "hennigar2017engines": {
+      "type": "article",
+      "fields": {
+        "title": "Holographic heat engines: general considerations and rotating black holes",
+        "author": "Hennigar, Robie A. and McCarthy, Fiona and Ballon, Alvaro and Mann, Robert B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "34",
+        "number": "17",
+        "pages": "175005",
+        "year": "2017",
+        "doi": "10.1088/1361-6382/aa7f0f",
+        "eprint": "1704.02314",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aa7f0f"
+      }
+    },
+    "wu2020superentropic": {
+      "type": "article",
+      "fields": {
+        "title": "Notes on the thermodynamics of superentropic {AdS} black holes",
+        "author": "Wu, Di and Wu, Puxun and Yu, Hongwei and Wu, Shuang-Qing",
+        "journal": "Physical Review D",
+        "volume": "101",
+        "number": "2",
+        "pages": "024057",
+        "year": "2020",
+        "doi": "10.1103/PhysRevD.101.024057",
+        "eprint": "1912.03576",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.101.024057"
+      }
+    },
+    "flathmann2020spindle": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic equations for particles and light in the black spindle spacetime",
+        "author": "Flathmann, Kai and Wassermann, Noa",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "61",
+        "number": "12",
+        "pages": "122504",
+        "year": "2020",
+        "doi": "10.1063/5.0011432",
+        "eprint": "1912.03974",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/5.0011432"
+      }
+    },
+    "imseis2021null": {
+      "type": "article",
+      "fields": {
+        "title": "Null hypersurfaces in {Kerr-Newman-AdS} black hole and super-entropic black hole spacetimes",
+        "author": "Imseis, Michael T. N. and Al Balushi, Abdulrahim and Mann, Robert B.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "38",
+        "number": "4",
+        "pages": "045018",
+        "year": "2021",
+        "doi": "10.1088/1361-6382/abd3e0",
+        "eprint": "2007.04354",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/abd3e0"
+      }
+    },
+    "noda2021caustics": {
+      "type": "article",
+      "fields": {
+        "title": "Null hypersurface caustics, closed null curves, and super entropy",
+        "author": "Noda, Sousuke and Ong, Yen Chin",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "2",
+        "pages": "024053",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.024053",
+        "eprint": "2009.13448",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.103.024053"
+      }
+    },
+    "zhang2021caustics": {
+      "type": "article",
+      "fields": {
+        "title": "Null hypersurface caustics and super-entropic black holes",
+        "author": "Zhang, Ming and Jiang, Jie",
+        "journal": "Physics Letters B",
+        "volume": "816",
+        "pages": "136197",
+        "year": "2021",
+        "doi": "10.1016/j.physletb.2021.136197",
+        "eprint": "2103.09083",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2021.136197"
+      }
+    },
+    "callebaut2020energy": {
+      "type": "article",
+      "fields": {
+        "title": "Electro-magnetic energy extraction from rotating black holes in {AdS}",
+        "author": "Callebaut, Nele and Rodriguez, Maria J. and Verlinde, Herman",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "12",
+        "pages": "018",
+        "year": "2020",
+        "doi": "10.1007/JHEP12(2020)018",
+        "eprint": "2006.09901",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP12(2020)018"
+      }
+    },
+    "belhaj2021shadows": {
+      "type": "article",
+      "fields": {
+        "title": "Superentropic {AdS} black hole shadows",
+        "author": "Belhaj, A. and Belmahi, H. and Benali, M.",
+        "journal": "Physics Letters B",
+        "volume": "821",
+        "pages": "136619",
+        "year": "2021",
+        "doi": "10.1016/j.physletb.2021.136619",
+        "eprint": "2110.06771",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2021.136619"
+      }
+    },
+    "johnson2020instability": {
+      "type": "article",
+      "fields": {
+        "title": "Instability of super-entropic black holes in extended thermodynamics",
+        "author": "Johnson, Clifford V.",
+        "journal": "Modern Physics Letters A",
+        "volume": "35",
+        "number": "13",
+        "pages": "2050098",
+        "year": "2020",
+        "doi": "10.1142/S0217732320500984",
+        "eprint": "1906.00993",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732320500984"
+      }
+    },
+    "cong2019exotic": {
+      "type": "article",
+      "fields": {
+        "title": "Thermodynamic instabilities of generalized exotic {BTZ} black holes",
+        "author": "Cong, Wan and Mann, Robert B.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2019",
+        "number": "11",
+        "pages": "004",
+        "year": "2019",
+        "doi": "10.1007/JHEP11(2019)004",
+        "eprint": "1908.01254",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2019)004"
+      }
+    },
+    "he2023instabilities": {
+      "type": "misc",
+      "fields": {
+        "title": "Thermodynamic instabilities of {Kerr-Newman} {Ads} black holes",
+        "author": "He, Yiqian and Mu, Benrong",
+        "year": "2023",
+        "eprint": "2305.02196",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2305.02196"
+      }
+    },
+    "di2026ultraspinning": {
+      "type": "article",
+      "fields": {
+        "title": "Thermodynamics and stability of ultraspinning black holes",
+        "author": "Di, Zhenbo",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "43",
+        "number": "13",
+        "pages": "135034",
+        "year": "2026",
+        "doi": "10.1088/1361-6382/ae83fe",
+        "eprint": "2601.22565",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ae83fe"
+      }
+    },
+    "mann2026isoperimetric": {
+      "type": "misc",
+      "fields": {
+        "title": "On the Classical, Penrose, and Reverse Isoperimetric Inequalities in Black Holes: Insights From {AdS} to Flat {Riemannian} Backgrounds",
+        "author": "Mann, Robert B. and Pourhassan, Behnam and Dehghani, Ali",
+        "year": "2026",
+        "eprint": "2609.14108",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.14108"
+      }
+    },
+    "kumar2026reverse": {
+      "type": "article",
+      "fields": {
+        "title": "A geometric-analytic proof of the reverse isoperimetric inequality in {Einstein} gravity",
+        "author": "Kumar, Naman",
+        "journal": "Physics Letters B",
+        "volume": "883",
+        "pages": "141111",
+        "year": "2026",
+        "doi": "10.1016/j.physletb.2026.141111",
+        "eprint": "2508.13235",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2026.141111"
       }
     }
   }
