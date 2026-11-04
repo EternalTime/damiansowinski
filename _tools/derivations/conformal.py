@@ -31269,7 +31269,7 @@ CAPTIONS = {
         "from it.",
     ],
     ("limiting_curvature", "comoving"): [
-        "The closed universe, each point a 2-sphere, $a^2$ times the Einstein static universe. Its history spans "
+        "The closed universe, each point a 2-sphere, conformal to the Einstein static universe. Its history spans "
         "$\\Delta\\eta = 1.686$, less than $\\pi$, so no light ray crosses from the pole to its antipode.",
     ],
     ("limiting_curvature", "de_sitter_bounce"): [

@@ -20123,8 +20123,7 @@ CAPTIONS = {
         "value, and falls after it as in a classical universe of a stiff fluid, with $a$ growing as $|t|^{1/3}$.",
     ],
     ("limiting_curvature", "bounce"): [
-        "The equator ($\\theta = \\pi/2$) of space from $H_0t = -2$ to $2$, each moment a sphere of radius $a(t)$ "
-        "with every distance along it the metric distance.",
+        "The equator ($\\theta = \\pi/2$) of space from $H_0t = -2$ to $2$, each moment a sphere of radius $a(t)$.",
         "It is smallest at the bounce, $a = 2c/H_0$, and no closed universe of the theory is smaller than $c/H_0$.",
     ],
     ("murphy_viscous_universe", "ring"): [
