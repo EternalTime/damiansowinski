@@ -70,3 +70,6 @@ The null integrals in the transformed charts contain $\sqrt{x}$ and $\arcsin\sqr
 The ray comparison omits $x\leq0.02$ and $r\notin(0.02,0.98)$, where these coordinate maps have unbounded derivatives at the endpoint.
 Their tracing step is $0.001$ of the displayed box.
 The static null integral is compared only for $\chi>0.02$, inside its sourced domain.
+
+The embedding is one fixed spatial moment, so its surface has neither sequence label nor sequence time.
+Its view settings fix $\psi=\pi/4$, and each causal drawing names that same moment explicitly.

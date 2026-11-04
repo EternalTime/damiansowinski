@@ -68,7 +68,7 @@ def embedding_views(ck, src, em):
     ck.isometry("Nappi-Witten round section", piece)
     ck.radius("Nappi-Witten circle radius", piece, np.sin, 2.5)
     ck.form("Nappi-Witten hemisphere height", piece, lambda s: -np.cos(s), 2.5)
-    surface = em.Surface([piece], label=MOMENT, time=math.pi/4)
+    surface = em.Surface([piece])
     fig = em.figure_of([surface], {"sheet": "cover"}, 2.5)
     fig.legend("fill", "cover", "Round spatial section")
     fig.legend("line", "r", "$s$ constant")
