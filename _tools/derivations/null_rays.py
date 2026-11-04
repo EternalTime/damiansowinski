@@ -19473,6 +19473,10 @@ DIAGRAMS.extend(_nappi_witten_drawings.diagram_specs(sys.modules[__name__]))
 CAPTIONS.update(_nappi_witten_drawings.diagram_captions())
 CLOSED_FORMS.update(_nappi_witten_drawings.null_forms())
 
+import counter_rotating_discs_drawings as _counter_rotating_disc_drawings
+DIAGRAMS.extend(_counter_rotating_disc_drawings.diagram_specs(sys.modules[__name__]))
+CAPTIONS.update(_counter_rotating_disc_drawings.diagram_captions())
+CLOSED_FORMS.update(_counter_rotating_disc_drawings.null_forms())
 
 if __name__ == "__main__":
     sys.exit(main())

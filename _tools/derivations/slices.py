@@ -5174,3 +5174,13 @@ FLAT.update({
     ("shell_void", "exterior_proper", "radial"): lambda: _shell_void_slice("exterior_proper"),
 })
 FLAT_METRICS.add("shell_void")
+
+import counter_rotating_discs_drawings as _counter_rotating_disc_drawings
+FLAT.update({
+    ("counter_rotating_discs", "static", plane):
+        (lambda plane=plane: _counter_rotating_disc_drawings.slice_marks(sys.modules[__name__], plane))
+    for plane in ("disc", "axis")
+})
+FLAT_METRICS.add("counter_rotating_discs")
+HIDDEN[("counter_rotating_discs", "stationary", "axis")] = (
+    "The embedded surfaces belong to the Curzon seed; this axis belongs to the Kerr seed.")

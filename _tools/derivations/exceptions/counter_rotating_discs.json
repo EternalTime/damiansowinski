@@ -1,0 +1,14 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The cylinder has Weyl radius 2m and does not meet the symmetry axis.",
+      "drawings": {"counter_rotating_discs/static/axis": ["cylinder"]}
+    }
+  ],
+  "hidden": [
+    {
+      "reason": "The embedded surfaces belong to the Curzon seed; the stationary axis belongs to the Kerr seed.",
+      "drawings": ["counter_rotating_discs/stationary/axis"]
+    }
+  ]
+}

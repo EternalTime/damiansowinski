@@ -22566,6 +22566,9 @@ import nappi_witten_drawings as _nappi_witten_drawings
 DRAWN[_nappi_witten_drawings.METRIC] = lambda ck, src: _nappi_witten_drawings.embedding_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_nappi_witten_drawings.embedding_captions())
 
+import counter_rotating_discs_drawings as _counter_rotating_disc_drawings
+DRAWN[_counter_rotating_disc_drawings.METRIC] = lambda ck, src: _counter_rotating_disc_drawings.embedding_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_counter_rotating_disc_drawings.embedding_captions())
 
 if __name__ == "__main__":
     sys.exit(main())

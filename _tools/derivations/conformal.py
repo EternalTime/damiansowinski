@@ -32403,6 +32403,7 @@ import nappi_witten_drawings as _nappi_witten_drawings
 DRAWN[_nappi_witten_drawings.METRIC] = lambda ck, src: _nappi_witten_drawings.conformal_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_nappi_witten_drawings.conformal_captions())
 
+NOT_DRAWN.add("counter_rotating_discs")
 
 if __name__ == "__main__":
     sys.exit(main())
