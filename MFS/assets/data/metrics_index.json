@@ -1481,6 +1481,31 @@
     "embedding": "eb3e037703b01e9d"
   },
   {
+    "id": "rotation_halts",
+    "name": "Counterrotating cylindrical shell",
+    "tags": [
+      "dust",
+      "thin shell",
+      "gravitational collapse",
+      "matched solution",
+      "junction conditions",
+      "cylindrical symmetry",
+      "gravitational wave",
+      "time-dependent",
+      "tangential pressure",
+      "collisionless",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "66fb7d15cb7ea9f9",
+    "diagrams": "16b5cc87affce27d",
+    "embedding": "e94d27579593ea01",
+    "curvature": "c0fceb7a6fd14b72"
+  },
+  {
     "id": "cremmer_scherk",
     "name": "Cremmer-Scherk",
     "tags": [
@@ -1873,7 +1898,7 @@
       "idealized model",
       "gravitational redshift"
     ],
-    "version": "051f378ac3ef121e",
+    "version": "b4042d72788fa511",
     "diagrams": "dd0f4a73eb933b73",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9",
@@ -2030,7 +2055,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7cd74b2077e87772",
+    "version": "374d2ff6db374dab",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902",
@@ -3050,7 +3075,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8a9449e8351da9d6",
+    "version": "c987b0ac49eeea53",
     "diagrams": "e28989ef92105e2d",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
@@ -3962,7 +3987,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cba489d4424f1768",
+    "version": "22fa303a48ca2b60",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",

@@ -792,6 +792,18 @@ The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De L
 - chart Static, Inside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_T r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_T r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Static, Outside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_F r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_F r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Rotation halts cylindrical collapse
+
+A cylindrical shell of counterrotating dust with a lower bound on its circumference set by particle angular momentum and mass per proper length.
+
+- id: `rotation_halts`
+- tags: dust, thin shell, gravitational collapse, matched solution, junction conditions, cylindrical symmetry, gravitational wave, time-dependent, tangential pressure, collisionless, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/rotation_halts.json
+- chart Cylindrical Interior: coordinates $(t, \rho, \phi, z)$, $$ds^2 = e^{2(\gamma - \psi)}\left(-dt^2 + d\rho^2\right) + \rho^2e^{-2\psi}d\phi^2 + e^{2\psi}dz^2$$
+- chart Cylindrical Exterior: coordinates $(t, \rho, \phi, z)$, $$ds^2 = e^{2(\gamma - \psi)}\left(-dt^2 + d\rho^2\right) + \rho^2e^{-2\psi}d\phi^2 + e^{2\psi}dz^2$$
+- chart Intrinsic Shell: coordinates $(\tau, \phi, z)$, $$ds^2 = -d\tau^2 + R^2e^{-2\psi}d\phi^2 + e^{2\psi}dz^2$$
+
 ### Cremmer-Scherk Spontaneous Compactification
 
 Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can curl up by the field equations. A magnetic monopole field through the sphere holds it open at one radius, and a cosmological constant of six dimensions keeps the other four dimensions flat.
