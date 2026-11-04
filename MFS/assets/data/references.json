@@ -1,5 +1,5 @@
 {
-  "version": "de918b970b371048",
+  "version": "ae0b8120826624ee",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35240,7 +35240,9 @@
         "number": "1",
         "pages": "31--49",
         "year": "2010",
-        "doi": "10.1007/s10714-009-0812-z"
+        "doi": "10.1007/s10714-009-0812-z",
+        "eprint": "0904.4484",
+        "archiveprefix": "arXiv"
       }
     },
     "economou_tsoubelis1988": {
@@ -37055,6 +37057,68 @@
         "year": "1994",
         "doi": "10.1103/PhysRevD.49.5135",
         "url": "https://doi.org/10.1103/PhysRevD.49.5135"
+      }
+    },
+    "xanthopoulos1987em": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmic strings coupled with gravitational and electromagnetic waves",
+        "author": "Xanthopoulos, Basilis C.",
+        "journal": "Physical Review D",
+        "volume": "35",
+        "number": "12",
+        "pages": "3713--3722",
+        "year": "1987",
+        "doi": "10.1103/physrevd.35.3713",
+        "url": "https://doi.org/10.1103/physrevd.35.3713"
+      }
+    },
+    "sjodin2000dynamic": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamic cosmic strings. I",
+        "author": "Sjödin, K. R. P. and Sperhake, U. and Vickers, J. A.",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "2",
+        "pages": "024011",
+        "year": "2000",
+        "doi": "10.1103/physrevd.63.024011",
+        "eprint": "gr-qc/0002096",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.63.024011"
+      }
+    },
+    "sperhake2000dynamic": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamic cosmic strings. II. Numerical evolution of excited cosmic strings",
+        "author": "Sperhake, U. and Sjödin, K. R. P. and Vickers, J. A.",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "2",
+        "pages": "024012",
+        "year": "2000",
+        "doi": "10.1103/physrevd.63.024012",
+        "eprint": "gr-qc/0003114",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.63.024012"
+      }
+    },
+    "barreto2019cylindrical": {
+      "type": "article",
+      "fields": {
+        "title": "A Galerkin-collocation domain decomposition method: application to the evolution of cylindrical gravitational waves",
+        "author": "Barreto, W O and Crespo, J A and de Oliveira, H P and Rodrigues, E L",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "36",
+        "number": "21",
+        "pages": "215011",
+        "year": "2019",
+        "doi": "10.1088/1361-6382/ab4733",
+        "eprint": "1802.00095",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ab4733"
       }
     }
   }
