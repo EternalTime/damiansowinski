@@ -1,5 +1,5 @@
 {
-  "version": "8eac6e4b40d7a068",
+  "version": "6309404c30713657",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -37637,6 +37637,473 @@
         "eprint": "2102.00800",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.103.084011"
+      }
+    },
+    "barriola1991strong": {
+      "type": "article",
+      "fields": {
+        "author": "Manuel Barriola and Tanmay Vachaspati",
+        "title": "Strong gravity of a self-similar global texture",
+        "journal": "Physical Review D",
+        "volume": "43",
+        "number": "4",
+        "pages": "1056--1059",
+        "year": "1991",
+        "doi": "10.1103/physrevd.43.1056",
+        "url": "https://doi.org/10.1103/physrevd.43.1056"
+      }
+    },
+    "barriola1991approx": {
+      "type": "article",
+      "fields": {
+        "author": "Manuel Barriola and Tanmay Vachaspati",
+        "title": "Analytical approximations to the self-similar global texture metric",
+        "journal": "Physical Review D",
+        "volume": "43",
+        "number": "8",
+        "pages": "2726--2729",
+        "year": "1991",
+        "doi": "10.1103/physrevd.43.2726",
+        "url": "https://doi.org/10.1103/physrevd.43.2726"
+      }
+    },
+    "durrer1991collapse": {
+      "type": "article",
+      "fields": {
+        "author": "Ruth Durrer and Markus Heusler and Philippe Jetzer and Norbert Straumann",
+        "title": "General relativistic collapse of textures",
+        "journal": "Physics Letters B",
+        "volume": "259",
+        "number": "1-2",
+        "pages": "48--52",
+        "year": "1991",
+        "doi": "10.1016/0370-2693(91)90131-9",
+        "url": "https://doi.org/10.1016/0370-2693(91)90131-9"
+      }
+    },
+    "barriola1993collapse": {
+      "type": "article",
+      "fields": {
+        "author": "Manuel Barriola",
+        "title": "Numerical study of the collapse of a global texture",
+        "journal": "Physical Review D",
+        "volume": "48",
+        "number": "12",
+        "pages": "5576--5580",
+        "year": "1993",
+        "doi": "10.1103/physrevd.48.5576",
+        "url": "https://doi.org/10.1103/physrevd.48.5576"
+      }
+    },
+    "aminneborg1995textures": {
+      "type": "article",
+      "fields": {
+        "author": "Stefan Åminneborg and Lars Bergström",
+        "title": "On self-similar global textures in an expanding universe",
+        "journal": "Physics Letters B",
+        "volume": "362",
+        "number": "1-4",
+        "pages": "39--45",
+        "year": "1995",
+        "doi": "10.1016/0370-2693(95)01156-k",
+        "url": "https://doi.org/10.1016/0370-2693(95)01156-k",
+        "eprint": "astro-ph/9511064",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gueron1997newtonian": {
+      "type": "article",
+      "fields": {
+        "author": "Eduardo Guéron and Patricio S. Letelier",
+        "title": "Textures and Newtonian gravity",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "8",
+        "pages": "5272--5275",
+        "year": "1997",
+        "doi": "10.1103/physrevd.56.5272",
+        "url": "https://doi.org/10.1103/physrevd.56.5272",
+        "eprint": "gr-qc/9708052",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "ribeiro1999bound": {
+      "type": "article",
+      "fields": {
+        "author": "A. L. B. Ribeiro and P. S. Letelier",
+        "title": "Global textures and the formation of self-bound gravitational systems",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "309",
+        "number": "4",
+        "pages": "817--822",
+        "year": "1999",
+        "doi": "10.1046/j.1365-8711.1999.02850.x",
+        "url": "https://doi.org/10.1046/j.1365-8711.1999.02850.x",
+        "eprint": "astro-ph/9906172",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "husa2000critical": {
+      "type": "article",
+      "fields": {
+        "author": "Sascha Husa and Christiane Lechner and Michael Pürrer and Jonathan Thornburg and Peter C. Aichelburg",
+        "title": "Type II critical collapse of a self-gravitating nonlinear {$\\sigma$} model",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "10",
+        "pages": "104007",
+        "year": "2000",
+        "doi": "10.1103/physrevd.62.104007",
+        "url": "https://doi.org/10.1103/physrevd.62.104007",
+        "eprint": "gr-qc/0002067",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "tails2009wave": {
+      "type": "article",
+      "fields": {
+        "author": "Piotr Bizoń and Tadeusz Chmaj and Andrzej Rostworowski and Stanisław Zając",
+        "title": "Late-time tails of wave maps coupled to gravity",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "26",
+        "number": "22",
+        "pages": "225015",
+        "year": "2009",
+        "doi": "10.1088/0264-9381/26/22/225015",
+        "url": "https://doi.org/10.1088/0264-9381/26/22/225015",
+        "eprint": "0906.2919",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "brandenberger2020seeds": {
+      "type": "article",
+      "fields": {
+        "author": "Robert Brandenberger and Hao Jiao",
+        "title": "Cosmic textures and global monopoles as seeds for super-massive black holes",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2020",
+        "number": "02",
+        "pages": "002",
+        "year": "2020",
+        "doi": "10.1088/1475-7516/2020/02/002",
+        "url": "https://doi.org/10.1088/1475-7516/2020/02/002",
+        "eprint": "1908.04585",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "brandenberger2020rays": {
+      "type": "article",
+      "fields": {
+        "author": "Robert Brandenberger and Bryce Cyr and Hao Jiao",
+        "title": "Cosmic rays and spectral distortions from collapsing textures",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2020",
+        "number": "09",
+        "pages": "035",
+        "year": "2020",
+        "doi": "10.1088/1475-7516/2020/09/035",
+        "url": "https://doi.org/10.1088/1475-7516/2020/09/035",
+        "eprint": "2005.11099",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bizon2000wave": {
+      "type": "article",
+      "fields": {
+        "author": "Piotr Bizoń and Arthur Wasserman",
+        "title": "Self-similar spherically symmetric wave maps coupled to gravity",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "8",
+        "pages": "084031",
+        "year": "2000",
+        "doi": "10.1103/physrevd.62.084031",
+        "url": "https://doi.org/10.1103/physrevd.62.084031",
+        "eprint": "gr-qc/0006034",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "lechner2002transition": {
+      "type": "article",
+      "fields": {
+        "author": "Christiane Lechner and Jonathan Thornburg and Sascha Husa and Peter C. Aichelburg",
+        "title": "New transition between discrete and continuous self-similarity in critical gravitational collapse",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "8",
+        "pages": "081501",
+        "year": "2002",
+        "doi": "10.1103/physrevd.65.081501",
+        "url": "https://doi.org/10.1103/physrevd.65.081501",
+        "eprint": "gr-qc/0112008",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bizon2002wave": {
+      "type": "article",
+      "fields": {
+        "author": "Piotr Bizoń and Arthur Wasserman",
+        "title": "On the existence of self-similar spherically symmetric wave maps coupled to gravity",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "12",
+        "pages": "3309--3321",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/12/313",
+        "url": "https://doi.org/10.1088/0264-9381/19/12/313",
+        "eprint": "gr-qc/0201046",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bizon2004periodic": {
+      "type": "article",
+      "fields": {
+        "author": "Piotr Bizoń and Sebastian J. Szybka and Arthur Wasserman",
+        "title": "Periodic self-similar wave maps coupled to gravity",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "6",
+        "pages": "064014",
+        "year": "2004",
+        "doi": "10.1103/physrevd.69.064014",
+        "url": "https://doi.org/10.1103/physrevd.69.064014",
+        "eprint": "gr-qc/0310038",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "szybka2004chaotic": {
+      "type": "article",
+      "fields": {
+        "author": "Sebastian J. Szybka",
+        "title": "Chaotic self-similar wave maps coupled to gravity",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "8",
+        "pages": "084014",
+        "year": "2004",
+        "doi": "10.1103/physrevd.69.084014",
+        "url": "https://doi.org/10.1103/physrevd.69.084014",
+        "eprint": "gr-qc/0310050",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "aichelburg2006bifurcation": {
+      "type": "article",
+      "fields": {
+        "author": "Peter C. Aichelburg and Piotr Bizoń and Zbislaw Tabor",
+        "title": "Bifurcation and fine structure phenomena in critical collapse of a self-gravitating {$\\sigma$}-field",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "16",
+        "pages": "S299--S306",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/16/s01",
+        "url": "https://doi.org/10.1088/0264-9381/23/16/s01",
+        "eprint": "gr-qc/0512136",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "cruz2007coldspot": {
+      "type": "article",
+      "fields": {
+        "author": "M. Cruz and N. Turok and P. Vielva and E. Martínez-González and M. Hobson",
+        "title": "A Cosmic Microwave Background Feature Consistent with a Cosmic Texture",
+        "journal": "Science",
+        "volume": "318",
+        "number": "5856",
+        "pages": "1612--1614",
+        "year": "2007",
+        "doi": "10.1126/science.1148694",
+        "url": "https://doi.org/10.1126/science.1148694",
+        "eprint": "0710.5737",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "das2009lensing": {
+      "type": "article",
+      "fields": {
+        "author": "Sudeep Das and David N. Spergel",
+        "title": "CMB lensing and the WMAP cold spot",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "4",
+        "pages": "043007",
+        "year": "2009",
+        "doi": "10.1103/physrevd.79.043007",
+        "url": "https://doi.org/10.1103/physrevd.79.043007",
+        "eprint": "0809.4704",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "ferreira2026lensing": {
+      "type": "article",
+      "fields": {
+        "author": "Pedro da Silveira Ferreira and Stephen Owusu",
+        "title": "The CMB Cold Spot under the lens II: lensing signatures in polarization and cosmic texture footprints",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2026",
+        "number": "07",
+        "pages": "055",
+        "year": "2026",
+        "doi": "10.1088/1475-7516/2026/07/055",
+        "url": "https://doi.org/10.1088/1475-7516/2026/07/055",
+        "eprint": "2505.08761",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "stebbins1995sky": {
+      "type": "article",
+      "fields": {
+        "author": "Albert Stebbins and Shoba Veeraraghavan",
+        "title": "Beyond the small-angle approximation for MBR anisotropy from seeds",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "4",
+        "pages": "1465--1478",
+        "year": "1995",
+        "doi": "10.1103/physrevd.51.1465",
+        "url": "https://doi.org/10.1103/physrevd.51.1465",
+        "eprint": "astro-ph/9406067",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "cruz2008coldspot": {
+      "type": "article",
+      "fields": {
+        "author": "M. Cruz and E. Martínez-González and P. Vielva and J. M. Diego and M. Hobson and N. Turok",
+        "title": "The CMB cold spot: texture, cluster or void?",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "390",
+        "number": "3",
+        "pages": "913--919",
+        "year": "2008",
+        "doi": "10.1111/j.1365-2966.2008.13812.x",
+        "url": "https://doi.org/10.1111/j.1365-2966.2008.13812.x",
+        "eprint": "0804.2904",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "vielva2011polarization": {
+      "type": "article",
+      "fields": {
+        "author": "P. Vielva and E. Martínez-González and M. Cruz and R. B. Barreiro and M. Tucci",
+        "title": "Cosmic microwave background polarization as a probe of the anomalous nature of the cold spot",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "410",
+        "number": "1",
+        "pages": "33--38",
+        "year": "2011",
+        "doi": "10.1111/j.1365-2966.2010.17418.x",
+        "url": "https://doi.org/10.1111/j.1365-2966.2010.17418.x",
+        "eprint": "1002.4029",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "feeney2012constraint": {
+      "type": "article",
+      "fields": {
+        "author": "Stephen M. Feeney and Matthew C. Johnson and Daniel J. Mortlock and Hiranya V. Peiris",
+        "title": "Robust Constraint on Cosmic Textures from the Cosmic Microwave Background",
+        "journal": "Physical Review Letters",
+        "volume": "108",
+        "number": "24",
+        "pages": "241301",
+        "year": "2012",
+        "doi": "10.1103/physrevlett.108.241301",
+        "url": "https://doi.org/10.1103/physrevlett.108.241301",
+        "eprint": "1203.1928",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "kovetz2013lensing": {
+      "type": "article",
+      "fields": {
+        "author": "Ely D. Kovetz and Marc Kamionkowski",
+        "title": "21-cm Lensing and the Cold Spot in the Cosmic Microwave Background",
+        "journal": "Physical Review Letters",
+        "volume": "110",
+        "number": "17",
+        "pages": "171301",
+        "year": "2013",
+        "doi": "10.1103/physrevlett.110.171301",
+        "url": "https://doi.org/10.1103/physrevlett.110.171301",
+        "eprint": "1211.4610",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "farhang2021coldspot": {
+      "type": "article",
+      "fields": {
+        "author": "M. Farhang and S. M. S. Movahed",
+        "title": "CMB Cold Spot in the Planck Light",
+        "journal": "The Astrophysical Journal",
+        "volume": "906",
+        "number": "1",
+        "pages": "41",
+        "year": "2021",
+        "doi": "10.3847/1538-4357/abc8e7",
+        "url": "https://doi.org/10.3847/1538-4357/abc8e7",
+        "eprint": "2001.03995",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "rathaus2011lens": {
+      "type": "article",
+      "fields": {
+        "author": "Ben Rathaus and Anastasia Fialkov and Nissan Itzhaki",
+        "title": "How sensitive is the CMB to a single lens?",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2011",
+        "number": "06",
+        "pages": "033",
+        "year": "2011",
+        "doi": "10.1088/1475-7516/2011/06/033",
+        "url": "https://doi.org/10.1088/1475-7516/2011/06/033",
+        "eprint": "1105.2940",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "feeney2013hierarchical": {
+      "type": "article",
+      "fields": {
+        "author": "Stephen M. Feeney and Matthew C. Johnson and Jason D. McEwen and Daniel J. Mortlock and Hiranya V. Peiris",
+        "title": "Hierarchical Bayesian detection algorithm for early-universe relics in the cosmic microwave background",
+        "journal": "Physical Review D",
+        "volume": "88",
+        "number": "4",
+        "pages": "043012",
+        "year": "2013",
+        "doi": "10.1103/physrevd.88.043012",
+        "url": "https://doi.org/10.1103/physrevd.88.043012",
+        "eprint": "1210.2725",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "fernandez2013polarization": {
+      "type": "article",
+      "fields": {
+        "author": "R. Fernández-Cobos and P. Vielva and E. Martínez-González and M. Tucci and M. Cruz",
+        "title": "Using CMB polarization to constrain the anomalous nature of the Cold Spot with an incomplete-sky coverage",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "435",
+        "number": "4",
+        "pages": "3096--3102",
+        "year": "2013",
+        "doi": "10.1093/mnras/stt1505",
+        "url": "https://doi.org/10.1093/mnras/stt1505",
+        "eprint": "1305.5527",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "dando1999dilaton": {
+      "type": "misc",
+      "fields": {
+        "author": "Owen Dando",
+        "title": "Textures in Dilaton Gravity",
+        "year": "1999",
+        "eprint": "gr-qc/9904058",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9904058"
       }
     }
   }
