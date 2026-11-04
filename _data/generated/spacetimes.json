@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 246,
+  "count": 247,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1596,6 +1596,11 @@
           "id": "linet_tian",
           "kind": "family",
           "text": "A line of mass in anti-de Sitter space. Its static field approaches this space far from the axis, in horospherical coordinates [dasilva2000, zofka2008]."
+        },
+        {
+          "id": "klebanov_witten",
+          "kind": "family",
+          "text": "The throat pairs anti-de Sitter space of five dimensions with a compact circle bundle over two 2-spheres. Threebranes at the tip of the conifold produce this product in the limit near their horizon [klebanovwitten1998]."
         }
       ],
       "references": [
@@ -1654,7 +1659,8 @@
         "maldacena2018",
         "cahen1970",
         "dasilva2000",
-        "zofka2008"
+        "zofka2008",
+        "klebanovwitten1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -35535,6 +35541,11 @@
           "id": "giddings_strominger",
           "kind": "family",
           "text": "Another space of four dimensions with no time, Steven B. Giddings and Andrew Strominger's wormhole of 1988, two flat regions joined at a 3-sphere that an axion's field holds open [giddings1988]."
+        },
+        {
+          "id": "klebanov_witten",
+          "kind": "family",
+          "text": "The compact five dimensions of the throat carry a circle bundle over two 2-spheres. The monopole's spatial Taub-NUT geometry carries a circle bundle over one 2-sphere [klebanovwitten1998]."
         }
       ],
       "references": [
@@ -35569,7 +35580,8 @@
         "horowitzmaeda2002",
         "myers1987compact",
         "vafa1996ftheory",
-        "giddings1988"
+        "giddings1988",
+        "klebanovwitten1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -41025,6 +41037,217 @@
           ],
           "ricci_scalar": "R = \\dfrac{3\\left(\\tau + \\rho\\right)}{r_q^2\\,\\rho}",
           "kretschmann": "K = \\dfrac{2\\left(\\tau + \\rho\\right)^2}{r_q^4\\,\\rho^2}"
+        }
+      ]
+    },
+    {
+      "id": "klebanov_witten",
+      "name": "Klebanov-Witten Conifold Throat",
+      "short_name": "Klebanov-Witten",
+      "description": "The throat of threebranes at a conifold singularity: anti-de Sitter space of five dimensions times the compact space $T^{1,1}$. Its internal circle twists over two 2-spheres, and a self-dual 5-form flux supports the curvature of the ten dimensions.",
+      "tags": [
+        "static",
+        "stationary",
+        "ten-dimensional",
+        "higher dimensions",
+        "string theory",
+        "supergravity",
+        "supersymmetric",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "D3-brane",
+        "brane",
+        "topology",
+        "compact dimension",
+        "Kaluza-Klein",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We keep factors of $c$ explicit and use the Ricci contraction $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "Both throats arise from threebranes and pair anti-de Sitter space of five dimensions with a compact space of the same radius. A round 5-sphere preserves 32 supersymmetries, while $T^{1,1}$ preserves eight and has $SU(2)\\times SU(2)\\times U(1)$ isometry [klebanovwitten1998]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The noncompact factor is anti-de Sitter space of five dimensions, with the same constant negative curvature construction as the geometry of four dimensions. The compact factor is $T^{1,1}$ [klebanovwitten1998]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Both geometries contain a spatial circle fibred over a 2-sphere. The internal circle of the throat has a connection with one contribution from each of two 2-spheres [klebanovwitten1998]."
+        },
+        {
+          "id": "taub_nut",
+          "kind": "family",
+          "text": "The angular connection in Taub-NUT and the circle fibre of $T^{1,1}$ both twist over a 2-sphere. The throat's fibre is spatial and extends over two spheres [klebanovwitten1998]."
+        }
+      ],
+      "references": [
+        "klebanovwitten1998",
+        "candelas1990conifold",
+        "romans1985compactification"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/klebanov_witten.json",
+      "charts": [
+        {
+          "id": "poincare",
+          "name": "Poincaré",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "r",
+            "\\theta",
+            "\\phi",
+            "\\alpha",
+            "\\beta",
+            "\\psi"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "r \\in (0,\\infty)",
+            "\\theta \\in [0,\\pi]",
+            "\\phi \\in [0,2\\pi)",
+            "\\alpha \\in [0,\\pi]",
+            "\\beta \\in [0,2\\pi)",
+            "\\psi \\in [0,4\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The common curvature length of the anti-de Sitter and compact factors, with $L>0$"
+            }
+          ],
+          "convention": "We use coordinates $(t,x,y,z,r,\\theta,\\phi,\\alpha,\\beta,\\psi)$, with $t$ a time, $x$, $y$, $z$, and $r$ lengths, and the remaining coordinates dimensionless angles. The sphere angles are $(\\theta,\\phi)$ and $(\\alpha,\\beta)$, corresponding to $(\\theta_1,\\phi_1)$ and $(\\theta_2,\\phi_2)$ in the conifold notation, and $\\psi$ parametrizes the circle fibre. We take components in the chart $x^0=ct$, with a dot denoting differentiation with respect to an affine parameter $\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{r^2}{L^2}\\left(-c^2dt^2+dx^2+dy^2+dz^2\\right)+\\dfrac{L^2}{r^2}dr^2+L^2\\left(\\dfrac{1}{9}\\left(d\\psi+\\cos\\theta\\,d\\phi+\\cos\\alpha\\,d\\beta\\right)^2+\\dfrac{1}{6}\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2+d\\alpha^2+\\sin^2\\alpha\\,d\\beta^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{r^2}{L^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{L^2}{r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{L^2}{6}"
+            },
+            {
+              "indices": [
+                "\\alpha",
+                "\\alpha"
+              ],
+              "value": "\\dfrac{L^2}{6}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\left(\\sin^2\\theta + 2\\right)}{18}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\beta"
+              ],
+              "value": "\\dfrac{L^2\\cos\\alpha\\cos\\theta}{9}"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\cos\\alpha\\cos\\theta}{9}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2\\cos\\theta}{9}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{L^2\\cos\\theta}{9}"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\beta"
+              ],
+              "value": "\\dfrac{L^2\\left(\\sin^2\\alpha + 2\\right)}{18}"
+            },
+            {
+              "indices": [
+                "\\beta",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2\\cos\\alpha}{9}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\beta"
+              ],
+              "value": "\\dfrac{L^2\\cos\\alpha}{9}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{L^2}{9}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{176}{L^4}"
         }
       ]
     },
@@ -73789,6 +74012,11 @@
           "id": "atiyah_hitchin",
           "kind": "family",
           "text": "Atiyah and Hitchin's space of two monopoles, which far from its core is Taub-NUT in Euclidean signature, self dual and with a negative mass. Its exponentially small corrections keep it smooth where that negative mass alone would leave a singularity [gibbonsmanton1995, tong2005]."
+        },
+        {
+          "id": "klebanov_witten",
+          "kind": "family",
+          "text": "The internal circle of the throat twists over two 2-spheres through the connection $d\\psi+\\cos\\theta_1\\,d\\phi_1+\\cos\\theta_2\\,d\\phi_2$. Taub-NUT carries the same angular connection over a single sphere [klebanovwitten1998]."
         }
       ],
       "references": [
@@ -73824,7 +74052,8 @@
         "newman1962tamburino",
         "moncrief1981nut",
         "gibbonsmanton1995",
-        "tong2005"
+        "tong2005",
+        "klebanovwitten1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/taub_nut.json",
@@ -75186,6 +75415,11 @@
           "id": "maximally_supersymmetric_plane_wave",
           "kind": "limit",
           "text": "The Penrose limit of the throat along a light ray circling its 5-sphere, a plane wave of ten dimensions that keeps all 32 supersymmetries of type IIB supergravity [blau2002penrose, berenstein2002]."
+        },
+        {
+          "id": "klebanov_witten",
+          "kind": "family",
+          "text": "Threebranes at a conifold tip approach anti-de Sitter space of five dimensions times $T^{1,1}$ in the limit near their horizon. The product has ten dimensions, one radius for both factors, compact isometry $SU(2)\\times SU(2)\\times U(1)$, and eight supersymmetries [klebanovwitten1998]."
         }
       ],
       "references": [
@@ -75206,7 +75440,8 @@
         "witten1998",
         "lin2004",
         "blau2002penrose",
-        "berenstein2002"
+        "berenstein2002",
+        "klebanovwitten1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",

@@ -1,5 +1,5 @@
 {
-  "version": "341126dbad48a564",
+  "version": "31db6593378534e8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36523,6 +36523,48 @@
         "eprint": "2203.01956",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/JHEP08(2022)064"
+      }
+    },
+    "klebanovwitten1998": {
+      "type": "article",
+      "fields": {
+        "author": "Klebanov, Igor R. and Witten, Edward",
+        "title": "Superconformal field theory on threebranes at a {Calabi-Yau} singularity",
+        "journal": "Nuclear Physics B",
+        "volume": "536",
+        "number": "1-2",
+        "pages": "199--218",
+        "year": "1998",
+        "doi": "10.1016/S0550-3213(98)00654-3",
+        "eprint": "hep-th/9807080",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "candelas1990conifold": {
+      "type": "article",
+      "fields": {
+        "author": "Candelas, Philip and de la Ossa, Xenia C.",
+        "title": "Comments on conifolds",
+        "journal": "Nuclear Physics B",
+        "volume": "342",
+        "number": "1",
+        "pages": "246--268",
+        "year": "1990",
+        "doi": "10.1016/0550-3213(90)90577-Z"
+      }
+    },
+    "romans1985compactification": {
+      "type": "article",
+      "fields": {
+        "author": "Romans, L. J.",
+        "title": "New compactifications of Chiral {$N = 2$}, {$d = 10$} supergravity",
+        "journal": "Physics Letters B",
+        "volume": "153",
+        "number": "6",
+        "pages": "392--396",
+        "year": "1985",
+        "doi": "10.1016/0370-2693(85)90479-4"
       }
     }
   }

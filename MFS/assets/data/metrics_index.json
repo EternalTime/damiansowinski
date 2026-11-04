@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "1bdf10d987c97746",
+    "version": "b6997ded96130e94",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -3174,7 +3174,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c2c73f58eb7a826a",
+    "version": "7cbf7790f17edb7a",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -3692,6 +3692,35 @@
     "conformal": "6ef2fd6aee9f0ecf",
     "embedding": "f88f2136771d0f0a",
     "curvature": "94cff053104263c8"
+  },
+  {
+    "id": "klebanov_witten",
+    "name": "Klebanov-Witten",
+    "tags": [
+      "static",
+      "stationary",
+      "ten-dimensional",
+      "higher dimensions",
+      "string theory",
+      "supergravity",
+      "supersymmetric",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "D3-brane",
+      "brane",
+      "topology",
+      "compact dimension",
+      "Kaluza-Klein",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "ff2f913a7593c614",
+    "diagrams": "990c8f303900f750",
+    "conformal": "a4d672cb360c0ce0",
+    "embedding": "ec43b4fdedcaee5d",
+    "curvature": "a5129d689073c273"
   },
   {
     "id": "kodama_kink",
@@ -6617,7 +6646,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "63941cecb0cb3b9e",
+    "version": "c3022b71fb724d9e",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078",
     "curvature": "67bff764e3e14927"
@@ -6745,7 +6774,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "2afaf7499cb1d740",
+    "version": "440ffd4d9a10e563",
     "diagrams": "e574af654990108c",
     "conformal": "631507c8e742808c",
     "embedding": "7006f557a81541c6",
