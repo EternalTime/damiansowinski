@@ -98,7 +98,7 @@ def conformal_views(ck, src, cf):
     half = math.pi/2
     plane = cf.Plane(src, METRIC, "cosmological", (r"\psi", "s"),
                      {"rho": "0", "lambda": "0"}, PARAMS)
-    null_map = lambda t, s: (t-s, t+s)
+    null_map = lambda t, s: ((t-s)/2, (t+s)/2)
     ck.chart("Nappi-Witten cosmological causal plane", plane, null_map,
              ck.uniform(0.01, half-0.01), ck.uniform(0.01, half-0.01), lambda t, s: (1, 0))
     view = cf.View("cosmological", "Closed cosmological region",
@@ -115,7 +115,7 @@ def conformal_views(ck, src, cf):
         s = np.linspace(max(0, intercept-half), min(half, intercept), 80)
         view.curve("null", *null_map(intercept-s, s))
     view.point("singular", (0, 0))
-    view.point("singular", (0, math.pi))
+    view.point("singular", (0, half))
     view.legend("null", "Light rays")
     view.legend("centre", "Circular axes")
     view.legend("boundary", "Big bang and big crunch")
@@ -124,7 +124,7 @@ def conformal_views(ck, src, cf):
     lo, hi = moment.reach("cosmological", "s")
     s = np.linspace(lo, hi, 80)
     view.slice(moment, [null_map(np.full_like(s, math.pi/4), s)])
-    view.set(settings=r"$b=L=1$, $p=\psi-s$, $q=\psi+s$.",
+    view.set(settings=r"$b=L=1$, $p=(\psi-s)/2$, $q=(\psi+s)/2$.",
              restriction="Each interior point a 2-torus.")
     return [view]
 
