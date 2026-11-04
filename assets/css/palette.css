@@ -24,6 +24,14 @@
   --blue-muted:   #7a9aae;  /* output node                  */
   --blue-mid:     #5a7a96;  /* simulation background        */
 
+  /* --- Speed ramp, slow → fast (hard-sphere gas) --- */
+  --ramp-steel:   #4a73ad;  /* slowest                      */
+  --ramp-indigo:  #44469d;
+  --ramp-violet:  #4f2474;
+  --ramp-magenta: #cf318e;
+  --ramp-coral:   #fe7d78;
+  --ramp-amber:   #ffa342;  /* fastest                      */
+
   /* --- Canvas backgrounds (near-black) --- */
   --bg-void:      #04040e;  /* spring-lattice deepest bg    */
   --bg-black:     #0d0d0d;  /* Lorentz canvas               */
