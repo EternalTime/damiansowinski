@@ -157,6 +157,6 @@ def curvature_views(ck, src, cv):
     return [{"id": "turnaround", "label": "At maximum volume", "system": "cosmological",
              "kind": "line", "x": xaxis, "panels": panels, "curves": curves, "marks": [],
              "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
-             "caption": [r"Spacetime curvature across the 3-sphere at maximum volume ($\psi=\pi/4$, $b=1$)."],
+             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the universe across its 3-sphere at maximum volume ($\psi=\pi/4$, $b=1$)."],
              "ricci_sentences": [], "settings": r"$L=1$.", "clip": "Linear vertical scales.",
              "per_scalar": cv.scalar_clips("Linear scale.", "Linear scale.")}]
