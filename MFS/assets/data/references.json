@@ -1,5 +1,5 @@
 {
-  "version": "4f52fd5806f1bced",
+  "version": "5399a7edce52f8f2",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -38829,6 +38829,711 @@
         "eprint": "2608.00159",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2608.00159"
+      }
+    },
+    "coleman_redherrings1988": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes as red herrings: Topological fluctuations and the loss of quantum coherence",
+        "author": "Coleman, Sidney",
+        "journal": "Nuclear Physics B",
+        "volume": "307",
+        "number": "4",
+        "pages": "867--882",
+        "year": "1988",
+        "doi": "10.1016/0550-3213(88)90110-1",
+        "url": "https://doi.org/10.1016/0550-3213(88)90110-1"
+      }
+    },
+    "lee1988": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes and Goldstone Bosons",
+        "author": "Lee, Kimyeong",
+        "journal": "Physical Review Letters",
+        "volume": "61",
+        "number": "3",
+        "pages": "263--266",
+        "year": "1988",
+        "doi": "10.1103/physrevlett.61.263",
+        "url": "https://doi.org/10.1103/physrevlett.61.263"
+      }
+    },
+    "fischler1989catastrophe": {
+      "type": "article",
+      "fields": {
+        "title": "A wormhole catastrophe",
+        "author": "Fischler, W. and Susskind, L.",
+        "journal": "Physics Letters B",
+        "volume": "217",
+        "number": "1-2",
+        "pages": "48--54",
+        "year": "1989",
+        "doi": "10.1016/0370-2693(89)91514-1",
+        "url": "https://doi.org/10.1016/0370-2693(89)91514-1"
+      }
+    },
+    "giddings_third1989": {
+      "type": "article",
+      "fields": {
+        "title": "Baby universe, third quantization and the cosmological constant",
+        "author": "Giddings, Steven B and Strominger, Andrew",
+        "journal": "Nuclear Physics B",
+        "volume": "321",
+        "number": "2",
+        "pages": "481--508",
+        "year": "1989",
+        "doi": "10.1016/0550-3213(89)90353-2",
+        "url": "https://doi.org/10.1016/0550-3213(89)90353-2"
+      }
+    },
+    "ridgway1991": {
+      "type": "article",
+      "fields": {
+        "title": "Axion charge decay and wormhole destabilization",
+        "author": "Ridgway, S.Alexander",
+        "journal": "Physics Letters B",
+        "volume": "264",
+        "number": "1-2",
+        "pages": "31--34",
+        "year": "1991",
+        "doi": "10.1016/0370-2693(91)90698-p",
+        "url": "https://doi.org/10.1016/0370-2693(91)90698-p"
+      }
+    },
+    "rubakov1996": {
+      "type": "article",
+      "fields": {
+        "title": "A negative mode about a euclidean wormhole",
+        "author": "Rubakov, V.A. and Shvedov, O.Yu.",
+        "journal": "Physics Letters B",
+        "volume": "383",
+        "number": "3",
+        "pages": "258--261",
+        "year": "1996",
+        "eprint": "gr-qc/9604038",
+        "archiveprefix": "arXiv",
+        "doi": "10.1016/0370-2693(96)00766-6",
+        "url": "https://doi.org/10.1016/0370-2693(96)00766-6"
+      }
+    },
+    "arkani2007": {
+      "type": "article",
+      "fields": {
+        "title": "Euclidean wormholes in string theory",
+        "author": "Arkani-Hamed, Nima and Orgera, Jacopo and Polchinski, Joseph",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2007",
+        "number": "12",
+        "pages": "018",
+        "year": "2007",
+        "eprint": "0705.2768",
+        "archiveprefix": "arXiv",
+        "doi": "10.1088/1126-6708/2007/12/018",
+        "url": "https://doi.org/10.1088/1126-6708/2007/12/018"
+      }
+    },
+    "montero2015": {
+      "type": "article",
+      "fields": {
+        "title": "Transplanckian axions!?",
+        "author": "Montero, Miguel and Uranga, Angel M. and Valenzuela, Irene",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2015",
+        "number": "8",
+        "pages": "032",
+        "year": "2015",
+        "eprint": "1503.03886",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep08(2015)032",
+        "url": "https://doi.org/10.1007/jhep08(2015)032"
+      }
+    },
+    "hebecker2017": {
+      "type": "article",
+      "fields": {
+        "title": "Can gravitational instantons really constrain axion inflation?",
+        "author": "Hebecker, Arthur and Mangat, Patrick and Theisen, Stefan and Witkowski, Lukas T.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2017",
+        "number": "2",
+        "pages": "097",
+        "year": "2017",
+        "eprint": "1607.06814",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep02(2017)097",
+        "url": "https://doi.org/10.1007/jhep02(2017)097"
+      }
+    },
+    "alonso2019": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes and masses for Goldstone bosons",
+        "author": "Alonso, Rodrigo and Urbano, Alfredo",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2019",
+        "number": "2",
+        "pages": "136",
+        "year": "2019",
+        "eprint": "1706.07415",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep02(2019)136",
+        "url": "https://doi.org/10.1007/jhep02(2019)136"
+      }
+    },
+    "alvey2021": {
+      "type": "article",
+      "fields": {
+        "title": "The axion quality problem: global symmetry breaking and wormholes",
+        "author": "Alvey, James and Escudero, Miguel",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "1",
+        "pages": "032",
+        "year": "2021",
+        "eprint": "2009.03917",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep01(2021)032",
+        "url": "https://doi.org/10.1007/jhep01(2021)032"
+      }
+    },
+    "alvey2023erratum": {
+      "type": "article",
+      "fields": {
+        "title": "Erratum to: The axion quality problem: global symmetry breaking and wormholes",
+        "author": "Alvey, James and Escudero, Miguel",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "11",
+        "pages": "223",
+        "year": "2023",
+        "doi": "10.1007/jhep11(2023)223",
+        "url": "https://doi.org/10.1007/jhep11(2023)223"
+      }
+    },
+    "andriolo2022": {
+      "type": "article",
+      "fields": {
+        "title": "Axion wormholes with massive dilaton",
+        "author": "Andriolo, Stefano and Shiu, Gary and Soler, Pablo and Van Riet, Thomas",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "39",
+        "number": "21",
+        "pages": "215014",
+        "year": "2022",
+        "eprint": "2205.01119",
+        "archiveprefix": "arXiv",
+        "doi": "10.1088/1361-6382/ac8fdc",
+        "url": "https://doi.org/10.1088/1361-6382/ac8fdc"
+      }
+    },
+    "jonas2023": {
+      "type": "article",
+      "fields": {
+        "title": "Zoo of axionic wormholes",
+        "author": "Jonas, Caroline and Lavrelashvili, George and Lehners, Jean-Luc",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "6",
+        "pages": "066012",
+        "year": "2023",
+        "eprint": "2306.11129",
+        "archiveprefix": "arXiv",
+        "doi": "10.1103/physrevd.108.066012",
+        "url": "https://doi.org/10.1103/physrevd.108.066012"
+      }
+    },
+    "jonas2024": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of axion-dilaton wormholes",
+        "author": "Jonas, Caroline and Lavrelashvili, George and Lehners, Jean-Luc",
+        "journal": "Physical Review D",
+        "volume": "109",
+        "number": "8",
+        "pages": "086022",
+        "year": "2024",
+        "eprint": "2312.08971",
+        "archiveprefix": "arXiv",
+        "doi": "10.1103/physrevd.109.086022",
+        "url": "https://doi.org/10.1103/physrevd.109.086022"
+      }
+    },
+    "kanazawa2024": {
+      "type": "article",
+      "fields": {
+        "title": "Axionic wormholes with {$R^2$} correction in metric and Palatini formulations",
+        "author": "Kanazawa, Yoshiki",
+        "journal": "Physical Review D",
+        "volume": "109",
+        "number": "7",
+        "pages": "076009",
+        "year": "2024",
+        "eprint": "2310.14641",
+        "archiveprefix": "arXiv",
+        "doi": "10.1103/physrevd.109.076009",
+        "url": "https://doi.org/10.1103/physrevd.109.076009"
+      }
+    },
+    "cheong2024": {
+      "type": "article",
+      "fields": {
+        "title": "Effective theory approach for axion wormholes",
+        "author": "Cheong, Dhong Yeon and Park, Seong Chan and Shin, Chang Sub",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "7",
+        "pages": "039",
+        "year": "2024",
+        "eprint": "2310.11260",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep07(2024)039",
+        "url": "https://doi.org/10.1007/jhep07(2024)039"
+      }
+    },
+    "hertog2024": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of axion-saxion wormholes",
+        "author": "Hertog, T. and Maenaut, S. and Missoni, B. and Tielemans, R. and Van Riet, T.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "11",
+        "pages": "151",
+        "year": "2024",
+        "eprint": "2405.02072",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep11(2024)151",
+        "url": "https://doi.org/10.1007/jhep11(2024)151"
+      }
+    },
+    "marolf2025": {
+      "type": "article",
+      "fields": {
+        "title": "Euclidean wormholes stability analysis revisited",
+        "author": "Marolf, Donald and Missoni, Bruno",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "10",
+        "pages": "117",
+        "year": "2025",
+        "eprint": "2505.21118",
+        "archiveprefix": "arXiv",
+        "doi": "10.1007/jhep10(2025)117",
+        "url": "https://doi.org/10.1007/jhep10(2025)117"
+      }
+    },
+    "kallosh1995": {
+      "type": "article",
+      "fields": {
+        "title": "Gravity and global symmetries",
+        "author": "Kallosh, Renata and Linde, Andrei and Linde, Dmitri and Susskind, Leonard",
+        "journal": "Physical Review D",
+        "volume": "52",
+        "number": "2",
+        "pages": "912--935",
+        "year": "1995",
+        "doi": "10.1103/physrevd.52.912",
+        "url": "https://doi.org/10.1103/physrevd.52.912"
+      }
+    },
+    "hamaguchi2022": {
+      "type": "article",
+      "fields": {
+        "title": "Axion quality problem alleviated by nonminimal coupling to gravity",
+        "author": "Hamaguchi, Koichi and Kanazawa, Yoshiki and Nagata, Natsumi",
+        "journal": "Physical Review D",
+        "volume": "105",
+        "number": "7",
+        "pages": "076008",
+        "year": "2022",
+        "doi": "10.1103/physrevd.105.076008",
+        "url": "https://doi.org/10.1103/physrevd.105.076008"
+      }
+    },
+    "cheong2023": {
+      "type": "article",
+      "fields": {
+        "title": "Axion quality problem and nonminimal gravitational coupling in the Palatini formulation",
+        "author": "Cheong, Dhong Yeon and Hamaguchi, Koichi and Kanazawa, Yoshiki and Lee, Sung Mook and Nagata, Natsumi and Park, Seong Chan",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "1",
+        "pages": "015007",
+        "year": "2023",
+        "doi": "10.1103/physrevd.108.015007",
+        "url": "https://doi.org/10.1103/physrevd.108.015007"
+      }
+    },
+    "axiverse2024": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes in the axiverse, and the species scale",
+        "author": "Martucci, Luca and Risso, Nicolò and Valenti, Alessandro and Vecchi, Luca",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "7",
+        "pages": "240",
+        "year": "2024",
+        "doi": "10.1007/jhep07(2024)240",
+        "url": "https://doi.org/10.1007/jhep07(2024)240"
+      }
+    },
+    "alp2025": {
+      "type": "article",
+      "fields": {
+        "title": "Wormhole-induced ALP dark matter",
+        "author": "Cheong, Dhong Yeon and Hamaguchi, Koichi and Kanazawa, Yoshiki and Lee, Sung Mook and Nagata, Natsumi and Park, Seong Chan",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "2",
+        "pages": "183",
+        "year": "2025",
+        "doi": "10.1007/jhep02(2025)183",
+        "url": "https://doi.org/10.1007/jhep02(2025)183"
+      }
+    },
+    "cosmology2026": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmology of gravitational axions",
+        "author": "Alexander, Stephon and Gabadadze, Gregory and Jenks, Leah and Yunes, Nicolás",
+        "journal": "Physical Review D",
+        "volume": "114",
+        "number": "2",
+        "pages": "023529",
+        "year": "2026",
+        "doi": "10.1103/yst4-cr4c",
+        "url": "https://doi.org/10.1103/yst4-cr4c"
+      }
+    },
+    "abbott1989": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes and global symmetries",
+        "author": "Abbott, L.F. and Wise, Mark B.",
+        "journal": "Nuclear Physics B",
+        "volume": "325",
+        "number": "3",
+        "pages": "687--704",
+        "year": "1989",
+        "doi": "10.1016/0550-3213(89)90503-8",
+        "url": "https://doi.org/10.1016/0550-3213(89)90503-8"
+      }
+    },
+    "string1989": {
+      "type": "article",
+      "fields": {
+        "title": "String wormholes",
+        "author": "Giddings, Steven B. and Strominger, Andrew",
+        "journal": "Physics Letters B",
+        "volume": "230",
+        "number": "1-2",
+        "pages": "46--51",
+        "year": "1989",
+        "doi": "10.1016/0370-2693(89)91651-1",
+        "url": "https://doi.org/10.1016/0370-2693(89)91651-1"
+      }
+    },
+    "colemanlee1990": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes made without massless matter fields",
+        "author": "Coleman, Sidney and Lee, Kimyeong",
+        "journal": "Nuclear Physics B",
+        "volume": "329",
+        "number": "2",
+        "pages": "387--409",
+        "year": "1990",
+        "doi": "10.1016/0550-3213(90)90149-8",
+        "url": "https://doi.org/10.1016/0550-3213(90)90149-8"
+      }
+    },
+    "gscoherence1988": {
+      "type": "article",
+      "fields": {
+        "title": "Loss of incoherence and determination of coupling constants in quantum gravity",
+        "author": "Giddings, Steven B. and Strominger, Andrew",
+        "journal": "Nuclear Physics B",
+        "volume": "307",
+        "number": "4",
+        "pages": "854--866",
+        "year": "1988",
+        "doi": "10.1016/0550-3213(88)90109-5",
+        "url": "https://doi.org/10.1016/0550-3213(88)90109-5"
+      }
+    },
+    "brax2024": {
+      "type": "article",
+      "fields": {
+        "title": "Lifting Klein-Gordon/Einstein solutions to general nonlinear sigma-models: the wormhole example",
+        "author": "Brax, Philippe and Burgess, C. P. and Quevedo, F.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "2",
+        "pages": "130",
+        "year": "2024",
+        "doi": "10.1007/jhep02(2024)130",
+        "url": "https://doi.org/10.1007/jhep02(2024)130"
+      }
+    },
+    "gb2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Scalar Gauss-Bonnet Wormholes and the Imaginary Distance Bound",
+        "author": "Kehagias, Alex and Riotto, Antonio",
+        "year": "2026",
+        "eprint": "2609.28456",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.28456"
+      }
+    },
+    "akbarieh2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Baby-universe state dependence of the wormhole-induced gravi-axion mass gap",
+        "author": "Akbarieh, Amin Rezaei",
+        "year": "2026",
+        "eprint": "2609.04191",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.04191"
+      }
+    },
+    "mallik2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Boundary conditions for axionic wormholes, imaginary distance bound and KSW allowability",
+        "author": "Mallik, Shubhashis and Neha and Narain, Gaurav",
+        "year": "2026",
+        "eprint": "2609.04137",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.04137"
+      }
+    },
+    "etheredge2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Sharpening the Supersymmetric Axion Weak Gravity Conjecture",
+        "author": "Etheredge, Muldrow and Reece, Matthew and Rudelius, Tom and Tudball, Christopher",
+        "year": "2026",
+        "eprint": "2605.22912",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2605.22912"
+      }
+    },
+    "imaginary2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Non-invertible symmetries in the axiverse, and the imaginary wormholes",
+        "author": "Licciardello, Daniele and Martucci, Luca",
+        "year": "2026",
+        "eprint": "2606.26004",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2606.26004"
+      }
+    },
+    "maldacena2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Wormholes and the imaginary distance bound",
+        "author": "Maldacena, Juan and Maloney, Alexander and McPeak, Brian",
+        "year": "2026",
+        "eprint": "2605.05336",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2605.05336"
+      }
+    },
+    "rey2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Dilaton-Axion Wormhole Partition Function Away from the BPS Endpoint",
+        "author": "Rey, Soo-Jong",
+        "year": "2026",
+        "eprint": "2610.22429",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2610.22429"
+      }
+    },
+    "affine2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Axionic Wormholes in Metric-Affine Gravity",
+        "author": "Takeshita, Shonosuke and Yoshioka, Naoki",
+        "year": "2026",
+        "eprint": "2609.11010",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.11010"
+      }
+    },
+    "diubaldo2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Positivity of the gravitational path integral implies the axionic weak gravity conjecture",
+        "author": "Di Ubaldo, Gabriele and Iliesiu, Luca V. and Lin, Henry W. and Yan, Cynthia",
+        "year": "2026",
+        "eprint": "2605.05305",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2605.05305"
+      }
+    },
+    "linshiu2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Wormhole fragmentation and the axion Weak Gravity Conjecture",
+        "author": "Lin, Puxin and Shiu, Gary",
+        "year": "2026",
+        "eprint": "2609.32063",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.32063"
+      }
+    },
+    "kawana2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Revisiting wormhole-induced global symmetry breaking",
+        "author": "Kawana, Kiyoharu",
+        "year": "2026",
+        "eprint": "2607.10981",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2607.10981"
+      }
+    },
+    "hongsu1998": {
+      "type": "article",
+      "fields": {
+        "title": "Axionic wormholes: More on their classical and quantum aspects",
+        "author": "Kim, Hongsu",
+        "journal": "Nuclear Physics B",
+        "volume": "527",
+        "number": "1-2",
+        "pages": "311--341",
+        "year": "1998",
+        "doi": "10.1016/s0550-3213(98)00397-6",
+        "url": "https://doi.org/10.1016/s0550-3213(98)00397-6"
+      }
+    },
+    "gutperle2002": {
+      "type": "article",
+      "fields": {
+        "title": "Instantons and wormholes in Minkowski and (A)dS spaces",
+        "author": "Gutperle, Michael and Sabra, Wafic",
+        "journal": "Nuclear Physics B",
+        "volume": "647",
+        "number": "1-2",
+        "pages": "344--356",
+        "year": "2002",
+        "doi": "10.1016/s0550-3213(02)00942-2",
+        "url": "https://doi.org/10.1016/s0550-3213(02)00942-2"
+      }
+    },
+    "bergshoeff2005": {
+      "type": "article",
+      "fields": {
+        "title": "Non‐extremal instantons and wormholes in string theory",
+        "author": "Bergshoeff, E. and Collinucci, A. and Gran, U. and Roest, D. and Vandoren, S.",
+        "journal": "Fortschritte der Physik",
+        "volume": "53",
+        "number": "7-8",
+        "pages": "990--996",
+        "year": "2005",
+        "doi": "10.1002/prop.200410227",
+        "url": "https://doi.org/10.1002/prop.200410227"
+      }
+    },
+    "nonextremal2004": {
+      "type": "article",
+      "fields": {
+        "title": "Non-extremal D-instantons",
+        "author": "Bergshoeff, E and Collinucci, A and Gran, U and Roest, D and Vandoren, S",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "10",
+        "pages": "031",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/10/031",
+        "url": "https://doi.org/10.1088/1126-6708/2004/10/031"
+      }
+    },
+    "chiodaroli2009uh": {
+      "type": "article",
+      "fields": {
+        "title": "Instantons and wormholes for the universal hypermultiplet",
+        "author": "Chiodaroli, Marco and Gutperle, Michael",
+        "journal": "Nuclear Physics B",
+        "volume": "807",
+        "number": "1-2",
+        "pages": "138--154",
+        "year": "2009",
+        "doi": "10.1016/j.nuclphysb.2008.08.017",
+        "url": "https://doi.org/10.1016/j.nuclphysb.2008.08.017"
+      }
+    },
+    "chiodaroli2009n2": {
+      "type": "article",
+      "fields": {
+        "title": "Instantons and wormholes in N=2 supergravity",
+        "author": "Chiodaroli, Marco and Gutperle, Michael",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "8",
+        "pages": "085023",
+        "year": "2009",
+        "doi": "10.1103/physrevd.79.085023",
+        "url": "https://doi.org/10.1103/physrevd.79.085023"
+      }
+    },
+    "loges2023lift": {
+      "type": "article",
+      "fields": {
+        "title": "A 10d construction of Euclidean axion wormholes in flat and AdS space",
+        "author": "Loges, Gregory J. and Shiu, Gary and Van Riet, Thomas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "6",
+        "pages": "079",
+        "year": "2023",
+        "doi": "10.1007/jhep06(2023)079",
+        "url": "https://doi.org/10.1007/jhep06(2023)079"
+      }
+    },
+    "kim2003": {
+      "type": "misc",
+      "fields": {
+        "title": "Classical stability of stringy wormholes in flat and AdS spaces",
+        "author": "Kim, Jin Young and Kim, Yoon-bai and Hetrick, James E.",
+        "year": "2003",
+        "eprint": "hep-th/0301191",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0301191"
+      }
+    },
+    "klebanov1989": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes and the cosmological constant",
+        "author": "Klebanov, Igor and Susskind, Leonard and Banks, Tom",
+        "journal": "Nuclear Physics B",
+        "volume": "317",
+        "pages": "665--692",
+        "year": "1989",
+        "doi": "10.1016/0550-3213(89)90538-5",
+        "url": "https://doi.org/10.1016/0550-3213(89)90538-5",
+        "number": "3"
+      }
+    },
+    "frt2026": {
+      "type": "article",
+      "fields": {
+        "title": "Wormhole solutions and pre-inflationary epoch in F(R,T) gravity with axion fields",
+        "author": "Li, Guo-He and Fang, Yeqi and Wu, Yuchi and Tao, Jun",
+        "journal": "Annals of Physics",
+        "volume": "492",
+        "pages": "170573",
+        "year": "2026",
+        "doi": "10.1016/j.aop.2026.170573",
+        "url": "https://doi.org/10.1016/j.aop.2026.170573",
+        "eprint": "2506.09310",
+        "archiveprefix": "arXiv"
       }
     }
   }
