@@ -1,5 +1,5 @@
 {
-  "version": "dce4df290984db0c",
+  "version": "7d31f1bd6fed02c1",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45509,6 +45509,16 @@
         "eprint": "2607.29265",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2607.29265"
+      }
+    },
+    "degroote2012": {
+      "type": "phdthesis",
+      "fields": {
+        "title": "{Einstein Maxwell} solutions of {Newman Tamburino} class and aligned pure radiation {Kundt} solutions",
+        "author": "De Groote, Liselotte",
+        "school": "Ghent University",
+        "year": "2012",
+        "url": "https://biblio.ugent.be/publication/3064531"
       }
     }
   }
