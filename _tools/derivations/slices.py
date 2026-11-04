@@ -3970,6 +3970,10 @@ FLAT.update({(_linear_dilaton_figures.METRIC, system, "plane"):
              (lambda system=system: _linear_dilaton_figures.slice_marks(sys.modules[__name__], system))
              for system in _linear_dilaton_figures.SYSTEMS})
 
+import global_texture as _global_texture
+FLAT[("global_texture", "collapse", "radial")] = lambda: _global_texture.slice_marks(sys.modules[__name__])
+
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

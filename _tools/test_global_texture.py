@@ -62,9 +62,9 @@ class GlobalTexture(unittest.TestCase):
         for a in (0, 1):
             for b in (0, 1):
                 for c in (0, 1):
-                    connection = sum((1 if a==1 else -1)*(
+                    connection = (1 if a==1 else -1)*(
                         sp.diff(self.g[a,c],coords[b])+sp.diff(self.g[a,b],coords[c])
-                        -sp.diff(self.g[b,c],coords[a]))/2 for _ in (0,))
+                        -sp.diff(self.g[b,c],coords[a]))/2
                     self.assertEqual(connection, 0)
         self.assertFalse(any(set(e['indices']) <= {'t','r'}
                              for e in self.chart['christoffel']['variants']['ull']['nonzero']))

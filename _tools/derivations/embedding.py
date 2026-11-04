@@ -22495,6 +22495,10 @@ _stringy_cosmic_strings_drawings.register_embedding(sys.modules[__name__])
 import klebanov_witten_drawings as _klebanov_witten_drawings
 _klebanov_witten_drawings.register_embedding(sys.modules[__name__])
 
+import global_texture as _global_texture
+DRAWN["global_texture"] = lambda ck, src: _global_texture.embedding_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_global_texture.embedding_captions())
+
 if __name__ == "__main__":
     sys.exit(main())
 

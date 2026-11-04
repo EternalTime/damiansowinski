@@ -19397,5 +19397,10 @@ _stringy_cosmic_strings_drawings.register_null(sys.modules[__name__])
 import klebanov_witten_drawings as _klebanov_witten_drawings
 _klebanov_witten_drawings.register_null(sys.modules[__name__])
 
+import global_texture as _global_texture
+DIAGRAMS.extend(_global_texture.diagram_specs(sys.modules[__name__]))
+CAPTIONS.update(_global_texture.diagram_captions())
+CLOSED_FORMS.update(_global_texture.null_forms())
+
 if __name__ == "__main__":
     sys.exit(main())

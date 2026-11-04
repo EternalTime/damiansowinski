@@ -19197,5 +19197,8 @@ _stringy_cosmic_strings_drawings.register_curvature(sys.modules[__name__])
 import klebanov_witten_drawings as _klebanov_witten_drawings
 _klebanov_witten_drawings.register_curvature(sys.modules[__name__])
 
+import global_texture as _global_texture
+DRAWN["global_texture"] = lambda ck, src: _global_texture.curvature_views(ck, src, sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

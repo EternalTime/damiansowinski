@@ -60,6 +60,11 @@
       "id": "ori_piran",
       "kind": "family",
       "text": "A ball of fluid with $P = k\\rho$ collapsing the same way at every scale. For radiation, $k = 1/3$, Charles Evans and Jason Coleman found in 1994 that the critical solution at the threshold of black hole formation is one of these self similar fluids, a solution Ori and Piran had already found [harada2001stability, evanscoleman1994]."
+    },
+    {
+      "id": "global_texture",
+      "kind": "family",
+      "text": "Another self-similar scalar collapse, with four components constrained to a three-sphere. Roberts's field has a single unconstrained component [durrer1992textures]."
     }
   ],
   "references": [
@@ -80,7 +85,8 @@
     "choptuik1996",
     "hilditch2017",
     "harada2001stability",
-    "evanscoleman1994"
+    "evanscoleman1994",
+    "durrer1992textures"
   ],
   "coordinates": [
     {

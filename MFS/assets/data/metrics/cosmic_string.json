@@ -103,6 +103,11 @@
       "id": "stringy_cosmic_strings",
       "kind": "family",
       "text": "A string whose hidden torus changes shape across space. Far from a single string its transverse space approaches a cone with deficit angle $\\pi/6$ [gibbonsgreenperry1996]."
+    },
+    {
+      "id": "global_texture",
+      "kind": "family",
+      "text": "A spherical scalar configuration whose collapse changes the solid angle about its centre. The straight string has a constant angular deficit around its axis [durrer1992textures]."
     }
   ],
   "references": [
@@ -135,7 +140,8 @@
     "sen1999superconducting",
     "gurtug_sakalli2003",
     "zofka2008",
-    "gibbonsgreenperry1996"
+    "gibbonsgreenperry1996",
+    "durrer1992textures"
   ],
   "coordinates": [
     {

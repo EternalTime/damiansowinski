@@ -54,6 +54,11 @@
       "id": "stringy_cosmic_strings",
       "kind": "family",
       "text": "A straight string with a scalar field for the shape of a hidden torus and finite energy per unit length [vafa1996ftheory]."
+    },
+    {
+      "id": "global_texture",
+      "kind": "family",
+      "text": "A collapsing four-component scalar field with a time-dependent solid angle deficit. The monopole has a static deficit outside its core [durrer1992textures]."
     }
   ],
   "references": [
@@ -73,7 +78,8 @@
     "pen1997",
     "kiselev2003",
     "visser2020",
-    "vafa1996ftheory"
+    "vafa1996ftheory",
+    "durrer1992textures"
   ],
   "coordinates": [
     {
