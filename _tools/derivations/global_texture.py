@@ -77,7 +77,7 @@ def embedding_views(ck, src, em):
                      (('axis', r'$r=0$'), ('edge', r'$r=4\ell$')),
                      [(x, 'r', None) for x in (1, 2, 3, 4)], size)
     ck.isometry('global texture: pre-collapse equator', piece)
-    surface = em.Surface([piece], label=r'$t=-\ell$', time=-1)
+    surface = em.Surface([piece])
     fig = em.figure_of([surface], {'sheet': 'cover'}, size, em.Camera(-70, 30))
     fig.legend('fill', 'cover', 'Equatorial space')
     fig.legend('line', 'r', 'Constant proper radius')
@@ -143,7 +143,7 @@ def conformal_views(ck, src, cf):
     v.legend('null', r'$r=-t$')
     v.legend('chartedge', r'$t=0$')
     v.legend('scri', 'Past null infinity')
-    moment = cf.slices.moments(METRIC, 'collapse')[0]
+    moment = cf.slices.moments(METRIC, 'collapse', label=r'$t=-\ell$')[0]
     xs = np.linspace(*moment.reach('collapse', 'r'), 81)
     v.slice(moment, [cf.mink_pq(-np.ones_like(xs), xs)])
     v.set(settings=r'Any length $\ell$ as unit; $p=\arctan((t-r)/\ell)$, $q=\arctan((t+r)/\ell)$.',

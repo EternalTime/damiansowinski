@@ -4523,6 +4523,10 @@ class Slices(unittest.TestCase):
             level = 1.0 if "/cosmic/" in key else -1.0
             return (lambda X: level), list(self.reach(surface))
 
+        if key == "global_texture/collapse/radial":
+            # One fixed equatorial moment at t=-ell, with ell=1.
+            return (lambda X: -1.0), list(self.reach(surface))
+
         if key.startswith("linear_dilaton/"):
             # The embedded moment has tau=1/q and eta=0 at q=1.
             _, hi = self.reach(surface)
@@ -5998,8 +6002,9 @@ class Slices(unittest.TestCase):
                     points = [p for line in mark["lines"] for p in line] + mark["points"]
                     self.assertTrue(all(X0 <= X <= X1 and T0 <= T <= T1 for X, T in points), where)
                     t = surface.get("time")
-                    if metric_id == "extended_inflation":
-                        # tan((T-X)/2)=eta-r and tan((T+X)/2)=eta+r, with eta=-1.
+                    if metric_id in ("extended_inflation", "global_texture"):
+                        # tan((T-X)/2)=clock-r and tan((T+X)/2)=clock+r:
+                        # eta=-1 for extended inflation, t=-1 for the fixed texture moment.
                         lo, hi = self.reach(surface)
                         for X, T in points:
                             tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)

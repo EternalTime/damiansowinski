@@ -41,7 +41,8 @@ Its Euclidean cylindrical radius is $\rho=\sqrt{g_{\phi\phi}}=r\sqrt H$, and $dz
 The shared embedding program takes that derivative from the stored metric and integrates the height by adaptive quadrature.
 Its circumference, radial lengths and interpolated profile pass the shared isometry checks.
 At the centre $H=1-2\epsilon r^2/(3t^2)+O(r^4/t^4)$, so the surface closes regularly and $d\rho/dr\to1$.
-The surface has time $-1$ in units of $\ell$, label $t=-\ell$, and view id `collapse`.
+The fixed time is specified in the Slice construction and view settings; its view id is `collapse`, and both causal diagrams label it $t=-\ell$.
+The single surface carries no movie-only time or label fields.
 Both causal diagrams register this same view, surface 0, from the same radial endpoints 0 and 4.
 The null-ray slice is produced by `slices.one`, and the conformal slice by `View.slice`, so their moment versions come from the embedding data.
 
@@ -72,3 +73,5 @@ Both had no MathJax error elements and no document-wide horizontal overflow.
 The conformal and embedding figures use their existing horizontal-scroll frames at the mobile width.
 The three related links and their reciprocal links were followed successfully in the browser.
 The painted curve classes resolve to existing styles, with no filter applied.
+
+The existing slice-test mappings register this fixed moment as $Y=-1$ in the radial plane and $(\tan p+\tan q)/2=-1$ in the conformal plane, with the embedding's own radial reach.
