@@ -3,8 +3,8 @@
   const _c   = n => _cs.getPropertyValue(n).trim();
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
 
-  const [upR, upG, upB] = _rgb('--sunset-12');
-  const [downR, downG, downB] = _rgb('--plum');
+  const warmShades = ['--sunset-12', '--sunset-10', '--coral', '--hot', '--mag'].map(_rgb);
+  const coolShades = ['--steel', '--sunset-1', '--sunset-2', '--sunset-3'].map(_rgb);
 
   /* ── Simulation constants ── */
   const N  = 400;
@@ -35,6 +35,20 @@
   }
   function coldStart() { spins.fill(1); }
 
+  function neighborSum(row, col, tri) {
+    const rU = ((row - 1 + N) % N) * N;
+    const rD = ((row + 1) % N) * N;
+    const cL = (col - 1 + N) % N;
+    const cR = (col + 1) % N;
+    let sum = spins[rU + col] + spins[rD + col] +
+      spins[row * N + cL] + spins[row * N + cR];
+    if (tri) {
+      const cX = (row % 2 === 0) ? cR : cL;
+      sum += spins[rU + cX] + spins[rD + cX];
+    }
+    return sum;
+  }
+
   function sweep() {
     const tri = lattice === 'triangle';
     for (let k = 0; k < N * N; k++) {
@@ -42,17 +56,7 @@
       const row = (i / N) | 0;
       const col = i % N;
       const s   = spins[i];
-      const rU  = ((row - 1 + N) % N) * N;
-      const rD  = ((row + 1)     % N) * N;
-      const cL  = (col - 1 + N) % N;
-      const cR  = (col + 1)     % N;
-      let sum =
-        spins[rU + col] + spins[rD + col] +
-        spins[row * N + cL] + spins[row * N + cR];
-      if (tri) {
-        const cX = (row % 2 === 0) ? cR : cL;
-        sum += spins[rU + cX] + spins[rD + cX];
-      }
+      const sum = neighborSum(row, col, tri);
       const m  = J * sum * s;
       const dE = 2 * (m + h * s);
       if (dE <= 0 || Math.random() < expJ[m + 6] * (s === 1 ? expHp : expHm)) spins[i] = -s;
@@ -63,15 +67,19 @@
   let canvas, ctx, off, offCtx, imgData, buf;
 
   function render() {
+    const tri = lattice === 'triangle';
+    const coordination = tri ? 6 : 4;
     let q = 0, k = 0;
     for (let row = 0; row < N; row++) {
       for (let col = 0; col < N; col++, k++, q += 4) {
         const raw  = spins[k];
         const disp = J < 0 && lattice === 'square' ? raw * (((row + col) & 1) ? -1 : 1) : raw;
-        const up   = disp === 1;
-        buf[q]     = up ? upR : downR;
-        buf[q + 1] = up ? upG : downG;
-        buf[q + 2] = up ? upB : downB;
+        const satisfied = (coordination + J * raw * neighborSum(row, col, tri)) / 2;
+        const shades = disp === 1 ? warmShades : coolShades;
+        const colour = shades[Math.round((coordination - satisfied) * (shades.length - 1) / coordination)];
+        buf[q]     = colour[0];
+        buf[q + 1] = colour[1];
+        buf[q + 2] = colour[2];
       }
     }
     offCtx.putImageData(imgData, 0, 0);
@@ -201,7 +209,7 @@ where the first sum runs over neighboring pairs and $h$ is an external magnetic 
 $$k_B T_c = \\frac{2J}{\\ln(1+\\sqrt{2})} \\approx 2.269\\,J.$$
 At zero field and below $T_c$, the infinite square lattice magnetizes; above, order dissolves. Exactly at $T_c$ fluctuations exist on all scales: patches within patches within patches, a self-similarity that is the fingerprint of a continuous phase transition. In this simulation, those scales end at the size of the lattice.¶Glauber studied single-spin-flip dynamics for the Ising chain in 1963 [glauber1963]. This simulation uses the Metropolis rule [metropolis1953]: a random spin is selected, the energy change $\\Delta E$ of flipping it is computed, and the flip is accepted with probability $\\min(1, e^{-\\frac{\\Delta E}{k_B T}})$. One sweep is one such attempt per site on average. At fixed $T>0$ and $h$, this Markov chain satisfies detailed balance and relaxes toward the Boltzmann distribution.¶Antiferromagnetic coupling ($J<0$) prefers neighbors to anti-align, forming a checkerboard on the square lattice, invisible to the ordinary magnetization but revealed by its staggered counterpart. On the triangular lattice the checkerboard is impossible: three mutually neighboring spins cannot all anti-align. At zero field, this frustration destroys long-range order at every positive temperature, as Wannier showed in 1950 [wannier1950]. A macroscopic ground-state entropy remains.`,
 
-      howto: `The canvas shows a $400 \\times 400$ lattice with periodic boundaries: each pixel is a spin pointing up or down.¶Lattice selects square (4 neighbors) or triangular (6 neighbors) connectivity:¶FIG::lattices¶Coupling switches $J$ between ferromagnetic and antiferromagnetic. Initialise resets the lattice: Hot scrambles every spin at random, Cold aligns them all.¶Temperature changes the balance between coupling and thermal fluctuations. For the square ferromagnet at zero field, $T_c \\approx \\frac{2.269\\,J}{k_B}$ in the infinite-lattice limit. Cool slowly through this region to watch domains coarsen, or park near $T_c$ to see fluctuations up to the size of the canvas. Speed sets the number of sweeps per animation frame. External Field applies $h$, biasing spins up or down; near $T_c$ even a small field tilts the balance decisively.`,
+      howto: `The canvas shows a $400 \\times 400$ lattice with periodic boundaries: each pixel is a spin pointing up or down, warm for up and cool for down, shaded by the share of its bonds that are satisfied.¶Lattice selects square (4 neighbors) or triangular (6 neighbors) connectivity:¶FIG::lattices¶Coupling switches $J$ between ferromagnetic and antiferromagnetic. Initialise resets the lattice: Hot scrambles every spin at random, Cold aligns them all.¶Temperature changes the balance between coupling and thermal fluctuations. For the square ferromagnet at zero field, $T_c \\approx \\frac{2.269\\,J}{k_B}$ in the infinite-lattice limit. Cool slowly through this region to watch domains coarsen, or park near $T_c$ to see fluctuations up to the size of the canvas. Speed sets the number of sweeps per animation frame. External Field applies $h$, biasing spins up or down; near $T_c$ even a small field tilts the balance decisively.`,
 
       references: ['lenz1920', 'ising1925', 'peierls1936', 'kramers1941', 'onsager1944', 'wannier1950', 'glauber1963', 'metropolis1953'],
 

@@ -79,6 +79,7 @@
 /* Ising roles use these existing Physics+ art colors, copied from PhysicsPlus/colours.css. */
 :root {
   --hot: #f66298;
+  --mag: #cf318e;
   --coral: #fe7d78;
   --plum: #a225a2;
   --steel: #4a73ad;
