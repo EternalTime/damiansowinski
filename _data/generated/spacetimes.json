@@ -75382,13 +75382,23 @@
         }
       ],
       "references": [
-        "sen1999superconducting",
-        "mosspoletti1987superconducting",
         "witten1985superconducting",
-        "eiroasimeone2004cylindrical",
+        "mosspoletti1987superconducting",
+        "sen1999superconducting",
+        "amsterdamskilaguna1988internal",
         "babul1988curvature",
+        "demianski1988conducting",
+        "linet1989superconducting",
+        "mankiewiczmisiak1989vacuum",
+        "helliwellkonkowski1990linearized",
+        "linet1990conversion",
+        "peterpuy1993gravitational",
+        "peter1994comments",
         "dimopoulos1998magnetic",
-        "linet1989superconducting"
+        "gleisertiglio1998nonstationary",
+        "ferreira2000current",
+        "eiroasimeone2004cylindrical",
+        "eiroasimeone2010aspects"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/superconducting_string.json",
