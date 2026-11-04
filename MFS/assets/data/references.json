@@ -1,5 +1,5 @@
 {
-  "version": "b7c76b865f1c8de8",
+  "version": "ab0e07966580d9a4",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -44635,6 +44635,71 @@
         "eprint": "0912.5496",
         "archiveprefix": "arXiv",
         "note": "Erratum: Physical Review D 90, 089906 (2014), doi:10.1103/PhysRevD.90.089906"
+      }
+    },
+    "synge1949": {
+      "type": "article",
+      "fields": {
+        "author": "Synge, John Lighton",
+        "title": "Gravitational Field of a Particle",
+        "journal": "Nature",
+        "volume": "164",
+        "number": "4160",
+        "pages": "148--149",
+        "year": "1949",
+        "doi": "10.1038/164148b0"
+      }
+    },
+    "reggewheeler1957": {
+      "type": "article",
+      "fields": {
+        "author": "Regge, Tullio and Wheeler, John Archibald",
+        "title": "Stability of a {Schwarzschild} Singularity",
+        "journal": "Physical Review",
+        "volume": "108",
+        "number": "4",
+        "pages": "1063--1069",
+        "year": "1957",
+        "doi": "10.1103/PhysRev.108.1063"
+      }
+    },
+    "synge1966": {
+      "type": "article",
+      "fields": {
+        "author": "Synge, John Lighton",
+        "title": "The Escape of Photons from Gravitationally Intense Stars",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "131",
+        "number": "3",
+        "pages": "463--466",
+        "year": "1966",
+        "doi": "10.1093/mnras/131.3.463"
+      }
+    },
+    "press1971": {
+      "type": "article",
+      "fields": {
+        "author": "Press, William Henry",
+        "title": "Long Wave Trains of Gravitational Waves from a Vibrating Black Hole",
+        "journal": "The Astrophysical Journal Letters",
+        "volume": "170",
+        "pages": "L105--L108",
+        "year": "1971",
+        "doi": "10.1086/180849"
+      }
+    },
+    "falcke2000": {
+      "type": "article",
+      "fields": {
+        "author": "Falcke, Heino and Melia, Fulvio and Agol, Eric",
+        "title": "Viewing the Shadow of the Black Hole at the Galactic Center",
+        "journal": "The Astrophysical Journal Letters",
+        "volume": "528",
+        "pages": "L13--L16",
+        "year": "2000",
+        "doi": "10.1086/312423",
+        "eprint": "astro-ph/9912263",
+        "archiveprefix": "arXiv"
       }
     }
   }
