@@ -1,5 +1,5 @@
 {
-  "version": "697b779454c5ec6e",
+  "version": "83adca92e9456c24",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -43432,6 +43432,345 @@
         "eprint": "2603.18133",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2603.18133"
+      }
+    },
+    "hochberg1993gauge": {
+      "type": "article",
+      "fields": {
+        "author": "Hochberg, David and Kephart, Thomas W.",
+        "title": "Gauge field back reaction on a black hole",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "4",
+        "pages": "1465--1470",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.1465",
+        "eprint": "gr-qc/9211008",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "hochberg1993entropy": {
+      "type": "article",
+      "fields": {
+        "author": "Hochberg, David and Kephart, Thomas W. and York, Jr., James W.",
+        "title": "Positivity of entropy in the semiclassical theory of black holes and radiation",
+        "journal": "Physical Review D",
+        "volume": "48",
+        "number": "2",
+        "pages": "479--484",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.48.479",
+        "eprint": "gr-qc/9211009",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "anderson1994nonconformal": {
+      "type": "article",
+      "fields": {
+        "author": "Anderson, Paul R. and Hiscock, William A. and Whitesell, Janet and York, Jr., James W.",
+        "title": "Semiclassical black hole in thermal equilibrium with a nonconformal scalar field",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "10",
+        "pages": "6427--6434",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.6427"
+      }
+    },
+    "hochberg1996spin2": {
+      "type": "article",
+      "fields": {
+        "author": "Hochberg, David and Sushkov, Sergey V.",
+        "title": "Black hole in thermal equilibrium with a spin-2 quantum field",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "12",
+        "pages": "7094--7102",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.7094",
+        "eprint": "gr-qc/9601045",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "matyjasek1998backreaction": {
+      "type": "article",
+      "fields": {
+        "author": "Matyjasek, J.",
+        "title": "Back reaction on the metric. Beyond the Page approximation",
+        "journal": "Acta Physica Polonica B",
+        "volume": "29",
+        "number": "3",
+        "pages": "529--548",
+        "year": "1998",
+        "url": "https://inspirehep.net/literature/41036"
+      }
+    },
+    "matyjasek2009backreaction": {
+      "type": "article",
+      "fields": {
+        "author": "Matyjasek, Jerzy and Tryniecki, Dariusz",
+        "title": "Next-to-leading term of the renormalized stress-energy tensor of the quantized massive scalar field in Schwarzschild spacetime. The back reaction",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "8",
+        "pages": "084017",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.79.084017",
+        "eprint": "0901.2746",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "nashed2026cavity": {
+      "type": "article",
+      "fields": {
+        "author": "Nashed, G. G. L. and Alfedeel, Alnadhief H. A. and Harko, Tiberiu",
+        "title": "Analytic semiclassical backreaction of a Schwarzschild black hole in a finite cavity: horizon shift, temperature renormalization, and canonical stability in the Hartle--Hawking state",
+        "journal": "The European Physical Journal C",
+        "volume": "86",
+        "number": "5",
+        "pages": "504",
+        "year": "2026",
+        "doi": "10.1140/epjc/s10052-026-15695-z",
+        "eprint": "2604.10346",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "lousto1988backreaction": {
+      "type": "article",
+      "fields": {
+        "author": "Loustó, C.O. and Sánchez, N.",
+        "title": "Back reaction effects in black hole spacetimes",
+        "journal": "Physics Letters B",
+        "volume": "212",
+        "number": "4",
+        "pages": "411--414",
+        "year": "1988",
+        "doi": "10.1016/0370-2693(88)91789-3"
+      }
+    },
+    "lousto1989backreaction": {
+      "type": "article",
+      "fields": {
+        "author": "Loustó, C.O. and Sánchez, N.",
+        "title": "Perturbative solution to the back reaction problem for static black holes",
+        "journal": "International Journal of Modern Physics A",
+        "volume": "4",
+        "number": "9",
+        "pages": "2317--2331",
+        "year": "1989",
+        "doi": "10.1142/S0217751X89000935"
+      }
+    },
+    "lee1993radiation": {
+      "type": "article",
+      "fields": {
+        "author": "Lee, C. F. P.",
+        "title": "Effects of Hawking radiation on black-hole---cosmic-string systems",
+        "journal": "Physical Review D",
+        "volume": "47",
+        "number": "6",
+        "pages": "2260--2270",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.47.2260"
+      }
+    },
+    "zaslavskii1993entropy": {
+      "type": "article",
+      "fields": {
+        "author": "Zaslavskii, O.B.",
+        "title": "Thermal stress-energy tensors and entropy of radiation in the Schwarzschild background",
+        "journal": "Physics Letters A",
+        "volume": "181",
+        "number": "2",
+        "pages": "105--108",
+        "year": "1993",
+        "doi": "10.1016/0375-9601(93)90904-E"
+      }
+    },
+    "huang1993thermodynamical": {
+      "type": "article",
+      "fields": {
+        "author": "Huang, Chao Guang and Liu, Liao and Zhao, Zheng",
+        "title": "The thermodynamical approach to the back reaction problem",
+        "journal": "General Relativity and Gravitation",
+        "volume": "25",
+        "number": "12",
+        "pages": "1267--1275",
+        "year": "1993",
+        "doi": "10.1007/BF00759032"
+      }
+    },
+    "huang1991backreaction": {
+      "type": "article",
+      "fields": {
+        "author": "Huang, Chaoguang and Liu, Liao and Xu, Feng",
+        "title": "On Black Hole Thermodynamics and Back-reaction",
+        "journal": "Chinese Physics Letters",
+        "volume": "8",
+        "number": "3",
+        "pages": "118--121",
+        "year": "1991",
+        "doi": "10.1088/0256-307x/8/3/003"
+      }
+    },
+    "hu1999notes": {
+      "type": "incollection",
+      "fields": {
+        "author": "Hu, B. L. and Raval, Alpan and Sinha, Sukanya",
+        "title": "Notes on Black Hole Fluctuations and Back-Reaction",
+        "booktitle": "Black Holes, Gravitational Radiation and the Universe",
+        "pages": "103--120",
+        "year": "1999",
+        "doi": "10.1007/978-94-017-0934-7_7",
+        "eprint": "gr-qc/9901010",
+        "archiveprefix": "arXiv",
+        "publisher": "Kluwer Academic Publishers"
+      }
+    },
+    "campos1999fluctuations": {
+      "type": "article",
+      "fields": {
+        "author": "Campos, Antonio and Hu, B. L.",
+        "title": "Fluctuations in a Thermal Field and Dissipation of a Black Hole Spacetime: Far-Field Limit",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "38",
+        "number": "4",
+        "pages": "1253--1271",
+        "year": "1999",
+        "doi": "10.1023/a:1026670816596",
+        "eprint": "gr-qc/9812034",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "sinha2003fluctuations": {
+      "type": "article",
+      "fields": {
+        "author": "Sinha, Sukanya and Raval, Alpan and Hu, B. L.",
+        "title": "Black Hole Fluctuations and Backreaction in Stochastic Gravity",
+        "journal": "Foundations of Physics",
+        "volume": "33",
+        "number": "1",
+        "pages": "37--64",
+        "year": "2003",
+        "doi": "10.1023/a:1022815724856",
+        "eprint": "gr-qc/0210013",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "phillips2003noise": {
+      "type": "article",
+      "fields": {
+        "author": "Phillips, Nicholas G. and Hu, B. L.",
+        "title": "Noise kernel and the stress energy bitensor of quantum fields in hot flat space and the Schwarzschild black hole under the Gaussian approximation",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "10",
+        "pages": "104002",
+        "year": "2003",
+        "doi": "10.1103/physrevd.67.104002",
+        "eprint": "gr-qc/0209056",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "eftekharzadeh2012noise": {
+      "type": "article",
+      "fields": {
+        "author": "Eftekharzadeh, A. and Bates, Jason D. and Roura, Albert and Anderson, Paul R. and Hu, B. L.",
+        "title": "Noise kernel for a quantum field in Schwarzschild spacetime under the Gaussian approximation",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "4",
+        "pages": "044037",
+        "year": "2012",
+        "doi": "10.1103/physrevd.85.044037",
+        "eprint": "1011.4903",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "anastopoulos2016equilibrium": {
+      "type": "article",
+      "fields": {
+        "author": "Anastopoulos, Charis and Savvidou, Ntina",
+        "title": "The thermodynamics of a black hole in equilibrium implies the breakdown of Einstein equations on a macroscopic near-horizon shell",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "1",
+        "pages": "144",
+        "year": "2016",
+        "doi": "10.1007/jhep01(2016)144",
+        "eprint": "1410.0788",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "zaslavskii1996entropy": {
+      "type": "article",
+      "fields": {
+        "author": "Zaslavskii, O B",
+        "title": "Entropy of a dressed black hole and properties of the Hartle - Hawking state",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "2",
+        "pages": "L23--L27",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/2/003"
+      }
+    },
+    "zaslavskii1996boundary": {
+      "type": "article",
+      "fields": {
+        "author": "Zaslavskii, O. B.",
+        "title": "Role of a boundary in the relationship between black hole temperature and the trace anomaly",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "8",
+        "pages": "4691--4693",
+        "year": "1996",
+        "doi": "10.1103/physrevd.53.4691"
+      }
+    },
+    "zaslavskii2001entropy": {
+      "type": "article",
+      "fields": {
+        "author": "Zaslavskii, O.B.",
+        "title": "Entropy of massive fields near a black hole and vacuum polarization: thermodynamics without statistical mechanics",
+        "journal": "Physics Letters B",
+        "volume": "501",
+        "number": "3-4",
+        "pages": "277--282",
+        "year": "2001",
+        "doi": "10.1016/s0370-2693(01)00148-4",
+        "eprint": "gr-qc/0101055",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "zaslavskii2003cavity": {
+      "type": "article",
+      "fields": {
+        "author": "Zaslavskii, O. B.",
+        "title": "Boulware state and semiclassical thermodynamics of black holes in a cavity",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "12",
+        "pages": "127502",
+        "year": "2003",
+        "doi": "10.1103/physrevd.68.127502",
+        "eprint": "gr-qc/0310090",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "matyjasek2006entropy": {
+      "type": "article",
+      "fields": {
+        "author": "Matyjasek, Jerzy",
+        "title": "Entropy of quantum-corrected black holes",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "10",
+        "pages": "104030",
+        "year": "2006",
+        "doi": "10.1103/physrevd.74.104030",
+        "eprint": "gr-qc/0610020",
+        "archiveprefix": "arXiv"
       }
     }
   }
