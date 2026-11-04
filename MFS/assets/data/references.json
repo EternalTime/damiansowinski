@@ -1,5 +1,5 @@
 {
-  "version": "3d3324735e34615d",
+  "version": "649de9fe39328aee",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45254,6 +45254,82 @@
         "eprint": "2501.10223",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1140/epjc/s10052-025-14282-y"
+      }
+    },
+    "anderson2020": {
+      "type": "article",
+      "fields": {
+        "title": "Spacetime groups",
+        "author": "Anderson, Ian and Torre, Charles",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "61",
+        "number": "7",
+        "pages": "072501",
+        "year": "2020",
+        "doi": "10.1063/5.0001460",
+        "eprint": "1911.02380",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/5.0001460"
+      }
+    },
+    "rosquist1980": {
+      "type": "article",
+      "fields": {
+        "title": "Global rotation",
+        "author": "Rosquist, Kjell",
+        "journal": "General Relativity and Gravitation",
+        "volume": "12",
+        "number": "8",
+        "pages": "649--664",
+        "year": "1980",
+        "doi": "10.1007/BF00758944",
+        "url": "https://doi.org/10.1007/BF00758944"
+      }
+    },
+    "rosquist1998": {
+      "type": "article",
+      "fields": {
+        "title": "Lax Pair Tensors and Integrable Spacetimes",
+        "author": "Rosquist, Kjell and Goliath, Martin",
+        "journal": "General Relativity and Gravitation",
+        "volume": "30",
+        "number": "10",
+        "pages": "1521--1534",
+        "year": "1998",
+        "doi": "10.1023/A:1018817209424",
+        "eprint": "gr-qc/9707003",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9707003"
+      }
+    },
+    "laurent1981": {
+      "type": "article",
+      "fields": {
+        "title": "The behavior of null geodesics in a class of rotating space-time homogeneous cosmologies",
+        "author": "Laurent, B. E. and Rosquist, K. and Sviestins, E.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "13",
+        "number": "11",
+        "pages": "1093--1115",
+        "year": "1981",
+        "doi": "10.1007/BF00756367",
+        "url": "https://doi.org/10.1007/BF00756367"
+      }
+    },
+    "dautcourt2006": {
+      "type": "article",
+      "fields": {
+        "title": "Revisiting the light cone of the {G\\\"odel} universe",
+        "author": "Dautcourt, G. and Abdel-Megied, M.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "4",
+        "pages": "1269--1288",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/4/013",
+        "eprint": "gr-qc/0511015",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0511015"
       }
     }
   }
