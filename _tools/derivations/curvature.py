@@ -3920,6 +3920,75 @@ def murphy_viscous_universe(ck, src):
         "clip": "Log scales.",
     }]
 
+LC_K = {"kind": "linear", "from": 0.0, "to": 30.0}     # the axis of K c^4/H_0^4
+LC_R = {"kind": "linear", "from": 0.0, "to": 15.0}     # the axis of R c^2/H_0^2
+
+
+def limiting_curvature(ck, src):
+    """Mukhanov and Brandenberger's closed universe with limiting curvature, both scalars against the
+    cosmic time t through the bounce, in units c = H_0 = 1, beside de Sitter space at the limit,
+    l = c/H_0, the comparison read from the de Sitter bounce chart's stored scalars.
+
+    The comoving chart's stored scalars hold the free scale factor, declared as the solution
+    limiting_curvature.py integrates, the universe through a bounce of radius 2c/H_0 symmetric in
+    time, so both depend on t alone and a line plot shows their whole variation from t = -3 to 3.
+    The checks cover both stored scalars against 12((a''/a)^2 + ((a'^2 + 1)/a^2)^2) and 6(a''/a +
+    (a'^2 + 1)/a^2) from the solver's own jet, the bound H^2 + c^2/a^2 < H_0^2 at every sample, both
+    scalars least at the bounce and below de Sitter's 24 and 12 throughout, the symmetry in t, and
+    every written point in sixty digits."""
+    name = "limiting_curvature"
+    universe = nr.lc_universe.bounce()
+    x_axis = axis("$H_0t$", -3, 3)
+    panels = [{"id": "K", "name": "$Kc^4/H_0^4$", "aspect": 2, "scale": LC_K, "ticks": value_ticks(LC_K)},
+              {"id": "R", "name": "$Rc^2/H_0^2$", "aspect": 2, "scale": LC_R, "ticks": value_ticks(LC_R)}]
+    shape_checks(ck, name, [p["aspect"] for p in panels])
+    functions = {"a": "lc_a(t)"}
+    K = Published(src, name, "comoving", "kretschmann", ["t"], ["H_0"], functions=functions)
+    R = Published(src, name, "comoving", "ricci_scalar", ["t"], ["H_0"], functions=functions)
+    K_ds = Published(src, name, "de_sitter_bounce", "kretschmann", ["t"], ["ell"])
+    R_ds = Published(src, name, "de_sitter_bounce", "ricci_scalar", ["t"], ["ell"])
+    t = np.linspace(-3, 3, SAMPLES)
+    jet = universe.jet(t)
+    a, da, d2a = jet["a"], jet["da"], jet["d2a"]
+    k, r = K(t, 1.0), R(t, 1.0)
+    ck(f"{name} the stored K is 12((a''/a)^2 + ((a'^2 + 1)/a^2)^2) of the solver's scale factor",
+       np.allclose(k, 12 * ((d2a / a) ** 2 + ((da ** 2 + 1) / a ** 2) ** 2), rtol=1e-12))
+    ck(f"{name} the stored R is 6(a''/a + (a'^2 + 1)/a^2) of the solver's scale factor",
+       np.allclose(r, 6 * (d2a / a + (da ** 2 + 1) / a ** 2), rtol=1e-12))
+    first = jet["H"] ** 2 + 1 / a ** 2
+    ck(f"{name} H^2 + c^2/a^2 stays below H_0^2 at every sample", np.max(first) < 1, f"largest {np.max(first):.6f}")
+    ck(f"{name} both scalars are least at the bounce, K = 10.02 and R = 6.774",
+       int(np.argmin(k)) == SAMPLES // 2 and int(np.argmin(r)) == SAMPLES // 2
+       and f"{k[SAMPLES // 2]:.2f}" == "10.02" and f"{r[SAMPLES // 2]:.3f}" == "6.774",
+       f"K = {k[SAMPLES // 2]:.9g}, R = {r[SAMPLES // 2]:.9g}")
+    ck(f"{name} de Sitter space at l = c/H_0 has K = 24 and R = 12",
+       abs(float(K_ds(0.0, 1.0)) - 24) < AGREE and abs(float(R_ds(0.0, 1.0)) - 12) < AGREE)
+    ck(f"{name} both scalars stay below de Sitter's at the limit", np.max(k) < 24 and np.max(r) < 12,
+       f"largest K = {np.max(k):.6f}, largest R = {np.max(r):.6f}")
+    ck(f"{name} both scalars are the same at t and -t", np.allclose(k, k[::-1], rtol=1e-10)
+       and np.allclose(r, r[::-1], rtol=1e-10))
+    ck(f"{name} both scalars stay inside their panels", np.min(k) > LC_K["from"] and np.max(k) < LC_K["to"]
+       and np.min(r) > LC_R["from"] and np.max(r) < LC_R["to"])
+    curves = (line_curves(ck, name, "K", "reference", K_ds, "t", x_axis, LC_K, PLOT_W / 2, {"ell": 1.0})
+              + line_curves(ck, name, "R", "reference", R_ds, "t", x_axis, LC_R, PLOT_W / 2, {"ell": 1.0})
+              + line_curves(ck, name, "K", "K", K, "t", x_axis, LC_K, PLOT_W / 2, {"H_0": 1.0})
+              + line_curves(ck, name, "R", "R", R, "t", x_axis, LC_R, PLOT_W / 2, {"H_0": 1.0}))
+    return [{
+        "id": "bounce", "label": "The universe through its bounce", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [],
+        "legend": [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "reference", "de Sitter space, $\\ell = c/H_0$"]],
+        "caption": [
+            "The Kretschmann scalar $K$ and the Ricci scalar $R$ of the closed universe against $t$, beside de Sitter "
+            "space at the limit, $\\ell = c/H_0$.",
+            "Both are least at the bounce, $K = 10.02H_0^4/c^4$ and $R = 6.774H_0^2/c^2$, and stay below de Sitter's.",
+        ],
+        "ricci_sentences": [[1, 0]],
+        "per_scalar": scalar_clips("Linear scale.", "Linear scale."),
+        "settings": "$H_0 = c = 1$.",
+        "input": nr.LC_INPUT,
+        "clip": "Linear scales.",
+    }]
+
 
 # ---------------------------------------------------------------- the charged dilaton black hole
 
@@ -18457,6 +18526,7 @@ DRAWN = {
     "damour_solodukhin": damour_solodukhin,
     "datt_ruban_t_models": datt_ruban_t_models,
     "murphy_viscous_universe": murphy_viscous_universe,
+    "limiting_curvature": limiting_curvature,
     "dilaton_black_hole": dilaton_black_hole,
     "distorted_schwarzschild": distorted_schwarzschild,
     "eguchi_hanson": eguchi_hanson,
