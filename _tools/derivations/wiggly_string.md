@@ -21,11 +21,11 @@ The relation to Levi-Civita is m=2(U-T), sigma=m/2, C=1+4T through first order, 
 
 ## Physics checks
 
-Pending tensor printing and the dedicated acceleration, equation-of-state, parameter-map, and Ricci-order checks.
+Tensor printing and dimensional verification pass, as do the four dedicated acceleration, equation-of-state, parameter-map, and Ricci-order checks.
 
 ## Drawings
 
-Pending spacetime, embedding, and curvature drawings, with a conformal decision restricted to the weak-field annulus.
+Spacetime, embedding, and curvature drawings are generated and checked over the weak-field annulus.
 
 ## The attraction
 
@@ -59,7 +59,8 @@ No horizon or singular boundary of the truncated formula is extrapolated beyond 
 The curvature figures evaluate the stored exact Kretschmann and Ricci scalars of the truncated metric over the same annulus.
 Each panel has aspect ratio 2, with two panels making a square stack.
 Both use logarithmic vertical scales and existing K and R curve styles.
-The common view-text counter is run on the generated files, and the counts are preserved in the task evidence.
+The common view-text counter measures 129 source characters for the radial diagram, 128 for the embedding, and 192 for the curvature view.
+The captions are distinct, and their Stops, legends, settings, and scale notes have been read as prose.
 
 ## Source ledger
 

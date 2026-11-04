@@ -20735,6 +20735,36 @@
    "\\phi"
   ]
  },
+ "wiggly_string/cylindrical": {
+  "stamp": "f58497f29886f35f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   },
+   {
+    "coord": "z",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "witten_black_hole/conformal": {
   "stamp": "c9eeaaeb6ed58e1f",
   "relations": {},
