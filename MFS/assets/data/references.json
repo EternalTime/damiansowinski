@@ -1,5 +1,5 @@
 {
-  "version": "2da1392e04ccbcbb",
+  "version": "601562e6959ed0aa",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -2930,6 +2930,18 @@
         "pages": "1208--1209",
         "year": "1957",
         "url": "https://doi.org/10.1063/1.1743957"
+      }
+    },
+    "alder1962": {
+      "type": "article",
+      "fields": {
+        "title": "Phase Transition in Elastic Disks",
+        "author": "Alder, B. J. and Wainwright, T. E.",
+        "journal": "Physical Review",
+        "volume": "127",
+        "pages": "359--361",
+        "year": "1962",
+        "url": "https://doi.org/10.1103/PhysRev.127.359"
       }
     },
     "landauer1961": {
@@ -40184,6 +40196,239 @@
         "archiveprefix": "arXiv",
         "primaryclass": "gr-qc",
         "url": "https://arxiv.org/abs/1307.4446"
+      }
+    },
+    "kogan1992": {
+      "type": "article",
+      "fields": {
+        "title": "About some exact solutions for 2+1 gravity coupled to gauge fields",
+        "author": "Kogan, Ian I.",
+        "journal": "Modern Physics Letters A",
+        "volume": "7",
+        "number": "25",
+        "pages": "2341--2350",
+        "year": "1992",
+        "doi": "10.1142/s0217732392002111",
+        "eprint": "hep-th/9205095",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/s0217732392002111"
+      }
+    },
+    "clement1996": {
+      "type": "article",
+      "fields": {
+        "title": "Spinning charged BTZ black holes and self-dual particle-like solutions",
+        "author": "Clément, Gérard",
+        "journal": "Physics Letters B",
+        "volume": "367",
+        "number": "1--4",
+        "pages": "70--74",
+        "year": "1996",
+        "doi": "10.1016/0370-2693(95)01464-0",
+        "eprint": "gr-qc/9510025",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(95)01464-0"
+      }
+    },
+    "mtz2000": {
+      "type": "article",
+      "fields": {
+        "title": "Charged rotating black hole in three spacetime dimensions",
+        "author": "Martínez, Cristián and Teitelboim, Claudio and Zanelli, Jorge",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "10",
+        "pages": "104013",
+        "year": "2000",
+        "doi": "10.1103/physrevd.61.104013",
+        "eprint": "hep-th/9912259",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.61.104013"
+      }
+    },
+    "cotton2023": {
+      "type": "article",
+      "fields": {
+        "title": "Novel classification method of 2+1 spacetimes based on the Cotton scalars",
+        "author": "Podolský, J. and Papajčík, M.",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "12",
+        "pages": "L121504",
+        "year": "2023",
+        "doi": "10.1103/physrevd.108.l121504",
+        "eprint": "2310.10528",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.108.l121504"
+      }
+    },
+    "maeda2024": {
+      "type": "article",
+      "fields": {
+        "title": "Charged rotating BTZ solution revisited: new coordinates and algebraic classifications",
+        "author": "Maeda, Hideki and Podolský, Jiří",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "41",
+        "number": "11",
+        "pages": "115012",
+        "year": "2024",
+        "doi": "10.1088/1361-6382/ad422d",
+        "eprint": "2311.07671",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ad422d"
+      }
+    },
+    "miyashita2024": {
+      "type": "article",
+      "fields": {
+        "title": "Thermodynamics of the 3-dimensional Einstein-Maxwell system",
+        "author": "Miyashita, Shoichiro",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "6",
+        "pages": "134",
+        "year": "2024",
+        "doi": "10.1007/jhep06(2024)134",
+        "eprint": "2403.01436",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep06(2024)134"
+      }
+    },
+    "miyashita2025": {
+      "type": "article",
+      "fields": {
+        "title": "Many Phases in a Hairy Box in Three Dimensions",
+        "author": "Miyashita, Shoichiro",
+        "journal": "Universe",
+        "volume": "11",
+        "number": "7",
+        "pages": "208",
+        "year": "2025",
+        "doi": "10.3390/universe11070208",
+        "eprint": "2506.20528",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/universe11070208"
+      }
+    },
+    "peldan1993": {
+      "type": "article",
+      "fields": {
+        "author": "Peld{\\'a}n, P.",
+        "title": "Unification of gravity and Yang-Mills theory in (2+1) dimensions",
+        "journal": "Nuclear Physics B",
+        "volume": "395",
+        "number": "1-2",
+        "pages": "239--262",
+        "year": "1993",
+        "doi": "10.1016/0550-3213(93)90216-C",
+        "eprint": "gr-qc/9211014",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(93)90216-C"
+      }
+    },
+    "garcia2013": {
+      "type": "misc",
+      "fields": {
+        "author": "Garc{\\'i}a, A. A.",
+        "title": "Three dimensional stationary cyclic symmetric Einstein-Maxwell solutions; energy, mass, momentum, and algebraic tensors characteristics",
+        "year": "2013",
+        "eprint": "1307.6652",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://arxiv.org/abs/1307.6652"
+      }
+    },
+    "barnich2015": {
+      "type": "article",
+      "fields": {
+        "author": "Barnich, G. and Lambert, P.-H. and Mao, P.",
+        "title": "Three-dimensional asymptotically flat Einstein-Maxwell theory",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "32",
+        "number": "24",
+        "pages": "245001",
+        "year": "2015",
+        "doi": "10.1088/0264-9381/32/24/245001",
+        "eprint": "1503.00856",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/32/24/245001"
+      }
+    },
+    "rainich2017": {
+      "type": "article",
+      "fields": {
+        "author": "Krongos, D. S. and Torre, C. G.",
+        "title": "Rainich conditions in (2 + 1)-dimensional gravity",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "58",
+        "number": "1",
+        "pages": "012501",
+        "year": "2017",
+        "doi": "10.1063/1.4974091",
+        "eprint": "1611.04143",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/1.4974091"
+      }
+    },
+    "hairybox2020": {
+      "type": "article",
+      "fields": {
+        "author": "Krishnan, C. and Shekhar, R. and Subramanian, P. N. Bala",
+        "title": "A hairy box in three dimensions",
+        "journal": "Nuclear Physics B",
+        "volume": "958",
+        "pages": "115115",
+        "year": "2020",
+        "doi": "10.1016/j.nuclphysb.2020.115115",
+        "eprint": "1905.11265",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.nuclphysb.2020.115115"
+      }
+    },
+    "radiative2024": {
+      "type": "article",
+      "fields": {
+        "author": "Bosma, J. and Geiller, M. and Majumdar, S. and Oblak, B.",
+        "title": "Radiative asymptotic symmetries of {3D} Einstein-Maxwell theory",
+        "journal": "SciPost Physics",
+        "volume": "16",
+        "number": "4",
+        "pages": "092",
+        "year": "2024",
+        "doi": "10.21468/SciPostPhys.16.4.092",
+        "eprint": "2311.09156",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.21468/SciPostPhys.16.4.092"
+      }
+    },
+    "reznik1992": {
+      "type": "article",
+      "fields": {
+        "author": "Reznik, B.",
+        "title": "Thermodynamics of event horizons in (2+1)-dimensional gravity",
+        "journal": "Physical Review D",
+        "volume": "45",
+        "number": "6",
+        "pages": "2151--2154",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.45.2151",
+        "url": "https://doi.org/10.1103/PhysRevD.45.2151"
+      }
+    },
+    "tunneling1994": {
+      "type": "article",
+      "fields": {
+        "author": "Englert, F. and Reznik, B.",
+        "title": "Entropy generation by tunneling in 2+1 gravity",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "4",
+        "pages": "2692--2699",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.2692",
+        "eprint": "gr-qc/9401010",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.2692"
       }
     }
   }
