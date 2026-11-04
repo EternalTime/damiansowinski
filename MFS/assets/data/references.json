@@ -1,5 +1,5 @@
 {
-  "version": "6309404c30713657",
+  "version": "4f52fd5806f1bced",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -38104,6 +38104,731 @@
         "eprint": "gr-qc/9904058",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/gr-qc/9904058"
+      }
+    },
+    "garriga1994rates": {
+      "type": "article",
+      "fields": {
+        "author": "Garriga, J.",
+        "title": "Nucleation rates in flat and curved space",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "12",
+        "pages": "6327--6342",
+        "year": "1994",
+        "doi": "10.1103/physrevd.49.6327",
+        "eprint": "hep-ph/9308280",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.49.6327"
+      }
+    },
+    "bousso1999open": {
+      "type": "article",
+      "fields": {
+        "author": "Bousso, R. and Chamblin, A.",
+        "title": "Open inflation from nonsingular instantons: Wrapping the universe with a membrane",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "6",
+        "pages": "063504",
+        "year": "1999",
+        "doi": "10.1103/physrevd.59.063504",
+        "eprint": "hep-th/9805167",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.59.063504"
+      }
+    },
+    "feng2001saltatory": {
+      "type": "article",
+      "fields": {
+        "author": "Feng, J. L. and March-Russell, J. and Sethi, S. and Wilczek, F.",
+        "title": "Saltatory relaxation of the cosmological constant",
+        "journal": "Nuclear Physics B",
+        "volume": "602",
+        "number": "1-2",
+        "pages": "307--328",
+        "year": "2001",
+        "doi": "10.1016/s0550-3213(01)00097-9",
+        "eprint": "hep-th/0005276",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/s0550-3213(01)00097-9"
+      }
+    },
+    "garriga2001solutions": {
+      "type": "article",
+      "fields": {
+        "author": "Garriga, J. and Vilenkin, A.",
+        "title": "Solutions to the cosmological constant problems",
+        "journal": "Physical Review D",
+        "volume": "64",
+        "number": "2",
+        "pages": "023517",
+        "year": "2001",
+        "doi": "10.1103/physrevd.64.023517",
+        "eprint": "hep-th/0011262",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.64.023517"
+      }
+    },
+    "dvali2001field": {
+      "type": "article",
+      "fields": {
+        "author": "Dvali, G. and Vilenkin, A.",
+        "title": "Field theory models for variable cosmological constant",
+        "journal": "Physical Review D",
+        "volume": "64",
+        "number": "6",
+        "pages": "063509",
+        "year": "2001",
+        "doi": "10.1103/physrevd.64.063509",
+        "eprint": "hep-th/0102142",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.64.063509"
+      }
+    },
+    "garriga2004coincident": {
+      "type": "article",
+      "fields": {
+        "author": "Garriga, J. and Megevand, A.",
+        "title": "Coincident brane nucleation and the neutralization of $\\Lambda$",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "8",
+        "pages": "083510",
+        "year": "2004",
+        "doi": "10.1103/physrevd.69.083510",
+        "eprint": "hep-th/0310211",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.69.083510"
+      }
+    },
+    "gomberoff2004thermal": {
+      "type": "article",
+      "fields": {
+        "author": "Gomberoff, A. and Henneaux, M. and Teitelboim, C. and Wilczek, F.",
+        "title": "Thermal decay of the cosmological constant into black holes",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "8",
+        "pages": "083520",
+        "year": "2004",
+        "doi": "10.1103/physrevd.69.083520",
+        "eprint": "hep-th/0311011",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.69.083520"
+      }
+    },
+    "garriga2004activation": {
+      "type": "article",
+      "fields": {
+        "author": "Garriga, J. and Megevand, A.",
+        "title": "Decay of de Sitter Vacua by Thermal Activation",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "43",
+        "number": "3",
+        "pages": "883--904",
+        "year": "2004",
+        "doi": "10.1023/b:ijtp.0000048178.69097.fb",
+        "eprint": "hep-th/0404097",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/b:ijtp.0000048178.69097.fb"
+      }
+    },
+    "fabinger2004dsitter": {
+      "type": "article",
+      "fields": {
+        "author": "Fabinger, M. and Silverstein, E.",
+        "title": "D-Sitter Space: Causal Structure, Thermodynamics, and Entropy",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "12",
+        "pages": "061",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/12/061",
+        "eprint": "hep-th/0304220",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/12/061"
+      }
+    },
+    "dealwis2007scales": {
+      "type": "article",
+      "fields": {
+        "author": "de Alwis, S. P.",
+        "title": "The scales of brane nucleation processes",
+        "journal": "Physics Letters B",
+        "volume": "644",
+        "number": "1",
+        "pages": "77--82",
+        "year": "2007",
+        "doi": "10.1016/j.physletb.2006.11.022",
+        "eprint": "hep-th/0605253",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2006.11.022"
+      }
+    },
+    "ansoldi2007shell": {
+      "type": "article",
+      "fields": {
+        "author": "Ansoldi, S. and Sindoni, L.",
+        "title": "Shell-mediated tunnelling between (anti-)de Sitter vacua",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "6",
+        "pages": "064020",
+        "year": "2007",
+        "doi": "10.1103/physrevd.76.064020",
+        "eprint": "0704.1073",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.76.064020"
+      }
+    },
+    "blanco2009tunneling": {
+      "type": "article",
+      "fields": {
+        "author": "Blanco-Pillado, J. J. and Schwartz-Perlov, D. and Vilenkin, A.",
+        "title": "Quantum tunneling in flux compactifications",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2009",
+        "number": "12",
+        "pages": "006",
+        "year": "2009",
+        "doi": "10.1088/1475-7516/2009/12/006",
+        "eprint": "0904.3106",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2009/12/006"
+      }
+    },
+    "brown2010steps": {
+      "type": "article",
+      "fields": {
+        "author": "Brown, A. R. and Dahlen, A.",
+        "title": "Small steps and giant leaps in the landscape",
+        "journal": "Physical Review D",
+        "volume": "82",
+        "number": "8",
+        "pages": "083519",
+        "year": "2010",
+        "doi": "10.1103/physrevd.82.083519",
+        "eprint": "1004.3994",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.82.083519"
+      }
+    },
+    "brown2011giant": {
+      "type": "article",
+      "fields": {
+        "author": "Brown, A. R. and Dahlen, A.",
+        "title": "Giant leaps and minimal branes in multidimensional flux landscapes",
+        "journal": "Physical Review D",
+        "volume": "84",
+        "number": "2",
+        "pages": "023513",
+        "year": "2011",
+        "doi": "10.1103/physrevd.84.023513",
+        "eprint": "1010.5241",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.84.023513"
+      }
+    },
+    "kleban2011cascade": {
+      "type": "article",
+      "fields": {
+        "author": "Kleban, M. and Krishnaiyengar, K. and Porrati, M.",
+        "title": "Flux discharge cascades in various dimensions",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2011",
+        "number": "11",
+        "pages": "096",
+        "year": "2011",
+        "doi": "10.1007/jhep11(2011)096",
+        "eprint": "1108.6102",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep11(2011)096"
+      }
+    },
+    "damico2013unwinding": {
+      "type": "article",
+      "fields": {
+        "author": "D'Amico, G. and Gobbetti, R. and Kleban, M. and Schillo, M.",
+        "title": "Unwinding inflation",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2013",
+        "number": "03",
+        "pages": "004",
+        "year": "2013",
+        "doi": "10.1088/1475-7516/2013/03/004",
+        "eprint": "1211.4589",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2013/03/004"
+      }
+    },
+    "brown2016monodromy": {
+      "type": "article",
+      "fields": {
+        "author": "Brown, J. and Cottrell, W. and Shiu, G. and Soler, P.",
+        "title": "Tunneling in axion monodromy",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "10",
+        "pages": "025",
+        "year": "2016",
+        "doi": "10.1007/jhep10(2016)025",
+        "eprint": "1607.00037",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep10(2016)025"
+      }
+    },
+    "giudice2019higgs": {
+      "type": "article",
+      "fields": {
+        "author": "Giudice, G. F. and Kehagias, A. and Riotto, A.",
+        "title": "The Selfish Higgs",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2019",
+        "number": "10",
+        "pages": "199",
+        "year": "2019",
+        "doi": "10.1007/jhep10(2019)199",
+        "eprint": "1907.05370",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep10(2019)199"
+      }
+    },
+    "kaloper2020higgs": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N. and Westphal, A.",
+        "title": "A Goldilocks Higgs",
+        "journal": "Physics Letters B",
+        "volume": "808",
+        "pages": "135616",
+        "year": "2020",
+        "doi": "10.1016/j.physletb.2020.135616",
+        "eprint": "1907.05837",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2020.135616"
+      }
+    },
+    "dealwis2020transitions": {
+      "type": "article",
+      "fields": {
+        "author": "de Alwis, S. P. and Muia, F. and Pasquarella, V. and Quevedo, F.",
+        "title": "Quantum Transitions Between Minkowski and de Sitter Spacetimes",
+        "journal": "Fortschritte der Physik",
+        "volume": "68",
+        "number": "9",
+        "pages": "2000069",
+        "year": "2020",
+        "doi": "10.1002/prop.202000069",
+        "eprint": "1909.01975",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1002/prop.202000069"
+      }
+    },
+    "bedroya2020bubbles": {
+      "type": "article",
+      "fields": {
+        "author": "Bedroya, A. and Montero, M. and Vafa, C. and Valenzuela, I.",
+        "title": "de Sitter Bubbles and the Swampland",
+        "journal": "Fortschritte der Physik",
+        "volume": "68",
+        "number": "11-12",
+        "pages": "2000084",
+        "year": "2020",
+        "doi": "10.1002/prop.202000084",
+        "eprint": "2008.07555",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1002/prop.202000084"
+      }
+    },
+    "farakos2021goldstino": {
+      "type": "article",
+      "fields": {
+        "author": "Farakos, F. and Kehagias, A. and Liatsos, N.",
+        "title": "De Sitter decay through goldstino evaporation",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2021",
+        "number": "2",
+        "pages": "186",
+        "year": "2021",
+        "doi": "10.1007/jhep02(2021)186",
+        "eprint": "2009.03335",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep02(2021)186"
+      }
+    },
+    "cespedes2021slicing": {
+      "type": "article",
+      "fields": {
+        "author": "Céspedes, S. and de Alwis, S. P. and Muia, F. and Quevedo, F.",
+        "title": "Lorentzian vacuum transitions: Open or closed universes?",
+        "journal": "Physical Review D",
+        "volume": "104",
+        "number": "2",
+        "pages": "026013",
+        "year": "2021",
+        "doi": "10.1103/physrevd.104.026013",
+        "eprint": "2011.13936",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.104.026013"
+      }
+    },
+    "kaloper2022hidden": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "Hidden variables of gravity and geometry and the cosmological constant problem",
+        "journal": "Physical Review D",
+        "volume": "106",
+        "number": "6",
+        "pages": "065009",
+        "year": "2022",
+        "doi": "10.1103/physrevd.106.065009",
+        "eprint": "2202.06977",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.106.065009"
+      }
+    },
+    "kaloper2022general": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "General relativity on the multiverse and nature’s hierarchies",
+        "journal": "Physical Review D",
+        "volume": "106",
+        "number": "4",
+        "pages": "044023",
+        "year": "2022",
+        "doi": "10.1103/physrevd.106.044023",
+        "eprint": "2202.08860",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.106.044023"
+      }
+    },
+    "kaloper2022quantum": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N. and Westphal, A.",
+        "title": "Quantum-mechanical mechanism for reducing the cosmological constant",
+        "journal": "Physical Review D",
+        "volume": "106",
+        "number": "10",
+        "pages": "L101701",
+        "year": "2022",
+        "doi": "10.1103/physrevd.106.l101701",
+        "eprint": "2204.13124",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.106.l101701"
+      }
+    },
+    "arcos2022holography": {
+      "type": "article",
+      "fields": {
+        "author": "Arcos, M. and Fischler, W. and Pedraza, J. F. and Svesko, A.",
+        "title": "Membrane nucleation rates from holography",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "12",
+        "pages": "141",
+        "year": "2022",
+        "doi": "10.1007/jhep12(2022)141",
+        "eprint": "2207.06447",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep12(2022)141"
+      }
+    },
+    "danielsson2022shells": {
+      "type": "article",
+      "fields": {
+        "author": "Danielsson, U. and Van Hemelryck, V. and Van Riet, T.",
+        "title": "Over-extremal brane shells from string theory?",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "39",
+        "number": "23",
+        "pages": "235001",
+        "year": "2022",
+        "doi": "10.1088/1361-6382/ac96c4",
+        "eprint": "2206.04506",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ac96c4"
+      }
+    },
+    "kaloper2023decay": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "de Sitter space decay and cosmological constant relaxation in unimodular gravity with charged membranes",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "2",
+        "pages": "025005",
+        "year": "2023",
+        "doi": "10.1103/physrevd.108.025005",
+        "eprint": "2305.02349",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.108.025005"
+      }
+    },
+    "kaloper2023axion": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "Axion flux monodromy discharges relax the cosmological constant",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2023",
+        "number": "11",
+        "pages": "032",
+        "year": "2023",
+        "doi": "10.1088/1475-7516/2023/11/032",
+        "eprint": "2307.10365",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2023/11/032"
+      }
+    },
+    "liu2023zero": {
+      "type": "article",
+      "fields": {
+        "author": "Liu, Y. and Padilla, A. and Pedro, F. G.",
+        "title": "The cosmological constant is probably still zero",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "10",
+        "pages": "014",
+        "year": "2023",
+        "doi": "10.1007/jhep10(2023)014",
+        "eprint": "2303.17723",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep10(2023)014"
+      }
+    },
+    "bandos2023nucleation": {
+      "type": "article",
+      "fields": {
+        "author": "Bandos, I. and Blanco-Pillado, J. J. and Sousa, K. and Urkiola, M. A.",
+        "title": "Brane nucleation in supersymmetric models",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "10",
+        "pages": "061",
+        "year": "2023",
+        "doi": "10.1007/jhep10(2023)061",
+        "eprint": "2306.09412",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep10(2023)061"
+      }
+    },
+    "kaloper2024weak": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N. and Westphal, A.",
+        "title": "Implications of the weak gravity conjecture for de Sitter space decay by flux discharge",
+        "journal": "Physical Review D",
+        "volume": "109",
+        "number": "8",
+        "pages": "085002",
+        "year": "2024",
+        "doi": "10.1103/physrevd.109.085002",
+        "eprint": "2309.07223",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.109.085002"
+      }
+    },
+    "ansoldi2024fluctuations": {
+      "type": "article",
+      "fields": {
+        "author": "Ansoldi, S. and Tanaka, T.",
+        "title": "Pathology in the WKB wave function for tunneling assisted by gravity",
+        "journal": "Physica Scripta",
+        "volume": "99",
+        "number": "3",
+        "pages": "035303",
+        "year": "2024",
+        "doi": "10.1088/1402-4896/ad1fb9",
+        "eprint": "2211.15555",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1402-4896/ad1fb9"
+      }
+    },
+    "cespedes2024transitions": {
+      "type": "article",
+      "fields": {
+        "author": "Céspedes, S. and de Alwis, S. and Muia, F. and Quevedo, F.",
+        "title": "Quantum transitions, detailed balance, black holes, and nothingness",
+        "journal": "Physical Review D",
+        "volume": "109",
+        "number": "10",
+        "pages": "105027",
+        "year": "2024",
+        "doi": "10.1103/physrevd.109.105027",
+        "eprint": "2307.13614",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.109.105027"
+      }
+    },
+    "seo2024tower": {
+      "type": "article",
+      "fields": {
+        "author": "Seo, M.S.",
+        "title": "Kaluza-Klein tower and bubble nucleation in six dimensional Einstein-Maxwell theory",
+        "journal": "The European Physical Journal C",
+        "volume": "84",
+        "number": "5",
+        "pages": "449",
+        "year": "2024",
+        "doi": "10.1140/epjc/s10052-024-12833-3",
+        "eprint": "2312.03184",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-024-12833-3"
+      }
+    },
+    "liu2024weak": {
+      "type": "article",
+      "fields": {
+        "author": "Liu, Y. and Padilla, A. and Pedro, F. G.",
+        "title": "The cosmological constant and the weak gravity conjecture",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "8",
+        "pages": "048",
+        "year": "2024",
+        "doi": "10.1007/jhep08(2024)048",
+        "eprint": "2404.02961",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep08(2024)048"
+      }
+    },
+    "kaloper2025evanescent": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "Discretely evanescent dark energy",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "11",
+        "pages": "075",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/11/075",
+        "eprint": "2506.04317",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2025/11/075"
+      }
+    },
+    "chakraborty2026axion": {
+      "type": "article",
+      "fields": {
+        "author": "Chakraborty, P. and Cheng, J. and Reece, M. and Wang, Z.",
+        "title": "A step in flux to suppress axion isocurvature",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "3",
+        "pages": "046",
+        "year": "2026",
+        "doi": "10.1007/jhep03(2026)046",
+        "eprint": "2507.12519",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep03(2026)046"
+      }
+    },
+    "irakleous2026bubble": {
+      "type": "article",
+      "fields": {
+        "author": "Irakleous, A. and Rondeau, F. and Toumbas, N.",
+        "title": "Holography for de Sitter bubble geometries",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "3",
+        "pages": "240",
+        "year": "2026",
+        "doi": "10.1007/jhep03(2026)240",
+        "eprint": "2509.19423",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep03(2026)240"
+      }
+    },
+    "halverson2026vacuum": {
+      "type": "misc",
+      "fields": {
+        "author": "Halverson, J. and Khoury, J. and Long, C.",
+        "title": "Small Vacuum Energy and Tunneling in a Modified Bousso-Polchinski Model",
+        "year": "2026",
+        "eprint": "2605.05357",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2605.05357"
+      }
+    },
+    "kaloper2026em": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "Electromagnetic couplings of dark domain walls",
+        "journal": "Physical Review D",
+        "volume": "114",
+        "number": "1",
+        "pages": "L011904",
+        "year": "2026",
+        "doi": "10.1103/d6vs-4wb6",
+        "eprint": "2602.03933",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/d6vs-4wb6"
+      }
+    },
+    "kaloper2026cmb": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "CMB birefringence from vacuum interfaces",
+        "journal": "Physical Review D",
+        "volume": "114",
+        "number": "3",
+        "pages": "036028",
+        "year": "2026",
+        "doi": "10.1103/cyz7-kplp",
+        "eprint": "2605.11065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/cyz7-kplp"
+      }
+    },
+    "kaloper2026darkphotons": {
+      "type": "article",
+      "fields": {
+        "author": "Kaloper, N.",
+        "title": "Dark photons from light with cosmic domain walls",
+        "journal": "Physical Review D",
+        "volume": "114",
+        "number": "5",
+        "pages": "L051901",
+        "year": "2026",
+        "doi": "10.1103/d6dz-ljwj",
+        "eprint": "2602.20248",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/d6dz-ljwj"
+      }
+    },
+    "khan2026topolons": {
+      "type": "article",
+      "fields": {
+        "author": "Khuwajah Khan, M. G.",
+        "title": "Topolons: Stable Particle-Like Remnants of Collapsed Vacuum Bubbles in a Three-Form Gauge Sector",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "65",
+        "number": "8",
+        "pages": "237",
+        "year": "2026",
+        "doi": "10.1007/s10773-026-06420-3",
+        "eprint": "2604.03363",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10773-026-06420-3"
+      }
+    },
+    "coudarchet2026lorentzian": {
+      "type": "misc",
+      "fields": {
+        "author": "Coudarchet, T. and Freivogel, B. and Hassfeld, B. and Hebecker, A.",
+        "title": "The Lorentzian Geometry of Tunneling in Global de Sitter at Late Time",
+        "year": "2026",
+        "eprint": "2608.00159",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2608.00159"
       }
     }
   }
