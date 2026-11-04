@@ -22515,6 +22515,10 @@ CAPTIONS.update(_pre_big_bang_figures.embedding_captions())
 import rotation_halts_drawings as _rotation_halts_drawings
 _rotation_halts_drawings.register_embedding(sys.modules[__name__])
 
+import nappi_witten_drawings as _nappi_witten_drawings
+DRAWN[_nappi_witten_drawings.METRIC] = lambda ck, src: _nappi_witten_drawings.embedding_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_nappi_witten_drawings.embedding_captions())
+
 
 if __name__ == "__main__":
     sys.exit(main())

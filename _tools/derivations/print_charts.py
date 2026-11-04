@@ -37589,5 +37589,10 @@ import rotation_halts as _rotation_halts
 _rotation_halts.register_charts(sys.modules[__name__])
 
 
+import nappi_witten as _nappi_witten
+CHARTS[_nappi_witten.METRIC] = [lambda system=system: _nappi_witten.chart_spec(system)
+                                for system in _nappi_witten.CHARTS]
+
+
 if __name__ == "__main__":
     main()

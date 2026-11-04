@@ -19415,6 +19415,11 @@ _wiggly_string_drawings.register_null(sys.modules[__name__])
 import rotation_halts_drawings as _rotation_halts_drawings
 _rotation_halts_drawings.register_null(sys.modules[__name__])
 
+import nappi_witten_drawings as _nappi_witten_drawings
+DIAGRAMS.extend(_nappi_witten_drawings.diagram_specs(sys.modules[__name__]))
+CAPTIONS.update(_nappi_witten_drawings.diagram_captions())
+CLOSED_FORMS.update(_nappi_witten_drawings.null_forms())
+
 
 if __name__ == "__main__":
     sys.exit(main())

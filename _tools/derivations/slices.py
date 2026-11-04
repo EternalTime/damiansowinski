@@ -3983,6 +3983,11 @@ FLAT.update({(_pre_big_bang_figures.METRIC, system, _pre_big_bang_figures.VIEWS[
              (lambda system=system: _pre_big_bang_figures.slice_marks(sys.modules[__name__], system))
              for system in _pre_big_bang_figures.SYSTEMS})
 
+import nappi_witten_drawings as _nappi_witten_drawings
+FLAT.update({(_nappi_witten_drawings.METRIC, system, "polar"):
+             (lambda system=system: _nappi_witten_drawings.slice_marks(sys.modules[__name__], system))
+             for system in ("cosmological", "bang_regular", "invariant")})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.
@@ -5143,6 +5148,9 @@ _klebanov_witten_drawings.register_slices(sys.modules[__name__])
 import rotation_halts_drawings as _rotation_halts_drawings
 _rotation_halts_drawings.register_slices(sys.modules[__name__])
 
+
+HIDDEN[("nappi_witten", "whisker", "periodic")] = (
+    "the static extension has r<0, whereas the embedded cosmological moment has r=1/2")
 
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")

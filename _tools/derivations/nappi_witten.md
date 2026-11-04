@@ -47,8 +47,19 @@ Equation (17) of hep-th/9310112 is $da_1^2+da_2^2+2du\,dv+(a_2da_1-a_1da_2)du+b_
 The change $V=-v-b_0u/2$ makes it the rotating Cahen-Wallach form at $\omega=-1/2$ in the source's dimensionless units.
 A rotation $X+iY=e^{-iu/2}(a_1+ia_2)$ makes the two transverse eigenvalues $\lambda_1=\lambda_2=-1/4$.
 Its Ricci component is $R_{uu}=1/2$, in agreement with the source.
+The standalone comparison `_tools/derivations/nappi_witten_wave.py` pulls the live Cahen-Wallach rotating metric back to the 1993 line element exactly.
 
 ## Drawing geometry
 
 At $b=1$ and $\psi=\pi/4$, a surface of constant $\rho$ has metric $L^2(ds^2+\sin^2s\,d\lambda^2)$.
 Its Euclidean surface of revolution has radius $L\sin s$ and height $L\cos s$, for $0\leq s\leq\pi/2$.
+The same moment has $x=1$ in the regular gauge and $r=1/2$ in the invariant coordinate.
+Each of the three cosmological null views marks the entire interval of $s$ reached by that hemisphere and names its embedding view `turnaround`.
+
+The curvature curves use the stored four-dimensional scalars on that same moment, so their horizontal coordinate is the polar angle $s$.
+The constant-$s$ plane of periodic time and $\chi$ in the static extension carries null curves; freely propagating light also moves across $s$.
+The regular gauge's cosmological null view divides out $w$ and draws null geodesics of zero angular momentum.
+
+NOT_DRAWN: a global conformal diagram through the static extensions would identify timelike-separated points because their time is periodic, and the coset is non-Hausdorff at the joins.
+The conformal construction is the closed cosmological causal region with both circular directions suppressed.
+NOT_DRAWN: the maximum-volume embedding moment has $r=1/2$ and lies on none of the static extension, where $r<0$.

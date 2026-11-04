@@ -4515,6 +4515,11 @@ class Slices(unittest.TestCase):
             if key == "rotation_halts/shell/axial" and mark["view"] == "interior_turn":
                 return (lambda X: 0.0), [0.0]
             return (lambda X: 0.0), list(self.reach(surface))
+
+        if key.startswith("nappi_witten/"):
+            chart = key.split("/")[1]
+            level = {"cosmological": math.pi/4, "bang_regular": 1.0, "invariant": 0.5}[chart]
+            return (lambda X: level), list(self.reach(surface))
         if key == "early_braneworlds/magnetic_general/radial":
             # The same magnetic surface: beta=(1+rho^2/a^2)^(1/3), with a=1.
             return (lambda X: 0.0), [(1+rho*rho)**(1/3) for rho in self.reach(surface)]
@@ -6021,7 +6026,13 @@ class Slices(unittest.TestCase):
                     points = [p for line in mark["lines"] for p in line] + mark["points"]
                     self.assertTrue(all(X0 <= X <= X1 and T0 <= T <= T1 for X, T in points), where)
                     t = surface.get("time")
-                    if metric_id in ("extended_inflation", "global_texture"):
+                    if metric_id == "nappi_witten":
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            self.assertAlmostEqual(T, math.pi/4, delta=2e-4, msg=where)
+                            self.assertGreaterEqual(X, lo-2e-4, where)
+                            self.assertLessEqual(X, hi+2e-4, where)
+                    elif metric_id in ("extended_inflation", "global_texture"):
                         # tan((T-X)/2)=clock-r and tan((T+X)/2)=clock+r:
                         # eta=-1 for extended inflation, t=-1 for the fixed texture moment.
                         lo, hi = self.reach(surface)

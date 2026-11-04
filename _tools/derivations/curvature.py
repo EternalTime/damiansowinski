@@ -19215,6 +19215,9 @@ _wiggly_string_drawings.register_curvature(sys.modules[__name__])
 import rotation_halts_drawings as _rotation_halts_drawings
 _rotation_halts_drawings.register_curvature(sys.modules[__name__])
 
+import nappi_witten_drawings as _nappi_witten_drawings
+DRAWN[_nappi_witten_drawings.METRIC] = lambda ck, src: _nappi_witten_drawings.curvature_views(ck, src, sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

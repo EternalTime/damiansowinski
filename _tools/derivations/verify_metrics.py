@@ -5486,5 +5486,9 @@ import pre_big_bang as _pre_big_bang
 DIMENSIONS.update(_pre_big_bang.DIMENSIONS)
 PARAMETER_RELATIONS.update(_pre_big_bang.PARAMETER_RELATIONS)
 
+import nappi_witten as _nappi_witten
+DIMENSIONS.update(_nappi_witten.DIMENSIONS)
+
+
 if __name__ == "__main__":
     sys.exit(main())

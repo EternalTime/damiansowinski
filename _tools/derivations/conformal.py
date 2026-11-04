@@ -32300,6 +32300,10 @@ NOT_DRAWN.add("wiggly_string")
 
 NOT_DRAWN.add("rotation_halts")
 
+import nappi_witten_drawings as _nappi_witten_drawings
+DRAWN[_nappi_witten_drawings.METRIC] = lambda ck, src: _nappi_witten_drawings.conformal_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_nappi_witten_drawings.conformal_captions())
+
 
 if __name__ == "__main__":
     sys.exit(main())
