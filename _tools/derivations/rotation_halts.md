@@ -21,7 +21,13 @@ Flatness belongs to static equilibrium and to the restricted dynamical family in
 
 ## Charts and tensor checks
 
-Pending the source equations.
+The canonical coordinates on the two vacuum regions are $(t,\rho,\phi,z)$, with independent times on the two sides and $\rho=R$ at the shell.
+They are equation (1) of Gleiser and Ramirez, with their $r$ renamed $\rho$ and with the angular coordinate before the axial coordinate.
+The junction coordinates $(\tau,\phi,z)$ are their equation (4).
+Flat interior and static exterior are special choices of the functions in these coordinates.
+Every tensor is retained with the functions free; the vacuum differential constraints are stated with those functions.
+The bulk checks evaluate two independent vacuum profiles at rational points, and the interior check also evaluates the flat specialization.
+The intrinsic shell metric is three dimensional, but the bulk spacetime is four dimensional.
 
 ## Bound and shell matching
 
@@ -57,16 +63,46 @@ Its exterior Cauchy data must satisfy the moving-boundary compatibility conditio
 
 ## Drawings and moments
 
-Pending chart selection.
+The radial interior drawing follows a local bounce of the restricted flat-interior family, with $\alpha=1$, $\lambda=0.08$, $R(0)=2$, and $V(0)=0$.
+The shell trajectory is integrated in proper time, including $dt_-/d\tau=\sqrt{1+V^2}$.
+Its conversion to interior time is interpolated and independently checked against the integrated trajectory at 701 interleaved points within $2\times10^{-12}$.
+The axial shell drawing uses the same trajectory and the induced proper-time metric.
+Both null families on these planes preserve $t\pm\rho$ or $\tau\pm z$.
+The exterior drawing is the exact equilibrium at $R_0=2$, $\alpha=1$, $\lambda=\sqrt5/18$, with $\kappa=1/2$ and $\gamma_0=2\ln(3/2)$.
+Its radial null families preserve $t\pm\rho$.
+It is a different member from the bouncing example.
+
+The turning interior disc and the material cylinder are embedded separately at their common turning event.
+On the radial interior drawing, the disc is the interval $0\leq\rho\leq2$ and the cylinder intersects it at $\rho=2$.
+On the axial shell drawing, the disc intersects at $z=0$ and the cylinder is the interval $-2\leq z\leq2$.
+Every intersection names its embedding view, surface, and moment through the shared slice registry.
+The equilibrium exterior surface reaches $2\leq\rho\leq5$ and appears only on the equilibrium exterior drawing.
+Its circles have circumferential radius $\rho\sqrt{\rho/2}$.
+The three embeddings satisfy the stored spatial metrics along, across, and around their surfaces.
+Only the existing cover, meridian, r, shell, mark, K, and front styles are painted.
+The displayed source text counts are 204, 205, and 198 for the spacetime views, 158, 186, and 175 for the embeddings, and 230 for the curvature view, using view_text.length.
+There is one moment per embedding view and no movie.
+
+NOT_DRAWN: a global conformal diagram of the dynamical family requires complete wave data and a globally specified shell history.
+Those data are free in the sourced equations, so a unique global causal completion is undetermined.
+NOT_DRAWN: a dynamical exterior ray view for the turning example requires compatible exterior Cauchy data beyond the shell jets.
+The equilibrium exterior is the exact exterior example drawn here.
+No exterior waveform is inferred from the shell trajectory alone.
 
 ## Curvature
 
-Pending stored scalars.
+The curvature curves read the stored Kretschmann scalars of the two bulk charts, with the equilibrium exterior functions and the flat interior specialization.
+The exterior scalar is positive and falls as $\rho^{-7}$ for $\kappa=1/2$.
+The regular bulk Ricci scalar vanishes on both sides.
+The exterior and interior curves stop on opposite sides of $\rho=2$.
+NOT_DRAWN: a bulk Kretschmann scalar on the ideal shell would square its delta distribution, which has no canonical distributional value.
+The shell stress is verified through the extrinsic-curvature jump.
 
 ## Verification
 
 The dedicated numerical check reads the stored metric and Christoffel symbols on both faces.
 It contracts the outward normal with the shell acceleration and angular connection components, and compares all three orthonormal components with the two-stream stress.
-Five dynamical states and two equilibria pass at 80 decimal digits, with a maximum dynamical Israel-jump residual of $7.9066\times10^{-82}$.
+Five restricted dynamical states and two equilibria pass at 80 decimal digits, with a maximum restricted Israel-jump residual of $7.9066\times10^{-82}$.
+A separate state with nonzero interior wave derivatives, $\psi_\Sigma=0.2$ and $\gamma_-=0.1$, satisfies the full jump with a residual of $1.2519\times10^{-81}$.
 The flat-interior specialization has zero Riemann components; an independent regular cylindrical vacuum wave has nonzero Riemann components.
 Admissible random shell states obey the strict lower bound, and candidate states at or below it fail the positive-lapse condition.

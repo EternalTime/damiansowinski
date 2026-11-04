@@ -1,0 +1,18 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The turning solution has alpha=1 and lambda=0.08; the separate equilibrium solution at radius two has lambda=sqrt(5)/18. They are different members of the cylindrical shell family.",
+      "drawings": {
+        "rotation_halts/interior/bounce": ["equilibrium"],
+        "rotation_halts/shell/axial": ["equilibrium"],
+        "rotation_halts/exterior/equilibrium": ["interior_turn", "shell_turn"]
+      }
+    }
+  ],
+  "flat_moments": [
+    {
+      "reason": "The restricted interior is Minkowski space, and its slice at constant interior time and axial coordinate is a Euclidean disc.",
+      "moments": [["interior_turn", 0]]
+    }
+  ]
+}

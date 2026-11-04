@@ -32296,5 +32296,8 @@ CAPTIONS.update(_global_texture.conformal_captions())
 # A local first-order string exterior does not determine a global causal completion.
 NOT_DRAWN.add("wiggly_string")
 
+NOT_DRAWN.add("rotation_halts")
+
+
 if __name__ == "__main__":
     sys.exit(main())

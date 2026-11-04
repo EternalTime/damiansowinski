@@ -449,6 +449,9 @@ REGIONS = {
 WHOLE = {("brane_wall_universe", "gaussian_normal")}
 
 OVERRULED = {
+    ("rotation_halts", "three-dimensional"): (
+        False, "The intrinsic metric of the material junction has three coordinates; "
+               "both bulk regions of the spacetime have four dimensions."),
     ("brown_teitelboim", "Einstein space"): (
         False, "the de Sitter constants differ across the membrane, which also carries surface tension"),
     ("brown_teitelboim", "stationary"): (

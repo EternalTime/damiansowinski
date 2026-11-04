@@ -29,13 +29,13 @@ class RotationHalts(unittest.TestCase):
         rd = vm.Reader(entry["coords"], [p["symbol"] for p in entry["parameters"]], ())
         t, rho = rd.symbol["t"], rd.symbol["\\rho"]
         psi, gamma = rd.parameters["psi"], rd.parameters["gamma"]
-        g0, pr, pt, gr, gt = sp.symbols("g0 pr pt gr gt")
+        g0, p0, pr, pt, gr, gt = sp.symbols("g0 p0 pr pt gr gt")
         jets = {sp.diff(psi, rho): pr, sp.diff(psi, t): pt,
                 sp.diff(gamma, rho): gr, sp.diff(gamma, t): gt}
 
         def compile_value(text):
-            value = rd(text).xreplace(jets).subs({psi: 0, gamma: g0})
-            return sp.lambdify((rho, g0, pr, pt, gr, gt), value, "mpmath")
+            value = rd(text).xreplace(jets).subs({psi: p0, gamma: g0})
+            return sp.lambdify((rho, g0, p0, pr, pt, gr, gt), value, "mpmath")
 
         metric = {tuple(v["indices"]): compile_value(v["value"])
                   for v in entry["metric_components"]}
@@ -63,8 +63,8 @@ class RotationHalts(unittest.TestCase):
                        for b in range(2) for c in range(2))
                for a, q in enumerate((Xdot, A))]
         Ktt = -sum(covnormal[a]*acc[a] for a in range(2))
-        Kpp = -sum(covnormal[a]*G(names[a], "\\phi", "\\phi") for a in range(2))/R**2
-        Kzz = -sum(covnormal[a]*G(names[a], "z", "z") for a in range(2))
+        Kpp = -sum(covnormal[a]*G(names[a], "\\phi", "\\phi") for a in range(2))/g[("\\phi", "\\phi")](*args)
+        Kzz = -sum(covnormal[a]*G(names[a], "z", "z") for a in range(2))/g[("z", "z")](*args)
         return (Ktt, Kpp, Kzz)
 
     def matching_case(self, R, V, alpha, lam):
@@ -81,9 +81,9 @@ class RotationHalts(unittest.TestCase):
              - lam*Xm*(R*R+2*alpha*alpha)**2/(R*R*s**3))
         Xmdot = V*A/Xm
         Xpdot = Xmdot + 4*lam*alpha*alpha*V/(s*R*R)
-        inner = self.face_curvature("interior", R, V, Xm, A, Xmdot, (0, 0, 0, 0, 0))
+        inner = self.face_curvature("interior", R, V, Xm, A, Xmdot, (0, 0, 0, 0, 0, 0))
         outer = self.face_curvature("exterior", R, V, Xp, A, Xpdot,
-                                    (-mp.log(D)/2, pr, pt, gr, gt))
+                                    (-mp.log(D)/2, 0, pr, pt, gr, gt))
         # The stress is independently obtained by summing the equal dust streams.
         u = alpha/R
         sigma = lam*mp.sqrt(1+u*u)/(2*mp.pi*R)
@@ -115,6 +115,35 @@ class RotationHalts(unittest.TestCase):
         self.assertGreater(A, 0)
         # With no rotation the same restricted shell accelerates inward.
         self.assertLess(model.acceleration(2, 0, 0, .08), 0)
+
+    def test_junction_with_a_nonflat_wave_on_the_interior_face(self):
+        R, V, alpha, lam, psi, gamma_in, W, Nm = map(
+            mp.mpf, ("3", ".1", ".7", ".03", ".2", ".1", ".03", ".02"))
+        q = alpha*alpha*mp.exp(2*psi)
+        s = mp.sqrt(R*R+q)
+        Xm = mp.sqrt(mp.exp(2*psi-2*gamma_in)+V*V)
+        Xp = Xm-4*lam*s/R
+        Np = Nm-2*lam/s
+        self.assertGreater(Xp, abs(V))
+        A = (V*W-R*(W*W+Nm*Nm)+R*R*Nm*Xm/(R*R+q)
+             -lam*R*R*Xm/s**3+q*Xm*Xp/(R*(R*R+q)))
+        curvatures = []
+        for side, X, N in [("interior", Xm, Nm), ("exterior", Xp, Np)]:
+            D = X*X-V*V
+            pr, pt = (X*N-V*W)/D, (X*W-V*N)/D
+            gr, gt = R*(pr*pr+pt*pt), 2*R*pr*pt
+            Xdot = (D*(W-gr*V-gt*X)+V*A)/X
+            curvatures.append(self.face_curvature(side, R, V, X, A, Xdot,
+                                                  (psi-mp.log(D)/2, psi, pr, pt, gr, gt)))
+        u = alpha*mp.exp(psi)/R
+        sigma = lam*mp.sqrt(1+u*u)/(2*mp.pi*R)
+        pressure = lam*u*u/(2*mp.pi*R*mp.sqrt(1+u*u))
+        trace = -sigma+pressure
+        source = [-8*mp.pi*(sij-eta*trace/2)
+                  for sij, eta in zip((sigma, pressure, 0), (-1, 1, 1))]
+        residual = max(abs(kp-km-rhs) for kp, km, rhs in zip(curvatures[1], curvatures[0], source))
+        self.assertLess(residual, mp.mpf("1e-65"))
+        print("nonflat-interior Israel-jump residual:", mp.nstr(residual, 5))
 
     def test_bound_follows_from_positive_lapses_and_a_regular_axis(self):
         rng = random.Random(1992)

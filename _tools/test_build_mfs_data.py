@@ -4509,6 +4509,12 @@ class Slices(unittest.TestCase):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
         t = surface.get("time")
+        if key.startswith("rotation_halts/"):
+            if key == "rotation_halts/interior/bounce" and mark["view"] == "shell_turn":
+                return (lambda X: 0.0), [2.0]
+            if key == "rotation_halts/shell/axial" and mark["view"] == "interior_turn":
+                return (lambda X: 0.0), [0.0]
+            return (lambda X: 0.0), list(self.reach(surface))
         if key == "early_braneworlds/magnetic_general/radial":
             # The same magnetic surface: beta=(1+rho^2/a^2)^(1/3), with a=1.
             return (lambda X: 0.0), [(1+rho*rho)**(1/3) for rho in self.reach(surface)]

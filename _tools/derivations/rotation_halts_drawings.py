@@ -6,7 +6,7 @@ import math
 import numpy as np
 import sympy as sp
 from scipy.integrate import solve_ivp
-from scipy.optimize import brentq
+from scipy.interpolate import CubicSpline
 
 from rotation_halts import METRIC, acceleration
 
@@ -33,11 +33,21 @@ def proper_values(tau):
     return values[0], values[1]*np.sign(t)
 
 
+@lru_cache(maxsize=1)
+def radius_interpolant():
+    tau = np.linspace(0, 5, 2001)
+    R, V, T = trajectory()(tau)
+    interpolation = CubicSpline(T, R)
+    probe = np.linspace(.001, 4.999, 701)
+    reference = trajectory()(probe)
+    error = np.max(np.abs(interpolation(reference[2])-reference[0]))
+    if error > 2e-12:
+        raise AssertionError(f"interior-time interpolation misses by {error}")
+    return interpolation
+
+
 def radius_at_time(time):
-    def scalar(T):
-        tau = brentq(lambda s: float(trajectory()(s)[2])-abs(T), 0, 5, xtol=1e-13)
-        return float(trajectory()(tau)[0])
-    return np.vectorize(scalar, otypes=[float])(np.asarray(time, dtype=float))
+    return radius_interpolant()(np.abs(np.asarray(time, dtype=float)))
 
 
 class rh_R(sp.Function):
@@ -101,3 +111,104 @@ def register_null(nr):
         (METRIC, "exterior", "equilibrium"): (lambda t, r: t+r, lambda t, r: t-r, None),
         (METRIC, "shell", "axial"): (lambda t, z: t+z, lambda t, z: t-z, None),
     })
+
+
+def embedding(ck, src, em):
+    """Three spatial slices read from the stored metrics, with their junction circles marked."""
+    views = []
+    definitions = [
+        ("interior_turn", "The interior at the turn", "interior", "\\rho", {"t": 0, "z": 0},
+         BOUNCE, {"psi": "0", "gamma": "0", "R": "2"}, 0, 2, 0,
+         (("axis", "the regular axis"), ("edge", "the shell")), [(2, "r", None)], "$t=0$"),
+        ("shell_turn", "The shell at the turn", "shell", "z", {"tau": 0},
+         BOUNCE, {"psi": "0", "R": "2"}, -2, 2, -2,
+         (("edge", "the shell continues along the axis"), ("edge", "the shell continues along the axis")),
+         [(-2, "r", None), (0, "r", None), (2, "r", None)], "$\\tau=0$"),
+        ("equilibrium", "The equilibrium exterior", "exterior", "\\rho", {"t": 0, "z": 0},
+         EQUILIBRIUM, STATIC, 2, 5, 0,
+         (("edge", "the equilibrium shell"), ("edge", "the exterior continues outward")),
+         [(2, "r", None), (5, "r", None)], "$t=0$"),
+    ]
+    for vid, label, system, coordinate, fixed, params, functions, lo, hi, z0, ends, marks, moment in definitions:
+        sl = em.Slice(src, METRIC, system, coordinate, "\\phi", fixed, params, functions=functions)
+        size = 4 if vid != "equilibrium" else 12
+        piece = em.Piece(vid, "sheet", sl, lo, hi, z0, ends=ends, marks=marks, size=size)
+        ck.isometry(vid, piece)
+        if vid == "interior_turn":
+            ck.radius("flat interior circles have their canonical radius", piece, lambda r: r, size)
+            ck.form("flat interior is a plane", piece, lambda r: np.zeros_like(r), size)
+        elif vid == "shell_turn":
+            ck.radius("shell circles have radius two", piece, lambda z: np.zeros_like(z)+2, size)
+        else:
+            ck.radius("equilibrium circumferential radius", piece, lambda r: r*np.sqrt(r/2), size)
+        surface = em.Surface([piece], label=moment, time=0)
+        fig = em.figure_of([surface], {"sheet": "cover"}, size, camera=em.Camera(-90, 40))
+        fig.legend("fill", "cover", "the spatial surface")
+        fig.legend("line", "r", "the marked circles")
+        setting = "$\\alpha=1$, $\\lambda=0.08$, $R=2\\alpha$." if vid != "equilibrium" else "$\\alpha=1$, $R_0=2\\alpha$."
+        views.append(em.view(vid, label, "$\\alpha$", [surface], fig.done(), settings=setting))
+    return views
+
+
+def register_embedding(em):
+    em.DRAWN[METRIC] = lambda ck, src: embedding(ck, src, em)
+    em.CAPTIONS.update({
+        (METRIC, "interior_turn"): ["The flat interior disc at the turning point ($t=0$, $z=0$), bounded by the shell."],
+        (METRIC, "shell_turn"): ["The material cylinder at its minimum local radius ($\\tau=0$, $|z|\\leq2\\alpha$), with its central ring marked."],
+        (METRIC, "equilibrium"): ["The static exterior slice ($t=0$, $2\\alpha\\leq\\rho\\leq5\\alpha$), with the material boundary at its inner circle."],
+    })
+
+
+def register_slices(sl):
+    def marks(system):
+        out = []
+        for m in sl.moments(METRIC):
+            vid = m.view["id"]
+            if system == "exterior":
+                if vid == "equilibrium":
+                    out.append(sl.Mark(m, sl.along(0, *m.reach("exterior", "\\rho"))))
+            elif vid == "interior_turn":
+                out.append(sl.Mark(m, sl.along(0, *m.reach("interior", "\\rho")))
+                           if system == "interior" else sl.Mark(m, points=[(0, 0)]))
+            elif vid == "shell_turn":
+                out.append(sl.Mark(m, sl.along(0, *m.reach("shell", "z")))
+                           if system == "shell" else sl.Mark(m, points=[(0, 2)]))
+        return out
+    for system, view in [("interior", "bounce"), ("exterior", "equilibrium"), ("shell", "axial")]:
+        sl.FLAT[(METRIC, system, view)] = lambda system=system: marks(system)
+    sl.FLAT_METRICS.add(METRIC)
+
+
+def curvature(ck, src, cv):
+    """Read the smooth equilibrium bulk scalars; a squared shell delta is undefined."""
+    inside = cv.Published(src, METRIC, "interior", "kretschmann", ["rho"], [],
+                          functions={"psi": "0", "gamma": "0", "R": "2"})
+    outside = cv.Published(src, METRIC, "exterior", "kretschmann", ["rho"], [], functions=STATIC)
+    ricci = cv.Published(src, METRIC, "exterior", "ricci_scalar", ["rho"], [], functions=STATIC)
+    ck("equilibrium bulk Ricci scalar is zero", ricci.expr == 0)
+    ck("restricted flat interior Kretschmann scalar is zero", inside.expr == 0)
+    rs = np.linspace(2.00001, 5, 200)
+    values = outside(rs)
+    ck("equilibrium exterior curvature is positive and decreases outward",
+       np.all(values > 0) and np.all(np.diff(values) < 0))
+    ck("equilibrium exterior radial power is minus seven",
+       abs(float(outside(4)/outside(2))-2**-7) < 1e-14)
+    axis = cv.axis("$\\rho/\\alpha$", 0, 5)
+    scale = {"kind": "linear", "from": 0, "to": .05}
+    aspect = 1.6
+    cv.shape_checks(ck, METRIC, [aspect])
+    curves = (cv.line_curves(ck, METRIC+" interior", "K", "K", inside, "\\rho", axis, scale,
+                             cv.PLOT_W/aspect, {}, within=(0, 1.99999))
+              + cv.line_curves(ck, METRIC+" exterior", "K", "K", outside, "\\rho", axis, scale,
+                               cv.PLOT_W/aspect, {}, within=(2.00001, 5)))
+    return [{"id": "equilibrium", "label": "The equilibrium bulk", "kind": "line", "x": axis,
+             "panels": [{"id": "K", "name": "$K\\alpha^4$", "aspect": aspect,
+                         "scale": scale, "ticks": cv.value_ticks(scale)}],
+             "curves": curves, "marks": [{"class": "front", "x": 2}],
+             "legend": [["line", "K", "the smooth bulk curvature"], ["line", "front", "the shell"]],
+             "caption": ["The Kretschmann scalar $K$ in the smooth equilibrium bulk ($R_0=2\\alpha$), zero inside the shell and decreasing as $\\rho^{-7}$ outside."],
+             "settings": "$\\alpha=1$, $R_0=2\\alpha$.", "clip": "Linear ($0\\leq K\\alpha^4\\leq0.05$)."}]
+
+
+def register_curvature(cv):
+    cv.DRAWN[METRIC] = lambda ck, src: curvature(ck, src, cv)

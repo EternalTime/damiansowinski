@@ -22510,6 +22510,10 @@ def pre_big_bang(ck, src):
 DRAWN[_pre_big_bang_figures.METRIC] = pre_big_bang
 CAPTIONS.update(_pre_big_bang_figures.embedding_captions())
 
+import rotation_halts_drawings as _rotation_halts_drawings
+_rotation_halts_drawings.register_embedding(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())
 

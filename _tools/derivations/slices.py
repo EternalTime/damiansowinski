@@ -5138,6 +5138,10 @@ _stringy_cosmic_strings_drawings.register_slices(sys.modules[__name__])
 import klebanov_witten_drawings as _klebanov_witten_drawings
 _klebanov_witten_drawings.register_slices(sys.modules[__name__])
 
+import rotation_halts_drawings as _rotation_halts_drawings
+_rotation_halts_drawings.register_slices(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)
