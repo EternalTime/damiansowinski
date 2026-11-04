@@ -1410,6 +1410,21 @@ The inside of a planar charged black hole of anti-de Sitter space that has grown
 - chart Final Kasner Epoch: coordinates $(\tau, t, x, y)$, $$ds^2 = -c^2d\tau^2 + \tau^{2p_t}c^2dt^2 + \tau^{2p_x}\left(dx^2 + dy^2\right)$$
 - chart Kasner Inversion: coordinates $(\rho, t, x, y)$, $$ds^2 = -\dfrac{\ell^2\left(1 + \rho^\beta\right)^2}{\rho^\beta}d\rho^2 + \dfrac{\rho^\beta}{\left(1 + \rho^\beta\right)^2}c^2dt^2 + \rho^{1 - \beta}\left(1 + \rho^\beta\right)^2\left(dx^2 + dy^2\right)$$
 
+### Horne-Horowitz Charged Black String in Three Dimensions
+
+A straight black string in three spacetime dimensions carrying an axion charge, an exact solution of string theory built from a gauged Wess-Zumino-Witten model. Like the charged black hole of Reissner and Nordström it has an event horizon, an inner horizon, and a timelike singularity, and with no charge it is Witten's black hole of two dimensions times a line.
+
+- id: `three_dim_black_string`
+- tags: black string, black hole, string theory, low energy string theory, dilaton, dilaton gravity, lower-dimensional gravity, horizon, event horizon, inner horizon, Cauchy horizon, curvature singularity, timelike singularity, naked singularity, conical singularity, extremal, cigar, causal structure, asymptotically flat, Hawking temperature, strong cosmic censorship, exact solution, Lorentzian, idealized model, static, stationary, three-dimensional
+- signature: (-,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/three_dim_black_string.json
+- chart Static: coordinates $(t, x, r)$, $$ds^2 = -\left(1 - \dfrac{M}{r}\right)dt^2 + \left(1 - \dfrac{Q^2}{Mr}\right)dx^2 + \dfrac{k\,dr^2}{8r^2\left(1 - \dfrac{M}{r}\right)\left(1 - \dfrac{Q^2}{Mr}\right)}$$
+- chart Wess-Zumino-Witten: coordinates $(u, v, x)$, $$ds^2 = -\dfrac{k\left(Q^2v^2\,du^2 + Q^2u^2\,dv^2 + 2\left(2M^2 - (2M^2 - Q^2)uv\right)du\,dv\right)}{8(1 - uv)\left(M^2 - (M^2 - Q^2)uv\right)} + \dfrac{(M^2 - Q^2)(1 - uv)}{M^2 - (M^2 - Q^2)uv}\,dx^2$$
+- chart Ingoing Eddington-Finkelstein: coordinates $(v, x, r)$, $$ds^2 = -\left(1 - \dfrac{M}{r}\right)dv^2 + \sqrt{\dfrac{k}{2}}\,\dfrac{dv\,dr}{r\sqrt{1 - \dfrac{Q^2}{Mr}}} + \left(1 - \dfrac{Q^2}{Mr}\right)dx^2$$
+- chart Extremal: coordinates $(t, x, \rho)$, $$ds^2 = \dfrac{\rho^2}{\rho^2 + M}\left(-dt^2 + dx^2\right) + \dfrac{k\,d\rho^2}{2\rho^2}$$
+- chart Extremal Interior: coordinates $(t, x, \rho)$, $$ds^2 = \dfrac{\rho^2}{M - \rho^2}\left(dt^2 - dx^2\right) + \dfrac{k\,d\rho^2}{2\rho^2}$$
+- chart Superextremal: coordinates $(t, x, \rho)$, $$ds^2 = -\dfrac{Q^2 - M^2 + M\rho^2}{Q^2 + M\rho^2}dt^2 + \dfrac{M\rho^2}{Q^2 + M\rho^2}dx^2 + \dfrac{Mk\,d\rho^2}{2\left(Q^2 - M^2 + M\rho^2\right)}$$
+
 ### Hosotani Universe
 
 A closed universe filled with a homogeneous magnetic SU(2) gauge field, expanding from a curvature singularity and recollapsing.

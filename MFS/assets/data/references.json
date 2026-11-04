@@ -1,5 +1,5 @@
 {
-  "version": "d091a1722cfd762c",
+  "version": "488d2ba0e38673a1",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36808,6 +36808,102 @@
         "year": "1993",
         "doi": "10.1103/PhysRevD.47.2271",
         "url": "https://doi.org/10.1103/PhysRevD.47.2271"
+      }
+    },
+    "horne1992black": {
+      "type": "article",
+      "fields": {
+        "title": "Exact black string solutions in three dimensions",
+        "author": "Horne, James H. and Horowitz, Gary T.",
+        "journal": "Nuclear Physics B",
+        "volume": "368",
+        "number": "2",
+        "pages": "444--462",
+        "year": "1992",
+        "doi": "10.1016/0550-3213(92)90536-K",
+        "eprint": "hep-th/9108001",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(92)90536-K"
+      }
+    },
+    "horne1992momentum": {
+      "type": "article",
+      "fields": {
+        "title": "An equivalence between momentum and charge in string theory",
+        "author": "Horne, James H. and Horowitz, Gary T. and Steif, Alan R.",
+        "journal": "Physical Review Letters",
+        "volume": "68",
+        "number": "5",
+        "pages": "568--571",
+        "year": "1992",
+        "doi": "10.1103/PhysRevLett.68.568",
+        "eprint": "hep-th/9110065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.68.568"
+      }
+    },
+    "sfetsos1993exact": {
+      "type": "article",
+      "fields": {
+        "title": "Conformally exact results for $SL(2,\\mathbb{R}) \\otimes SO(1,1)^{d-2}/SO(1,1)$ coset models",
+        "author": "Sfetsos, Konstadinos",
+        "journal": "Nuclear Physics B",
+        "volume": "389",
+        "number": "2",
+        "pages": "424--442",
+        "year": "1993",
+        "doi": "10.1016/0550-3213(93)90327-L",
+        "eprint": "hep-th/9206048",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(93)90327-L"
+      }
+    },
+    "emparan2013strings": {
+      "type": "article",
+      "fields": {
+        "title": "Large-$D$ gravity and low-$D$ strings",
+        "author": "Emparan, Roberto and Grumiller, Daniel and Tanabe, Kentaro",
+        "journal": "Physical Review Letters",
+        "volume": "110",
+        "number": "25",
+        "pages": "251102",
+        "year": "2013",
+        "doi": "10.1103/PhysRevLett.110.251102",
+        "eprint": "1303.1995",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.110.251102"
+      }
+    },
+    "apolo2020black": {
+      "type": "article",
+      "fields": {
+        "title": "TsT, $T\\bar{T}$ and black strings",
+        "author": "Apolo, Luis and Detournay, St{\\'e}phane and Song, Wei",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "6",
+        "pages": "109",
+        "year": "2020",
+        "doi": "10.1007/JHEP06(2020)109",
+        "eprint": "1911.12359",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2020)109"
+      }
+    },
+    "ho2022strong": {
+      "type": "article",
+      "fields": {
+        "title": "Investigations of strong cosmic censorship in 3-dimensional black strings",
+        "author": "Ho, Jeongwon and Kim, Wontae and Lee, Bum-Hoon",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2022",
+        "number": "8",
+        "pages": "18",
+        "year": "2022",
+        "doi": "10.1007/JHEP08(2022)018",
+        "eprint": "2202.12561",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2022)018"
       }
     }
   }

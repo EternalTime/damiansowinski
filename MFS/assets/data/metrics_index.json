@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "b6997ded96130e94",
+    "version": "1dc92ebb3123c4f1",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -260,7 +260,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "3d0eee641e09b06c",
+    "version": "816f55ddf37fbb3a",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -614,7 +614,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "3f9b623ed208a5a0",
+    "version": "ef62b861f14c242c",
     "diagrams": "54fe7a1cf641db39",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "163c135cc969d5f9"
@@ -1714,7 +1714,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "89f3dd92fab43ac6",
+    "version": "43600bf7f8106f57",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -2963,6 +2963,44 @@
     "diagrams": "c18955687fcaa707",
     "embedding": "daa1ee83d90d0b0c",
     "curvature": "132fe3163a85f889"
+  },
+  {
+    "id": "three_dim_black_string",
+    "name": "Horne-Horowitz",
+    "tags": [
+      "black string",
+      "black hole",
+      "string theory",
+      "low energy string theory",
+      "dilaton",
+      "dilaton gravity",
+      "lower-dimensional gravity",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "Cauchy horizon",
+      "curvature singularity",
+      "timelike singularity",
+      "naked singularity",
+      "conical singularity",
+      "extremal",
+      "cigar",
+      "causal structure",
+      "asymptotically flat",
+      "Hawking temperature",
+      "strong cosmic censorship",
+      "exact solution",
+      "Lorentzian",
+      "idealized model",
+      "static",
+      "stationary",
+      "three-dimensional"
+    ],
+    "version": "a869f151fdd872c5",
+    "diagrams": "db0bdd1450517176",
+    "conformal": "7d5ec2ca81e0334c",
+    "embedding": "bf7df4d617ede825",
+    "curvature": "84fa67efd4c8a78e"
   },
   {
     "id": "hosotani_universe",
@@ -5691,7 +5729,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6400a0a920ba119a",
+    "version": "4ff7a6a146ddbce3",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -7455,7 +7493,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "e3c4df9ba1e02ae4",
+    "version": "c713ab969671a9dc",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"

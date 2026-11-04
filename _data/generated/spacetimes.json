@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 251,
+  "count": 252,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1601,6 +1601,11 @@
           "id": "klebanov_witten",
           "kind": "family",
           "text": "The throat pairs anti-de Sitter space of five dimensions with a compact circle bundle over two 2-spheres. Threebranes at the tip of the conifold produce this product in the limit near their horizon [klebanovwitten1998]."
+        },
+        {
+          "id": "three_dim_black_string",
+          "kind": "limit_source",
+          "text": "A charged black string of three dimensions, which becomes anti-de Sitter space of three dimensions in the limit where its charge approaches its mass, with its coordinates rescaled [horne1992black]."
         }
       ],
       "references": [
@@ -1660,7 +1665,8 @@
         "cahen1970",
         "dasilva2000",
         "zofka2008",
-        "klebanovwitten1998"
+        "klebanovwitten1998",
+        "horne1992black"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3242,6 +3248,11 @@
           "id": "charged_three_dimensions",
           "kind": "family",
           "text": "Charged, and with its cosmological constant set to zero, this black hole becomes the spacetime of a point charge in a plane [carlip1995]."
+        },
+        {
+          "id": "three_dim_black_string",
+          "kind": "family",
+          "text": "An asymptotically flat charged black string, the dual of the rotating hole along its angle. Its charge is half the hole's angular momentum and its horizons sit where the hole's do [horowitz1993]."
         }
       ],
       "references": [
@@ -7136,6 +7147,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "A charged extremal black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "three_dim_black_string",
+          "kind": "family",
+          "text": "A charged black string in three dimensions from string theory, with an event horizon, an inner horizon, and a timelike singularity. The dilaton and antisymmetric field of its string metric violate the strong energy condition, which lets a static black string exist below five dimensions [horne1992black]."
         }
       ],
       "references": [
@@ -7166,7 +7182,8 @@
         "herdeiro2014",
         "lake2006static",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "horne1992black"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -18543,6 +18560,11 @@
           "id": "pre_big_bang",
           "kind": "family",
           "text": "A universe of the same string theory with the dilaton alone, changing with time. With every exponent negative it expands faster and faster toward a singularity of infinite curvature, and inverting its scale factors and reversing its time pairs it with a decelerating expansion [gasperini1993prebigbang]."
+        },
+        {
+          "id": "three_dim_black_string",
+          "kind": "family",
+          "text": "A charged black string of string theory in three dimensions that keeps an inner horizon, with a timelike singularity inside it [horne1992black]."
         }
       ],
       "references": [
@@ -18572,7 +18594,8 @@
         "banerjee1998",
         "dvali2016skyrmion",
         "devega1994linear",
-        "gasperini1993prebigbang"
+        "gasperini1993prebigbang",
+        "horne1992black"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -33331,6 +33354,447 @@
           ],
           "ricci_scalar": "R = -\\dfrac{\\left(1 - \\beta^2\\right)\\rho^{\\beta - 2}}{2\\ell^2\\left(1 + \\rho^\\beta\\right)^2}",
           "kretschmann": "K = \\dfrac{\\left(\\left(1 + \\beta\\right)^2\\left(7\\beta^2 + 2\\beta + 3\\right)\\rho^{4\\beta} - 4\\left(1 + \\beta\\right)\\left(11\\beta^3 + 5\\beta^2 - \\beta - 3\\right)\\rho^{3\\beta} + 2\\left(61\\beta^4 - 30\\beta^2 + 9\\right)\\rho^{2\\beta} + 4\\left(1 - \\beta\\right)\\left(11\\beta^3 - 5\\beta^2 - \\beta + 3\\right)\\rho^\\beta + \\left(1 - \\beta\\right)^2\\left(7\\beta^2 - 2\\beta + 3\\right)\\right)\\rho^{2\\beta - 4}}{4\\ell^4\\left(1 + \\rho^\\beta\\right)^8}"
+        }
+      ]
+    },
+    {
+      "id": "three_dim_black_string",
+      "name": "Horne-Horowitz Charged Black String in Three Dimensions",
+      "short_name": "Horne-Horowitz",
+      "description": "A straight black string in three spacetime dimensions carrying an axion charge, an exact solution of string theory built from a gauged Wess-Zumino-Witten model. Like the charged black hole of Reissner and Nordström it has an event horizon, an inner horizon, and a timelike singularity, and with no charge it is Witten's black hole of two dimensions times a line.",
+      "tags": [
+        "black string",
+        "black hole",
+        "string theory",
+        "low energy string theory",
+        "dilaton",
+        "dilaton gravity",
+        "lower-dimensional gravity",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "Cauchy horizon",
+        "curvature singularity",
+        "timelike singularity",
+        "naked singularity",
+        "conical singularity",
+        "extremal",
+        "cigar",
+        "causal structure",
+        "asymptotically flat",
+        "Hawking temperature",
+        "strong cosmic censorship",
+        "exact solution",
+        "Lorentzian",
+        "idealized model",
+        "static",
+        "stationary",
+        "three-dimensional"
+      ],
+      "signature": "(-,+,+)",
+      "convention": "We work in units with $c = 1$ and $\\alpha' = 1/2$, as Horne and Horowitz do, and $k$ is the level of the gauged model. The string metric $g$, the field $H$, and the dilaton $\\Phi$ extremize Horne and Horowitz's action, $\\int\\sqrt{-g}\\,e^{\\Phi}\\left(R + (\\nabla\\Phi)^2 - \\tfrac{1}{12}H_{\\mu\\nu\\rho}H^{\\mu\\nu\\rho} + 8/k\\right)d^3x$, and solve $R_{\\mu\\nu} - \\nabla_\\mu\\nabla_\\nu\\Phi - \\tfrac{1}{4}H_{\\mu\\alpha\\beta}H_\\nu{}^{\\alpha\\beta} = 0$, which for $\\phi = -\\Phi/2$ reads $R_{\\mu\\nu} + 2\\nabla_\\mu\\nabla_\\nu\\phi - \\tfrac{1}{4}H_{\\mu\\alpha\\beta}H_\\nu{}^{\\alpha\\beta} = 0$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "witten_black_hole",
+          "kind": "piece",
+          "text": "Witten's black hole of two dimensions, the cross section of this string when it carries no charge. Horne and Horowitz built the charged string by adding a line to Witten's model and gauging a translation along it [horne1992black]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole of general relativity, with the same diagram of horizons and singularity. Inside its inner horizon the time translation is timelike again, and here the translation along the string takes that role [horne1992black]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The rotating black hole of three dimensions with a negative cosmological constant. Dualized along its angle it becomes this string, its angular momentum turned into twice the string's charge and its horizons left where they were [horowitz1993]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "Schwarzschild's black hole stretched along a line, a static black string of general relativity, which needs five dimensions or more when matter obeys the strong energy condition [horne1992black, horowitz1991]. This one lives in three, where the dilaton and antisymmetric field of its string metric violate that condition [horne1992black]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of string theory in four dimensions, with one horizon and no inner horizon for every charge. Its singularity is spacelike, and the string's is timelike [horne1992black]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "limit",
+          "text": "In the limit $|Q| \\to M$ with $r$, $t$, and $x$ rescaled, the string becomes anti-de Sitter space of three dimensions with a constant dilaton, the ungauged model on $SL(2,\\mathbb{R})$ [horne1992black]."
+        }
+      ],
+      "references": [
+        "horne1992black",
+        "witten1991",
+        "horowitz1993",
+        "sfetsos1993exact",
+        "horne1992momentum",
+        "banados1992",
+        "emparan2013strings",
+        "apolo2020black",
+        "ho2022strong",
+        "horowitz1991"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_dim_black_string.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "x",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "0 < |Q| < M,\\quad k > 0",
+            "r = M \\;\\text{(the event horizon)}",
+            "r = Q^2/M \\;\\text{(the inner horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass per unit length of the string"
+            },
+            {
+              "symbol": "Q",
+              "description": "Axion charge per unit length of the string"
+            },
+            {
+              "symbol": "k",
+              "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, r)$, with $x$ along the string and $r$ fixed by the dilaton, $\\Phi = \\ln r + \\tfrac{1}{2}\\ln(k/2)$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{M}{r}\\right)dt^2 + \\left(1 - \\dfrac{Q^2}{Mr}\\right)dx^2 + \\dfrac{k\\,dr^2}{8r^2\\left(1 - \\dfrac{M}{r}\\right)\\left(1 - \\dfrac{Q^2}{Mr}\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{M - r}{r}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{M\\,r - Q^2}{M\\,r}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{M\\,k}{8\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8M^2\\,r - 28M\\,Q^2 + 8Q^2\\,r}{M\\,k\\,r^2}",
+          "kretschmann": "K = \\dfrac{64M^4\\,r^2 - 192M^3\\,Q^2\\,r + 304M^2\\,Q^4 - 192M\\,Q^4\\,r + 64Q^4\\,r^2}{M^2\\,k^2\\,r^4}"
+        },
+        {
+          "id": "wzw",
+          "name": "Wess-Zumino-Witten",
+          "coordinates": [
+            "u",
+            "v",
+            "x"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "uv < 1",
+            "0 < |Q| < M,\\quad k > 0",
+            "uv = 0 \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass per unit length of the string"
+            },
+            {
+              "symbol": "Q",
+              "description": "Axion charge per unit length of the string"
+            },
+            {
+              "symbol": "k",
+              "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+            }
+          ],
+          "convention": "We use the coordinates $(u, v)$ of $SL(2,\\mathbb{R})$ in which the model is gauged, with $r = M - (M^2 - Q^2)uv/M$ and, outside the event horizon, $u/v = -e^{2\\kappa t}$, $\\kappa = \\sqrt{2(M^2 - Q^2)/k}/M$.",
+          "line_element": "ds^2 = -\\dfrac{k\\left(Q^2v^2\\,du^2 + Q^2u^2\\,dv^2 + 2\\left(2M^2 - (2M^2 - Q^2)uv\\right)du\\,dv\\right)}{8(1 - uv)\\left(M^2 - (M^2 - Q^2)uv\\right)} + \\dfrac{(M^2 - Q^2)(1 - uv)}{M^2 - (M^2 - Q^2)uv}\\,dx^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{Q^2\\,k\\,v^2}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "\\dfrac{k\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "\\dfrac{k\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+            },
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{Q^2\\,k\\,u^2}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}{M^2\\,u\\,v - M^2 - Q^2\\,u\\,v}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8Q^4\\,u\\,v - 20M^2\\,Q^2 + 8M^4 - 8M^4\\,u\\,v}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}",
+          "kretschmann": "K = \\dfrac{64M^8\\,u^2\\,v^2 - 128M^8\\,u\\,v + 64M^8 - 128M^6\\,Q^2\\,u^2\\,v^2 + 320M^6\\,Q^2\\,u\\,v - 192M^6\\,Q^2 + 128M^4\\,Q^4\\,u^2\\,v^2 - 128M^4\\,Q^4\\,u\\,v + 176M^4\\,Q^4 - 128M^2\\,Q^6\\,u^2\\,v^2 - 64M^2\\,Q^6\\,u\\,v + 64Q^8\\,u^2\\,v^2}{k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein",
+          "coordinates": [
+            "v",
+            "x",
+            "r"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "r \\in (Q^2/M, \\infty)",
+            "0 < |Q| < M,\\quad k > 0",
+            "r = M \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass per unit length of the string"
+            },
+            {
+              "symbol": "Q",
+              "description": "Axion charge per unit length of the string"
+            },
+            {
+              "symbol": "k",
+              "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+            }
+          ],
+          "convention": "We use coordinates $(v, x, r)$, with the advanced time $dv = dt + \\sqrt{k/8}\\,dr/\\left(r(1 - M/r)\\sqrt{1 - Q^2/(Mr)}\\right)$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{M}{r}\\right)dv^2 + \\sqrt{\\dfrac{k}{2}}\\,\\dfrac{dv\\,dr}{r\\sqrt{1 - \\dfrac{Q^2}{Mr}}} + \\left(1 - \\dfrac{Q^2}{Mr}\\right)dx^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "\\dfrac{M - r}{r}"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{k}}{4\\sqrt{r}\\sqrt{M\\,r - Q^2}}"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{k}}{4\\sqrt{r}\\sqrt{M\\,r - Q^2}}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{M\\,r - Q^2}{M\\,r}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8M^2\\,r - 28M\\,Q^2 + 8Q^2\\,r}{M\\,k\\,r^2}",
+          "kretschmann": "K = \\dfrac{64M^4\\,r^2 - 192M^3\\,Q^2\\,r + 304M^2\\,Q^4 - 192M\\,Q^4\\,r + 64Q^4\\,r^2}{M^2\\,k^2\\,r^4}"
+        },
+        {
+          "id": "extremal",
+          "name": "Extremal",
+          "coordinates": [
+            "t",
+            "x",
+            "\\rho"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "M > 0,\\quad k > 0",
+            "\\rho = 0 \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass per unit length of the string"
+            },
+            {
+              "symbol": "k",
+              "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, \\rho)$ at $|Q| = M$, with $\\rho^2 = r - M$.",
+          "line_element": "ds^2 = \\dfrac{\\rho^2}{\\rho^2 + M}\\left(-dt^2 + dx^2\\right) + \\dfrac{k\\,d\\rho^2}{2\\rho^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\rho^2}{M + \\rho^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\rho^2}{M + \\rho^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{k}{2\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4M\\left(4\\rho^2 - 3M\\right)}{k\\left(M + \\rho^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{16M^2\\left(3M^2 - 8M\\,\\rho^2 + 8\\rho^4\\right)}{k^2\\left(M + \\rho^2\\right)^4}"
+        },
+        {
+          "id": "extremal_interior",
+          "name": "Extremal Interior",
+          "coordinates": [
+            "t",
+            "x",
+            "\\rho"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\sqrt{M})",
+            "M > 0,\\quad k > 0",
+            "\\rho = 0 \\;\\text{(the event horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass per unit length of the string"
+            },
+            {
+              "symbol": "k",
+              "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, \\rho)$ inside the horizon at $|Q| = M$, with $\\rho^2 = M - r$.",
+          "line_element": "ds^2 = \\dfrac{\\rho^2}{M - \\rho^2}\\left(dt^2 - dx^2\\right) + \\dfrac{k\\,d\\rho^2}{2\\rho^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\rho^2}{M - \\rho^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "-\\dfrac{\\rho^2}{M - \\rho^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{k}{2\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4M\\left(3M + 4\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{16M^2\\left(3M^2 + 8M\\,\\rho^2 + 8\\rho^4\\right)}{k^2\\left(M - \\rho^2\\right)^4}"
+        },
+        {
+          "id": "superextremal",
+          "name": "Superextremal",
+          "coordinates": [
+            "t",
+            "x",
+            "\\rho"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in [0, \\pi|Q|\\sqrt{2k/(Q^2 - M^2)})",
+            "\\rho \\in [0, \\infty)",
+            "0 < M < |Q|,\\quad k > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass per unit length of the string"
+            },
+            {
+              "symbol": "Q",
+              "description": "Axion charge per unit length of the string"
+            },
+            {
+              "symbol": "k",
+              "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+            }
+          ],
+          "convention": "We use coordinates $(t, x, \\rho)$ at $|Q| > M$, with $\\rho^2 = r - Q^2/M$ and $x$ of period $\\pi|Q|\\sqrt{2k/(Q^2 - M^2)}$.",
+          "line_element": "ds^2 = -\\dfrac{Q^2 - M^2 + M\\rho^2}{Q^2 + M\\rho^2}dt^2 + \\dfrac{M\\rho^2}{Q^2 + M\\rho^2}dx^2 + \\dfrac{Mk\\,d\\rho^2}{2\\left(Q^2 - M^2 + M\\rho^2\\right)}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{M^2 - M\\,\\rho^2 - Q^2}{M\\,\\rho^2 + Q^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{M\\,\\rho^2}{M\\,\\rho^2 + Q^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "-\\dfrac{M\\,k}{2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{8M^3\\,\\rho^2 - 20M^2\\,Q^2 + 8M\\,Q^2\\,\\rho^2 + 8Q^4}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{64M^6\\,\\rho^4 - 64M^5\\,Q^2\\,\\rho^2 + 176M^4\\,Q^4 - 192M^3\\,Q^4\\,\\rho^2 - 192M^2\\,Q^6 + 64M^2\\,Q^4\\,\\rho^4 + 128M\\,Q^6\\,\\rho^2 + 64Q^8}{k^2\\left(M\\,\\rho^2 + Q^2\\right)^4}"
         }
       ]
     },
@@ -63108,6 +63572,11 @@
           "id": "charged_three_dimensions",
           "kind": "family",
           "text": "J. Richard Gott III, Jonathan Z. Simon, and Mark Alpert likened the horizon of a point charge in two dimensions of space to the inner horizon of this black hole [gott1986charged]."
+        },
+        {
+          "id": "three_dim_black_string",
+          "kind": "family",
+          "text": "A charged black string in three dimensions with the same diagram of an event horizon, an inner horizon, and a timelike singularity. Inside its inner horizon the timelike Killing vector is the translation along the string [horne1992black]."
         }
       ],
       "references": [
@@ -63161,7 +63630,8 @@
         "lewandowski2023",
         "mertens2023",
         "banerjee1998",
-        "gott1986charged"
+        "gott1986charged",
+        "horne1992black"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -83638,6 +84108,11 @@
           "id": "linear_dilaton",
           "kind": "family",
           "text": "The string frame far from the hole has a spatial linear dilaton [karananas2021linear, mandal1991]. The expanding universe has a timelike dilaton gradient [devega1994linear, angius2022linear]."
+        },
+        {
+          "id": "three_dim_black_string",
+          "kind": "composite",
+          "text": "Times a line, this hole is the uncharged black string of three dimensions. Horne and Horowitz charged that string by gauging a translation along the line together with the hole's own symmetry [horne1992black]."
         }
       ],
       "references": [
@@ -83659,7 +84134,8 @@
         "maldacena2018",
         "karananas2021linear",
         "devega1994linear",
-        "angius2022linear"
+        "angius2022linear",
+        "horne1992black"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",
