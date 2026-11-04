@@ -100,7 +100,7 @@ def slice_marks(slices):
 def diagram_specs(nr):
     return [nr.Diagram(METRIC, 'collapse', 'radial', 'Before collapse', ('t', 'r'),
                        (0, 4, -4, -.05), r'$r/\ell$', r'$t/\ell$', PARAMS, nr.EQUATOR,
-                       curves=(('world', '-t', r'$r=-t$, the self-similar light cone'),),
+                       curves=(('world', '-t', r'$r=-t$, the self similar light cone'),),
                        input=r'$\epsilon=1/20$; any length $\ell$ as unit.')]
 
 
@@ -146,13 +146,13 @@ def conformal_views(ck, src, cf):
     moment = cf.slices.moments(METRIC, 'collapse')[0]
     xs = np.linspace(*moment.reach('collapse', 'r'), 81)
     v.slice(moment, [cf.mink_pq(-np.ones_like(xs), xs)])
-    v.set(settings=r'$p=\arctan((t-r)/\ell)$, $q=\arctan((t+r)/\ell)$.',
+    v.set(settings=r'Any length $\ell$ as unit; $p=\arctan((t-r)/\ell)$, $q=\arctan((t+r)/\ell)$.',
           restriction='Each point represents a symmetry sphere.')
     return [v]
 
 
 def conformal_captions():
-    return {(METRIC, 'collapse'): [r'Pre-collapse radial causal structure, with the light cone $r=-t$ ending at the collapse.']}
+    return {(METRIC, 'collapse'): [r'Radial causal structure before collapse, with the light cone $r=-t$ ending at the collapse.']}
 
 
 def curvature_views(ck, src, cv):
@@ -174,6 +174,6 @@ def curvature_views(ck, src, cv):
              'panels': panels, 'curves': curves, 'marks': [],
              'legend': [['line', 'K', '$K$, Kretschmann scalar'], ['line', 'R', '$R$, Ricci scalar']],
              'caption': [r'The Kretschmann scalar $K$ and the Ricci scalar $R$ of the truncated metric along the embedded moment ($t=-\ell$).'],
-             'ricci_sentences': [], 'settings': r'$t=-\ell$, $\epsilon=1/20$; lengths in units of $\ell$.',
+             'ricci_sentences': [], 'settings': r'$t=-\ell$, $\epsilon=1/20$; any length $\ell$ as unit.',
              'clip': 'Logarithmic $K$; signed logarithmic $R$.',
              'per_scalar': cv.scalar_clips('Logarithmic scale.', 'Signed logarithmic scale.')}]

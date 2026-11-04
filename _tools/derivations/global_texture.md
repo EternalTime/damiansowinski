@@ -62,3 +62,13 @@ It separately checks the vacuum limit and the identically vanishing radial conne
 `test_global_texture.py` obtains the sphere area from the stored metric, derives $\Delta\Omega=4\pi(1-g_{\theta\theta}/r^2)$, and checks both limits.
 Its growth proof uses $d[\arctan z-z/(1+z^2)]/dz=2z^2/(1+z^2)^2>0$ for $z>0$, with the bracket zero at $z=0$.
 The test also checks the two source expressions at first order, the exact radial geodesics, and the spatial-volume factor underlying the test-dust density.
+
+## Prose and browser checks
+
+The collection's `view_text.length` counts are 193 characters for the radial-null view, 220 for the conformal view, 167 for the embedding, and 248 for the curvature view.
+Each drawing kind has its own caption, and each aspect ratio lies between 0.5 and 2.
+The headless local preview was checked at a 1200-pixel viewport and an emulated 390-pixel mobile viewport, without screenshots.
+Both had no MathJax error elements and no document-wide horizontal overflow.
+The conformal and embedding figures use their existing horizontal-scroll frames at the mobile width.
+The three related links and their reciprocal links were followed successfully in the browser.
+The painted curve classes resolve to existing styles, with no filter applied.
