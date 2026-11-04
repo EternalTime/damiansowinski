@@ -1,5 +1,5 @@
 {
-  "version": "286b54d7a6bffa75",
+  "version": "e96614e60aa1b6b8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -42461,6 +42461,496 @@
         "url": "https://doi.org/10.1088/1475-7516/2024/01/025",
         "eprint": "2308.16764",
         "archiveprefix": "arXiv"
+      }
+    },
+    "ginsparg1992duality": {
+      "type": "article",
+      "fields": {
+        "title": "Strings on curved space-times: black holes, torsion, and duality",
+        "author": "Ginsparg, Paul and Quevedo, Fernando",
+        "journal": "Nuclear Physics B",
+        "volume": "385",
+        "number": "3",
+        "pages": "527--557",
+        "year": "1992",
+        "doi": "10.1016/0550-3213(92)90057-I",
+        "eprint": "hep-th/9202092",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(92)90057-I"
+      }
+    },
+    "ali1993duality": {
+      "type": "article",
+      "fields": {
+        "title": "$O(\\\\bar{d}, \\\\bar{d})$ transformations and 3D black hole",
+        "author": "Ali, Abbas and Kumar, Alok",
+        "journal": "Modern Physics Letters A",
+        "volume": "08",
+        "number": "22",
+        "pages": "2045--2052",
+        "year": "1993",
+        "doi": "10.1142/S0217732393001756",
+        "eprint": "hep-th/9303032",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732393001756"
+      }
+    },
+    "bars1993effective": {
+      "type": "article",
+      "fields": {
+        "title": "Exact effective action and spacetime geometry in gauged WZW models",
+        "author": "Bars, I. and Sfetsos, K.",
+        "journal": "Physical Review D",
+        "volume": "48",
+        "number": "2",
+        "pages": "844--852",
+        "year": "1993",
+        "doi": "10.1103/PhysRevD.48.844",
+        "eprint": "hep-th/9301047",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.48.844"
+      }
+    },
+    "gershon1994exact": {
+      "type": "article",
+      "fields": {
+        "title": "Exact $O(d,d)$ transformations in WZW models",
+        "author": "Gershon, David",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "10",
+        "pages": "6481--6489",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.6481",
+        "eprint": "hep-th/9312154",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.6481"
+      }
+    },
+    "sfetsos1994tensor": {
+      "type": "article",
+      "fields": {
+        "title": "Antisymmetric tensor coupling and conformal invariance in $\\\\sigma$ models corresponding to gauged WZNW theories",
+        "author": "Sfetsos, Konstadinos and Tseytlin, A. A.",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "6",
+        "pages": "2933--2956",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.2933",
+        "eprint": "hep-th/9310159",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.49.2933"
+      }
+    },
+    "horowitz1994exact": {
+      "type": "article",
+      "fields": {
+        "title": "Exact solutions and singularities in string theory",
+        "author": "Horowitz, Gary T. and Tseytlin, A. A.",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "8",
+        "pages": "5204--5224",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.5204",
+        "eprint": "hep-th/9406067",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.5204"
+      }
+    },
+    "horowitz1994duality": {
+      "type": "article",
+      "fields": {
+        "title": "Duality invariance of the Hawking temperature and entropy",
+        "author": "Horowitz, Gary T. and Welch, Dean L.",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "2",
+        "pages": "R590--R594",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.R590",
+        "eprint": "hep-th/9308077",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.49.R590"
+      }
+    },
+    "welch1994timelike": {
+      "type": "article",
+      "fields": {
+        "title": "Timelike duality",
+        "author": "Welch, Dean L.",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "10",
+        "pages": "6404--6411",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.6404",
+        "eprint": "hep-th/9405070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.6404"
+      }
+    },
+    "anderson1995strings": {
+      "type": "article",
+      "fields": {
+        "title": "Some new black string solutions in three dimensions",
+        "author": "Anderson, Warren G. and Kaloper, Nemanja",
+        "journal": "Physical Review D",
+        "volume": "52",
+        "number": "8",
+        "pages": "4440--4454",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.52.4440",
+        "eprint": "hep-th/9503175",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.52.4440"
+      }
+    },
+    "iofa1997genus": {
+      "type": "article",
+      "fields": {
+        "title": "Higher-Genus Corrections to Black-String Solution",
+        "author": "Iofa, M. Z.",
+        "journal": "Modern Physics Letters A",
+        "volume": "12",
+        "number": "12",
+        "pages": "837--850",
+        "year": "1997",
+        "doi": "10.1142/S0217732397000868",
+        "eprint": "hep-th/9603008",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732397000868"
+      }
+    },
+    "ho1998quasilocal": {
+      "type": "article",
+      "fields": {
+        "title": "Duality of quasilocal black-hole thermodynamics",
+        "author": "Ho, Jeongwon and Kim, Won Tae and Park, Young-Jai",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "6",
+        "pages": "1437--1448",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/6/003",
+        "eprint": "gr-qc/9711006",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/6/003"
+      }
+    },
+    "lee1998stability": {
+      "type": "article",
+      "fields": {
+        "title": "Stability analysis and absorption cross section in three-dimensional black string",
+        "author": "Lee, H. W. and Kim, N. J. and Myung, Y. S. and Kim, Jin Young",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "12",
+        "pages": "7361--7368",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.7361",
+        "eprint": "hep-th/9801152",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.7361"
+      }
+    },
+    "kaloper1998entropy": {
+      "type": "article",
+      "fields": {
+        "title": "Entropy count for extremal three-dimensional black strings",
+        "author": "Kaloper, Nemanja",
+        "journal": "Physics Letters B",
+        "volume": "434",
+        "number": "3-4",
+        "pages": "285--293",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)00668-6",
+        "eprint": "hep-th/9804062",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(98)00668-6"
+      }
+    },
+    "hong2001embedding": {
+      "type": "article",
+      "fields": {
+        "title": "Higher dimensional flat embeddings of black strings in $2+1$ dimensions",
+        "author": "Hong, Soon-Tae and Kim, Won Tae and Oh, John J. and Park, Young-Jai",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "12",
+        "pages": "127502",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.127502",
+        "eprint": "hep-th/0103036",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.63.127502"
+      }
+    },
+    "detournay2005deformed": {
+      "type": "article",
+      "fields": {
+        "title": "Three-dimensional black holes from deformed anti de Sitter",
+        "author": "Detournay, Stéphane and Orlando, Domenico and Petropoulos, P. Marios and Spindel, Philippe",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2005",
+        "number": "7",
+        "pages": "072",
+        "year": "2005",
+        "doi": "10.1088/1126-6708/2005/07/072",
+        "eprint": "hep-th/0504231",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2005/07/072"
+      }
+    },
+    "ayon2007selfdual": {
+      "type": "article",
+      "fields": {
+        "title": "Surveying the three-dimensional fixed points of $T$ duality",
+        "author": "Ayón-Beato, Eloy and Giribet, Gastón",
+        "journal": "Physical Review D",
+        "volume": "75",
+        "number": "4",
+        "pages": "046008",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.75.046008",
+        "eprint": "hep-th/0611202",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.75.046008"
+      }
+    },
+    "hyun2007collapse": {
+      "type": "article",
+      "fields": {
+        "title": "Formation of three-dimensional black strings from gravitational collapse of dust cloud",
+        "author": "Hyun, Seungjoon and Jeong, Jaehoon and Kim, Wontae and Oh, John J",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2007",
+        "number": "4",
+        "pages": "088",
+        "year": "2007",
+        "doi": "10.1088/1126-6708/2007/04/088",
+        "eprint": "gr-qc/0612094",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2007/04/088"
+      }
+    },
+    "edelstein2018duality": {
+      "type": "article",
+      "fields": {
+        "title": "T-duality and high-derivative gravity theories: the BTZ black hole/string paradigm",
+        "author": "Edelstein, José D. and Sfetsos, Konstantinos and Sierra-Garcia, J. Anibal and Vilar López, Alejandro",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2018",
+        "number": "6",
+        "pages": "142",
+        "year": "2018",
+        "doi": "10.1007/JHEP06(2018)142",
+        "eprint": "1803.04517",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2018)142"
+      }
+    },
+    "spindel2019instability": {
+      "type": "article",
+      "fields": {
+        "title": "Three dimensional black strings: instabilities and asymptotic charges",
+        "author": "Spindel, Ph",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "36",
+        "number": "17",
+        "pages": "175003",
+        "year": "2019",
+        "doi": "10.1088/1361-6382/ab3489",
+        "eprint": "1810.00603",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ab3489"
+      }
+    },
+    "detournay2019symmetries": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotic symmetries of three-dimensional black strings",
+        "author": "Detournay, Stéphane and Petropoulos, P. Marios and Zwikel, Céline",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2019",
+        "number": "6",
+        "pages": "131",
+        "year": "2019",
+        "doi": "10.1007/JHEP06(2019)131",
+        "eprint": "1812.08764",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP06(2019)131"
+      }
+    },
+    "gim2019pressure": {
+      "type": "article",
+      "fields": {
+        "title": "The role of the cosmological constant as a pressure in the (2 + 1)-dimensional black string",
+        "author": "Gim, Yongwan and Kim, Wontae",
+        "journal": "Physics Letters B",
+        "volume": "791",
+        "pages": "390--395",
+        "year": "2019",
+        "doi": "10.1016/j.physletb.2019.03.014",
+        "eprint": "1812.06085",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2019.03.014"
+      }
+    },
+    "chakraborty2020negative": {
+      "type": "article",
+      "fields": {
+        "title": "$T\\\\overline{T}$, black holes and negative strings",
+        "author": "Chakraborty, Soumangsu and Giveon, Amit and Kutasov, David",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "9",
+        "pages": "057",
+        "year": "2020",
+        "doi": "10.1007/JHEP09(2020)057",
+        "eprint": "2006.13249",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP09(2020)057"
+      }
+    },
+    "driezen2021lambda": {
+      "type": "article",
+      "fields": {
+        "title": "Integrable $\\\\lambda$-deformations of the Euclidean black string",
+        "author": "Driezen, Sibylle and Sfetsos, Konstantinos",
+        "journal": "Nuclear Physics B",
+        "volume": "964",
+        "pages": "115327",
+        "year": "2021",
+        "doi": "10.1016/j.nuclphysb.2021.115327",
+        "eprint": "2012.08527",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.nuclphysb.2021.115327"
+      }
+    },
+    "eom2022collapse": {
+      "type": "article",
+      "fields": {
+        "title": "Analytic approach to the formation of a three-dimensional black string from a dust cloud",
+        "author": "Eom, Hwajin and Kim, Wontae",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2022",
+        "number": "11",
+        "pages": "004",
+        "year": "2022",
+        "doi": "10.1088/1475-7516/2022/11/004",
+        "eprint": "2202.11327",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2022/11/004"
+      }
+    },
+    "eghbali2022duality": {
+      "type": "article",
+      "fields": {
+        "title": "Non-Abelian T-duality of $AdS_{d\\\\le 3}$ families by Poisson-Lie T-duality",
+        "author": "Eghbali, Ali and Naderi, Reza and Rezaei-Aghdam, Adel",
+        "journal": "The European Physical Journal C",
+        "volume": "82",
+        "number": "7",
+        "pages": "580",
+        "year": "2022",
+        "doi": "10.1140/epjc/s10052-022-10537-0",
+        "eprint": "2111.07700",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-022-10537-0"
+      }
+    },
+    "ying2023regular": {
+      "type": "article",
+      "fields": {
+        "title": "Three dimensional regular black string via loop corrections",
+        "author": "Ying, Shuxuan",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "3",
+        "pages": "044",
+        "year": "2023",
+        "doi": "10.1007/JHEP03(2023)044",
+        "eprint": "2212.14785",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2023)044"
+      }
+    },
+    "ying2023alpha": {
+      "type": "article",
+      "fields": {
+        "title": "Two-dimensional regular string black hole via complete $\\\\alpha^{\\\\prime}$ corrections",
+        "author": "Ying, Shuxuan",
+        "journal": "The European Physical Journal C",
+        "volume": "83",
+        "number": "7",
+        "pages": "577",
+        "year": "2023",
+        "doi": "10.1140/epjc/s10052-023-11756-9",
+        "eprint": "2212.03808",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-023-11756-9"
+      }
+    },
+    "asrat2025strings": {
+      "type": "article",
+      "fields": {
+        "title": "Kalb-Ramond field, black holes and black strings in (2 + 1)D",
+        "author": "Asrat, Meseret",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "8",
+        "pages": "135",
+        "year": "2025",
+        "doi": "10.1007/JHEP08(2025)135",
+        "eprint": "2410.07580",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2025)135"
+      }
+    },
+    "detournay2025asymptotic": {
+      "type": "article",
+      "fields": {
+        "title": "Asymptotic T-duality in three dimensions",
+        "author": "Detournay, Stéphane and Figueroa, José and Vilar López, Alejandro",
+        "journal": "SciPost Physics",
+        "volume": "19",
+        "number": "2",
+        "pages": "044",
+        "year": "2025",
+        "doi": "10.21468/SciPostPhys.19.2.044",
+        "eprint": "2412.16136",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.21468/SciPostPhys.19.2.044"
+      }
+    },
+    "li2026spectra": {
+      "type": "misc",
+      "fields": {
+        "title": "Black Strings and Black Holes: Worldsheet Spectra and Near-Extremal Limits",
+        "author": "Li, Ziyi",
+        "year": "2026",
+        "eprint": "2610.18591",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th",
+        "url": "https://arxiv.org/abs/2610.18591"
+      }
+    },
+    "eghbali2024generalized": {
+      "type": "article",
+      "fields": {
+        "title": "Solutions of generalized supergravity equations with the BTZ black hole metric",
+        "author": "Eghbali, Ali and Ghasemi-Sorkhabi, Simin and Rezaei-Aghdam, Adel",
+        "journal": "Transactions in Theoretical and Mathematical Physics",
+        "volume": "1",
+        "number": "2",
+        "pages": "33--38",
+        "year": "2024",
+        "doi": "10.30511/ttmp.2024.2016004.1019",
+        "eprint": "2402.07287",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.30511/ttmp.2024.2016004.1019"
       }
     }
   }
