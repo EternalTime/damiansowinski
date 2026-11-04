@@ -106,3 +106,7 @@ Five restricted dynamical states and two equilibria pass at 80 decimal digits, w
 A separate state with nonzero interior wave derivatives, $\psi_\Sigma=0.2$ and $\gamma_-=0.1$, satisfies the full jump with a residual of $1.2519\times10^{-81}$.
 The flat-interior specialization has zero Riemann components; an independent regular cylindrical vacuum wave has nonzero Riemann components.
 Admissible random shell states obey the strict lower bound, and candidate states at or below it fail the positive-lapse condition.
+
+The single turning surfaces have no animation metadata.
+Their moments are registered by the slice registry, which names each embedding view and carries the radial or axial endpoint into the corresponding diagram.
+The scoped drawing stage passes 75 tests, including the moment coverage and endpoint checks.

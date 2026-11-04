@@ -141,7 +141,7 @@ def embedding(ck, src, em):
             ck.radius("shell circles have radius two", piece, lambda z: np.zeros_like(z)+2, size)
         else:
             ck.radius("equilibrium circumferential radius", piece, lambda r: r*np.sqrt(r/2), size)
-        surface = em.Surface([piece], label=moment, time=0)
+        surface = em.Surface([piece])
         fig = em.figure_of([surface], {"sheet": "cover"}, size, camera=em.Camera(-90, 40))
         fig.legend("fill", "cover", "the spatial surface")
         fig.legend("line", "r", "the marked circles")
@@ -162,7 +162,9 @@ def register_embedding(em):
 def register_slices(sl):
     def marks(system):
         out = []
-        for m in sl.moments(METRIC):
+        moments = [sl.moments(METRIC, vid, label=label)[0] for vid, label in
+                   [("interior_turn", "$t=0$"), ("shell_turn", "$\\tau=0$"), ("equilibrium", "$t=0$")]]
+        for m in moments:
             vid = m.view["id"]
             if system == "exterior":
                 if vid == "equilibrium":
