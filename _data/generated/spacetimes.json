@@ -9223,7 +9223,18 @@
       "references": [
         "thompson1967",
         "bonnor1967oscillating",
-        "sussman2000stephani"
+        "thompson1968motions",
+        "faulkes1968stability",
+        "taub1968restricted",
+        "bondi1969bounce",
+        "mansouri1977fluid",
+        "knutsen1979oscillations",
+        "knutsen1983oscillations",
+        "sussman2000stephani",
+        "quevedo1995thermodynamics",
+        "krasinski1997thermodynamics",
+        "durgapal2010collapse",
+        "srivastava2016homogeneous"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oscillating_sphere.json",
