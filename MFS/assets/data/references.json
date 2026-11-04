@@ -1,5 +1,5 @@
 {
-  "version": "14ac048f56daac8e",
+  "version": "154745c0edb753a4",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -35970,6 +35970,164 @@
         "eprint": "2503.18028",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/j.dark.2025.101917"
+      }
+    },
+    "quevedo1986": {
+      "type": "article",
+      "fields": {
+        "title": "Class of stationary axisymmetric solutions of {Einstein}'s equations in empty space",
+        "author": "Quevedo, Hernando",
+        "journal": "Physical Review D",
+        "volume": "33",
+        "number": "2",
+        "pages": "324--327",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.33.324",
+        "url": "https://doi.org/10.1103/PhysRevD.33.324"
+      }
+    },
+    "quevedo2011grg": {
+      "type": "article",
+      "fields": {
+        "title": "Exterior and interior metrics with quadrupole moment",
+        "author": "Quevedo, Hernando",
+        "journal": "General Relativity and Gravitation",
+        "volume": "43",
+        "number": "4",
+        "pages": "1141--1152",
+        "year": "2011",
+        "doi": "10.1007/s10714-010-0940-5",
+        "eprint": "1003.4344",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-010-0940-5"
+      }
+    },
+    "bini2012tidal": {
+      "type": "article",
+      "fields": {
+        "title": "Tidal indicators in the spacetime of a rotating deformed mass",
+        "author": "Bini, Donato and Boshkayev, Kuantay and Geralico, Andrea",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "29",
+        "number": "14",
+        "pages": "145003",
+        "year": "2012",
+        "doi": "10.1088/0264-9381/29/14/145003",
+        "eprint": "1306.4803",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/29/14/145003"
+      }
+    },
+    "frutosalfaro2018": {
+      "type": "article",
+      "fields": {
+        "title": "On relativistic multipole moments of stationary space--times",
+        "author": "Frutos-Alfaro, Francisco and Soffel, Michael",
+        "journal": "Royal Society Open Science",
+        "volume": "5",
+        "number": "7",
+        "pages": "180640",
+        "year": "2018",
+        "doi": "10.1098/rsos.180640",
+        "eprint": "1606.07173",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1098/rsos.180640"
+      }
+    },
+    "allahyari2020": {
+      "type": "article",
+      "fields": {
+        "title": "Quasinormal modes of generalized black holes: $\\delta$-{Kerr} spacetime",
+        "author": "Allahyari, Alireza and Firouzjahi, Hassan and Mashhoon, Bahram",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "5",
+        "pages": "055006",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/ab6860",
+        "eprint": "1908.10813",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ab6860"
+      }
+    },
+    "oliva2021": {
+      "type": "article",
+      "fields": {
+        "title": "Effects of the treatment of the mass quadrupole moment on ray-tracing applications for rapidly rotating neutron stars",
+        "author": "Oliva, G. Andr\\'e and Frutos-Alfaro, Francisco",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "505",
+        "number": "2",
+        "pages": "2870--2885",
+        "year": "2021",
+        "doi": "10.1093/mnras/stab1380",
+        "eprint": "2006.05948",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/mnras/stab1380"
+      }
+    },
+    "li2022": {
+      "type": "article",
+      "fields": {
+        "title": "Constraining the deformation of a rotating black hole mimicker from its shadow",
+        "author": "Li, Song and Mirzaev, Temurbek and Abdujabbarov, Ahmadjon A. and Malafarina, Daniele and Ahmedov, Bobomurat and Han, Wen-Biao",
+        "journal": "Physical Review D",
+        "volume": "106",
+        "number": "8",
+        "pages": "084041",
+        "year": "2022",
+        "doi": "10.1103/PhysRevD.106.084041",
+        "eprint": "2207.10933",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.106.084041"
+      }
+    },
+    "tao2023": {
+      "type": "article",
+      "fields": {
+        "title": "Testing the $\\delta$-{Kerr} metric with black hole x-ray data",
+        "author": "Tao, Jiahao and Riaz, Shafqat and Zhou, Biao and Abdikamalov, Askar B. and Bambi, Cosimo and Malafarina, Daniele",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "8",
+        "pages": "083036",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.108.083036",
+        "eprint": "2301.12164",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.108.083036"
+      }
+    },
+    "zhang2025": {
+      "type": "article",
+      "fields": {
+        "title": "Penrose process in magnetized non-{Kerr} rotating spacetime with anomalous quadrupole moment",
+        "author": "Zhang, Shao-Jun",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "12",
+        "pages": "004",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/12/004",
+        "eprint": "2507.08401",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2025/12/004"
+      }
+    },
+    "wangzeng2026": {
+      "type": "article",
+      "fields": {
+        "title": "Extracting energy from a non-{Kerr} rotating spacetime with an anomalous quadrupole moment via magnetic reconnection",
+        "author": "Wang, Ke and Zeng, Xiao-Xiong",
+        "journal": "The European Physical Journal C",
+        "volume": "86",
+        "number": "9",
+        "pages": "1071",
+        "year": "2026",
+        "doi": "10.1140/epjc/s10052-026-16339-y",
+        "eprint": "2607.25315",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-026-16339-y"
       }
     },
     "horowitzmaeda2002": {
