@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 252,
+  "count": 253,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -14003,6 +14003,11 @@
           "id": "kowalski_glikman",
           "kind": "family",
           "text": "The member in eleven dimensions with a null 4-form and 32 Killing spinors. Three transverse directions oscillate at twice the frequency of the other six [figueroa2001]."
+        },
+        {
+          "id": "nappi_witten",
+          "kind": "family",
+          "text": "The same authors' 1992 string cosmology has inhomogeneous 3-sphere spatial slices that expand and recollapse. Their later homogeneous Wess-Zumino-Witten plane wave belongs to the Cahen-Wallach family [nappi1992, nappi1993]."
         }
       ],
       "references": [
@@ -14019,7 +14024,8 @@
         "blau2002",
         "blau2002penrose",
         "fransen2023",
-        "bonnor1969light"
+        "bonnor1969light",
+        "nappi1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cahen_wallach.json",
@@ -27116,6 +27122,11 @@
           "id": "giddings_strominger",
           "kind": "dual",
           "text": "This universe, closed, with the energy of an axion's field in it and continued to imaginary time, is Steven B. Giddings and Andrew Strominger's wormhole between two flat spaces of four dimensions [giddings1988]. Cut at its throat, the wormhole continues back to this universe at its greatest radius $a$, \"created at its moment of time symmetry and maximal radius\" [giddings1988]."
+        },
+        {
+          "id": "nappi_witten",
+          "kind": "family",
+          "text": "A closed cosmology from an exact conformal field theory. Its spatial slices are inhomogeneous, with two circular directions that expand and contract at different rates."
         }
       ],
       "references": [
@@ -54457,6 +54468,346 @@
       ]
     },
     {
+      "id": "nappi_witten",
+      "name": "Nappi-Witten Closed Expanding Universe",
+      "short_name": "Nappi-Witten Universe",
+      "description": "A closed universe in string theory, with space shaped as an inhomogeneous 3-sphere that expands and recollapses. A dilaton and an antisymmetric tensor accompany the geometry; the cosmology arises from an exact conformal field theory.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "anisotropic",
+        "inhomogeneous",
+        "closed universe",
+        "string theory",
+        "dilaton",
+        "curvature singularity",
+        "closed timelike curves",
+        "big bang",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use the string frame and set the speed of light to one. The positive length $L$ sets the common scale, and $b=\\sqrt{(1-\\sin\\alpha)/(1+\\sin\\alpha)}$ for the dimensionless gauge parameter $\\alpha$. A dot denotes differentiation with respect to an affine parameter.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "Both cosmologies can have closed spatial slices and a finite lifetime. Friedmann's spatial geometry is homogeneous and isotropic; the two circular directions of the Nappi-Witten universe evolve differently, and curvature varies across space."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "Both backgrounds arise from gauged Wess-Zumino-Witten models and carry a dilaton; Witten's hole describes the $SL(2,\\mathbb{R})/U(1)$ coset. An $O(2,2;\\mathbb{R})$ transformation relates the cosmology to a product of Lorentzian and Euclidean black hole cosets; Witten's black hole has two spacetime dimensions [nappi1992, elitzur2002nw]."
+        },
+        {
+          "id": "pp_wave",
+          "kind": "family",
+          "text": "Nappi and Witten's later spacetime is a homogeneous plane wave with a parallel null direction. Its antisymmetric tensor supports nonzero Ricci curvature; the vacuum plane waves have vanishing Ricci tensor [nappi1993]."
+        },
+        {
+          "id": "cahen_wallach",
+          "kind": "family",
+          "text": "Nappi and Witten's 1993 plane wave is the Cahen-Wallach member with equal negative transverse eigenvalues, supported by an antisymmetric tensor. Their closed universe has spatially varying curvature and a finite cosmological lifetime [nappi1993, nappi1992]."
+        }
+      ],
+      "references": [
+        "nappi1992",
+        "elitzur2002nw",
+        "nappi1993",
+        "cahen1970",
+        "figueroa2013symmetric"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/nappi_witten.json",
+      "charts": [
+        {
+          "id": "cosmological",
+          "name": "Cosmological",
+          "coordinates": [
+            "\\psi",
+            "s",
+            "\\rho",
+            "\\lambda"
+          ],
+          "domains": [
+            "\\psi \\in (0,\\pi/2)",
+            "s \\in (0,\\pi/2)",
+            "\\rho \\in [0,2\\pi)",
+            "\\lambda \\in [0,2\\pi)",
+            "L>0",
+            "b>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The common length scale."
+            },
+            {
+              "symbol": "b",
+              "description": "The positive dimensionless gauge mixing parameter."
+            },
+            {
+              "symbol": "D = \\sin^2s\\cos^2\\psi+b^2\\cos^2s\\sin^2\\psi",
+              "description": "The dimensionless denominator."
+            }
+          ],
+          "convention": "We use dimensionless coordinates $(\\psi,s,\\rho,\\lambda)$, with proper time $L\\psi$ at fixed spatial coordinates.",
+          "line_element": "ds^2=L^2\\left(-d\\psi^2+ds^2+\\dfrac{\\cos^2s\\cos^2\\psi}{D}d\\rho^2+\\dfrac{b^2\\sin^2s\\sin^2\\psi}{D}d\\lambda^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "-L^2"
+            },
+            {
+              "indices": [
+                "s",
+                "s"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "-\\dfrac{L^2\\left(\\sin\\psi + 1\\right)\\left(\\sin s + 1\\right)\\left(\\sin\\psi - 1\\right)\\left(\\sin s - 1\\right)}{b^2\\sin^2\\psi\\sin^2 s + \\sin^2\\psi\\sin^2 s - b^2\\sin^2\\psi - \\sin^2 s}"
+            },
+            {
+              "indices": [
+                "\\lambda",
+                "\\lambda"
+              ],
+              "value": "-\\dfrac{L^2\\,b^2\\sin^2\\psi\\sin^2 s}{b^2\\sin^2\\psi\\sin^2 s + \\sin^2\\psi\\sin^2 s - b^2\\sin^2\\psi - \\sin^2 s}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(\\sin^2 s + \\sin^2\\psi - 1\\right)\\left(2b^4\\sin^2\\psi\\sin^2 s - 2\\sin^2\\psi\\sin^2 s + 5b^2\\sin^2 s - 5b^2\\sin^2\\psi - 2b^4\\sin^2\\psi + 2\\sin^2 s\\right)}{L^2\\left(b^2\\sin^2\\psi\\sin^2 s + \\sin^2\\psi\\sin^2 s - b^2\\sin^2\\psi - \\sin^2 s\\right)^2}",
+          "kretschmann": "K = \\dfrac{16\\sin^8 s + 16\\sin^4 s + 16b^8\\sin^8\\psi + 16b^8\\sin^4\\psi + 48b^6\\sin^8\\psi - 48b^6\\sin^6\\psi + 44b^4\\sin^8\\psi + 44b^4\\sin^8 s - 88b^4\\sin^6\\psi - 88b^4\\sin^6 s + 44b^4\\sin^4\\psi + 44b^4\\sin^4 s + 48b^2\\sin^8 s - 48b^2\\sin^6 s + 16\\sin^8\\psi\\sin^4 s - 64\\sin^6\\psi\\sin^4 s + 16\\sin^4\\psi\\sin^8 s + 96\\sin^4\\psi\\sin^4 s - 32\\sin^2\\psi\\sin^8 s - 64\\sin^2\\psi\\sin^4 s + 16b^8\\sin^8\\psi\\sin^4 s - 32b^8\\sin^8\\psi\\sin^2 s + 16b^8\\sin^4\\psi\\sin^8 s - 64b^8\\sin^4\\psi\\sin^6 s + 96b^8\\sin^4\\psi\\sin^4 s - 64b^8\\sin^4\\psi\\sin^2 s + 32b^6\\sin^8\\psi\\sin^4 s - 80b^6\\sin^8\\psi\\sin^2 s - 32b^6\\sin^6\\psi\\sin^4 s + 80b^6\\sin^6\\psi\\sin^2 s + 32b^6\\sin^4\\psi\\sin^8 s - 96b^6\\sin^4\\psi\\sin^6 s + 96b^6\\sin^4\\psi\\sin^4 s - 32b^6\\sin^4\\psi\\sin^2 s + 16b^6\\sin^2\\psi\\sin^8 s - 48b^6\\sin^2\\psi\\sin^6 s + 48b^6\\sin^2\\psi\\sin^4 s - 16b^6\\sin^2\\psi\\sin^2 s + 32b^4\\sin^8\\psi\\sin^4 s - 32b^4\\sin^8\\psi\\sin^2 s - 64b^4\\sin^6\\psi\\sin^4 s + 64b^4\\sin^6\\psi\\sin^2 s + 32b^4\\sin^4\\psi\\sin^8 s - 64b^4\\sin^4\\psi\\sin^6 s - 88b^4\\sin^4\\psi\\sin^4 s + 120b^4\\sin^4\\psi\\sin^2 s - 32b^4\\sin^2\\psi\\sin^8 s + 64b^4\\sin^2\\psi\\sin^6 s + 120b^4\\sin^2\\psi\\sin^4 s - 152b^4\\sin^2\\psi\\sin^2 s + 32b^2\\sin^8\\psi\\sin^4 s + 16b^2\\sin^8\\psi\\sin^2 s - 96b^2\\sin^6\\psi\\sin^4 s - 48b^2\\sin^6\\psi\\sin^2 s + 32b^2\\sin^4\\psi\\sin^8 s - 32b^2\\sin^4\\psi\\sin^6 s + 96b^2\\sin^4\\psi\\sin^4 s + 48b^2\\sin^4\\psi\\sin^2 s - 80b^2\\sin^2\\psi\\sin^8 s + 80b^2\\sin^2\\psi\\sin^6 s - 32b^2\\sin^2\\psi\\sin^4 s - 16b^2\\sin^2\\psi\\sin^2 s}{L^4\\left(b^2\\sin^2\\psi\\sin^2 s + \\sin^2\\psi\\sin^2 s - b^2\\sin^2\\psi - \\sin^2 s\\right)^4}"
+        },
+        {
+          "id": "bang_regular",
+          "name": "Across the Big Bang",
+          "coordinates": [
+            "x",
+            "s",
+            "\\rho",
+            "w"
+          ],
+          "domains": [
+            "x \\in (-1,\\infty)",
+            "D\\neq0",
+            "s \\in (0,\\pi/2)",
+            "\\rho \\in [0,2\\pi)",
+            "w \\in [0,2\\pi)",
+            "L>0",
+            "b>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The common length scale."
+            },
+            {
+              "symbol": "b",
+              "description": "The positive dimensionless gauge mixing parameter."
+            },
+            {
+              "symbol": "D = \\sin^2s+b^2x\\cos^2s",
+              "description": "The dimensionless denominator in the regular gauge."
+            }
+          ],
+          "convention": "The dimensionless coordinates $x=\\tan^2\\psi$ and $w=\\lambda-\\log x/(2b)$ agree with the cosmological coordinates on $x>0$.",
+          "line_element": "ds^2=L^2\\left(ds^2+\\dfrac{(2+x)\\sin^2s-b^2\\cos^2s}{4(1+x)^2D}dx^2+\\dfrac{\\cos^2s}{D}d\\rho^2+\\dfrac{b^2x\\sin^2s}{D}dw^2+\\dfrac{b\\sin^2s}{D}dx\\,dw\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{L^2\\left(b^2 - 2\\sin^2 s - x\\sin^2 s - b^2\\sin^2 s\\right)}{4\\left(1 + x\\right)^2\\left(b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "w"
+              ],
+              "value": "-\\dfrac{L^2\\,b\\sin^2 s}{2\\left(b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x\\right)}"
+            },
+            {
+              "indices": [
+                "w",
+                "x"
+              ],
+              "value": "-\\dfrac{L^2\\,b\\sin^2 s}{2\\left(b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x\\right)}"
+            },
+            {
+              "indices": [
+                "s",
+                "s"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{L^2\\left(\\sin s + 1\\right)\\left(\\sin s - 1\\right)}{b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "-\\dfrac{L^2\\,b^2\\,x\\sin^2 s}{b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(x\\sin^2 s + \\sin^2 s - 1\\right)\\left(5b^2\\,x\\sin^2 s + 2b^4\\,x\\sin^2 s + 5b^2\\sin^2 s + 2\\sin^2 s - 5b^2\\,x - 2b^4\\,x\\right)}{L^2\\left(b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x\\right)^2}",
+          "kretschmann": "K = \\dfrac{16\\sin^8 s + 16\\sin^4 s + 32x\\sin^8 s + 32b^8\\,x^4 + 32b^8\\,x^3 + 16b^8\\,x^2 - 48b^6\\,x^3 + 44b^4\\,x^2 + 16x^2\\sin^8 s + 44b^4\\sin^8 s - 88b^4\\sin^6 s + 44b^4\\sin^4 s + 48b^2\\sin^8 s - 48b^2\\sin^6 s + 16b^6\\,x\\sin^8 s - 48b^6\\,x\\sin^6 s + 48b^6\\,x\\sin^4 s - 16b^6\\,x\\sin^2 s + 144b^4\\,x\\sin^8 s - 288b^4\\,x\\sin^6 s + 296b^4\\,x\\sin^4 s - 152b^4\\,x\\sin^2 s + 112b^2\\,x\\sin^8 s - 112b^2\\,x\\sin^6 s - 32b^2\\,x\\sin^4 s - 16b^2\\,x\\sin^2 s + 16b^8\\,x^4\\sin^8 s - 64b^8\\,x^4\\sin^6 s + 112b^8\\,x^4\\sin^4 s - 96b^8\\,x^4\\sin^2 s + 32b^8\\,x^3\\sin^8 s - 128b^8\\,x^3\\sin^6 s + 192b^8\\,x^3\\sin^4 s - 128b^8\\,x^3\\sin^2 s + 16b^8\\,x^2\\sin^8 s - 64b^8\\,x^2\\sin^6 s + 96b^8\\,x^2\\sin^4 s - 64b^8\\,x^2\\sin^2 s + 48b^6\\,x^4\\sin^8 s - 144b^6\\,x^4\\sin^6 s + 144b^6\\,x^4\\sin^4 s - 48b^6\\,x^4\\sin^2 s + 112b^6\\,x^3\\sin^8 s - 336b^6\\,x^3\\sin^6 s + 304b^6\\,x^3\\sin^4 s - 32b^6\\,x^3\\sin^2 s + 80b^6\\,x^2\\sin^8 s - 240b^6\\,x^2\\sin^6 s + 240b^6\\,x^2\\sin^4 s - 80b^6\\,x^2\\sin^2 s + 44b^4\\,x^4\\sin^8 s - 88b^4\\,x^4\\sin^6 s + 44b^4\\,x^4\\sin^4 s + 144b^4\\,x^3\\sin^8 s - 288b^4\\,x^3\\sin^6 s + 296b^4\\,x^3\\sin^4 s - 152b^4\\,x^3\\sin^2 s + 200b^4\\,x^2\\sin^8 s - 400b^4\\,x^2\\sin^6 s + 536b^4\\,x^2\\sin^4 s - 336b^4\\,x^2\\sin^2 s + 16b^2\\,x^3\\sin^8 s - 16b^2\\,x^3\\sin^6 s + 80b^2\\,x^2\\sin^8 s - 80b^2\\,x^2\\sin^6 s}{L^4\\left(b^2\\,x\\sin^2 s - \\sin^2 s - b^2\\,x\\right)^4}"
+        },
+        {
+          "id": "invariant",
+          "name": "Invariant Coordinate",
+          "coordinates": [
+            "r",
+            "s",
+            "\\rho",
+            "\\lambda"
+          ],
+          "domains": [
+            "r \\in (-\\infty,\\infty)",
+            "r\\neq0,1",
+            "D\\neq0",
+            "s \\in (0,\\pi/2)",
+            "\\rho \\in [0,2\\pi)",
+            "\\lambda \\in [0,2\\pi)",
+            "L>0",
+            "b>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The common length scale."
+            },
+            {
+              "symbol": "b",
+              "description": "The positive dimensionless gauge mixing parameter."
+            },
+            {
+              "symbol": "D = (1-r)\\sin^2s+b^2r\\cos^2s",
+              "description": "The dimensionless denominator."
+            }
+          ],
+          "convention": "The dimensionless invariant coordinate is $r=\\sin^2\\psi$.",
+          "line_element": "ds^2=L^2\\left(-\\dfrac{dr^2}{4r(1-r)}+ds^2+\\dfrac{(1-r)\\cos^2s}{D}d\\rho^2+\\dfrac{b^2r\\sin^2s}{D}d\\lambda^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{L^2}{4r\\left(1 - r\\right)}"
+            },
+            {
+              "indices": [
+                "s",
+                "s"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{L^2\\left(\\sin s + 1\\right)\\left(1 - r\\right)\\left(\\sin s - 1\\right)}{b^2\\,r\\sin^2 s + r\\sin^2 s - \\sin^2 s - b^2\\,r}"
+            },
+            {
+              "indices": [
+                "\\lambda",
+                "\\lambda"
+              ],
+              "value": "-\\dfrac{L^2\\,b^2\\,r\\sin^2 s}{b^2\\,r\\sin^2 s + r\\sin^2 s - \\sin^2 s - b^2\\,r}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(\\sin^2 s - 1 + r\\right)\\left(2b^4\\,r\\sin^2 s + 5b^2\\sin^2 s - 2r\\sin^2 s + 2\\sin^2 s - 5b^2\\,r - 2b^4\\,r\\right)}{L^2\\left(b^2\\,r\\sin^2 s + r\\sin^2 s - \\sin^2 s - b^2\\,r\\right)^2}",
+          "kretschmann": "K = \\dfrac{48b^2\\,r^2\\sin^2 s + 96b^2\\,r^2\\sin^4 s - 32b^2\\,r^2\\sin^6 s + 32b^2\\,r^2\\sin^8 s - 48b^2\\,r^3\\sin^2 s - 96b^2\\,r^3\\sin^4 s + 16b^2\\,r^4\\sin^2 s + 32b^2\\,r^4\\sin^4 s + 120b^4\\,r^2\\sin^2 s - 88b^4\\,r^2\\sin^4 s - 64b^4\\,r^2\\sin^6 s + 32b^4\\,r^2\\sin^8 s + 64b^4\\,r^3\\sin^2 s - 64b^4\\,r^3\\sin^4 s - 32b^4\\,r^4\\sin^2 s + 32b^4\\,r^4\\sin^4 s - 32b^6\\,r^2\\sin^2 s + 96b^6\\,r^2\\sin^4 s - 96b^6\\,r^2\\sin^6 s + 32b^6\\,r^2\\sin^8 s + 80b^6\\,r^3\\sin^2 s - 32b^6\\,r^3\\sin^4 s - 80b^6\\,r^4\\sin^2 s + 32b^6\\,r^4\\sin^4 s - 64b^8\\,r^2\\sin^2 s + 96b^8\\,r^2\\sin^4 s - 64b^8\\,r^2\\sin^6 s + 16b^8\\,r^2\\sin^8 s - 32b^8\\,r^4\\sin^2 s + 16b^8\\,r^4\\sin^4 s - 16b^2\\,r\\sin^2 s - 32b^2\\,r\\sin^4 s + 80b^2\\,r\\sin^6 s - 80b^2\\,r\\sin^8 s - 152b^4\\,r\\sin^2 s + 120b^4\\,r\\sin^4 s + 64b^4\\,r\\sin^6 s - 32b^4\\,r\\sin^8 s - 16b^6\\,r\\sin^2 s + 48b^6\\,r\\sin^4 s - 48b^6\\,r\\sin^6 s + 16b^6\\,r\\sin^8 s - 48b^2\\sin^6 s + 48b^2\\sin^8 s + 44b^4\\sin^4 s - 88b^4\\sin^6 s + 44b^4\\sin^8 s + 96r^2\\sin^4 s + 16r^2\\sin^8 s - 64r^3\\sin^4 s + 16r^4\\sin^4 s + 44b^4\\,r^2 - 88b^4\\,r^3 + 44b^4\\,r^4 - 48b^6\\,r^3 + 48b^6\\,r^4 + 16b^8\\,r^2 + 16b^8\\,r^4 - 64r\\sin^4 s - 32r\\sin^8 s + 16\\sin^4 s + 16\\sin^8 s}{L^4\\left(b^2\\,r\\sin^2 s + r\\sin^2 s - \\sin^2 s - b^2\\,r\\right)^4}"
+        },
+        {
+          "id": "whisker",
+          "name": "Static Extension",
+          "coordinates": [
+            "\\chi",
+            "s",
+            "\\rho",
+            "\\lambda"
+          ],
+          "domains": [
+            "\\chi \\in (0,\\infty)",
+            "D\\neq0",
+            "s \\in (0,\\pi/2)",
+            "\\rho \\in [0,2\\pi)",
+            "\\lambda \\in [0,2\\pi)",
+            "L>0",
+            "b>0"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "The common length scale."
+            },
+            {
+              "symbol": "b",
+              "description": "The positive dimensionless gauge mixing parameter."
+            },
+            {
+              "symbol": "D = \\sin^2s\\cosh^2\\chi-b^2\\cos^2s\\sinh^2\\chi",
+              "description": "The dimensionless denominator."
+            }
+          ],
+          "convention": "We use $\\psi=i\\chi$ for the analytic continuation, and the circular coordinates $\\rho$ and $\\lambda$ retain their periods.",
+          "line_element": "ds^2=L^2\\left(d\\chi^2+ds^2+\\dfrac{\\cos^2s\\cosh^2\\chi}{D}d\\rho^2-\\dfrac{b^2\\sin^2s\\sinh^2\\chi}{D}d\\lambda^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "s",
+                "s"
+              ],
+              "value": "L^2"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{L^2\\left(e^{2\\chi} + 1\\right)^2\\left(\\sin s + 1\\right)\\left(\\sin s - 1\\right)}{2b^2e^{2\\chi}\\sin^2 s - b^2e^{4\\chi}\\sin^2 s - 2e^{2\\chi}\\sin^2 s - e^{4\\chi}\\sin^2 s - b^2\\sin^2 s - 2b^2e^{2\\chi} + b^2e^{4\\chi} - \\sin^2 s + b^2}"
+            },
+            {
+              "indices": [
+                "\\lambda",
+                "\\lambda"
+              ],
+              "value": "\\dfrac{L^2\\,b^2\\left(e^{\\chi} + 1\\right)^2\\left(e^{\\chi} - 1\\right)^2\\sin^2 s}{2b^2e^{2\\chi}\\sin^2 s - b^2e^{4\\chi}\\sin^2 s - 2e^{2\\chi}\\sin^2 s - e^{4\\chi}\\sin^2 s - b^2\\sin^2 s - 2b^2e^{2\\chi} + b^2e^{4\\chi} - \\sin^2 s + b^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(2e^{\\chi}\\sin s - e^{2\\chi} - 1\\right)\\left(2e^{\\chi}\\sin s + e^{2\\chi} + 1\\right)\\left(20b^2e^{2\\chi}\\sin^2 s + 4b^4e^{2\\chi}\\sin^2 s - 2b^4e^{4\\chi}\\sin^2 s + 4e^{2\\chi}\\sin^2 s + 2e^{4\\chi}\\sin^2 s - 10b^2e^{2\\chi} + 5b^2e^{4\\chi} - 2b^4\\sin^2 s - 4b^4e^{2\\chi} + 2b^4e^{4\\chi} + 2\\sin^2 s + 5b^2 + 2b^4\\right)}{L^2\\left(2b^2e^{2\\chi}\\sin^2 s - b^2e^{4\\chi}\\sin^2 s - 2e^{2\\chi}\\sin^2 s - e^{4\\chi}\\sin^2 s - b^2\\sin^2 s - 2b^2e^{2\\chi} + b^2e^{4\\chi} - \\sin^2 s + b^2\\right)^2}",
+          "kretschmann": "K = \\dfrac{16b^8 + 48b^6 + 44b^4 + 16\\sin^4 s + 2656b^8e^{8\\chi} - 1920b^8e^{6\\chi} + 704b^8e^{4\\chi} - 128b^8e^{2\\chi} + 16b^8e^{16\\chi} - 128b^8e^{14\\chi} + 704b^8e^{12\\chi} - 1920b^8e^{10\\chi} + 16b^8\\sin^4 s - 32b^8\\sin^2 s - 480b^6e^{8\\chi} + 192b^6e^{6\\chi} + 192b^6e^{4\\chi} - 192b^6e^{2\\chi} + 48b^6e^{16\\chi} - 192b^6e^{14\\chi} + 192b^6e^{12\\chi} + 192b^6e^{10\\chi} + 32b^6\\sin^4 s - 80b^6\\sin^2 s + 264b^4e^{8\\chi} - 176b^4e^{4\\chi} + 44b^4e^{16\\chi} - 176b^4e^{12\\chi} + 32b^4\\sin^4 s - 32b^4\\sin^2 s + 32b^2\\sin^4 s + 16b^2\\sin^2 s + 1536e^{8\\chi}\\sin^8 s + 1120e^{8\\chi}\\sin^4 s + 1024e^{6\\chi}\\sin^8 s + 896e^{6\\chi}\\sin^4 s + 256e^{4\\chi}\\sin^8 s + 448e^{4\\chi}\\sin^4 s + 128e^{2\\chi}\\sin^4 s + 16e^{16\\chi}\\sin^4 s + 128e^{14\\chi}\\sin^4 s + 256e^{12\\chi}\\sin^8 s + 448e^{12\\chi}\\sin^4 s + 1024e^{10\\chi}\\sin^8 s + 896e^{10\\chi}\\sin^4 s + 1536b^8e^{8\\chi}\\sin^8 s - 6144b^8e^{8\\chi}\\sin^6 s + 10336b^8e^{8\\chi}\\sin^4 s - 8384b^8e^{8\\chi}\\sin^2 s - 1024b^8e^{6\\chi}\\sin^8 s + 4096b^8e^{6\\chi}\\sin^6 s - 7040b^8e^{6\\chi}\\sin^4 s + 5888b^8e^{6\\chi}\\sin^2 s + 256b^8e^{4\\chi}\\sin^8 s - 1024b^8e^{4\\chi}\\sin^6 s + 1984b^8e^{4\\chi}\\sin^4 s - 1920b^8e^{4\\chi}\\sin^2 s - 128b^8e^{2\\chi}\\sin^4 s + 256b^8e^{2\\chi}\\sin^2 s + 16b^8e^{16\\chi}\\sin^4 s - 32b^8e^{16\\chi}\\sin^2 s - 128b^8e^{14\\chi}\\sin^4 s + 256b^8e^{14\\chi}\\sin^2 s + 256b^8e^{12\\chi}\\sin^8 s - 1024b^8e^{12\\chi}\\sin^6 s + 1984b^8e^{12\\chi}\\sin^4 s - 1920b^8e^{12\\chi}\\sin^2 s - 1024b^8e^{10\\chi}\\sin^8 s + 4096b^8e^{10\\chi}\\sin^6 s - 7040b^8e^{10\\chi}\\sin^4 s + 5888b^8e^{10\\chi}\\sin^2 s + 5120b^6e^{8\\chi}\\sin^8 s - 15360b^6e^{8\\chi}\\sin^6 s + 15040b^6e^{8\\chi}\\sin^4 s - 4320b^6e^{8\\chi}\\sin^2 s - 3072b^6e^{6\\chi}\\sin^8 s + 9216b^6e^{6\\chi}\\sin^6 s - 9088b^6e^{6\\chi}\\sin^4 s + 2752b^6e^{6\\chi}\\sin^2 s + 512b^6e^{4\\chi}\\sin^8 s - 1536b^6e^{4\\chi}\\sin^6 s + 1664b^6e^{4\\chi}\\sin^4 s - 832b^6e^{4\\chi}\\sin^2 s - 128b^6e^{2\\chi}\\sin^4 s + 320b^6e^{2\\chi}\\sin^2 s + 32b^6e^{16\\chi}\\sin^4 s - 80b^6e^{16\\chi}\\sin^2 s - 128b^6e^{14\\chi}\\sin^4 s + 320b^6e^{14\\chi}\\sin^2 s + 512b^6e^{12\\chi}\\sin^8 s - 1536b^6e^{12\\chi}\\sin^6 s + 1664b^6e^{12\\chi}\\sin^4 s - 832b^6e^{12\\chi}\\sin^2 s - 3072b^6e^{10\\chi}\\sin^8 s + 9216b^6e^{10\\chi}\\sin^6 s - 9088b^6e^{10\\chi}\\sin^4 s + 2752b^6e^{10\\chi}\\sin^2 s + 10240b^4e^{8\\chi}\\sin^8 s - 20480b^4e^{8\\chi}\\sin^6 s + 15296b^4e^{8\\chi}\\sin^4 s - 5056b^4e^{8\\chi}\\sin^2 s + 512b^4e^{4\\chi}\\sin^8 s - 1024b^4e^{4\\chi}\\sin^6 s - 2048b^4e^{4\\chi}\\sin^4 s + 2560b^4e^{4\\chi}\\sin^2 s + 32b^4e^{16\\chi}\\sin^4 s - 32b^4e^{16\\chi}\\sin^2 s + 512b^4e^{12\\chi}\\sin^8 s - 1024b^4e^{12\\chi}\\sin^6 s - 2048b^4e^{12\\chi}\\sin^4 s + 2560b^4e^{12\\chi}\\sin^2 s + 5120b^2e^{8\\chi}\\sin^8 s - 5120b^2e^{8\\chi}\\sin^6 s - 320b^2e^{8\\chi}\\sin^4 s - 160b^2e^{8\\chi}\\sin^2 s + 3072b^2e^{6\\chi}\\sin^8 s - 3072b^2e^{6\\chi}\\sin^6 s - 128b^2e^{6\\chi}\\sin^4 s - 64b^2e^{6\\chi}\\sin^2 s + 512b^2e^{4\\chi}\\sin^8 s - 512b^2e^{4\\chi}\\sin^6 s + 128b^2e^{4\\chi}\\sin^4 s + 64b^2e^{4\\chi}\\sin^2 s + 128b^2e^{2\\chi}\\sin^4 s + 64b^2e^{2\\chi}\\sin^2 s + 32b^2e^{16\\chi}\\sin^4 s + 16b^2e^{16\\chi}\\sin^2 s + 128b^2e^{14\\chi}\\sin^4 s + 64b^2e^{14\\chi}\\sin^2 s + 512b^2e^{12\\chi}\\sin^8 s - 512b^2e^{12\\chi}\\sin^6 s + 128b^2e^{12\\chi}\\sin^4 s + 64b^2e^{12\\chi}\\sin^2 s + 3072b^2e^{10\\chi}\\sin^8 s - 3072b^2e^{10\\chi}\\sin^6 s - 128b^2e^{10\\chi}\\sin^4 s - 64b^2e^{10\\chi}\\sin^2 s}{L^4\\left(2b^2e^{2\\chi}\\sin^2 s - b^2e^{4\\chi}\\sin^2 s - 2e^{2\\chi}\\sin^2 s - e^{4\\chi}\\sin^2 s - b^2\\sin^2 s - 2b^2e^{2\\chi} + b^2e^{4\\chi} - \\sin^2 s + b^2\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "nariai",
       "name": "Nariai Universe",
       "short_name": "Nariai",
@@ -61201,6 +61552,11 @@
           "id": "kowalski_glikman",
           "kind": "family",
           "text": "A homogeneous wave in eleven dimensions with nine transverse directions and a parallel null 4-form. The metric and flux admit 32 Killing spinors [figueroa2001]."
+        },
+        {
+          "id": "nappi_witten",
+          "kind": "family",
+          "text": "Nappi and Witten constructed an exact string plane wave in 1993 with a constant dilaton and an antisymmetric tensor. Their 1992 closed universe expands and recollapses, with spatially varying curvature [nappi1993, nappi1992]."
         }
       ],
       "references": [
@@ -61248,7 +61604,9 @@
         "lin2004",
         "blau2003homogeneous",
         "godazgar2021",
-        "figueroa2001"
+        "figueroa2001",
+        "nappi1993",
+        "nappi1992"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -84113,6 +84471,11 @@
           "id": "three_dim_black_string",
           "kind": "composite",
           "text": "Times a line, this hole is the uncharged black string of three dimensions. Horne and Horowitz charged that string by gauging a translation along the line together with the hole's own symmetry [horne1992black]."
+        },
+        {
+          "id": "nappi_witten",
+          "kind": "family",
+          "text": "A cosmological gauged Wess-Zumino-Witten background with three spatial dimensions. An $O(2,2;\\mathbb{R})$ transformation relates it to a product containing the Lorentzian black hole coset in two spacetime dimensions [nappi1992, elitzur2002nw]."
         }
       ],
       "references": [
@@ -84135,7 +84498,9 @@
         "karananas2021linear",
         "devega1994linear",
         "angius2022linear",
-        "horne1992black"
+        "horne1992black",
+        "nappi1992",
+        "elitzur2002nw"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",

@@ -1292,7 +1292,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "101d527f084b31bb",
+    "version": "cf782b4dcb8c19e9",
     "diagrams": "07c29806c64a38dc",
     "conformal": "e9b1dc4aed6a0a12",
     "embedding": "de42a4c092d5d323"
@@ -2390,7 +2390,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "bf63a2632dcffb05",
+    "version": "50c32e9041781838",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -4918,6 +4918,32 @@
     "curvature": "00db200db43a22e2"
   },
   {
+    "id": "nappi_witten",
+    "name": "Nappi-Witten Universe",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "anisotropic",
+      "inhomogeneous",
+      "closed universe",
+      "string theory",
+      "dilaton",
+      "curvature singularity",
+      "closed timelike curves",
+      "big bang",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "70b0965d846ad1a7",
+    "diagrams": "1d8e521e1cb956f2",
+    "conformal": "b95e6b82cb4368d6",
+    "embedding": "79c0eec426be0bae",
+    "curvature": "81d6145ea0605b6f"
+  },
+  {
     "id": "nariai",
     "name": "Nariai",
     "tags": [
@@ -5505,7 +5531,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "058da1c399e466f2",
+    "version": "f262a530e7036746",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "c2fea606320f23bc"
   },
@@ -7493,7 +7519,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "c713ab969671a9dc",
+    "version": "83dd47186e1acde0",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"

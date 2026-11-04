@@ -1,5 +1,5 @@
 {
-  "version": "488d2ba0e38673a1",
+  "version": "2279dbe406b9b5be",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -36904,6 +36904,38 @@
         "eprint": "2202.12561",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/JHEP08(2022)018"
+      }
+    },
+    "nappi1992": {
+      "type": "article",
+      "fields": {
+        "title": "A closed, expanding universe in string theory",
+        "author": "Nappi, Chiara R. and Witten, Edward",
+        "journal": "Physics Letters B",
+        "volume": "293",
+        "number": "3-4",
+        "pages": "309--314",
+        "year": "1992",
+        "doi": "10.1016/0370-2693(92)90888-B",
+        "eprint": "hep-th/9206078",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(92)90888-B"
+      }
+    },
+    "elitzur2002nw": {
+      "type": "article",
+      "fields": {
+        "title": "From big bang to big crunch and beyond",
+        "author": "Elitzur, Shmuel and Giveon, Amit and Kutasov, David and Rabinovici, Eliezer",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2002",
+        "number": "06",
+        "pages": "017",
+        "year": "2002",
+        "doi": "10.1088/1126-6708/2002/06/017",
+        "eprint": "hep-th/0204189",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2002/06/017"
       }
     }
   }

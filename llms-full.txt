@@ -2193,6 +2193,19 @@ The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Rob
 - chart Equal Spins, Five Dimensions: coordinates $(t, \rho, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{\rho^2}\left(c\,dt - \dfrac{a}{2}\left(d\psi + \cos\theta\,d\phi\right)\right)^2 + \dfrac{d\rho^2}{1 - \dfrac{\mu}{\rho^2} + \dfrac{\mu a^2}{\rho^4}} + \dfrac{\rho^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2 + \left(d\psi + \cos\theta\,d\phi\right)^2\right)$$
 - chart Boyer-Lindquist, One Spin, Six Dimensions: coordinates $(t, r, \theta, \phi, \chi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{r\left(r^2 + a^2\cos^2\theta\right)}\left(c\,dt - a\sin^2\theta\,d\phi\right)^2 + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{\mu}{r}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2\right)\sin^2\theta\,d\phi^2 + r^2\cos^2\theta\left(d\chi^2 + \sin^2\chi\,d\psi^2\right)$$
 
+### Nappi-Witten Closed Expanding Universe
+
+A closed universe in string theory, with space shaped as an inhomogeneous 3-sphere that expands and recollapses. A dilaton and an antisymmetric tensor accompany the geometry; the cosmology arises from an exact conformal field theory.
+
+- id: `nappi_witten`
+- tags: cosmology, expanding universe, anisotropic, inhomogeneous, closed universe, string theory, dilaton, curvature singularity, closed timelike curves, big bang, time-dependent, exact solution, Lorentzian, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/nappi_witten.json
+- chart Cosmological: coordinates $(\psi, s, \rho, \lambda)$, $$ds^2=L^2\left(-d\psi^2+ds^2+\dfrac{\cos^2s\cos^2\psi}{D}d\rho^2+\dfrac{b^2\sin^2s\sin^2\psi}{D}d\lambda^2\right)$$
+- chart Across the Big Bang: coordinates $(x, s, \rho, w)$, $$ds^2=L^2\left(ds^2+\dfrac{(2+x)\sin^2s-b^2\cos^2s}{4(1+x)^2D}dx^2+\dfrac{\cos^2s}{D}d\rho^2+\dfrac{b^2x\sin^2s}{D}dw^2+\dfrac{b\sin^2s}{D}dx\,dw\right)$$
+- chart Invariant Coordinate: coordinates $(r, s, \rho, \lambda)$, $$ds^2=L^2\left(-\dfrac{dr^2}{4r(1-r)}+ds^2+\dfrac{(1-r)\cos^2s}{D}d\rho^2+\dfrac{b^2r\sin^2s}{D}d\lambda^2\right)$$
+- chart Static Extension: coordinates $(\chi, s, \rho, \lambda)$, $$ds^2=L^2\left(d\chi^2+ds^2+\dfrac{\cos^2s\cosh^2\chi}{D}d\rho^2-\dfrac{b^2\sin^2s\sinh^2\chi}{D}d\lambda^2\right)$$
+
 ### Nariai Universe
 
 A vacuum solution with a positive cosmological constant, geometrically the product of a two dimensional de Sitter space and a sphere of the same radius (dS₂ × S²). It is the limit of the Schwarzschild-de Sitter black hole as its horizon meets the cosmological horizon, the largest black hole a de Sitter universe can hold.
