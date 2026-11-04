@@ -298,6 +298,11 @@ REGIONS = {
                "fifth dimension is this universe; the entry's spacetime is the one of four "
                "dimensions, with the scalar field in it",
     },
+    "pre_big_bang": {
+        "regions": [["synchronous"]],
+        "why": "conformal is the two members with every exponent equal, which alone are isotropic "
+               "and conformally flat",
+    },
     "kastor_traschen": {
         "regions": [["cartesian", "comoving"]],
         "why": "isotropic is the single hole, which alone is spherically symmetric, and "

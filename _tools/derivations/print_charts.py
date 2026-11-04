@@ -37580,5 +37580,8 @@ CHARTS[_klebanov_witten.METRIC] = [_klebanov_witten.chart_spec]
 import wiggly_string as _wiggly_string
 CHARTS[_wiggly_string.METRIC] = [_wiggly_string.chart_spec]
 
+import pre_big_bang as _pre_big_bang
+_pre_big_bang.register(sys.modules[__name__])
+
 if __name__ == "__main__":
     main()

@@ -5468,5 +5468,9 @@ DIMENSIONS.update(_klebanov_witten.DIMENSIONS)
 import wiggly_string as _wiggly_string
 DIMENSIONS.update(_wiggly_string.DIMENSIONS)
 
+import pre_big_bang as _pre_big_bang
+DIMENSIONS.update(_pre_big_bang.DIMENSIONS)
+PARAMETER_RELATIONS.update(_pre_big_bang.PARAMETER_RELATIONS)
+
 if __name__ == "__main__":
     sys.exit(main())

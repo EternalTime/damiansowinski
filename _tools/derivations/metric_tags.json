@@ -15026,6 +15026,70 @@
   ],
   "sphere": null
  },
+ "pre_big_bang/conformal": {
+  "stamp": "0432d87b1cc2a465",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
+ "pre_big_bang/synchronous": {
+  "stamp": "d1fa1f4e10820660",
+  "relations": {
+   "beta_1": "2*u/(1 + u**2 + v**2)",
+   "beta_2": "2*v/(1 + u**2 + v**2)",
+   "beta_3": "(u**2 + v**2 - 1)/(1 + u**2 + v**2)"
+  },
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "x",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "y",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "z",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   }
+  ],
+  "sphere": null
+ },
  "quantum_btz/brane": {
   "stamp": "aef821a3620abcf1",
   "relations": {},
