@@ -3216,6 +3216,16 @@ A ball of dust that comes out of a singularity through the past horizon of Schwa
 - chart Kruskal Exterior: coordinates $(U, V, \theta, \phi)$, $$ds^2 = -\dfrac{4r_s^3}{r}e^{-r/r_s}\,dU\,dV + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Novikov's Comoving: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \left(\partial_r R\right)^2dr^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Vachaspati-Vilenkin Wiggly Cosmic String
+
+The averaged gravitational field of a cosmic string carrying small waves. Its energy per length exceeds its tension, and the averaged geometry attracts matter initially at rest.
+
+- id: `wiggly_string`
+- tags: topological defect, cosmic string, angular deficit, cylindrical symmetry, axisymmetric, static, stationary, weak field, approximate solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/wiggly_string.json
+- chart Cylindrical Transverse Gauge: coordinates $(t, r, \phi, z)$, $$ds^2 = -\left(1+4(U-T)\ln(r/r_0)\right)dt^2+\left(1-4(U+T)\ln(r/r_0)\right)\left(dr^2+r^2d\phi^2\right)+\left(1-4(U-T)\ln(r/r_0)\right)dz^2$$
+
 ### Witten's Black Hole in Two Dimensions
 
 A black hole in two spacetime dimensions, a solution of the low energy equations of string theory for a metric and a dilaton, and an exact string background. It has a horizon, a spacelike singularity, and Kruskal's diagram, and its Hawking temperature is the same for every mass. With matter added it is the model of Callan, Giddings, Harvey, and Strominger for a black hole that forms and evaporates.

@@ -2389,7 +2389,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "05eedf13f0b96167",
+    "version": "1a12635737e04b85",
     "diagrams": "d86ff0a92ec2a5b0",
     "embedding": "eb113e431f8fa107"
   },
@@ -3962,7 +3962,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "13c8446b41e2c8c8",
+    "version": "cba489d4424f1768",
     "diagrams": "32400e2bb95be485",
     "conformal": "5451827f049d2595",
     "embedding": "232b53e716678841",
@@ -7209,7 +7209,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "4cd4a46b6a87193c",
+    "version": "0e23f8b2d4b91a76",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "ef960fe8cb1357e7"
@@ -7345,6 +7345,29 @@
     "diagrams": "526e1debafad2074",
     "conformal": "05af67c07226ebb3",
     "embedding": "f02661da1ce5940b"
+  },
+  {
+    "id": "wiggly_string",
+    "name": "Wiggly Cosmic String",
+    "tags": [
+      "topological defect",
+      "cosmic string",
+      "angular deficit",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "static",
+      "stationary",
+      "weak field",
+      "approximate solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "5a60c099203c7e9b",
+    "diagrams": "cf3523a1221fdff6",
+    "embedding": "66453a2d5d64edfe",
+    "curvature": "997db8e755fb17e2"
   },
   {
     "id": "witten_black_hole",

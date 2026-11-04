@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 248,
+  "count": 249,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -27065,6 +27065,11 @@
           "id": "string_cylindrical_waves",
           "kind": "family",
           "text": "Xanthopoulos's gravitational waves have cylindrical fronts around a string [gurtug_sakalli2003]."
+        },
+        {
+          "id": "wiggly_string",
+          "kind": "family",
+          "text": "An average over small waves has unequal energy per length and tension, with a static gravitational field fixed by both quantities [campsemparan2010]."
         }
       ],
       "references": [
@@ -27086,7 +27091,8 @@
         "lunin2001",
         "aichelburg1971",
         "deser1992time",
-        "gurtug_sakalli2003"
+        "gurtug_sakalli2003",
+        "campsemparan2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_wave.json",
@@ -43413,6 +43419,11 @@
           "id": "linet_tian",
           "kind": "generalisation",
           "text": "The same line of mass in a universe with a cosmological constant, the static field Bernard Linet and Qingjun Tian found in 1986. With $\\Lambda < 0$ it approaches anti-de Sitter space far from the axis [zofka2008, dasilva2000]."
+        },
+        {
+          "id": "wiggly_string",
+          "kind": "family",
+          "text": "The averaged string realizes the weak field of the cylindrical family, with its mass parameter fixed by the difference between energy per length and tension through first order [campsemparan2010]."
         }
       ],
       "references": [
@@ -43452,7 +43463,8 @@
         "davis1974",
         "sen1999superconducting",
         "zofka2008",
-        "dasilva2000"
+        "dasilva2000",
+        "campsemparan2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/levi_civita.json",
@@ -80822,6 +80834,11 @@
           "id": "global_texture",
           "kind": "family",
           "text": "A spherical scalar configuration whose collapse changes the solid angle about its centre. The straight string has a constant angular deficit around its axis [durrer1992textures]."
+        },
+        {
+          "id": "wiggly_string",
+          "kind": "family",
+          "text": "Averaging small waves on the string raises its energy per length above its tension, so the averaged geometry attracts matter initially at rest [campsemparan2010]."
         }
       ],
       "references": [
@@ -80855,7 +80872,8 @@
         "gurtug_sakalli2003",
         "zofka2008",
         "gibbonsgreenperry1996",
-        "durrer1992textures"
+        "durrer1992textures",
+        "campsemparan2010"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/cosmic_string.json",
@@ -82911,6 +82929,122 @@
           ],
           "ricci_scalar": "R = \\dfrac{4F'}{3q\\left(q\\,F' - 2F\\,b'\\right)}",
           "kretschmann": "K = \\dfrac{16\\left(16F^2\\left(b'\\right)^2 + 5q^2\\left(F'\\right)^2\\right)}{27q^4\\left(q\\,F' - 2F\\,b'\\right)^2}"
+        }
+      ]
+    },
+    {
+      "id": "wiggly_string",
+      "name": "Vachaspati-Vilenkin Wiggly Cosmic String",
+      "short_name": "Wiggly Cosmic String",
+      "description": "The averaged gravitational field of a cosmic string carrying small waves. Its energy per length exceeds its tension, and the averaged geometry attracts matter initially at rest.",
+      "tags": [
+        "topological defect",
+        "cosmic string",
+        "angular deficit",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "static",
+        "stationary",
+        "weak field",
+        "approximate solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use $G=c=1$, with energy per length $U$ and tension $T$ in geometrical units. The tensors are exact tensors of the truncated line element; the vacuum field equations hold through first order in $U$ and $T$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "cosmic_string",
+          "kind": "family",
+          "text": "For $U=T$, the Newtonian attraction vanishes and the field reduces to the straight string's conical geometry through first order [campsemparan2010]."
+        },
+        {
+          "id": "string_wave",
+          "kind": "family",
+          "text": "A travelling wave retains its dependence on position along the string and time [garfinkle1990]. The averaged wiggly string has a static cylindrical field [campsemparan2010]."
+        },
+        {
+          "id": "levi_civita",
+          "kind": "family",
+          "text": "The weak field belongs to this cylindrical family, with $\\sigma=U-T$ and $C=1+4T$ through first order in units $G=c=1$ [campsemparan2010]."
+        }
+      ],
+      "references": [
+        "vachaspativilenkin1991",
+        "campsemparan2010",
+        "carter1990noisy",
+        "garfinkle1990"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wiggly_string.json",
+      "charts": [
+        {
+          "id": "cylindrical",
+          "name": "Cylindrical Transverse Gauge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty,\\infty)",
+            "r \\in (0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "z \\in (-\\infty,\\infty)",
+            "0<T\\le U\\ll1",
+            "\\left|4(U+T)\\ln(r/r_0)\\right|\\ll1"
+          ],
+          "parameters": [
+            {
+              "symbol": "U",
+              "description": "Energy per length of the averaged string, in geometrical units; $U\\ge T>0$."
+            },
+            {
+              "symbol": "T",
+              "description": "Tension of the averaged string; $UT=\\mu_0^2$, where $\\mu_0$ is the energy per length and tension of the unperturbed string."
+            },
+            {
+              "symbol": "r_0",
+              "description": "Reference length in the logarithmic potential."
+            }
+          ],
+          "convention": "We use coordinates $(t,r,\\phi,z)$, with $t$, $r$, and $z$ measured as lengths and $\\phi$ an angle, and $r_0$ is a positive reference length.",
+          "line_element": "ds^2 = -\\left(1+4(U-T)\\ln(r/r_0)\\right)dt^2+\\left(1-4(U+T)\\ln(r/r_0)\\right)\\left(dr^2+r^2d\\phi^2\\right)+\\left(1-4(U-T)\\ln(r/r_0)\\right)dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{1024T^2\\,U^2\\,\\ln(r/r_0)^2 - 2048T^2\\,U^3\\,\\ln(r/r_0)^3 - 6144T^2\\,U^4\\,\\ln(r/r_0)^4 - 2048T^3\\,U^2\\,\\ln(r/r_0)^3 + 24576T^3\\,U^3\\,\\ln(r/r_0)^4 - 6144T^4\\,U^2\\,\\ln(r/r_0)^4 - 512T\\,U^3\\,\\ln(r/r_0)^2 + 3072T\\,U^4\\,\\ln(r/r_0)^3 - 12288T\\,U^5\\,\\ln(r/r_0)^4 - 512T^3\\,U\\,\\ln(r/r_0)^2 + 3072T^4\\,U\\,\\ln(r/r_0)^3 - 12288T^5\\,U\\,\\ln(r/r_0)^4 + 192T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 192T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1024T^5\\,\\ln(r/r_0)^3 + 6144T^6\\,\\ln(r/r_0)^4 - 1024U^5\\,\\ln(r/r_0)^3 + 6144U^6\\,\\ln(r/r_0)^4 - 192T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 192U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 16T\\,U + 40T^2 + 40U^2}{r^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^2\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^3}",
+          "kretschmann": "K = \\dfrac{704U^4 - 256U^3 + 64U^2 + 704T^4 - 256T^3 + 64T^2 - 128T\\,U + 256T^3\\,U + 256T^2\\,U + 256T\\,U^3 + 256T\\,U^2 + 2176T^2\\,U^2 - 2048U^5\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1536U^4\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1024U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2048T^5\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1536T^4\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1024T^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 67108864U^{12}\\ln(r/r_0)^{10} + 100663296U^{12}\\ln(r/r_0)^9 + 62914560U^{12}\\ln(r/r_0)^8 - 67108864U^{11}\\ln(r/r_0)^9 - 83886080U^{11}\\ln(r/r_0)^8 - 33554432U^{11}\\ln(r/r_0)^7 + 20971520U^{10}\\ln(r/r_0)^8 + 25165824U^{10}\\ln(r/r_0)^7 + 8388608U^{10}\\ln(r/r_0)^6 - 4194304U^9\\,\\ln(r/r_0)^6 - 4718592U^9\\,\\ln(r/r_0)^5 - 1572864U^8\\,\\ln(r/r_0)^6 + 262144U^8\\,\\ln(r/r_0)^5 + 1540096U^8\\,\\ln(r/r_0)^4 + 524288U^7\\,\\ln(r/r_0)^5 + 393216U^7\\,\\ln(r/r_0)^4 - 65536U^7\\,\\ln(r/r_0)^3 - 98304U^6\\,\\ln(r/r_0)^4 - 163840U^6\\,\\ln(r/r_0)^3 - 24576U^6\\,\\ln(r/r_0)^2 + 16384U^5\\,\\ln(r/r_0)^2 + 5120U^4\\,\\ln(r/r_0)^2 + 67108864T^{12}\\ln(r/r_0)^{10} + 100663296T^{12}\\ln(r/r_0)^9 + 62914560T^{12}\\ln(r/r_0)^8 - 67108864T^{11}\\ln(r/r_0)^9 - 83886080T^{11}\\ln(r/r_0)^8 - 33554432T^{11}\\ln(r/r_0)^7 + 20971520T^{10}\\ln(r/r_0)^8 + 25165824T^{10}\\ln(r/r_0)^7 + 8388608T^{10}\\ln(r/r_0)^6 - 4194304T^9\\,\\ln(r/r_0)^6 - 4718592T^9\\,\\ln(r/r_0)^5 - 1572864T^8\\,\\ln(r/r_0)^6 + 262144T^8\\,\\ln(r/r_0)^5 + 1540096T^8\\,\\ln(r/r_0)^4 + 524288T^7\\,\\ln(r/r_0)^5 + 393216T^7\\,\\ln(r/r_0)^4 - 65536T^7\\,\\ln(r/r_0)^3 - 98304T^6\\,\\ln(r/r_0)^4 - 163840T^6\\,\\ln(r/r_0)^3 - 24576T^6\\,\\ln(r/r_0)^2 + 16384T^5\\,\\ln(r/r_0)^2 + 5120T^4\\,\\ln(r/r_0)^2 - 2048T^4\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 6144T^3\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1024T^2\\,U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 2048T\\,U^4\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 6144T\\,U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1024T\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 268435456T^{11}\\,U\\,\\ln(r/r_0)^{10} - 402653184T^{11}\\,U\\,\\ln(r/r_0)^9 - 251658240T^{11}\\,U\\,\\ln(r/r_0)^8 + 335544320T^{10}\\,U\\,\\ln(r/r_0)^9 + 419430400T^{10}\\,U\\,\\ln(r/r_0)^8 + 167772160T^{10}\\,U\\,\\ln(r/r_0)^7 - 142606336T^9\\,U\\,\\ln(r/r_0)^8 - 150994944T^9\\,U\\,\\ln(r/r_0)^7 - 52428800T^9\\,U\\,\\ln(r/r_0)^6 + 16777216T^8\\,U\\,\\ln(r/r_0)^7 + 25165824T^8\\,U\\,\\ln(r/r_0)^6 + 18350080T^8\\,U\\,\\ln(r/r_0)^5 + 4194304T^7\\,U\\,\\ln(r/r_0)^6 - 4194304T^7\\,U\\,\\ln(r/r_0)^5 - 5636096T^7\\,U\\,\\ln(r/r_0)^4 - 1572864T^6\\,U\\,\\ln(r/r_0)^5 + 393216T^6\\,U\\,\\ln(r/r_0)^4 + 851968T^6\\,U\\,\\ln(r/r_0)^3 + 327680T^5\\,U\\,\\ln(r/r_0)^4 + 327680T^5\\,U\\,\\ln(r/r_0)^3 - 40960T^5\\,U\\,\\ln(r/r_0)^2 - 65536T^4\\,U\\,\\ln(r/r_0)^3 - 98304T^4\\,U\\,\\ln(r/r_0)^2 + 4096T^3\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4096T^3\\,U\\,\\ln(r/r_0)^2 + 4096T^2\\,U^3\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 15360T^2\\,U^2\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 268435456T\\,U^{11}\\ln(r/r_0)^{10} - 402653184T\\,U^{11}\\ln(r/r_0)^9 - 251658240T\\,U^{11}\\ln(r/r_0)^8 + 335544320T\\,U^{10}\\ln(r/r_0)^9 + 419430400T\\,U^{10}\\ln(r/r_0)^8 + 167772160T\\,U^{10}\\ln(r/r_0)^7 - 142606336T\\,U^9\\,\\ln(r/r_0)^8 - 150994944T\\,U^9\\,\\ln(r/r_0)^7 - 52428800T\\,U^9\\,\\ln(r/r_0)^6 + 16777216T\\,U^8\\,\\ln(r/r_0)^7 + 25165824T\\,U^8\\,\\ln(r/r_0)^6 + 18350080T\\,U^8\\,\\ln(r/r_0)^5 + 4194304T\\,U^7\\,\\ln(r/r_0)^6 - 4194304T\\,U^7\\,\\ln(r/r_0)^5 - 5636096T\\,U^7\\,\\ln(r/r_0)^4 - 1572864T\\,U^6\\,\\ln(r/r_0)^5 + 393216T\\,U^6\\,\\ln(r/r_0)^4 + 851968T\\,U^6\\,\\ln(r/r_0)^3 + 327680T\\,U^5\\,\\ln(r/r_0)^4 + 327680T\\,U^5\\,\\ln(r/r_0)^3 - 40960T\\,U^5\\,\\ln(r/r_0)^2 - 65536T\\,U^4\\,\\ln(r/r_0)^3 - 98304T\\,U^4\\,\\ln(r/r_0)^2 + 4096T\\,U^3\\,\\ln(r/r_0)^2 + 134217728T^{10}\\,U^2\\,\\ln(r/r_0)^{10} + 201326592T^{10}\\,U^2\\,\\ln(r/r_0)^9 + 125829120T^{10}\\,U^2\\,\\ln(r/r_0)^8 + 805306368T^9\\,U^3\\,\\ln(r/r_0)^{10} + 1207959552T^9\\,U^3\\,\\ln(r/r_0)^9 + 754974720T^9\\,U^3\\,\\ln(r/r_0)^8 - 469762048T^9\\,U^2\\,\\ln(r/r_0)^9 - 587202560T^9\\,U^2\\,\\ln(r/r_0)^8 - 234881024T^9\\,U^2\\,\\ln(r/r_0)^7 - 1140850688T^8\\,U^4\\,\\ln(r/r_0)^{10} - 1711276032T^8\\,U^4\\,\\ln(r/r_0)^9 - 1069547520T^8\\,U^4\\,\\ln(r/r_0)^8 - 335544320T^8\\,U^3\\,\\ln(r/r_0)^9 - 419430400T^8\\,U^3\\,\\ln(r/r_0)^8 - 167772160T^8\\,U^3\\,\\ln(r/r_0)^7 + 339738624T^8\\,U^2\\,\\ln(r/r_0)^8 + 327155712T^8\\,U^2\\,\\ln(r/r_0)^7 + 117440512T^8\\,U^2\\,\\ln(r/r_0)^6 - 536870912T^7\\,U^5\\,\\ln(r/r_0)^{10} - 805306368T^7\\,U^5\\,\\ln(r/r_0)^9 - 503316480T^7\\,U^5\\,\\ln(r/r_0)^8 + 1476395008T^7\\,U^4\\,\\ln(r/r_0)^9 + 1845493760T^7\\,U^4\\,\\ln(r/r_0)^8 + 738197504T^7\\,U^4\\,\\ln(r/r_0)^7 - 234881024T^7\\,U^3\\,\\ln(r/r_0)^8 - 201326592T^7\\,U^3\\,\\ln(r/r_0)^7 - 75497472T^7\\,U^3\\,\\ln(r/r_0)^6 - 83886080T^7\\,U^2\\,\\ln(r/r_0)^7 - 62914560T^7\\,U^2\\,\\ln(r/r_0)^6 - 20971520T^7\\,U^2\\,\\ln(r/r_0)^5 + 1879048192T^6\\,U^6\\,\\ln(r/r_0)^{10} + 2818572288T^6\\,U^6\\,\\ln(r/r_0)^9 + 1761607680T^6\\,U^6\\,\\ln(r/r_0)^8 - 939524096T^6\\,U^5\\,\\ln(r/r_0)^9 - 1174405120T^6\\,U^5\\,\\ln(r/r_0)^8 - 469762048T^6\\,U^5\\,\\ln(r/r_0)^7 - 360710144T^6\\,U^4\\,\\ln(r/r_0)^8 - 352321536T^6\\,U^4\\,\\ln(r/r_0)^7 - 125829120T^6\\,U^4\\,\\ln(r/r_0)^6 + 150994944T^6\\,U^3\\,\\ln(r/r_0)^7 + 79691776T^6\\,U^3\\,\\ln(r/r_0)^6 + 2097152T^6\\,U^2\\,\\ln(r/r_0)^6 + 9437184T^6\\,U^2\\,\\ln(r/r_0)^5 + 5898240T^6\\,U^2\\,\\ln(r/r_0)^4 - 536870912T^5\\,U^7\\,\\ln(r/r_0)^{10} - 805306368T^5\\,U^7\\,\\ln(r/r_0)^9 - 503316480T^5\\,U^7\\,\\ln(r/r_0)^8 - 939524096T^5\\,U^6\\,\\ln(r/r_0)^9 - 1174405120T^5\\,U^6\\,\\ln(r/r_0)^8 - 469762048T^5\\,U^6\\,\\ln(r/r_0)^7 + 754974720T^5\\,U^5\\,\\ln(r/r_0)^8 + 704643072T^5\\,U^5\\,\\ln(r/r_0)^7 + 255852544T^5\\,U^5\\,\\ln(r/r_0)^6 - 83886080T^5\\,U^4\\,\\ln(r/r_0)^7 - 37748736T^5\\,U^4\\,\\ln(r/r_0)^6 + 7340032T^5\\,U^4\\,\\ln(r/r_0)^5 - 20971520T^5\\,U^3\\,\\ln(r/r_0)^6 - 4194304T^5\\,U^3\\,\\ln(r/r_0)^5 + 2490368T^5\\,U^3\\,\\ln(r/r_0)^4 + 1572864T^5\\,U^2\\,\\ln(r/r_0)^5 - 3538944T^5\\,U^2\\,\\ln(r/r_0)^4 - 2162688T^5\\,U^2\\,\\ln(r/r_0)^3 - 1140850688T^4\\,U^8\\,\\ln(r/r_0)^{10} - 1711276032T^4\\,U^8\\,\\ln(r/r_0)^9 - 1069547520T^4\\,U^8\\,\\ln(r/r_0)^8 + 1476395008T^4\\,U^7\\,\\ln(r/r_0)^9 + 1845493760T^4\\,U^7\\,\\ln(r/r_0)^8 + 738197504T^4\\,U^7\\,\\ln(r/r_0)^7 - 360710144T^4\\,U^6\\,\\ln(r/r_0)^8 - 352321536T^4\\,U^6\\,\\ln(r/r_0)^7 - 125829120T^4\\,U^6\\,\\ln(r/r_0)^6 - 83886080T^4\\,U^5\\,\\ln(r/r_0)^7 - 37748736T^4\\,U^5\\,\\ln(r/r_0)^6 + 7340032T^4\\,U^5\\,\\ln(r/r_0)^5 + 32505856T^4\\,U^4\\,\\ln(r/r_0)^6 - 2621440T^4\\,U^4\\,\\ln(r/r_0)^5 - 8585216T^4\\,U^4\\,\\ln(r/r_0)^4 - 524288T^4\\,U^3\\,\\ln(r/r_0)^5 + 2752512T^4\\,U^3\\,\\ln(r/r_0)^4 + 1376256T^4\\,U^3\\,\\ln(r/r_0)^3 - 163840T^4\\,U^2\\,\\ln(r/r_0)^4 + 425984T^4\\,U^2\\,\\ln(r/r_0)^3 + 188416T^4\\,U^2\\,\\ln(r/r_0)^2 + 805306368T^3\\,U^9\\,\\ln(r/r_0)^{10} + 1207959552T^3\\,U^9\\,\\ln(r/r_0)^9 + 754974720T^3\\,U^9\\,\\ln(r/r_0)^8 - 335544320T^3\\,U^8\\,\\ln(r/r_0)^9 - 419430400T^3\\,U^8\\,\\ln(r/r_0)^8 - 167772160T^3\\,U^8\\,\\ln(r/r_0)^7 - 234881024T^3\\,U^7\\,\\ln(r/r_0)^8 - 201326592T^3\\,U^7\\,\\ln(r/r_0)^7 - 75497472T^3\\,U^7\\,\\ln(r/r_0)^6 + 150994944T^3\\,U^6\\,\\ln(r/r_0)^7 + 79691776T^3\\,U^6\\,\\ln(r/r_0)^6 - 20971520T^3\\,U^5\\,\\ln(r/r_0)^6 - 4194304T^3\\,U^5\\,\\ln(r/r_0)^5 + 2490368T^3\\,U^5\\,\\ln(r/r_0)^4 - 524288T^3\\,U^4\\,\\ln(r/r_0)^5 + 2752512T^3\\,U^4\\,\\ln(r/r_0)^4 + 1376256T^3\\,U^4\\,\\ln(r/r_0)^3 - 131072T^3\\,U^3\\,\\ln(r/r_0)^4 - 1179648T^3\\,U^3\\,\\ln(r/r_0)^3 - 245760T^3\\,U^3\\,\\ln(r/r_0)^2 + 65536T^3\\,U^2\\,\\ln(r/r_0)^3 + 81920T^3\\,U^2\\,\\ln(r/r_0)^2 + 134217728T^2\\,U^{10}\\ln(r/r_0)^{10} + 201326592T^2\\,U^{10}\\ln(r/r_0)^9 + 125829120T^2\\,U^{10}\\ln(r/r_0)^8 - 469762048T^2\\,U^9\\,\\ln(r/r_0)^9 - 587202560T^2\\,U^9\\,\\ln(r/r_0)^8 - 234881024T^2\\,U^9\\,\\ln(r/r_0)^7 + 339738624T^2\\,U^8\\,\\ln(r/r_0)^8 + 327155712T^2\\,U^8\\,\\ln(r/r_0)^7 + 117440512T^2\\,U^8\\,\\ln(r/r_0)^6 - 83886080T^2\\,U^7\\,\\ln(r/r_0)^7 - 62914560T^2\\,U^7\\,\\ln(r/r_0)^6 - 20971520T^2\\,U^7\\,\\ln(r/r_0)^5 + 2097152T^2\\,U^6\\,\\ln(r/r_0)^6 + 9437184T^2\\,U^6\\,\\ln(r/r_0)^5 + 5898240T^2\\,U^6\\,\\ln(r/r_0)^4 + 1572864T^2\\,U^5\\,\\ln(r/r_0)^5 - 3538944T^2\\,U^5\\,\\ln(r/r_0)^4 - 2162688T^2\\,U^5\\,\\ln(r/r_0)^3 - 163840T^2\\,U^4\\,\\ln(r/r_0)^4 + 425984T^2\\,U^4\\,\\ln(r/r_0)^3 + 188416T^2\\,U^4\\,\\ln(r/r_0)^2 + 65536T^2\\,U^3\\,\\ln(r/r_0)^3 + 81920T^2\\,U^3\\,\\ln(r/r_0)^2 - 18432T^2\\,U^2\\,\\ln(r/r_0)^2}{r^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 1\\right)^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^4\\left(4T\\,\\ln\\left(\\dfrac{r}{r_0}\\right) + 4U\\,\\ln\\left(\\dfrac{r}{r_0}\\right) - 1\\right)^6}"
         }
       ]
     },
