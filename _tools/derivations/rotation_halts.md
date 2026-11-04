@@ -65,4 +65,8 @@ Pending stored scalars.
 
 ## Verification
 
-Pending scoped checks.
+The dedicated numerical check reads the stored metric and Christoffel symbols on both faces.
+It contracts the outward normal with the shell acceleration and angular connection components, and compares all three orthonormal components with the two-stream stress.
+Five dynamical states and two equilibria pass at 80 decimal digits, with a maximum dynamical Israel-jump residual of $7.9066\times10^{-82}$.
+The flat-interior specialization has zero Riemann components; an independent regular cylindrical vacuum wave has nonzero Riemann components.
+Admissible random shell states obey the strict lower bound, and candidate states at or below it fail the positive-lapse condition.
