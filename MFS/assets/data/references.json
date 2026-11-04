@@ -1,5 +1,5 @@
 {
-  "version": "73a79d2a038ec556",
+  "version": "e663c358fc9de7a9",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -44102,6 +44102,156 @@
         "year": "2006",
         "doi": "10.1103/physrevd.74.104030",
         "eprint": "gr-qc/0610020",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "brandenberger1998": {
+      "type": "article",
+      "fields": {
+        "author": "Brandenberger, R. and Easther, Richard and Maia, J.",
+        "title": "Nonsingular dilaton cosmology",
+        "journal": "Journal of High Energy Physics",
+        "volume": "1998",
+        "number": "08",
+        "pages": "007",
+        "year": "1998",
+        "doi": "10.1088/1126-6708/1998/08/007",
+        "eprint": "gr-qc/9806111",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "easson1999": {
+      "type": "article",
+      "fields": {
+        "author": "Easson, Damien A. and Brandenberger, Robert H.",
+        "title": "Nonsingular dilaton cosmology in the string frame",
+        "journal": "Journal of High Energy Physics",
+        "volume": "1999",
+        "number": "09",
+        "pages": "003",
+        "year": "1999",
+        "doi": "10.1088/1126-6708/1999/09/003",
+        "eprint": "hep-th/9905175",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "loewenfeld2008": {
+      "type": "article",
+      "fields": {
+        "author": "Höffer v. Loewenfeld, Philipp and Sachs, Ivo",
+        "title": "Resolution of curvature singularities in higher derivative gravity",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "2",
+        "pages": "024036",
+        "year": "2008",
+        "doi": "10.1103/physrevd.78.024036",
+        "eprint": "0803.2170",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "sanyal2009": {
+      "type": "article",
+      "fields": {
+        "author": "Sanyal, Abhik Kumar",
+        "title": "Quantum cosmology of a classically constrained nonsingular Universe",
+        "journal": "PMC Physics A",
+        "volume": "3",
+        "number": "1",
+        "pages": "5",
+        "year": "2009",
+        "doi": "10.1186/1754-0410-3-5",
+        "eprint": "0910.2302",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "yoshida2018spherical": {
+      "type": "article",
+      "fields": {
+        "author": "Yoshida, Daisuke and Brandenberger, Robert H.",
+        "title": "Singularities in spherically symmetric solutions with limited curvature invariants",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2018",
+        "number": "07",
+        "pages": "022",
+        "year": "2018",
+        "doi": "10.1088/1475-7516/2018/07/022",
+        "eprint": "1801.05070",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "quintin2020": {
+      "type": "article",
+      "fields": {
+        "author": "Quintin, Jerome and Yoshida, Daisuke",
+        "title": "Cuscuton gravity as a classically stable limiting curvature theory",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2020",
+        "number": "02",
+        "pages": "016",
+        "year": "2020",
+        "doi": "10.1088/1475-7516/2020/02/016",
+        "eprint": "1911.06040",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "sakakihara2020": {
+      "type": "article",
+      "fields": {
+        "author": "Sakakihara, Yuki and Yoshida, Daisuke and Takahashi, Kazufumi and Quintin, Jerome",
+        "title": "Theories with limited extrinsic curvature and a nonsingular anisotropic universe",
+        "journal": "Physical Review D",
+        "volume": "102",
+        "number": "8",
+        "pages": "084004",
+        "year": "2020",
+        "doi": "10.1103/physrevd.102.084004",
+        "eprint": "2005.10844",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "frolov2022blackholes": {
+      "type": "article",
+      "fields": {
+        "author": "Frolov, Valeri P. and Zelnikov, Andrei",
+        "title": "Spherically symmetric black holes in the limiting curvature theory of gravity",
+        "journal": "Physical Review D",
+        "volume": "105",
+        "number": "2",
+        "pages": "024041",
+        "year": "2022",
+        "doi": "10.1103/physrevd.105.024041",
+        "eprint": "2111.12846",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "frolov2023": {
+      "type": "article",
+      "fields": {
+        "author": "Frolov, Andrei V. and Frolov, Valeri P.",
+        "title": "Classical Mechanics with Inequality Constraints and Gravity Models with Limiting Curvature",
+        "journal": "Universe",
+        "volume": "9",
+        "number": "6",
+        "pages": "284",
+        "year": "2023",
+        "doi": "10.3390/universe9060284",
+        "eprint": "2304.12179",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "cuscuton2025": {
+      "type": "article",
+      "fields": {
+        "author": "Dehghani, Amir and Geshnizjani, Ghazal and Quintin, Jerome",
+        "title": "Cuscuton bounce beyond the linear regime: bispectrum and strong coupling constraints",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "05",
+        "pages": "026",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/05/026",
+        "eprint": "2503.01992",
         "archiveprefix": "arXiv"
       }
     }
