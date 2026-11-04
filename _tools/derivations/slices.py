@@ -3974,6 +3974,10 @@ import global_texture as _global_texture
 FLAT[("global_texture", "collapse", "radial")] = lambda: _global_texture.slice_marks(sys.modules[__name__])
 
 
+import wiggly_string_drawings as _wiggly_string_drawings
+FLAT[(_wiggly_string_drawings.METRIC, _wiggly_string_drawings.SYSTEM, "radial")] = (
+    lambda: _wiggly_string_drawings.slice_marks(sys.modules[__name__]))
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

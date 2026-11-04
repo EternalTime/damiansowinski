@@ -19402,5 +19402,8 @@ DIAGRAMS.extend(_global_texture.diagram_specs(sys.modules[__name__]))
 CAPTIONS.update(_global_texture.diagram_captions())
 CLOSED_FORMS.update(_global_texture.null_forms())
 
+import wiggly_string_drawings as _wiggly_string_drawings
+_wiggly_string_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

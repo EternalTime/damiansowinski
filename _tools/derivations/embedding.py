@@ -22499,6 +22499,9 @@ import global_texture as _global_texture
 DRAWN["global_texture"] = lambda ck, src: _global_texture.embedding_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_global_texture.embedding_captions())
 
+import wiggly_string_drawings as _wiggly_string_drawings
+_wiggly_string_drawings.register_embedding(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
 

@@ -32285,5 +32285,8 @@ import global_texture as _global_texture
 DRAWN["global_texture"] = lambda ck, src: _global_texture.conformal_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_global_texture.conformal_captions())
 
+# A local first-order string exterior does not determine a global causal completion.
+NOT_DRAWN.add("wiggly_string")
+
 if __name__ == "__main__":
     sys.exit(main())
