@@ -1,0 +1,127 @@
+{
+  "id": "counter_rotating_discs",
+  "name": "Counter Rotating Discs as Sources of Vacuum Fields",
+  "short_name": "Counter Rotating Disc Sources",
+  "description": "Two regions of a known vacuum field joined across a thin disc. A displaced cut and reflection can produce positive surface density and two streams of ordinary matter circling in opposite senses.",
+  "tags": [
+    "stationary",
+    "axisymmetric",
+    "Weyl class",
+    "harmonic function",
+    "thin disc",
+    "thin shell",
+    "junction conditions",
+    "cut and paste",
+    "weak energy condition",
+    "dominant energy condition",
+    "frame dragging",
+    "gravitational redshift",
+    "asymptotically flat",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use $G=c=1$ and the Ricci contraction $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A displaced cut and reflection join two regions of a known vacuum field across a thin disc. The cut lies clear of the singularity, and the disc's matter supplies the jump in normal derivatives [ledvinka2019discs]. Jiří Bičák, Donald Lynden-Bell, and Joseph Katz applied this construction to static fields in 1993, showing that \"most vacuum Weyl solutions can arise as the metrics of counter-rotating relativistic disks\" [bicak1993]. Their examples include the Curzon, Schwarzschild, and Zipoy-Voorhees fields [bicak1993].¶The two streams in a static disc have equal densities and circle in opposite senses with equal speeds. Their angular momenta cancel, and their orbital motion supplies azimuthal pressure without radial pressure [ledvinka2019discs]. The same Schwarzschild vacuum geometry can therefore surround a spherical body or form the two sides of a disc junction [bicak1993]. The global geometry includes the disc and the identification across it.¶In units $G = c = 1$, $U$ and $k$ are the Weyl potentials, with derivatives evaluated just above the disc at $z = 0$. The surface energy density is $\\varepsilon = e^{U-k}U_{,z}(1-\\rho U_{,\\rho})/(2\\pi)$, and the azimuthal pressure is $p_\\phi = e^{U-k}U_{,z}\\rho U_{,\\rho}/(2\\pi)$ [ledvinka2019discs]. Here $\\rho$ is the cylindrical radius, and each stream has speed $v^2 = p_\\phi/\\varepsilon$ measured by a static observer. Positive densities and speeds below light require $\\varepsilon > p_\\phi \\ge 0$, which also satisfies the dominant and weak energy conditions. Each stream's proper rest surface density is $(\\varepsilon-p_\\phi)/2$ [bicak1993kerr, ledvinka2019discs].¶Bičák and Tomáš Ledvinka extended the construction to rotation in 1993 and showed that these discs \"can act as exact sources of all types of the Kerr metric\" [bicak1993kerr]. Their discs extend to infinity with finite mass, and frame dragging makes the two streams asymmetric. In the local frame where the surface stress is diagonal, equal opposite speeds $v^2 = p_\\phi/\\varepsilon$ reproduce the azimuthal pressure [bicak1993kerr]. Ledvinka and Bičák distinguished this model, which requires radial momentum exchange, from freely orbiting streams in 2019; two circular timelike geodesics with positive densities impose additional restrictions [ledvinka2019discs].¶Werner Israel's 1970 seam occupies the disc spanning the Kerr ring singularity and carries negative mass moving faster than light [israel1970]. For the displaced cuts, the singular region lies in the discarded slab, and suitable choices of the cut admit positive density and matter moving below light speed [bicak1993kerr, ledvinka2019discs]. The character of the matter on the seam separates the two constructions.¶José P. S. Lemos and Patricio S. Letelier superposed thin discs and black holes in 1994 [lemosletelier1994]. They described their annular family as \"the first known exact solution for a black hole surrounded by a realistic heavy disk of matter\" [lemosletelier1994]. These discs have an inner edge and admit configurations without matter moving faster than light; their equal counter rotating populations have zero net angular momentum. A negligible disc mass leaves the geometry of a black hole with a disc of test particles [lemosletelier1994].",
+  "related": [
+    {
+      "id": "kerr_disc_source",
+      "kind": "family",
+      "text": "Israel's seam spans Kerr's ring and carries negative mass moving faster than light [israel1970]. A displaced cut removes the singular region and permits a disc with positive density and matter moving below light speed [bicak1993kerr]."
+    },
+    {
+      "id": "kerr",
+      "kind": "piece",
+      "text": "Two retained regions of Kerr's vacuum geometry meet across the matter disc. The location of the cut determines the surface stress and the admissible streams [bicak1993kerr, ledvinka2019discs]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "piece",
+      "text": "Schwarzschild's vacuum field supplies both sides of a static disc junction [bicak1993]. The seam's equal opposite streams carry no net angular momentum."
+    },
+    {
+      "id": "curzon_chazy",
+      "kind": "piece",
+      "text": "The Curzon field is a Weyl seed for a counter rotating disc [bicak1993]. Displacing the cut excludes the seed's singularity from both retained regions."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "piece",
+      "text": "The Zipoy-Voorhees Weyl fields also admit disc sources constructed by a displaced cut and reflection [bicak1993]. The cut and the seed parameters determine whether the matter is physically admissible."
+    }
+  ],
+  "references": [
+    "ledvinka2019discs",
+    "bicak1993",
+    "bicak1993kerr",
+    "israel1970",
+    "lemosletelier1994"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "name": "Reflected Static Weyl",
+      "parameters": [
+        {
+          "symbol": "U = U(\\rho,z)",
+          "description": "Reflected Weyl potential, evaluated from the seed at $(\\rho,b+|z|)$; $U_{,\\rho\\rho}+U_{,\\rho}/\\rho+U_{,zz}=0$ off the seam"
+        },
+        {
+          "symbol": "k = k(\\rho,z)",
+          "description": "Reflected Weyl potential; $k_{,\\rho}=\\rho(U_{,\\rho}^2-U_{,z}^2)$ and $k_{,z}=2\\rho U_{,\\rho}U_{,z}$ off the seam"
+        },
+        {
+          "symbol": "b",
+          "description": "Positive displacement of the cut, a length"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter of the vacuum seed, a length"
+        },
+        {
+          "symbol": "\\delta",
+          "description": "Dimensionless Zipoy-Voorhees parameter"
+        },
+        {
+          "symbol": "a",
+          "description": "Half length of the Weyl rod, a length"
+        }
+      ],
+      "convention": "Coordinates are $(t,\\rho,\\phi,z)$, with $t$, $\\rho$, and $z$ lengths and $\\phi$ an angle. The two retained regions meet at $z=0$; the potentials are composed with $b+|z|$. Smooth tensor components apply at $z\\ne0$; the surface stress on the seam follows from the jump in extrinsic curvature."
+    },
+    {
+      "id": "stationary",
+      "name": "Reflected Stationary Weyl",
+      "parameters": [
+        {
+          "symbol": "f = f(\\rho,z)",
+          "description": "Negative norm of the stationary Killing vector, evaluated from the Kerr seed at $(\\rho,b+|z|)$"
+        },
+        {
+          "symbol": "g = g(\\rho,z)",
+          "description": "Dimensionless Kerr metric function evaluated at $(\\rho,b+|z|)$; the meridional coefficient is $g/f$"
+        },
+        {
+          "symbol": "A = A(\\rho,z)",
+          "description": "Kerr rotation potential evaluated at $(\\rho,b+|z|)$, a length"
+        },
+        {
+          "symbol": "b",
+          "description": "Positive displacement of the cut, a length"
+        },
+        {
+          "symbol": "m",
+          "description": "Mass parameter of the Kerr seed, a length"
+        },
+        {
+          "symbol": "a",
+          "description": "Angular momentum per unit mass of the Kerr seed, a length"
+        }
+      ],
+      "convention": "Coordinates are $(t,\\rho,\\phi,z)$, with $t$, $\\rho$, and $z$ lengths and $\\phi$ an angle. The two retained regions meet at $z=0$; the potentials are composed with $b+|z|$. Smooth tensor components apply at $z\\ne0$; the surface stress on the seam follows from the jump in extrinsic curvature."
+    }
+  ]
+}

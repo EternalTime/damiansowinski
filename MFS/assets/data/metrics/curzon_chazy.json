@@ -71,6 +71,11 @@
       "id": "bach_weyl_ring",
       "kind": "generalisation",
       "text": "The particle spread around a circle of radius $a$ in Weyl's coordinates. At $a = 0$ Bach and Weyl's ring is the Curzon-Chazy particle [semerak2016]."
+    },
+    {
+      "id": "counter_rotating_discs",
+      "kind": "composite",
+      "text": "A displaced cut and reflection join two regions of the Curzon field across a disc of counter rotating matter [bicak1993]."
     }
   ],
   "references": [

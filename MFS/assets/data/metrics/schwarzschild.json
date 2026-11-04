@@ -554,6 +554,11 @@
       "id": "hellaby_kruskal",
       "kind": "generalisation",
       "text": "A universe of dust with a neck joining two regions, whose vacuum member is the extended Schwarzschild solution [hellaby2002]."
+    },
+    {
+      "id": "counter_rotating_discs",
+      "kind": "composite",
+      "text": "A cut clear of the central source and a reflection produce a thin disc with Schwarzschild vacuum geometry on either side [bicak1993]."
     }
   ],
   "references": [
@@ -697,7 +702,8 @@
     "dvali2016skyrmion",
     "hochberg1994potential",
     "york1985equilibrium",
-    "hellaby2002"
+    "hellaby2002",
+    "bicak1993"
   ],
   "coordinates": [
     {

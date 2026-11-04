@@ -66,6 +66,11 @@
       "id": "thin_shell_wormhole",
       "kind": "family",
       "text": "Spacetimes cut and glued, with all their matter on the seam. The seam's matter is exotic in both, negative mass on the disc and negative energy density on the throat."
+    },
+    {
+      "id": "counter_rotating_discs",
+      "kind": "family",
+      "text": "The cut lies clear of the singular region, and the seam can support ordinary counter rotating matter [bicak1993kerr]. Israel's ring spanning seam carries negative mass moving faster than light [israel1970]."
     }
   ],
   "references": [

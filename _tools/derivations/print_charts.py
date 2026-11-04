@@ -37664,6 +37664,12 @@ CHARTS["kowalski_glikman"] = [
 import electron_bubble as _electron_bubble
 _electron_bubble.register_charts(sys.modules[__name__])
 
+import counter_rotating_discs as _counter_rotating_discs
+CHARTS[_counter_rotating_discs.METRIC] = [
+    lambda system=system: _counter_rotating_discs.chart_spec(sys.modules[__name__], system)
+    for system in _counter_rotating_discs.SYSTEMS
+]
+
 import torus_universe_2plus1 as _torus
 CHARTS[_torus.METRIC] = [lambda system=system: _torus.chart_spec(system) for system in _torus.CHARTS]
 

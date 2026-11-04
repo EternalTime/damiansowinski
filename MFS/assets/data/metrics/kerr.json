@@ -266,6 +266,11 @@
       "id": "quevedo_mashhoon",
       "kind": "generalisation",
       "text": "The rotating vacuum field with an independent deformation parameter. At $q=0$ and $\\delta=1$ it is the Kerr field [bini2009]."
+    },
+    {
+      "id": "counter_rotating_discs",
+      "kind": "composite",
+      "text": "A displaced cut and reflection turn regions of Kerr's field into the exterior of a thin disc with counter rotating matter [bicak1993kerr]."
     }
   ],
   "references": [
@@ -344,9 +349,9 @@
     "vaidya1989kerr",
     "vaidya1977kerr",
     "gleiser1998by",
-    "xanthopoulos1986rotating"
-,
-    "bini2009"
+    "xanthopoulos1986rotating",
+    "bini2009",
+    "bicak1993kerr"
   ],
   "coordinates": [
     {

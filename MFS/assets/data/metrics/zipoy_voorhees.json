@@ -87,6 +87,11 @@
       "id": "quevedo_mashhoon",
       "kind": "generalisation",
       "text": "A rotating deformed vacuum field that becomes the Zipoy-Voorhees field at $a=0$ and $q=0$ [boshkayev2012qm]."
+    },
+    {
+      "id": "counter_rotating_discs",
+      "kind": "composite",
+      "text": "The Weyl potentials generate thin disc sources when a cut clear of the singular region is joined to its reflection [bicak1993]."
     }
   ],
   "references": [
