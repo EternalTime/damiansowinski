@@ -1,5 +1,5 @@
 {
-  "version": "4b010c5341974d4a",
+  "version": "14ac048f56daac8e",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -41674,6 +41674,434 @@
         "eprint": "0903.4041",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/physrevd.80.024001"
+      }
+    },
+    "mueller1990rolling": {
+      "type": "article",
+      "fields": {
+        "author": "Mueller, Mark",
+        "title": "Rolling radii and a time-dependent dilaton",
+        "journal": "Nuclear Physics B",
+        "volume": "337",
+        "number": "1",
+        "pages": "37--48",
+        "year": "1990",
+        "doi": "10.1016/0550-3213(90)90249-d",
+        "url": "https://doi.org/10.1016/0550-3213(90)90249-d"
+      }
+    },
+    "gasperini1997towards": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, M. and Maggiore, M. and Veneziano, G.",
+        "title": "Towards a non-singular pre-big-bang cosmology",
+        "journal": "Nuclear Physics B",
+        "volume": "494",
+        "number": "1-2",
+        "pages": "315--328",
+        "year": "1997",
+        "doi": "10.1016/s0550-3213(97)00149-1",
+        "url": "https://doi.org/10.1016/s0550-3213(97)00149-1",
+        "eprint": "hep-th/9611039",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "brustein1998model": {
+      "type": "article",
+      "fields": {
+        "author": "Brustein, Ram and Madden, Richard",
+        "title": "Model of graceful exit in string cosmology",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "2",
+        "pages": "712--724",
+        "year": "1998",
+        "doi": "10.1103/physrevd.57.712",
+        "url": "https://doi.org/10.1103/physrevd.57.712",
+        "eprint": "hep-th/9708046",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bozza2002axions": {
+      "type": "article",
+      "fields": {
+        "author": "Bozza, V. and Gasperini, M. and Giovannini, M. and Veneziano, G.",
+        "title": "Assisting pre-big-bang phenomenology through short-lived axions",
+        "journal": "Physics Letters B",
+        "volume": "543",
+        "number": "1-2",
+        "pages": "14--22",
+        "year": "2002",
+        "doi": "10.1016/s0370-2693(02)02387-0",
+        "url": "https://doi.org/10.1016/s0370-2693(02)02387-0",
+        "eprint": "hep-ph/0206131",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bozza2003cmb": {
+      "type": "article",
+      "fields": {
+        "author": "Bozza, V. and Gasperini, M. and Giovannini, M. and Veneziano, G.",
+        "title": "Constraints on pre-big-bang parameter space from CMBR anisotropies",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "6",
+        "pages": "063514",
+        "year": "2003",
+        "doi": "10.1103/physrevd.67.063514",
+        "url": "https://doi.org/10.1103/physrevd.67.063514",
+        "eprint": "hep-ph/0212112",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini2016observable": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, M.",
+        "title": "Observable gravitational waves in pre-big bang cosmology: an update",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2016",
+        "number": "12",
+        "pages": "010",
+        "year": "2016",
+        "doi": "10.1088/1475-7516/2016/12/010",
+        "url": "https://doi.org/10.1088/1475-7516/2016/12/010",
+        "eprint": "1606.07889",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "wang2019nonsingular": {
+      "type": "article",
+      "fields": {
+        "author": "Wang, Peng and Wu, Houwen and Yang, Haitang and Ying, Shuxuan",
+        "title": "Non-singular string cosmology via $\\alpha'$ corrections",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2019",
+        "number": "10",
+        "pages": "263",
+        "year": "2019",
+        "doi": "10.1007/jhep10(2019)263",
+        "url": "https://doi.org/10.1007/jhep10(2019)263",
+        "eprint": "1909.00830",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "wang2020construct": {
+      "type": "article",
+      "fields": {
+        "author": "Wang, Peng and Wu, Houwen and Yang, Haitang and Ying, Shuxuan",
+        "title": "Construct $\\alpha'$ corrected or loop corrected solutions without curvature singularities",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "1",
+        "pages": "164",
+        "year": "2020",
+        "doi": "10.1007/jhep01(2020)164",
+        "url": "https://doi.org/10.1007/jhep01(2020)164",
+        "eprint": "1910.05808",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "conzinu2020blackholes": {
+      "type": "article",
+      "fields": {
+        "author": "Conzinu, P. and Gasperini, M. and Marozzi, G.",
+        "title": "Primordial black holes from pre-big bang inflation",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2020",
+        "number": "08",
+        "pages": "031",
+        "year": "2020",
+        "doi": "10.1088/1475-7516/2020/08/031",
+        "url": "https://doi.org/10.1088/1475-7516/2020/08/031",
+        "eprint": "2004.08111",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "song2023solutions": {
+      "type": "article",
+      "fields": {
+        "author": "Song, Li and Chen, Deyou",
+        "title": "Two non-perturbative $\\alpha'$ or loop corrected string cosmological solutions",
+        "journal": "Chinese Physics C",
+        "volume": "47",
+        "number": "9",
+        "pages": "095102",
+        "year": "2023",
+        "doi": "10.1088/1674-1137/acddd5",
+        "url": "https://doi.org/10.1088/1674-1137/acddd5",
+        "eprint": "2306.07031",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "codina2023bianchi": {
+      "type": "article",
+      "fields": {
+        "author": "Codina, Tomas and Hohm, Olaf and Zwiebach, Barton",
+        "title": "2D black holes, Bianchi I cosmologies, and $\\alpha'$",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "2",
+        "pages": "026014",
+        "year": "2023",
+        "doi": "10.1103/physrevd.108.026014",
+        "url": "https://doi.org/10.1103/physrevd.108.026014",
+        "eprint": "2304.06763",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "jiang2023ligo": {
+      "type": "article",
+      "fields": {
+        "author": "Jiang, Yang and Fan, Xi-Long and Huang, Qing-Guo",
+        "title": "Search for stochastic gravitational-wave background from string cosmology with Advanced LIGO and Virgo's O1∼O3 data",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2023",
+        "number": "04",
+        "pages": "024",
+        "year": "2023",
+        "doi": "10.1088/1475-7516/2023/04/024",
+        "url": "https://doi.org/10.1088/1475-7516/2023/04/024",
+        "eprint": "2302.03846",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "conzinu2023vacuum": {
+      "type": "article",
+      "fields": {
+        "author": "Conzinu, P. and Fanizza, G. and Gasperini, M. and Pavone, E. and Tedesco, L. and Veneziano, G.",
+        "title": "From the string vacuum to FLRW or de Sitter via $\\alpha'$ corrections",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2023",
+        "number": "12",
+        "pages": "019",
+        "year": "2023",
+        "doi": "10.1088/1475-7516/2023/12/019",
+        "url": "https://doi.org/10.1088/1475-7516/2023/12/019",
+        "eprint": "2308.16076",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "conzinu2023matter": {
+      "type": "article",
+      "fields": {
+        "author": "Conzinu, Pietro and Marozzi, Giovanni",
+        "title": "Primordial black holes formation in an early matter dominated era from the pre-big-bang scenario",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "4",
+        "pages": "043533",
+        "year": "2023",
+        "doi": "10.1103/physrevd.108.043533",
+        "url": "https://doi.org/10.1103/physrevd.108.043533",
+        "eprint": "2305.01430",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bendayan2024bouncing": {
+      "type": "article",
+      "fields": {
+        "author": "Ben-Dayan, Ido and Calcagni, Gianluca and Gasperini, Maurizio and Mazumdar, Anupam and Pavone, Eliseo and Thattarampilly, Udaykrishna and Verma, Amresh",
+        "title": "Gravitational-wave background in bouncing models from semi-classical, quantum and string gravity",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2024",
+        "number": "09",
+        "pages": "058",
+        "year": "2024",
+        "doi": "10.1088/1475-7516/2024/09/058",
+        "url": "https://doi.org/10.1088/1475-7516/2024/09/058",
+        "eprint": "2406.13521",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "tan2025string": {
+      "type": "article",
+      "fields": {
+        "author": "Tan, Qin and Wu, You and Liu, Lang",
+        "title": "Constraining string cosmology with the gravitational-wave background using the NANOGrav 15-year data set",
+        "journal": "The European Physical Journal C",
+        "volume": "85",
+        "number": "3",
+        "pages": "327",
+        "year": "2025",
+        "doi": "10.1140/epjc/s10052-025-13998-1",
+        "url": "https://doi.org/10.1140/epjc/s10052-025-13998-1",
+        "eprint": "2409.17846",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "conzinu2025nanograv": {
+      "type": "article",
+      "fields": {
+        "author": "Conzinu, P. and Fanizza, G. and Gasperini, M. and Pavone, E. and Tedesco, L. and Veneziano, G.",
+        "title": "Constraints on the Pre-Big Bang scenario from a cosmological interpretation of the NANOGrav data",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "02",
+        "pages": "039",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/02/039",
+        "url": "https://doi.org/10.1088/1475-7516/2025/02/039",
+        "eprint": "2412.01734",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "angus2025perturbations": {
+      "type": "article",
+      "fields": {
+        "author": "Angus, Stephen and Mukohyama, Shinji",
+        "title": "Perturbations in $O(D,D)$ string cosmology from double field theory",
+        "journal": "The European Physical Journal C",
+        "volume": "85",
+        "number": "2",
+        "pages": "173",
+        "year": "2025",
+        "doi": "10.1140/epjc/s10052-025-13841-7",
+        "url": "https://doi.org/10.1140/epjc/s10052-025-13841-7",
+        "eprint": "2408.13032",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "tan2025nanograv": {
+      "type": "article",
+      "fields": {
+        "author": "Tan, Qin and Wu, You and Liu, Lang",
+        "title": "Pre-big-bang cosmology cannot explain the NANOGrav 15-year signal",
+        "journal": "Physical Review D",
+        "volume": "111",
+        "number": "12",
+        "pages": "123525",
+        "year": "2025",
+        "doi": "10.1103/l7kb-r667",
+        "url": "https://doi.org/10.1103/l7kb-r667",
+        "eprint": "2411.16505",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "conzinu2025nonminimal": {
+      "type": "article",
+      "fields": {
+        "author": "Conzinu, P. and Gasperini, M. and Pavone, E.",
+        "title": "A simple example of “non-minimal” Pre-Big Bang scenario",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "11",
+        "pages": "027",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/11/027",
+        "url": "https://doi.org/10.1088/1475-7516/2025/11/027",
+        "eprint": "2506.00995",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "tan2026ligo": {
+      "type": "article",
+      "fields": {
+        "author": "Tan, Qin and Chen, Zu-Cheng and Wu, You and Liu, Lang",
+        "title": "Pre-Big-Bang cosmology meets gravitational wave astronomy: constraints from advanced LIGO and advanced Virgo’s first three observing runs",
+        "journal": "Communications in Theoretical Physics",
+        "volume": "78",
+        "number": "2",
+        "pages": "025408",
+        "year": "2026",
+        "doi": "10.1088/1572-9494/ae0aba",
+        "url": "https://doi.org/10.1088/1572-9494/ae0aba",
+        "eprint": "2412.09461",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "vilascurras2026lisa": {
+      "type": "article",
+      "fields": {
+        "author": "Vilas Currás, Xoán and Calcagni, Gianluca",
+        "title": "LISA as a probe of pre-big-bang physics: a nested sampling analysis",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2026",
+        "number": "05",
+        "pages": "061",
+        "year": "2026",
+        "doi": "10.1088/1475-7516/2026/05/061",
+        "url": "https://doi.org/10.1088/1475-7516/2026/05/061",
+        "eprint": "2511.16748",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini2026horizons": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, M.",
+        "title": "Cosmological horizons in regular bouncing backgrounds",
+        "journal": "International Journal of Modern Physics D",
+        "pages": "2641026",
+        "year": "2026",
+        "doi": "10.1142/s0218271826410269",
+        "url": "https://doi.org/10.1142/s0218271826410269",
+        "eprint": "2605.13636",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini2017initial": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, M.",
+        "title": "On the initial regime of pre-big bang cosmology",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2017",
+        "number": "09",
+        "pages": "001",
+        "year": "2017",
+        "doi": "10.1088/1475-7516/2017/09/001",
+        "url": "https://doi.org/10.1088/1475-7516/2017/09/001",
+        "eprint": "1707.05763",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "quintin2018stringholes": {
+      "type": "article",
+      "fields": {
+        "author": "Quintin, Jerome and Brandenberger, Robert H. and Gasperini, Maurizio and Veneziano, Gabriele",
+        "title": "Stringy black-hole gas in $\\alpha'$-corrected dilaton gravity",
+        "journal": "Physical Review D",
+        "volume": "98",
+        "number": "10",
+        "pages": "103519",
+        "year": "2018",
+        "doi": "10.1103/physrevd.98.103519",
+        "url": "https://doi.org/10.1103/physrevd.98.103519",
+        "eprint": "1809.01658",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gasperini2021quantum": {
+      "type": "article",
+      "fields": {
+        "author": "Gasperini, Maurizio",
+        "title": "Quantum String Cosmology",
+        "journal": "Universe",
+        "volume": "7",
+        "number": "1",
+        "pages": "14",
+        "year": "2021",
+        "doi": "10.3390/universe7010014",
+        "url": "https://doi.org/10.3390/universe7010014",
+        "eprint": "2101.01070",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "bitnaya2024stability": {
+      "type": "article",
+      "fields": {
+        "author": "Bitnaya, Denis and Conzinu, Pietro and Marozzi, Giovanni",
+        "title": "On the stability of string-hole gas",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2024",
+        "number": "01",
+        "pages": "025",
+        "year": "2024",
+        "doi": "10.1088/1475-7516/2024/01/025",
+        "url": "https://doi.org/10.1088/1475-7516/2024/01/025",
+        "eprint": "2308.16764",
+        "archiveprefix": "arXiv"
       }
     }
   }
