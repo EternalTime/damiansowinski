@@ -179,6 +179,11 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "rotation_halts": {
+        "regions": [["interior"], ["exterior"]],
+        "why": "The intrinsic three-dimensional shell metric is a junction, not a bulk region; "
+               "the two canonical bulk charts retain their wave functions.",
+    },
     "electron_bubble": {"regions": [["exterior", "exterior_kerr"], ["interior", "interior_kerr", "cartesian"]],
                         "why": "the flat interior and electrovacuum exterior are distinct smooth regions"},
     "hawking_moss": {

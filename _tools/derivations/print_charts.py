@@ -37583,5 +37583,9 @@ CHARTS[_wiggly_string.METRIC] = [_wiggly_string.chart_spec]
 import pre_big_bang as _pre_big_bang
 _pre_big_bang.register(sys.modules[__name__])
 
+import rotation_halts as _rotation_halts
+_rotation_halts.register_charts(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()

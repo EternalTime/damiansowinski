@@ -224,6 +224,18 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    ("rotation_halts", "interior"): {
+        "t": "L", "\\rho": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
+        "R": "L", "\\alpha": "L", "\\lambda": "1",
+    },
+    ("rotation_halts", "exterior"): {
+        "t": "L", "\\rho": "L", "\\phi": "1", "z": "L", "\\psi": "1", "\\gamma": "1",
+        "R": "L", "\\alpha": "L", "\\lambda": "1",
+    },
+    ("rotation_halts", "shell"): {
+        "\\tau": "L", "\\phi": "1", "z": "L", "R": "L", "\\psi": "1",
+        "\\alpha": "L", "\\lambda": "1",
+    },
     ("global_texture", "collapse"): {
         "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\epsilon": "1", "H": "1",
     },
