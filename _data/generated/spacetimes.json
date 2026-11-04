@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 253,
+  "count": 254,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3611,6 +3611,11 @@
           "id": "eye_of_the_storm",
           "kind": "family",
           "text": "A rotating regular black hole with an asymptotically Minkowski core, Kerr's metric with the mass written $me^{-\\ell/r}$ [simpson2022eye]."
+        },
+        {
+          "id": "limiting_curvature",
+          "kind": "family",
+          "text": "Universes in a theory of gravity whose curvature has an upper limit, where a collapse turns into de Sitter space as the centre of Bardeen's black hole is de Sitter's [brandenberger1993]. The bound comes from the action of gravity with ordinary matter as the source, and Frolov, Markov, and Mukhanov put a de Sitter core inside a black hole on the same hypothesis in 1989 [brandenberger1993, frolov1989]."
         }
       ],
       "references": [
@@ -3640,7 +3645,8 @@
         "gibbonsrasheed1995",
         "kelly2020",
         "bueno2025regular",
-        "simpson2022eye"
+        "simpson2022eye",
+        "brandenberger1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bardeen.json",
@@ -5519,6 +5525,11 @@
           "id": "pre_big_bang",
           "kind": "family",
           "text": "A vacuum of low energy string theory whose isotropic member expands faster and faster toward the big bang in its string frame. In the Einstein frame that expansion is the contraction of this universe long before its bounce [gasperini2003prebigbang]."
+        },
+        {
+          "id": "limiting_curvature",
+          "kind": "family",
+          "text": "A universe kept from its singularity by a classical action that bounds the curvature, written to stand in for quantum gravity at Planck curvatures [brandenberger1993]. Its closed universe bounces through a stage of de Sitter space, and its flat universe contracts toward de Sitter space for all time."
         }
       ],
       "references": [
@@ -5538,7 +5549,8 @@
         "hayward2006",
         "binetruy2000nonconventional",
         "murphy1973",
-        "gasperini2003prebigbang"
+        "gasperini2003prebigbang",
+        "brandenberger1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lqc_bounce.json",
@@ -18285,6 +18297,11 @@
           "id": "brown_teitelboim",
           "kind": "composite",
           "text": "Two regions of de Sitter space joined across a charged membrane, with different cosmological constants [hirano2018bt]."
+        },
+        {
+          "id": "limiting_curvature",
+          "kind": "family",
+          "text": "Universes in a theory of gravity whose curvature has an upper limit, each of which approaches de Sitter space as its curvature nears that limit [brandenberger1993]. A closed universe of the theory that collapses becomes de Sitter space and expands again."
         }
       ],
       "references": [
@@ -18338,7 +18355,8 @@
         "murphy1973",
         "starobinsky1980",
         "weinberg2007hm",
-        "hirano2018bt"
+        "hirano2018bt",
+        "brandenberger1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -27127,6 +27145,11 @@
           "id": "nappi_witten",
           "kind": "family",
           "text": "A closed cosmology from an exact conformal field theory. Its spatial slices are inhomogeneous, with two circular directions that expand and contract at different rates."
+        },
+        {
+          "id": "limiting_curvature",
+          "kind": "special_case",
+          "text": "Friedmann's metric with its scale factor taken from a theory of gravity changed at Planck curvatures, which keeps every curvature invariant bounded [brandenberger1993]. A closed universe of that theory bounces through de Sitter space where Einstein's equations put a big crunch."
         }
       ],
       "references": [
@@ -27206,7 +27229,8 @@
         "mello2017",
         "starobinsky1980",
         "gibbons1994ym",
-        "giddings1988"
+        "giddings1988",
+        "brandenberger1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -32346,6 +32370,11 @@
           "id": "eye_of_the_storm",
           "kind": "family",
           "text": "A regular black hole that spins, Kerr's metric with the mass switched off toward the centre, whose core is asymptotically Minkowski [simpson2022eye]."
+        },
+        {
+          "id": "limiting_curvature",
+          "kind": "family",
+          "text": "Universes in a theory of gravity built to keep its curvature below a limit, where a collapsing universe turns into de Sitter space [brandenberger1993]. Hayward's core is de Sitter space of radius $\\ell$ for every mass and meets the same kind of limit, as Valeri Frolov showed in 2016 [frolov2016]."
         }
       ],
       "references": [
@@ -32373,7 +32402,8 @@
         "haggard2015fireworks",
         "ashtekar2006bounce",
         "bueno2025regular",
-        "simpson2022eye"
+        "simpson2022eye",
+        "brandenberger1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -45551,6 +45581,196 @@
           ],
           "ricci_scalar": "R = -\\dfrac{2\\left(z^2 + 2z + 3\\right)}{L^2}",
           "kretschmann": "K = \\dfrac{4\\left(z^4 + 2z^2 + 3\\right)}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "limiting_curvature",
+      "name": "Mukhanov-Brandenberger Universe with Limiting Curvature",
+      "short_name": "Limiting Curvature Universe",
+      "description": "Homogeneous and isotropic universes in a theory of gravity changed at Planck curvatures so that no curvature invariant can grow without limit. A closed universe that collapses becomes de Sitter space, bounces, and expands again, and without matter every solution oscillates about flat spacetime or approaches de Sitter space. Viatcheslav Mukhanov and Robert Brandenberger proposed the theory in 1992 and worked out its universes with Andrew Sornborger in 1993.",
+      "tags": [
+        "alternative theories of gravity",
+        "no singularity",
+        "bounce",
+        "de Sitter",
+        "inflation",
+        "cosmology",
+        "FLRW",
+        "homogeneous",
+        "isotropic",
+        "closed universe",
+        "expanding universe",
+        "singularity theorems",
+        "numerical solution",
+        "time-dependent",
+        "Lorentzian",
+        "four-dimensional",
+        "idealized model",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "The space every universe of the theory approaches as its curvature nears the limit, with a Hubble rate no greater than $H_0$ [brandenberger1993]. A closed universe turns around through a de Sitter bounce, which resembles the waist of de Sitter's closed universe [brandenberger1993]."
+        },
+        {
+          "id": "frw",
+          "kind": "generalisation",
+          "text": "Friedmann's metric with any scale factor. With the scale factor taken from field equations that keep $H^2 + k/a^2$ below $H_0^2$, it is this universe, and it reaches no big bang and no big crunch [brandenberger1993]."
+        },
+        {
+          "id": "lqc_bounce",
+          "kind": "family",
+          "text": "A flat universe of a massless scalar field whose contraction turns into expansion at a greatest density, about 0.41 of the Planck density, from the quantum geometry of loop quantum cosmology [ashtekar2009bianchi, ashtekar2011status]. There a flat universe bounces; with a limiting curvature a flat universe contracts toward de Sitter space for all time, and only a closed one bounces [brandenberger1993]."
+        },
+        {
+          "id": "bardeen",
+          "kind": "family",
+          "text": "A black hole of Einstein's theory whose centre is de Sitter space, with every curvature invariant finite [ayonbeato2000]. Applied to a black hole, the limit on curvature puts de Sitter space where the singularity would be, as Valeri Frolov, Moissei Markov, and Viatcheslav Mukhanov proposed in 1989 [brandenberger1993, frolov1989]."
+        },
+        {
+          "id": "hayward",
+          "kind": "family",
+          "text": "A black hole whose core is de Sitter space of radius $\\ell$ whatever its mass [hayward2006]. Valeri Frolov showed in 2016 that its curvature stays below a value of order $1/\\ell^2$ for every mass, the condition Markov proposed and this theory builds into its field equations [frolov2016, brandenberger1993]."
+        }
+      ],
+      "references": [
+        "brandenberger1993",
+        "brandenberger1995",
+        "mukhanov1992nonsingular",
+        "frolov1989",
+        "yoshida2017",
+        "chamseddine2017",
+        "frolov2021bouncing",
+        "ashtekar2009bianchi",
+        "ashtekar2011status",
+        "ayonbeato2000",
+        "hayward2006",
+        "frolov2016"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/limiting_curvature.json",
+      "charts": [
+        {
+          "id": "comoving",
+          "name": "Comoving",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor ($a > 0$), a length, the radius of curvature of space at the time $t$, with the Hubble rate $H = (da/dt)/a$. The field equations of the theory hold $H^2 + c^2/a^2$ below $H_0^2$, so $a$ stays above $c/H_0$"
+            },
+            {
+              "symbol": "H_0",
+              "description": "The limiting Hubble rate of the theory, an inverse time, expected at the Planck scale"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and the angles $(\\chi, \\theta, \\phi)$ of the unit 3-sphere about one observer, with $a\\chi$ the distance from that observer. The scale factor $a(t)$ is the radius of curvature of space, a length, and we leave it free, since no solution is known in closed form. We take components in the chart $x^0 = ct$, a prime is $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+          "kretschmann": "K = 12\\left(\\left(\\dfrac{a''}{a}\\right)^2 + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)"
+        },
+        {
+          "id": "de_sitter_bounce",
+          "name": "de Sitter Bounce",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the 3-sphere at the bounce $t = 0$, a length, with $\\ell > c/H_0$ for the limiting Hubble rate $H_0$ of the theory. At the time $t$ the radius is $a = \\ell\\cosh(ct/\\ell)$ and the Hubble rate $H = (c/\\ell)\\tanh(ct/\\ell)$, so $H^2 + c^2/a^2 = c^2/\\ell^2$ at every time"
+            }
+          ],
+          "convention": "We use cosmic time $t$ and the angles $(\\chi, \\theta, \\phi)$ of the unit 3-sphere about one observer. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + \\ell^2\\cosh^2(ct/\\ell)\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\cosh^2(ct/\\ell)\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4}"
         }
       ]
     },

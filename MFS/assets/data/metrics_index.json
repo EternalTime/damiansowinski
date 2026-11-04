@@ -299,7 +299,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6d4ce7f67cc7835b",
+    "version": "33a42bd9a3a70047",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
     "embedding": "1585df5452ac5572",
@@ -475,7 +475,7 @@
       "spherically symmetric",
       "quantum cosmology"
     ],
-    "version": "e45d6c6f5084c2e0",
+    "version": "1884934096eb4464",
     "diagrams": "3db667c16a7e7f5b",
     "conformal": "ccbbac884fd12a06",
     "embedding": "ceeab6a7ab8b327f"
@@ -1675,7 +1675,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "0e24c6cb1217f84e",
+    "version": "5c2fb7e33679364f",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2390,7 +2390,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "50c32e9041781838",
+    "version": "500c054386238aa7",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2845,7 +2845,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "827539c93a554856",
+    "version": "ddaffe2808dae44d",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "5ff5b48da9e6b5f3",
@@ -4088,6 +4088,36 @@
     "diagrams": "8ae1647667d42c8c",
     "conformal": "5a36ce41d9009dbd",
     "embedding": "cd98817c46caeee2"
+  },
+  {
+    "id": "limiting_curvature",
+    "name": "Limiting Curvature Universe",
+    "tags": [
+      "alternative theories of gravity",
+      "no singularity",
+      "bounce",
+      "de Sitter",
+      "inflation",
+      "cosmology",
+      "FLRW",
+      "homogeneous",
+      "isotropic",
+      "closed universe",
+      "expanding universe",
+      "singularity theorems",
+      "numerical solution",
+      "time-dependent",
+      "Lorentzian",
+      "four-dimensional",
+      "idealized model",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "ae4d762f9e9f8537",
+    "diagrams": "98f1c16829b170cc",
+    "conformal": "4f59900fc97ca1a5",
+    "embedding": "977ecc88581943c1",
+    "curvature": "5b1898109e64be96"
   },
   {
     "id": "lindquist_wheeler_lattice",

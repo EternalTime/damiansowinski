@@ -1843,6 +1843,17 @@ A spacetime whose symmetry rescales time and space by different powers, $t \to \
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, x, y, r)$, $$ds^2 = -\left(\dfrac{r}{L}\right)^{2z}dv^2 + 2\left(\dfrac{r}{L}\right)^{z - 1}dv\,dr + \dfrac{r^2}{L^2}\left(dx^2 + dy^2\right)$$
 - chart Affine Null (Copsey-Mann): coordinates $(v, x, y, s)$, $$ds^2 = -\dfrac{z^2s^2}{4L^2}dv^2 + dv\,ds + \left(\dfrac{zs}{2L}\right)^{2/z}\left(dx^2 + dy^2\right)$$
 
+### Mukhanov-Brandenberger Universe with Limiting Curvature
+
+Homogeneous and isotropic universes in a theory of gravity changed at Planck curvatures so that no curvature invariant can grow without limit. A closed universe that collapses becomes de Sitter space, bounces, and expands again, and without matter every solution oscillates about flat spacetime or approaches de Sitter space. Viatcheslav Mukhanov and Robert Brandenberger proposed the theory in 1992 and worked out its universes with Andrew Sornborger in 1993.
+
+- id: `limiting_curvature`
+- tags: alternative theories of gravity, no singularity, bounce, de Sitter, inflation, cosmology, FLRW, homogeneous, isotropic, closed universe, expanding universe, singularity theorems, numerical solution, time-dependent, Lorentzian, four-dimensional, idealized model, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/limiting_curvature.json
+- chart Comoving: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart de Sitter Bounce: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + \ell^2\cosh^2(ct/\ell)\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Lindquist-Wheeler Lattice Universe
 
 A closed universe that holds nothing but $N$ equal masses, one at the centre of each cell of a regular tiling of the three sphere, built by Richard Lindquist and John Wheeler in 1957 from pieces of Schwarzschild's geometry. Fitting the pieces together makes the lattice expand and fall back almost as Friedmann's closed universe of dust does. It is an approximate spacetime, and an early test of whether a universe whose matter comes in lumps expands like a smooth one.
