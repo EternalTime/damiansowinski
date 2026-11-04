@@ -5125,6 +5125,8 @@ HIDDEN[("mallett_radiating_star", "eddington_finkelstein_outgoing", "radiation")
 
 import charged_three_dimensions_drawings as _charged_three_dimensions_drawings  # noqa: E402
 _charged_three_dimensions_drawings.register_slices(sys.modules[__name__])
+import three_dim_black_string_drawings as _three_dim_black_string_drawings  # noqa: E402
+_three_dim_black_string_drawings.register_slices(sys.modules[__name__])
 
 
 FLAT[("hellaby_kruskal", "comoving", "neck")] = lambda: one(

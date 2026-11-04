@@ -1,0 +1,51 @@
+{
+  "hidden": [
+    {
+      "reason": "The extremal string, |Q| = M, is another member of the family than either string embedded.",
+      "drawings": [
+        "three_dim_black_string/extremal/radial",
+        "three_dim_black_string/extremal_interior/along"
+      ]
+    },
+    {
+      "reason": "The plane of x and r inside the event horizon meets the slice t = 0 of the black string nowhere, since that slice lies outside the event horizon, and the cigar is another member of the family.",
+      "drawings": [
+        "three_dim_black_string/static/along",
+        "conformal three_dim_black_string/interior"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The cigar is the slice t = 0 beyond extremality, |Q| = 2M, another member of the family than the black string at Q^2 = M^2/2 that these drawings show.",
+      "drawings": {
+        "three_dim_black_string/static/radial": [
+          "cigar"
+        ],
+        "three_dim_black_string/wzw/plane": [
+          "cigar"
+        ],
+        "three_dim_black_string/eddington_finkelstein_ingoing/chart": [
+          "cigar"
+        ],
+        "conformal three_dim_black_string/static": [
+          "cigar"
+        ],
+        "conformal three_dim_black_string/wzw": [
+          "cigar"
+        ],
+        "conformal three_dim_black_string/ingoing": [
+          "cigar"
+        ]
+      }
+    },
+    {
+      "reason": "The black string at Q^2 = M^2/2 is another member of the family than the string beyond extremality, |Q| = 2M, that this drawing shows.",
+      "drawings": {
+        "three_dim_black_string/superextremal/radial": [
+          "string"
+        ]
+      }
+    }
+  ]
+}

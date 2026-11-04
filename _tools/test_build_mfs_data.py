@@ -4800,6 +4800,13 @@ class Slices(unittest.TestCase):
             from scipy.special import exp1
             sign = 1 if "ingoing" in key else -1
             return (lambda X: sign * (2 * float(exp1(math.log(1 / X))) - X)), list(self.reach(surface))
+        if key == "three_dim_black_string/eddington_finkelstein_ingoing/chart":
+            # Static t = 0 at M = 1, Q^2 = 1/2 and k = 52/23 is v = r_*, drawn against v, with
+            # r_* = sqrt(k/8)(ln(|s - a|/(s + a))/a + ln((1 + s)/(1 - s))), s = sqrt(1 - Q^2/Mr), a = sqrt(1/2).
+            def string_rstar(r):
+                s, a = math.sqrt(1 - 0.5 / r), math.sqrt(0.5)
+                return math.sqrt(52 / 23 / 8) * (math.log(abs(s - a) / (s + a)) / a + math.log((1 + s) / (1 - s)))
+            return string_rstar, list(self.reach(surface))
         if key.startswith(("kerr_de_sitter/kerr_", "kerr_de_sitter/kerr_schild")):
             # Static t = 0 is v = r_*, u = -r_* and c tau = s, drawn against v - r, u + r and c tau:
             # dr_*/dr = (r^2 + a^2)/Delta_r and ds/dr = r_s r/((1 - Lambda r^2/3) Delta_r), both zero at
