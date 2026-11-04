@@ -234,6 +234,7 @@ import boson_star as bs  # noqa: E402
 import kodama_kink as kk  # noqa: E402
 import bubbling_ads  # noqa: E402
 import bartnik_mckinnon as bm_soliton  # noqa: E402
+import limiting_curvature as lc_universe  # noqa: E402
 import skyrmion_hair as skyrme_hole  # noqa: E402
 import ori_piran as ori_piran_solution  # noqa: E402
 import black_saturn as bsat  # noqa: E402
@@ -2407,6 +2408,30 @@ BM_FLOW = {"A": "exp(-bm_delta(exp(tau)*bm_k(exp(tau), 1), 1))", "N": "sqrt(bm_N
            "r": "exp(tau)*bm_k(exp(tau), 1)"}
 BM_NODE = 1.5457        # the zero of w, in ell
 
+# Mukhanov and Brandenberger's closed universe as every drawing of it draws it, in units c = H_0 = 1: the
+# universe through a bounce of radius 2c/H_0, symmetric in time, that limiting_curvature.py solves.
+# The scale factor is declared with its derivatives along x^0 = ct, each the next of its chain, read off
+# the solver's state through (2.26).
+def _lc_function(name, key, rate=None, doc=None):
+    def value(t):
+        return lc_universe.bounce().jet(np.asarray(t, dtype=float))[key]
+
+    def fdiff(self, argindex=1):
+        if argindex != 1 or rate is None:
+            raise sp.ArgumentIndexError(self, argindex)
+        return rate(*self.args)
+    return type(name, (sp.Function,), {"nargs": 1, "is_real": True, "_imp_": staticmethod(value), "fdiff": fdiff,
+                                       "__doc__": doc})
+
+
+lc_d3a = _lc_function("lc_d3a", "d3a")
+lc_d2a = _lc_function("lc_d2a", "d2a", lambda t: lc_d3a(t))
+lc_da = _lc_function("lc_da", "da", lambda t: lc_d2a(t))
+lc_a = _lc_function("lc_a", "a", lambda t: lc_da(t),
+                    "The radius a/(c/H_0) of the 3-sphere at H_0 t in the universe with limiting curvature.")
+LC_INPUT = ("The closed universe without matter whose bounce at $t = 0$ has the radius $a = 2c/H_0$ and is "
+            "symmetric in time, found by numerical integration of the field equations.")
+
 # Lindquist and Wheeler's lattice of eight cells, whose numbers slices.py holds for every drawing of it.
 LW_CELLS, LW_PSI, LW_RM, LW_AM = slices.LW_CELLS, slices.LW_PSI, slices.LW_RM, slices.LW_AM
 LW_TM = math.pi / 2 * LW_RM ** 1.5         # the boundary's proper time from the bang to its turn, in r_s/c
@@ -2635,6 +2660,8 @@ DECLARED_FUNCTIONS = {"dr_eta": dr_eta, "tilted_eta": tilted_eta, **{f.__name__:
                       "iw_dddr": iw_dddr,
                       "bwh_sigma": bwh_sigma, "bwh_inside_sch": bwh_inside_sch,
                       "bwh_inside_pg": bwh_inside_pg, "bwh_shell_sch": bwh_shell_sch, "bwh_shell_pg": bwh_shell_pg}
+
+DECLARED_FUNCTIONS.update({f.__name__: f for f in (lc_a, lc_da, lc_d2a, lc_d3a)})
 
 
 DECLARED_FUNCTIONS.update(skyrme_hole.declared_functions())
@@ -5300,6 +5327,14 @@ DIAGRAMS = [
             "$r/ct_b$", "$t/t_b$", {"t_b": 1}, EQUATOR, areal=True),
     Diagram("lqc_bounce", "harmonic", "taux", "$\\tau$ and $x$", ("\\tau", "x"), (-3, 3, -2.5, 2.5),
             "$x/ct_b$", "$\\tau/t_b$", {"t_b": 1}, {"y": "0", "z": "0"}, tau="tau", families=SIDEWAYS),
+    # Mukhanov and Brandenberger's closed universe with limiting curvature in units c = H_0 = 1, through its
+    # bounce at t = 0 from the pole chi = 0 to the antipode chi = pi, and de Sitter's closed slicing, the
+    # space the universe approaches, in units of the radius l of its waist.
+    Diagram("limiting_curvature", "comoving", "radial", "$t$ and $\\chi$", ("t", "\\chi"), (0, math.pi, -2, 2),
+            "$\\chi$", "$H_0t$", {"H_0": 1}, EQUATOR, areal=True, no_throat=True, functions={"a": "lc_a(t)"},
+            input=LC_INPUT),
+    Diagram("limiting_curvature", "de_sitter_bounce", "radial", "$t$ and $\\chi$", ("t", "\\chi"),
+            (0, math.pi, -2, 2), "$\\chi$", "$ct/\\ell$", {"ell": 1}, EQUATOR, areal=True, no_throat=True),
     # Murphy's universe with viscosity for radiation, q = 2, in units of 1/H_s and c/H_s. The scale factor
     # is the time of two charts; the cosmic chart's a(t) is a^2 = W(e^(2t)), Lambert's W, from
     # H_s t = ln a + a^2/2, and the expansion stops accelerating at a = 1, t = 1/2.
@@ -12386,6 +12421,18 @@ CAPTIONS = {
         "which the field has one value. Each ray is a ray of the cosmic chart, with $x \\pm \\int c\\,dt/a$ "
         "constant along it.",
     ],
+    ("limiting_curvature", "comoving", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) from the pole to its antipode, each point a "
+        "2-sphere of radius $a\\sin\\chi$.",
+        "The cones are $d\\chi/d(ct) = \\pm 1/a$, widest at the bounce, $a = 2c/H_0$, and closing as the universe "
+        "approaches de Sitter space. The dotted apparent horizon is $\\tan\\chi = 1/|a'|$.",
+    ],
+    ("limiting_curvature", "de_sitter_bounce", "radial"): [
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in de Sitter space, whose 3-sphere is "
+        "smallest, $a = \\ell$, at $t = 0$.",
+        "A ray that leaves the pole at $t = -\\infty$ reaches the antipode at $t = +\\infty$. The dotted apparent "
+        "horizon is $\\tan\\chi = 1/|\\sinh(ct/\\ell)|$.",
+    ],
     ("kopczynski_trautman", "comoving_cartesian", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$), each vertical line the world line of a grain of dust. The edges of "
         "the cones are $dx/d(ct) = \\pm 1/a$, so they stand at 45° at $t = 0$, where $a = 1$ and the dust is densest, "
@@ -18017,6 +18064,12 @@ CLOSED_FORMS = {
     ("lqc_bounce", "comoving_spherical", "radial"): (lambda t, r: _lqc_eta(t) + r, lambda t, r: _lqc_eta(t) - r, None),
     ("lqc_bounce", "harmonic", "taux"):
         (lambda tau, x: x + _lqc_eta(np.sinh(tau)), lambda tau, x: x - _lqc_eta(np.sinh(tau)), None),
+    # The universe with limiting curvature: its conformal time eta = int c dt/a, which the solver integrates
+    # along with the scale factor, and de Sitter's closed slicing, eta = gd(ct/l) = 2 arctan(tanh(ct/2l)).
+    ("limiting_curvature", "comoving", "radial"):
+        (lambda t, c: lc_universe.bounce().eta(t) + c, lambda t, c: lc_universe.bounce().eta(t) - c, None),
+    ("limiting_curvature", "de_sitter_bounce", "radial"):
+        (lambda t, c: 2 * np.arctan(np.tanh(t / 2)) + c, lambda t, c: 2 * np.arctan(np.tanh(t / 2)) - c, None),
     ("kopczynski_trautman", "comoving_cartesian", "tx"): (lambda t, x: _kt_eta(t) + x, lambda t, x: _kt_eta(t) - x, None),
     ("kopczynski_trautman", "comoving_spherical", "radial"):
         (lambda t, r: _kt_eta(t) + r, lambda t, r: _kt_eta(t) - r, None),
