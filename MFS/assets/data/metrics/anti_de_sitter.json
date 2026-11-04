@@ -197,6 +197,11 @@
       "id": "klebanov_witten",
       "kind": "family",
       "text": "The throat pairs anti-de Sitter space of five dimensions with a compact circle bundle over two 2-spheres. Threebranes at the tip of the conifold produce this product in the limit near their horizon [klebanovwitten1998]."
+    },
+    {
+      "id": "three_dim_black_string",
+      "kind": "limit_source",
+      "text": "A charged black string of three dimensions, which becomes anti-de Sitter space of three dimensions in the limit where its charge approaches its mass, with its coordinates rescaled [horne1992black]."
     }
   ],
   "references": [
@@ -256,7 +261,8 @@
     "cahen1970",
     "dasilva2000",
     "zofka2008",
-    "klebanovwitten1998"
+    "klebanovwitten1998",
+    "horne1992black"
   ],
   "coordinates": [
     {

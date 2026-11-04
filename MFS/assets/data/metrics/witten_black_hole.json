@@ -67,6 +67,11 @@
       "id": "linear_dilaton",
       "kind": "family",
       "text": "The string frame far from the hole has a spatial linear dilaton [karananas2021linear, mandal1991]. The expanding universe has a timelike dilaton gradient [devega1994linear, angius2022linear]."
+    },
+    {
+      "id": "three_dim_black_string",
+      "kind": "composite",
+      "text": "Times a line, this hole is the uncharged black string of three dimensions. Horne and Horowitz charged that string by gauging a translation along the line together with the hole's own symmetry [horne1992black]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "maldacena2018",
     "karananas2021linear",
     "devega1994linear",
-    "angius2022linear"
+    "angius2022linear",
+    "horne1992black"
   ],
   "coordinates": [
     {

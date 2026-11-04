@@ -146,6 +146,11 @@
       "id": "charged_three_dimensions",
       "kind": "family",
       "text": "Charged, and with its cosmological constant set to zero, this black hole becomes the spacetime of a point charge in a plane [carlip1995]."
+    },
+    {
+      "id": "three_dim_black_string",
+      "kind": "family",
+      "text": "An asymptotically flat charged black string, the dual of the rotating hole along its angle. Its charge is half the hole's angular momentum and its horizons sit where the hole's do [horowitz1993]."
     }
   ],
   "references": [

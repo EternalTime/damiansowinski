@@ -107,6 +107,11 @@
       "id": "pre_big_bang",
       "kind": "family",
       "text": "A universe of the same string theory with the dilaton alone, changing with time. With every exponent negative it expands faster and faster toward a singularity of infinite curvature, and inverting its scale factors and reversing its time pairs it with a decelerating expansion [gasperini1993prebigbang]."
+    },
+    {
+      "id": "three_dim_black_string",
+      "kind": "family",
+      "text": "A charged black string of string theory in three dimensions that keeps an inner horizon, with a timelike singularity inside it [horne1992black]."
     }
   ],
   "references": [
@@ -136,7 +141,8 @@
     "banerjee1998",
     "dvali2016skyrmion",
     "devega1994linear",
-    "gasperini1993prebigbang"
+    "gasperini1993prebigbang",
+    "horne1992black"
   ],
   "coordinates": [
     {

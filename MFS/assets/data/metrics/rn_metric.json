@@ -213,6 +213,11 @@
       "id": "charged_three_dimensions",
       "kind": "family",
       "text": "J. Richard Gott III, Jonathan Z. Simon, and Mark Alpert likened the horizon of a point charge in two dimensions of space to the inner horizon of this black hole [gott1986charged]."
+    },
+    {
+      "id": "three_dim_black_string",
+      "kind": "family",
+      "text": "A charged black string in three dimensions with the same diagram of an event horizon, an inner horizon, and a timelike singularity. Inside its inner horizon the timelike Killing vector is the translation along the string [horne1992black]."
     }
   ],
   "references": [
@@ -266,7 +271,8 @@
     "lewandowski2023",
     "mertens2023",
     "banerjee1998",
-    "gott1986charged"
+    "gott1986charged",
+    "horne1992black"
   ],
   "coordinates": [
     {

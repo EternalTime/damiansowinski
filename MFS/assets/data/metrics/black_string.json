@@ -87,6 +87,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "A charged extremal black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "three_dim_black_string",
+      "kind": "family",
+      "text": "A charged black string in three dimensions from string theory, with an event horizon, an inner horizon, and a timelike singularity. The dilaton and antisymmetric field of its string metric violate the strong energy condition, which lets a static black string exist below five dimensions [horne1992black]."
     }
   ],
   "references": [
@@ -117,7 +122,8 @@
     "herdeiro2014",
     "lake2006static",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "horne1992black"
   ],
   "coordinates": [
     {
