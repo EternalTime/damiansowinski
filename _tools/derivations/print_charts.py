@@ -33969,7 +33969,7 @@ def limiting_curvature_check(chart, system, points=6, seed=1993):
     difference a''/a - (a'^2 + 1)/a^2 = (dH/dt - c^2/a^2)/c^2 takes both signs. The comoving chart
     has I_2 = 12 D^2 with D that difference, and I_1 = R - sqrt(3) sqrt(I_2) = 12(a'^2 + 1)/a^2,
     which is 12(H^2 + c^2/a^2)/c^2, only with sqrt(I_2) = sqrt(12) D, the root taken with the sign
-    of D: where D < 0 the positive root gives I_1 = 12(a'^2 + 1)/a^2 + 24 D. The de Sitter bounce
+    of D: where D < 0 the positive root gives I_1 = 12(a'^2 + 1)/a^2 + 12 D. The de Sitter bounce
     chart is the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 of five dimensional Minkowski
     space pulled back, with R_mu_nu = (3/l^2) g_mu_nu, I_2 = 0, I_1 = 12/l^2, and its metric is
     the comoving chart's at a = l cosh(ct/l)."""

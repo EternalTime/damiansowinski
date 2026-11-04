@@ -56,7 +56,7 @@ radius and that rate, and the rate zero is the one symmetric under t -> -t, whic
 and phi_2 into themselves and H and the rates into their negatives. The solution is integrated
 from t = 0 to T_FAR and read at negative times through that symmetry. Past the bounce phi_2 runs
 off toward -infinity and phi_1 grows, so dH/dt - k/a^2 = -V_2'(phi_2)/sqrt(12) falls toward zero
-and the universe approaches de Sitter space, slowly: at a_b = 2 it is 3e-2 at t = 2, 3e-3 at t = 10
+and the universe approaches de Sitter space, slowly: at a_b = 2 it is 7e-3 at t = 2, 3e-3 at t = 10
 and 5e-4 at T_FAR = 60, while H climbs from 0.82 to 0.92 and the scale factor grows as e^(Ht). The
 conformal time eta, d eta/dt = 1/a, rides along, zero at the bounce, and has stopped changing in its
 tenth digit by t = 30. Its limit is eta_end = 0.8430 at a_b = 2, so the whole history spans 1.686
