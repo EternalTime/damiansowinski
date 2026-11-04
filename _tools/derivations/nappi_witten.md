@@ -65,3 +65,8 @@ The conformal construction is the closed cosmological causal region with both ci
 NOT_DRAWN: the maximum volume embedding moment has $r=1/2$ and lies on none of the static extension, where $r<0$.
 
 The conformal null coordinates are $p=(\psi-s)/2$ and $q=(\psi+s)/2$, so the plotted axes are $X=q-p=s$ and $T=q+p=\psi$.
+
+The null integrals in the transformed charts contain $\sqrt{x}$ and $\arcsin\sqrt{r}$.
+The ray comparison omits $x\leq0.02$ and $r\notin(0.02,0.98)$, where these coordinate maps have unbounded derivatives at the endpoint.
+Their tracing step is $0.001$ of the displayed box.
+The static null integral is compared only for $\chi>0.02$, inside its sourced domain.

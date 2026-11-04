@@ -76,7 +76,7 @@
     {
       "id": "nappi_witten",
       "kind": "family",
-      "text": "A cosmological gauged Wess-Zumino-Witten background with three spatial dimensions. Its construction is related by $O(2,2;\\mathbb{R})$ transformations to a product containing the Lorentzian model in two spacetime dimensions black hole coset [nappi1992, elitzur2002nw]."
+      "text": "A cosmological gauged Wess-Zumino-Witten background with three spatial dimensions. An $O(2,2;\\mathbb{R})$ transformation relates it to a product containing the Lorentzian black hole coset in two spacetime dimensions [nappi1992, elitzur2002nw]."
     }
   ],
   "references": [

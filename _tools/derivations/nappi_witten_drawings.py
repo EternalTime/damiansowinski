@@ -17,11 +17,11 @@ def diagram_specs(nr):
         nr.Diagram(METRIC, "bang_regular", "polar", "Cosmological region", ("x", "s"),
                    (-0.12, half+0.12, -0.10, 3.35), "$s$", "$x$", PARAMS,
                    {"rho": "0"}, tau="x", families=nr.SIDEWAYS, quotient="w", where="x",
-                   cone="future cone of zero angular momentum"),
+                   cone="future cone of zero angular momentum", step=0.001),
         nr.Diagram(METRIC, "invariant", "polar", "Cosmological region", ("r", "s"),
                    (-0.12, half+0.12, -0.12, 1.12), "$s$", "$r$", PARAMS,
                    {"rho": "0", "lambda": "0"}, tau="r", families=nr.SIDEWAYS,
-                   where="r*(1-r)"),
+                   where="r*(1-r)", step=0.001),
         nr.Diagram(METRIC, "whisker", "periodic", "Periodic time", (r"\lambda", r"\chi"),
                    (-0.15, 6.45, -0.15, 2*math.pi+0.15), r"$\chi$", r"$\lambda$", PARAMS,
                    {"rho": "0", "s": "pi/4"}, tau="lambda_", families=nr.SIDEWAYS,
@@ -49,11 +49,11 @@ def null_forms():
         (METRIC, "cosmological", "polar"):
             (lambda t, s: t+s, lambda t, s: t-s, None),
         (METRIC, "bang_regular", "polar"):
-            (lambda x, s: np.arctan(np.sqrt(x))+s, lambda x, s: np.arctan(np.sqrt(x))-s, None),
+            (lambda x, s: np.arctan(np.sqrt(x))+s, lambda x, s: np.arctan(np.sqrt(x))-s, lambda x, s: x > 0.02),
         (METRIC, "invariant", "polar"):
-            (lambda r, s: np.arcsin(np.sqrt(r))+s, lambda r, s: np.arcsin(np.sqrt(r))-s, None),
+            (lambda r, s: np.arcsin(np.sqrt(r))+s, lambda r, s: np.arcsin(np.sqrt(r))-s, lambda r, s: (r > 0.02) & (r < 0.98)),
         (METRIC, "whisker", "periodic"):
-            (lambda t, x: t+np.log(np.tanh(x/2)), lambda t, x: t-np.log(np.tanh(x/2)), None),
+            (lambda t, x: t+np.log(np.tanh(x/2)), lambda t, x: t-np.log(np.tanh(x/2)), lambda t, x: x > 0.02),
     }
 
 
