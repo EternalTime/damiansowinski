@@ -72,6 +72,11 @@
       "id": "three_dim_black_string",
       "kind": "composite",
       "text": "Times a line, this hole is the uncharged black string of three dimensions. Horne and Horowitz charged that string by gauging a translation along the line together with the hole's own symmetry [horne1992black]."
+    },
+    {
+      "id": "nappi_witten",
+      "kind": "family",
+      "text": "A cosmological gauged Wess-Zumino-Witten background with three spatial dimensions. Its construction is related by $O(2,2;\\mathbb{R})$ transformations to a product containing the Lorentzian model in two spacetime dimensions black hole coset [nappi1992, elitzur2002nw]."
     }
   ],
   "references": [
@@ -94,7 +99,9 @@
     "karananas2021linear",
     "devega1994linear",
     "angius2022linear",
-    "horne1992black"
+    "horne1992black",
+    "nappi1992",
+    "elitzur2002nw"
   ],
   "coordinates": [
     {

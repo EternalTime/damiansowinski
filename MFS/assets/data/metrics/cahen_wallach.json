@@ -67,6 +67,11 @@
       "id": "kowalski_glikman",
       "kind": "family",
       "text": "The member in eleven dimensions with a null 4-form and 32 Killing spinors. Three transverse directions oscillate at twice the frequency of the other six [figueroa2001]."
+    },
+    {
+      "id": "nappi_witten",
+      "kind": "family",
+      "text": "The same authors' 1992 string cosmology has inhomogeneous 3-sphere spatial slices that expand and recollapse. Their later homogeneous Wess-Zumino-Witten plane wave belongs to the Cahen-Wallach family [nappi1992, nappi1993]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "blau2002",
     "blau2002penrose",
     "fransen2023",
-    "bonnor1969light"
+    "bonnor1969light",
+    "nappi1992"
   ],
   "coordinates": [
     {

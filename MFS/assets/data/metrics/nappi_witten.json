@@ -23,7 +23,28 @@
   "signature": "(-,+,+,+)",
   "convention": "We use the string frame and set $c=1$. The positive length $L$ sets the common scale, and $b=\\sqrt{(1-\\sin\\alpha)/(1+\\sin\\alpha)}$ for the dimensionless gauge parameter $\\alpha$. A dot denotes differentiation with respect to an affine parameter.",
   "history": "One circular direction collapses at the big bang; another collapses at the big crunch. Between those singularities, space has the topology of a 3-sphere. Chiara R. Nappi and Edward Witten constructed this closed, expanding universe in 1992 [nappi1992].¶They gauged two symmetries of a Wess-Zumino-Witten model on $SL(2,\\mathbb{R})\\times SU(2)$, leaving a spacetime with three spatial dimensions and one time dimension. The dilaton and an antisymmetric tensor accompany the metric, and the conformal field theory has central charge $c=4$ [nappi1992]. The conformal field theory is exact; their spacetime geometry is its limit of large levels, with corrections at finite level in the bosonic theory [elitzur2002nw].¶The two circular directions change size at different rates, and their radii depend on position across the 3-sphere [nappi1992]. At maximum spatial volume for the gauge parameter $\\alpha=0$, the scalar curvature ranges from zero to $14/L^2$, where $L$ sets the overall length scale. Even at that instant, different places have different curvature; in a Friedmann universe, scalar curvature is the same throughout each spatial slice.¶The initial and final singularities have two distinct origins. For $\\alpha=0$, the collapse at generic spatial positions is an orbifold singularity; curvature and the dilaton diverge at particular points where a continuous gauge symmetry fixes the fields [nappi1992]. Nappi and Witten wrote that a possible violation of cosmic censorship is avoided because the \"universe recollapses just when a naked singularity was about to form\" [nappi1992].¶The same authors constructed a homogeneous plane wave in 1993 from an ungauged Wess-Zumino-Witten model on a nonsemisimple group [nappi1993]. The plane wave has a parallel null direction and a constant dilaton. Its curvature is covariantly constant, with equal negative transverse eigenvalues; it belongs to the symmetric plane waves that Michel Cahen and Nolan Wallach classified in 1970 [cahen1970, figueroa2013symmetric].¶Shmuel Elitzur, Amit Giveon, David Kutasov, and Eliezer Rabinovici studied the extended cosmology in 2002 [elitzur2002nw]. They connected successive expanding and collapsing regions to additional static regions containing closed timelike curves. String scattering states can pass between the cosmological and static regions, and the asymptotic boundaries of the static regions support observables of the conformal field theory.",
-  "related": [],
+  "related": [
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "Both cosmologies can have closed spatial slices and a finite lifetime. Friedmann's spatial geometry is homogeneous and isotropic; the two circular directions of the Nappi-Witten universe evolve differently, and curvature varies across space."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "Both backgrounds arise from gauged Wess-Zumino-Witten models and carry a dilaton; Witten's hole describes the $SL(2,\\mathbb{R})/U(1)$ coset. An $O(2,2;\\mathbb{R})$ transformation relates the cosmology to a product of Lorentzian and Euclidean black hole cosets; Witten's black hole has two spacetime dimensions [nappi1992, elitzur2002nw]."
+    },
+    {
+      "id": "pp_wave",
+      "kind": "family",
+      "text": "Nappi and Witten's later spacetime is a homogeneous plane wave with a parallel null direction. Its antisymmetric tensor supports nonzero Ricci curvature; the vacuum plane waves have vanishing Ricci tensor [nappi1993]."
+    },
+    {
+      "id": "cahen_wallach",
+      "kind": "family",
+      "text": "Nappi and Witten's 1993 plane wave is the Cahen-Wallach member with equal negative transverse eigenvalues, supported by an antisymmetric tensor. Their closed universe has spatially varying curvature and a finite cosmological lifetime [nappi1993, nappi1992]."
+    }
+  ],
   "references": [
     "nappi1992",
     "elitzur2002nw",

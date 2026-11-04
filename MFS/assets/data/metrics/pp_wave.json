@@ -128,6 +128,11 @@
       "id": "kowalski_glikman",
       "kind": "family",
       "text": "A homogeneous wave in eleven dimensions with nine transverse directions and a parallel null 4-form. The metric and flux admit 32 Killing spinors [figueroa2001]."
+    },
+    {
+      "id": "nappi_witten",
+      "kind": "family",
+      "text": "Nappi and Witten constructed an exact string plane wave in 1993 with a constant dilaton and an antisymmetric tensor. Their 1992 closed universe expands and recollapses, with spatially varying curvature [nappi1993, nappi1992]."
     }
   ],
   "references": [
@@ -175,7 +180,9 @@
     "lin2004",
     "blau2003homogeneous",
     "godazgar2021",
-    "figueroa2001"
+    "figueroa2001",
+    "nappi1993",
+    "nappi1992"
   ],
   "coordinates": [
     {
