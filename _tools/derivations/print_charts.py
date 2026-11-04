@@ -20,7 +20,7 @@ tilted_universes, bowers_liang, kasner_magnetic, draining_bathtub, kerr_melvin, 
 string_bh_three_four_charges, btz_multi_holes_wormholes, three_brane_throat, freund_rubin, brill_charged_taub_nut,
 bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum_btz, topological_star, quantum_oppenheimer_snyder,
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
-poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce,
+poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce, limiting_curvature,
 maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm,
 buchdahl_sphere, ozsvath_dust, kerr_disc_source and cahen_wallach, and Godel's cylindrical chart.
 
@@ -51,7 +51,7 @@ misner_brill_lindquist.md, lewis.md, tippett_tsang.md, belinski_zakharov.md, pet
 brill_waves.md, gravitational_instantons.md, brans_dicke_sphere.md, tilted_universes.md, bowers_liang.md,
 kerr_melvin.md, einstein_dirac_maxwell_wormhole.md, jackiw_teitelboim_black_hole.md,
 eternal_traversable_wormhole.md, interstellar_wormhole.md,
-supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md, buchdahl_sphere.md, ozsvath_dust.md and kerr_disc_source.md beside this file.
+supertranslation_hair.md, big_rip.md, kerr_scalar_hair.md, kodama_kink.md, buchdahl_sphere.md, ozsvath_dust.md, kerr_disc_source.md and limiting_curvature.md beside this file.
 btz_multi_holes_wormholes.md beside this file records the charts of the many black holes of three dimensions.
 btz_shock_wave.md beside this file records the charts of the shock wave in the BTZ black hole.
 black_to_white_hole.md beside this file records the charts of the black hole fireworks and their junction.
@@ -33894,6 +33894,152 @@ def lqc_bounce_check(chart, system):
 
 
 CHARTS["lqc_bounce"] = [lambda s=s: lqc_bounce(s) for s in LQC_CHARTS]
+
+
+# -- Mukhanov and Brandenberger's universe with limiting curvature -------------------------
+
+LC_CHARTS = ("comoving", "de_sitter_bounce")
+LC_DOMAINS = ["t \\in (-\\infty, \\infty)", "\\chi \\in [0, \\pi]", "\\theta \\in [0, \\pi]", "\\phi \\in [0, 2\\pi)"]
+
+
+def limiting_curvature(system):
+    """The closed universe of Mukhanov and Brandenberger's theory of gravity with limiting
+    curvature (Phys. Rev. Lett. 68, 1969, 1992), as Brandenberger, Mukhanov and Sornborger solve it
+    (Phys. Rev. D 48, 1629, 1993): two fields with no dynamics of their own multiply the invariants
+    I_1 = R - sqrt(3) sqrt(I_2) and I_2 = 4 R_mu_nu R^mu_nu - R^2, and their potentials bound
+    both. Two charts. The comoving chart is Friedmann's closed line element with the scale factor
+    left free, since the universe is known only as a numerical solution, which
+    _tools/derivations/limiting_curvature.py integrates; it is printed as the comoving chart of
+    poincare_dodecahedral is, with a' = da/d(ct) and a'^2 + 1 kept whole. The de Sitter bounce
+    chart is the closed slicing of de Sitter space, a = l cosh(ct/l), the space every solution
+    approaches as its curvature nears the limit, printed as Vilenkin's closed slicing of
+    universe_from_nothing is. limiting_curvature_check holds the comoving chart's invariants to
+    I_2 = 12(a''/a - (a'^2 + 1)/a^2)^2 and, with the root taken with the sign of
+    a''/a - (a'^2 + 1)/a^2, to I_1 = 12(a'^2 + 1)/a^2, and the de Sitter bounce chart to the
+    hyperboloid of radius l pulled back, to R_mu_nu = (3/l^2) g_mu_nu, to I_2 = 0 and to being the
+    comoving chart at a = l cosh(ct/l); limiting_curvature.md beside this file is the derivation."""
+    coords = ["t", "\\chi", "\\theta", "\\phi"]
+    check = lambda chart: limiting_curvature_check(chart, system)  # noqa: E731
+    if system == "comoving":
+        parameters = ["a = a(t)", "H_0"]
+        probe = vm.Reader(coords, parameters, ())
+        return {
+            "metric_id": "limiting_curvature",
+            "system": {"id": system, "name": "Comoving", "coords": coords, "domains": LC_DOMAINS,
+                       "parameters": parameters,
+                       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(" + PD_SPHERE + "\\right)"},
+            "chart_line_element": "ds^2 = -dt^2 + a^2\\left(" + PD_SPHERE + "\\right)",
+            "printer": {"primed": ["a"], "lead": [probe.parameters["a"]], "overrides": {SMALL_Q: PD_RATE}},
+            "pretty": poincare_dodecahedral_pretty(probe),
+            "bracketed": lambda value: sp.expand(poincare_dodecahedral_pretty(probe)(value)),
+            "ricci_scalar": "6\\left(\\dfrac{a''}{a} + \\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)",
+            "kretschmann": ("12\\left(\\left(\\dfrac{a''}{a}\\right)^2"
+                            " + \\left(\\dfrac{\\left(a'\\right)^2 + 1}{a^2}\\right)^2\\right)"),
+            "check": check,
+        }
+    probe = vm.Reader(coords, ["\\ell"], ())
+    ell, first = probe.parameters["ell"], probe.symbol["t"]
+
+    def line(c):
+        return f"ds^2 = -{c + '^2' if c else ''}dt^2 + \\ell^2\\cosh^2({c}t/\\ell)\\left(" + PD_SPHERE + "\\right)"
+    return {
+        "metric_id": "limiting_curvature",
+        "system": {"id": system, "name": "de Sitter Bounce", "coords": coords, "domains": LC_DOMAINS,
+                   "parameters": ["\\ell"], "line_element": line("c")},
+        "chart_line_element": line(""),
+        "printer": {"lead": [ell], "arguments": {probe.c * first / ell: "ct/\\ell"}},
+        "time": "t",
+        "pretty": nariai_hyperbolic(probe.c * first / ell),
+        "check": check,
+    }
+
+
+def limiting_curvature_invariants(chart):
+    """(R, I_2) of a chart, I_2 = 4 R_mu_nu R^mu_nu - R^2, from the checker's Ricci tensor."""
+    g, ginv = chart.geo.g, chart.geo.ginv
+    ricci = chart.geo.ricci_ll()
+    upper = ginv * sp.Matrix(4, 4, lambda i, j: ricci[i][j]) * ginv
+    square = sum(ricci[i][j] * upper[i, j] for i in range(4) for j in range(4))
+    return chart.geo.ricci_scalar(), 4 * square - chart.geo.ricci_scalar() ** 2
+
+
+def limiting_curvature_check(chart, system, points=6, seed=1993):
+    """Every comparison is made at points in thirty digits, with the scale factor and its first two
+    derivatives along x^0 = ct set to numbers, a'' on both sides of (a'^2 + 1)/a, so that the
+    difference a''/a - (a'^2 + 1)/a^2 = (dH/dt - c^2/a^2)/c^2 takes both signs. The comoving chart
+    has I_2 = 12 D^2 with D that difference, and I_1 = R - sqrt(3) sqrt(I_2) = 12(a'^2 + 1)/a^2,
+    which is 12(H^2 + c^2/a^2)/c^2, only with sqrt(I_2) = sqrt(12) D, the root taken with the sign
+    of D: where D < 0 the positive root gives I_1 = 12(a'^2 + 1)/a^2 + 24 D. The de Sitter bounce
+    chart is the hyperboloid -X_0^2 + X_1^2 + ... + X_4^2 = l^2 of five dimensional Minkowski
+    space pulled back, with R_mu_nu = (3/l^2) g_mu_nu, I_2 = 0, I_1 = 12/l^2, and its metric is
+    the comoving chart's at a = l cosh(ct/l)."""
+    rng = random.Random(seed)
+    x0, chi, theta, phi = chart.symbols
+    R, I2 = limiting_curvature_invariants(chart)
+
+    def at(expr, values):
+        return sp.N(sp.sympify(expr).subs(values), 30)
+
+    if system == "comoving":
+        a = chart.reader.parameters["a"]
+        jets, signs = [], set()
+        for k in range(points):
+            A = sp.Rational(rng.randint(50, 300), 100)
+            A1 = sp.Rational(rng.randint(-200, 200), 100)
+            # a'' above (a'^2 + 1)/a on even points and below it on odd ones.
+            A2 = (A1 ** 2 + 1) / A + sp.Rational(rng.randint(10, 200), 100) * (1 if k % 2 == 0 else -1)
+            jets.append((A, A1, A2))
+        for A, A1, A2 in jets:
+            values = [(sp.Derivative(a, (x0, 2)), A2), (sp.Derivative(a, x0), A1), (a, A),
+                      (chi, sp.Rational(rng.randint(10, 300), 100)), (theta, sp.Rational(rng.randint(10, 300), 100)),
+                      (x0, sp.Rational(rng.randint(-100, 100), 100))]
+            D = A2 / A - (A1 ** 2 + 1) / A ** 2
+            signs.add(D > 0)
+            if abs(at(I2, values) - 12 * D ** 2) > 1e-25:
+                raise AssertionError("limiting_curvature/comoving: I_2 is not 12(a''/a - (a'^2 + 1)/a^2)^2")
+            first = 12 * (A1 ** 2 + 1) / A ** 2
+            signed = at(R, values) - sp.sqrt(3) * sp.sqrt(12) * D
+            if abs(signed - first) > 1e-25:
+                raise AssertionError("limiting_curvature/comoving: with the signed root I_1 is not 12(a'^2 + 1)/a^2")
+            positive = at(R, values) - sp.sqrt(3) * sp.sqrt(at(I2, values))
+            if (abs(positive - first) > 1e-25) == (D > 0):
+                raise AssertionError("limiting_curvature/comoving: the positive root agrees with the signed one "
+                                     "where a''/a < (a'^2 + 1)/a^2")
+            if abs(at(R, values) - 6 * (A2 / A + (A1 ** 2 + 1) / A ** 2)) > 1e-25:
+                raise AssertionError("limiting_curvature/comoving: R is not 6(a''/a + (a'^2 + 1)/a^2)")
+        if signs != {True, False}:
+            raise AssertionError("limiting_curvature/comoving: the points do not take both signs of the root")
+        return
+    ell = chart.reader.parameters["ell"]
+    g = chart.geo.g
+    n = [sp.cos(chi), sp.sin(chi) * sp.cos(theta), sp.sin(chi) * sp.sin(theta) * sp.cos(phi),
+         sp.sin(chi) * sp.sin(theta) * sp.sin(phi)]
+    P = [ell * sp.sinh(x0 / ell)] + [ell * sp.cosh(x0 / ell) * k for k in n]
+    J = sp.Matrix([[sp.diff(p, v) for v in chart.symbols] for p in P])
+    pulled = J.T * sp.diag(-1, 1, 1, 1, 1) * J
+    ricci = chart.geo.ricci_ll()
+    comoving = sp.diag(-1, *[ell ** 2 * sp.cosh(x0 / ell) ** 2 * f for f in (1, sp.sin(chi) ** 2,
+                                                                              sp.sin(chi) ** 2 * sp.sin(theta) ** 2)])
+    for _ in range(points):
+        values = {ell: sp.Rational(rng.randint(50, 300), 100), x0: sp.Rational(rng.randint(-300, 300), 100),
+                  chi: sp.Rational(rng.randint(10, 300), 100), theta: sp.Rational(rng.randint(10, 300), 100),
+                  phi: sp.Rational(rng.randint(10, 600), 100)}
+        if abs(at(-P[0] ** 2 + sum(p ** 2 for p in P[1:]) - ell ** 2, values)) > 1e-25:
+            raise AssertionError("limiting_curvature/de_sitter_bounce: the chart leaves the hyperboloid")
+        for i in range(4):
+            for j in range(4):
+                if abs(at(pulled[i, j] - g[i, j], values)) > 1e-25:
+                    raise AssertionError(f"limiting_curvature/de_sitter_bounce: the hyperboloid pulled back misses "
+                                         f"slot {chart.coords_tex[i]}{chart.coords_tex[j]}")
+                if abs(at(ricci[i][j] - 3 * g[i, j] / ell ** 2, values)) > 1e-25:
+                    raise AssertionError("limiting_curvature/de_sitter_bounce: R_mu_nu is not (3/l^2) g_mu_nu")
+                if abs(at(comoving[i, j] - g[i, j], values)) > 1e-25:
+                    raise AssertionError("limiting_curvature/de_sitter_bounce: not the comoving chart at a = l cosh(ct/l)")
+        if abs(at(I2, values)) > 1e-25 or abs(at(R - 12 / ell ** 2, values)) > 1e-25:
+            raise AssertionError("limiting_curvature/de_sitter_bounce: I_2 is not zero or I_1 is not 12/l^2")
+
+
+CHARTS["limiting_curvature"] = [lambda s=s: limiting_curvature(s) for s in LC_CHARTS]
 
 
 # -- A universe on a wall moving past a black hole in five dimensions -------------------------

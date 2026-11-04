@@ -1048,6 +1048,11 @@ DIMENSIONS = {
     ("lqc_bounce", "cosmic"): {"t": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
     ("lqc_bounce", "comoving_spherical"): {"t": "T", "r": "L", "\\theta": "1", "\\phi": "1", "t_b": "T", "a": "1"},
     ("lqc_bounce", "harmonic"): {"\\tau": "T", "x": "L", "y": "L", "z": "L", "t_b": "T", "a": "1"},
+    # The universe with limiting curvature: its scale factor is the radius of the 3-sphere, a length, as
+    # Poincare's dodecahedral universe has it, H_0 is the limiting Hubble rate, an inverse time, which
+    # stands in no component, and the de Sitter bounce's l is the radius of its waist.
+    ("limiting_curvature", "comoving"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "a": "L", "H_0": "1/T"},
+    ("limiting_curvature", "de_sitter_bounce"): {"t": "T", "\\chi": "1", "\\theta": "1", "\\phi": "1", "\\ell": "L"},
     # The scale factor is the time of two of Murphy's charts, a pure number, so no coordinate of
     # theirs is a time the chart multiplies by c.
     ("murphy_viscous_universe", "scale_factor"): {"a": "1", "x": "L", "y": "L", "z": "L", "q": "1", "H_s": "1/T"},
