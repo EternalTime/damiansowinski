@@ -4720,6 +4720,9 @@ class Slices(unittest.TestCase):
             system = key.split("/")[1]
             height = math.asinh(t) if system == "harmonic" else t
             return (lambda X: height), ([lo, hi] if system == "comoving_spherical" else [-hi, hi])
+        if key.startswith("limiting_curvature/"):
+            # A moment of the comoving observers' time, in units c = H_0 = 1, from the pole to the antipode.
+            return (lambda X: t), list(self.reach(surface))
         if key.startswith("bekenstein_universes/"):
             # A moment of the conformal time eta, which each chart draws upward, from the centre to the
             # embedding's reach: the pole to the antipode in the closed chart, out to chi = 1 in the open one.
@@ -6491,6 +6494,15 @@ class Slices(unittest.TestCase):
                         for X, T in points:
                             self.assertLess(abs(math.tan((T - X) / 2) + math.tan((T + X) / 2)
                                                 - 2 * lqc_bounce_eta(t)), 2e-3, f"{where} at {(X, T)}")
+                    elif metric_id == "limiting_curvature":
+                        # The strip draws X = chi and T = eta(t), the conformal time limiting_curvature.py integrates
+                        # with the universe.
+                        import sys
+                        sys.path.insert(0, str(build.ROOT / "_tools" / "derivations"))
+                        import limiting_curvature
+                        eta = float(limiting_curvature.bounce().eta(t))
+                        for X, T in points:
+                            self.assertLess(abs(T - eta), 2e-4, f"{where} at {(X, T)}")
                     elif metric_id == "bekenstein_universes":
                         # The closed strip draws T = eta; the open universe's p, q = gd(eta -+ chi), so
                         # ln tan(p/2 + pi/4) + ln tan(q/2 + pi/4) = 2 eta on a moment.

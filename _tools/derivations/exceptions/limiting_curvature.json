@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    {
+      "reason": "De Sitter space in its closed slicing, the geometry the universe approaches, another spacetime than the universe whose moments are embedded.",
+      "drawings": ["limiting_curvature/de_sitter_bounce/radial", "conformal limiting_curvature/de_sitter_bounce"]
+    }
+  ]
+}

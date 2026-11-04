@@ -17169,6 +17169,96 @@ def lqc_bounce(ck, src):
                    "$q = \\arctan((\\eta + r)/ct_b)$, where $\\eta = \\int c\\,dt/a$.")
     return [v]
 
+def limiting_curvature(ck, src):
+    """Mukhanov and Brandenberger's closed universe with limiting curvature, in units c = H_0 = 1, and
+    de Sitter's closed slicing, the space it approaches, in units of the radius l of its waist.
+
+    Each metric is a^2(-d eta^2 + dchi^2 + sin^2 chi dOmega^2) in its conformal time eta = int c dt/a,
+    a^2 times the Einstein static universe, so p, q = (eta -+ chi)/2 draw the strip X = chi, T = eta,
+    the pole on X = 0 and the antipode on X = pi, every null direction kept. The universe's eta, which
+    limiting_curvature.py integrates with it, runs over |eta| < eta_end = 0.8430, since a grows
+    exponentially toward both ends; its edges are past and future infinity, spacelike, as de Sitter's
+    are, and a null ray's affine length, the integral of a^2 d eta, diverges toward each. De Sitter's
+    eta = gd(ct/l) = 2 arctan(tanh(ct/2l)) runs over |eta| < pi/2, the square. The published
+    Kretschmann scalar of each is checked finite over its plane, and the universe's history checked
+    shorter in eta than pi, so that no ray crosses from the pole to the antipode."""
+    universe = nr.lc_universe.bounce()
+    end = universe.eta_end
+    com = Plane(src, "limiting_curvature", "comoving", ("t", "\\chi"), EQUATOR, {"H_0": 1},
+                functions={"a": "lc_a(t)"})
+    bounce = Plane(src, "limiting_curvature", "de_sitter_bounce", ("t", "\\chi"), EQUATOR, {"ell": 1})
+
+    def comoving(t, chi):
+        eta, chi = universe.eta(np.asarray(t, dtype=float)), np.asarray(chi, dtype=float)
+        return (eta - chi) / 2, (eta + chi) / 2
+
+    def de_sitter(t, chi):
+        eta, chi = 2 * np.arctan(np.tanh(np.asarray(t, dtype=float) / 2)), np.asarray(chi, dtype=float)
+        return (eta - chi) / 2, (eta + chi) / 2
+    ck.chart("limiting curvature comoving", com, comoving, ck.uniform(-6, 6), ck.uniform(0.001, PI - 0.001),
+             lambda t, c: (1, 0))
+    ck.chart("limiting curvature de Sitter bounce", bounce, de_sitter, ck.uniform(-8, 8),
+             ck.uniform(0.001, PI - 0.001), lambda t, c: (1, 0))
+    ck.limit("limiting curvature: eta has reached its end by t = 30", [float(universe.eta(30.0)), float(universe.eta(-30.0))],
+             [end, -end], 1e-9)
+    ck.limit("limiting curvature: the whole history spans less than pi in eta", [float(2 * end < PI)], [1.0])
+    s = np.linspace(0, 40, 400001)
+    a = universe.a(s)
+    half = np.cumsum(a ** 2) * (s[1] - s[0])
+    ck.limit("limiting curvature: a ray's affine length grows without limit toward infinity",
+             [float(half[-1] > 1e30)], [1.0])
+    ck.finite("limiting curvature: the Kretschmann scalar is finite all over the strip",
+              com.kretschmann(ck.uniform(-6, 6, 400), ck.uniform(0.001, PI - 0.001, 400)))
+    ck.finite("limiting curvature: the de Sitter bounce's Kretschmann scalar is finite all over the square",
+              bounce.kretschmann(ck.uniform(-8, 8, 400), ck.uniform(0.001, PI - 0.001, 400)))
+
+    views = []
+    rect = [[0, -end], [PI, -end], [PI, end], [0, end]]
+    v = View("comoving", "Comoving", [-0.35, PI + 0.35, -end - 0.3, end + 0.3], "comoving")
+    v.fill("region", rect)
+    v.fill("cover", rect)
+    v.line("scri", [[[0, end], [PI, end]], [[0, -end], [PI, -end]]])
+    v.line("centre", [[[0, -end], [0, end]], [[PI, -end], [PI, end]]])
+    v.line("surface", [[[0, 0], [PI, 0]]])
+    v.line("t", [[[0, float(universe.eta(t))], [PI, float(universe.eta(t))]] for t in (-2.0, -1.0, 1.0, 2.0)])
+    v.label_xt([HALF, end], "$\\mathscr{I}^+$", "b", dy=-5)
+    v.label_xt([HALF, -end], "$\\mathscr{I}^-$", "t", dy=5)
+    v.label_xt([0, -0.2], "pole", "r", "coord", dx=-6)
+    v.label_xt([PI, -0.2], "antipode", "l", "coord", dx=6)
+    v.legend("cover", "the whole spacetime")
+    v.legend("t", "$H_0t = \\pm 1$ and $\\pm 2$")
+    v.legend("surface", "the bounce, $t = 0$")
+    v.legend("centre", "the pole and its antipode")
+    v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$")
+    for m in slices.moments("limiting_curvature"):
+        lo, hi = m.reach("comoving", "\\chi")
+        T = float(universe.eta(m.time))
+        v.slice(m, xt=[[[lo, T], [hi, T]]])
+    v.set(settings="$H_0 = 1$, $X = \\chi$, $T = \\eta = \\int c\\,dt/a$.")
+    views.append(v)
+
+    square = [[0, -HALF], [PI, -HALF], [PI, HALF], [0, HALF]]
+    v = View("de_sitter_bounce", "de Sitter Bounce", [-0.35, PI + 0.35, -HALF - 0.3, HALF + 0.3], "de_sitter_bounce")
+    v.fill("region", square)
+    v.fill("cover", square)
+    v.line("scri", [[[0, HALF], [PI, HALF]], [[0, -HALF], [PI, -HALF]]])
+    v.line("centre", [[[0, -HALF], [0, HALF]], [[PI, -HALF], [PI, HALF]]])
+    v.line("surface", [[[0, 0], [PI, 0]]])
+    v.line("t", [[[0, 2 * math.atan(math.tanh(t / 2))], [PI, 2 * math.atan(math.tanh(t / 2))]]
+                 for t in (-2.0, -1.0, 1.0, 2.0)])
+    v.label_xt([HALF, HALF], "$\\mathscr{I}^+$", "b", dy=-5)
+    v.label_xt([HALF, -HALF], "$\\mathscr{I}^-$", "t", dy=5)
+    v.label_xt([0, -0.2], "pole", "r", "coord", dx=-6)
+    v.label_xt([PI, -0.2], "antipode", "l", "coord", dx=6)
+    v.legend("cover", "the whole spacetime")
+    v.legend("t", "$ct/\\ell = \\pm 1$ and $\\pm 2$")
+    v.legend("surface", "the waist, $t = 0$")
+    v.legend("centre", "the pole and its antipode")
+    v.legend("scri", "future and past infinity $\\mathscr{I}^\\pm$")
+    v.set(settings="$\\ell = 1$, $X = \\chi$, $\\tan(T/2) = \\tanh(ct/2\\ell)$.")
+    views.append(v)
+    return views
+
 
 def bekenstein_universes(ck, src):
     """Bekenstein's universes in units of l = 4 pi N mu/3, each in its conformal time, in which the
@@ -27568,6 +27658,7 @@ DRAWN = {
     "myers_perry": myers_perry,
     "curzon_chazy": curzon_chazy,
     "lqc_bounce": lqc_bounce,
+    "limiting_curvature": limiting_curvature,
     "bekenstein_universes": bekenstein_universes,
     "murphy_viscous_universe": murphy_viscous_universe,
     "kopczynski_trautman": kopczynski_trautman,
@@ -31176,6 +31267,14 @@ CAPTIONS = {
         "$4/3c^4t_b^4$, its greatest value, and every comoving world line and every light ray crosses it. The "
         "moments of constant $t$ crowd toward the bounce, since $\\eta$ grows only as the $2/3$ power of $t$ far "
         "from it.",
+    ],
+    ("limiting_curvature", "comoving"): [
+        "The closed universe, each point a 2-sphere, $a^2$ times the Einstein static universe. Its history spans "
+        "$\\Delta\\eta = 1.686$, less than $\\pi$, so no light ray crosses from the pole to its antipode.",
+    ],
+    ("limiting_curvature", "de_sitter_bounce"): [
+        "De Sitter space in its closed slicing, each point a 2-sphere. Its history spans $\\Delta T = \\pi$, so a ray "
+        "that leaves the pole at $t = -\\infty$ reaches the antipode at $t = +\\infty$.",
     ],
     ("kopczynski_trautman", "comoving"): [
         "Kopczyński and Trautman's universe, each point in the diagram a 2-sphere. The metric is "

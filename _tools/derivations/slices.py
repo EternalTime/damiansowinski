@@ -4320,6 +4320,7 @@ FUNCTION = r"\\(sinh|cosh|tanh|sin|cos|tan|ln|log|exp|arctan|min|max)(?![a-zA-Z]
 # Whittaker's sphere until 3 October 2026, its two X's 0.97 em wide and counted 0.7.
 HIDDEN[("limiting_curvature", "de_sitter_bounce", "radial")] = (
     "de Sitter space, the geometry the universe approaches, another spacetime than the universe whose moments are embedded")
+HIDDEN[("limiting_curvature", "de_sitter_bounce")] = HIDDEN[("limiting_curvature", "de_sitter_bounce", "radial")]
 HIDDEN.update({key: "the flat universe, whose moments are planes and are not embedded, another member of the family "
                     "than the closed and open universes whose moments are"
                for key in (("bekenstein_universes", "flat", "radial"), ("bekenstein_universes", "flat"))})
