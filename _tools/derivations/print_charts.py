@@ -78,6 +78,7 @@ sys.path.insert(0, str(HERE))
 import chart_printer as cp  # noqa: E402
 import verify_metrics as vm  # noqa: E402
 import bowen_york as by  # noqa: E402
+import global_texture as gt  # noqa: E402
 
 METRICS = vm.METRICS_DIR
 SYSTEM_ORDER = ["id", "name", "coords", "domains", "parameters", "convention", "line_element", "metric_components",
@@ -37461,6 +37462,9 @@ CHARTS["hosotani_universe"] = [lambda s=s: hosotani.chart_spec(s) for s in hosot
 
 import brown_teitelboim as brown_teitelboim
 CHARTS["brown_teitelboim"] = [lambda s=s: brown_teitelboim.chart_spec(s) for s in brown_teitelboim.SYSTEMS]
+
+
+CHARTS["global_texture"] = gt.chart_spec
 
 
 def main():

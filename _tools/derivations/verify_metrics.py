@@ -224,6 +224,9 @@ BASE_DIMENSIONS = {"L": LENGTH, "T": TIME, "M": MASS, "1": sp.Integer(1)}
 # declared T is the one the chart multiplies by c; the rest are their own chart
 # coordinates. A system absent from this table is UNCHECKED.
 DIMENSIONS = {
+    ("global_texture", "collapse"): {
+        "t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\epsilon": "1", "H": "1",
+    },
     # Geometrized units G = c = 1: Harada and Maeda's comoving t and r are lengths, and the zooming
     # tau and z are pure numbers, with ell the length the comoving coordinates are counted in.
     ("ori_piran", "comoving"): {"t": "L", "r": "L", "\\theta": "1", "\\phi": "1", "\\sigma": "1",
@@ -2791,6 +2794,8 @@ ORDERS = {
 # The defined names a system holds as functions of the coordinates while its tensors are built.
 # See "Adding a spacetime, as far as the checker is concerned" in _tools/README.md.
 HELD = {
+    # The texture's explicit angular factor is held while its exact tensors are printed.
+    ("global_texture", "collapse"): ("H",),
     ("york_equilibrium", "areal"): ("mu", "rho"),
     # The conformal factor of the curved space of a perturbed Friedmann universe, a quadratic in the
     # coordinates: held, every value is printed in it, as the space's own Christoffel symbols

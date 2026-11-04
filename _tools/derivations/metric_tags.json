@@ -7415,6 +7415,27 @@
    "\\phi"
   ]
  },
+ "global_texture/collapse": {
+  "stamp": "ff7771a87d93f55e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "godel/cartesian": {
   "stamp": "9b721f2049cb64f6",
   "relations": {},
