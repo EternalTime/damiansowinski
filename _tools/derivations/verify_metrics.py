@@ -5473,6 +5473,8 @@ DIMENSIONS.update(_linear_dilaton.DIMENSIONS)
 import stringy_cosmic_strings as _stringy_cosmic_strings
 DIMENSIONS.update(_stringy_cosmic_strings.DIMENSIONS)
 
+import three_dim_black_string as _three_dim_black_string
+_three_dim_black_string.register_dimensions(sys.modules[__name__])
 
 import klebanov_witten as _klebanov_witten
 DIMENSIONS.update(_klebanov_witten.DIMENSIONS)

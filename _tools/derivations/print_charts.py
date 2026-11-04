@@ -37573,6 +37573,8 @@ import stringy_cosmic_strings as _stringy_cosmic_strings
 CHARTS[_stringy_cosmic_strings.METRIC] = [lambda system=system: _stringy_cosmic_strings.chart_spec(system)
                                           for system in _stringy_cosmic_strings.SYSTEMS]
 
+import three_dim_black_string as _three_dim_black_string
+_three_dim_black_string.register(sys.modules[__name__])
 
 import klebanov_witten as _klebanov_witten
 CHARTS[_klebanov_witten.METRIC] = [_klebanov_witten.chart_spec]

@@ -1,0 +1,4457 @@
+{
+  "id": "three_dim_black_string",
+  "name": "Horne-Horowitz Charged Black String in Three Dimensions",
+  "short_name": "Horne-Horowitz",
+  "description": "A straight black string in three spacetime dimensions carrying an axion charge, an exact solution of string theory built from a gauged Wess-Zumino-Witten model. Like the charged black hole of Reissner and Nordström it has an event horizon, an inner horizon, and a timelike singularity, and with no charge it is Witten's black hole of two dimensions times a line.",
+  "tags": [
+    "black string",
+    "black hole",
+    "string theory",
+    "low energy string theory",
+    "dilaton",
+    "dilaton gravity",
+    "lower-dimensional gravity",
+    "horizon",
+    "event horizon",
+    "inner horizon",
+    "Cauchy horizon",
+    "curvature singularity",
+    "timelike singularity",
+    "naked singularity",
+    "conical singularity",
+    "extremal",
+    "cigar",
+    "causal structure",
+    "asymptotically flat",
+    "Hawking temperature",
+    "strong cosmic censorship",
+    "exact solution",
+    "Lorentzian",
+    "idealized model",
+    "static",
+    "stationary",
+    "three-dimensional"
+  ],
+  "signature": "(-,+,+)",
+  "convention": "We work in units with $c = 1$ and $\\alpha' = 1/2$, as Horne and Horowitz do, and $k$ is the level of the gauged model. The string metric $g$, the field $H$, and the dilaton $\\Phi$ extremize Horne and Horowitz's action, $\\int\\sqrt{-g}\\,e^{\\Phi}\\left(R + (\\nabla\\Phi)^2 - \\tfrac{1}{12}H_{\\mu\\nu\\rho}H^{\\mu\\nu\\rho} + 8/k\\right)d^3x$, and solve $R_{\\mu\\nu} - \\nabla_\\mu\\nabla_\\nu\\Phi - \\tfrac{1}{4}H_{\\mu\\alpha\\beta}H_\\nu{}^{\\alpha\\beta} = 0$, which for $\\phi = -\\Phi/2$ reads $R_{\\mu\\nu} + 2\\nabla_\\mu\\nabla_\\nu\\phi - \\tfrac{1}{4}H_{\\mu\\alpha\\beta}H_\\nu{}^{\\alpha\\beta} = 0$. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "James H. Horne began the construction of this string at the Aspen Center for Physics, and he and Gary T. Horowitz wrote it up at the University of California, Santa Barbara, in a preprint dated July 1991 [horne1992black]. Edward Witten had just found a black hole in two dimensions in the Wess-Zumino-Witten model on the group $SL(2,\\mathbb{R})$ with a one dimensional subgroup gauged [witten1991]. Horne and Horowitz added a free boson $x$ to his model and gauged the same subgroup together with a translation of $x$, and the result is an exact conformal field theory of a straight, static string inside an event horizon [horne1992black]. The string carries a mass $M$ and an axion charge $Q$ per unit length, and its string metric is $$ds^2 = -\\left(1 - \\frac{M}{r}\\right)dt^2 + \\left(1 - \\frac{Q^2}{Mr}\\right)dx^2 + \\left(1 - \\frac{M}{r}\\right)^{-1}\\left(1 - \\frac{Q^2}{Mr}\\right)^{-1}\\frac{k\\,dr^2}{8r^2},$$ with an antisymmetric tensor field $H_{rtx} = Q/r^2$ and a dilaton $\\Phi = \\ln r + \\tfrac{1}{2}\\ln(k/2)$ [horne1992black].¶The static charged black holes of string theory with a dilaton have no inner horizon, and their singularity is spacelike, as the Schwarzschild singularity is [horne1992black]. This string, in Horne and Horowitz's words, \"has a regular inner horizon (in addition to the event horizon) and a timelike singularity\" [horne1992black]. The event horizon is at $r = M$ and the inner horizon at $r = Q^2/M$, and the causal structure follows that of the charged black hole of Hans Reissner and Gunnar Nordström, region by region [horne1992black]. In the Reissner-Nordström hole the Killing vector that translates time far away is timelike again inside the inner horizon; here $\\partial_t$ stays spacelike all the way to the singularity, and $\\partial_x$, the translation along the string, is timelike inside the inner horizon [horne1992black]. Each point of Horne and Horowitz's diagram is therefore a line along $x$ outside the inner horizon and a line along $t$ inside it [horne1992black]. Timelike geodesics turn back before $r = 0$, so no freely falling observer reaches the singularity, and a light ray with momentum $P$ along the string and energy $E$ reaches it only when $P^2M^2 > E^2Q^2$ [horne1992black].¶With no charge the field $H$ vanishes and the string is Witten's black hole times a line [horne1992black, witten1991]. The Hawking temperature, $T = \\sqrt{(M^2 - Q^2)/2k}\\,/\\pi M$, falls to zero as $|Q|$ approaches $M$, and in that limit, in Horne and Horowitz's words, \"the event horizon remains but the singularity disappears\" [horne1992black]. At $|Q| = M$ the coordinate $\\rho$, with $\\rho^2 = r - M$, runs through the horizon from positive to negative values into a copy of the region outside, and observers who cross it, \"fortunately for them\", find themselves in a second asymptotically flat region identical to the first [horne1992black]. With $r$, $t$, and $x$ rescaled as $|Q|$ goes to $M$, the limit is anti-de Sitter space of three dimensions with a constant dilaton, the ungauged model on $SL(2,\\mathbb{R})$ [horne1992black]. For $|Q| > M$ there is neither a horizon nor a curvature singularity, and identifying $x$ with period $\\pi|Q|\\sqrt{2k/(Q^2 - M^2)}$ removes a conical singularity at the centre and makes each slice of constant $t$ an infinite cigar [horne1992black].¶The constant $k$ is the level of the gauged model, whose central charge, $3k/(k - 2)$, is one more than that of Witten's black hole for the added boson [horne1992black, horowitz1993]. In the low energy equations $k$ appears as a cosmological constant $8/k$, present because that central charge differs from the dimension of spacetime, and only the dilaton's equation carries it, so the equation for the metric holds at every $k$ [horne1992black, horowitz1993]. A bosonic string needs a total central charge of 26, so $k = 52/23$ for this string alone, the value Horowitz and Dean L. Welch gave in 1993 for the same central charge, and a larger $k$ leaves room for an internal conformal field theory beside it [horne1992black, horowitz1993]. The metric is the lowest order in $1/k$, and Konstadinos Sfetsos computed the metric and dilaton of the same model to all orders in 1992, finding a second curvature singularity at finite $k$ that merges with the one at $r = 0$ as $k$ grows without bound [sfetsos1993exact]. Rescaled by the dilaton to the metric of Einstein's action, the string keeps its horizons and is asymptotically flat, but the symmetry that is timelike outside the horizon approaches a boost at infinity, so in that frame the string is not static [horne1992black].¶Horne, Horowitz, and Alan R. Steif showed later in 1991 that the duality of string theory along a direction of translation exchanges the momentum in that direction with the axion charge [horne1992momentum]. The uncharged string of mass $M_0$, boosted along $x$ with rapidity $\\alpha$ and then dualized, becomes the charged string with $M = M_0\\cosh^2\\alpha$ and $Q = M_0\\cosh\\alpha\\sinh\\alpha$, so when $x$ is a circle the charged string is equivalent to a boosted uncharged one, which has a spacelike singularity and no inner horizon [horne1992momentum]. Inner horizons in general relativity are unstable, and they argued from that equivalence that the exact solution has no inner horizon, though its low energy metric does [horne1992momentum]. In 1993 Horowitz and Welch made the rotating black hole of Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli an exact solution of string theory and dualized it along its angle into this string, whose charge is half the hole's angular momentum and whose horizons sit where the hole's do [banados1992, horowitz1993]. The hole is asymptotically anti-de Sitter and the string asymptotically flat, which suggested to them that \"strings are not affected by a negative cosmological constant in three dimensions\" [horowitz1993].¶Roberto Emparan, Daniel Grumiller, and Kentaro Tanabe found this string in 2013 as the geometry near the horizon of black branes with an electric string charge and no dilaton, in the limit of a large number of dimensions [emparan2013strings]. Luis Apolo, Stéphane Detournay, and Wei Song reached it in 2020 from the black hole of Bañados, Teitelboim, and Zanelli through a duality, a shift, and a second duality, and identified the string of fixed charge as the dual of a thermal state of a conformal field theory deformed by $T\\bar{T}$ [apolo2020black]. Jeongwon Ho, Wontae Kim, and Bum-Hoon Lee followed massive scalar waves to the inner horizon in 2022, and found strong cosmic censorship respected far from extremality and violated near it for a heavy enough field, so that it \"can be violated even for an asymptotically flat spacetime\" [ho2022strong].",
+  "related": [
+    {
+      "id": "witten_black_hole",
+      "kind": "piece",
+      "text": "Witten's black hole of two dimensions, the cross section of this string when it carries no charge. Horne and Horowitz built the charged string by adding a line to Witten's model and gauging a translation along it [horne1992black]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "family",
+      "text": "The charged black hole of general relativity, with the same diagram of horizons and singularity. Inside its inner horizon the time translation is timelike again, and here the translation along the string takes that role [horne1992black]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "The rotating black hole of three dimensions with a negative cosmological constant. Dualized along its angle it becomes this string, its angular momentum turned into twice the string's charge and its horizons left where they were [horowitz1993]."
+    },
+    {
+      "id": "black_string",
+      "kind": "family",
+      "text": "Schwarzschild's black hole stretched along a line, a static black string of general relativity, which needs five dimensions or more when matter obeys the strong energy condition [horne1992black, horowitz1991]. This one lives in three, where the dilaton and antisymmetric field of its string metric violate that condition [horne1992black]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The charged black hole of string theory in four dimensions, with one horizon and no inner horizon for every charge. Its singularity is spacelike, and the string's is timelike [horne1992black]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "limit",
+      "text": "In the limit $|Q| \\to M$ with $r$, $t$, and $x$ rescaled, the string becomes anti-de Sitter space of three dimensions with a constant dilaton, the ungauged model on $SL(2,\\mathbb{R})$ [horne1992black]."
+    }
+  ],
+  "references": [
+    "horne1992black",
+    "witten1991",
+    "horowitz1993",
+    "sfetsos1993exact",
+    "horne1992momentum",
+    "banados1992",
+    "emparan2013strings",
+    "apolo2020black",
+    "ho2022strong",
+    "horowitz1991"
+  ],
+  "coordinates": [
+    {
+      "id": "static",
+      "name": "Static",
+      "coords": [
+        "t",
+        "x",
+        "r"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "0 < |Q| < M,\\quad k > 0",
+        "r = M \\;\\text{(the event horizon)}",
+        "r = Q^2/M \\;\\text{(the inner horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass per unit length of the string"
+        },
+        {
+          "symbol": "Q",
+          "description": "Axion charge per unit length of the string"
+        },
+        {
+          "symbol": "k",
+          "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, r)$, with $x$ along the string and $r$ fixed by the dilaton, $\\Phi = \\ln r + \\tfrac{1}{2}\\ln(k/2)$.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{M}{r}\\right)dt^2 + \\left(1 - \\dfrac{Q^2}{Mr}\\right)dx^2 + \\dfrac{k\\,dr^2}{8r^2\\left(1 - \\dfrac{M}{r}\\right)\\left(1 - \\dfrac{Q^2}{Mr}\\right)}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{M - r}{r}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M\\,r - Q^2}{M\\,r}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "-\\dfrac{M\\,k}{8\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{r}{M - r}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M\\,r}{M\\,r - Q^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "-\\dfrac{8\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{M}{2r\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{M}{2r\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2}{2r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M^2\\,k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{M^2 - 2M\\,r + Q^2}{2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{M}{2r^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{M}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{M}{2r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2M\\,r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2}{2M\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2}{2M\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{M\\,k\\left(M^2 - 2M\\,r + Q^2\\right)}{16\\left(M - r\\right)^2\\left(M\\,r - Q^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\left(Q^2 - M\\,r\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(Q^2 - M\\,r\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M - r\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2\\left(3M - 2r\\right)}{4r^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\left(3M - 2r\\right)}{4r^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(M - r\\right)\\left(2M\\,r - 3Q^2\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(M - r\\right)\\left(2M\\,r - 3Q^2\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M\\,r - Q^2\\right)\\left(3M - 2r\\right)}{M^2\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M\\,r - Q^2\\right)\\left(3M - 2r\\right)}{M^2\\,k\\,r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2\\left(3M - 2r\\right)}{4M\\,r^3\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\left(3M - 2r\\right)}{4M\\,r^3\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{Q^2\\left(3M - 2r\\right)}{4M\\,r^3\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\left(3M - 2r\\right)}{4M\\,r^3\\left(M - r\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\left(M - r\\right)\\left(M\\,r - 2Q^2\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{4Q^2\\left(2M - r\\right)\\left(M\\,r - Q^2\\right)}{M^2\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{M^2\\,r - 3M\\,Q^2 + Q^2\\,r}{2r^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M\\,r - 8Q^2}{k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(r - 2M\\right)}{M\\,k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4M^2\\,r - 12M\\,Q^2 + 4Q^2\\,r}{M\\,k\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M\\,r - 8Q^2}{k\\,r\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(r - 2M\\right)}{k\\,r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{32\\left(M - r\\right)\\left(M\\,r - Q^2\\right)\\left(M^2\\,r - 3M\\,Q^2 + Q^2\\,r\\right)}{M^2\\,k^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{8M^2\\,r - 28M\\,Q^2 + 8Q^2\\,r}{M\\,k\\,r^2}",
+      "kretschmann": "K = \\dfrac{64M^4\\,r^2 - 192M^3\\,Q^2\\,r + 304M^2\\,Q^4 - 192M\\,Q^4\\,r + 64Q^4\\,r^2}{M^2\\,k^2\\,r^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)\\left(3M - 2r\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\left(M\\,r - Q^2\\right)\\left(2M\\,r - 3Q^2\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{M\\,Q^2}{4r^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(3M - 2r\\right)}{M\\,k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{6Q^2 - 4M\\,r}{k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2Q^2}{k\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(3M - 2r\\right)}{M\\,k\\,r\\left(M - r\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\left(3Q^2 - 2M\\,r\\right)}{k\\,r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{16Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{M}{r\\left(M - r\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{x} + \\dfrac{Q^2}{r\\left(M\\,r - Q^2\\right)}\\dot{x}\\dot{r} = 0",
+        "\\ddot{r} - \\dfrac{4\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{k\\,r^2}\\dot{t}^2 + \\dfrac{4Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M^2\\,k\\,r^2}\\dot{x}^2 - \\dfrac{M^2 - 2M\\,r + Q^2}{2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}\\dot{r}^2 = 0"
+      ]
+    },
+    {
+      "id": "wzw",
+      "name": "Wess-Zumino-Witten",
+      "coords": [
+        "u",
+        "v",
+        "x"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "uv < 1",
+        "0 < |Q| < M,\\quad k > 0",
+        "uv = 0 \\;\\text{(the event horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass per unit length of the string"
+        },
+        {
+          "symbol": "Q",
+          "description": "Axion charge per unit length of the string"
+        },
+        {
+          "symbol": "k",
+          "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+        }
+      ],
+      "convention": "We use the coordinates $(u, v)$ of $SL(2,\\mathbb{R})$ in which the model is gauged, with $r = M - (M^2 - Q^2)uv/M$ and, outside the event horizon, $u/v = -e^{2\\kappa t}$, $\\kappa = \\sqrt{2(M^2 - Q^2)/k}/M$.",
+      "line_element": "ds^2 = -\\dfrac{k\\left(Q^2v^2\\,du^2 + Q^2u^2\\,dv^2 + 2\\left(2M^2 - (2M^2 - Q^2)uv\\right)du\\,dv\\right)}{8(1 - uv)\\left(M^2 - (M^2 - Q^2)uv\\right)} + \\dfrac{(M^2 - Q^2)(1 - uv)}{M^2 - (M^2 - Q^2)uv}\\,dx^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\dfrac{Q^2\\,k\\,v^2}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "\\dfrac{k\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "\\dfrac{k\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "-\\dfrac{Q^2\\,k\\,u^2}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}{M^2\\,u\\,v - M^2 - Q^2\\,u\\,v}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\dfrac{2Q^2\\,u^2}{M^2\\,k}"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "\\dfrac{4M^2\\,u\\,v - 4M^2 - 2Q^2\\,u\\,v}{M^2\\,k}"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "\\dfrac{4M^2\\,u\\,v - 4M^2 - 2Q^2\\,u\\,v}{M^2\\,k}"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{2Q^2\\,v^2}{M^2\\,k}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M^2\\,u\\,v - M^2 - Q^2\\,u\\,v}{\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{v\\left(3Q^4\\,u\\,v - 4Q^4\\,u^2\\,v^2 + 4M^2\\,Q^2 - 12M^2\\,Q^2\\,u\\,v + 8M^2\\,Q^2\\,u^2\\,v^2 - 4M^4 + 8M^4\\,u\\,v - 4M^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\,u\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\,u\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^4\\,u^3}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\,u\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^4\\,v^3}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\,v\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\,v\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{u\\left(3Q^4\\,u\\,v - 4Q^4\\,u^2\\,v^2 + 4M^2\\,Q^2 - 12M^2\\,Q^2\\,u\\,v + 8M^2\\,Q^2\\,u^2\\,v^2 - 4M^4 + 8M^4\\,u\\,v - 4M^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\,v\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\,v}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^2\\,v}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\,u}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^2\\,u}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\,k\\,v^3\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + Q^2\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\,k\\,v\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\,k\\,v\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{k\\,u\\left(Q^4\\,u\\,v - 2Q^4\\,u^2\\,v^2 + 4M^2\\,Q^2 - 10M^2\\,Q^2\\,u\\,v + 6M^2\\,Q^2\\,u^2\\,v^2 - 4M^4 + 8M^4\\,u\\,v - 4M^4\\,u^2\\,v^2\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\,v\\left(M + Q\\right)\\left(M - Q\\right)}{2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\,v\\left(M + Q\\right)\\left(M - Q\\right)}{2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^2\\,v\\left(M + Q\\right)\\left(M - Q\\right)}{2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{k\\,v\\left(Q^4\\,u\\,v - 2Q^4\\,u^2\\,v^2 + 4M^2\\,Q^2 - 10M^2\\,Q^2\\,u\\,v + 6M^2\\,Q^2\\,u^2\\,v^2 - 4M^4 + 8M^4\\,u\\,v - 4M^4\\,u^2\\,v^2\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\,k\\,u\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\,k\\,u\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\,k\\,u^3\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + Q^2\\right)}{16\\left(u\\,v - 1\\right)^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\,u\\left(M + Q\\right)\\left(M - Q\\right)}{2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\,u\\left(M + Q\\right)\\left(M - Q\\right)}{2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^2\\,u\\left(M + Q\\right)\\left(M - Q\\right)}{2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{M^2\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{M^2\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{M^2\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{M^2\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{M^2\\,Q^2\\,u^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{M^2\\,Q^2\\,u^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{2Q^2\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{2Q^2\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\,u^2\\left(M + Q\\right)^2\\left(M - Q\\right)^2\\left(1 - u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{2Q^2\\,u^2\\left(M + Q\\right)^2\\left(M - Q\\right)^2\\left(1 - u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{M^2\\,Q^2\\,v^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{M^2\\,Q^2\\,v^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\,v^2\\left(M + Q\\right)^2\\left(M - Q\\right)^2\\left(1 - u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{2Q^2\\,v^2\\left(M + Q\\right)^2\\left(M - Q\\right)^2\\left(1 - u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\,v^2\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^2\\,v^2\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^2\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^2\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\,u^2\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^2\\,u^2\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{M^4\\,k\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{M^4\\,k\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{M^4\\,k\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{M^4\\,k\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{8\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\,v^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\,v^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\,v^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^2\\,v^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{Q^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2\\,u^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^2\\,u^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2\\,u^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{Q^2\\,u^2\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{4\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{Q^4\\,v^2\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2M^6\\,u^2\\,v^2 - 4M^6\\,u\\,v + 2M^6 - 2M^4\\,Q^2\\,u^2\\,v^2 + 6M^4\\,Q^2\\,u\\,v - 4M^4\\,Q^2 - M^2\\,Q^4\\,u^2\\,v^2 - M^2\\,Q^4\\,u\\,v + Q^6\\,u^2\\,v^2}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2M^6\\,u^2\\,v^2 - 4M^6\\,u\\,v + 2M^6 - 2M^4\\,Q^2\\,u^2\\,v^2 + 6M^4\\,Q^2\\,u\\,v - 4M^4\\,Q^2 - M^2\\,Q^4\\,u^2\\,v^2 - M^2\\,Q^4\\,u\\,v + Q^6\\,u^2\\,v^2}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{Q^4\\,u^2\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{4Q^2\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2Q^4\\,u\\,v - 8M^2\\,Q^2 + 2M^2\\,Q^2\\,u\\,v + 4M^4 - 4M^4\\,u\\,v}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2Q^4\\,u\\,v - 8M^2\\,Q^2 + 2M^2\\,Q^2\\,u\\,v + 4M^4 - 4M^4\\,u\\,v}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2Q^2\\,u^2\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2Q^2\\,v^2\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(Q^2\\,u\\,v - M^2 - M^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{8Q^2\\,u^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{8Q^4\\,u\\,v + 32M^2\\,Q^2 - 48M^2\\,Q^2\\,u\\,v + 16M^2\\,Q^2\\,u^2\\,v^2 - 16M^4 + 32M^4\\,u\\,v - 16M^4\\,u^2\\,v^2}{k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{8Q^4\\,u\\,v + 32M^2\\,Q^2 - 48M^2\\,Q^2\\,u\\,v + 16M^2\\,Q^2\\,u^2\\,v^2 - 16M^4 + 32M^4\\,u\\,v - 16M^4\\,u^2\\,v^2}{k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{8Q^2\\,v^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(Q^2\\,u\\,v - M^2 - M^2\\,u\\,v\\right)}{k\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{8Q^4\\,u\\,v - 20M^2\\,Q^2 + 8M^4 - 8M^4\\,u\\,v}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}",
+      "kretschmann": "K = \\dfrac{64M^8\\,u^2\\,v^2 - 128M^8\\,u\\,v + 64M^8 - 128M^6\\,Q^2\\,u^2\\,v^2 + 320M^6\\,Q^2\\,u\\,v - 192M^6\\,Q^2 + 128M^4\\,Q^4\\,u^2\\,v^2 - 128M^4\\,Q^4\\,u\\,v + 176M^4\\,Q^4 - 128M^2\\,Q^6\\,u^2\\,v^2 - 64M^2\\,Q^6\\,u\\,v + 64Q^8\\,u^2\\,v^2}{k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{M^2\\,Q^2\\,v^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{M^2\\,Q^2\\left(2M^2\\,u^2\\,v^2 - 2M^2 - 2Q^2\\,u^2\\,v^2 + Q^2\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{M^2\\,Q^2\\left(2M^2\\,u^2\\,v^2 - 2M^2 - 2Q^2\\,u^2\\,v^2 + Q^2\\,u\\,v\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{M^2\\,Q^2\\,u^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^3}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M^2\\,u\\,v + M^2 - Q^2\\,u\\,v\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "-\\dfrac{2Q^2\\,u^2\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-\\dfrac{2Q^2\\,v^2\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{4Q^2\\,u^2\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{M^2\\,k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{4Q^2\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{M^2\\,k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{4Q^2\\left(2M^4\\,u^2\\,v^2 - 2M^4 - 4M^2\\,Q^2\\,u^2\\,v^2 + M^2\\,Q^2\\,u\\,v + 2Q^4\\,u^2\\,v^2\\right)}{M^2\\,k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{4Q^2\\,v^2\\left(2M^4\\,u\\,v - 2M^4 - 4M^2\\,Q^2\\,u\\,v + M^2\\,Q^2 + 2Q^4\\,u\\,v\\right)}{M^2\\,k^2\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\left(2M^2\\,u\\,v - 2M^2 - 2Q^2\\,u\\,v + 3Q^2\\right)}{k\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\dfrac{v\\left(3Q^4\\,u\\,v - 4Q^4\\,u^2\\,v^2 + 4M^2\\,Q^2 - 12M^2\\,Q^2\\,u\\,v + 8M^2\\,Q^2\\,u^2\\,v^2 - 4M^4 + 8M^4\\,u\\,v - 4M^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{u}^2 + \\dfrac{Q^2\\,u\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{u}\\dot{v} - \\dfrac{Q^4\\,u^3}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{v}^2 + \\dfrac{2Q^2\\,u\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{x}^2 = 0",
+        "\\ddot{v} - \\dfrac{Q^4\\,v^3}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{u}^2 + \\dfrac{Q^2\\,v\\left(2M^2\\,u\\,v - 2M^2 - Q^2\\,u\\,v\\right)}{2\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{u}\\dot{v} + \\dfrac{u\\left(3Q^4\\,u\\,v - 4Q^4\\,u^2\\,v^2 + 4M^2\\,Q^2 - 12M^2\\,Q^2\\,u\\,v + 8M^2\\,Q^2\\,u^2\\,v^2 - 4M^4 + 8M^4\\,u\\,v - 4M^4\\,u^2\\,v^2\\right)}{4\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{v}^2 + \\dfrac{2Q^2\\,v\\left(u\\,v - 1\\right)\\left(M + Q\\right)\\left(M - Q\\right)}{k\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)^2}\\dot{x}^2 = 0",
+        "\\ddot{x} - \\dfrac{Q^2\\,v}{\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}\\dot{u}\\dot{x} - \\dfrac{Q^2\\,u}{\\left(u\\,v - 1\\right)\\left(M^2\\,u\\,v - M^2 - Q^2\\,u\\,v\\right)}\\dot{v}\\dot{x} = 0"
+      ]
+    },
+    {
+      "id": "eddington_finkelstein_ingoing",
+      "name": "Ingoing Eddington-Finkelstein",
+      "coords": [
+        "v",
+        "x",
+        "r"
+      ],
+      "domains": [
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "r \\in (Q^2/M, \\infty)",
+        "0 < |Q| < M,\\quad k > 0",
+        "r = M \\;\\text{(the event horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass per unit length of the string"
+        },
+        {
+          "symbol": "Q",
+          "description": "Axion charge per unit length of the string"
+        },
+        {
+          "symbol": "k",
+          "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+        }
+      ],
+      "convention": "We use coordinates $(v, x, r)$, with the advanced time $dv = dt + \\sqrt{k/8}\\,dr/\\left(r(1 - M/r)\\sqrt{1 - Q^2/(Mr)}\\right)$.",
+      "line_element": "ds^2 = -\\left(1 - \\dfrac{M}{r}\\right)dv^2 + \\sqrt{\\dfrac{k}{2}}\\,\\dfrac{dv\\,dr}{r\\sqrt{1 - \\dfrac{Q^2}{Mr}}} + \\left(1 - \\dfrac{Q^2}{Mr}\\right)dx^2",
+      "metric_components": [
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{M - r}{r}"
+        },
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{k}}{4\\sqrt{r}\\sqrt{M\\,r - Q^2}}"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{k}}{4\\sqrt{r}\\sqrt{M\\,r - Q^2}}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M\\,r - Q^2}{M\\,r}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "v",
+            "r"
+          ],
+          "value": "\\dfrac{2\\sqrt{2}\\sqrt{r}\\sqrt{M\\,r - Q^2}}{\\sqrt{M}\\sqrt{k}}"
+        },
+        {
+          "indices": [
+            "r",
+            "v"
+          ],
+          "value": "\\dfrac{2\\sqrt{2}\\sqrt{r}\\sqrt{M\\,r - Q^2}}{\\sqrt{M}\\sqrt{k}}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M\\,r}{M\\,r - Q^2}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "-\\dfrac{8\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{M\\,r - Q^2}}{\\sqrt{k}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{M\\,r - Q^2}}{\\sqrt{k}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{M\\,r - Q^2}}{\\sqrt{k}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{M^{3/2}\\sqrt{k}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2}{2r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v"
+                ],
+                "value": "-\\dfrac{4\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M^2\\,k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2 - 2M\\,r}{2r\\left(M\\,r - Q^2\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{M}{2r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{M}{2r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{M}{2r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{k}\\left(Q^2 - 2M\\,r\\right)}{8r^{3/2}\\left(M\\,r - Q^2\\right)^{3/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2M\\,r^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2}{2M\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2}{2M\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\left(2M\\,r - 3Q^2\\right)}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{M}\\left(2M\\,r - 3Q^2\\right)}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{M}\\left(2M\\,r - 3Q^2\\right)}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\left(2M\\,r - 3Q^2\\right)}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\left(Q^2 - M\\,r\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(Q^2 - M\\,r\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{M^{3/2}\\sqrt{k}\\,r^{5/2}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{M^{3/2}\\sqrt{k}\\,r^{5/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M - r\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{M}\\,Q^2}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\,Q^2}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\,Q^2}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\sqrt{M}\\,Q^2}{2\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2r^2\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2}{2r^2\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{2\\left(M - r\\right)\\left(2M\\,r - 3Q^2\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{2\\left(M - r\\right)\\left(2M\\,r - 3Q^2\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M\\,r - Q^2\\right)\\left(3M - 2r\\right)}{M^2\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M\\,r - Q^2\\right)\\left(3M - 2r\\right)}{M^2\\,k\\,r^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{2Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k\\,r^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{2\\sqrt{M}\\sqrt{k}\\,r^{7/2}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r",
+                  "r",
+                  "v"
+                ],
+                "value": "-\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "v",
+                  "r"
+                ],
+                "value": "-\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v",
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{M\\left(3Q^2 - 2M\\,r\\right)}{4r^3\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "x",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2M\\,r^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "r",
+                  "r",
+                  "x"
+                ],
+                "value": "-\\dfrac{Q^2}{2M\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "x",
+                  "r"
+                ],
+                "value": "-\\dfrac{Q^2}{2M\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x",
+                  "r",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2}{2M\\,r^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4\\left(M - r\\right)\\left(M\\,r - 2Q^2\\right)}{k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\left(M\\,r - 2Q^2\\right)}{\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\sqrt{M}\\left(M\\,r - 2Q^2\\right)}{\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{4Q^2\\left(2M - r\\right)\\left(M\\,r - Q^2\\right)}{M^2\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2r^2\\left(M\\,r - Q^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4M\\,r - 8Q^2}{k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2}{\\sqrt{M}\\sqrt{k}\\,r^{3/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(r - 2M\\right)}{M\\,k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{4M^2\\,r - 12M\\,Q^2 + 4Q^2\\,r}{M\\,k\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4Q^2}{M\\,k\\,r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{8\\sqrt{2}\\sqrt{M\\,r - Q^2}\\left(M^2\\,r - 3M\\,Q^2 + Q^2\\,r\\right)}{M^{3/2}\\,k^{3/2}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{8\\sqrt{2}\\sqrt{M\\,r - Q^2}\\left(M^2\\,r - 3M\\,Q^2 + Q^2\\,r\\right)}{M^{3/2}\\,k^{3/2}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(r - 2M\\right)}{k\\,r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{32\\left(M - r\\right)\\left(M\\,r - Q^2\\right)\\left(M^2\\,r - 3M\\,Q^2 + Q^2\\,r\\right)}{M^2\\,k^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{8M^2\\,r - 28M\\,Q^2 + 8Q^2\\,r}{M\\,k\\,r^2}",
+      "kretschmann": "K = \\dfrac{64M^4\\,r^2 - 192M^3\\,Q^2\\,r + 304M^2\\,Q^4 - 192M\\,Q^4\\,r + 64Q^4\\,r^2}{M^2\\,k^2\\,r^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M - r\\right)\\left(3M - 2r\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\left(3M - 2r\\right)}{2\\sqrt{M}\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2\\left(3M - 2r\\right)}{2\\sqrt{M}\\sqrt{k}\\,r^{5/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2\\left(M\\,r - Q^2\\right)\\left(2M\\,r - 3Q^2\\right)}{M\\,k\\,r^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{Q^2}{2r^2\\left(M\\,r - Q^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2Q^2\\left(3M - 2r\\right)}{M\\,k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{\\sqrt{2}\\,Q^2}{\\sqrt{M}\\sqrt{k}\\,r^{3/2}\\sqrt{M\\,r - Q^2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{6Q^2 - 4M\\,r}{k\\,r^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{2Q^2}{k\\,r^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4Q^2}{M\\,k\\,r}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "r"
+                ],
+                "value": "\\dfrac{4\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{\\sqrt{M}\\,k^{3/2}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "v"
+                ],
+                "value": "\\dfrac{4\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{\\sqrt{M}\\,k^{3/2}\\,r^{3/2}}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\left(3Q^2 - 2M\\,r\\right)}{k\\,r\\left(M\\,r - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{16Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M\\,k^2\\,r^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{v} + \\dfrac{\\sqrt{2}\\sqrt{M}\\sqrt{M\\,r - Q^2}}{\\sqrt{k}\\,r^{3/2}}\\dot{v}^2 - \\dfrac{\\sqrt{2}\\,Q^2\\,\\sqrt{M\\,r - Q^2}}{M^{3/2}\\sqrt{k}\\,r^{3/2}}\\dot{x}^2 = 0",
+        "\\ddot{x} + \\dfrac{Q^2}{r\\left(M\\,r - Q^2\\right)}\\dot{x}\\dot{r} = 0",
+        "\\ddot{r} - \\dfrac{4\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{k\\,r^2}\\dot{v}^2 - \\dfrac{2\\sqrt{2}\\sqrt{M}\\sqrt{M\\,r - Q^2}}{\\sqrt{k}\\,r^{3/2}}\\dot{v}\\dot{r} + \\dfrac{4Q^2\\left(M - r\\right)\\left(M\\,r - Q^2\\right)}{M^2\\,k\\,r^2}\\dot{x}^2 + \\dfrac{Q^2 - 2M\\,r}{2r\\left(M\\,r - Q^2\\right)}\\dot{r}^2 = 0"
+      ]
+    },
+    {
+      "id": "extremal",
+      "name": "Extremal",
+      "coords": [
+        "t",
+        "x",
+        "\\rho"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "\\rho \\in (0, \\infty)",
+        "M > 0,\\quad k > 0",
+        "\\rho = 0 \\;\\text{(the event horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass per unit length of the string"
+        },
+        {
+          "symbol": "k",
+          "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, \\rho)$ at $|Q| = M$, with $\\rho^2 = r - M$.",
+      "line_element": "ds^2 = \\dfrac{\\rho^2}{\\rho^2 + M}\\left(-dt^2 + dx^2\\right) + \\dfrac{k\\,d\\rho^2}{2\\rho^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\rho^2}{M + \\rho^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{\\rho^2}{M + \\rho^2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{k}{2\\rho^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{M + \\rho^2}{\\rho^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M + \\rho^2}{\\rho^2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{2\\rho^2}{k}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^3}{k\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^3}{k\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{1}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\,\\rho}{\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\,\\rho}{\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\,\\rho}{\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{k}{2\\rho^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^2}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^2}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^2}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^2}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\left(2\\rho^2 - M\\right)}{\\rho^2\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\left(2\\rho^2 - M\\right)}{\\rho^2\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\left(2\\rho^2 - M\\right)}{\\rho^2\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\left(2\\rho^2 - M\\right)}{\\rho^2\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^4}{k\\left(M + \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^4}{k\\left(M + \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^4}{k\\left(M + \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^4}{k\\left(M + \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\left(M - 2\\rho^2\\right)}{\\left(M + \\rho^2\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M\\,\\rho^2\\left(M - \\rho^2\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{4M\\,\\rho^2\\left(M - \\rho^2\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M\\left(2\\rho^2 - M\\right)}{\\rho^2\\left(M + \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M\\left(\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4M\\left(\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4M\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M\\left(M - \\rho^2\\right)}{k\\,\\rho^2\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{4M\\left(M - \\rho^2\\right)}{k\\,\\rho^2\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{8M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k^2\\left(M + \\rho^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4M\\left(4\\rho^2 - 3M\\right)}{k\\left(M + \\rho^2\\right)^2}",
+      "kretschmann": "K = \\dfrac{16M^2\\left(3M^2 - 8M\\,\\rho^2 + 8\\rho^4\\right)}{k^2\\left(M + \\rho^2\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^2\\left(2\\rho^2 - M\\right)}{k\\left(M + \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M^2}{\\rho^2\\left(M + \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\left(M - 2\\rho^2\\right)}{k\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\left(M - 2\\rho^2\\right)}{k\\left(M + \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M^2}{k\\left(M + \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\left(2\\rho^2 - M\\right)}{k\\,\\rho^2\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M\\left(2\\rho^2 - M\\right)}{k\\,\\rho^2\\left(M + \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4M^2\\,\\rho^2}{k^2\\left(M + \\rho^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2M}{\\rho\\left(M + \\rho^2\\right)}\\dot{t}\\dot{\\rho} = 0",
+        "\\ddot{x} + \\dfrac{2M}{\\rho\\left(M + \\rho^2\\right)}\\dot{x}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\dfrac{2M\\,\\rho^3}{k\\left(M + \\rho^2\\right)^2}\\dot{t}^2 - \\dfrac{2M\\,\\rho^3}{k\\left(M + \\rho^2\\right)^2}\\dot{x}^2 - \\dfrac{1}{\\rho}\\dot{\\rho}^2 = 0"
+      ]
+    },
+    {
+      "id": "extremal_interior",
+      "name": "Extremal Interior",
+      "coords": [
+        "t",
+        "x",
+        "\\rho"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "\\rho \\in (0, \\sqrt{M})",
+        "M > 0,\\quad k > 0",
+        "\\rho = 0 \\;\\text{(the event horizon)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass per unit length of the string"
+        },
+        {
+          "symbol": "k",
+          "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, \\rho)$ inside the horizon at $|Q| = M$, with $\\rho^2 = M - r$.",
+      "line_element": "ds^2 = \\dfrac{\\rho^2}{M - \\rho^2}\\left(dt^2 - dx^2\\right) + \\dfrac{k\\,d\\rho^2}{2\\rho^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{\\rho^2}{M - \\rho^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "-\\dfrac{\\rho^2}{M - \\rho^2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{k}{2\\rho^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{M - \\rho^2}{\\rho^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "-\\dfrac{M - \\rho^2}{\\rho^2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{2\\rho^2}{k}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M}{\\rho\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^3}{k\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^3}{k\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{1}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\,\\rho}{\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\,\\rho}{\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\,\\rho}{\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{k}{2\\rho^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^2}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^2}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^2}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^2}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\rho^2\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\rho^2\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\rho^2\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\rho^2\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^4}{k\\left(M - \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^4}{k\\left(M - \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M^2\\,\\rho^4}{k\\left(M - \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho^4}{k\\left(M - \\rho^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M\\left(M + 2\\rho^2\\right)}{\\left(M - \\rho^2\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4M\\,\\rho^2\\left(M + \\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4M\\,\\rho^2\\left(M + \\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2M\\left(M + 2\\rho^2\\right)}{\\rho^2\\left(M - \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4M\\left(M + \\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{4M\\left(M + \\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{4M\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{4M\\left(M + \\rho^2\\right)}{k\\,\\rho^2\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4M\\left(M + \\rho^2\\right)}{k\\,\\rho^2\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{8M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k^2\\left(M - \\rho^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{4M\\left(3M + 4\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}",
+      "kretschmann": "K = \\dfrac{16M^2\\left(3M^2 + 8M\\,\\rho^2 + 8\\rho^4\\right)}{k^2\\left(M - \\rho^2\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M\\,\\rho^2\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M^2}{\\rho^2\\left(M - \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\left(M + 2\\rho^2\\right)}{k\\left(M - \\rho^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M^2}{k\\left(M - \\rho^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M\\left(M + 2\\rho^2\\right)}{k\\,\\rho^2\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M\\left(M + 2\\rho^2\\right)}{k\\,\\rho^2\\left(M - \\rho^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4M^2\\,\\rho^2}{k^2\\left(M - \\rho^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2M}{\\rho\\left(M - \\rho^2\\right)}\\dot{t}\\dot{\\rho} = 0",
+        "\\ddot{x} + \\dfrac{2M}{\\rho\\left(M - \\rho^2\\right)}\\dot{x}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} - \\dfrac{2M\\,\\rho^3}{k\\left(M - \\rho^2\\right)^2}\\dot{t}^2 + \\dfrac{2M\\,\\rho^3}{k\\left(M - \\rho^2\\right)^2}\\dot{x}^2 - \\dfrac{1}{\\rho}\\dot{\\rho}^2 = 0"
+      ]
+    },
+    {
+      "id": "superextremal",
+      "name": "Superextremal",
+      "coords": [
+        "t",
+        "x",
+        "\\rho"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in [0, \\pi|Q|\\sqrt{2k/(Q^2 - M^2)})",
+        "\\rho \\in [0, \\infty)",
+        "0 < M < |Q|,\\quad k > 0"
+      ],
+      "parameters": [
+        {
+          "symbol": "M",
+          "description": "Mass per unit length of the string"
+        },
+        {
+          "symbol": "Q",
+          "description": "Axion charge per unit length of the string"
+        },
+        {
+          "symbol": "k",
+          "description": "Level of the gauged Wess-Zumino-Witten model, $k = 52/23$ for the string alone"
+        }
+      ],
+      "convention": "We use coordinates $(t, x, \\rho)$ at $|Q| > M$, with $\\rho^2 = r - Q^2/M$ and $x$ of period $\\pi|Q|\\sqrt{2k/(Q^2 - M^2)}$.",
+      "line_element": "ds^2 = -\\dfrac{Q^2 - M^2 + M\\rho^2}{Q^2 + M\\rho^2}dt^2 + \\dfrac{M\\rho^2}{Q^2 + M\\rho^2}dx^2 + \\dfrac{Mk\\,d\\rho^2}{2\\left(Q^2 - M^2 + M\\rho^2\\right)}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{M^2 - M\\,\\rho^2 - Q^2}{M\\,\\rho^2 + Q^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M\\,\\rho^2}{M\\,\\rho^2 + Q^2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "-\\dfrac{M\\,k}{2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "\\dfrac{M\\,\\rho^2 + Q^2}{M^2 - M\\,\\rho^2 - Q^2}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "\\dfrac{M\\,\\rho^2 + Q^2}{M\\,\\rho^2}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{2Q^2 + 2M\\,\\rho^2 - 2M^2}{M\\,k}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M^3\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M^3\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{Q^2}{\\rho\\left(M\\,\\rho^2 + Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{Q^2}{\\rho\\left(M\\,\\rho^2 + Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^2\\,\\rho\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2Q^2\\,\\rho\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\,\\rho}{M^2 - M\\,\\rho^2 - Q^2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M^3\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M^3\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{M^3\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\,Q^2\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M\\,Q^2\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\,Q^2\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M^2\\,k\\,\\rho}{2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M^3\\,Q^2\\,\\rho^2}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^3\\,Q^2\\,\\rho^2}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M^3\\left(Q^2 - 2M\\,\\rho^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M^3\\left(Q^2 - 2M\\,\\rho^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\,Q^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M^2\\,Q^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M\\,Q^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{M\\,Q^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2M^2\\left(2M\\,\\rho^2 - Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^2\\left(2M\\,\\rho^2 - Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M\\,Q^2\\,\\rho^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M\\,Q^2\\,\\rho^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "t",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^3\\,Q^2\\,\\rho^2\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x",
+                  "x",
+                  "t"
+                ],
+                "value": "-\\dfrac{2M^3\\,Q^2\\,\\rho^2\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "t",
+                  "x"
+                ],
+                "value": "-\\dfrac{2M^3\\,Q^2\\,\\rho^2\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "t",
+                  "x",
+                  "t"
+                ],
+                "value": "\\dfrac{2M^3\\,Q^2\\,\\rho^2\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^4}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M^3\\left(Q^2 - 2M\\,\\rho^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{M^3\\left(Q^2 - 2M\\,\\rho^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M^3\\left(Q^2 - 2M\\,\\rho^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{M^3\\left(Q^2 - 2M\\,\\rho^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{M^2\\,Q^2\\,\\rho^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "\\rho",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "-\\dfrac{M^2\\,Q^2\\,\\rho^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "x",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M^2\\,Q^2\\,\\rho^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "x",
+                  "\\rho",
+                  "x"
+                ],
+                "value": "\\dfrac{M^2\\,Q^2\\,\\rho^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^3\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M^2\\left(M\\,\\rho^2 - Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4M\\,Q^2\\,\\rho^2\\left(Q^2 + M\\,\\rho^2 - 2M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{2M\\left(M^3\\,\\rho^2 - 2M^2\\,Q^2 + M\\,Q^2\\,\\rho^2 + Q^4\\right)}{\\left(M\\,\\rho^2 + Q^2\\right)^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M^2\\left(M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(Q^2 + M\\,\\rho^2 - 2M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4M^3\\,\\rho^2 - 8M^2\\,Q^2 + 4M\\,Q^2\\,\\rho^2 + 4Q^4}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4M^2\\left(M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{4Q^2\\left(Q^2 + M\\,\\rho^2 - 2M^2\\right)}{M\\,k\\,\\rho^2\\left(M\\,\\rho^2 + Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{8\\left(M^2 - M\\,\\rho^2 - Q^2\\right)\\left(M^3\\,\\rho^2 - 2M^2\\,Q^2 + M\\,Q^2\\,\\rho^2 + Q^4\\right)}{M\\,k^2\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{8M^3\\,\\rho^2 - 20M^2\\,Q^2 + 8M\\,Q^2\\,\\rho^2 + 8Q^4}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}",
+      "kretschmann": "K = \\dfrac{64M^6\\,\\rho^4 - 64M^5\\,Q^2\\,\\rho^2 + 176M^4\\,Q^4 - 192M^3\\,Q^4\\,\\rho^2 - 192M^2\\,Q^6 + 64M^2\\,Q^4\\,\\rho^4 + 128M\\,Q^6\\,\\rho^2 + 64Q^8}{k^2\\left(M\\,\\rho^2 + Q^2\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^3\\,\\rho^2\\left(Q^2 - 2M\\,\\rho^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^3}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{M^3\\,Q^2}{\\left(M\\,\\rho^2 + Q^2\\right)^2\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M^2\\left(Q^2 - 2M\\,\\rho^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{2M^2\\,Q^2}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2Q^2\\left(3M^2 - 2M\\,\\rho^2 - 2Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2M\\left(Q^2 - 2M\\,\\rho^2\\right)}{k\\,\\rho^2\\left(M\\,\\rho^2 + Q^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{4M\\,Q^2\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k^2\\left(M\\,\\rho^2 + Q^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} - \\dfrac{2M^3\\,\\rho}{\\left(M\\,\\rho^2 + Q^2\\right)\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}\\dot{t}\\dot{\\rho} = 0",
+        "\\ddot{x} + \\dfrac{2Q^2}{\\rho\\left(M\\,\\rho^2 + Q^2\\right)}\\dot{x}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\dfrac{2M^2\\,\\rho\\left(Q^2 + M\\,\\rho^2 - M^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}\\dot{t}^2 + \\dfrac{2Q^2\\,\\rho\\left(M^2 - M\\,\\rho^2 - Q^2\\right)}{k\\left(M\\,\\rho^2 + Q^2\\right)^2}\\dot{x}^2 + \\dfrac{M\\,\\rho}{M^2 - M\\,\\rho^2 - Q^2}\\dot{\\rho}^2 = 0"
+      ]
+    }
+  ]
+}
