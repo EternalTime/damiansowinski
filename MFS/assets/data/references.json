@@ -1,5 +1,5 @@
 {
-  "version": "601562e6959ed0aa",
+  "version": "5f2e177b1cbadf25",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -40429,6 +40429,210 @@
         "eprint": "gr-qc/9401010",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.50.2692"
+      }
+    },
+    "hellaby1997signature": {
+      "type": "article",
+      "fields": {
+        "author": "Hellaby, C. and Sumeruk, A. and Ellis, G. F. R.",
+        "title": "Classical Signature Change in the Black Hole Topology",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "6",
+        "number": "2",
+        "pages": "211--238",
+        "year": "1997",
+        "doi": "10.1142/s0218271897000133",
+        "eprint": "gr-qc/9907042",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1142/s0218271897000133"
+      }
+    },
+    "krasinskihellaby2004galaxy": {
+      "type": "article",
+      "fields": {
+        "author": "Krasiński, A. and Hellaby, C.",
+        "title": "Formation of a galaxy with a central black hole in the Lemaître-Tolman model",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "4",
+        "pages": "043502",
+        "year": "2004",
+        "doi": "10.1103/physrevd.69.043502",
+        "eprint": "gr-qc/0309119",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1103/physrevd.69.043502"
+      }
+    },
+    "krasinskibolejko2012horizons": {
+      "type": "article",
+      "fields": {
+        "author": "Krasiński, A. and Bolejko, K.",
+        "title": "Apparent horizons in the quasispherical Szekeres models",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "12",
+        "pages": "124016",
+        "year": "2012",
+        "doi": "10.1103/physrevd.85.124016",
+        "eprint": "1202.5970",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1103/physrevd.85.124016"
+      }
+    },
+    "kasharginsushkov2020dust": {
+      "type": "article",
+      "fields": {
+        "author": "Kashargin, P. E. and Sushkov, S. V.",
+        "title": "Collapsing Wormholes Sustained by Dustlike Matter",
+        "journal": "Universe",
+        "volume": "6",
+        "number": "10",
+        "pages": "186",
+        "year": "2020",
+        "doi": "10.3390/universe6100186",
+        "eprint": "2011.05099",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.3390/universe6100186"
+      }
+    },
+    "hellabybuckley2021topology": {
+      "type": "article",
+      "fields": {
+        "author": "Hellaby, C. and Buckley, R. G.",
+        "title": "Rotation, embedding, and topology for the Szekeres geometry",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "4",
+        "pages": "043510",
+        "year": "2021",
+        "doi": "10.1103/physrevd.103.043510",
+        "eprint": "2012.03192",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1103/physrevd.103.043510"
+      }
+    },
+    "bronnikov2021dust": {
+      "type": "article",
+      "fields": {
+        "author": "Bronnikov, K. A. and Kashargin, P. E. and Sushkov, S. V.",
+        "title": "Magnetized Dusty Black Holes and Wormholes",
+        "journal": "Universe",
+        "volume": "7",
+        "number": "11",
+        "pages": "419",
+        "year": "2021",
+        "doi": "10.3390/universe7110419",
+        "eprint": "2109.12670",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.3390/universe7110419"
+      }
+    },
+    "bronnikov2023friedmann": {
+      "type": "article",
+      "fields": {
+        "author": "Bronnikov, K. A. and Kashargin, P. E. and Sushkov, S. V.",
+        "title": "Possible Wormholes in a Friedmann Universe",
+        "journal": "Universe",
+        "volume": "9",
+        "number": "11",
+        "pages": "465",
+        "year": "2023",
+        "doi": "10.3390/universe9110465",
+        "eprint": "2309.03166",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.3390/universe9110465"
+      }
+    },
+    "bronnikov2025lensing": {
+      "type": "article",
+      "fields": {
+        "author": "Bronnikov, K. A. and Ishkaeva, V. A. and Sushkov, S. V.",
+        "title": "Gravitational Lensing by Lemaître–Tolman–Bondi Wormholes in a Friedmann Universe",
+        "journal": "Universe",
+        "volume": "11",
+        "number": "11",
+        "pages": "374",
+        "year": "2025",
+        "doi": "10.3390/universe11110374",
+        "eprint": "2509.09797",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.3390/universe11110374"
+      }
+    },
+    "matravershumphreys2001matching": {
+      "type": "article",
+      "fields": {
+        "author": "Matravers, D. R. and Humphreys, N. P.",
+        "title": "Matching Spherical Dust Solutions to Construct Cosmological Models",
+        "journal": "General Relativity and Gravitation",
+        "volume": "33",
+        "number": "3",
+        "pages": "531--552",
+        "year": "2001",
+        "doi": "10.1023/a:1010248925032",
+        "eprint": "gr-qc/0009057",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1023/a:1010248925032"
+      }
+    },
+    "kopp2011separate": {
+      "type": "article",
+      "fields": {
+        "author": "Kopp, M. and Hofmann, S. and Weller, J.",
+        "title": "Separate universes do not constrain primordial black hole formation",
+        "journal": "Physical Review D",
+        "volume": "83",
+        "number": "12",
+        "pages": "124025",
+        "year": "2011",
+        "doi": "10.1103/physrevd.83.124025",
+        "eprint": "1012.4369",
+        "archiveprefix": "arXiv",
+        "primaryclass": "astro-ph.CO",
+        "url": "https://doi.org/10.1103/physrevd.83.124025"
+      }
+    },
+    "roukema2013topology": {
+      "type": "article",
+      "fields": {
+        "author": "Roukema, B. F. and Blanlœil, V. and Ostrowski, J. J.",
+        "title": "Topological implications of inhomogeneity",
+        "journal": "Physical Review D",
+        "volume": "87",
+        "number": "4",
+        "pages": "043521",
+        "year": "2013",
+        "doi": "10.1103/physrevd.87.043521",
+        "eprint": "1201.5845",
+        "archiveprefix": "arXiv",
+        "primaryclass": "astro-ph.CO",
+        "url": "https://doi.org/10.1103/physrevd.87.043521"
+      }
+    },
+    "uehara2025dusthorizons": {
+      "type": "article",
+      "fields": {
+        "author": "Uehara, K. and Escrivà, A. and Harada, T. and Saito, D. and Yoo, C.-M.",
+        "title": "Primordial black hole formation from a type II perturbation in the absence and presence of pressure",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "08",
+        "pages": "042",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/08/042",
+        "eprint": "2505.00366",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://doi.org/10.1088/1475-7516/2025/08/042"
       }
     }
   }
