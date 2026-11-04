@@ -90,6 +90,11 @@
       "id": "pre_big_bang",
       "kind": "family",
       "text": "A vacuum of low energy string theory whose isotropic member expands faster and faster toward the big bang in its string frame. In the Einstein frame that expansion is the contraction of this universe long before its bounce [gasperini2003prebigbang]."
+    },
+    {
+      "id": "limiting_curvature",
+      "kind": "family",
+      "text": "A universe kept from its singularity by a classical action that bounds the curvature, written to stand in for quantum gravity at Planck curvatures [brandenberger1993]. Its closed universe bounces through a stage of de Sitter space, and its flat universe contracts toward de Sitter space for all time."
     }
   ],
   "references": [
@@ -109,7 +114,8 @@
     "hayward2006",
     "binetruy2000nonconventional",
     "murphy1973",
-    "gasperini2003prebigbang"
+    "gasperini2003prebigbang",
+    "brandenberger1993"
   ],
   "coordinates": [
     {

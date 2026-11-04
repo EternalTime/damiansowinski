@@ -199,6 +199,11 @@
       "id": "brown_teitelboim",
       "kind": "composite",
       "text": "Two regions of de Sitter space joined across a charged membrane, with different cosmological constants [hirano2018bt]."
+    },
+    {
+      "id": "limiting_curvature",
+      "kind": "family",
+      "text": "Universes in a theory of gravity whose curvature has an upper limit, each of which approaches de Sitter space as its curvature nears that limit [brandenberger1993]. A closed universe of the theory that collapses becomes de Sitter space and expands again."
     }
   ],
   "references": [
@@ -252,7 +257,8 @@
     "murphy1973",
     "starobinsky1980",
     "weinberg2007hm",
-    "hirano2018bt"
+    "hirano2018bt",
+    "brandenberger1993"
   ],
   "coordinates": [
     {

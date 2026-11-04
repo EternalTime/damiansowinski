@@ -92,6 +92,11 @@
       "id": "eye_of_the_storm",
       "kind": "family",
       "text": "A rotating regular black hole with an asymptotically Minkowski core, Kerr's metric with the mass written $me^{-\\ell/r}$ [simpson2022eye]."
+    },
+    {
+      "id": "limiting_curvature",
+      "kind": "family",
+      "text": "Universes in a theory of gravity whose curvature has an upper limit, where a collapse turns into de Sitter space as the centre of Bardeen's black hole is de Sitter's [brandenberger1993]. The bound comes from the action of gravity with ordinary matter as the source, and Frolov, Markov, and Mukhanov put a de Sitter core inside a black hole on the same hypothesis in 1989 [brandenberger1993, frolov1989]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "gibbonsrasheed1995",
     "kelly2020",
     "bueno2025regular",
-    "simpson2022eye"
+    "simpson2022eye",
+    "brandenberger1993"
   ],
   "coordinates": [
     {

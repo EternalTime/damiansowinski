@@ -221,6 +221,11 @@
       "id": "nappi_witten",
       "kind": "family",
       "text": "A closed cosmology from an exact conformal field theory. Its spatial slices are inhomogeneous, with two circular directions that expand and contract at different rates."
+    },
+    {
+      "id": "limiting_curvature",
+      "kind": "special_case",
+      "text": "Friedmann's metric with its scale factor taken from a theory of gravity changed at Planck curvatures, which keeps every curvature invariant bounded [brandenberger1993]. A closed universe of that theory bounces through de Sitter space where Einstein's equations put a big crunch."
     }
   ],
   "references": [
@@ -300,7 +305,8 @@
     "mello2017",
     "starobinsky1980",
     "gibbons1994ym",
-    "giddings1988"
+    "giddings1988",
+    "brandenberger1993"
   ],
   "coordinates": [
     {

@@ -20,7 +20,9 @@
     "time-dependent",
     "Lorentzian",
     "four-dimensional",
-    "idealized model"
+    "idealized model",
+    "conformally flat",
+    "spherically symmetric"
   ],
   "signature": "(-,+,+,+)",
   "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",

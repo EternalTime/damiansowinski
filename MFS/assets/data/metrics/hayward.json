@@ -105,6 +105,11 @@
       "id": "eye_of_the_storm",
       "kind": "family",
       "text": "A regular black hole that spins, Kerr's metric with the mass switched off toward the centre, whose core is asymptotically Minkowski [simpson2022eye]."
+    },
+    {
+      "id": "limiting_curvature",
+      "kind": "family",
+      "text": "Universes in a theory of gravity built to keep its curvature below a limit, where a collapsing universe turns into de Sitter space [brandenberger1993]. Hayward's core is de Sitter space of radius $\\ell$ for every mass and meets the same kind of limit, as Valeri Frolov showed in 2016 [frolov2016]."
     }
   ],
   "references": [
@@ -132,7 +137,8 @@
     "haggard2015fireworks",
     "ashtekar2006bounce",
     "bueno2025regular",
-    "simpson2022eye"
+    "simpson2022eye",
+    "brandenberger1993"
   ],
   "coordinates": [
     {
