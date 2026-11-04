@@ -3,8 +3,8 @@
   const _c   = n => _cs.getPropertyValue(n).trim();
   const _rgb  = n => { const h = _c(n).replace('#',''); const v = parseInt(h,16); return [(v>>16)&0xFF,(v>>8)&0xFF,v&0xFF]; };
 
-  const warmShades = ['--sunset-12', '--sunset-10', '--coral', '--hot', '--mag'].map(_rgb);
-  const coolShades = ['--steel', '--sunset-1', '--sunset-2', '--sunset-3'].map(_rgb);
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
 
   /* ── Simulation constants ── */
   const N  = 400;
@@ -35,20 +35,6 @@
   }
   function coldStart() { spins.fill(1); }
 
-  function neighborSum(row, col, tri) {
-    const rU = ((row - 1 + N) % N) * N;
-    const rD = ((row + 1) % N) * N;
-    const cL = (col - 1 + N) % N;
-    const cR = (col + 1) % N;
-    let sum = spins[rU + col] + spins[rD + col] +
-      spins[row * N + cL] + spins[row * N + cR];
-    if (tri) {
-      const cX = (row % 2 === 0) ? cR : cL;
-      sum += spins[rU + cX] + spins[rD + cX];
-    }
-    return sum;
-  }
-
   function sweep() {
     const tri = lattice === 'triangle';
     for (let k = 0; k < N * N; k++) {
@@ -56,7 +42,17 @@
       const row = (i / N) | 0;
       const col = i % N;
       const s   = spins[i];
-      const sum = neighborSum(row, col, tri);
+      const rU  = ((row - 1 + N) % N) * N;
+      const rD  = ((row + 1)     % N) * N;
+      const cL  = (col - 1 + N) % N;
+      const cR  = (col + 1)     % N;
+      let sum =
+        spins[rU + col] + spins[rD + col] +
+        spins[row * N + cL] + spins[row * N + cR];
+      if (tri) {
+        const cX = (row % 2 === 0) ? cR : cL;
+        sum += spins[rU + cX] + spins[rD + cX];
+      }
       const m  = J * sum * s;
       const dE = 2 * (m + h * s);
       if (dE <= 0 || Math.random() < expJ[m + 6] * (s === 1 ? expHp : expHm)) spins[i] = -s;
@@ -67,19 +63,15 @@
   let canvas, ctx, off, offCtx, imgData, buf;
 
   function render() {
-    const tri = lattice === 'triangle';
-    const coordination = tri ? 6 : 4;
     let q = 0, k = 0;
     for (let row = 0; row < N; row++) {
       for (let col = 0; col < N; col++, k++, q += 4) {
         const raw  = spins[k];
         const disp = J < 0 && lattice === 'square' ? raw * (((row + col) & 1) ? -1 : 1) : raw;
-        const satisfied = (coordination + J * raw * neighborSum(row, col, tri)) / 2;
-        const shades = disp === 1 ? warmShades : coolShades;
-        const colour = shades[Math.round((coordination - satisfied) * (shades.length - 1) / coordination)];
-        buf[q]     = colour[0];
-        buf[q + 1] = colour[1];
-        buf[q + 2] = colour[2];
+        const up   = disp === 1;
+        buf[q]     = up ? _TLR : _PDR;
+        buf[q + 1] = up ? _TLG : _PDG;
+        buf[q + 2] = up ? _TLB : _PDB;
       }
     }
     offCtx.putImageData(imgData, 0, 0);
@@ -118,8 +110,8 @@
     const H  = y0 + dy * (N - 1) + 15;
     const cols = r => (tri && (r & 1)) ? N - 1 : N;
     const pos  = (r, c) => [x0 + a * c + ((tri && (r & 1)) ? a / 2 : 0), y0 + dy * r];
-    const line = (p, q, central) =>
-      `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" style="stroke: var(${central ? '--coral' : '--dim'}); stroke-width: ${central ? 2.5 : 1.5};"/>`;
+    const line = (p, q) =>
+      `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" style="stroke: var(--border-mid); stroke-width: 1.5;"/>`;
     const nbrs = tri
       ? [[2,1],[2,3],[1,1],[1,2],[3,1],[3,2]]
       : [[1,2],[3,2],[2,1],[2,3]];
@@ -127,16 +119,16 @@
     let bonds = '', nodes = '';
     for (let r = 0; r < N; r++) {
       for (let c = 0; c < cols(r); c++) {
-        if (c < cols(r) - 1) bonds += line(pos(r, c), pos(r, c + 1), r === 2 && (c === 1 || c === 2));
+        if (c < cols(r) - 1) bonds += line(pos(r, c), pos(r, c + 1));
         if (r < N - 1) {
           const targets = tri ? ((r & 1) ? [c, c + 1] : [c - 1, c]) : [c];
           targets.forEach(function (c2) {
-            if (c2 >= 0 && c2 < cols(r + 1)) bonds += line(pos(r, c), pos(r + 1, c2), (r === 2 && c === 2) || (r + 1 === 2 && c2 === 2));
+            if (c2 >= 0 && c2 < cols(r + 1)) bonds += line(pos(r, c), pos(r + 1, c2));
           });
         }
         const isCenter = r === 2 && c === 2;
         const isNbr    = nbrs.some(n => n[0] === r && n[1] === c);
-        const fill     = isCenter ? 'var(--hot)' : isNbr ? 'var(--sunset-12)' : 'var(--steel)';
+        const fill     = isCenter ? 'var(--pink-dark)' : isNbr ? 'var(--teal-light)' : 'var(--text-dim)';
         const [x, y]   = pos(r, c);
         nodes += `<circle cx="${x}" cy="${y}" r="${R}" style="fill: ${fill};"/>`;
       }
@@ -146,55 +138,12 @@
   }
 
   /* ── Shell wiring ── */
-  const rangeColours = Array.from({ length: 12 }, (_, i) => `--sunset-${i + 1}`);
-
-  function paintRange(input, signed) {
-    const value = Number(input.value);
-    const fraction = (value - Number(input.min)) / (Number(input.max) - Number(input.min));
-    const colour = signed
-      ? (value < 0 ? '--plum' : value > 0 ? '--sunset-12' : '--light')
-      : rangeColours[Math.round(fraction * (rangeColours.length - 1))];
-    input.style.setProperty('--ising-range-colour', `var(${colour})`);
-    input.style.setProperty('--ising-low', `${signed ? Math.min(50, fraction * 100) : 0}%`);
-    input.style.setProperty('--ising-high', `${signed ? Math.max(50, fraction * 100) : fraction * 100}%`);
-  }
-
   const shell = new AppletShell({
     id:    'ising',
     title: 'Ising Model',
     gap:   0,
 
     ctrlHTML: `
-      <style>
-        #ising-btn-square { --ising-choice: var(--coral); }
-        #ising-btn-triangle { --ising-choice: var(--sunset-12); }
-        #ising-btn-ferro { --ising-choice: var(--hot); }
-        #ising-btn-antiferro, #ising-btn-cold {
-          --ising-choice: var(--sunset-1); --ising-choice-words: var(--bright);
-        }
-        #ising-btn-hot { --ising-choice: var(--sunset-12); }
-        #ising-asm-overlay .applet-shell-btn { background: var(--ink); color: var(--light); }
-        #ising-btn-cold, #ising-btn-hot { border-color: var(--ising-choice); }
-        #ising-asm-overlay .applet-shell-btn.active,
-        #ising-asm-overlay .applet-shell-btn:active {
-          background: var(--ising-choice) !important;
-          border-color: var(--ising-choice);
-          color: var(--ising-choice-words, var(--ink));
-        }
-        #ising-asm-overlay input[type=range] { accent-color: var(--ising-range-colour); }
-        #ising-asm-overlay input[type=range]::-webkit-slider-runnable-track {
-          background: linear-gradient(to right, var(--dim) var(--ising-low), var(--ising-range-colour) var(--ising-low), var(--ising-range-colour) var(--ising-high), var(--dim) var(--ising-high));
-        }
-        #ising-asm-overlay input[type=range]::-webkit-slider-thumb {
-          background: var(--ising-range-colour) !important; box-shadow: none;
-        }
-        #ising-asm-overlay input[type=range]::-moz-range-track {
-          background: linear-gradient(to right, var(--dim) var(--ising-low), var(--ising-range-colour) var(--ising-low), var(--ising-range-colour) var(--ising-high), var(--dim) var(--ising-high));
-        }
-        #ising-asm-overlay input[type=range]::-moz-range-thumb {
-          background: var(--ising-range-colour) !important; box-shadow: none;
-        }
-      </style>
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Lattice</div>
         <div class="applet-shell-btn-row">
@@ -212,8 +161,8 @@
       <div class="applet-shell-ctrl-section">
         <div class="applet-shell-ctrl-title">Initialise</div>
         <div class="applet-shell-btn-row">
-          <button class="applet-shell-btn" id="ising-btn-hot" onclick="isingHotStart()">Hot</button>
-          <button class="applet-shell-btn" id="ising-btn-cold" onclick="isingColdStart()">Cold</button>
+          <button class="applet-shell-btn" onclick="isingHotStart()">Hot</button>
+          <button class="applet-shell-btn" onclick="isingColdStart()">Cold</button>
         </div>
       </div>
       <div class="applet-shell-ctrl-section">
@@ -252,7 +201,7 @@ where the first sum runs over neighboring pairs and $h$ is an external magnetic 
 $$k_B T_c = \\frac{2J}{\\ln(1+\\sqrt{2})} \\approx 2.269\\,J.$$
 At zero field and below $T_c$, the infinite square lattice magnetizes; above, order dissolves. Exactly at $T_c$ fluctuations exist on all scales: patches within patches within patches, a self-similarity that is the fingerprint of a continuous phase transition. In this simulation, those scales end at the size of the lattice.¶Glauber studied single-spin-flip dynamics for the Ising chain in 1963 [glauber1963]. This simulation uses the Metropolis rule [metropolis1953]: a random spin is selected, the energy change $\\Delta E$ of flipping it is computed, and the flip is accepted with probability $\\min(1, e^{-\\frac{\\Delta E}{k_B T}})$. One sweep is one such attempt per site on average. At fixed $T>0$ and $h$, this Markov chain satisfies detailed balance and relaxes toward the Boltzmann distribution.¶Antiferromagnetic coupling ($J<0$) prefers neighbors to anti-align, forming a checkerboard on the square lattice, invisible to the ordinary magnetization but revealed by its staggered counterpart. On the triangular lattice the checkerboard is impossible: three mutually neighboring spins cannot all anti-align. At zero field, this frustration destroys long-range order at every positive temperature, as Wannier showed in 1950 [wannier1950]. A macroscopic ground-state entropy remains.`,
 
-      howto: `The canvas shows a $400 \\times 400$ lattice with periodic boundaries: each pixel is a spin pointing up or down, warm for up and cool for down, shaded by the share of its bonds that are satisfied.¶Lattice selects square (4 neighbors) or triangular (6 neighbors) connectivity:¶FIG::lattices¶Coupling switches $J$ between ferromagnetic and antiferromagnetic. Initialise resets the lattice: Hot scrambles every spin at random, Cold aligns them all.¶Temperature changes the balance between coupling and thermal fluctuations. For the square ferromagnet at zero field, $T_c \\approx \\frac{2.269\\,J}{k_B}$ in the infinite-lattice limit. Cool slowly through this region to watch domains coarsen, or park near $T_c$ to see fluctuations up to the size of the canvas. Speed sets the number of sweeps per animation frame. External Field applies $h$, biasing spins up or down; near $T_c$ even a small field tilts the balance decisively.`,
+      howto: `The canvas shows a $400 \\times 400$ lattice with periodic boundaries: teal pixels are spins up, pink are down.¶Lattice selects square (4 neighbors) or triangular (6 neighbors) connectivity:¶FIG::lattices¶Coupling switches $J$ between ferromagnetic and antiferromagnetic. Initialise resets the lattice: Hot scrambles every spin at random, Cold aligns them all.¶Temperature changes the balance between coupling and thermal fluctuations. For the square ferromagnet at zero field, $T_c \\approx \\frac{2.269\\,J}{k_B}$ in the infinite-lattice limit. Cool slowly through this region to watch domains coarsen, or park near $T_c$ to see fluctuations up to the size of the canvas. Speed sets the number of sweeps per animation frame. External Field applies $h$, biasing spins up or down; near $T_c$ even a small field tilts the balance decisively.`,
 
       references: ['lenz1920', 'ising1925', 'peierls1936', 'kramers1941', 'onsager1944', 'wannier1950', 'glauber1963', 'metropolis1953'],
 
@@ -303,14 +252,13 @@ At zero field and below $T_c$, the infinite square lattice magnetizes; above, or
   };
 
   document.getElementById('ising-temp').addEventListener('input', function () {
-    T = parseFloat(this.value); buildExpTable(); paintRange(this, false);
+    T = parseFloat(this.value); buildExpTable();
   });
   document.getElementById('ising-speed').addEventListener('input', function () {
-    sweepsPerFrame = parseInt(this.value); paintRange(this, false);
+    sweepsPerFrame = parseInt(this.value);
   });
   document.getElementById('ising-field').addEventListener('input', function () {
-    h = parseFloat(this.value); buildExpTable(); paintRange(this, true);
+    h = parseFloat(this.value); buildExpTable();
   });
-  ['temp', 'speed', 'field'].forEach(name => paintRange(document.getElementById(`ising-${name}`), name === 'field'));
 
 })();

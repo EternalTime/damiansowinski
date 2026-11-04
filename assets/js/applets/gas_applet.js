@@ -42,47 +42,10 @@
     document.head.appendChild(s);
   })();
 
-  /* ── Speed ramp: the palette's six speed colours, slow to fast, interpolated in OKLab
-     and spaced by their OKLab distances, so equal steps in speed are equal steps in colour.
-     Disks, halos and histogram bars all read their colour from this one table. ── */
-  const N_SPRITES = 32;
-  const SPEED_RAMP = (function () {
-    const lin = c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
-    const gam = c => { const v = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055; return Math.round(Math.min(Math.max(v, 0), 1) * 255); };
-    const toLab = ([r8, g8, b8]) => {
-      const r = lin(r8), g = lin(g8), b = lin(b8);
-      const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
-      const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
-      const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
-      return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
-              1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
-              0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
-    };
-    const toRgb = ([L, A, B]) => {
-      const l = Math.pow(L + 0.3963377774 * A + 0.2158037573 * B, 3);
-      const m = Math.pow(L - 0.1055613458 * A - 0.0638541728 * B, 3);
-      const s = Math.pow(L - 0.0894841775 * A - 1.2914855480 * B, 3);
-      return [gam( 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
-              gam(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
-              gam(-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s)];
-    };
-    const stops = ['--ramp-steel', '--ramp-indigo', '--ramp-violet',
-                   '--ramp-magenta', '--ramp-coral', '--ramp-amber'].map(n => toLab(_rgb(n)));
-    const at = [0];
-    for (let k = 1; k < stops.length; k++) {
-      const [a, b] = [stops[k - 1], stops[k]];
-      at.push(at[k - 1] + Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]));
-    }
-    const table = [];
-    for (let s = 0; s < N_SPRITES; s++) {
-      const u = s / (N_SPRITES - 1) * at[at.length - 1];
-      let k = 0;
-      while (k < stops.length - 2 && at[k + 1] < u) k++;
-      const f = Math.min(Math.max((u - at[k]) / (at[k + 1] - at[k]), 0), 1);
-      table.push(toRgb(stops[k].map((v, j) => v + (stops[k + 1][j] - v) * f)));
-    }
-    return table;
-  })();
+  const [_TLR, _TLG, _TLB] = _rgb('--teal-light');
+  const [_PDR, _PDG, _PDB] = _rgb('--pink-dark');
+  const [_PLR, _PLG, _PLB] = _rgb('--pink-light');
+  const [_TDR, _TDG, _TDB] = _rgb('--teal-dark');
 
   /* ── Simulation state ── */
   const N = 300;
@@ -276,15 +239,13 @@
     }
   }
 
-  /* Pre-rendered particle sprites, bucketed by speed relative to the mean.
-     Neon aesthetic: white-hot core through the ramp color, and an additive halo
-     in the same color that grows with speed, so a slow disk is nearly bare and
-     the fastest carry the full glow. */
+  /* Pre-rendered particle sprites, bucketed by temperature.
+     Neon aesthetic: white-hot core through the light palette color,
+     additive halo in the paired dark color. */
+  const N_SPRITES  = 32;
   const GLOW_SCALE = 2.6;
   let sprites = null, glowSprites = null, spriteR = -1;
   const _siScratch = new Int32Array(N);
-  let spdRef = 1;   // the speed drawn at the fast end: twice the mean, set every frame
-  const speedBucket = spd => (Math.min(spd / spdRef, 1) * (N_SPRITES - 1) + 0.5) | 0;
 
   function buildSprites() {
     sprites     = new Array(N_SPRITES);
@@ -292,8 +253,13 @@
     spriteR = R;
     for (let s = 0; s < N_SPRITES; s++) {
       const hot = s / (N_SPRITES - 1);
-      const [lr, lg, lb] = SPEED_RAMP[s];
-      /* body: white core → ramp color → transparent edge */
+      const lr = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db = Math.round(_TDB + (_PDB - _TDB) * hot);
+      /* body: white core → light color → transparent edge */
       const c = document.createElement('canvas');
       c.width = c.height = 2 * R + 2;
       const sctx = c.getContext('2d');
@@ -308,53 +274,52 @@
       sctx.fillStyle = grad;
       sctx.fill();
       sprites[s] = c;
-      /* halo: its strength and reach grow as the square of the bucket, inside one
-         canvas size for every bucket; the slowest bucket has none */
-      const glow = hot * hot;
-      const gR = R * (1 + (GLOW_SCALE - 1) * glow);
+      /* halo */
+      const gR = R * GLOW_SCALE;
       const gc = document.createElement('canvas');
-      gc.width = gc.height = Math.ceil(2 * R * GLOW_SCALE) + 2;
+      gc.width = gc.height = Math.ceil(2 * gR) + 2;
       const gctx = gc.getContext('2d');
       const gcx = gc.width / 2, gcy = gc.height / 2;
       const gg = gctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gR);
-      gg.addColorStop(0.0, `rgba(${lr},${lg},${lb},${(0.60 * glow).toFixed(3)})`);
-      gg.addColorStop(0.4, `rgba(${lr},${lg},${lb},${(0.22 * glow).toFixed(3)})`);
-      gg.addColorStop(1.0, `rgba(${lr},${lg},${lb},0)`);
+      gg.addColorStop(0.0, `rgba(${dr},${dg},${db},0.55)`);
+      gg.addColorStop(0.4, `rgba(${dr},${dg},${db},0.20)`);
+      gg.addColorStop(1.0, `rgba(${dr},${dg},${db},0)`);
       gctx.beginPath();
       gctx.arc(gcx, gcy, gR, 0, Math.PI * 2);
       gctx.fillStyle = gg;
       gctx.fill();
-      glowSprites[s] = s > 0 ? gc : null;
+      glowSprites[s] = gc;
     }
   }
 
   function render() {
     ctx.fillStyle = _c('--black');
     ctx.fillRect(0, 0, L, L);
-    /* the piston in white, a colour no speed takes; its body as bright as the site's
-       teal one was */
     if (wallX > 0) {
-      ctx.fillStyle = _rgba('--white', 0.18);
+      ctx.fillStyle = _rgba('--teal-light', 0.25);
       ctx.fillRect(0, 0, wallX, L);
       ctx.save();
-      ctx.shadowColor = _c('--white');
+      ctx.shadowColor = _c('--teal-light');
       ctx.shadowBlur  = 14;
-      ctx.fillStyle = _c('--white');
+      ctx.fillStyle = _c('--teal-light');
       ctx.fillRect(wallX - 2, 0, 3, L);
       ctx.restore();
     }
     let meanSpd = 0;
     for (let i = 0; i < N; i++) meanSpd += Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
     meanSpd /= N;
-    spdRef = Math.max(meanSpd * 2, 0.001);
+    const spdRef = Math.max(meanSpd * 2, 0.001);
     if (spriteR !== R) buildSprites();
-    for (let i = 0; i < N; i++) _siScratch[i] = speedBucket(Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]));
+    for (let i = 0; i < N; i++) {
+      const spd = Math.sqrt(vx[i]*vx[i] + vy[i]*vy[i]);
+      const hot = Math.min(spd / spdRef, 1);
+      _siScratch[i] = (hot * (N_SPRITES - 1) + 0.5) | 0;
+    }
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    const gHalf = (Math.ceil(2 * R * GLOW_SCALE) + 2) / 2;
+    const gHalf = glowSprites[0].width / 2;
     for (let i = 0; i < N; i++) {
-      const halo = glowSprites[_siScratch[i]];
-      if (halo) ctx.drawImage(halo, px[i] - gHalf, py[i] - gHalf);
+      ctx.drawImage(glowSprites[_siScratch[i]], px[i] - gHalf, py[i] - gHalf);
     }
     ctx.restore();
     for (let i = 0; i < N; i++) {
@@ -413,13 +378,20 @@
     const pw = W - PL - PR, ph = H - PT - PB;
     const bw = pw / N_BINS;
     hctx.clearRect(0, 0, W, H);
-    /* Bars: each in the ramp color of the disks it counts, with a glow of the same */
+    /* Bars: light-palette gradient with dark-palette glow (matches particles) */
     hctx.save();
     hctx.shadowBlur = 6;
     for (let b = 0; b < N_BINS; b++) {
       const bh  = Math.min(smoothBins[b] / ymax, 1) * ph;
-      const [lr, lg, lb] = SPEED_RAMP[speedBucket((b + 0.5) * dv)];
-      hctx.shadowColor = `rgb(${lr},${lg},${lb})`;
+      const v   = (b + 0.5) * dv;
+      const hot = Math.min(v / (Math.sqrt(T) * 2), 1);
+      const lr  = Math.round(_TLR + (_PLR - _TLR) * hot);
+      const lg  = Math.round(_TLG + (_PLG - _TLG) * hot);
+      const lb  = Math.round(_TLB + (_PLB - _TLB) * hot);
+      const dr  = Math.round(_TDR + (_PDR - _TDR) * hot);
+      const dg  = Math.round(_TDG + (_PDG - _TDG) * hot);
+      const db  = Math.round(_TDB + (_PDB - _TDB) * hot);
+      hctx.shadowColor = `rgb(${dr},${dg},${db})`;
       hctx.fillStyle   = `rgba(${lr},${lg},${lb},0.75)`;
       hctx.fillRect(PL + b * bw, PT + ph - bh, bw - 1, bh);
     }
@@ -490,7 +462,7 @@
 $$P(v) = \\frac{m v}{k_B T} \\, e^{-m v^2 / 2 k_B T},$$
 the two-dimensional form of the law Maxwell found in three.¶The hard-sphere gas strips the picture to its bones: disks that fly freely and collide elastically, nothing else. No attractions, no internal structure, no adjustable potential. Remarkably, this bare minimum suffices for equilibration, for pressure, for the Maxwell-Boltzmann distribution; as Alder and Wainwright discovered in 1957, in one of the first molecular dynamics simulations ever run, it even suffices for a freezing transition at high density [alder1957], which in 1962 they found for disks too [alder1962]. Entropy alone can crystallize a gas.¶The walls make the thermodynamics tangible. Push the piston inward and the moving wall returns each particle slightly faster than it arrived: microscopic work heating the gas, compression made mechanical. Switch on gravity and the box becomes a miniature atmosphere, its density thinning with height, barometrically where the gas is dilute.`,
 
-      howto: `Disks are colored by speed, blue for slow through violet, magenta and coral to amber for fast. The white wall on the left is the piston face; the panel below histograms the speeds against the two-dimensional Maxwell-Boltzmann distribution (pink curve) at the slider temperature.¶Temperature rescales all velocities immediately. Push In drives the piston in until the disks jam and can make no more room, and the histogram drifts hot as the gas is compressed; Pull Out withdraws it. Gravity pulls the disks down into a profile that thins with height.¶Radius takes effect on Reset, which re-grids the gas with fresh Maxwell-Boltzmann velocities and withdraws the piston. Crank Radius high, push the piston in, and look for crystalline patches: Alder and Wainwright's transition, live. Pause freezes the dynamics.`,
+      howto: `Disks are colored by speed, teal for slow through pink for fast. The teal wall on the left is the piston face; the panel below histograms the speeds against the two-dimensional Maxwell-Boltzmann distribution (pink curve) at the slider temperature.¶Temperature rescales all velocities immediately. Push In drives the piston in until the disks jam and can make no more room, and the histogram drifts hot as the gas is compressed; Pull Out withdraws it. Gravity pulls the disks down into a profile that thins with height.¶Radius takes effect on Reset, which re-grids the gas with fresh Maxwell-Boltzmann velocities and withdraws the piston. Crank Radius high, push the piston in, and look for crystalline patches: Alder and Wainwright's transition, live. Pause freezes the dynamics.`,
 
       references: ['bernoulli1738', 'maxwell1860', 'boltzmann1872', 'alder1957', 'alder1962'],
     },
