@@ -15151,10 +15151,17 @@
         }
       ],
       "references": [
+        "raval1967charged",
         "banerjee1968charged",
         "klepac2000charged",
         "kanti1999charged",
-        "reboucas1979charged"
+        "reboucas1979charged",
+        "raychaudhuri1980",
+        "reboucas1983",
+        "romano2003godel",
+        "caldarelli2004supersymmetric",
+        "ishihara2022godel",
+        "floresalfonso2026godel"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_godel_universe.json",

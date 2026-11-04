@@ -1,5 +1,5 @@
 {
-  "version": "1faf0272b8e45e7f",
+  "version": "4418adb4acd984c5",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -1032,7 +1032,7 @@
       "type": "article",
       "fields": {
         "title": "Semantic information in a model of resource gathering agents",
-        "author": "Sowinski, Damian R and Carroll-Nellenback, Jonathan and Markwick, Robert N and Pinero, Jordi and Gleiser, Marcelo and Kolchinsky, Artemy and Ghoshal, Gourab and Frank, Adam",
+        "author": "Sowinski, Damian R and Carroll-Nellenback, Jonathan and Markwick, Robert N and Piñero, Jordi and Gleiser, Marcelo and Kolchinsky, Artemy and Ghoshal, Gourab and Frank, Adam",
         "journal": "PRX Life",
         "volume": "1",
         "number": "2",
@@ -2766,7 +2766,7 @@
         "volume": "13",
         "pages": "1--270",
         "year": "1890",
-        "url": "https://doi.org/10.1007/BF02392506"
+        "url": "https://henripoincarepapers.univ-nantes.fr/chp/hp-pdf/hp1890am.pdf"
       }
     },
     "born1912": {
@@ -45673,6 +45673,83 @@
         "eprint": "1607.08358",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1007/s10714-016-2065-y"
+      }
+    },
+    "raval1967charged": {
+      "type": "article",
+      "fields": {
+        "title": "On a {G}{\\\"o}del-type universe filled with charged-incoherent matter",
+        "author": "Raval, H. M. and Vaidya, P. C.",
+        "journal": "Current Science",
+        "volume": "36",
+        "number": "1",
+        "pages": "7",
+        "year": "1967",
+        "url": "https://www.currentscience.ac.in/Volumes/36/01/0007.pdf"
+      }
+    },
+    "romano2003godel": {
+      "type": "article",
+      "fields": {
+        "title": "G{\\\"o}del-type space-time metrics",
+        "author": "Romano, Antonio Enea and Goebel, Charles",
+        "journal": "General Relativity and Gravitation",
+        "volume": "35",
+        "number": "10",
+        "pages": "1857--1863",
+        "year": "2003",
+        "doi": "10.1023/A:1026022416126",
+        "eprint": "gr-qc/0208093",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1026022416126"
+      }
+    },
+    "caldarelli2004supersymmetric": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetric {G}{\\\"o}del-type universe in four dimensions",
+        "author": "Caldarelli, Marco M. and Klemm, Dietmar",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "4",
+        "pages": "L17--L20",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/4/L03",
+        "eprint": "hep-th/0310081",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/21/4/L03"
+      }
+    },
+    "ishihara2022godel": {
+      "type": "article",
+      "fields": {
+        "title": "G{\\\"o}del-type solutions in {E}instein--{M}axwell--scalar field theories",
+        "author": "Ishihara, Hideki and Matsuno, Satsuki",
+        "journal": "Progress of Theoretical and Experimental Physics",
+        "volume": "2022",
+        "number": "1",
+        "pages": "013E02",
+        "year": "2022",
+        "doi": "10.1093/ptep/ptab154",
+        "eprint": "2109.11740",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/ptep/ptab154"
+      }
+    },
+    "floresalfonso2026godel": {
+      "type": "article",
+      "fields": {
+        "title": "G{\\\"o}del universe as a superconductor",
+        "author": "Flores-Alfonso, Daniel and Lopez-Monsalvo, Cesar S. and Rubio-Ponce, Alberto",
+        "journal": "Physical Review D",
+        "volume": "113",
+        "number": "12",
+        "pages": "124014",
+        "year": "2026",
+        "doi": "10.1103/gw8y-zrt4",
+        "eprint": "2606.01409",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/gw8y-zrt4"
       }
     }
   }
