@@ -221,6 +221,7 @@
 
     makeStateTextures();
     initState();
+    brushQueue.push({ x0: 0.4, y0: 0.5, x1: 0.6, y1: 0.5, mode: 0 });
     return true;
   }
 
