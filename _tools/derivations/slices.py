@@ -3978,6 +3978,11 @@ import wiggly_string_drawings as _wiggly_string_drawings
 FLAT[(_wiggly_string_drawings.METRIC, _wiggly_string_drawings.SYSTEM, "radial")] = (
     lambda: _wiggly_string_drawings.slice_marks(sys.modules[__name__]))
 
+import pre_big_bang_figures as _pre_big_bang_figures
+FLAT.update({(_pre_big_bang_figures.METRIC, system, _pre_big_bang_figures.VIEWS[system]):
+             (lambda system=system: _pre_big_bang_figures.slice_marks(sys.modules[__name__], system))
+             for system in _pre_big_bang_figures.SYSTEMS})
+
 FLAT_METRICS = {key[0] for key in FLAT}
 
 # Where a moment of the spacetime lies on the drawing and is not drawn, and why.

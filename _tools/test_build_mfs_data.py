@@ -4533,6 +4533,12 @@ class Slices(unittest.TestCase):
             level = 1.0 if "/cosmic/" in key else 0.0
             return (lambda X: level), [-hi, hi]
 
+        if key.startswith("pre_big_bang/"):
+            # The embedded moment is t=-1, which is eta=-1/(1+1/sqrt3) in conformal time.
+            _, hi = self.reach(surface)
+            level = -1.0 if "/synchronous/" in key else -1 / (1 + 1 / math.sqrt(3))
+            return (lambda X: level), [-hi, hi]
+
         if key.startswith("electron_bubble/"):
             # At the shell r0=m=1, the two clocks agree at zero.
             # Its axial intersection is one pole in r or both poles in Cartesian z.
@@ -6012,6 +6018,15 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp+tq)/2+1), 2e-4*scale, where)
                             self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
                             self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
+                    elif metric_id == "pre_big_bang":
+                        # tan((T-X)/2)=eta-x and tan((T+X)/2)=eta+x, with eta=-1/(1+1/sqrt3) at t=-1.
+                        eta = -1 / (1 + 1 / math.sqrt(3))
+                        hi = self.reach(surface)[1]
+                        for X, T in points:
+                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
+                            scale = 1 + tp*tp + tq*tq
+                            self.assertLess(abs((tp+tq)/2-eta), 2e-4*scale, where)
+                            self.assertLessEqual(abs((tq-tp)/2), hi+2e-4*scale, where)
                     elif metric_id == "exponential_scalar_universes":
                         p = {"inflation": 2, "tracking": 2/3, "coasting": 1}[mark["view"]]
                         eta = 0 if p == 1 else 1/(1-p)

@@ -19,9 +19,23 @@ So $k = -1/(1 + \sqrt3)$ is $a_-$, the expanding member, and $k = 1/(\sqrt3 - 1)
 The two values are the roots of $2k^2 - 2k - 1$, which is $3\beta^2 = 1$ written in $k$, and the dilaton is $\phi = (3\beta - 1)\ln(-t) = (2k - 1)\ln(-\eta/(1 + k))$.
 Both field equations in this chart are proportional to $2k^2 - 2k - 1$, and its curvature holds for every $k$, so none of its components assumes a value of $k$.
 The constant $1 + k$ keeps $x$, $y$, and $z$ the coordinates of the synchronous chart and puts $t = -1$ at $\eta = -(1 + k)$, where $a = 1$.
-The ratio of the two charts' curvature is a check on both: at $k = -1/(1 + \sqrt3)$, $6k(k - 1)/(\eta^2a^2) = (1 + \sqrt3)^2/t^2$, since $\eta^2a^2 = (1 + k)^2t^2$.
+The two charts' Ricci scalars agree: at $k = -1/(1 + \sqrt3)$, $6k(k - 1)/(\eta^2a^2) = (1 + \sqrt3)^2/t^2$, since $\eta^2a^2 = (1 + k)^2t^2$.
 
 The Einstein frame metric $\tilde g_{\mu\nu} = e^{-\phi}g_{\mu\nu}$ is a second metric, conformal to this one, Gasperini and Veneziano's (1.8) to (1.14) and (3.51).
 With $B = \sum_i\beta_i$, its time is $-\tilde t \propto (-t)^{(3 - B)/2}$ and its scale factors are $(-\tilde t)^{p_i}$ with $p_i = (1 - B + 2\beta_i)/(3 - B)$, so $\sum_i p_i = 1$ and $\sum_i p_i^2 = 1 - 2(1 - B)^2/(3 - B)^2$.
 That is Kasner's universe with a massless scalar field, its $q^2 = 2(1 - B)^2/(3 - B)^2$, run toward $\tilde t = 0$ from below; the isotropic expanding member has $p_i = 1/3$, the massless scalar universe $\tilde a = (-\tilde t)^{1/3}$.
 It appears in the History and in the relation to Kasner's universe with a scalar field, and no chart of this spacetime carries it, since its line element is another metric.
+
+## Drawings
+
+Every drawing is of the expanding isotropic member, $\beta_1 = \beta_2 = \beta_3 = -1/\sqrt3$, which is $k = -1/(1 + \sqrt3)$ in conformal time.
+The plane $y = z = 0$ is totally geodesic, since the reflections $y \to -y$ and $z \to -z$ fix it, and its light rays see only $\beta_1$.
+Along $x$ a ray keeps $x \mp (-t)^s/s$ with $s = 1 - \beta_1 = 1 + 1/\sqrt3$, which is $x \pm \eta$ in conformal time, so the cones close up as $t \to 0$, where the scale factor diverges.
+Both spacetime diagrams span $x \in [-2.2, 2.2]$ and a time from $-4.4$ to $0$, the curvature singularity along the top edge.
+The marked moment is $t = -1$, where every scale factor is one, which is $\eta = -1/s = -(1 + k)$ in conformal time.
+The embedding turns the plane $z = 0$ at that moment about its origin: it is Euclid's plane, $dx^2 + dy^2$, out to the radius $2$ of the slices.
+The conformal diagram compactifies the plane $y = z = 0$ in conformal time with $p, q = \arctan(\eta \mp x)$, the half of Minkowski's diamond below $T = 0$: the singularity $\eta = 0$ is its top edge, where the Kretschmann scalar grows as $(-\eta)^{-4(1 + k)}$, and its lower edges are past null infinity, where the scalar falls to zero.
+The curvature figure reads the stored scalars of the synchronous chart, $K = (20 + 8\sqrt3)/(3t^4)$ and $R = (1 + \sqrt3)^2/t^2$ at this member, from $t = -4.4$ to $t = -0.2$.
+All four drawing kinds are present.
+
+The collection's `view_text.length` counts 223 characters on the synchronous spacetime view, 156 on the conformal time one, 246 on the conformal diagram, 212 on the embedding, and 163 on the curvature view.

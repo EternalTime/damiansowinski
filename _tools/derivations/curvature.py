@@ -19000,6 +19000,13 @@ def linear_dilaton(ck, src):
 
 DRAWN[_linear_dilaton_figures.METRIC] = linear_dilaton
 
+import pre_big_bang_figures as _pre_big_bang_figures
+
+def pre_big_bang(ck, src):
+    return _pre_big_bang_figures.curvature_views(ck, src, sys.modules[__name__])
+
+DRAWN[_pre_big_bang_figures.METRIC] = pre_big_bang
+
 import exponential_scalar_universes as _exponential_scalar
 
 

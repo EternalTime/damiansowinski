@@ -19335,6 +19335,11 @@ DIAGRAMS.extend(_linear_dilaton_figures.diagram_specs(Diagram, SIDEWAYS))
 CAPTIONS.update(_linear_dilaton_figures.diagram_captions())
 CLOSED_FORMS.update(_linear_dilaton_figures.null_forms())
 
+import pre_big_bang_figures as _pre_big_bang_figures
+DIAGRAMS.extend(_pre_big_bang_figures.diagram_specs(Diagram, SIDEWAYS))
+CAPTIONS.update(_pre_big_bang_figures.diagram_captions())
+CLOSED_FORMS.update(_pre_big_bang_figures.null_forms())
+
 import hosotani_drawings as hosotani_drawings
 hosotani_drawings.register_null(sys.modules[__name__])
 

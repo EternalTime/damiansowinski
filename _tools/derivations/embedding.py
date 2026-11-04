@@ -22502,6 +22502,14 @@ CAPTIONS.update(_global_texture.embedding_captions())
 import wiggly_string_drawings as _wiggly_string_drawings
 _wiggly_string_drawings.register_embedding(sys.modules[__name__])
 
+import pre_big_bang_figures as _pre_big_bang_figures
+
+def pre_big_bang(ck, src):
+    return _pre_big_bang_figures.embedding_views(ck, src, sys.modules[__name__])
+
+DRAWN[_pre_big_bang_figures.METRIC] = pre_big_bang
+CAPTIONS.update(_pre_big_bang_figures.embedding_captions())
+
 if __name__ == "__main__":
     sys.exit(main())
 
