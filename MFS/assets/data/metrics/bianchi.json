@@ -80,6 +80,11 @@
       "id": "kasner_magnetic",
       "kind": "special_case",
       "text": "Bianchi type I holding a uniform magnetic field and no matter, the universe Gerald Rosen found in 1962 [rosen1962, jacobs1969]."
+    },
+    {
+      "id": "pre_big_bang",
+      "kind": "special_case",
+      "text": "The type I universes of low energy string theory, with scale factors $(-t)^{\\beta_i}$ and a dilaton, where $\\sum_i\\beta_i^2 = 1$ [gasperini2003prebigbang]."
     }
   ],
   "references": [
@@ -102,7 +107,8 @@
     "zeldovich1984",
     "king1973",
     "rosen1962",
-    "jacobs1969"
+    "jacobs1969",
+    "gasperini2003prebigbang"
   ],
   "coordinates": [
     {

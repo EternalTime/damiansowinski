@@ -107,6 +107,11 @@
       "id": "chodos_detweiler",
       "kind": "family",
       "text": "Three expanding circles and one contracting circle form a five dimensional Kasner vacuum with exponents $(1/2,1/2,1/2,-1/2)$ [chyba1985]."
+    },
+    {
+      "id": "pre_big_bang",
+      "kind": "generalisation",
+      "text": "Kasner's metric with the dilaton of low energy string theory, $\\phi = (\\sum_i\\beta_i - 1)\\ln(-t)$, on $t < 0$. The squares of the exponents still sum to one while their sum is free, and with every exponent negative space expands faster and faster toward $t = 0$ [gasperini2003prebigbang]."
     }
   ],
   "references": [
@@ -133,7 +138,8 @@
     "kastor2015",
     "belinskii1975",
     "bedran1997",
-    "chyba1985"
+    "chyba1985",
+    "gasperini2003prebigbang"
   ],
   "coordinates": [
     {

@@ -85,6 +85,11 @@
       "id": "bekenstein_universes",
       "kind": "family",
       "text": "Another universe whose contraction turns into expansion at a bounce, in Einstein's theory, through a scalar field coupled to curvature and to dust."
+    },
+    {
+      "id": "pre_big_bang",
+      "kind": "family",
+      "text": "A vacuum of low energy string theory whose isotropic member expands faster and faster toward the big bang in its string frame. In the Einstein frame that expansion is the contraction of this universe long before its bounce [gasperini2003prebigbang]."
     }
   ],
   "references": [
@@ -103,7 +108,8 @@
     "simpson2019",
     "hayward2006",
     "binetruy2000nonconventional",
-    "murphy1973"
+    "murphy1973",
+    "gasperini2003prebigbang"
   ],
   "coordinates": [
     {

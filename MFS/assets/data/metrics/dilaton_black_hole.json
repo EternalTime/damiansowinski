@@ -102,6 +102,11 @@
       "id": "linear_dilaton",
       "kind": "family",
       "text": "A flat string frame can carry a dilaton linear in a coordinate. The Einstein frame with a timelike gradient expands linearly in time, while the extremal magnetic throat has a spatial gradient [devega1994linear, giddings1992]."
+    },
+    {
+      "id": "pre_big_bang",
+      "kind": "family",
+      "text": "A universe of the same string theory with the dilaton alone, changing with time. With every exponent negative it expands faster and faster toward a singularity of infinite curvature, and inverting its scale factors and reversing its time pairs it with a decelerating expansion [gasperini1993prebigbang]."
     }
   ],
   "references": [
@@ -130,7 +135,8 @@
     "gibbons1995",
     "banerjee1998",
     "dvali2016skyrmion",
-    "devega1994linear"
+    "devega1994linear",
+    "gasperini1993prebigbang"
   ],
   "coordinates": [
     {

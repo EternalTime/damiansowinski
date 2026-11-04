@@ -82,6 +82,11 @@
       "id": "chodos_detweiler",
       "kind": "family",
       "text": "The five dimensional vacuum chart at $s_1=s_2=s_3=1/2$, $s_5=-1/2$ has the local geometry of this expanding and contracting four torus [chyba1985]."
+    },
+    {
+      "id": "pre_big_bang",
+      "kind": "conformal",
+      "text": "A vacuum of low energy string theory whose string frame metric, multiplied by $e^{-\\phi}$, is one of these universes run backward in time. Its accelerating isotropic expansion becomes the contraction of the member with all three exponents $1/3$ [gasperini2003prebigbang]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "jacobs1969",
     "ashtekar2009bianchi",
     "hartnoll2021diving",
-    "chyba1985"
+    "chyba1985",
+    "gasperini2003prebigbang"
   ],
   "coordinates": [
     {

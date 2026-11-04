@@ -30,7 +30,8 @@
     "antoniadis1989expanding",
     "karananas2021linear",
     "mandal1991",
-    "giddings1992"
+    "giddings1992",
+    "gasperini1993prebigbang"
   ],
   "coordinates": [
     {
@@ -1434,6 +1435,11 @@
       "id": "dilaton_black_hole",
       "kind": "family",
       "text": "The string frame of the extreme magnetic black hole has a long throat whose dilaton is linear in distance [giddings1992]. The gradient along the throat is spatial."
+    },
+    {
+      "id": "pre_big_bang",
+      "kind": "family",
+      "text": "A vacuum of the metric and dilaton of string theory whose scale factors are powers of time, the squares of the exponents summing to one. With every exponent negative it expands faster and faster toward a singularity, and inverting its scale factors and reversing its time, with a shift of the dilaton, pairs it with a decelerating expansion [gasperini1993prebigbang]."
     }
   ]
 }

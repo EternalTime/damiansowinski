@@ -2341,5 +2341,36 @@
       ]
     }
   ],
-  "related": []
+  "related": [
+    {
+      "id": "kasner",
+      "kind": "special_case",
+      "text": "Kasner's vacuum is the member whose exponents also sum to one, where the dilaton is constant. Its time runs the other way, on $t > 0$ [lidsey2000superstring]."
+    },
+    {
+      "id": "kasner_scalar",
+      "kind": "conformal",
+      "text": "Rescaled by $e^{-\\phi}$ to the Einstein frame, where the dilaton is a massless scalar field, each of these universes is Kasner's universe with a scalar field run backward in time [gasperini2003prebigbang]. The accelerating isotropic expansion becomes an accelerating contraction there."
+    },
+    {
+      "id": "linear_dilaton",
+      "kind": "family",
+      "text": "Another vacuum of the metric and dilaton of string theory, flat in its string frame with the dilaton linear in time. Gabriele Veneziano noted that with a cosmological term in the string action the general solution tends to it in the far past [veneziano1991duality]. Its scale factors are all one, so the inversion of scale factors leaves it as it is."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The static, charged black hole of the same low energy string theory, with a Maxwell field beside the dilaton, whose dilaton changes with distance from the hole. Here the dilaton changes with time alone, and with every exponent negative space expands faster and faster toward a singularity."
+    },
+    {
+      "id": "bianchi",
+      "kind": "generalisation",
+      "text": "Bianchi type I, flat space with a scale factor of its own along each axis. The dilaton of low energy string theory makes each scale factor a power of time [gasperini2003prebigbang]."
+    },
+    {
+      "id": "lqc_bounce",
+      "kind": "family",
+      "text": "A flat universe of a massless scalar field in which the big bang is replaced by a bounce of loop quantum cosmology. Long before the bounce it contracts as $(-t)^{1/3}$, the Einstein frame of the isotropic expansion here [gasperini2003prebigbang]."
+    }
+  ]
 }
