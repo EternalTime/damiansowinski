@@ -1,0 +1,75 @@
+{
+  "id": "global_texture",
+  "name": "Collapsing Global Texture",
+  "short_name": "Global Texture",
+  "description": "A spherical configuration of four scalar fields collapsing under its own gradients. Its gravitational field has a solid angle deficit that grows as the collapse approaches. The metric is known explicitly to first order in the field's gravitational strength; the full self-similar solution is determined numerically.",
+  "tags": [
+    "topological defect",
+    "angular deficit",
+    "scalar field",
+    "time-dependent",
+    "self-similar",
+    "gravitational collapse",
+    "numerical solution",
+    "approximate solution",
+    "spherically symmetric",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use $c=\\hbar=1$, so $t$ and $r$ are lengths, with the collapse at $t=0$ and $r$ the proper radial distance. The chart covers $t<0$ and $r>0$. Its angular factor is $H=1-2\\epsilon+2\\epsilon(t/r)\\arctan(r/t)$, with $\\epsilon=8\\pi G\\eta^2\\ll1$ and $0\\le\\epsilon<1/2$. The displayed tensors are the exact tensors of this truncated line element. Its Einstein tensor agrees with the texture stress through first order in $\\epsilon$; terms beyond that order do not describe the full coupled solution. A dot in the geodesic equations denotes differentiation with respect to an affine parameter.  The full solution has $ds^2=-dt^2+dr^2+r^2\\omega^2(u)d\\Omega^2$, where $u=t/r$, $d\\Omega^2=d\\theta^2+\\sin^2\\theta\\,d\\phi^2$, $\\chi=f(u)$ and primes denote $d/du$. It satisfies $(1-u^2)(\\omega^2f')'+\\sin(2f)=0$, $\\omega''=-(\\epsilon/2)\\omega(f')^2$ and $(u\\omega'-\\omega)^2-(\\omega')^2+(\\epsilon/2)(1-u^2)\\omega^2(f')^2+\\epsilon\\sin^2f=1$ [durrer1992textures]. The functions are determined numerically with regularity conditions at the centre and the self-similarity horizon.",
+  "history": "Four scalar fields with a fixed combined magnitude have a three-sphere of possible values [durrer1992textures]. Their direction can vary across space, forming a global texture whose gradients drive it to collapse. For a spherical texture, one angle $\\chi(t,r)$ describes the field's direction, and the self-similar collapse has the same profile at each scale. The four-component field is $\\boldsymbol\\phi=\\eta(\\sin\\chi\\,\\hat{\\boldsymbol r},\\cos\\chi)$, where $\\eta$ is its fixed magnitude and $\\hat{\\boldsymbol r}$ the radial unit vector.¶Dirk Nötzold calculated the gravitational field of a collapsing spherical texture to first order in $\\epsilon=8\\pi G\\eta^2$ [noetzold1991textures]. His 1991 solution uses the proper time and radial distance of a flat background, with the geometry's time dependence in the areas of spheres about the centre. Ruth Durrer, Markus Heusler, Philippe Jetzer, and Norbert Straumann studied the coupled Einstein and scalar-field equations in 1992 [durrer1992textures]. They obtained the full self-similar solution numerically in two coordinate systems and related those systems by a coordinate transformation.¶The collapse occurs at $t=0$. Before collapse, Nötzold's variable is $x=-t/r>0$, and his angular function is $w(x)=-2+2x\\arctan(1/x)$ [noetzold1991textures]. Through first order, the line element is $ds^2=-dt^2+dr^2+r^2H(d\\theta^2+\\sin^2\\theta\\,d\\phi^2)$, with $H=1+\\epsilon w(x)$. Durrer and colleagues' first-order result is the same angular factor, expressed through $y=r/t=-1/x$: $\\omega=1+\\epsilon[\\arctan(y)/y-1]$, with $H=\\omega^2+O(\\epsilon^2)$ [durrer1992textures].¶A sphere at proper radial distance $r$ has area $4\\pi r^2H$. Its remaining solid angle is $4\\pi H$, and its missing solid angle is $\\Delta\\Omega=-4\\pi\\epsilon w(x)$ [noetzold1991textures]. At a fixed nonzero $r$, the missing angle grows from zero in the distant past toward $8\\pi\\epsilon$ as $t\\to0^-$. The change is self-similar: spheres with the same $-t/r$ have the same deficit.¶Nötzold stated that test matter feels no gravitational force unless it has angular momentum about the texture's centre [noetzold1991textures]. In these coordinates radial geodesics obey $\\ddot t=\\ddot r=0$, and a particle initially at rest retains its radial coordinate. The shrinking spatial volume still increases the density of initially uniform dust, with its density proportional to $H^{-1}$ [durrer1992textures]. The dust is treated as test matter, with its own gravitational field neglected.¶For the nonlinear solution, Durrer and colleagues use $u=t/r$, $\\chi=f(u)$ and the angular factor $\\omega^2(u)$, solving coupled ordinary differential equations by shooting [durrer1992textures]. Their solution describes the field outside the small core in which its magnitude changes during unwinding. The fixed-magnitude sigma model cannot resolve that event. Nötzold gives several post-collapse continuations, so a continuation through the unwinding requires additional physical assumptions [noetzold1991textures].",
+  "related": [
+    {
+      "id": "global_monopole",
+      "kind": "family",
+      "text": "A spherical defect with a solid angle deficit. The monopole's far field is static; the texture's deficit changes during collapse [noetzold1991textures]."
+    },
+    {
+      "id": "cosmic_string",
+      "kind": "family",
+      "text": "Both are defects associated with broken symmetries. A straight string has a fixed missing angle around its axis; the texture has a changing missing solid angle about its centre [durrer1992textures]."
+    },
+    {
+      "id": "roberts",
+      "kind": "family",
+      "text": "Both scalar fields collapse self-similarly. Roberts has one unconstrained massless scalar; the texture has four components constrained to a three-sphere [durrer1992textures]."
+    }
+  ],
+  "references": [
+    "durrer1992textures",
+    "noetzold1991textures"
+  ],
+  "coordinates": [
+    {
+      "id": "collapse",
+      "name": "Before Collapse",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, 0)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\epsilon",
+          "description": "Gravitational strength, $\\epsilon=8\\pi G\\eta^2\\ll1$, with $0\\le\\epsilon<1/2$, $G$ Newton's constant and $\\eta$ the scalar field magnitude"
+        },
+        {
+          "symbol": "H = 1 - 2\\epsilon + \\dfrac{2\\epsilon t}{r}\\arctan\\left(\\dfrac{r}{t}\\right)",
+          "description": "Ratio of a sphere's area to $4\\pi r^2$, through first order in $\\epsilon$; $r$ is proper radial distance"
+        }
+      ],
+      "convention": "We use $c=\\hbar=1$, so $t$ and $r$ are lengths, with the collapse at $t=0$. The displayed tensors are the exact tensors of this truncated line element. Its Einstein tensor agrees with the texture stress through first order in $\\epsilon$; terms beyond that order do not describe the full coupled solution. A dot denotes differentiation with respect to an affine parameter.",
+      "line_element": "ds^2=-dt^2+dr^2+r^2H\\left(d\\theta^2+\\sin^2\\theta\\,d\\phi^2\\right)"
+    }
+  ]
+}
