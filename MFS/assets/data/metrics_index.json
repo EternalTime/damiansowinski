@@ -2476,11 +2476,35 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "586ecc290da20a00",
+    "version": "31dca47f34fa7798",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "0715fc5083d2df7a",
     "curvature": "a9c0014fd398ed71"
+  },
+  {
+    "id": "global_texture",
+    "name": "Global Texture",
+    "tags": [
+      "topological defect",
+      "angular deficit",
+      "scalar field",
+      "time-dependent",
+      "self-similar",
+      "gravitational collapse",
+      "numerical solution",
+      "approximate solution",
+      "spherically symmetric",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "4a7bdd03f6f7e8b6",
+    "diagrams": "171ee62f5e7913e0",
+    "conformal": "753bec29d4e640f6",
+    "embedding": "05a89c0afe29a237",
+    "curvature": "ed30e1f1bb30065d"
   },
   {
     "id": "godel",
@@ -5730,7 +5754,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f423b2604fe7ecdd",
+    "version": "48586f0260719dcd",
     "diagrams": "ef50bbbb10b2fcf3",
     "conformal": "7870256e2aa08cb4",
     "embedding": "c4852dac6f3f346e",
@@ -7185,7 +7209,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "2d738ad0f70f2e8b",
+    "version": "4cd4a46b6a87193c",
     "diagrams": "a5eedeb1a3fee9e3",
     "conformal": "23c762685b735685",
     "embedding": "ef960fe8cb1357e7"

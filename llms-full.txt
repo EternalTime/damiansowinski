@@ -1215,6 +1215,16 @@ The static, spherically symmetric field of a global monopole, a hedgehog of thre
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \Delta - \dfrac{r_s}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \Delta - \dfrac{r_s}{r}\right)dv^2 + 2\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Collapsing Global Texture
+
+A spherical configuration of four scalar fields collapsing under its own gradients. Its gravitational field has a solid angle deficit that grows as the collapse approaches. The metric is known explicitly to first order in the field's gravitational strength; the full self similar solution is determined numerically.
+
+- id: `global_texture`
+- tags: topological defect, angular deficit, scalar field, time-dependent, self-similar, gravitational collapse, numerical solution, approximate solution, spherically symmetric, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/global_texture.json
+- chart Before Collapse: coordinates $(t, r, \theta, \phi)$, $$ds^2=-dt^2+dr^2+r^2H\left(d\theta^2+\sin^2\theta\,d\phi^2\right)$$
+
 ### Gödel Rotating Universe
 
 An exact solution of Einstein's field equations describing a rotating dust universe with closed timelike curves.
