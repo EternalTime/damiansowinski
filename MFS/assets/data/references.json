@@ -1,5 +1,5 @@
 {
-  "version": "5399a7edce52f8f2",
+  "version": "2da1392e04ccbcbb",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -22885,13 +22885,17 @@
     "kofron2023": {
       "type": "article",
       "fields": {
-        "title": "Relativistic disks by {Appell}-ring convolutions",
-        "author": "Kofroň, David and Kotlař\\'ik, Petr and Semer\\'ak, Oldřich",
-        "journal": "arXiv preprint arXiv:2310.16669",
-        "year": "2023",
+        "title": "Self-gravitating Relativistic Disks and Their Exact Superpositions with a Black Hole",
+        "author": "Kofroň, D. and Kotlařík, P. and Semerák, O.",
+        "journal": "The Astrophysical Journal",
+        "volume": "1009",
+        "number": "2",
+        "pages": "191",
+        "year": "2026",
+        "doi": "10.3847/1538-4357/ae8e6e",
         "eprint": "2310.16669",
         "archiveprefix": "arXiv",
-        "url": "https://arxiv.org/abs/2310.16669"
+        "url": "https://doi.org/10.3847/1538-4357/ae8e6e"
       }
     },
     "misner1960": {
@@ -39534,6 +39538,652 @@
         "url": "https://doi.org/10.1016/j.aop.2026.170573",
         "eprint": "2506.09310",
         "archiveprefix": "arXiv"
+      }
+    },
+    "pichonlyndenbell1996": {
+      "type": "article",
+      "fields": {
+        "title": "New sources for Kerr and other metrics: rotating relativistic discs with pressure support",
+        "author": "Pichon, C. and Lynden-Bell, D.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "280",
+        "number": "4",
+        "pages": "1007--1026",
+        "year": "1996",
+        "doi": "10.1093/mnras/280.4.1007",
+        "eprint": "astro-ph/9605037",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1093/mnras/280.4.1007"
+      }
+    },
+    "ledvinkazofkabicak1999": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "Relativistic disks as sources of Kerr-Newman fields",
+        "author": "Ledvinka, Tomáš and Žofka, Martin and Bičák, Jiří",
+        "booktitle": "Recent developments in theoretical and experimental general relativity, gravitation, and relativistic field theories. Proceedings, 8th Marcel Grossmann meeting, MG8, Jerusalem, Israel, June 22-27, 1997. Pts. A, B",
+        "editor": "Piran, T. and Ruffini, R.",
+        "publisher": "World Scientific",
+        "address": "Singapore",
+        "pages": "339--341",
+        "year": "1999",
+        "eprint": "gr-qc/9801053",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9801053"
+      }
+    },
+    "kleinrichter1999": {
+      "type": "article",
+      "fields": {
+        "title": "Exact Relativistic Gravitational Field of a Stationary Counterrotating Dust Disk",
+        "author": "Klein, C. and Richter, O.",
+        "journal": "Physical Review Letters",
+        "volume": "83",
+        "number": "15",
+        "pages": "2884--2887",
+        "year": "1999",
+        "doi": "10.1103/physrevlett.83.2884",
+        "eprint": "gr-qc/9908042",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevlett.83.2884"
+      }
+    },
+    "gonzalezletelier2000": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating relativistic thin disks",
+        "author": "González, Guillermo A. and Letelier, Patricio S.",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "6",
+        "pages": "064025",
+        "year": "2000",
+        "doi": "10.1103/physrevd.62.064025",
+        "eprint": "gr-qc/0006002",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.62.064025"
+      }
+    },
+    "frauendienerklein2001": {
+      "type": "article",
+      "fields": {
+        "title": "Exact relativistic treatment of stationary counterrotating dust disks: Physical properties",
+        "author": "Frauendiener, J. and Klein, C.",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "8",
+        "pages": "084025",
+        "year": "2001",
+        "doi": "10.1103/physrevd.63.084025",
+        "eprint": "gr-qc/0102096",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.63.084025"
+      }
+    },
+    "gonzalezespitia2003": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic static thin disks: The counterrotating model",
+        "author": "González, Guillermo A. and Espitia, Omar A.",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "10",
+        "pages": "104028",
+        "year": "2003",
+        "doi": "10.1103/physrevd.68.104028",
+        "eprint": "gr-qc/0107044",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.68.104028"
+      }
+    },
+    "ujevicletelier2004": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of general relativistic geometric thin disks",
+        "author": "Ujevic, Maximiliano and Letelier, Patricio S.",
+        "journal": "Physical Review D",
+        "volume": "70",
+        "number": "8",
+        "pages": "084015",
+        "year": "2004",
+        "doi": "10.1103/physrevd.70.084015",
+        "eprint": "gr-qc/0409110",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.70.084015"
+      }
+    },
+    "vogtletelier2005": {
+      "type": "article",
+      "fields": {
+        "title": "General relativistic model for the gravitational field of active galactic nuclei surrounded by a disk",
+        "author": "Vogt, D. and Letelier, P. S.",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "4",
+        "pages": "044009",
+        "year": "2005",
+        "doi": "10.1103/physrevd.71.044009",
+        "eprint": "gr-qc/0409109",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.71.044009"
+      }
+    },
+    "garciareyesgonzalez2007": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating and counterrotating relativistic thin disks as sources of stationary electrovacuum spacetimes",
+        "author": "García-Reyes, Gonzalo and González, Guillermo A.",
+        "journal": "Brazilian Journal of Physics",
+        "volume": "37",
+        "number": "3b",
+        "pages": "1094--1105",
+        "year": "2007",
+        "doi": "10.1590/s0103-97332007000700004",
+        "eprint": "0810.2691",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1590/s0103-97332007000700004"
+      }
+    },
+    "vieiraramoscarosaa2016": {
+      "type": "article",
+      "fields": {
+        "title": "Vertical stability of circular orbits in relativistic razor-thin disks",
+        "author": "Vieira, Ronaldo S. S. and Ramos-Caro, Javier and Saa, Alberto",
+        "journal": "Physical Review D",
+        "volume": "94",
+        "number": "10",
+        "pages": "104016",
+        "year": "2016",
+        "doi": "10.1103/physrevd.94.104016",
+        "eprint": "1610.02369",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.94.104016"
+      }
+    },
+    "becerra2017mass": {
+      "type": "article",
+      "fields": {
+        "title": "On the Influence of the Mass Definition in the Stability of Axisymmetric Relativistic Thin Disks",
+        "author": "Becerra, Eduar A. and Dubeibe, Fredy L. and González, Guillermo A.",
+        "journal": "Revista de la Academia Colombiana de Ciencias Exactas, Físicas y Naturales",
+        "volume": "41",
+        "number": "158",
+        "pages": "22--29",
+        "year": "2017",
+        "doi": "10.18257/raccefyn.416",
+        "eprint": "1701.03686",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.18257/raccefyn.416"
+      }
+    },
+    "freitassaa2017": {
+      "type": "article",
+      "fields": {
+        "title": "Stability aspects of relativistic thin magnetized disks",
+        "author": "de Freitas, Vanessa P. and Saa, Alberto",
+        "journal": "Physical Review D",
+        "volume": "95",
+        "number": "12",
+        "pages": "124040",
+        "year": "2017",
+        "doi": "10.1103/physrevd.95.124040",
+        "eprint": "1703.10883",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.95.124040"
+      }
+    },
+    "vieira2020seeds": {
+      "type": "article",
+      "fields": {
+        "title": "Self-gravitating razor-thin discs around black holes via multi-hole seeds",
+        "author": "Vieira, Ronaldo S. S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "37",
+        "number": "20",
+        "pages": "205013",
+        "year": "2020",
+        "doi": "10.1088/1361-6382/aba99b",
+        "eprint": "1907.08987",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aba99b"
+      }
+    },
+    "chenkotlarik2023": {
+      "type": "article",
+      "fields": {
+        "title": "Quasinormal modes of black holes encircled by a gravitating thin disk",
+        "author": "Chen, Che-Yu and Kotlařík, Petr",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "6",
+        "pages": "064052",
+        "year": "2023",
+        "doi": "10.1103/physrevd.108.064052",
+        "eprint": "2307.07360",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.108.064052"
+      }
+    },
+    "deleon2024": {
+      "type": "article",
+      "fields": {
+        "title": "Visualisation of counter-rotating dust disks using ray tracing methods",
+        "author": "de Leon, Eddy B and Frauendiener, Jörg and Klein, Christian",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "41",
+        "number": "15",
+        "pages": "155005",
+        "year": "2024",
+        "doi": "10.1088/1361-6382/ad58cb",
+        "eprint": "2401.11498",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ad58cb"
+      }
+    },
+    "caputoledvinka2026": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic chaos in black-hole spacetimes with rotating thin disks",
+        "author": "Caputo, Claudia and Ledvinka, Tomáš",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "43",
+        "number": "21",
+        "pages": "215001",
+        "year": "2026",
+        "doi": "10.1088/1361-6382/aeb16a",
+        "url": "https://doi.org/10.1088/1361-6382/aeb16a"
+      }
+    },
+    "gonzalezletelier1999stress": {
+      "type": "article",
+      "fields": {
+        "title": "Relativistic static thin discs with radial stress support",
+        "author": "González, Guillermo A and Letelier, Patricio S",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "2",
+        "pages": "479--494",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/2/012",
+        "eprint": "gr-qc/9803071",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/2/012"
+      }
+    },
+    "cizeksemerak2017": {
+      "type": "article",
+      "fields": {
+        "title": "Perturbation of a Schwarzschild Black Hole Due to a Rotating Thin Disk",
+        "author": "Čížek, P. and Semerák, O.",
+        "journal": "The Astrophysical Journal Supplement Series",
+        "volume": "232",
+        "number": "1",
+        "pages": "14",
+        "year": "2017",
+        "doi": "10.3847/1538-4365/aa876b",
+        "eprint": "1710.07109",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3847/1538-4365/aa876b"
+      }
+    },
+    "kotlarik2018rotating": {
+      "type": "article",
+      "fields": {
+        "title": "Schwarzschild black hole encircled by a rotating thin disc: Properties of perturbative solution",
+        "author": "Kotlařík, P. and Semerák, O. and Čížek, P.",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "8",
+        "pages": "084006",
+        "year": "2018",
+        "doi": "10.1103/physrevd.97.084006",
+        "eprint": "1804.02010",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.97.084006"
+      }
+    },
+    "kotlarikkofron2022": {
+      "type": "article",
+      "fields": {
+        "title": "Black Hole Encircled by a Thin Disk: Fully Relativistic Solution",
+        "author": "Kotlařík, Petr and Kofroň, David",
+        "journal": "The Astrophysical Journal",
+        "volume": "941",
+        "number": "1",
+        "pages": "25",
+        "year": "2022",
+        "doi": "10.3847/1538-4357/ac9620",
+        "eprint": "2211.04823",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3847/1538-4357/ac9620"
+      }
+    },
+    "cannizzaro2024tidal": {
+      "type": "article",
+      "fields": {
+        "title": "Tidal deformability of black holes surrounded by thin accretion disks",
+        "author": "Cannizzaro, Enrico and De Luca, Valerio and Pani, Paolo",
+        "journal": "Physical Review D",
+        "volume": "110",
+        "number": "12",
+        "pages": "123004",
+        "year": "2024",
+        "doi": "10.1103/physrevd.110.123004",
+        "eprint": "2408.14208",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/physrevd.110.123004"
+      }
+    },
+    "chowdhury2026tidal": {
+      "type": "misc",
+      "fields": {
+        "author": "Chowdhury, Avijit and Singha, Chiranjeeb and Bamba, Kazuharu and Chakraborty, Sumanta",
+        "title": "Tidal deformation of an accreting compact object",
+        "year": "2026",
+        "eprint": "2607.24938",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://arxiv.org/abs/2607.24938"
+      }
+    },
+    "letelier1999magnetic": {
+      "type": "article",
+      "fields": {
+        "author": "Letelier, Patricio S.",
+        "title": "Exact general relativistic disks with magnetic fields",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "10",
+        "pages": "104042",
+        "year": "1999",
+        "doi": "10.1103/physrevd.60.104042",
+        "eprint": "gr-qc/9907050",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "klein2002charged": {
+      "type": "article",
+      "fields": {
+        "author": "Klein, C.",
+        "title": "Harrison transformation of hyperelliptic solutions and charged dust disks",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "8",
+        "pages": "084029",
+        "year": "2002",
+        "doi": "10.1103/physrevd.65.084029",
+        "eprint": "gr-qc/0512133",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "garciareyes2004static": {
+      "type": "article",
+      "fields": {
+        "author": "García R., Gonzalo and González, Guillermo A.",
+        "title": "Electrovacuum static counterrotating relativistic dust disks",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "12",
+        "pages": "124002",
+        "year": "2004",
+        "doi": "10.1103/physrevd.69.124002",
+        "eprint": "0807.2792",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "garciareyes2004fluid": {
+      "type": "article",
+      "fields": {
+        "author": "García-Reyes, Gonzalo and González, Guillermo A",
+        "title": "Counterrotating perfect fluid discs as sources of electrovacuum static spacetimes",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "21",
+        "number": "21",
+        "pages": "4845--4864",
+        "year": "2004",
+        "doi": "10.1088/0264-9381/21/21/007",
+        "eprint": "0810.2567",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "garciareyes2009kerrnut": {
+      "type": "article",
+      "fields": {
+        "author": "García-Reyes, Gonzalo and González, Guillermo A.",
+        "title": "Rotating relativistic thin disks as sources of charged and magnetized Kerr--NUT space--times",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "18",
+        "number": "09",
+        "pages": "1461--1481",
+        "year": "2009",
+        "doi": "10.1142/s0218271809015205",
+        "eprint": "0807.2574",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "semeraksukova2010chaos": {
+      "type": "article",
+      "fields": {
+        "author": "Semerák, O. and Suková, P.",
+        "title": "Free motion around black holes with discs or rings: between integrability and chaos - I",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "404",
+        "number": "2",
+        "pages": "545--574",
+        "year": "2010",
+        "doi": "10.1111/j.1365-2966.2009.16003.x",
+        "eprint": "1211.4106",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "semeraksukova2012chaos": {
+      "type": "article",
+      "fields": {
+        "author": "Semerák, O. and Suková, P.",
+        "title": "Free motion around black holes with discs or rings: between integrability and chaos - II",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "425",
+        "number": "4",
+        "pages": "2455--2476",
+        "year": "2012",
+        "doi": "10.1111/j.1365-2966.2012.21630.x",
+        "eprint": "1211.4107",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "sukovasemerak2013chaos": {
+      "type": "article",
+      "fields": {
+        "author": "Suková, P. and Semerák, O.",
+        "title": "Free motion around black holes with discs or rings: between integrability and chaos -- III",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "436",
+        "number": "2",
+        "pages": "978--996",
+        "year": "2013",
+        "doi": "10.1093/mnras/stt1587",
+        "eprint": "1308.4306",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gutierrez2014magnetic": {
+      "type": "article",
+      "fields": {
+        "author": "Gutiérrez-Piñeres, Antonio C. and García-Reyes, Gonzalo and González, Guillermo A.",
+        "title": "Exact relativistic models of thin disks around static black holes in a magnetic field",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "23",
+        "number": "01",
+        "pages": "1450010",
+        "year": "2014",
+        "doi": "10.1142/s0218271814500102",
+        "eprint": "1209.0500",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "witzany2015chaos": {
+      "type": "article",
+      "fields": {
+        "author": "Witzany, V. and Semerák, O. and Suková, P.",
+        "title": "Free motion around black holes with discs or rings: between integrability and chaos -- IV",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "451",
+        "number": "2",
+        "pages": "1770--1794",
+        "year": "2015",
+        "doi": "10.1093/mnras/stv1148",
+        "eprint": "1503.09077",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "polcar2019chaos": {
+      "type": "article",
+      "fields": {
+        "author": "Polcar, L. and Suková, P. and Semerák, O.",
+        "title": "Free Motion around Black Holes with Disks or Rings: Between Integrability and Chaos--V",
+        "journal": "The Astrophysical Journal",
+        "volume": "877",
+        "number": "1",
+        "pages": "16",
+        "year": "2019",
+        "doi": "10.3847/1538-4357/ab18a0",
+        "eprint": "1905.07646",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "cunha2020lensing": {
+      "type": "article",
+      "fields": {
+        "author": "Cunha, Pedro V.P. and Eiró, Nelson A. and Herdeiro, Carlos A.R. and Lemos, José P.S.",
+        "title": "Lensing and shadow of a black hole surrounded by a heavy accretion disk",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2020",
+        "number": "03",
+        "pages": "035",
+        "year": "2020",
+        "doi": "10.1088/1475-7516/2020/03/035",
+        "eprint": "1912.08833",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "kotlarik2022powerlaw": {
+      "type": "article",
+      "fields": {
+        "author": "Kotlařík, P. and Kofroň, D. and Semerák, O.",
+        "title": "Static Thin Disks with Power-law Density Profiles *",
+        "journal": "The Astrophysical Journal",
+        "volume": "931",
+        "number": "2",
+        "pages": "161",
+        "year": "2022",
+        "doi": "10.3847/1538-4357/ac6027"
+      }
+    },
+    "guo2026quasibound": {
+      "type": "misc",
+      "fields": {
+        "author": "Guo, Yin-Da and Xu, Qi-Xuan and Brito, Richard and Cannizzaro, Enrico",
+        "title": "Revisiting environmental effects on black hole quasibound-state spectra with relativistic perturbation theory",
+        "year": "2026",
+        "eprint": "2608.14971",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
+      }
+    },
+    "gonzalez2009annular": {
+      "type": "article",
+      "fields": {
+        "author": "González, Guillermo A. and Gutiérrez-Piñeres, Antonio C. and Viña-Cervantes, Viviana M.",
+        "title": "Relativistic static thin dust disks with an inner edge: An infinite family of new exact solutions",
+        "journal": "Physical Review D",
+        "volume": "79",
+        "number": "12",
+        "pages": "124048",
+        "year": "2009",
+        "doi": "10.1103/physrevd.79.124048",
+        "eprint": "0811.3869",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gleiser2012comment": {
+      "type": "article",
+      "fields": {
+        "author": "Gleiser, Reinaldo J.",
+        "title": "Comment on “Relativistic static thin dust disks with an inner edge: An infinite family of new exact solutions”",
+        "journal": "Physical Review D",
+        "volume": "85",
+        "number": "2",
+        "pages": "028501",
+        "year": "2012",
+        "doi": "10.1103/physrevd.85.028501"
+      }
+    },
+    "bambi2014spin": {
+      "type": "article",
+      "fields": {
+        "author": "Bambi, Cosimo and Malafarina, Daniele and Tsukamoto, Naoki",
+        "title": "Note on the effect of a massive accretion disk in the measurements of black hole spins",
+        "journal": "Physical Review D",
+        "volume": "89",
+        "number": "12",
+        "pages": "127302",
+        "year": "2014",
+        "doi": "10.1103/physrevd.89.127302",
+        "eprint": "1406.2181",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gonzalezgutierrez2008": {
+      "type": "article",
+      "fields": {
+        "author": "González, Guillermo A. and Gutiérrez-Piñeres, Antonio C.",
+        "title": "Counterrotating Dust Disk Around a Schwarzschild Black Hole: New Fully Integrated Explicit Exact Solution",
+        "year": "2008",
+        "eprint": "0811.3002",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "journal": "Revista Integración",
+        "volume": "26",
+        "number": "2",
+        "pages": "123--130"
+      }
+    },
+    "klein2003blackhole": {
+      "type": "article",
+      "fields": {
+        "author": "Klein, C.",
+        "title": "Exact relativistic treatment of stationary black-hole--disk systems",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "2",
+        "pages": "027501",
+        "year": "2003",
+        "doi": "10.1103/physrevd.68.027501"
+      }
+    },
+    "gonzalezgutierrez2012pressure": {
+      "type": "article",
+      "fields": {
+        "author": "González, Guillermo A and Gutiérrez-Piñeres, Antonio C",
+        "title": "Stationary axially symmetric relativistic thin discs with nonzero radial pressure",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "29",
+        "number": "13",
+        "pages": "135001",
+        "year": "2012",
+        "doi": "10.1088/0264-9381/29/13/135001"
+      }
+    },
+    "gutierrez2013twofluids": {
+      "type": "misc",
+      "fields": {
+        "author": "Gutiérrez-Piñeres, Antonio C.",
+        "title": "Relativistic disks with two charged perfect fluids components",
+        "year": "2013",
+        "eprint": "1307.4446",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc",
+        "url": "https://arxiv.org/abs/1307.4446"
       }
     }
   }
