@@ -1481,6 +1481,33 @@
     "embedding": "eb3e037703b01e9d"
   },
   {
+    "id": "counter_rotating_discs",
+    "name": "Counter Rotating Disc Sources",
+    "tags": [
+      "stationary",
+      "axisymmetric",
+      "Weyl class",
+      "harmonic function",
+      "thin disc",
+      "thin shell",
+      "junction conditions",
+      "cut and paste",
+      "weak energy condition",
+      "frame dragging",
+      "gravitational redshift",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "2fa16f6b4dc22f38",
+    "diagrams": "66cdb16ef7492173",
+    "embedding": "eb9628320ef2e880",
+    "curvature": "e5ea281a21001879"
+  },
+  {
     "id": "rotation_halts",
     "name": "Counterrotating cylindrical shell",
     "tags": [
@@ -1562,7 +1589,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b50146e2b1773d47",
+    "version": "84c348255a0b3067",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
     "embedding": "a9676c6465fbce1c",
@@ -3450,7 +3477,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "68545f0728c92d2c",
+    "version": "f570de2dcf55ae7c",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -3484,7 +3511,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0e001b062856487a",
+    "version": "6c93f1de694d9965",
     "diagrams": "e7a1445e07b52920",
     "conformal": "c3a8a3ed3877d66e",
     "embedding": "be51da1b9f740d58",
@@ -6085,7 +6112,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "eae46f32420e2875",
+    "version": "c7377c81d8b5d00b",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -7594,7 +7621,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "600a1be23acef754",
+    "version": "3482bb579b057a00",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a",

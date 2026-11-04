@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 254,
+  "count": 255,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -16382,6 +16382,241 @@
       ]
     },
     {
+      "id": "counter_rotating_discs",
+      "name": "Counter Rotating Discs as Sources of Vacuum Fields",
+      "short_name": "Counter Rotating Disc Sources",
+      "description": "Two regions of a known vacuum field joined across a thin disc. A displaced cut and reflection can produce positive surface density and two streams of ordinary matter circling in opposite senses.",
+      "tags": [
+        "stationary",
+        "axisymmetric",
+        "Weyl class",
+        "harmonic function",
+        "thin disc",
+        "thin shell",
+        "junction conditions",
+        "cut and paste",
+        "weak energy condition",
+        "frame dragging",
+        "gravitational redshift",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use $G=c=1$ and the Ricci contraction $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$. A dot denotes differentiation along an affine parameter.",
+      "related": [
+        {
+          "id": "kerr_disc_source",
+          "kind": "family",
+          "text": "Israel's seam spans Kerr's ring and carries negative mass moving faster than light [israel1970]. A displaced cut removes the singular region and permits a disc with positive density and matter moving below light speed [bicak1993kerr]."
+        },
+        {
+          "id": "kerr",
+          "kind": "piece",
+          "text": "Two retained regions of Kerr's vacuum geometry meet across the matter disc. The location of the cut determines the surface stress and the admissible streams [bicak1993kerr, ledvinka2019discs]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "piece",
+          "text": "Schwarzschild's vacuum field supplies both sides of a static disc junction [bicak1993]. The seam's equal opposite streams carry no net angular momentum."
+        },
+        {
+          "id": "curzon_chazy",
+          "kind": "piece",
+          "text": "The Curzon field is a Weyl seed for a counter rotating disc [bicak1993]. Displacing the cut excludes the seed's singularity from both retained regions."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "piece",
+          "text": "The Zipoy-Voorhees Weyl fields also admit disc sources constructed by a displaced cut and reflection [bicak1993]. The cut and the seed parameters determine whether the matter is physically admissible."
+        }
+      ],
+      "references": [
+        "ledvinka2019discs",
+        "bicak1993",
+        "bicak1993kerr",
+        "israel1970",
+        "lemosletelier1994"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/counter_rotating_discs.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Reflected Static Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "b > 0",
+            "z = 0\\;\\text{(the matter junction)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "U = U(\\rho,z)",
+              "description": "Reflected Weyl potential, evaluated from the seed at $(\\rho,b+|z|)$; $U_{,\\rho\\rho}+U_{,\\rho}/\\rho+U_{,zz}=0$ off the seam"
+            },
+            {
+              "symbol": "k = k(\\rho,z)",
+              "description": "Reflected Weyl potential; $k_{,\\rho}=\\rho(U_{,\\rho}^2-U_{,z}^2)$ and $k_{,z}=2\\rho U_{,\\rho}U_{,z}$ off the seam"
+            },
+            {
+              "symbol": "b",
+              "description": "Positive displacement of the cut, a length"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the vacuum seed, a length"
+            },
+            {
+              "symbol": "\\delta",
+              "description": "Dimensionless Zipoy-Voorhees parameter"
+            },
+            {
+              "symbol": "a",
+              "description": "Half length of the Weyl rod, a length"
+            }
+          ],
+          "convention": "Coordinates are $(t,\\rho,\\phi,z)$, with $t$, $\\rho$, and $z$ lengths and $\\phi$ an angle. The two retained regions meet at $z=0$; the potentials are composed with $b+|z|$. Smooth tensor components apply at $z\\ne0$; the surface stress on the seam follows from the jump in extrinsic curvature.",
+          "line_element": "ds^2 = -e^{2U}dt^2 + e^{2k-2U}(d\\rho^2 + dz^2) + \\rho^2e^{-2U}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-e^{2U}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "e^{-2U + 2k}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "e^{-2U + 2k}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2e^{-2U}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(\\rho\\left(\\partial_\\rho U\\right)^2 - \\partial_\\rho U + \\rho\\left(\\partial_z U\\right)^2 - \\rho\\,\\partial_\\rho^2 U - \\rho\\,\\partial_z^2 U + \\rho\\,\\partial_\\rho^2 k + \\rho\\,\\partial_z^2 k\\right)e^{2U - 2k}}{\\rho}",
+          "kretschmann": "K = \\dfrac{4\\left(7\\rho^2\\left(\\partial_\\rho U\\right)^4 - 8\\rho^2\\left(\\partial_\\rho U\\right)^3\\,\\partial_\\rho k - 4\\rho\\left(\\partial_\\rho U\\right)^3 + 14\\rho^2\\left(\\partial_\\rho U\\right)^2\\left(\\partial_z U\\right)^2 - 8\\rho^2\\left(\\partial_\\rho U\\right)^2\\,\\partial_z U\\,\\partial_z k + 4\\rho^2\\left(\\partial_\\rho U\\right)^2\\left(\\partial_\\rho k\\right)^2 + 2\\rho\\left(\\partial_\\rho U\\right)^2\\,\\partial_\\rho k + 4\\rho^2\\left(\\partial_\\rho U\\right)^2\\left(\\partial_z k\\right)^2 + 4\\rho^2\\left(\\partial_\\rho U\\right)^2\\,\\partial_\\rho^2 U - 4\\rho^2\\left(\\partial_\\rho U\\right)^2\\,\\partial_z^2 U + 3\\left(\\partial_\\rho U\\right)^2 - 8\\rho^2\\,\\partial_\\rho U\\left(\\partial_z U\\right)^2\\,\\partial_\\rho k - 4\\rho\\,\\partial_\\rho U\\left(\\partial_z U\\right)^2 + 4\\rho\\,\\partial_\\rho U\\,\\partial_z U\\,\\partial_z k + 16\\rho^2\\,\\partial_\\rho U\\,\\partial_z U\\,\\partial_\\rho\\partial_z U - 4\\rho\\,\\partial_\\rho U\\left(\\partial_\\rho k\\right)^2 - 4\\rho^2\\,\\partial_\\rho U\\,\\partial_\\rho k\\,\\partial_\\rho^2 U + 4\\rho^2\\,\\partial_\\rho U\\,\\partial_\\rho k\\,\\partial_z^2 U - 4\\rho\\,\\partial_\\rho U\\left(\\partial_z k\\right)^2 - 8\\rho^2\\,\\partial_\\rho U\\,\\partial_z k\\,\\partial_\\rho\\partial_z U + 2\\rho\\,\\partial_\\rho U\\,\\partial_\\rho^2 U + 2\\rho\\,\\partial_\\rho U\\,\\partial_z^2 U + 7\\rho^2\\left(\\partial_z U\\right)^4 - 8\\rho^2\\left(\\partial_z U\\right)^3\\,\\partial_z k + 4\\rho^2\\left(\\partial_z U\\right)^2\\left(\\partial_\\rho k\\right)^2 - 2\\rho\\left(\\partial_z U\\right)^2\\,\\partial_\\rho k + 4\\rho^2\\left(\\partial_z U\\right)^2\\left(\\partial_z k\\right)^2 - 4\\rho^2\\left(\\partial_z U\\right)^2\\,\\partial_\\rho^2 U + 4\\rho^2\\left(\\partial_z U\\right)^2\\,\\partial_z^2 U - 8\\rho^2\\,\\partial_z U\\,\\partial_\\rho k\\,\\partial_\\rho\\partial_z U + 4\\rho^2\\,\\partial_z U\\,\\partial_z k\\,\\partial_\\rho^2 U - 4\\rho^2\\,\\partial_z U\\,\\partial_z k\\,\\partial_z^2 U + 2\\left(\\partial_\\rho k\\right)^2 + 2\\rho\\,\\partial_\\rho k\\,\\partial_\\rho^2 U - 2\\rho\\,\\partial_\\rho k\\,\\partial_z^2 U + 2\\left(\\partial_z k\\right)^2 + 4\\rho\\,\\partial_z k\\,\\partial_\\rho\\partial_z U + 3\\rho^2\\left(\\partial_\\rho^2 U\\right)^2 + 2\\rho^2\\,\\partial_\\rho^2 U\\,\\partial_z^2 U - 2\\rho^2\\,\\partial_\\rho^2 U\\,\\partial_\\rho^2 k - 2\\rho^2\\,\\partial_\\rho^2 U\\,\\partial_z^2 k + 4\\rho^2\\left(\\partial_\\rho\\partial_z U\\right)^2 + 3\\rho^2\\left(\\partial_z^2 U\\right)^2 - 2\\rho^2\\,\\partial_z^2 U\\,\\partial_\\rho^2 k - 2\\rho^2\\,\\partial_z^2 U\\,\\partial_z^2 k + \\rho^2\\left(\\partial_\\rho^2 k\\right)^2 + 2\\rho^2\\,\\partial_\\rho^2 k\\,\\partial_z^2 k + \\rho^2\\left(\\partial_z^2 k\\right)^2\\right)e^{4U - 4k}}{\\rho^2}"
+        },
+        {
+          "id": "stationary",
+          "name": "Reflected Stationary Weyl",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "z \\in (-\\infty, \\infty)",
+            "b > 0",
+            "z = 0\\;\\text{(the matter junction)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(\\rho,z)",
+              "description": "Negative norm of the stationary Killing vector, evaluated from the Kerr seed at $(\\rho,b+|z|)$"
+            },
+            {
+              "symbol": "g = g(\\rho,z)",
+              "description": "Dimensionless Kerr metric function evaluated at $(\\rho,b+|z|)$; the meridional coefficient is $g/f$"
+            },
+            {
+              "symbol": "A = A(\\rho,z)",
+              "description": "Kerr rotation potential evaluated at $(\\rho,b+|z|)$, a length"
+            },
+            {
+              "symbol": "b",
+              "description": "Positive displacement of the cut, a length"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter of the Kerr seed, a length"
+            },
+            {
+              "symbol": "a",
+              "description": "Angular momentum per unit mass of the Kerr seed, a length"
+            }
+          ],
+          "convention": "Coordinates are $(t,\\rho,\\phi,z)$, with $t$, $\\rho$, and $z$ lengths and $\\phi$ an angle. The two retained regions meet at $z=0$; the potentials are composed with $b+|z|$. Smooth tensor components apply at $z\\ne0$; the surface stress on the seam follows from the jump in extrinsic curvature.",
+          "line_element": "ds^2 = -f(dt + A\\,d\\phi)^2 + \\dfrac{g}{f}(d\\rho^2 + dz^2) + \\dfrac{\\rho^2}{f}d\\phi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f"
+            },
+            {
+              "indices": [
+                "t",
+                "\\phi"
+              ],
+              "value": "-f\\,A"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "t"
+              ],
+              "value": "-f\\,A"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{g}{f}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{g}{f}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{\\left(f\\,A + \\rho\\right)\\left(f\\,A - \\rho\\right)}{f}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{f^4\\,g^2\\left(\\partial_\\rho A\\right)^2 + f^4\\,g^2\\left(\\partial_z A\\right)^2 - 2f^2\\,g\\,\\rho^2\\,\\partial_\\rho^2 g - 2f^2\\,g\\,\\rho^2\\,\\partial_z^2 g + 2f^2\\,\\rho^2\\left(\\partial_\\rho g\\right)^2 + 2f^2\\,\\rho^2\\left(\\partial_z g\\right)^2 + 2f\\,g^2\\,\\rho\\,\\partial_\\rho f + 2f\\,g^2\\,\\rho^2\\,\\partial_\\rho^2 f + 2f\\,g^2\\,\\rho^2\\,\\partial_z^2 f - 3g^2\\,\\rho^2\\left(\\partial_\\rho f\\right)^2 - 3g^2\\,\\rho^2\\left(\\partial_z f\\right)^2}{2f\\,g^3\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{11f^8\\,g^4\\left(\\partial_\\rho A\\right)^4 + 22f^8\\,g^4\\left(\\partial_\\rho A\\right)^2\\left(\\partial_z A\\right)^2 + 11f^8\\,g^4\\left(\\partial_z A\\right)^4 - 8f^6\\,g^4\\left(\\partial_\\rho A\\right)^2 + 16f^6\\,g^4\\,\\rho\\,\\partial_\\rho A\\,\\partial_\\rho^2 A - 16f^6\\,g^4\\left(\\partial_z A\\right)^2 + 16f^6\\,g^4\\,\\rho\\,\\partial_z A\\,\\partial_\\rho\\partial_z A - 8f^6\\,g^4\\,\\rho^2\\left(\\partial_\\rho^2 A\\right)^2 - 16f^6\\,g^4\\,\\rho^2\\left(\\partial_\\rho\\partial_z A\\right)^2 - 8f^6\\,g^4\\,\\rho^2\\left(\\partial_z^2 A\\right)^2 + 4f^6\\,g^3\\,\\rho\\,\\partial_\\rho g\\left(\\partial_\\rho A\\right)^2 + 8f^6\\,g^3\\,\\rho^2\\,\\partial_\\rho g\\,\\partial_\\rho A\\,\\partial_\\rho^2 A - 8f^6\\,g^3\\,\\rho^2\\,\\partial_\\rho g\\,\\partial_\\rho A\\,\\partial_z^2 A - 20f^6\\,g^3\\,\\rho\\,\\partial_\\rho g\\left(\\partial_z A\\right)^2 + 16f^6\\,g^3\\,\\rho^2\\,\\partial_\\rho g\\,\\partial_z A\\,\\partial_\\rho\\partial_z A + 24f^6\\,g^3\\,\\rho\\,\\partial_z g\\,\\partial_\\rho A\\,\\partial_z A + 16f^6\\,g^3\\,\\rho^2\\,\\partial_z g\\,\\partial_\\rho A\\,\\partial_\\rho\\partial_z A - 8f^6\\,g^3\\,\\rho^2\\,\\partial_z g\\,\\partial_z A\\,\\partial_\\rho^2 A + 8f^6\\,g^3\\,\\rho^2\\,\\partial_z g\\,\\partial_z A\\,\\partial_z^2 A - 4f^6\\,g^2\\,\\rho^2\\left(\\partial_\\rho g\\right)^2\\left(\\partial_\\rho A\\right)^2 - 4f^6\\,g^2\\,\\rho^2\\left(\\partial_\\rho g\\right)^2\\left(\\partial_z A\\right)^2 - 4f^6\\,g^2\\,\\rho^2\\left(\\partial_z g\\right)^2\\left(\\partial_\\rho A\\right)^2 - 4f^6\\,g^2\\,\\rho^2\\left(\\partial_z g\\right)^2\\left(\\partial_z A\\right)^2 + 56f^5\\,g^4\\,\\rho\\,\\partial_\\rho f\\left(\\partial_\\rho A\\right)^2 - 40f^5\\,g^4\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho A\\,\\partial_\\rho^2 A + 8f^5\\,g^4\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho A\\,\\partial_z^2 A + 64f^5\\,g^4\\,\\rho\\,\\partial_\\rho f\\left(\\partial_z A\\right)^2 - 48f^5\\,g^4\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z A\\,\\partial_\\rho\\partial_z A - 8f^5\\,g^4\\,\\rho\\,\\partial_z f\\,\\partial_\\rho A\\,\\partial_z A - 48f^5\\,g^4\\,\\rho^2\\,\\partial_z f\\,\\partial_\\rho A\\,\\partial_\\rho\\partial_z A + 8f^5\\,g^4\\,\\rho^2\\,\\partial_z f\\,\\partial_z A\\,\\partial_\\rho^2 A - 40f^5\\,g^4\\,\\rho^2\\,\\partial_z f\\,\\partial_z A\\,\\partial_z^2 A + 16f^5\\,g^4\\,\\rho^2\\left(\\partial_\\rho A\\right)^2\\,\\partial_\\rho^2 f + 32f^5\\,g^4\\,\\rho^2\\,\\partial_\\rho A\\,\\partial_z A\\,\\partial_\\rho\\partial_z f + 16f^5\\,g^4\\,\\rho^2\\left(\\partial_z A\\right)^2\\,\\partial_z^2 f + 16f^5\\,g^3\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho g\\left(\\partial_\\rho A\\right)^2 + 32f^5\\,g^3\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_\\rho g\\left(\\partial_z A\\right)^2 - 16f^5\\,g^3\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z g\\,\\partial_\\rho A\\,\\partial_z A - 16f^5\\,g^3\\,\\rho^2\\,\\partial_z f\\,\\partial_\\rho g\\,\\partial_\\rho A\\,\\partial_z A + 32f^5\\,g^3\\,\\rho^2\\,\\partial_z f\\,\\partial_z g\\left(\\partial_\\rho A\\right)^2 + 16f^5\\,g^3\\,\\rho^2\\,\\partial_z f\\,\\partial_z g\\left(\\partial_z A\\right)^2 - 66f^4\\,g^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_\\rho A\\right)^2 - 58f^4\\,g^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z A\\right)^2 - 16f^4\\,g^4\\,\\rho^2\\,\\partial_\\rho f\\,\\partial_z f\\,\\partial_\\rho A\\,\\partial_z A - 58f^4\\,g^4\\,\\rho^2\\left(\\partial_z f\\right)^2\\left(\\partial_\\rho A\\right)^2 - 66f^4\\,g^4\\,\\rho^2\\left(\\partial_z f\\right)^2\\left(\\partial_z A\\right)^2 + 8f^4\\,g^2\\,\\rho^2\\left(\\partial_\\rho g\\right)^2 + 8f^4\\,g^2\\,\\rho^2\\left(\\partial_z g\\right)^2 + 4f^4\\,g^2\\,\\rho^4\\left(\\partial_\\rho^2 g\\right)^2 + 8f^4\\,g^2\\,\\rho^4\\,\\partial_\\rho^2 g\\,\\partial_z^2 g + 4f^4\\,g^2\\,\\rho^4\\left(\\partial_z^2 g\\right)^2 - 8f^4\\,g\\,\\rho^4\\left(\\partial_\\rho g\\right)^2\\,\\partial_\\rho^2 g - 8f^4\\,g\\,\\rho^4\\left(\\partial_\\rho g\\right)^2\\,\\partial_z^2 g - 8f^4\\,g\\,\\rho^4\\left(\\partial_z g\\right)^2\\,\\partial_\\rho^2 g - 8f^4\\,g\\,\\rho^4\\left(\\partial_z g\\right)^2\\,\\partial_z^2 g + 4f^4\\,\\rho^4\\left(\\partial_\\rho g\\right)^4 + 8f^4\\,\\rho^4\\left(\\partial_\\rho g\\right)^2\\left(\\partial_z g\\right)^2 + 4f^4\\,\\rho^4\\left(\\partial_z g\\right)^4 + 8f^3\\,g^3\\,\\rho^3\\,\\partial_\\rho g\\,\\partial_\\rho^2 f - 8f^3\\,g^3\\,\\rho^3\\,\\partial_\\rho g\\,\\partial_z^2 f + 16f^3\\,g^3\\,\\rho^3\\,\\partial_z g\\,\\partial_\\rho\\partial_z f - 8f^3\\,g^3\\,\\rho^4\\,\\partial_\\rho^2 f\\,\\partial_\\rho^2 g - 8f^3\\,g^3\\,\\rho^4\\,\\partial_\\rho^2 f\\,\\partial_z^2 g - 8f^3\\,g^3\\,\\rho^4\\,\\partial_z^2 f\\,\\partial_\\rho^2 g - 8f^3\\,g^3\\,\\rho^4\\,\\partial_z^2 f\\,\\partial_z^2 g - 8f^3\\,g^2\\,\\rho^3\\,\\partial_\\rho f\\left(\\partial_\\rho g\\right)^2 - 8f^3\\,g^2\\,\\rho^3\\,\\partial_\\rho f\\left(\\partial_z g\\right)^2 + 8f^3\\,g^2\\,\\rho^4\\left(\\partial_\\rho g\\right)^2\\,\\partial_\\rho^2 f + 8f^3\\,g^2\\,\\rho^4\\left(\\partial_\\rho g\\right)^2\\,\\partial_z^2 f + 8f^3\\,g^2\\,\\rho^4\\left(\\partial_z g\\right)^2\\,\\partial_\\rho^2 f + 8f^3\\,g^2\\,\\rho^4\\left(\\partial_z g\\right)^2\\,\\partial_z^2 f + 12f^2\\,g^4\\,\\rho^2\\left(\\partial_\\rho f\\right)^2 + 8f^2\\,g^4\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_\\rho^2 f + 8f^2\\,g^4\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_z^2 f + 12f^2\\,g^4\\,\\rho^4\\left(\\partial_\\rho^2 f\\right)^2 + 8f^2\\,g^4\\,\\rho^4\\,\\partial_\\rho^2 f\\,\\partial_z^2 f + 16f^2\\,g^4\\,\\rho^4\\left(\\partial_\\rho\\partial_z f\\right)^2 + 12f^2\\,g^4\\,\\rho^4\\left(\\partial_z^2 f\\right)^2 - 4f^2\\,g^3\\,\\rho^3\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho g + 8f^2\\,g^3\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2 g + 8f^2\\,g^3\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_z^2 g - 8f^2\\,g^3\\,\\rho^3\\,\\partial_\\rho f\\,\\partial_z f\\,\\partial_z g - 8f^2\\,g^3\\,\\rho^4\\,\\partial_\\rho f\\,\\partial_\\rho g\\,\\partial_\\rho^2 f + 8f^2\\,g^3\\,\\rho^4\\,\\partial_\\rho f\\,\\partial_\\rho g\\,\\partial_z^2 f - 16f^2\\,g^3\\,\\rho^4\\,\\partial_\\rho f\\,\\partial_z g\\,\\partial_\\rho\\partial_z f + 4f^2\\,g^3\\,\\rho^3\\left(\\partial_z f\\right)^2\\,\\partial_\\rho g + 8f^2\\,g^3\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_\\rho^2 g + 8f^2\\,g^3\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2 g - 16f^2\\,g^3\\,\\rho^4\\,\\partial_z f\\,\\partial_\\rho g\\,\\partial_\\rho\\partial_z f + 8f^2\\,g^3\\,\\rho^4\\,\\partial_z f\\,\\partial_z g\\,\\partial_\\rho^2 f - 8f^2\\,g^3\\,\\rho^4\\,\\partial_z f\\,\\partial_z g\\,\\partial_z^2 f - 4f^2\\,g^2\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\left(\\partial_\\rho g\\right)^2 - 4f^2\\,g^2\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z g\\right)^2 - 4f^2\\,g^2\\,\\rho^4\\left(\\partial_z f\\right)^2\\left(\\partial_\\rho g\\right)^2 - 4f^2\\,g^2\\,\\rho^4\\left(\\partial_z f\\right)^2\\left(\\partial_z g\\right)^2 - 16f\\,g^4\\,\\rho^3\\left(\\partial_\\rho f\\right)^3 - 16f\\,g^4\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_\\rho^2 f - 16f\\,g^4\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\,\\partial_z^2 f - 16f\\,g^4\\,\\rho^3\\,\\partial_\\rho f\\left(\\partial_z f\\right)^2 - 16f\\,g^4\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_\\rho^2 f - 16f\\,g^4\\,\\rho^4\\left(\\partial_z f\\right)^2\\,\\partial_z^2 f + 11g^4\\,\\rho^4\\left(\\partial_\\rho f\\right)^4 + 22g^4\\,\\rho^4\\left(\\partial_\\rho f\\right)^2\\left(\\partial_z f\\right)^2 + 11g^4\\,\\rho^4\\left(\\partial_z f\\right)^4}{4f^2\\,g^6\\,\\rho^4}"
+        }
+      ]
+    },
+    {
       "id": "rotation_halts",
       "name": "Rotation halts cylindrical collapse",
       "short_name": "Counterrotating cylindrical shell",
@@ -16876,6 +17111,11 @@
           "id": "bach_weyl_ring",
           "kind": "generalisation",
           "text": "The particle spread around a circle of radius $a$ in Weyl's coordinates. At $a = 0$ Bach and Weyl's ring is the Curzon-Chazy particle [semerak2016]."
+        },
+        {
+          "id": "counter_rotating_discs",
+          "kind": "composite",
+          "text": "A displaced cut and reflection join two regions of the Curzon field across a disc of counter rotating matter [bicak1993]."
         }
       ],
       "references": [
@@ -38423,6 +38663,11 @@
           "id": "quevedo_mashhoon",
           "kind": "generalisation",
           "text": "The rotating vacuum field with an independent deformation parameter. At $q=0$ and $\\delta=1$ it is the Kerr field [bini2009]."
+        },
+        {
+          "id": "counter_rotating_discs",
+          "kind": "composite",
+          "text": "A displaced cut and reflection turn regions of Kerr's field into the exterior of a thin disc with counter rotating matter [bicak1993kerr]."
         }
       ],
       "references": [
@@ -38502,7 +38747,8 @@
         "vaidya1977kerr",
         "gleiser1998by",
         "xanthopoulos1986rotating",
-        "bini2009"
+        "bini2009",
+        "bicak1993kerr"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -38654,6 +38900,11 @@
           "id": "thin_shell_wormhole",
           "kind": "family",
           "text": "Spacetimes cut and glued, with all their matter on the seam. The seam's matter is exotic in both, negative mass on the disc and negative energy density on the throat."
+        },
+        {
+          "id": "counter_rotating_discs",
+          "kind": "family",
+          "text": "The cut lies clear of the singular region, and the seam can support ordinary counter rotating matter [bicak1993kerr]. Israel's ring spanning seam carries negative mass moving faster than light [israel1970]."
         }
       ],
       "references": [
@@ -67305,6 +67556,11 @@
           "id": "hellaby_kruskal",
           "kind": "generalisation",
           "text": "A universe of dust with a neck joining two regions, whose vacuum member is the extended Schwarzschild solution [hellaby2002]."
+        },
+        {
+          "id": "counter_rotating_discs",
+          "kind": "composite",
+          "text": "A cut clear of the central source and a reflection produce a thin disc with Schwarzschild vacuum geometry on either side [bicak1993]."
         }
       ],
       "references": [
@@ -67448,7 +67704,8 @@
         "dvali2016skyrmion",
         "hochberg1994potential",
         "york1985equilibrium",
-        "hellaby2002"
+        "hellaby2002",
+        "bicak1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -85270,6 +85527,11 @@
           "id": "quevedo_mashhoon",
           "kind": "generalisation",
           "text": "A rotating deformed vacuum field that becomes the Zipoy-Voorhees field at $a=0$ and $q=0$ [boshkayev2012qm]."
+        },
+        {
+          "id": "counter_rotating_discs",
+          "kind": "composite",
+          "text": "The Weyl potentials generate thin disc sources when a cut clear of the singular region is joined to its reflection [bicak1993]."
         }
       ],
       "references": [

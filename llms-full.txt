@@ -792,6 +792,17 @@ The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De L
 - chart Static, Inside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_T r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_T r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Static, Outside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_F r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_F r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Counter Rotating Discs as Sources of Vacuum Fields
+
+Two regions of a known vacuum field joined across a thin disc. A displaced cut and reflection can produce positive surface density and two streams of ordinary matter circling in opposite senses.
+
+- id: `counter_rotating_discs`
+- tags: stationary, axisymmetric, Weyl class, harmonic function, thin disc, thin shell, junction conditions, cut and paste, weak energy condition, frame dragging, gravitational redshift, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/counter_rotating_discs.json
+- chart Reflected Static Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2U}dt^2 + e^{2k-2U}(d\rho^2 + dz^2) + \rho^2e^{-2U}d\phi^2$$
+- chart Reflected Stationary Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -f(dt + A\,d\phi)^2 + \dfrac{g}{f}(d\rho^2 + dz^2) + \dfrac{\rho^2}{f}d\phi^2$$
+
 ### Rotation halts cylindrical collapse
 
 A cylindrical shell of counterrotating dust with a lower bound on its circumference set by particle angular momentum and mass per proper length.
