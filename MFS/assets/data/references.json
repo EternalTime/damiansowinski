@@ -1,5 +1,5 @@
 {
-  "version": "f4a37bbed9e31d2d",
+  "version": "9a7189d8befb88cc",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -45993,6 +45993,92 @@
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2610.25542",
         "note": "Preprint"
+      }
+    },
+    "balasin1995": {
+      "type": "article",
+      "fields": {
+        "title": "The ultrarelativistic Kerr geometry and its energy-momentum tensor",
+        "author": "Balasin, Herbert and Nachbagauer, Herbert",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "3",
+        "pages": "707--713",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/3/009",
+        "eprint": "gr-qc/9405053",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/12/3/009"
+      }
+    },
+    "balasin1996": {
+      "type": "article",
+      "fields": {
+        "title": "Boosting the Kerr geometry in an arbitrary direction",
+        "author": "Balasin, Herbert and Nachbagauer, Herbert",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "4",
+        "pages": "731--737",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/4/013",
+        "eprint": "gr-qc/9508044",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/13/4/013"
+      }
+    },
+    "balasin1997": {
+      "type": "article",
+      "fields": {
+        "title": "Distributional energy-momentum tensor of the extended Kerr geometry",
+        "author": "Balasin, Herbert",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "number": "12",
+        "pages": "3353--3362",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/12/018",
+        "eprint": "gr-qc/9702060",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/14/12/018"
+      }
+    },
+    "adamo2023": {
+      "type": "article",
+      "fields": {
+        "title": "The ultrarelativistic limit of Kerr",
+        "author": "Adamo, Tim and Cristofoli, Andrea and Tourkine, Piotr",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2023",
+        "number": "2",
+        "pages": "107",
+        "year": "2023",
+        "doi": "10.1007/jhep02(2023)107",
+        "eprint": "2209.05730",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/jhep02(2023)107"
+      }
+    },
+    "doran2004source": {
+      "type": "misc",
+      "fields": {
+        "title": "Integral equations, Kerr-Schild fields and gravitational sources",
+        "author": "Doran, Chris and Lasenby, Anthony",
+        "year": "2004",
+        "eprint": "gr-qc/0404081",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0404081"
+      }
+    },
+    "damgaard2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Iterative Solution of the Kerr Black Hole Metric",
+        "author": "Damgaard, Poul H. and Lee, Hojin and Lee, Kanghoon and Rahnuma, Tabasum",
+        "year": "2026",
+        "eprint": "2605.19948",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2605.19948"
       }
     }
   }
