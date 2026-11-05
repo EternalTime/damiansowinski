@@ -1,5 +1,5 @@
 {
-  "version": "37aa2be3052e6ac8",
+  "version": "f4a37bbed9e31d2d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -7905,7 +7905,7 @@
       "type": "article",
       "fields": {
         "title": "The gravitational field of light",
-        "author": "Bonnor, William B.",
+        "author": "Bonnor, W. B.",
         "journal": "Communications in Mathematical Physics",
         "volume": "13",
         "number": "3",
@@ -45825,6 +45825,174 @@
         "eprint": "2201.07662",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2201.07662"
+      }
+    },
+    "cahen1982conformal": {
+      "type": "article",
+      "fields": {
+        "title": "Transformations conformes des espaces symétriques pseudo-riemanniens",
+        "author": "Cahen, M. and Kerbrat, Y.",
+        "journal": "Annali di Matematica Pura ed Applicata",
+        "volume": "132",
+        "number": "1",
+        "pages": "275--289",
+        "year": "1982",
+        "doi": "10.1007/bf01760985",
+        "url": "https://doi.org/10.1007/bf01760985"
+      }
+    },
+    "kath2019compact": {
+      "type": "article",
+      "fields": {
+        "title": "Compact quotients of Cahen-Wallach spaces",
+        "author": "Kath, Ines and Olbrich, Martin",
+        "journal": "Memoirs of the American Mathematical Society",
+        "volume": "262",
+        "number": "1264",
+        "year": "2019",
+        "doi": "10.1090/memo/1264",
+        "url": "https://doi.org/10.1090/memo/1264",
+        "eprint": "1501.01474",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "leistner2016complete": {
+      "type": "article",
+      "fields": {
+        "title": "Completeness of compact Lorentzian manifolds with abelian holonomy",
+        "author": "Leistner, Thomas and Schliebner, Daniel",
+        "journal": "Mathematische Annalen",
+        "volume": "364",
+        "number": "3--4",
+        "pages": "1469--1503",
+        "year": "2016",
+        "doi": "10.1007/s00208-015-1270-4",
+        "url": "https://doi.org/10.1007/s00208-015-1270-4",
+        "eprint": "1306.0120",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "leistner2023complete": {
+      "type": "article",
+      "fields": {
+        "title": "Completeness of certain compact Lorentzian locally symmetric spaces",
+        "author": "Leistner, Thomas and Munn, Thomas",
+        "journal": "Comptes Rendus. Mathématique",
+        "volume": "361",
+        "number": "G4",
+        "pages": "819--824",
+        "year": "2023",
+        "doi": "10.5802/crmath.449",
+        "url": "https://doi.org/10.5802/crmath.449"
+      }
+    },
+    "giataganas2024universal": {
+      "type": "article",
+      "fields": {
+        "title": "Quasinormal modes and universality of the Penrose limit of black hole photon rings",
+        "author": "Giataganas, D. and Kehagias, A. and Riotto, A.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "9",
+        "pages": "168",
+        "year": "2024",
+        "doi": "10.1007/jhep09(2024)168",
+        "url": "https://doi.org/10.1007/jhep09(2024)168",
+        "eprint": "2403.10605",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "perrone2025nonlinear": {
+      "type": "article",
+      "fields": {
+        "title": "Nonlinearities in Kerr black hole ringdown from the Penrose limit",
+        "author": "Perrone, D. and Kehagias, A. and Riotto, A.",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2025",
+        "number": "10",
+        "pages": "024",
+        "year": "2025",
+        "doi": "10.1088/1475-7516/2025/10/024",
+        "url": "https://doi.org/10.1088/1475-7516/2025/10/024",
+        "eprint": "2507.01919",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "fransen2025quadratic": {
+      "type": "article",
+      "fields": {
+        "title": "Perturbations of plane waves and quadratic quasinormal modes on the lightring",
+        "author": "Fransen, Kwinten and Pereñiguez, David and Redondo-Yuste, Jaime",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2025",
+        "number": "12",
+        "pages": "148",
+        "year": "2025",
+        "doi": "10.1007/jhep12(2025)148",
+        "url": "https://doi.org/10.1007/jhep12(2025)148",
+        "eprint": "2509.03598",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "leistner2025conformal": {
+      "type": "article",
+      "fields": {
+        "title": "Conformal transformations of Cahen--Wallach spaces",
+        "author": "Leistner, Thomas and Teisseire, Stuart",
+        "journal": "Annales de l'Institut Fourier",
+        "volume": "75",
+        "number": "5",
+        "pages": "2147--2187",
+        "year": "2025",
+        "doi": "10.5802/aif.3678",
+        "url": "https://doi.org/10.5802/aif.3678"
+      }
+    },
+    "hanounah2025topology": {
+      "type": "article",
+      "fields": {
+        "title": "Topology and dynamics of compact plane waves",
+        "author": "Hanounah, Malek and Kath, Ines and Mehidi, Lilia and Zeghib, Abdelghani",
+        "journal": "Journal für die reine und angewandte Mathematik (Crelles Journal)",
+        "year": "2025",
+        "doi": "10.1515/crelle-2024-0095",
+        "url": "https://doi.org/10.1515/crelle-2024-0095"
+      }
+    },
+    "kehagias2025nonlinear": {
+      "type": "misc",
+      "fields": {
+        "title": "Non-linear Quasi-Normal Modes of the Schwarzschild Black Hole from the Penrose Limit",
+        "author": "Kehagias, Alex and Perrone, Davide and Riotto, Antonio",
+        "year": "2025",
+        "eprint": "2503.09350",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2503.09350",
+        "note": "Preprint"
+      }
+    },
+    "mehidi2025conformal": {
+      "type": "misc",
+      "fields": {
+        "title": "Conformal quotients of plane waves, and Lichnerowicz conjecture in a locally homogeneous setting",
+        "author": "Mehidi, Lilia",
+        "year": "2025",
+        "eprint": "2503.08614",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2503.08614",
+        "note": "Preprint"
+      }
+    },
+    "allout2026closed": {
+      "type": "misc",
+      "fields": {
+        "title": "Closed locally symmetric spacetimes",
+        "author": "Allout, Souheib",
+        "year": "2026",
+        "eprint": "2610.25542",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2610.25542",
+        "note": "Preprint"
       }
     }
   }
