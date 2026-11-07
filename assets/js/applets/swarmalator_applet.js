@@ -232,10 +232,12 @@
   function onKeyDown(event) {
     if (event.key === 'Escape') { event.preventDefault(); shell.close(); return; }
     if (event.key !== 'Tab') return;
+    const inactive = docsOpen ? (byId('ctrl-panel') || byId('asm-ctrl')) : (byId('docs-panel') || byId('asm-docs'));
     const focusable = Array.from(overlay.querySelectorAll('button, input, a[href]'))
-      .filter(el => !el.disabled && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
+      .filter(el => !inactive.contains(el) && !el.disabled && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
     const first = focusable[0], last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    if (!overlay.contains(document.activeElement)) { event.preventDefault(); (event.shiftKey ? last : first).focus(); }
+    else if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   }
 
@@ -285,14 +287,17 @@ These are the applet's numerical choices.`,
         <div>Phase: 0 to 2&pi;</div>
       </div>`,
     onOpen: function ({ canvas: c }) {
-      opener = document.activeElement;
+      opener = document.querySelector('.applet-launch-btn[onclick^="swarmalatorOpen"]') || document.activeElement;
       canvas = c; ctx = c.getContext('2d');
       canvas.setAttribute('role', 'img');
       canvas.setAttribute('aria-label', 'Planar swarmalators. Color and white hand show phase. Readouts give synchrony r and phase-position correlation S.');
       overlay = byId('overlay') || byId('asm-overlay');
       overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
       overlay.setAttribute('aria-label', 'Swarmalator');
-      docsOpen = false; buildPalette(); syncControls(); reset();
+      docsOpen = false;
+      (byId('docs-panel') || byId('asm-docs')).inert = true;
+      (byId('ctrl-panel') || byId('asm-ctrl')).inert = false;
+      buildPalette(); syncControls(); reset();
       setPlaying(!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
       byId('pause-btn').focus();
       document.addEventListener('keydown', onKeyDown);
@@ -304,8 +309,19 @@ These are the applet's numerical choices.`,
       if (opener && opener.isConnected) opener.focus();
     },
     onResize: function () { render(); },
-    onDocsOpen: function () { docsOpen = true; haltFrame(); },
-    onDocsClose: function () { docsOpen = false; schedule(); },
+    onDocsOpen: function () {
+      docsOpen = true; haltFrame();
+      (byId('ctrl-panel') || byId('asm-ctrl')).inert = true;
+      (byId('docs-panel') || byId('asm-docs')).inert = false;
+      queueMicrotask(() => (byId('docs-btn') || byId('asm-docs-btn')).focus());
+    },
+    onDocsClose: function () {
+      docsOpen = false;
+      (byId('docs-panel') || byId('asm-docs')).inert = true;
+      (byId('ctrl-panel') || byId('asm-ctrl')).inert = false;
+      queueMicrotask(() => (byId('docs-btn') || byId('asm-docs-btn')).focus());
+      schedule();
+    },
   });
 
   byId('reset-btn').addEventListener('click', reset);
