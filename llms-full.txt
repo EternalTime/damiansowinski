@@ -3386,6 +3386,7 @@ Each has a brief description of the physics and history behind it, just press th
 - Forager (interactive applet)
 - Forager 3D (interactive applet)
 - Kuramoto Model (interactive applet)
+- Swarmalator (interactive applet)
 - Toner–Tu Model (interactive applet)
 - Vicsek Model (interactive applet)
 
