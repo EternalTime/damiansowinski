@@ -111,6 +111,11 @@
   const byId = suffix => document.getElementById('swarmalator-' + suffix);
   const style = document.createElement('style');
   style.textContent = `
+    @media (max-width: 600px) {
+      #swarmalator-asm-overlay .asm-header-inner { flex-wrap: wrap; justify-content: center; padding: 0 8px; }
+      #swarmalator-asm-overlay .asm-header-inner h2 { flex: 0 0 100%; text-align: center; line-height: 1; }
+      #swarmalator-asm-overlay .asm-header-actions { width: 100%; justify-content: center; }
+    }
     #swarmalator-presets { flex-wrap: wrap; }
     #swarmalator-presets button { flex: 1 1 45%; }
     #swarmalator-readout { font-size: calc(13px * var(--shell-fs, 1)); line-height: 1.5; }
