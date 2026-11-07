@@ -53,6 +53,19 @@ const fineError = distance(solutions[1], solutions[2]);
 assert(coarseError / fineError > 3.2 && coarseError / fineError < 4.8);
 console.log('PASS Heun convergence ratio', (coarseError / fineError).toFixed(3));
 
+// A stopped advance reports exactly the model time it integrated.
+const whole = createModel(40, random(7)), partial = createModel(40, random(7));
+assert.equal(whole.advance(0.25, 1, -0.75), 0.25);
+let steps = 0;
+const integrated = partial.advance(0.25, 1, -0.75, 0.01, () => ++steps < 5);
+assert.equal(steps, 5);
+assert(integrated > 0 && integrated <= 0.05 + 1e-15);
+const replay = createModel(40, random(7));
+assert(Math.abs(replay.advance(integrated, 1, -0.75) - integrated) < 1e-15);
+assert(distance(replay.state, partial.state) < 1e-12);
+assert(distance(whole.state, partial.state) > 1e-6);
+console.log('PASS budgeted advance stops early and reports integrated time');
+
 // Long trajectories for all published presets; the small finite swarm is checked
 // for boundedness and emergent structure, not equality to a continuum picture.
 for (const [key, p] of Object.entries(PRESETS)) {
