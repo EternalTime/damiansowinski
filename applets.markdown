@@ -55,6 +55,7 @@ Each has a brief description of the physics and history behind it, just press th
 <button class="applet-launch-btn" onclick="faOpen(); this.blur()">Forager</button>
 <button class="applet-launch-btn" onclick="fa3Open(); this.blur()">Forager 3D</button>
 <button class="applet-launch-btn" onclick="kmOpen(); this.blur()">Kuramoto Model</button>
+<button class="applet-launch-btn" onclick="swarmalatorOpen(); this.blur()">Swarmalator</button>
 <button class="applet-launch-btn" onclick="ttOpen(); this.blur()">Toner&ndash;Tu Model</button>
 <button class="applet-launch-btn" onclick="vicsekOpen(); this.blur()">Vicsek Model</button>
 
