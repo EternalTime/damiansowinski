@@ -59,7 +59,7 @@
       return out;
     }
 
-    function advance(duration, J, K, maxStep = 0.01) {
+    function advance(duration, J, K, maxStep = 0.01, more = () => true) {
       let remaining = duration;
       while (remaining > 1e-12) {
         rates(state, first, J, K);
@@ -75,7 +75,9 @@
         for (let a = 0; a < state.length; a++) state[a] += dt * (first[a] + second[a]) / 2;
         for (let i = 0; i < n; i++) state[3 * i + 2] = ((state[3 * i + 2] % TAU) + TAU) % TAU;
         remaining -= dt;
+        if (!more()) break;
       }
+      return duration - remaining;
     }
 
     function observe() {
@@ -104,6 +106,7 @@
     return;
   }
 
+  const FRAME_BUDGET_MS = 10;
   let canvas, ctx, model, opener, overlay;
   let playing = false, docsOpen = false, frameId = null, lastTime = null;
   let J = 1, K = 0, count = 160, speed = 4, preset = 'wave', elapsed = 0;
@@ -228,7 +231,8 @@
     if (lastTime !== null) {
       // Drop excess wall time after a hidden tab or a slow frame, avoiding catch-up bursts.
       const dt = Math.min((now - lastTime) / 1000, 0.05) * speed;
-      model.advance(dt, J, K); elapsed += dt;
+      const stop = performance.now() + FRAME_BUDGET_MS;
+      elapsed += model.advance(dt, J, K, 0.01, () => performance.now() < stop);
     }
     lastTime = now;
     render(); schedule();
