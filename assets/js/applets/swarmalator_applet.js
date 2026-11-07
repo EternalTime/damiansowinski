@@ -264,10 +264,10 @@ Here $\\phi_j$ is the spatial angle about the swarm's center; $r=1$ means equal 
       howto: `Color and the white hand on each particle show its phase, from $0$ to $2\\pi$.
 The view follows the swarm's center and scales to contain it; View width is in model units.¶A preset sets $J$ and $K$ and scatters the particles anew.
 The labels name the published regimes; the pattern develops through a transient that depends on the random start and population, especially for splintered waves [okeeffe2017swarm].
-Changing either coupling keeps the current swarm and selects Custom parameters.¶Particles changes the population and resets it.
-Simulation speed sets model time per second; $t$ records elapsed model time.
+Changing either coupling keeps the current swarm and selects Custom parameters.¶The Particles slider changes the population and resets the swarm.
+Simulation speed controls how quickly model time advances; $t$ records elapsed model time.
 Reset scatters positions and phases while keeping the controls and play state.
-Close and reopen starts a fresh swarm with the selected controls; Pause freezes it and Play resumes it.
+Reopening starts a fresh swarm with the selected controls; Pause freezes it and Play resumes it.
 Opening these notes pauses evolution, and returning restores the play state.
 Reduced motion starts the applet paused.¶For numerical evolution we replace each $r_{ij}$ by $\\sqrt{r_{ij}^2+0.01^2}$ and use Heun steps of at most $0.01$ model time, shortened during fast motion.
 Initial positions lie in a square of side $2$, with a minimum separation of $0.04$; initial phases are random.
