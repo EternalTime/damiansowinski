@@ -179,6 +179,7 @@ a:hover {
 /* Nav links (upper right — About, Research, etc.) */
 .site-nav a {
   font-family: 'Paytone One', Georgia, serif !important;
+  font-size: 1.0625rem;
   transition: text-shadow 0.2s ease;
 }
 
