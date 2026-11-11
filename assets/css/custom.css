@@ -166,6 +166,7 @@ a:hover {
 .site-header a.site-title {
   font-family: 'Paytone One', sans-serif !important;
   font-weight: 400;
+  color: var(--pink-light) !important;
   font-size: 2.0rem !important;
   letter-spacing: 0.05em;
   transition: text-shadow 0.2s ease;
