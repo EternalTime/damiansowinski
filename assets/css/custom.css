@@ -39,15 +39,9 @@
 }
 
 @font-face {
-  font-family: 'Pump';
-  src: url('../fonts/Pump/PumpOpti-Medium.otf') format('opentype');
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: 'Pump';
-  src: url('../fonts/Pump/PumpOpti-DemiBold.otf') format('opentype');
-  font-weight: 600;
+  font-family: 'Paytone One';
+  src: url('../fonts/Paytone_One/PaytoneOne-Regular.ttf') format('truetype');
+  font-weight: 400;
 }
 
 /* ============================================================
@@ -63,11 +57,11 @@ body, p, li, td, th, blockquote {
 
 /* ============================================================
    HEADINGS
-   All h1-h6 use Pump font
+   All h1-h6 use Paytone One font
    ============================================================ */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Pump', Georgia, serif !important;
-  font-weight: 600;
+  font-family: 'Paytone One', Georgia, serif !important;
+  font-weight: 400;
 }
 
 /* ============================================================
@@ -156,21 +150,22 @@ a:hover {
 
 /* ============================================================
    HEADER
-   Top bar — transparent background, Pump font
+   Top bar - transparent background, Paytone One font
    ============================================================ */
 .site-header {
   background-color: transparent !important;
   border-top: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
-  font-family: 'Pump', Times, serif;
+  font-family: 'Paytone One', Times, serif;
 }
 
 /* Site title (upper left) */
 .site-header .site-title,
 .site-header .site-title:visited,
 .site-header a.site-title {
-  font-family: 'Pump', sans-serif !important;
+  font-family: 'Paytone One', sans-serif !important;
+  font-weight: 400;
   font-size: 2.0rem !important;
   letter-spacing: 0.05em;
   transition: text-shadow 0.2s ease;
@@ -182,7 +177,7 @@ a:hover {
 
 /* Nav links (upper right — About, Research, etc.) */
 .site-nav a {
-  font-family: 'Pump', Georgia, serif !important;
+  font-family: 'Paytone One', Georgia, serif !important;
   transition: text-shadow 0.2s ease;
 }
 
