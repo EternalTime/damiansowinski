@@ -4793,8 +4793,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "80ec07f4192d4d5c",
-    "diagrams": "fcd9b835546fa10a",
+    "version": "200138584d0aa26a",
+    "diagrams": "341808d247cd2c12",
     "conformal": "5201752f1d1e4844",
     "embedding": "6602c018a8504748"
   },
@@ -5295,10 +5295,10 @@
       "idealized model",
       "equivalence principle"
     ],
-    "version": "ad790903b002fec5",
-    "diagrams": "197eec2d67db791c",
+    "version": "12643f9188c267da",
+    "diagrams": "4033d1e59631bdd4",
     "conformal": "6588b3545cfd1a4f",
-    "embedding": "7438e54f373b2e03"
+    "embedding": "bbcc5b7555f1e25e"
   },
   {
     "id": "penney_scalar",
@@ -7248,9 +7248,9 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "674bc74b3a047076",
-    "diagrams": "ecd549f04fdf7ba8",
-    "conformal": "eba618d692af4a23",
+    "version": "af158828dc90c6e1",
+    "diagrams": "a9188dda865e16c7",
+    "conformal": "f418f5e5af0df32b",
     "embedding": "5c081e057e4b8c91"
   },
   {
@@ -7414,8 +7414,8 @@
       "spherically symmetric",
       "black hole pair creation"
     ],
-    "version": "d4d17cc107ee4863",
-    "diagrams": "d5e2884c8c7af71d",
+    "version": "1dddb20b177f8c19",
+    "diagrams": "89350711900d66d8",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"
   },
@@ -7576,7 +7576,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "83dd47186e1acde0",
+    "version": "f9258fb301a0433f",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"
