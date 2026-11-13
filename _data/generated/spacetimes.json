@@ -35606,7 +35606,7 @@
       "id": "israel_wilson_perjes",
       "name": "Israel-Wilson-Perjés Spinning Charged Sources",
       "short_name": "Israel-Wilson-Perjés",
-      "description": "Majumdar and Papapetrou's balanced charges set spinning: the stationary electrovacuum fields built from a complex solution of Laplace's equation, found by Zoltán Perjés in 1971 and by Werner Israel and Gordon Wilson in 1972. Every source carries a charge equal to its mass, and the family holds Kerr and Newman's spinning body with that charge, a naked singularity, and a charged NUT space.",
+      "description": "The spinning generalization of Sudhansu Datta Majumdar and Achilles Papapetrou's balanced charges: the stationary electrovacuum fields built from a complex solution of Laplace's equation, found by Zoltán Perjés in 1971 and by Werner Israel and Gordon Wilson in 1972. Every source carries a charge equal to its mass, and the family includes Roy Kerr and Ezra Newman's spinning body with that charge, a naked singularity, and a charged NUT space.",
       "tags": [
         "electrovacuum",
         "stationary",
@@ -40679,7 +40679,7 @@
       "id": "kerr_melvin",
       "name": "Kerr Black Hole in a Magnetic Universe",
       "short_name": "Kerr-Melvin",
-      "description": "Kerr's rotating black hole inside Melvin's magnetic universe, the exact solution of the Einstein-Maxwell equations that Frederick Ernst and Walter Wild built in 1976 by a Harrison transformation of Kerr's metric. The hole carries the charge $Q = 2amB$ that Robert Wald found for a test field in 1974, and its ergoregion runs out to infinity in a tube beside the axis.",
+      "description": "Roy Kerr's rotating black hole inside Mael Melvin's magnetic universe, the exact solution of the Einstein-Maxwell equations that Frederick Ernst and Walter Wild built in 1976 by a Harrison transformation of Kerr's metric. The hole carries the charge $Q = 2amB$ that Robert Wald found for a test field in 1974, and its ergoregion runs out to infinity in a tube beside the axis.",
       "tags": [
         "electrovacuum",
         "Einstein-Maxwell",
@@ -42050,7 +42050,7 @@
       "id": "kiselev",
       "name": "Kiselev Black Hole",
       "short_name": "Kiselev",
-      "description": "Schwarzschild's black hole with one more term in its metric, a power of the radius that stands for matter around the hole whose pressure, averaged over directions, is a fixed multiple of its energy density. Valery Kiselev wrote it down in 2003 as a black hole surrounded by quintessence, and Matt Visser showed in 2020 that the matter is neither a perfect fluid nor quintessence.",
+      "description": "Karl Schwarzschild's black hole with one more term in its metric, a power of the radius that stands for matter around the hole whose pressure, averaged over directions, is a fixed multiple of its energy density. Valery Kiselev wrote it down in 2003 as a black hole surrounded by quintessence, and Matt Visser showed in 2020 that the matter is neither a perfect fluid nor quintessence.",
       "tags": [
         "static",
         "stationary",
@@ -45008,7 +45008,7 @@
       "id": "lewis",
       "name": "Lewis Rotating Cylinder",
       "short_name": "Lewis",
-      "description": "The stationary vacuum fields with cylindrical symmetry, the space outside an infinitely long rotating cylinder, which Thomas Lewis wrote down in 1932. With real constants the field is locally Levi-Civita's static one and the rotation shows only on a trip round the axis; with an imaginary exponent it is static nowhere. Both kinds hold the vacuum outside van Stockum's cylinder of dust.",
+      "description": "The stationary vacuum fields with cylindrical symmetry, the space outside an infinitely long rotating cylinder, which Thomas Lewis wrote down in 1932. With real constants the field is locally Tullio Levi-Civita's static one and the rotation appears only on a closed path round the axis; with an imaginary exponent it is static nowhere. Both kinds occur as the vacuum outside Willem Jacob van Stockum's cylinder of dust.",
       "tags": [
         "vacuum",
         "stationary",

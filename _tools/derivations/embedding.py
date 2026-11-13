@@ -20754,8 +20754,8 @@ CAPTIONS = {
         "$r$ has circumference $2\\pi\\sqrt{r^2 - k^2}$, which grows at every radius, since $k < r$ and "
         "$dk/dr < 1$.",
         "The circles grow more slowly than the distance out to them, so the surface is a bowl whose wall steepens: "
-        "the circle at $r = a$ has radius $0.93\\,a$, and the one at $r = 6a$, where the drawing ends, $3.87\\,a$. "
-        "The bowl goes on past the drawing with its circles still growing, so a surface of constant $t$ is a "
+        "the circle at $r = a$ has radius $0.93\\,a$, and the one at $r = 6a$, the outer edge, $3.87\\,a$. "
+        "The bowl goes on beyond $r = 6a$ with its circles still growing, so a surface of constant $t$ is a "
         "moment of space at every radius.",
     ],
     ("vuorio_warped_ads", "axis"): [

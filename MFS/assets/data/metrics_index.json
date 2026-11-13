@@ -3171,10 +3171,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "34e241cf05f3a1ba",
-    "diagrams": "46f7eaaecdbd1ba2",
+    "version": "012c0eb4e352f874",
+    "diagrams": "23593684842e4900",
     "conformal": "82c544ce8dcb28c0",
-    "embedding": "5af191b3a00d29f2"
+    "embedding": "6a27809442290a10"
   },
   {
     "id": "jackiw_teitelboim_black_hole",
@@ -3669,9 +3669,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c6f3f8d68fea752c",
-    "diagrams": "751e7bb9426ca853",
-    "conformal": "c948590fa4547aec",
+    "version": "5e749bb3119f4bbc",
+    "diagrams": "52dc7aa47036e41f",
+    "conformal": "a47e310b101f3a62",
     "embedding": "8c4b344875f825be",
     "curvature": "faa89e7625b916d1"
   },
@@ -3801,11 +3801,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b332f802ac544769",
+    "version": "1b4b30220846a655",
     "diagrams": "b8b3958f55b02f60",
-    "conformal": "6ef2fd6aee9f0ecf",
+    "conformal": "35112b5f8f3a4ad7",
     "embedding": "f88f2136771d0f0a",
-    "curvature": "94cff053104263c8"
+    "curvature": "13998c981a29af56"
   },
   {
     "id": "klebanov_witten",
@@ -4085,8 +4085,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "22fad424ae8b602f",
-    "diagrams": "4ab32fd3e8390e5e",
+    "version": "c10fb831e175ec82",
+    "diagrams": "394c8654aaf8ad8e",
     "conformal": "ef3ef065649addc5",
     "embedding": "77935accaa9e62b5"
   },
@@ -4274,9 +4274,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6b00971b1dedb49f",
+    "version": "e0807b63a2a1e85a",
     "diagrams": "6e297744e2657a6c",
-    "embedding": "8764c8fb21edf33b"
+    "embedding": "d134ca04303f9822"
   },
   {
     "id": "majumdar_papapetrou",
