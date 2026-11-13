@@ -28493,12 +28493,12 @@ CAPTIONS = {
     ("kantowski_sachs", "vacuum"): [
         "The Schwarzschild spacetime, maximally extended, each point in the diagram a 2-sphere, with the region "
         "inside the black hole's horizon tinted. There the metric is $-dT^2/(r_s/T - 1) + (r_s/T - 1)\\,dr^2$ on "
-        "the plane of $T$ and $r$, Schwarzschild's with $T$ for the areal radius and $r$ for $ct$, and Kruskal "
-        "and Szekeres's coordinates draw it as the triangle between the horizon and the singularity.",
+        "the plane of $T$ and $r$, Schwarzschild's with $T$ for the areal radius and $r$ for $ct$, and in Kruskal "
+        "and Szekeres's coordinates that region is the triangle between the horizon and the singularity.",
         "Each line of constant $T$ runs from one end of the horizon to the other and is a whole moment of the "
         "vacuum Kantowski-Sachs universe, homogeneous along $r$. The future lies toward smaller $T$, and every "
         "world line in the triangle ends on the singularity $T = 0$. The white hole below is the same universe "
-        "run backward in time.",
+        "reversed in time.",
     ],
     ("schwarzschild", "spherical"): [
         "The Schwarzschild spacetime, maximally extended, each point in the diagram a 2-sphere "

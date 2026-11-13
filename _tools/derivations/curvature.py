@@ -7679,8 +7679,8 @@ def kantowski_sachs(ck, src):
             "At the dust's greatest sphere radius, $R = 1/b_0^2$. "
             f"At $|c\\tau| = {tau_end:.3f}$, the dust reaches $K = {tex_number(dust_K_end)}/b_0^4$ at "
             f"$|\\eta| = {eta_end}$, while the vacuum reaches $K = {tex_number(vacuum_K_end)}/r_s^4$. "
-            f"At that endpoint, dust has $R = {tex_number(dust_R_end)}/b_0^2$, and the curves stop before "
-            "the cigarlike singularities at $|\\eta| = \\pi/2$.",
+            f"At that endpoint, dust has $R = {tex_number(dust_R_end)}/b_0^2$, and the cigarlike singularities "
+            "lie beyond it, at $|\\eta| = \\pi/2$.",
         ],
         "ricci_sentences": [[0, 0], [0, 2], [1, 1], [1, 3]],
         "per_scalar": scalar_clips(k_clip, r_clip),
