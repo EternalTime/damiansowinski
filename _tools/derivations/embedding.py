@@ -20318,10 +20318,10 @@ CAPTIONS = {
         "slices of constant $v - r$ inside the surface of pair creation and of constant $u + r$ outside it, "
         "spacelike everywhere, and both carry the metric $(1 + 2m/r)\\,dr^2 + r^2d\\phi^2$ with $m$ taken on each "
         "circle. The mass is the same on the two sides of the surface of pair creation, so the slope "
-        "$dz/dr = \\sqrt{2m/r}$ is too, and nothing folds there.",
+        "$dz/dr = \\sqrt{2m/r}$ is too, and the surface is smooth there.",
         "Inside the shell of light the surface is a flat disc, and once the shell has reached the centre it closes "
         "in a spike at the singularity. While the hole evaporates the mass is least on the surface of pair "
-        "creation, which shrinks onto the centre at $v - r = 8\\,m_0$ and takes the spike with it. After that a "
+        "creation, which shrinks onto the centre at $v - r = 8\\,m_0$, where the spike ends. After that a "
         "flat disc grows from the centre at half the speed of light in $v - r$, its rim the last ray $u_0$, and "
         "the radiation ahead of it carries the curvature away.",
     ],

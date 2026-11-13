@@ -8021,7 +8021,7 @@ CAPTIONS = {
         "scalar $48m^2/r^6$ diverges, lasts from $v = 0$ to $v_0$.",
     ],
     ("hiscock", "ingoing", "shells"): [
-        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the simplest of the models, drawn with "
+        "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the model with two shells, drawn with "
         "$v - r$ as the vertical axis. A shell of light of mass $m_0$ falls in along $v = 0$ and a shell of mass "
         "$-m_0$ follows along $v_1 = 6\\,m_0$, with flat space before the first, Schwarzschild's metric between "
         "them, and flat space again after the second.",
@@ -8039,8 +8039,8 @@ CAPTIONS = {
         "shell before $u_1$ and on the surface $R = 3m$ after it.",
         "The ray $u_0$ is the Cauchy horizon, the first light from the last point of the singularity, and beyond "
         "it the plane is Minkowski's, with a regular centre. Everywhere on the plane $g^{rr} = 1 - 2m/r$ is "
-        "positive, so no sphere here is trapped. A distant observer reads the mass off the rays as they arrive "
-        "and sees it fall to zero with $dm/du \\to 0$.",
+        "positive, so no sphere here is trapped. A distant observer measures the mass each ray carries as it "
+        "arrives and sees it fall to zero with $dm/du \\to 0$.",
     ],
     ("hiscock", "flat", "after"): [
         "The plane of $u$ and $v$ ($\\theta = \\pi/2$, $\\phi = 0$) after the hole has gone, drawn with "
