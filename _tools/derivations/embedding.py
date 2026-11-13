@@ -19540,7 +19540,7 @@ CAPTIONS = {
         "The throat has the radius $0.687/\\mu$. Beside it stands Kerr's black hole of the same mass and angular "
         "momentum, whose throat has the radius $2GM/c^2 = 1.866/\\mu$: three quarters of the hairy hole's mass is in "
         "the field outside its horizon, and its horizon has a ninth of the area of Kerr's. The two surfaces climb alike "
-        "far out, where only the mass and the angular momentum are felt.",
+        "far out, where the metric depends only on the mass and the angular momentum.",
     ],
     ("eye_of_the_storm", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the eye of the storm at one moment of Boyer-Lindquist $t$, drawn "

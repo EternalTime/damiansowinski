@@ -1975,7 +1975,7 @@
       "curvature singularity",
       "asymptotically flat"
     ],
-    "version": "8a0f2213a1974b4c",
+    "version": "cc1d54f50f6131c6",
     "diagrams": "797bb029c7a77a1c",
     "conformal": "ba7f2b66e7041147",
     "embedding": "d878e36cfb97e520",
@@ -2941,10 +2941,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2950605e8c0ea709",
-    "diagrams": "82a626856450392e",
+    "version": "06c6bb0a86d7202e",
+    "diagrams": "cef95c9dca25d066",
     "conformal": "a8c68e67ec52e67a",
-    "embedding": "920063a794e7f34b",
+    "embedding": "a3313a6de5428233",
     "curvature": "bc013e26573c54a1"
   },
   {
@@ -3549,10 +3549,10 @@
       "four-dimensional",
       "black hole shadow"
     ],
-    "version": "4cc9f1464b41dc45",
+    "version": "cc32053c653da345",
     "diagrams": "64c05059b2977164",
     "conformal": "d43447090445284f",
-    "embedding": "7ede09463628958d"
+    "embedding": "448aedd6a53740ee"
   },
   {
     "id": "kerr_bertotti_robinson",
