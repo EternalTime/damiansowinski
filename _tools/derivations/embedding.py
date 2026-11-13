@@ -19030,11 +19030,11 @@ CAPTIONS = {
         "the metric is $r^2\\left(e^{2\\gamma}d\\theta^2 + e^{-2\\gamma}\\sin^2\\theta\\,d\\phi^2\\right)$, a "
         "surface of revolution whose circle at $\\theta$ has radius $r\\,e^{-\\gamma}\\sin\\theta$, and its area is "
         "$4\\pi r^2$ whatever $\\gamma$ is.",
-        "The wave is all in the shape. Here the shear is at its greatest, $\\sigma = -0.037\\,m_0$ on the equator, "
+        "The wave changes the shape of the sphere, and its area stays $4\pi r^2$. Here the shear is at its greatest, $\\sigma = -0.037\\,m_0$ on the equator, "
         "and $\\gamma = -0.0035$ there: the equator has radius $1.0035\\,r$ and the meridian from pole to pole is "
         "$0.9983\\,\\pi r$ long, an oblate sphere flattened by half a percent. A quarter of the burst earlier and "
         "later it is prolate by a quarter of a percent, and before the burst it is round. A burst that carries off "
-        "a thousandth of the mass strains space by this much ten masses out.",
+        "a thousandth of the mass strains space by this much at $r = 10\,m_0$.",
     ],
     ("supertranslation_hair", "shells"): [
         "The shells of the vacuum with the field $C = \\tfrac{1}{2}\\ell\\left(3\\cos^2\\theta - 1\\right)$, the surfaces "

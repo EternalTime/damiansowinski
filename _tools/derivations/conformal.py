@@ -25887,7 +25887,7 @@ def bondi_sachs(ck, src):
     v.set(input=nr.BURST_INPUT, settings="$m_0$ is the unit of every length and of $cu$.",
           restriction="The axis of symmetry $\\theta = 0$ outside the world tube $r = 10\\,m_0$, a totally geodesic "
                       "surface, each point in the diagram a single event; off the axis the cones carry the shear "
-                      "and the lines of constant $r$ run otherwise.")
+                      "and the lines of constant $r$ follow other curves.")
     for m in slices.moments("bondi_sachs", "sphere", label=slices.BONDI_SPHERE):
         p, q = F.pq(np.array([10.0]), np.array([10.0]))
         v.slice(m, points=[(float(p[0]), float(q[0]))])

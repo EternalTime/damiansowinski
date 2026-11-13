@@ -1204,8 +1204,8 @@ BONDI_BURST_INVERSE = {k: str(_BURST[k].subs(sp.Symbol("r", real=True), 1 / sp.S
 BURST_INPUT = ("A burst from a source of mass $m_0$ whose quadrupole moment makes one swing, "
                "$Q = \\tfrac{1}{4}m_0^3\\sin^6(\\pi cu/20m_0)$ from $u = 0$ to $cu = 20\\,m_0$: the shear is "
                "$\\sigma = \\partial_u^2Q\\,\\sin^2\\theta$, and $V$, $\\beta$, $U$, and $\\gamma$ are Bondi, van der Burg, "
-               "and Metzner's expansion in $1/r$ through the orders they give, $\\gamma$ and $U$ through $r^{-3}$, "
-               "$\\beta$ through $r^{-2}$, and $V$ through $r^{-1}$. The Ricci tensor those orders leave is $1.4\\%$ of the "
+               "and Metzner's expansion in $1/r$ to the orders of their paper, $\\gamma$ and $U$ through $r^{-3}$, "
+               "$\\beta$ through $r^{-2}$, and $V$ through $r^{-1}$. The Ricci tensor left over at those orders is $1.4\\%$ of the "
                "curvature at $r = 10\\,m_0$ and falls as $1/r$ beyond it.")
 RT_INPUT = ("The first front $f(0, \\theta)^2 = f_0^2\\left(1 - \\epsilon^2\\cos^2\\theta\\right)$ at "
             "$\\epsilon = 4/5$, with $f_0^2 = \\ln\\left((1 + \\epsilon)/(1 - \\epsilon)\\right)/(2\\epsilon)$ so that "
