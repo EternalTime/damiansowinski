@@ -29992,7 +29992,7 @@ CAPTIONS = {
         "$-c^2dt^2 + dx^2$ with $x$ over the whole line, and $p, q = \\arctan((ct \\mp x)/a)$ bring it into "
         "the full diamond.",
         "The four large dimensions have the causal structure of Minkowski space, with a null infinity at each "
-        "end of $x$. The sphere adds none: light sent round it stays at one point of the diamond.",
+        "end of $x$. Light sent round the sphere stays at one point of the diamond, so the sphere adds no null infinity.",
     ],
     ("plebanski_hacyan", "sphere"): [
         "Plebański and Hacyan's product of a flat plane with a sphere ($\\Lambda = 1/2b^2$), each point in "

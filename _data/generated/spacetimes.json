@@ -10315,7 +10315,7 @@
       "id": "boulware_deser",
       "name": "Boulware-Deser Black Hole",
       "short_name": "Boulware-Deser",
-      "description": "The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, which David Boulware and Stanley Deser found in 1985. The curvature squared term of string theory keeps its metric function finite at the centre and leaves a small mass with no horizon, and the same field equations have a second solution that approaches anti-de Sitter space.",
+      "description": "The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, which David Boulware and Stanley Deser found in 1985. With the curvature squared term of string theory its metric function is finite at the centre and a small mass has no horizon; the same field equations have a second solution that approaches anti-de Sitter space.",
       "tags": [
         "static",
         "stationary",
@@ -17024,7 +17024,7 @@
       "id": "cremmer_scherk",
       "name": "Cremmer-Scherk Spontaneous Compactification",
       "short_name": "Cremmer-Scherk",
-      "description": "Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can curl up by the field equations. A magnetic monopole field through the sphere holds it open at one radius, and a cosmological constant of six dimensions keeps the other four dimensions flat.",
+      "description": "Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can compactify as a solution of the field equations. A magnetic monopole field through the sphere fixes its radius, and with a cosmological constant of six dimensions the other four dimensions are flat.",
       "tags": [
         "static",
         "stationary",

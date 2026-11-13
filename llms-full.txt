@@ -570,7 +570,7 @@ A ball of scalar field held together by its own gravity, the heir of John Wheele
 
 ### Boulware-Deser Black Hole
 
-The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, which David Boulware and Stanley Deser found in 1985. The curvature squared term of string theory keeps its metric function finite at the centre and leaves a small mass with no horizon, and the same field equations have a second solution that approaches anti-de Sitter space.
+The spherical black hole of Einstein-Gauss-Bonnet gravity in five dimensions, which David Boulware and Stanley Deser found in 1985. With the curvature squared term of string theory its metric function is finite at the centre and a small mass has no horizon; the same field equations have a second solution that approaches anti-de Sitter space.
 
 - id: `boulware_deser`
 - tags: static, stationary, spherically symmetric, hyperspherical symmetry, black hole, mass, string theory, low energy string theory, higher dimensions, five-dimensional, curvature singularity, naked singularity, coordinate singularity, horizon, event horizon, white hole, maximal extension, causal structure, asymptotically flat, anti-de Sitter, instability, black hole thermodynamics, Hawking temperature, exact solution, Lorentzian, idealized model, alternative theories of gravity
@@ -817,7 +817,7 @@ A cylindrical shell of counterrotating dust with a lower bound on its circumfere
 
 ### Cremmer-Scherk Spontaneous Compactification
 
-Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can curl up by the field equations. A magnetic monopole field through the sphere holds it open at one radius, and a cosmological constant of six dimensions keeps the other four dimensions flat.
+Minkowski space times a sphere, in six dimensions: the solution of gravity coupled to gauge fields with which Eugene Cremmer and Joël Scherk showed in 1976 that extra dimensions can compactify as a solution of the field equations. A magnetic monopole field through the sphere fixes its radius, and with a cosmological constant of six dimensions the other four dimensions are flat.
 
 - id: `cremmer_scherk`
 - tags: static, stationary, six-dimensional, higher dimensions, Kaluza-Klein, compact dimension, spontaneous compactification, product spacetime, homogeneous, Einstein-Yang-Mills, Yang-Mills field, gauge field, magnetic monopole, Dirac quantisation, cosmological constant, positive cosmological constant, string theory, no horizon, no singularity, geodesically complete, exact solution, Lorentzian, Einstein equations, idealized model

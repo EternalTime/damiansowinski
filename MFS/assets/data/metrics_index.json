@@ -831,10 +831,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "efd753c27b2af3d7",
-    "diagrams": "2122349c176f47ed",
-    "conformal": "fe30a252dab8b052",
-    "embedding": "c306446463337712",
+    "version": "de346f94fc2d0229",
+    "diagrams": "25fdab20a4c5b620",
+    "conformal": "e4851ed687f44f24",
+    "embedding": "92e727392bc99d4e",
     "curvature": "28f92f5e309235e6"
   },
   {
@@ -944,7 +944,7 @@
       "idealized model",
       "alternative theories of gravity"
     ],
-    "version": "8139f62e08066e6b",
+    "version": "7e64f4aa3730a58b",
     "diagrams": "aad81dc2048a0547",
     "conformal": "235a9c07b83bc763",
     "embedding": "d857ba18e7d9066a",
@@ -999,7 +999,7 @@
       "hydrostatic equilibrium",
       "gravitational redshift"
     ],
-    "version": "a3ed39f4162e2004",
+    "version": "0cd87104cd214857",
     "diagrams": "e3a9b0855962b188",
     "conformal": "956299fadfc78f36",
     "embedding": "0147ab391063a7a6",
@@ -1143,7 +1143,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4b987c78344b9e5e",
+    "version": "9510f9084b5748b1",
     "diagrams": "a6411ef1f1dca001",
     "conformal": "139a18a90eb98719",
     "embedding": "65bf7e933e8622ef",
@@ -1561,9 +1561,9 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "f6a60792cde5bc47",
+    "version": "a13915a1a75e25dc",
     "diagrams": "48060486c9b55dec",
-    "conformal": "f7ef5892e08fb949",
+    "conformal": "7fb65c7d5bba307d",
     "embedding": "90144612e008c71d"
   },
   {
