@@ -15776,8 +15776,8 @@ def erez_rosen(ck, src):
         else:
             marks = [(stop, "chartedge", None), (3.0, "r", None)]
         plane = Piece("plane", "sheet", sl, stop, top, 0.0, 1,
-                      (("stops", "the circles change faster than the distance in to them, and nothing in flat space "
-                                 "carries the slice on"),
+                      (("stops", "the circles change faster than the distance in to them, too fast for a surface of "
+                                 "revolution in flat space"),
                        ("edge", "the surface runs on to $r \\to \\infty$")),
                       marks + [(4.0, "r", None), (5.0, "r", None), (top, "r", "$6\\,m$")],
                       size, digits=LORENTZ_DIGITS)
@@ -15805,14 +15805,14 @@ def erez_rosen(ck, src):
         fig.legend("line", "r", "$r$ constant, at $3$, $4$, $5$ and $6\\,m$")
         if vid == "oblate":
             fig.legend("line", "surface", f"the narrowest circle, of radius $2.29\\,m$, at $r = {neck:.2f}\\,m$")
-        fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, where the drawing stops")
+        fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, the inner edge of the surface")
         fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
         q = "1" if vid == "prolate" else "-1/2"
         views.append(view(vid, label, "$m$", [surface], fig.done(),
                           settings=f"$q = {q}$ and $m = 1$, the unit of every length.",
                           stops=[f"Inside $r = {stop:.4f}\\,m$ the circles change faster than the distance in to them, "
-                                 "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
-                                 "space carries the slice on."]))
+                                 "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, too fast for a surface of revolution in "
+                                 "flat space."]))
     return views
 
 
@@ -20072,8 +20072,8 @@ CAPTIONS = {
         "The equatorial plane of the Erez-Rosen metric at one moment ($q = 1$, $m = 1$), drawn as a surface in flat "
         "space with every distance along it the metric distance. With $x = r/m - 1$ and $f = 1 - 2m/r$, the circle of "
         "radius $r$ has circumference $2\\pi r f^{(3x^2 - 1)/8}e^{3x/4}$, which falls to zero as $r \\to 2m$.",
-        "The surface narrows all the way in toward the singularity at $r = 2m$ and lies level at $r = 2.03\\,m$, on a "
-        "circle of radius $1.37\\,m$, where the drawing stops; the same plane at every moment is the same surface.",
+        "The surface narrows all the way in toward the singularity at $r = 2m$ and lies level at its inner edge, "
+        "$r = 2.03\\,m$, on a circle of radius $1.37\\,m$; the same plane at every moment is the same surface.",
     ],
     ("erez_rosen", "oblate"): [
         "The equatorial plane of the Erez-Rosen metric at one moment ($q = -1/2$, $m = 1$), drawn as a surface in flat "
@@ -20081,7 +20081,7 @@ CAPTIONS = {
         "radius $r$ has circumference $2\\pi r f^{-(3x^2 - 1)/16}e^{-3x/8}$, least, $2\\pi \\cdot 2.29\\,m$, at "
         "$r = 2.13\\,m$, and growing without bound as $r \\to 2m$.",
         "The surface narrows from far out to a neck at $r = 2.13\\,m$ and widens again toward the singularity at "
-        "$r = 2m$, until it lies level at $r = 2.03\\,m$, where the drawing stops; the same plane at every moment is "
+        "$r = 2m$, until it lies level at its inner edge, $r = 2.03\\,m$; the same plane at every moment is "
         "the same surface.",
     ],
     ("zipoy_voorhees", "oblate"): [

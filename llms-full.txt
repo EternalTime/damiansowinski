@@ -1094,7 +1094,7 @@ A static, spherically symmetric traversable wormhole with zero redshift function
 
 ### Erez-Rosen Quadrupole
 
-Schwarzschild's metric with a mass quadrupole added, a static vacuum field of Weyl's class found by G. Erez and Nathan Rosen in 1959. For every quadrupole parameter $q \neq 0$ a naked curvature singularity stands where the horizon was, which Doroshkevich, Zel'dovich, and Novikov used in 1965 to argue that a collapsing star sheds its quadrupole.
+Schwarzschild's metric with a mass quadrupole added, a static vacuum field of Weyl's class found by G. Erez and Nathan Rosen in 1959. For every quadrupole parameter $q \neq 0$ a naked curvature singularity stands on the surface that is Schwarzschild's horizon at $q = 0$, which A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov used in 1965 to argue that a collapsing star sheds its quadrupole.
 
 - id: `erez_rosen`
 - tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, mass, quadrupole, prolate spheroidal coordinates, curvature singularity, naked singularity, directional singularity, no-hair theorem, gravitational collapse, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model

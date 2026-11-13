@@ -643,10 +643,10 @@
       "supertranslation",
       "gravitational memory"
     ],
-    "version": "60dd8c1f6314c19d",
-    "diagrams": "254f7746e52372ea",
-    "conformal": "ff606c016a700422",
-    "embedding": "3aa6e616aa7f5d53"
+    "version": "60f240e8f2c50ef2",
+    "diagrams": "d542eefacde86131",
+    "conformal": "d34d3461c0fc2aed",
+    "embedding": "ff0efc23173effe7"
   },
   {
     "id": "light_beam",
@@ -1109,8 +1109,8 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "6bfc060b31b6bbfe",
-    "embedding": "0665e353193ed99b",
+    "version": "6d4cd9690f8348d2",
+    "embedding": "0b328a1cd75e3202",
     "curvature": "a594586a8e3812ff"
   },
   {
@@ -1417,10 +1417,10 @@
       "idealized model",
       "point charge"
     ],
-    "version": "88de60f2a6ad73f7",
-    "diagrams": "0c8055201b356841",
+    "version": "abb5df243cb60f97",
+    "diagrams": "08d0c075bece562f",
     "conformal": "9a86449fd5dc7244",
-    "embedding": "2c30edaa0cee4bdc"
+    "embedding": "7947127423217b5b"
   },
   {
     "id": "chodos_detweiler",
@@ -1642,9 +1642,9 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "bc2bcedd639092d3",
+    "version": "0e25489a59e45005",
     "diagrams": "703438847ca6a35b",
-    "conformal": "7f7b3ad43c1f628e",
+    "conformal": "34a5b31df0e26b9b",
     "embedding": "759b3c0dec35465e",
     "curvature": "da03d2027d9d2a6a"
   },
@@ -2202,10 +2202,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d773b2d35735fb82",
+    "version": "e44150d406e79516",
     "diagrams": "94462e128eea5d3d",
     "conformal": "73d1aa078d3b894f",
-    "embedding": "e21547bef3d58f8e",
+    "embedding": "5665ebc90d1d65e1",
     "curvature": "a7dd5de84f0f5f12"
   },
   {

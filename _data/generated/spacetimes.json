@@ -24882,7 +24882,7 @@
       "id": "erez_rosen",
       "name": "Erez-Rosen Quadrupole",
       "short_name": "Erez-Rosen",
-      "description": "Schwarzschild's metric with a mass quadrupole added, a static vacuum field of Weyl's class found by G. Erez and Nathan Rosen in 1959. For every quadrupole parameter $q \\neq 0$ a naked curvature singularity stands where the horizon was, which Doroshkevich, Zel'dovich, and Novikov used in 1965 to argue that a collapsing star sheds its quadrupole.",
+      "description": "Schwarzschild's metric with a mass quadrupole added, a static vacuum field of Weyl's class found by G. Erez and Nathan Rosen in 1959. For every quadrupole parameter $q \\neq 0$ a naked curvature singularity stands on the surface that is Schwarzschild's horizon at $q = 0$, which A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov used in 1965 to argue that a collapsing star sheds its quadrupole.",
       "tags": [
         "vacuum",
         "static",
