@@ -20059,7 +20059,7 @@ CAPTIONS = {
         "flat space with every distance along it the metric distance. A ring of matter around the equator flattens "
         "it: the equator has radius $2m\\,e^{q/2} = 2.085\\,m$ and each pole stands $1.225\\,m$ from the centre.",
         "The Gaussian curvature at a pole is $(1 - 12q)e^{2q}/4m^2$, zero at this $q$, the largest for which the "
-        "horizon stands in flat space. The area is $16\\pi m^2e^{-2q}$.",
+        "horizon can be embedded in flat space. The area is $16\\pi m^2e^{-2q}$.",
     ],
     ("distorted_schwarzschild", "horizon_prolate"): [
         "The horizon of the black hole in a tidal field at one moment ($q = -1/12$, $m = 1$), drawn as a surface in "
