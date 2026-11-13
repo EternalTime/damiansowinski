@@ -43898,7 +43898,7 @@
       "id": "kundt_waves",
       "name": "Kundt Waves",
       "short_name": "Kundt Waves",
-      "description": "Exact gravitational waves on plane fronts whose rays turn from one front to the next. In flat space the fronts are half planes rolling round a cylinder that expands at the speed of light, and the cylinder is a singularity that no curvature scalar shows.",
+      "description": "Exact gravitational waves on plane fronts whose rays turn from one front to the next. In flat space the fronts are half planes touching a cylinder that expands at the speed of light, each turned a little from the one before, and the cylinder is a curvature singularity at which every curvature scalar vanishes.",
       "tags": [
         "gravitational wave",
         "Kundt class",

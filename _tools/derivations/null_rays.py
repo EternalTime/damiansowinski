@@ -13527,8 +13527,7 @@ CAPTIONS = {
         "$\\kappa = 1/\\ell^2$. The rays moving right keep their $u$, and a curve moving left obeys "
         "$dv/du = (\\kappa v^2 + ph/q)/2$.",
         "The rays moving right are null geodesics, the rays of the wave, and a curve moving left is a null "
-        f"curve of the plane. The envelope of the wave fronts, $q = 0$, is {envelope} of each front, at a "
-        "distance from this plane.",
+        f"curve of the plane. The envelope of the wave fronts, $q = 0$, is {envelope} of each front.",
     ] for view, space, p, q, envelope in (
         ("de_sitter", "de Sitter", "5/4", "3/4", "the circle $\\xi^2 + \\eta^2 = 4\\ell^2$"),
         ("anti_de_sitter", "anti-de Sitter", "3/4", "1", "the line $\\xi = 0$"))},

@@ -2729,8 +2729,8 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "a75f78f2993f057e",
-    "embedding": "f7b5f03abe971ff6",
+    "version": "570a63a1a58955b0",
+    "embedding": "9506b0f6bee702ce",
     "curvature": "23007b402fd37c38"
   },
   {
@@ -2782,9 +2782,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b139fb765d3ae604",
+    "version": "6b88368d1a4c89d5",
     "diagrams": "dfa07fae80435e7d",
-    "conformal": "878abf6db42c0334",
+    "conformal": "104baef8765896b0",
     "embedding": "cc9efb7cafec7946"
   },
   {
@@ -3742,9 +3742,9 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "a15086a4da55f328",
+    "version": "ceb0958ab0285dc7",
     "diagrams": "442206dfc206d069",
-    "conformal": "8508e743b0676aa7",
+    "conformal": "2b182e23b95d828a",
     "embedding": "f046af1ffaff68d9",
     "curvature": "09525b8bb0d5a40a"
   },
@@ -3771,7 +3771,7 @@
     "diagrams": "39424436cf59ea7f",
     "conformal": "6fa408bb4e46f514",
     "embedding": "0633d69609fb99f8",
-    "curvature": "7c4a9c7606aa4417"
+    "curvature": "25507da3ad165653"
   },
   {
     "id": "kiselev",
@@ -3987,8 +3987,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7f2ba09e788a2f8f",
-    "diagrams": "707ada311baa183e",
+    "version": "b1f6dde8b10f1576",
+    "diagrams": "652793375fdb6141",
     "embedding": "aa93f3cc510fade8"
   },
   {
