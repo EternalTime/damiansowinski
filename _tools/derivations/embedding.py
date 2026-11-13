@@ -19429,7 +19429,7 @@ CAPTIONS = {
         "surface turned over, as Schwarzschild's does through $r_s$. Maxwell's field would put the throat at "
         "$1.8660\\,r_0$, the outer horizon of Reissner and Nordström's black hole of the same mass and charge, "
         "and Born and Infeld's field, which holds less energy, moves it out to $1.8666\\,r_0$. Inside the horizon "
-        "$r$ is a time, and no slice of constant $t$ enters there.",
+        "$r$ is a time, and the slice of constant $t$ lies outside it.",
     ],
     ("bardeen", "outside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Bardeen's black hole at one moment of $t$ outside its "
