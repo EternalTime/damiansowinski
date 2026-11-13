@@ -2361,7 +2361,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a8b284ec0aa0947c",
+    "version": "5ecb130cd8dfc2c5",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "702d68d9fe0d4f1d",
@@ -2752,11 +2752,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e9f6275fd98ea978",
+    "version": "9a669abfc10896a9",
     "diagrams": "9f49d55edfa17437",
     "conformal": "06e065e27b7e360f",
     "embedding": "ad3b787488c249a5",
-    "curvature": "94cd6ad124791c66"
+    "curvature": "c69ba0965ba4f95e"
   },
   {
     "id": "hartle_thorne",
@@ -3401,8 +3401,8 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "2e8c224eaa6139a9",
-    "diagrams": "8b8ed11a7a64599d",
+    "version": "dbf2aa7b3084f34f",
+    "diagrams": "f683bb9df8bac0df",
     "embedding": "592f4ab4aaa693fe"
   },
   {
@@ -5568,9 +5568,9 @@
       "conformally flat",
       "tachyon"
     ],
-    "version": "e9ccd8a7a23a6c9d",
+    "version": "2ad98e817c147133",
     "diagrams": "31e9dff1390f00d4",
-    "conformal": "354a17ef203ec712",
+    "conformal": "e4928f85ed18ab72",
     "embedding": "c40545f1ea0c929c"
   },
   {

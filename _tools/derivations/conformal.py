@@ -30489,14 +30489,14 @@ CAPTIONS = {
     ("point_particle_2plus1", "conical"): [
         "The half plane of $t$ and $r$ at fixed $\\phi$ ($\\alpha = 3/4$), totally geodesic. The metric on it is "
         "$-c^2dt^2 + dr^2$, so $p, q = \\arctan((ct \\mp r)/\\ell)$, with $\\ell$ any length, bring it into "
-        "Minkowski's half diamond, with the particle at $r = 0$ in place of a regular centre.",
+        "Minkowski's half diamond, with the particle, a conical singularity, at $r = 0$.",
         "The particle's gravity is its deficit angle $\\delta = 2\\pi(1 - \\alpha)$, which shows in the circles "
         "of constant $r$ around it: each has circumference $2\\pi\\alpha r$, short of $2\\pi r$ by $\\delta r$.",
     ],
     ("point_particle_2plus1", "wedge"): [
         "The half plane of $t$ and $r$ at fixed $\\theta$ ($\\alpha = 3/4$), totally geodesic. The metric on it is "
         "$-c^2dt^2 + dr^2$, so $p, q = \\arctan((ct \\mp r)/\\ell)$ bring it into Minkowski's half diamond, with "
-        "the particle at $r = 0$ in place of a regular centre.",
+        "the particle, a conical singularity, at $r = 0$.",
         "Each point is a circle around the particle on which $\\theta$ runs to $2\\pi\\alpha$, an arc of "
         "Minkowski's circle with its two ends joined.",
     ],

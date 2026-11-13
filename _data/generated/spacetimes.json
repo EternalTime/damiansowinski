@@ -37989,7 +37989,7 @@
       "id": "kasner_scalar",
       "name": "Kasner Universe with a Scalar Field",
       "short_name": "Kasner with a Scalar Field",
-      "description": "Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.",
+      "description": "Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field relaxes Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum stop.",
       "tags": [
         "scalar field",
         "massless scalar field",

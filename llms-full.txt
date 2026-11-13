@@ -1573,7 +1573,7 @@ Kasner's anisotropic universe threaded by a uniform magnetic field along one axi
 
 ### Kasner Universe with a Scalar Field
 
-Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field loosens Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum come to a stop.
+Kasner's anisotropic universe filled with a massless scalar field, which is also a fluid whose pressure equals its energy density. The field relaxes Kasner's second condition, so all three axes can shrink together toward the singularity, and the oscillations of the vacuum stop.
 
 - id: `kasner_scalar`
 - tags: scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, stiff fluid, anisotropic, cosmology, Kasner, Bianchi classification, spatially homogeneous, homogeneous, curvature singularity, spacelike singularity, big bang, BKL, Kaluza-Klein, higher dimensions, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, five-dimensional, idealized model
