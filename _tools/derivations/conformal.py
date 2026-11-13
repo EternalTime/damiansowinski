@@ -30940,8 +30940,8 @@ CAPTIONS = {
         "and light at 45°. Clifton and Ferreira's $\\tau$ and $r$ cover the cell while it expands: from the "
         "singularity below, across the horizon that light leaves through, up to the slice $\\tau = \\tau_m$ "
         "on which the boundary comes to rest.",
-        "Each surface of constant $\\tau$ meets the boundary at a right angle, which is what lets "
-        "neighbouring cells share it. The contracting cell is the mirror image of this region in $T = 0$, "
+        "Each surface of constant $\\tau$ meets the boundary at a right angle, so neighbouring cells "
+        "can share it. The contracting cell is the mirror image of this region in $T = 0$, "
         "with the sign of the root reversed, and the two leave a gap between the slices through the "
         "boundary's turn, as Rex Liu pointed out in 2015.",
     ],

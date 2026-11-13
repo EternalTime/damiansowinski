@@ -7035,12 +7035,12 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) about the mass at the centre of one cell, "
         "where the metric is Schwarzschild's. The boundary of the cell rises out of $r_s$ as $t \\to -\\infty$, "
         "is at rest at $r_m$ at $t = 0$, and falls back to $r_s$ as $t \\to +\\infty$, along a radial geodesic. "
-        "The drawing holds the fall, from the moment of rest on, and the rise is its mirror image in time. "
+        "The fall is drawn from the moment of rest on, and the rise is its mirror image in time. "
         "The cell is everything inside it, and beyond it lies the next cell, with a mass and a chart of its own.",
         "The boundary's clock reads a finite time between the two ends, $\\pi r_m^{3/2}/c\\sqrt{r_s}$ from $r = 0$ "
-        "back to $r = 0$, most of which these coordinates leave out, since they stop at $r_s$. The surfaces "
-        "of constant $t$ of neighbouring cells meet at an angle on the boundary once it moves, which is why "
-        "the lattice takes another time.",
+        "back to $r = 0$. The surfaces "
+        "of constant $t$ of neighbouring cells meet at an angle on the boundary once it moves, so the lattice "
+        "needs another time.",
     ],
     ("lindquist_wheeler_lattice", "cosmological_time", "radial"): [
         "The plane of $\\tau$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in one expanding cell. Every shell that "
