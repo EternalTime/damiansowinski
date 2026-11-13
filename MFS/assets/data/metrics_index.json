@@ -331,11 +331,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8391df93f0e75fe4",
+    "version": "350ea836418edb48",
     "diagrams": "04a29fa582f0c7a2",
     "conformal": "acaf9c7da5b177a4",
     "embedding": "b0d9da588a8a0e63",
-    "curvature": "15df5518b3325317"
+    "curvature": "d00d6b994bba13fb"
   },
   {
     "id": "bekenstein_universes",
@@ -666,10 +666,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "302e463d6578196a",
-    "diagrams": "2342c1618b43b6d4",
+    "version": "c9f34ecdcf24a2df",
+    "diagrams": "bccec4ecefcbbe06",
     "conformal": "4c22fa7d37693c09",
-    "embedding": "7035de7d63ab26a4"
+    "embedding": "0e4c5ae5859933fb"
   },
   {
     "id": "bonnor_charged_dust",
@@ -1812,9 +1812,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2efcd5507ecbd06c",
+    "version": "29019ee93bb9e495",
     "diagrams": "e80c22fa8faff2b6",
-    "conformal": "9dae987db0ca1df8",
+    "conformal": "a17a7bab1947ec70",
     "embedding": "7ebe08e359710241"
   },
   {
@@ -2697,8 +2697,8 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ed8bd3a16e1d7c0",
-    "diagrams": "1e2a338fbaeb162f",
+    "version": "f104347e9380347c",
+    "diagrams": "313072e69a9fa9b4",
     "conformal": "c44e7367505c4a14",
     "embedding": "eb3c3b7b2d474485",
     "curvature": "510b0aa9a0a06aba"
@@ -6828,7 +6828,7 @@
     ],
     "version": "30df2c1cf37b61cf",
     "diagrams": "99c54951a880e0fc",
-    "embedding": "afe08c1a64cd8527"
+    "embedding": "2c6872209174e14b"
   },
   {
     "id": "taub_nut",

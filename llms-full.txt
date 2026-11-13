@@ -472,7 +472,7 @@ The form the metric of an isolated body that sends out gravitational waves takes
 
 ### Bonnor Beam of Light
 
-The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that keeps pace with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.
+The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that travels with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.
 
 - id: `light_beam`
 - tags: null dust, pp-wave, gravitational wave, Petrov type N, cylindrical symmetry, stationary, gravitational lensing, not asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -1299,7 +1299,7 @@ Closed vacuum universes holding gravitational waves that travel along one direct
 
 ### Mazur-Mottola Gravastar
 
-A star with no horizon and no singularity that passes for a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.
+A star with no horizon and no singularity that resembles a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.
 
 - id: `gravastar`
 - tags: black hole mimicker, exotic compact object, no horizon, thin shell, matched solution, de Sitter core, regular centre, vacuum energy, positive cosmological constant, anisotropic pressure, strong energy condition, echoes, quasinormal modes, static, stationary, spherically symmetric, mass, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model

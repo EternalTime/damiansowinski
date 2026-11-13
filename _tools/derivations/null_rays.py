@@ -8421,7 +8421,7 @@ CAPTIONS = {
         "so $ct \\mp x$ is constant along a ray, with $x = (L/\\sqrt{C})\\,\\mathrm{artanh}(r/L)$ the tortoise "
         "coordinate. The cones are widest at the centre, where $dr/d(ct) = \\pm 0.57$, and narrowest on the shell, "
         "where it is $\\pm 0.35$.",
-        "The chart stops at the shell $r = R$, before the cones close at the de Sitter horizon $r = L$, and $t$ "
+        "The interior ends at the shell $r = R$, inside the de Sitter horizon $r = L$ where the cones would close, and $t$ "
         "is the time of the exterior chart. A ray from the centre reaches the shell after $ct = 2.56\\,r_s$ and "
         "goes on into Schwarzschild's vacuum. The Kretschmann scalar is $24/L^4$ at every point.",
     ],
@@ -8441,7 +8441,7 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn for $R = 1.25\\,r_s$. "
         "The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r)$, so $ct \\mp r_*$ is constant along a ray, with "
         "$r_* = r + r_s\\ln(r/r_s - 1)$, as outside a Schwarzschild black hole.",
-        "The chart stops at the shell $r = R$, before the cones close at $r_s$, so there is no horizon. A ray "
+        "The exterior ends at the shell $r = R$, outside $r_s$ where the cones would close, so there is no horizon. A ray "
         "moving in reaches the shell at a finite $t$, where $dr/d(ct) = -0.2$, and crosses into the de Sitter "
         "interior. Light leaving the shell arrives far away with its frequency lowered by the factor "
         "$\\sqrt{1 - r_s/R} = 0.45$. The Kretschmann scalar $12r_s^2/r^6$ is at most $12r_s^2/R^6$.",

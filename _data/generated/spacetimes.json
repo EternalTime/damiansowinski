@@ -7791,7 +7791,7 @@
       "id": "light_beam",
       "name": "Bonnor Beam of Light",
       "short_name": "Bonnor",
-      "description": "The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that keeps pace with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.",
+      "description": "The exact gravitational field of a steady beam of light, which William Bonnor found in 1969, a plane-fronted gravitational wave that travels with the light. A ray moving with the beam feels nothing, a ray moving against it is drawn in, and two beams shining the same way do not attract each other.",
       "tags": [
         "null dust",
         "pp-wave",
@@ -30521,7 +30521,7 @@
       "id": "gravastar",
       "name": "Mazur-Mottola Gravastar",
       "short_name": "Gravastar",
-      "description": "A star with no horizon and no singularity that passes for a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.",
+      "description": "A star with no horizon and no singularity that resembles a black hole from outside, proposed by Pawel Mazur and Emil Mottola in 2001. A ball of de Sitter space, a vacuum with $p = -\\rho$, fills the inside of a thin shell at $R > r_s$, and Schwarzschild's vacuum lies outside it, the three layers Matt Visser and David Wiltshire reduced it to.",
       "tags": [
         "black hole mimicker",
         "exotic compact object",
