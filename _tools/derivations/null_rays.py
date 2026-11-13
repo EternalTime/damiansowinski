@@ -7627,7 +7627,7 @@ CAPTIONS = {
         "to a point and a ray crosses to the other side.",
         "The dotted line is the ergosurface, $y = -5/4$. With no hole at the centre the ring's ergoregion is a "
         "tube about the ring, and the middle of the disc lies outside it; in the Saturn of Weyl's chart the "
-        "ergoregion reaches all the way across the gap to the hole.",
+        "ergoregion reaches across the gap to the hole.",
     ],
     ("schwarzschild_ads", "static", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $r_s = 2L$, the same at every "

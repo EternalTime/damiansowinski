@@ -6880,7 +6880,7 @@ def black_saturn(ck, src):
     ck.add("Black Saturn: the ring's inner edge has the radius sqrt(147/40) L",
            abs(float(between.rho_at(inner + 1e-12)) - math.sqrt(147 / 40)), 1e-6)
     size = 2 * float(outside.rho_at(far))
-    why = "where the circles shrink inward faster than the distance in to them, and the surface stops"
+    why = "where the circles shrink inward faster than the distance in to them, and the surface lies level"
     sheet = Piece("outside", "sheet", outside, far, stop_out, float(outside.rise(far, stop_out)), -1,
                   (("edge", "the surface runs on to $z \\to -\\infty$, a flat plane"), ("stops", "$z = 0.242$, " + why)),
                   [(z, "r", None) for z in (far, -4.5, -2.0, -0.5)] + [(0.0, "ergo", None), (stop_out, "space", None)], size,
@@ -6907,7 +6907,7 @@ def black_saturn(ck, src):
     fig.legend("fill", "cover", "the plane of the ring at one moment, where flat space carries it")
     fig.legend("line", "r", "$z$ constant, at $-1/2$, $-2$, $-9/2$, and $-8$")
     fig.legend("line", "ergo", "the ergosurface, $z = 0$")
-    fig.legend("line", "space", "the two circles where the surface stops, with the ring between them")
+    fig.legend("line", "space", "the two circles where the surface lies level, with the ring between them")
     fig.legend("line", "horizon", "the circle where the slice crosses the hole's horizon")
     fig.legend("line", "meridian", "$\\psi$ constant, every $15°$")
     return [view("plane", "The plane of the ring", "$L$", [surface], fig.done(),
@@ -20955,8 +20955,9 @@ CAPTIONS = {
         "inside a ring in balance. Far out it is the flat plane. At the centre it stands vertical on the circle "
         "of radius $0.7\\,L$ where the slice crosses the hole's horizon.",
         "Near the ring the rotation has widened the circles of $\\psi$, which shrink inward faster than the "
-        "distance in to them, and flat space carries no such surface: the plane stops at $z = 0.242$ and the "
-        "band about the hole begins at $z = 0.787$, each lying level there. Between those two circles lies the "
+        "distance in to them, and flat space carries no such surface: the plane lies level at its inner edge, "
+        "$z = 0.242$, and the band about the hole lies level at its outer edge, $z = 0.787$. Between those two "
+        "circles lies the "
         "ring, whose outer and inner edges have the radii $2.74\\,L$ and $1.92\\,L$. The dotted circle is the "
         "ergosurface, $z = 0$.",
     ],
