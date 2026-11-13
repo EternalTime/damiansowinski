@@ -6462,7 +6462,7 @@ def kerr_taub_nut(ck, src):
     grids = {"I": (rI, times), "II": (rII, times), "IV": (rII, times), "III": (rIII, times)}
     restriction = ("The northern half of the axis, $\\theta = 0$, only, a totally geodesic surface, regular in the "
                    "charts whose time is $t_N$. The Misner string lies along the southern half, $\\theta = \\pi$, "
-                   "off this surface, and with $l > a$ the spacetime has no curvature singularity.")
+                   "and with $l > a$ the spacetime has no curvature singularity.")
     views = []
     for view_id, label, chart, cover, what in (
             ("axis", "Regular half axis", "one_string", [("I", False)], "the exterior $r > r_+$, which $t_N$ and $r$ cover"),
