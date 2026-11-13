@@ -276,7 +276,7 @@ A smooth spacetime of negative energy with no horizon: the planar black hole of 
 
 ### Black Hole Threaded by a Cosmic String
 
-A Schwarzschild black hole with a straight cosmic string through it. Off the axis it is Schwarzschild's vacuum, and around the whole axis, horizon included, a wedge is missing whose angle the string's tension sets, which lowers the horizon's area and the black hole's energy at a fixed mass.
+A Schwarzschild black hole with a straight cosmic string through it. Off the axis it is Schwarzschild's vacuum, and around the whole axis, horizon included, a wedge whose angle is set by the string's tension is missing, which lowers the horizon's area and the black hole's energy at a fixed mass.
 
 - id: `string_black_hole`
 - tags: topological defect, cosmic string, angular deficit, conical singularity, black hole, black hole hair, black hole thermodynamics, vacuum, static, stationary, axisymmetric, mass, curvature singularity, coordinate singularity, horizon, event horizon, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -2096,7 +2096,7 @@ One moment of a spacetime with two black holes at rest in it, the initial data C
 
 ### Misner-Zapolsky Star of Infinite Central Density
 
-A static sphere of fluid as stiff as light, $p = \rho c^2/3$, whose density is infinite at the centre and falls as $1/r^2$. Tolman and Oppenheimer and Volkoff found it in 1939, and it is the core that models of neutron stars approach as their central density grows without limit.
+A static sphere of fluid with the equation of state of light, $p = \rho c^2/3$, whose density is infinite at the centre and falls as $1/r^2$. Richard Tolman, and J. Robert Oppenheimer and George Volkoff, found it in 1939, and it is the core that models of neutron stars approach as their central density grows without limit.
 
 - id: `misner_zapolsky`
 - tags: perfect fluid, radiation, equation of state, static, stationary, spherically symmetric, stellar interior, neutron star, maximum mass, instability, self-similar, curvature singularity, timelike singularity, naked singularity, no horizon, matched solution, mass, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -2501,7 +2501,7 @@ A homogeneous, anisotropic universe of low energy string theory whose scale fact
 
 ### Quantum BTZ Black Hole
 
-The black hole of three dimensions with the backreaction of strongly coupled quantum fields included exactly, read off a black hole on a brane in anti-de Sitter space of four dimensions. One more term in the metric of Bañados, Teitelboim, and Zanelli, $-\ell F/r$, puts a curvature singularity at its centre and hides the conical singularities of negative mass behind horizons.
+The black hole of three dimensions with the backreaction of strongly coupled quantum fields included exactly, obtained from a black hole on a brane in anti-de Sitter space of four dimensions. One more term in the metric of Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli, $-\ell F/r$, puts a curvature singularity at its centre and hides the conical singularities of negative mass behind horizons.
 
 - id: `quantum_btz`
 - tags: negative cosmological constant, cosmological constant, anti-de Sitter, black hole, BTZ black hole, rotating black hole, mass, angular momentum, horizon, event horizon, Cauchy horizon, curvature singularity, ring singularity, conical singularity, naked singularity, cosmic censorship, strong cosmic censorship, causal structure, black hole thermodynamics, black hole entropy, Hawking temperature, AdS/CFT, holography, braneworld, quantum field theory in curved spacetime, 2+1 dimensional gravity, circularly symmetric, exact solution, Lorentzian, idealized model, static, stationary, three-dimensional
@@ -3263,7 +3263,7 @@ An empty space of gravity in three dimensions with a mass for the graviton, whos
 
 ### Wahlquist's Rotating Perfect Fluid
 
-A rigidly rotating body of perfect fluid in closed form, its energy density and pressure tied by $\mu + 3p = \mu_0$, which Hugo Wahlquist found in 1968. The surface of zero pressure closes around the fluid, and no asymptotically flat vacuum can be joined to it.
+A rigidly rotating body of perfect fluid in closed form, its energy density and pressure related by $\mu + 3p = \mu_0$, which Hugo Wahlquist found in 1968. The surface of zero pressure closes around the fluid, and no asymptotically flat vacuum can be joined to it.
 
 - id: `wahlquist`
 - tags: perfect fluid, rotating, rigid rotation, stationary, axisymmetric, stellar interior, equation of state, frame dragging, Petrov type D, separable, NUT parameter, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
