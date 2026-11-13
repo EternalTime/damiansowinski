@@ -11852,7 +11852,7 @@ CAPTIONS = {
         "$\\Omega c\\,dt = -(41/3\\sqrt{3} - 2)\\,d\\phi$, climbs steeply. Every horizontal line, run toward "
         "$+\\phi$, points into the future cones, so the circle of constant $t$ and $r$ is a closed timelike curve.",
         "The curve moving to $+\\phi$ comes round to its own $\\phi$ at a $t$ earlier by "
-        "$2\\pi(5/\\sqrt{3} - 2)/\\Omega c$ after each turn. None of the curves drawn here is a null geodesic: "
+        "$2\\pi(5/\\sqrt{3} - 2)/\\Omega c$ after each turn. None of these curves is a null geodesic: "
         "light launched along one moving to $+\\phi$ is turned toward the axis by $\\Gamma^r{}_{t\\phi}$ and "
         "$\\Gamma^r{}_{\\phi\\phi}$, and light launched along one moving to $-\\phi$ is turned away from it.",
     ],

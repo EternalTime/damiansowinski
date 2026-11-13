@@ -10233,7 +10233,7 @@ def vuorio_warped_ads(ck, src):
     widest = 2 * math.asinh(1 / math.sqrt(6))
     axis = Piece("axis", "star", sl, 0.0, stop, 0.0, 1,
                  (("axis", "the integral curve $r = 0$ of $\\partial_t$"),
-                  ("stops", "the circles shrink faster than the distance out to them, and nothing in flat space carries the slice on")),
+                  ("stops", "the circles shrink faster than the distance out to them, too fast for a surface of revolution in flat space")),
                  [(rc / 4, "r", None), (rc / 2, "r", None), (widest, "r", None), (stop, "chartedge", None)], size)
     ck.isometry("Vuorio, about one axis", axis)
     ck.radius("Vuorio, rho = 2 sinh(r/2) sqrt(1 - 3 sinh^2(r/2))", axis,
@@ -10244,13 +10244,13 @@ def vuorio_warped_ads(ck, src):
     ring_label(fig, [0, 0, 0], *axis.at(widest), "$\\sinh^2(\\Omega r/2) = 1/6$")
     fig.legend("fill", "star", "the plane about one integral curve of $\\partial_t$, which $t$, $r$ and $\\phi$ cover")
     fig.legend("line", "r", "$r$ constant, at $r_c/4$ and $r_c/2$, and the widest circle, $\\sinh^2(\\Omega r/2) = 1/6$")
-    fig.legend("line", "chartedge", "$\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$, where the drawing stops")
+    fig.legend("line", "chartedge", "$\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$, where the circles begin to shrink faster than the distance out to them")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("axis", "About one axis", "$1/\\Omega$", [surface], fig.done(),
                  settings="$m = \\Omega = 1$, Vuorio's universe, so that $1/\\Omega$ is the unit of every length.",
                  stops=["From $\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$ the circles shrink faster than the distance "
-                        "out to them, $g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in "
-                        "flat space carries the slice on.",
+                        "out to them, $g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, too fast for a surface of "
+                        "revolution in flat space.",
                         "At $r_c = \\ln 3/\\Omega$ the circles about the axis are null, and beyond it they are closed "
                         "timelike curves, so a surface of constant $t$ is not a moment of space there. Every integral "
                         "curve of $\\partial_t$ is an axis like this one."])]
@@ -20764,8 +20764,8 @@ CAPTIONS = {
         "distance. Its $r$ is the proper distance from the axis, and the circle at $r$ has circumference "
         "$4\\pi\\sinh(\\Omega r/2)\\sqrt{1 - 3\\sinh^2(\\Omega r/2)}/\\Omega$, which grows out to "
         "$\\sinh^2(\\Omega r/2) = 1/6$ and then shrinks, so the surface curls back toward the axis, and at "
-        "$\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$ the circles shrink faster than the distance out to them and "
-        "the drawing stops.",
+        "$\\sinh^2(\\Omega r/2) = (\\sqrt{3} - 1)/3$ the circles begin to shrink faster than the distance out to "
+        "them.",
         "At $r_c = \\ln 3/\\Omega$ the circles are null, and beyond it they are closed timelike curves. The "
         "spacetime is homogeneous, so every integral curve of $\\partial_t$ is an axis like this one, and this "
         "surface is a moment of space only within $r_c$ of its axis.",
