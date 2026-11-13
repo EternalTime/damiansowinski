@@ -28313,8 +28313,8 @@ CAPTIONS = {
     ("milne", "comoving_hyperbolic"): [
         "The Milne universe, each point in the diagram a 2-sphere of radius $ct\\sinh\\chi$. With $T = "
         "t\\cosh\\chi$ and $R = ct\\sinh\\chi$ it is the inside of the future light cone of the event $T = R = 0$ "
-        "of Minkowski spacetime, and Minkowski's own maps $p = \\arctan(ct\\,e^{-\\chi}/\\ell)$ and $q = "
-        "\\arctan(ct\\,e^{\\chi}/\\ell)$ draw it as the wedge above that cone, with $T = p + q$ up and $X = q - p$ "
+        "of Minkowski spacetime, and under Minkowski's own maps $p = \\arctan(ct\\,e^{-\\chi}/\\ell)$ and $q = "
+        "\\arctan(ct\\,e^{\\chi}/\\ell)$ it is the wedge above that cone, with $T = p + q$ up and $X = q - p$ "
         "across.",
         "Every comoving particle runs from the event at the foot of the wedge to $i^+$, and every moment of "
         "constant $t$ runs from the centre to the corner where the cone meets $\\mathscr{I}^+$. Light crosses the "
@@ -28322,7 +28322,7 @@ CAPTIONS = {
     ],
     ("milne", "comoving_spherical"): [
         "The Milne universe in its comoving spherical chart, each point in the diagram a 2-sphere of radius $ctr$. "
-        "With $r = \\sinh\\chi$ the chart is the hyperbolic one, and Minkowski's maps draw it as the same wedge "
+        "With $r = \\sinh\\chi$ the chart is the hyperbolic one, and under Minkowski's maps it is the same wedge "
         "above the future light cone of the event $T = R = 0$.",
     ],
     ("milne", "logarithmic_time"): [
