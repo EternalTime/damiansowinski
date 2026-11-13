@@ -30988,8 +30988,8 @@ CAPTIONS = {
         "kink's mass on either side.",
         "The tortoise coordinate $r_* = \\int e^{-h}\\,dR$ runs over the whole line, and "
         "$p, q = \\arctan((ct \\mp r_*)/r_0)$ bring the spacetime into the full diamond, with the throat on its "
-        "axis and an $i^0$ and a pair of null infinities on each side. Light crosses the throat both ways, and no "
-        "horizon stands anywhere.",
+        "axis and an $i^0$ and a pair of null infinities on each side. Light crosses the throat both ways, and there "
+        "is no horizon.",
     ],
     ("kodama_kink", "areal"): [
         "The same kink in Kodama's areal radius $r$, which covers the side $R > 0$ and ends at the throat, where "
