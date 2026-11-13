@@ -15208,7 +15208,7 @@ def curzon_chazy(ck, src):
     top = 5.0
     size = 2 * float(sl.rho_at(top))
     plane = Piece("plane", "sheet", sl, stop, top, 0.0, 1,
-                  (("stops", "the circles grow faster than the distance in to them, and nothing in flat space carries the slice on"),
+                  (("stops", "the circles grow faster than the distance in to them, too fast for a surface of revolution in flat space"),
                    ("edge", "the surface runs on to $\\rho \\to \\infty$")),
                   [(stop, "chartedge", None), (1.0, "surface", "$\\rho = m$"), (2.0, "r", None), (3.0, "r", None),
                    (4.0, "r", None), (top, "r", "$5\\,m$")], size, digits=LORENTZ_DIGITS)
@@ -15234,8 +15234,8 @@ def curzon_chazy(ck, src):
     return [view("equator", "The plane $z = 0$", "$m$", [surface], fig.done(),
                  settings="$m = GM/c^2 = 1$, the unit of every length.",
                  stops=[f"Inside $\\rho = {stop:.4f}\\,m$ the circles grow faster than the distance in to them, "
-                        "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat "
-                        "space carries the slice on."])]
+                        "$g_{\\rho\\rho} < (\\partial_\\rho\\sqrt{g_{\\phi\\phi}})^2$, too fast for a surface of revolution in "
+                        "flat space."])]
 
 
 def bach_weyl_ring(ck, src):
@@ -20013,7 +20013,7 @@ CAPTIONS = {
         "circle of Weyl's radius $\\rho$ has circumference $2\\pi\\rho\\,e^{m/\\rho}$, least, $2\\pi m\\,e$, at "
         "$\\rho = m$, and growing without bound as $\\rho \\to 0$.",
         "The surface narrows from far out to a neck at $\\rho = m$ and widens again toward the singularity, the ring "
-        "of infinite circumference, until it lies level at $\\rho = 0.72\\,m$, where the drawing stops; the same "
+        "of infinite circumference, until it lies level at $\\rho = 0.72\\,m$; the same "
         "plane at every moment is the same surface.",
     ],
     ("bonnor_magnetic_dipole", "equator"): [
