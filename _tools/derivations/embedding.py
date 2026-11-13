@@ -21573,7 +21573,7 @@ CAPTIONS = {
         "waves have passed ($q = 4/5$), each moment drawn as a surface in flat space with every distance along it the "
         "metric distance. At each moment the front's metric has constant coefficients, with a cross term $g_{xy}$ "
         "because the polarizations of the waves are out of line, so the drawing is a flat disc, seen in the frame "
-        "that parallel transport carries along the world line of the ring's centre. The waves show in a ring of "
+        "that parallel transport carries along the world line of the ring's centre. The waves act on a ring of "
         "free particles at rest on the circle $x^2 + y^2 = \\ell^2$ before they arrive.",
         "At the collision, $\\psi = 0$, the ring is still that circle, and afterwards it is an ellipse that the "
         "waves stretch along one axis, squeeze along the other, and turn, its long axis swinging through about "
