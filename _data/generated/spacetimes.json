@@ -5751,7 +5751,7 @@
       "id": "big_rip",
       "name": "Big Rip Universe",
       "short_name": "Big Rip",
-      "description": "A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, pulling apart every bound system on the way.",
+      "description": "A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, before which every bound system is pulled apart.",
       "tags": [
         "cosmology",
         "expanding universe",
@@ -6493,7 +6493,7 @@
       "id": "black_saturn",
       "name": "Black Saturn",
       "short_name": "Black Saturn",
-      "description": "A black ring turning in balance around a spherical black hole in five dimensions, the exact vacuum solution Henriette Elvang and Pau Figueras built in 2007 by the inverse scattering method. Rotation alone holds the two apart, each drags the other around, and one mass and angular momentum can be shared between them in a continuum of ways.",
+      "description": "A black ring turning in balance around a spherical black hole in five dimensions, the exact vacuum solution Henriette Elvang and Pau Figueras built in 2007 by the inverse scattering method. Rotation alone balances the two against their attraction, each drags the other around, and a given mass and angular momentum can be shared between them in a continuum of ways.",
       "tags": [
         "vacuum",
         "stationary",
@@ -9744,7 +9744,7 @@
       "id": "born_infeld_charge",
       "name": "Born-Infeld Point Charge",
       "short_name": "Born-Infeld Point Charge",
-      "description": "The gravitational field of a point charge in Born and Infeld's electrodynamics, where the electric field stays finite at the charge, which Banesh Hoffmann found in 1935. With its whole mass in its field the charge is a particle with no horizon and a conical point at its centre, and with more mass it is a black hole with one horizon.",
+      "description": "The gravitational field of a point charge in Max Born and Leopold Infeld's electrodynamics, where the electric field stays finite at the charge, which Banesh Hoffmann found in 1935. With its whole mass in its field the charge is a particle with no horizon and a conical point at its centre, and with more mass it is a black hole with one horizon.",
       "tags": [
         "static",
         "stationary",

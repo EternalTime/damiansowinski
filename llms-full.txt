@@ -409,7 +409,7 @@ The flat universe of a massless scalar field as loop quantum cosmology has it, i
 
 ### Big Rip Universe
 
-A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, pulling apart every bound system on the way.
+A flat Friedmann universe filled with phantom energy, whose pressure is more negative than minus its energy density. The density grows as space expands, and the scale factor reaches infinity at a finite time, the Big Rip, before which every bound system is pulled apart.
 
 - id: `big_rip`
 - tags: cosmology, expanding universe, homogeneous, isotropic, FLRW, phantom field, perfect fluid, equation of state, energy condition violation, exotic matter, curvature singularity, spacelike singularity, event horizon, causal structure, time-dependent, exact solution, Lorentzian, Einstein equations, idealized model, four-dimensional, conformally flat, spherically symmetric, dark energy
@@ -436,7 +436,7 @@ A shell of light falls in, makes a black hole, and after a long time comes back 
 
 ### Black Saturn
 
-A black ring turning in balance around a spherical black hole in five dimensions, the exact vacuum solution Henriette Elvang and Pau Figueras built in 2007 by the inverse scattering method. Rotation alone holds the two apart, each drags the other around, and one mass and angular momentum can be shared between them in a continuum of ways.
+A black ring turning in balance around a spherical black hole in five dimensions, the exact vacuum solution Henriette Elvang and Pau Figueras built in 2007 by the inverse scattering method. Rotation alone balances the two against their attraction, each drags the other around, and a given mass and angular momentum can be shared between them in a continuum of ways.
 
 - id: `black_saturn`
 - tags: vacuum, stationary, rotating, black hole, black ring, multiple black holes, axisymmetric, angular momentum, mass, frame dragging, ergoregion, horizon, event horizon, horizon topology, black hole uniqueness, conical singularity, asymptotically flat, higher dimensions, five-dimensional, soliton, inverse scattering, exact solution, Lorentzian, Einstein equations, idealized model
@@ -547,7 +547,7 @@ Vaidya's radiating star with a charge: the field of a spherical body that sends 
 
 ### Born-Infeld Point Charge
 
-The gravitational field of a point charge in Born and Infeld's electrodynamics, where the electric field stays finite at the charge, which Banesh Hoffmann found in 1935. With its whole mass in its field the charge is a particle with no horizon and a conical point at its centre, and with more mass it is a black hole with one horizon.
+The gravitational field of a point charge in Max Born and Leopold Infeld's electrodynamics, where the electric field stays finite at the charge, which Banesh Hoffmann found in 1935. With its whole mass in its field the charge is a particle with no horizon and a conical point at its centre, and with more mass it is a black hole with one horizon.
 
 - id: `born_infeld_charge`
 - tags: static, stationary, spherically symmetric, electric charge, mass, point charge, nonlinear electrodynamics, electromagnetic field, particle-like solution, geon, conical singularity, curvature singularity, naked singularity, timelike singularity, no horizon, black hole, charged black hole, horizon, event horizon, string theory, causal structure, maximal extension, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
