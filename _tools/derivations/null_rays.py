@@ -9922,7 +9922,7 @@ CAPTIONS = {
         "covers the inside of the wall, the hyperbola $R^2 - c^2T^2 = 1/k^2$, which falls in, stops at "
         "$R = 1/k$ at $T = 0$, and recedes.",
         "Across the wall lies the same region of a second copy of Minkowski space, and a ray that reaches "
-        "the wall runs on into it. The rays $R = c|T|$ through the centre at $T = 0$ bound the region "
+        "the wall continues into it. The rays $R = c|T|$ through the centre at $T = 0$ bound the region "
         "the planar and global charts cover, between them and the wall, and are the horizons $|z| = 1/k$ "
         "of those charts.",
     ],
