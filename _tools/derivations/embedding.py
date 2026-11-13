@@ -21621,13 +21621,13 @@ CAPTIONS = {
     ("kasner_magnetic", "ring"): [
         "The plane $y = 0$ of Kasner's universe with a magnetic field along $z$ as $t$ runs from $1/4$ to $2$, each "
         "moment drawn as a surface in flat space with every distance along it the metric distance. At every "
-        "moment the plane is flat, Euclid's plane with its axes scaled, so the drawing is a flat disc, and the "
-        "uneven expansion shows in a ring of particles at rest in the chart, which stay at rest because the "
-        "metric has no $\\Gamma^i{}_{tt}$.",
+        "moment the plane is flat, Euclid's plane with its axes scaled, so the drawing is a flat disc, and a ring "
+        "of particles at rest in the chart, which stay at rest because the metric has no $\\Gamma^i{}_{tt}$, "
+        "traces the uneven expansion.",
         "The ring is the circle $x^2 + z^2 = \\ell^2$ of the chart, and at time $t$ the ellipse reaching "
         "$(1 + b^2t^{2p_3})\\,t^{p_1}\\ell$ along $x$ and $t^{p_3}\\ell/(1 + b^2t^{2p_3})$ along $z$. With "
         "$(p_1, p_2, p_3) = (-2/7, 3/7, 6/7)$ and $b = 1$ the length along the field grows as in Kasner's vacuum, "
-        "reaches $\\ell/2$ at $t = 1$, and shrinks, while the tension of the field takes over. In Kasner's "
+        "reaches $\\ell/2$ at $t = 1$, and then shrinks under the tension of the field. In Kasner's "
         "vacuum, $b = 0$, the same length grows without bound.",
     ],
     ("kasner_scalar", "ring"): [
