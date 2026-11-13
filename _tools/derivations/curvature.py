@@ -7320,7 +7320,7 @@ def khan_penrose(ck, src):
             "The Kretschmann scalar $K$ of the Khan-Penrose spacetime where both waves have passed, over the plane "
             "of $\\sigma$ and $\\tau$ ($L = 1$), the same at every $x$ and $y$, with $\\tau$ growing toward the "
             "singularity. The spacetime is a vacuum, so its Ricci scalar vanishes. Outside the triangle "
-            "$|\\sigma| \\le \\tau$, ahead of one wave or the other, it is flat, and the map leaves it blank.",
+            "$|\\sigma| \\le \\tau$, ahead of one wave or the other, it is flat, and the map is blank there.",
             "The waves meet at $\\sigma = \\tau = 0$, where $K = 48/L^4$, its least value. Their fronts are "
             "impulsive, $v = 0$ on $\\sigma = \\tau$ and $u = 0$ on $\\sigma = -\\tau$, with "
             "$u = \\sin\\tfrac{1}{2}(\\tau + \\sigma)$ and $v = \\sin\\tfrac{1}{2}(\\tau - \\sigma)$. Each "
