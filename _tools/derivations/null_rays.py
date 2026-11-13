@@ -9551,7 +9551,7 @@ CAPTIONS = {
         "distance along it, so the rays, $c\\,dt = \\pm d\\rho$, run at 45° as in Minkowski space.",
         "The chart ends on the left at $\\rho = 5\\ell/2$, where $g_{\\theta\\theta} = \\left(\\rho - C - C''\\right)^2$ "
         "vanishes: the supertranslation horizon, on the equator a ring of radius $3\\ell$. An ingoing ray reaches it "
-        "at a finite affine parameter and carries on, straight, into flat space the chart does not cover.",
+        "at a finite affine parameter and continues in a straight line into the flat space beyond it.",
     ],
     ("supertranslation_hair", "bondi_retarded", "equator"): [
         "The plane of $u$ and $r$ on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the "

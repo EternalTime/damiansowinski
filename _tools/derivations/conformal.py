@@ -28343,8 +28343,8 @@ CAPTIONS = {
         "$t$ and $\\rho$ is flat and ends at $\\rho = 5\\ell/2$, the supertranslation horizon. With "
         "$p, q = \\arctan\\left((ct \\mp (\\rho - 5\\ell/2))/\\ell\\right)$ it is Minkowski's triangle, drawn with "
         "$T = p + q$ up and $X = q - p$ across, the horizon standing where Minkowski's centre stands.",
-        "Light runs at 45° and null infinity is Minkowski's, but a ray that reaches the left edge carries on into "
-        "flat space the chart does not cover. The dots are the shells of the embedding diagram at $t = 0$.",
+        "Light runs at 45° and null infinity is Minkowski's, but a ray that reaches the left edge continues into "
+        "the flat space beyond it. The dots are the shells of the embedding diagram at $t = 0$.",
     ],
     ("supertranslation_hair", "bondi_retarded"): [
         "The retarded chart on the equator ($\\theta = \\pi/2$, $\\phi = 0$) of the vacuum with the field "

@@ -19043,8 +19043,8 @@ CAPTIONS = {
         "radius $B = \\left(\\rho - C\\right)\\sin\\theta - C'\\cos\\theta$, and the height is "
         "$\\left(\\rho - C\\right)\\cos\\theta + C'\\sin\\theta$, by Compère and Long's map.",
         "Every shell is oblate, $2\\left(\\rho + \\ell/2\\right)$ across the equator and $2\\left(\\rho - \\ell\\right)$ "
-        "from pole to pole, where a sphere of radius $\\rho$ is $2\\rho$ both ways. Its meridian bends hardest at the "
-        "equator, with the radius of curvature $\\rho - 5\\ell/2$, so the shells grow a ridge round the equator as "
+        "from pole to pole, where a sphere of radius $\\rho$ is $2\\rho$ both ways. Its meridian is most sharply curved at the "
+        "equator, with the radius of curvature $\\rho - 5\\ell/2$, so a ridge forms round the equator of the shells as "
         "$\\rho$ falls, and at $\\rho = 5\\ell/2$ the ridge lies on the supertranslation horizon.",
     ],
     ("robinson_trautman", "fronts"): [
