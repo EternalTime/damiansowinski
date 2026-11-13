@@ -614,8 +614,8 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "ef62b861f14c242c",
-    "diagrams": "54fe7a1cf641db39",
+    "version": "8d31dda21900b4e3",
+    "diagrams": "606c7fd2b39fc9d5",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "163c135cc969d5f9"
   },
@@ -1925,7 +1925,7 @@
       "idealized model",
       "gravitational redshift"
     ],
-    "version": "b4042d72788fa511",
+    "version": "b55e4ccbfcfa2c85",
     "diagrams": "dd0f4a73eb933b73",
     "conformal": "7807b351c1311ade",
     "embedding": "ab81073436048cb9",
@@ -2394,7 +2394,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "011b188c267ea789",
+    "version": "05834dcc4e2efda8",
     "diagrams": "5e0c638643e61027",
     "conformal": "fdaf25d52bb0d79a",
     "embedding": "c496b535987be512"
@@ -3140,11 +3140,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c987b0ac49eeea53",
-    "diagrams": "e28989ef92105e2d",
+    "version": "bd6c0930a0055d1f",
+    "diagrams": "02dc301797257580",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
-    "curvature": "3304f1ee22b46286"
+    "curvature": "9e58bfa061af9c00"
   },
   {
     "id": "israel_wilson_perjes",
@@ -4466,11 +4466,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b308d4a90555cbb7",
+    "version": "d967cca29dba1d5a",
     "diagrams": "b56d3fe3ca86d14a",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12",
-    "curvature": "a051049b2e50dfe7"
+    "curvature": "f0ea7303280002c1"
   },
   {
     "id": "maximally_supersymmetric_plane_wave",

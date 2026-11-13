@@ -15869,8 +15869,8 @@ def mass_inflation(ck, src):
         "settings": "$m_0 = 1$, the final mass outside the shell and the unit of length, "
                     "with $r_q = 0.96\\,m_0$ and $0.1 \\le r/m_0 \\le 0.7$.",
         "input": nr.MI_BEHIND_INPUT,
-        "clip": "We draw $K m_0^4$ on a logarithmic scale from $10^2$ to $10^{14}$. "
-                "Every drawn value in every frame lies within these limits; no value is clipped.",
+        "clip": "We draw $K m_0^4$ on a logarithmic scale from $10^2$ to $10^{14}$, "
+                "a range that holds the values of all frames.",
         "movie": {"variable": "$-\\log_{10}(-v/m_0)$", "seconds": 12, "frames": frames},
     }]
 
