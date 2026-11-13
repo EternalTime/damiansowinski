@@ -2528,7 +2528,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "31dca47f34fa7798",
+    "version": "28986d097220ab16",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "0715fc5083d2df7a",
@@ -2986,7 +2986,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "39bf77777e413b4c",
+    "version": "2631325b407d552c",
     "diagrams": "c18955687fcaa707",
     "embedding": "daa1ee83d90d0b0c",
     "curvature": "132fe3163a85f889"
@@ -3023,10 +3023,10 @@
       "stationary",
       "three-dimensional"
     ],
-    "version": "b88e339369d97451",
-    "diagrams": "db0bdd1450517176",
+    "version": "9aca682f051d27a1",
+    "diagrams": "a813c1a7b8ce30a4",
     "conformal": "7d5ec2ca81e0334c",
-    "embedding": "bf7df4d617ede825",
+    "embedding": "53e6489a108d3120",
     "curvature": "84fa67efd4c8a78e"
   },
   {
@@ -3085,7 +3085,7 @@
       "Einstein space",
       "cut and paste"
     ],
-    "version": "5044301107847a19",
+    "version": "047ead7f7efcaf22",
     "diagrams": "582c49f296d53450",
     "conformal": "1c0299b48c135ff5",
     "embedding": "4a468cbcc8c8e211"
@@ -3110,7 +3110,7 @@
       "idealized model",
       "quantum inequality"
     ],
-    "version": "b7287556be071cce",
+    "version": "d1dafcc924723a73",
     "diagrams": "69dbfb95c62e9269",
     "conformal": "c33cf1f478015cab",
     "embedding": "f16f1b3336ecf8c5",

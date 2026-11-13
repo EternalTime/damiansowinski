@@ -28669,7 +28669,7 @@
       "id": "global_monopole",
       "name": "Global Monopole and Letelier's Cloud of Strings",
       "short_name": "Global Monopole",
-      "description": "The static, spherically symmetric field of a global monopole, a hedgehog of three scalar fields that forms where a global O(3) symmetry breaks, and of Letelier's cloud of strings running out from a centre. Every sphere about the centre misses the same fraction of its solid angle, so light passing it is bent through one angle whatever its impact parameter, and with a mass at the centre it holds a black hole.",
+      "description": "The static, spherically symmetric field of a global monopole, a hedgehog of three scalar fields that forms where a global O(3) symmetry breaks, and of Letelier's cloud of strings running out from a centre. Every sphere about the centre misses the same fraction of its solid angle, so light passing it is bent through one angle whatever its impact parameter, and with a mass at the centre the spacetime is a black hole.",
       "tags": [
         "topological defect",
         "angular deficit",
@@ -28699,7 +28699,7 @@
         {
           "id": "schwarzschild",
           "kind": "special_case",
-          "text": "The monopole unwound, $\\Delta = 0$, with every sphere whole again."
+          "text": "The monopole with $\\Delta = 0$, where every sphere about the centre has its full solid angle."
         },
         {
           "id": "cosmic_string",
@@ -33614,7 +33614,7 @@
       "id": "holographic_superconductor",
       "name": "Inside a Holographic Superconductor",
       "short_name": "Holographic Superconductor",
-      "description": "The inside of a planar charged black hole of anti-de Sitter space that has grown charged scalar hair below a critical temperature, the gravitational dual of a superconductor. It has no inner horizon: the Einstein-Rosen bridge collapses, the scalar field oscillates, and the spacetime ends at a spacelike Kasner singularity, sometimes after one or more Kasner inversions.",
+      "description": "The inside of a planar charged black hole of anti-de Sitter space that carries charged scalar hair below a critical temperature, the gravitational dual of a superconductor. It has no inner horizon: the Einstein-Rosen bridge collapses, the scalar field oscillates, and the spacetime ends at a spacelike Kasner singularity, sometimes after one or more Kasner inversions.",
       "tags": [
         "holography",
         "AdS/CFT",
@@ -33682,7 +33682,7 @@
         {
           "id": "topological_black_hole",
           "kind": "family",
-          "text": "The black holes of anti-de Sitter space with flat horizons. Given a charge and a charged scalar field, the flat one grows hair below a critical temperature and becomes the black hole of the holographic superconductor [hartnoll2008holographic]."
+          "text": "The black holes of anti-de Sitter space with flat horizons. Given a charge and a charged scalar field, the flat one acquires charged scalar hair below a critical temperature and becomes the black hole of the holographic superconductor [hartnoll2008holographic]."
         }
       ],
       "references": [
@@ -33954,12 +33954,12 @@
         {
           "id": "btz",
           "kind": "family",
-          "text": "The rotating black hole of three dimensions with a negative cosmological constant. Dualized along its angle it becomes this string, its angular momentum turned into twice the string's charge and its horizons left where they were [horowitz1993]."
+          "text": "The rotating black hole of three dimensions with a negative cosmological constant. Dualized along its angle it becomes this string, its angular momentum turned into twice the string's charge and its horizons at the same radii [horowitz1993]."
         },
         {
           "id": "black_string",
           "kind": "family",
-          "text": "Schwarzschild's black hole stretched along a line, a static black string of general relativity, which needs five dimensions or more when matter obeys the strong energy condition [horne1992black, horowitz1991]. This one lives in three, where the dilaton and antisymmetric field of its string metric violate that condition [horne1992black]."
+          "text": "Schwarzschild's black hole stretched along a line, a static black string of general relativity, which needs five dimensions or more when matter obeys the strong energy condition [horne1992black, horowitz1991]. This one is a solution in three, where the dilaton and antisymmetric field of its string metric violate that condition [horne1992black]."
         },
         {
           "id": "dilaton_black_hole",
@@ -35009,7 +35009,7 @@
       "id": "interstellar_wormhole",
       "name": "Interstellar's Wormhole",
       "short_name": "Interstellar",
-      "description": "The wormhole Oliver James, Eugénie von Tunzelmann, Paul Franklin, and Kip Thorne designed for Christopher Nolan's film Interstellar of 2014, which they call the Dneg wormhole after the effects studio Double Negative. A cylinder of length $2a$, every sphere along it of radius $\\rho$, joins two flat spaces, each through a mouth that flares out over a length set by $M$, and clocks everywhere keep the same time, $g_{tt} = -1$.",
+      "description": "The wormhole Oliver James, Eugénie von Tunzelmann, Paul Franklin, and Kip Thorne designed for Christopher Nolan's film Interstellar of 2014, which they call the Dneg wormhole after the effects studio Double Negative. A cylinder of length $2a$, every sphere along it of radius $\\rho$, joins two flat spaces, each through a mouth that flares out over a length set by $M$, and clocks everywhere run at the same rate, $g_{tt} = -1$.",
       "tags": [
         "wormhole",
         "traversable",
@@ -35043,17 +35043,17 @@
         {
           "id": "plebanski_hacyan",
           "kind": "piece",
-          "text": "Along its cylinder, $|\\ell| \\le a$, this wormhole is the product of the flat plane of $t$ and $\\ell$ with a sphere of radius $\\rho$, Plebański and Hacyan's flat plane times a sphere with $b = \\rho$."
+          "text": "Along its cylinder, $|\\ell| \\le a$, this wormhole is the product of the flat plane of $t$ and $\\ell$ with a sphere of radius $\\rho$, Jerzy Plebański and Shahen Hacyan's flat plane times a sphere with $b = \\rho$."
         },
         {
           "id": "thin_shell_wormhole",
           "kind": "family",
-          "text": "As $M \\to 0$ the flares sharpen into edges, and with $a = 0$ as well this wormhole becomes two flat spaces, each with a ball of radius $\\rho$ cut out, joined across the edges, which is Visser's thin shell wormhole with no mass [james2015, visser1989prd]."
+          "text": "As $M \\to 0$ the flares sharpen into edges, and with $a = 0$ as well this wormhole becomes two flat spaces, each with a ball of radius $\\rho$ cut out, joined across the edges, which is Matt Visser's thin shell wormhole with no mass [james2015, visser1989prd]."
         },
         {
           "id": "schwarzschild",
           "kind": "family",
-          "text": "Each mouth flares out roughly as space opens out from Schwarzschild's horizon, with $M$ in the part of the mass, and the mouth's radius $\\rho$ left free where the horizon's is $2M$ [james2015]."
+          "text": "Each mouth flares out roughly as space opens out from Schwarzschild's horizon, with $M$ in the part of the mass, and the mouth's radius $\\rho$ a free parameter, while the horizon's is $2M$ [james2015]."
         },
         {
           "id": "kerr",
