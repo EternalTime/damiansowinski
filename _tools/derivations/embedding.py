@@ -21687,7 +21687,7 @@ CAPTIONS = {
         "Early rays left a mirror that was nearly at rest and carry almost nothing, so the far left of the plane "
         "lies flat. The flux is $\\tfrac{\\hbar c^2\\kappa^2}{48\\pi}(4\\mathrm{W} + 1)/(\\mathrm{W} + 1)^4$ with "
         "$\\mathrm{W} = \\mathrm{W}(e^{-\\kappa u})$: it rises fastest on the marked ray, where it is $16/27$ of the "
-        "thermal flux, and on the near right it levels off at the thermal flux, the steady glow of a black hole of "
+        "thermal flux, and on the near right it levels off at the thermal flux, the steady flux of a black hole of "
         "radius $r_s = 1/2\\kappa$. No ray carries negative energy.",
     ],
     ("krasnikov", "plane"): [

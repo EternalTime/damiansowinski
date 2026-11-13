@@ -31957,8 +31957,9 @@ CAPTIONS = {
         "world line.",
         "The mirror leaves $i^-$ nearly at rest, along the lines of constant $x$, and ends on the left future null "
         "infinity where the ray $v = 0$ ends. Every ray with $v < 0$ is reflected to the right $\\mathscr{I}^+$, and "
-        "every ray with $v > 0$ reaches the left $\\mathscr{I}^+$ without meeting the mirror. Fold the diagram of a "
-        "shell of light collapsing to a black hole along its centre and the centre lies where this mirror does.",
+        "every ray with $v > 0$ reaches the left $\\mathscr{I}^+$ without meeting the mirror. In the conformal "
+        "diagram of a shell of light collapsing to a black hole, folded along its centre, the centre lies where this "
+        "mirror does.",
     ],
     ("moving_mirror", "inertial_uniform"): [
         "Flat spacetime to the right of a uniformly accelerating mirror ($\\kappa = 1$), each point in the diagram a "

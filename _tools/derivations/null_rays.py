@@ -8911,7 +8911,7 @@ CAPTIONS = {
         "$X = 0$, each point in the diagram a single event. The metric is the flat metric of $T$ and $X$ times "
         "$1 + 1/\\kappa(X - cT)$, so the light rays run at 45°.",
         "Far below the hatched edge the factor is close to $1$ and $T$ and $X$ are close to inertial coordinates, the "
-        "mirror all but at rest. The chart ends on $X = cT$, where the factor diverges and the inertial $u = ct - x$ "
+        "mirror nearly at rest. The chart ends on $X = cT$, where the factor diverges and the inertial $u = ct - x$ "
         "runs to infinity. The five rays marked reach the mirror at $\\kappa cT = -2$, $-1$, $-1/2$, $-1/4$, and "
         "$-1/8$, and the last ray, $v = cT + X = 0$, arrives at the corner.",
     ],
