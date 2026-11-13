@@ -30364,7 +30364,7 @@ CAPTIONS = {
         "line, and $p, q = \\arctan((ct \\mp x)/\\ell)$ bring it into the full diamond.",
         "The two ends are two asymptotically flat regions, each with its own $i^0$ and $\\mathscr{I}^\\pm$, "
         "joined at the throat $\\rho = 0$. The lines $\\rho = \\pm 2$ and $\\pm 4$ are spheres of radius "
-        "$1.05\\,r_s$ and $1.51\\,r_s$, and the diamond gives the space between them most of its width: for small "
+        "$1.05\\,r_s$ and $1.51\\,r_s$, and the space between them takes up most of the width of the diamond: for small "
         "$\\lambda$ the tortoise coordinate of the sphere of radius $r$ is Schwarzschild's "
         "$r + r_s\\ln(r/r_s - 1)$ and the constant $r_s\\left(\\ln(4/\\lambda^2) - 1\\right)$.",
     ],
