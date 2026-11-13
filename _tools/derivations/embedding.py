@@ -19806,9 +19806,9 @@ CAPTIONS = {
         "moment of $t$ outside its outer horizon ($\\ell = 12r_0/25$), drawn as a surface in flat space with every "
         "distance along it the metric distance. On it $dz/dr = r_0r/\\sqrt{(r^2 - r_+^2)(r^2 - r_-^2)}$, and the slice "
         "passes through the outer horizon's bifurcation sphere $r = r_+$, its throat, into a second exterior.",
-        "The core pulls the throat in from Tangherlini's $r_0$ to $r_+ = 4r_0/5$, and far out the surface climbs as "
-        "Tangherlini's of the same mass does, $z \\approx r_0\\ln r$. Between the horizons $r$ is a time, and no "
-        "slice of constant $t$ enters there.",
+        "With the core the throat is at $r_+ = 4r_0/5$, inside Tangherlini's at $r_0$, and far out the surface climbs "
+        "as Tangherlini's of the same mass does, $z \\approx r_0\\ln r$. Between the horizons $r$ is a time, and the "
+        "slice of constant $t$ lies outside them.",
     ],
     ("regular_black_hole_pure_gravity", "inside"): [
         "The same plane at one moment of $t$ inside the inner horizon, where $r$ is again a distance and $t$ a time. "
