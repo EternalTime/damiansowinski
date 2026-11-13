@@ -12627,7 +12627,7 @@ CAPTIONS = {
         "null geodesics. The cones close where $\\Delta$ vanishes, at $r_+ = 8m/5$ and at $r_- = 2m/5$, and between them "
         "they point to smaller $r$, following the ingoing family.",
         "The domain of the chart begins at $r_+$. The magnetic field runs along this axis and leaves the plane "
-        "Kerr's but for $k$; the ergoregion that reaches infinity lies off it, in a tube beside the axis, where "
+        "Kerr's but for $k$; the ergoregion that reaches infinity is a tube beside the axis, where "
         "$g_{tt} > 0$.",
     ],
     ("kerr_melvin", "boyer_lindquist", "equator"): [

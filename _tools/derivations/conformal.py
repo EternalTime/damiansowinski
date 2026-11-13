@@ -29572,7 +29572,7 @@ CAPTIONS = {
         "The equatorial plane $\\theta = \\pi/2$ of Ernst and Wild's black hole, maximally extended ($a = 4m/5$, "
         "$B = 1/(4m)$), with $\\phi$ divided out, each point in the diagram a circle about the axis. The metric "
         "orthogonal to the circles is $H$ times that of Kerr's equator, and a factor changes no null direction, so "
-        "Brandon Carter's diagram of 1968 draws it.",
+        "it has the conformal diagram Brandon Carter drew in 1968.",
         "A light ray reaches $r \\to \\infty$ only at an infinite value of its affine parameter, so the far edges "
         "are the null infinity of the plane, although the circles about the axis shrink to zero there. The ring "
         "singularity is the timelike edge $r = 0$ of each region inside $r_-$.",
