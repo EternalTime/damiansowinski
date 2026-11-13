@@ -29047,7 +29047,7 @@ CAPTIONS = {
         "hole's is, in the Kruskal coordinates $U$ and $V$ with $\\kappa_+ = 2/\\ell_3$ and the conformal boundary "
         "where $UV = -13.9$.",
         "At $\\ell = 0$ the same coordinates cover anti-de Sitter space with a conical defect along $r = 0$, a "
-        "timelike line with nothing to hide it. The backreaction of the quantum fields puts it behind a horizon "
+        "naked timelike line. The backreaction of the quantum fields puts it behind a horizon "
         "and turns it into a spacelike curvature singularity, $r = 0$ on the horizontal lines $T = \\pm\\pi/2$.",
     ],
     ("quantum_btz", "rotating"): [
