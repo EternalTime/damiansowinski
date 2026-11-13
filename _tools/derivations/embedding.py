@@ -20903,7 +20903,7 @@ CAPTIONS = {
         "moment of $t$, drawn as a surface in flat space with every distance along it the metric distance. On "
         "it the metric is $dr^2/(1 - r_s/r) + (1 + (q - r_s)/r)\\,dy^2$, so the circle of the fifth dimension "
         "at $r$ has circumference $L\\sqrt{1 + (q - r_s)/r}$. Far from the hole the surface is a cylinder, "
-        "the small circle Klein gave every point of space, drawn with $L = 2\\pi r_s$.",
+        "Klein's small circle at every point of space, drawn with $L = 2\\pi r_s$.",
         "Toward the hole the circle grows, and it is widest on the horizon $r = r_s$, where its "
         "circumference is $L\\sqrt{q/r_s}$. The slice passes through the horizon into a second exterior, the "
         "same surface turned over. At $q = r_s$ the hole has no charge and the surface is a cylinder.",

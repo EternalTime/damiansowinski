@@ -31517,9 +31517,8 @@ CAPTIONS = {
     ("kaluza_klein_black_hole", "einstein"): [
         "The Einstein metric of four dimensions of a Kaluza-Klein black hole of one charge, maximally extended "
         "($q = 2\\,r_s$), each point in the diagram a 2-sphere of area $4\\pi r\\sqrt{r(r + q - r_s)}$. It is "
-        "$\\sqrt{1 + (q - r_s)/r}$ times the metric orthogonal to the circles of the fifth dimension, and a "
-        "conformal factor leaves every light ray where it is, so the diagram is the one drawn with the circle "
-        "divided out.",
+        "$\\sqrt{1 + (q - r_s)/r}$ times the metric orthogonal to the circles of the fifth dimension, so the "
+        "two have the same light rays and the diagram is the one drawn with the circle divided out.",
         "The singularity $r = 0$ is spacelike, as Schwarzschild's is, and there is no inner horizon. At the "
         "extremal charge, $r_s = 0$, the horizon meets the singularity and its area is zero.",
     ],
