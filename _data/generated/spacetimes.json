@@ -53914,7 +53914,7 @@
       "id": "moving_mirror",
       "name": "The Moving Mirror of Fulling and Davies",
       "short_name": "Moving mirror",
-      "description": "Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Hawking's radiation with no curvature anywhere.",
+      "description": "Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Stephen Hawking's radiation with no curvature anywhere.",
       "tags": [
         "two-dimensional",
         "flat",

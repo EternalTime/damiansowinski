@@ -3867,9 +3867,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9bfe8e07097880e2",
+    "version": "a2f16dbcf51da82b",
     "diagrams": "40f73396333f824d",
-    "conformal": "ca263c4f02fd012f",
+    "conformal": "a8b689df2e308481",
     "embedding": "400c5460f3140ed9"
   },
   {
@@ -3895,10 +3895,10 @@
       "four-dimensional",
       "alternative theories of gravity"
     ],
-    "version": "470396427b4c9344",
+    "version": "01e097e4538b3931",
     "diagrams": "cdb14d2cd4994bf6",
     "conformal": "12298805078c9773",
-    "embedding": "c1d8898d9745f721"
+    "embedding": "0f0d0ccead353b13"
   },
   {
     "id": "kowalski_glikman",
@@ -4389,7 +4389,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f0ef7af39e678271",
+    "version": "98b0aaede0c44b80",
     "diagrams": "5ff071701e011e10",
     "embedding": "b7ac17d3dbbc3535",
     "curvature": "c4423b74d3fb91f9"
@@ -4871,10 +4871,10 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "cc918b93b045b5c5",
-    "diagrams": "71b5d5fd56fc2bcf",
-    "conformal": "87e0174e8f73dc88",
-    "embedding": "3103128e785dc4ef"
+    "version": "42552f9529538594",
+    "diagrams": "f915b6d6d0acda91",
+    "conformal": "7301354c65cbdd6a",
+    "embedding": "a2489fca30a75f70"
   },
   {
     "id": "murphy_viscous_universe",
@@ -4994,7 +4994,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "437016602bbac612",
+    "version": "57fdcf4236425b71",
     "diagrams": "1d8e521e1cb956f2",
     "conformal": "b95e6b82cb4368d6",
     "embedding": "79c0eec426be0bae",

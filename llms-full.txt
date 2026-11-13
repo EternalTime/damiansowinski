@@ -2165,7 +2165,7 @@ A traversable wormhole whose mouths have been put out of step by taking one of t
 
 ### The Moving Mirror of Fulling and Davies
 
-Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Hawking's radiation with no curvature anywhere.
+Flat spacetime in two dimensions that ends at a perfectly reflecting mirror on a chosen world line, with a massless quantum field to its right. A mirror that accelerates radiates, and one whose world line approaches a light ray sends out a steady thermal flux, Stephen Hawking's radiation with no curvature anywhere.
 
 - id: `moving_mirror`
 - tags: two-dimensional, flat, conformally flat, vacuum, Hawking radiation, Hawking temperature, quantum field theory in curved spacetime, horizon, black hole evaporation, information paradox, Page curve, Rindler, accelerating, Lambert W function, exact solution, Lorentzian, idealized model
