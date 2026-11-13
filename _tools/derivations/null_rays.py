@@ -12889,7 +12889,7 @@ CAPTIONS = {
         "The edges of the cones are $dr/d(ct) = \\pm 1/a$, wide open beside that curve and closing as $a$ grows like $e^{ct/\\ell}$, as the cones of de Sitter space do.",
     ],
     ("datt_ruban_t_models", "exterior_kruskal", "kruskal"): [
-        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside a T-sphere, drawn with $(V - U)/2$ across and $(U + V)/2$ up, so that every light ray runs at 45°. The surface of the dust is the left edge, $V = U$: it leaves the past singularity $UV = 1$ at $U = -1$, passes at its greatest expansion through the sphere $U = V = 0$ where the two horizons cross, and ends on the future singularity at $U = 1$. The dust lies to its left, where these coordinates do not reach.",
+        "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside a T-sphere, drawn with $(V - U)/2$ across and $(U + V)/2$ up, so that every light ray runs at 45°. The surface of the dust is the left edge, $V = U$: it leaves the past singularity $UV = 1$ at $U = -1$, passes at its greatest expansion through the sphere $U = V = 0$ where the two horizons cross, and ends on the future singularity at $U = 1$. The dust lies to its left.",
         "The surface stays inside $r_s$: below the crossing it is in the white hole, above it in the black hole, and the world outside, $U < 0 < V$, receives light only from its lower half. An observer there sees the surface rise out of the white hole and slow toward the horizon $U = 0$.",
     ],
     ("white_hole", "interior_comoving", "through"): [

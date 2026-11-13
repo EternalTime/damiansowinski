@@ -30850,7 +30850,7 @@ CAPTIONS = {
     ],
     ("datt_ruban_t_models", "comoving"): [
         "A T-sphere ($\\epsilon = 1$, $\\mu = 1/\\pi$), each point in the diagram a 2-sphere, with the dust ruled in its proper time $t$, from the bang at $t = 0$ to the crunch at $ct = \\pi r_s$. The moments crowd toward the bang and the crunch, where the radius $b$ of the spheres changes fastest.",
-        "Each moment of the dust carries on outside as the moment of clocks released from rest at the greatest expansion, Igor Novikov's slicing of the vacuum, whose innermost clock is the surface of the dust.",
+        "Each moment of the dust continues outside as the moment of clocks released from rest at the greatest expansion, Igor Novikov's slicing of the vacuum, whose innermost clock is the surface of the dust.",
     ],
     ("datt_ruban_t_models", "areal"): [
         "A T-sphere ($\\epsilon = 1$, $\\mu = 1/\\pi$), each point in the diagram a 2-sphere, with the dust ruled in the radius $T$ of its spheres. That time covers the expansion, the lower half of the lens, and stops on the line $T = r_s$, where the spheres stand still; the collapse above it is the same chart with the time reversed.",
