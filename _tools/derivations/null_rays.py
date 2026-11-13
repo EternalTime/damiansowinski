@@ -7501,8 +7501,8 @@ CAPTIONS = {
         "at every fixed angle by hyperspherical symmetry. Outside $r_h$ the cones narrow toward the vertical as "
         "$r \\to r_h$, because $dt/dr = \\pm(1 - r_h^3/r^3)^{-1}$ diverges there. At $r = 2r_h$ it is $\\pm 8/7$, "
         "where Schwarzschild's at twice its own horizon radius is $\\pm 2$.",
-        "Inside $r_h$ the same components make $r$ the time, and we take the future as the ingoing rays carry it "
-        "across the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
+        "Inside $r_h$ the same components make $r$ the time, and we take the future from the ingoing rays that "
+        "cross the horizon, which makes that region the black hole, where every cone points to $r = 0$. The "
         "Kretschmann scalar $240r_h^6/r^{10}$ is finite at $r_h$ and diverges only at $r = 0$.",
     ],
     ("myers_perry", "boyer_lindquist", "transverse"): [
