@@ -22,11 +22,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4376554c435a0094",
+    "version": "dca7d933f8f9aa2f",
     "diagrams": "955db54b31a1e1c3",
     "conformal": "dacd55113d63661a",
     "embedding": "4829fb64992692bb",
-    "curvature": "8507f13a27557c4a"
+    "curvature": "fed78966d4af7610"
   },
   {
     "id": "aichelburg_sexl",
@@ -906,7 +906,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "429aa2ad5fbef2d5",
+    "version": "fbecedb5ab70abd1",
     "diagrams": "d8f5e35c3b0e6fe2",
     "conformal": "7b86209f53558e97",
     "embedding": "c3dc5db3068ad454",
@@ -1475,8 +1475,8 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "6598ef80477e01a3",
-    "diagrams": "df6268c48408964f",
+    "version": "921ac50c0570f6b5",
+    "diagrams": "0a8a12ca162aa30b",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
   },
@@ -2082,7 +2082,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "374d2ff6db374dab",
+    "version": "5280ad49b672c9f2",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902",
@@ -7440,7 +7440,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "99026b918aa4be12",
+    "version": "ab1fb95f3535df45",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24",
