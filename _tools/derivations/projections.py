@@ -1629,7 +1629,7 @@ CAPTIONS = {
         "On the ergosurface $g_{tt}$ vanishes, so $\\partial_t$ is null and one edge of every cone stands vertical, "
         "along a curve of fixed $r$ and $\\phi$. Inside it every future direction, timelike or null, moves toward "
         "$+\\phi$, and nothing can stay at fixed $\\phi$. A second ergosurface lies farther out, at $r = 3.173\\,r_s$, "
-        "past the edge of the floor, and from it to the cosmological horizon $r_c = 3.232\\,r_s$ nothing can stay "
+        "and from it to the cosmological horizon $r_c = 3.232\\,r_s$ nothing can stay "
         "at fixed $\\phi$ either.",
     ],
     ("kerr_taub_nut", "boyer_lindquist", "dragging"): [
