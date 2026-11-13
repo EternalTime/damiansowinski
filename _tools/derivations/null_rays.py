@@ -10699,7 +10699,7 @@ CAPTIONS = {
         "The plane of $t$ and $z$ ($\\theta = \\pi/2$, $\\phi = 0$), the flat factor $-c^2dt^2 + dz^2$ of "
         "Plebański and Hacyan's product with $\\Lambda = 1/2b^2$, each point in the plane a 2-sphere of radius "
         "$b$. The rays are at 45°, with $ct \\pm z$ constant along them.",
-        "The uniform field's gravity pulls and the cosmological constant pushes as hard, "
+        "The gravitational attraction of the uniform field and the repulsion of the cosmological constant balance, "
         "$8\\pi G\\varepsilon/c^4 = \\Lambda$, so two particles at rest on a line of $z$ stay at rest and the "
         "plane is flat.",
     ],

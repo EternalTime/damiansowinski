@@ -20677,7 +20677,7 @@ CAPTIONS = {
         "The circle a distance $a\\theta$ from the point $\\theta = 0$ has circumference $2\\pi a\\sinh\\theta$, "
         "which grows faster than the distance out to it, as no surface of revolution in flat space allows. In "
         "Minkowski space it is one sheet of the hyperboloid $(Z + a)^2 - X^2 - Y^2 = a^2$, nearing the light cone, "
-        "dashed. It takes the place Nariai's sphere has, at the same radius as the anti-de Sitter factor.",
+        "dashed. It is the counterpart of Nariai's sphere, with the same radius as the anti-de Sitter factor.",
     ],
     ("stockum_dust", "dust"): [
         "The plane $z = 0$ across Kornel Lanczos's cylinder of rotating dust at one moment of $t$, drawn "
