@@ -13333,8 +13333,7 @@ def three_brane_throat(ck, src):
             "Sitter space of five dimensions times a sphere of five, both of radius $L$, where it is that "
             "constant at every radius.",
         ],
-        "settings": "$L = 1$, the unit of every length, the radius of the throat and of its sphere, as its "
-                    "other drawings take it.",
+        "settings": "$L = 1$, the unit of every length, the radius of the throat and of its sphere.",
         "clip": "We draw $K\\,L^4$ on a logarithmic scale from $10^{-5}$ to $10^2$; every value drawn lies "
                 f"within it, and the curve starts $10^{{{round(math.log10(TB_GAP))}}}\\,L$ from $\\rho = 0$, "
                 "which the chart leaves out.",

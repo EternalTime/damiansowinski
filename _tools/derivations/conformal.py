@@ -29979,7 +29979,7 @@ CAPTIONS = {
         "$-\\frac{r^2}{L^2}c^2dt^2 + \\frac{L^2}{r^2}dr^2$, an anti-de Sitter space of two dimensions and "
         "radius $L$, whose conformal diagram is a strip.",
         "The coordinates $t$ and $r$ cover a Poincaré wedge of the strip. The limit that keeps the throat alone "
-        "has traded the flat region of the three-brane for the timelike boundary at $r \\to \\infty$, and "
+        "replaces the flat region of the three-brane with the timelike boundary at $r \\to \\infty$, and "
         "$r = 0$ is the Poincaré horizon, across which the strip continues.",
     ],
     ("three_brane_throat", "throat_proper"): [
