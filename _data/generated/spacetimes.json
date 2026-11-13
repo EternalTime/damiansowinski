@@ -80433,7 +80433,7 @@
       "id": "topological_star",
       "name": "Topological Star",
       "short_name": "Topological Star",
-      "description": "A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2021 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.",
+      "description": "A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2021 as a topological star built from Einstein's gravity and Maxwell's field alone, on a line element that also describes a black string with the same bubble behind its horizon.",
       "tags": [
         "static",
         "stationary",
@@ -84860,7 +84860,7 @@
       "id": "white_hole",
       "name": "White Hole, the Lagging Core of Novikov and Ne'eman",
       "short_name": "White Hole",
-      "description": "A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, Oppenheimer and Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as what a quasar is.",
+      "description": "A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, J. Robert Oppenheimer and Hartland Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as an explanation of the quasars.",
       "tags": [
         "white hole",
         "dust",

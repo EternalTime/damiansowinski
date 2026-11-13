@@ -3125,7 +3125,7 @@ Black holes in anti-de Sitter space whose horizons are planes, cylinders, tori, 
 
 ### Topological Star
 
-A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2021 as the simplest topological star, on a line element that also describes a black string with the same bubble behind its horizon.
+A smooth spacetime of five dimensions with no horizon and no singularity, which seen from four dimensions has the mass and the magnetic charge of a black hole. Where the horizon would be, the circle of the fifth dimension shrinks to a point and space ends on a bubble held open by magnetic flux. Ibrahima Bah and Pierre Heidmann proposed it in 2021 as a topological star built from Einstein's gravity and Maxwell's field alone, on a line element that also describes a black string with the same bubble behind its horizon.
 
 - id: `topological_star`
 - tags: static, stationary, five-dimensional, four-dimensional, soliton, no horizon, no singularity, black hole mimicker, bubble, nuts and bolts, cigar, topology, magnetic charge, electromagnetic field, Einstein-Maxwell, Kaluza-Klein, compact dimension, higher dimensions, black string, horizon, event horizon, extremal, orbifold, dilaton, Einstein-Maxwell-dilaton, naked singularity, photon sphere, quasinormal modes, echoes, Gregory-Laflamme instability, instability, string theory, mass, exact solution, Lorentzian, Einstein equations, idealized model
@@ -3276,7 +3276,7 @@ A rigidly rotating body of perfect fluid in closed form, its energy density and 
 
 ### White Hole, the Lagging Core of Novikov and Ne'eman
 
-A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, Oppenheimer and Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as what a quasar is.
+A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, J. Robert Oppenheimer and Hartland Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as an explanation of the quasars.
 
 - id: `white_hole`
 - tags: white hole, dust, matched solution, big bang, horizon, event horizon, apparent horizon, curvature singularity, instability, quasar, Swiss cheese, Kruskal extension, comoving, time-dependent, spherically symmetric, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
