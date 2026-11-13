@@ -28830,14 +28830,14 @@ CAPTIONS = {
         "The laboratory's $t$ and $r > 0$ cover the outside and the black hole, and those two regions are all "
         "the fluid there is. Every line of constant $t$ runs from the sink through the horizon out to $i^0$. "
         "The dashed edge is $t \\to -\\infty$: a sound ray followed back in time reaches it after a finite "
-        "affine length and an endless time on the laboratory's clock.",
+        "affine length and an infinite time on the laboratory's clock.",
     ],
     ("unruh_acoustic_hole", "unruh"): [
         "The same fluid, with the region Unruh's time covers. The coordinates $\\tau$ and $r > r_0$ cover the "
         "outside alone, and its lines of constant $\\tau$ all meet at the corner where the horizon meets the "
         "edge $t \\to -\\infty$.",
         "The time $\\tau = t - (r_0/4c)\\ln|(r - r_0)/(r + r_0)| - (r_0/2c)\\arctan(r/r_0)$ runs to $+\\infty$ "
-        "along the horizon, so the chart ends there, while the laboratory's $t$ goes through.",
+        "along the horizon, so the chart ends there, while the laboratory's $t$ stays finite across it.",
     ],
     ("btz", "static"): [
         "The black hole without rotation ($M = 1$, $J = 0$), maximally extended, each point in the "

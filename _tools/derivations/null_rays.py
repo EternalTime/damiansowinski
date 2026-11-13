@@ -10500,8 +10500,8 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of a fluid falling into $r = 0$ at "
         "$c\\,r_0^2/r^2$. Its null curves are the radial sound rays, $dr/dt = -c\\,r_0^2/r^2 \\pm c$: sound "
         "moving at $c$ through a fluid that carries it inward.",
-        "The outgoing rays stand still at the horizon $r = r_0$, where the fluid falls as fast as sound runs "
-        "out, and inside it both edges of every future cone point to $r = 0$. Each moment of constant $t$ is "
+        "The outgoing rays stand still at the horizon $r = r_0$, where the fluid falls as fast as sound moves "
+        "outward through it, and inside it both edges of every future cone point to $r = 0$. Each moment of constant $t$ is "
         "flat space, and the Kretschmann scalar $468\\,r_0^8/r^{12}$ diverges at $r = 0$.",
     ],
     ("unruh_acoustic_hole", "unruh", "exterior"): [
@@ -10509,7 +10509,7 @@ CAPTIONS = {
         "Its null curves are the radial sound rays, $c\\,d\\tau/dr = \\pm 1/(1 - r_0^4/r^4)$, symmetric in "
         "$\\tau$ as Schwarzschild's are in his own time.",
         "The cones close at the horizon $r = r_0$, the edge of the chart: $\\tau$ runs to infinity there along "
-        "every ray, while the laboratory's $t$ goes through.",
+        "every ray, while the laboratory's $t$ stays finite across it.",
     ],
     ("draining_bathtub", "vortex_filament", "drain"): [
         "The plane of $t$ and $r$ ($z = 0$) of a vortex filament with a line sink ($A < 0$, $B = "

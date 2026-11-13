@@ -18977,7 +18977,7 @@ CAPTIONS = {
         "distance along it the metric distance. On the slice the metric is $dr^2 + r^2d\\phi^2$: the space sound "
         "moves through is the space the fluid falls through, and a circle of radius $r$ has circumference $2\\pi r$ "
         "all the way down to the sink.",
-        "The curvature of this spacetime lies in how its moments are stacked. From one to the next the fluid "
+        "The curvature of this spacetime comes from its shift vector, the fluid's velocity: from one moment to the next the fluid "
         "carries each point inward at $c\\,r_0^2/r^2$, faster than sound inside the horizon $r = r_0$.",
     ],
     ("unruh_acoustic_hole", "funnel"): [
