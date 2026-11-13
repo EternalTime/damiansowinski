@@ -5899,7 +5899,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b1809a519c7e0afc",
+    "version": "63fa7bc7b0d62868",
     "diagrams": "f6c6ac1947d0b4e9",
     "conformal": "639eea78631ca3e1",
     "embedding": "4d304b421f18a69a",
@@ -6211,7 +6211,7 @@
     ],
     "version": "c373f436a5517826",
     "diagrams": "01986085179076c1",
-    "conformal": "32bdc5cbd0072ca8",
+    "conformal": "49ab4c59d25e2f88",
     "embedding": "2693e5d4af5edd89"
   },
   {
@@ -6274,7 +6274,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "c32013e7c44fff96",
+    "version": "c8bf557c9164e4da",
     "diagrams": "1bcf1f96aa6c51fa",
     "conformal": "1d994db28644e6d6",
     "embedding": "74242cc150b7e4a7"
@@ -6376,9 +6376,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "28f41766de9a737c",
-    "diagrams": "42f4ed1ce5e520aa",
-    "conformal": "2735322746e26156",
+    "version": "585438821dd3912a",
+    "diagrams": "630177f337a42e3a",
+    "conformal": "c5087b775be3abf6",
     "embedding": "ad8fbfdcb04765f7"
   },
   {
@@ -6462,7 +6462,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "2da0db9d1f582b85",
+    "version": "f61b0caff93811c3",
     "diagrams": "4fe4b870a1063747",
     "conformal": "60e261619c0672af",
     "embedding": "bc57c8422b6337be"

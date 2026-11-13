@@ -70637,7 +70637,7 @@
       "id": "siklos",
       "name": "Siklos Waves and the Kaigorodov Spacetime",
       "short_name": "Siklos Waves",
-      "description": "Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. The simplest, Kaigorodov's spacetime, is homogeneous, and its singularity shows in no curvature scalar.",
+      "description": "Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. One of them, Kaigorodov's spacetime, is homogeneous, and every curvature scalar stays finite at its singularity.",
       "tags": [
         "negative cosmological constant",
         "cosmological constant",

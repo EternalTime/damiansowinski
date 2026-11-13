@@ -2769,7 +2769,7 @@ The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave ly
 
 ### Siklos Waves and the Kaigorodov Spacetime
 
-Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. The simplest, Kaigorodov's spacetime, is homogeneous, and its singularity shows in no curvature scalar.
+Exact gravitational waves crossing anti-de Sitter space: a pp-wave multiplied by anti-de Sitter's conformal factor, with fronts that are hyperbolic planes. One of them, Kaigorodov's spacetime, is homogeneous, and every curvature scalar stays finite at its singularity.
 
 - id: `siklos`
 - tags: negative cosmological constant, cosmological constant, anti-de Sitter, gravitational wave, pp-wave, Kundt class, Petrov type N, null Killing vector, homogeneous, stationary, AdS/CFT, holography, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
