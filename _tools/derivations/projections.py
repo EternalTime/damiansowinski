@@ -1294,8 +1294,8 @@ CAPTIONS = {
         "$15°$ apart, each a null geodesic integrated with the Christoffel symbols of this chart.",
         "Only the ray sent straight up reaches the boundary. A ray that leaves at the angle $\\alpha$ from "
         "that one turns back at the depth $u_0 = 2L\\sin\\alpha$ and follows the catenary "
-        "$u = u_0\\cosh((x - x_0)/u_0)$ through the point $x_0$ where it turns, so the boundary sees no light "
-        "that left the event at an angle. At $z = 1$ the same rays are the straight lines of anti-de Sitter space, "
+        "$u = u_0\\cosh((x - x_0)/u_0)$ through the point $x_0$ where it turns, so no light that left the "
+        "event at an angle reaches the boundary. At $z = 1$ the same rays are the straight lines of anti-de Sitter space, "
         "and every one of them arrives.",
     ],
     ("light_beam", "cartesian", "lens"): [

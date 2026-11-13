@@ -1502,7 +1502,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "db2ddca7e1cace60",
+    "version": "4d305c6392361c8c",
     "diagrams": "66cdb16ef7492173",
     "embedding": "eb9628320ef2e880",
     "curvature": "e5ea281a21001879"
@@ -2232,11 +2232,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "72505c35f8fc9403",
+    "version": "13d232e52536478a",
     "diagrams": "650c940a33d88a1c",
     "conformal": "c0043e438cd296ac",
     "embedding": "d1d99538ce0bd31c",
-    "curvature": "009ff57df2364612"
+    "curvature": "66f830b03abe1a6f"
   },
   {
     "id": "exponential_scalar_universes",
@@ -2324,10 +2324,10 @@
       "idealized model",
       "Einstein equations"
     ],
-    "version": "e99cbab66d43458a",
-    "diagrams": "df994dd93e437b51",
+    "version": "89e2fbd1b4f037ae",
+    "diagrams": "21aca3206b5c5cd4",
     "conformal": "c278958d595c6a20",
-    "embedding": "42786aab3975f902",
+    "embedding": "378760e6120898dc",
     "curvature": "5466f0c23c30d8fb"
   },
   {
@@ -3367,9 +3367,9 @@
       "idealized model",
       "BKL"
     ],
-    "version": "71fb63c566828613",
+    "version": "e9f93ce1b158bc8e",
     "diagrams": "487e58f217c89feb",
-    "embedding": "779744327513578c",
+    "embedding": "73abebc988a9a7fe",
     "curvature": "a6ea8bad838cbf55"
   },
   {
@@ -4111,10 +4111,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ded14e40c98cd94b",
-    "diagrams": "8ae1647667d42c8c",
+    "version": "25f23cbd21bd985f",
+    "diagrams": "3cadca845845269d",
     "conformal": "5a36ce41d9009dbd",
-    "embedding": "cd98817c46caeee2"
+    "embedding": "656d0335e0edddde"
   },
   {
     "id": "limiting_curvature",

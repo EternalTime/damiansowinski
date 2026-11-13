@@ -21780,8 +21780,8 @@ CAPTIONS = {
         "The surface of $\\rho$ and $x$ at one moment ($y = 0$), a strip of width $2\\pi L$ along $x$ rolled up, with "
         "every distance along it the metric distance. Its metric is $d\\rho^2 + e^{2\\rho/L}dx^2$ for every dynamical "
         "exponent $z$, the hyperbolic plane of curvature $-1/L^2$, as a moment of anti-de Sitter space is: $z$ "
-        "stands in $g_{tt}$ alone, so two Lifshitz spacetimes differ in how fast clocks run at each depth and in "
-        "nothing a ruler measures.",
+        "appears in $g_{tt}$ alone, so two Lifshitz spacetimes differ only in how fast clocks run at each depth, "
+        "and their spatial geometries are identical.",
         "Below $r = L$ the strip is half of Eugenio Beltrami's pseudosphere, narrowing toward the null "
         "singularity $r = 0$, which lies a proper distance without end down the horn. Above $r = L$ the circles "
         "grow faster than the distance out to them, so the strip is drawn on in Minkowski space, where it climbs "

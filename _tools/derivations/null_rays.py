@@ -10001,7 +10001,7 @@ CAPTIONS = {
         "The plane of $t$ and $w$ ($x = y = 0$) at $z = 2$, in units of $L$. The metric on it is "
         "$L^2(-c^2dt^2 + dw^2)/z^2w^2$, conformal to Minkowski's plane, so every ray is a straight 45° line, "
         "$ct \\pm w = $ const. It is the plane of anti-de Sitter space's Poincaré chart with $L/z$ for the radius.",
-        "The boundary is the left edge, $w = 0$, and the singularity lies at $w \\to \\infty$, off the drawing to "
+        "The boundary is the left edge, $w = 0$, and the singularity lies at $w \\to \\infty$, to "
         "the right. "
         "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
     ],
@@ -10020,7 +10020,7 @@ CAPTIONS = {
         "$v + 4L^2/(z^2s) = $ const.",
         "The metric on the plane is $-(z^2s^2/4L^2)dv^2 + dv\\,ds$, finite and invertible at $s = 0$, a null "
         "surface. There $g_{xx} = g_{yy} = (zs/2L)^{2/z}$ vanish, so every length along $x$ and $y$ shrinks to "
-        "nothing on it. "
+        "zero on it. "
         "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",
     ],
     ("anti_de_sitter", "static_global", "radial"): [

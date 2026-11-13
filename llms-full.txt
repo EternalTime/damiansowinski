@@ -1142,7 +1142,7 @@ An accelerating false vacuum universe with an evolving Brans-Dicke gravitational
 
 ### The Eye of the Storm
 
-Kerr's rotating black hole with its mass $m$ replaced by $me^{-\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass is switched off so fast toward the centre that the curvature falls away to nothing at the core and Kerr's ring singularity is gone, while it keeps horizons of its own, an ergoregion and geodesics that separate as Kerr's do.
+Kerr's rotating black hole with its mass $m$ replaced by $me^{-\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass falls to zero so fast toward the centre that the curvature vanishes at the core and Kerr's ring singularity is gone, while the metric keeps horizons of its own, an ergoregion, and geodesics that separate as Kerr's do.
 
 - id: `eye_of_the_storm`
 - tags: regular black hole, rotating, rotating black hole, black hole, stationary, axisymmetric, angular momentum, mass, no singularity, ergoregion, frame dragging, horizon, event horizon, inner horizon, Cauchy horizon, asymptotically flat, energy conditions, energy condition violation, anisotropic, separable, black hole mimicker, black hole shadow, Lorentzian, four-dimensional, idealized model, Einstein equations
@@ -1562,7 +1562,7 @@ An anisotropic vacuum cosmology that expands along some axes while contracting a
 
 ### Kasner Universe with a Magnetic Field
 
-Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field pulls that axis to nothing at both ends of time, and the universe passes from one Kasner vacuum at early times to another at late times.
+Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field drives the length along that axis to zero both at the singularity and at late times, and the universe passes from one Kasner vacuum at early times to another at late times.
 
 - id: `kasner_magnetic`
 - tags: electrovacuum, electromagnetic field, magnetic field, anisotropic, cosmology, Kasner, Bianchi classification, spatially homogeneous, homogeneous, curvature singularity, spacelike singularity, big bang, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, BKL

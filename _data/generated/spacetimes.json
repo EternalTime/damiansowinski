@@ -25941,7 +25941,7 @@
       "id": "eye_of_the_storm",
       "name": "The Eye of the Storm",
       "short_name": "Eye of the Storm",
-      "description": "Kerr's rotating black hole with its mass $m$ replaced by $me^{-\\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass is switched off so fast toward the centre that the curvature falls away to nothing at the core and Kerr's ring singularity is gone, while it keeps horizons of its own, an ergoregion and geodesics that separate as Kerr's do.",
+      "description": "Kerr's rotating black hole with its mass $m$ replaced by $me^{-\\ell/r}$, which Sushant Ghosh proposed in 2014 and Alex Simpson and Matt Visser found again and named in 2021. The mass falls to zero so fast toward the centre that the curvature vanishes at the core and Kerr's ring singularity is gone, while the metric keeps horizons of its own, an ergoregion, and geodesics that separate as Kerr's do.",
       "tags": [
         "regular black hole",
         "rotating",
@@ -25976,7 +25976,7 @@
         {
           "id": "kerr",
           "kind": "special_case",
-          "text": "Set $\\ell = 0$ and the mass is never switched off: the metric is Kerr's, ring singularity and all [simpson2022eye]."
+          "text": "With $\\ell = 0$ the mass is constant, and the metric is Kerr's, with its ring singularity [simpson2022eye]."
         },
         {
           "id": "kerr_newman",
@@ -25986,12 +25986,12 @@
         {
           "id": "simpson_visser",
           "kind": "programme",
-          "text": "Simpson and Visser's other way of taking a singularity out of a black hole by one substitution. There it is the radius they change, and the centre opens into a throat [simpson2019]."
+          "text": "Simpson and Visser's other removal of a black hole's singularity by one substitution. There they change the radius, and the centre opens into a throat [simpson2019]."
         },
         {
           "id": "hayward",
           "kind": "family",
-          "text": "A regular black hole with two horizons whose centre is a ball of de Sitter space. The eye of the storm spins, and at its centre the curvature falls away to nothing [simpson2022eye]."
+          "text": "A regular black hole with two horizons whose centre is a ball of de Sitter space. The eye of the storm spins, and at its centre the curvature vanishes [simpson2022eye]."
         },
         {
           "id": "bardeen",
@@ -37786,7 +37786,7 @@
       "id": "kasner_magnetic",
       "name": "Kasner Universe with a Magnetic Field",
       "short_name": "Kasner with a Magnetic Field",
-      "description": "Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field pulls that axis to nothing at both ends of time, and the universe passes from one Kasner vacuum at early times to another at late times.",
+      "description": "Kasner's anisotropic universe threaded by a uniform magnetic field along one axis, with no matter in it. The tension of the field drives the length along that axis to zero both at the singularity and at late times, and the universe passes from one Kasner vacuum at early times to another at late times.",
       "tags": [
         "electrovacuum",
         "electromagnetic field",
@@ -37814,7 +37814,7 @@
         {
           "id": "kasner",
           "kind": "special_case",
-          "text": "The universe with the field switched off. At $b = 0$ the metric is Kasner's vacuum, and with the field on it starts as one Kasner vacuum and ends as another [kastor2015]."
+          "text": "The universe without the field. At $b = 0$ the metric is Kasner's vacuum, and with the field present it starts as one Kasner vacuum and ends as another [kastor2015]."
         },
         {
           "id": "melvin",
@@ -45744,12 +45744,12 @@
         {
           "id": "pp_wave",
           "kind": "family",
-          "text": "Near $r = 0$ Lifshitz spacetime looks like a singular plane wave, which is how Horowitz and Way sent strings through its singularity [horowitz2012lifshitz]."
+          "text": "Near $r = 0$ Lifshitz spacetime looks like a singular plane wave, and Horowitz and Way used that approximation to send strings through its singularity [horowitz2012lifshitz]."
         },
         {
           "id": "randall_sundrum",
           "kind": "family",
-          "text": "Randall and Sundrum's wall warps time and space by one factor. Koroteev and Libanov gave the two different factors by filling the space beside it with an anisotropic fluid, and met Lifshitz's scaling in five dimensions [koroteev2008]."
+          "text": "Randall and Sundrum's wall warps time and space by one factor. Koroteev and Libanov gave the two different factors by filling the space beside it with an anisotropic fluid, and obtained Lifshitz's scaling in five dimensions [koroteev2008]."
         },
         {
           "id": "schrodinger_spacetime",
