@@ -20140,10 +20140,10 @@ CAPTIONS = {
         "from $ct = -3\\,\\ell$ to $3\\,\\ell$, each moment drawn as a surface in flat space with every distance "
         "along it the metric distance. Each moment is a flat plane, on which the dust at the comoving radius $r$ "
         "stands a distance $ar$ from the centre, with $a = (1 + c^2t^2/\\ell^2)^{1/3}$.",
-        "The dust keeps its places in the chart while every distance between its grains shrinks until $t = 0$, "
+        "The dust stays at fixed comoving coordinates while every distance between its grains shrinks until $t = 0$, "
         "where $a = 1$, and grows again. The turn is smooth: near it $a \\approx 1 + c^2t^2/3\\ell^2$, and the "
-        "expansion accelerates until $a^3 = 4$, at $ct = \\sqrt{3}\\,\\ell$, after which the dust slows it as in "
-        "Friedmann's universe.",
+        "expansion accelerates until $a^3 = 4$, at $ct = \\sqrt{3}\\,\\ell$, after which the gravity of the dust "
+        "decelerates it as in Friedmann's universe.",
     ],
     ("poincare_dodecahedral", "today"): [
         "The equator ($\\theta = \\pi/2$) of space today in Luminet's universe, drawn as a surface in flat space with "
