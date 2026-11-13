@@ -13126,8 +13126,8 @@ CAPTIONS = {
         "same. The shell is the curve $r = R(T)$, which closes on the centre at $T = 0$ at a speed that rises "
         "toward that of light, and the flat region ends there.",
         "The event horizon is the outgoing ray that reaches the shell as the shell crosses $r_s$, at "
-        "$cT = -4r_s/3$. It leaves the centre at $cT = -7r_s/3$ and crosses flat space, where no local "
-        "measurement marks it. An outgoing ray that leaves the centre after that moment meets the shell inside "
+        "$cT = -4r_s/3$. It leaves the centre at $cT = -7r_s/3$ and crosses flat space, where the curvature "
+        "is zero. An outgoing ray that leaves the centre after that moment meets the shell inside "
         "$r_s$ and ends on the singularity.",
     ],
     ("israel_shell", "interior", "through"): [
