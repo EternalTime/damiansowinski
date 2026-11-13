@@ -1836,7 +1836,7 @@
         {
           "id": "schwarzschild_ads",
           "kind": "family",
-          "text": "The round black hole of anti-de Sitter space, which trades places with anti-de Sitter space in Hawking and Page's phase transition. The flat black hole does the same with the soliton [hawking1983, surya2001]."
+          "text": "The round black hole of anti-de Sitter space, which with anti-de Sitter space makes the two phases of Hawking and Page's phase transition. The flat black hole and the soliton make the two phases of another [hawking1983, surya2001]."
         },
         {
           "id": "topological_star",
@@ -6452,7 +6452,7 @@
               "description": "Areal radius, a length; its derivatives are $\\partial_\\rho r = \\sqrt{r_s/r}$ and $\\partial_\\tau r = -c\\sqrt{r_s/r}$"
             }
           ],
-          "convention": "We use Lemaître's coordinates $(\\tau, \\rho, \\theta, \\phi)$ before the bounce, with $\\tau$ carrying dimensions of time, the proper time of observers falling in from rest at infinity, each of whom keeps its $\\rho$, a length, and $R$ is the areal radius of the shell. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
+          "convention": "We use Lemaître's coordinates $(\\tau, \\rho, \\theta, \\phi)$ before the bounce, with $\\tau$ carrying dimensions of time, the proper time of observers falling in from rest at infinity, each at a constant $\\rho$, a length, and $R$ is the areal radius of the shell. We take components in the chart $x^0 = c\\tau$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{\\tau}$ means $d(c\\tau)/d\\lambda$.",
           "line_element": "ds^2 = -c^2d\\tau^2 + \\dfrac{r_s}{r}\\,d\\rho^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
           "metric_components": [
             {
@@ -70369,7 +70369,7 @@
       "id": "btz_shock_wave",
       "name": "Shenker-Stanford Shock Wave in the BTZ Black Hole",
       "short_name": "Shenker-Stanford Shock Wave",
-      "description": "The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It is the geometry of the butterfly effect in holography.",
+      "description": "The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It describes the butterfly effect in holography: a small perturbation made long ago on one side destroys the mutual information between small regions on the two sides.",
       "tags": [
         "shock wave",
         "impulsive wave",

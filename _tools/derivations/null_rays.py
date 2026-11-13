@@ -12955,8 +12955,8 @@ CAPTIONS = {
         "across and $(u + v)/2 = ct$ up, so that every light ray runs at 45°. Space here is flat. The shell falls "
         "in along $v = 0$, reaches the centre at the bounce, $u = v = 0$, and goes out along $u = 0$, so the flat "
         "region is the inside of the past and future light cones of the bounce.",
-        "Outside those cones lie the quantum region and the two flaps of Kruskal's spacetime, where these "
-        "coordinates do not reach. The shell enters the quantum region at $E$, at $u = -r_s$ and $r = r_s/2$, "
+        "Outside those cones lie the quantum region and the two exterior regions of Kruskal's spacetime. The "
+        "shell enters the quantum region at $E$, at $u = -r_s$ and $r = r_s/2$, "
         "and its stretch from $E$ to the bounce borders the quantum region on the inside.",
     ],
     ("black_to_white_hole", "kruskal", "falling"): [

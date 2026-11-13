@@ -132,8 +132,8 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "4a37c58ebfcbac9b",
-    "diagrams": "f8d136f5ed61d7d1",
+    "version": "7d625ee0351a00bd",
+    "diagrams": "222337856526a602",
     "conformal": "be0bf05b08f0c825",
     "embedding": "819ee1c2da820b20"
   },
@@ -221,10 +221,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b3ebc7538e485359",
+    "version": "353b3166d8b93479",
     "diagrams": "dc13a758c6ce9e83",
     "conformal": "a879de23f7faf4b3",
-    "embedding": "572ba49646346a3a",
+    "embedding": "3053c38f5d75b12a",
     "curvature": "d5392d81473c757a"
   },
   {
@@ -544,11 +544,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0aa588fc8170d2b6",
-    "diagrams": "66048e8162c31d68",
+    "version": "de075f3548d756ca",
+    "diagrams": "7ebb481e97bbe76c",
     "conformal": "6f624a51fd25bcd5",
     "embedding": "83bb4961a98c0272",
-    "curvature": "ec283fb4dc7ac539"
+    "curvature": "50ef041f5cf30850"
   },
   {
     "id": "black_saturn",
@@ -6349,10 +6349,10 @@
       "conformally flat",
       "three-dimensional"
     ],
-    "version": "dcbc4e817b0a0f22",
-    "diagrams": "9feb8b9b0371232c",
+    "version": "e447cf2f3f0fefb0",
+    "diagrams": "efcc9f68e4b91d8e",
     "conformal": "53ebebdf4e877f10",
-    "embedding": "64e28e383710d26c"
+    "embedding": "a8eec309d4bcd39a"
   },
   {
     "id": "siklos",
@@ -7055,10 +7055,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "534b5f72c4edaf91",
+    "version": "65f3d9e4d40d200b",
     "diagrams": "54dd0e9e7887701d",
     "conformal": "0f87c7ddfbce658d",
-    "embedding": "80461874aabb5765"
+    "embedding": "139a1319d7d6ecd0"
   },
   {
     "id": "tolman_bondi",

@@ -2757,7 +2757,7 @@ An empty spherical cavity surrounded by an accreting dust shell in a Friedmann u
 
 ### Shenker-Stanford Shock Wave in the BTZ Black Hole
 
-The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It is the geometry of the butterfly effect in holography.
+The eternal black hole of Bañados, Teitelboim, and Zanelli with a shock wave lying on its horizon, the field of a few quanta thrown in from one side long ago. The two halves of the black hole are joined along the horizon with a shift $\alpha$ that grows exponentially with the time since the quanta were let go, so the wormhole between the two outsides grows longer. It describes the butterfly effect in holography: a small perturbation made long ago on one side destroys the mutual information between small regions on the two sides.
 
 - id: `btz_shock_wave`
 - tags: shock wave, impulsive wave, null source, black hole, BTZ black hole, anti-de Sitter, negative cosmological constant, cosmological constant, wormhole, Einstein-Rosen bridge, horizon, event horizon, AdS/CFT, holography, circularly symmetric, 2+1 dimensional gravity, exact solution, Lorentzian, Einstein equations, idealized model, conformally flat, three-dimensional

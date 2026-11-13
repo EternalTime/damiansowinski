@@ -16825,8 +16825,8 @@ def black_to_white_hole(ck, src):
                     "and $E$ at $r = r_s/2$.",
         "clip": f"We colour $K\\,r_s^4$ on a logarithmic scale from $10^{{-2}}$ to $10^{{3}}$, and every cell "
                 f"drawn lies inside it, from ${tex_number(coolest, 6)}/r_s^4$ at the right edge of the box to "
-                f"${tex_number(hottest, 6)}/r_s^4$ beside $E$. The chart holds outside the shell alone, which the "
-                f"map declares as its domain, so the cells inside the shell are left clear.",
+                f"${tex_number(hottest, 6)}/r_s^4$ beside $E$. The chart holds outside the shell alone, the "
+                f"domain of the map, so the cells inside the shell are left clear.",
     }]
 
 
@@ -16839,13 +16839,13 @@ def bw_caption(ct_horizon, ct_E, ct_delta, at_horizon, at_E):
         "$\\theta$ and $\\phi$. Outside the shell the geometry is Schwarzschild's and $K = 12r_s^2/r^6$, so the "
         "levels of $K$ are the spheres of constant $r$ and the colours brighten inward. That region is a vacuum "
         "and its Ricci scalar vanishes.",
-        "Inside the shell space is flat and $K$ vanishes there, a region this chart does not reach, so those "
-        "cells are left clear and the edge of the colour is the shell itself, falling in at the speed of light. It "
+        "Inside the shell space is flat and $K$ vanishes there; those cells are left clear, and the edge "
+        "of the colour is the shell itself, falling in at the speed of light. It "
         f"passes the apparent horizon $r = r_s$ at $ct = {tex_number(ct_horizon, 6)}\\,r_s$, where "
         f"$K = {tex_number(at_horizon, 3)}/r_s^4$, and reaches $E$ at $ct = {tex_number(ct_E, 6)}\\,r_s$, where "
-        f"$K = {tex_number(at_E, 3)}/r_s^4$, the largest curvature the classical region carries. Between those two "
+        f"$K = {tex_number(at_E, 3)}/r_s^4$, the largest curvature in the classical region. Between those two "
         "moments every sphere outside the shell and inside $r_s$ is trapped.",
-        "The box stops at the moment the shell reaches $E$, the last moment of this chart whose whole slice "
+        "The top edge of the box is the moment the shell reaches $E$, the last moment of this chart whose whole slice "
         "outside the shell is classical. Above that moment lies the quantum region, which has no metric, and its "
         f"edge runs from $E$ out to $\\Delta$, at $r = 7r_s/6$ and $ct = {tex_number(ct_delta, 6)}\\,r_s$. Beyond "
         "$\\Delta$ the surface of time symmetry carries the flap after the bounce, the mirror image of this one, "
