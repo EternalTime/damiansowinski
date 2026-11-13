@@ -66468,7 +66468,7 @@
         {
           "id": "schwarzschild",
           "kind": "locally_same",
-          "text": "The geon's one exterior is Schwarzschild's, metric and all, and Kruskal's full extension of it covers the geon twice. Behind the horizon the geon has a fold where Kruskal's spacetime has a second exterior [friedman1993, louko1998]."
+          "text": "The geon's one exterior is Schwarzschild's exterior, with the same metric, and Kruskal's full extension of it covers the geon twice. Behind the horizon the geon has a fold where Kruskal's spacetime has a second exterior [friedman1993, louko1998]."
         },
         {
           "id": "einstein_rosen_bridge",
@@ -66478,7 +66478,7 @@
         {
           "id": "elliptic_de_sitter",
           "kind": "family",
-          "text": "The same antipodal fold made on de Sitter space, where it reverses time. Made on Kruskal's spacetime with time reversed it is Gibbons's elliptic interpretation of the black hole, and the geon is the fold that keeps time's direction [gibbons1986elliptic, louko1998]."
+          "text": "The same antipodal fold made on de Sitter space, where it reverses time. Made on Kruskal's spacetime with time reversed it is Gibbons's elliptic interpretation of the black hole, and the geon is the fold that preserves the direction of time [gibbons1986elliptic, louko1998]."
         },
         {
           "id": "misner_brill_lindquist",
@@ -75615,7 +75615,7 @@
       "id": "supertranslation_hair",
       "name": "Flat Space with Supertranslation Hair",
       "short_name": "Supertranslation Hair",
-      "description": "Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.",
+      "description": "Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes. Each function on the sphere of directions defines a different vacuum, and a burst of gravitational waves causes a transition from one of these vacua to another.",
       "tags": [
         "vacuum",
         "flat",
@@ -75639,7 +75639,7 @@
         {
           "id": "minkowski",
           "kind": "locally_same",
-          "text": "Minkowski space itself, in the coordinates a supertranslation carries it to. Every component of the Riemann tensor vanishes in both [compere2016vacua]."
+          "text": "Minkowski space itself, here written in coordinates changed by a supertranslation. Every component of the Riemann tensor vanishes in both [compere2016vacua]."
         },
         {
           "id": "bondi_sachs",
@@ -81703,7 +81703,7 @@
       "id": "unruh_acoustic_hole",
       "name": "Unruh's Acoustic Black Hole",
       "short_name": "Unruh Acoustic Black Hole",
-      "description": "The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should glow with thermal sound. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.",
+      "description": "The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should emit sound with a thermal spectrum. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.",
       "tags": [
         "analogue gravity",
         "acoustic black hole",
@@ -81736,7 +81736,7 @@
         {
           "id": "schwarzschild",
           "kind": "family",
-          "text": "Near its horizon Unruh's metric takes the form of Schwarzschild's near his, and its temperature follows the same law. Away from the horizon they part: the canonical fluid falls as $1/r^2$, where Painlevé and Gullstrand's space falls as $1/\\sqrt{r}$ [unruh1981, visser1998]."
+          "text": "Near its horizon Unruh's metric takes the form of Schwarzschild's near his, and its temperature follows the same law. Away from the horizon they differ: the canonical fluid falls as $1/r^2$, where Painlevé and Gullstrand's space falls as $1/\\sqrt{r}$ [unruh1981, visser1998]."
         },
         {
           "id": "natario",

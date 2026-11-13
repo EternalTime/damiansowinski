@@ -794,7 +794,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "519b66c631628921",
+    "version": "b239af090bb05f43",
     "diagrams": "f065886408ac8e94",
     "embedding": "24542ca0b095480d",
     "curvature": "56bb21ef08d250d4"
@@ -5505,7 +5505,7 @@
       "four-dimensional",
       "conformally flat"
     ],
-    "version": "7a05ae91b6153258",
+    "version": "9e0974054839ce1f",
     "diagrams": "15ccd759bdb6a22a",
     "conformal": "f8b6ad40c581351e",
     "embedding": "d0dbf15e01a964ff"
@@ -6010,7 +6010,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "70bedad3964d9c13",
+    "version": "d2a3da0f44fc1cf6",
     "diagrams": "6a3ce40ab242fc55",
     "conformal": "fcc119dbec4fbaa1",
     "embedding": "fabbc86e0024f31d"
@@ -6765,10 +6765,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "da39468fdb383894",
-    "diagrams": "d120d76fc965997d",
-    "conformal": "b40fdbdc039b6c75",
-    "embedding": "5b15cfdf325c286f"
+    "version": "605bddc69b11acff",
+    "diagrams": "88a51932fabd1105",
+    "conformal": "7f8eb8fe41e69381",
+    "embedding": "83bfeaef63af9cd6"
   },
   {
     "id": "swirling_universe_black_hole",
@@ -7277,10 +7277,10 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "673860d1cf2adf86",
-    "diagrams": "b6a409820f7523a2",
-    "conformal": "27826ad818be5392",
-    "embedding": "d3bc63dd86a87cdc"
+    "version": "a6137e045da6701c",
+    "diagrams": "4e95164bacd8411a",
+    "conformal": "cc1f10cab18e5c51",
+    "embedding": "b43705e015a05b55"
   },
   {
     "id": "vaidya",

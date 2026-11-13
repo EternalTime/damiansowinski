@@ -2955,7 +2955,7 @@ The exterior of a straight superconducting cosmic string carrying a current and 
 
 ### Flat Space with Supertranslation Hair
 
-Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes, and each function on the sphere of directions gives a different vacuum, between which a burst of gravitational waves carries space.
+Minkowski space in the coordinates of a supertranslation, written in closed form by Geoffrey Compère and Jiang Long in 2016. Every component of the Riemann tensor vanishes. Each function on the sphere of directions defines a different vacuum, and a burst of gravitational waves causes a transition from one of these vacua to another.
 
 - id: `supertranslation_hair`
 - tags: vacuum, flat, conformally flat, static, stationary, axisymmetric, asymptotically flat, retarded time, supertranslation, gravitational memory, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -3167,7 +3167,7 @@ Half of a 4-sphere joined at its equator to the waist of de Sitter's closed univ
 
 ### Unruh's Acoustic Black Hole
 
-The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should glow with thermal sound. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.
+The spacetime that sound travels through in a fluid falling steadily into a point from every side. Inside $r = r_0$ the fluid falls faster than sound, so no sound gets out, and the sphere $r = r_0$ is a horizon that should emit sound with a thermal spectrum. It solves no field equation of gravity, and its horizon has been made in a Bose-Einstein condensate.
 
 - id: `unruh_acoustic_hole`
 - tags: analogue gravity, acoustic black hole, acoustic metric, sound, fluid flow, black hole, horizon, event horizon, Hawking radiation, Painlevé-Gullstrand coordinates, laboratory experiment, no field equations, curvature singularity, spherically symmetric, stationary, static, four-dimensional, Lorentzian, idealized model
