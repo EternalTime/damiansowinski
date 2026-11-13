@@ -10220,7 +10220,7 @@ CAPTIONS = {
         "moves in $\\rho$ at $d\\rho/dt = \\pm c\\,\\rho/\\sqrt{W^4\\rho^2 - \\omega^2}$.",
         "There $W = 1 + 2m/s$ and $\\omega = 4m^2/s + 4m^3/s^2$ with $s = \\sqrt{\\rho^2 + 4m^2}$. Far out "
         "$\\omega$ falls as $4m^2/\\rho$, the dragging of an angular momentum $l$ times the separation $4m$ "
-        "of the sources, and the cones open toward $45°$. The drawing begins at $\\rho = m$, and inside "
+        "of the sources, and the cones open toward $45°$. The left edge is $\\rho = m$, and inside "
         "$\\rho = 0.73\\,m$, where $W^4\\rho^2 = \\omega^2$, the circles of $\\phi$ are timelike.",
     ],
     ("israel_wilson_perjes", "spheroidal", "axis"): [
@@ -10240,16 +10240,16 @@ CAPTIONS = {
         "$d(ct)/dr = \\pm((r + m)^2 + a^2)/(r^2 + a^2)$, the same at every $\\theta$.",
         "No cone closes anywhere. The ingoing rays cross $r = 0$, the ring of radius $a$ in the flat "
         "background where $U$ is infinite and $\\partial_t$ is null, and run on to the ring singularity at "
-        "$r = -m$, which no horizon hides. The drawing begins at $r = -m/2$, and inside $r = -0.60\\,m$ the "
+        "$r = -m$, which is naked. The left edge is $r = -m/2$, and inside $r = -0.60\\,m$ the "
         "circles of $\\phi$ are timelike.",
     ],
     ("israel_wilson_perjes", "spherical", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $l = m/2$. There "
         "$dr/dt = \\pm c\\,(r - m)^2/(r^2 + l^2)$, so the cones close at $r = m$, where $g^{rr}$ has a double "
         "zero, and an ingoing ray reaches it only as $t \\to +\\infty$.",
-        "$r = m$ is a degenerate horizon of area $4\\pi(m^2 + l^2)$. The twist sits in $g_{t\\phi}$, which "
+        "$r = m$ is a degenerate horizon of area $4\\pi(m^2 + l^2)$. The twist is in $g_{t\\phi}$, which "
         "drops out of the metric on this plane, and no Christoffel symbol turns these null curves out of "
-        "it, so they are null geodesics, the paths light takes.",
+        "it, so they are null geodesics, the paths of light.",
     ],
     ("kastor_traschen", "cartesian", "tz"): [
         "The plane of $\\tau$ and $z$ on the axis through both holes ($x = y = 0$), which light launched along the "

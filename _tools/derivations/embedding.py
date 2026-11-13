@@ -9984,7 +9984,7 @@ def israel_wilson_perjes(ck, src):
     ring_label(fig, [0, 0, 0], *sheet.at(top), "$6m$")
     fig.legend("fill", "cover", "the equator at one moment, which $t$, $r$ and $\\phi$ cover")
     fig.legend("line", "r", "$r$ constant, at $0$, $1$, $2$, $3$, $4$, $5$ and $6$ times $m$")
-    fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, where the drawing stops")
+    fig.legend("line", "chartedge", f"$r = {stop:.2f}\\,m$, the inner edge of the surface")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     views.append(view("spinning", "The spinning source", "$m$", [spin], fig.done(), system="spheroidal",
                       settings="$m = 1$, the unit of every length, and $a = m$.",
@@ -10025,7 +10025,7 @@ def israel_wilson_perjes(ck, src):
     ring_label(fig, [0, 0, 0], *plane.at(top), "$8m$")
     fig.legend("fill", "cover", "the plane $z = 0$ at one moment, which $t$, $\\rho$ and $\\phi$ cover")
     fig.legend("line", "r", "$\\rho$ constant, at $2$, $3$, $4$, $5$, $6$, $7$ and $8$ times $m$")
-    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,m$, where the drawing stops")
+    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,m$, the inner edge of the surface")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     views.append(view("two_sources", "Two sources", "$m$", [two], fig.done(), system="cylindrical",
                       settings="$m = 1$, the unit of every length, and $l = m/2$.", input=nr.IWP_TWO_INPUT,
