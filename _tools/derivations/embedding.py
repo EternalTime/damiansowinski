@@ -20180,7 +20180,7 @@ CAPTIONS = {
         "$\\sqrt{X^2 - C^2} = 3.28\\,W$. A strip of it one turn of $y$ wide is rolled up into Eugenio Beltrami's "
         "pseudosphere, and the plane itself runs on in $y$ without closing.",
         "The surface begins at the rim $r = 0.32$. Below it the circles grow faster than the distance out to them, "
-        "and no surface of revolution in flat space carries them. The radius of curvature falls to zero on the "
+        "and no surface of revolution in flat space embeds them. The radius of curvature falls to zero on the "
         "Cauchy horizon, where $X = C$, and under the horizon the surfaces of homogeneity are timelike.",
     ],
     ("melvin", "universe"): [
