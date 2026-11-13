@@ -29207,7 +29207,7 @@ CAPTIONS = {
         "continuous tangent.",
         "The coordinates $t$ and $r_h < r < r_c$ cover one static region. Static regions alternate along the chain "
         "with the black hole above the white hole across $r_h$ and the expanding region above the contracting one "
-        "across $r_c$, and the chain runs on past both ends of the drawing without end. The singularity $r = 0$ and "
+        "across $r_c$, and the chain runs on without end in both directions. The singularity $r = 0$ and "
         "future and past infinity are spacelike curves, and neither is straight, since $\\kappa_h \\neq \\kappa_c$.",
     ],
     ("schwarzschild_de_sitter", "ingoing"): [
