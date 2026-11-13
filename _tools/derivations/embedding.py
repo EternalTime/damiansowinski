@@ -10134,7 +10134,7 @@ def som_raychaudhuri(ck, src):
     widest = 1 / math.sqrt(2)
     dust = Piece("dust", "star", sl, 0.0, stop, 0.0, 1,
                  (("axis", "the world line $r = 0$ of the dust"),
-                  ("stops", "the circles shrink faster than the distance out to them, and nothing in flat space carries the slice on")),
+                  ("stops", "the circles shrink faster than the distance out to them, and no surface in flat space continues the slice")),
                  [(0.25, "r", None), (0.5, "r", None), (widest, "r", None), (stop, "chartedge", None)], size)
     ck.isometry("Som-Raychaudhuri, about one world line", dust)
     ck.add("Som-Raychaudhuri: the widest circle is at r = r_c/sqrt(2), of radius r_c/2",
@@ -10153,13 +10153,13 @@ def som_raychaudhuri(ck, src):
     ring_label(fig, [0, 0, 0], *dust.at(stop), "$\\sqrt{3}\\,r_c/2$", side=-1)
     fig.legend("fill", "star", "the dust about one of its world lines, which $t$, $r$ and $\\phi$ cover")
     fig.legend("line", "r", "$r$ constant, at $r_c/4$, $r_c/2$ and $r_c/\\sqrt{2}$, the widest circle")
-    fig.legend("line", "chartedge", "$r = \\sqrt{3}\\,r_c/2$, where the drawing stops")
+    fig.legend("line", "chartedge", "$r = \\sqrt{3}\\,r_c/2$, beyond which the circles shrink faster than the distance out to them")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("dust", "About one world line", "$r_c$", [surface], fig.done(),
                  settings="$r_c = c/\\Omega = 1$, the unit of every length.",
                  stops=["From $r = \\sqrt{3}\\,r_c/2$ the circles shrink faster than the distance out to them, "
                         "$g_{rr} < (\\partial_r\\sqrt{g_{\\phi\\phi}})^2$, and no surface of revolution in flat space "
-                        "carries the slice on.",
+                        "continues the slice.",
                         "At $r = r_c$ the circles about the axis are null, and beyond it they are closed timelike "
                         "curves, so a surface of constant $t$ is not a moment of space there. Every world line of "
                         "the dust is an axis like this one."])]
@@ -20742,8 +20742,8 @@ CAPTIONS = {
         "of $t$, drawn as a surface in flat space with every distance along it the metric distance. Its $r$ is "
         "the proper distance from the axis, and the circle at $r$ has circumference "
         "$2\\pi r\\sqrt{1 - r^2/r_c^2}$ with $r_c = c/\\Omega$, which grows out to $r = r_c/\\sqrt{2}$ and then "
-        "shrinks, so the surface curls back toward the axis, and at $r = \\sqrt{3}\\,r_c/2$ the circles shrink "
-        "faster than the distance out to them and the drawing stops.",
+        "shrinks, so the surface curls back toward the axis, and from $r = \\sqrt{3}\\,r_c/2$ the circles shrink "
+        "faster than the distance out to them.",
         "At $r = r_c$ the circles are null, and beyond it they are closed timelike curves. The universe is "
         "homogeneous, so every world line of the dust is an axis like this one, and this surface is a moment "
         "of space only within $r_c$ of its axis.",
