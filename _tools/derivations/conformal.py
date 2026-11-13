@@ -22125,7 +22125,7 @@ def _scalar_field_black_hole_captions():
             f"The horizon ${h_plane}$ is regular, with Schwarzschild's surface gravity $\\kappa$, and the singularity "
             "$r = 0$ is spacelike. Out in the plane $F$ falls away as a Gaussian and $r_*$ tends to a finite value, so "
             "the edge $r \\to \\infty$ is timelike: light reaches it in a finite time $t$ and after a finite affine "
-            "distance, and the Kretschmann scalar grows without bound toward it, a singularity no horizon hides.",
+            "distance, and the Kretschmann scalar grows without bound toward it, a naked singularity.",
         ]
     out["scalar_universe"] = [
         "The half plane of $t$ and $\\rho$ ($z = 0$, $\\phi$ fixed) of the universe with no black hole ($b = 1$). The "
