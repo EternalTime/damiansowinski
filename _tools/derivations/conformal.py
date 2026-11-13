@@ -28971,7 +28971,7 @@ CAPTIONS = {
         "point in the diagram a hyperbolic plane of curvature $-1/r^2$. Its plane of $t$ and $r$ is the BTZ "
         "black hole's at $M = 1$: with $r_* = \\frac{L}{2}\\ln|(r - L)/(r + L)|$, which vanishes as "
         "$r \\to \\infty$, the Kruskal coordinates $U = -e^{-\\kappa u}$ and $V = e^{\\kappa v}$, with "
-        "$u, v = ct \\mp r_*$ and $\\kappa = 1/L$, give $UV = (L - r)/(L + r)$. With $p = \\arctan U$ and "
+        "$u, v = ct \\mp r_*$ and $\\kappa = 1/L$, have $UV = (L - r)/(L + r)$. With $p = \\arctan U$ and "
         "$q = \\arctan V$ the conformal boundary, $UV = -1$, lies on the vertical lines $X = \\pm\\pi/2$, and "
         "$r = 0$, where $UV = 1$, on the horizontal lines $T = \\pm\\pi/2$: a square.",
         "The coordinates $t$ and $r > r_h$ cover the right exterior alone. The Kretschmann scalar is $24/L^4$ "

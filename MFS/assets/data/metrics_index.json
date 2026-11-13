@@ -2872,10 +2872,10 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "ddaffe2808dae44d",
+    "version": "75e4b57b16260dc1",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
-    "embedding": "5ff5b48da9e6b5f3",
+    "embedding": "69d565d6dacdbb99",
     "curvature": "42c25927dc8304f6"
   },
   {
@@ -3633,9 +3633,9 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "4cfa1e6788962222",
-    "diagrams": "7dc03a9eedf6e5a2",
-    "conformal": "285d4f33c4486dd2",
+    "version": "2dde458c443d8a3a",
+    "diagrams": "eb02ad0dffd9be82",
+    "conformal": "66b0f084486a21ae",
     "embedding": "f1315ee1ffa48ebb"
   },
   {
@@ -4575,9 +4575,9 @@
       "idealized model",
       "black hole pair creation"
     ],
-    "version": "f74c8dcfb53f7c30",
+    "version": "91ecefbe21e3283e",
     "diagrams": "5ac02048c1fc2550",
-    "conformal": "edd5386c486f11df",
+    "conformal": "c58cffe574b8cbeb",
     "embedding": "f82056eed836aaf8",
     "curvature": "de05ecefe45599e2"
   },
@@ -7144,9 +7144,9 @@
       "Einstein space",
       "torus"
     ],
-    "version": "6964bf5e0a2cfdc1",
+    "version": "d51b0837f914a200",
     "diagrams": "70598c77af726b80",
-    "conformal": "376fd97d44eb677e",
+    "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"
   },
   {
