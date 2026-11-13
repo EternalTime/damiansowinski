@@ -29903,7 +29903,7 @@ CAPTIONS = {
     ("maximally_supersymmetric_plane_wave", "brinkmann"): [
         "The axis of the wave in the Einstein static universe ($\\mu = 1$), the cylinder of its time $\\psi$ and the "
         "angle $\\beta$ round a great circle of its 9-sphere, each point a single event. On the axis the metric is "
-        "$-2c\\,du\\,dv$, and Berenstein and Nastase's map gives $\\mu cu = (\\psi + \\beta - \\pi)/2$ and "
+        "$-2c\\,du\\,dv$, and Berenstein and Nastase's map is $\\mu cu = (\\psi + \\beta - \\pi)/2$ and "
         "$\\mu v = -\\cot((\\psi - \\beta)/2)/2$, so the metric is the cylinder's $-d\\psi^2 + d\\beta^2$ divided "
         "by $\\mu^2|e^{i\\psi} - e^{i\\beta}|^2$.",
         "The whole axis plane fills the cylinder but for one null line, $\\psi - \\beta \\in 2\\pi\\mathbb{Z}$, "

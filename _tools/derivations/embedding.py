@@ -21474,8 +21474,8 @@ CAPTIONS = {
         "The wave front of the maximally supersymmetric plane wave as $\\mu cu$ runs from $0$ to $3$, the plane of "
         "$x_1$ and $x_2$ with $x_3$ to $x_8$ at zero, each front drawn as a surface in flat space with every "
         "distance along it the metric distance. A surface of constant $u$ has the metric $dx_1^2 + dx_2^2$ "
-        "whatever $v$ is on it, so the drawing is a flat disc, and the wave shows in a ring of free particles at "
-        "rest on the circle $x_1^2 + x_2^2 = 1/\\mu^2$ at $u = 0$.",
+        "whatever $v$ is on it, so the drawing is a flat disc, and the wave acts on a ring of free particles "
+        "drawn at rest on the circle $x_1^2 + x_2^2 = 1/\\mu^2$ at $u = 0$.",
         "Each particle obeys $d^2x_i/d(cu)^2 = -\\mu^2x_i$, the equation of a harmonic oscillator, the same in all "
         "eight directions across the wave, so the ring stays a circle of radius $\\cos(\\mu cu)/\\mu$. It "
         "closes on the axis at $\\mu cu = \\pi/2$, every particle at once, and is back at rest on its first circle "
