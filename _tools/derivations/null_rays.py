@@ -13438,8 +13438,8 @@ CAPTIONS = {
         "future cone of those directions.",
         "The rays keep $v \\pm \\tfrac{2}{5}x^{5/2}/L^{3/2}$. They reach the conformal boundary $x = 0$ at a "
         "finite $v$, as light reaches anti-de Sitter's. The cones close toward larger $x$: the singularity "
-        "$x \\to \\infty$ lies at $v = \\pm\\infty$, a finite affine distance away, and no curvature scalar "
-        "diverges there, only the tidal forces on whatever falls in.",
+        "$x \\to \\infty$ lies at $v = \\pm\\infty$, a finite affine distance away, and every curvature "
+        "scalar stays finite there, while the tidal forces on whatever falls in diverge.",
     ],
     ("siklos", "kaigorodov_poincare", "depth"): [
         "The plane of $t$ and $z$ ($y = 0$) with $x$ divided out, "

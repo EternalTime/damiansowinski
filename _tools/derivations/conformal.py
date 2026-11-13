@@ -27786,23 +27786,23 @@ CAPTIONS = {
     ],
     ("siklos", "kaigorodov_horospheric"): [
         "Kaigorodov's spacetime on its slice $y = 0$ with the lines of $u$ divided out, each point in the diagram "
-        "one such line, in Kaigorodov's coordinates $v$ and $\\rho$. The triangle is the one Siklos's coordinates "
-        "draw, with $x = Le^{-\\rho/L}$, so that $x_* = \\tfrac{2}{5}Le^{-5\\rho/2L}$.",
+        "one such line, in Kaigorodov's coordinates $v$ and $\\rho$. The triangle is that of Siklos's coordinates, "
+        "with $x = Le^{-\\rho/L}$, so that $x_* = \\tfrac{2}{5}Le^{-5\\rho/2L}$.",
         "The conformal boundary is $\\rho \\to \\infty$, the timelike line on the left, a proper distance without "
         "end from every event. The singularity is $\\rho \\to -\\infty$, the two null edges, and an observer "
         "falling toward it arrives in a finite proper time.",
     ],
     ("siklos", "kaigorodov_homogeneous"): [
         "Kaigorodov's spacetime on its slice $y = 0$ with the lines of $X$ divided out, each point in the diagram "
-        "one such line, in the coordinates $U$ and $Z$ at $k = 1/10$. The triangle is the one Siklos's coordinates "
-        "draw, with $x = Le^{2Z}$ and $v = -Ue^{5Z}$.",
+        "one such line, in the coordinates $U$ and $Z$ at $k = 1/10$. The triangle is that of Siklos's coordinates, "
+        "with $x = Le^{2Z}$ and $v = -Ue^{5Z}$.",
         "The conformal boundary is $Z \\to -\\infty$, the timelike line on the left, and the singularity "
         "$Z \\to \\infty$, the two null edges. A line of constant $Ue^{5Z}$ is a line of constant $v$, and the "
         "future is toward smaller $U$.",
     ],
     ("siklos", "kaigorodov_kundt"): [
         "Kaigorodov's spacetime on its slice $y = 0$ with the lines of $U$ divided out, each point in the diagram "
-        "one such line, in the coordinates $V$ and $x$. The triangle is the one Siklos's coordinates draw, with "
+        "one such line, in the coordinates $V$ and $x$. The triangle is that of Siklos's coordinates, with "
         "$v = Vx^2/\\sqrt{2}$ and $Lx$ for his $x$.",
         "The conformal boundary is $x = 0$, the timelike line on the left, and the singularity $x \\to \\infty$, "
         "the two null edges. A line of constant $Vx^2$ is a line of constant $v$.",
