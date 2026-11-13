@@ -13446,8 +13446,8 @@ def btz_multi_holes_wormholes(ck, src):
                  settings="$\\ell = 1$, the unit of every length, and $\\alpha = \\sqrt{2/3}$, the hyperbolic tangent "
                           "of each cut's distance from the axis in units of $\\ell$. Every length along the sheet is "
                           "measured with $dX^2 + dY^2 - dZ^2$.",
-                 stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, and no surface "
-                        "of revolution in flat space carries the moment; Minkowski space carries it."])]
+                 stops=["At every $\\rho > 0$ the circles grow faster than the distance out to them, too fast for a "
+                        "surface of revolution in flat space, and the moment is a surface of revolution in Minkowski space."])]
 def unruh_acoustic_hole(ck, src):
     """Two moments of Unruh's acoustic black hole on its equator, at r_0 = c = 1, so that the
     horizon r_0 is the unit of length, as the spacetime diagrams draw it.

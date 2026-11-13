@@ -1592,7 +1592,7 @@
     "version": "84c348255a0b3067",
     "diagrams": "8b39c6bef80d5718",
     "conformal": "573aa16b0b411fe4",
-    "embedding": "a9676c6465fbce1c",
+    "embedding": "21018d8011f5d5fe",
     "curvature": "b13644c5a96f00ca"
   },
   {
@@ -1670,10 +1670,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d5fd26c21962c0ca",
-    "diagrams": "c8516d16841cd13d",
-    "conformal": "d1d7f8cc8abd9bb8",
-    "embedding": "13f67fcc322f9144",
+    "version": "533119d6dda125b1",
+    "diagrams": "93c03f1f21c48fcf",
+    "conformal": "3e3178b1cccfcfe0",
+    "embedding": "0fe4584ba64edcf3",
     "curvature": "355cf1d91dccd23a"
   },
   {
@@ -2604,7 +2604,7 @@
       "conformally flat"
     ],
     "version": "f7087a455e7303a2",
-    "diagrams": "b4937a90691eba2b",
+    "diagrams": "a06fed0d8a214d89",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
   },
@@ -3314,11 +3314,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "84d66e711d51009c",
+    "version": "155e97776cc2fd88",
     "diagrams": "af83133484b3c126",
-    "conformal": "5aa345afee4654d8",
+    "conformal": "3d575283a2bd08b9",
     "embedding": "7e661e3124d380aa",
-    "curvature": "c4c90f685f7f5ec4"
+    "curvature": "a1cb8ecf5f7b33f0"
   },
   {
     "id": "kasner",
@@ -4429,10 +4429,10 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "2f6cc26e7a968059",
-    "diagrams": "cfadfa6a6d870e02",
+    "version": "89d8d03291373130",
+    "diagrams": "02cb54738b1e1077",
     "conformal": "4d5f7414085f41e0",
-    "embedding": "cd281d7fc89e697d"
+    "embedding": "6a0f9d87d0364fdb"
   },
   {
     "id": "mass_inflation",

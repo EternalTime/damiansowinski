@@ -1972,7 +1972,7 @@ A spherical source of null radiation in a spacetime with a positive cosmological
 
 ### Many Black Holes and Wormholes in Three Dimensions
 
-Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.
+Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and in the sausage chart each moment of the whole spacetime is a region of Poincaré's disc.
 
 - id: `btz_multi_holes_wormholes`
 - tags: black hole, multiple black holes, wormhole, BTZ black hole, anti-de Sitter, negative cosmological constant, cosmological constant, constant curvature, hyperbolic space, multiply connected, topology, topological geon, topological censorship, time symmetric, initial data, closed universe, Misner space, horizon, event horizon, causal structure, AdS/CFT, holography, three-dimensional, 2+1 dimensional gravity, exact solution, Lorentzian, Einstein equations, idealized model, Einstein space, conformally flat

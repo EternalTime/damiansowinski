@@ -48750,7 +48750,7 @@
       "id": "btz_multi_holes_wormholes",
       "name": "Many Black Holes and Wormholes in Three Dimensions",
       "short_name": "Many Black Holes and Wormholes in Three Dimensions",
-      "description": "Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and the whole spacetime is drawn on Poincaré's disc.",
+      "description": "Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, which makes any number of black holes joined behind their horizons, or one black hole with a wormhole of any genus inside it. Every exterior is that of a Bañados-Teitelboim-Zanelli black hole, and in the sausage chart each moment of the whole spacetime is a region of Poincaré's disc.",
       "tags": [
         "black hole",
         "multiple black holes",

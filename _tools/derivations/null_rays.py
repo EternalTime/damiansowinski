@@ -10373,7 +10373,7 @@ CAPTIONS = {
         "freely from rest at $T = 0$. The metric on it is $-c^2dT^2 + \\cos^2(cT/\\ell)\\,4\\ell^4d\\rho^2/"
         "(\\ell^2 - \\rho^2)^2$, so the cones open toward $cT = \\pm\\pi\\ell/2$, where every distance between "
         "the observers shrinks to zero.",
-        "In these coordinates the glued surfaces stand still and the folds lie beyond the top edge. The event "
+        "In these coordinates the glued surfaces stand still, and the folds lie outside the chart, after its last moment. The event "
         "horizon leaves the axis at $cT = -\\pi\\ell/3$ and overtakes every observer before $cT = \\pi\\ell/2$.",
     ],
     ("btz_multi_holes_wormholes", "exterior", "radial"): [
