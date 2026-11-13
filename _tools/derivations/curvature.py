@@ -14107,7 +14107,7 @@ def van_den_broeck(ck, src):
             "The Kretschmann scalar $K$ and the Ricci scalar $R^\\mu{}_\\mu$ of the pocket inside Van Den Broeck's "
             "bubble against the proper distance $l$ from the middle of its neck ($l_0 = 4R$), the same at every $t$, "
             "$\\theta$, and $\\phi$, from the centre of the pocket out to the sphere $r = R$, where the wall begins. "
-            "The floor of the pocket, where the ship rides, its lid, and the space outside the neck are flat, and "
+            "The floor of the pocket, where the ship is, its lid, and the space outside the neck are flat, and "
             f"there $K = 0$. Round the rim $K$ rises from ${tex_number(K_mid)}/R^4$ in its middle to "
             f"${tex_number(K_edge)}/R^4$ at its edges. Through the neck it rises from ${K_end:.0f}/R^4$ at either end "
             f"to ${K_narrow:.0f}/R^4$ at the narrowest sphere, $r = R/4$, ${ratio:.0f}$ times its least value round "

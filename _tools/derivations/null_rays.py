@@ -11471,13 +11471,13 @@ CAPTIONS = {
         "and through the neck they narrow about the world line of the ship, since a unit of $x$ there is "
         "$B$ units of distance.",
         "The dashed lines are $g^{xx} = (1 - v_s^2 f^2B^2)/B^2 = 0$. Outside the neck $B = 1$, so they "
-        "stand where $v_s f = 1$, and for $v_s = 2$ a forward ray keeps pace with the bubble there. "
+        "stand where $v_s f = 1$, and for $v_s = 2$ a forward ray moves at the speed of the bubble there. "
         "The pocket itself is the sliver $|x - 2ct| < 0.004\\,R$ about the centre, $3R$ across for "
         "whoever is inside it.",
     ],
     ("van_den_broeck", "pocket", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the bubble, in the chart that "
-        "rides with the ship, which ends where the wall of the bubble begins, at $r = R$. The radial null "
+        "moves with the ship, which ends where the wall of the bubble begins, at $r = R$. The radial null "
         "geodesics are $c\\,dt = \\pm B\\,dr$. From the wall in to "
         "$r = R/2$ they run at 45°, and through the neck the cones close about the vertical as $B$ climbs "
         "to $380$.",

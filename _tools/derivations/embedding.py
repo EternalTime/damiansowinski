@@ -10309,7 +10309,7 @@ def van_den_broeck(ck, src):
              (-1.0, "r", None), (-0.5, "r", None), (0.0, "throat", "$r = R/4$"), (0.5, "r", "$l = R/2$"),
              (1.0, "wall", "$r = R$")]
     whole = Piece("pocket", "sheet", sl, -4.0, 1.0, 0.0, 1,
-                  (("axis", "the centre of the pocket, $l = -4R$, where the ship rides"),
+                  (("axis", "the centre of the pocket, $l = -4R$, where the ship is"),
                    ("edge", "the slice runs on flat through the wall of the bubble and beyond it")),
                   marks, size, digits=VDB_DIGITS)
     ck.isometry("Van Den Broeck, the pocket in the proper distance", whole)
@@ -20791,7 +20791,7 @@ CAPTIONS = {
         "the circle at $l$ has circumference $2\\pi r(l)$. The surface climbs at $dz/dl = \\sqrt{1 - r'^2}$: "
         "it lies level on the floor and the lid of the pocket and outside the neck, where $r' = \\pm 1$, and "
         "it climbs $\\pi R/4$ round the rim and again through the neck.",
-        "The ship rides on the floor, a flat disc $3R$ across, under a bubble whose wall begins at the "
+        "The ship is on the floor, a flat disc $3R$ across, under a bubble whose wall begins at the "
         "circle $r = R$ on the plane above. The neck that joins them is $R/2$ across at its narrowest. "
         "From the lid to the outer end of the neck the circles shrink and then grow while $r'' > 0$, "
         "and there the slice's Einstein tensor has $G_{tt} + G_{ll} = -2r''/r < 0$, the negative energy "
