@@ -9941,7 +9941,7 @@ CAPTIONS = {
         "The plane of $t$ and $w$ ($x_1 = x_2 = x_3 = 0$), in units of $1/k$. The metric on it is "
         "$(-c^2dt^2 + dw^2)/(1 + k|w|)^2$, conformal to Minkowski's plane, so every ray is a straight 45° line, "
         "$ct \\pm w = $ const, through the wall at $w = 0$ and on.",
-        "The horizons lie at $w \\to \\pm\\infty$, off the drawing in every direction. No Christoffel symbol turns "
+        "The horizons lie at $w \\to \\pm\\infty$. No Christoffel symbol turns "
         "a ray out of the plane, so every curve drawn is a null geodesic.",
     ],
     ("randall_sundrum", "poincare", "tz"): [
