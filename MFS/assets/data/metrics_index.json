@@ -736,11 +736,11 @@
       "idealized model",
       "black hole pair creation"
     ],
-    "version": "d310c4c58505c8fd",
+    "version": "ca28db0f2d6c1f94",
     "diagrams": "c33a80d5fbd3405b",
     "conformal": "5a2e7ecd5c36aed6",
     "embedding": "46e51a0ccad0ce53",
-    "curvature": "8a3d2a2465a5ec1a"
+    "curvature": "862b7e82a099b35a"
   },
   {
     "id": "bonnor_rotating_dust",
@@ -1292,7 +1292,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "b5abc5451a53de30",
+    "version": "30306e8b2a30cdd9",
     "diagrams": "07c29806c64a38dc",
     "conformal": "e9b1dc4aed6a0a12",
     "embedding": "de42a4c092d5d323"
@@ -5967,7 +5967,7 @@
     ],
     "version": "0e0cf2e6e7b09448",
     "diagrams": "53ff4d90bff08988",
-    "conformal": "0326c9d2101aa7a6",
+    "conformal": "84bde9f632b545e3",
     "embedding": "7b7a1d9f63195b3e"
   },
   {
@@ -6241,8 +6241,8 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "b0f4bb928ceaa343",
-    "diagrams": "d1e087098b20d92d",
+    "version": "c7ee7a4879482d19",
+    "diagrams": "5e6f09418e784399",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
   },
@@ -6976,11 +6976,11 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "440ffd4d9a10e563",
+    "version": "e086e841517d122e",
     "diagrams": "e574af654990108c",
-    "conformal": "631507c8e742808c",
+    "conformal": "5eac0de61d9d83c8",
     "embedding": "7006f557a81541c6",
-    "curvature": "e2bf4c033d45f31f"
+    "curvature": "41e4f19989f40b03"
   },
   {
     "id": "tilted_universes",
