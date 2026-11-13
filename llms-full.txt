@@ -2291,7 +2291,7 @@ The vacuum fields whose light rays spread apart and shear without twisting, ever
 
 ### Nordström's Scalar Theory of Gravity
 
-Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.
+Gravity as one scalar field on flat spacetime, which Albert Einstein and Adriaan Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.
 
 - id: `nordstrom_scalar`
 - tags: scalar gravity, alternative theories of gravity, scalar field, conformally flat, four-dimensional, Lorentzian, idealized model, curvature singularity, naked singularity, no horizon, point mass, cosmology, dust, equivalence principle
@@ -2515,7 +2515,7 @@ The black hole of three dimensions with the backreaction of strongly coupled qua
 
 ### Quantum Oppenheimer-Snyder Black Hole
 
-Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.
+J. Robert Oppenheimer and Hartland Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.
 
 - id: `quantum_oppenheimer_snyder`
 - tags: loop quantum gravity, loop quantum cosmology, quantum gravity, bounce, dust, gravitational collapse, matched solution, junction conditions, black hole, white hole, horizon, event horizon, inner horizon, Cauchy horizon, mass inflation, causal structure, maximal extension, asymptotically flat, time-dependent, spherically symmetric, Lorentzian, four-dimensional, idealized model
@@ -2735,7 +2735,7 @@ More than half of a closed Friedmann universe of dust joined to Schwarzschild's 
 
 ### Senovilla Universe With No Singularity
 
-A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems leave it alone because it has no closed trapped surface and its expansion falls to zero far from the axis.
+A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems do not apply to it, because it has no closed trapped surface and its expansion falls to zero far from the axis.
 
 - id: `senovilla`
 - tags: perfect fluid, radiation, cosmology, inhomogeneous, cylindrical symmetry, geodesically complete, no singularity, bounce, singularity theorems, globally hyperbolic, comoving, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model

@@ -20107,8 +20107,8 @@ CAPTIONS = {
         "$\\cosh^4(act)\\left(\\cosh^2(3a\\rho)\\,d\\rho^2 + \\sinh^2(3a\\rho)\\,d\\phi^2/9a^2\\cosh^{2/3}(3a\\rho)\\right)$, so the "
         "circle at $\\rho$ has radius $\\cosh^2(act)\\sinh(3a\\rho)/3a\\cosh^{1/3}(3a\\rho)$, and on the axis the surface "
         "starts level.",
-        "Time enters through the factor $\\cosh^2(act)$ alone, so every moment has one shape: the surface shrinks until "
-        "the bounce at $t = 0$, and then grows. Far from the axis a circle's radius grows as the $2/3$ power of its "
+        "Time enters through the factor $\\cosh^2(act)$ alone, so every moment has the same shape: the surface shrinks "
+        "until the bounce at $t = 0$, and then grows. Far from the axis a circle's radius grows as the $2/3$ power of its "
         "distance from the axis, and the surface opens ever more slowly.",
     ],
     ("lqc_bounce", "universe"): [

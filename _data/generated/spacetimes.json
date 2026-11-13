@@ -57316,7 +57316,7 @@
       "id": "nordstrom_scalar",
       "name": "Nordström's Scalar Theory of Gravity",
       "short_name": "Nordström Scalar Gravity",
-      "description": "Gravity as one scalar field on flat spacetime, which Einstein and Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.",
+      "description": "Gravity as one scalar field on flat spacetime, which Albert Einstein and Adriaan Fokker rewrote as a conformally flat spacetime whose curvature scalar is fixed by the trace of the stress-energy tensor of matter. Light keeps the cones of Minkowski space while clocks and rods change from place to place.",
       "tags": [
         "scalar gravity",
         "alternative theories of gravity",
@@ -63307,7 +63307,7 @@
       "id": "quantum_oppenheimer_snyder",
       "name": "Quantum Oppenheimer-Snyder Black Hole",
       "short_name": "Quantum Oppenheimer-Snyder",
-      "description": "Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.",
+      "description": "J. Robert Oppenheimer and Hartland Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.",
       "tags": [
         "loop quantum gravity",
         "loop quantum cosmology",
@@ -69986,7 +69986,7 @@
       "id": "senovilla",
       "name": "Senovilla Universe With No Singularity",
       "short_name": "Senovilla",
-      "description": "A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems leave it alone because it has no closed trapped surface and its expansion falls to zero far from the axis.",
+      "description": "A universe filled with radiation and arranged around an axis, which contracts, is densest at one moment, and expands again, with no big bang and no singularity anywhere, found by José Senovilla in 1990. It satisfies the energy conditions and is globally hyperbolic, and the singularity theorems do not apply to it, because it has no closed trapped surface and its expansion falls to zero far from the axis.",
       "tags": [
         "perfect fluid",
         "radiation",

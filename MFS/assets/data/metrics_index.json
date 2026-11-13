@@ -5079,7 +5079,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "4328ad15551af25c",
+    "version": "ff1b82609d395b59",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
     "embedding": "7667dd747e7d1a4d",
@@ -5157,10 +5157,10 @@
       "dust",
       "equivalence principle"
     ],
-    "version": "c64fb8d2534bfdf5",
-    "diagrams": "6fd971676062a65c",
+    "version": "df3e1be204d1d619",
+    "diagrams": "ea9f09ccff3e0c14",
     "conformal": "20e04688ba6cf230",
-    "embedding": "a1af7a0037273cf7",
+    "embedding": "2700c80755736dc1",
     "curvature": "889fb5c57e63fcf9"
   },
   {
@@ -5477,10 +5477,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "29a10ce84bf7e81f",
-    "diagrams": "4fa9e29b17d51d20",
+    "version": "8794b39f2a890921",
+    "diagrams": "2f6498092c56cff3",
     "conformal": "a1c6fef8b6655acc",
-    "embedding": "b7a09dddf9867ddf"
+    "embedding": "6d7a1ab824bd00a2"
   },
   {
     "id": "poincare_dodecahedral",
@@ -5695,10 +5695,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "dd6aada5dbd890cd",
+    "version": "b7091f1e39cf4bdd",
     "diagrams": "43178260a751b2b6",
-    "conformal": "b740810dfc5bf7e8",
-    "embedding": "aa0bb4ff5da3747e",
+    "conformal": "92decf923312cfa1",
+    "embedding": "cb0d19b9439bbe73",
     "curvature": "4546c14b366adb5a"
   },
   {
@@ -6301,10 +6301,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1163a99a2543ee3f",
+    "version": "c53e3ae1553ece25",
     "diagrams": "ba9dba288cd26f63",
     "conformal": "e6b2c492ab043d17",
-    "embedding": "e135a6bb032eedc2",
+    "embedding": "c95f9a00d77dd7c1",
     "curvature": "4280533b4a12efb1"
   },
   {
