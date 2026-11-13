@@ -20351,13 +20351,12 @@ CAPTIONS = {
         "on through the horizon to close in a spike at the singularity $r = 0$.",
     ],
     ("penrose_impulsive_wave", "snap"): [
-        "The plane through the break and across the string ($\\theta = \\pi/2$ behind the wave, $z = 0$ ahead of "
-        "it), from $ct = \\ell/4$ to $5\\ell/2$, each moment drawn as a surface in flat space with every distance "
-        "along it the metric distance. Ahead of the wave the plane is the string's cone, of half angle "
-        "$\\arcsin\\beta = 30°$, on which a circle at the distance $R$ from the string has the circumference "
-        "$2\\pi\\beta R$. Behind the wave the string is gone and the plane is a level disc of radius $ct$. The "
-        "wave front is the circle where the two meet, and the disc grows at the speed of light as the cone "
-        "flattens onto it.",
+        "The plane through the break and across the string ($\\theta = \\pi/2$ behind the wave, $z = 0$ ahead of it), "
+        "from $ct = \\ell/4$ to $5\\ell/2$, each moment drawn as a surface in flat space with every distance along it "
+        "the metric distance. Ahead of the wave the plane is the string's cone, of half angle $\\arcsin\\beta = 30°$, "
+        "on which a circle at the distance $R$ from the string has the circumference $2\\pi\\beta R$. Behind the wave "
+        "there is no string, and the plane is a level disc of radius $ct$. The wave front is the circle where the two "
+        "meet, and the disc grows at the speed of light as the cone flattens onto it.",
         "A ring of free particles rests on the cone at $R = 2\\,\\ell$. The front reaches every particle of it at "
         "$ct = \\ell$, and from then on the ring falls across the disc toward the centre at $3c/5$, the speed "
         "$c\\,(1 - \\beta^2)/(1 + \\beta^2)$.",
