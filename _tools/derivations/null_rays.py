@@ -7458,7 +7458,7 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$, $z = 0$), the same at every angle and at every "
         "$z$ along the string. It is Schwarzschild's plane: outside $r_s$ the cones narrow toward the vertical as "
         "$r \\to r_s$, because $dt/dr = \\pm(1 - r_s/r)^{-1}$ diverges there. The Gregory-Laflamme instability "
-        "is a ripple along $z$, which is fixed on this plane.",
+        "is a ripple along $z$.",
         "Inside $r_s$ the same components make $r$ the time. We take the future from the ingoing "
         "Eddington-Finkelstein chart, which runs smoothly across $r_s$, and this makes that region the black "
         "hole, where every cone points to $r = 0$, a singular line along $z$. The Kretschmann scalar "
