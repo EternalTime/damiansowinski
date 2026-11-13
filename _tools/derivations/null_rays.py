@@ -11989,8 +11989,8 @@ CAPTIONS = {
         "and goes out with its crest just outside $u = 0$.",
     ],
     ("twisting_cylindrical_waves", "cylindrical", "radial"): [
-        "A pulse of Piran, Safier, and Katz ($\\alpha = 2$) on the plane of $t$ and $\\rho$. Its metric there, "
-        "$e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$ whatever $\\omega$ is, keeps the rays at 45° and in the plane.",
+        "A pulse of Piran, Safier, and Katz ($\\alpha = 2$) on the plane of $t$ and $\\rho$. Its metric there is "
+        "$e^{2(\\gamma - \\psi)}(-c^2dt^2 + d\\rho^2)$ whatever $\\omega$ is, so the rays run at 45° and stay in the plane.",
         "The pulse is deepest on the axis at $t = 0$ ($\\psi = -1.32$) and leaves just inside $\\rho = |ct|$.",
     ],
     ("twisting_cylindrical_waves", "null", "radial"): [

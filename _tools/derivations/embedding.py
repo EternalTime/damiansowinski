@@ -14743,7 +14743,7 @@ def twisting_cylindrical_waves(ck, src):
                  settings="$\\alpha = 2$, lengths in units of $a$.",
                  input=nr.PSK_INPUT,
                  stops=["From $ct = 1.36\\,a$ on, the circles near the axis grow faster than the distance out to "
-                        "them, and no surface of revolution in flat space carries that part of the moment."])]
+                        "them, too fast for a surface of revolution in flat space."])]
 
 
 GOWDY_MOMENTS = (0.25, 0.5, 1.0, 2.0, 3.0)     # the areal time t
