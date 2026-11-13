@@ -19208,8 +19208,8 @@ CAPTIONS = {
         "The curvature of the surface at radius $r$ is $\\beta(5R^2 - 6r^2)/R^4$. It is positive out to "
         "$r = R\\sqrt{5/6}$, where the surface curves like a cap, and negative beyond, where it curves like a "
         "saddle, as Flamm's paraboloid does everywhere. Karl Schwarzschild's star of uniform density is a cap of "
-        "a sphere all the way out, and meets the paraboloid with a jump in curvature that this star does not "
-        "have: the density here is zero on both sides of $r = R$.",
+        "a sphere all the way out, and meets the paraboloid with a jump in curvature; here the curvature is "
+        "continuous at $r = R$, where the density is zero on both sides.",
     ],
     ("kodama_kink", "wormhole"): [
         "The equatorial plane ($\\theta = \\pi/2$) of Kodama's kink at $f = 1.25$ at one moment of $t$, drawn as a "
