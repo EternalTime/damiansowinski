@@ -9717,7 +9717,7 @@ CAPTIONS = {
         "observer at the pole ever receives light from only the hemisphere about it on the waist.",
     ],
     ("universe_from_nothing", "lapse", "radial"): [
-        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in Feldbrugge, Lehners and Turok's "
+        "The plane of $t$ and $\\chi$ ($\\theta = \\pi/2$, $\\phi = 0$) in Feldbrugge, Lehners, and Turok's "
         "gauge, above the waist $t = 0$. On it $ds^2 = -\\ell^2c^2dt^2/(\\ell^2 + c^2t^2) + "
         "(\\ell^2 + c^2t^2)\\,d\\chi^2$, with the squared radius of the 3-sphere a quadratic in $t$.",
         "The rays keep $\\arctan(ct/\\ell) \\pm \\chi$, so the drawing is the closed slicing's with its "

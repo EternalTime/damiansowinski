@@ -29643,7 +29643,7 @@ CAPTIONS = {
     ("universe_from_nothing", "scale_factor"): [
         "The scale factor chart above its join, $\\cos T = \\ell/a$ and $X = \\chi$, each point in the "
         "diagram a 2-sphere. The join $a = \\ell$ is the lower edge, where the same line element turns "
-        "Riemannian and carries on as the 4-sphere.",
+        "Riemannian and continues as the 4-sphere.",
     ],
     ("universe_from_nothing", "conformal"): [
         "The conformal chart, $T = \\eta$ and $X = \\chi$, each point in the diagram a 2-sphere. Its metric is "
@@ -29651,7 +29651,7 @@ CAPTIONS = {
         "$\\eta = \\pi/2$.",
     ],
     ("universe_from_nothing", "lapse"): [
-        "Feldbrugge, Lehners and Turok's gauge, $\\tan T = ct/\\ell$ and $X = \\chi$, each point in the "
+        "Feldbrugge, Lehners, and Turok's gauge, $\\tan T = ct/\\ell$ and $X = \\chi$, each point in the "
         "diagram a 2-sphere. Its lines of constant $t$ are those of the closed slicing, with $ct = "
         "\\ell\\sinh(ct_c/\\ell)$ for the proper time $t_c$ of the closed slicing.",
     ],
