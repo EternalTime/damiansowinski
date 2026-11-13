@@ -5932,7 +5932,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "48586f0260719dcd",
+    "version": "0a805e9864a412cf",
     "diagrams": "ef50bbbb10b2fcf3",
     "conformal": "7870256e2aa08cb4",
     "embedding": "c4852dac6f3f346e",
@@ -6488,9 +6488,9 @@
       "idealized model",
       "rigid rotation"
     ],
-    "version": "87e953234ebb54b6",
+    "version": "247351cd93654271",
     "diagrams": "24d791c0188bc8ef",
-    "embedding": "96ddbe0d3bf719ac"
+    "embedding": "5696bd98df41ef9d"
   },
   {
     "id": "spheroidal_stars",
@@ -6934,7 +6934,7 @@
       "idealized model",
       "dyon"
     ],
-    "version": "3869c0cf913f3c0e",
+    "version": "55909f02435e1fde",
     "diagrams": "3ed264d5e1cddbce",
     "conformal": "0d346a206bbd9515",
     "embedding": "1154c266ff9d9f93"
@@ -7007,10 +7007,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5310d78bb83bf9a7",
+    "version": "22136214fa1eb7a1",
     "diagrams": "79b6f6d84c2d4018",
     "conformal": "044a1f5e11dda30f",
-    "embedding": "22f4e2ee1ae4426f"
+    "embedding": "4f2811498bb7f981"
   },
   {
     "id": "tippett_tsang",
@@ -7031,8 +7031,8 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "e59b0f17c94807e4",
-    "diagrams": "adf26d5017096abb",
+    "version": "58fb47004118e185",
+    "diagrams": "c329c6b5ada2da7b",
     "embedding": "39b40fc53795299b"
   },
   {

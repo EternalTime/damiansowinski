@@ -1279,8 +1279,8 @@ CAPTIONS = {
     ],
     ("tippett_tsang", "cartesian", "ring"): [
         "The slice $z = 0$ of $t$, $x$, and $y$, $t$ up, with Tippett and Tsang's bubble. Its wall is a tube bent "
-        "round the circle $x^2 + c^2t^2 = A^2$, a ring standing on its edge in the plane of $t$ and $x$. A cut "
-        "of the ring at one $t$ is what someone outside sees at that moment: no bubble before $ct = "
+        "round the circle $x^2 + c^2t^2 = A^2$, a ring standing on its edge in the plane of $t$ and $x$. Someone "
+        "outside sees at each moment the cut of the ring at that $t$: no bubble before $ct = "
         "-\\sqrt{A^2 + R^2}$, then one that splits in two, two at rest at $t = 0$, and one again before it "
         "disappears.",
         "Inside the tube the light cones turn with the angle $\\lambda$ of the plane of $t$ and $x$, so a rider "

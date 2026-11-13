@@ -3025,7 +3025,7 @@ A conformal Schwarzschild geometry with cosmological expansion and a radial ener
 
 ### Black Holes of String Theory with Three and Four Charges
 
-The black holes of string theory whose entropy was first counted from their microscopic states: in five dimensions with three charges, Strominger and Vafa's hole and the family of Horowitz, Maldacena, and Strominger around it, and in four dimensions with four charges, the hole of Cvetič and Youm. Each charge enters the metric through a harmonic function of its own, and the horizon of the extreme hole has an area only when every charge is present.
+The black holes of string theory whose entropy was first counted from their microscopic states: in five dimensions with three charges, Andrew Strominger and Cumrun Vafa's hole and the family of Gary Horowitz, Juan Maldacena, and Strominger around it, and in four dimensions with four charges, the hole of Mirjam Cvetič and Donam Youm. Each charge enters the metric through a harmonic function of its own, and the horizon of the extreme hole has an area only when every charge is present.
 
 - id: `string_bh_three_four_charges`
 - tags: static, stationary, spherically symmetric, hyperspherical symmetry, black hole, charged black hole, electric charge, string theory, black hole entropy, black hole thermodynamics, brane, harmonic function, extremal, supersymmetric, dilaton, scalar field, mass, horizon, event horizon, inner horizon, throat, curvature singularity, coordinate singularity, maximal extension, causal structure, asymptotically flat, higher dimensions, five-dimensional, four-dimensional, exact solution, Lorentzian, Einstein equations, idealized model, dyon
@@ -3053,7 +3053,7 @@ A flat sheet of three dimensions in a spacetime of ten, carrying the charge of t
 
 ### Tilted Universes and the Whimper
 
-Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In the simplest of them, Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.
+Homogeneous universes whose matter drifts through the surfaces of homogeneity, so that an observer riding with it sees a lopsided sky. In one of them, David L. Farnsworth's dust of 1967, those surfaces turn from spacelike to timelike across a Cauchy horizon, and the light rays along the horizon end where the density and the curvature are finite: a whimper, as George Ellis and A. R. King named it in 1974.
 
 - id: `tilted_universes`
 - tags: cosmology, spatially homogeneous, homogeneous, anisotropic, Bianchi classification, locally rotationally symmetric, dust, Cauchy horizon, curvature singularity, big bang, expanding universe, hyperbolic space, dipole, comoving, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -3066,7 +3066,7 @@ Homogeneous universes whose matter drifts through the surfaces of homogeneity, s
 
 ### Tippett-Tsang Time Machine
 
-A bubble of curved spacetime whose centre runs round a circle in the plane of $t$ and $x$, proposed by Benjamin Tippett and David Tsang in a preprint of 2013 and a paper of 2017. Inside the bubble spacetime is flat in Rindler's form with an angle for its time, so the world line of a rider who keeps accelerating closes on itself. Outside is Minkowski space, and the wall between the two violates the null energy condition, carries naked singularities, and leaves the spacetime with no consistent arrow of time.
+A bubble of curved spacetime whose centre runs round a circle in the plane of $t$ and $x$, proposed by Benjamin Tippett and David Tsang in a preprint of 2013 and a paper of 2017. Inside the bubble spacetime is flat in Wolfgang Rindler's form with an angle for its time, so the world line of a rider who keeps accelerating closes on itself. Outside is Minkowski space, and the wall between the two violates the null energy condition, carries naked singularities, and leaves the spacetime with no consistent arrow of time.
 
 - id: `tippett_tsang`
 - tags: time machine, closed timelike curves, bubble, exotic matter, energy condition violation, naked singularity, not time orientable, Rindler, asymptotically flat, time-dependent, idealized model, Lorentzian, Einstein equations, four-dimensional
