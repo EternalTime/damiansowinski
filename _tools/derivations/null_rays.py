@@ -10398,7 +10398,7 @@ CAPTIONS = {
         "The plane of $U$ and $V$ ($\\phi = 0$) at $R = \\ell$ and $\\alpha = 1$, the same at every $\\phi$, "
         "drawn with $(V - U)/2$ across and $(U + V)/2$ up. Off the shock $U = 0$ the metric on this plane is the "
         "black hole's, $-4\\ell^2\\,dU\\,dV/(1 + UV)^2$, with infinity on $UV = -1$ and the singularity $r = 0$ "
-        "on $UV = 1$, and light runs at 45°. The rays moving right keep their $U$ and run beside the shock. Each "
+        "on $UV = 1$, and light runs at 45°. The rays moving right have constant $U$ and run beside the shock. Each "
         "ray moving left crosses it and comes out with $V$ larger by $\\alpha$, the jump of $V = v + "
         "\\alpha\\Theta(u)$ [shenker2014].",
         "No Christoffel symbol turns a ray out of the plane, so every curve drawn is a null geodesic.",

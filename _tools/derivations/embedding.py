@@ -18939,7 +18939,7 @@ CAPTIONS = {
         "the shock either way the circles shrink at $d\\rho/ds = -\\alpha R/2\\ell$, so the two halves meet "
         "there at an angle, the delta of the curvature on the shell of null particles. Each half narrows to a neck "
         "of radius $R(16 - \\alpha^2)/(16 + \\alpha^2) = 15R/17$ inside its horizon and widens again, so the "
-        "single throat of the BTZ black hole's $t = 0$ has become two, with the bridge between them longer.",
+        "moment has two throats, where the BTZ black hole's $t = 0$ has one, and a longer bridge between them.",
     ],
     ("btz", "throat"): [
         "The moment $t = 0$ of the hole without rotation ($M = 1$, $J = 0$) through both of its exteriors, "
