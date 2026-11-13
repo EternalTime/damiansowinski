@@ -8995,13 +8995,13 @@ CAPTIONS = {
         "same areal radius, and the term in $m^2$ drops out of $g_{tt}$ at $\\beta = \\gamma$.",
     ],
     ("ppn_metric", "rotating", "axis"): [
-        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the body out "
-        "($R = 10\\,m$, $a = 2m$, $\\beta = \\gamma = 1$, $\\alpha_1 = 0$). The dragging of frames carries a "
+        "The plane of $t$ and $r$ on the axis of rotation ($\\theta = 0$) from the surface of the body, $r = R$, "
+        "out ($R = 10\\,m$, $a = 2m$, $\\beta = \\gamma = 1$, $\\alpha_1 = 0$). The dragging of frames carries a "
         "factor $\\sin^2\\theta$ and vanishes on the axis, so these rays are null geodesics that stay on it, "
         "with the edges $dr/d(ct) = \\pm\\sqrt{(1 - 2m/r + 2\\beta m^2/r^2)/(1 + 2\\gamma m/r)}$ of the body "
         "at rest.",
         "The cones are narrowest at the surface, where $dr/d(ct) = \\pm 0.827$, and open to 45° far from the "
-        "body. The chart ends at $r = R$, where the body begins.",
+        "body.",
     ],
     ("ppn_metric", "rotating", "equator"): [
         "The plane of $t$ and $r$ on the equator ($\\theta = \\pi/2$) with $\\phi$ divided out, the metric "

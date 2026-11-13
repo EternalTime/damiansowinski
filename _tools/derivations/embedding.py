@@ -21293,7 +21293,7 @@ CAPTIONS = {
         "the metric distance. The moment is $(1 + 2\\gamma m/r)(dr^2 + r^2d\\phi^2)$, so the circle of isotropic "
         "radius $r$ has the radius $\\sqrt{r(r + 2\\gamma m)}$ and the surface rises as "
         "$dz/dr = \\sqrt{\\gamma m(2r + 3\\gamma m)/(r(r + 2\\gamma m))}$.",
-        "The slope is $\\gamma$'s doing alone: $\\beta$ stands only in $g_{tt}$, and the rotating body has this "
+        "The slope depends on $\\gamma$ alone: $\\beta$ stands only in $g_{tt}$, and the rotating body has this "
         "same equator for every spin. The faint surface is Flamm's paraboloid of the same mass, from which this one "
         "falls $0.30\\,m$ short by $3R$.",
     ],
