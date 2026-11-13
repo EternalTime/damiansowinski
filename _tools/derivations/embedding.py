@@ -20880,7 +20880,7 @@ CAPTIONS = {
         "half and $\\psi = \\pi$ on the other) in the Eguchi-Hanson space, drawn as a surface in flat space with "
         "every distance along it the metric distance. On it the metric is $dr^2/(1 - a^4/r^4) + (r^2/4)\\,d\\phi^2$, "
         "so the circle at $r$ has circumference $\\pi r$, and the smallest circle is the bolt's equator, of radius "
-        "$a/2$. The two halves are the two ways out of the bolt along the plane of $r$ and $\\psi$ over each point "
+        "$a/2$. The two halves are the two opposite directions from the bolt in the plane of $r$ and $\\psi$ over each point "
         "of the equator, and they meet smoothly there.",
         "Each half opens into a cone of half angle $30°$. Both run out to the same infinity: the points with "
         "$\\psi = 0$ and with $\\psi = \\pi$ at large $r$ lie on the one boundary, a 3-sphere with opposite points "
