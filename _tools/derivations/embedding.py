@@ -21001,7 +21001,7 @@ CAPTIONS = {
         "every distance along it the metric distance. With the time turned to the angle "
         "$\\theta = ir_hct/L^2$ the metric is $d\\rho^2 + L^2\\sinh^2(\\rho/L)\\,d\\theta^2$, the hyperbolic "
         "plane of curvature $-1/L^2$, so the circle at $\\rho$ has circumference $2\\pi L\\sinh(\\rho/L)$.",
-        "The circles grow faster than the distance out to them, so the disc stands in Minkowski space, on the "
+        "The circles grow faster than the distance out to them, so the disc lies in Minkowski space, on the "
         "sheet $Z = L\\cosh(\\rho/L) - L$ of a hyperboloid that nears the light cone far out. At the horizon "
         "$\\rho = 0$ the circle closes to a point as smoothly as the pole of a sphere, which fixes the period "
         "$2\\pi$ of $\\theta$, a period $2\\pi L^2/r_hc$ of the Euclidean time, and its inverse is the Hawking "

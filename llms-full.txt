@@ -1008,7 +1008,7 @@ Einstein's theory of static gravity from his Prague year: space stays flat and t
 
 ### Einstein-Dirac-Maxwell Wormhole
 
-A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.
+A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll, and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.
 
 - id: `einstein_dirac_maxwell_wormhole`
 - tags: wormhole, traversable, throat, no horizon, exotic matter, energy condition violation, electric charge, electromagnetic field, Dirac field, braneworld, static, stationary, spherically symmetric, asymptotically flat, exact solution, Lorentzian, four-dimensional, idealized model
@@ -1070,7 +1070,7 @@ A rotating charged oblate shell joining a flat interior to a Kerr-Newman exterio
 
 ### Elliptic de Sitter Space
 
-De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \sim -X$. One observer's horizon then bounds the whole world and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.
+De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \sim -X$. One observer's horizon then bounds the whole world, and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.
 
 - id: `elliptic_de_sitter`
 - tags: de Sitter, positive cosmological constant, cosmological constant, maximally symmetric, constant curvature, not time orientable, topology, cosmological horizon, horizon, causal structure, holography, inflation, expanding universe, cosmology, homogeneous, isotropic, geodesically complete, no singularity, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, Einstein space, conformally flat, stationary, static, spherically symmetric
@@ -1499,7 +1499,7 @@ Majumdar and Papapetrou's balanced charges set spinning: the stationary electrov
 
 ### Jackiw-Teitelboim Black Hole
 
-A black hole in two spacetime dimensions, in the gravity of Teitelboim and Jackiw, where a scalar field, the dilaton, holds the curvature at $R = -2/L^2$. Every solution is a piece of anti-de Sitter space of two dimensions, and the dilaton tells the black hole from empty space: its value on the horizon is the entropy. The same gravity governs the throat of a nearly extreme charged black hole, and in it the quantum mechanics of a black hole can be solved exactly.
+A black hole in two spacetime dimensions, in the gravity of Claudio Teitelboim and Roman Jackiw, where a scalar field, the dilaton, holds the curvature at $R = -2/L^2$. Every solution is a piece of anti-de Sitter space of two dimensions, and the dilaton distinguishes the black hole from empty space: its value on the horizon is the entropy. The same gravity governs the throat of a nearly extreme charged black hole, and in it the quantum mechanics of a black hole can be solved exactly.
 
 - id: `jackiw_teitelboim_black_hole`
 - tags: black hole, two-dimensional, dilaton, dilaton gravity, lower-dimensional gravity, anti-de Sitter, constant curvature, Hawking radiation, Hawking temperature, black hole thermodynamics, black hole entropy, holography, AdS/CFT, information paradox, Page curve, horizon, event horizon, Kruskal extension, Euclidean black hole, exact solution, Lorentzian, idealized model, Einstein space, cosmological constant, negative cosmological constant, conformally flat, static, stationary

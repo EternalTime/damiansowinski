@@ -1896,8 +1896,8 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c00d404dbee62201",
-    "embedding": "4717367b2f2467bd",
+    "version": "c273fac3f1ef0b6e",
+    "embedding": "6bc48a526283dfca",
     "curvature": "22c75e43617d680d"
   },
   {
@@ -2004,7 +2004,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ff58e2731ef9e606",
+    "version": "79d99fefaa2debe6",
     "diagrams": "8ed3da1d15c6836e",
     "conformal": "29a0a2bdfee14a28",
     "embedding": "5f6b7e20a1d2a9dd",
@@ -2145,7 +2145,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "e9921d859824fa7a",
+    "version": "eb6c8670572865b8",
     "diagrams": "e73839d0a0529179",
     "conformal": "2fed97c5ab6ddc3d",
     "embedding": "954af1b6ad40d276"
@@ -2441,9 +2441,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1a12635737e04b85",
+    "version": "a391f97295c9b36f",
     "diagrams": "d86ff0a92ec2a5b0",
-    "embedding": "eb113e431f8fa107"
+    "embedding": "0674f5fcca5d25f8"
   },
   {
     "id": "ghost_neutrinos",
@@ -3209,10 +3209,10 @@
       "static",
       "stationary"
     ],
-    "version": "d9ecb61f75942ef8",
+    "version": "25122c5f8cc25979",
     "diagrams": "fa020044695455d4",
-    "conformal": "8b047d93d5d75c6c",
-    "embedding": "0cc1bd857f4933e9"
+    "conformal": "72b8b8364c2383ff",
+    "embedding": "3f3bef969a674ac2"
   },
   {
     "id": "kaluza_klein_black_hole",

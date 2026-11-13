@@ -22535,7 +22535,7 @@
       "id": "einstein_dirac_maxwell_wormhole",
       "name": "Einstein-Dirac-Maxwell Wormhole",
       "short_name": "Einstein-Dirac-Maxwell",
-      "description": "A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.",
+      "description": "A static wormhole held open by an electric field and a pair of massless Dirac fields, the exact solution of Einstein-Dirac-Maxwell theory that Jose Luis Blázquez-Salcedo, Christian Knoll, and Eugen Radu found in 2021. Its $g_{tt}$ is the extreme Reissner-Nordström black hole's, its charge exceeds its mass, and the electric field runs through the throat from one side to the other.",
       "tags": [
         "wormhole",
         "traversable",
@@ -24316,7 +24316,7 @@
       "id": "elliptic_de_sitter",
       "name": "Elliptic de Sitter Space",
       "short_name": "Elliptic de Sitter",
-      "description": "De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \\sim -X$. One observer's horizon then bounds the whole world and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.",
+      "description": "De Sitter space with every event identified with the event opposite it on the hyperboloid, $X \\sim -X$. One observer's horizon then bounds the whole world, and future and past infinity are a single sphere. The spacetime has no closed timelike curves and no global direction of time.",
       "tags": [
         "de Sitter",
         "positive cosmological constant",
@@ -35924,7 +35924,7 @@
       "id": "jackiw_teitelboim_black_hole",
       "name": "Jackiw-Teitelboim Black Hole",
       "short_name": "Jackiw-Teitelboim",
-      "description": "A black hole in two spacetime dimensions, in the gravity of Teitelboim and Jackiw, where a scalar field, the dilaton, holds the curvature at $R = -2/L^2$. Every solution is a piece of anti-de Sitter space of two dimensions, and the dilaton tells the black hole from empty space: its value on the horizon is the entropy. The same gravity governs the throat of a nearly extreme charged black hole, and in it the quantum mechanics of a black hole can be solved exactly.",
+      "description": "A black hole in two spacetime dimensions, in the gravity of Claudio Teitelboim and Roman Jackiw, where a scalar field, the dilaton, holds the curvature at $R = -2/L^2$. Every solution is a piece of anti-de Sitter space of two dimensions, and the dilaton distinguishes the black hole from empty space: its value on the horizon is the entropy. The same gravity governs the throat of a nearly extreme charged black hole, and in it the quantum mechanics of a black hole can be solved exactly.",
       "tags": [
         "black hole",
         "two-dimensional",

@@ -31586,9 +31586,9 @@ CAPTIONS = {
         "each point in the diagram a single event. The drawing is the chart itself, $T = \\tau$ and "
         "$X = \\sigma - \\pi/2$, since the metric $L^2(-d\\tau^2 + d\\sigma^2)/\\sin^2\\sigma$ is already flat "
         "space times a factor.",
-        "The strip $0 < \\sigma < \\pi$ is the whole of anti-de Sitter space of two dimensions, and the dilaton "
-        "$\\phi = \\phi_rr_h\\cos\\tau/L^2\\sin\\sigma$ cuts the black hole out of it as the square "
-        "$|\\tau| < \\pi/2$, where it is positive. The horizons are the diagonals of the square.",
+        "The strip $0 < \\sigma < \\pi$ is the whole of anti-de Sitter space of two dimensions, and the black hole "
+        "is the square $|\\tau| < \\pi/2$ within it, where the dilaton "
+        "$\\phi = \\phi_rr_h\\cos\\tau/L^2\\sin\\sigma$ is positive. The horizons are the diagonals of the square.",
     ],
     ("jackiw_teitelboim_black_hole", "poincare"): [
         "The black hole of Jackiw and Teitelboim's gravity with the Poincaré chart's $T$ and $z$ on it "
