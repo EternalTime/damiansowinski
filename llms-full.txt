@@ -1585,7 +1585,7 @@ Kasner's anisotropic universe filled with a massless scalar field, which is also
 
 ### Kastor-Traschen Colliding Black Holes
 
-Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes ride the expansion or the contraction of the universe, so holes that fall together merge.
+Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes move with the expansion or the contraction of the universe, so holes that fall together merge.
 
 - id: `kastor_traschen`
 - tags: electrovacuum, time-dependent, electric charge, charged black hole, black hole, multiple black holes, black hole collision, white hole, mass, electromagnetic field, cosmological constant, positive cosmological constant, de Sitter, lukewarm, expanding universe, cosmology, horizon, event horizon, cosmological horizon, Cauchy horizon, inner horizon, curvature singularity, naked singularity, cosmic censorship, harmonic function, superposition, causal structure, exact solution, Lorentzian, Einstein equations, Einstein-Maxwell, four-dimensional, idealized model
@@ -1630,7 +1630,7 @@ A rotating black hole wrapped in a cloud of massive complex scalar field that ne
 
 ### Kerr-Bertotti-Robinson Black Hole
 
-Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric with the field switched off and Bertotti and Robinson's universe with the mass taken away, and the spinning hole carries an electric charge.
+Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric when the field vanishes and Bertotti and Robinson's universe when the mass does, and the spinning hole carries an electric charge.
 
 - id: `kerr_bertotti_robinson`
 - tags: electrovacuum, Einstein-Maxwell, electromagnetic field, magnetic field, uniform field, rotating, rotating black hole, black hole, charged black hole, electric charge, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, ring singularity, curvature singularity, horizon, event horizon, Cauchy horizon, not asymptotically flat, Petrov type D, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, black hole shadow
@@ -2203,7 +2203,7 @@ An extremal electrically charged black hole localized on a compact spatial circl
 
 ### Myers-Perry Rotating Black Hole
 
-The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.
+The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane has a horizon at every spin.
 
 - id: `myers_perry`
 - tags: vacuum, rotating, rotating black hole, black hole, stationary, axisymmetric, angular momentum, mass, ergoregion, frame dragging, curvature singularity, ring singularity, conical singularity, horizon, event horizon, Cauchy horizon, causal structure, asymptotically flat, higher dimensions, five-dimensional, six-dimensional, Kerr-Schild, black ring, black hole uniqueness, Hopf fibration, exact solution, Lorentzian, Einstein equations, idealized model

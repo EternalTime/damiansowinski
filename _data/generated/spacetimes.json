@@ -38323,7 +38323,7 @@
       "id": "kastor_traschen",
       "name": "Kastor-Traschen Colliding Black Holes",
       "short_name": "Kastor-Traschen",
-      "description": "Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes ride the expansion or the contraction of the universe, so holes that fall together merge.",
+      "description": "Any number of charged black holes in a universe with a positive cosmological constant, the exact solution of the Einstein-Maxwell equations David Kastor and Jennie Traschen found in 1993. Each hole has a charge equal to its mass, and the holes move with the expansion or the contraction of the universe, so holes that fall together merge.",
       "tags": [
         "electrovacuum",
         "time-dependent",
@@ -38365,22 +38365,22 @@
         {
           "id": "majumdar_papapetrou",
           "kind": "special_case",
-          "text": "These holes with the cosmological constant switched off. At $H = 0$ the time drops out of the metric and the holes stand still [kastor1993]."
+          "text": "These holes with the cosmological constant set to zero. At $H = 0$ the time drops out of the metric and the holes stand still [kastor1993]."
         },
         {
           "id": "reissner_nordstrom_de_sitter",
           "kind": "special_case",
-          "text": "One hole alone is the lukewarm charged black hole in de Sitter space, the one as hot as its cosmological horizon, in coordinates that ride the expansion [kastor1993, brill1994]."
+          "text": "One hole alone is the lukewarm charged black hole in de Sitter space, the one as hot as its cosmological horizon, in coordinates comoving with the expansion [kastor1993, brill1994]."
         },
         {
           "id": "de_sitter",
           "kind": "special_case",
-          "text": "The universe the holes ride in. With every mass set to zero the metric is de Sitter space in its flat slicing [kastor1993]."
+          "text": "The universe around the holes. With every mass set to zero the metric is de Sitter space in its flat slicing [kastor1993]."
         },
         {
           "id": "mcvittie",
           "kind": "family",
-          "text": "A mass in an expanding universe filled with fluid, where the pressure piles up around the mass to keep the density even [kastor1993]."
+          "text": "A mass in an expanding universe filled with fluid, where the pressure grows toward the mass so that the density stays uniform [kastor1993]."
         },
         {
           "id": "misner_brill_lindquist",
@@ -39670,7 +39670,7 @@
       "id": "kerr_bertotti_robinson",
       "name": "Kerr-Bertotti-Robinson Black Hole",
       "short_name": "Kerr-Bertotti-Robinson",
-      "description": "Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric with the field switched off and Bertotti and Robinson's universe with the mass taken away, and the spinning hole carries an electric charge.",
+      "description": "Kerr's rotating black hole in a magnetic field that points along its axis of rotation and is uniform far away, the exact solution of the Einstein-Maxwell equations that Jiří Podolský and Hryhorii Ovcharenko found in 2025. It is of Petrov type D, it is Kerr's metric when the field vanishes and Bertotti and Robinson's universe when the mass does, and the spinning hole carries an electric charge.",
       "tags": [
         "electrovacuum",
         "Einstein-Maxwell",
@@ -39708,7 +39708,7 @@
         {
           "id": "kerr",
           "kind": "special_case",
-          "text": "Switch the field off, $B = 0$, and Podolský and Ovcharenko's metric is Kerr's in Boyer and Lindquist's coordinates, with $m = GM/c^2$ [podolsky2025]."
+          "text": "With no field, $B = 0$, Podolský and Ovcharenko's metric is Kerr's in Boyer and Lindquist's coordinates, with $m = GM/c^2$ [podolsky2025]."
         },
         {
           "id": "bertotti_robinson",
@@ -46401,7 +46401,7 @@
         {
           "id": "schwarzschild",
           "kind": "piece",
-          "text": "Every cell is a piece of Schwarzschild's geometry, cut off at a sphere in radial free fall. The lattice has no other ingredient [lindquist1957]."
+          "text": "Every cell is a piece of Schwarzschild's geometry, cut off at a sphere in radial free fall. The lattice is built from nothing else [lindquist1957]."
         },
         {
           "id": "frw",
@@ -46416,7 +46416,7 @@
         {
           "id": "oppenheimer_snyder",
           "kind": "family",
-          "text": "The same fit turned inside out. There a ball of Friedmann's dust sits inside Schwarzschild's vacuum, here Schwarzschild's vacuum sits inside a cell of a closed universe, and in both the boundary falls along a radial geodesic whose energy is the cosine of the boundary's angle."
+          "text": "The same matching with the two sides exchanged. There a ball of Friedmann's dust sits inside Schwarzschild's vacuum, here Schwarzschild's vacuum sits inside a cell of a closed universe, and in both the boundary falls along a radial geodesic whose energy is the cosine of the boundary's angle."
         },
         {
           "id": "einstein_rosen_bridge",
@@ -50615,17 +50615,17 @@
         {
           "id": "small_universes",
           "kind": "generalisation",
-          "text": "Milne's universe with matter let in and its hyperbolic space rolled up into a closed form. With $a = ct$ and nothing in it, the hyperbolic small universe is Milne's at each point."
+          "text": "Milne's universe with matter added and its hyperbolic space made compact. With $a = ct$ and nothing in it, the hyperbolic small universe is Milne's at each point."
         },
         {
           "id": "tilted_universes",
           "kind": "generalisation",
-          "text": "Milne's universe with its particles aimed to miss the origin. Straight world lines that each pass one event at the distance $C$ fill a part of flat spacetime with a Cauchy horizon in it, Ellis and King's picture of the whimper [ellis1974]."
+          "text": "Milne's universe with its particles aimed to miss the origin. Straight world lines that each pass one event at the distance $C$ fill a part of flat spacetime with a Cauchy horizon in it, George Ellis and Andrew King's picture of the whimper [ellis1974]."
         },
         {
           "id": "topological_star",
           "kind": "family",
-          "text": "Inside Bah and Heidmann's black string, next to the bubble that ends it, the plane of $r$ and the circle is Milne's universe of two dimensions, a cone of flat spacetime closing on its tip [bah2021]."
+          "text": "Inside Ibrahima Bah and Pierre Heidmann's black string, next to the bubble that ends it, the plane of $r$ and the circle is Milne's universe of two dimensions, a cone of flat spacetime closing on its tip [bah2021]."
         },
         {
           "id": "linear_dilaton",
@@ -54718,7 +54718,7 @@
       "id": "myers_perry",
       "name": "Myers-Perry Rotating Black Hole",
       "short_name": "Myers-Perry",
-      "description": "The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane keeps its horizon at every spin.",
+      "description": "The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Robert Myers and Malcolm Perry gave in 1986, with a separate spin in each independent plane of rotation. In five dimensions it shares its mass and spin with black rings, and from six dimensions up a black hole turning in one plane has a horizon at every spin.",
       "tags": [
         "vacuum",
         "rotating",
@@ -54761,7 +54761,7 @@
         {
           "id": "tangherlini",
           "kind": "special_case",
-          "text": "Every spin switched off. The horizon is a round sphere again, of radius $\\mu^{1/(D-3)}$ [myers2011]."
+          "text": "Every spin set to zero. The horizon is a round sphere, of radius $\\mu^{1/(D-3)}$ [myers2011]."
         },
         {
           "id": "kaluza_klein_monopole",
@@ -54776,17 +54776,17 @@
         {
           "id": "belinski_zakharov",
           "kind": "family",
-          "text": "Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
+          "text": "Andrei Pomeransky derived the hole of five dimensions as two solitons, by Belinski and Zakharov's inverse scattering method [pomeransky2006]."
         },
         {
           "id": "string_bh_three_four_charges",
           "kind": "family",
-          "text": "Two ways of dressing Tangherlini's hole of five dimensions: spin here, three charges there. Cvetič and Youm's rotating solution has both at once [cvetic1996rotating]."
+          "text": "Tangherlini's hole of five dimensions with three charges, where this hole has spin. Mirjam Cvetič and Donam Youm's rotating solution has both at once [cvetic1996rotating]."
         },
         {
           "id": "myers_compactified",
           "kind": "family",
-          "text": "A static, charged black hole in five dimensions with one spatial direction curled into a circle [horowitzmaeda2002, myers1987compact]."
+          "text": "A static, charged black hole in five dimensions with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
         }
       ],
       "references": [

@@ -20926,8 +20926,8 @@ CAPTIONS = {
         "metric distance. A circle of constant $r$ has the circumference radius "
         "$\\sqrt{r^2 + a^2 + \\mu a^2/r^2}$, which at the throat $r_+$ is $\\mu/r_+ = 1.25\\sqrt{\\mu}$.",
         "The slice runs through the throat, the bifurcation surface of the horizon, into a second exterior. "
-        "The dotted circle is the edge of the ergosphere, $r = \\sqrt{\\mu}$, which leaves no mark on the "
-        "shape of the slice, since $g_{t\\phi}$ drops out at constant $t$.",
+        "The dotted circle is the edge of the ergosphere, $r = \\sqrt{\\mu}$, and the shape of the slice "
+        "does not depend on it, since $g_{t\\phi}$ drops out at constant $t$.",
     ],
     ("myers_perry", "transverse"): [
         "The plane of $r$ and $\\psi$ ($\\theta = 0$), transverse to the rotation, of the same black hole at "
@@ -20935,7 +20935,7 @@ CAPTIONS = {
         "distance. On it the metric is $(r^2 + a^2)\\,dr^2/(r^2 - r_+^2) + r^2d\\psi^2$, and the surface is "
         "$z = \\sqrt{\\mu}\\,\\mathrm{arcosh}(r/r_+)$, a catenoid stretched along its axis by $\\sqrt{\\mu}/r_+$.",
         "Its throat has the radius $r_+ = 0.8\\sqrt{\\mu}$, where the throat in the plane of rotation has "
-        "$1.25\\sqrt{\\mu}$: the horizon is wider in the plane it turns in. With the spin switched off both "
+        "$1.25\\sqrt{\\mu}$: the horizon is wider in the plane it turns in. With no spin both "
         "throats have the radius $\\sqrt{\\mu}$ and the surface is the catenoid of the Schwarzschild-Tangherlini "
         "black hole in five dimensions.",
     ],

@@ -31420,12 +31420,12 @@ CAPTIONS = {
         "The plane of rotation ($\\theta = \\pi/2$) of the Myers-Perry black hole with one spin in five dimensions "
         "($a = 0.6\\sqrt{\\mu}$) with $\\phi$ divided out, maximally extended, each point in the diagram a circle "
         "of $\\phi$. The tortoise coordinate has $dr_*/dr = \\sqrt{r^4 + a^2r^2 + \\mu a^2}/(r^2 - r_+^2)$, "
-        "and $p = \\arctan U$, $q = \\arctan V$ with $U = -e^{-\\kappa u}$, $V = e^{\\kappa v}$, "
-        "$u, v = ct \\mp r_*$, and $\\kappa = r_+/\\mu$ bring the plane into the same square as the transverse "
+        "and with $p = \\arctan U$, $q = \\arctan V$, $U = -e^{-\\kappa u}$, $V = e^{\\kappa v}$, "
+        "$u, v = ct \\mp r_*$, and $\\kappa = r_+/\\mu$ the plane is the same square as the transverse "
         "plane.",
         "Here $r = 0$ is the ring, where the Kretschmann scalar $72\\mu^2/r^8$ diverges, a spacelike singularity "
-        "on $T = \\pm\\pi/2$. The hole has one horizon and no inner one, so nothing of Kerr's tower of universes "
-        "survives a single spin in five dimensions.",
+        "on $T = \\pm\\pi/2$. The hole has one horizon and no inner one, so with a single spin in five dimensions "
+        "the extension does not repeat up and down as Kerr's does.",
     ],
     ("myers_perry", "equal"): [
         "The Myers-Perry black hole with equal spins in five dimensions ($a = 0.4\\sqrt{\\mu}$), maximally "
