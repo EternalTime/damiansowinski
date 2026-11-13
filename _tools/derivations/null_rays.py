@@ -980,8 +980,8 @@ def _morgan_morgan_plane():
 
 
 MM_INPUT = ("The first disc of Morgan and Morgan's family at $m = a/5$, with $m = GM/c^2$ for a disc of mass $M$ and "
-            "radius $a$: $\\psi$ and $\\gamma$ are the two functions the oblate spheroidal chart defines, written in "
-            "$\\rho$ and $z$.")
+            "radius $a$: $\\psi$ and $\\gamma$ are the two functions defined in the oblate spheroidal chart, written "
+            "in $\\rho$ and $z$.")
 # Every drawing of Bach and Weyl's ring is at m = a/2, in units of the ring's radius a in Weyl's
 # coordinates. gamma is 0/0 on the axis as its closed form is written, a factor that vanishes
 # as rho^2 over rho, so a view of the axis is taken at BW_AXIS from it, where gamma is below 10^-9.
