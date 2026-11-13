@@ -21338,7 +21338,7 @@ CAPTIONS = {
         "$ct = -0.9\\,L$ to $0.9\\,L$, each moment drawn as a surface in flat space with every distance along it the "
         "metric distance. Each moment is a flat plane, on which the galaxy at the comoving radius $r$ stands a "
         "distance $\\Phi r$ from the centre, with $\\Phi = 1 - c^2t^2/L^2$.",
-        "The galaxies keep their places in the chart while every distance between them grows from zero at the "
+        "The galaxies stay at rest in the chart while every distance between them grows from zero at the "
         "bang, $ct = -L$, to its largest at $t = 0$ and falls back to zero at the crunch, $ct = L$. Gravity "
         "decelerates the expansion at the steady rate $d^2\\Phi/d(ct)^2 = -2/L^2$, so the dust turns round and "
         "falls back however fast it starts.",

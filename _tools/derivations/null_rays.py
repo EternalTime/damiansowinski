@@ -9437,8 +9437,8 @@ CAPTIONS = {
     ("nordstrom_scalar", "conformal", "tx"): [
         "The plane of $t$ and $x$ ($y = z = 0$). The metric on it is $\\Phi^2(-c^2dt^2 + dx^2)$, and $\\Phi^2$ "
         "drops out of the null condition, so for every $\\Phi$ the light rays are Minkowski's, straight at 45°.",
-        "A wave of $\\Phi$ solves the wave equation light solves and keeps pace with the rays moving right, each "
-        "of which rides one value of $\\Phi$. A clock at rest ticks at the rate $\\Phi$ and a rod measures the "
+        "A wave of $\\Phi$ obeys the same wave equation as light and travels with the rays moving right, along "
+        "each of which $\\Phi$ is constant. A clock at rest ticks at the rate $\\Phi$ and a rod measures the "
         "coordinate length $dx$ as $\\Phi\\,dx$, so both readings swell and shrink by half as the wave passes, and "
         "the cones stay as they are.",
     ],
@@ -9450,7 +9450,7 @@ CAPTIONS = {
         "stretched by $1/(1 - m/r)$, to first order in $m/r$ the redshift of Schwarzschild's field. On $r = m$ the "
         "spheres have zero area and the Kretschmann scalar diverges as $(r - m)^{-8}$. A ray moving in from $r$ "
         "reaches that singularity after the time $(r - m)/c$, and a ray leaves it for infinity at every moment, so "
-        "no horizon hides it.",
+        "the singularity is naked.",
     ],
     ("nordstrom_scalar", "uniform", "tz"): [
         "The plane of $t$ and $z$ ($x = y = 0$) in units of $c^2/a$. The conformal factor $a^2z^2/c^4$ drops out of "
