@@ -8617,9 +8617,8 @@ CAPTIONS = {
         "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = r_s$ with $u + r$ as the "
         "vertical axis, so that the rays moving right, $u = $ const, run at 45°. The rays moving left have "
         "$du/dr = -2(1 - r_s/\\rho)^{-1}$ and stand vertical at $r = 0$ alone, the extremal horizon.",
-        "A ray moving right crosses $r = 0$ at a finite $u$, coming from $r \\to -\\infty$. This is the "
-        "horizon through which a region $r < 0$ empties into the region $r > 0$ to its future, the crossing "
-        "that the ingoing chart leaves out.",
+        "A ray moving right crosses $r = 0$ at a finite $u$, coming from $r \\to -\\infty$. Through this "
+        "horizon a region $r < 0$ empties into the region $r > 0$ to its future.",
     ],
     ("simpson_visser", "eddington_finkelstein_outgoing", "wormhole"): [
         "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn for $a = 2\\,r_s$ with $u + r$ as the "

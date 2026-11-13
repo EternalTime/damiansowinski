@@ -19351,8 +19351,8 @@ CAPTIONS = {
         "The movie runs from the horizon $r = 0.87\\,r_s$ toward the horizon $r = -0.87\\,r_s$ at a steady "
         "proper time of an observer at fixed $t$, who takes $3.7\\,r_s/c$ from one to the other. The cylinder "
         "narrows and lengthens as the inside of Schwarzschild's horizon does, until at $r = 0$ its radius is "
-        "$a$ and the stretch is $2r_s\\sqrt{r_s/a - 1}$ long, $2\\,r_s$ here. From there it widens and shortens "
-        "through the same moments in reverse: the bounce.",
+        "$a$ and the stretch is $2r_s\\sqrt{r_s/a - 1}$ long, $2\\,r_s$ here. From there it bounces, widening and "
+        "shortening through the same moments in reverse.",
     ],
     ("simpson_visser", "null"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the one way wormhole ($a = r_s$) at one moment of $t$, on "
