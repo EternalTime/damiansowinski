@@ -18834,7 +18834,7 @@ CAPTIONS = {
     ],
     ("string_wave", "ring"): [
         "The surface of constant $u$ and $v$ across a cosmic string carrying a travelling wave ($b = 1/2$), drawn "
-        "as a surface in flat space with every distance along it the metric distance. The wave stands in "
+        "as a surface in flat space with every distance along it the metric distance. The wave appears in "
         "$g_{uu}$ alone, so at every $u$ the surface is the cone of the string at rest, of half angle "
         "$\\arcsin b = 30°$, with the string at its apex.",
         "The ring is 360 free particles at rest on the circle $r = 2\\ell$ before the pulse arrives. As the "
