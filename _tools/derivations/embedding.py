@@ -19827,7 +19827,7 @@ CAPTIONS = {
         "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through its own horizon.",
         "The length $\\ell$ pulls the throat in from $2m$ to $r_+ = 12m/7$, and far out the surface rises as "
         "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{2m/r}$. Between the horizons $r$ is a time, "
-        "and no slice of constant $t$ enters there.",
+        "and the slice of constant $t$ lies outside $r_+$ on both sides of the throat.",
     ],
     ("hayward", "inside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "
