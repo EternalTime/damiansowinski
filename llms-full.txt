@@ -2338,7 +2338,7 @@ A spherical ball of perfect fluid, its pressure a fixed fraction $k$ of its dens
 
 ### Ozsváth's Homogeneous Universes of Dust
 
-István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Einstein's static universe, class III, which holds Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.
+István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Albert Einstein's static universe, class III, which holds Kurt Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.
 
 - id: `ozsvath_dust`
 - tags: dust, rotating, cosmology, homogeneous, stationary, cosmological constant, anisotropic, Bianchi classification, three sphere, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -2934,7 +2934,7 @@ A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multipli
 
 ### Super-Entropic Black Holes
 
-Kerr's black hole in anti-de Sitter space spun up to $a = \ell$, where its boundary turns at the speed of light, which Robie Hennigar, Robert Mann, and David Kubizňák reached in 2014 and named for an entropy larger than its thermodynamic volume seemed to allow. Its horizon is a sphere with both poles cut out, noncompact and of finite area.
+Roy Kerr's black hole in anti-de Sitter space spun up to $a = \ell$, where its boundary turns at the speed of light, which Robie Hennigar, Robert Mann, and David Kubizňák reached in 2014 and named for an entropy larger than its thermodynamic volume seemed to allow. Its horizon is a sphere with both poles cut out, noncompact and of finite area.
 
 - id: `super_entropic`
 - tags: rotating, rotating black hole, black hole, anti-de Sitter, AdS/CFT, black hole thermodynamics, black hole entropy, horizon, event horizon, horizon topology, extremal, supergravity, separable, exact solution, idealized model, Einstein space, cosmological constant, negative cosmological constant, stationary, four-dimensional
@@ -3203,7 +3203,7 @@ Kerr's spinning black hole set radiating by Vaidya and Patel in 1973, its rotati
 
 ### Van Den Broeck Warp Drive
 
-Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.
+Miguel Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.
 
 - id: `van_den_broeck`
 - tags: warp drive, faster-than-light, exotic matter, negative energy, energy condition violation, quantum inequality, time-dependent, idealized model, Lorentzian, Einstein equations, four-dimensional

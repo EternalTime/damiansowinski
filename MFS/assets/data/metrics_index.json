@@ -1375,7 +1375,7 @@
       "rigid rotation",
       "cosmological constant"
     ],
-    "version": "2c71f7cc5eed2343",
+    "version": "631a0be2c7e7f235",
     "diagrams": "641e75f758483ab6",
     "embedding": "c87056e25873f24a",
     "curvature": "80fd5fac66098182"
@@ -5133,7 +5133,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bb9408bc133b6d5c",
+    "version": "409ea83b256e21d4",
     "diagrams": "ef279298249b66f4",
     "embedding": "23da0d71ec10300b",
     "curvature": "0d39271760ddb811"
@@ -5259,7 +5259,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f85a0cff0a3f97a9",
+    "version": "3d40d2251f93bdf3",
     "diagrams": "6df66ba5ae37d825",
     "embedding": "c799f9df36961c5c",
     "curvature": "fb6ffbffc349dcee"
@@ -6715,7 +6715,7 @@
       "stationary",
       "four-dimensional"
     ],
-    "version": "dd50bfa00e8c47b4",
+    "version": "c201cb7c73270ce3",
     "diagrams": "7cc5e2d03ca3e40a",
     "embedding": "0942323987a38028",
     "curvature": "4808af17a81a82e5"
@@ -7362,10 +7362,10 @@
       "Einstein equations",
       "four-dimensional"
     ],
-    "version": "45ba91fb89abc13f",
-    "diagrams": "54c4ab721c360189",
-    "embedding": "d0eb9c1c758df3f4",
-    "curvature": "b1dc1f4a2c41dd40"
+    "version": "07ae4ffd3c7df519",
+    "diagrams": "da287006bdcbb3aa",
+    "embedding": "66517ef6df608880",
+    "curvature": "ce357d6591b89d21"
   },
   {
     "id": "cosmic_string",

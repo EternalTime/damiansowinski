@@ -58476,7 +58476,7 @@
       "id": "ozsvath_dust",
       "name": "Ozsváth's Homogeneous Universes of Dust",
       "short_name": "Ozsváth Dust",
-      "description": "István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Einstein's static universe, class III, which holds Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.",
+      "description": "István Ozsváth's universes of dust and a cosmological constant, of 1965, in which four motions carry any event to any other: class I on a three sphere, which holds Albert Einstein's static universe, class III, which holds Kurt Gödel's, and class II, which meets class III. David L. Farnsworth and Roy P. Kerr showed in 1966 that these three are the ones whose group of motions is unimodular.",
       "tags": [
         "dust",
         "rotating",
@@ -58509,7 +58509,7 @@
         {
           "id": "petrov_homogeneous",
           "kind": "family",
-          "text": "Petrov's vacuum is the empty one of its kind: there too four motions carry any event to any other in exactly one way."
+          "text": "Aleksei Petrov's vacuum is the empty one of its kind: there too four motions carry any event to any other in exactly one way."
         }
       ],
       "references": [
@@ -75227,7 +75227,7 @@
       "id": "super_entropic",
       "name": "Super-Entropic Black Holes",
       "short_name": "Super-Entropic Black Hole",
-      "description": "Kerr's black hole in anti-de Sitter space spun up to $a = \\ell$, where its boundary turns at the speed of light, which Robie Hennigar, Robert Mann, and David Kubizňák reached in 2014 and named for an entropy larger than its thermodynamic volume seemed to allow. Its horizon is a sphere with both poles cut out, noncompact and of finite area.",
+      "description": "Roy Kerr's black hole in anti-de Sitter space spun up to $a = \\ell$, where its boundary turns at the speed of light, which Robie Hennigar, Robert Mann, and David Kubizňák reached in 2014 and named for an entropy larger than its thermodynamic volume seemed to allow. Its horizon is a sphere with both poles cut out, noncompact and of finite area.",
       "tags": [
         "rotating",
         "rotating black hole",
@@ -82872,7 +82872,7 @@
       "id": "van_den_broeck",
       "name": "Van Den Broeck Warp Drive",
       "short_name": "Van Den Broeck",
-      "description": "Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.",
+      "description": "Miguel Alcubierre's warp bubble with the space inside it expanded by a large factor, so that a bubble microscopic from outside opens through a narrow neck onto a pocket large enough for a ship. Shrinking the bubble's surface brings the negative energy it needs from far beyond the mass of the visible universe down to a few solar masses.",
       "tags": [
         "warp drive",
         "faster-than-light",
