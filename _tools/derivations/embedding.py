@@ -9871,7 +9871,7 @@ def brill_waves(ck, src):
         ck.radius(f"{where}, {piece.id}, rho = rho psi^2", piece, radius(w), size_weak)
     weak = Surface([disc, outer])
     fig = figure_of([weak], {"sheet": "cover"}, size_weak)
-    fig.legend("fill", "cover", "the plane $z = 0$, where flat space carries it")
+    fig.legend("fill", "cover", "the plane $z = 0$, where it can be embedded in flat space")
     fig.legend("line", "r", "$\\rho$ constant, at $1$, $3$, $4$, $5$, and $6$ times $\\lambda$")
     fig.legend("line", "space", "the two circles where the surface stops, at $\\rho = 1.59$ and $2.43\\,\\lambda$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
