@@ -11257,7 +11257,7 @@ CAPTIONS = {
     ],
     ("eye_of_the_storm", "boyer_lindquist", "radial"): [
         "The plane of $t$ and $r$ on the rotation axis ($\\theta = 0$), drawn for $a = 0.6\\,m$ and $\\ell = 0.2\\,m$. "
-        "The curves drawn are null, and on the axis they are null geodesics, the paths light takes. $g^{rr}$ vanishes at "
+        "The curves drawn are null, and on the axis they are null geodesics, the paths of light. $g^{rr}$ vanishes at "
         "$r_- = 0.435\\,m$ and $r_+ = 1.515\\,m$, the roots of $\\Delta = r^2 + a^2 - 2mr\\,e^{-\\ell/r}$, which lie "
         "inside Kerr's horizons at $0.2$ and $1.8\\,m$. The cones close at both, and between them they point to smaller $r$.",
         "Inside $r_-$ the cones open again, and toward $r = 0$, the centre of the disk, $\\Delta/(r^2 + a^2) \\to 1$: the "
@@ -11276,7 +11276,7 @@ CAPTIONS = {
         "The equatorial plane ($\\theta = \\pi/2$) seen from above, along the axis, with $r$ and $\\phi$ drawn as polar "
         "coordinates and $t$ left out, for $a = 0.6\\,m$ and $\\ell = 0.2\\,m$. Its rays are the principal null "
         "congruence, each turning at $d\\phi/dr = \\pm a/\\Delta$, so both families wind the way the hole turns, and "
-        "far out the turning dies away as $a/r^2$.",
+        "far out the turning falls off as $a/r^2$.",
         "The rays wind onto the horizon $r_+ = 1.515\\,m$ without end, since $\\phi$ runs to infinity there; along an "
         "ingoing ray $\\tilde\\phi = \\phi + \\int a\\,dr/\\Delta$ stays fixed. The dotted circles are the "
         "ergosurfaces, $1.788$ and $0.056\\,m$ on the equator.",

@@ -19550,7 +19550,7 @@ CAPTIONS = {
         "second exterior, as Kerr's does.",
         "At the horizon $r_+^2 + a^2 = 2mr_+e^{-\\ell/r_+}$, so the throat's circumference radius is $2me^{-\\ell/r_+}$, "
         "$1.753\\,m$ here, below Kerr's $2m$. The dotted circle is the edge of the ergoregion, where $g_{tt} = 0$ on "
-        "the equator, inside which nothing can stand still against the rotation.",
+        "the equator, inside which no observer can be static.",
     ],
     ("kerr_newman", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of a charged rotating black hole at one moment of "
