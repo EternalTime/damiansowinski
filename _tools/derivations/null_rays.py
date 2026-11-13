@@ -8778,7 +8778,7 @@ CAPTIONS = {
         "$du/d(ct) = \\pm e^{-2bu}\\sinh^2(ku)/k^2$, and $ct \\pm r_*$ is constant along a ray, for the "
         "tortoise coordinate $r_*$ with $dr_*/du = -k^2e^{2bu}/\\sinh^2(ku)$.",
         "The cones close as $u^2$ toward $u = 0$, which a ray reaches only as $t \\to \\pm\\infty$, and open as "
-        "$e^{2(k - b)u}/4k^2$ at large $u$. A ray moving toward larger $u$ runs through all of it in a finite "
+        "$e^{2(k - b)u}/4k^2$ at large $u$. A ray moving toward larger $u$ crosses that infinite range in a finite "
         "time and reaches the singularity $13\\,k/c$ after passing $ku = 1$. The faint vertical lines are "
         "the spheres of areal radius $4k$, $2k$, $1.5\\,k$, and $k$, at $ku = 0.31$, $0.83$, $1.4$, and "
         "$2.8$.",

@@ -31672,7 +31672,7 @@ CAPTIONS = {
         "$A^{m+1}(-c^2dt^2 + dr_*^2)$ with $A = 1 - 2r_0/r$ and $dr_*/dr = A^{-(m - n + 2)/2}$, and $r_*$ "
         "vanishes at $r = 2r_0$, so $p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring the spacetime into Minkowski's triangle, drawn with $T = p + q$ up and $X = q - p$ across.",
         "The edge $X = 0$ is $r = 2r_0$, where the spheres have zero area and the Kretschmann scalar diverges: a timelike singularity with no horizon, so light leaving it reaches $\\mathscr{I}^+$. The triangle is Fisher's, whose metric is this one multiplied by "
-        "the scalar field, a factor that moves no light ray. The strip between the edge and the first line "
+        "the scalar field, a factor that does not change the light rays. The strip between the edge and the first line "
         "drawn is the last thousandth of $r_0$ before the singularity, which light takes $6.2\\,r_0/c$ to "
         "cross: the power of $A$ in $dr_*/dr$ is $7/8$ where Schwarzschild's is $1$, and at $m = n = 0$ the "
         "integral for $r_*$ diverges at $r = 2r_0$, which is then Schwarzschild's horizon.",

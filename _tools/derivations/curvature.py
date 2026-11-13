@@ -2943,7 +2943,7 @@ def brans_dicke_sphere(ck, src):
             f"$n = 1/4$ and inside $r = {crossing(first, 2):.3f}\\,r_0$ at $n = 1/100$. As $n$ falls, $R$ shrinks "
             "toward zero.",
             "In 1961 Brans and Dicke took $\\omega \\ge 6$ from Mercury's perihelion, and the last frame is that least "
-            f"value. The Cassini spacecraft puts $\\omega$ above ${BDS_CASSINI // 1000}{{,}}000$, where "
+            f"value. Measured with the Cassini spacecraft, $\\omega$ is above ${BDS_CASSINI // 1000}{{,}}000$, where "
             f"$n < {tex_number(n_cassini, 2)}$ and $K$ is within a percent of Schwarzschild's outside "
             f"$r = {r_percent:.4f}\\,r_0$.",
         ],
