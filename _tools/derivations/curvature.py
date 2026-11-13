@@ -14743,7 +14743,8 @@ def zipoy_voorhees(ck, src):
             "Off the axis $K$ grows toward it as $(r - 2m)^{-2(q^2 + q + 1)}$, and along the axis as "
             "$(r - 2m)^{2q - 2}$, so it grows faster along the axis when the field is prolate, $q < 0$, and faster "
             "off it when the field is oblate, $q > 0$. From $q = 1$ up $K$ stays finite along the axis, where it "
-            "tends to $3/4m^4$ at $q = 1$: how the singularity looks depends on the direction it is approached from.",
+            "tends to $3/4m^4$ at $q = 1$. The singularity looks different depending on the direction it is "
+            "approached from.",
             "On the axis $K$ carries the factor $(r - (2 + q)m)^2$, so for $q > 0$ it vanishes at $r = (2 + q)m$, "
             "which moves out from $r = 2m$ to $3m$ as $q$ grows. On the circle $r = 3m$ the prolate field's $K$ "
             f"falls from $1/9m^4$ on the axis to ${s[(sp.Rational(-1, 2), sp.pi / 2)]}/m^4$ on the equator, "
@@ -14751,11 +14752,10 @@ def zipoy_voorhees(ck, src):
             f"${s[(1, sp.pi / 2)]}/m^4$.",
             "Far out $K$ falls off as $48M^2/r^6$ in every direction, as Schwarzschild's does at the same mass "
             "$GM/c^2 = (1 + q)m$. In Weyl's $\\rho$ and $z$ the sphere $r = 2m$ is the rod $\\rho = 0$, "
-            "$|z| \\le m$, whose Newtonian potential is the metric's $\\psi$. For $q \\neq 0$ the map leaves the disc "
-            "inside it blank, and at $q = 0$ it draws Schwarzschild's $K$ inside the horizon as well.",
+            "$|z| \\le m$, whose Newtonian potential is the metric's $\\psi$.",
         ],
         "settings": "$m = 1$, the unit of every length, and $q$ in steps of $1/4$, from the prolate $q = -1/2$ to the "
-                    "oblate $q = 1$ that every other drawing takes.",
+                    "oblate $q = 1$.",
         "clip": ("We colour $K\\,m^4$ on a logarithmic scale from $10^{-5}$ to $10$ and give a value beyond it the "
                  "colour of the end it passes: $K$ passes $10/m^4$ beside $r = 2m$ in every frame but "
                  f"$q = 0$, at most ${d_high:.2f}\\,m$ outside it at $q = 1$, and at $q = 0$ inside "
