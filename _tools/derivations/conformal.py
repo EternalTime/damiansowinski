@@ -30626,8 +30626,8 @@ CAPTIONS = {
         "The sphere of radiation, each point in the diagram a 2-sphere of radius $r$. Its tortoise coordinate "
         "$r_* = \\int\\sqrt{g_{rr}/(-g_{tt})}\\,dr = \\sqrt{7ar}$ is zero at the centre, so the plane of $t$ and "
         "$r_*$ is half of Minkowski's, and $p, q = \\arctan((ct \\mp r_*)/a)$ bring it into his triangle.",
-        "The centre $r = 0$ is a timelike line where the density and the Kretschmann scalar diverge, and no "
-        "horizon stands between it and null infinity: a ray from the centre reaches radius $r$ at "
+        "The centre $r = 0$ is a timelike line where the density and the Kretschmann scalar diverge, and it is "
+        "naked: a ray from the centre reaches radius $r$ at "
         "$ct = \\sqrt{7ar}$ and goes on to $\\mathscr{I}^+$.",
     ],
     ("misner_zapolsky", "tolman_v"): [

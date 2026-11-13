@@ -10999,8 +10999,8 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), with $a$ the unit of length. A radial ray "
         "moves at $dr/d(ct) = \\pm\\sqrt{4r/7a}$, so the cones narrow toward the centre and close on it, where "
         "$g_{tt} = 0$ and the Kretschmann scalar $72/49r^4$ diverges. A ray from $r$ still reaches the centre in "
-        "the finite time $ct = \\sqrt{7ar}$, and a ray leaves it as easily: the singularity has no horizon "
-        "around it.",
+        "the finite time $ct = \\sqrt{7ar}$, and a ray from the centre reaches $r$ in the same time: the "
+        "singularity is naked.",
     ],
     ("misner_zapolsky", "tolman_v", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) over the whole domain of the chart "

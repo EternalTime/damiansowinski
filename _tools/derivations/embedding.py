@@ -19236,8 +19236,8 @@ CAPTIONS = {
         "radius, so the surface climbs at $dz/dr = \\sqrt{3}/2$: a cone, with the infinite density at its apex.",
         "A cone is flat everywhere but at its apex: this one is a flat sheet with a wedge of "
         "$2\\pi(1 - 2/\\sqrt{7})$, about $88°$, cut out and the edges joined. The circle of circumference "
-        "$2\\pi r$ lies at a distance $\\sqrt{7}\\,r/2$ from the apex, and magnified by any factor the cone is "
-        "the same cone.",
+        "$2\\pi r$ lies at a distance $\\sqrt{7}\\,r/2$ from the apex, and the cone is "
+        "unchanged under magnification by any factor.",
     ],
     ("misner_zapolsky", "tolman_v"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the Tolman V star at one moment of $t$, "
