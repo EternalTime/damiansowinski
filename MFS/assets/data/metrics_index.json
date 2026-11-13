@@ -5110,9 +5110,9 @@
       "idealized model",
       "thin disc"
     ],
-    "version": "2b2a70939d09b19c",
-    "diagrams": "094ddf5d8a968231",
-    "conformal": "02fb2665a736a4d9",
+    "version": "6f883b1cce0729ee",
+    "diagrams": "731f41a3618a81e6",
+    "conformal": "71dd3e2467335e95",
     "embedding": "1bebbd3e461aed13"
   },
   {
@@ -5207,7 +5207,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "a1d450671bd4551f",
+    "version": "4f46b4550229d0e4",
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "984dd972b1a2fddf"
@@ -5362,10 +5362,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "87cdfbd55430eebd",
+    "version": "5ca1526d19f1705d",
     "diagrams": "e88c36460f2d0d45",
     "conformal": "0658bc8d7d0d08b1",
-    "embedding": "bfee67da3b69aec1"
+    "embedding": "873e6973c5f23b4e"
   },
   {
     "id": "bardeen_perturbations",
@@ -5413,7 +5413,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "cffe30324a93a648",
+    "version": "bb91528c3d2bf703",
     "diagrams": "382c56b4dcf64971",
     "embedding": "9f6d91cb4fe80ffb"
   },
@@ -5858,7 +5858,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "fa4715cd89b09e55",
+    "version": "edf2d22ae43c54ce",
     "diagrams": "84d8aa4c800066d0",
     "conformal": "3d5ddd92f7851875",
     "embedding": "b5e538549e42926e"

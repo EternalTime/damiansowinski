@@ -2375,7 +2375,7 @@ The static, spherically symmetric field of a mass carrying both an electric char
 
 ### Penrose's Spherical Impulsive Wave
 
-Flat spacetime cut along the future light cone of one event and joined again with a warp, which leaves a spherical gravitational wave one instant thick expanding at the speed of light. With the warp of a cosmic string it is the wave a string sends out when it snaps, with the cone of the string ahead of the wave and plain flat space behind it.
+Flat spacetime cut along the future light cone of one event and joined again with a warp, which leaves a spherical gravitational wave one instant thick expanding at the speed of light. With the warp of a cosmic string it is the gravitational wave from a snapping string, with the cone of the string ahead of the wave and plain flat space behind it.
 
 - id: `penrose_impulsive_wave`
 - tags: vacuum, gravitational wave, impulsive wave, cut and paste, cosmic string, topological defect, angular deficit, Robinson-Trautman, Petrov type N, vanishing scalar invariants, null source, axisymmetric, expanding, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
