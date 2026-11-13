@@ -9857,7 +9857,7 @@ CAPTIONS = {
         "largest.",
         "The scale factor returns to zero at $c\\tau = \\pi\\ell$, the top edge. In this exact solution the "
         "Kretschmann scalar is $24/\\ell^4$ there as everywhere, a coordinate singularity like the one at "
-        "$\\tau = 0$, and Coleman and De Luccia argued that any small disturbance of the field makes it a true "
+        "$\\tau = 0$, and Coleman and De Luccia argued that any small disturbance of the field makes it a curvature "
         "singularity, a crunch.",
     ],
     ("coleman_de_luccia", "open_conformal", "negative"): [
