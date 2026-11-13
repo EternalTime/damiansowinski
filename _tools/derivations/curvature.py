@@ -16257,8 +16257,7 @@ def bonnor_magnetic_dipole(ck, src):
                     "Toward $r = 4m$ along the exterior axis it tends to $131/(64m^4) = 2.046875/m^4$, "
                     "and along the equator to $0.0574134/m^4$. The curvature varies with both radius and polar angle.",
                     "The axes are coordinate lengths: the circles about the symmetry axis shrink to zero "
-                    "on the whole inner semicircle, the axis between the holes. "
-                    "The empty half disc lies outside the exterior chart, and the empty corners beyond $r = 8m$ lie outside the drawn range."],
+                    "on the whole inner semicircle, the axis between the holes."],
         "settings": "$m = 1$, the unit of every length, and $b = 2\\sqrt{2}\\,m$.",
         "clip": "We colour $K\\,m^4$ logarithmically from $10^{-4}$ to $10$, over $4 < r/m \\le 8$. "
                 "Every coloured cell lies within the scale; cells outside this radial interval stay clear.",
