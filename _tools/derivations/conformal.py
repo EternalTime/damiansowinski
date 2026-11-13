@@ -29664,7 +29664,7 @@ CAPTIONS = {
         "The boost carries each line $ct = k\\beta$ onto the next, and one copy of the region lies between two "
         "neighbouring lines, which are one line of it. In the quotient each curve of constant $r$ is a closed "
         "timelike curve, and the two null lines through the centre of the square are the Cauchy horizons. The boost "
-        "leaves every point of the sphere at the centre where it is, and there the quotient is no manifold.",
+        "fixes every point of the sphere at the centre, and there the quotient is not a manifold.",
     ],
     ("self_creating_universe", "kantowski_sachs"): [
         "The region to the future of both Cauchy horizons in the Kantowski-Sachs chart, "
