@@ -11363,8 +11363,8 @@ CAPTIONS = {
     ],
     ("kasner_scalar", "logarithmic", "taux"): [
         "The plane of $\\tau$ and $x$ ($y = z = 0$, $(p_1, p_2, p_3) = (2/13, 4/13, 7/13)$, $q = 10/13$), "
-        "with $-\\tau$ upward, so the future is up and the singularity, $\\tau \\to \\infty$, lies below the "
-        "whole diagram. The edges of the cones are $dx/d\\tau = \\pm\\ell e^{-11\\tau/13}$, and "
+        "with $-\\tau$ upward, so the future is up and the singularity is at $\\tau \\to \\infty$. "
+        "The edges of the cones are $dx/d\\tau = \\pm\\ell e^{-11\\tau/13}$, and "
         "$x \\pm (13/11)\\,\\ell e^{-11\\tau/13}$ is constant along a ray.",
         "In this time the logarithm of each scale factor, $-p_i\\tau$, and the scalar field, "
         "$\\varphi \\propto -q\\tau$, are linear. The singularity is an unbounded $\\tau$ away and a proper "
