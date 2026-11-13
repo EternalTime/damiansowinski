@@ -15508,7 +15508,7 @@ def bartnik_mckinnon(ck, src):
                 "The soliton's own $K$ approaches it outward as the Yang-Mills field dies away: at the edge "
                 f"of the plot, $r = {BM_REACH}\\,\\ell$, $K = {edge * 1e4:.3f}\\times10^{{-4}}/\\ell^4$ is "
                 f"${short:.1f}$ percent below it, with the amplitude's {'zero' if n == 1 else 'last zero'} "
-                f"at ${node:.2f}\\,\\ell$" + (", beyond the plot." if node > BM_REACH else "."),
+                f"at ${node:.2f}\\,\\ell$.",
             ],
             "settings": f"$\\ell = 1$, the unit of every length, and the vacuum beside the soliton at "
                         f"$r_s = 2GM/c^2 = {2 * mass:.2f}\\,\\ell$, the soliton's own mass.",
