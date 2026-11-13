@@ -21494,7 +21494,7 @@ CAPTIONS = {
         "in a ring of free particles at rest on the circle $\\rho = 2R$ at $u = 0$.",
         "The ring obeys $d^2\\rho/du^2 = -dA/d\\rho$, the equation of a particle in Newton's theory in the "
         "potential $A$, so $(d\\rho/du)^2 + 2A$ keeps its value. Outside the beam the ring falls through the "
-        "logarithm and reaches the edge at $u = 3.81\\,R$; inside, $d^2\\rho/du^2 = -\\rho/4R^2$ and it swings as a "
+        "logarithmic potential and reaches the edge at $u = 3.81\\,R$; inside, $d^2\\rho/du^2 = -\\rho/4R^2$ and it swings as a "
         "pendulum, closing on the axis at $u = 5.22\\,R$. It comes back to rest on its first circle at "
         "$u = 10.45\\,R$, turned through half a circle, and falls again. Light sent against the beam follows the "
         "same $\\rho(u)$.",

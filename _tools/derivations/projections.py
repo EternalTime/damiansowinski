@@ -1306,7 +1306,7 @@ CAPTIONS = {
         "Light sent against the beam, from the right, falls toward the axis. Inside the beam the pull grows in "
         "proportion to $x$, so every ray that starts there parallel to the axis reaches it when its $ct - z$ has "
         "grown by $\\sqrt{2}\\,\\pi R$, and the beam is a lens for light going the other way. "
-        "A ray that starts outside the beam falls through the logarithm of the vacuum field, crosses the beam, "
+        "A ray that starts outside the beam falls through the logarithmic potential of the vacuum field, crosses the beam, "
         "and climbs as far out on the other side.",
     ],
     ("schrodinger_spacetime", "global", "trap"): [

@@ -6756,7 +6756,7 @@ LB_CAPTIONS = {
         "A ray moving with the beam keeps its $ct - z$, runs at 45°, and is a null geodesic whatever the profile. "
         "A null curve moving against the beam keeps $ct + z + A(ct - z)$, so it covers $(1 + A)/(1 - A) = 2.3$ "
         "units of $z$ for each unit of $ct$.",
-        "That rate belongs to the coordinates: a constant added to $A$ amounts to the change of coordinates "
+        "That rate depends on the coordinates: a constant added to $A$ amounts to the change of coordinates "
         "$ct + z \\to ct + z + \\text{const}\\,(ct - z)$, and only the difference in $A$ between two distances from "
         "the axis is free of that choice. A light ray launched against the beam along one of these curves is "
         "turned toward the axis by $\\Gamma^x{}_{tt}$, $\\Gamma^x{}_{tz}$, and $\\Gamma^x{}_{zz}$ and leaves the "
