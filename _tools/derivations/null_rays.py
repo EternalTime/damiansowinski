@@ -12784,7 +12784,7 @@ CAPTIONS = {
     ],
     ("lewis", "stockum_critical", "beyond"): [
         "The cylinder of $t$ and $\\phi$ ($r = 5R$, $z = 0$) outside van Stockum's cylinder ($wR = 1/2$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. Beyond $r = eR$, where $F < 0$, both climb in $t$ toward $+\\phi$, and every vertical line, a point turning with the dust, lies outside the cones.",
-        "The slower curve is $c\\,dt = (R/2)\\,d\\phi$, the circular path of light the surface has, a null geodesic here too. The circles of constant $t$ are spacelike at every radius, since $L > 0$.",
+        "The slower curve is $c\\,dt = (R/2)\\,d\\phi$, the circular light path at the surface, a null geodesic here too. The circles of constant $t$ are spacelike at every radius, since $L > 0$.",
     ],
     ("lewis", "stockum_heavy", "surface"): [
         "The cylinder of $t$ and $\\phi$ ($r = R$, $z = 0$) outside van Stockum's cylinder ($m = 3/2$, $wR = \\sqrt{13}/4$), opened along the line $\\phi = \\pm\\pi$ and drawn with $r\\phi$ across, so that its left and right edges are that one line. The metric on it is $-F\\,c^2dt^2 - 2M\\,c\\,dt\\,d\\phi + L\\,d\\phi^2$, the same at every point, so its null curves are straight, $c\\,dt = (-M \\pm r)\\,d\\phi/F$. On the surface $F = 1$, $M = wR^2$, and $L = R^2(3 - m^2)/4$, and the cones lean so far toward $+\\phi$ that the null curve moving that way climbs by only $0.10\\,R$ per radian.",
