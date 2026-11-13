@@ -13257,8 +13257,7 @@ CAPTIONS = {
         "diverges, is a timelike line. Across the shell $G_{vv}$ jumps by $2(Mr - q^2/2)/r^3$ times a delta "
         "function of $v$, so the energy density of the dust is positive outside the marked sphere "
         "$r = q^2/2M = 0.46\\,M$ and negative inside it. Amos Ori showed in 1991 that the Lorentz force turns "
-        "the charged dust round on that sphere, and the stretch of the shell below the mark is drawn as the "
-        "metric stands.",
+        "the charged dust round on that sphere, and below the mark the shell is drawn without that turn.",
     ],
     ("bonnor_vaidya", "eddington_finkelstein_outgoing", "shell"): [
         "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn with $u + r$ as the vertical axis so "

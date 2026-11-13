@@ -20307,8 +20307,8 @@ CAPTIONS = {
         "radius.",
         "The energy of the shell folds the surface where the two meet, by the slope $\\sqrt{2M/R - q^2/R^2}$ at "
         "the shell's radius $R$. The fold sharpens until the shell reaches $R = q^2/M$ and then flattens, and at "
-        "$R = q^2/2M = 0.46\\,M$ it is gone: there the energy density of the shell is zero, and the last "
-        "moment is drawn. The event horizon forms at the centre at $v = -2.56\\,M$ and grows through the flat "
+        "$R = q^2/2M = 0.46\\,M$, the last moment, it is gone, since there the energy density of the shell is "
+        "zero. The event horizon forms at the centre at $v = -2.56\\,M$ and grows through the flat "
         "interior to meet the shell at $r_+ = 1.28\\,M$, where it stays.",
     ],
     ("hiscock", "history"): [

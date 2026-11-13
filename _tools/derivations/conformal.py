@@ -31818,7 +31818,7 @@ CAPTIONS = {
     ],
     ("bonnor_vaidya", "shell"): [
         "A spacetime into which a spherical shell of charged null dust of mass $M$ and charge $q = 0.96\\,M$ falls "
-        "along $v = 0$, drawn as the ingoing metric stands, each point in the diagram a 2-sphere. Before the shell "
+        "along $v = 0$, drawn from the ingoing metric alone, each point in the diagram a 2-sphere. Before the shell "
         "the metric is flat, and after it Reissner-Nordström's, whose ingoing coordinates cover the exterior, the "
         "region between $r_+$ and $r_-$, and one region inside $r_-$, as far as the Cauchy horizon $v \\to \\infty$. "
         "Each outgoing ray of the flat side keeps the $p$ it has where it crosses the shell, and $q$ is the same "
