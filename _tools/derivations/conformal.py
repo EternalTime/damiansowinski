@@ -31387,7 +31387,7 @@ CAPTIONS = {
     ],
     ("melvin", "ernst"): [
         "The plane of $t$ and $r$ of Ernst's black hole at $\\theta = \\pi/2$, totally geodesic. The metric on it is "
-        "$(1 + B^2r^2/4)^2$ times Schwarzschild's, so Kruskal and Szekeres's extension draws it for every $B$: two "
+        "$(1 + B^2r^2/4)^2$ times Schwarzschild's, so for every $B$ its extension is Kruskal and Szekeres's: two "
         "exteriors, the black hole above, the white hole below, and the curvature singularity $r = 0$ at the top "
         "and the bottom.",
         "The plane of $t$ and $r$ at every other constant $\\theta$ has the same null curves and the same drawing, "
