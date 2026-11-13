@@ -21796,7 +21796,7 @@ CAPTIONS = {
         "centre, so the dish is the path of the centres along the axis, and in the Tolman-Bondi cloud, where "
         "$S' = 0$, it is a flat disc.",
         "Outside the cloud $S$ is constant and the surface is a plane, the equator of Georges Lemaître's moment of "
-        "Schwarzschild's exterior. Every shell falls on its own clock, the centre first, and the dish grows shallower "
+        "Schwarzschild's exterior. Each shell collapses at its own time, the centre first, and the dish grows shallower "
         "as its circles shrink, since the step from one centre to the next is proportional to $R$. Peter Szekeres "
         "found these solutions in 1975.",
     ],
