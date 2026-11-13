@@ -15290,7 +15290,7 @@ def bach_weyl_ring(ck, src):
     fig.legend("fill", "cover", "the plane $z = 0$ outside the ring at $t = 0$, which $\\rho$ and $\\phi$ cover")
     fig.legend("line", "r", "$\\rho$ constant, at $2$, $3$ and $4\\,a$")
     fig.legend("line", "surface", f"the narrowest circle, of radius ${float(np.min(plane.rho)):.2f}\\,a$, at $\\rho = {neck:.2f}\\,a$")
-    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,a$, where the drawing stops")
+    fig.legend("line", "chartedge", f"$\\rho = {stop:.2f}\\,a$, where the surface lies level")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     settings = "$m = GM/c^2 = a/2$, with the radius $a$ of the ring in Weyl's coordinates the unit of every length."
     views = [view("outside", "Outside the ring", "$a$", [outside], fig.done(), settings=settings,
@@ -19995,7 +19995,7 @@ CAPTIONS = {
         "circle of Weyl's radius $\\rho$ has circumference $2\\pi\\rho\\,e^{-\\psi}$, least, $2\\pi \\times 2.08\\,a$, at "
         "$\\rho = 1.22\\,a$, and growing without bound toward the ring.",
         "The surface narrows from far out to a neck and widens again toward the ring, until it lies level at "
-        "$\\rho = 1.12\\,a$, where the drawing stops. The ring itself is a proper distance $0.24\\,a$ further in, a "
+        "$\\rho = 1.12\\,a$. The ring itself is a proper distance $0.24\\,a$ further in, a "
         "circle of infinite circumference.",
     ],
     ("bach_weyl_ring", "inside"): [
