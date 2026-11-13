@@ -29351,7 +29351,7 @@ CAPTIONS = {
         "tinted, each point in the diagram a 2-sphere of radius $r$. The advanced time $v = ct + r_*$ is constant "
         "along every ingoing light ray, and it runs on across both horizons: from an exterior, through the black "
         "hole, into the region inside $r_-$ on the far side.",
-        "That is the way the surface of the dust goes in. The coordinates end where an outgoing ray inside $r_-$ "
+        "The surface of the dust falls in through this region. The coordinates end where an outgoing ray inside $r_-$ "
         "reaches the horizon of the white hole above, at $v \\to \\infty$.",
     ],
     ("quantum_oppenheimer_snyder", "outgoing"): [
@@ -29359,7 +29359,7 @@ CAPTIONS = {
         "tinted, each point in the diagram a 2-sphere of radius $r$. The retarded time $u = ct - r_*$ is constant "
         "along every outgoing light ray, and the coordinates are the time reverse of the ingoing ones: from the "
         "region inside $r_-$, through the white hole above it, into the next exterior.",
-        "That is the way the surface of the dust comes back out, after it turns round on $r = r_b$.",
+        "The surface of the dust comes back out through this region, after it turns round on $r = r_b$.",
     ],
     ("quantum_oppenheimer_snyder", "collapse"): [
         "The collapse and the bounce, each point in the diagram a 2-sphere: the dust on the left of its surface and "
@@ -29369,8 +29369,8 @@ CAPTIONS = {
         "Outside we keep the tower's map. Inside, the dust is a flat Friedmann ball in its conformal time "
         "$\\eta = \\int c\\,d\\tau/a$, whose light rays are $\\eta \\mp \\chi$ constant, and we place each point of "
         "the ball at the $p$ of the outgoing ray through it where that ray meets the surface, and at the $q$ of the "
-        "ingoing ray where it left the surface. So a ray keeps its line across the surface, and the whole ball is "
-        "the lens between the surface and its centre $\\chi = 0$, which runs from $i^-$ to $i^+$.",
+        "ingoing ray where it left the surface. So a ray continues along one straight line across the surface, "
+        "and the whole ball is the lens between the surface and its centre $\\chi = 0$, which runs from $i^-$ to $i^+$.",
         "Someone who stays in the lower exterior sees the ball sink behind $r_+$ and never sees the bounce, and "
         "someone in the upper exterior sees the white hole, and the dust coming out of it.",
     ],

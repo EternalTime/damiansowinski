@@ -2,7 +2,7 @@
   "id": "quantum_oppenheimer_snyder",
   "name": "Quantum Oppenheimer-Snyder Black Hole",
   "short_name": "Quantum Oppenheimer-Snyder",
-  "description": "Oppenheimer and Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.",
+  "description": "J. Robert Oppenheimer and Hartland Snyder's ball of dust with the bounce of loop quantum cosmology inside it, which Jerzy Lewandowski, Yongge Ma, Jinsong Yang, and Cong Zhang built in 2023. The dust falls, stops at a finite density, and comes back out, and the junction conditions fix the vacuum outside: Schwarzschild's metric with one more term, with two horizons above a least mass and none below it.",
   "tags": [
     "loop quantum gravity",
     "loop quantum cosmology",

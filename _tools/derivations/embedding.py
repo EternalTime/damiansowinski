@@ -19454,7 +19454,7 @@ CAPTIONS = {
         "outer horizon, drawn as a surface in flat space with every distance along it the metric distance. On it "
         "$g_{rr} = (1 - 2m/r + \\alpha m^2/r^4)^{-1}$, and the slice passes through the outer horizon's "
         "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r = 2m$.",
-        "The quantum correction pulls the throat in from $2m$ to $r_+ = 1.777\\,m$, and far out the surface rises "
+        "With the quantum correction the throat shrinks from $2m$ to $r_+ = 1.777\\,m$, and far out the surface rises "
         "as Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{2m/r}$. Between the horizons $r$ is a "
         "time, and no slice of constant $t$ enters there.",
     ],
