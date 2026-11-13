@@ -12913,7 +12913,7 @@ CAPTIONS = {
         "and on the left $\\phi = \\pi$, and the surface is $\\chi_0 = \\pi/4$ on either side. In the conformal "
         "time the dust is $a^2(-d\\eta^2 + d\\chi^2 + \\sin^2\\chi\\,d\\Omega^2)$ with "
         "$a = a_m\\sin^2(\\eta/2)$, so every light ray is a straight line, $\\eta \\mp \\chi$ constant, and "
-        "the cones keep one shape all the way up from the singularity, where the Kretschmann scalar diverges.",
+        "the cones have the same shape all the way up from the singularity, where the Kretschmann scalar diverges.",
         "The past horizon leaves the surface at $\\eta = 2\\chi_0$, as it crosses $r_s$ on the way out, and reaches "
         "the centre at $\\eta = 3\\chi_0$. The dotted line $\\eta = 2\\chi$ is where $|\\nabla R|^2 = 0$ for the "
         "areal radius $R = a\\sin\\chi$. After the moment of rest the core falls back to its last singularity at "
@@ -12925,10 +12925,10 @@ CAPTIONS = {
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the core, where the metric is "
         "Schwarzschild's. The surface is a radial geodesic of it: it leaves $r_s$ as $t \\to -\\infty$, comes to "
         "rest at $r = 2r_s$ at $t = 0$, and falls back toward $r_s$ as $t \\to \\infty$. Inside it, $r < R(t)$, "
-        "lies the dust, which these coordinates do not cover.",
+        "lies the dust.",
         "By Schwarzschild's time the core has been outside $r_s$ for ever, though its own clock reads "
-        "$c\\tau = 0.81\\,r_s$ at the crossing. The past horizon and the white hole behind it lie beyond these "
-        "coordinates, at $t = -\\infty$, as the event horizon lies at $t = +\\infty$.",
+        "$c\\tau = 0.81\\,r_s$ at the crossing. The past horizon and the white hole behind it lie at "
+        "$t = -\\infty$, as the event horizon lies at $t = +\\infty$.",
     ],
     ("white_hole", "exterior_eddington_finkelstein", "finkelstein"): [
         "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the core, drawn with $u + r$ as the "
@@ -12944,8 +12944,7 @@ CAPTIONS = {
         "The plane of $U$ and $V$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the core, drawn with $(V - U)/2$ "
         "across and $(U + V)/2$ up, so that every light ray runs at 45°. The surface leaves the singularity "
         "$UV = 1$ at $U = -1.25$, crosses the past horizon $V = 0$ at $U = -1$, and runs on toward its moment of "
-        "rest, far up the drawing at $V = \\sqrt{2}\\,e^{2 + \\pi/2} = 50.3$. The dust lies to its left, where "
-        "these coordinates do not reach.",
+        "rest, far up the drawing at $V = \\sqrt{2}\\,e^{2 + \\pi/2} = 50.3$. The dust lies to its left.",
         "Between the singularity, the past horizon, and the surface lies what is left of the white hole, and to the "
         "right of the past horizon the world outside $r_s$. The ingoing rays that set out earliest, $V$ just above "
         "zero, run beside the past horizon, and the surface crosses every one of them on its way out.",
