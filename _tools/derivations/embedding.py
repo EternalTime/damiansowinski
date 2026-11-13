@@ -19437,8 +19437,7 @@ CAPTIONS = {
         "it $g_{rr} = (1 - r_sr^2/(r^2 + g^2)^{3/2})^{-1}$, and the slice passes through the outer horizon's "
         "bifurcation sphere $r = r_+$, its throat, into a second exterior, as Schwarzschild's does through $r_s$.",
         "The charge $g$ pulls the throat in from $r_s$ to $r_+ = 0.775\\,r_s$, and far out the surface rises as "
-        "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{r_s/r}$. Between the horizons $r$ is a "
-        "time, and no slice of constant $t$ enters there.",
+        "Flamm's paraboloid of the same mass does, $dz/dr \\to \\sqrt{r_s/r}$.",
     ],
     ("bardeen", "inside"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the same black hole at one moment of $t$ inside its inner "

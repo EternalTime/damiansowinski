@@ -299,10 +299,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "33a42bd9a3a70047",
+    "version": "aa1fe883d799a749",
     "diagrams": "af782319d0ede812",
     "conformal": "7ea8e08d66397efe",
-    "embedding": "1585df5452ac5572",
+    "embedding": "94e932a537f5c39f",
     "curvature": "c74a9aae67336060"
   },
   {
@@ -5749,8 +5749,8 @@
       "idealized model",
       "stationary"
     ],
-    "version": "a941dfaa0d0c607d",
-    "diagrams": "f78be2d481dc49b2",
+    "version": "d007f87de04925b3",
+    "diagrams": "598394eb07802f5f",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
   },
@@ -6410,10 +6410,10 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "ad73291e1b761afa",
-    "diagrams": "b272a6aeea9e0b62",
+    "version": "e1b855d7034fcd9c",
+    "diagrams": "b8aeabc297db5707",
     "conformal": "09d52a3611b8d1c6",
-    "embedding": "044c6a18e30bb001",
+    "embedding": "bebff634dd864a50",
     "curvature": "6af7b095e9a8141d"
   },
   {
@@ -7625,6 +7625,6 @@
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a",
-    "curvature": "4e78c2d301e37d81"
+    "curvature": "439feee95fb8b2a1"
   }
 ]
