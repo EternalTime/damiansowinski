@@ -3872,11 +3872,11 @@ def kerr_disc_source(ck, src):
     fig.legend("line", "r", "$r = 3$, $4$, $5$, $6$ and $8\\,m$")
     fig.legend("line", "throat", "the neck, $r = (ma^2)^{1/3}$")
     fig.legend("line", "ergo", "the edge of the ergoregion, $r = 2m$")
-    fig.legend("line", "chartedge", f"$r = {level:.3f}\\,m$, where the drawing stops")
+    fig.legend("line", "chartedge", f"$r = {level:.3f}\\,m$, where the surface lies level")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     return [view("equator", "The equator", "$m$", [surface], fig.done(),
                  settings="$m = 1$ and $a = 1.5\\,m$, with no horizon.",
-                 stops=["Nearer the ring no surface in flat space carries the slice."])]
+                 stops=["Nearer the ring the circles grow too fast for a surface of revolution in flat space."])]
 
 
 def kerr_bertotti_robinson(ck, src):
