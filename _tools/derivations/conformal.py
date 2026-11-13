@@ -27919,7 +27919,7 @@ CAPTIONS = {
         "strut, each point in the diagram a single event. The metric on it is $-f\\,c^2dt^2 + (e^{2\\gamma}/f)\\,dz^2$ "
         "with $e^{\\gamma} = 3/4$, and with $z_* = \\tfrac{3}{4}\\int_0^z dz/f$ the maps $p = \\arctan((ct - z_*)/\\ell)$ "
         "and $q = \\arctan((ct + z_*)/\\ell)$ bring it into the whole diamond, drawn with $T = p + q$ up and $X = q - p$ across.",
-        "A horizon stands on every side: $z_* \\to \\pm\\infty$ at the two poles that face each other, "
+        "There is a horizon at each end: $z_* \\to \\pm\\infty$ at the two poles that face each other, "
         "$z = \\pm(2m - \\sigma)$, so light sent along the strut from $z = 0$ takes an infinite time $t$ to reach either hole.",
     ],
     ("double_kerr", "weyl_midplane"): [
