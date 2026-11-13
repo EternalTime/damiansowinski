@@ -10583,7 +10583,7 @@ CAPTIONS = {
         "$t = 0$, where the Kretschmann scalar diverges. The edges of the cones are $dx/d(ct) = \\pm 1/a$, so "
         "the cones open out toward the past and close up toward the rip.",
         "Light covers the comoving distance $3ct_0(-t/t_0)^{7/3}/7$ before the rip, so the observer at $x = 0$ "
-        "receives signals only from between the two marked rays, its event horizon, which closes in on it as "
+        "receives signals only from between the two marked rays, its event horizon, which shrinks toward it as "
         "$t \\to 0$.",
     ],
     ("big_rip", "comoving", "radial"): [
