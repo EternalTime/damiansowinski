@@ -51853,7 +51853,7 @@
       "id": "misner_brill_lindquist",
       "name": "Misner and Brill-Lindquist Initial Data for Two Black Holes",
       "short_name": "Misner and Brill-Lindquist Data",
-      "description": "One moment of a spacetime with two black holes at rest in it, the initial data Charles Misner found in 1960 and Dieter Brill and Richard Lindquist in 1963. It is a single slice of space, three dimensions with no time, that satisfies Einstein's constraint equations for a moment at which nothing moves. Each hole is a throat that opens into another sheet of space, and what the holes do afterwards is known from computer simulations.",
+      "description": "One moment of a spacetime with two black holes at rest in it, the initial data Charles Misner found in 1960 and Dieter Brill and Richard Lindquist in 1963. It is a single slice of space, three dimensions with no time, that satisfies Einstein's constraint equations for a moment at which nothing moves. Each hole is a throat that opens into another sheet of space, and the holes' later motion is known from computer simulations.",
       "tags": [
         "three-dimensional",
         "conformally flat",
