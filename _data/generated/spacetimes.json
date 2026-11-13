@@ -36238,7 +36238,7 @@
       "id": "kaluza_klein_black_hole",
       "name": "Kaluza-Klein Black Holes",
       "short_name": "Kaluza-Klein Black Holes",
-      "description": "The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that four dimensions see as black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.",
+      "description": "The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that reduce in four dimensions to black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.",
       "tags": [
         "vacuum",
         "stationary",
@@ -39167,7 +39167,7 @@
         {
           "id": "kerr",
           "kind": "piece",
-          "text": "Kerr's spacetime is what the disc source is cut from. Keep its sheet of positive $r$, glue the upper face of the disc in its ring to the lower, and the seam carries Israel's layer [israel1970]."
+          "text": "The disc source is cut from Kerr's spacetime. Keep its sheet of positive $r$, glue the upper face of the disc in its ring to the lower, and the seam carries Israel's layer [israel1970]."
         },
         {
           "id": "minkowski",
@@ -49379,7 +49379,7 @@
       "id": "maximally_supersymmetric_plane_wave",
       "name": "Maximally Supersymmetric Plane Wave",
       "short_name": "Maximally Supersymmetric Plane Wave",
-      "description": "A plane wave of ten dimensions, held up by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.",
+      "description": "A plane wave of ten dimensions, sourced by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.",
       "tags": [
         "stationary",
         "conformally flat",
@@ -49411,7 +49411,7 @@
         {
           "id": "bubbling_ads",
           "kind": "generalisation",
-          "text": "Lin, Lunin, and Maldacena's droplets. A black half plane on their plane of droplets is this wave, and zooming in on the border of any droplet gives it back [lin2004]."
+          "text": "Lin, Lunin, and Maldacena's droplets. A black half plane on their plane of droplets is this wave, and the geometry near the border of any droplet, magnified, is this wave again [lin2004]."
         },
         {
           "id": "freund_rubin",
@@ -49421,7 +49421,7 @@
         {
           "id": "pp_wave",
           "kind": "family",
-          "text": "The plane-fronted waves of four dimensions. This one is their homogeneous kin in ten, with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$ the same in every direction across it and a 5-form field to hold it up [blau2002]."
+          "text": "The plane-fronted waves of four dimensions. This one is a homogeneous wave of the same kind in ten, with $H = -\\mu^2\\left(x_1^2 + \\dots + x_8^2\\right)$ the same in every direction across it and a 5-form field as its source [blau2002]."
         },
         {
           "id": "light_beam",

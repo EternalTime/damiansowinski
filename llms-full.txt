@@ -1513,7 +1513,7 @@ A black hole in two spacetime dimensions, in the gravity of Teitelboim and Jacki
 
 ### Kaluza-Klein Black Holes
 
-The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that four dimensions see as black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.
+The charged black holes of gravity in five dimensions with the fifth dimension a small circle, vacuum solutions that reduce in four dimensions to black holes with an electric charge, a magnetic charge, or both, and a scalar field. The electric hole is Schwarzschild's black string set moving around the circle, and Gary Gibbons and David Wiltshire classified the family in 1986.
 
 - id: `kaluza_klein_black_hole`
 - tags: vacuum, stationary, static, five-dimensional, four-dimensional, black hole, charged black hole, electric charge, magnetic charge, dyon, Kaluza-Klein, compact dimension, higher dimensions, black string, boosted black hole, magnetic monopole, Dirac string, dilaton, scalar field, Einstein-Maxwell-dilaton, ergoregion, horizon, event horizon, inner horizon, curvature singularity, extremal, maximal extension, causal structure, black hole thermodynamics, string theory, Gregory-Laflamme instability, exact solution, Lorentzian, Einstein equations, idealized model
@@ -1997,7 +1997,7 @@ The inside of a charged black hole crossed by two streams of radiation, one fall
 
 ### Maximally Supersymmetric Plane Wave
 
-A plane wave of ten dimensions, held up by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.
+A plane wave of ten dimensions, sourced by the 5-form field of type IIB supergravity, that keeps all 32 of the theory's supersymmetries. It pulls every free particle toward its axis with one period in all eight directions across it. Matthias Blau, José Figueroa-O'Farrill, Christopher Hull, and George Papadopoulos found it in 2001, and it is the geometry near a light ray circling the sphere of anti-de Sitter space times a 5-sphere.
 
 - id: `maximally_supersymmetric_plane_wave`
 - tags: stationary, conformally flat, ten-dimensional, plane wave, pp-wave, higher dimensions, supergravity, string theory, supersymmetric, homogeneous, AdS/CFT, holography, geodesically complete, no horizon, null Killing vector, exact solution, Lorentzian, idealized model

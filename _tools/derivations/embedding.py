@@ -21819,7 +21819,7 @@ CAPTIONS = {
         "On it the metric is $a^2(1 + \\mu)^4(dr^2 + r^2d\\phi^2)$ with $\\mu = r_s/4ar$, which in the areal radius "
         "$R = ar(1 + \\mu)^2$ is $dR^2/(1 - r_s/R) + R^2d\\phi^2$, so every moment is Ludwig Flamm's paraboloid "
         "$z^2 = 4r_s(R - r_s)$, the same for every $a$.",
-        "The circles of constant $r$, which the fluid rides, slide outward along that one surface as $a$ grows, and "
+        "The circles of constant $r$, on which the fluid is at rest, slide outward along that one surface as $a$ grows, and "
         "the distance between two of them grows with it, while the throat $R = r_s$ keeps its circumference "
         "$2\\pi r_s$. On the throat $r = r_s/4a$ the pressure of the fluid and the Ricci scalar diverge, and the "
         "moment ends there. From $ct = 2.10\\,r_s$ the two circles where $1 - r_s/R - H^2R^2/c^2$ vanishes stand "
