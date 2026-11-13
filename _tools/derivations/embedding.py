@@ -20408,8 +20408,8 @@ CAPTIONS = {
         "The event horizon forms at the centre at $cT = -1.17\\,r_s$, before the shell arrives, and grows through "
         "the flat disc at the speed of light to meet the shell at $r_+$. The shell goes on through $r_-$, stops at "
         "$R = 0.317\\,r_s$ at $v - r = -0.015\\,r_s$, and climbs back toward $r_-$, which it reaches only as "
-        "$v \\to \\infty$. The disc at the bottom of the well stays flat throughout, and the charged field's "
-        "singularity has no place on any slice.",
+        "$v \\to \\infty$. The disc at the bottom of the well stays flat throughout, and every slice stays clear "
+        "of the charged field's singularity.",
     ],
     ("charged_shell", "point"): [
         "The equatorial plane ($\\theta = \\pi/2$) of space at $t = 0$ around the balanced shell, "

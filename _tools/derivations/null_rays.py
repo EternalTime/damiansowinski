@@ -13159,12 +13159,12 @@ CAPTIONS = {
     ("charged_shell", "interior", "radial"): [
         "The plane of $T$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) inside the shell, drawn for a shell that comes "
         "in from infinity with more charge than rest mass. The shell encloses no charge, so space is flat here: every "
-        "ray runs at 45° and every cone is the same. The shell is the curve $r = R(T)$, a hyperbola's cousin, the "
+        "ray runs at 45° and every cone is the same. The shell is the curve $r = R(T)$, shaped like a hyperbola, the "
         "path of a charge thrown at a fixed like charge in flat space. It turns round at $T = 0$ at "
         "$R = 0.317\\,r_s$ and leaves at the speed it came in with.",
         "The event horizon is the outgoing ray that reaches the shell as the shell crosses $r_+$, at "
-        "$cT = -0.53\\,r_s$; it leaves the centre at $cT = -1.17\\,r_s$ and crosses flat space, where no local "
-        "measurement marks it. The Cauchy horizon is the ingoing ray $cT + r = 0.50\\,r_s$, which leaves the "
+        "$cT = -0.53\\,r_s$; it leaves the centre at $cT = -1.17\\,r_s$ and crosses flat space as one of its "
+        "ordinary light cones. The Cauchy horizon is the ingoing ray $cT + r = 0.50\\,r_s$, which leaves the "
         "shell as it comes back up through $r_-$. An event above that ray can receive light from the "
         "singularity of the charged field outside.",
     ],
@@ -13178,21 +13178,21 @@ CAPTIONS = {
     ("charged_shell", "exterior", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell and outside $r_+$, where "
         "the metric is Reissner-Nordström's. The edges of the cones are $dr/d(ct) = \\pm(1 - r_s/r + r_q^2/r^2)$. "
-        "Inside the shell, $r < R(t)$, lies the flat interior, which keeps a time of its own.",
+        "Inside the shell, $r < R(t)$, lies the flat interior, which has a time of its own.",
         "The shell reaches $r_+ = 0.64\\,r_s$ only as $t \\to \\infty$, while its own clock passes $r_+$ at a "
-        "finite reading, $0.39\\,r_s/c$ before the turn. Its fall through both horizons lies beyond these "
-        "coordinates, and the advanced time $v$ follows it there.",
+        "finite reading, $0.39\\,r_s/c$ before the turn. The advanced time $v$ follows its fall through "
+        "both horizons.",
     ],
     ("charged_shell", "exterior", "inside"): [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell and inside "
         "$r_- = 0.36\\,r_s$, where $1 - r_s/r + r_q^2/r^2$ is positive again and $t$ is once more a time. The shell "
         "comes down from $r_-$ at $t \\to -\\infty$, turns round at $t = 0$ at $R = 0.317\\,r_s$, and climbs back "
-        "to $r_-$ as $t \\to \\infty$, all in a proper time of $0.27\\,r_s/c$. The drawing holds the turn itself, "
+        "to $r_-$ as $t \\to \\infty$, all in a proper time of $0.27\\,r_s/c$. The plane covers the turn itself, "
         "the stretch of $t$ within $0.16\\,r_s/c$ of it, in which the shell stays below $0.324\\,r_s$.",
-        "The repulsion that turns it is the electric field's. The dust is at rest at the turn, where "
+        "The electric field's repulsion turns it. The dust is at rest at the turn, where "
         "$\\gamma = 1$, and the field energy outside the shell and the binding energy of the dust make up "
         "the rest of the mass seen from outside. Below the shell, $r < R(t)$, space is flat, so the "
-        "singularity at $r = 0$ of the charged field is absent from this region.",
+        "centre $r = 0$ is regular.",
     ],
     ("charged_shell", "exterior_ingoing", "shell"): [
         "The plane of $v$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn with $v - r$ as the "
@@ -13205,10 +13205,10 @@ CAPTIONS = {
     ],
     ("charged_shell", "exterior_outgoing", "shell"): [
         "The plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) outside the shell, drawn with $u + r$ as the "
-        "vertical axis so that the outgoing rays, $u$ constant, run at 45°. These coordinates take up where "
+        "vertical axis so that the outgoing rays, $u$ constant, run at 45°. These coordinates begin where "
         "the ingoing ones end: the shell comes down from $r_-$ at $u \\to -\\infty$, turns round at "
         "$u = -0.30\\,r_s$, and leaves through $r_-$ at $u = -0.11\\,r_s$ and $r_+$ at $u = 0.02\\,r_s$.",
-        "Between the horizons every future cone now points to larger $r$, a white hole, and the $r_+$ the "
+        "Between the horizons every future cone points to larger $r$, a white hole, and the $r_+$ the "
         "shell comes out of bounds another exterior, with its own infinity. The shell leaves for that "
         "infinity at $0.92$ of the speed of light, the speed it came in with.",
     ],
