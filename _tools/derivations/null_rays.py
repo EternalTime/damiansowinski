@@ -12015,7 +12015,7 @@ CAPTIONS = {
     ],
     ("gowdy", "logarithmic", "plane"): [
         "The plane of $\\tau$ and $\\theta$ ($\\sigma = 0$, $\\delta = 0$) of the same wave, drawn against "
-        "$-\\tau$ so that the future is up and the singularity, $\\tau \\to \\infty$, lies below the drawing. "
+        "$-\\tau$ so that the future is up, with the singularity at $\\tau \\to \\infty$. "
         "The rays are $\\theta \\pm e^{-\\tau} = $ const, so the cones close up toward the singularity as "
         "$d\\theta/d\\tau = \\pm e^{-\\tau}$.",
         "A ray covers the angle $e^{-\\tau}$ between the singularity and $\\tau$, so the pasts of two events "
