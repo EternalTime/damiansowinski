@@ -1268,8 +1268,8 @@ CAPTIONS = {
         "The slice $z = 0$ of $t$, $x$, and $y$ in the centre of momentum frame, $t$ up, for two strings "
         "with $4G\\mu/c^2 = 1/3$, each removing a wedge of $120°$, moving at $v = 4c/5$ on the lines "
         "$y = \\pm\\ell/2$, so that $\\gamma\\sin\\alpha = 1.44$. Each string's wedge opens away from the other "
-        "string, and its two faces are identified at equal times of that string's rest frame: the dashed lines "
-        "are the two faces at one such time, one rising in $t$ and the other falling, and events at equal "
+        "string, and its two faces are identified at equal times of that string's rest frame: at one such time, shown dashed, "
+        "one face rises in $t$ and the other falls, and events at equal "
         "distances along them are one event.",
         "A rocket leaves the event $A$ at $t = 0$ and $x = 3\\ell/2$, crosses the upper string's wedge from the "
         "event $C$ to the same event on the other face, at an earlier $t$, and reaches the event $B$ at $x = "
