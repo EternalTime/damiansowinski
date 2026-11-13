@@ -12199,8 +12199,8 @@ CAPTIONS = {
         "$\\mu \\to \\mu_0$, the extreme Kerr metric. The rays are null geodesics, the curves of constant $ct \\pm r_*$ "
         "with $r_* = r + 2m\\ln(r/m) - 2m^2/r$.",
         "The left edge, $r = 0$, is the horizon, which a ray reaches only as $t \\to \\pm\\infty$: there $r_*$ falls "
-        "to $-\\infty$ as $-2m^2/r$, as it does at a horizon with no surface gravity. The disc lies beyond that "
-        "edge, an infinite proper distance down the throat.",
+        "to $-\\infty$ as $-2m^2/r$, as it does at a horizon with no surface gravity. The disc lies an infinite proper "
+        "distance down the throat.",
     ],
     ("neugebauer_meinel", "black_hole_limit", "equator"): [
         "The equatorial plane ($\\theta = \\pi/2$) of the same limit drawn in $t$ and $r$ with $\\phi$ divided out, "

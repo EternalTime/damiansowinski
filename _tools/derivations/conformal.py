@@ -27886,8 +27886,8 @@ CAPTIONS = {
         "metric, each point in the diagram a single event. With $r_* = r + 2m\\ln(r/m) - 2m^2/r$ the maps "
         "$p = \\arctan((ct - r_*)/\\ell)$ and $q = \\arctan((ct + r_*)/\\ell)$ bring it into the whole diamond, drawn "
         "with $T = p + q$ up and $X = q - p$ across.",
-        "At $r = 0$ the tortoise coordinate falls to $-\\infty$, so that edge of the disc's diamond, where the "
-        "centre line stood, is now the two null edges on the left, a horizon. The disc lies beyond them.",
+        "At $r = 0$ the tortoise coordinate falls to $-\\infty$, so the two null edges on the left are a horizon, "
+        "where the diagram of the disc has its centre line. The disc lies an infinite proper distance down the throat.",
     ],
     ("kerr_scalar_hair", "hair_axis"): [
         "The half axis $\\theta = 0$ outside the horizon of Herdeiro and Radu's configuration IV, each point in the "
