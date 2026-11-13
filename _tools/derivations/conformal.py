@@ -25751,7 +25751,7 @@ def robinson_trautman(ck, src):
     v.label((0, -0.9), "$u = \\infty$", "l", "small", dx=6)
     v.label((0.5, 0.5), "black hole", cls="region")
     v.label((Q4, -Q4), "exterior", cls="region")
-    v.legend("cover", "the region the Robinson-Trautman equation reaches, $u \\ge 0$")
+    v.legend("cover", "the region of the Robinson-Trautman evolution, $u \\ge 0$")
     v.legend("r", "$r$ constant on the axis: $0.5$, $1$, $1.5$, $2.5$, $3$, $4$, $6$ and $10\\,m$")
     v.legend("null", "$u$ constant, a wave front: $cu = 0.5$, $1$, $2$ and $4\\,m$")
     v.legend("r2", "$r$ constant in Schwarzschild's black hole and second exterior, at the same values")
@@ -31807,13 +31807,13 @@ CAPTIONS = {
         "The axis of symmetry of a Robinson-Trautman spacetime whose first wave front is prolate "
         "($\\epsilon = 4/5$), each point in the diagram a single event. The outgoing rays, one for the pole of "
         "each wave front, are $p = \\arctan U$ with Kruskal's $U = -e^{-cu/4m}$, and an ingoing ray keeps "
-        "the $V = (r/2m - 1)e^{(cu + 2r)/4m}$ it has once the fronts are round. The region the "
-        "Robinson-Trautman equation reaches lies between the first front, $u = 0$, and $u = \\infty$, with "
+        "the $V = (r/2m - 1)e^{(cu + 2r)/4m}$ it has once the fronts are round. The region of the "
+        "Robinson-Trautman evolution lies between the first front, $u = 0$, and $u = \\infty$, with "
         "the singularity $r = 0$ in its past and future null infinity along its upper edge.",
         "The equation has no solution toward the past, so nothing lies before the first front: the spacetime "
         "has no past null infinity and no past event horizon. The fronts settle to round spheres, so "
         "$u = \\infty$ is the horizon $r = 2m$ of a Schwarzschild black hole. Joined across it to "
-        "Schwarzschild's black hole and second exterior, as drawn here, the metric has five continuous "
+        "Schwarzschild's black hole and second exterior, the metric has five continuous "
         "derivatives in general. Until $cu = 1.18\\,m$ every line of constant $r$ on the axis is spacelike, "
         "since $g^{rr} < 0$ at every $r$ there, and from $cu = 4m$ on the lines are Schwarzschild's.",
     ],
