@@ -8127,7 +8127,7 @@ def kiselev(ck, src):
             "$r^{-6(w + 1)}$. As $w$ grows the matter's curvature falls off ever faster, far out $R$ as "
             "$r^{-3(w + 1)}$.",
             f"The two horizons approach each other as $w$ grows and meet at $w = {w_meet:.3f}$, at "
-            f"$r = {r_meet:.3f}\\,r_s$. Past it $g^{{rr}}$ is negative at every $r$, and no static region is left.",
+            f"$r = {r_meet:.3f}\\,r_s$. Past it $g^{{rr}}$ is negative at every $r$, and the spacetime has no static region.",
         ],
         "ricci_sentences": [[0, 2], [0, 4]],
         "per_scalar": scalar_clips(

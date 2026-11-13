@@ -27747,7 +27747,7 @@ KISELEV_STATIC_CAPTION = [
     "$r_+$, so every line crosses both kinds of horizon with a continuous tangent.",
     "The coordinates $t$ and $r_- < r < r_+$ cover one static region. Static regions alternate along the chain "
     "with the black hole above the white hole across $r_-$ and the expanding region above the contracting one "
-    "across $r_+$, and the chain runs on past both ends of the drawing without end. The singularity $r = 0$ is a "
+    "across $r_+$, and the chain runs on without end in both directions. The singularity $r = 0$ is a "
     "spacelike curve. Beyond $r_+$ the tortoise coordinate falls as $-r_q\\ln r$ and $r$ is an affine parameter "
     "along every radial light ray, so $r \\to \\infty$ is null infinity, two edges at 45° that meet at $i^\\pm$.",
 ]
