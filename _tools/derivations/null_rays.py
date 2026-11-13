@@ -8205,7 +8205,7 @@ CAPTIONS = {
         "$g^{zz} = (z^2/L^2)(1 - z^3/z_0^3)$ vanishes and the rays, "
         "$c\\,dt/dz = \\pm(1 - z^3/z_0^3)^{-1/2}$, stand vertical.",
         "A ray from the boundary reaches the tip at $ct = 1.40\\,z_0$ and passes through it to the opposite "
-        "side of the circle $\\tau$. The space closes off at $z_0$, and no ray runs on toward $z \\to \\infty$, "
+        "side of the circle $\\tau$. The space closes off at $z_0$, short of $z \\to \\infty$, "
         "where anti-de Sitter space has its Poincaré horizon and the black brane its singularity.",
     ],
     ("ads_soliton", "polar", "radial"): [
