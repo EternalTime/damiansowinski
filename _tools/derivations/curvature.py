@@ -16612,12 +16612,11 @@ def ab_caption(inside_cone, axis_values):
             "$K = 12b^2/\\sigma^6$ in the interval $\\sigma = \\sqrt{T^2 - X^2}$ from that line, so its levels are "
             "the hyperbolas of constant $\\sigma$ and the colours cool away from the cone. On the axis $X = 0$ it is "
             f"${tex_number(axis_values['inside_three'], 6)}/b^4$ at $T = 3b$ and "
-            f"${tex_number(axis_values['inside'], 6)}/b^4$ at the top of the box.",
+            f"${tex_number(axis_values['inside'], 6)}/b^4$ at $T = 6b$.",
             "The cone $T^2 = X^2$ is the singularity $\\sigma = 0$, the shock that closes on the tachyon's line and "
-            "opens again, and toward it $K$ grows as $12b^2/|T^2 - X^2|^3$, past every bound. The chart drawn here "
+            "opens again, and toward it $K$ grows as $12b^2/|T^2 - X^2|^3$, past every bound. The chart "
             "reaches the hyperbola $\\sigma = b$, where $K = 12/b^4$ and $g^{ZZ}$ changes sign; "
-            "between that hyperbola and the cone the field is static, with $Z$ for its time, and the map leaves "
-            "the band blank.",
+            "between that hyperbola and the cone the field is static, with $Z$ for its time.",
         ]
     return [
         "The Kretschmann scalar $K$ of Ehlers and Kundt's B I metric on the inertial plane of $X$ and $T$ "
@@ -16626,10 +16625,10 @@ def ab_caption(inside_cone, axis_values):
         "$K = 12b^2/r^6$ in the interval $r = \\sqrt{X^2 - T^2}$ from that line, so its levels are the hyperbolas "
         f"of constant $r$ and the colours cool away from the cone. On the axis $T = 0$ it is "
         f"${tex_number(axis_values['outside'], 6)}/b^4$ at $X = 3b$.",
-        "The map stops on the hyperbolas $r = b$, where $K = 12/b^4$ and $g^{ZZ}$ changes sign. "
+        "$K = 12/b^4$ on the hyperbolas $r = b$, where $g^{ZZ}$ changes sign. "
         "That surface is the neck: the metric continues through it into a second region of the same shape, so "
-        "the cone $T^2 = X^2$, where $r$ would vanish, is never reached from here, and the band about it is "
-        "left blank. Its curvature belongs to A II, which the other view draws.",
+        "the cone $T^2 = X^2$, where $r$ would vanish, is never reached from here. The curvature of the cone "
+        "belongs to A II.",
     ]
 
 
