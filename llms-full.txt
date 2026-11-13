@@ -838,7 +838,7 @@ A static, axially symmetric vacuum field whose Weyl potential is Newton's potent
 
 ### Cylindrical Waves with Two Polarisations
 
-Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Einstein and Rosen with the second polarisation switched on. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.
+Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Albert Einstein and Nathan Rosen with the second polarisation added. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.
 
 - id: `twisting_cylindrical_waves`
 - tags: vacuum, gravitational wave, cylindrical symmetry, exact solution, time-dependent, radiating, nonlinear, Lorentzian, Einstein equations, four-dimensional, idealized model
@@ -902,7 +902,7 @@ The static, spherically symmetric charged black hole of low energy string theory
 
 ### Schwarzschild Black Hole in a Tidal Field
 
-Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1966, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.
+Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1966, and among the distorted black holes of Robert Geroch and James Hartle the one with a quadrupole field alone. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.
 
 - id: `distorted_schwarzschild`
 - tags: vacuum, static, stationary, axisymmetric, Weyl class, harmonic function, black hole, mass, quadrupole, horizon, Killing horizon, curvature singularity, not asymptotically flat, prolate spheroidal coordinates, no-hair theorem, black hole uniqueness, black hole thermodynamics, Hawking temperature, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model, black hole shadow

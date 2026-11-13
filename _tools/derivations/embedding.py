@@ -18959,7 +18959,7 @@ CAPTIONS = {
         "every distance along it the metric distance. On the slice the metric is $dr^2 + r^2d\\theta^2$: the "
         "space sound moves through is the plane the water moves in, and a circle of radius $r$ has "
         "circumference $2\\pi r$ all the way down to the drain.",
-        "The curvature of this spacetime lies in how its moments are stacked. From one to the next the water "
+        "Each moment of this spacetime is flat, and its curvature is in how the moments are joined in time. From one to the next the water "
         "carries each point of the plane inward at $|A|/r$ and round at $B/r$, faster than sound inside the "
         "ergosurface $r = 2|A|/c$, and inward faster than sound inside the horizon $r = |A|/c$.",
     ],

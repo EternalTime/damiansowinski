@@ -28802,7 +28802,7 @@ CAPTIONS = {
         "inward against the flow approaches the horizon for ever by the laboratory's clock.",
     ],
     ("draining_bathtub", "kerr_like"): [
-        "The same drain, with the region the Kerr-like chart covers. The coordinates $T$ and $r > |A|/c$ "
+        "The same drain, with the region covered by the Kerr-like chart. The coordinates $T$ and $r > |A|/c$ "
         "cover the outside alone, and its lines of constant $T$ all meet at the corner where the horizon "
         "meets the edge $t \\to -\\infty$.",
         "The time $T = t - (|A|/(2c^2))\\ln(c^2r^2/A^2 - 1)$ runs to $+\\infty$ along the horizon, so the chart "

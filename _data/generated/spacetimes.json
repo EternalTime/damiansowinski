@@ -17418,7 +17418,7 @@
       "id": "twisting_cylindrical_waves",
       "name": "Cylindrical Waves with Two Polarisations",
       "short_name": "Cylindrical Waves with Two Polarisations",
-      "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Einstein and Rosen with the second polarisation switched on. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.",
+      "description": "Exact vacuum solutions describing gravitational waves with cylindrical wave fronts and both polarisations, the waves of Albert Einstein and Nathan Rosen with the second polarisation added. The second polarisation makes the field equations nonlinear, and a wave passing through another has its plane of polarisation turned.",
       "tags": [
         "vacuum",
         "gravitational wave",
@@ -19343,7 +19343,7 @@
       "id": "distorted_schwarzschild",
       "name": "Schwarzschild Black Hole in a Tidal Field",
       "short_name": "Distorted Schwarzschild",
-      "description": "Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1966, and the simplest of the distorted black holes of Robert Geroch and James Hartle. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.",
+      "description": "Schwarzschild's black hole in the quadrupole field of distant matter, a static vacuum solution of Weyl's class that A. G. Doroshkevich, Yakov Zel'dovich, and Igor Novikov gave in 1966, and among the distorted black holes of Robert Geroch and James Hartle the one with a quadrupole field alone. The tidal field flattens or stretches the horizon and leaves it regular; it grows with distance, so the solution holds between the horizon and the matter that distorts it.",
       "tags": [
         "vacuum",
         "static",

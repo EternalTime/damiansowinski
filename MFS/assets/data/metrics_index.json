@@ -1073,11 +1073,11 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "078603941f90501c",
-    "diagrams": "fd0321d9fcdcb54d",
-    "conformal": "c776bb1e86cd5f7d",
+    "version": "d4de6c87002e4a65",
+    "diagrams": "7621e48374c18acb",
+    "conformal": "30e728a3ec171eba",
     "embedding": "a1c5b02d8ba65163",
-    "curvature": "e0e7276a7b696dc6"
+    "curvature": "41c12a491e943cda"
   },
   {
     "id": "brill_waves",
@@ -1323,10 +1323,10 @@
       "idealized model",
       "Einstein equations"
     ],
-    "version": "cce9317edfd7ce53",
+    "version": "7e9751a395549bfb",
     "diagrams": "e8c5af81ff1b23c6",
     "conformal": "065779d03ab6d15d",
-    "embedding": "3437f058dfb1c91b",
+    "embedding": "bc85722446383174",
     "curvature": "a98ece8b3bfa41c1"
   },
   {
@@ -1611,10 +1611,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d12719767160f1cb",
-    "diagrams": "99c3458f20f3b69a",
+    "version": "f8eee2d7d73fac1b",
+    "diagrams": "66e8791c9cb4f924",
     "conformal": "8868c8b173cd5e27",
-    "embedding": "54d3ac1624dd55dd",
+    "embedding": "8c0ed08b2c538de2",
     "curvature": "68ddd3897040fe31"
   },
   {
@@ -1776,10 +1776,10 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "7c8925b84f027b69",
+    "version": "f1360c74b972ab31",
     "diagrams": "3293440e9059a970",
     "conformal": "49c40202992137c1",
-    "embedding": "84b96fdfc56548d3",
+    "embedding": "abd0088bc14b36b5",
     "curvature": "fff48b88cf1101d9"
   },
   {
@@ -1847,10 +1847,10 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "9de216666f68929a",
+    "version": "db6b2ed7d6bcdc61",
     "diagrams": "f15df464f0bd3714",
-    "conformal": "4e349fa775a9fedb",
-    "embedding": "0b94902b156b8152"
+    "conformal": "e436a7566710de9e",
+    "embedding": "a56af22a507838f9"
   },
   {
     "id": "early_braneworlds",
