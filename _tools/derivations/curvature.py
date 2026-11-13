@@ -1151,7 +1151,7 @@ def belinski_zakharov(ck, src):
             "scalar vanishes. $K$ is the same at $z$ and $-z$, the symmetry that carries $\\xi$ and $y$ to minus "
             "themselves.",
             "Two pulses leave the singularity $t = 0$ as one and run apart along the light cone $z = \\pm ct$, "
-            "which runs out to the two top corners. Each is a trough of negative $K$ riding the cone with a crest "
+            "which runs out to the two top corners. Each is a trough of negative $K$ on the cone with a crest "
             f"of positive $K$ about $w$ outside it: at $ct = 2\\,w$, $K$ vanishes at $z = {crossings[0]:.3f}\\,w$ "
             f"and ${crossings[1]:.3f}\\,w$, is least at ${trough_named:.3f}\\,w$ and greatest at "
             f"${crest_named:.3f}\\,w$. Each crest passes out of the box by its side at $ct = {leaves:.2f}\\,w$, "
@@ -1189,7 +1189,7 @@ def belinski_zakharov(ck, src):
             "scalar vanishes. It has no horizon: $g^{zz}$ stays positive at every $z$.",
             f"One hump stands about $z = 0$ while $ct < {crest_time:.3f}\\,w$. A crest parts from the axis "
             f"to each side there, and at $ct = {trough_time:.3f}\\,w$ a trough of negative $K$ opens behind each "
-            "crest, after which the two pulses run out along $z = \\pm ct$ with the trough riding the cone and the "
+            "crest, after which the two pulses run out along $z = \\pm ct$ with the trough on the cone and the "
             "crest about $w$ beyond it.",
             "Each pulse keeps its shape as it goes and falls as the inverse cube of $ct$: "
             f"$K\\,w^4(ct/w)^3$ is ${crest_value:.4f}$ at every crest and ${trough_value:.4f}$ at every trough. "
