@@ -2552,7 +2552,7 @@ A flat wall with three dimensions of space in anti-de Sitter space of five dimen
 
 ### Regular Black Hole from Pure Gravity
 
-Sean Hayward's regular black hole as a vacuum solution of gravity alone, in five dimensions or more: Einstein's theory with an infinite tower of quasi-topological curvature terms, which Pablo Bueno, Pablo A. Cano and Robie A. Hennigar summed in 2024. Every finite piece of the tower leaves a singularity, and the whole tower leaves a de Sitter core.
+Sean Hayward's regular black hole as a vacuum solution of gravity alone, in five dimensions or more: Einstein's theory with an infinite tower of quasi-topological curvature terms, which Pablo Bueno, Pablo A. Cano and Robie A. Hennigar summed in 2024. With any finite number of these terms the centre is a curvature singularity, and with the infinite tower it is a de Sitter core.
 
 - id: `regular_black_hole_pure_gravity`
 - tags: static, stationary, spherically symmetric, hyperspherical symmetry, five-dimensional, higher dimensions, regular black hole, black hole, mass, de Sitter core, regular centre, no singularity, horizon, inner horizon, white hole, maximal extension, causal structure, asymptotically flat, alternative theories of gravity, exact solution, Lorentzian, idealized model

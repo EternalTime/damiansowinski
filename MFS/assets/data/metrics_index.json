@@ -2028,7 +2028,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "91af6aa316f3fcc6",
+    "version": "f0e0661aa22468cf",
     "diagrams": "7c0ed7cc7e087f7f",
     "embedding": "fff7a814e65cff6e",
     "curvature": "cbad1f48551b27a9"
@@ -5781,10 +5781,10 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "b14e9207b8c4827c",
+    "version": "c989dd520e02ce9f",
     "diagrams": "f63b64b6804356d9",
     "conformal": "4af782afff090dfb",
-    "embedding": "9492d060e8b36e34",
+    "embedding": "0aeecf17f3e8af04",
     "curvature": "7f5516c8ad3bf890"
   },
   {
@@ -6048,9 +6048,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bded9949b0eda7d5",
+    "version": "e76e1ad2872e3759",
     "diagrams": "4ab734ce2ff4da65",
-    "conformal": "b7f985612e7adadb",
+    "conformal": "2c07e9fd30aab042",
     "embedding": "48330de47b7eda59",
     "curvature": "54286353a8682151"
   },
@@ -6082,7 +6082,7 @@
       "six-dimensional",
       "idealized model"
     ],
-    "version": "4fc35fc6625e83f5",
+    "version": "e915267c23b35eb7",
     "diagrams": "5e04d5de76a9e104",
     "embedding": "2bcbcccd5666d405"
   },
@@ -6685,7 +6685,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "26d7ee9bed19cda2",
+    "version": "8652609582adb250",
     "diagrams": "7276a636d705765d",
     "conformal": "e0a22ba6cfc54754",
     "embedding": "8003002e86c3bf6e"

@@ -22849,7 +22849,7 @@
         {
           "id": "majumdar_papapetrou",
           "kind": "family",
-          "text": "The other field of many bodies. There each body carries a charge equal to its mass, and all of them stay at rest for good; here nothing holds the bodies apart, so they orbit."
+          "text": "The other field of many bodies. There each body carries a charge equal to its mass, and all of them remain at rest; here nothing holds the bodies apart, so they orbit."
         }
       ],
       "references": [
@@ -64371,7 +64371,7 @@
       "id": "regular_black_hole_pure_gravity",
       "name": "Regular Black Hole from Pure Gravity",
       "short_name": "Regular Black Hole from Pure Gravity",
-      "description": "Sean Hayward's regular black hole as a vacuum solution of gravity alone, in five dimensions or more: Einstein's theory with an infinite tower of quasi-topological curvature terms, which Pablo Bueno, Pablo A. Cano and Robie A. Hennigar summed in 2024. Every finite piece of the tower leaves a singularity, and the whole tower leaves a de Sitter core.",
+      "description": "Sean Hayward's regular black hole as a vacuum solution of gravity alone, in five dimensions or more: Einstein's theory with an infinite tower of quasi-topological curvature terms, which Pablo Bueno, Pablo A. Cano and Robie A. Hennigar summed in 2024. With any finite number of these terms the centre is a curvature singularity, and with the infinite tower it is a de Sitter core.",
       "tags": [
         "static",
         "stationary",
@@ -64402,12 +64402,12 @@
         {
           "id": "hayward",
           "kind": "special_case",
-          "text": "The same metric function at $D = 4$, where Hayward wrote it down by hand and general relativity needs matter to hold it up [bueno2025regular, hayward2006]."
+          "text": "The same metric function at $D = 4$, where Hayward wrote it down without deriving it from a theory and general relativity needs matter as its source [bueno2025regular, hayward2006]."
         },
         {
           "id": "tangherlini",
           "kind": "special_case",
-          "text": "The black hole at $\\ell = 0$, where the tower is gone and the singularity is back, with $r_h = r_0$."
+          "text": "The black hole at $\\ell = 0$, where the tower vanishes and the centre is a curvature singularity, with $r_h = r_0$."
         },
         {
           "id": "boulware_deser",
@@ -67013,7 +67013,7 @@
         {
           "id": "pp_wave",
           "kind": "conformal",
-          "text": "Schrödinger spacetime is $L^2/r^2$ times a pp-wave of profile $-\\beta^2/r^2$, and it has the pp-wave to thank for its light cones [balasubramanian2008, herzog2008]."
+          "text": "Schrödinger spacetime is $L^2/r^2$ times a pp-wave of profile $-\\beta^2/r^2$, and its light cones are those of the pp-wave [balasubramanian2008, herzog2008]."
         },
         {
           "id": "lifshitz_spacetime",
@@ -74987,7 +74987,7 @@
         {
           "id": "mcvittie",
           "kind": "family",
-          "text": "The older way to put a mass in an expanding universe. McVittie's fluid never falls onto the mass, Sultana and Dyer's black hole swallows its dust, and no choice of mass and scale factor turns one metric into the other [carrera2010mcvittie]."
+          "text": "The older way to put a mass in an expanding universe. McVittie's fluid never falls onto the mass, Sultana and Dyer's black hole accretes its dust, and no choice of mass and scale factor turns one metric into the other [carrera2010mcvittie]."
         },
         {
           "id": "thakurta",
