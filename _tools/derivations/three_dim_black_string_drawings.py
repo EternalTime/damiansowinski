@@ -121,7 +121,7 @@ def register_null(nr):
     nr.DIAGRAMS.extend(rows)
     nr.CAPTIONS[(METRIC, STATIC, "radial")] = [
         "The plane of $t$ and $r$ ($x = 0$, $Q^2 = M^2/2$), its cones closing at the event horizon $r = M$ and "
-        "tipping inward between the horizons; inside the inner horizon $r = M/2$ the plane holds no light ray."]
+        "tipping inward between the horizons; inside the inner horizon $r = M/2$ the plane is spacelike."]
     nr.CAPTIONS[(METRIC, STATIC, "along")] = [
         "The plane of $x$ and $r$ inside the event horizon ($t = 0$, $Q^2 = M^2/2$), where $r$ is the time down to "
         "the inner horizon $r = M/2$ and $x$ the time inside it, out to the timelike singularity $r = 0$."]
@@ -250,7 +250,7 @@ def embedding(eb, ck, src):
     fig.legend("line", "r", "$r$ constant, at $2M$, $4M$, and $6M$")
     fig.legend("line", "r2", "the same circles in the other exterior")
     fig.legend("line", "meridian", "$x$ constant, every $\\pi M/12$")
-    stops = ["Inside the event horizon $r$ is a time, and a slice of constant $t$ is no moment of space."]
+    stops = ["Inside the event horizon $r$ is a time, so a slice of constant $t$ is a timelike surface."]
     views = [eb.view("string", "The black string", "$M$", [string], fig.done(),
                      settings=SETTINGS, stops=stops)]
 
