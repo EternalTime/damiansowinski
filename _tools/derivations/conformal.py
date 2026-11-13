@@ -30112,7 +30112,7 @@ CAPTIONS = {
         "$-F(1 - h_2)c^2dt^2 + (1 + j_2)dr^2/F$, and with $r_*$ its tortoise coordinate, zero at the surface, "
         "$p, q = \\arctan((ct \\mp r_*)/R)$ bring it into Minkowski's triangle.",
         "The left edge is the surface of the star, a timelike line, with the star beyond it. The cones never "
-        "close on the way in, since $R > 2m$, so the diagram has no horizon and every outgoing ray reaches "
+        "close on the way in, since $R > 2m$, so the spacetime outside the star has no horizon and every outgoing ray reaches "
         "$\\mathscr{I}^+$.",
     ],
     ("hartle_thorne", "painleve_gullstrand"): [
