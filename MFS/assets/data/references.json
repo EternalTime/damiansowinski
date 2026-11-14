@@ -1,5 +1,5 @@
 {
-  "version": "76a3d8406c3312f3",
+  "version": "60dca57f95d45d49",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47018,6 +47018,36 @@
         "eprint": "astro-ph/0405247",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1086/422385"
+      }
+    },
+    "garcia1988type": {
+      "type": "article",
+      "fields": {
+        "title": "Type-{D} rigidly rotating perfect fluid solutions",
+        "author": "Garc\\'{\\i}a D., Alberto and Hauser, Isidore",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "29",
+        "number": "1",
+        "pages": "175--178",
+        "year": "1988",
+        "doi": "10.1063/1.528159",
+        "url": "https://doi.org/10.1063/1.528159"
+      }
+    },
+    "mars1993axial": {
+      "type": "article",
+      "fields": {
+        "title": "Axial symmetry and conformal {Killing} vectors",
+        "author": "Mars, M. and Senovilla, J. M. M.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "10",
+        "number": "8",
+        "pages": "1633--1647",
+        "year": "1993",
+        "doi": "10.1088/0264-9381/10/8/020",
+        "eprint": "gr-qc/0201045",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/10/8/020"
       }
     }
   }

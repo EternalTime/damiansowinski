@@ -43613,7 +43613,12 @@
       "references": [
         "kramer1984fluid",
         "chinea1999kramer",
-        "racz1996fluid"
+        "kramer1985",
+        "mars2001",
+        "mars1993axial",
+        "senovilla1987",
+        "racz1996fluid",
+        "garcia1988type"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kramer_fluid.json",
