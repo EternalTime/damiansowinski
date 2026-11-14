@@ -1,5 +1,5 @@
 {
-  "version": "d91039b4f37169dc",
+  "version": "e254159bbfc1752c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46566,6 +46566,139 @@
         "eprint": "1106.0331",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1106.0331"
+      }
+    },
+    "murphy1977": {
+      "type": "article",
+      "fields": {
+        "title": "Graviton viscosity in the early universe",
+        "author": "Murphy, George L.",
+        "journal": "Physics Letters A",
+        "volume": "62",
+        "number": "2",
+        "pages": "75--77",
+        "year": "1977",
+        "doi": "10.1016/0375-9601(77)90953-7",
+        "url": "https://doi.org/10.1016/0375-9601(77)90953-7"
+      }
+    },
+    "santos1985viscous": {
+      "type": "article",
+      "fields": {
+        "title": "Isotropic homogeneous universe with viscous fluid",
+        "author": "Santos, N. O. and Dias, R. S. and Banerjee, A.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "26",
+        "number": "4",
+        "pages": "878--881",
+        "year": "1985",
+        "doi": "10.1063/1.526582",
+        "url": "https://doi.org/10.1063/1.526582"
+      }
+    },
+    "barrow1988": {
+      "type": "article",
+      "fields": {
+        "title": "String-driven inflationary and deflationary cosmological models",
+        "author": "Barrow, John D.",
+        "journal": "Nuclear Physics B",
+        "volume": "310",
+        "number": "3-4",
+        "pages": "743--763",
+        "year": "1988",
+        "doi": "10.1016/0550-3213(88)90101-0",
+        "url": "https://doi.org/10.1016/0550-3213(88)90101-0"
+      }
+    },
+    "oliveira1988": {
+      "type": "article",
+      "fields": {
+        "title": "Non-Equilibrium Friedman Cosmologies",
+        "author": "de Oliveira, H. P. and Salim, J. M.",
+        "journal": "Acta Physica Polonica B",
+        "volume": "19",
+        "number": "8",
+        "pages": "649--657",
+        "year": "1988",
+        "url": "https://www.actaphys.uj.edu.pl/R/19/8/649"
+      }
+    },
+    "pavon1991": {
+      "type": "article",
+      "fields": {
+        "title": "Causal Friedmann-Robertson-Walker cosmology",
+        "author": "Pav{\\'o}n, D. and Bafaluy, J. and Jou, D.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "8",
+        "number": "2",
+        "pages": "347--360",
+        "year": "1991",
+        "doi": "10.1088/0264-9381/8/2/014",
+        "url": "https://doi.org/10.1088/0264-9381/8/2/014"
+      }
+    },
+    "lima2012": {
+      "type": "article",
+      "fields": {
+        "title": "New cosmic accelerating scenario without dark energy",
+        "author": "Lima, J. A. S. and Basilakos, S. and Costa, F. E. M.",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "10",
+        "pages": "103534",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.103534",
+        "eprint": "1205.0868",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.103534"
+      }
+    },
+    "bravo2019": {
+      "type": "article",
+      "fields": {
+        "title": "Viscous cosmologies",
+        "author": "Bravo Medina, Sergio and Nowakowski, Marek and Batic, Davide",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "36",
+        "number": "21",
+        "pages": "215002",
+        "year": "2019",
+        "doi": "10.1088/1361-6382/ab45bb",
+        "eprint": "1901.09787",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ab45bb"
+      }
+    },
+    "cruz2022": {
+      "type": "article",
+      "fields": {
+        "title": "Singularities and soft-Big Bang in a viscous $\\Lambda$CDM model",
+        "author": "Cruz, Norman and Gonz{\\'a}lez, Esteban and Jovel, Jose",
+        "journal": "Physical Review D",
+        "volume": "105",
+        "number": "2",
+        "pages": "024047",
+        "year": "2022",
+        "doi": "10.1103/PhysRevD.105.024047",
+        "eprint": "2109.09865",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.105.024047"
+      }
+    },
+    "cruz2023": {
+      "type": "article",
+      "fields": {
+        "title": "A non-singular early-time viscous cosmological model",
+        "author": "Cruz, Norman and Gonz{\\'a}lez, Esteban and Jovel, Jose",
+        "journal": "Modern Physics Letters A",
+        "volume": "38",
+        "number": "18n19",
+        "pages": "2350088",
+        "year": "2023",
+        "doi": "10.1142/S0217732323500888",
+        "eprint": "2207.14244",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0217732323500888"
       }
     }
   }
