@@ -1,5 +1,5 @@
 {
-  "version": "8cc9250db23117da",
+  "version": "3cc4cb8c362aeb89",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46430,6 +46430,66 @@
         "pages": "1040--1048",
         "year": "1985",
         "doi": "10.1063/1.526535"
+      }
+    },
+    "bekenstein1989": {
+      "type": "article",
+      "fields": {
+        "title": "Is the cosmological singularity thermodynamically possible?",
+        "author": "Bekenstein, Jacob D.",
+        "journal": "International Journal of Theoretical Physics",
+        "volume": "28",
+        "number": "9",
+        "pages": "967--981",
+        "year": "1989",
+        "doi": "10.1007/BF00670342",
+        "url": "https://doi.org/10.1007/BF00670342"
+      }
+    },
+    "parker1990": {
+      "type": "article",
+      "fields": {
+        "title": "Avoidance of singularities in relativity through two-body interactions",
+        "author": "Parker, Leonard and Wang, Yi",
+        "journal": "Physical Review D",
+        "volume": "42",
+        "number": "6",
+        "pages": "1877--1883",
+        "year": "1990",
+        "doi": "10.1103/PhysRevD.42.1877",
+        "url": "https://doi.org/10.1103/PhysRevD.42.1877"
+      }
+    },
+    "molinaparis1999": {
+      "type": "article",
+      "fields": {
+        "title": "Minimal conditions for the creation of a {Friedman}--{Robertson}--{Walker} universe from a ``bounce''",
+        "author": "Molina-Par{\\'\\i}s, Carmen and Visser, Matt",
+        "journal": "Physics Letters B",
+        "volume": "455",
+        "number": "1--4",
+        "pages": "90--95",
+        "year": "1999",
+        "doi": "10.1016/S0370-2693(99)00469-4",
+        "url": "https://doi.org/10.1016/S0370-2693(99)00469-4",
+        "eprint": "gr-qc/9810023",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "barcelo2000": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar fields, energy conditions and traversable wormholes",
+        "author": "Barcel{\\'o}, Carlos and Visser, Matt",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "18",
+        "pages": "3843--3864",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/18/318",
+        "url": "https://doi.org/10.1088/0264-9381/17/18/318",
+        "eprint": "gr-qc/0003025",
+        "archiveprefix": "arXiv"
       }
     }
   }
