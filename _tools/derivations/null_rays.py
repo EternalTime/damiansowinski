@@ -19155,19 +19155,19 @@ def ghost_neutrino_diagrams():
     ])
     CAPTIONS[("ghost_neutrinos", "taub", "radial")] = [
         "The plane of $t$ and $z$ ($x = 0$, $y = 0$), with $z$ the proper distance from the "
-        "singularity. A ray has $c\\,dt/dz = \\pm(z/L)^{1/3}$ and keeps $ct \\mp \\tfrac{3}{4}L^{-1/3}z^{4/3}$, so light "
+        "singularity. A ray has $c\\,dt/dz = \\pm(z/L)^{1/3}$, with $ct \\mp \\tfrac{3}{4}L^{-1/3}z^{4/3}$ constant along it, so light "
         "reaches $z = 0$ in a finite time and the cones close as $z$ grows.",
         "The ghost neutrino current is null and runs along $z$, on the rays of one family or the other.",
     ]
     CAPTIONS[("ghost_neutrinos", "areal", "radial")] = [
         "The plane of $t$ and $r$ ($x = 0$, $y = 0$), with $z = \\tfrac{2}{3}L(r/L)^{3/2}$. A ray has "
-        "$c\\,dt/dr = \\pm r/L$ and keeps $ct \\mp r^2/2L$, so the cones are widest at the singularity $r = 0$ "
+        "$c\\,dt/dr = \\pm r/L$, with $ct \\mp r^2/2L$ constant along it, so the cones are widest at the singularity $r = 0$ "
         "and close as $r$ grows.",
     ]
     CAPTIONS[("ghost_neutrinos", "null", "null")] = [
         "The plane of $\\mu$ and $\\nu$ ($x = 0$, $y = 0$), drawn in $(\\mu + \\nu)/2 = r^2/4L^2$ across and "
-        "$(\\mu - \\nu)/2 = ct/2L$ up. Every ray keeps $\\mu$ or $\\nu$, the singularity is the line $\\mu + \\nu = 0$, "
-        "and null infinity lies where $\\mu$ or $\\nu$ runs to infinity.",
+        "$(\\mu - \\nu)/2 = ct/2L$ up. Along every ray $\\mu$ or $\\nu$ is constant, the singularity is the line $\\mu + \\nu = 0$, "
+        "and null infinity lies where $\\mu$ or $\\nu$ tends to infinity.",
     ]
     CLOSED_FORMS.update({
         ("ghost_neutrinos", "taub", "radial"):

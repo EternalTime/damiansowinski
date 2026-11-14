@@ -22205,9 +22205,9 @@ def ghost_neutrinos(ck, src):
     ck.add("Ghost neutrinos: g_zz = (d rho/dz)^2 at z = 8/27", abs(float(sl.defect_at(np.array([stop]))[0])), 1e-12)
     ck.stops("Ghost neutrinos, inside z = 8/27", sl, np.geomspace(1e-6, stop, 202)[:-1])
     horn = Piece("strip", "sheet", sl, stop, top, 0.0, 1,
-                 (("stops", "the circles grow faster than the distance out to them, and nothing in flat space "
-                            "carries the slice on toward the singularity"),
-                  ("edge", "the surface runs on, steepening, to $z \\to \\infty$")),
+                 (("stops", "the circles grow faster than the distance out to them, too fast for a surface of revolution "
+                            "in flat space to continue toward the singularity"),
+                  ("edge", "the surface continues, steepening, to $z \\to \\infty$")),
                  [(stop, "chartedge", None), (1.0, "r", None), (2.0, "r", None), (3.0, "r", None), (top, "r", None)], size,
                  digits=LORENTZ_DIGITS)
     ck.isometry("Ghost neutrinos, the plane y = 0", horn)

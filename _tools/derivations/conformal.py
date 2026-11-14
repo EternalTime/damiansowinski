@@ -32138,7 +32138,7 @@ DRAWN["ghost_neutrinos"] = ghost_neutrinos
 for _cid in ("taub", "areal", "null"):
     CAPTIONS[("ghost_neutrinos", _cid)] = [
         "The half plane of fixed $x$ and $y$, each point a plane, with metric $(L/r)(-c^2dt^2 + dr_*^2)$ and "
-        "$r_* = r^2/2L$, in Minkowski's triangle by $p, q = \\arctan(ct \\mp r_*)$. The edge $X = 0$ is the "
+        "$r_* = r^2/2L$, in the triangle of Minkowski space by $p, q = \\arctan(ct \\mp r_*)$. The edge $X = 0$ is the "
         "timelike singularity and the far edges are null infinity.",
     ]
 
