@@ -1,5 +1,5 @@
 {
-  "version": "787ea69dccc83305",
+  "version": "97d0c6042256ddbd",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46833,6 +46833,52 @@
         "eprint": "2102.08401",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/j.nuclphysb.2021.115583"
+      }
+    },
+    "chrusciel1984": {
+      "type": "article",
+      "fields": {
+        "author": "Chruściel, P. T. and Kowalski-Glikman, J.",
+        "title": "The isometry group and {Killing} spinors for the pp wave space-time in {D} = 11 supergravity",
+        "journal": "Physics Letters B",
+        "volume": "149",
+        "number": "1--3",
+        "pages": "107--110",
+        "year": "1984",
+        "doi": "10.1016/0370-2693(84)91563-6",
+        "url": "https://doi.org/10.1016/0370-2693(84)91563-6"
+      }
+    },
+    "gran2010": {
+      "type": "article",
+      "fields": {
+        "author": "Gran, U. and Gutowski, J. and Papadopoulos, G.",
+        "title": "M-theory backgrounds with 30 {Killing} spinors are maximally supersymmetric",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2010",
+        "number": "3",
+        "pages": "112",
+        "year": "2010",
+        "doi": "10.1007/JHEP03(2010)112",
+        "eprint": "1001.1103",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2010)112"
+      }
+    },
+    "chang2025": {
+      "type": "article",
+      "fields": {
+        "author": "Chang, Chi-Ming",
+        "title": "Witten index of {BMN} matrix quantum mechanics",
+        "journal": "SciPost Physics",
+        "volume": "19",
+        "number": "6",
+        "pages": "147",
+        "year": "2025",
+        "doi": "10.21468/SciPostPhys.19.6.147",
+        "eprint": "2404.18442",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.21468/SciPostPhys.19.6.147"
       }
     }
   }
