@@ -1,5 +1,5 @@
 {
-  "version": "3cc4cb8c362aeb89",
+  "version": "d91039b4f37169dc",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46490,6 +46490,82 @@
         "url": "https://doi.org/10.1088/0264-9381/17/18/318",
         "eprint": "gr-qc/0003025",
         "archiveprefix": "arXiv"
+      }
+    },
+    "ernst1978": {
+      "type": "article",
+      "fields": {
+        "title": "Field equations and integrability conditions for special type {N} twisting gravitational fields",
+        "author": "Ernst, F. J. and Hauser, I.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "19",
+        "number": "9",
+        "pages": "1816--1822",
+        "year": "1978",
+        "doi": "10.1063/1.523920",
+        "url": "https://doi.org/10.1063/1.523920"
+      }
+    },
+    "machadoramos2000": {
+      "type": "article",
+      "fields": {
+        "title": "Symmetries and the {Karlhede} classification of type {N} vacuum solutions",
+        "author": "Machado Ramos, M. P. and Vaz, E. G. L. R.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "24",
+        "pages": "5089--5102",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/24/310",
+        "url": "https://doi.org/10.1088/0264-9381/17/24/310"
+      }
+    },
+    "ivanov2000": {
+      "type": "article",
+      "fields": {
+        "title": "Pure-radiation gravitational fields with a simple twist and a {Killing} vector",
+        "author": "Ivanov, B. V.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "6",
+        "pages": "064011",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.064011",
+        "eprint": "gr-qc/0103095",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0103095"
+      }
+    },
+    "ortaggio2010": {
+      "type": "article",
+      "fields": {
+        "title": "Type {III} and {N} {Einstein} spacetimes in higher dimensions: General properties",
+        "author": "Ortaggio, Marcello and Pravda, Vojtěch and Pravdová, Alena",
+        "journal": "Physical Review D",
+        "volume": "82",
+        "number": "6",
+        "pages": "064043",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.82.064043",
+        "eprint": "1005.2377",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1005.2377"
+      }
+    },
+    "malek2011": {
+      "type": "article",
+      "fields": {
+        "title": "Types {III} and {N} solutions to quadratic gravity",
+        "author": "Málek, Tomáš and Pravda, Vojtěch",
+        "journal": "Physical Review D",
+        "volume": "84",
+        "number": "2",
+        "pages": "024047",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.84.024047",
+        "eprint": "1106.0331",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1106.0331"
       }
     }
   }
