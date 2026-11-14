@@ -22045,7 +22045,7 @@ def bekenstein_universes(ck, src):
         where = f"Bekenstein open, eta = {e:.4f}"
         ck.stops(f"{where}, in flat space", flat, np.linspace(1e-3, 6, 200))
         sheet = Piece("sheet", "sheet", sl, 0.0, top, 0.0, 1,
-                      (("axis", "the centre $\\chi = 0$"), ("edge", "the sheet runs on, to $\\chi \\to \\infty$")),
+                      (("axis", "the centre $\\chi = 0$"), ("edge", "the sheet continues to $\\chi \\to \\infty$")),
                       [(0.5, "r", None), (top, "r", None)], open_size)
         ck.isometry(where, sheet)
         ck.radius(f"{where}, rho = a sinh chi", sheet, lambda x, a=a: a * np.sinh(x), open_size)
@@ -22064,8 +22064,8 @@ def bekenstein_universes(ck, src):
     views.append(view("open", "Open universe", "$\\ell$", surfaces, fig.done(),
                       movie=movie(frames, "$\\eta$", times),
                       settings="$\\ell = 1$ and $A = 3/2$, with lengths measured by $dX^2 + dY^2 - dZ^2$.",
-                      stops=["At every $\\chi > 0$ the circles grow faster than the distance out to them, so no "
-                             "surface of revolution in flat space carries the moment; Minkowski space carries it."]))
+                      stops=["At every $\\chi > 0$ the circles grow faster than the distance out to them, too fast for a "
+                             "surface of revolution in flat space, so the moment is embedded in Minkowski space."]))
     return views
 
 

@@ -4223,7 +4223,7 @@
       "id": "bekenstein_universes",
       "name": "Bekenstein's Universes with No Singularity",
       "short_name": "Bekenstein Universes",
-      "description": "Friedmann universes of dust whose particles interact with a conformally coupled scalar field, solved exactly by Jacob D. Bekenstein in 1975. For a range of the constants the scale factor never reaches zero: the closed universe swings between two radii for all time, and the flat and open universes contract to a smallest radius and expand again.",
+      "description": "Friedmann universes of dust whose particles interact with a conformally coupled scalar field, solved exactly by Jacob D. Bekenstein in 1975. For a range of the constants the scale factor never reaches zero: the closed universe oscillates between two radii for all time, and the flat and open universes contract to a smallest radius and expand again.",
       "tags": [
         "cosmology",
         "FLRW",
@@ -28128,7 +28128,7 @@
       "id": "ghost_neutrinos",
       "name": "Davis-Ray Ghost Neutrinos",
       "short_name": "Ghost Neutrinos",
-      "description": "A current of neutrinos along one axis of Taub's static plane symmetric vacuum, which Talmadge M. Davis and John R. Ray found in 1974. The neutrinos carry no energy or momentum, so the geometry around them is that of empty space, with a timelike singularity on one side.",
+      "description": "A current of neutrinos along one axis of Abraham Taub's static plane symmetric vacuum, which Talmadge M. Davis and John R. Ray found in 1974. The neutrinos carry no energy or momentum, so the geometry around them is that of empty space, with a timelike singularity on one side.",
       "tags": [
         "vacuum",
         "static",

@@ -368,10 +368,10 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "9803bcfb7ae396b4",
+    "version": "ddf512a20bc3c12a",
     "diagrams": "1d6c29c5b6bfabeb",
     "conformal": "e5ff4de589ab53ea",
-    "embedding": "9bebc74012355e18",
+    "embedding": "799ee7b43bf96901",
     "curvature": "ca116e9e816b5f9b"
   },
   {
@@ -1869,7 +1869,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "5732b362980f22b9",
+    "version": "5bdc309d29111b5c",
     "diagrams": "331d3ed0e92420c7",
     "conformal": "420755ae5fafd02e",
     "embedding": "cb5e3996e73277cc",
@@ -2259,7 +2259,7 @@
       "inflation",
       "perfect fluid"
     ],
-    "version": "04d1943910015d57",
+    "version": "36f8fde47bc4ba42",
     "diagrams": "3a7074ca557a3b99",
     "conformal": "75bc47db71571987",
     "embedding": "517eb8d877b53deb",
@@ -2467,10 +2467,10 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "76c110fe88bc79d8",
-    "diagrams": "f0a2d2a7211281f0",
-    "conformal": "f4ed73afc00b554e",
-    "embedding": "dd42edb65e2da2d2",
+    "version": "f4cae0b200f3aed3",
+    "diagrams": "2c4986de69822961",
+    "conformal": "78aa29e98b268930",
+    "embedding": "5f4bc0365a1fa024",
     "curvature": "94a423a07033db04"
   },
   {
@@ -2834,7 +2834,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "ad135614cfc17162",
+    "version": "e63b5ed7e81ac3e0",
     "diagrams": "1595ec6b66273613",
     "conformal": "32be75dd18ea06d1",
     "embedding": "603810d2fd81ec88",
