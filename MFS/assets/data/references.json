@@ -1,5 +1,5 @@
 {
-  "version": "827a4bcacba786e6",
+  "version": "4c58d62863e2d793",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46291,6 +46291,80 @@
         "archiveprefix": "arXiv",
         "primaryclass": "hep-th",
         "url": "https://doi.org/10.1007/JHEP08(2026)191"
+      }
+    },
+    "ferreira_joyce1997": {
+      "type": "article",
+      "fields": {
+        "author": "Ferreira, Pedro G. and Joyce, Michael",
+        "title": "Structure Formation with a Self-Tuning Scalar Field",
+        "journal": "Physical Review Letters",
+        "volume": "79",
+        "number": "24",
+        "pages": "4740--4743",
+        "year": "1997",
+        "doi": "10.1103/PhysRevLett.79.4740",
+        "eprint": "astro-ph/9707286",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.79.4740"
+      }
+    },
+    "liddle_mazumdar_schunck1998": {
+      "type": "article",
+      "fields": {
+        "author": "Liddle, Andrew R. and Mazumdar, Anupam and Schunck, Franz E.",
+        "title": "Assisted inflation",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "6",
+        "pages": "061301",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.061301",
+        "eprint": "astro-ph/9804177",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.58.061301"
+      }
+    },
+    "emparan_garriga2003": {
+      "type": "article",
+      "fields": {
+        "author": "Emparan, Roberto and Garriga, Jaume",
+        "title": "A note on accelerating cosmologies from compactifications and S-branes",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2003",
+        "number": "05",
+        "pages": "028",
+        "year": "2003",
+        "doi": "10.1088/1126-6708/2003/05/028",
+        "eprint": "hep-th/0304124",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2003/05/028"
+      }
+    },
+    "agrawal_obied_steinhardt_vafa2018": {
+      "type": "article",
+      "fields": {
+        "author": "Agrawal, Prateek and Obied, Georges and Steinhardt, Paul J. and Vafa, Cumrun",
+        "title": "On the cosmological implications of the string Swampland",
+        "journal": "Physics Letters B",
+        "volume": "784",
+        "pages": "271--276",
+        "year": "2018",
+        "doi": "10.1016/j.physletb.2018.07.040",
+        "eprint": "1806.09718",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2018.07.040"
+      }
+    },
+    "akrami_alestas_nesseris2025": {
+      "type": "misc",
+      "fields": {
+        "author": "Akrami, Yashar and Alestas, George and Nesseris, Savvas",
+        "title": "Has {DESI} detected exponential quintessence?",
+        "year": "2025",
+        "eprint": "2504.04226",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2504.04226"
       }
     }
   }
