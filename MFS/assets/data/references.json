@@ -1,5 +1,5 @@
 {
-  "version": "637c65adcddad017",
+  "version": "76a3d8406c3312f3",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46972,6 +46972,52 @@
         "eprint": "1904.01658",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1361-6382/ab293a"
+      }
+    },
+    "lemos1989": {
+      "type": "article",
+      "fields": {
+        "author": "Lemos, J. P. S.",
+        "title": "Self-similar relativistic discs with pressure",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "6",
+        "number": "9",
+        "pages": "1219--1230",
+        "year": "1989",
+        "doi": "10.1088/0264-9381/6/9/007",
+        "url": "https://doi.org/10.1088/0264-9381/6/9/007"
+      }
+    },
+    "caishu2003": {
+      "type": "article",
+      "fields": {
+        "author": "Cai, Mike J. and Shu, Frank H.",
+        "title": "Relativistic Singular Isothermal Toroids",
+        "journal": "The Astrophysical Journal",
+        "volume": "583",
+        "number": "1",
+        "pages": "391--401",
+        "year": "2003",
+        "doi": "10.1086/345357",
+        "eprint": "astro-ph/0302474",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1086/345357"
+      }
+    },
+    "caishu2004": {
+      "type": "article",
+      "fields": {
+        "author": "Cai, Mike J. and Shu, Frank H.",
+        "title": "Nonaxisymmetric Neutral Modes in Relativistic Disks",
+        "journal": "The Astrophysical Journal",
+        "volume": "611",
+        "number": "2",
+        "pages": "1054--1067",
+        "year": "2004",
+        "doi": "10.1086/422385",
+        "eprint": "astro-ph/0405247",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1086/422385"
       }
     }
   }
