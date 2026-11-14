@@ -1,5 +1,5 @@
 {
-  "version": "78bf3da2d9031bcf",
+  "version": "827a4bcacba786e6",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -46175,6 +46175,122 @@
         "eprint": "hep-th/0012143",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1016/S0550-3213(01)00175-4"
+      }
+    },
+    "linde1992hm": {
+      "type": "article",
+      "fields": {
+        "author": "Linde, Andrei",
+        "title": "Stochastic approach to tunneling and baby universe formation",
+        "journal": "Nuclear Physics B",
+        "volume": "372",
+        "number": "1-2",
+        "pages": "421--442",
+        "year": "1992",
+        "doi": "10.1016/0550-3213(92)90326-7",
+        "eprint": "hep-th/9110037",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0550-3213(92)90326-7"
+      }
+    },
+    "hackworth2005hm": {
+      "type": "article",
+      "fields": {
+        "author": "Hackworth, James C. and Weinberg, Erick J.",
+        "title": "Oscillating bounce solutions and vacuum tunneling in de Sitter spacetime",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "4",
+        "pages": "044014",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.044014",
+        "eprint": "hep-th/0410142",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.71.044014"
+      }
+    },
+    "batra2007hm": {
+      "type": "article",
+      "fields": {
+        "author": "Batra, Puneet and Kleban, Matthew",
+        "title": "Transitions between de Sitter minima",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "10",
+        "pages": "103510",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.103510",
+        "eprint": "hep-th/0612083",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.76.103510"
+      }
+    },
+    "oshita2016hm": {
+      "type": "article",
+      "fields": {
+        "author": "Oshita, Naritaka and Yokoyama, Jun'ichi",
+        "title": "Entropic interpretation of the Hawking-Moss bounce",
+        "journal": "Progress of Theoretical and Experimental Physics",
+        "volume": "2016",
+        "number": "5",
+        "pages": "051E02",
+        "year": "2016",
+        "doi": "10.1093/ptep/ptw053",
+        "eprint": "1603.06671",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th",
+        "url": "https://doi.org/10.1093/ptep/ptw053"
+      }
+    },
+    "gregory2020hm": {
+      "type": "article",
+      "fields": {
+        "author": "Gregory, Ruth and Moss, Ian G. and Oshita, Naritaka and Patrick, Sam",
+        "title": "Hawking-Moss transition with a black hole seed",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2020",
+        "number": "9",
+        "pages": "135",
+        "year": "2020",
+        "doi": "10.1007/JHEP09(2020)135",
+        "eprint": "2007.11428",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th",
+        "url": "https://doi.org/10.1007/JHEP09(2020)135"
+      }
+    },
+    "miyachi2024hm": {
+      "type": "article",
+      "fields": {
+        "author": "Miyachi, Taiga and Soda, Jiro and Tokuda, Junsei",
+        "title": "Stochastic Tunneling in de Sitter Spacetime",
+        "journal": "Universe",
+        "volume": "10",
+        "number": "7",
+        "pages": "292",
+        "year": "2024",
+        "doi": "10.3390/universe10070292",
+        "eprint": "2309.07440",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th",
+        "url": "https://doi.org/10.3390/universe10070292"
+      }
+    },
+    "shi2026hm": {
+      "type": "article",
+      "fields": {
+        "author": "Shi, Xiaoyi and Turiaci, Gustavo J. and Wu, Chih-Hung",
+        "title": "The fate of nucleated black holes in de Sitter quantum gravity",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "8",
+        "pages": "191",
+        "year": "2026",
+        "doi": "10.1007/JHEP08(2026)191",
+        "eprint": "2605.03015",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th",
+        "url": "https://doi.org/10.1007/JHEP08(2026)191"
       }
     }
   }
