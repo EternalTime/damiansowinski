@@ -1,5 +1,5 @@
 {
-  "version": "60dca57f95d45d49",
+  "version": "ab98004a72b6216d",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47048,6 +47048,22 @@
         "eprint": "gr-qc/0201045",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/10/8/020"
+      }
+    },
+    "clement1999": {
+      "type": "article",
+      "fields": {
+        "title": "The gravitating {$\\sigma$} model in 2+1 dimensions: black hole solutions",
+        "author": "Cl{\\'e}ment, G. and Fabbri, A.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "2",
+        "pages": "323--341",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/2/001",
+        "eprint": "gr-qc/9804050",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/2/001"
       }
     }
   }
