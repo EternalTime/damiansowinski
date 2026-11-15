@@ -1,5 +1,5 @@
 {
-  "version": "9accec60815f3028",
+  "version": "7b7e1b0a7db72fc0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47361,6 +47361,135 @@
         "pages": "869--871",
         "year": "1986",
         "doi": "10.1103/PhysRevD.33.869"
+      }
+    },
+    "natorf2005": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr-Schild metrics and gravitational radiation",
+        "author": "Natorf, Włodzimierz",
+        "journal": "General Relativity and Gravitation",
+        "volume": "37",
+        "number": "10",
+        "pages": "1719--1729",
+        "year": "2005",
+        "doi": "10.1007/s10714-005-0154-4",
+        "eprint": "gr-qc/0412016",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-005-0154-4"
+      }
+    },
+    "ivanov2005": {
+      "type": "article",
+      "fields": {
+        "title": "No news for Kerr-Schild fields",
+        "author": "Ivanov, Boyko V.",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "4",
+        "pages": "044012",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.044012",
+        "eprint": "gr-qc/0411118",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.71.044012"
+      }
+    },
+    "patel1982kerrnewman": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr-Newman Metric in Cosmological Background",
+        "author": "Patel, L. K. and Trivedi, Hiren B.",
+        "journal": "Journal of Astrophysics and Astronomy",
+        "volume": "3",
+        "number": "1",
+        "pages": "63--67",
+        "year": "1982",
+        "doi": "10.1007/BF02714563",
+        "url": "https://doi.org/10.1007/BF02714563"
+      }
+    },
+    "vaidya1984desitter": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr metric in the deSitter background",
+        "author": "Vaidya, P. C.",
+        "journal": "Pramana",
+        "volume": "22",
+        "number": "3-4",
+        "pages": "151--158",
+        "year": "1984",
+        "doi": "10.1007/BF02846369",
+        "url": "https://doi.org/10.1007/BF02846369"
+      }
+    },
+    "patel1986radiating": {
+      "type": "article",
+      "fields": {
+        "title": "A radiating Kerr-Newman solution",
+        "author": "Patel, L. K. and Koppar, Sharda S.",
+        "journal": "Pramana",
+        "volume": "26",
+        "number": "3",
+        "pages": "171--178",
+        "year": "1986",
+        "doi": "10.1007/BF02845258",
+        "url": "https://doi.org/10.1007/BF02845258"
+      }
+    },
+    "nayak2000": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in nonflat backgrounds: The Schwarzschild black hole in the Einstein universe",
+        "author": "Nayak, K. Rajesh and MacCallum, M. A. H. and Vishveshwara, C. V.",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "2",
+        "pages": "024020",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.63.024020",
+        "eprint": "gr-qc/0006040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.63.024020"
+      }
+    },
+    "ramachandra2003kerr": {
+      "type": "article",
+      "fields": {
+        "title": "Kerr Black Hole in the Background of the Einstein Universe",
+        "author": "Ramachandra, B. S. and Nayak, K. R. and Vishveshwara, C. V.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "35",
+        "number": "11",
+        "pages": "1977--2005",
+        "year": "2003",
+        "doi": "10.1023/A:1026290708471",
+        "url": "https://doi.org/10.1023/A:1026290708471"
+      }
+    },
+    "cox2003": {
+      "type": "article",
+      "fields": {
+        "title": "Vaidya's ``{Kerr-Einstein}'' metric cannot be matched to the {Kerr} metric",
+        "author": "Cox, D. P. G.",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "12",
+        "pages": "124008",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.68.124008",
+        "url": "https://doi.org/10.1103/PhysRevD.68.124008"
+      }
+    },
+    "tripathy2024": {
+      "type": "misc",
+      "fields": {
+        "title": "Static Blackhole with Cosmological Influence: Whittaker Solutions",
+        "author": "Tripathy, Santanu and Nayak, K. Rajesh",
+        "year": "2024",
+        "eprint": "2404.16146",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2404.16146"
       }
     }
   }
