@@ -1,5 +1,5 @@
 {
-  "version": "5fd79a4d82d17378",
+  "version": "48d357834ee18cff",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47506,6 +47506,85 @@
         "eprint": "1011.4571",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.4310/ATMP.2011.v15.n4.a6"
+      }
+    },
+    "lopez1986stability": {
+      "type": "article",
+      "fields": {
+        "author": "Carlos A. L\\'opez",
+        "title": "Stability of an extended model of the elctron",
+        "journal": "Physical Review D",
+        "volume": "33",
+        "number": "8",
+        "pages": "2489--2491",
+        "year": "1986",
+        "doi": "10.1103/physrevd.33.2489"
+      }
+    },
+    "lopez1988bubbles": {
+      "type": "article",
+      "fields": {
+        "author": "Carlos A. L\\'opez",
+        "title": "Dynamics of charged bubbles in general relativity and models of particles",
+        "journal": "Physical Review D",
+        "volume": "38",
+        "number": "12",
+        "pages": "3662--3666",
+        "year": "1988",
+        "doi": "10.1103/physrevd.38.3662"
+      }
+    },
+    "burinskii2010soliton": {
+      "type": "article",
+      "fields": {
+        "author": "Alexander Burinskii",
+        "title": "Regularized Kerr--Newman solution as a gravitating soliton",
+        "journal": "Journal of Physics A: Mathematical and Theoretical",
+        "volume": "43",
+        "number": "39",
+        "pages": "392001",
+        "year": "2010",
+        "doi": "10.1088/1751-8113/43/39/392001",
+        "eprint": "1003.2928"
+      }
+    },
+    "dymnikova2015source": {
+      "type": "article",
+      "fields": {
+        "author": "Irina Dymnikova",
+        "title": "Electromagnetic source for the Kerr--Newman geometry",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "24",
+        "number": "14",
+        "pages": "1550094",
+        "year": "2015",
+        "doi": "10.1142/s0218271815500947",
+        "eprint": "1510.01352"
+      }
+    },
+    "basso2024compact": {
+      "type": "article",
+      "fields": {
+        "author": "Marcos L. W. Basso and Vilson T. Zanchin",
+        "title": "Compact regular objects from an electrified Tolman-like density: A new interior region for the Kerr-Newman spacetime",
+        "journal": "Physical Review D",
+        "volume": "110",
+        "number": "12",
+        "pages": "124044",
+        "year": "2024",
+        "doi": "10.1103/physrevd.110.124044",
+        "eprint": "2406.13032"
+      }
+    },
+    "basso2026core": {
+      "type": "misc",
+      "fields": {
+        "author": "Marcos L. W. Basso and Vilson T. Zanchin",
+        "title": "Kerr-Newman outside a rotating de Sitter-type core: Different types of interior electromagnetic fields and currents",
+        "year": "2026",
+        "eprint": "2407.01228",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2407.01228"
       }
     }
   }
