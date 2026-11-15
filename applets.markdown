@@ -12,6 +12,7 @@ title: Applets
 .wip-wrap { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; }
 .wip-wrap .applet-launch-btn { outline: 2px solid var(--amber); outline-offset: 2px; box-shadow: 0px 1px 1px rgba(0,0,0,0.95); }
 .wip-label { font-size: 0.6em; color: var(--amber); letter-spacing: 0.04em; line-height: 1; text-shadow: 0px 1px 1px rgba(0,0,0,0.95); position: relative; z-index: 10; }
+.appstore-badge { height: 2.5rem; width: auto; display: block; }
 </style>
 
 <a href="{{ '/' | relative_url }}" style="float: right;">← Back to Home</a>
@@ -30,7 +31,8 @@ We can explore unknown worlds obeying strange rules, limited solely by our imagi
 Feel free to explore the applets below and see what you can discover.
 They've been organized loosley into categories, but many of them overlap in interesting ways.
 Each has a brief description of the physics and history behind it, just press the "What is this?" button in the applet window to learn more.
-</div><br>
+There's also a corresponding Computational Physics+ app for iPhone and Mac.
+</div><a href="https://apps.apple.com/us/app/computational-physics/id6831356955" target="_blank" rel="noopener"><img class="appstore-badge" src="{{ '/assets/images/app_store_button_white.svg' | relative_url }}" alt="Download on the App Store"></a><br>
 
 ---
 
