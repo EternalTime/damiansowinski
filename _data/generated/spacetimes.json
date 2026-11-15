@@ -74300,9 +74300,13 @@
         }
       ],
       "references": [
+        "zeldovich1962",
         "tabensky1973",
+        "lefloch2011stiff",
         "rendall1995plane",
-        "wainwright1979stiff"
+        "wainwright1979stiff",
+        "belinskii1973",
+        "andersson2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stiff_fluid_universes.json",

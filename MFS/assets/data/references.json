@@ -1,5 +1,5 @@
 {
-  "version": "7b7e1b0a7db72fc0",
+  "version": "5fd79a4d82d17378",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47490,6 +47490,22 @@
         "eprint": "2404.16146",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2404.16146"
+      }
+    },
+    "lefloch2011stiff": {
+      "type": "article",
+      "fields": {
+        "author": "LeFloch, Philippe G. and Tchapnda, Sophonie B.",
+        "title": "Plane-symmetric spacetimes with positive cosmological constant: The case of stiff fluids",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "15",
+        "number": "4",
+        "pages": "1115--1140",
+        "year": "2011",
+        "doi": "10.4310/ATMP.2011.v15.n4.a6",
+        "eprint": "1011.4571",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.2011.v15.n4.a6"
       }
     }
   }
