@@ -1,5 +1,5 @@
 {
-  "version": "9db18f789a9ff612",
+  "version": "e54f4f1440750be0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47176,6 +47176,118 @@
         "eprint": "1304.2964",
         "archiveprefix": "arXiv",
         "primaryclass": "gr-qc"
+      }
+    },
+    "valiente2004": {
+      "type": "article",
+      "fields": {
+        "title": "Nonexistence of Conformally Flat Slices in {Kerr} and Other Stationary Spacetimes",
+        "author": "Valiente Kroon, Juan Antonio",
+        "journal": "Physical Review Letters",
+        "volume": "92",
+        "number": "4",
+        "pages": "041101",
+        "year": "2004",
+        "doi": "10.1103/PhysRevLett.92.041101",
+        "eprint": "gr-qc/0310048",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0310048"
+      }
+    },
+    "dain2002": {
+      "type": "article",
+      "fields": {
+        "title": "New conformally flat initial data for spinning black holes",
+        "author": "Dain, Sergio and Lousto, Carlos O. and Takahashi, Ryoji",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "10",
+        "pages": "104038",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.104038",
+        "eprint": "gr-qc/0201062",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0201062"
+      }
+    },
+    "lovelace2008": {
+      "type": "article",
+      "fields": {
+        "title": "Binary-black-hole initial data with nearly extremal spins",
+        "author": "Lovelace, Geoffrey and Owen, Robert and Pfeiffer, Harald P. and Chu, Tony",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "8",
+        "pages": "084017",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.084017",
+        "eprint": "0805.4192",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0805.4192"
+      }
+    },
+    "dain2009": {
+      "type": "article",
+      "fields": {
+        "title": "Extreme {Bowen-York} initial data",
+        "author": "Dain, Sergio and Gabach Cl{\\'e}ment, Mar{\\'i}a E.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "26",
+        "number": "3",
+        "pages": "035020",
+        "year": "2009",
+        "doi": "10.1088/0264-9381/26/3/035020",
+        "eprint": "0806.2180",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0806.2180"
+      }
+    },
+    "hannam2007": {
+      "type": "article",
+      "fields": {
+        "title": "Geometry and Regularity of Moving Punctures",
+        "author": "Hannam, Mark and Husa, Sascha and Pollney, Denis and Br{\\\"u}gmann, Bernd and {\\'O} Murchadha, Niall",
+        "journal": "Physical Review Letters",
+        "volume": "99",
+        "number": "24",
+        "pages": "241102",
+        "year": "2007",
+        "doi": "10.1103/PhysRevLett.99.241102",
+        "eprint": "gr-qc/0606099",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0606099"
+      }
+    },
+    "hannam2009": {
+      "type": "article",
+      "fields": {
+        "title": "{Bowen-York} trumpet data and black-hole simulations",
+        "author": "Hannam, Mark and Husa, Sascha and {\\'O} Murchadha, Niall",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "12",
+        "pages": "124007",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.124007",
+        "eprint": "0908.1063",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0908.1063"
+      }
+    },
+    "immerman2009": {
+      "type": "article",
+      "fields": {
+        "title": "Trumpet-puncture initial data for black holes",
+        "author": "Immerman, Jason D. and Baumgarte, Thomas W.",
+        "journal": "Physical Review D",
+        "volume": "80",
+        "number": "6",
+        "pages": "061501",
+        "year": "2009",
+        "doi": "10.1103/PhysRevD.80.061501",
+        "eprint": "0908.0337",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0908.0337"
       }
     }
   }

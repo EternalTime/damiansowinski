@@ -3365,6 +3365,7 @@ We can explore unknown worlds obeying strange rules, limited solely by our imagi
 Feel free to explore the applets below and see what you can discover.
 They've been organized loosley into categories, but many of them overlap in interesting ways.
 Each has a brief description of the physics and history behind it, just press the "What is this?" button in the applet window to learn more.
+There's also a corresponding Computational Physics+ app for iPhone and Mac.
 
 #### Statistical Physics
 
