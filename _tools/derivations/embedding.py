@@ -21974,7 +21974,7 @@ def vaidya_patel_kerr(ck, src):
     fig.legend("line", "chartedge", "the level circle")
     return [view("equator", "The equator", "$m$", [surface], fig.done(),
                  settings="$m = 1$, $a = 3m/5$, $R = 4m$.",
-                 stops=["No flat surface carries the slice beyond the level circle."])]
+                 stops=["Beyond the level circle the slice has no embedding as a surface of revolution in flat space."])]
 
 
 DRAWN["vaidya_patel_kerr"] = vaidya_patel_kerr
