@@ -730,7 +730,7 @@ Two plane gravitational waves colliding head on in flat space, each an impulse w
 
 ### Gowdy Universes with Scalar and Electromagnetic Waves
 
-Toroidal cosmologies containing gravitational waves and a massless scalar field or electromagnetic waves. Two commuting spacelike symmetries leave time and one periodic spatial coordinate in the field equations.
+Toroidal cosmologies containing gravitational waves and a massless scalar field or electromagnetic waves. With two commuting spacelike symmetries, the field equations depend only on time and one periodic spatial coordinate.
 
 - id: `charach_malin`
 - tags: cosmology, inhomogeneous, gravitational wave, closed universe, exact solution, time-dependent, curvature singularity, Lorentzian, Einstein equations, four-dimensional, idealized model, torus, scalar field, electromagnetic field

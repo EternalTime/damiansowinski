@@ -14829,7 +14829,7 @@
       "id": "charach_malin",
       "name": "Gowdy Universes with Scalar and Electromagnetic Waves",
       "short_name": "Charach-Malin",
-      "description": "Toroidal cosmologies containing gravitational waves and a massless scalar field or electromagnetic waves. Two commuting spacelike symmetries leave time and one periodic spatial coordinate in the field equations.",
+      "description": "Toroidal cosmologies containing gravitational waves and a massless scalar field or electromagnetic waves. With two commuting spacelike symmetries, the field equations depend only on time and one periodic spatial coordinate.",
       "tags": [
         "cosmology",
         "inhomogeneous",
