@@ -1447,7 +1447,7 @@
       "torus",
       "topology"
     ],
-    "version": "029286bed8d331e0",
+    "version": "5f40dc2a10de1020",
     "diagrams": "2a4bedd9f03f65c9",
     "embedding": "25a6946371b2db7b",
     "curvature": "cd65ae35623dd817"
@@ -2106,7 +2106,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3b73af0c239a786b",
+    "version": "9d3f7222ff3f4728",
     "diagrams": "c8b0e54e16a6bfdd",
     "conformal": "0e13a713f3a4548b",
     "embedding": "f0b07e38099aa4fc",
@@ -2287,7 +2287,7 @@
       "idealized model",
       "scalar-tensor theory"
     ],
-    "version": "77536bdab0046f93",
+    "version": "0c51e967b895bf8a",
     "diagrams": "f91d4e26b9ff136c",
     "conformal": "2f4ea1592ca65c1e",
     "embedding": "68fc5fd2e3b99703",
@@ -6601,7 +6601,7 @@
       "time-dependent",
       "stiff fluid"
     ],
-    "version": "e2bb7faf5f27edde",
+    "version": "0de40acd16fc9f71",
     "diagrams": "adc8c2dc582c9b84",
     "conformal": "f462a84914c217d1",
     "embedding": "6a1bc6f9c3a87571",
@@ -7341,9 +7341,9 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "965171d695349d9d",
+    "version": "3942416d4dce44d2",
     "diagrams": "dcb1fc774959b7cf",
-    "embedding": "eb26e4c2cdd53ec6",
+    "embedding": "09a8c78b6b3c9c1c",
     "curvature": "b0d67ac85d5c9733"
   },
   {

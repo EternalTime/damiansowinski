@@ -15896,7 +15896,7 @@
       "id": "chodos_detweiler",
       "name": "Chodos and Detweiler's five-dimensional universe",
       "short_name": "Chodos-Detweiler",
-      "description": "Three expanding spatial circles and one contracting circle in a five-dimensional vacuum universe.",
+      "description": "Three expanding spatial circles and one contracting circle in a five dimensional vacuum universe.",
       "tags": [
         "vacuum",
         "five-dimensional",
@@ -74283,7 +74283,7 @@
       "id": "stiff_fluid_universes",
       "name": "Universes of Stiff Fluid",
       "short_name": "Stiff Fluid Universes",
-      "description": "Plane-symmetric exact universes with pressure equal to energy density, represented by a massless scalar field with timelike gradient.",
+      "description": "Plane symmetric exact universes with pressure equal to energy density, represented by a massless scalar field with timelike gradient.",
       "tags": [
         "cosmology",
         "inhomogeneous",
