@@ -2805,7 +2805,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "36fcd97de184c64e",
+    "version": "0832b7ddbb1d3aeb",
     "diagrams": "8db2da3173c1ed79"
   },
   {
@@ -3053,7 +3053,7 @@
       "gauge field",
       "instability"
     ],
-    "version": "bc200b5adcc9d0f1",
+    "version": "7a0c9e9e13a343e0",
     "diagrams": "9d0db1ef98fc23a0",
     "conformal": "abc503964236abbe",
     "embedding": "96ecda13d6a29061",
@@ -4899,11 +4899,11 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4216a1675adac713",
+    "version": "00337303b65aaae5",
     "diagrams": "125170e57ca89e2d",
     "conformal": "7e80c8a2afadfdd1",
     "embedding": "6789f9195b146543",
-    "curvature": "309c49a3a59ba6c9"
+    "curvature": "9455977030bd0e7a"
   },
   {
     "id": "myers_compactified",
@@ -5332,7 +5332,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0d42834214e5d9b1",
+    "version": "8b87ebc77f7ba441",
     "diagrams": "8326e68cbda09f9d",
     "conformal": "9ff380f65ea53fc3",
     "embedding": "121146402ebb3077",

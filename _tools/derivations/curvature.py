@@ -3913,7 +3913,7 @@ def murphy_viscous_universe(ck, src):
         "panels": panels, "curves": curves, "marks": [],
         "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
         "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the universe of radiation, $q = 2$, "
-                    "against the scale factor, both finite at every $a$ and greatest at the steady state, $a \\to 0$."],
+                    "against the scale factor, finite at every $a$ and greatest at the steady state, $a \\to 0$."],
         "ricci_sentences": [],
         "per_scalar": scalar_clips("Log scale.", "Log scale."),
         "settings": "$q = 2$, $H_s = 1$.",
