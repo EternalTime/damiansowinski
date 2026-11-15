@@ -15940,7 +15940,12 @@
       ],
       "references": [
         "chodos1980",
-        "chyba1985"
+        "chyba1985",
+        "levin1995",
+        "pailas2018",
+        "ishihara2016",
+        "uzan2003",
+        "kolb1986"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/chodos_detweiler.json",

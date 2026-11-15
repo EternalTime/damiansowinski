@@ -1,5 +1,5 @@
 {
-  "version": "e54f4f1440750be0",
+  "version": "9accec60815f3028",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47288,6 +47288,79 @@
         "eprint": "0908.0337",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/0908.0337"
+      }
+    },
+    "levin1995": {
+      "type": "article",
+      "fields": {
+        "author": "Levin, Janna J.",
+        "title": "Inflation from extra dimensions",
+        "journal": "Physics Letters B",
+        "volume": "343",
+        "number": "1-4",
+        "pages": "69--75",
+        "year": "1995",
+        "doi": "10.1016/0370-2693(94)01499-3",
+        "eprint": "gr-qc/9411041",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "pailas2018": {
+      "type": "article",
+      "fields": {
+        "author": "Pailas, T. and Terzis, Petros A. and Christodoulakis, T.",
+        "title": "The solution space of the {Einstein's} vacuum field equations for the case of five-dimensional {Bianchi} {Type I} ({Type} $4{A}_1$)",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "14",
+        "pages": "145003",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aac847",
+        "eprint": "1802.09044",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "ishihara2016": {
+      "type": "article",
+      "fields": {
+        "author": "Ishihara, Hideki and Kimura, Masashi and Matsuno, Ken",
+        "title": "Charged black strings in a five-dimensional {Kasner} universe",
+        "journal": "Physical Review D",
+        "volume": "93",
+        "number": "2",
+        "pages": "024037",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.93.024037",
+        "eprint": "1511.01913",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "uzan2003": {
+      "type": "article",
+      "fields": {
+        "author": "Uzan, Jean-Philippe",
+        "title": "The fundamental constants and their variation: observational and theoretical status",
+        "journal": "Reviews of Modern Physics",
+        "volume": "75",
+        "number": "2",
+        "pages": "403--455",
+        "year": "2003",
+        "doi": "10.1103/RevModPhys.75.403",
+        "eprint": "hep-ph/0205340",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "kolb1986": {
+      "type": "article",
+      "fields": {
+        "author": "Kolb, Edward W. and Perry, Malcolm J. and Walker, T. P.",
+        "title": "Time variation of fundamental constants, primordial nucleosynthesis, and the size of extra dimensions",
+        "journal": "Physical Review D",
+        "volume": "33",
+        "number": "4",
+        "pages": "869--871",
+        "year": "1986",
+        "doi": "10.1103/PhysRevD.33.869"
       }
     }
   }
