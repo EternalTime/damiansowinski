@@ -1,5 +1,5 @@
 {
-  "version": "ab98004a72b6216d",
+  "version": "9db18f789a9ff612",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47064,6 +47064,118 @@
         "eprint": "gr-qc/9804050",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/0264-9381/16/2/001"
+      }
+    },
+    "lazkoz1999": {
+      "type": "article",
+      "fields": {
+        "author": "Lazkoz, Ruth",
+        "title": "G$_1$ spacetimes with gravitational and scalar waves",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "10",
+        "pages": "104008",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.104008",
+        "eprint": "gr-qc/9812069",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
+      }
+    },
+    "szybka_naqvi2021": {
+      "type": "article",
+      "fields": {
+        "author": "Szybka, Sebastian J. and Naqvi, Syed U.",
+        "title": "Freely falling bodies in a standing-wave spacetime",
+        "journal": "Physical Review D",
+        "volume": "103",
+        "number": "2",
+        "pages": "024011",
+        "year": "2021",
+        "doi": "10.1103/PhysRevD.103.024011",
+        "eprint": "2010.12549",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
+      }
+    },
+    "alekseev2016": {
+      "type": "article",
+      "fields": {
+        "author": "Alekseev, G. A.",
+        "title": "Collision of strong gravitational and electromagnetic waves in the expanding universe",
+        "journal": "Physical Review D",
+        "volume": "93",
+        "number": "6",
+        "pages": "061501",
+        "year": "2016",
+        "doi": "10.1103/PhysRevD.93.061501",
+        "eprint": "1511.03335",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
+      }
+    },
+    "barrow_kunze1997": {
+      "type": "article",
+      "fields": {
+        "author": "Barrow, John D. and Kunze, Kerstin E.",
+        "title": "Inhomogeneous string cosmologies",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "2",
+        "pages": "741--752",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.741",
+        "eprint": "hep-th/9701085",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "narita_torii_maeda2000": {
+      "type": "article",
+      "fields": {
+        "author": "Narita, Makoto and Torii, Takashi and Maeda, Kengo",
+        "title": "Asymptotic singular behaviour of Gowdy spacetimes in string theory",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "17",
+        "number": "22",
+        "pages": "4597--4613",
+        "year": "2000",
+        "doi": "10.1088/0264-9381/17/22/301",
+        "eprint": "gr-qc/0003013",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
+      }
+    },
+    "yazadjiev2001": {
+      "type": "article",
+      "fields": {
+        "author": "Yazadjiev, Stoytcho S.",
+        "title": "Exact inhomogeneous Einstein-Maxwell-dilaton cosmologies",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "6",
+        "pages": "063510",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.063510",
+        "eprint": "hep-th/0010156",
+        "archiveprefix": "arXiv",
+        "primaryclass": "hep-th"
+      }
+    },
+    "nungesser_lim2013": {
+      "type": "article",
+      "fields": {
+        "author": "Nungesser, Ernesto and Lim, Woei Chet",
+        "title": "The electromagnetic spike solutions",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "30",
+        "number": "23",
+        "pages": "235020",
+        "year": "2013",
+        "doi": "10.1088/0264-9381/30/23/235020",
+        "eprint": "1304.2964",
+        "archiveprefix": "arXiv",
+        "primaryclass": "gr-qc"
       }
     }
   }
