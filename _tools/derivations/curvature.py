@@ -19021,6 +19021,8 @@ DRAWN["thakurta"] = lambda ck, src: thakurta_curvature(ck, src, sys.modules[__na
 import starobinsky_universe as _starobinsky
 
 DRAWN["starobinsky_universe"] = _starobinsky.curvature_diagram
+import brout_englert_gunzig as _brout_englert_gunzig
+DRAWN["brout_englert_gunzig"] = _brout_englert_gunzig.curvature_diagram
 
 import hawking_moss_drawings as hm_drawings
 hm_drawings.register_curvature(sys.modules[__name__])
