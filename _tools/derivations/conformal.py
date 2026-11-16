@@ -32409,5 +32409,8 @@ CAPTIONS.update(_nappi_witten_drawings.conformal_captions())
 
 NOT_DRAWN.add("counter_rotating_discs")
 
+import ads_dust_collapse_drawings as _ads_dust_collapse_drawings
+_ads_dust_collapse_drawings.register_conformal(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

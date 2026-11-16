@@ -99,10 +99,49 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "1dc92ebb3123c4f1",
+    "version": "71a22bc0d37b955a",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
+  },
+  {
+    "id": "ads_dust_collapse",
+    "name": "Anti-de Sitter Dust Collapse",
+    "tags": [
+      "dust",
+      "gravitational collapse",
+      "matched solution",
+      "junction conditions",
+      "black hole",
+      "BTZ black hole",
+      "horizon topology",
+      "torus",
+      "wormhole",
+      "curvature singularity",
+      "naked singularity",
+      "conical singularity",
+      "horizon",
+      "event horizon",
+      "cosmological constant",
+      "negative cosmological constant",
+      "anti-de Sitter",
+      "2+1 dimensional gravity",
+      "circularly symmetric",
+      "hyperbolic space",
+      "planar symmetry",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "three-dimensional",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "bde86baf5aaab21e",
+    "diagrams": "f4b2d462348b867c",
+    "conformal": "768966e355af7bfe",
+    "embedding": "00b4bcab2bbac7ab",
+    "curvature": "b9ab323cfba2da34"
   },
   {
     "id": "ads_soliton",
@@ -260,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "816f55ddf37fbb3a",
+    "version": "58fff3a2e99a7d07",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -2450,7 +2489,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "6ee3694fbf2884d8",
+    "version": "12b4d8f365fd6d50",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -3173,7 +3212,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "bd6c0930a0055d1f",
+    "version": "288c86c8e4ddf4f8",
     "diagrams": "02dc301797257580",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
@@ -5215,7 +5254,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9cc5e8a3e52721de",
+    "version": "9fe37e4555358425",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6",
@@ -5601,7 +5640,7 @@
       "conformally flat",
       "tachyon"
     ],
-    "version": "2ad98e817c147133",
+    "version": "d1c6555115f890b3",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "e4928f85ed18ab72",
     "embedding": "c40545f1ea0c929c"
@@ -5728,7 +5767,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b7091f1e39cf4bdd",
+    "version": "ee4cd8485904723c",
     "diagrams": "43178260a751b2b6",
     "conformal": "92decf923312cfa1",
     "embedding": "cb0d19b9439bbe73",
@@ -6207,7 +6246,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "9319c7b7232cffa0",
+    "version": "db70ceab17d27e72",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -6859,7 +6898,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "30df2c1cf37b61cf",
+    "version": "7832e064452e73b4",
     "diagrams": "99c54951a880e0fc",
     "embedding": "2c6872209174e14b"
   },
@@ -7177,7 +7216,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "d51b0837f914a200",
+    "version": "0f9493a0027612d3",
     "diagrams": "70598c77af726b80",
     "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"

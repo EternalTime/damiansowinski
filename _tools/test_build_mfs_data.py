@@ -4823,6 +4823,11 @@ class Slices(unittest.TestCase):
             # v = ct + r_* and u = ct - r_*, r_* = (1/2) ln|(r - 1)/(r + 1)|, drawn against v - r and u + r.
             sign = 1 if "ingoing" in key else -1
             return (lambda X: sign * (0.5 * math.log(abs((X - 1) / (X + 1))) - X)), list(self.reach(surface))
+        if key == "ads_dust_collapse/disc_exterior_ingoing/finkelstein":
+            # The moment of rest T = 0 outside the disc at ell = 1 and M = 1/4 is v = R_*(R) - R_*(1), with
+            # R_* = ln|(R - 1/2)/(R + 1/2)| and v = 0 on the edge R = 1, drawn against v - R from the edge out.
+            return ((lambda X: math.log(abs(3 * (X - 0.5) / (X + 0.5))) - X),
+                    list(self.reach(surface, "disc_exterior")))
         if key.startswith("charged_three_dimensions/eddington_finkelstein"):
             # The static t = 0 at kQ^2 = pi and r_c = 1 is v = r_* and u = -r_*, with r_* = 2 E_1(ln(1/r)) inside
             # the horizon, drawn against v - r and u + r.

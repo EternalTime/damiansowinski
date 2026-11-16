@@ -260,6 +260,23 @@ The maximally symmetric vacuum solution with constant negative curvature, arisin
 - chart Static global: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{L^2}\right)c^2dt^2 + \dfrac{dr^2}{1 + \dfrac{r^2}{L^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Poincare patch: coordinates $(t, x, y, z)$, $$ds^2 = \dfrac{L^2}{z^2}\left(-c^2dt^2 + dx^2 + dy^2 + dz^2\right)$$
 
+### Dust Collapse to Black Holes in Anti-de Sitter Space
+
+A cloud of pressureless dust collapsing under a negative cosmological constant, joined across its surface to a static black hole. In three dimensions a disc of dust dense enough makes the black hole of Bañados, Teitelboim, and Zanelli, and in four a slab of dust with hyperbolic or flat faces makes a black hole whose horizon is a surface of higher genus or a torus.
+
+- id: `ads_dust_collapse`
+- tags: dust, gravitational collapse, matched solution, junction conditions, black hole, BTZ black hole, horizon topology, torus, wormhole, curvature singularity, naked singularity, conical singularity, horizon, event horizon, cosmological constant, negative cosmological constant, anti-de Sitter, 2+1 dimensional gravity, circularly symmetric, hyperbolic space, planar symmetry, time-dependent, exact solution, Lorentzian, Einstein equations, three-dimensional, four-dimensional, idealized model
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ads_dust_collapse.json
+- chart Comoving Disc of Dust: coordinates $(t, r, \theta)$, $$ds^2 = -c^2dt^2 + a^2\left(\dfrac{dr^2}{1 - kr^2} + r^2d\theta^2\right)$$
+- chart Static Exterior of the Disc: coordinates $(T, R, \theta)$, $$ds^2 = -\left(\dfrac{R^2}{\ell^2} - M\right)c^2dT^2 + \dfrac{dR^2}{\dfrac{R^2}{\ell^2} - M} + R^2d\theta^2$$
+- chart Ingoing Exterior of the Disc: coordinates $(v, R, \theta)$, $$ds^2 = -\left(\dfrac{R^2}{\ell^2} - M\right)dv^2 + 2\,dv\,dR + R^2d\theta^2$$
+- chart Comoving Hyperbolic Cloud: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(\dfrac{dr^2}{\dfrac{r^2}{b^2} - 1} + r^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)\right)$$
+- chart Hyperbolic Cloud between Its Faces: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(d\chi^2 + b^2\cosh^2(\chi/b)\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)\right)$$
+- chart Static Exterior of the Hyperbolic Cloud: coordinates $(T, R, \theta, \phi)$, $$ds^2 = -\left(-1 - \dfrac{\mu}{R} + \dfrac{R^2}{L^2}\right)c^2dT^2 + \dfrac{dR^2}{-1 - \dfrac{\mu}{R} + \dfrac{R^2}{L^2}} + R^2\left(d\theta^2 + \sinh^2\theta\,d\phi^2\right)$$
+- chart Comoving Flat Cloud: coordinates $(t, \chi, x, y)$, $$ds^2 = -c^2dt^2 + a^2\left(d\chi^2 + e^{2\chi/b}\left(dx^2 + dy^2\right)\right)$$
+- chart Static Exterior of the Flat Cloud: coordinates $(T, R, x, y)$, $$ds^2 = -\left(\dfrac{R^2}{L^2} - \dfrac{\mu}{R}\right)c^2dT^2 + \dfrac{dR^2}{\dfrac{R^2}{L^2} - \dfrac{\mu}{R}} + \dfrac{R^2}{b^2}\left(dx^2 + dy^2\right)$$
+
 ### Anti-de Sitter Soliton
 
 A smooth spacetime of negative energy with no horizon: the planar black hole of anti-de Sitter space with its time and one flat direction exchanged, so that the horizon becomes a tip where a circle shrinks to a point. Gary Horowitz and Robert Myers found it in 1998 and conjectured that it is the ground state of its boundary conditions.

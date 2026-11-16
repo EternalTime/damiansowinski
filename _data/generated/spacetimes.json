@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 256,
+  "count": 257,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1606,6 +1606,11 @@
           "id": "three_dim_black_string",
           "kind": "limit_source",
           "text": "A charged black string of three dimensions, which becomes anti-de Sitter space of three dimensions in the limit where its charge approaches its mass, with its coordinates rescaled [horne1992black]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with a slab of dust in it, which collapses to a hyperbolic black hole. With the density set to zero the slab is anti-de Sitter space [smith1997]."
         }
       ],
       "references": [
@@ -1666,7 +1671,8 @@
         "dasilva2000",
         "zofka2008",
         "klebanovwitten1998",
-        "horne1992black"
+        "horne1992black",
+        "smith1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -1782,6 +1788,624 @@
           ],
           "ricci_scalar": "R = -\\dfrac{12}{L^2}",
           "kretschmann": "K = \\dfrac{24}{L^4}"
+        }
+      ]
+    },
+    {
+      "id": "ads_dust_collapse",
+      "name": "Dust Collapse to Black Holes in Anti-de Sitter Space",
+      "short_name": "Anti-de Sitter Dust Collapse",
+      "description": "A cloud of pressureless dust collapsing under a negative cosmological constant, joined across its surface to a static black hole. In three dimensions a disc of dust dense enough makes the black hole of Bañados, Teitelboim, and Zanelli, and in four a slab of dust with hyperbolic or flat faces makes a black hole whose horizon is a surface of higher genus or a torus.",
+      "tags": [
+        "dust",
+        "gravitational collapse",
+        "matched solution",
+        "junction conditions",
+        "black hole",
+        "BTZ black hole",
+        "horizon topology",
+        "torus",
+        "wormhole",
+        "curvature singularity",
+        "naked singularity",
+        "conical singularity",
+        "horizon",
+        "event horizon",
+        "cosmological constant",
+        "negative cosmological constant",
+        "anti-de Sitter",
+        "2+1 dimensional gravity",
+        "circularly symmetric",
+        "hyperbolic space",
+        "planar symmetry",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "three-dimensional",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "The cosmological constant is $\\Lambda = -1/\\ell^2$ in three dimensions and $\\Lambda = -3/L^2$ in four, and the dust is released from rest with density $\\rho_0$ where its scale factor is $a = 1$. We keep factors of $c$ explicit, with $G_3$ Newton's constant in three dimensions and $G$ the constant of four.",
+      "related": [
+        {
+          "id": "btz",
+          "kind": "piece",
+          "text": "The outside of the collapsing disc. Its edge falls along a radial geodesic of the hole without rotation, whose mass is $M = 8\\pi G_3\\rho_0r_0^2/c^2 - 1$ [mann1993]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "piece",
+          "text": "The outside of the clouds of four dimensions: the hyperbolic hole for a cloud sliced by hyperbolic planes, and the flat hole for a cloud sliced by horospheres [smith1997, mena2008toroidal]."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The inside of the clouds of four dimensions, a slab cut from an open Friedmann universe of dust with a negative cosmological constant [smith1997, mena2008toroidal]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "The star without pressure that J. Robert Oppenheimer and Hartland Snyder let fall in 1939, in four dimensions with no cosmological constant. Robert Mann and Simon Ross called their disc \"the 3D analog of Oppenheimer-Snyder collapse\" [oppenheimersnyder1939, mann1993]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "With no dust, $\\rho_0 = 0$, the hyperbolic cloud is anti-de Sitter space, and its scale factor vanishes where the surfaces of identification meet [smith1997]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space with a round horizon. These clouds end as its counterparts whose horizons are tori or surfaces of higher genus [smith1997]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "A disc too light to make a horizon ends as a conical singularity, the point mass of three dimensions, here in anti-de Sitter space [mann1993]."
+        },
+        {
+          "id": "quantum_oppenheimer_snyder",
+          "kind": "family",
+          "text": "Oppenheimer and Snyder's star with the bounce of loop quantum cosmology inside it. Zijian Shi and Xiangdong Zhang gave the disc of three dimensions a modified Friedmann equation of the same kind in 2026 [shi2026]."
+        },
+        {
+          "id": "szekeres",
+          "kind": "family",
+          "text": "Dust with no symmetry required of it. Filipe Mena, José Natário, and Paul Tod joined its members with flat and with hyperbolic shells to the black holes these clouds make [mena2008toroidal]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "The collapse with the dust on one thin shell. Yoav Peleg and Alan Steif let a ring of dust fall in three dimensions, with and without a cosmological constant [peleg1995]."
+        }
+      ],
+      "references": [
+        "mann1993",
+        "giddings1984",
+        "banados1992",
+        "oppenheimersnyder1939",
+        "carlip1995",
+        "peleg1995",
+        "pretorius2000",
+        "gutti2005",
+        "vaz2007",
+        "vaz2008",
+        "shi2026",
+        "aminneborg1996",
+        "mann1997",
+        "smith1997",
+        "mena2008toroidal",
+        "lemos1998",
+        "mena2017",
+        "mena2010",
+        "mann1997negative",
+        "smith1998",
+        "lemos1999"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_dust_collapse.json",
+      "charts": [
+        {
+          "id": "disc_interior",
+          "name": "Comoving Disc of Dust",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta"
+          ],
+          "domains": [
+            "t \\in [0, \\pi\\ell/(2c))",
+            "r \\in [0, r_0]",
+            "\\theta \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the dust, a pure number, $a = \\cos(ct/\\ell)$ for a disc released from rest at $t = 0$, which solves $\\ddot{a} = -a/\\ell^2$"
+            },
+            {
+              "symbol": "k",
+              "description": "Curvature of the disc's space at release, of either sign, $k = 8\\pi G_3\\rho_0/c^2 - 1/\\ell^2$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Comoving radius of the edge of the disc, a length, with $r_0 < 1/\\sqrt{k}$ where $k > 0$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            }
+          ],
+          "convention": "We use Mann and Ross's comoving coordinates $(t, r, \\theta)$, with $t$ the proper time of the dust, $r$ a length, and $a$ the scale factor of the disc $r \\le r_0$ [mann1993]. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(\\dfrac{dr^2}{1 - kr^2} + r^2d\\theta^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{a^2}{1 - k\\,r^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\left(2a\\ddot{a} + \\dot{a}^2 + k\\right)}{a^2}",
+          "kretschmann": "K = \\dfrac{4\\left(2a^2\\ddot{a}^2 + \\left(\\dot{a}^2 + k\\right)^2\\right)}{a^4}"
+        },
+        {
+          "id": "disc_exterior",
+          "name": "Static Exterior of the Disc",
+          "coordinates": [
+            "T",
+            "R",
+            "\\theta"
+          ],
+          "domains": [
+            "T \\in [0, \\infty)",
+            "R \\in [R_s(T), \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "R = \\ell\\sqrt{M} \\;\\text{(the horizon, for}\\; M > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "M",
+              "description": "Mass of the hole, dimensionless, $M = 8\\pi G_3\\rho_0r_0^2/c^2 - 1$ for a disc whose edge is released at the radius $r_0$; a horizon forms only for $M > 0$"
+            }
+          ],
+          "convention": "We use Mann and Ross's coordinates $(T, R, \\theta)$ outside the disc, with metric function $R^2/\\ell^2 - M$, $T$ a time, and $T = 0$ at the moment of rest [mann1993]. The edge of the disc is at $R = R_s(T)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{R^2}{\\ell^2} - M\\right)c^2dT^2 + \\dfrac{dR^2}{\\dfrac{R^2}{\\ell^2} - M} + R^2d\\theta^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(\\dfrac{R^2}{\\ell^2} - M\\right)"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\left(\\dfrac{R^2}{\\ell^2} - M\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "disc_exterior_ingoing",
+          "name": "Ingoing Exterior of the Disc",
+          "coordinates": [
+            "v",
+            "R",
+            "\\theta"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "R \\in [R_s(v), \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "T \\ge 0 \\;\\text{(after the moment of rest)}",
+            "R = \\ell\\sqrt{M} \\;\\text{(the horizon, for}\\; M > 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "M",
+              "description": "Mass of the hole, dimensionless, $M = 8\\pi G_3\\rho_0r_0^2/c^2 - 1$ for a disc whose edge is released at the radius $r_0$; a horizon forms only for $M > 0$"
+            }
+          ],
+          "convention": "We use coordinates $(v, R, \\theta)$ outside the disc, with the advanced time $v$ a length, $dv = c\\,dT + dR/\\left(R^2/\\ell^2 - M\\right)$, as in Carlip's review of the hole [carlip1995]. The edge of the disc is at $R = R_s(v)$, with $R_s = r_0a$ for the scale factor $a$ of the dust, and $v = 0$ where the edge is at rest, at $T = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = -\\left(\\dfrac{R^2}{\\ell^2} - M\\right)dv^2 + 2\\,dv\\,dR + R^2d\\theta^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(\\dfrac{R^2}{\\ell^2} - M\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "R"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "R",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "hyperbolic_interior",
+          "name": "Comoving Hyperbolic Cloud",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in [0, t_c)",
+            "r \\in (b, r_0]",
+            "\\theta \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the dust, a pure number with $a = 1$ at release, which solves $\\dot{a}^2 = 1/b^2 + \\left(1/L^2 - 1/b^2\\right)/a - a^2/L^2$"
+            },
+            {
+              "symbol": "b",
+              "description": "Curvature radius of the cloud's space at release, a length greater than $L$, fixed by the density through $1/b^2 = 1/L^2 - 8\\pi G\\rho_0/(3c^2)$"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Comoving radius of a face of the cloud, a length greater than $b$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use Smith and Mann's comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the dust, $r$ a length, and $a$ the scale factor, between the smallest surface of the cloud, $r = b$, and a face, $r = r_0$ [smith1997]. The scale factor reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(\\dfrac{dr^2}{\\dfrac{r^2}{b^2} - 1} + r^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{a^2\\,b^2}{r^2 - b^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,r^2\\sinh^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(b^2\\left(a\\ddot{a} + \\dot{a}^2\\right) - 1\\right)}{a^2b^2}",
+          "kretschmann": "K = \\dfrac{12\\left(a^2b^4\\ddot{a}^2 + \\left(b^2\\dot{a}^2 - 1\\right)^2\\right)}{a^4b^4}"
+        },
+        {
+          "id": "hyperbolic_slab",
+          "name": "Hyperbolic Cloud between Its Faces",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in [0, t_c)",
+            "\\chi \\in [-\\chi_0, \\chi_0]",
+            "\\theta \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the dust, a pure number with $a = 1$ at release, which solves $\\dot{a}^2 = 1/b^2 + \\left(1/L^2 - 1/b^2\\right)/a - a^2/L^2$"
+            },
+            {
+              "symbol": "b",
+              "description": "Curvature radius of the cloud's space at release, a length greater than $L$, fixed by the density through $1/b^2 = 1/L^2 - 8\\pi G\\rho_0/(3c^2)$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving distance of each face from the smallest surface, a length, where the radius of the face is $r_0 = b\\cosh(\\chi_0/b)$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use the comoving coordinates $(t, \\chi, \\theta, \\phi)$ of Mena, Natário, and Tod, with $t$ the proper time of the dust and $\\chi$ the distance at release from the smallest surface of the cloud, where Smith and Mann's radius is $r = b\\cosh(\\chi/b)$ [mena2008toroidal]. The scale factor $a$ reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + b^2\\cosh^2(\\chi/b)\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,b^2\\cosh^2(\\chi/b)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,b^2\\cosh^2(\\chi/b)\\sinh^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(b^2\\left(a\\ddot{a} + \\dot{a}^2\\right) - 1\\right)}{a^2b^2}",
+          "kretschmann": "K = \\dfrac{12\\left(a^2b^4\\ddot{a}^2 + \\left(b^2\\dot{a}^2 - 1\\right)^2\\right)}{a^4b^4}"
+        },
+        {
+          "id": "hyperbolic_exterior",
+          "name": "Static Exterior of the Hyperbolic Cloud",
+          "coordinates": [
+            "T",
+            "R",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in [0, \\infty)",
+            "R \\in [R_s(T), \\infty)",
+            "\\theta \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "R = R_h \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length, $\\mu = 8\\pi G\\rho_0r_0^3/(3c^2)$ for a cloud whose face is released at the radius $r_0$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use Smith and Mann's coordinates $(T, R, \\theta, \\phi)$ outside a face of the cloud, with metric function $-1 - \\mu/R + R^2/L^2$, whose positive root is the horizon $R_h$, $T$ a time, and $T = 0$ at the moment of rest [smith1997]. The face is at $R = R_s(T)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(-1 - \\dfrac{\\mu}{R} + \\dfrac{R^2}{L^2}\\right)c^2dT^2 + \\dfrac{dR^2}{-1 - \\dfrac{\\mu}{R} + \\dfrac{R^2}{L^2}} + R^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(-1 - \\dfrac{\\mu}{R} + \\dfrac{R^2}{L^2}\\right)"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\left(-1 - \\dfrac{\\mu}{R} + \\dfrac{R^2}{L^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sinh^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{R^6} + \\dfrac{24}{L^4}"
+        },
+        {
+          "id": "flat_interior",
+          "name": "Comoving Flat Cloud",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "t \\in [0, t_c)",
+            "\\chi \\in (-\\infty, \\chi_0]",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the dust, a pure number with $a = 1$ at release, which solves $\\dot{a}^2 = 1/b^2 + \\left(1/L^2 - 1/b^2\\right)/a - a^2/L^2$"
+            },
+            {
+              "symbol": "b",
+              "description": "Curvature radius of the cloud's space at release, a length greater than $L$, fixed by the density through $1/b^2 = 1/L^2 - 8\\pi G\\rho_0/(3c^2)$"
+            },
+            {
+              "symbol": "\\chi_0",
+              "description": "Comoving position of the face of the cloud, a length, where the radius of the face at release is $R_0 = be^{\\chi_0/b}$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            }
+          ],
+          "convention": "We use the comoving coordinates $(t, \\chi, x, y)$ of Mena, Natário, and Tod, with $t$ the proper time of the dust, $\\chi$, $x$, and $y$ lengths, and the factor $e^{2\\chi/b}$ on the flat planes of constant $\\chi$ [mena2008toroidal]. The cloud is $\\chi \\le \\chi_0$, and the scale factor $a$ reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + e^{2\\chi/b}\\left(dx^2 + dy^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "a^2e^{2\\chi/b}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "a^2e^{2\\chi/b}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6\\left(b^2\\left(a\\ddot{a} + \\dot{a}^2\\right) - 1\\right)}{a^2b^2}",
+          "kretschmann": "K = \\dfrac{12\\left(a^2b^4\\ddot{a}^2 + \\left(b^2\\dot{a}^2 - 1\\right)^2\\right)}{a^4b^4}"
+        },
+        {
+          "id": "flat_exterior",
+          "name": "Static Exterior of the Flat Cloud",
+          "coordinates": [
+            "T",
+            "R",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "T \\in [0, \\infty)",
+            "R \\in [R_s(T), \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "R = (\\mu L^2)^{1/3} \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a length, $\\mu = 8\\pi G\\rho_0R_0^3/(3c^2)$ for a cloud whose face is released at the radius $R_0$"
+            },
+            {
+              "symbol": "L",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
+            },
+            {
+              "symbol": "b",
+              "description": "Curvature radius of the cloud's space at release, a length, the scale of $x$ and $y$"
+            }
+          ],
+          "convention": "We use the coordinates $(T, R, x, y)$ of Mena, Natário, and Tod outside the face of the cloud, with metric function $R^2/L^2 - \\mu/R$, $T$ a time, and $T = 0$ at the moment of rest [mena2008toroidal]. The lengths $x$ and $y$ are the cloud's comoving ones, and the face is at $R = R_s(T)$, with $R_s = R_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{R^2}{L^2} - \\dfrac{\\mu}{R}\\right)c^2dT^2 + \\dfrac{dR^2}{\\dfrac{R^2}{L^2} - \\dfrac{\\mu}{R}} + \\dfrac{R^2}{b^2}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\left(\\dfrac{R^2}{L^2} - \\dfrac{\\mu}{R}\\right)"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "\\left(\\dfrac{R^2}{L^2} - \\dfrac{\\mu}{R}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{R^2}{b^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{R^2}{b^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{L^2}",
+          "kretschmann": "K = \\dfrac{12\\mu^2}{R^6} + \\dfrac{24}{L^4}"
         }
       ]
     },
@@ -3263,6 +3887,11 @@
           "id": "three_dim_black_string",
           "kind": "family",
           "text": "An asymptotically flat charged black string, the dual of the rotating hole along its angle. Its charge is half the hole's angular momentum and its horizons sit where the hole's do [horowitz1993]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "composite",
+          "text": "A disc of dust falling under a negative cosmological constant, with this hole, without rotation, outside it. The disc makes the hole only if it is dense enough, and otherwise ends as a naked conical singularity [mann1993]."
         }
       ],
       "references": [
@@ -28163,6 +28792,11 @@
           "id": "brout_englert_gunzig",
           "kind": "composite",
           "text": "An open Friedmann universe preceded by a fireball of particle creation, which starts at one event of empty flat space [brout1979causal]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "composite",
+          "text": "A slab of an open universe of dust with a negative cosmological constant, joined across its faces to black holes whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
         }
       ],
       "references": [
@@ -28244,7 +28878,9 @@
         "gibbons1994ym",
         "giddings1988",
         "brandenberger1993",
-        "brout1979causal"
+        "brout1979causal",
+        "smith1997",
+        "mena2008toroidal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -36001,6 +36637,11 @@
           "id": "rotation_halts",
           "kind": "family",
           "text": "The same junction conditions govern a cylindrical shell of counterrotating dust. Particle angular momentum produces azimuthal stress, and cylindrical vacuum waves couple to the shell on both sides [gleiser2012radiative]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "family",
+          "text": "A disc and slabs of dust falling in anti-de Sitter space. Yoav Peleg and Alan Steif let a thin ring of dust fall in three dimensions in 1995, and found a black hole or a naked singularity on either side of a threshold mass [peleg1995]."
         }
       ],
       "references": [
@@ -36027,7 +36668,8 @@
         "kraus1999",
         "israel1970",
         "sakaihaines2000void",
-        "gleiser2012radiative"
+        "gleiser2012radiative",
+        "peleg1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -58429,6 +59071,11 @@
           "id": "ori_piran",
           "kind": "family",
           "text": "A ball of fluid with pressure collapsing the same way at every scale. Its singularity is visible from outside when the fluid is soft enough [oripiran1987]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "family",
+          "text": "The collapse in anti-de Sitter space. A disc of dust in three dimensions and slabs of dust in four end as black holes whose horizons are a circle, a torus, or a surface of higher genus [mann1993, smith1997, mena2008toroidal]."
         }
       ],
       "references": [
@@ -58457,7 +59104,9 @@
         "barcelo2014mutiny",
         "bonnor1967oscillating",
         "hellaby1987",
-        "oripiran1987"
+        "oripiran1987",
+        "smith1997",
+        "mena2008toroidal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -62585,6 +63234,11 @@
           "id": "stringy_cosmic_strings",
           "kind": "family",
           "text": "Straight strings whose transverse space can close into a sphere as the particles close their space [gibbonsgreenperry1996, deser1984]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "family",
+          "text": "A disc of dust falling under a negative cosmological constant. Below a threshold density it ends as a naked conical singularity, and above it as a black hole [mann1993]."
         }
       ],
       "references": [
@@ -62612,7 +63266,8 @@
         "vuorio1985",
         "louko_marolf1994",
         "gott1986charged",
-        "gibbonsgreenperry1996"
+        "gibbonsgreenperry1996",
+        "mann1993"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -64051,6 +64706,11 @@
           "id": "lqc_bounce",
           "kind": "family",
           "text": "The whole universe bouncing, filled with a massless scalar field, the setting where Ashtekar, Pawlowski, and Singh found the bouncing Friedmann equation [ashtekar2006improved]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "family",
+          "text": "The classical collapse in anti-de Sitter space, in three dimensions and in four. Zijian Shi and Xiangdong Zhang gave the disc of three dimensions the modified Friedmann equation of loop quantum cosmology in 2026, and found a hole joined through a transition region to a white hole [shi2026]."
         }
       ],
       "references": [
@@ -64063,7 +64723,8 @@
         "husain2022",
         "bonanno2024",
         "hayward2006",
-        "ashtekar2006improved"
+        "ashtekar2006improved",
+        "shi2026"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/quantum_oppenheimer_snyder.json",
@@ -69356,6 +70017,11 @@
           "id": "linet_tian",
           "kind": "family",
           "text": "A line of mass in anti-de Sitter space. Far from the axis its static field has the leading terms of this black hole written in horospherical coordinates [zofka2008]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "family",
+          "text": "Dust collapsing in anti-de Sitter space to this hole's counterparts whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
         }
       ],
       "references": [
@@ -69389,7 +70055,9 @@
         "kraus1999",
         "hochberg1994potential",
         "york1985equilibrium",
-        "zofka2008"
+        "zofka2008",
+        "smith1997",
+        "mena2008toroidal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -76911,6 +77579,11 @@
           "id": "hellaby_kruskal",
           "kind": "special_case",
           "text": "Concentric shells of dust with a neck joining two regions [hellaby2002]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "family",
+          "text": "Clouds of dust collapsing in anti-de Sitter space to black holes with flat or hyperbolic horizons. Filipe Mena, José Natário, and Paul Tod joined the flat and the hyperbolic members of this family to those holes in 2008 [mena2008toroidal]."
         }
       ],
       "references": [
@@ -76938,7 +77611,8 @@
         "szekeres1972",
         "datt1938",
         "ruban1968",
-        "krasinski1999datt"
+        "krasinski1999datt",
+        "mena2008toroidal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/szekeres.json",
@@ -80673,6 +81347,11 @@
           "id": "linet_tian",
           "kind": "family",
           "text": "Static fields around a line of mass with a cosmological constant. With $\\sigma = 1/2$ and $\\Lambda < 0$ the field is the flat hole's black string outside its horizon [zofka2008, lemos1995]."
+        },
+        {
+          "id": "ads_dust_collapse",
+          "kind": "composite",
+          "text": "A slab of dust falling under a negative cosmological constant, with a hyperbolic or a flat hole outside each of its faces [smith1997, mena2008toroidal]."
         }
       ],
       "references": [
@@ -80706,7 +81385,9 @@
         "kraus1999",
         "gnecchi2014",
         "hartnoll2021diving",
-        "zofka2008"
+        "zofka2008",
+        "smith1997",
+        "mena2008toroidal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",

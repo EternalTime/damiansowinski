@@ -1,0 +1,42 @@
+{
+  "hidden": [
+    {
+      "reason": "The hyperbolic cloud is another spacetime than the disc and the flat cloud, whose moments of rest are embedded.",
+      "drawings": [
+        "ads_dust_collapse/hyperbolic_interior/radial",
+        "ads_dust_collapse/hyperbolic_slab/through",
+        "ads_dust_collapse/hyperbolic_exterior/radial"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The flat cloud is another spacetime than the disc that these drawings show.",
+      "drawings": {
+        "ads_dust_collapse/disc_interior/through": [
+          "horn"
+        ],
+        "ads_dust_collapse/disc_exterior/radial": [
+          "horn"
+        ],
+        "ads_dust_collapse/disc_exterior_ingoing/finkelstein": [
+          "horn"
+        ],
+        "conformal ads_dust_collapse/disc": [
+          "horn"
+        ]
+      }
+    },
+    {
+      "reason": "The disc is another spacetime than the flat cloud that these drawings show.",
+      "drawings": {
+        "ads_dust_collapse/flat_interior/radial": [
+          "rest"
+        ],
+        "ads_dust_collapse/flat_exterior/radial": [
+          "rest"
+        ]
+      }
+    }
+  ]
+}

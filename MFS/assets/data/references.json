@@ -1,5 +1,5 @@
 {
-  "version": "ac82f0e6f0e50e52",
+  "version": "7d59e072736e93e0",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -47852,6 +47852,208 @@
         "eprint": "2602.16963",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2602.16963"
+      }
+    },
+    "peleg1995": {
+      "type": "article",
+      "fields": {
+        "title": "Phase transition for gravitationally collapsing dust shells in 2+1 dimensions",
+        "author": "Peleg, Yoav and Steif, Alan R.",
+        "journal": "Physical Review D",
+        "volume": "51",
+        "number": "8",
+        "pages": "R3992--R3996",
+        "year": "1995",
+        "doi": "10.1103/PhysRevD.51.R3992",
+        "url": "https://doi.org/10.1103/PhysRevD.51.R3992",
+        "eprint": "gr-qc/9412023",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "pretorius2000": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse in 2+1 dimensional AdS spacetime",
+        "author": "Pretorius, Frans and Choptuik, Matthew W.",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "12",
+        "pages": "124012",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.62.124012",
+        "url": "https://doi.org/10.1103/PhysRevD.62.124012",
+        "eprint": "gr-qc/0007008",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "gutti2005": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of inhomogeneous dust in (2+1) dimensions",
+        "author": "Gutti, Sashideep",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "22",
+        "number": "16",
+        "pages": "3223--3234",
+        "year": "2005",
+        "doi": "10.1088/0264-9381/22/16/007",
+        "url": "https://doi.org/10.1088/0264-9381/22/16/007",
+        "eprint": "gr-qc/0506100",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "vaz2007": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum gravitational collapse and Hawking radiation in 2+1 dimensions",
+        "author": "Vaz, Cenalo and Gutti, Sashideep and Kiefer, Claus and Singh, T. P.",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "12",
+        "pages": "124021",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.124021",
+        "url": "https://doi.org/10.1103/PhysRevD.76.124021",
+        "eprint": "0710.2164",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "vaz2008": {
+      "type": "article",
+      "fields": {
+        "title": "Rotating, inhomogeneous dust interior for the BTZ black hole",
+        "author": "Vaz, Cenalo and Koehler, K. R.",
+        "journal": "Physical Review D",
+        "volume": "78",
+        "number": "2",
+        "pages": "024038",
+        "year": "2008",
+        "doi": "10.1103/PhysRevD.78.024038",
+        "url": "https://doi.org/10.1103/PhysRevD.78.024038",
+        "eprint": "0805.1908",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "shi2026": {
+      "type": "misc",
+      "fields": {
+        "title": "LQG-inspired black hole solutions in (2+1)-dimensions",
+        "author": "Shi, Zijian and Zhang, Xiangdong",
+        "year": "2026",
+        "eprint": "2609.23044",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.23044"
+      }
+    },
+    "smith1997": {
+      "type": "article",
+      "fields": {
+        "title": "Formation of topological black holes from gravitational collapse",
+        "author": "Smith, W. L. and Mann, R. B.",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "8",
+        "pages": "4942--4947",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.4942",
+        "url": "https://doi.org/10.1103/PhysRevD.56.4942",
+        "eprint": "gr-qc/9703007",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "mena2008toroidal": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse to toroidal and higher genus asymptotically AdS black holes",
+        "author": "Mena, Filipe C. and Nat\\'ario, Jos\\'e and Tod, Paul",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "12",
+        "number": "5",
+        "pages": "1163--1181",
+        "year": "2008",
+        "doi": "10.4310/ATMP.2008.v12.n5.a5",
+        "url": "https://doi.org/10.4310/ATMP.2008.v12.n5.a5",
+        "eprint": "0707.2519",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "lemos1998": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse to toroidal, cylindrical, and planar black holes",
+        "author": "Lemos, Jos\\'e P. S.",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "8",
+        "pages": "4600--4605",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.4600",
+        "url": "https://doi.org/10.1103/PhysRevD.57.4600",
+        "eprint": "gr-qc/9709013",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "mena2017": {
+      "type": "article",
+      "fields": {
+        "title": "Radiative gravitational collapse to spherical, toroidal and higher genus black holes",
+        "author": "Mena, Filipe C. and Oliveira, Jo\\~ao M.",
+        "journal": "Annals of Physics",
+        "volume": "387",
+        "pages": "135--151",
+        "year": "2017",
+        "doi": "10.1016/j.aop.2017.10.012",
+        "url": "https://doi.org/10.1016/j.aop.2017.10.012",
+        "eprint": "1710.03721",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "mena2010": {
+      "type": "article",
+      "fields": {
+        "title": "Formation of higher-dimensional topological black holes",
+        "author": "Mena, Filipe C. and Nat\\'ario, Jos\\'e and Tod, Paul",
+        "journal": "Annales Henri Poincar\\'e",
+        "volume": "10",
+        "number": "7",
+        "pages": "1359--1376",
+        "year": "2010",
+        "doi": "10.1007/s00023-009-0013-z",
+        "url": "https://doi.org/10.1007/s00023-009-0013-z",
+        "eprint": "0906.3216",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "smith1998": {
+      "type": "article",
+      "fields": {
+        "title": "Regular central structures in topologically nontrivial anti-de Sitter spacetimes",
+        "author": "Smith, W. L. and Mann, R. B.",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "12",
+        "pages": "124021",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.124021",
+        "url": "https://doi.org/10.1103/PhysRevD.58.124021",
+        "eprint": "gr-qc/9806013",
+        "archiveprefix": "arXiv"
+      }
+    },
+    "lemos1999": {
+      "type": "article",
+      "fields": {
+        "title": "Collapsing shells of radiation in anti-de Sitter spacetimes and the hoop and cosmic censorship conjectures",
+        "author": "Lemos, Jos\\'e P. S.",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "4",
+        "pages": "044020",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.59.044020",
+        "url": "https://doi.org/10.1103/PhysRevD.59.044020",
+        "eprint": "gr-qc/9812078",
+        "archiveprefix": "arXiv"
       }
     }
   }
