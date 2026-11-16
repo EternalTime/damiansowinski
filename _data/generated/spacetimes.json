@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 255,
+  "count": 256,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12492,6 +12492,550 @@
       ]
     },
     {
+      "id": "brout_englert_gunzig",
+      "name": "Brout-Englert-Gunzig Causal Universe",
+      "short_name": "Brout-Englert-Gunzig",
+      "description": "An open universe that begins at one event of empty Minkowski space and fills the forward light cone of that event. A fireball of particle creation expands almost as de Sitter space and then joins smoothly onto a freely expanding Friedmann universe, with no singularity, no event horizon, and no particle horizon.",
+      "tags": [
+        "cosmology",
+        "expanding universe",
+        "open universe",
+        "hyperbolic space",
+        "inflation",
+        "de Sitter",
+        "FLRW",
+        "homogeneous",
+        "isotropic",
+        "matched solution",
+        "no singularity",
+        "no horizon",
+        "causal structure",
+        "radiation",
+        "quantum field theory in curved spacetime",
+        "time-dependent",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "four-dimensional",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "de_sitter",
+          "kind": "piece",
+          "text": "The fireball. With the density of created matter constant, the open universe inside the cone is de Sitter space in hyperbolic slices, $a = (c/H)\\sinh HT$ [gott1983]."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The free expansion. Once creation stops, the universe inside the cone is an open Friedmann one, $k = -1$, with positive pressure [gott1983]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "piece",
+          "text": "The region outside the forward light cone of the origin, where space is empty and $\\phi$ is constant [brout1979causal]."
+        },
+        {
+          "id": "milne",
+          "kind": "special_case",
+          "text": "The universe with no creation. At $H = 0$ the fireball's scale factor is $a = cT$, Milne's flat space in hyperbolic slices, and $\\phi$ stays constant [brout1979causal, spindel1986]."
+        },
+        {
+          "id": "coleman_de_luccia",
+          "kind": "family",
+          "text": "An open universe inside the light cone of one event, born there by the decay of a false vacuum [coleman1980]. Gott wrote in 1982 that inside the light cone of an event of de Sitter space the geometry is similar to the Brussels one [gott1982]."
+        }
+      ],
+      "references": [
+        "brout1979causal",
+        "brout1978",
+        "englert1986",
+        "tryon1973",
+        "smeenk2005",
+        "gott1983",
+        "spindel1986",
+        "parker1969",
+        "brout1979spindel",
+        "brout1980",
+        "casher1981",
+        "gott1982",
+        "bucher1995",
+        "gunzig1982",
+        "guth1981",
+        "prigogine1988",
+        "brandenberger2026",
+        "coleman1980"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brout_englert_gunzig.json",
+      "charts": [
+        {
+          "id": "fireball_flat",
+          "name": "Fireball, Flat Background",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in [0, ct)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "\\tau \\in (0, \\tau_1]",
+            "\\tau_1 < \\tau_\\infty",
+            "\\tau = 0 \\;\\text{(the light cone of the origin)}",
+            "\\tau = \\tau_1 \\;\\text{(the end of creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\tau_\\infty",
+              "description": "Flat proper time at which the conformal factor diverges, a positive time. The expansion rate of the fireball is $H = 2/\\tau_\\infty$"
+            },
+            {
+              "symbol": "\\tau_1",
+              "description": "Flat proper time at which creation ends and the free expansion begins, with $0 < \\tau_1 < \\tau_\\infty$"
+            },
+            {
+              "symbol": "\\tau = \\sqrt{t^2 - \\dfrac{r^2}{c^2}}",
+              "description": "Proper time of the flat background since the origin, along the straight line from the origin through the point. The surfaces of constant $\\tau$ are hyperboloids"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(t, r, \\theta, \\varphi)$ of the flat background about the origin, the event at which the universe starts, and $\\tau$ is the flat proper time since that event. The conformal factor is the fireball's with the correction $\\delta$ to the density of created particles set to zero [brout1979causal, gott1983]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{-c^2dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\varphi^2}{\\left(1 - \\dfrac{\\tau^2}{\\tau_\\infty^2}\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\tau_\\infty^4}{\\left(\\tau_\\infty^2 - \\tau^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\tau_\\infty^4}{\\left(\\tau_\\infty^2 - \\tau^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\tau_\\infty^4\\,r^2}{\\left(\\tau_\\infty^2 - \\tau^2\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{\\tau_\\infty^4\\,r^2\\sin^2\\theta}{\\left(\\tau_\\infty^2 - \\tau^2\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{48}{c^2\\,\\tau_\\infty^2}",
+          "kretschmann": "K = \\dfrac{384}{c^4\\,\\tau_\\infty^4}"
+        },
+        {
+          "id": "expansion_flat",
+          "name": "Free Expansion, Flat Background",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "r \\in [0, ct)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "\\tau \\in [\\tau_1, \\infty)",
+            "\\tau_b < \\tau_1 < \\tau_\\infty",
+            "\\tau = \\tau_1 \\;\\text{(the end of creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\Omega_f",
+              "description": "Value the square root of the conformal factor approaches at late times, a pure number. Joining the fireball at $\\tau_1$ with the factor and its first derivative continuous fixes $\\Omega_f = \\left(1 - \\tau_1^2/\\tau_\\infty^2\\right)^{-2}$"
+            },
+            {
+              "symbol": "\\tau_b",
+              "description": "Flat proper time at which the conformal factor would vanish, before $\\tau_1$. The same joining fixes $\\tau_b = \\tau_1^2/\\tau_\\infty$"
+            },
+            {
+              "symbol": "\\tau_\\infty",
+              "description": "Flat proper time at which the fireball's conformal factor diverges, a positive time"
+            },
+            {
+              "symbol": "\\tau_1",
+              "description": "Flat proper time at which creation ends and the free expansion begins, with $0 < \\tau_1 < \\tau_\\infty$"
+            },
+            {
+              "symbol": "\\tau = \\sqrt{t^2 - \\dfrac{r^2}{c^2}}",
+              "description": "Proper time of the flat background since the origin, along the straight line from the origin through the point. The surfaces of constant $\\tau$ are hyperboloids"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(t, r, \\theta, \\varphi)$ of the flat background about the origin, the event at which the universe starts, and $\\tau$ is the flat proper time since that event. The conformal factor is that of the radiation era of the free expansion, an open Friedmann universe with pressure one third of its energy density [gott1983, englert1986]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\Omega_f^2\\left(1 - \\dfrac{\\tau_b^2}{\\tau^2}\\right)^2\\left(-c^2dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\Omega_f^2\\left(\\tau^2 - \\tau_b^2\\right)^2}{\\tau^4}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Omega_f^2\\left(\\tau^2 - \\tau_b^2\\right)^2}{\\tau^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\Omega_f^2\\,r^2\\left(\\tau^2 - \\tau_b^2\\right)^2}{\\tau^4}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{\\Omega_f^2\\,r^2\\left(\\tau^2 - \\tau_b^2\\right)^2\\sin^2\\theta}{\\tau^4}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{384\\tau_b^4\\,\\tau^8}{c^4\\,\\Omega_f^4\\left(\\tau^2 - \\tau_b^2\\right)^8}"
+        },
+        {
+          "id": "outside_flat",
+          "name": "Empty Space, Flat Background",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "r \\ge ct",
+            "r = ct \\;\\text{with}\\; t > 0 \\;\\text{(the light cone of the origin)}"
+          ],
+          "parameters": [],
+          "convention": "We use the inertial coordinates $(t, r, \\theta, \\varphi)$ of the flat background about the origin, the event at which the universe starts. Outside the forward light cone of that event space is empty and the conformal factor is one [brout1979causal]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dr^2 + r^2d\\theta^2 + r^2\\sin^2\\theta\\,d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "fireball_proper",
+          "name": "Fireball, Proper Time",
+          "coordinates": [
+            "T",
+            "\\chi",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "T \\in (0, T_1]",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "T = 0 \\;\\text{(the light cone of the origin)}",
+            "T = T_1 \\;\\text{(the end of creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "H",
+              "description": "Expansion rate of the fireball, $H = 2/\\tau_\\infty$, an inverse time, with $\\tau_\\infty$ the flat proper time at which the fireball's conformal factor diverges. The scale factor of the hyperboloids is $a = (c/H)\\sinh HT$"
+            },
+            {
+              "symbol": "T_1",
+              "description": "Proper time at which creation ends and the free expansion begins, with $\\tanh(HT_1/2) = \\tau_1/\\tau_\\infty$ for the flat proper time $\\tau_1$ of that moment"
+            }
+          ],
+          "convention": "We use the proper time $T$ of the comoving world lines since the light cone of the origin and the rapidity $\\chi$, a pure number, with $t = \\tau\\cosh\\chi$, $r = c\\tau\\sinh\\chi$, and $\\tanh(HT/2) = \\tau/\\tau_\\infty$ in the coordinates of the flat background. The scale factor is the fireball's with the correction $\\delta$ to the density of created particles set to zero [brout1979causal, gott1983]. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + \\dfrac{c^2\\sinh^2\\left(HT\\right)}{H^2}\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{c^2\\sinh^2\\left(H\\,T\\right)}{H^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{c^2\\sinh^2\\left(H\\,T\\right)\\sinh^2\\chi}{H^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{c^2\\sinh^2\\left(H\\,T\\right)\\sinh^2\\chi\\sin^2\\theta}{H^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
+          "kretschmann": "K = \\dfrac{24H^4}{c^4}"
+        },
+        {
+          "id": "expansion_proper",
+          "name": "Free Expansion, Proper Time",
+          "coordinates": [
+            "T",
+            "\\chi",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "T \\in [T_1, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "T_b + b < T_1",
+            "T = T_1 \\;\\text{(the end of creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "T_b",
+              "description": "A time fixed by joining the fireball at $T_1$ with the scale factor and its first derivative continuous, $T_b = T_1 - \\sinh(2HT_1)/(2H)$. The scale factor of the hyperboloids is $a = c\\sqrt{(T - T_b)^2 - b^2}$"
+            },
+            {
+              "symbol": "b",
+              "description": "A time fixed by the same joining, $b = \\sinh^2(HT_1)/H$"
+            },
+            {
+              "symbol": "H",
+              "description": "Expansion rate of the fireball, $H = 2/\\tau_\\infty$, an inverse time, with $\\tau_\\infty$ the flat proper time at which the fireball's conformal factor diverges"
+            },
+            {
+              "symbol": "T_1",
+              "description": "Proper time at which creation ends and the free expansion begins, with $\\tanh(HT_1/2) = \\tau_1/\\tau_\\infty$ for the flat proper time $\\tau_1$ of that moment"
+            }
+          ],
+          "convention": "We use the proper time $T$ of the comoving world lines since the light cone of the origin and the rapidity $\\chi$, a pure number, with $t = \\tau\\cosh\\chi$ and $r = c\\tau\\sinh\\chi$ in the coordinates of the flat background. The scale factor is that of the radiation era of the free expansion, an open Friedmann universe with pressure one third of its energy density [gott1983, englert1986]. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + c^2\\left(\\left(T - T_b\\right)^2 - b^2\\right)\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "c^2\\left(\\left(T - T_b\\right)^2 - b^2\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "c^2\\left(\\left(T - T_b\\right)^2 - b^2\\right)\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "c^2\\left(\\left(T - T_b\\right)^2 - b^2\\right)\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24b^4}{c^4\\left(\\left(T - T_b\\right)^2 - b^2\\right)^4}"
+        },
+        {
+          "id": "fireball_conformal",
+          "name": "Fireball, Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\eta_1]",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "\\eta_1 < 0",
+            "\\eta \\to -\\infty \\;\\text{(the light cone of the origin)}",
+            "\\eta = \\eta_1 \\;\\text{(the end of creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "H",
+              "description": "Expansion rate of the fireball, $H = 2/\\tau_\\infty$, an inverse time, with $\\tau_\\infty$ the flat proper time at which the fireball's conformal factor diverges. The scale factor of the hyperboloids is $a = -c/(H\\sinh\\eta)$"
+            },
+            {
+              "symbol": "\\eta_1",
+              "description": "Conformal time at which creation ends and the free expansion begins, $\\eta_1 = \\ln(\\tau_1/\\tau_\\infty)$ for the flat proper time $\\tau_1$ of that moment, a negative number"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta = \\ln(\\tau/\\tau_\\infty)$, a pure number with $a\\,d\\eta = c\\,dT$ for the scale factor $a$ and the proper time $T$ of the comoving world lines, and the rapidity $\\chi$, with $t = \\tau\\cosh\\chi$ and $r = c\\tau\\sinh\\chi$ in the coordinates of the flat background. The conformal time is itself the chart's $x^0$, and the scale factor is the fireball's with the correction $\\delta$ to the density of created particles set to zero [brout1979causal, gott1983]. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{c^2}{H^2\\sinh^2\\eta}\\left(-d\\eta^2 + d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{c^2}{H^2\\sinh^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{c^2}{H^2\\sinh^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{c^2\\sinh^2\\chi}{H^2\\sinh^2\\eta}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{c^2\\sinh^2\\chi\\sin^2\\theta}{H^2\\sinh^2\\eta}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
+          "kretschmann": "K = \\dfrac{24H^4}{c^4}"
+        },
+        {
+          "id": "expansion_conformal",
+          "name": "Free Expansion, Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "\\chi",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "\\eta \\in [\\eta_1, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)",
+            "\\eta_b < \\eta_1 < 0",
+            "\\eta = \\eta_1 \\;\\text{(the end of creation)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "A time fixed by joining the fireball at $\\eta_1$ with the scale factor and its first derivative continuous, $b = 1/(H\\sinh^2\\eta_1)$. The scale factor of the hyperboloids is $a = bc\\sinh(\\eta - \\eta_b)$"
+            },
+            {
+              "symbol": "\\eta_b",
+              "description": "A number fixed by the same joining, $\\eta_b = 2\\eta_1$"
+            },
+            {
+              "symbol": "H",
+              "description": "Expansion rate of the fireball, $H = 2/\\tau_\\infty$, an inverse time, with $\\tau_\\infty$ the flat proper time at which the fireball's conformal factor diverges"
+            },
+            {
+              "symbol": "\\eta_1",
+              "description": "Conformal time at which creation ends and the free expansion begins, $\\eta_1 = \\ln(\\tau_1/\\tau_\\infty)$ for the flat proper time $\\tau_1$ of that moment, a negative number"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta = \\ln(\\tau/\\tau_\\infty)$, a pure number with $a\\,d\\eta = c\\,dT$ for the scale factor $a$ and the proper time $T$ of the comoving world lines, and the rapidity $\\chi$, with $t = \\tau\\cosh\\chi$ and $r = c\\tau\\sinh\\chi$ in the coordinates of the flat background. The conformal time is itself the chart's $x^0$, and the scale factor is that of the radiation era of the free expansion [gott1983, englert1986]. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = b^2c^2\\sinh^2\\left(\\eta - \\eta_b\\right)\\left(-d\\eta^2 + d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-c^2\\,b^2\\sinh^2\\left(\\eta - \\eta_b\\right)"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "c^2\\,b^2\\sinh^2\\left(\\eta - \\eta_b\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "c^2\\,b^2\\sinh^2\\chi\\sinh^2\\left(\\eta - \\eta_b\\right)"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "c^2\\,b^2\\sinh^2\\chi\\sinh^2\\left(\\eta - \\eta_b\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{24}{c^4\\,b^4\\sinh^8\\left(\\eta - \\eta_b\\right)}"
+        }
+      ]
+    },
+    {
       "id": "brown_teitelboim",
       "name": "Brown-Teitelboim Membrane Bubble",
       "short_name": "Brown-Teitelboim Bubble",
@@ -16178,6 +16722,11 @@
           "id": "giddings_strominger",
           "kind": "family",
           "text": "Another tunnelling described by a Euclidean solution round in four dimensions, a closed universe budding off flat space, which Steven B. Giddings and Andrew Strominger found with an axion's field in 1988 [giddings1988]. Sidney Coleman argued later that year that such wormholes make the cosmological constant vanish [coleman1988]."
+        },
+        {
+          "id": "brout_englert_gunzig",
+          "kind": "family",
+          "text": "An open universe inside the light cone of one event, with empty flat space outside it [brout1979causal]. Gott found the geometry inside similar when the outside is de Sitter space [gott1982]."
         }
       ],
       "references": [
@@ -16205,7 +16754,8 @@
         "brown2007hm",
         "hirano2018bt",
         "giddings1988",
-        "coleman1988"
+        "coleman1988",
+        "brout1979causal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -18717,6 +19267,11 @@
           "id": "limiting_curvature",
           "kind": "family",
           "text": "Universes in a theory of gravity whose curvature has an upper limit, each of which approaches de Sitter space as its curvature nears that limit [brandenberger1993]. A closed universe of the theory that collapses becomes de Sitter space and expands again."
+        },
+        {
+          "id": "brout_englert_gunzig",
+          "kind": "composite",
+          "text": "A universe born at one event of empty flat space. Its fireball of particle creation is de Sitter space in hyperbolic slices, and an open Friedmann universe follows it [gott1983]."
         }
       ],
       "references": [
@@ -18771,7 +19326,8 @@
         "starobinsky1980",
         "weinberg2007hm",
         "hirano2018bt",
-        "brandenberger1993"
+        "brandenberger1993",
+        "gott1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -27602,6 +28158,11 @@
           "id": "limiting_curvature",
           "kind": "special_case",
           "text": "Friedmann's metric with its scale factor taken from a theory of gravity changed at Planck curvatures, which keeps every curvature invariant bounded [brandenberger1993]. A closed universe of that theory bounces through de Sitter space where Einstein's equations put a big crunch."
+        },
+        {
+          "id": "brout_englert_gunzig",
+          "kind": "composite",
+          "text": "An open Friedmann universe preceded by a fireball of particle creation, which starts at one event of empty flat space [brout1979causal]."
         }
       ],
       "references": [
@@ -27682,7 +28243,8 @@
         "starobinsky1980",
         "gibbons1994ym",
         "giddings1988",
-        "brandenberger1993"
+        "brandenberger1993",
+        "brout1979causal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -50718,6 +51280,11 @@
           "id": "linear_dilaton",
           "kind": "family",
           "text": "The Einstein frame of the timelike linear dilaton vacuum also expands in proportion to time. Its spatial slices are flat and its spacetime has nonzero curvature [devega1994linear]."
+        },
+        {
+          "id": "brout_englert_gunzig",
+          "kind": "generalisation",
+          "text": "Milne's universe with matter created inside it. A constant density of created particles turns its linear expansion into the hyperbolic sine of de Sitter space [gott1983]."
         }
       ],
       "references": [
@@ -50750,7 +51317,8 @@
         "bucher1995",
         "ellis1974",
         "bah2021",
-        "devega1994linear"
+        "devega1994linear",
+        "gott1983"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/milne.json",
@@ -51285,6 +51853,11 @@
           "id": "exponential_scalar_universes",
           "kind": "conformal",
           "text": "The power law scalar cosmologies are conformal to regions of Minkowski space whose time interval depends on the expansion exponent $p$."
+        },
+        {
+          "id": "brout_englert_gunzig",
+          "kind": "composite",
+          "text": "Empty flat space with a universe growing inside the forward light cone of one of its events. In the universe of Brout, Englert, and Gunzig matter is created inside the cone and the total energy stays that of empty space [brout1979causal]."
         }
       ],
       "references": [
@@ -51371,7 +51944,8 @@
         "haggard2015fireworks",
         "astorino2022swirling",
         "lyndenbell1978",
-        "lopez1984electron"
+        "lopez1984electron",
+        "brout1979causal"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",

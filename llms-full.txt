@@ -652,6 +652,22 @@ Taub-NUT with an electric charge, the solution of the Einstein-Maxwell equations
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\dfrac{\Delta}{\Sigma}\left(du - 2l\left(1 - \cos\theta\right)d\phi\right)^2 - 2\,dr\left(du - 2l\left(1 - \cos\theta\right)d\phi\right) + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Brill's Universe: coordinates $(\tau, \psi, \theta, \phi)$, $$ds^2 = -\dfrac{\Sigma}{U}d\tau^2 + \dfrac{4l^2U}{\Sigma}\left(d\psi + \cos\theta\,d\phi\right)^2 + \Sigma\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Brout-Englert-Gunzig Causal Universe
+
+An open universe that begins at one event of empty Minkowski space and fills the forward light cone of that event. A fireball of particle creation expands almost as de Sitter space and then joins smoothly onto a freely expanding Friedmann universe, with no singularity, no event horizon, and no particle horizon.
+
+- id: `brout_englert_gunzig`
+- tags: cosmology, expanding universe, open universe, hyperbolic space, inflation, de Sitter, FLRW, homogeneous, isotropic, matched solution, no singularity, no horizon, causal structure, radiation, quantum field theory in curved spacetime, time-dependent, Lorentzian, Einstein equations, idealized model, four-dimensional, conformally flat, spherically symmetric
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brout_englert_gunzig.json
+- chart Fireball, Flat Background: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = \dfrac{-c^2dt^2 + dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\varphi^2}{\left(1 - \dfrac{\tau^2}{\tau_\infty^2}\right)^2}$$
+- chart Free Expansion, Flat Background: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = \Omega_f^2\left(1 - \dfrac{\tau_b^2}{\tau^2}\right)^2\left(-c^2dt^2 + dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\varphi^2\right)$$
+- chart Empty Space, Flat Background: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = -c^2dt^2 + dr^2 + r^2d\theta^2 + r^2\sin^2\theta\,d\varphi^2$$
+- chart Fireball, Proper Time: coordinates $(T, \chi, \theta, \varphi)$, $$ds^2 = -c^2dT^2 + \dfrac{c^2\sinh^2\left(HT\right)}{H^2}\left(d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\varphi^2\right)$$
+- chart Free Expansion, Proper Time: coordinates $(T, \chi, \theta, \varphi)$, $$ds^2 = -c^2dT^2 + c^2\left(\left(T - T_b\right)^2 - b^2\right)\left(d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\varphi^2\right)$$
+- chart Fireball, Conformal Time: coordinates $(\eta, \chi, \theta, \varphi)$, $$ds^2 = \dfrac{c^2}{H^2\sinh^2\eta}\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\varphi^2\right)$$
+- chart Free Expansion, Conformal Time: coordinates $(\eta, \chi, \theta, \varphi)$, $$ds^2 = b^2c^2\sinh^2\left(\eta - \eta_b\right)\left(-d\eta^2 + d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\varphi^2\right)$$
+
 ### Brown-Teitelboim Membrane Bubble
 
 A spherical charged membrane joins two regions of de Sitter space with different cosmological constants.

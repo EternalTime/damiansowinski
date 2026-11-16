@@ -1150,6 +1150,39 @@
     "curvature": "297145c1d6ea679a"
   },
   {
+    "id": "brout_englert_gunzig",
+    "name": "Brout-Englert-Gunzig",
+    "tags": [
+      "cosmology",
+      "expanding universe",
+      "open universe",
+      "hyperbolic space",
+      "inflation",
+      "de Sitter",
+      "FLRW",
+      "homogeneous",
+      "isotropic",
+      "matched solution",
+      "no singularity",
+      "no horizon",
+      "causal structure",
+      "radiation",
+      "quantum field theory in curved spacetime",
+      "time-dependent",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "four-dimensional",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "0d000957defe48d0",
+    "diagrams": "51fd45d109639177",
+    "conformal": "9e4da577aa88f9f4",
+    "embedding": "210cf308926a4be8",
+    "curvature": "ae0597e7654576b5"
+  },
+  {
     "id": "brown_teitelboim",
     "name": "Brown-Teitelboim Bubble",
     "tags": [
@@ -1475,7 +1508,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "921ac50c0570f6b5",
+    "version": "aec0533a9fce6316",
     "diagrams": "0a8a12ca162aa30b",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -1702,7 +1735,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "5c2fb7e33679364f",
+    "version": "05d48e943d14cddc",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2417,7 +2450,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "500c054386238aa7",
+    "version": "6ee3694fbf2884d8",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -4604,7 +4637,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "257ff062b24a378d",
+    "version": "c6eeb1b46b7d1174",
     "diagrams": "434dbc69f632abef",
     "conformal": "cc9acbf2b37188d5",
     "embedding": "6358a5e6f5a871e8"
@@ -4629,7 +4662,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "5ace10ed9d1cc403",
+    "version": "d40d691b81696197",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
