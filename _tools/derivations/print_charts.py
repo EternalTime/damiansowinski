@@ -37745,6 +37745,9 @@ import nappi_witten as _nappi_witten
 CHARTS[_nappi_witten.METRIC] = [lambda system=system: _nappi_witten.chart_spec(system)
                                 for system in _nappi_witten.CHARTS]
 
+import dimensionally_continued as _dimensionally_continued
+_dimensionally_continued.register(sys.modules[__name__])
+
 
 import brout_englert_gunzig as _brout_englert_gunzig
 CHARTS[_brout_englert_gunzig.METRIC] = [lambda system=system: _brout_englert_gunzig.chart_spec(system)

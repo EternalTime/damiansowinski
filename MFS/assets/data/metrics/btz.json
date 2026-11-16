@@ -161,6 +161,11 @@
       "id": "ads_vaidya",
       "kind": "generalisation",
       "text": "The hole without rotation with a mass $m(v)$ that grows as light falls in from the boundary. Viqar Husain wrote it in 1994 and called it \"the three dimensional analog of the Vaidya metric\" [husain1994]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "family",
+      "text": "Black holes of Lovelock's theory with one length, in every dimension. The odd family at three dimensions is this hole without rotation, and in each odd dimension anti-de Sitter space is the solution with $M = -1$, below a gap [banados1994]."
     }
   ],
   "references": [
@@ -199,7 +204,8 @@
     "anninos2009",
     "shenker2014",
     "carlip1995",
-    "husain1994"
+    "husain1994",
+    "banados1994"
   ],
   "coordinates": [
     {

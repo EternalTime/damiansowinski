@@ -5204,6 +5204,148 @@
    "\\phi"
   ]
  },
+ "dimensionally_continued/conformal": {
+  "stamp": "d0c46f01df9ca1ce",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "dimensionally_continued/eddington_finkelstein_ingoing": {
+  "stamp": "c8a42bc299009ab9",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "dimensionally_continued/eddington_finkelstein_ingoing_six": {
+  "stamp": "0a3c4c73c5b513f6",
+  "relations": {},
+  "orders": null,
+  "dimension": 6,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "v",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "dimensionally_continued/spherical": {
+  "stamp": "409f443f0eaebe37",
+  "relations": {},
+  "orders": null,
+  "dimension": 5,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "dimensionally_continued/spherical_six": {
+  "stamp": "e680101641c44024",
+  "relations": {},
+  "orders": null,
+  "dimension": 6,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\chi",
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "distorted_schwarzschild/prolate_spheroidal": {
   "stamp": "239fd0961690c080",
   "relations": {},

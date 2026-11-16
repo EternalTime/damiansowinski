@@ -5506,5 +5506,8 @@ DIMENSIONS.update(_ads_dust_collapse.DIMENSIONS)
 import ads_vaidya as _ads_vaidya
 DIMENSIONS.update(_ads_vaidya.DIMENSIONS)
 
+import dimensionally_continued as _dimensionally_continued
+_dimensionally_continued.register_dimensions(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

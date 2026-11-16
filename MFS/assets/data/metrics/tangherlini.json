@@ -85,6 +85,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "An extremal charged hole with a round 3-sphere horizon in five dimensions and a compact spatial direction [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "family",
+      "text": "Black holes of Lovelock's theory in $D$ dimensions with every coefficient tied to one length. Without a cosmological constant the even ones have the metric function $1 - (2M/r)^{1/(n-1)}$ in $D = 2n$ dimensions, where Tangherlini's has $1 - \\mu/r^{D-3}$ [banados1994]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "bah2021",
     "bueno2025regular",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "banados1994"
   ],
   "coordinates": [
     {

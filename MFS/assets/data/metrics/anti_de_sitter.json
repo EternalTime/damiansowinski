@@ -212,6 +212,11 @@
       "id": "ads_vaidya",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with a shell of light falling in from its boundary, which leaves a black hole. In holography the collapse is the thermalization of the field theory on the boundary [danielsson1999, balasubramanian2011]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "generalisation",
+      "text": "Black holes of Lovelock's theory with every coefficient set by the anti-de Sitter radius. Anti-de Sitter space is their solution of mass $M = 0$ in even dimensions and of $M = -1$ in odd ones [banados1994]."
     }
   ],
   "references": [
@@ -275,7 +280,8 @@
     "horne1992black",
     "smith1997",
     "danielsson1999",
-    "balasubramanian2011"
+    "balasubramanian2011",
+    "banados1994"
   ],
   "coordinates": [
     {

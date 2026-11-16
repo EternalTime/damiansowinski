@@ -118,6 +118,11 @@
       "id": "ads_vaidya",
       "kind": "generalisation",
       "text": "The flat hole with a mass that grows as a plane of light falls in from the boundary. Sayantani Bhattacharyya and Shiraz Minwalla found in 2009 that a weak pulse of a massless scalar field makes this metric at leading order [bhattacharyya2009]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "family",
+      "text": "The spherical black holes of Lovelock's theory with every coefficient set by one length. Rong-Gen Cai and Kwang-Sup Soh gave them flat and hyperbolic horizons in 1999 [cai1999]."
     }
   ],
   "references": [
@@ -154,7 +159,8 @@
     "zofka2008",
     "smith1997",
     "mena2008toroidal",
-    "bhattacharyya2009"
+    "bhattacharyya2009",
+    "cai1999"
   ],
   "coordinates": [
     {

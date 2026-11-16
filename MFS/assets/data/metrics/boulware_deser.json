@@ -65,6 +65,11 @@
       "id": "regular_black_hole_pure_gravity",
       "kind": "family",
       "text": "Gauss-Bonnet's term continued into an infinite tower of quasi-topological ones. The whole tower turns the centre into de Sitter space, with finite curvature [bueno2025regular]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "family",
+      "text": "Black holes of Lovelock's theory with every coefficient tied to one length. In five dimensions that theory is this one with a negative cosmological constant tuned to the Gauss-Bonnet coupling, where the two roots of the field equations share one anti-de Sitter vacuum [nozawa2006, aviles2026]."
     }
   ],
   "references": [
@@ -90,7 +95,9 @@
     "kobayashi2005",
     "gibbonsrasheed1995",
     "wiltshire1988",
-    "bueno2025regular"
+    "bueno2025regular",
+    "nozawa2006",
+    "aviles2026"
   ],
   "coordinates": [
     {

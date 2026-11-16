@@ -155,6 +155,11 @@
       "id": "ads_vaidya",
       "kind": "generalisation",
       "text": "Vaidya's ingoing metric with a negative cosmological constant, a shell of light falling in anti-de Sitter space. Viqar Husain wrote its form in three dimensions in 1994, and José Lemos used that of four in 1999 to test cosmic censorship [husain1994, lemos1999]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "family",
+      "text": "Static black holes of Lovelock's theory in higher dimensions. Masato Nozawa and Hideki Maeda let their mass depend on advanced time in 2006, as Vaidya's does, and found that a naked singularity can form [nozawa2006]."
     }
   ],
   "references": [
@@ -196,7 +201,8 @@
     "vaidya1989kerr",
     "oripiran1987",
     "husain1994",
-    "lemos1999"
+    "lemos1999",
+    "nozawa2006"
   ],
   "coordinates": [
     {

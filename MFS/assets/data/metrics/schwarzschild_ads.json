@@ -108,6 +108,11 @@
       "id": "ads_vaidya",
       "kind": "generalisation",
       "text": "This black hole with a mass that grows as light falls in from the boundary, Vaidya's metric with a negative cosmological constant. José Lemos used it in 1999 to test cosmic censorship [lemos1999]."
+    },
+    {
+      "id": "dimensionally_continued",
+      "kind": "generalisation",
+      "text": "The same black hole continued to every even dimension in Lovelock's theory with every coefficient set by one length. In $D = 2n$ dimensions the metric function has $(r_s/r)^{1/(n-1)}$ where this one has $r_s/r$ [banados1994]."
     }
   ],
   "references": [
@@ -144,7 +149,8 @@
     "zofka2008",
     "smith1997",
     "mena2008toroidal",
-    "lemos1999"
+    "lemos1999",
+    "banados1994"
   ],
   "coordinates": [
     {
