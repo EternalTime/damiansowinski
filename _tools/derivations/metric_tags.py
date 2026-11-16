@@ -353,6 +353,13 @@ REGIONS = {
         "regions": [["interior_comoving"], ["exterior_schwarzschild"]],
         "why": "the dust ball and the vacuum outside it are two regions of one spacetime",
     },
+    "ads_dust_collapse": {
+        "regions": [["disc_interior"], ["disc_exterior", "disc_exterior_ingoing"],
+                    ["hyperbolic_interior", "hyperbolic_slab"], ["hyperbolic_exterior"],
+                    ["flat_interior"], ["flat_exterior"]],
+        "why": "each cloud of dust and the black hole outside it are two regions of one spacetime, and the disc "
+               "of three dimensions and the two clouds of four are three such spacetimes",
+    },
     "oscillating_sphere": {
         "regions": [["comoving", "central_time"], ["exterior_schwarzschild"]],
         "why": "the ball of fluid and the vacuum outside it are two regions of one spacetime",

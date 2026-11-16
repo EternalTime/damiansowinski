@@ -37751,5 +37751,9 @@ CHARTS[_brout_englert_gunzig.METRIC] = [lambda system=system: _brout_englert_gun
                                          for system in _brout_englert_gunzig.CHARTS]
 
 
+import ads_dust_collapse as _ads_dust_collapse
+_ads_dust_collapse.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()

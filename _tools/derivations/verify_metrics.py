@@ -5500,5 +5500,8 @@ DIMENSIONS.update(_nappi_witten.DIMENSIONS)
 import counter_rotating_discs as _counter_rotating_discs
 DIMENSIONS.update(_counter_rotating_discs.DIMENSIONS)
 
+import ads_dust_collapse as _ads_dust_collapse
+DIMENSIONS.update(_ads_dust_collapse.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())
