@@ -92,6 +92,11 @@
       "id": "ads_dust_collapse",
       "kind": "family",
       "text": "A disc and slabs of dust falling in anti-de Sitter space. Yoav Peleg and Alan Steif let a thin ring of dust fall in three dimensions in 1995, and found a black hole or a naked singularity on either side of a threshold mass [peleg1995]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "family",
+      "text": "A thin shell of light falling in anti-de Sitter space, with anti-de Sitter space inside it and a black hole outside. Its event horizon forms at the centre before the shell arrives, as this one's does [hubeny2007]."
     }
   ],
   "references": [
@@ -119,7 +124,8 @@
     "israel1970",
     "sakaihaines2000void",
     "gleiser2012radiative",
-    "peleg1995"
+    "peleg1995",
+    "hubeny2007"
   ],
   "coordinates": [
     {

@@ -70,6 +70,11 @@
       "id": "quantum_btz",
       "kind": "family",
       "text": "The BTZ black hole with the backreaction of strongly coupled quantum fields included exactly [emparan2020qbtz]. The shock wave changes the same black hole classically, with a shell of null particles on its horizon."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "family",
+      "text": "A shell of light that falls from the boundary into anti-de Sitter space of three dimensions and leaves the black hole behind it [husain1994]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "roberts2015",
     "maldacena2016chaos",
     "banados1993",
-    "emparan2020qbtz"
+    "emparan2020qbtz",
+    "husain1994"
   ],
   "coordinates": [
     {

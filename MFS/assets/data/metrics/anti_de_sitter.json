@@ -207,6 +207,11 @@
       "id": "ads_dust_collapse",
       "kind": "generalisation",
       "text": "Anti-de Sitter space with a slab of dust in it, which collapses to a hyperbolic black hole. With the density set to zero the slab is anti-de Sitter space [smith1997]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space with a shell of light falling in from its boundary, which leaves a black hole. In holography the collapse is the thermalization of the field theory on the boundary [danielsson1999, balasubramanian2011]."
     }
   ],
   "references": [
@@ -268,7 +273,9 @@
     "zofka2008",
     "klebanovwitten1998",
     "horne1992black",
-    "smith1997"
+    "smith1997",
+    "danielsson1999",
+    "balasubramanian2011"
   ],
   "coordinates": [
     {

@@ -73,6 +73,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "Its Friedmann equation carries a term in $\\rho^2$ too, with a minus sign that turns a collapse into a bounce. On the wall the sign is a plus [singh2006, binetruy2000nonconventional]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "family",
+      "text": "The black hole of anti-de Sitter space with light falling into it. Andrew Chamblin, Andreas Karch, and Ali Nayeri took it for the space on both sides of the wall in 2001, and its growing mass is a radiation term in the wall's Friedmann equation [chamblin2001]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "mukohyama2000",
     "shiromizu2000",
     "visser1989nuclphysb",
-    "singh2006"
+    "singh2006",
+    "chamblin2001"
   ],
   "coordinates": [
     {

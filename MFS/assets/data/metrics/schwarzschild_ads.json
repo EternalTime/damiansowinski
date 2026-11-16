@@ -103,6 +103,11 @@
       "id": "ads_dust_collapse",
       "kind": "family",
       "text": "Dust collapsing in anti-de Sitter space to this hole's counterparts whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "generalisation",
+      "text": "This black hole with a mass that grows as light falls in from the boundary, Vaidya's metric with a negative cosmological constant. José Lemos used it in 1999 to test cosmic censorship [lemos1999]."
     }
   ],
   "references": [
@@ -138,7 +143,8 @@
     "york1985equilibrium",
     "zofka2008",
     "smith1997",
-    "mena2008toroidal"
+    "mena2008toroidal",
+    "lemos1999"
   ],
   "coordinates": [
     {

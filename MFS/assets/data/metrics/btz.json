@@ -156,6 +156,11 @@
       "id": "ads_dust_collapse",
       "kind": "composite",
       "text": "A disc of dust falling under a negative cosmological constant, with this hole, without rotation, outside it. The disc makes the hole only if it is dense enough, and otherwise ends as a naked conical singularity [mann1993]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "generalisation",
+      "text": "The hole without rotation with a mass $m(v)$ that grows as light falls in from the boundary. Viqar Husain wrote it in 1994 and called it \"the three dimensional analog of the Vaidya metric\" [husain1994]."
     }
   ],
   "references": [
@@ -193,7 +198,8 @@
     "achucarro1993",
     "anninos2009",
     "shenker2014",
-    "carlip1995"
+    "carlip1995",
+    "husain1994"
   ],
   "coordinates": [
     {

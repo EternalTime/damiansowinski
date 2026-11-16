@@ -132,6 +132,11 @@
       "id": "ads_dust_collapse",
       "kind": "family",
       "text": "The collapse in anti-de Sitter space. A disc of dust in three dimensions and slabs of dust in four end as black holes whose horizons are a circle, a torus, or a surface of higher genus [mann1993, smith1997, mena2008toroidal]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "family",
+      "text": "Collapse to a black hole in anti-de Sitter space, with light for matter. The field theory on the boundary thermalizes as the hole forms [danielsson1999, balasubramanian2011]."
     }
   ],
   "references": [
@@ -162,7 +167,9 @@
     "hellaby1987",
     "oripiran1987",
     "smith1997",
-    "mena2008toroidal"
+    "mena2008toroidal",
+    "danielsson1999",
+    "balasubramanian2011"
   ],
   "coordinates": [
     {

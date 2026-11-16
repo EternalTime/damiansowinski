@@ -49,6 +49,11 @@
       "id": "bonnor_vaidya",
       "kind": "family",
       "text": "A spherical radiating body with charge and no cosmological constant. Its mass and charge can vary with retarded time [bonnor1970]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "family",
+      "text": "Vaidya's metric with a negative cosmological constant, where light falling in from the boundary of anti-de Sitter space leaves a black hole [lemos1999]."
     }
   ],
   "references": [
@@ -82,7 +87,8 @@
     "mishra2019understanding",
     "senovilla2023beyond",
     "boyanov2026semiclassical",
-    "bonnor1970"
+    "bonnor1970",
+    "lemos1999"
   ],
   "coordinates": [
     {

@@ -113,6 +113,11 @@
       "id": "ads_dust_collapse",
       "kind": "composite",
       "text": "A slab of dust falling under a negative cosmological constant, with a hyperbolic or a flat hole outside each of its faces [smith1997, mena2008toroidal]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "generalisation",
+      "text": "The flat hole with a mass that grows as a plane of light falls in from the boundary. Sayantani Bhattacharyya and Shiraz Minwalla found in 2009 that a weak pulse of a massless scalar field makes this metric at leading order [bhattacharyya2009]."
     }
   ],
   "references": [
@@ -148,7 +153,8 @@
     "hartnoll2021diving",
     "zofka2008",
     "smith1997",
-    "mena2008toroidal"
+    "mena2008toroidal",
+    "bhattacharyya2009"
   ],
   "coordinates": [
     {

@@ -150,6 +150,11 @@
       "id": "ori_piran",
       "kind": "family",
       "text": "A ball of fluid with pressure collapsing the same way at every scale, whose central singularity is naked when the pressure is a small enough fraction of the density [oripiran1987]."
+    },
+    {
+      "id": "ads_vaidya",
+      "kind": "generalisation",
+      "text": "Vaidya's ingoing metric with a negative cosmological constant, a shell of light falling in anti-de Sitter space. Viqar Husain wrote its form in three dimensions in 1994, and José Lemos used that of four in 1999 to test cosmic censorship [husain1994, lemos1999]."
     }
   ],
   "references": [
@@ -189,7 +194,9 @@
     "compere2016final",
     "haggard2015fireworks",
     "vaidya1989kerr",
-    "oripiran1987"
+    "oripiran1987",
+    "husain1994",
+    "lemos1999"
   ],
   "coordinates": [
     {
