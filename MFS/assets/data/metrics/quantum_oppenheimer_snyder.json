@@ -71,6 +71,11 @@
       "id": "lqc_bounce",
       "kind": "family",
       "text": "The whole universe bouncing, filled with a massless scalar field, the setting where Ashtekar, Pawlowski, and Singh found the bouncing Friedmann equation [ashtekar2006improved]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "family",
+      "text": "The classical collapse in anti-de Sitter space, in three dimensions and in four. Zijian Shi and Xiangdong Zhang gave the disc of three dimensions the modified Friedmann equation of loop quantum cosmology in 2026, and found a hole joined through a transition region to a white hole [shi2026]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "husain2022",
     "bonanno2024",
     "hayward2006",
-    "ashtekar2006improved"
+    "ashtekar2006improved",
+    "shi2026"
   ],
   "coordinates": [
     {

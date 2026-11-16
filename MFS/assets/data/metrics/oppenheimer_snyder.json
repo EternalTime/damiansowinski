@@ -127,6 +127,11 @@
       "id": "ori_piran",
       "kind": "family",
       "text": "A ball of fluid with pressure collapsing the same way at every scale. Its singularity is visible from outside when the fluid is soft enough [oripiran1987]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "family",
+      "text": "The collapse in anti-de Sitter space. A disc of dust in three dimensions and slabs of dust in four end as black holes whose horizons are a circle, a torus, or a surface of higher genus [mann1993, smith1997, mena2008toroidal]."
     }
   ],
   "references": [
@@ -155,7 +160,9 @@
     "barcelo2014mutiny",
     "bonnor1967oscillating",
     "hellaby1987",
-    "oripiran1987"
+    "oripiran1987",
+    "smith1997",
+    "mena2008toroidal"
   ],
   "coordinates": [
     {

@@ -231,6 +231,11 @@
       "id": "brout_englert_gunzig",
       "kind": "composite",
       "text": "An open Friedmann universe preceded by a fireball of particle creation, which starts at one event of empty flat space [brout1979causal]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "composite",
+      "text": "A slab of an open universe of dust with a negative cosmological constant, joined across its faces to black holes whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
     }
   ],
   "references": [
@@ -312,7 +317,9 @@
     "gibbons1994ym",
     "giddings1988",
     "brandenberger1993",
-    "brout1979causal"
+    "brout1979causal",
+    "smith1997",
+    "mena2008toroidal"
   ],
   "coordinates": [
     {

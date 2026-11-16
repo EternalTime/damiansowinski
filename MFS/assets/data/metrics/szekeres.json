@@ -77,6 +77,11 @@
       "id": "hellaby_kruskal",
       "kind": "special_case",
       "text": "Concentric shells of dust with a neck joining two regions [hellaby2002]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "family",
+      "text": "Clouds of dust collapsing in anti-de Sitter space to black holes with flat or hyperbolic horizons. Filipe Mena, José Natário, and Paul Tod joined the flat and the hyperbolic members of this family to those holes in 2008 [mena2008toroidal]."
     }
   ],
   "references": [
@@ -104,7 +109,8 @@
     "szekeres1972",
     "datt1938",
     "ruban1968",
-    "krasinski1999datt"
+    "krasinski1999datt",
+    "mena2008toroidal"
   ],
   "coordinates": [
     {

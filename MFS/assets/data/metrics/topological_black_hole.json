@@ -108,6 +108,11 @@
       "id": "linet_tian",
       "kind": "family",
       "text": "Static fields around a line of mass with a cosmological constant. With $\\sigma = 1/2$ and $\\Lambda < 0$ the field is the flat hole's black string outside its horizon [zofka2008, lemos1995]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "composite",
+      "text": "A slab of dust falling under a negative cosmological constant, with a hyperbolic or a flat hole outside each of its faces [smith1997, mena2008toroidal]."
     }
   ],
   "references": [
@@ -141,7 +146,9 @@
     "kraus1999",
     "gnecchi2014",
     "hartnoll2021diving",
-    "zofka2008"
+    "zofka2008",
+    "smith1997",
+    "mena2008toroidal"
   ],
   "coordinates": [
     {

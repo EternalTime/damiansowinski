@@ -202,6 +202,11 @@
       "id": "three_dim_black_string",
       "kind": "limit_source",
       "text": "A charged black string of three dimensions, which becomes anti-de Sitter space of three dimensions in the limit where its charge approaches its mass, with its coordinates rescaled [horne1992black]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "generalisation",
+      "text": "Anti-de Sitter space with a slab of dust in it, which collapses to a hyperbolic black hole. With the density set to zero the slab is anti-de Sitter space [smith1997]."
     }
   ],
   "references": [
@@ -262,7 +267,8 @@
     "dasilva2000",
     "zofka2008",
     "klebanovwitten1998",
-    "horne1992black"
+    "horne1992black",
+    "smith1997"
   ],
   "coordinates": [
     {

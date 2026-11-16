@@ -151,6 +151,11 @@
       "id": "three_dim_black_string",
       "kind": "family",
       "text": "An asymptotically flat charged black string, the dual of the rotating hole along its angle. Its charge is half the hole's angular momentum and its horizons sit where the hole's do [horowitz1993]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "composite",
+      "text": "A disc of dust falling under a negative cosmological constant, with this hole, without rotation, outside it. The disc makes the hole only if it is dense enough, and otherwise ends as a naked conical singularity [mann1993]."
     }
   ],
   "references": [

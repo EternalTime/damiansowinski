@@ -87,6 +87,11 @@
       "id": "rotation_halts",
       "kind": "family",
       "text": "The same junction conditions govern a cylindrical shell of counterrotating dust. Particle angular momentum produces azimuthal stress, and cylindrical vacuum waves couple to the shell on both sides [gleiser2012radiative]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "family",
+      "text": "A disc and slabs of dust falling in anti-de Sitter space. Yoav Peleg and Alan Steif let a thin ring of dust fall in three dimensions in 1995, and found a black hole or a naked singularity on either side of a threshold mass [peleg1995]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "kraus1999",
     "israel1970",
     "sakaihaines2000void",
-    "gleiser2012radiative"
+    "gleiser2012radiative",
+    "peleg1995"
   ],
   "coordinates": [
     {

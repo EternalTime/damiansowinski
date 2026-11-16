@@ -98,6 +98,11 @@
       "id": "linet_tian",
       "kind": "family",
       "text": "A line of mass in anti-de Sitter space. Far from the axis its static field has the leading terms of this black hole written in horospherical coordinates [zofka2008]."
+    },
+    {
+      "id": "ads_dust_collapse",
+      "kind": "family",
+      "text": "Dust collapsing in anti-de Sitter space to this hole's counterparts whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
     }
   ],
   "references": [
@@ -131,7 +136,9 @@
     "kraus1999",
     "hochberg1994potential",
     "york1985equilibrium",
-    "zofka2008"
+    "zofka2008",
+    "smith1997",
+    "mena2008toroidal"
   ],
   "coordinates": [
     {
