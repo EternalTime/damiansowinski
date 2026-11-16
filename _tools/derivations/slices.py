@@ -5186,3 +5186,6 @@ FLAT.update({
 FLAT_METRICS.add("counter_rotating_discs")
 HIDDEN[("counter_rotating_discs", "stationary", "axis")] = (
     "The embedded surfaces belong to the Curzon seed; this axis belongs to the Kerr seed.")
+
+import ads_dust_collapse_drawings as _ads_dust_collapse_drawings  # noqa: E402
+_ads_dust_collapse_drawings.register_slices(sys.modules[__name__])

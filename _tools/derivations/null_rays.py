@@ -19476,5 +19476,8 @@ DIAGRAMS.extend(_counter_rotating_disc_drawings.diagram_specs(sys.modules[__name
 CAPTIONS.update(_counter_rotating_disc_drawings.diagram_captions())
 CLOSED_FORMS.update(_counter_rotating_disc_drawings.null_forms())
 
+import ads_dust_collapse_drawings as _ads_dust_collapse_drawings
+_ads_dust_collapse_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

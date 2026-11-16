@@ -22573,6 +22573,9 @@ import counter_rotating_discs_drawings as _counter_rotating_disc_drawings
 DRAWN[_counter_rotating_disc_drawings.METRIC] = lambda ck, src: _counter_rotating_disc_drawings.embedding_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_counter_rotating_disc_drawings.embedding_captions())
 
+import ads_dust_collapse_drawings as _ads_dust_collapse_drawings
+_ads_dust_collapse_drawings.register_embedding(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
 
