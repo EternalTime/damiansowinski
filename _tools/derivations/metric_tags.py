@@ -179,6 +179,13 @@ RETIRED = {
 # that does not speak for the spacetime. A statement about the curvature has to hold in
 # every chart counted, and a symmetry has to show in some chart of every region.
 REGIONS = {
+    "brout_englert_gunzig": {
+        "regions": [["outside_flat"], ["fireball_flat", "fireball_proper", "fireball_conformal"],
+                    ["expansion_flat", "expansion_proper", "expansion_conformal"]],
+        "why": "empty flat space outside the light cone, the fireball, an Einstein space, and the "
+               "radiation era that follows it are three regions of one spacetime, the two inside the "
+               "cone joined on the hyperboloid where creation ends and each in three charts",
+    },
     "rotation_halts": {
         "regions": [["interior"], ["exterior"]],
         "why": "The intrinsic three-dimensional shell metric is a junction, not a bulk region; "
