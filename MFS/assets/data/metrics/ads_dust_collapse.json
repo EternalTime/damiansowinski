@@ -143,7 +143,7 @@
           "description": "Anti-de Sitter radius, a length, fixed by the cosmological constant through $\\Lambda = -1/\\ell^2$"
         }
       ],
-      "convention": "We use Mann and Ross's comoving coordinates $(t, r, \\theta)$, with $t$ the proper time of the dust and $r$ a length, and the disc is $r \\le r_0$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use Mann and Ross's comoving coordinates $(t, r, \\theta)$, with $t$ the proper time of the dust, $r$ a length, and $a$ the scale factor of the disc $r \\le r_0$ [mann1993]. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(\\dfrac{dr^2}{1 - kr^2} + r^2d\\theta^2\\right)",
       "metric_components": [
         {
@@ -808,7 +808,7 @@
           "description": "Mass of the hole, dimensionless, $M = 8\\pi G_3\\rho_0r_0^2/c^2 - 1$ for a disc whose edge is released at the radius $r_0$; a horizon forms only for $M > 0$"
         }
       ],
-      "convention": "We use coordinates $(T, R, \\theta)$ outside the disc, with $T$ carrying dimensions of time and $T = 0$ at the moment of rest, and the edge of the disc is at $R = R_s(T)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "convention": "We use Mann and Ross's coordinates $(T, R, \\theta)$ outside the disc, with metric function $R^2/\\ell^2 - M$, $T$ a time, and $T = 0$ at the moment of rest [mann1993]. The edge of the disc is at $R = R_s(T)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(\\dfrac{R^2}{\\ell^2} - M\\right)c^2dT^2 + \\dfrac{dR^2}{\\dfrac{R^2}{\\ell^2} - M} + R^2d\\theta^2",
       "metric_components": [
         {
@@ -1413,6 +1413,7 @@
         "v \\in (-\\infty, \\infty)",
         "R \\in [R_s(v), \\infty)",
         "\\theta \\in [0, 2\\pi)",
+        "T \\ge 0 \\;\\text{(after the moment of rest)}",
         "R = \\ell\\sqrt{M} \\;\\text{(the horizon, for}\\; M > 0\\text{)}"
       ],
       "parameters": [
@@ -1425,7 +1426,7 @@
           "description": "Mass of the hole, dimensionless, $M = 8\\pi G_3\\rho_0r_0^2/c^2 - 1$ for a disc whose edge is released at the radius $r_0$; a horizon forms only for $M > 0$"
         }
       ],
-      "convention": "We use coordinates $(v, R, \\theta)$ outside the disc, with the advanced time $v$ a length, $dv = c\\,dT + dR/\\left(R^2/\\ell^2 - M\\right)$, and the edge of the disc is at $R = R_s(v)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "convention": "We use coordinates $(v, R, \\theta)$ outside the disc, with the advanced time $v$ a length, $dv = c\\,dT + dR/\\left(R^2/\\ell^2 - M\\right)$, as in Carlip's review of the hole [carlip1995]. The edge of the disc is at $R = R_s(v)$, with $R_s = r_0a$ for the scale factor $a$ of the dust, and $v = 0$ where the edge is at rest, at $T = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
       "line_element": "ds^2 = -\\left(\\dfrac{R^2}{\\ell^2} - M\\right)dv^2 + 2\\,dv\\,dR + R^2d\\theta^2",
       "metric_components": [
         {
@@ -2165,7 +2166,7 @@
           "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
         }
       ],
-      "convention": "We use Smith and Mann's comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the dust and $r$ a length, between the smallest surface of the cloud, $r = b$, and a face, $r = r_0$, and the scale factor reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use Smith and Mann's comoving coordinates $(t, r, \\theta, \\phi)$, with $t$ the proper time of the dust, $r$ a length, and $a$ the scale factor, between the smallest surface of the cloud, $r = b$, and a face, $r = r_0$ [smith1997]. The scale factor reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(\\dfrac{dr^2}{\\dfrac{r^2}{b^2} - 1} + r^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -3256,7 +3257,7 @@
           "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
         }
       ],
-      "convention": "We use comoving coordinates $(t, \\chi, \\theta, \\phi)$, with $t$ the proper time of the dust and $\\chi$ the distance at release from the smallest surface of the cloud, where Smith and Mann's radius is $r = b\\cosh(\\chi/b)$, and the scale factor reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use the comoving coordinates $(t, \\chi, \\theta, \\phi)$ of Mena, Natário, and Tod, with $t$ the proper time of the dust and $\\chi$ the distance at release from the smallest surface of the cloud, where Smith and Mann's radius is $r = b\\cosh(\\chi/b)$ [mena2008toroidal]. The scale factor $a$ reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + b^2\\cosh^2(\\chi/b)\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -4324,7 +4325,7 @@
           "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
         }
       ],
-      "convention": "We use coordinates $(T, R, \\theta, \\phi)$ outside a face of the cloud, with $T$ carrying dimensions of time and $T = 0$ at the moment of rest, and the face is at $R = R_s(T)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. The horizon $R_h$ is the positive root of $-1 - \\mu/R + R^2/L^2$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "convention": "We use Smith and Mann's coordinates $(T, R, \\theta, \\phi)$ outside a face of the cloud, with metric function $-1 - \\mu/R + R^2/L^2$, whose positive root is the horizon $R_h$, $T$ a time, and $T = 0$ at the moment of rest [smith1997]. The face is at $R = R_s(T)$, with $R_s = r_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(-1 - \\dfrac{\\mu}{R} + \\dfrac{R^2}{L^2}\\right)c^2dT^2 + \\dfrac{dR^2}{-1 - \\dfrac{\\mu}{R} + \\dfrac{R^2}{L^2}} + R^2\\left(d\\theta^2 + \\sinh^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -5753,7 +5754,7 @@
           "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/L^2$"
         }
       ],
-      "convention": "We use comoving coordinates $(t, \\chi, x, y)$, with $t$ the proper time of the dust and $\\chi$, $x$, and $y$ lengths, and the cloud is $\\chi \\le \\chi_0$, with the scale factor reaching zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use the comoving coordinates $(t, \\chi, x, y)$ of Mena, Natário, and Tod, with $t$ the proper time of the dust, $\\chi$, $x$, and $y$ lengths, and the factor $e^{2\\chi/b}$ on the flat planes of constant $\\chi$ [mena2008toroidal]. The cloud is $\\chi \\le \\chi_0$, and the scale factor $a$ reaches zero at $t = t_c$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = \\dfrac{1}{c}\\dfrac{da}{dt}$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + e^{2\\chi/b}\\left(dx^2 + dy^2\\right)\\right)",
       "metric_components": [
         {
@@ -6777,7 +6778,7 @@
           "description": "Curvature radius of the cloud's space at release, a length, the scale of $x$ and $y$"
         }
       ],
-      "convention": "We use coordinates $(T, R, x, y)$ outside the face of the cloud, with $T$ carrying dimensions of time, $T = 0$ at the moment of rest, and $x$ and $y$ the lengths of the cloud's comoving coordinates, and the face is at $R = R_s(T)$, with $R_s = R_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "convention": "We use the coordinates $(T, R, x, y)$ of Mena, Natário, and Tod outside the face of the cloud, with metric function $R^2/L^2 - \\mu/R$, $T$ a time, and $T = 0$ at the moment of rest [mena2008toroidal]. The lengths $x$ and $y$ are the cloud's comoving ones, and the face is at $R = R_s(T)$, with $R_s = R_0a$ for the scale factor $a$ of the dust. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(\\dfrac{R^2}{L^2} - \\dfrac{\\mu}{R}\\right)c^2dT^2 + \\dfrac{dR^2}{\\dfrac{R^2}{L^2} - \\dfrac{\\mu}{R}} + \\dfrac{R^2}{b^2}\\left(dx^2 + dy^2\\right)",
       "metric_components": [
         {

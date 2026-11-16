@@ -96,7 +96,7 @@ DOMAINS = {
     DISC: ["t \\in [0, \\pi\\ell/(2c))", "r \\in [0, r_0]", ANGLE],
     DISC_OUT: ["T \\in [0, \\infty)", "R \\in [R_s(T), \\infty)", ANGLE,
                "R = \\ell\\sqrt{M} \\;\\text{(the horizon, for}\\; M > 0\\text{)}"],
-    DISC_IN: ["v \\in " + LINE, "R \\in [R_s(v), \\infty)", ANGLE,
+    DISC_IN: ["v \\in " + LINE, "R \\in [R_s(v), \\infty)", ANGLE, "T \\ge 0 \\;\\text{(after the moment of rest)}",
               "R = \\ell\\sqrt{M} \\;\\text{(the horizon, for}\\; M > 0\\text{)}"],
     HYP: ["t \\in [0, t_c)", "r \\in (b, r_0]"] + PLANE,
     SLAB: ["t \\in [0, t_c)", "\\chi \\in [-\\chi_0, \\chi_0]"] + PLANE,
