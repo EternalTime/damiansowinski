@@ -61,6 +61,11 @@
       "id": "linear_dilaton",
       "kind": "family",
       "text": "The Einstein frame of the timelike linear dilaton vacuum also expands in proportion to time. Its spatial slices are flat and its spacetime has nonzero curvature [devega1994linear]."
+    },
+    {
+      "id": "brout_englert_gunzig",
+      "kind": "generalisation",
+      "text": "Milne's universe with matter created inside it. A constant density of created particles turns its linear expansion into the hyperbolic sine of de Sitter space [gott1983]."
     }
   ],
   "references": [
@@ -93,7 +98,8 @@
     "bucher1995",
     "ellis1974",
     "bah2021",
-    "devega1994linear"
+    "devega1994linear",
+    "gott1983"
   ],
   "coordinates": [
     {

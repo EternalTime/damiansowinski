@@ -204,6 +204,11 @@
       "id": "limiting_curvature",
       "kind": "family",
       "text": "Universes in a theory of gravity whose curvature has an upper limit, each of which approaches de Sitter space as its curvature nears that limit [brandenberger1993]. A closed universe of the theory that collapses becomes de Sitter space and expands again."
+    },
+    {
+      "id": "brout_englert_gunzig",
+      "kind": "composite",
+      "text": "A universe born at one event of empty flat space. Its fireball of particle creation is de Sitter space in hyperbolic slices, and an open Friedmann universe follows it [gott1983]."
     }
   ],
   "references": [
@@ -258,7 +263,8 @@
     "starobinsky1980",
     "weinberg2007hm",
     "hirano2018bt",
-    "brandenberger1993"
+    "brandenberger1993",
+    "gott1983"
   ],
   "coordinates": [
     {

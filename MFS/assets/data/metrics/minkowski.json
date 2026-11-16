@@ -318,6 +318,11 @@
       "id": "exponential_scalar_universes",
       "kind": "conformal",
       "text": "The power law scalar cosmologies are conformal to regions of Minkowski space whose time interval depends on the expansion exponent $p$."
+    },
+    {
+      "id": "brout_englert_gunzig",
+      "kind": "composite",
+      "text": "Empty flat space with a universe growing inside the forward light cone of one of its events. In the universe of Brout, Englert, and Gunzig matter is created inside the cone and the total energy stays that of empty space [brout1979causal]."
     }
   ],
   "references": [
@@ -404,7 +409,8 @@
     "haggard2015fireworks",
     "astorino2022swirling",
     "lyndenbell1978",
-    "lopez1984electron"
+    "lopez1984electron",
+    "brout1979causal"
   ],
   "coordinates": [
     {

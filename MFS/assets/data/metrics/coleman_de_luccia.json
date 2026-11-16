@@ -81,6 +81,11 @@
       "id": "giddings_strominger",
       "kind": "family",
       "text": "Another tunnelling described by a Euclidean solution round in four dimensions, a closed universe budding off flat space, which Steven B. Giddings and Andrew Strominger found with an axion's field in 1988 [giddings1988]. Sidney Coleman argued later that year that such wormholes make the cosmological constant vanish [coleman1988]."
+    },
+    {
+      "id": "brout_englert_gunzig",
+      "kind": "family",
+      "text": "An open universe inside the light cone of one event, with empty flat space outside it [brout1979causal]. Gott found the geometry inside similar when the outside is de Sitter space [gott1982]."
     }
   ],
   "references": [
@@ -108,7 +113,8 @@
     "brown2007hm",
     "hirano2018bt",
     "giddings1988",
-    "coleman1988"
+    "coleman1988",
+    "brout1979causal"
   ],
   "coordinates": [
     {
