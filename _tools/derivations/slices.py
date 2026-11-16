@@ -5110,6 +5110,8 @@ sph_drawings.register_slices(sys.modules[__name__])
 import starobinsky_universe as _starobinsky
 
 _starobinsky.register_slices(sys.modules[__name__])
+import brout_englert_gunzig as _brout_englert_gunzig
+_brout_englert_gunzig.register_slices(sys.modules[__name__])
 
 import early_braneworlds_drawings as eb_drawings
 eb_drawings.register_slices(sys.modules[__name__])

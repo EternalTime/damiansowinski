@@ -19250,6 +19250,8 @@ vaidya_patel_kerr_diagrams()
 import starobinsky_universe as _starobinsky
 
 _starobinsky.register_null_rays(sys.modules[__name__])
+import brout_englert_gunzig as _brout_englert_gunzig
+_brout_englert_gunzig.register_null_rays(sys.modules[__name__])
 
 
 def check_table():

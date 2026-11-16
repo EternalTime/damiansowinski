@@ -22294,6 +22294,10 @@ import starobinsky_universe as _starobinsky
 
 DRAWN["starobinsky_universe"] = _starobinsky.embedding_diagram
 CAPTIONS.update({("starobinsky_universe", key): value for key, value in _starobinsky.EMBEDDING_CAPTIONS.items()})
+import brout_englert_gunzig as _brout_englert_gunzig
+DRAWN["brout_englert_gunzig"] = _brout_englert_gunzig.embedding_diagram
+CAPTIONS.update({("brout_englert_gunzig", key): value
+                 for key, value in _brout_englert_gunzig.EMBEDDING_CAPTIONS.items()})
 
 import hawking_moss_drawings as hm_drawings
 hm_drawings.register_embedding(sys.modules[__name__])

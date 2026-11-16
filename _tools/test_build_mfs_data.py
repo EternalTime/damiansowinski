@@ -4530,6 +4530,26 @@ class Slices(unittest.TestCase):
             inside = key.split("/")[1] == "interior"
             level = 1.0043869706139898 if inside else 2.0
             return (lambda X: level), list(self.reach(surface, "interior" if inside else "exterior"))
+        if key.startswith("brout_englert_gunzig/"):
+            # One moment of the flat background, t = 0.9 tau_infinity, which is 1.8 in units of 1/H:
+            # level on the flat charts, each across its own piece of the surface, and on the others
+            # the curve tau cosh chi = t, which passes from the free expansion to the fireball at
+            # cosh chi = 9/8 and runs on to the edge of the drawing.
+            chart = key.split("/")[1]
+            turn = math.acosh(9 / 8)
+            if chart.endswith("_flat"):
+                return (lambda X: 1.8), list(self.reach(surface, chart))
+            ends = [0.0, turn] if chart.startswith("expansion") else [turn]
+
+            def eta(X):
+                return math.log(0.9 / math.cosh(X))
+            if chart.endswith("_conformal"):
+                return eta, ends
+            if chart == "fireball_proper":
+                return (lambda X: 2 * math.atanh(0.9 / math.cosh(X))), ends
+            end = 2 * math.log(3)
+            return (lambda X: end - math.sinh(2 * end) / 2
+                    + math.sinh(end) ** 2 * math.cosh(eta(X) - 2 * math.log(0.8))), ends
         if key.startswith("extended_inflation/"):
             # The fixed reference surface is t=t_0=1, eta=-1 at p=2.
             level = 1.0 if "/cosmic/" in key else -1.0
@@ -6690,6 +6710,14 @@ class Slices(unittest.TestCase):
                         self.assertLess(max(products) - min(products), 2e-2 * max(products), where)
                         qs = [(T + X) / 2 for X, T in points]
                         self.assertTrue(all(b < a for a, b in zip(qs, qs[1:])), where)
+                    elif metric_id == "brout_englert_gunzig":
+                        # The moment t = 0.9 tau_infinity of the flat background, 1.8 in units of 1/H:
+                        # tan p + tan q = 2Ht along it, from the centre out to the embedding's reach.
+                        sums = [math.tan((T - X) / 2) + math.tan((T + X) / 2) for X, T in points]
+                        self.assertTrue(all(abs(s - 3.6) < 1e-2 for s in sums), where)
+                        radii = [(math.tan((T + X) / 2) - math.tan((T - X) / 2)) / 2 for X, T in points]
+                        self.assertAlmostEqual(min(radii), 0, delta=1e-2, msg=where)
+                        self.assertAlmostEqual(max(radii), 3.2, delta=1e-2, msg=where)
                     else:
                         self.assertTrue(all(abs(T) < 2e-4 for _, T in points), where)
 

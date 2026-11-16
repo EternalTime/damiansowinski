@@ -32291,6 +32291,10 @@ import starobinsky_universe as _starobinsky
 
 DRAWN["starobinsky_universe"] = _starobinsky.conformal_diagram
 CAPTIONS.update({("starobinsky_universe", key): value for key, value in _starobinsky.CONFORMAL_CAPTIONS.items()})
+import brout_englert_gunzig as _brout_englert_gunzig
+DRAWN["brout_englert_gunzig"] = _brout_englert_gunzig.conformal_diagram
+CAPTIONS.update({("brout_englert_gunzig", key): value
+                 for key, value in _brout_englert_gunzig.CONFORMAL_CAPTIONS.items()})
 
 import hawking_moss_drawings as hm_drawings
 hm_drawings.register_conformal(sys.modules[__name__])
