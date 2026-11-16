@@ -5503,5 +5503,8 @@ DIMENSIONS.update(_counter_rotating_discs.DIMENSIONS)
 import ads_dust_collapse as _ads_dust_collapse
 DIMENSIONS.update(_ads_dust_collapse.DIMENSIONS)
 
+import ads_vaidya as _ads_vaidya
+DIMENSIONS.update(_ads_vaidya.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())
