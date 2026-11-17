@@ -100,36 +100,37 @@ def register_null(nr):
     nr.DIAGRAMS.extend(rows)
     nr.CAPTIONS[(METRIC, CHM, "radial")] = [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the linear dilaton black hole ($a = 1$, "
-        "$r_0 = r_h$), each point a 2-sphere of area $4\\pi r_0r$. The cones close at the horizon $r = r_h$ and "
-        "point to the singularity $r = 0$ inside it."]
+        "$r_0 = r_h$), each point in the diagram a 2-sphere of area $4\\pi r_0r$, with the cones closing at the "
+        "horizon $r = r_h$."]
     nr.CAPTIONS[(METRIC, CHM, "third")] = [
-        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) at $a^2 = 1/3$ ($r_0 = r_h$), where "
-        "$dt/dr = 1/U$ falls as $r^{-3/2}$ and an outgoing ray reaches $r \\to \\infty$ at a finite $t$."]
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) at $a^2 = 1/3$ ($r_0 = r_h$), each point in the "
+        "diagram a 2-sphere, where an outgoing ray reaches $r \\to \\infty$ at a finite $t$."]
     nr.CAPTIONS[(METRIC, AREAL, "radial")] = [
         "The plane of $t$ and the areal radius $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the linear dilaton black "
-        "hole ($r_0 = r_h$), with the horizon at $r = \\sqrt{r_0r_h}$ and the singularity at $r = 0$."]
+        "hole ($r_0 = r_h$), each point in the diagram a 2-sphere of area $4\\pi r^2$, with the horizon at "
+        "$r = \\sqrt{r_0r_h}$."]
     nr.CAPTIONS[(METRIC, ELECTRIC, "radial")] = [
-        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the string metric of the electric hole "
-        "($a = 1$, $r_0 = r_h = \\sqrt{2}\\,Q$), conformal to the Einstein metric, with the same null rays and the "
-        "horizon at $r = r_h$."]
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the string metric of the electric hole "
+        "($a = 1$, $r_0 = r_h = \\sqrt{2}\\,Q$), each point in the diagram a 2-sphere, with the null rays of the "
+        "Einstein metric and the horizon at $r = r_h$."]
     nr.CAPTIONS[(METRIC, MAGNETIC, "radial")] = [
-        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) of the string metric of the magnetic hole "
-        "($a = 1$, $r_0 = r_h = \\sqrt{2}\\,Q$), Witten's two dimensional black hole, each point a sphere of fixed "
-        "area $8\\pi Q^2$."]
+        "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) in the string metric of the magnetic hole "
+        "($a = 1$, $r_0 = r_h = \\sqrt{2}\\,Q$), Witten's black hole of two dimensions, each point in the diagram a "
+        "2-sphere of area $8\\pi Q^2$."]
     nr.CAPTIONS[(METRIC, INVERSE, "radial")] = [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) with the potential $b = 1/a$ ($a = 1/2$, "
-        "$M = 4r_0/3$, $q = r_0$), with an event horizon at $r = 3r_0/2$ and an inner horizon at $r = r_0/2$, "
-        "between which $t$ is a space coordinate."]
+        "$M = 4r_0/3$, $q = r_0$), each point in the diagram a 2-sphere, with an event horizon at $r = 3r_0/2$ and "
+        "an inner horizon at $r = r_0/2$."]
     nr.CAPTIONS[(METRIC, MINUS_A, "radial")] = [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) with the potential $b = -a$ ($a = 1/2$, "
-        "$r_0 = r_h$, $\\sigma = 2$), with one horizon at $r = r_h$ and the singularity $r = 0$ inside it."]
+        "$r_0 = r_h$, $\\sigma = 2$), each point in the diagram a 2-sphere, with one horizon at $r = r_h$."]
     nr.CAPTIONS[(METRIC, MINUS_INVERSE, "radial")] = [
         "The plane of $t$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$) with the potential $b = -1/a$ ($a = 2$, "
-        f"$r_0 = r_h$, $\\lambda = -1/(10r_h^2)$), with the event horizon at $r = {EVENT:.2f}\\,r_h$ and a "
-        f"cosmological horizon at $r = {COSMOLOGICAL:.2f}\\,r_h$."]
+        f"$r_0 = r_h$, $\\lambda = -1/(10r_h^2)$), each point in the diagram a 2-sphere, with an event horizon at "
+        f"$r = {EVENT:.2f}\\,r_h$ and a cosmological horizon at $r = {COSMOLOGICAL:.2f}\\,r_h$."]
     nr.CAPTIONS[(METRIC, MASSLESS, "plane")] = [
-        "The plane of $\\eta$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$) of the hole of no mass at $a = 1$, flat, "
-        "each point a 2-sphere of area $\\pi(\\xi^2 - \\eta^2)$, which closes on the null singularity "
+        "The flat plane of $\\eta$ and $\\xi$ ($\\theta = \\pi/2$, $\\phi = 0$) of the hole of no mass at $a = 1$, "
+        "each point in the diagram a 2-sphere of area $\\pi(\\xi^2 - \\eta^2)$, closing on the null singularity "
         "$\\xi = |\\eta|$."]
 
 
@@ -203,8 +204,8 @@ def embedding(eb, ck, src):
     fig.legend("line", "r2", "the other exterior")
     fig.legend("line", "horizon", "the throat $r = r_h$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
-    stops = ["Inside the horizon, $0 < r < r_h$, $r$ is a time, and a slice of constant $t$ is not a moment of "
-             "space."]
+    stops = ["Inside the horizon, $0 < r < r_h$, $r$ is a time, and a slice of constant $t$ is a timelike "
+             "surface."]
     return [eb.view("einstein", "Einstein metric", "$r_h$", [surface], fig.done(),
                     settings="$a = 1$, $r_0 = r_h = 1$.", stops=stops)]
 
