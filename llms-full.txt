@@ -748,6 +748,23 @@ The plane waves whose curvature is the same at every event and carried unchanged
 - chart Rotating, Conformally Flat Member: coordinates $(u, v, x, y)$, $$ds^2 = -2c\,du\,dv + dx^2 + dy^2 + 2\omega c\left(x\,dy - y\,dx\right)du$$
 - chart Rosen, Vacuum Member: coordinates $(u, v, p, q)$, $$ds^2 = -2c\,du\,dv + \sinh^2\left(kcu\right)dp^2 + \sin^2\left(kcu\right)dq^2$$
 
+### Chan-Horne-Mann Dilaton Black Holes
+
+Static, spherically symmetric charged black holes of Einstein-Maxwell-dilaton gravity, found by Kevin Chan, James Horne, and Robert Mann in 1995, whose region far away is neither flat nor de Sitter nor anti-de Sitter space. The curvature falls to zero at large distances and the dilaton grows as the logarithm of the radius, and with no dilaton potential the hole has one horizon and no extremal limit for every nonzero charge.
+
+- id: `dilaton_unusual_asymptotics`
+- tags: static, stationary, spherically symmetric, four-dimensional, black hole, charged black hole, electric charge, magnetic charge, dilaton, scalar field, Einstein-Maxwell-dilaton, string theory, low energy string theory, Kaluza-Klein, not asymptotically flat, near-horizon limit, mass, electromagnetic field, curvature singularity, coordinate singularity, horizon, event horizon, Hawking temperature, black hole thermodynamics, causal structure, holography, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/dilaton_unusual_asymptotics.json
+- chart Chan-Horne-Mann: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -h\left(1 - \dfrac{r_h}{r}\right)dt^2 + \dfrac{dr^2}{h\left(1 - \dfrac{r_h}{r}\right)} + \dfrac{r^2}{h}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Areal Radius, $a = 1$: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2 - r_0\,r_h}{r_0^2}dt^2 + \dfrac{4r^2\,dr^2}{r^2 - r_0\,r_h} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart String Metric, Electric Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r^2}{r_0^2}\left(1 - \dfrac{r_0\,r_h}{\sqrt{2}\,Qr}\right)dt^2 + \dfrac{dr^2}{1 - \dfrac{r_0\,r_h}{\sqrt{2}\,Qr}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart String Metric, Magnetic Charge: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{2Q^2}{r_0^2}\left(1 - \dfrac{r_h}{r}\right)dt^2 + \dfrac{2Q^2\,dr^2}{r^2\left(1 - \dfrac{r_h}{r}\right)} + 2Q^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Liouville Potential, $b = 1/a$: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 + a^2\right)k\left(\dfrac{1}{1 - a^2} - \dfrac{2M}{r} + \dfrac{q^2}{r^2}\right)dt^2 + \dfrac{dr^2}{\left(1 + a^2\right)k\left(\dfrac{1}{1 - a^2} - \dfrac{2M}{r} + \dfrac{q^2}{r^2}\right)} + \dfrac{r^2}{k}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Liouville Potential, $b = -a$: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\sigma h\left(1 - \dfrac{r_h}{r}\right)dt^2 + \dfrac{dr^2}{\sigma h\left(1 - \dfrac{r_h}{r}\right)} + \dfrac{r^2}{h}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Liouville Potential, $b = -1/a$: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(h\left(1 - \dfrac{r_h}{r}\right) + \dfrac{\lambda r^2}{h}\right)dt^2 + \dfrac{dr^2}{\left(h\left(1 - \dfrac{r_h}{r}\right) + \dfrac{\lambda r^2}{h}\right)} + \dfrac{r^2}{h}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart No Mass, $a = 1$: coordinates $(\eta, \xi, \theta, \phi)$, $$ds^2 = -d\eta^2 + d\xi^2 + \dfrac{\xi^2 - \eta^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Chandrasekhar-Xanthopoulos Colliding Plane Waves
 
 Two plane gravitational waves colliding head on in flat space, each an impulse with a shock wave behind it, their polarizations out of line. Where both have passed the spacetime is locally Kerr's between its horizons, and the waves focus each other onto a Killing-Cauchy horizon with the curvature finite.

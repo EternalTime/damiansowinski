@@ -299,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "ff281904a4661579",
+    "version": "0001708658183173",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -461,7 +461,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "b38a59b437dffdae",
+    "version": "b41401ecbf2028cc",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -1370,6 +1370,47 @@
     "embedding": "de42a4c092d5d323"
   },
   {
+    "id": "dilaton_unusual_asymptotics",
+    "name": "Chan-Horne-Mann",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "four-dimensional",
+      "black hole",
+      "charged black hole",
+      "electric charge",
+      "magnetic charge",
+      "dilaton",
+      "scalar field",
+      "Einstein-Maxwell-dilaton",
+      "string theory",
+      "low energy string theory",
+      "Kaluza-Klein",
+      "not asymptotically flat",
+      "near-horizon limit",
+      "mass",
+      "electromagnetic field",
+      "curvature singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "Hawking temperature",
+      "black hole thermodynamics",
+      "causal structure",
+      "holography",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "e4943a6c5f852568",
+    "diagrams": "f6838bf25fafeda4",
+    "conformal": "02e9acf08c937e3c",
+    "embedding": "27fecf3bd144731a",
+    "curvature": "01de68a01551cbed"
+  },
+  {
     "id": "chandrasekhar_xanthopoulos",
     "name": "Chandrasekhar-Xanthopoulos",
     "tags": [
@@ -1813,7 +1854,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "43600bf7f8106f57",
+    "version": "705a9478094f30c3",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -4263,7 +4304,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "25f23cbd21bd985f",
+    "version": "27c16c3e2fa9e96b",
     "diagrams": "3cadca845845269d",
     "conformal": "5a36ce41d9009dbd",
     "embedding": "656d0335e0edddde"
@@ -4346,7 +4387,7 @@
       "dilaton",
       "string theory"
     ],
-    "version": "0f3eaf23fa10ef9d",
+    "version": "76cd01b4ae0116b3",
     "diagrams": "d95113778b14b283",
     "conformal": "381fbc315a237c9a",
     "embedding": "a048b6c2abfe9e5b",
@@ -5964,7 +6005,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4ff7a6a146ddbce3",
+    "version": "2a7caf9f7dbbad74",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6264,7 +6305,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "f7870703ea63cf0f",
+    "version": "00e944b0dec4b876",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -6393,7 +6434,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "f33e4c6da3882a67",
+    "version": "e4515d7c01e95cd3",
     "diagrams": "5e6f09418e784399",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -7296,7 +7337,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "e3a1f4f59439b3f2",
+    "version": "fe56662ee1d2c992",
     "diagrams": "70598c77af726b80",
     "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"
@@ -7773,7 +7814,7 @@
       "conformally flat",
       "stationary"
     ],
-    "version": "f9258fb301a0433f",
+    "version": "9ed8d6f3af6f2404",
     "diagrams": "20e4b54fd89e7fb9",
     "conformal": "f6b963bc340f323d",
     "embedding": "05b4e9f05b7ea873"

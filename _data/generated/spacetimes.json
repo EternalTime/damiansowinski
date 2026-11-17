@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 260,
+  "count": 261,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -3915,6 +3915,11 @@
           "id": "dimensionally_continued",
           "kind": "family",
           "text": "Black holes of Lovelock's theory with one length, in every dimension. The odd family at three dimensions is this hole without rotation, and in each odd dimension anti-de Sitter space is the solution with $M = -1$, below a gap [banados1994]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "family",
+          "text": "Kevin Chan and Robert Mann found a family of black holes with a dilaton in three dimensions in 1994, this one among them, by letting the radius of the circles grow as a power of $r$ [chan1994]. The same ansatz in four dimensions produced these charged holes a year later [chan1995]."
         }
       ],
       "references": [
@@ -3954,7 +3959,9 @@
         "shenker2014",
         "carlip1995",
         "husain1994",
-        "banados1994"
+        "banados1994",
+        "chan1994",
+        "chan1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -5768,6 +5775,11 @@
           "id": "mclenaghan_tariq_tupper",
           "kind": "family",
           "text": "A homogeneous electrovacuum of Petrov type I with a Maxwell field that does not inherit the symmetry [evtyagin2021mtt, anderson2022noninheriting]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "limit_source",
+          "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$. In the limit $a \\to 0$ they lose their mass and each is the Bertotti-Robinson spacetime in other coordinates [clement2004]."
         }
       ],
       "references": [
@@ -5804,7 +5816,8 @@
         "maldacena2023",
         "figueroa2003maximally",
         "evtyagin2021mtt",
-        "anderson2022noninheriting"
+        "anderson2022noninheriting",
+        "clement2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bertotti_robinson.json",
@@ -15574,6 +15587,664 @@
       ]
     },
     {
+      "id": "dilaton_unusual_asymptotics",
+      "name": "Chan-Horne-Mann Dilaton Black Holes",
+      "short_name": "Chan-Horne-Mann",
+      "description": "Static, spherically symmetric charged black holes of Einstein-Maxwell-dilaton gravity, found by Kevin Chan, James Horne, and Robert Mann in 1995, whose region far away is neither flat nor de Sitter nor anti-de Sitter space. The curvature falls to zero at large distances and the dilaton grows as the logarithm of the radius, and with no dilaton potential the hole has one horizon and no extremal limit for every nonzero charge.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional",
+        "black hole",
+        "charged black hole",
+        "electric charge",
+        "magnetic charge",
+        "dilaton",
+        "scalar field",
+        "Einstein-Maxwell-dilaton",
+        "string theory",
+        "low energy string theory",
+        "Kaluza-Klein",
+        "not asymptotically flat",
+        "near-horizon limit",
+        "mass",
+        "electromagnetic field",
+        "curvature singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "Hawking temperature",
+        "black hole thermodynamics",
+        "causal structure",
+        "holography",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use units with $G = c = 1$, and the dilaton $\\phi$ couples to the Maxwell field $F$ with the strength $a$ in the action $\\int\\sqrt{-g}\\left(\\mathcal{R} - 2(\\nabla\\phi)^2 - V(\\phi) - e^{-2a\\phi}F_{\\mu\\nu}F^{\\mu\\nu}\\right)d^4x$, with $\\mathcal{R}$ the Ricci scalar. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "dilaton_black_hole",
+          "kind": "limit_source",
+          "text": "The charged black hole of string theory that is flat far away. Bring its charge to the extreme value and magnify the neighbourhood of its horizon without bound, and the limit is the linear dilaton black hole, the member of this family with $a = 1$ [clement2003]."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "Flat spacetime in the string metric with a dilaton linear in a coordinate. The magnetic hole with $a = 1$ and no mass is, in the string metric, a flat plane of time and distance times a sphere, with the dilaton linear in the distance, and the holes with mass approach it far away [clement2003]."
+        },
+        {
+          "id": "witten_black_hole",
+          "kind": "family",
+          "text": "The black hole of string theory in two dimensions. The string metric of the magnetic hole with $a = 1$ is Witten's hole times a sphere of fixed radius [chan1995, giddings1992]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "limit",
+          "text": "The black hole with no charge and no dilaton. In the limit $a \\to \\infty$ the dilaton and the Maxwell field decouple and the metric tends to Schwarzschild's [chan1995, clement2004]."
+        },
+        {
+          "id": "bertotti_robinson",
+          "kind": "limit",
+          "text": "A uniform electric field with the geometry AdS$_2 \\times$ S$^2$. In the limit $a \\to 0$ the family ends on it, with zero mass [clement2004]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "limit",
+          "text": "The charged black hole of Einstein-Maxwell theory. For $a^2 < 1$ the family with the potential $b = 1/a$ has two horizons and an extremal charge as it does, and it tends to it in the limit $a \\to 0$ [chan1995]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "Schwarzschild's black hole in more dimensions. Reduce the one of five dimensions along one of its angles and it is the magnetic hole with $a = \\sqrt{3}$ [clement2004]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space with flat or negatively curved horizons. Cai, Ji, and Soh found their counterparts with a dilaton and a Liouville potential, which are neither flat nor anti-de Sitter far away [cai1998]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions. Chan and Mann found a family of black holes with a dilaton there in 1994, this one among them, by letting the radius of the circles grow as a power of $r$, the ansatz that produced the holes of four dimensions a year later [chan1994, chan1995]."
+        },
+        {
+          "id": "lifshitz_spacetime",
+          "kind": "family",
+          "text": "A spacetime in which time and space scale by different powers. The planar relatives of these holes, near their extreme charge, are conformal to Lifshitz spacetimes and descend from Lifshitz black branes of more dimensions [gouteraux2011]."
+        }
+      ],
+      "references": [
+        "gibbons1988",
+        "chan1995",
+        "garfinkle1991",
+        "poletti1994",
+        "poletti1995erratum",
+        "chan1994",
+        "clement2004",
+        "giddings1992",
+        "cai1996",
+        "cai1998",
+        "clement2003",
+        "cai2004",
+        "charmousis2009liouville",
+        "gouteraux2011",
+        "li2024"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_unusual_asymptotics.json",
+      "charts": [
+        {
+          "id": "chan_horne_mann",
+          "name": "Chan-Horne-Mann",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a \\neq 0,\\quad r_0 > 0,\\quad r_h > 0",
+            "r = r_h \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Coupling of the dilaton to the Maxwell field, a pure number"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, with Chan, Horne, and Mann's constant $\\gamma^2 = r_0^{2/(1 + a^2)}$"
+            },
+            {
+              "symbol": "r_h",
+              "description": "Radius of the event horizon, $r_h = 2(1 + a^2)M/a^2$ for the quasilocal mass $M$"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r}{r_0}\\right)^{2/(1 + a^2)}",
+              "description": "A pure number that grows with the radius, $\\partial_r h = 2h/((1 + a^2)r)$; Chan, Horne, and Mann's $U = h(1 - r_h/r)$ and $R^2 = r^2/h$"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's coordinates, their (2.2) and (3.7), with their constant $\\gamma$ written through Clément and Leygnac's length $r_0$. The electric hole of charge $Q$ has $F_{tr} = 1/((1 + a^2)Q)$ and $e^{2a\\phi} = r^2(r_0/r)^{2/(1 + a^2)}/((1 + a^2)Q^2)$, and the magnetic hole has $F_{\\theta\\phi} = Q\\sin\\theta$ and the dilaton $-\\phi$.",
+          "line_element": "ds^2 = -h\\left(1 - \\dfrac{r_h}{r}\\right)dt^2 + \\dfrac{dr^2}{h\\left(1 - \\dfrac{r_h}{r}\\right)} + \\dfrac{r^2}{h}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-h\\left(1 - \\dfrac{r_h}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{h\\left(1 - \\dfrac{r_h}{r}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{h}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{h}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2a^2h\\left(r - r_h\\right)}{\\left(1 + a^2\\right)^2r^3}",
+          "kretschmann": "K = \\dfrac{4h^2\\left(2r^2 + 2a^2\\,r^2 + 2a^2\\,r\\,r_h + 7a^4\\,r^2 - 4a^4\\,r\\,r_h + 2a^4\\,r_h^2 + 8a^6\\,r\\,r_h - 2a^6\\,r_h^2 + 3a^8\\,r_h^2\\right)}{r^6\\left(1 + a^2\\right)^4}"
+        },
+        {
+          "id": "areal",
+          "name": "Areal Radius, $a = 1$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r_0 > 0,\\quad r_h > 0",
+            "r = \\sqrt{r_0\\,r_h} \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, Chan, Horne, and Mann's constant $\\gamma^2$"
+            },
+            {
+              "symbol": "r_h",
+              "description": "Four times the quasilocal mass $M$, the radius of the event horizon in the Chan-Horne-Mann chart"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's areal radius $r$ at $a = 1$, their (3.2), whose square is $r_0$ times the radius of the Chan-Horne-Mann chart. The electric hole of charge $Q$ has $F_{tr} = r/(r_0Q)$ and $e^{2\\phi} = r^2/(2Q^2)$.",
+          "line_element": "ds^2 = -\\dfrac{r^2 - r_0\\,r_h}{r_0^2}dt^2 + \\dfrac{4r^2\\,dr^2}{r^2 - r_0\\,r_h} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2 - r_0\\,r_h}{r_0^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{4r^2}{r^2 - r_0\\,r_h}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{r^2 - r_0\\,r_h}{2r^4}",
+          "kretschmann": "K = \\dfrac{11r^4 + 6r^2\\,r_0\\,r_h + 3r_0^2\\,r_h^2}{4r^8}"
+        },
+        {
+          "id": "string_electric",
+          "name": "String Metric, Electric Charge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r_0 > 0,\\quad r_h > 0,\\quad Q > 0",
+            "r = r_0\\,r_h/(\\sqrt{2}\\,Q) \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, Chan, Horne, and Mann's constant $\\gamma^2$"
+            },
+            {
+              "symbol": "r_h",
+              "description": "Four times the quasilocal mass $M$, the radius of the event horizon in the Chan-Horne-Mann chart"
+            },
+            {
+              "symbol": "Q",
+              "description": "Charge of the hole, a length"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's string metric $e^{2\\phi}g$ of the electric hole at $a = 1$, their (3.5), with $e^{2\\phi} = r/(\\sqrt{2}\\,Q)$ and the radius $r$ equal to $r_0/(\\sqrt{2}\\,Q)$ times the radius of the Chan-Horne-Mann chart.",
+          "line_element": "ds^2 = -\\dfrac{r^2}{r_0^2}\\left(1 - \\dfrac{r_0\\,r_h}{\\sqrt{2}\\,Qr}\\right)dt^2 + \\dfrac{dr^2}{1 - \\dfrac{r_0\\,r_h}{\\sqrt{2}\\,Qr}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r^2}{r_0^2}\\left(1 - \\dfrac{r_0\\,r_h}{\\sqrt{2}\\,Qr}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{1 - \\dfrac{r_0\\,r_h}{\\sqrt{2}\\,Qr}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\sqrt{2}\\,r_0\\,r_h - 8r\\,Q}{2r^3\\,Q}",
+          "kretschmann": "K = \\dfrac{16r^2\\,Q^2 - 8\\sqrt{2}\\,r\\,r_0\\,r_h\\,Q + 9r_0^2\\,r_h^2}{2r^6\\,Q^2}"
+        },
+        {
+          "id": "string_magnetic",
+          "name": "String Metric, Magnetic Charge",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r_0 > 0,\\quad r_h > 0,\\quad Q > 0",
+            "r = r_h \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, Chan, Horne, and Mann's constant $\\gamma^2$"
+            },
+            {
+              "symbol": "r_h",
+              "description": "Four times the quasilocal mass $M$, the radius of the event horizon in the Chan-Horne-Mann chart"
+            },
+            {
+              "symbol": "Q",
+              "description": "Charge of the hole, a length"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's string metric $e^{2\\phi}g$ of the magnetic hole at $a = 1$, their (3.6), with $F_{\\theta\\phi} = Q\\sin\\theta$, $e^{2\\phi} = 2Q^2/(r_0r)$, and the coordinates of the Chan-Horne-Mann chart.",
+          "line_element": "ds^2 = -\\dfrac{2Q^2}{r_0^2}\\left(1 - \\dfrac{r_h}{r}\\right)dt^2 + \\dfrac{2Q^2\\,dr^2}{r^2\\left(1 - \\dfrac{r_h}{r}\\right)} + 2Q^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{2Q^2}{r_0^2}\\left(1 - \\dfrac{r_h}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{2Q^2}{r^2\\left(1 - \\dfrac{r_h}{r}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "2Q^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "2Q^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2r + r_h}{2r\\,Q^2}",
+          "kretschmann": "K = \\dfrac{4r^2 + r_h^2}{4r^2\\,Q^4}"
+        },
+        {
+          "id": "liouville_inverse",
+          "name": "Liouville Potential, $b = 1/a$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a \\neq 0,\\quad a^2 \\neq 1,\\quad r_0 > 0",
+            "\\dfrac{1}{1 - a^2} - \\dfrac{2M}{r} + \\dfrac{q^2}{r^2} = 0 \\;\\text{(the horizons)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Coupling of the dilaton to the Maxwell field, a pure number"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, with Chan, Horne, and Mann's constant $\\gamma^2 = r_0^{2a^2/(1 + a^2)}$"
+            },
+            {
+              "symbol": "M",
+              "description": "Quasilocal mass of the hole"
+            },
+            {
+              "symbol": "q",
+              "description": "Length set by the charge $Q$, $q^2 = Q^2e^{2a\\phi_0}/\\gamma^2$"
+            },
+            {
+              "symbol": "k = \\left(\\dfrac{r}{r_0}\\right)^{2a^2/(1 + a^2)}",
+              "description": "A pure number that grows with the radius, $\\partial_r k = 2a^2k/((1 + a^2)r)$, with Chan, Horne, and Mann's $R^2 = r^2/k$"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's coordinates for the potential $V = 2\\Lambda e^{2\\phi/a}$, their (4.2), with their constant $\\gamma$ written through the length $r_0$. The dilaton is $\\phi = \\phi_0 - a\\ln r/(1 + a^2)$, the electric field is $F_{tr} = Qe^{2a\\phi}k/r^2$, and $\\Lambda = -a^2e^{-2\\phi_0/a}/((1 - a^2)\\gamma^2)$.",
+          "line_element": "ds^2 = -\\left(1 + a^2\\right)k\\left(\\dfrac{1}{1 - a^2} - \\dfrac{2M}{r} + \\dfrac{q^2}{r^2}\\right)dt^2 + \\dfrac{dr^2}{\\left(1 + a^2\\right)k\\left(\\dfrac{1}{1 - a^2} - \\dfrac{2M}{r} + \\dfrac{q^2}{r^2}\\right)} + \\dfrac{r^2}{k}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 + a^2\\right)k\\left(\\dfrac{1}{1 - a^2} - \\dfrac{2M}{r} + \\dfrac{q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{\\left(1 + a^2\\right)k\\left(\\dfrac{1}{1 - a^2} - \\dfrac{2M}{r} + \\dfrac{q^2}{r^2}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{k}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{k}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2a^2k\\left(\\left(1 + 2a^2\\right)r^2 + 2\\left(1 - a^2\\right)Mr - \\left(1 - a^2\\right)q^2\\right)}{\\left(1 - a^2\\right)\\left(1 + a^2\\right)r^4}",
+          "kretschmann": "K = \\dfrac{4k^2\\left(12r^2\\,M^2 - 24r\\,M\\,q^2 + 14q^4 + 8a^2\\,r^3\\,M - 32a^2\\,r^2\\,M^2 - 10a^2\\,r^2\\,q^2 + 52a^2\\,r\\,M\\,q^2 - 18a^2\\,q^4 + 3a^4\\,r^4 - 24a^4\\,r^3\\,M + 36a^4\\,r^2\\,M^2 + 16a^4\\,r^2\\,q^2 - 32a^4\\,r\\,M\\,q^2 - 3a^4\\,q^4 - 2a^6\\,r^4 + 20a^6\\,r^3\\,M - 24a^6\\,r^2\\,M^2 - 4a^6\\,r^2\\,q^2 + 4a^6\\,r\\,M\\,q^2 + 4a^6\\,q^4 + 2a^8\\,r^4 - 4a^8\\,r^3\\,M + 8a^8\\,r^2\\,M^2 - 2a^8\\,r^2\\,q^2 + 3a^8\\,q^4\\right)}{r^8\\left(1 + a\\right)^2\\left(1 + a^2\\right)^2\\left(1 - a\\right)^2}"
+        },
+        {
+          "id": "liouville_minus_a",
+          "name": "Liouville Potential, $b = -a$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a \\neq 0,\\quad a^2 \\neq 1,\\quad r_0 > 0,\\quad r_h > 0,\\quad \\sigma > 0",
+            "r = r_h \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Coupling of the dilaton to the Maxwell field, a pure number"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, with Chan, Horne, and Mann's constant $\\gamma^2 = r_0^{2/(1 + a^2)}$"
+            },
+            {
+              "symbol": "r_h",
+              "description": "Radius of the event horizon, Chan, Horne, and Mann's (4.7)"
+            },
+            {
+              "symbol": "\\sigma",
+              "description": "A pure number, $\\sigma = (1 + a^2)(2Q^2e^{2a\\phi_0}/\\gamma^2 - 1)/(1 - a^2)$, which is $1$ where $\\Lambda = 0$"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r}{r_0}\\right)^{2/(1 + a^2)}",
+              "description": "A pure number that grows with the radius, $\\partial_r h = 2h/((1 + a^2)r)$, with Chan, Horne, and Mann's $R^2 = r^2/h$"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's coordinates for the potential $V = 2\\Lambda e^{-2a\\phi}$, their (4.6), with their constant $\\gamma$ written through the length $r_0$. The dilaton is $\\phi = \\phi_0 + a\\ln r/(1 + a^2)$, the electric field is $F_{tr} = Qe^{2a\\phi}h/r^2$, and $\\Lambda = (1 - (1 + a^2)Q^2e^{2a\\phi_0}/\\gamma^2)e^{2a\\phi_0}/((1 - a^2)\\gamma^2)$.",
+          "line_element": "ds^2 = -\\sigma h\\left(1 - \\dfrac{r_h}{r}\\right)dt^2 + \\dfrac{dr^2}{\\sigma h\\left(1 - \\dfrac{r_h}{r}\\right)} + \\dfrac{r^2}{h}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\sigma h\\left(1 - \\dfrac{r_h}{r}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{\\sigma h\\left(1 - \\dfrac{r_h}{r}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{h}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{h}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2h\\left(\\left(1 + a^2\\right)^2r - \\left(1 + a^2 + a^4\\right)\\sigma r - a^2\\sigma r_h\\right)}{\\left(1 + a^2\\right)^2r^3}",
+          "kretschmann": "K = \\dfrac{4h^2\\left(r^2\\,\\sigma^2 + r^2 - 2a^2\\,r^2\\,\\sigma^2 + 4a^2\\,r^2 + 2a^2\\,r\\,r_h\\,\\sigma^2 + 3a^4\\,r^2\\,\\sigma^2 - 2a^4\\,r^2\\,\\sigma + 6a^4\\,r^2 - 6a^4\\,r\\,r_h\\,\\sigma^2 + 2a^4\\,r\\,r_h\\,\\sigma + 2a^4\\,r_h^2\\,\\sigma^2 - 4a^6\\,r^2\\,\\sigma + 4a^6\\,r^2 + 4a^6\\,r\\,r_h\\,\\sigma^2 + 4a^6\\,r\\,r_h\\,\\sigma - 2a^6\\,r_h^2\\,\\sigma^2 + a^8\\,r^2\\,\\sigma^2 - 2a^8\\,r^2\\,\\sigma + a^8\\,r^2 - 2a^8\\,r\\,r_h\\,\\sigma^2 + 2a^8\\,r\\,r_h\\,\\sigma + 3a^8\\,r_h^2\\,\\sigma^2\\right)}{r^6\\left(1 + a^2\\right)^4}"
+        },
+        {
+          "id": "liouville_minus_inverse",
+          "name": "Liouville Potential, $b = -1/a$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a \\neq 0,\\quad a^2 \\neq 1/3,\\quad r_0 > 0",
+            "h\\left(1 - \\dfrac{r_h}{r}\\right) + \\dfrac{\\lambda r^2}{h} = 0 \\;\\text{(the horizons)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Coupling of the dilaton to the Maxwell field, a pure number"
+            },
+            {
+              "symbol": "r_0",
+              "description": "Length that sets the area of the spheres, with Chan, Horne, and Mann's constant $\\gamma^2 = r_0^{2/(1 + a^2)}$"
+            },
+            {
+              "symbol": "r_h",
+              "description": "Radius of the event horizon at $\\Lambda = 0$, $r_h = 2(1 + a^2)M/a^2$ for the quasilocal mass $M$ the hole has there"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Inverse area set by the potential, $\\lambda = (1 + a^2)^{(2a^2 + 1)/a^2}(Q/r_0)^{2/a^2}\\Lambda/((1 - 3a^2)a^2)$ for the charge $Q$"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{r}{r_0}\\right)^{2/(1 + a^2)}",
+              "description": "A pure number that grows with the radius, $\\partial_r h = 2h/((1 + a^2)r)$, with Chan, Horne, and Mann's $R^2 = r^2/h$"
+            }
+          ],
+          "convention": "We use Chan, Horne, and Mann's coordinates for the potential $V = 2\\Lambda e^{-2\\phi/a}$, their (4.9), with their constant $\\gamma$ written through the length $r_0$. The dilaton and the electric field are those of the Chan-Horne-Mann chart.",
+          "line_element": "ds^2 = -\\left(h\\left(1 - \\dfrac{r_h}{r}\\right) + \\dfrac{\\lambda r^2}{h}\\right)dt^2 + \\dfrac{dr^2}{\\left(h\\left(1 - \\dfrac{r_h}{r}\\right) + \\dfrac{\\lambda r^2}{h}\\right)} + \\dfrac{r^2}{h}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(h\\left(1 - \\dfrac{r_h}{r}\\right) + \\dfrac{\\lambda r^2}{h}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{1}{\\left(h\\left(1 - \\dfrac{r_h}{r}\\right) + \\dfrac{\\lambda r^2}{h}\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2}{h}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\sin^2\\theta}{h}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2a^2\\left(3\\left(1 - 2a^2\\right)\\lambda r^3 + h^2\\left(r - r_h\\right)\\right)}{\\left(1 + a^2\\right)^2r^3h}",
+          "kretschmann": "K = \\dfrac{8r^2\\,h^4 - 8a^2\\,r^4\\,\\lambda\\,h^2 + 8a^2\\,r^2\\,h^4 + 8a^2\\,r\\,r_h\\,h^4 + 12a^4\\,r^6\\,\\lambda^2 + 8a^4\\,r^4\\,\\lambda\\,h^2 - 16a^4\\,r^3\\,r_h\\,\\lambda\\,h^2 + 28a^4\\,r^2\\,h^4 - 16a^4\\,r\\,r_h\\,h^4 + 8a^4\\,r_h^2\\,h^4 - 24a^6\\,r^6\\,\\lambda^2 - 8a^6\\,r^4\\,\\lambda\\,h^2 + 8a^6\\,r^3\\,r_h\\,\\lambda\\,h^2 + 32a^6\\,r\\,r_h\\,h^4 - 8a^6\\,r_h^2\\,h^4 + 24a^8\\,r^6\\,\\lambda^2 + 12a^8\\,r_h^2\\,h^4}{r^6\\,h^2\\left(1 + a^2\\right)^4}"
+        },
+        {
+          "id": "massless",
+          "name": "No Mass, $a = 1$",
+          "coordinates": [
+            "\\eta",
+            "\\xi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (-\\infty, \\infty)",
+            "\\xi \\in (|\\eta|, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\xi = |\\eta| \\;\\text{(the null singularity)}"
+          ],
+          "parameters": [],
+          "convention": "We use Clément, Gal'tsov, and Leygnac's coordinates of the hole of no mass at $a = 1$, their (2.10) and (2.11) with the signature reversed, $\\xi = 2\\sqrt{r_0r}\\cosh(t/(2r_0))$ and $\\eta = 2\\sqrt{r_0r}\\sinh(t/(2r_0))$ for the $t$ and $r$ of the Chan-Horne-Mann chart at $r_h = 0$.",
+          "line_element": "ds^2 = -d\\eta^2 + d\\xi^2 + \\dfrac{\\xi^2 - \\eta^2}{4}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\xi",
+                "\\xi"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\xi^2 - \\eta^2}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\xi^2 - \\eta^2}{4}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2}{\\xi^2 - \\eta^2}",
+          "kretschmann": "K = \\dfrac{44}{\\left(\\xi^2 - \\eta^2\\right)^2}"
+        }
+      ]
+    },
+    {
       "id": "chandrasekhar_xanthopoulos",
       "name": "Chandrasekhar-Xanthopoulos Colliding Plane Waves",
       "short_name": "Chandrasekhar-Xanthopoulos",
@@ -20233,6 +20904,11 @@
           "id": "three_dim_black_string",
           "kind": "family",
           "text": "A charged black string of string theory in three dimensions that keeps an inner horizon, with a timelike singularity inside it [horne1992black]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "limit",
+          "text": "Charged black holes of the same theory whose region far away is neither flat nor anti-de Sitter space [chan1995]. The one at the string coupling is the limit of the dilaton black hole in which the charge approaches its extreme value and the neighbourhood of the horizon is magnified without bound [clement2003]."
         }
       ],
       "references": [
@@ -20263,7 +20939,9 @@
         "dvali2016skyrmion",
         "devega1994linear",
         "gasperini1993prebigbang",
-        "horne1992black"
+        "horne1992black",
+        "chan1995",
+        "clement2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -48007,6 +48685,11 @@
           "id": "schrodinger_spacetime",
           "kind": "family",
           "text": "The same scaling of time against space with Galilean boosts and a conserved mass besides, which takes one more dimension, a null one [son2008, balasubramanian2008]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "family",
+          "text": "Charged dilaton black holes that are neither flat nor anti-de Sitter far away. Their planar relatives, near their extreme charge, are conformal to Lifshitz spacetimes, and descend from Lifshitz black branes of more dimensions [gouteraux2011]."
         }
       ],
       "references": [
@@ -48026,7 +48709,8 @@
         "keeler2014",
         "horava2011",
         "son2008",
-        "balasubramanian2008"
+        "balasubramanian2008",
+        "gouteraux2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/lifshitz_spacetime.json",
@@ -49013,6 +49697,11 @@
           "id": "pre_big_bang",
           "kind": "family",
           "text": "A vacuum of the metric and dilaton of string theory whose scale factors are powers of time, the squares of the exponents summing to one. With every exponent negative it expands faster and faster toward a singularity, and inverting its scale factors and reversing its time, with a shift of the dilaton, pairs it with a decelerating expansion [gasperini1993prebigbang]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "family",
+          "text": "Black holes that approach a linear dilaton background far away. For a magnetic charge at the string coupling, the one without mass is in the string metric a flat plane of time and distance times a sphere, the dilaton linear in the distance [clement2003]."
         }
       ],
       "references": [
@@ -49025,7 +49714,8 @@
         "karananas2021linear",
         "mandal1991",
         "giddings1992",
-        "gasperini1993prebigbang"
+        "gasperini1993prebigbang",
+        "clement2003"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/linear_dilaton.json",
@@ -67230,6 +67920,11 @@
           "id": "three_dim_black_string",
           "kind": "family",
           "text": "A charged black string in three dimensions with the same diagram of an event horizon, an inner horizon, and a timelike singularity. Inside its inner horizon the timelike Killing vector is the translation along the string [horne1992black]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "limit_source",
+          "text": "Charged black holes with a dilaton of coupling $a$ and an exponential potential, neither flat nor anti-de Sitter far away. For $a^2 < 1$ one family of them has two horizons, and it tends to the Reissner-Nordström black hole in the limit $a \\to 0$ [chan1995]."
         }
       ],
       "references": [
@@ -67284,7 +67979,8 @@
         "mertens2023",
         "banerjee1998",
         "gott1986charged",
-        "horne1992black"
+        "horne1992black",
+        "chan1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -70393,6 +71089,11 @@
           "id": "counter_rotating_discs",
           "kind": "composite",
           "text": "A cut clear of the central source and a reflection produce a thin disc with Schwarzschild vacuum geometry on either side [bicak1993]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "limit_source",
+          "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$, neither flat nor anti-de Sitter far away. In the limit $a \\to \\infty$ the dilaton and the Maxwell field decouple and the metric is Schwarzschild's [chan1995, clement2004]."
         }
       ],
       "references": [
@@ -70543,7 +71244,9 @@
         "delgaty1998",
         "york1985equilibrium",
         "hellaby2002",
-        "bicak1993"
+        "bicak1993",
+        "chan1995",
+        "clement2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -71684,6 +72387,11 @@
           "id": "dimensionally_continued",
           "kind": "family",
           "text": "Black holes of Lovelock's theory in $D$ dimensions with every coefficient tied to one length. Without a cosmological constant the even ones have the metric function $1 - (2M/r)^{1/(n-1)}$ in $D = 2n$ dimensions, where Tangherlini's has $1 - \\mu/r^{D-3}$ [banados1994]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "family",
+          "text": "Take one angle of the black hole of five dimensions as an extra dimension, and in four dimensions it is a magnetic black hole with a dilaton at the Kaluza-Klein coupling. Its region far away, flat in five dimensions, is neither flat nor anti-de Sitter in four [clement2004]."
         }
       ],
       "references": [
@@ -71713,7 +72421,8 @@
         "bueno2025regular",
         "horowitzmaeda2002",
         "myers1987compact",
-        "banados1994"
+        "banados1994",
+        "clement2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
@@ -82403,6 +83112,11 @@
           "id": "dimensionally_continued",
           "kind": "family",
           "text": "The spherical black holes of Lovelock's theory with every coefficient set by one length. Rong-Gen Cai and Kwang-Sup Soh gave them flat and hyperbolic horizons in 1999 [cai1999]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "family",
+          "text": "Rong-Gen Cai, Jeong-Young Ji, and Kwang-Sup Soh gave the flat and the hyperbolic hole a dilaton with an exponential potential in 1997, by the ansatz that had produced the spherical holes. With the dilaton they are neither flat nor anti-de Sitter far away [cai1998]."
         }
       ],
       "references": [
@@ -82440,7 +83154,8 @@
         "smith1997",
         "mena2008toroidal",
         "bhattacharyya2009",
-        "cai1999"
+        "cai1999",
+        "cai1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
@@ -88512,6 +89227,11 @@
           "id": "nappi_witten",
           "kind": "family",
           "text": "A cosmological gauged Wess-Zumino-Witten background with three spatial dimensions. An $O(2,2;\\mathbb{R})$ transformation relates it to a product containing the Lorentzian black hole coset in two spacetime dimensions [nappi1992, elitzur2002nw]."
+        },
+        {
+          "id": "dilaton_unusual_asymptotics",
+          "kind": "family",
+          "text": "Charged dilaton black holes of four dimensions that are neither flat nor anti-de Sitter far away. For a magnetic charge at the string coupling their string metric is Witten's hole times a sphere of fixed radius, whatever the mass [chan1995, giddings1992]."
         }
       ],
       "references": [
@@ -88536,7 +89256,8 @@
         "angius2022linear",
         "horne1992black",
         "nappi1992",
-        "elitzur2002nw"
+        "elitzur2002nw",
+        "chan1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/witten_black_hole.json",
