@@ -5514,5 +5514,8 @@ DIMENSIONS.update(_scalar_collapse_cosmology.DIMENSIONS)
 HELD.update(_scalar_collapse_cosmology.HELD)
 RATES.update(_scalar_collapse_cosmology.RATES)
 
+import dilaton_unusual_asymptotics as _dilaton_unusual_asymptotics
+_dilaton_unusual_asymptotics.register_dimensions(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

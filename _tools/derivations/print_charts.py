@@ -37766,5 +37766,9 @@ import scalar_collapse_cosmology as _scalar_collapse_cosmology
 _scalar_collapse_cosmology.register(sys.modules[__name__])
 
 
+import dilaton_unusual_asymptotics as _dilaton_unusual_asymptotics
+_dilaton_unusual_asymptotics.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()

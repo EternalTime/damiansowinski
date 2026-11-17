@@ -1,0 +1,1544 @@
+{
+  "id": "dilaton_unusual_asymptotics",
+  "name": "Chan-Horne-Mann Dilaton Black Holes",
+  "short_name": "Chan-Horne-Mann",
+  "description": "Static, spherically symmetric charged black holes of Einstein-Maxwell-dilaton gravity, found by Kevin Chan, James Horne, and Robert Mann in 1995, whose region far away is neither flat nor de Sitter nor anti-de Sitter space. The curvature falls to zero at large distances and the dilaton grows as the logarithm of the radius, and with no dilaton potential the hole has one horizon and no extremal limit for every nonzero charge.",
+  "tags": [
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "four-dimensional",
+    "black hole",
+    "charged black hole",
+    "electric charge",
+    "magnetic charge",
+    "dilaton",
+    "scalar field",
+    "Einstein-Maxwell-dilaton",
+    "string theory",
+    "low energy string theory",
+    "Kaluza-Klein",
+    "not asymptotically flat",
+    "near-horizon limit",
+    "mass",
+    "electromagnetic field",
+    "curvature singularity",
+    "coordinate singularity",
+    "horizon",
+    "event horizon",
+    "Hawking temperature",
+    "black hole thermodynamics",
+    "causal structure",
+    "holography",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use units with $G = c = 1$, and the dilaton $\\phi$ couples to the Maxwell field $F$ with the strength $a$ in the action $\\int\\sqrt{-g}\\left(\\mathcal{R} - 2(\\nabla\\phi)^2 - V(\\phi) - e^{-2a\\phi}F_{\\mu\\nu}F^{\\mu\\nu}\\right)d^4x$, with $\\mathcal{R}$ the Ricci scalar. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Far from the charged black holes that Gary Gibbons and Kei-ichi Maeda analysed in 1988, spacetime is flat [gibbons1988, chan1995]. David Garfinkle, Gary Horowitz, and Andrew Strominger rediscovered the four dimensional ones in 1991 [garfinkle1991, chan1995]. In them a scalar field $\\phi$, the dilaton, is coupled to the Maxwell field with a strength $a$, and at $a = 1$ the theory is the low energy limit of string theory [chan1995]. A massless dilaton would mediate a force of long range, so the dilaton is widely believed to have a mass, and with it a potential $V(\\phi)$ [poletti1994]. Stephen Poletti and David Wiltshire, at the University of Adelaide, studied in 1994 the exponential potential of Liouville type, $V = 2\\Lambda e^{2b\\phi}$, that arises in string theory away from its critical dimension [poletti1994, chan1995].¶In an expansion in inverse powers of the radius, a flat, de Sitter, or anti-de Sitter region needs the dilaton to settle at a stationary point of its potential, and an exponential has none [poletti1994]. To cover a dilaton that diverges far away, Poletti and Wiltshire rewrote the field equations as a flow in a phase space of five dimensions and read the possible far regions off its critical points [poletti1994]. Unless the potential is a constant, they showed, \"no asymptotically flat, asymptotically de Sitter or asymptotically anti-de Sitter solutions exist in these models\" [poletti1994]. Among their solutions without a potential was a class whose curvature falls to zero far away in a spacetime that is not flat there, and they judged that all of its members \"correspond to naked singularities\" [poletti1994]. Kevin Chan, James Horne, and Robert Mann found black holes in that class in February 1995 [chan1995, poletti1995erratum].¶Chan and Mann, at the University of Waterloo, had obtained black holes in three dimensions in 1994 by letting the radius of a circle grow as a power of the coordinate $r$ [chan1994]. With Horne, at Cambridge, they tried the same for the spheres of four dimensions, $R = \\gamma r^N$ with constants $\\gamma$ and $N$, in the metric $$ds^2 = -U\\,dt^2 + \\frac{dr^2}{U} + R^2\\,d\\Omega^2$$ [chan1995]. With no potential they found $N = a^2/(1 + a^2)$ and a horizon at $r_h$, $$U = \\frac{r^{2/(1+a^2)}}{\\gamma^2}\\left(1 - \\frac{r_h}{r}\\right), \\qquad r_h = \\frac{2(1+a^2)}{a^2}\\,M,$$ in units with $G = c = \\hbar = k_B = 1$ [chan1995]. Here $M$ is the mass, defined quasilocally on a large sphere, and the charge $Q$ enters through the dilaton, $e^{2a\\phi} = R^2/((1 + a^2)Q^2)$ [chan1995]. The horizon hides a singularity at $r = 0$, the hole has no inner horizon, and its charge may take any value but zero without the horizon vanishing or becoming singular [chan1995]. They believed these to be \"the first examples of black hole solutions in four-dimensional general relativity or string gravity which have charge without having an extremal limit\" [chan1995].¶Poletti and Wiltshire corrected their sentence in September 1995 and thanked the three \"for bringing our attention to the above omission\" [poletti1995erratum]. Far from the hole the curvature falls to zero and the mass and the charge are finite, but the dilaton grows without limit as $\\log r$, and the region is neither flat nor of constant curvature [chan1995]. For $a^2 \\ge 1$ the causal structure is Schwarzschild's, and for $a^2 < 1$ a light ray reaches infinity in a finite time $t$, as in anti-de Sitter space [chan1995, clement2004]. The temperature is $T = r_h^{(1-a^2)/(1+a^2)}/(4\\pi\\gamma^2)$, which at $a = 1$ is the same for every mass [chan1995]. For a magnetic charge at $a = 1$ the string metric, to which strings couple, is the two dimensional black hole of string theory times a sphere of fixed radius [chan1995]. Steven Giddings and Strominger had reached that product in 1992, as the \"horizon plus infinite throat\" limit of the extreme dilaton black hole [giddings1992].¶With the potential included, Chan, Horne, and Mann found three families by the same ansatz, with $b = 1/a$, $-a$, and $-1/a$, among them holes with an inner horizon and an extremal limit, and spacetimes with a cosmological horizon [chan1995]. Rong-Gen Cai and Yuan-Zhong Zhang found counterparts with planar horizons in 1996, and Cai, Jeong-Young Ji, and Kwang-Sup Soh added horizons of negative curvature in 1997 and found that both kinds need the potential, with $\\Lambda < 0$ [cai1996, cai1998]. Gérard Clément, Dmitri Gal'tsov, and Cédric Leygnac named the hole with $a = 1$ the linear dilaton black hole in 2002 [clement2003]. They showed that it is the limit of Garfinkle, Horowitz, and Strominger's black hole in which the charge approaches its extreme value and the neighbourhood of the horizon is magnified without bound, and that its heat capacity is zero [clement2003]. Throw a massive particle outward from it and the particle falls back, whatever its energy [clement2003]. They also set the hole rotating, and found it unstable, since the waves that take energy from its rotation are reflected at large distances and grow [clement2003].¶Clément and Leygnac extended the limit to every coupling in 2004, and showed that the family runs from the Bertotti-Robinson universe at $a = 0$ to the Schwarzschild black hole as $a \\to \\infty$ [clement2004]. At the Kaluza-Klein value $a = \\sqrt{3}$, they found, the magnetic hole is the Schwarzschild-Tangherlini black hole of five dimensions reduced along one of its angles, and the region far from it is flat space of five dimensions [clement2004]. Cai and Anzhong Wang traced several of the solutions with a potential, in the same year, to black holes of flat, de Sitter, or anti-de Sitter space in more dimensions [cai2004]. Christos Charmousis, Blaise Goutéraux, and Jiro Soda recovered the three families in 2009, matched each to one of Poletti and Wiltshire's critical points, and lifted one to a black hole of anti-de Sitter space in five dimensions whose horizon is a lens space, a 3-sphere with points identified [charmousis2009liouville]. Goutéraux and Elias Kiritsis showed in 2011 that the planar counterparts near their extreme charge descend from black branes of anti-de Sitter and Lifshitz spacetimes of more dimensions, which accounts for how their entropy scales with temperature [gouteraux2011]. Yong-Zhuang Li and Xiao-Mei Kuang traced light rays around a slowly rotating member of the family in 2024, and found that far away the effective potential of a photon tends to a constant fixed by $\\Lambda$ [li2024].",
+  "related": [
+    {
+      "id": "dilaton_black_hole",
+      "kind": "limit_source",
+      "text": "The charged black hole of string theory that is flat far away. Bring its charge to the extreme value and magnify the neighbourhood of its horizon without bound, and the limit is the linear dilaton black hole, the member of this family with $a = 1$ [clement2003]."
+    },
+    {
+      "id": "linear_dilaton",
+      "kind": "family",
+      "text": "Flat spacetime in the string metric with a dilaton linear in a coordinate. The magnetic hole with $a = 1$ and no mass is, in the string metric, a flat plane of time and distance times a sphere, with the dilaton linear in the distance, and the holes with mass approach it far away [clement2003]."
+    },
+    {
+      "id": "witten_black_hole",
+      "kind": "family",
+      "text": "The black hole of string theory in two dimensions. The string metric of the magnetic hole with $a = 1$ is Witten's hole times a sphere of fixed radius [chan1995, giddings1992]."
+    },
+    {
+      "id": "schwarzschild",
+      "kind": "limit",
+      "text": "The black hole with no charge and no dilaton. In the limit $a \\to \\infty$ the dilaton and the Maxwell field decouple and the metric tends to Schwarzschild's [chan1995, clement2004]."
+    },
+    {
+      "id": "bertotti_robinson",
+      "kind": "limit",
+      "text": "A uniform electric field with the geometry AdS$_2 \\times$ S$^2$. In the limit $a \\to 0$ the family ends on it, with zero mass [clement2004]."
+    },
+    {
+      "id": "rn_metric",
+      "kind": "limit",
+      "text": "The charged black hole of Einstein-Maxwell theory. For $a^2 < 1$ the family with the potential $b = 1/a$ has two horizons and an extremal charge as it does, and it tends to it in the limit $a \\to 0$ [chan1995]."
+    },
+    {
+      "id": "tangherlini",
+      "kind": "family",
+      "text": "Schwarzschild's black hole in more dimensions. Reduce the one of five dimensions along one of its angles and it is the magnetic hole with $a = \\sqrt{3}$ [clement2004]."
+    },
+    {
+      "id": "topological_black_hole",
+      "kind": "family",
+      "text": "Black holes of anti-de Sitter space with flat or negatively curved horizons. Cai, Ji, and Soh found their counterparts with a dilaton and a Liouville potential, which are neither flat nor anti-de Sitter far away [cai1998]."
+    },
+    {
+      "id": "btz",
+      "kind": "family",
+      "text": "The black hole of three dimensions. Chan and Mann found a family of black holes with a dilaton there in 1994, this one among them, by letting the radius of the circles grow as a power of $r$, the ansatz that produced the holes of four dimensions a year later [chan1994, chan1995]."
+    },
+    {
+      "id": "lifshitz_spacetime",
+      "kind": "family",
+      "text": "A spacetime in which time and space scale by different powers. The planar relatives of these holes, near their extreme charge, are conformal to Lifshitz spacetimes and descend from Lifshitz black branes of more dimensions [gouteraux2011]."
+    }
+  ],
+  "references": [
+    "gibbons1988",
+    "chan1995",
+    "garfinkle1991",
+    "poletti1994",
+    "poletti1995erratum",
+    "chan1994",
+    "clement2004",
+    "giddings1992",
+    "cai1996",
+    "cai1998",
+    "clement2003",
+    "cai2004",
+    "charmousis2009liouville",
+    "gouteraux2011",
+    "li2024"
+  ],
+  "coordinates": [
+    {
+      "id": "chan_horne_mann",
+      "name": "Chan-Horne-Mann",
+      "coords": [
+        "t",
+        "r",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "a \\neq 0,\\quad r_0 > 0,\\quad r_h > 0",
+        "r = r_h \\;\\text{(the event horizon)}",
+        "r = 0 \\;\\text{(the singularity)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Coupling of the dilaton to the Maxwell field, a pure number"
+        },
+        {
+          "symbol": "r_0",
+          "description": "Length that sets the area of the spheres, with Chan, Horne, and Mann's constant $\\gamma^2 = r_0^{2/(1 + a^2)}$"
+        },
+        {
+          "symbol": "r_h",
+          "description": "Radius of the event horizon, $r_h = 2(1 + a^2)M/a^2$ for the quasilocal mass $M$"
+        },
+        {
+          "symbol": "h = \\left(\\dfrac{r}{r_0}\\right)^{2/(1 + a^2)}",
+          "description": "A pure number that grows with the radius, $\\partial_r h = 2h/((1 + a^2)r)$; Chan, Horne, and Mann's $U = h(1 - r_h/r)$ and $R^2 = r^2/h$"
+        }
+      ],
+      "convention": "We use Chan, Horne, and Mann's coordinates, their (2.2) and (3.7), with their constant $\\gamma$ written through Clément and Leygnac's length $r_0$. The electric hole of charge $Q$ has $F_{tr} = 1/((1 + a^2)Q)$ and $e^{2a\\phi} = r^2(r_0/r)^{2/(1 + a^2)}/((1 + a^2)Q^2)$, and the magnetic hole has $F_{\\theta\\phi} = Q\\sin\\theta$ and the dilaton $-\\phi$.",
+      "line_element": "ds^2 = -h\\left(1 - \\dfrac{r_h}{r}\\right)dt^2 + \\dfrac{dr^2}{h\\left(1 - \\dfrac{r_h}{r}\\right)} + \\dfrac{r^2}{h}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-h\\left(1 - \\dfrac{r_h}{r}\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "\\dfrac{1}{h\\left(1 - \\dfrac{r_h}{r}\\right)}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{r^2}{h}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{r^2\\sin^2\\theta}{h}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{h\\left(1 - \\dfrac{r_h}{r}\\right)}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "h\\left(1 - \\dfrac{r_h}{r}\\right)"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{h}{r^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{h\\csc^2\\theta}{r^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{2r - r_h + a^2\\,r_h}{2r\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{2r - r_h + a^2\\,r_h}{2r\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r - r_h + a^2\\,r_h}{2r\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{h^2\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^3\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(r_h - r\\right)}{1 + a^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\left(r_h - r\\right)\\sin^2\\theta}{1 + a^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2}{r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2}{r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2}{r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2}{r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{h\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{h\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{h\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{2r - r_h + a^2\\,r_h}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,r}{h\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r}{h\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,r}{h\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,r\\sin^2\\theta}{h\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r\\sin^2\\theta}{h\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,r\\sin^2\\theta}{h\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r^2\\sin\\theta\\cos\\theta}{h}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r^2\\sin\\theta\\cos\\theta}{h}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r^2\\sin\\theta\\cos\\theta}{h}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(1 + a\\right)\\left(1 - a\\right)\\left(r + a^2\\,r_h\\right)}{r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(1 + a\\right)\\left(1 - a\\right)\\left(r + a^2\\,r_h\\right)}{r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(2r - r_h + a^2\\,r_h\\right)}{2r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(2r - r_h + a^2\\,r_h\\right)}{2r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\left(2r - r_h + a^2\\,r_h\\right)\\sin^2\\theta}{2r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(2r - r_h + a^2\\,r_h\\right)\\sin^2\\theta}{2r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{h^2\\left(1 + a\\right)\\left(1 - a\\right)\\left(r - r_h\\right)\\left(r + a^2\\,r_h\\right)}{r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{h^2\\left(1 + a\\right)\\left(1 - a\\right)\\left(r - r_h\\right)\\left(r + a^2\\,r_h\\right)}{r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h}{2r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,r_h}{2r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h\\sin^2\\theta}{2r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,r_h\\sin^2\\theta}{2r\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r_h}{2r^2\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h}{2r^2\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r_h}{2r^2\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h}{2r^2\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r + 2a^2\\,r + a^4\\,r_h\\right)\\sin^2\\theta}{r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(r + 2a^2\\,r + a^4\\,r_h\\right)\\sin^2\\theta}{r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r + 2a^2\\,r + a^4\\,r_h}{r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r + 2a^2\\,r + a^4\\,r_h}{r\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{h\\left(1 + a\\right)\\left(1 - a\\right)\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{h\\left(1 + a\\right)\\left(1 - a\\right)\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{h\\left(1 + a\\right)\\left(1 - a\\right)\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{h\\left(1 + a\\right)\\left(1 - a\\right)\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)\\sin^2\\theta}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)\\sin^2\\theta}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)\\sin^2\\theta}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)\\sin^2\\theta}{2r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,r_h}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r_h}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h\\sin^2\\theta}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,r_h\\sin^2\\theta}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r_h\\sin^2\\theta}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,r_h\\sin^2\\theta}{2h\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{r\\left(r + 2a^2\\,r + a^4\\,r_h\\right)\\sin^2\\theta}{h\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{r\\left(r + 2a^2\\,r + a^4\\,r_h\\right)\\sin^2\\theta}{h\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{r\\left(r + 2a^2\\,r + a^4\\,r_h\\right)\\sin^2\\theta}{h\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r\\left(r + 2a^2\\,r + a^4\\,r_h\\right)\\sin^2\\theta}{h\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{h^2\\left(r - r_h\\right)}{r^3\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r - a^2\\,r + 2a^2\\,r_h}{r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{1 + a^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\sin^2\\theta}{1 + a^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{h}{r^2\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{h}{r^2\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{h}{r^2\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{h\\left(r - a^2\\,r + 2a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r\\left(1 + a^2\\right)\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{h^2\\left(r - r_h\\right)\\left(r - a^2\\,r + 2a^2\\,r_h\\right)}{r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{h^2}{r^4\\left(1 + a^2\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{h^2\\csc^2\\theta}{r^4\\left(1 + a^2\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{2a^2h\\left(r - r_h\\right)}{\\left(1 + a^2\\right)^2r^3}",
+      "kretschmann": "K = \\dfrac{4h^2\\left(2r^2 + 2a^2\\,r^2 + 2a^2\\,r\\,r_h + 7a^4\\,r^2 - 4a^4\\,r\\,r_h + 2a^4\\,r_h^2 + 8a^6\\,r\\,r_h - 2a^6\\,r_h^2 + 3a^8\\,r_h^2\\right)}{r^6\\left(1 + a^2\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{h^2\\left(r - r_h\\right)\\left(r + 2a^2\\,r - a^2\\,r_h\\right)}{r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{r + a^2\\,r_h}{r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{r + a^2\\,r_h}{r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r + a^2\\,r_h\\right)\\sin^2\\theta}{r\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{h\\left(a^2\\,r_h - 2a^2\\,r - r\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{h\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{h\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{h\\left(r + a^2\\,r_h\\right)}{r^3\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{r + 2a^2\\,r - a^2\\,r_h}{r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{h^2\\left(r - r_h\\right)\\left(r + a^2\\,r_h\\right)}{r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{h^2\\left(r + a^2\\,r_h\\right)}{r^5\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{h^2\\left(r + a^2\\,r_h\\right)\\csc^2\\theta}{r^5\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h^2\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^4\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{3r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{3r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(4r - r_h + 3a^2\\,r_h\\right)}{3r^3\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\,h\\left(r - r_h\\right)\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6r^2\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\theta",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "r",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "r",
+                  "\\theta",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "\\phi",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "r",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "r",
+                  "\\phi",
+                  "r"
+                ],
+                "value": "-\\dfrac{a^2\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{6h\\left(1 + a^2\\right)^2\\left(r - r_h\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{a^2\\,r\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{3h\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\,r\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{3h\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{a^2\\,r\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{3h\\left(1 + a^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\,r\\left(4r - r_h + 3a^2\\,r_h\\right)\\sin^2\\theta}{3h\\left(1 + a^2\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2r - r_h + a^2\\,r_h}{r\\left(1 + a^2\\right)\\left(r - r_h\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{h^2\\left(r - r_h\\right)\\left(2r - r_h + a^2\\,r_h\\right)}{2r^3\\left(1 + a^2\\right)}\\dot{t}^2 - \\dfrac{2r - r_h + a^2\\,r_h}{2r\\left(1 + a^2\\right)\\left(r - r_h\\right)}\\dot{r}^2 + \\dfrac{a^2\\left(r_h - r\\right)}{1 + a^2}\\dot{\\theta}^2 + \\dfrac{a^2\\left(r_h - r\\right)\\sin^2\\theta}{1 + a^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2a^2}{r\\left(1 + a^2\\right)}\\dot{r}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2a^2}{r\\left(1 + a^2\\right)}\\dot{r}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}
