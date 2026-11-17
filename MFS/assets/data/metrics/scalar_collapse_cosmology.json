@@ -141,7 +141,7 @@
           "description": "Schwarzschild's function with $b$ for $r_s$; the areal radius is $R = a\\,rf^{(1-\\gamma)/2}$"
         }
       ],
-      "convention": "We use the conformal time $\\eta$ and the radius $r$ of Husain, Martinez, and Núñez, both lengths, with the time shifted so that the factor is $\\eta/\\eta_0$ [husain1994exact]. The scalar field is $\\varphi = \\pm\\sqrt{c^4/16\\pi G}\\,\\left(\\sqrt{3}\\ln(\\eta/\\eta_0) + (\\gamma/\\sqrt{3})\\ln f\\right)$, with either sign for either $\\gamma$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "convention": "We use the conformal time $\\eta$ and the radius $r$ of Husain, Martinez, and Núñez, both lengths, with the time shifted so that the factor multiplying Fisher's bracket is $\\eta/\\eta_0$ [husain1994exact]. The scalar field is $\\varphi = \\pm\\sqrt{c^4/16\\pi G}\\,\\left(\\sqrt{3}\\ln(\\eta/\\eta_0) + (\\gamma/\\sqrt{3})\\ln f\\right)$, with either sign for either $\\gamma$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
       "line_element": "ds^2 = \\dfrac{\\eta}{\\eta_0}\\left(-f^{\\gamma}d\\eta^2 + \\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
@@ -3981,7 +3981,7 @@
           "description": "Scale factor of the Friedmann universe far from the centre, a pure number"
         }
       ],
-      "convention": "We use the conformal time $\\eta$, a length, in which Fonarev's solutions are a power of the time on Fisher's bracket [maeda2007, kastor2017frozen]. Einstein's equations read $R_{\\mu\\nu} = (8\\pi G/c^4)\\left(\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi + g_{\\mu\\nu}V\\right)$, and on the solutions the potential is $8\\pi GV/c^4 = s(2s-1)/(\\eta^2a^2f^{\\gamma})$, an exponential of $\\varphi = \\pm\\sqrt{c^4/4\\pi G}\\,\\left(\\gamma\\ln a/\\sqrt{1-\\gamma^2} + \\tfrac{1}{2}\\sqrt{1-\\gamma^2}\\,\\ln f\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "convention": "We use the conformal time $\\eta$, a length, in which Fonarev's solutions are Fisher's bracket multiplied by a power of the time [maeda2007, kastor2017frozen]. Einstein's equations read $R_{\\mu\\nu} = (8\\pi G/c^4)\\left(\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi + g_{\\mu\\nu}V\\right)$, and on the solutions the potential is $8\\pi GV/c^4 = s(2s-1)/(\\eta^2a^2f^{\\gamma})$, an exponential of $\\varphi = \\pm\\sqrt{c^4/4\\pi G}\\,\\left(\\gamma\\ln a/\\sqrt{1-\\gamma^2} + \\tfrac{1}{2}\\sqrt{1-\\gamma^2}\\,\\ln f\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
       "line_element": "ds^2 = a^2\\left(-f^{\\gamma}d\\eta^2 + \\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
