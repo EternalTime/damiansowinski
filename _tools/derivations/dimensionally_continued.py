@@ -90,10 +90,8 @@ def line_element(system, c="c"):
 def domains(system):
     six = system in SIX
     angles = [a + " \\in [0, \\pi]" for a in ANGLES[six][:-1]] + ["\\phi \\in [0, 2\\pi)"]
-    if system.startswith("spherical"):
-        return ["t \\in (-\\infty, \\infty)", "r \\in (r_+, \\infty)"] + angles
-    if system.startswith("eddington"):
-        return (["v \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
+    if system != "conformal":
+        return ([coords(system)[0] + " \\in (-\\infty, \\infty)", "r \\in (0, \\infty)"] + angles
                 + [HORIZON_SIX if six else HORIZON_FIVE])
     return ["t \\in (-\\infty, \\infty)", "\\rho \\in (0, \\pi/2)"] + angles
 

@@ -112,10 +112,11 @@
       ],
       "domains": [
         "t \\in (-\\infty, \\infty)",
-        "r \\in (r_+, \\infty)",
+        "r \\in (0, \\infty)",
         "\\psi \\in [0, \\pi]",
         "\\theta \\in [0, \\pi]",
-        "\\phi \\in [0, 2\\pi)"
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1} \\;\\text{(the horizon)}"
       ],
       "parameters": [
         {
@@ -7132,11 +7133,12 @@
       ],
       "domains": [
         "t \\in (-\\infty, \\infty)",
-        "r \\in (r_+, \\infty)",
+        "r \\in (0, \\infty)",
         "\\chi \\in [0, \\pi]",
         "\\psi \\in [0, \\pi]",
         "\\theta \\in [0, \\pi]",
-        "\\phi \\in [0, 2\\pi)"
+        "\\phi \\in [0, 2\\pi)",
+        "r = r_+ \\;\\text{(the horizon)}"
       ],
       "parameters": [
         {
