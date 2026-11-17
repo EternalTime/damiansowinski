@@ -143,7 +143,7 @@
           "description": "Mass function of advanced time, a pure number, with $m' \\ge 0$ for infalling light; $m = -1$ is anti-de Sitter space and a positive constant is a black hole"
         }
       ],
-      "convention": "We use coordinates $(v, r, \\theta)$, with the advanced time $v$ carrying dimensions of time and $2\\pi r$ the circumference of the circle of radius $r$. The mass function $m(v)$ enters as $r^2/\\ell^2 - m$, the coefficient of $-c^2dv^2$ [husain1994]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "convention": "We use coordinates $(v, r, \\theta)$, with the advanced time $v$ having dimensions of time and $2\\pi r$ the circumference of the circle of radius $r$. The mass function $m(v)$ enters as $r^2/\\ell^2 - m$, the coefficient of $-c^2dv^2$ [husain1994]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell^2} - m\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2d\\theta^2",
       "metric_components": [
         {
@@ -914,7 +914,7 @@
           "description": "Mass function of advanced time, an inverse area, with $m' \\ge 0$ for infalling light; it is $1/\\ell^2$ times the mass function of the ingoing chart"
         }
       ],
-      "convention": "We use coordinates $(v, z, x)$, with the advanced time $v$ carrying dimensions of time and $z$ and $x$ lengths, where $z = \\ell^2/r$ vanishes on the boundary and $r$ is the radius of the ingoing chart. The mass function $m(v)$ enters as the factor $1 - mz^2$ [balasubramanian2011]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "convention": "We use coordinates $(v, z, x)$, with the advanced time $v$ having dimensions of time and $z$ and $x$ lengths, where $z = \\ell^2/r$ vanishes on the boundary and $r$ is the radius of the ingoing chart. The mass function $m(v)$ enters as the factor $1 - mz^2$ [balasubramanian2011]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
       "line_element": "ds^2 = \\dfrac{\\ell^2}{z^2}\\left(-\\left(1 - m\\,z^2\\right)c^2dv^2 - 2c\\,dv\\,dz + dx^2\\right)",
       "metric_components": [
         {
@@ -1707,7 +1707,7 @@
           "description": "Mass function of advanced time, a mass, with $m' \\ge 0$ for infalling light"
         }
       ],
-      "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ carrying dimensions of time and $r$ the areal radius. The mass function $m(v)$ enters as $1 + r^2/\\ell^2 - 2Gm/c^2r$, the coefficient of $-c^2dv^2$ [lemos1999]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ having dimensions of time and $r$ the areal radius. The mass function $m(v)$ enters as $1 + r^2/\\ell^2 - 2Gm/c^2r$, the coefficient of $-c^2dv^2$ [lemos1999]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(1 + \\dfrac{r^2}{\\ell^2} - \\dfrac{2Gm}{c^2r}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -3489,7 +3489,7 @@
           "description": "Mass function of advanced time, a length, with $m' \\ge 0$ for infalling light; a constant times the mass of a torus, the mass per unit length of a cylinder, or the mass per unit area of a plane"
         }
       ],
-      "convention": "We use coordinates $(v, r, x, y)$, with the advanced time $v$ carrying dimensions of time, and $x$ and $y$ lengths along the front, which is a plane, or a cylinder or a torus where one or both of them are periodic. The mass function $m(v)$ enters as $r^2/\\ell^2 - m/r$, the coefficient of $-c^2dv^2$ [lemos1999]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "convention": "We use coordinates $(v, r, x, y)$, with the advanced time $v$ having dimensions of time, and $x$ and $y$ lengths along the front, which is a plane, or a cylinder or a torus where one or both of them are periodic. The mass function $m(v)$ enters as $r^2/\\ell^2 - m/r$, the coefficient of $-c^2dv^2$ [lemos1999]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell^2} - \\dfrac{m}{r}\\right)c^2dv^2 + 2c\\,dv\\,dr + \\dfrac{r^2}{\\ell^2}\\left(dx^2 + dy^2\\right)",
       "metric_components": [
         {
@@ -5223,7 +5223,7 @@
           "description": "Mass function of advanced time, an inverse volume, with $m' \\ge 0$ for infalling light; it is $1/\\ell^4$ times the mass function of the flat front chart"
         }
       ],
-      "convention": "We use coordinates $(v, z, x, y)$, with the advanced time $v$ carrying dimensions of time and $z$, $x$, and $y$ lengths, where $z = \\ell^2/r$ vanishes on the boundary and $r$ is the radius of the flat front chart. The mass function $m(v)$ enters as the factor $1 - mz^3$ [balasubramanian2011]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "convention": "We use coordinates $(v, z, x, y)$, with the advanced time $v$ having dimensions of time and $z$, $x$, and $y$ lengths, where $z = \\ell^2/r$ vanishes on the boundary and $r$ is the radius of the flat front chart. The mass function $m(v)$ enters as the factor $1 - mz^3$ [balasubramanian2011]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
       "line_element": "ds^2 = \\dfrac{\\ell^2}{z^2}\\left(-\\left(1 - m\\,z^3\\right)c^2dv^2 - 2c\\,dv\\,dz + dx^2 + dy^2\\right)",
       "metric_components": [
         {
@@ -6975,7 +6975,7 @@
           "description": "Mass function of advanced time, an area proportional to the mass of the hole, with $m' \\ge 0$ for infalling light"
         }
       ],
-      "convention": "We use coordinates $(v, r, \\chi, \\theta, \\phi)$, with the advanced time $v$ carrying dimensions of time, $r$ the areal radius, and $\\chi$, $\\theta$, and $\\phi$ the angles of the 3-sphere. The mass function $m(v)$ enters as $1 + r^2/\\ell^2 - m/r^2$, the coefficient of $-c^2dv^2$ [hubeny2007]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+      "convention": "We use coordinates $(v, r, \\chi, \\theta, \\phi)$, with the advanced time $v$ having dimensions of time, $r$ the areal radius, and $\\chi$, $\\theta$, and $\\phi$ the angles of the 3-sphere. The mass function $m(v)$ enters as $1 + r^2/\\ell^2 - m/r^2$, the coefficient of $-c^2dv^2$ [hubeny2007]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(1 + \\dfrac{r^2}{\\ell^2} - \\dfrac{m}{r^2}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
       "metric_components": [
         {
