@@ -128,7 +128,7 @@
           "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = -1$"
         }
       ],
-      "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ carrying dimensions of time and $\\psi$, $\\theta$, $\\phi$ the angles of the 3-sphere. The metric function is $1 - \\sqrt{M + 1} + r^2/\\ell^2$ with the positive square root [banados1994, muniain1996], and it vanishes on the horizon $r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ a time and $\\psi$, $\\theta$, $\\phi$ the angles of the 3-sphere. The metric function is $1 - \\sqrt{M + 1} + r^2/\\ell^2$ with the positive square root [banados1994, muniain1996], and it vanishes on the horizon $r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}} + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -4947,7 +4947,7 @@
           "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = -1$"
         }
       ],
-      "convention": "We use coordinates $(t, \\rho, \\psi, \\theta, \\phi)$ in $D = 5$ outside the horizon $r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1}$ of a black hole with $M > 0$, with $t$ carrying dimensions of time and the positive square root. The areal radius is $r = r_+\\sec\\rho$, and the conformal factor is $\\ell^2\\sec^2\\rho$ [shiraishi1994]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use coordinates $(t, \\rho, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ a time, outside the horizon $r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1}$ of a black hole with $M > 0$, the square root taken positive. The areal radius is $r = r_+\\sec\\rho$, and the conformal factor is $\\ell^2\\sec^2\\rho$ [shiraishi1994]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(\\sqrt{M + 1} - 1\\right)\\tan^2\\rho\\,c^2dt^2 + \\ell^2\\sec^2\\rho\\,d\\rho^2 + \\ell^2\\left(\\sqrt{M + 1} - 1\\right)\\sec^2\\rho\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
@@ -7154,7 +7154,7 @@
           "description": "The root in the metric function, a pure number"
         }
       ],
-      "convention": "We use coordinates $(t, r, \\chi, \\psi, \\theta, \\phi)$ in $D = 6$, with $t$ carrying dimensions of time and $\\chi$, $\\psi$, $\\theta$, $\\phi$ the angles of the 4-sphere. The metric function is $1 - w + r^2/\\ell^2$ with $w = \\sqrt{2M/r}$ the positive square root [banados1994, muniain1996], and it vanishes on the horizon $r_+$, where $r_+\\left(1 + r_+^2/\\ell^2\\right)^2 = 2M$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "convention": "We use coordinates $(t, r, \\chi, \\psi, \\theta, \\phi)$ in $D = 6$, with $t$ a time and $\\chi$, $\\psi$, $\\theta$, $\\phi$ the angles of the 4-sphere. The metric function is $1 - w + r^2/\\ell^2$ with $w = \\sqrt{2M/r}$ the positive square root [banados1994, muniain1996], and it vanishes on the horizon $r_+$, where $r_+\\left(1 + r_+^2/\\ell^2\\right)^2 = 2M$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
       "line_element": "ds^2 = -\\left(1 - \\sqrt{\\dfrac{2M}{r}} + \\dfrac{r^2}{\\ell^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\sqrt{\\dfrac{2M}{r}} + \\dfrac{r^2}{\\ell^2}} + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2 + \\sin^2\\chi\\sin^2\\psi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
       "metric_components": [
         {
