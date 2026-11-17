@@ -310,3 +310,56 @@ def conformal(cf, ck, src):
         v.set(settings=f"{label} and $r_0 = r_h = 1$, the unit of every length.")
         views.append(v)
     return views
+
+
+# -- Curvature figure --------------------------------------------------------------------------------------
+
+def register_curvature(cv):
+    cv.DRAWN[METRIC] = lambda ck, src: curvature(cv, ck, src)
+
+
+def curvature(cv, ck, src):
+    """K and R against r from the stored scalars of the first chart at a = 1 and r_0 = r_h = 1, where
+    h = r: K = (11r^2 + 6r + 3)/(4r^4), positive, finite at the horizon, growing as 3/(4r^4) toward r = 0
+    and falling as 11/(4r^2) far away; R = (r - 1)/(2r^2), negative inside the horizon, zero on it, and
+    falling as 1/(2r) far away. Both fall more slowly than Schwarzschild's K = 12 r_s^2/r^6."""
+    params = {"a": 1.0, "r_0": 1.0, "r_h": 1.0}
+    names = list(params)
+    Kp = cv.Published(src, METRIC, CHM, "kretschmann", ["r"], names)
+    Rp = cv.Published(src, METRIC, CHM, "ricci_scalar", ["r"], names)
+    x_axis = cv.axis("$r/r_h$", 0.1, 6)
+    K_scale = {"kind": "log", "from": 1e-2, "to": 1e4}
+    R_scale = {"kind": "symlog", "from": -1e2, "to": 1, "linear": 1e-2}
+    panels = [{"id": "K", "name": "$K\\,r_h^4$", "aspect": 2, "scale": K_scale, "ticks": cv.value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,r_h^2$", "aspect": 2, "scale": R_scale, "ticks": cv.value_ticks(R_scale)}]
+    cv.shape_checks(ck, METRIC, [p["aspect"] for p in panels])
+    height = {p["id"]: cv.PLOT_W / p["aspect"] for p in panels}
+    curves = (cv.line_curves(ck, METRIC, "K", "K", Kp, "r", x_axis, K_scale, height["K"], params)
+              + cv.line_curves(ck, METRIC, "R", "R", Rp, "r", x_axis, R_scale, height["R"], params))
+    vals = list(params.values())
+    rs = np.linspace(0.1, 6, cv.SAMPLES)
+    name = "Chan-Horne-Mann dilaton black hole at a = 1"
+    ck(f"{name}: K = (11r^2 + 6r r_h + 3r_h^2)/(4r_0^2 r^4)",
+       bool(np.allclose(Kp(rs, *vals), (11 * rs ** 2 + 6 * rs + 3) / (4 * rs ** 4), rtol=1e-12)))
+    ck(f"{name}: R = (r - r_h)/(2r_0 r^2)", bool(np.allclose(Rp(rs, *vals), (rs - 1) / (2 * rs ** 2), rtol=1e-12)))
+    ck(f"{name}: K is positive", bool(np.all(Kp(rs, *vals) > 0)))
+    ck(f"{name}: R vanishes at the horizon", abs(float(Rp.exact([1.0] + vals))) < 1e-12)
+    ck(f"{name}: K is finite at the horizon", bool(np.isfinite(Kp(np.array([1.0]), *vals)).all()))
+    far = np.array([1e6])
+    ck(f"{name}: K falls as 11/(4r^2)", abs(float(Kp(far, *vals)[0]) * 4e12 / 11 - 1) < 1e-5)
+    ck(f"{name}: R falls as 1/(2r)", abs(float(Rp(far, *vals)[0]) * 2e6 - 1) < 1e-5)
+    legend = [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "horizon", "$r = r_h$"]]
+    return [{
+        "id": "radial", "label": "Along $r$", "kind": "line", "x": x_axis,
+        "panels": panels, "curves": curves, "marks": [{"class": "horizon", "x": 1.0}],
+        "legend": legend,
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the linear dilaton black hole against $r$ "
+                    "($a = 1$, $r_0 = r_h$). "
+                    "$K$ is finite at the horizon, diverges at $r = 0$, and falls as $11/(4r_0^2r^2)$. "
+                    "$R$ vanishes at the horizon and falls as $1/(2r_0r)$."],
+        "ricci_sentences": [[0, 2]],
+        "per_scalar": cv.scalar_clips("A logarithmic scale from $10^{-2}$ to $10^4$.",
+                                      "A signed logarithmic scale from $-10^2$ to $1$, linear within $10^{-2}$."),
+        "settings": "$a = 1$, $r_0 = r_h = 1$.",
+        "clip": "$K$ logarithmic, $10^{-2}$ to $10^4$; $R$ signed logarithmic, $-10^2$ to $1$, linear within $10^{-2}$.",
+    }]

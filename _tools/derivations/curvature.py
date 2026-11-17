@@ -19304,6 +19304,8 @@ import scalar_collapse_cosmology_drawings as _scalar_collapse_drawings
 DRAWN[_scalar_collapse_drawings.METRIC] = (
     lambda ck, src: _scalar_collapse_drawings.curvature_views(ck, src, sys.modules[__name__]))
 
+import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings
+_dilaton_unusual_asymptotics_drawings.register_curvature(sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())
