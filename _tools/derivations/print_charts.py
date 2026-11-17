@@ -37762,5 +37762,9 @@ CHARTS[_ads_vaidya.METRIC] = [lambda system=system: _ads_vaidya.chart_spec(syste
                                for system in _ads_vaidya.CHARTS]
 
 
+import scalar_collapse_cosmology as _scalar_collapse_cosmology
+_scalar_collapse_cosmology.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     main()

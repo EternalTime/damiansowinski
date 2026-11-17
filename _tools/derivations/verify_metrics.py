@@ -5509,5 +5509,10 @@ DIMENSIONS.update(_ads_vaidya.DIMENSIONS)
 import dimensionally_continued as _dimensionally_continued
 _dimensionally_continued.register_dimensions(sys.modules[__name__])
 
+import scalar_collapse_cosmology as _scalar_collapse_cosmology
+DIMENSIONS.update(_scalar_collapse_cosmology.DIMENSIONS)
+HELD.update(_scalar_collapse_cosmology.HELD)
+RATES.update(_scalar_collapse_cosmology.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
