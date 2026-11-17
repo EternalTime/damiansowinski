@@ -19479,5 +19479,8 @@ CLOSED_FORMS.update(_counter_rotating_disc_drawings.null_forms())
 import ads_dust_collapse_drawings as _ads_dust_collapse_drawings
 _ads_dust_collapse_drawings.register_null(sys.modules[__name__])
 
+import ads_vaidya_drawings as _ads_vaidya_drawings
+_ads_vaidya_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
