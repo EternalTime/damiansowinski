@@ -452,3 +452,80 @@ def embedding(eb, ck, src):
         fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
         views.append(eb.view(vid, label, "$\\ell$", [surface], fig.done(), settings=settings))
     return views
+
+
+# -- Curvature figure -----------------------------------------------------------------------------------
+
+def register_curvature(cv):
+    cv.DRAWN[METRIC] = lambda ck, src: curvature(cv, ck, src)
+
+
+def curvature(cv, ck, src):
+    """K and R against r from the stored scalars of each static chart, at the values every other drawing
+    takes. In five dimensions, with s = sqrt(M + 1), K = 40/l^4 - 24s/l^2r^2 + 12s^2/r^4 is least, 28/l^4
+    at every M, at r^2 = s l^2, r = sqrt(2) l at M = 3, and R = -20/l^2 + 6s/r^2 changes sign at
+    r^2 = 3s l^2/10, r = sqrt(3/5) l. In six, with y = (l/r)^(5/2) at M = 2l, K = (60 - 70y + 425y^2/4)/l^4
+    is least, 824/17l^4 = 48.5/l^4, at y = 28/85, r = (85/28)^(2/5) l = 1.56 l, and R = (-30 + 35y/2)/l^2
+    changes sign at y = 12/7, r = (7/12)^(2/5) l = 0.806 l. Far out both tend to anti-de Sitter space's,
+    2D(D - 1)/l^4 and -D(D - 1)/l^2, and toward r = 0 both diverge. Each statement is checked here in
+    sixty digits, and K is positive at every r drawn: its quadratic in 1/r^2, or in y, has no real root."""
+    views = []
+    x_axis = cv.axis("$r/\\ell$", 0, 3)
+    K_scale = {"kind": "log", "from": 10, "to": 1e6}
+    R_scale = {"kind": "symlog", "from": -100, "to": 1e4, "linear": 1}
+    clip = "$K$ logarithmic, $10$ to $10^6$; $R$ signed logarithmic, $-10^2$ to $10^4$, linear within $1$."
+    for d, system, params, settings, least, least_at, zero_at, empty_K, empty_R, least_tex, zero_tex in (
+            ("five", STATIC5, {"M": 3.0, "\\ell": 1.0}, SETTINGS5, 28, math.sqrt(2), math.sqrt(3 / 5), 40, -20,
+             "$28/\\ell^4$, at $r = \\sqrt{2}\\ell$", "$r = \\sqrt{3/5}\\ell$"),
+            ("six", STATIC6, {"M": 2.0, "\\ell": 1.0}, SETTINGS6, 824 / 17, (85 / 28) ** 0.4, (7 / 12) ** 0.4, 60,
+             -30, "$48.5/\\ell^4$, at $r = 1.56\\,\\ell$", "$r = 0.806\\,\\ell$")):
+        name = f"Dimensionally continued, {d}"
+        names = list(params)
+        Kp = cv.nr_published(src, METRIC, system, "kretschmann", ["r"], names)
+        Rp = cv.nr_published(src, METRIC, system, "ricci_scalar", ["r"], names)
+        grr = cv.nr_published(src, METRIC, system, "inverse_metric_components", ["r"], names, ("r", "r"))
+        vals = list(params.values())
+        panels = [{"id": "K", "name": "$K\\,\\ell^4$", "aspect": 2, "scale": K_scale, "ticks": cv.value_ticks(K_scale)},
+                  {"id": "R", "name": "$R\\,\\ell^2$", "aspect": 2, "scale": R_scale, "ticks": cv.value_ticks(R_scale)}]
+        cv.shape_checks(ck, f"{METRIC} {d}", [p["aspect"] for p in panels])
+        height = {p["id"]: cv.PLOT_W / p["aspect"] for p in panels}
+        curves = (cv.line_curves(ck, f"{METRIC} {d}", "K", "K", Kp, "r", x_axis, K_scale, height["K"], params)
+                  + cv.line_curves(ck, f"{METRIC} {d}", "R", "R", Rp, "r", x_axis, R_scale, height["R"], params))
+
+        rs = np.linspace(0.05, 3, 600)
+        if d == "five":
+            s = 2.0
+            K_hand, R_hand = 40 - 24 * s / rs ** 2 + 12 * s * s / rs ** 4, -20 + 6 * s / rs ** 2
+        else:
+            y = rs ** -2.5
+            K_hand, R_hand = 60 - 70 * y + 106.25 * y * y, -30 + 17.5 * y
+        ck(f"{name}: K as the module docstring writes it", bool(np.allclose(Kp(rs, *vals), K_hand, rtol=1e-12)))
+        ck(f"{name}: R as the module docstring writes it", bool(np.allclose(Rp(rs, *vals), R_hand, rtol=1e-12)))
+        ck(f"{name}: K is positive at every r drawn", bool(np.all(Kp(rs, *vals) > 0)))
+        ck(f"{name}: the horizon, where g^rr = 0, is r_+ = l", abs(float(grr.exact([1.0] + vals))) < 1e-50)
+        ck(f"{name}: K is least, {least:.4g}/l^4, at r = {least_at:.4g} l",
+           abs(float(Kp.exact([least_at] + vals)) - least) < 1e-12
+           and float(Kp.exact([least_at * 0.999] + vals)) > least and float(Kp.exact([least_at * 1.001] + vals)) > least)
+        ck(f"{name}: the figures the caption prints", (round(least, 1), round(least_at, 2), round(zero_at, 3))
+           == ((48.5, 1.56, 0.806) if d == "six" else (28, round(math.sqrt(2), 2), round(math.sqrt(0.6), 3))))
+        ck(f"{name}: R changes sign at r = {zero_at:.4g} l", abs(float(Rp.exact([zero_at] + vals))) < 1e-12
+           and float(Rp.exact([zero_at * 0.99] + vals)) > 0 > float(Rp.exact([zero_at * 1.01] + vals)))
+        ck(f"{name}: far out K and R are anti-de Sitter space's", abs(float(Kp.exact([1e8] + vals)) - empty_K) < 1e-9
+           and abs(float(Rp.exact([1e8] + vals)) - empty_R) < 1e-9)
+        ck(f"{name}: K and R diverge toward r = 0", float(Kp.exact([1e-6] + vals)) > 1e20
+           and float(Rp.exact([1e-6] + vals)) > 1e10)
+        legend = [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "horizon", "the horizon"]]
+        views.append({
+            "id": d, "label": f"{d.capitalize()} dimensions", "kind": "line", "x": x_axis,
+            "panels": panels, "curves": curves, "marks": [{"class": "horizon", "x": 1.0}],
+            "legend": legend,
+            "caption": [f"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the black hole of {d} dimensions "
+                        f"against $r$. $K$ diverges at $r = 0$ and is least, {least_tex}. "
+                        f"$R$ changes sign at {zero_tex} and tends to ${empty_R}/\\ell^2$."],
+            "ricci_sentences": [[0, 2]],
+            "per_scalar": cv.scalar_clips("A logarithmic scale from $10$ to $10^6$.",
+                                          "A signed logarithmic scale from $-10^2$ to $10^4$, linear within $1$."),
+            "settings": settings,
+            "clip": clip,
+        })
+    return views

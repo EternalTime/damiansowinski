@@ -19296,5 +19296,8 @@ _ads_dust_collapse_drawings.register_curvature(sys.modules[__name__])
 import ads_vaidya_drawings as _ads_vaidya_drawings
 DRAWN[_ads_vaidya_drawings.METRIC] = lambda ck, src: _ads_vaidya_drawings.curvature_views(ck, src, sys.modules[__name__])
 
+import dimensionally_continued_drawings as _dimensionally_continued_drawings
+_dimensionally_continued_drawings.register_curvature(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
