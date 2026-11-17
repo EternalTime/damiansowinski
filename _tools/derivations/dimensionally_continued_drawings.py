@@ -25,6 +25,12 @@ The slice t = 0 on the plane of r and phi has g_rr = 1/f, at least 1 from the ho
 where f = 1, r = sqrt 2 in five dimensions and r = 2^(2/5) in six, and less than 1 beyond it: it is drawn in
 flat space from the throat to that circle and in three dimensional Minkowski space beyond, through both
 exteriors, as the black hole of three dimensions and Schwarzschild-anti-de Sitter are.
+
+Each chart has a spacetime diagram on its plane of the time and the radius, register_null; the moment
+t = 0 of each embedding view is marked on the planes of its dimension, register_slices, and on the
+conformal diagrams, which register_conformal draws in the cells of Hole; register_curvature draws K and
+R against r. All four kinds are drawn, so nothing of this spacetime is in a NOT_DRAWN table, and
+dimensionally_continued.md beside this file is the derivation.
 """
 import math
 
