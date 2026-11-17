@@ -22583,6 +22583,14 @@ CAPTIONS.update(_ads_vaidya_drawings.embedding_captions())
 import dimensionally_continued_drawings as _dimensionally_continued_drawings
 _dimensionally_continued_drawings.register_embedding(sys.modules[__name__])
 
+
+import scalar_collapse_cosmology_drawings as _scalar_collapse_drawings
+DRAWN[_scalar_collapse_drawings.METRIC] = (
+    lambda ck, src: _scalar_collapse_drawings.embedding_views(ck, src, sys.modules[__name__]))
+CAPTIONS.update({(_scalar_collapse_drawings.METRIC, vid): [text]
+                 for vid, text in _scalar_collapse_drawings.EMBEDDING_CAPTIONS.items()})
+
+
 if __name__ == "__main__":
     sys.exit(main())
 

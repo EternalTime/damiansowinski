@@ -5200,3 +5200,12 @@ HIDDEN.update({(_ads_vaidya_drawings.METRIC, system): _ads_vaidya_drawings.HIDDE
 
 import dimensionally_continued_drawings as _dimensionally_continued_drawings  # noqa: E402
 _dimensionally_continued_drawings.register_slices(sys.modules[__name__])
+
+import scalar_collapse_cosmology_drawings as _scalar_collapse_drawings
+FLAT.update(_scalar_collapse_drawings.flat_marks(sys.modules[__name__]))
+FLAT_METRICS.add(_scalar_collapse_drawings.METRIC)
+HIDDEN.update({key: _scalar_collapse_drawings.HIDDEN_REASON
+               for key in ((_scalar_collapse_drawings.METRIC, "fonarev_conformal", "radial"),
+                           (_scalar_collapse_drawings.METRIC, "fonarev", "radial"),
+                           (_scalar_collapse_drawings.METRIC, "fonarev_conformal"),
+                           (_scalar_collapse_drawings.METRIC, "fonarev"))})

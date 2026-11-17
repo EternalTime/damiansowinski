@@ -19485,5 +19485,12 @@ _ads_vaidya_drawings.register_null(sys.modules[__name__])
 import dimensionally_continued_drawings as _dimensionally_continued_drawings
 _dimensionally_continued_drawings.register_null(sys.modules[__name__])
 
+import scalar_collapse_cosmology_drawings as _scalar_collapse_drawings
+_scalar_collapse_rows, _scalar_collapse_captions, _scalar_collapse_forms = (
+    _scalar_collapse_drawings.null_rows(sys.modules[__name__]))
+DIAGRAMS.extend(_scalar_collapse_rows)
+CAPTIONS.update(_scalar_collapse_captions)
+CLOSED_FORMS.update(_scalar_collapse_forms)
+
 if __name__ == "__main__":
     sys.exit(main())
