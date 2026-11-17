@@ -3251,7 +3251,7 @@ class StacksAndMovies(unittest.TestCase):
               ("bekenstein_universes", "closed"): "$\\eta$", ("bekenstein_universes", "open"): "$\\eta$",
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
-              ("vaidya", "shell"): "$v - r$",
+              ("vaidya", "shell"): "$v - r$", ("ads_vaidya", "shell"): "$cv - \\ell\\arctan(r/\\ell)$",
               ("semiclosed_world", "bag"): "$c\\tau$", ("datt_ruban_t_models", "tsphere"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$", ("black_to_white_hole", "collapse"): "$ct$",
@@ -5230,6 +5230,9 @@ class Slices(unittest.TestCase):
             return (lambda X: math.log(t)), list(self.reach(surface))
         if key == "mallett_radiating_star/eddington_finkelstein_ingoing/accretion":
             return (lambda X: 0.0), list(self.reach(surface))
+        if key == "ads_vaidya/ingoing_three/shell":
+            # The moment cv - l arctan(r/l) = t l, drawn against r and cv at l = 1.
+            return (lambda X: t + math.atan(X)), list(self.reach(surface))
         if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
             return (lambda X: t), list(self.reach(surface))
         if key.startswith("charged_shell/"):
@@ -6245,6 +6248,23 @@ class Slices(unittest.TestCase):
                         # p = arctan(2 mu v) - pi/2 and q = mu c u + pi/2 put at T = t, X = t + pi.
                         (X, T), = points
                         self.assertLess(abs(T - t) + abs(X - t - math.pi), 2e-4, where)
+                    elif metric_id == "ads_vaidya":
+                        # Before the shell, q < 0, the strip's p, q = (cv - 2 arctan r)/2, cv/2, and after it
+                        # p, q = arctan U - pi/4, arctan V - pi/4 of the hole's V = e^v and UV = (1 - r)/(1 + r),
+                        # at l = 1: every point lies on cv - arctan r = t within the embedding's reach.
+                        lo, hi = self.reach(surface)
+                        for X, T in points:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            if q < -1e-3:
+                                v, r = 2 * q, math.tan(X)
+                            elif q > 1e-3:
+                                v = math.log(math.tan(q + math.pi / 4))
+                                uv = math.tan(p + math.pi / 4) * math.tan(q + math.pi / 4)
+                                r = (1 - uv) / (1 + uv)
+                            else:
+                                continue
+                            self.assertLess(abs(v - math.atan(r) - t), 1e-3 * (1 + r), f"{where} at {(X, T)}")
+                            self.assertTrue(lo - 1e-3 <= r <= hi + 1e-2, f"{where} at {(X, T)}")
                     elif metric_id == "vaidya":
                         for X, T in points:
                             p, q = (T - X) / 2, (T + X) / 2

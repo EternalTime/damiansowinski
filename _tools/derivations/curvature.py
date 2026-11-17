@@ -19293,5 +19293,8 @@ DRAWN[_counter_rotating_disc_drawings.METRIC] = lambda ck, src: _counter_rotatin
 import ads_dust_collapse_drawings as _ads_dust_collapse_drawings
 _ads_dust_collapse_drawings.register_curvature(sys.modules[__name__])
 
+import ads_vaidya_drawings as _ads_vaidya_drawings
+DRAWN[_ads_vaidya_drawings.METRIC] = lambda ck, src: _ads_vaidya_drawings.curvature_views(ck, src, sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

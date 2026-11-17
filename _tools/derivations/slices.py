@@ -5189,3 +5189,11 @@ HIDDEN[("counter_rotating_discs", "stationary", "axis")] = (
 
 import ads_dust_collapse_drawings as _ads_dust_collapse_drawings  # noqa: E402
 _ads_dust_collapse_drawings.register_slices(sys.modules[__name__])
+
+import ads_vaidya_drawings as _ads_vaidya_drawings
+FLAT[(_ads_vaidya_drawings.METRIC, "ingoing_three", "shell")] = lambda: _ads_vaidya_drawings.slice_marks(sys.modules[__name__])
+FLAT_METRICS.add(_ads_vaidya_drawings.METRIC)
+HIDDEN.update({(_ads_vaidya_drawings.METRIC, system, "shell"): _ads_vaidya_drawings.HIDDEN_REASON
+               for system in ("poincare_three", "ingoing_four", "flat_front", "poincare_four", "ingoing_five")})
+HIDDEN.update({(_ads_vaidya_drawings.METRIC, system): _ads_vaidya_drawings.HIDDEN_REASON
+               for system in ("poincare_three", "ingoing_four", "flat_front", "poincare_four", "ingoing_five")})

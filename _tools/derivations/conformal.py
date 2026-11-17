@@ -32412,5 +32412,9 @@ NOT_DRAWN.add("counter_rotating_discs")
 import ads_dust_collapse_drawings as _ads_dust_collapse_drawings
 _ads_dust_collapse_drawings.register_conformal(sys.modules[__name__])
 
+import ads_vaidya_drawings as _ads_vaidya_drawings
+DRAWN[_ads_vaidya_drawings.METRIC] = lambda ck, src: _ads_vaidya_drawings.conformal_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_ads_vaidya_drawings.conformal_captions())
+
 if __name__ == "__main__":
     sys.exit(main())

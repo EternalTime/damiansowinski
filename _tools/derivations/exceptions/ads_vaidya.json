@@ -1,0 +1,19 @@
+{
+  "hidden": [
+    {
+      "reason": "The Poincaré patch of three dimensions, and the charts of four and five dimensions, draw shells of light falling into other spacetimes than the round anti-de Sitter space of three dimensions whose moments are embedded.",
+      "drawings": [
+        "ads_vaidya/poincare_three/shell",
+        "ads_vaidya/ingoing_four/shell",
+        "ads_vaidya/flat_front/shell",
+        "ads_vaidya/poincare_four/shell",
+        "ads_vaidya/ingoing_five/shell",
+        "conformal ads_vaidya/poincare_three",
+        "conformal ads_vaidya/ingoing_four",
+        "conformal ads_vaidya/flat_front",
+        "conformal ads_vaidya/poincare_four",
+        "conformal ads_vaidya/ingoing_five"
+      ]
+    }
+  ]
+}
