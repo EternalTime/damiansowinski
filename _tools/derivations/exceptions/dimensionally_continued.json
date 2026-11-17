@@ -1,0 +1,19 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The dimensionally continued black holes of five and six dimensions are two spacetimes, each marked on the drawings of its own charts.",
+      "drawings": {
+        "dimensionally_continued/spherical/radial": ["six"],
+        "dimensionally_continued/eddington_finkelstein_ingoing/finkelstein": ["six"],
+        "dimensionally_continued/conformal/radial": ["six"],
+        "conformal dimensionally_continued/static": ["six"],
+        "conformal dimensionally_continued/ingoing": ["six"],
+        "conformal dimensionally_continued/conformal": ["six"],
+        "dimensionally_continued/spherical_six/radial": ["five"],
+        "dimensionally_continued/eddington_finkelstein_ingoing_six/finkelstein": ["five"],
+        "conformal dimensionally_continued/static_six": ["five"],
+        "conformal dimensionally_continued/ingoing_six": ["five"]
+      }
+    }
+  ]
+}

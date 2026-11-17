@@ -5825,6 +5825,24 @@ class Slices(unittest.TestCase):
         if key == "vuorio_warped_ads/fibred/plane":
             hi = self.reach(surface)[1]
             return (lambda X: 0.0), [-hi, hi]
+        if key == "dimensionally_continued/eddington_finkelstein_ingoing/finkelstein":
+            # Five dimensions at M = 3 and l = 1: f = r^2 - 1, r_* = ln|(r - 1)/(r + 1)|/2, and the static
+            # t = 0 is v = r_*, drawn against v - r.
+            return (lambda X: 0.5 * math.log(abs((X - 1) / (X + 1))) - X), list(self.reach(surface))
+        if key == "dimensionally_continued/eddington_finkelstein_ingoing_six/finkelstein":
+            # Six dimensions at M = 2 and l = 1: with x = sqrt(r), dr/f = 2x^2 dx/(x^5 + x - 2), whose poles are
+            # x = 1 and the four roots of x^4 + x^3 + x^2 + x + 2, so r_* = Re sum A_i ln(1 - x/x_i) with
+            # A_i = 2x_i^2/(5x_i^4 + 1), zero at r = 0; the static t = 0 is v = r_*, drawn against v - r.
+            import numpy as np
+            roots = [1.0] + [complex(z) for z in np.roots([1, 1, 1, 1, 2])]
+
+            def rstar(r):
+                x = math.sqrt(r)
+                return sum((2 * z * z / (5 * z ** 4 + 1) * cmath.log(1 - x / z)).real for z in roots)
+            return (lambda X: rstar(X) - X), list(self.reach(surface))
+        if key == "dimensionally_continued/conformal/radial":
+            # The embedding is read in the static r, and the conformal chart's rho is arccos(r_+/r) at r_+ = 1.
+            return (lambda X: 0.0), [math.acos(1 / r) for r in self.reach(surface)]
         if surface["pieces"][0].get("grid"):
             u = surface["pieces"][0]["grid"]["u"][-1]
             return (lambda X: 0.0), [-u, u]
