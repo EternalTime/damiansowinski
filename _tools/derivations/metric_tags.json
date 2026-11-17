@@ -16899,6 +16899,90 @@
    "\\phi"
   ]
  },
+ "scalar_collapse_cosmology/comoving_time": {
+  "stamp": "c522c21e4d29d7f1",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "scalar_collapse_cosmology/conformal_time": {
+  "stamp": "fea3325fb9bd82c7",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "scalar_collapse_cosmology/fonarev": {
+  "stamp": "b9bc297c806bf51c",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "scalar_collapse_cosmology/fonarev_conformal": {
+  "stamp": "0e0b27d1b2e0c59f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "scalar_field_black_hole/scalar_universe": {
   "stamp": "0b198093097fd648",
   "relations": {},
