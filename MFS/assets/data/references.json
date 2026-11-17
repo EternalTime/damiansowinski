@@ -1,5 +1,5 @@
 {
-  "version": "7d59e072736e93e0",
+  "version": "146983d70bcdefe8",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -48040,6 +48040,38 @@
         "archiveprefix": "arXiv"
       }
     },
+    "hubeny2007": {
+      "type": "article",
+      "fields": {
+        "title": "Bulk-cone singularities \\& signatures of horizon formation in AdS/CFT",
+        "author": "Hubeny, Veronika E. and Liu, Hong and Rangamani, Mukund",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2007",
+        "number": "01",
+        "pages": "009",
+        "year": "2007",
+        "doi": "10.1088/1126-6708/2007/01/009",
+        "eprint": "hep-th/0610041",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2007/01/009"
+      }
+    },
+    "husain1994": {
+      "type": "article",
+      "fields": {
+        "title": "Radiation collapse and gravitational waves in three dimensions",
+        "author": "Husain, Viqar",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "4",
+        "pages": "R2361--R2363",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.R2361",
+        "eprint": "gr-qc/9404047",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.R2361"
+      }
+    },
     "lemos1999": {
       "type": "article",
       "fields": {
@@ -48054,6 +48086,166 @@
         "url": "https://doi.org/10.1103/PhysRevD.59.044020",
         "eprint": "gr-qc/9812078",
         "archiveprefix": "arXiv"
+      }
+    },
+    "chamblin2001": {
+      "type": "article",
+      "fields": {
+        "title": "Thermal equilibration of brane-worlds",
+        "author": "Chamblin, Andrew and Karch, Andreas and Nayeri, Ali",
+        "journal": "Physics Letters B",
+        "volume": "509",
+        "number": "1-2",
+        "pages": "163--167",
+        "year": "2001",
+        "doi": "10.1016/S0370-2693(01)00535-4",
+        "eprint": "hep-th/0007060",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(01)00535-4"
+      }
+    },
+    "danielsson1999": {
+      "type": "article",
+      "fields": {
+        "title": "Spherically collapsing matter in AdS, holography, and shellons",
+        "author": "Danielsson, Ulf H. and Keski-Vakkuri, Esko and Kruczenski, Mart\\'in",
+        "journal": "Nuclear Physics B",
+        "volume": "563",
+        "number": "1-2",
+        "pages": "279--292",
+        "year": "1999",
+        "doi": "10.1016/S0550-3213(99)00511-8",
+        "eprint": "hep-th/9905227",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(99)00511-8"
+      }
+    },
+    "maeda2006": {
+      "type": "article",
+      "fields": {
+        "title": "Extracting information behind the veil of the horizon",
+        "author": "Maeda, Kengo and Natsuume, Makoto and Okamura, Takashi",
+        "journal": "Physical Review D",
+        "volume": "74",
+        "number": "4",
+        "pages": "046010",
+        "year": "2006",
+        "doi": "10.1103/PhysRevD.74.046010",
+        "eprint": "hep-th/0605224",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.74.046010"
+      }
+    },
+    "hubeny2007covariant": {
+      "type": "article",
+      "fields": {
+        "title": "A covariant holographic entanglement entropy proposal",
+        "author": "Hubeny, Veronika E. and Rangamani, Mukund and Takayanagi, Tadashi",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2007",
+        "number": "07",
+        "pages": "062",
+        "year": "2007",
+        "doi": "10.1088/1126-6708/2007/07/062",
+        "eprint": "0705.0016",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2007/07/062"
+      }
+    },
+    "bhattacharyya2009": {
+      "type": "article",
+      "fields": {
+        "title": "Weak field black hole formation in asymptotically AdS spacetimes",
+        "author": "Bhattacharyya, Sayantani and Minwalla, Shiraz",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2009",
+        "number": "09",
+        "pages": "034",
+        "year": "2009",
+        "doi": "10.1088/1126-6708/2009/09/034",
+        "eprint": "0904.0464",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2009/09/034"
+      }
+    },
+    "abajoarrastia2010": {
+      "type": "article",
+      "fields": {
+        "title": "Holographic evolution of entanglement entropy",
+        "author": "Abajo-Arrastia, Javier and Apar\\'icio, Jo\\~ao and L\\'opez, Esperanza",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2010",
+        "number": "11",
+        "pages": "149",
+        "year": "2010",
+        "doi": "10.1007/JHEP11(2010)149",
+        "eprint": "1006.4090",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP11(2010)149"
+      }
+    },
+    "balasubramanian2011": {
+      "type": "article",
+      "fields": {
+        "title": "Thermalization of Strongly Coupled Field Theories",
+        "author": "Balasubramanian, V. and Bernamonti, A. and de Boer, J. and Copland, N. and Craps, B. and Keski-Vakkuri, E. and M\\\"uller, B. and Sch\\\"afer, A. and Shigemori, M. and Staessens, W.",
+        "journal": "Physical Review Letters",
+        "volume": "106",
+        "number": "19",
+        "pages": "191601",
+        "year": "2011",
+        "doi": "10.1103/PhysRevLett.106.191601",
+        "eprint": "1012.4753",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.106.191601"
+      }
+    },
+    "liu2014": {
+      "type": "article",
+      "fields": {
+        "title": "Entanglement Tsunami: Universal Scaling in Holographic Thermalization",
+        "author": "Liu, Hong and Suh, S. Josephine",
+        "journal": "Physical Review Letters",
+        "volume": "112",
+        "number": "1",
+        "pages": "011601",
+        "year": "2014",
+        "doi": "10.1103/PhysRevLett.112.011601",
+        "eprint": "1305.7244",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.112.011601"
+      }
+    },
+    "anous2016": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole collapse in the $1/c$ expansion",
+        "author": "Anous, Tarek and Hartman, Thomas and Rovai, Antonin and Sonner, Julian",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2016",
+        "number": "7",
+        "pages": "123",
+        "year": "2016",
+        "doi": "10.1007/JHEP07(2016)123",
+        "eprint": "1603.04856",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP07(2016)123"
+      }
+    },
+    "cardona2026": {
+      "type": "article",
+      "fields": {
+        "title": "Generalized Thermodynamics and Phase Transitions of Vaidya-adS Black Holes",
+        "author": "Cardona, A. F. and Molina, C.",
+        "journal": "Universe",
+        "volume": "12",
+        "number": "10",
+        "pages": "300",
+        "year": "2026",
+        "doi": "10.3390/universe12100300",
+        "eprint": "2610.31760",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/universe12100300"
       }
     }
   }

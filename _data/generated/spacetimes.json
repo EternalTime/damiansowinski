@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 257,
+  "count": 258,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1611,6 +1611,11 @@
           "id": "ads_dust_collapse",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with a slab of dust in it, which collapses to a hyperbolic black hole. With the density set to zero the slab is anti-de Sitter space [smith1997]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "generalisation",
+          "text": "Anti-de Sitter space with a shell of light falling in from its boundary, which leaves a black hole. In holography the collapse is the thermalization of the field theory on the boundary [danielsson1999, balasubramanian2011]."
         }
       ],
       "references": [
@@ -1672,7 +1677,9 @@
         "zofka2008",
         "klebanovwitten1998",
         "horne1992black",
-        "smith1997"
+        "smith1997",
+        "danielsson1999",
+        "balasubramanian2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3892,6 +3899,11 @@
           "id": "ads_dust_collapse",
           "kind": "composite",
           "text": "A disc of dust falling under a negative cosmological constant, with this hole, without rotation, outside it. The disc makes the hole only if it is dense enough, and otherwise ends as a naked conical singularity [mann1993]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "generalisation",
+          "text": "The hole without rotation with a mass $m(v)$ that grows as light falls in from the boundary. Viqar Husain wrote it in 1994 and called it \"the three dimensional analog of the Vaidya metric\" [husain1994]."
         }
       ],
       "references": [
@@ -3929,7 +3941,8 @@
         "achucarro1993",
         "anninos2009",
         "shenker2014",
-        "carlip1995"
+        "carlip1995",
+        "husain1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -11793,6 +11806,11 @@
           "id": "lqc_bounce",
           "kind": "family",
           "text": "Its Friedmann equation carries a term in $\\rho^2$ too, with a minus sign that turns a collapse into a bounce. On the wall the sign is a plus [singh2006, binetruy2000nonconventional]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space with light falling into it. Andrew Chamblin, Andreas Karch, and Ali Nayeri took it for the space on both sides of the wall in 2001, and its growing mass is a radiation term in the wall's Friedmann equation [chamblin2001]."
         }
       ],
       "references": [
@@ -11809,7 +11827,8 @@
         "mukohyama2000",
         "shiromizu2000",
         "visser1989nuclphysb",
-        "singh2006"
+        "singh2006",
+        "chamblin2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brane_wall_universe.json",
@@ -36642,6 +36661,11 @@
           "id": "ads_dust_collapse",
           "kind": "family",
           "text": "A disc and slabs of dust falling in anti-de Sitter space. Yoav Peleg and Alan Steif let a thin ring of dust fall in three dimensions in 1995, and found a black hole or a naked singularity on either side of a threshold mass [peleg1995]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "A thin shell of light falling in anti-de Sitter space, with anti-de Sitter space inside it and a black hole outside. Its event horizon forms at the centre before the shell arrives, as this one's does [hubeny2007]."
         }
       ],
       "references": [
@@ -36669,7 +36693,8 @@
         "israel1970",
         "sakaihaines2000void",
         "gleiser2012radiative",
-        "peleg1995"
+        "peleg1995",
+        "hubeny2007"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -49853,6 +49878,11 @@
           "id": "bonnor_vaidya",
           "kind": "family",
           "text": "A spherical radiating body with charge and no cosmological constant. Its mass and charge can vary with retarded time [bonnor1970]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "Vaidya's metric with a negative cosmological constant, where light falling in from the boundary of anti-de Sitter space leaves a black hole [lemos1999]."
         }
       ],
       "references": [
@@ -49886,7 +49916,8 @@
         "mishra2019understanding",
         "senovilla2023beyond",
         "boyanov2026semiclassical",
-        "bonnor1970"
+        "bonnor1970",
+        "lemos1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mallett_radiating_star.json",
@@ -50435,6 +50466,11 @@
           "id": "holographic_superconductor",
           "kind": "family",
           "text": "The inside of a charged black hole of anti-de Sitter space with charged scalar hair, which has no inner horizon. The charged condensate removes it, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "Vaidya's metric in three dimensions with a negative cosmological constant. Viqar Husain wrote it in 1994 to build Ori's model there, and concluded that \"mass inflation also occurs in three dimensions\" [husain1994]."
         }
       ],
       "references": [
@@ -50461,7 +50497,8 @@
         "yurtsever1993",
         "delacruz1967",
         "husain2022",
-        "hartnoll2021diving"
+        "hartnoll2021diving",
+        "husain1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mass_inflation.json",
@@ -59076,6 +59113,11 @@
           "id": "ads_dust_collapse",
           "kind": "family",
           "text": "The collapse in anti-de Sitter space. A disc of dust in three dimensions and slabs of dust in four end as black holes whose horizons are a circle, a torus, or a surface of higher genus [mann1993, smith1997, mena2008toroidal]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "Collapse to a black hole in anti-de Sitter space, with light for matter. The field theory on the boundary thermalizes as the hole forms [danielsson1999, balasubramanian2011]."
         }
       ],
       "references": [
@@ -59106,7 +59148,9 @@
         "hellaby1987",
         "oripiran1987",
         "smith1997",
-        "mena2008toroidal"
+        "mena2008toroidal",
+        "danielsson1999",
+        "balasubramanian2011"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -70022,6 +70066,11 @@
           "id": "ads_dust_collapse",
           "kind": "family",
           "text": "Dust collapsing in anti-de Sitter space to this hole's counterparts whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "generalisation",
+          "text": "This black hole with a mass that grows as light falls in from the boundary, Vaidya's metric with a negative cosmological constant. José Lemos used it in 1999 to test cosmic censorship [lemos1999]."
         }
       ],
       "references": [
@@ -70057,7 +70106,8 @@
         "york1985equilibrium",
         "zofka2008",
         "smith1997",
-        "mena2008toroidal"
+        "mena2008toroidal",
+        "lemos1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -71780,6 +71830,11 @@
           "id": "quantum_btz",
           "kind": "family",
           "text": "The BTZ black hole with the backreaction of strongly coupled quantum fields included exactly [emparan2020qbtz]. The shock wave changes the same black hole classically, with a shell of null particles on its horizon."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "A shell of light that falls from the boundary into anti-de Sitter space of three dimensions and leaves the black hole behind it [husain1994]."
         }
       ],
       "references": [
@@ -71794,7 +71849,8 @@
         "roberts2015",
         "maldacena2016chaos",
         "banados1993",
-        "emparan2020qbtz"
+        "emparan2020qbtz",
+        "husain1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz_shock_wave.json",
@@ -81352,6 +81408,11 @@
           "id": "ads_dust_collapse",
           "kind": "composite",
           "text": "A slab of dust falling under a negative cosmological constant, with a hyperbolic or a flat hole outside each of its faces [smith1997, mena2008toroidal]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "generalisation",
+          "text": "The flat hole with a mass that grows as a plane of light falls in from the boundary. Sayantani Bhattacharyya and Shiraz Minwalla found in 2009 that a weak pulse of a massless scalar field makes this metric at leading order [bhattacharyya2009]."
         }
       ],
       "references": [
@@ -81387,7 +81448,8 @@
         "hartnoll2021diving",
         "zofka2008",
         "smith1997",
-        "mena2008toroidal"
+        "mena2008toroidal",
+        "bhattacharyya2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
@@ -83409,6 +83471,11 @@
           "id": "ori_piran",
           "kind": "family",
           "text": "A ball of fluid with pressure collapsing the same way at every scale, whose central singularity is naked when the pressure is a small enough fraction of the density [oripiran1987]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "generalisation",
+          "text": "Vaidya's ingoing metric with a negative cosmological constant, a shell of light falling in anti-de Sitter space. Viqar Husain wrote its form in three dimensions in 1994, and José Lemos used that of four in 1999 to test cosmic censorship [husain1994, lemos1999]."
         }
       ],
       "references": [
@@ -83448,7 +83515,9 @@
         "compere2016final",
         "haggard2015fireworks",
         "vaidya1989kerr",
-        "oripiran1987"
+        "oripiran1987",
+        "husain1994",
+        "lemos1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -83586,6 +83655,533 @@
           ],
           "ricci_scalar": "R = 0",
           "kretschmann": "K = \\dfrac{48G^2m^2}{c^4 r^6}"
+        }
+      ]
+    },
+    {
+      "id": "ads_vaidya",
+      "name": "Shell of Light Falling in Anti-de Sitter Space",
+      "short_name": "Vaidya-anti-de Sitter",
+      "description": "A shell of light, null dust, falling inward from the boundary of anti-de Sitter space and leaving a black hole behind it, Vaidya's metric with a negative cosmological constant. Viqar Husain wrote it in three dimensions in 1994, where the hole is that of Bañados, Teitelboim, and Zanelli, and in holography the collapse is the thermalization of the field theory on the boundary.",
+      "tags": [
+        "null dust",
+        "accreting",
+        "Vaidya",
+        "gravitational collapse",
+        "thin shell",
+        "black hole",
+        "BTZ black hole",
+        "black brane",
+        "mass",
+        "mass inflation",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "curvature singularity",
+        "naked singularity",
+        "cosmic censorship",
+        "cosmological constant",
+        "negative cosmological constant",
+        "anti-de Sitter",
+        "AdS/CFT",
+        "holography",
+        "braneworld",
+        "2+1 dimensional gravity",
+        "circularly symmetric",
+        "planar symmetry",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "three-dimensional",
+        "four-dimensional",
+        "five-dimensional",
+        "spherically symmetric"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "btz",
+          "kind": "special_case",
+          "text": "The hole the light leaves behind in three dimensions. With $m$ a positive constant the metric is this black hole without rotation, in ingoing coordinates [husain1994]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "special_case",
+          "text": "The hole the light leaves behind in four dimensions. With $m$ constant the metric is this black hole in ingoing coordinates [lemos1999]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "The spacetime before the light arrives. It is the metric with $m = 0$ in four dimensions and with $m = -1$ in three [lemos1999, banados1992]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "special_case",
+          "text": "With a flat front and a constant mass the metric is the flat black hole of anti-de Sitter space, the black brane of holography [lemos1999, balasubramanian2011]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "The same shell of light with no cosmological constant. As $\\ell \\to \\infty$ the metric of four dimensions is Vaidya's ingoing metric [lemos1999]."
+        },
+        {
+          "id": "mass_inflation",
+          "kind": "family",
+          "text": "The charged hole of four dimensions whose inner horizon two streams of light make singular. Viqar Husain wrote the metric of three dimensions to build the same model there, and found the mass function diverging too [husain1994]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "family",
+          "text": "Vaidya's metric with a positive cosmological constant, a radiating body in de Sitter space. Here the constant is negative and the light falls in."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "A thin shell of dust with rest mass falling in flat space, with Schwarzschild's vacuum outside it. This shell is of light and falls in anti-de Sitter space, and in both the event horizon forms at the centre before the shell arrives [hubeny2007]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "A ball of dust collapsing to a black hole in four dimensions with no cosmological constant. Here the matter is light, and the field theory on the boundary of anti-de Sitter space thermalizes as the hole forms [danielsson1999]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "A universe that is a wall moving past the static black hole of anti-de Sitter space in five dimensions. Andrew Chamblin, Andreas Karch, and Ali Nayeri let light fall into that hole, and its growing mass is a radiation term in the wall's Friedmann equation [chamblin2001]."
+        },
+        {
+          "id": "btz_shock_wave",
+          "kind": "family",
+          "text": "A shell of null particles lying on the horizon of the eternal black hole of three dimensions. Here the shell falls from the boundary into anti-de Sitter space and makes the hole [husain1994]."
+        }
+      ],
+      "references": [
+        "hubeny2007",
+        "husain1994",
+        "banados1992",
+        "poisson1989",
+        "ori1991inflation",
+        "chan1996",
+        "lemos1999",
+        "chamblin2001",
+        "danielsson1999",
+        "maeda2006",
+        "hubeny2007covariant",
+        "bhattacharyya2009",
+        "abajoarrastia2010",
+        "balasubramanian2011",
+        "liu2014",
+        "anous2016",
+        "cardona2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_vaidya.json",
+      "charts": [
+        {
+          "id": "ingoing_three",
+          "name": "Ingoing, Three Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "r = \\ell\\sqrt{m} \\;\\text{(the apparent horizon, where } m > 0 \\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, a pure number, with $m' \\ge 0$ for infalling light; $m = -1$ is anti-de Sitter space and a positive constant is a black hole"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta)$, with the advanced time $v$ having dimensions of time and $2\\pi r$ the circumference of the circle of radius $r$. The mass function $m(v)$ enters as $r^2/\\ell^2 - m$, the coefficient of $-c^2dv^2$ [husain1994]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell^2} - m\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2d\\theta^2",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(\\dfrac{r^2}{\\ell^2} - m\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "poincare_three",
+          "name": "Poincaré, Three Dimensions",
+          "coordinates": [
+            "v",
+            "z",
+            "x"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "z = m^{-1/2} \\;\\text{(the apparent horizon, where } m > 0 \\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -1/\\ell^2$"
+            },
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, an inverse area, with $m' \\ge 0$ for infalling light; it is $1/\\ell^2$ times the mass function of the ingoing chart"
+            }
+          ],
+          "convention": "We use coordinates $(v, z, x)$, with the advanced time $v$ having dimensions of time and $z$ and $x$ lengths, where $z = \\ell^2/r$ vanishes on the boundary and $r$ is the radius of the ingoing chart. The mass function $m(v)$ enters as the factor $1 - mz^2$ [balasubramanian2011]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{z^2}\\left(-\\left(1 - m\\,z^2\\right)c^2dv^2 - 2c\\,dv\\,dz + dx^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{\\ell^2\\left(1 - m\\,z^2\\right)}{z^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "z"
+              ],
+              "value": "-\\dfrac{\\ell^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "v"
+              ],
+              "value": "-\\dfrac{\\ell^2}{z^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\ell^2}{z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{12}{\\ell^4}"
+        },
+        {
+          "id": "ingoing_four",
+          "name": "Ingoing, Four Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "1 + \\dfrac{r^2}{\\ell^2} = \\dfrac{2Gm}{c^2r} \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "G",
+              "description": "Newton's gravitational constant"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/\\ell^2$"
+            },
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, a mass, with $m' \\ge 0$ for infalling light"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ having dimensions of time and $r$ the areal radius. The mass function $m(v)$ enters as $1 + r^2/\\ell^2 - 2Gm/c^2r$, the coefficient of $-c^2dv^2$ [lemos1999]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{r^2}{\\ell^2} - \\dfrac{2Gm}{c^2r}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 + \\dfrac{r^2}{\\ell^2} - \\dfrac{2Gm}{c^2r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4} + \\dfrac{48G^2m^2}{c^4r^6}"
+        },
+        {
+          "id": "flat_front",
+          "name": "Flat Front, Four Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "r = \\left(m\\ell^2\\right)^{1/3} \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/\\ell^2$"
+            },
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, a length, with $m' \\ge 0$ for infalling light; a constant times the mass of a torus, the mass per unit length of a cylinder, or the mass per unit area of a plane"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, x, y)$, with the advanced time $v$ having dimensions of time, and $x$ and $y$ lengths along the front, which is a plane, or a cylinder or a torus where one or both of them are periodic. The mass function $m(v)$ enters as $r^2/\\ell^2 - m/r$, the coefficient of $-c^2dv^2$ [lemos1999]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\dfrac{r^2}{\\ell^2} - \\dfrac{m}{r}\\right)c^2dv^2 + 2c\\,dv\\,dr + \\dfrac{r^2}{\\ell^2}\\left(dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(\\dfrac{r^2}{\\ell^2} - \\dfrac{m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2}{\\ell^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2}{\\ell^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4} + \\dfrac{12m^2}{r^6}"
+        },
+        {
+          "id": "poincare_four",
+          "name": "Poincaré, Four Dimensions",
+          "coordinates": [
+            "v",
+            "z",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "z \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z = m^{-1/3} \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/\\ell^2$"
+            },
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, an inverse volume, with $m' \\ge 0$ for infalling light; it is $1/\\ell^4$ times the mass function of the flat front chart"
+            }
+          ],
+          "convention": "We use coordinates $(v, z, x, y)$, with the advanced time $v$ having dimensions of time and $z$, $x$, and $y$ lengths, where $z = \\ell^2/r$ vanishes on the boundary and $r$ is the radius of the flat front chart. The mass function $m(v)$ enters as the factor $1 - mz^3$ [balasubramanian2011]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{z^2}\\left(-\\left(1 - m\\,z^3\\right)c^2dv^2 - 2c\\,dv\\,dz + dx^2 + dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\dfrac{\\ell^2\\left(1 - m\\,z^3\\right)}{z^2}"
+            },
+            {
+              "indices": [
+                "v",
+                "z"
+              ],
+              "value": "-\\dfrac{\\ell^2}{z^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "v"
+              ],
+              "value": "-\\dfrac{\\ell^2}{z^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\ell^2}{z^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\ell^2}{z^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4} + \\dfrac{12m^2z^6}{\\ell^4}"
+        },
+        {
+          "id": "ingoing_five",
+          "name": "Ingoing, Five Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "1 + \\dfrac{r^2}{\\ell^2} = \\dfrac{m}{r^2} \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -6/\\ell^2$"
+            },
+            {
+              "symbol": "m = m(v)",
+              "description": "Mass function of advanced time, an area proportional to the mass of the hole, with $m' \\ge 0$ for infalling light"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\chi, \\theta, \\phi)$, with the advanced time $v$ having dimensions of time, $r$ the areal radius, and $\\chi$, $\\theta$, and $\\phi$ the angles of the 3-sphere. The mass function $m(v)$ enters as $1 + r^2/\\ell^2 - m/r^2$, the coefficient of $-c^2dv^2$ [hubeny2007]. We take components in the chart $x^0 = cv$, a prime is $m' = dm/d(cv)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{v}$ means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 + \\dfrac{r^2}{\\ell^2} - \\dfrac{m}{r^2}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 + \\dfrac{r^2}{\\ell^2} - \\dfrac{m}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{40}{\\ell^4} + \\dfrac{72m^2}{r^8}"
         }
       ]
     },

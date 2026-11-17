@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "71a22bc0d37b955a",
+    "version": "64e74a5ff5f9dbed",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -299,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "58fff3a2e99a7d07",
+    "version": "52ffd49ca125678c",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1074,7 +1074,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "ed4b9a4695a51cd0",
+    "version": "b104da7885bb5a33",
     "diagrams": "16913809b57177fb",
     "conformal": "ce3ca95a4083e894",
     "embedding": "bedfefcf30c45163",
@@ -3212,7 +3212,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "288c86c8e4ddf4f8",
+    "version": "34b2710c0f8caa21",
     "diagrams": "02dc301797257580",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
@@ -4461,7 +4461,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "98b0aaede0c44b80",
+    "version": "259995f61c9d86c1",
     "diagrams": "5ff071701e011e10",
     "embedding": "b7ac17d3dbbc3535",
     "curvature": "c4423b74d3fb91f9"
@@ -4538,7 +4538,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d967cca29dba1d5a",
+    "version": "33c3f6c675324375",
     "diagrams": "b56d3fe3ca86d14a",
     "conformal": "43d2fa3533d022a9",
     "embedding": "097ceae878d9ed12",
@@ -5254,7 +5254,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9fe37e4555358425",
+    "version": "428cb280af2482be",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6",
@@ -6246,7 +6246,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "db70ceab17d27e72",
+    "version": "c44ba24a5050858e",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -6421,7 +6421,7 @@
       "conformally flat",
       "three-dimensional"
     ],
-    "version": "e447cf2f3f0fefb0",
+    "version": "faef122e9c69fac7",
     "diagrams": "efcc9f68e4b91d8e",
     "conformal": "53ebebdf4e877f10",
     "embedding": "a8eec309d4bcd39a"
@@ -7216,7 +7216,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "0f9493a0027612d3",
+    "version": "9518adc7faf8e0aa",
     "diagrams": "70598c77af726b80",
     "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"
@@ -7376,11 +7376,56 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "fd328c4a63b79360",
+    "version": "2b0028ca4ef32cb2",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",
     "curvature": "1e0ae749787ac5e7"
+  },
+  {
+    "id": "ads_vaidya",
+    "name": "Vaidya-anti-de Sitter",
+    "tags": [
+      "null dust",
+      "accreting",
+      "Vaidya",
+      "gravitational collapse",
+      "thin shell",
+      "black hole",
+      "BTZ black hole",
+      "black brane",
+      "mass",
+      "mass inflation",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "curvature singularity",
+      "naked singularity",
+      "cosmic censorship",
+      "cosmological constant",
+      "negative cosmological constant",
+      "anti-de Sitter",
+      "AdS/CFT",
+      "holography",
+      "braneworld",
+      "2+1 dimensional gravity",
+      "circularly symmetric",
+      "planar symmetry",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "three-dimensional",
+      "four-dimensional",
+      "five-dimensional",
+      "spherically symmetric"
+    ],
+    "version": "6e87876e2ae63c5b",
+    "diagrams": "a72f42dab2b437ae",
+    "conformal": "20d33b0ad03499d3",
+    "embedding": "6614b788b39f0b9d",
+    "curvature": "be4cf6723d43dbd9"
   },
   {
     "id": "vaidya_patel_kerr",

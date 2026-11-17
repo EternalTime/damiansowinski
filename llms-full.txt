@@ -3220,6 +3220,21 @@ A dynamical solution describing the spacetime of a radiating or accreting spheri
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 du^2 - 2c\,du\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1-\dfrac{2Gm}{c^2 r}\right)c^2 dv^2 + 2c\,dv\,dr + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2$$
 
+### Shell of Light Falling in Anti-de Sitter Space
+
+A shell of light, null dust, falling inward from the boundary of anti-de Sitter space and leaving a black hole behind it, Vaidya's metric with a negative cosmological constant. Viqar Husain wrote it in three dimensions in 1994, where the hole is that of Bañados, Teitelboim, and Zanelli, and in holography the collapse is the thermalization of the field theory on the boundary.
+
+- id: `ads_vaidya`
+- tags: null dust, accreting, Vaidya, gravitational collapse, thin shell, black hole, BTZ black hole, black brane, mass, mass inflation, horizon, event horizon, apparent horizon, curvature singularity, naked singularity, cosmic censorship, cosmological constant, negative cosmological constant, anti-de Sitter, AdS/CFT, holography, braneworld, 2+1 dimensional gravity, circularly symmetric, planar symmetry, time-dependent, exact solution, Lorentzian, Einstein equations, idealized model, three-dimensional, four-dimensional, five-dimensional, spherically symmetric
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/ads_vaidya.json
+- chart Ingoing, Three Dimensions: coordinates $(v, r, \theta)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - m\right)c^2dv^2 + 2c\,dv\,dr + r^2d\theta^2$$
+- chart Poincaré, Three Dimensions: coordinates $(v, z, x)$, $$ds^2 = \dfrac{\ell^2}{z^2}\left(-\left(1 - m\,z^2\right)c^2dv^2 - 2c\,dv\,dz + dx^2\right)$$
+- chart Ingoing, Four Dimensions: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{\ell^2} - \dfrac{2Gm}{c^2r}\right)c^2dv^2 + 2c\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Flat Front, Four Dimensions: coordinates $(v, r, x, y)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - \dfrac{m}{r}\right)c^2dv^2 + 2c\,dv\,dr + \dfrac{r^2}{\ell^2}\left(dx^2 + dy^2\right)$$
+- chart Poincaré, Four Dimensions: coordinates $(v, z, x, y)$, $$ds^2 = \dfrac{\ell^2}{z^2}\left(-\left(1 - m\,z^3\right)c^2dv^2 - 2c\,dv\,dz + dx^2 + dy^2\right)$$
+- chart Ingoing, Five Dimensions: coordinates $(v, r, \chi, \theta, \phi)$, $$ds^2 = -\left(1 + \dfrac{r^2}{\ell^2} - \dfrac{m}{r^2}\right)c^2dv^2 + 2c\,dv\,dr + r^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Kerr's Black Hole in a Universe, and Kerr Radiating
 
 Kerr's spinning black hole set radiating by Vaidya and Patel in 1973, its rotation parameter growing as its mass falls, and set by Vaidya in 1977 in Einstein's static universe and in an expanding universe with closed spatial sections. The radiating metric is a different one from the Kerr-Vaidya metric whose mass alone depends on the retarded time.
