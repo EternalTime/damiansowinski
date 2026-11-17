@@ -408,3 +408,76 @@ CONFORMAL_CAPTIONS = {
                          "the diagram a 2-sphere.",
     "fonarev": "Fonarev's expanding universe in his time $T$ ($\\gamma = 4/5$), each point in the diagram a 2-sphere.",
 }
+
+
+def curvature_views(ck, src, cv):
+    """The Kretschmann scalar K and the Ricci scalar R of the moment eta = eta_0, the embedding
+    diagram's, against r from the singularity r = b to 6b, one line view for each massless member,
+    read from the conformal chart with eta held.
+
+    What the captions state is checked here: both scalars grow without bound toward r = b; far out
+    they tend to the flat Friedmann universe's K = 15 eta_0^2/4 eta^6 and R = -3 eta_0/2 eta^3, which
+    at eta = eta_0 are 15/4 eta_0^4 and -3/2 eta_0^2, read in sixty digits at r = 10^8 b and at b = 0;
+    R changes sign once, at the radius each caption states; at gamma = sqrt(3)/2 K falls at every r
+    drawn, and at gamma = -sqrt(3)/2 it is least at the radius its caption states, K = 0.153/b^4 there."""
+    x_axis = cv.axis("$r/b$", 1, 6)
+    K_scale = {"kind": "log", "from": 0.1, "to": 1e4}
+    R_scale = {"kind": "symlog", "from": -10, "to": 1e3, "linear": 0.1}
+    panels = [{"id": "K", "name": "$K\\,b^4$", "aspect": 2, "scale": K_scale, "ticks": cv.value_ticks(K_scale)},
+              {"id": "R", "name": "$R\\,b^2$", "aspect": 2, "scale": R_scale, "ticks": cv.value_ticks(R_scale)}]
+    cv.shape_checks(ck, METRIC, [p["aspect"] for p in panels])
+    height = {p["id"]: cv.PLOT_W / p["aspect"] for p in panels}
+    names = (["r", "eta"], ["b", "eta_0", "gamma"])
+    K = cv.Held(cv.Published(src, METRIC, "conformal_time", "kretschmann", *names), {"eta": ETA0})
+    R = cv.Held(cv.Published(src, METRIC, "conformal_time", "ricci_scalar", *names), {"eta": ETA0})
+    within = (1 + 1e-4, 6.0)
+    rs = np.linspace(1 + 1e-4, 6, cv.SAMPLES)
+    views = []
+    for vid in ("positive", "negative"):
+        gamma = SIGNS[vid]
+        params = {"b": 1.0, "eta_0": ETA0, "gamma": gamma}
+        values = list(params.values())
+        name = f"{METRIC} at gamma = {'' if gamma > 0 else '-'}sqrt(3)/2"
+        curves = (cv.line_curves(ck, name, "K", "K", K, "r", x_axis, K_scale, height["K"], params, within)
+                  + cv.line_curves(ck, name, "R", "R", R, "r", x_axis, R_scale, height["R"], params, within))
+        ck(f"{name}: K and R grow without bound toward r = b",
+           float(K.exact([1 + 1e-12] + values)) > 1e12 and float(R.exact([1 + 1e-12] + values)) > 1e6)
+        far_K, far_R = 15 / (4 * ETA0 ** 4), -3 / (2 * ETA0 ** 2)
+        for at, b in ((1e8, 1.0), (3.0, 0.0)):
+            ck(f"{name}: K tends to the Friedmann universe's 15/4 eta_0^4 (r = {at:g}, b = {b:g})",
+               abs(float(K.exact([at, b, ETA0, gamma])) / far_K - 1) < 1e-6)
+            ck(f"{name}: R tends to the Friedmann universe's -3/2 eta_0^2 (r = {at:g}, b = {b:g})",
+               abs(float(R.exact([at, b, ETA0, gamma])) / far_R - 1) < 1e-6)
+        sign = cv.zeros(ck, f"{name} R", R, *within, values)
+        want = 1.014 if gamma > 0 else 1.72
+        ck(f"{name}: R changes sign once, at r = {want} b", len(sign) == 1 and round(sign[0], 3 if gamma > 0 else 2) == want,
+           f"{sign}")
+        if gamma > 0:
+            ck(f"{name}: K falls at every r drawn", bool(np.all(np.diff(K(rs, *values)) < 0)))
+            text = "$K$ diverges at $r = b$ and falls toward the Friedmann universe's $15/4\\eta_0^4$."
+        else:
+            fine = np.linspace(2, 6, 400001)
+            least = int(np.argmin(K(fine, *values)))
+            r_least, K_least = float(fine[least]), float(K(fine[least], *values))
+            ck(f"{name}: K is least, 0.153/b^4, at r = 4.01 b", round(r_least, 2) == 4.01 and round(K_least, 3) == 0.153,
+               f"r = {r_least:.4f}, K = {K_least:.5f}")
+            text = ("$K$ diverges at $r = b$, is least at $r \\approx 4.01\\,b$ and tends to the Friedmann universe's "
+                    "$15/4\\eta_0^4$.")
+        for label, fn, scale in (("K", K, K_scale), ("R", R, R_scale)):
+            up, down = cv.beyond(fn, x_axis, scale, values, within)
+            ck(f"{name}: {label} leaves its panel only beside r = b, upward",
+               len(up) == 1 and up[0][0] < 1.001 and up[0][1] < 1.5 and not down, f"{up} {down}")
+        views.append({
+            "id": vid, "label": f"$\\gamma = {GAMMA_TEXT[vid]}$", "kind": "line", "x": x_axis, "panels": panels,
+            "curves": curves, "marks": [], "legend": [["line", "K", "$K$"], ["line", "R", "$R$"]],
+            "caption": [f"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the moment $\\eta = \\eta_0$ against "
+                        f"$r$ ($\\gamma = {GAMMA_TEXT[vid]}$). " + text + " $R$ diverges at $r = b$, changes sign at "
+                        f"$r \\approx {want}\\,b$ and tends to $-3/2\\eta_0^2$."],
+            "ricci_sentences": [[0, 2]],
+            "per_scalar": cv.scalar_clips("A logarithmic scale from $0.1$ to $10^4$, cut beside $r = b$.",
+                                          "A signed logarithmic scale from $-10$ to $10^3$, linear within $0.1$, cut "
+                                          "beside $r = b$."),
+            "settings": "$b = 1$, $\\eta_0 = 2b$.",
+            "clip": "Logarithmic scales, signed for $R$.",
+        })
+    return views

@@ -19299,5 +19299,11 @@ DRAWN[_ads_vaidya_drawings.METRIC] = lambda ck, src: _ads_vaidya_drawings.curvat
 import dimensionally_continued_drawings as _dimensionally_continued_drawings
 _dimensionally_continued_drawings.register_curvature(sys.modules[__name__])
 
+
+import scalar_collapse_cosmology_drawings as _scalar_collapse_drawings
+DRAWN[_scalar_collapse_drawings.METRIC] = (
+    lambda ck, src: _scalar_collapse_drawings.curvature_views(ck, src, sys.modules[__name__]))
+
+
 if __name__ == "__main__":
     sys.exit(main())
