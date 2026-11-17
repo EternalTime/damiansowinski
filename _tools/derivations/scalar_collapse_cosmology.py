@@ -7,13 +7,13 @@ conformal_time     ds^2 = (eta/eta_0) [-f^gamma d eta^2 + dr^2/f^gamma + f^(1-ga
                    written eta/eta_0, their 2c written b and their alpha written gamma;
 comoving_time      ds^2 = -f^gamma c^2 dt^2 + a^2 [dr^2/f^gamma + f^(1-gamma) r^2 dOmega^2] with
                    a = (t/t_0)^(1/3), the solution in comoving time of Faraoni (2013), the equation
-                   after his (3.161) in the arXiv text, with c dt = a d eta;
+                   after equation (3.161) in the arXiv text, with c dt = a d eta;
 fonarev_conformal  ds^2 = a^2 [-f^gamma d eta^2 + ...] with a = (eta/eta_0)^s, Fonarev's family as
-                   Kastor and Traschen (2017) write it in their (12) and Maeda (2007) in his (6)
+                   Kastor and Traschen (2017) write it in their (12) and Maeda (2007) in equations (6)
                    to (11), whose 2/(lambda^2 - 2) is s;
 fonarev            ds^2 = -e^(2nkT) f^gamma c^2 dT^2 + e^(2kT) [...], equation (2.18) of Fonarev
-                   (1995) with his a written k/c, his 2m written b, his delta written gamma and
-                   his 4 alpha^2 written n.
+                   (1995) with Fonarev's a written k/c, 2m written b, delta written gamma and
+                   4 alpha^2 written n.
 
 Every value is printed with gamma, s and n free, so it holds for any of them. The field equations
 hold where gamma^2 = (s + 1)/(2s + 1) and n = gamma^2/(1 - gamma^2), and with no potential at

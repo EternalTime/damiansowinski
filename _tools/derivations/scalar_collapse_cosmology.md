@@ -16,15 +16,15 @@ The field is printed in the scaling of `roberts` and `fisher_jnw`, $R_{\mu\nu} =
 
 ## Step 2: the sources of the charts
 
-- `conformal_time`: equations (3) and (4) of Husain, Martinez and Núñez, shifted as above; Husain, Phys. Rev. D 69, 084002, his (10), and Kastor and Traschen, Class. Quantum Grav. 34, 035012, their (4), write it in the same form.
-- `comoving_time`: Faraoni, Galaxies 1, 114, the solution in comoving time, his (3.162) in the arXiv text (arXiv:1309.4915, labelled `HMNcomoving`), with $c\,dt = a\,d\eta$, $a = (\eta/\eta_0)^{1/2} = (t/t_0)^{1/3}$ and $t_0 = 2\eta_0/3c$.
-- `fonarev_conformal`: Fonarev's family as Maeda, arXiv:0704.2731, writes it in his (6) to (11), $a(\eta)^2$ times the bracket with any exponent, and as Kastor and Traschen write it in their (12); Maeda's $2/(\lambda^2 - 2)$ and Kastor and Traschen's exponent are the $s$ of the chart, $s = (1 - \gamma^2)/(2\gamma^2 - 1)$ on the solutions, and $s = 1/2$ at $\gamma^2 = 3/4$ is the first chart.
-- `fonarev`: Fonarev, Class. Quantum Grav. 12, 1739, his (2.18) in the arXiv text (arXiv:gr-qc/9409020), signature $(+,-,-,-)$, $e^{8\alpha^2aT}(1 - 2m/r)^{\delta}dT^2 - e^{2aT}[\dots]$, with his $a$ written $k/c$, his $2m$ written $b$, his $\delta$ written $\gamma$ and his $4\alpha^2$ written $n$; his (2.7) gives $\delta = 2\alpha/\sqrt{4\alpha^2 + 1}$, so $n = \gamma^2/(1 - \gamma^2)$, and $V_o = a^2(3 - 4\alpha^2)/8\pi G$, which vanishes at $n = 3$, $\gamma^2 = 3/4$.
+- `conformal_time`: equations (3) and (4) of Husain, Martinez and Núñez, shifted as above; Husain, Phys. Rev. D 69, 084002, equation (10), and Kastor and Traschen, Class. Quantum Grav. 34, 035012, their (4), write it in the same form.
+- `comoving_time`: Faraoni, Galaxies 1, 114, the solution in comoving time, equation (3.162) in the arXiv text (arXiv:1309.4915, labelled `HMNcomoving`), with $c\,dt = a\,d\eta$, $a = (\eta/\eta_0)^{1/2} = (t/t_0)^{1/3}$ and $t_0 = 2\eta_0/3c$.
+- `fonarev_conformal`: Fonarev's family as Maeda, arXiv:0704.2731, writes it in equations (6) to (11), $a(\eta)^2$ times the bracket with any exponent, and as Kastor and Traschen write it in their (12); Maeda's $2/(\lambda^2 - 2)$ and Kastor and Traschen's exponent are the $s$ of the chart, $s = (1 - \gamma^2)/(2\gamma^2 - 1)$ on the solutions, and $s = 1/2$ at $\gamma^2 = 3/4$ is the first chart.
+- `fonarev`: Fonarev, Class. Quantum Grav. 12, 1739, equation (2.18) in the arXiv text (arXiv:gr-qc/9409020), signature $(+,-,-,-)$, $e^{8\alpha^2aT}(1 - 2m/r)^{\delta}dT^2 - e^{2aT}[\dots]$, with Fonarev's $a$ written $k/c$, $2m$ written $b$, $\delta$ written $\gamma$ and $4\alpha^2$ written $n$; equation (2.7) gives $\delta = 2\alpha/\sqrt{4\alpha^2 + 1}$, so $n = \gamma^2/(1 - \gamma^2)$, and $V_o = a^2(3 - 4\alpha^2)/8\pi G$, which vanishes at $n = 3$, $\gamma^2 = 3/4$.
 
 Three more forms are not charts of the page.
 The advanced time $v$ of Wang, Wu and Gao, Eur. Phys. J. C 79, 823, needs $\int f^{-\gamma}dr$, which has no closed form in elementary functions, so no component of it can be printed.
 Faraoni's description in the comoving time and the areal radius $R = a\,rf^{(1-\gamma)/2}$ needs $r$ as a function of $t$ and $R$, which is implicit.
-Fonarev's solution for a scalar field coupled conformally to the curvature, his (3.29) and (3.36), solves other field equations, and his (3.36) writes $dr^2 + r^2d\theta^2$ where the isotropic radius is meant while his (3.41) writes $2m/\bar r$ where (3.36) has $m/2\bar r$; the History tells it and no chart is printed.
+Fonarev's solution for a scalar field coupled conformally to the curvature, equations (3.29) and (3.36), solves other field equations, and equation (3.36) writes $dr^2 + r^2d\theta^2$ where the isotropic radius is meant while equation (3.41) writes $2m/\bar r$ where (3.36) has $m/2\bar r$; the History tells it and no chart is printed.
 
 ## Step 3: what is checked
 

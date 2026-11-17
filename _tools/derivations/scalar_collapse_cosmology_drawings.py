@@ -406,7 +406,7 @@ CONFORMAL_CAPTIONS = {
                 "each point in the diagram a 2-sphere.",
     "fonarev_conformal": "Fonarev's expanding universe with an exponential potential ($\\gamma = 4/5$), each point in "
                          "the diagram a 2-sphere.",
-    "fonarev": "Fonarev's expanding universe in his time $T$ ($\\gamma = 4/5$), each point in the diagram a 2-sphere.",
+    "fonarev": "Fonarev's expanding universe in the time $T$ ($\\gamma = 4/5$), each point in the diagram a 2-sphere.",
 }
 
 
