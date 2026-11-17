@@ -5197,3 +5197,6 @@ HIDDEN.update({(_ads_vaidya_drawings.METRIC, system, "shell"): _ads_vaidya_drawi
                for system in ("poincare_three", "ingoing_four", "flat_front", "poincare_four", "ingoing_five")})
 HIDDEN.update({(_ads_vaidya_drawings.METRIC, system): _ads_vaidya_drawings.HIDDEN_REASON
                for system in ("poincare_three", "ingoing_four", "flat_front", "poincare_four", "ingoing_five")})
+
+import dimensionally_continued_drawings as _dimensionally_continued_drawings  # noqa: E402
+_dimensionally_continued_drawings.register_slices(sys.modules[__name__])
