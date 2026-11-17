@@ -4583,6 +4583,11 @@ class Slices(unittest.TestCase):
             lo, hi = self.reach(surface)
             return (lambda X: clock), [lo if chart == "cosmic_spherical" else -hi, hi]
 
+        if key.startswith("scalar_collapse_cosmology/"):
+            # The embedded moment is eta = eta_0 = 2b, which is ct = ct_0 = 4b/3 in the comoving chart.
+            level = 4 / 3 if "/comoving_time/" in key else 2.0
+            return (lambda X: level), list(self.reach(surface))
+
         if key.startswith("hosotani_universe/"):
             # One sphere at maximum expansion: t=ell=1, eta=pi/2, over the full polar distance.
             height = 1.0 if "/cosmic_hyperspherical/" in key else math.pi / 2
@@ -6111,6 +6116,14 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((u+v)/2-eta), tolerance, where)
                             self.assertLessEqual(lo-tolerance, (v-u)/2, where)
                             self.assertLessEqual((v-u)/2, hi+tolerance, where)
+                    elif metric_id == "scalar_collapse_cosmology":
+                        # p, q = arctan((eta -+ r_*)/4b), r_* the integral of f^(-gamma) dr from r = b, on the
+                        # moment eta = eta_0 = 2b: (tan p + tan q)/2 = eta/4b = 1/2 and r_* is not negative.
+                        for X, T in points:
+                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
+                            scale = 1 + tp*tp + tq*tq
+                            self.assertLess(abs((tp+tq)/2-0.5), 2e-4*scale, where)
+                            self.assertLessEqual(-2e-4*scale, (tq-tp)/2, where)
                     elif metric_id == "charach_malin":
                         # p,q=atan(1 -+ theta) on each static matter slice.
                         lo, hi = self.reach(surface)
