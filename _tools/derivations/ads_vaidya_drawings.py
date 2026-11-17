@@ -98,7 +98,10 @@ def register_null(nr):
     before = lambda v, r: v < -0.1  # noqa: E731
     nr.CLOSED_FORMS.update({
         **{(METRIC, system, "shell"): (lambda v, r: v, lambda v, r: np.arctan(r) - v / 2, before) for system in ROUND},
-        (METRIC, "flat_front", "shell"): (lambda v, r: v, lambda v, r: 1 / r + v / 2, before),
+        # Near r = 0 the flat front's m/r is as large as r^2 even in the shell's far tail, so its rays keep
+        # 1/r + cv/2l only from r = l/20 out.
+        (METRIC, "flat_front", "shell"): (lambda v, r: v, lambda v, r: 1 / r + v / 2,
+                                          lambda v, r: (v < -0.1) & (r > 0.05)),
         **{(METRIC, system, "shell"): (lambda v, z: z + v / 2, lambda v, z: v, before) for system in POINCARE},
     })
 
