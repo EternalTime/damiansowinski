@@ -77,6 +77,11 @@
       "id": "nappi_witten",
       "kind": "family",
       "text": "A cosmological gauged Wess-Zumino-Witten background with three spatial dimensions. An $O(2,2;\\mathbb{R})$ transformation relates it to a product containing the Lorentzian black hole coset in two spacetime dimensions [nappi1992, elitzur2002nw]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "family",
+      "text": "Charged dilaton black holes of four dimensions that are neither flat nor anti-de Sitter far away. For a magnetic charge at the string coupling their string metric is Witten's hole times a sphere of fixed radius, whatever the mass [chan1995, giddings1992]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "angius2022linear",
     "horne1992black",
     "nappi1992",
-    "elitzur2002nw"
+    "elitzur2002nw",
+    "chan1995"
   ],
   "coordinates": [
     {

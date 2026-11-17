@@ -559,6 +559,11 @@
       "id": "counter_rotating_discs",
       "kind": "composite",
       "text": "A cut clear of the central source and a reflection produce a thin disc with Schwarzschild vacuum geometry on either side [bicak1993]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "limit_source",
+      "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$, neither flat nor anti-de Sitter far away. In the limit $a \\to \\infty$ the dilaton and the Maxwell field decouple and the metric is Schwarzschild's [chan1995, clement2004]."
     }
   ],
   "references": [
@@ -709,7 +714,9 @@
     "delgaty1998",
     "york1985equilibrium",
     "hellaby2002",
-    "bicak1993"
+    "bicak1993",
+    "chan1995",
+    "clement2004"
   ],
   "coordinates": [
     {

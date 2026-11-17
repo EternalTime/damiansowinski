@@ -112,6 +112,11 @@
       "id": "three_dim_black_string",
       "kind": "family",
       "text": "A charged black string of string theory in three dimensions that keeps an inner horizon, with a timelike singularity inside it [horne1992black]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "limit",
+      "text": "Charged black holes of the same theory whose region far away is neither flat nor anti-de Sitter space [chan1995]. The one at the string coupling is the limit of the dilaton black hole in which the charge approaches its extreme value and the neighbourhood of the horizon is magnified without bound [clement2003]."
     }
   ],
   "references": [
@@ -142,7 +147,9 @@
     "dvali2016skyrmion",
     "devega1994linear",
     "gasperini1993prebigbang",
-    "horne1992black"
+    "horne1992black",
+    "chan1995",
+    "clement2003"
   ],
   "coordinates": [
     {

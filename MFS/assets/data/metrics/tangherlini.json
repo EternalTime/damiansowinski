@@ -90,6 +90,11 @@
       "id": "dimensionally_continued",
       "kind": "family",
       "text": "Black holes of Lovelock's theory in $D$ dimensions with every coefficient tied to one length. Without a cosmological constant the even ones have the metric function $1 - (2M/r)^{1/(n-1)}$ in $D = 2n$ dimensions, where Tangherlini's has $1 - \\mu/r^{D-3}$ [banados1994]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "family",
+      "text": "Take one angle of the black hole of five dimensions as an extra dimension, and in four dimensions it is a magnetic black hole with a dilaton at the Kaluza-Klein coupling. Its region far away, flat in five dimensions, is neither flat nor anti-de Sitter in four [clement2004]."
     }
   ],
   "references": [
@@ -119,7 +124,8 @@
     "bueno2025regular",
     "horowitzmaeda2002",
     "myers1987compact",
-    "banados1994"
+    "banados1994",
+    "clement2004"
   ],
   "coordinates": [
     {

@@ -144,6 +144,11 @@
       "id": "mclenaghan_tariq_tupper",
       "kind": "family",
       "text": "A homogeneous electrovacuum of Petrov type I with a Maxwell field that does not inherit the symmetry [evtyagin2021mtt, anderson2022noninheriting]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "limit_source",
+      "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$. In the limit $a \\to 0$ they lose their mass and each is the Bertotti-Robinson spacetime in other coordinates [clement2004]."
     }
   ],
   "references": [
@@ -180,7 +185,8 @@
     "maldacena2023",
     "figueroa2003maximally",
     "evtyagin2021mtt",
-    "anderson2022noninheriting"
+    "anderson2022noninheriting",
+    "clement2004"
   ],
   "coordinates": [
     {

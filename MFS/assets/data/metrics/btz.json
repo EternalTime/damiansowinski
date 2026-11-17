@@ -166,6 +166,11 @@
       "id": "dimensionally_continued",
       "kind": "family",
       "text": "Black holes of Lovelock's theory with one length, in every dimension. The odd family at three dimensions is this hole without rotation, and in each odd dimension anti-de Sitter space is the solution with $M = -1$, below a gap [banados1994]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "family",
+      "text": "Kevin Chan and Robert Mann found a family of black holes with a dilaton in three dimensions in 1994, this one among them, by letting the radius of the circles grow as a power of $r$ [chan1994]. The same ansatz in four dimensions produced these charged holes a year later [chan1995]."
     }
   ],
   "references": [
@@ -205,7 +210,9 @@
     "shenker2014",
     "carlip1995",
     "husain1994",
-    "banados1994"
+    "banados1994",
+    "chan1994",
+    "chan1995"
   ],
   "coordinates": [
     {

@@ -49,6 +49,11 @@
       "id": "schrodinger_spacetime",
       "kind": "family",
       "text": "The same scaling of time against space with Galilean boosts and a conserved mass besides, which takes one more dimension, a null one [son2008, balasubramanian2008]."
+    },
+    {
+      "id": "dilaton_unusual_asymptotics",
+      "kind": "family",
+      "text": "Charged dilaton black holes that are neither flat nor anti-de Sitter far away. Their planar relatives, near their extreme charge, are conformal to Lifshitz spacetimes, and descend from Lifshitz black branes of more dimensions [gouteraux2011]."
     }
   ],
   "references": [
@@ -68,7 +73,8 @@
     "keeler2014",
     "horava2011",
     "son2008",
-    "balasubramanian2008"
+    "balasubramanian2008",
+    "gouteraux2011"
   ],
   "coordinates": [
     {
