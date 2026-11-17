@@ -1,0 +1,22 @@
+{
+  "hidden": [
+    {
+      "reason": "Other members of the family than the hole whose moment is embedded, at a = 1 and r_0 = r_h: the first chart at a^2 = 1/3, the three families with a Liouville potential, and the hole of no mass.",
+      "drawings": [
+        "dilaton_unusual_asymptotics/chan_horne_mann/third",
+        "dilaton_unusual_asymptotics/liouville_inverse/radial",
+        "dilaton_unusual_asymptotics/liouville_minus_a/radial",
+        "dilaton_unusual_asymptotics/liouville_minus_inverse/radial",
+        "dilaton_unusual_asymptotics/massless/plane",
+        "conformal dilaton_unusual_asymptotics/third"
+      ]
+    },
+    {
+      "reason": "The string metrics of the electric and the magnetic hole measure the manifold another way than the Einstein metric whose moment is embedded.",
+      "drawings": [
+        "dilaton_unusual_asymptotics/string_electric/radial",
+        "dilaton_unusual_asymptotics/string_magnetic/radial"
+      ]
+    }
+  ]
+}

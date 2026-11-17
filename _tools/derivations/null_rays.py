@@ -19492,5 +19492,8 @@ DIAGRAMS.extend(_scalar_collapse_rows)
 CAPTIONS.update(_scalar_collapse_captions)
 CLOSED_FORMS.update(_scalar_collapse_forms)
 
+import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings
+_dilaton_unusual_asymptotics_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

@@ -5816,6 +5816,10 @@ class Slices(unittest.TestCase):
             # The embedding uses theta, with sigma=cosh(theta).
             lo, hi = self.reach(surface)
             return (lambda X: 0.0), [math.cosh(lo), math.cosh(hi)]
+        if key == "dilaton_unusual_asymptotics/areal/radial":
+            # The areal radius is sqrt(r_0 r) for the r of the embedded chart, with r_0 = 1.
+            lo, hi = self.reach(surface)
+            return (lambda X: 0.0), [math.sqrt(lo), math.sqrt(hi)]
         if key == "kramer_fluid/published/equator":
             # The embedded radial coordinate is w; the same endpoint is eta=1+w^2.
             lo, hi = self.reach(surface)

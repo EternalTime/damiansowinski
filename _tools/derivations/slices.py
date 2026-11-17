@@ -5209,3 +5209,6 @@ HIDDEN.update({key: _scalar_collapse_drawings.HIDDEN_REASON
                            (_scalar_collapse_drawings.METRIC, "fonarev", "radial"),
                            (_scalar_collapse_drawings.METRIC, "fonarev_conformal"),
                            (_scalar_collapse_drawings.METRIC, "fonarev"))})
+
+import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings  # noqa: E402
+_dilaton_unusual_asymptotics_drawings.register_slices(sys.modules[__name__])

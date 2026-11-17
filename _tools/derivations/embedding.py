@@ -22590,6 +22590,8 @@ DRAWN[_scalar_collapse_drawings.METRIC] = (
 CAPTIONS.update({(_scalar_collapse_drawings.METRIC, vid): [text]
                  for vid, text in _scalar_collapse_drawings.EMBEDDING_CAPTIONS.items()})
 
+import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings
+_dilaton_unusual_asymptotics_drawings.register_embedding(sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())
