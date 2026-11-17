@@ -161,7 +161,8 @@ def register_embedding(eb):
     eb.DRAWN[METRIC] = lambda ck, src: embedding(eb, ck, src)
     eb.CAPTIONS[(METRIC, "einstein")] = [
         "The equatorial plane ($\\theta = \\pi/2$) of the linear dilaton black hole ($a = 1$, $r_0 = r_h$) at "
-        "$t = 0$, with a throat at the horizon $r = r_h$ and a cone far away ($dz/d\\rho \\to \\sqrt{3}$)."]
+        "$t = 0$, with a throat at the horizon $r = r_h$ and far away a cone of slope $dz/d\\rho = \\sqrt{3}$ for the "
+        "radius $\\rho$ of its circles."]
 
 
 def embedding(eb, ck, src):
@@ -199,13 +200,13 @@ def embedding(eb, ck, src):
     eb.ring_label(fig, [0, 0, 0], *near.at(TOP), "$6\\,r_h$")
     fig.legend("fill", "cover", "the exterior $r > r_h$")
     fig.legend("line", "r", "$r$ constant, $2$ to $6\\,r_h$")
-    fig.legend("line", "r2", "the same radii on the other exterior")
-    fig.legend("line", "horizon", "the throat $r = r_h$, on the horizon")
+    fig.legend("line", "r2", "the other exterior")
+    fig.legend("line", "horizon", "the throat $r = r_h$")
     fig.legend("line", "meridian", "$\\phi$ constant, every $15°$")
     stops = ["Inside the horizon, $0 < r < r_h$, $r$ is a time, and a slice of constant $t$ is not a moment of "
              "space."]
     return [eb.view("einstein", "Einstein metric", "$r_h$", [surface], fig.done(),
-                    settings="$a = 1$ and $r_0 = r_h = 1$, the unit of every length.", stops=stops)]
+                    settings="$a = 1$, $r_0 = r_h = 1$.", stops=stops)]
 
 
 # -- Conformal diagram -------------------------------------------------------------------------------------
