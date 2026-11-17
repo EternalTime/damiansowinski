@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "64e74a5ff5f9dbed",
+    "version": "b43be9040191858f",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -299,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "52ffd49ca125678c",
+    "version": "ff281904a4661579",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -983,7 +983,7 @@
       "idealized model",
       "alternative theories of gravity"
     ],
-    "version": "7e64f4aa3730a58b",
+    "version": "bd08039b61568bc2",
     "diagrams": "aad81dc2048a0547",
     "conformal": "235a9c07b83bc763",
     "embedding": "d857ba18e7d9066a",
@@ -1818,6 +1818,45 @@
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
     "curvature": "dd6ec211e1e91ec7"
+  },
+  {
+    "id": "dimensionally_continued",
+    "name": "Dimensionally Continued Black Holes",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "hyperspherical symmetry",
+      "black hole",
+      "mass",
+      "higher dimensions",
+      "five-dimensional",
+      "six-dimensional",
+      "anti-de Sitter",
+      "cosmological constant",
+      "negative cosmological constant",
+      "curvature singularity",
+      "naked singularity",
+      "coordinate singularity",
+      "horizon",
+      "event horizon",
+      "white hole",
+      "maximal extension",
+      "causal structure",
+      "cosmic censorship",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "Hawking temperature",
+      "alternative theories of gravity",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "44fe023b3b2ff112",
+    "diagrams": "33d0e6d2bb2bd77e",
+    "conformal": "e5564702e828b143",
+    "embedding": "6de61822b4951686",
+    "curvature": "f8ff05df4d92ec4f"
   },
   {
     "id": "distorted_schwarzschild",
@@ -5254,7 +5293,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "428cb280af2482be",
+    "version": "54cc4598d1cfcef4",
     "diagrams": "d31b7b7b6c3dd2ef",
     "conformal": "7400ddcb9dd6a817",
     "embedding": "1ecd155079c29ab6",
@@ -6246,7 +6285,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "c44ba24a5050858e",
+    "version": "afbf2b457f3cf3d3",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -6313,7 +6352,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c7ee7a4879482d19",
+    "version": "f33e4c6da3882a67",
     "diagrams": "5e6f09418e784399",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -7216,7 +7255,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "9518adc7faf8e0aa",
+    "version": "e3a1f4f59439b3f2",
     "diagrams": "70598c77af726b80",
     "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"
@@ -7376,7 +7415,7 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "2b0028ca4ef32cb2",
+    "version": "318444adbaa25291",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",

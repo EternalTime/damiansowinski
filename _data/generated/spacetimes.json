@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 258,
+  "count": 259,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1616,6 +1616,11 @@
           "id": "ads_vaidya",
           "kind": "generalisation",
           "text": "Anti-de Sitter space with a shell of light falling in from its boundary, which leaves a black hole. In holography the collapse is the thermalization of the field theory on the boundary [danielsson1999, balasubramanian2011]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "generalisation",
+          "text": "Black holes of Lovelock's theory with every coefficient set by the anti-de Sitter radius. Anti-de Sitter space is their solution of mass $M = 0$ in even dimensions and of $M = -1$ in odd ones [banados1994]."
         }
       ],
       "references": [
@@ -1679,7 +1684,8 @@
         "horne1992black",
         "smith1997",
         "danielsson1999",
-        "balasubramanian2011"
+        "balasubramanian2011",
+        "banados1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3904,6 +3910,11 @@
           "id": "ads_vaidya",
           "kind": "generalisation",
           "text": "The hole without rotation with a mass $m(v)$ that grows as light falls in from the boundary. Viqar Husain wrote it in 1994 and called it \"the three dimensional analog of the Vaidya metric\" [husain1994]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "family",
+          "text": "Black holes of Lovelock's theory with one length, in every dimension. The odd family at three dimensions is this hole without rotation, and in each odd dimension anti-de Sitter space is the solution with $M = -1$, below a gap [banados1994]."
         }
       ],
       "references": [
@@ -3942,7 +3953,8 @@
         "anninos2009",
         "shenker2014",
         "carlip1995",
-        "husain1994"
+        "husain1994",
+        "banados1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -11024,6 +11036,11 @@
           "id": "regular_black_hole_pure_gravity",
           "kind": "family",
           "text": "Gauss-Bonnet's term continued into an infinite tower of quasi-topological ones. The whole tower turns the centre into de Sitter space, with finite curvature [bueno2025regular]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "family",
+          "text": "Black holes of Lovelock's theory with every coefficient tied to one length. In five dimensions that theory is this one with a negative cosmological constant tuned to the Gauss-Bonnet coupling, where the two roots of the field equations share one anti-de Sitter vacuum [nozawa2006, aviles2026]."
         }
       ],
       "references": [
@@ -11049,7 +11066,9 @@
         "kobayashi2005",
         "gibbonsrasheed1995",
         "wiltshire1988",
-        "bueno2025regular"
+        "bueno2025regular",
+        "nozawa2006",
+        "aviles2026"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/boulware_deser.json",
@@ -20566,6 +20585,500 @@
           ],
           "ricci_scalar": "R = -\\dfrac{r_d\\left(r\\,r_d + 3r\\,r_s - 4r_s\\,r_d\\right)}{r^2\\left(r - r_d\\right)^3}",
           "kretschmann": "K = \\dfrac{12r^4\\,r_d^2 - 4r^3\\,r_d^3 + r^2\\,r_d^4 - 40r^3\\,r_s\\,r_d^2 + 30r^2\\,r_s\\,r_d^3 - 8r\\,r_s\\,r_d^4 + 12r^4\\,r_s^2 - 36r^3\\,r_s^2\\,r_d + 73r^2\\,r_s^2\\,r_d^2 - 56r\\,r_s^2\\,r_d^3 + 16r_s^2\\,r_d^4}{r^4\\left(r - r_d\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "dimensionally_continued",
+      "name": "Dimensionally Continued Black Holes",
+      "short_name": "Dimensionally Continued Black Holes",
+      "description": "The static, spherically symmetric black holes of Lovelock's theory of gravity with every coefficient set by one length, which Máximo Bañados, Claudio Teitelboim, and Jorge Zanelli found in 1994. In odd dimensions the action is a Chern-Simons form and a gap of naked singularities separates anti-de Sitter space from the black holes, as in three dimensions; in even dimensions the black holes are continuations of Schwarzschild's in anti-de Sitter space.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "hyperspherical symmetry",
+        "black hole",
+        "mass",
+        "higher dimensions",
+        "five-dimensional",
+        "six-dimensional",
+        "anti-de Sitter",
+        "cosmological constant",
+        "negative cosmological constant",
+        "curvature singularity",
+        "naked singularity",
+        "coordinate singularity",
+        "horizon",
+        "event horizon",
+        "white hole",
+        "maximal extension",
+        "causal structure",
+        "cosmic censorship",
+        "black hole thermodynamics",
+        "black hole entropy",
+        "Hawking temperature",
+        "alternative theories of gravity",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "The length $\\ell$ fixes every coefficient of Lovelock's action, and the mass $M$ is a pure number in odd dimensions and a length in even ones [banados1994]. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "schwarzschild_ads",
+          "kind": "special_case",
+          "text": "The even family at $n = 2$, in four dimensions, where the metric function is $1 - 2M/r + r^2/\\ell^2$ and the theory is Einstein's [banados1994]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The odd family in three dimensions is this black hole without rotation. There the curvature is constant and the black hole is anti-de Sitter space with points identified, and from five dimensions up the curvature varies with $r$ [banados1994]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "special_case",
+          "text": "The solution with $M = -1$ in odd dimensions and with $M = 0$ in even ones. In odd dimensions naked singularities fill the masses between it and the black holes [banados1994]."
+        },
+        {
+          "id": "boulware_deser",
+          "kind": "family",
+          "text": "The black hole of five dimensions with the Gauss-Bonnet coupling left free. With a negative cosmological constant tuned to that coupling the two vacua of the theory merge into one anti-de Sitter space, and its black hole is the dimensionally continued one of five dimensions [nozawa2006, aviles2026]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space with flat and hyperbolic horizons, in Einstein's theory. Rong-Gen Cai and Kwang-Sup Soh gave the dimensionally continued black holes the same horizons in 1999 [cai1999]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "family",
+          "text": "The black hole of Einstein's theory in $D$ dimensions with no cosmological constant, whose metric function falls as $1/r^{D-3}$. In even dimensions the dimensionally continued one without a cosmological constant is $1 - (2M/r)^{1/(n-1)}$, with its horizon at $r = 2M$ [banados1994]."
+        },
+        {
+          "id": "oppenheimer_snyder",
+          "kind": "family",
+          "text": "A ball of dust collapsing to Schwarzschild's black hole. Anderson Ilha, Antares Kleber, and José Lemos joined the same ball to these black holes, in even dimensions in 1997 and in odd ones in 1999 [ilha1997, ilha1999]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "A black hole fed by null dust, its mass a function of advanced time. Masato Nozawa and Hideki Maeda let the mass of these black holes depend on advanced time in 2006 and found that a naked singularity can form [nozawa2006]."
+        }
+      ],
+      "references": [
+        "banados1994",
+        "ilha1997",
+        "lovelock1971",
+        "teitelboim1987",
+        "chamseddine1989",
+        "chamseddine1990",
+        "banados1992",
+        "garraffo2008",
+        "muniain1996",
+        "jacobson1993",
+        "banados1994entropy",
+        "cai1999",
+        "crisostomo2000",
+        "kuang2017",
+        "ilha1999",
+        "nozawa2006",
+        "aviles2026",
+        "shiraishi1994",
+        "banados1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dimensionally_continued.json",
+      "charts": [
+        {
+          "id": "spherical",
+          "name": "Hyperspherical, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1} \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass, a pure number in five dimensions, with $M \\ge 0$ for a black hole and $M = -1$ for anti-de Sitter space"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = -1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ a time and $\\psi$, $\\theta$, $\\phi$ the angles of the 3-sphere. The metric function is $1 - \\sqrt{M + 1} + r^2/\\ell^2$ with the positive square root [banados1994, muniain1996], and it vanishes on the horizon $r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1}$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}} + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{\\ell^2} + \\dfrac{6\\sqrt{M + 1}}{r^2}",
+          "kretschmann": "K = \\dfrac{40}{\\ell^4} - \\dfrac{24\\sqrt{M + 1}}{\\ell^2 r^2} + \\dfrac{12\\left(M + 1\\right)}{r^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing",
+          "name": "Ingoing Eddington-Finkelstein, Five Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1} \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass, a pure number in five dimensions, with $M \\ge 0$ for a black hole and $M = -1$ for anti-de Sitter space"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = -1$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\psi, \\theta, \\phi)$ in $D = 5$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - \\sqrt{M + 1} + r^2/\\ell^2\\right)^{-1}$ with the positive square root [nozawa2006].",
+          "line_element": "ds^2 = -\\left(1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\sqrt{M + 1} + \\dfrac{r^2}{\\ell^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{\\ell^2} + \\dfrac{6\\sqrt{M + 1}}{r^2}",
+          "kretschmann": "K = \\dfrac{40}{\\ell^4} - \\dfrac{24\\sqrt{M + 1}}{\\ell^2 r^2} + \\dfrac{12\\left(M + 1\\right)}{r^4}"
+        },
+        {
+          "id": "conformal",
+          "name": "Conformal, Five Dimensions",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\pi/2)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass, a pure number in five dimensions, with $M \\ge 0$ for a black hole and $M = -1$ for anti-de Sitter space"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = -1$"
+            }
+          ],
+          "convention": "We use coordinates $(t, \\rho, \\psi, \\theta, \\phi)$ in $D = 5$, with $t$ a time, outside the horizon $r_+ = \\ell\\sqrt{\\sqrt{M + 1} - 1}$ of a black hole with $M > 0$, the square root taken positive. The areal radius is $r = r_+\\sec\\rho$, and the conformal factor is $\\ell^2\\sec^2\\rho$ [shiraishi1994]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(\\sqrt{M + 1} - 1\\right)\\tan^2\\rho\\,c^2dt^2 + \\ell^2\\sec^2\\rho\\,d\\rho^2 + \\ell^2\\left(\\sqrt{M + 1} - 1\\right)\\sec^2\\rho\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(\\sqrt{M + 1} - 1\\right)\\tan^2\\rho"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\ell^2\\sec^2\\rho"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\ell^2\\left(\\sqrt{M + 1} - 1\\right)\\sec^2\\rho"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\left(\\sqrt{M + 1} - 1\\right)\\sec^2\\rho\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\left(\\sqrt{M + 1} - 1\\right)\\sec^2\\rho\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{\\ell^2} + \\dfrac{6\\sqrt{M + 1}\\cos^2\\rho}{\\ell^2\\left(\\sqrt{M + 1} - 1\\right)}",
+          "kretschmann": "K = \\dfrac{40}{\\ell^4} - \\dfrac{24\\sqrt{M + 1}\\cos^2\\rho}{\\ell^4\\left(\\sqrt{M + 1} - 1\\right)} + \\dfrac{12\\left(M + 1\\right)\\cos^4\\rho}{\\ell^4\\left(\\sqrt{M + 1} - 1\\right)^2}"
+        },
+        {
+          "id": "spherical_six",
+          "name": "Hyperspherical, Six Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass, a length in six dimensions, with $M > 0$ for a black hole and $M = 0$ for anti-de Sitter space"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = 0$"
+            },
+            {
+              "symbol": "w = \\sqrt{2M/r}",
+              "description": "The root in the metric function, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, r, \\chi, \\psi, \\theta, \\phi)$ in $D = 6$, with $t$ a time and $\\chi$, $\\psi$, $\\theta$, $\\phi$ the angles of the 4-sphere. The metric function is $1 - w + r^2/\\ell^2$ with $w = \\sqrt{2M/r}$ the positive square root [banados1994, muniain1996], and it vanishes on the horizon $r_+$, where $r_+\\left(1 + r_+^2/\\ell^2\\right)^2 = 2M$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\sqrt{\\dfrac{2M}{r}} + \\dfrac{r^2}{\\ell^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\sqrt{\\dfrac{2M}{r}} + \\dfrac{r^2}{\\ell^2}} + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2 + \\sin^2\\chi\\sin^2\\psi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - w + \\dfrac{r^2}{\\ell^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - w + \\dfrac{r^2}{\\ell^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{30}{\\ell^2} + \\dfrac{35w}{4r^2}",
+          "kretschmann": "K = \\dfrac{60}{\\ell^4} - \\dfrac{35w}{\\ell^2 r^2} + \\dfrac{425w^2}{16r^4}"
+        },
+        {
+          "id": "eddington_finkelstein_ingoing_six",
+          "name": "Ingoing Eddington-Finkelstein, Six Dimensions",
+          "coordinates": [
+            "v",
+            "r",
+            "\\chi",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_+ \\;\\text{(the horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass, a length in six dimensions, with $M > 0$ for a black hole and $M = 0$ for anti-de Sitter space"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "The length that fixes every coefficient of the action, and the radius of the anti-de Sitter space at $M = 0$"
+            },
+            {
+              "symbol": "w = \\sqrt{2M/r}",
+              "description": "The root in the metric function, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\chi, \\psi, \\theta, \\phi)$ in $D = 6$, with the advanced time $v = ct + r_*$ a length, where $dr_*/dr = \\left(1 - w + r^2/\\ell^2\\right)^{-1}$ with $w = \\sqrt{2M/r}$ the positive square root [nozawa2006]. The horizon $r_+$ is the root of $r_+\\left(1 + r_+^2/\\ell^2\\right)^2 = 2M$.",
+          "line_element": "ds^2 = -\\left(1 - \\sqrt{\\dfrac{2M}{r}} + \\dfrac{r^2}{\\ell^2}\\right)dv^2 + 2\\,dv\\,dr + r^2\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2 + \\sin^2\\chi\\sin^2\\psi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - w + \\dfrac{r^2}{\\ell^2}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "r^2\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\chi\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{30}{\\ell^2} + \\dfrac{35w}{4r^2}",
+          "kretschmann": "K = \\dfrac{60}{\\ell^4} - \\dfrac{35w}{\\ell^2 r^2} + \\dfrac{425w^2}{16r^4}"
         }
       ]
     },
@@ -59118,6 +59631,11 @@
           "id": "ads_vaidya",
           "kind": "family",
           "text": "Collapse to a black hole in anti-de Sitter space, with light for matter. The field theory on the boundary thermalizes as the hole forms [danielsson1999, balasubramanian2011]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "family",
+          "text": "Black holes of Lovelock's theory in higher dimensions. Anderson Ilha, Antares Kleber, and José Lemos collapsed a ball of dust to them, in even dimensions in 1997 and in odd ones in 1999 [ilha1997, ilha1999]."
         }
       ],
       "references": [
@@ -59150,7 +59668,9 @@
         "smith1997",
         "mena2008toroidal",
         "danielsson1999",
-        "balasubramanian2011"
+        "balasubramanian2011",
+        "ilha1997",
+        "ilha1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/oppenheimer_snyder.json",
@@ -70071,6 +70591,11 @@
           "id": "ads_vaidya",
           "kind": "generalisation",
           "text": "This black hole with a mass that grows as light falls in from the boundary, Vaidya's metric with a negative cosmological constant. José Lemos used it in 1999 to test cosmic censorship [lemos1999]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "generalisation",
+          "text": "The same black hole continued to every even dimension in Lovelock's theory with every coefficient set by one length. In $D = 2n$ dimensions the metric function has $(r_s/r)^{1/(n-1)}$ where this one has $r_s/r$ [banados1994]."
         }
       ],
       "references": [
@@ -70107,7 +70632,8 @@
         "zofka2008",
         "smith1997",
         "mena2008toroidal",
-        "lemos1999"
+        "lemos1999",
+        "banados1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -70712,6 +71238,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "An extremal charged hole with a round 3-sphere horizon in five dimensions and a compact spatial direction [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "family",
+          "text": "Black holes of Lovelock's theory in $D$ dimensions with every coefficient tied to one length. Without a cosmological constant the even ones have the metric function $1 - (2M/r)^{1/(n-1)}$ in $D = 2n$ dimensions, where Tangherlini's has $1 - \\mu/r^{D-3}$ [banados1994]."
         }
       ],
       "references": [
@@ -70740,7 +71271,8 @@
         "bah2021",
         "bueno2025regular",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "banados1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
@@ -81413,6 +81945,11 @@
           "id": "ads_vaidya",
           "kind": "generalisation",
           "text": "The flat hole with a mass that grows as a plane of light falls in from the boundary. Sayantani Bhattacharyya and Shiraz Minwalla found in 2009 that a weak pulse of a massless scalar field makes this metric at leading order [bhattacharyya2009]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "family",
+          "text": "The spherical black holes of Lovelock's theory with every coefficient set by one length. Rong-Gen Cai and Kwang-Sup Soh gave them flat and hyperbolic horizons in 1999 [cai1999]."
         }
       ],
       "references": [
@@ -81449,7 +81986,8 @@
         "zofka2008",
         "smith1997",
         "mena2008toroidal",
-        "bhattacharyya2009"
+        "bhattacharyya2009",
+        "cai1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
@@ -83476,6 +84014,11 @@
           "id": "ads_vaidya",
           "kind": "generalisation",
           "text": "Vaidya's ingoing metric with a negative cosmological constant, a shell of light falling in anti-de Sitter space. Viqar Husain wrote its form in three dimensions in 1994, and José Lemos used that of four in 1999 to test cosmic censorship [husain1994, lemos1999]."
+        },
+        {
+          "id": "dimensionally_continued",
+          "kind": "family",
+          "text": "Static black holes of Lovelock's theory in higher dimensions. Masato Nozawa and Hideki Maeda let their mass depend on advanced time in 2006, as Vaidya's does, and found that a naked singularity can form [nozawa2006]."
         }
       ],
       "references": [
@@ -83517,7 +84060,8 @@
         "vaidya1989kerr",
         "oripiran1987",
         "husain1994",
-        "lemos1999"
+        "lemos1999",
+        "nozawa2006"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",

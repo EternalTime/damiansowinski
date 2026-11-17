@@ -1,5 +1,5 @@
 {
-  "version": "146983d70bcdefe8",
+  "version": "337bc08f48f4cc6c",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -48246,6 +48246,251 @@
         "eprint": "2610.31760",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.3390/universe12100300"
+      }
+    },
+    "banados1994": {
+      "type": "article",
+      "fields": {
+        "title": "Dimensionally continued black holes",
+        "author": "Ba\\~nados, M\\'aximo and Teitelboim, Claudio and Zanelli, Jorge",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "2",
+        "pages": "975--986",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.975",
+        "eprint": "gr-qc/9307033",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.49.975"
+      }
+    },
+    "ilha1997": {
+      "type": "article",
+      "fields": {
+        "title": "Dimensionally continued {Oppenheimer-Snyder} gravitational collapse: Solutions in even dimensions",
+        "author": "Ilha, Anderson and Lemos, Jos\\'e P. S.",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "4",
+        "pages": "1788--1794",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.1788",
+        "eprint": "gr-qc/9608004",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.55.1788"
+      }
+    },
+    "teitelboim1987": {
+      "type": "article",
+      "fields": {
+        "title": "Dimensionally continued topological gravitation theory in {Hamiltonian} form",
+        "author": "Teitelboim, C. and Zanelli, J.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "4",
+        "number": "4",
+        "pages": "L125--L129",
+        "year": "1987",
+        "doi": "10.1088/0264-9381/4/4/010",
+        "url": "https://doi.org/10.1088/0264-9381/4/4/010"
+      }
+    },
+    "chamseddine1989": {
+      "type": "article",
+      "fields": {
+        "title": "Topological gauge theory of gravity in five and all odd dimensions",
+        "author": "Chamseddine, A. H.",
+        "journal": "Physics Letters B",
+        "volume": "233",
+        "number": "3-4",
+        "pages": "291--294",
+        "year": "1989",
+        "doi": "10.1016/0370-2693(89)91312-9",
+        "url": "https://doi.org/10.1016/0370-2693(89)91312-9"
+      }
+    },
+    "chamseddine1990": {
+      "type": "article",
+      "fields": {
+        "title": "Topological gravity and supergravity in various dimensions",
+        "author": "Chamseddine, A. H.",
+        "journal": "Nuclear Physics B",
+        "volume": "346",
+        "number": "1",
+        "pages": "213--234",
+        "year": "1990",
+        "doi": "10.1016/0550-3213(90)90245-9",
+        "url": "https://doi.org/10.1016/0550-3213(90)90245-9"
+      }
+    },
+    "muniain1996": {
+      "type": "article",
+      "fields": {
+        "title": "Critical behavior of dimensionally continued black holes",
+        "author": "Muniain, Javier P. and P\\'iriz, Dardo",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "2",
+        "pages": "816--823",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.816",
+        "eprint": "gr-qc/9502029",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.53.816"
+      }
+    },
+    "jacobson1993": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole entropy and higher curvature interactions",
+        "author": "Jacobson, Ted and Myers, Robert C.",
+        "journal": "Physical Review Letters",
+        "volume": "70",
+        "number": "24",
+        "pages": "3684--3687",
+        "year": "1993",
+        "doi": "10.1103/PhysRevLett.70.3684",
+        "eprint": "hep-th/9305016",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.70.3684"
+      }
+    },
+    "banados1994entropy": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole entropy and the dimensional continuation of the {Gauss-Bonnet} theorem",
+        "author": "Ba\\~nados, M\\'aximo and Teitelboim, Claudio and Zanelli, Jorge",
+        "journal": "Physical Review Letters",
+        "volume": "72",
+        "number": "7",
+        "pages": "957--960",
+        "year": "1994",
+        "doi": "10.1103/PhysRevLett.72.957",
+        "eprint": "gr-qc/9309026",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.72.957"
+      }
+    },
+    "cai1999": {
+      "type": "article",
+      "fields": {
+        "title": "Topological black holes in the dimensionally continued gravity",
+        "author": "Cai, Rong-Gen and Soh, Kwang-Sup",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "4",
+        "pages": "044013",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.59.044013",
+        "eprint": "gr-qc/9808067",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.59.044013"
+      }
+    },
+    "crisostomo2000": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole scan",
+        "author": "Cris\\'ostomo, Juan and Troncoso, Ricardo and Zanelli, Jorge",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "8",
+        "pages": "084013",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.62.084013",
+        "eprint": "hep-th/0003271",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.62.084013"
+      }
+    },
+    "kuang2017": {
+      "type": "article",
+      "fields": {
+        "title": "Thermal phase transitions of dimensionally continued {AdS} black holes",
+        "author": "Kuang, Xiao-Mei and Miskovic, Olivera",
+        "journal": "Physical Review D",
+        "volume": "95",
+        "number": "4",
+        "pages": "046009",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.95.046009",
+        "eprint": "1611.10194",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.95.046009"
+      }
+    },
+    "ilha1999": {
+      "type": "article",
+      "fields": {
+        "title": "Dimensionally continued {Oppenheimer-Snyder} gravitational collapse: Solutions in odd dimensions",
+        "author": "Ilha, Anderson and Kleber, Antares and Lemos, Jos\\'e P. S.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "40",
+        "number": "7",
+        "pages": "3509--3518",
+        "year": "1999",
+        "doi": "10.1063/1.532904",
+        "eprint": "gr-qc/9902054",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/1.532904"
+      }
+    },
+    "nozawa2006": {
+      "type": "article",
+      "fields": {
+        "title": "Effects of {Lovelock} terms on the final fate of gravitational collapse: analysis in dimensionally continued gravity",
+        "author": "Nozawa, Masato and Maeda, Hideki",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "23",
+        "number": "5",
+        "pages": "1779--1800",
+        "year": "2006",
+        "doi": "10.1088/0264-9381/23/5/018",
+        "eprint": "gr-qc/0510070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/23/5/018"
+      }
+    },
+    "aviles2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Inhomogeneous dust collapse in five-dimensional {AdS-Chern-Simons} gravity",
+        "author": "Avil\\'es, Luis and D\\'iaz, Jos\\'e and Quinzacara, Cristian and Salgado, Patricio",
+        "year": "2026",
+        "eprint": "2609.32200",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.32200"
+      }
+    },
+    "shiraishi1994": {
+      "type": "article",
+      "fields": {
+        "title": "Vacuum polarization near asymptotically anti-de {Sitter} black holes in odd dimensions",
+        "author": "Shiraishi, Kiyoshi and Maki, Takuya",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "11",
+        "number": "7",
+        "pages": "1687--1696",
+        "year": "1994",
+        "doi": "10.1088/0264-9381/11/7/009",
+        "eprint": "1901.00977",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/11/7/009"
+      }
+    },
+    "banados1996": {
+      "type": "article",
+      "fields": {
+        "title": "Existence of local degrees of freedom for higher dimensional pure {Chern-Simons} theories",
+        "author": "Ba\\~nados, M\\'aximo and Garay, Luis J. and Henneaux, Marc",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "2",
+        "pages": "R593--R596",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.R593",
+        "eprint": "hep-th/9506187",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.53.R593"
       }
     }
   }
