@@ -32416,5 +32416,8 @@ import ads_vaidya_drawings as _ads_vaidya_drawings
 DRAWN[_ads_vaidya_drawings.METRIC] = lambda ck, src: _ads_vaidya_drawings.conformal_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_ads_vaidya_drawings.conformal_captions())
 
+import dimensionally_continued_drawings as _dimensionally_continued_drawings
+_dimensionally_continued_drawings.register_conformal(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

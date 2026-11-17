@@ -84,6 +84,221 @@ def rstar_conformal(rho):
         return np.log(np.tan(np.asarray(rho, dtype=float) / 2))
 
 
+class Hole:
+    """The plane of t and r of one black hole, drawn as Kruskal and Szekeres draw Schwarzschild's, in the
+    cells of conformal.Tower: G(u) = arctan exp(-k u) with u, v = ct -+ r_*, and
+
+        I    exterior, right       p = -G(u),   q = G(-v)
+        I'   exterior, left        p = G(u),    q = -G(-v)
+        II   black hole            p = G(u),    q = G(-v)
+        IV   white hole            p = -G(u),   q = -G(-v)
+
+    so that tan p tan q is Kruskal's UV, 1 at r = 0 and -B on the conformal boundary."""
+
+    def __init__(self, cf, rstar, product, kappa, far):
+        self.cf, self.rstar, self.UV, self.kp, self.far = cf, rstar, product, kappa, far
+        self.B = math.exp(2 * kappa * far)
+
+    def G(self, u):
+        return self.cf.atan_exp(-self.kp * np.asarray(u, dtype=float))
+
+    def pq(self, cell, t, r):
+        rs = self.rstar(r)
+        t = np.asarray(t, dtype=float)
+        u, v = t - rs, t + rs
+        return {"I": (-self.G(u), self.G(-v)), "I'": (self.G(u), -self.G(-v)),
+                "II": (self.G(u), self.G(-v)), "IV": (-self.G(u), -self.G(-v))}[cell]
+
+    def ingoing(self, w, r):
+        """(p, q) of the ingoing chart's (v, r): V = exp(k v) and U = UV(r)/V, one formula for every r > 0."""
+        w = np.asarray(w, dtype=float)
+        return np.arctan(self.UV(r) * np.exp(-self.kp * w)), self.cf.atan_exp(self.kp * w)
+
+    def boundary(self, n=400):
+        """r -> infinity in cell I: tan p tan q = -B, from the corner (X, T) = (pi/2, -pi/2) to (pi/2, pi/2)."""
+        HALF = math.pi / 2
+        p = -HALF / (1 + np.exp(np.linspace(-14, 14, n)))
+        return p, np.arctan(-self.B / np.tan(p))
+
+
+def product5(r):
+    """Kruskal's UV in five dimensions at M = 3, (1 - r)/(1 + r)."""
+    r = np.asarray(r, dtype=float)
+    return (1 - r) / (1 + r)
+
+
+# -- Conformal diagrams ----------------------------------------------------------------------------------
+
+def register_conformal(cf):
+    cf.DRAWN[METRIC] = lambda ck, src: conformal(cf, ck, src)
+    for vid, d, sphere in (("static", "five", "3-sphere"), ("static_six", "six", "4-sphere")):
+        mass = "$M = 3$" if d == "five" else "$M = 2\\ell$"
+        cf.CAPTIONS[(METRIC, vid)] = [
+            f"The black hole of {d} dimensions ({mass}), maximally extended, each point in the diagram a {sphere}, "
+            "with the spacelike singularity $r = 0$ inside the horizon."]
+    for vid, d, sphere in (("ingoing", "five", "3-sphere"), ("ingoing_six", "six", "4-sphere")):
+        mass = "$M = 3$" if d == "five" else "$M = 2\\ell$"
+        cf.CAPTIONS[(METRIC, vid)] = [
+            f"The black hole of {d} dimensions ({mass}), each point in the diagram a {sphere}, with the ingoing "
+            "rays of constant $v$ crossing the horizon to the singularity $r = 0$."]
+    cf.CAPTIONS[(METRIC, "conformal")] = [
+        "The black hole of five dimensions ($M = 3$), each point in the diagram a 3-sphere, with $t$ and $\\rho$ "
+        "covering one exterior from the horizon $\\rho = 0$ to the boundary $\\rho = \\pi/2$."]
+
+
+def conformal(cf, ck, src):
+    """Each black hole maximally extended in the cells of Hole, from the closed forms of the module
+    docstring, checked under every chart that covers it. In five dimensions B = 1 and the diagram is the
+    square of the black hole of three dimensions, its conformal boundary on X = +-pi/2; in six B =
+    exp(2kR) = 4.79 and the boundary lies on tan p tan q = -B, bowed outward to X = 2 arctan sqrt(B) =
+    2.28 on T = 0, as Schwarzschild-anti-de Sitter's is."""
+    HALF, Q4 = math.pi / 2, math.pi / 4
+    views = []
+    for d, static_id, in_id, H, params, fixed, settings, sphere in (
+            ("five", STATIC5, IN5, Hole(cf, rstar5, product5, KAPPA5, 0.0), P5, FIXED5, SETTINGS5, "3-sphere"),
+            ("six", STATIC6, IN6, Hole(cf, rstar6, product6, KAPPA6, FAR6), P6, FIXED6, SETTINGS6, "4-sphere")):
+        name = f"Dimensionally continued, {d}"
+        st = cf.Plane(src, METRIC, static_id, ("t", "r"), fixed, params)
+        ein = cf.Plane(src, METRIC, in_id, ("v", "r"), fixed, params)
+        for cell, rs, future, what in (("I", (1.001, 40), (1, 0), "exterior"),
+                                       ("II", (0.01, 0.999), (0, -1), "black hole"),
+                                       ("IV", (0.01, 0.999), (0, 1), "white hole"),
+                                       ("I'", (1.001, 40), (-1, 0), "other exterior")):
+            ck.chart(f"{name}, static, {what}", st, lambda t, r, c=cell: H.pq(c, t, r),
+                     ck.uniform(-4, 4), ck.uniform(*rs), lambda t, r, f=future: f)
+        f_of = (lambda r: 1 - 2.0 + r * r) if d == "five" else (lambda r: 1 - 2 / np.sqrt(r) + r * r)
+        ck.chart(f"{name}, ingoing Eddington-Finkelstein", ein, H.ingoing, ck.uniform(-4, 4), ck.uniform(0.01, 40),
+                 lambda w, r: (np.ones_like(r), -np.maximum(1, np.abs(f_of(r)))))
+        rr = np.linspace(0.05, 5, 50)
+        for cell, sel in (("I", rr > 1.001), ("II", rr < 0.999)):
+            p, q = H.pq(cell, 0.3 + 0 * rr[sel], rr[sel])
+            ck.limit(f"{name}, {cell}: tan p tan q is Kruskal's UV", np.tan(p) * np.tan(q), H.UV(rr[sel]), 1e-8)
+        ck.limit(f"{name}: r_* vanishes at r = 0", H.rstar(np.array([1e-12])), [0.0], 1e-6)
+        ck.limit(f"{name}: r_* tends to R as r -> infinity", H.rstar(np.array([1e9])), [H.far], 1e-4)
+        ck.limit(f"{name}: UV is 1 at r = 0 and 0 on the horizon", H.UV(np.array([1e-12, 1.0])), [1.0, 0.0], 1e-5)
+        p, q = H.pq("II", np.array([-1.0, 0, 1]), np.full(3, 1e-12))
+        ck.limit(f"{name}: r -> 0 in the black hole lands on T = pi/2", p + q, [HALF] * 3, 1e-5)
+        p, q = H.pq("IV", np.array([-1.0, 0, 1]), np.full(3, 1e-12))
+        ck.limit(f"{name}: r -> 0 in the white hole lands on T = -pi/2", p + q, [-HALF] * 3, 1e-5)
+        p, q = H.pq("I", np.array([-0.5, 0, 0.5]), np.full(3, 1e12))
+        ck.limit(f"{name}: r -> infinity lands on the boundary tan p tan q = -B", np.tan(p) * np.tan(q),
+                 [-H.B] * 3, 1e-4)
+        p, q = H.pq("I", np.array([0.5]), np.array([1 + 1e-12]))
+        ck.limit(f"{name}: r -> r_+ at fixed t lands on the bifurcation sphere", cf.point(p[0], q[0]), [0, 0], 1e-4)
+        ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+                 np.array(H.ingoing(0.4 + H.rstar(3.0), 3.0)).ravel(), np.array(H.pq("I", 0.4, 3.0)).ravel(), 1e-12)
+        ck.limit(f"{name}: the ingoing and static coordinates put one event at one point in the black hole",
+                 np.array(H.ingoing(0.4 + H.rstar(0.5), 0.5)).ravel(), np.array(H.pq("II", 0.4, 0.5)).ravel(),
+                 1e-12)
+        K = st.kretschmann
+        ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+        ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_+", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+        if d == "five":
+            ck.limit(f"{name}: B = 1, so the boundary is the vertical line X = pi/2", H.B, 1.0, 1e-15)
+            cv = cf.Plane(src, METRIC, CONF5, ("t", "\\rho"), fixed, params)
+            ck.chart(f"{name}, conformal", cv, lambda t, rho: H.pq("I", t, 1 / np.cos(rho)),
+                     ck.uniform(-4, 4), ck.uniform(0.01, HALF - 0.01), lambda t, rho: (1, 0))
+            ck.limit(f"{name}: ln tan(rho/2) is r_* at r = sec(rho)", rstar_conformal(np.array([0.3, 0.9, 1.4])),
+                     rstar5(1 / np.cos(np.array([0.3, 0.9, 1.4]))), 1e-12)
+        else:
+            ck.limit(f"{name}: R = 0.522 l and B = exp(2kR) = 4.79", [H.far, H.B], [0.5223, 4.792], 1e-3)
+            ck.limit(f"{name}: the residue of r_* at the horizon is 1/2k", RESIDUES6[HORIZON6].real, 1 / (2 * KAPPA6),
+                     1e-12)
+
+        reach = 2 * math.atan(math.sqrt(H.B))
+        box = [-reach - 0.3, reach + 0.3, -HALF - 0.25, HALF + 0.25]
+        if d == "five":
+            right = [[HALF, -HALF], [HALF, HALF]]
+            named = [HALF, 1.0]
+        else:
+            bp, bq = H.boundary()
+            right = [cf.point(a, b) for a, b in zip(bp, bq)]
+            named = min(right, key=lambda at: abs(at[1] - 1.2))
+        left = [[-x, t_] for x, t_ in right[::-1]]
+        whole = right + left
+        t_all = cf.S_ALL
+        r_out, r_in, times = (1.2, 1.5, 2.0, 4.0), (0.3, 0.6, 0.9), (-1.0, -0.5, 0.0, 0.5, 1.0)
+        beyond = cf.spread(1.0, np.inf, 500, 14)
+        inside = np.linspace(1e-6, 1 - 1e-9, 500)
+        side = 1.05 if d == "five" else 1.6
+
+        def edges(v):
+            if d == "five":
+                v.line("boundary", [right, [[-HALF, -HALF], [-HALF, HALF]]])
+            else:
+                v.curve("boundary", bp, bq)
+                v.curve("boundary", -bq, -bp)
+            v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+            v.line("singular", [[[-HALF, HALF], [HALF, HALF]], [[-HALF, -HALF], [HALF, -HALF]]], zig=True)
+            v.label_xt([0, HALF], "$r = 0$", "b", dy=-8)
+            v.label_xt([0, -HALF], "$r = 0$", "t", dy=8)
+            v.label_xt(named, "$r \\to \\infty$", "l", "small", dx=6)
+            v.label_xt([-named[0], named[1]], "$r \\to \\infty$", "r", "small", dx=-6)
+            v.label_xt([-Q4, Q4], "$r_+$", "tr", "small", dx=-6, dy=2)
+            v.label_xt([side, -0.45], "exterior", cls="region")
+            v.label_xt([-side, -0.45], "exterior", cls="region")
+            v.label_xt([0, 1.15], "black hole", cls="region")
+            v.label_xt([0, -1.15], "white hole", cls="region")
+            v.legend("horizon", "the horizon $r = r_+$")
+            v.legend("boundary", "the conformal boundary $r \\to \\infty$, timelike")
+            v.legend("singular", "$r = 0$, a curvature singularity")
+
+        moment = cf.slices.moments(METRIC, d)[0]
+        lo, hi = moment.reach(static_id, "r")
+        through = cf.through_bifurcation(H, ("I'", "I"), hi, lo)
+        suffix = "" if d == "five" else "_six"
+
+        v = cf.View("static" + suffix, "Static", box, static_id)
+        v.fill("region", whole)
+        v.fill("cover", [[0, 0]] + right + [[-HALF, HALF]])
+        for r in r_out:
+            v.curve("r", *H.pq("I", t_all, np.full_like(t_all, r)))
+        for r in r_in:
+            v.curve("r", *H.pq("II", t_all, np.full_like(t_all, r)))
+        for tt in times:
+            v.curve("t", *H.pq("I", np.full_like(beyond, tt), beyond))
+            v.curve("t", *H.pq("II", np.full_like(inside, tt), inside))
+        edges(v)
+        v.legend("cover", "what $t$ and $r$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("t", "$t$ constant")
+        views.append(v)
+
+        v = cf.View("ingoing" + suffix, "Ingoing Eddington-Finkelstein", box, in_id)
+        v.fill("region", whole)
+        v.fill("cover", [[0, 0]] + right + [[-HALF, HALF]])
+        for r in r_out + r_in:
+            v.curve("r", *H.ingoing(t_all, np.full_like(t_all, r)))
+        radii = cf.spread(0, np.inf, 600, 14)
+        for w in (-1.0, -0.5, 0.0, 0.5, 1.0):
+            v.curve("null", *H.ingoing(np.full_like(radii, w), radii))
+        edges(v)
+        v.legend("cover", "what $v$ and $r$ cover")
+        v.legend("r", "$r$ constant")
+        v.legend("null", "$v$ constant, an ingoing light ray")
+        views.append(v)
+
+        if d == "five":
+            v = cf.View("conformal", "Conformal", box, CONF5)
+            v.fill("region", whole)
+            v.fill("cover", [[0, 0]] + right)
+            rhos = np.linspace(1e-6, HALF - 1e-9, 500)
+            for rho in (math.pi / 8, math.pi / 4, 3 * math.pi / 8):
+                v.curve("r", *H.pq("I", t_all, np.full_like(t_all, 1 / math.cos(rho))))
+            for tt in times:
+                v.curve("t", *H.pq("I", np.full_like(rhos, tt), 1 / np.cos(rhos)))
+            edges(v)
+            v.legend("cover", "what $t$ and $\\rho$ cover")
+            v.legend("r", "$\\rho$ constant, every $\\pi/8$")
+            v.legend("t", "$t$ constant")
+            views.append(v)
+
+        for view in views[-3 if d == "five" else -2:]:
+            view.slice(moment, [through])
+            view.set(settings=settings)
+    return views
+
+
 # -- Spacetime diagrams ----------------------------------------------------------------------------
 
 def register_null(nr):
