@@ -42,3 +42,14 @@ The event horizon is the outgoing ray $dr/d(cv) = f/2$ that ends on the final ho
 With a constant mass it holds the ingoing chart of three dimensions to the published ingoing chart of `btz` without spin and, at $m = -1$, to anti-de Sitter space with a regular centre; the chart of four dimensions to the published ingoing chart of `schwarzschild_ads` and, without the cosmological term, to the published ingoing chart of `vaidya`; the flat front to the published ingoing chart of `topological_black_hole` at $k = 0$, whose plane is in polar coordinates; and the chart of five dimensions to the published static chart of `brane_wall_universe` at $k = 1$ carried to advanced time and, without the cosmological term, to the published ingoing chart of `tangherlini`.
 Each Poincaré chart is held to the flat chart of its dimension pulled back along $z = \ell^2/r$.
 `verify_metrics.py --metric ads_vaidya` then checks every printed value and its dimension.
+
+## Drawings
+
+`ads_vaidya_drawings.py` beside this file draws every view, and its comments hold the derivations.
+The spacetime diagrams draw each chart with a thin shell of thickness $cv_0 = \ell/100$, Balasubramanian and coauthors' equation (2), and the final horizon at $r = \ell$.
+The conformal diagrams take the shell of no thickness, Anous, Hartman, Rovai and Sonner's equation (2.4), where both sides have null coordinates in closed form.
+In a round chart anti-de Sitter space before the shell is its global strip, and each outgoing ray keeps the $p$ it has where it crosses the shell, so the event horizon is the line $T - X = -\pi/2$ from the centre at $cv = -\pi\ell/2$, Hubeny, Liu and Rangamani's $t_h = t_s - 2\arctan r_+$.
+With a flat front the space before the shell is the Poincaré patch, whose two horizons are where the chart ends.
+The embedding diagram is the round chart of three dimensions, a movie of the moments $cv - \ell\arctan(r/\ell)$ constant, the hyperbolic plane inside the shell in Minkowski space, flat space between the shell and $r = \ell$, and Minkowski space beyond.
+The other five charts draw shells falling into other spacetimes, so no moment lies on their drawings, as `exceptions/ads_vaidya.json` says.
+The curvature figure maps the Kretschmann scalar of the charts of four and five dimensions; in three dimensions it is $12/\ell^4$ at every event, and no map is drawn of it.
