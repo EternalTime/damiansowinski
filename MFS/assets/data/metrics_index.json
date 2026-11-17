@@ -1112,7 +1112,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "d4de6c87002e4a65",
+    "version": "c2504858956879bf",
     "diagrams": "7621e48374c18acb",
     "conformal": "30e728a3ec171eba",
     "embedding": "a1c5b02d8ba65163",
@@ -2472,7 +2472,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5ecb130cd8dfc2c5",
+    "version": "23d33f220351db3d",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "702d68d9fe0d4f1d",
@@ -2528,7 +2528,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "12b4d8f365fd6d50",
+    "version": "b93a1e47761bc918",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -3200,6 +3200,47 @@
     "diagrams": "582c49f296d53450",
     "conformal": "1c0299b48c135ff5",
     "embedding": "4a468cbcc8c8e211"
+  },
+  {
+    "id": "scalar_collapse_cosmology",
+    "name": "Husain-Martinez-Núñez",
+    "tags": [
+      "spherically symmetric",
+      "scalar field",
+      "massless scalar field",
+      "minimally coupled scalar field",
+      "Einstein-scalar",
+      "cosmology",
+      "expanding universe",
+      "FLRW",
+      "inhomogeneous",
+      "time-dependent",
+      "gravitational collapse",
+      "critical collapse",
+      "cosmic censorship",
+      "naked singularity",
+      "curvature singularity",
+      "timelike singularity",
+      "spacelike singularity",
+      "big bang",
+      "apparent horizon",
+      "trapped surface",
+      "cosmological horizon",
+      "causal structure",
+      "conformal transformation",
+      "Kaluza-Klein",
+      "Brans-Dicke",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "f7739ffa21673fab",
+    "diagrams": "845c45a0ae2add32",
+    "conformal": "0d4ca8e4ac97255f",
+    "embedding": "468c9bbd405a517b",
+    "curvature": "8633871ad5c7923f"
   },
   {
     "id": "interstellar_wormhole",
@@ -4656,7 +4697,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "6cd098e2c05afc45",
+    "version": "171761cc7f7a6916",
     "diagrams": "1e8a40c11bf25b40",
     "conformal": "8eca882a8f2cfb79",
     "embedding": "eff980a45a5a9518",
@@ -6043,7 +6084,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "0a805e9864a412cf",
+    "version": "9f22c13400eb1ff8",
     "diagrams": "ef50bbbb10b2fcf3",
     "conformal": "7870256e2aa08cb4",
     "embedding": "c4852dac6f3f346e",
@@ -6691,7 +6732,7 @@
       "scalar field",
       "naked singularity"
     ],
-    "version": "0368fb97f1dc5495",
+    "version": "7e9fcbe3f7841c1e",
     "diagrams": "d44710c10d87276f",
     "conformal": "b6c1b07af1ea393e",
     "embedding": "a34a8a2ad2314a27",
@@ -6796,7 +6837,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8652609582adb250",
+    "version": "8d7509fa5594a060",
     "diagrams": "7276a636d705765d",
     "conformal": "e0a22ba6cfc54754",
     "embedding": "8003002e86c3bf6e"
@@ -7415,7 +7456,7 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "318444adbaa25291",
+    "version": "e620185562d34903",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",
@@ -7777,7 +7818,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "3482bb579b057a00",
+    "version": "8ff986b6ebf5575d",
     "diagrams": "c383ba43920e5b0b",
     "conformal": "f06e536b192c099c",
     "embedding": "633fa78640daea0a",

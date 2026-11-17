@@ -1508,6 +1508,19 @@ The gravitational field of two massless particles in de Sitter space, the Schwar
 - chart Null Cylindrical: coordinates $(u, v, \rho, \phi)$, $$ds^2 = \dfrac{-du\,dv + d\rho^2 + \rho^2d\phi^2 - \dfrac{4GE}{c^4}\left(\left(1 - \dfrac{\rho^2}{4a^2}\right)\ln\left(\dfrac{\rho^2}{4a^2}\right) + 2 + \dfrac{\rho^2}{2a^2}\right)\delta(u)\,du^2}{\left(1 + \dfrac{\rho^2 - uv}{4a^2}\right)^2}$$
 - chart Kundt: coordinates $(u, w, \theta, \phi)$, $$ds^2 = \sin^2\theta\cos^2\phi\left(-2\,du\,dw + \dfrac{w^2}{a^2}du^2\right) + a^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{4GE}{c^4}\sin\theta\cos\phi\left(\cos\theta\,\ln\left(\dfrac{1 + \cos\theta}{1 - \cos\theta}\right) - 2\right)\delta(u)\,du^2$$
 
+### Husain-Martinez-Núñez Scalar Field Universe
+
+Fisher's static solution for a mass with a massless scalar field, at the exponent $\gamma = \pm\sqrt{3}/2$, multiplied by a factor that grows with conformal time, which Viqar Husain, Erik A. Martinez, and Darío Núñez found in 1994. Far from the centre it is a spatially flat Friedmann universe filled with the field, and its central singularity is timelike and begins with the big bang. Oleg A. Fonarev extended it in 1995 to a field with an exponential potential.
+
+- id: `scalar_collapse_cosmology`
+- tags: spherically symmetric, scalar field, massless scalar field, minimally coupled scalar field, Einstein-scalar, cosmology, expanding universe, FLRW, inhomogeneous, time-dependent, gravitational collapse, critical collapse, cosmic censorship, naked singularity, curvature singularity, timelike singularity, spacelike singularity, big bang, apparent horizon, trapped surface, cosmological horizon, causal structure, conformal transformation, Kaluza-Klein, Brans-Dicke, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/scalar_collapse_cosmology.json
+- chart Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = \dfrac{\eta}{\eta_0}\left(-f^{\gamma}d\eta^2 + \dfrac{dr^2}{f^{\gamma}} + f^{1-\gamma}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Comoving Time: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -f^{\gamma}c^2dt^2 + a^2\left(\dfrac{dr^2}{f^{\gamma}} + f^{1-\gamma}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Fonarev Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-f^{\gamma}d\eta^2 + \dfrac{dr^2}{f^{\gamma}} + f^{1-\gamma}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Fonarev Time: coordinates $(T, r, \theta, \phi)$, $$ds^2 = -e^{2nkT}f^{\gamma}c^2dT^2 + e^{2kT}\left(\dfrac{dr^2}{f^{\gamma}} + f^{1-\gamma}r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Interstellar's Wormhole
 
 The wormhole Oliver James, Eugénie von Tunzelmann, Paul Franklin, and Kip Thorne designed for Christopher Nolan's film Interstellar of 2014, which they call the Dneg wormhole after the effects studio Double Negative. A cylinder of length $2a$, every sphere along it of radius $\rho$, joins two flat spaces, each through a mouth that flares out over a length set by $M$, and clocks everywhere run at the same rate, $g_{tt} = -1$.

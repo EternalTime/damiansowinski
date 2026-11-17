@@ -1,5 +1,5 @@
 {
-  "version": "337bc08f48f4cc6c",
+  "version": "0c71aa6643717151",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -48491,6 +48491,177 @@
         "eprint": "hep-th/9506187",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.53.R593"
+      }
+    },
+    "husain1994exact": {
+      "type": "article",
+      "fields": {
+        "title": "Exact solution for scalar field collapse",
+        "author": "Husain, Viqar and Martinez, Erik A. and N\\'u\\~nez, Dar\\'io",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "6",
+        "pages": "3783--3786",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.3783",
+        "eprint": "gr-qc/9402021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.3783"
+      }
+    },
+    "faraoni2013": {
+      "type": "article",
+      "fields": {
+        "title": "Evolving Black Hole Horizons in General Relativity and Alternative Gravity",
+        "author": "Faraoni, Valerio",
+        "journal": "Galaxies",
+        "volume": "1",
+        "number": "3",
+        "pages": "114--179",
+        "year": "2013",
+        "doi": "10.3390/galaxies1030114",
+        "eprint": "1309.4915",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.3390/galaxies1030114"
+      }
+    },
+    "husain1996": {
+      "type": "article",
+      "fields": {
+        "title": "On critical behaviour in gravitational collapse",
+        "author": "Husain, Viqar and Martinez, Erik A. and N\\'u\\~nez, Dar\\'io",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "13",
+        "number": "5",
+        "pages": "1183--1189",
+        "year": "1996",
+        "doi": "10.1088/0264-9381/13/5/028",
+        "eprint": "gr-qc/9505024",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/13/5/028"
+      }
+    },
+    "fonarev1995": {
+      "type": "article",
+      "fields": {
+        "title": "Exact {Einstein} scalar field solutions for formation of black holes in a cosmological setting",
+        "author": "Fonarev, Oleg A.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "12",
+        "number": "7",
+        "pages": "1739--1752",
+        "year": "1995",
+        "doi": "10.1088/0264-9381/12/7/016",
+        "eprint": "gr-qc/9409020",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/12/7/016"
+      }
+    },
+    "maeda2007": {
+      "type": "misc",
+      "fields": {
+        "title": "Global structure and physical interpretation of the {Fonarev} solution for a scalar field with exponential potential",
+        "author": "Maeda, Hideki",
+        "year": "2007",
+        "eprint": "0704.2731",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/0704.2731"
+      }
+    },
+    "husain2004": {
+      "type": "article",
+      "fields": {
+        "title": "Probing entropy bounds with scalar field spacetimes",
+        "author": "Husain, Viqar",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "8",
+        "pages": "084002",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.69.084002",
+        "eprint": "gr-qc/0307070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.69.084002"
+      }
+    },
+    "clifton2005": {
+      "type": "article",
+      "fields": {
+        "title": "Inhomogeneous gravity",
+        "author": "Clifton, Timothy and Mota, David F. and Barrow, John D.",
+        "journal": "Monthly Notices of the Royal Astronomical Society",
+        "volume": "358",
+        "number": "2",
+        "pages": "601--613",
+        "year": "2005",
+        "doi": "10.1111/j.1365-2966.2005.08831.x",
+        "eprint": "gr-qc/0406001",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1111/j.1365-2966.2005.08831.x"
+      }
+    },
+    "faraoni2012cousin": {
+      "type": "article",
+      "fields": {
+        "title": "Interpreting the conformal cousin of the {Husain-Martinez-Nu\\~nez} spacetime",
+        "author": "Faraoni, Valerio and Zambrano Moreno, Andres F.",
+        "journal": "Physical Review D",
+        "volume": "86",
+        "number": "8",
+        "pages": "084044",
+        "year": "2012",
+        "doi": "10.1103/PhysRevD.86.084044",
+        "eprint": "1208.3731",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.86.084044"
+      }
+    },
+    "kastor2017frozen": {
+      "type": "article",
+      "fields": {
+        "title": "Building cosmological frozen stars",
+        "author": "Kastor, David and Traschen, Jennie",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "34",
+        "number": "3",
+        "pages": "035012",
+        "year": "2017",
+        "doi": "10.1088/1361-6382/aa549e",
+        "eprint": "1607.08219",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aa549e"
+      }
+    },
+    "wang2019critical": {
+      "type": "article",
+      "fields": {
+        "title": "Critical phenomena in gravitational collapse of {Husain-Martinez-Nunez} scalar field",
+        "author": "Wang, Xiaobao and Wu, Xiaoning and Gao, Sijie",
+        "journal": "The European Physical Journal C",
+        "volume": "79",
+        "number": "10",
+        "pages": "823",
+        "year": "2019",
+        "doi": "10.1140/epjc/s10052-019-7340-0",
+        "eprint": "1904.12411",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-019-7340-0"
+      }
+    },
+    "benachour2026": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamical axisymmetric compact objects in {General Relativity}",
+        "author": "Ben Achour, Jibril and Cisterna, Adolfo and Hassaine, Mokhtar",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2026",
+        "number": "06",
+        "pages": "061",
+        "year": "2026",
+        "doi": "10.1088/1475-7516/2026/06/061",
+        "eprint": "2512.19542",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2026/06/061"
       }
     }
   }

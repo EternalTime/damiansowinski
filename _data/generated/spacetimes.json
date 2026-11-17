@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 259,
+  "count": 260,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12097,6 +12097,11 @@
           "id": "extended_inflation",
           "kind": "family",
           "text": "Brans-Dicke gravity also supports an expanding false vacuum universe with a homogeneous gravitational scalar."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "A time dependent relative. Timothy Clifton, David F. Mota, and John D. Barrow divided this scalar field universe by an exponential of its field in 2005 and obtained a vacuum solution of Brans and Dicke's equations, a mass in an expanding universe [clifton2005]."
         }
       ],
       "references": [
@@ -12119,7 +12124,8 @@
         "thornedykla1971",
         "scheel1995",
         "ohanlon1972",
-        "deruelle2011"
+        "deruelle2011",
+        "clifton2005"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brans_dicke_sphere.json",
@@ -28080,6 +28086,11 @@
           "id": "static_five_soliton",
           "kind": "family",
           "text": "A spacelike fifth dimension lifts the massless scalar geometry to a vacuum solution in five dimensions [kramer1971projective]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "conformal",
+          "text": "Fisher's solution at $\\gamma = \\sqrt{3}/2$ multiplied by a factor that grows with time. At that exponent the product solves Einstein's equations again, and the scalar field fills an expanding universe [husain1994exact]."
         }
       ],
       "references": [
@@ -28113,7 +28124,8 @@
         "faraoni2018",
         "herdeiro2025",
         "banerjee1998",
-        "kramer1971projective"
+        "kramer1971projective",
+        "husain1994exact"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -29329,6 +29341,11 @@
           "id": "ads_dust_collapse",
           "kind": "composite",
           "text": "A slab of an open universe of dust with a negative cosmological constant, joined across its faces to black holes whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "generalisation",
+          "text": "A flat Friedmann universe of massless scalar field with the naked singularity of Fisher's solution at its centre from the big bang on. With $b = 0$ it is that universe alone [husain1994exact, faraoni2013]."
         }
       ],
       "references": [
@@ -29412,7 +29429,9 @@
         "brandenberger1993",
         "brout1979causal",
         "smith1997",
-        "mena2008toroidal"
+        "mena2008toroidal",
+        "husain1994exact",
+        "faraoni2013"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -36805,6 +36824,415 @@
           ],
           "ricci_scalar": "R = \\dfrac{12}{a^2}",
           "kretschmann": "K = \\dfrac{24}{a^4}"
+        }
+      ]
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "name": "Husain-Martinez-Núñez Scalar Field Universe",
+      "short_name": "Husain-Martinez-Núñez",
+      "description": "Fisher's static solution for a mass with a massless scalar field, at the exponent $\\gamma = \\pm\\sqrt{3}/2$, multiplied by a factor that grows with conformal time, which Viqar Husain, Erik A. Martinez, and Darío Núñez found in 1994. Far from the centre it is a spatially flat Friedmann universe filled with the field, and its central singularity is timelike and begins with the big bang. Oleg A. Fonarev extended it in 1995 to a field with an exponential potential.",
+      "tags": [
+        "spherically symmetric",
+        "scalar field",
+        "massless scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "cosmology",
+        "expanding universe",
+        "FLRW",
+        "inhomogeneous",
+        "time-dependent",
+        "gravitational collapse",
+        "critical collapse",
+        "cosmic censorship",
+        "naked singularity",
+        "curvature singularity",
+        "timelike singularity",
+        "spacelike singularity",
+        "big bang",
+        "apparent horizon",
+        "trapped surface",
+        "cosmological horizon",
+        "causal structure",
+        "conformal transformation",
+        "Kaluza-Klein",
+        "Brans-Dicke",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The parameters $b$ and $\\eta_0$ are lengths and $\\gamma$ is a pure number, and a scalar field $\\varphi$ with no potential obeys $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "fisher_jnw",
+          "kind": "conformal",
+          "text": "The static solution inside the bracket. At $\\gamma = \\pm\\sqrt{3}/2$ Fisher's metric multiplied by $\\eta/\\eta_0$ solves Einstein's equations again, with the same light rays and a scalar field that now grows with time [husain1994exact]."
+        },
+        {
+          "id": "frw",
+          "kind": "special_case",
+          "text": "The solution with $b = 0$, a spatially flat Friedmann universe filled with a massless scalar field. Its scale factor grows as the cube root of the proper time [husain1994exact, faraoni2013]."
+        },
+        {
+          "id": "roberts",
+          "kind": "family",
+          "text": "An older exact solution of the same equations that depends on both time and radius. Roberts's looks the same at every scale, and this one does only where $b = 0$ [husain2004, wang2019critical]."
+        },
+        {
+          "id": "sultana_dyer",
+          "kind": "family",
+          "text": "Schwarzschild's metric multiplied by the scale factor of a universe of dust, as this is Fisher's multiplied by that of a universe of scalar field. Sultana and Dyer's universe is filled by two fluids, a dust and a null dust, and this one by a single field [faraoni2013]."
+        },
+        {
+          "id": "mcvittie",
+          "kind": "family",
+          "text": "A mass in an expanding universe whose fluid does not fall onto it. In a universe of dust its two apparent horizons appear together and stay, and here a pair appears and one of the two later vanishes with an older horizon [faraoni2013]."
+        },
+        {
+          "id": "static_five_soliton",
+          "kind": "family",
+          "text": "Fisher's solution lifted to a vacuum solution in five dimensions. Where its time and circle directions have the same exponent a boost mixes the two, and reducing along the angle of Milne coordinates gives this metric [kastor2017frozen]."
+        },
+        {
+          "id": "brans_dicke_sphere",
+          "kind": "family",
+          "text": "Divided by an exponential of its own scalar field, this metric solves the vacuum equations of Brans and Dicke's theory, where it is a mass in an expanding universe whose gravitational constant varies from place to place [clifton2005]."
+        },
+        {
+          "id": "zipoy_voorhees",
+          "kind": "family",
+          "text": "The static vacuum field of a rod. Ben Achour, Cisterna, and Hassaine gave it the same scalar field and the same factor of time in 2026, a relative of this solution with an axis of symmetry [benachour2026]."
+        },
+        {
+          "id": "vaidya",
+          "kind": "family",
+          "text": "Wang, Wu, and Gao cut the contracting solution along a light ray and joined it to Vaidya's outgoing radiation, which leaves a black hole of finite mass [wang2019critical]."
+        }
+      ],
+      "references": [
+        "husain1994exact",
+        "choptuik1993",
+        "roberts1989",
+        "fisher1948",
+        "malomuzh2009",
+        "janis1968",
+        "faraoni2013",
+        "husain1996",
+        "fonarev1995",
+        "maeda2007",
+        "bekenstein1974",
+        "husain2004",
+        "clifton2005",
+        "faraoni2012cousin",
+        "kastor2017frozen",
+        "wang2019critical",
+        "benachour2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/scalar_collapse_cosmology.json",
+      "charts": [
+        {
+          "id": "conformal_time",
+          "name": "Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty) \\;\\text{for}\\; \\eta_0 > 0",
+            "\\eta \\in (-\\infty, 0) \\;\\text{for}\\; \\eta_0 < 0",
+            "r \\in (b, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta = 0 \\;\\text{(curvature singularity, the big bang for}\\; \\eta_0 > 0\\text{)}",
+            "r = b \\;\\text{(curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Value of $r$ at the central singularity, a length"
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "Conformal time at which the scale factor $a = (\\eta/\\eta_0)^{1/2}$ is one, a length: $\\eta_0 > 0$ in the expanding branch and $\\eta_0 < 0$ in its time reverse"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Exponent of Fisher's solution, a pure number: $\\gamma = \\pm\\sqrt{3}/2$ where the field has no potential"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{b}{r}",
+              "description": "Schwarzschild's function with $b$ for $r_s$; the areal radius is $R = a\\,rf^{(1-\\gamma)/2}$"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$ and the radius $r$ of Husain, Martinez, and Núñez, both lengths, with the time shifted so that the factor is $\\eta/\\eta_0$ [husain1994exact]. The scalar field is $\\varphi = \\pm\\sqrt{c^4/16\\pi G}\\,\\left(\\sqrt{3}\\ln(\\eta/\\eta_0) + (\\gamma/\\sqrt{3})\\ln f\\right)$, with either sign for either $\\gamma$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\eta}{\\eta_0}\\left(-f^{\\gamma}d\\eta^2 + \\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-\\dfrac{\\eta}{\\eta_0}f^{\\gamma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\eta}{\\eta_0\\,f^{\\gamma}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\eta}{\\eta_0}r^2f^{1-\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\eta}{\\eta_0}r^2f^{1-\\gamma}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{b^2\\,\\eta_0\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)f^{\\gamma}}{2\\eta\\,r^2\\left(r - b\\right)^2} - \\dfrac{3\\eta_0}{2\\eta^3\\,f^{\\gamma}}",
+          "kretschmann": "K = \\dfrac{15\\eta_0^2}{4\\eta^6\\,f^{2\\gamma}} + \\dfrac{b^2\\,\\eta_0^2\\left(1 - 3\\gamma^2\\right)}{2\\eta^4\\,r^2\\left(r - b\\right)^2} + \\dfrac{b^2\\,\\eta_0^2\\left(48\\gamma^2\\,r^2 - 16b\\,\\gamma\\,r\\left(1 + \\gamma\\right)\\left(1 + 2\\gamma\\right) + b^2\\left(1 + \\gamma\\right)^2\\left(3 + 2\\gamma + 7\\gamma^2\\right)\\right)f^{2\\gamma}}{4\\eta^2\\,r^4\\left(r - b\\right)^4}"
+        },
+        {
+          "id": "comoving_time",
+          "name": "Comoving Time",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty) \\;\\text{for}\\; t_0 > 0",
+            "t \\in (-\\infty, 0) \\;\\text{for}\\; t_0 < 0",
+            "r \\in (b, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t = 0 \\;\\text{(curvature singularity, the big bang for}\\; t_0 > 0\\text{)}",
+            "r = b \\;\\text{(curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Value of $r$ at the central singularity, a length"
+            },
+            {
+              "symbol": "t_0",
+              "description": "Proper time at which the scale factor is one: $t_0 = 2\\eta_0/3c$, positive in the expanding branch and negative in its time reverse"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Exponent of Fisher's solution, a pure number: $\\gamma = \\pm\\sqrt{3}/2$ where the field has no potential"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{b}{r}",
+              "description": "Schwarzschild's function with $b$ for $r_s$; the areal radius is $R = a\\,rf^{(1-\\gamma)/2}$"
+            },
+            {
+              "symbol": "a = \\left(\\dfrac{t}{t_0}\\right)^{1/3}",
+              "description": "Scale factor of the Friedmann universe far from the centre, a pure number equal to $(\\eta/\\eta_0)^{1/2}$"
+            }
+          ],
+          "convention": "We use the proper time $t$ of comoving observers far from the centre, with $c\\,dt = a\\,d\\eta$, and the same radius $r$ [faraoni2013]. The scalar field is $\\varphi = \\pm\\sqrt{c^4/16\\pi G}\\,\\left(2\\sqrt{3}\\ln a + (\\gamma/\\sqrt{3})\\ln f\\right)$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -f^{\\gamma}c^2dt^2 + a^2\\left(\\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-f^{\\gamma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{a^2}{f^{\\gamma}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2r^2f^{1-\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2r^2f^{1-\\gamma}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{b^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)f^{\\gamma}}{2a^2\\,r^2\\left(r - b\\right)^2} - \\dfrac{2}{3c^2\\,t^2\\,f^{\\gamma}}",
+          "kretschmann": "K = \\dfrac{20}{27c^4\\,t^4\\,f^{2\\gamma}} + \\dfrac{2b^2\\left(1 - 3\\gamma^2\\right)}{9a^2\\,c^2\\,t^2\\,r^2\\left(r - b\\right)^2} + \\dfrac{b^2\\left(48\\gamma^2\\,r^2 - 16b\\,\\gamma\\,r\\left(1 + \\gamma\\right)\\left(1 + 2\\gamma\\right) + b^2\\left(1 + \\gamma\\right)^2\\left(3 + 2\\gamma + 7\\gamma^2\\right)\\right)f^{2\\gamma}}{4a^4\\,r^4\\left(r - b\\right)^4}"
+        },
+        {
+          "id": "fonarev_conformal",
+          "name": "Fonarev Conformal Time",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\eta \\in (0, \\infty) \\;\\text{for}\\; \\eta_0 > 0",
+            "\\eta \\in (-\\infty, 0) \\;\\text{for}\\; \\eta_0 < 0",
+            "r \\in (b, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\eta = 0 \\;\\text{(curvature singularity, the big bang for}\\; \\eta_0 > 0\\text{)}",
+            "r = b \\;\\text{(curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Value of $r$ at the central singularity, a length"
+            },
+            {
+              "symbol": "\\eta_0",
+              "description": "Conformal time at which the scale factor is one, a length"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Exponent of Fisher's solution, a pure number with $-1 < \\gamma < 1$ and $\\gamma^2 \\neq 1/2$"
+            },
+            {
+              "symbol": "s",
+              "description": "Exponent of the scale factor, a pure number: $s = (1-\\gamma^2)/(2\\gamma^2-1)$ on Fonarev's solutions, and $s = 1/2$ is the solution of Husain, Martinez, and Núñez"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{b}{r}",
+              "description": "Schwarzschild's function with $b$ for $r_s$; the areal radius is $R = a\\,rf^{(1-\\gamma)/2}$"
+            },
+            {
+              "symbol": "a = \\left(\\dfrac{\\eta}{\\eta_0}\\right)^s",
+              "description": "Scale factor of the Friedmann universe far from the centre, a pure number"
+            }
+          ],
+          "convention": "We use the conformal time $\\eta$, a length, in which Fonarev's solutions are a power of the time on Fisher's bracket [maeda2007, kastor2017frozen]. Einstein's equations read $R_{\\mu\\nu} = (8\\pi G/c^4)\\left(\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi + g_{\\mu\\nu}V\\right)$, and on the solutions the potential is $8\\pi GV/c^4 = s(2s-1)/(\\eta^2a^2f^{\\gamma})$, an exponential of $\\varphi = \\pm\\sqrt{c^4/4\\pi G}\\,\\left(\\gamma\\ln a/\\sqrt{1-\\gamma^2} + \\tfrac{1}{2}\\sqrt{1-\\gamma^2}\\,\\ln f\\right)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = a^2\\left(-f^{\\gamma}d\\eta^2 + \\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-a^2f^{\\gamma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{a^2}{f^{\\gamma}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2r^2f^{1-\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2r^2f^{1-\\gamma}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{b^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)f^{\\gamma}}{2a^2\\,r^2\\left(r - b\\right)^2} - \\dfrac{6s\\left(1 - s\\right)}{a^2\\,\\eta^2\\,f^{\\gamma}}",
+          "kretschmann": "K = \\dfrac{12s^2\\left(s^2 + 1\\right)}{a^4\\,\\eta^4\\,f^{2\\gamma}} + \\dfrac{2b^2\\,s^2\\left(1 - 3\\gamma^2\\right)}{a^4\\,\\eta^2\\,r^2\\left(r - b\\right)^2} + \\dfrac{b^2\\left(48\\gamma^2\\,r^2 - 16b\\,\\gamma\\,r\\left(1 + \\gamma\\right)\\left(1 + 2\\gamma\\right) + b^2\\left(1 + \\gamma\\right)^2\\left(3 + 2\\gamma + 7\\gamma^2\\right)\\right)f^{2\\gamma}}{4a^4\\,r^4\\left(r - b\\right)^4}"
+        },
+        {
+          "id": "fonarev",
+          "name": "Fonarev Time",
+          "coordinates": [
+            "T",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "r \\in (b, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "kT \\to -\\infty \\;\\text{(curvature singularity, the big bang for}\\; k > 0\\text{)}",
+            "r = b \\;\\text{(curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b",
+              "description": "Value of $r$ at the central singularity, a length"
+            },
+            {
+              "symbol": "k",
+              "description": "Rate at which the scale factor $e^{kT}$ grows in Fonarev's time, an inverse time"
+            },
+            {
+              "symbol": "\\gamma",
+              "description": "Exponent of Fisher's solution, a pure number with $-1 < \\gamma < 1$"
+            },
+            {
+              "symbol": "n",
+              "description": "Exponent of the lapse, a pure number: $n = \\gamma^2/(1-\\gamma^2)$ on Fonarev's solutions, and $n = 3$ is the solution of Husain, Martinez, and Núñez"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{b}{r}",
+              "description": "Schwarzschild's function with $b$ for $r_s$; the areal radius is $R = a\\,rf^{(1-\\gamma)/2}$"
+            }
+          ],
+          "convention": "We use Fonarev's time $T$, in which the scale factor is $e^{kT}$ and $c\\,dT = e^{(1-n)kT}\\,d\\eta$ [fonarev1995]. On the solutions the potential is $8\\pi GV/c^4 = (3-n)(k^2/c^2)\\,e^{-2nkT}f^{-\\gamma}$, with $\\varphi = \\pm\\sqrt{c^4/4\\pi G}\\,\\left(\\gamma kT/\\sqrt{1-\\gamma^2} + \\tfrac{1}{2}\\sqrt{1-\\gamma^2}\\,\\ln f\\right)$. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -e^{2nkT}f^{\\gamma}c^2dT^2 + e^{2kT}\\left(\\dfrac{dr^2}{f^{\\gamma}} + f^{1-\\gamma}r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-e^{2nkT}f^{\\gamma}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{e^{2k\\,T}}{f^{\\gamma}}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "e^{2kT}r^2f^{1-\\gamma}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "e^{2kT}r^2f^{1-\\gamma}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6k^2\\left(2 - n\\right)e^{-2n\\,k\\,T}}{c^2\\,f^{\\gamma}} + \\dfrac{b^2\\left(1 + \\gamma\\right)\\left(1 - \\gamma\\right)f^{\\gamma}e^{-2k\\,T}}{2r^2\\left(r - b\\right)^2}",
+          "kretschmann": "K = \\dfrac{12k^4\\left(n^2 + 2 - 2n\\right)e^{-4n\\,k\\,T}}{c^4\\,f^{2\\gamma}} + \\dfrac{2b^2\\,k^2\\left(1 - 3\\gamma^2\\right)e^{-2k\\,T\\left(1 + n\\right)}}{c^2\\,r^2\\left(r - b\\right)^2} + \\dfrac{b^2\\left(48\\gamma^2\\,r^2 - 16b\\,\\gamma\\,r\\left(1 + \\gamma\\right)\\left(1 + 2\\gamma\\right) + b^2\\left(1 + \\gamma\\right)^2\\left(3 + 2\\gamma + 7\\gamma^2\\right)\\right)f^{2\\gamma}e^{-4k\\,T}}{4r^4\\left(r - b\\right)^4}"
         }
       ]
     },
@@ -51983,6 +52411,11 @@
           "id": "thakurta",
           "kind": "family",
           "text": "A member of the generalized McVittie family with $M(t)=m a(t)$ and a radial heat flow [mello2017]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "A mass with a massless scalar field in a universe of the same field. Two of its apparent horizons appear together as McVittie's do, and then one of them meets an older horizon and both vanish [faraoni2013]."
         }
       ],
       "references": [
@@ -52004,7 +52437,8 @@
         "kastor1993",
         "carrera2010mcvittie",
         "vaidya1977kerr",
-        "mello2017"
+        "mello2017",
+        "faraoni2013"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mcvittie.json",
@@ -67702,6 +68136,11 @@
           "id": "global_texture",
           "kind": "family",
           "text": "Another self similar scalar collapse, with four components constrained to a three sphere. Roberts's field has a single unconstrained component [durrer1992textures]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "Fisher's static solution multiplied by a factor that grows with time, a second exact solution with the massless scalar field that depends on both time and radius. It looks the same at every scale only where its central singularity is absent [husain1994exact, wang2019critical]."
         }
       ],
       "references": [
@@ -67723,7 +68162,9 @@
         "hilditch2017",
         "harada2001stability",
         "evanscoleman1994",
-        "durrer1992textures"
+        "durrer1992textures",
+        "husain1994exact",
+        "wang2019critical"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/roberts.json",
@@ -75861,6 +76302,11 @@
           "id": "kaluza_klein_monopole",
           "kind": "family",
           "text": "Gross and Perry studied the neutral scalar family and magnetic monopoles in five dimensional vacuum gravity [grossperry1983, lake2006static]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "The member with equal time and circle exponents has a boost symmetry. David Kastor and Jennie Traschen wrote that plane in Milne coordinates in 2017 and reduced along its angle, which gives a scalar field universe that expands around Fisher's singularity [kastor2017frozen]."
         }
       ],
       "references": [
@@ -75869,7 +76315,8 @@
         "chodos1982",
         "overduin1997",
         "grossperry1983",
-        "davidsonowen1985"
+        "davidsonowen1985",
+        "kastor2017frozen"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/static_five_soliton.json",
@@ -76929,6 +77376,11 @@
           "id": "thakurta",
           "kind": "family",
           "text": "A conformal Schwarzschild geometry whose scale factor depends on static Schwarzschild time. Its fluid carries a radial heat flow [mello2017]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "The same construction with Fisher's scalar field solution in Schwarzschild's place. One massless scalar field fills that universe, where Sultana and Dyer's holds a dust and a null dust [faraoni2013]."
         }
       ],
       "references": [
@@ -76939,7 +77391,8 @@
         "saida2007",
         "carrera2010mcvittie",
         "mello2017",
-        "mcclure2006"
+        "mcclure2006",
+        "faraoni2013"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/sultana_dyer.json",
@@ -84019,6 +84472,11 @@
           "id": "dimensionally_continued",
           "kind": "family",
           "text": "Static black holes of Lovelock's theory in higher dimensions. Masato Nozawa and Hideki Maeda let their mass depend on advanced time in 2006, as Vaidya's does, and found that a naked singularity can form [nozawa2006]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "A scalar field universe whose contracting branch Xiaobao Wang, Xiaoning Wu, and Sijie Gao joined along a light ray to Vaidya's outgoing radiation in 2019. The black hole that remains has a mass that follows a power law of exponent $1/2$ [wang2019critical]."
         }
       ],
       "references": [
@@ -84061,7 +84519,8 @@
         "oripiran1987",
         "husain1994",
         "lemos1999",
-        "nozawa2006"
+        "nozawa2006",
+        "wang2019critical"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -88656,6 +89115,11 @@
           "id": "counter_rotating_discs",
           "kind": "composite",
           "text": "The Weyl potentials generate thin disc sources when a cut clear of the singular region is joined to its reflection [bicak1993]."
+        },
+        {
+          "id": "scalar_collapse_cosmology",
+          "kind": "family",
+          "text": "Fisher's solution with the exponent $\\sqrt{3}/2$ multiplied by a factor of time. Jibril Ben Achour, Adolfo Cisterna, and Mokhtar Hassaine built its counterpart on the Zipoy-Voorhees metric in 2026 [benachour2026]."
         }
       ],
       "references": [
@@ -88684,7 +89148,8 @@
         "boshkayev2019",
         "geroch1982",
         "astorino2022swirling",
-        "boshkayev2012qm"
+        "boshkayev2012qm",
+        "benachour2026"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/zipoy_voorhees.json",
