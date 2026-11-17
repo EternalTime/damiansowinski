@@ -38,7 +38,53 @@
   "signature": "(-,+,+,+)",
   "convention": "The parameters $b$ and $\\eta_0$ are lengths and $\\gamma$ is a pure number, and a scalar field $\\varphi$ with no potential obeys $R_{\\mu\\nu} = (8\\pi G/c^4)\\,\\partial_\\mu\\varphi\\,\\partial_\\nu\\varphi$. We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
   "history": "Viqar Husain, Erik A. Martinez, and Darío Núñez, at the University of Alberta, titled their article of February 1994 \"Exact solution for scalar field collapse\" [husain1994exact]. Matthew Choptuik had found on a computer the year before that a collapsing massless scalar field makes black holes of mass proportional to $|p - p_*|^{0.37}$, where $p$ is any parameter of the initial pulse and $p_*$ its value at the threshold [choptuik1993, husain1994exact]. The three wanted an exact solution from which such a law could be read [husain1994exact]. Of the solutions then known almost all were static or depended on time alone, and Mark Roberts's of 1989 was the exception they cite [husain1994exact, roberts1989]. Their own is $$ds^2 = \\frac{\\eta}{\\eta_0}\\left[-f^{\\gamma}d\\eta^2 + f^{-\\gamma}dr^2 + r^2f^{1-\\gamma}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right], \\qquad f = 1 - \\frac{b}{r},$$ where the conformal time $\\eta$ and the constants $\\eta_0$ and $b$ are lengths and $\\gamma = \\pm\\sqrt{3}/2$ [husain1994exact]. The bracket alone, with $\\gamma$ free, is the static solution that Iosif Zalmanovich Fisher published in 1948 and Allen Janis, Ezra Newman, and Jeffrey Winicour found again in 1968 [fisher1948, malomuzh2009, janis1968, husain1994exact].¶With $b = 0$ the metric is a spatially flat Friedmann universe filled with the scalar field, and its scale factor $a = (\\eta/\\eta_0)^{1/2}$ grows as the cube root of the proper time $t$ of comoving observers [husain1994exact, faraoni2013]. Far from the centre the solutions with $b > 0$ approach that universe [husain1994exact, faraoni2013]. The curvature diverges on the spacelike surface $\\eta = 0$, the big bang of the expanding branch $\\eta > 0$, and on the timelike surface $r = b$, where the spheres of symmetry have zero area [husain1994exact, faraoni2013]. Husain, Martinez, and Núñez found an apparent horizon at every time in the expanding branch and none in the static solution [husain1994exact]. On the early side of that horizon both families of radial light rays diverge, as in a white hole, and in the time reverse, which contracts to a final singularity, both converge, as in a black hole [husain1994exact]. The mass inside the horizon grows without limit as the horizon moves outward, and two years later the three counted the solution among those that are cosmological and whose collapse \"results in infinite mass black holes\" [husain1994exact, husain1996].¶Oleg A. Fonarev, at the Hebrew University of Jerusalem, generalised the solution in September 1994 while working on a problem that Jacob Bekenstein had suggested [fonarev1995]. Fonarev proved that any static vacuum solution leads to a time dependent solution with a scalar field whose potential is an exponential of the field [fonarev1995]. From Schwarzschild's metric Fonarev obtained the same bracket for any $\\gamma$ between $-1$ and $1$, multiplied by a function of $\\eta$ that $\\gamma$ fixes [fonarev1995, maeda2007]. The potential vanishes where $\\gamma^2 = 3/4$, the solution of Husain, Martinez, and Núñez [fonarev1995]. With a transformation of Bekenstein's, Fonarev mapped the family to solutions for a scalar field coupled conformally to the curvature, and the one from $\\gamma = 1/2$ is regular on the sphere $r = b$ [fonarev1995, bekenstein1974]. In Fonarev's description it is two universes joined by a throat, one of which collapses to a singularity that an event horizon hides when $bH \\ge 1$, where $1/H$ is the radius of the cosmological horizons [fonarev1995].¶Hideki Maeda worked out the global structure of the family with a potential in 2007 and found its singularity at $r = b$ timelike [maeda2007]. In Maeda's analysis the apparent horizon of the contracting solution with no potential is spacelike, which makes that solution a black hole by the local definition of one [maeda2007]. The singularity behind that horizon is the spacelike one at $\\eta = 0$, trapped surfaces do not cover the central singularity, and a spacetime with no future null infinity has no event horizon [maeda2007]. Maeda judged it proper to call the whole family naked singularities, and wrote that such solutions \"may demonstrate a weak point of the local definition of a black hole in terms of a trapping horizon\" [maeda2007]. Husain had described the expanding solution in 2004 as \"an inhomogeneous cosmology with an initial spacelike singularity, and a naked timelike singularity at the origin\" [husain2004]. Testing the covariant bounds on entropy there, Husain found that the bound on a complete light sheet held in every case computed and that the generalised bound on a truncated sheet failed near the apparent horizon [husain2004].¶Valerio Faraoni followed the horizons in 2013 in the proper time $t$ and in the areal radius $R = a\\,rf^{(1-\\gamma)/2}$ [faraoni2013]. For $\\gamma = \\sqrt{3}/2$ one apparent horizon expands from the big bang until two more appear together [faraoni2013]. The outer one of that pair expands forever as the cosmological horizon, and the inner one contracts until it meets the first, where both vanish and the singularity at $R = 0$ is left naked [faraoni2013]. For $\\gamma = -\\sqrt{3}/2$ there is the cosmological horizon alone, and the singularity is naked throughout [faraoni2013]. The central singularity, Faraoni wrote, \"is created with the universe in the Big Bang and does not result from a collapse process\" [faraoni2013]. Timothy Clifton, David F. Mota, and John D. Barrow had transformed the solution conformally in 2005 into a vacuum solution of Brans and Dicke's theory, and Faraoni and Andres Zambrano Moreno showed in 2012 that it has a wormhole throat for some of its parameters and a naked singularity for the rest [clifton2005, faraoni2012cousin].¶David Kastor and Jennie Traschen asked in 2017 what selects the exponent $\\sqrt{3}/2$ [kastor2017frozen]. They lifted the static solution to a vacuum solution in five dimensions, where the scalar field sets the size of the fifth, and found that at this exponent alone the metric is unchanged by boosts that mix time with the fifth dimension [kastor2017frozen]. Writing that plane in Milne coordinates and reducing along the new spatial direction, they recovered four dimensions with the factor $\\eta/\\eta_0$; with $b = 0$ the five dimensional space is flat [kastor2017frozen]. Xiaobao Wang, Xiaoning Wu, and Sijie Gao cut the contracting solution along an ingoing light ray in 2019 and joined it to outgoing radiation, which leaves a black hole of finite mass [wang2019critical]. That mass is proportional to $|\\eta_0|^{-1/2}$, a power law of exponent $1/2$ in a solution that for $b > 0$ has no self similarity [wang2019critical]. Jibril Ben Achour, Adolfo Cisterna, and Mokhtar Hassaine extended Fonarev's theorem in 2026 to static vacuum solutions with an axis of symmetry, applied it to Zipoy and Voorhees's metric, and left the horizons of the result to a numerical study [benachour2026].",
-  "related": [],
+  "related": [
+    {
+      "id": "fisher_jnw",
+      "kind": "conformal",
+      "text": "The static solution inside the bracket. At $\\gamma = \\pm\\sqrt{3}/2$ Fisher's metric multiplied by $\\eta/\\eta_0$ solves Einstein's equations again, with the same light rays and a scalar field that now grows with time [husain1994exact]."
+    },
+    {
+      "id": "frw",
+      "kind": "special_case",
+      "text": "The solution with $b = 0$, a spatially flat Friedmann universe filled with a massless scalar field. Its scale factor grows as the cube root of the proper time [husain1994exact, faraoni2013]."
+    },
+    {
+      "id": "roberts",
+      "kind": "family",
+      "text": "An older exact solution of the same equations that depends on both time and radius. Roberts's looks the same at every scale, and this one does only where $b = 0$ [husain2004, wang2019critical]."
+    },
+    {
+      "id": "sultana_dyer",
+      "kind": "family",
+      "text": "Schwarzschild's metric multiplied by the scale factor of a universe of dust, as this is Fisher's multiplied by that of a universe of scalar field. Sultana and Dyer's universe is filled by two fluids, a dust and a null dust, and this one by a single field [faraoni2013]."
+    },
+    {
+      "id": "mcvittie",
+      "kind": "family",
+      "text": "A mass in an expanding universe whose fluid does not fall onto it. In a universe of dust its two apparent horizons appear together and stay, and here a pair appears and one of the two later vanishes with an older horizon [faraoni2013]."
+    },
+    {
+      "id": "static_five_soliton",
+      "kind": "family",
+      "text": "Fisher's solution lifted to a vacuum solution in five dimensions. Where its time and circle directions have the same exponent a boost mixes the two, and reducing along the angle of Milne coordinates gives this metric [kastor2017frozen]."
+    },
+    {
+      "id": "brans_dicke_sphere",
+      "kind": "family",
+      "text": "Divided by an exponential of its own scalar field, this metric solves the vacuum equations of Brans and Dicke's theory, where it is a mass in an expanding universe whose gravitational constant varies from place to place [clifton2005]."
+    },
+    {
+      "id": "zipoy_voorhees",
+      "kind": "family",
+      "text": "The static vacuum field of a rod. Ben Achour, Cisterna, and Hassaine gave it the same scalar field and the same factor of time in 2026, a relative of this solution with an axis of symmetry [benachour2026]."
+    },
+    {
+      "id": "vaidya",
+      "kind": "family",
+      "text": "Wang, Wu, and Gao cut the contracting solution along a light ray and joined it to Vaidya's outgoing radiation, which leaves a black hole of finite mass [wang2019critical]."
+    }
+  ],
   "references": [
     "husain1994exact",
     "choptuik1993",

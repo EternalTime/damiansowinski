@@ -92,6 +92,11 @@
       "id": "counter_rotating_discs",
       "kind": "composite",
       "text": "The Weyl potentials generate thin disc sources when a cut clear of the singular region is joined to its reflection [bicak1993]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "Fisher's solution with the exponent $\\sqrt{3}/2$ multiplied by a factor of time. Jibril Ben Achour, Adolfo Cisterna, and Mokhtar Hassaine built its counterpart on the Zipoy-Voorhees metric in 2026 [benachour2026]."
     }
   ],
   "references": [
@@ -120,7 +125,8 @@
     "boshkayev2019",
     "geroch1982",
     "astorino2022swirling",
-    "boshkayev2012qm"
+    "boshkayev2012qm",
+    "benachour2026"
   ],
   "coordinates": [
     {

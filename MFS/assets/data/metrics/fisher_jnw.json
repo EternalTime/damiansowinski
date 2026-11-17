@@ -89,6 +89,11 @@
       "id": "static_five_soliton",
       "kind": "family",
       "text": "A spacelike fifth dimension lifts the massless scalar geometry to a vacuum solution in five dimensions [kramer1971projective]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "conformal",
+      "text": "Fisher's solution at $\\gamma = \\sqrt{3}/2$ multiplied by a factor that grows with time. At that exponent the product solves Einstein's equations again, and the scalar field fills an expanding universe [husain1994exact]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "faraoni2018",
     "herdeiro2025",
     "banerjee1998",
-    "kramer1971projective"
+    "kramer1971projective",
+    "husain1994exact"
   ],
   "coordinates": [
     {

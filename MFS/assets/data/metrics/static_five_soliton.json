@@ -21,7 +21,8 @@
     "chodos1982",
     "overduin1997",
     "grossperry1983",
-    "davidsonowen1985"
+    "davidsonowen1985",
+    "kastor2017frozen"
   ],
   "coordinates": [
     {
@@ -5735,6 +5736,11 @@
       "id": "kaluza_klein_monopole",
       "kind": "family",
       "text": "Gross and Perry studied the neutral scalar family and magnetic monopoles in five dimensional vacuum gravity [grossperry1983, lake2006static]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "The member with equal time and circle exponents has a boost symmetry. David Kastor and Jennie Traschen wrote that plane in Milne coordinates in 2017 and reduced along its angle, which gives a scalar field universe that expands around Fisher's singularity [kastor2017frozen]."
     }
   ]
 }

@@ -160,6 +160,11 @@
       "id": "dimensionally_continued",
       "kind": "family",
       "text": "Static black holes of Lovelock's theory in higher dimensions. Masato Nozawa and Hideki Maeda let their mass depend on advanced time in 2006, as Vaidya's does, and found that a naked singularity can form [nozawa2006]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "A scalar field universe whose contracting branch Xiaobao Wang, Xiaoning Wu, and Sijie Gao joined along a light ray to Vaidya's outgoing radiation in 2019. The black hole that remains has a mass that follows a power law of exponent $1/2$ [wang2019critical]."
     }
   ],
   "references": [
@@ -202,7 +207,8 @@
     "oripiran1987",
     "husain1994",
     "lemos1999",
-    "nozawa2006"
+    "nozawa2006",
+    "wang2019critical"
   ],
   "coordinates": [
     {

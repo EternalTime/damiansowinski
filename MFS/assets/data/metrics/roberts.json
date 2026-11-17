@@ -65,6 +65,11 @@
       "id": "global_texture",
       "kind": "family",
       "text": "Another self similar scalar collapse, with four components constrained to a three sphere. Roberts's field has a single unconstrained component [durrer1992textures]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "Fisher's static solution multiplied by a factor that grows with time, a second exact solution with the massless scalar field that depends on both time and radius. It looks the same at every scale only where its central singularity is absent [husain1994exact, wang2019critical]."
     }
   ],
   "references": [
@@ -86,7 +91,9 @@
     "hilditch2017",
     "harada2001stability",
     "evanscoleman1994",
-    "durrer1992textures"
+    "durrer1992textures",
+    "husain1994exact",
+    "wang2019critical"
   ],
   "coordinates": [
     {

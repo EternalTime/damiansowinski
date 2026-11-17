@@ -236,6 +236,11 @@
       "id": "ads_dust_collapse",
       "kind": "composite",
       "text": "A slab of an open universe of dust with a negative cosmological constant, joined across its faces to black holes whose horizons are tori or surfaces of higher genus [smith1997, mena2008toroidal]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "generalisation",
+      "text": "A flat Friedmann universe of massless scalar field with the naked singularity of Fisher's solution at its centre from the big bang on. With $b = 0$ it is that universe alone [husain1994exact, faraoni2013]."
     }
   ],
   "references": [
@@ -319,7 +324,9 @@
     "brandenberger1993",
     "brout1979causal",
     "smith1997",
-    "mena2008toroidal"
+    "mena2008toroidal",
+    "husain1994exact",
+    "faraoni2013"
   ],
   "coordinates": [
     {

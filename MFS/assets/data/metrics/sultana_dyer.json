@@ -56,6 +56,11 @@
       "id": "thakurta",
       "kind": "family",
       "text": "A conformal Schwarzschild geometry whose scale factor depends on static Schwarzschild time. Its fluid carries a radial heat flow [mello2017]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "The same construction with Fisher's scalar field solution in Schwarzschild's place. One massless scalar field fills that universe, where Sultana and Dyer's holds a dust and a null dust [faraoni2013]."
     }
   ],
   "references": [
@@ -66,7 +71,8 @@
     "saida2007",
     "carrera2010mcvittie",
     "mello2017",
-    "mcclure2006"
+    "mcclure2006",
+    "faraoni2013"
   ],
   "coordinates": [
     {

@@ -71,6 +71,11 @@
       "id": "thakurta",
       "kind": "family",
       "text": "A member of the generalized McVittie family with $M(t)=m a(t)$ and a radial heat flow [mello2017]."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "A mass with a massless scalar field in a universe of the same field. Two of its apparent horizons appear together as McVittie's do, and then one of them meets an older horizon and both vanish [faraoni2013]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "kastor1993",
     "carrera2010mcvittie",
     "vaidya1977kerr",
-    "mello2017"
+    "mello2017",
+    "faraoni2013"
   ],
   "coordinates": [
     {

@@ -70,6 +70,11 @@
       "id": "extended_inflation",
       "kind": "family",
       "text": "Brans-Dicke gravity also supports an expanding false vacuum universe with a homogeneous gravitational scalar."
+    },
+    {
+      "id": "scalar_collapse_cosmology",
+      "kind": "family",
+      "text": "A time dependent relative. Timothy Clifton, David F. Mota, and John D. Barrow divided this scalar field universe by an exponential of its field in 2005 and obtained a vacuum solution of Brans and Dicke's equations, a mass in an expanding universe [clifton2005]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "thornedykla1971",
     "scheel1995",
     "ohanlon1972",
-    "deruelle2011"
+    "deruelle2011",
+    "clifton2005"
   ],
   "coordinates": [
     {
