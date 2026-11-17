@@ -1,0 +1,26 @@
+{
+  "hidden": [
+    {
+      "reason": "Fonarev's solution at gamma = 4/5, with an exponential potential, another member of the family than the two massless members whose moments are embedded.",
+      "drawings": [
+        "scalar_collapse_cosmology/fonarev_conformal/radial",
+        "scalar_collapse_cosmology/fonarev/radial",
+        "conformal scalar_collapse_cosmology/fonarev_conformal",
+        "conformal scalar_collapse_cosmology/fonarev"
+      ]
+    }
+  ],
+  "hidden_views": [
+    {
+      "reason": "The two massless members, gamma = sqrt(3)/2 and gamma = -sqrt(3)/2, are two solutions, each embedded in a view of its own, and each drawing is of one of them.",
+      "drawings": {
+        "scalar_collapse_cosmology/conformal_time/positive": ["negative"],
+        "scalar_collapse_cosmology/conformal_time/negative": ["positive"],
+        "scalar_collapse_cosmology/comoving_time/radial": ["negative"],
+        "conformal scalar_collapse_cosmology/positive": ["negative"],
+        "conformal scalar_collapse_cosmology/negative": ["positive"],
+        "conformal scalar_collapse_cosmology/comoving": ["negative"]
+      }
+    }
+  ]
+}

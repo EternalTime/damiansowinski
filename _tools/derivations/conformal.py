@@ -32419,5 +32419,13 @@ CAPTIONS.update(_ads_vaidya_drawings.conformal_captions())
 import dimensionally_continued_drawings as _dimensionally_continued_drawings
 _dimensionally_continued_drawings.register_conformal(sys.modules[__name__])
 
+
+import scalar_collapse_cosmology_drawings as _scalar_collapse_drawings
+DRAWN[_scalar_collapse_drawings.METRIC] = (
+    lambda ck, src: _scalar_collapse_drawings.conformal_views(ck, src, sys.modules[__name__]))
+CAPTIONS.update({(_scalar_collapse_drawings.METRIC, vid): [text]
+                 for vid, text in _scalar_collapse_drawings.CONFORMAL_CAPTIONS.items()})
+
+
 if __name__ == "__main__":
     sys.exit(main())

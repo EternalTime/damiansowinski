@@ -297,3 +297,114 @@ EMBEDDING_CAPTIONS = {
     "negative": "The equatorial plane at $\\eta = \\eta_0$ ($\\gamma = -\\sqrt{3}/2$), in Minkowski space from the "
                 "singularity $r = b$ out.",
 }
+
+
+# (system, view, exponent's sign): one conformal view for each chart, both massless members in the
+# conformal chart.
+CONFORMAL = (("conformal_time", "positive", "positive"), ("conformal_time", "negative", "negative"),
+             ("comoving_time", "comoving", "positive"), ("fonarev_conformal", "fonarev_conformal", None),
+             ("fonarev", "fonarev", None))
+ELL = 4.0
+# Each chart's own time, at the moments its coordinate lines are drawn, and where its big bang is.
+TIMES = {"conformal_time": (0.5, 1, 2, 4, 8), "comoving_time": (0.5, 1, 2, 4, 8),
+         "fonarev_conformal": (0.5, 1, 2, 4, 8), "fonarev": (-2, -1, 0, 1, 2)}
+BANG = {"conformal_time": 0.0, "comoving_time": 0.0, "fonarev_conformal": 0.0, "fonarev": -400.0}
+MIDDLE = {"conformal_time": ETA0, "comoving_time": T0, "fonarev_conformal": FON_ETA0, "fonarev": 0.0}
+TIME_TEXT = {"conformal_time": "$\\eta = b/2$, $b$, $2b$, $4b$, $8b$", "comoving_time": "$ct = b/2$, $b$, $2b$, $4b$, $8b$",
+             "fonarev_conformal": "$\\eta = b/2$, $b$, $2b$, $4b$, $8b$", "fonarev": "$cT = 0$, $\\pm b$, $\\pm 2b$"}
+CONFORMAL_LABEL = {"positive": "$\\gamma = \\sqrt{3}/2$", "negative": "$\\gamma = -\\sqrt{3}/2$",
+                   "comoving": "Comoving time", "fonarev_conformal": "Fonarev, $\\eta$", "fonarev": "Fonarev, $T$"}
+
+
+def conformal_views(ck, src, cf):
+    """Each chart's plane carried by p, q = arctan((eta -+ r_*)/l), l = 4b, onto the triangle
+    T = p + q > 0, X = q - p > 0 of Minkowski's compactification, each point a 2-sphere: the big bang
+    eta = 0 is its base T = 0 and r = b its side X = 0, both curvature singularities where the
+    Kretschmann scalar diverges, which is checked, and null infinity runs from i^+ at (0, pi) to i^0
+    at (pi, 0). The apparent horizon is Husain, Martinez and Nunez's (11) for the massless members
+    and its generalisation to a = (eta/eta_0)^s for Fonarev's, both of which print_charts.py checks,
+    carried by the same map."""
+    views = []
+    pi, half = cf.PI, cf.HALF
+    for system, vid, sign in CONFORMAL:
+        gamma = gamma_of(system, sign or "positive")
+        s = FON_S if system.startswith("fonarev") else 0.5
+        plane = cf.Plane(src, METRIC, system, (CLOCK[system], "r"), cf.EQUATOR, params(system, sign or "positive"))
+
+        def fmap(x0, r, system=system, gamma=gamma):
+            return cf.mink_pq(eta_of(system, x0), rstar(r, gamma), ELL)
+
+        name = f"Husain-Martinez-Nunez {system}" + (f", gamma = {'' if gamma > 0 else '-'}sqrt(3)/2" if sign else "")
+        x0s = ck.uniform(-6, 4) if system == "fonarev" else ck.uniform(0.02, 20)
+        ck.chart(name, plane, fmap, x0s, 1 + np.exp(ck.uniform(-6, 3.5)), lambda x0, r: (1, 0))
+        K = plane.kretschmann
+        mid = np.full(3, MIDDLE[system])
+        ck.diverges(f"{name}: the Kretschmann scalar diverges on r = b",
+                    K(mid, np.full(3, 1 + 1e-4)), K(mid, np.full(3, 1 + 1e-5)))
+        rr = np.array([1.5, 2.0, 4.0])
+        near, nearer = ((-6.0, -6.0 - 9 * math.log(10) / 7) if system == "fonarev" else
+                        (0.01, 0.001) if system != "comoving_time" else (0.01, 0.01 * 10 ** -1.5))
+        ck.diverges(f"{name}: the Kretschmann scalar diverges on the big bang",
+                    K(np.full(3, near), rr), K(np.full(3, nearer), rr))
+        ck.limit(f"{name}: the big bang meets r = b at (X, T) = (0, 0)",
+                 cf.point(*fmap(BANG[system], 1.0)), [0, 0], 1e-9)
+        ck.limit(f"{name}: the big bang runs to i0 at (pi, 0)", cf.point(*fmap(BANG[system], 1e9)), [pi, 0], 1e-6)
+        ck.limit(f"{name}: r = b is the side X = 0", [cf.point(*fmap(x, 1.0))[0] for x in TIMES[system]],
+                 [0] * 5, 1e-12)
+        later = {"fonarev": 60.0, "comoving_time": 1e12}.get(system, 1e9)
+        ck.limit(f"{name}: at a fixed r the end of time is i+ at (0, pi)", cf.point(*fmap(later, 3.0)), [0, pi], 1e-6)
+
+        v = cf.View(vid, CONFORMAL_LABEL[vid], [-0.35, pi + 0.35, -0.3, pi + 0.3], system)
+        tri = [[0, 0], [pi, 0], [0, pi]]
+        v.fill("region", tri)
+        v.fill("cover", tri)
+        out = cf.spread(1, np.inf, 600, 14)
+        for x0 in TIMES[system]:
+            v.curve("t", *fmap(np.full_like(out, x0), out))
+        own = cf.S_ALL if system == "fonarev" else cf.spread(0, np.inf, 600, 12)
+        for r in (1.5, 2.0, 4.0):
+            v.curve("r", *fmap(own, np.full_like(own, r)))
+        rh = cf.spread(1, np.inf, 1500, 16)
+        v.curve("apparent", *cf.mink_pq(horizon(rh, gamma, s), rstar(rh, gamma), ELL))
+        v.line("singular", [[[pi, 0], [0, 0], [0, pi]]], zig=True)
+        v.line("scri", [[[0, pi], [pi, 0]]])
+        for at, text, anchor, dx, dy in (((0, pi), "$i^+$", "b", 0, -6), ((pi, 0), "$i^0$", "l", 6, 0)):
+            v.layers.append({"kind": "point", "class": "infinity", "at": [round(at[0], 4), round(at[1], 4)]})
+            v.label_xt(at, text, anchor, dx=dx, dy=dy)
+        v.label_xt([half, half], "$\\mathscr{I}^+$", "bl", dx=5, dy=-3)
+        v.label_xt([0, half], "$r = b$", "r", dx=-6)
+        v.legend("cover", "the expanding branch")
+        v.legend("t", TIME_TEXT[system])
+        v.legend("r", "$r = 1.5\\,b$, $2b$, $4b$")
+        v.legend("apparent", "the apparent horizon")
+        v.legend("singular", "the big bang and $r = b$")
+        v.legend("scri", "future null infinity $\\mathscr{I}^+$")
+        if sign:
+            moment = cf.slices.moments(METRIC, view_id=sign)[0]
+            lo, hi = moment.reach("conformal_time", "r")
+            rr = lo + (hi - lo) * np.linspace(0, 1, 600) ** 3
+            v.slice(moment, [cf.mink_pq(np.full_like(rr, ETA0), rstar(rr, gamma), ELL)],
+                    label="$t = t_0$" if system == "comoving_time" else "$\\eta = \\eta_0$")
+        tail = "$p, q = \\arctan((\\eta \\mp r_*)/\\ell)$ with $r_* = \\int_b^r f^{-\\gamma}dr$."
+        if system == "fonarev":
+            settings = "$b = 1$, $k = c/b$, $\\ell = 4b$; " + tail[:-1] + " and $\\eta = \\eta_0e^{7kT/9}$."
+        elif system == "fonarev_conformal":
+            settings = "$b = 1$, $\\eta_0 = 9b/7$, $\\ell = 4b$; " + tail
+        else:
+            settings = "$b = 1$, $\\eta_0 = 2b$, $\\ell = 4b$; " + tail
+        v.set(settings=settings)
+        views.append(v)
+    return views
+
+
+CONFORMAL_CAPTIONS = {
+    "positive": "The expanding universe of Husain, Martinez, and Núñez ($\\gamma = \\sqrt{3}/2$), each point in the "
+                "diagram a 2-sphere.",
+    "negative": "The expanding universe of Husain, Martinez, and Núñez ($\\gamma = -\\sqrt{3}/2$), each point in the "
+                "diagram a 2-sphere.",
+    "comoving": "The universe of Husain, Martinez, and Núñez in comoving time ($\\gamma = \\sqrt{3}/2$), "
+                "each point in the diagram a 2-sphere.",
+    "fonarev_conformal": "Fonarev's expanding universe with an exponential potential ($\\gamma = 4/5$), each point in "
+                         "the diagram a 2-sphere.",
+    "fonarev": "Fonarev's expanding universe in his time $T$ ($\\gamma = 4/5$), each point in the diagram a 2-sphere.",
+}
