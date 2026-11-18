@@ -37775,5 +37775,10 @@ import waves_in_friedmann as _waves_in_friedmann
 CHARTS[_waves_in_friedmann.METRIC] = [lambda system=system: _waves_in_friedmann.chart_spec(system)
                                       for system in _waves_in_friedmann.CHARTS]
 
+import kaluza_klein_melvin as _kaluza_klein_melvin
+CHARTS[_kaluza_klein_melvin.METRIC] = [lambda system=system: _kaluza_klein_melvin.chart_spec(system)
+                                       for system in _kaluza_klein_melvin.CHARTS]
+
+
 if __name__ == "__main__":
     main()

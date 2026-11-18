@@ -1,0 +1,460 @@
+{
+  "id": "kaluza_klein_melvin",
+  "name": "Kaluza-Klein Melvin Universe",
+  "short_name": "Kaluza-Klein Melvin",
+  "description": "Flat spacetime of five dimensions whose fifth dimension is a circle with a twist, so that anything taken once around it comes back turned through a fixed angle about an axis. Seen from four dimensions it is a tube of magnetic flux with a dilaton, the counterpart in Kaluza-Klein theory of the Melvin magnetic universe. Fay Dowker, Jerome Gauntlett, Gary Gibbons, and Gary Horowitz showed in 1995 that it can decay by a bubble of nothing or by creating pairs of Kaluza-Klein monopoles.",
+  "tags": [
+    "flat",
+    "vacuum",
+    "conformally flat",
+    "five-dimensional",
+    "static",
+    "stationary",
+    "Kaluza-Klein",
+    "compact dimension",
+    "higher dimensions",
+    "magnetic field",
+    "dilaton",
+    "Einstein-Maxwell-dilaton",
+    "string theory",
+    "cylindrical symmetry",
+    "axisymmetric",
+    "topology",
+    "not asymptotically flat",
+    "instability",
+    "black hole pair creation",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "We keep factors of $c$ explicit.",
+  "history": "Flat spacetime of five dimensions becomes a magnetic universe when its fifth dimension is rolled into a circle with a twist [dowker1995]. Each point is identified with the one reached by moving a distance $2\\pi R$ around the circle and turning through an angle $2\\pi RB$ about an axis [dowker1995]. Seen from four dimensions the space is a tube of magnetic flux along that axis, and $B$ is the strength of the field on it [dowker1995]. The curvature is zero at every point, and a vector taken once around the circle comes back rotated by $2\\pi RB$ [dowker1994b, dowker1995]. The square of the field is $F_{\\mu\\nu}F^{\\mu\\nu} = 2B^2/\\Lambda^4$, with $\\Lambda = 1 + B^2\\rho^2$ and $\\rho$ the distance from the axis, so it falls off away from the axis [dowker1994b].¶In Einstein-Maxwell theory the counterpart is the Melvin magnetic universe, a static flux tube with cylindrical symmetry [melvin1964, dowker1995]. Gary Gibbons and Kei-ichi Maeda generalised it in 1988 to theories with a dilaton, a scalar field coupled to the Maxwell field with a strength $a$ [gibbons1988, dowker1994b]. At $a = \\sqrt{3}$ the theory is Kaluza-Klein theory, general relativity in five dimensions with a symmetry along the fifth [dowker1994b]. Fay Dowker, Jerome Gauntlett, David Kastor, and Jennie Traschen obtained that solution from flat space in 1994 by \"a transformation mixing the internal and azimuthal coordinates\", which they called a rotation [dowker1994]. With Steven Giddings and Gary Horowitz, Dowker and Gauntlett wrote its metric of five dimensions the same year in cylindrical coordinates, with $y$ the coordinate around the circle, $$ds^2 = -c^2dt^2 + dz^2 + d\\rho^2 + \\rho^2(d\\varphi + B\\,dy)^2 + dy^2,$$ and found it flat [dowker1994b]. They reduced it to four dimensions along a combination of the translation in $y$ and a rotation, which is how a flat space produces a magnetic field [dowker1994b].¶Gibbons joined Dowker, Gauntlett, and Horowitz in 1995 to study the geometry and its decay [dowker1995]. A turn through $2\\pi$ changes nothing, so fields that differ by a multiple of $1/R$ give one spacetime, and the distinct ones fill the range $-1/2R < B \\le 1/2R$ [dowker1995]. On scales large compared with the circle the geometry is a metric, a Maxwell field, and a dilaton in four dimensions, with $ds_4^2 = \\Lambda^{1/2}(-c^2dt^2 + dz^2 + d\\rho^2) + \\Lambda^{-1/2}\\rho^2d\\varphi^2$ [dowker1995]. The circle has the length $2\\pi R\\Lambda^{1/2}$, which grows in proportion to $\\rho$ far from the axis [dowker1995]. The field is close to uniform only where $\\rho \\ll 1/|B|$, as for the Melvin universe, which \"curls up\" far from its axis [dowker1995]. With $\\rho \\gg R$ as well, to keep the fifth dimension unobservable, a description in four dimensions needs $|B| \\ll 1/R$ [dowker1995].¶Edward Witten showed in 1982 that the Kaluza-Klein vacuum, the same space with no twist, can decay by nucleating a \"bubble of nothing\" [witten1982kk, dowker1995]. Dowker, Gauntlett, and Horowitz had described with Giddings in 1994 how this magnetic field creates a Kaluza-Klein monopole and antimonopole that accelerate apart [dowker1994b]. With Gibbons they found in 1995 that the instanton of that pair creation \"is identical to the five dimensional Kerr solution\" of Robert Myers and Malcolm Perry, continued to imaginary time [dowker1995, myers1986]. The same instanton describes a second decay, Witten's bubble changed by the field, so the magnetic universe can decay in two ways [dowker1995]. For weak fields the bubble is far likelier than the pair, and the field makes the bubble rarer than it is in the vacuum [dowker1995]. Fundamental fermions, the four of them argued, can eliminate the bubble and leave the pair creation [dowker1995].¶Superstring theory on the twisted space is solvable in terms of free fields, as Jorge Russo and Arkady Tseytlin found in 1996 [russo1996]. The space is flat, and the twist changes the masses of string states, which Russo and Tseytlin called \"an example of a gravitational Aharonov-Bohm-type phenomenon\" [russo1996]. Supersymmetry is broken unless $BR$ is an even integer [russo1996]. The spectrum repeats when $B$ changes by $2/R$, twice the period of the geometry, since a fermion changes sign under a turn through $2\\pi$ [russo1996]. At $BR = 1$ the theory is the free superstring on a circle with fermions antiperiodic around it [russo1996]. For $R < \\sqrt{2\\alpha'}$, with $\\alpha'$ the Regge slope of the string, winding states become tachyons once $B$ passes $R/2\\alpha'$ [russo1996].¶The four who had studied its decay extended the construction to any number of dimensions in 1996 and called its flux tubes of higher dimension \"fluxbranes\" [dowker1996]. Flat spacetime of eleven dimensions with the same twist is, seen from ten, a fluxbrane of type IIA string theory that decays by nucleating a spherical sixbrane [dowker1996]. With fermions the distinct spaces fill the wider range $-1/R < B \\le 1/R$, which Miguel Costa and Michael Gutperle read in 2001 as a maximum magnetic field [costa2001]. At $B = 1/R$ fermions change sign around the circle, and Costa and Gutperle conjectured that type IIA string theory in the field $B$ is type 0A string theory, which has no supersymmetry, in the field $B - 1/R$ [costa2001]. Gutperle and Andrew Strominger called the type IIA flux tube the F7-brane that year and wrote that its periodicity \"appears almost trivial from the M-theory perspective since the flux is equivalent to a rotation\" [gutperle2001]. Liang Ma, Peng-Yu Wu, and Hong Lü applied the same rotation in 2026 to a Ricci flat deformation of the Kerr metric and found a Kerr black hole in a magnetic field of Kaluza-Klein theory that has the same strength at every point, $F_{\\mu\\nu}F^{\\mu\\nu} = 2B^2$ [ma2026].",
+  "related": [
+    {
+      "id": "minkowski",
+      "kind": "family",
+      "text": "Flat spacetime of four dimensions. The magnetic universe is flat as well, in five dimensions, with its points identified by a step around the fifth dimension and a turn about an axis [dowker1995]."
+    },
+    {
+      "id": "melvin",
+      "kind": "family",
+      "text": "The flux tube of Einstein-Maxwell theory, with no dilaton. Gibbons and Maeda's solutions run from it, at the coupling $a = 0$, to this universe seen from four dimensions, at $a = \\sqrt{3}$ [dowker1994b]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "The monopole the magnetic universe creates in pairs as it decays, a monopole and an antimonopole accelerating apart. The instanton of that creation is the rotating black hole of five dimensions continued to imaginary time [dowker1994b, dowker1995]."
+    },
+    {
+      "id": "myers_perry",
+      "kind": "family",
+      "text": "The rotating black hole of five dimensions. With one rotation and continued to imaginary time, it is the instanton for both decays of the magnetic universe, the bubble and the pair of monopoles [dowker1995]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The charged black hole of string theory, where the dilaton couples to the Maxwell field with strength $1$. The magnetic flux tube that Gibbons and Maeda found in the same theories is this universe at the coupling $\\sqrt{3}$ [dowker1994b]."
+    },
+    {
+      "id": "kerr_melvin",
+      "kind": "family",
+      "text": "Kerr's black hole in the Melvin universe of Einstein-Maxwell theory. Liang Ma, Peng-Yu Wu, and Hong Lü used the rotation that makes this universe to set a Kerr black hole in a uniform magnetic field of Kaluza-Klein theory in 2026 [ma2026]."
+    }
+  ],
+  "references": [
+    "dowker1995",
+    "dowker1994b",
+    "melvin1964",
+    "gibbons1988",
+    "dowker1994",
+    "witten1982kk",
+    "myers1986",
+    "russo1996",
+    "dowker1996",
+    "costa2001",
+    "gutperle2001",
+    "ma2026"
+  ],
+  "coordinates": [
+    {
+      "id": "adapted",
+      "name": "Adapted Angle",
+      "coords": [
+        "t",
+        "z",
+        "\\rho",
+        "\\varphi",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\varphi \\in [0, 2\\pi)",
+        "y \\in [0, 2\\pi R)",
+        "B \\in (-1/2R, 1/2R] \\;\\text{(distinct spacetimes)}",
+        "\\rho = 0 \\;\\text{(the axis, a regular line)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the fifth dimension, along which $y$ has period $2\\pi R$"
+        },
+        {
+          "symbol": "B",
+          "description": "Magnetic field on the axis seen from four dimensions; once around the fifth dimension the plane about the axis turns through $2\\pi RB$"
+        }
+      ],
+      "convention": "We use coordinates $(t, z, \\rho, \\varphi, y)$, with $t$ carrying dimensions of time, $z$, $\\rho$, and $y$ lengths, $\\varphi$ periodic with period $2\\pi$, and $y$ periodic with period $2\\pi R$, each identified on its own [dowker1994b, dowker1995]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dz^2 + d\\rho^2 + \\rho^2\\left(d\\varphi + B\\,dy\\right)^2 + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\varphi",
+            "\\varphi"
+          ],
+          "value": "\\rho^2"
+        },
+        {
+          "indices": [
+            "\\varphi",
+            "y"
+          ],
+          "value": "B\\,\\rho^2"
+        },
+        {
+          "indices": [
+            "y",
+            "\\varphi"
+          ],
+          "value": "B\\,\\rho^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "B^2\\,\\rho^2 + 1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\varphi",
+            "\\varphi"
+          ],
+          "value": "\\dfrac{B^2\\,\\rho^2 + 1}{\\rho^2}"
+        },
+        {
+          "indices": [
+            "\\varphi",
+            "y"
+          ],
+          "value": "-B"
+        },
+        {
+          "indices": [
+            "y",
+            "\\varphi"
+          ],
+          "value": "-B"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "y"
+                ],
+                "value": "-B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "\\varphi"
+                ],
+                "value": "-B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y"
+                ],
+                "value": "-B^2\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{1}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{1}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "\\dfrac{B}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{B}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\rho"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\rho"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "y"
+                ],
+                "value": "-B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "\\varphi"
+                ],
+                "value": "-B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "B\\,\\rho"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "y",
+                  "y"
+                ],
+                "value": "-B^2\\,\\rho"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\rho",
+                  "y"
+                ],
+                "value": "B^2\\,\\rho"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y",
+                  "\\rho"
+                ],
+                "value": "B^2\\,\\rho"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{z} = 0",
+        "\\ddot{\\rho} - \\rho\\,\\dot{\\varphi}^2 - 2B\\,\\rho\\,\\dot{\\varphi}\\dot{y} - B^2\\,\\rho\\,\\dot{y}^2 = 0",
+        "\\ddot{\\varphi} + \\dfrac{2}{\\rho}\\dot{\\rho}\\dot{\\varphi} + \\dfrac{2B}{\\rho}\\dot{\\rho}\\dot{y} = 0",
+        "\\ddot{y} = 0"
+      ]
+    }
+  ]
+}
