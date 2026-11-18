@@ -1760,6 +1760,66 @@ class Figures(unittest.TestCase):
         self.assertTrue(by_id)
 
 
+def curvature_styles(page):
+    """The rules of the page's stylesheets that style a class of a curvature figure, each as
+    (whether it styles the print copy, the element it is limited to or None, the class, its
+    declarations as a dictionary of property and value)."""
+    rules = []
+    for sheet in re.findall(r"<style[^>]*>(.*?)</style>", page, re.S):
+        sheet = re.sub(r"/\*.*?\*/", "", sheet, flags=re.S)
+        for selectors, body in re.findall(r"([^{}]+)\{([^{}]*)\}", sheet):
+            declarations = dict((p.strip(), v.strip()) for p, _, v in
+                                (d.partition(":") for d in body.split(";") if ":" in d))
+            for selector in selectors.split(","):
+                selector = selector.strip()
+                last = re.search(r"(?:^|\s)([a-z]*)\.cv-([\w-]+)$", selector)
+                if last:
+                    rules.append((selector.startswith(".mfs-print-body"), last.group(1) or None, last.group(2),
+                                  declarations))
+    return rules
+
+
+class CurvatureFigures(unittest.TestCase):
+    """Every curve, mark and legend swatch of a curvature figure is drawn in a class the page
+    styles, as _tools/README.md, "Drawing the figure", sets each one, on the screen and in print."""
+
+    def setUp(self):
+        self.figures = curvature_files()
+        found(self, self.figures, "curvature figure")
+
+    def test_every_class_a_curvature_figure_draws_is_styled_on_the_page_and_in_print(self):
+        # A class the stylesheet does not know draws a curve as a black fill with no line on the
+        # dark page and a legend swatch with nothing in it, as the eye of the storm's curves on
+        # its axis and its equator, the rotating bubble's and the waves in Friedmann universes'
+        # were drawn until 18 November 2026.
+        rules = curvature_styles((build.ROOT / "_layouts" / "mfs.html").read_text(encoding="utf-8"))
+        drawn = set()
+        for name, data in self.figures.items():
+            for view in data["views"]:
+                where = f"curvature/{name}.json, view {view['id']!r}"
+                legends = [view["legend"]] + [p["legend"] for p in (view.get("per_scalar") or {}).values()]
+                for holder in [view] + (view.get("movie") or {}).get("frames", []):
+                    drawn |= {(where, "path", c["class"]) for c in holder.get("curves") or []}
+                    drawn |= {(where, "circle" if "at" in m else "path" if "points" in m else "line", m["class"])
+                              for m in holder.get("marks") or []}
+                drawn |= {(where, "circle" if kind == "point" else "line", cls)
+                          for legend in legends for kind, cls, _ in legend}
+        found(self, drawn, "class drawn by a curvature figure")
+        for where, element, cls in sorted(drawn):
+            for printed in (False, True):
+                styled = {}
+                for in_print, limited, named, declarations in rules:
+                    if in_print == printed and named == cls and limited in (None, element):
+                        styled.update(declarations)
+                surface = "in print" if printed else "on the page"
+                with self.subTest(where=where, element=element, cls=cls, surface=surface):
+                    self.assertNotIn(styled.get("stroke", "none"), ("none", "transparent"),
+                                     f"{where} draws a {element} of the class {cls!r}, which has no line {surface}")
+                    if element == "path" and not printed:
+                        self.assertEqual(styled.get("fill"), "none",
+                                         f"{where} draws a {element} of the class {cls!r}, which is filled {surface}")
+
+
 class ConformalDiagrams(unittest.TestCase):
     """A conformal diagram is of a whole spacetime, drawn from what its metrics publish, and
     stops being published when any of that changes."""

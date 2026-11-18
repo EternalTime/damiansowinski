@@ -47,8 +47,8 @@ DATA = ROOT / "MFS" / "assets" / "data"
 
 # The classes of test_build_mfs_data.py that test the drawing data of the spacetimes
 # MFS_SPACETIME names.
-DRAWING_TESTS = ("Diagrams", "Figures", "ConformalDiagrams", "EmbeddingDiagrams", "Slices", "StacksAndMovies",
-                 "TimeSlicedViewsAreMovies")
+DRAWING_TESTS = ("Diagrams", "Figures", "CurvatureFigures", "ConformalDiagrams", "EmbeddingDiagrams", "Slices",
+                 "StacksAndMovies", "TimeSlicedViewsAreMovies")
 TAIL = 25
 
 
