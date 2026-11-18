@@ -33,3 +33,18 @@ With the magnetic charges zero and the electric pair $\eta C_1 = r_0$, $\eta C_2
 ## Not charts
 
 Ortín's quadruhole, hep-th/9602067 eq. (14), and the massless hole of Cano, Chimento, Ortín and Ruipérez, 1806.08377 eq. (6), $ds^2 = -(1 - Q^2/r^2)^{-1}dt^2 + (1 - Q^2/r^2)d\vec x^2$, are a different solution, with four charges and a constant dilaton, and are not printed here.
+
+## Drawings
+
+Every drawing is of the massless member, $M = 0$, in units of $q$, so $\Delta = 1 - 4q^2/r^2$ and the singularity is $r = 2q$; `repulson_drawings.py` beside this file draws them.
+
+- Spacetime diagrams, one view per chart on the plane of $t$ and $r$ at $\theta = \pi/2$, $\phi = 0$, for $2q < r < 6q$ and $|ct| < 2q$.
+  The radial light rays of both charts obey $c\,dt = \pm\sqrt{\Delta}\,dr$, since the string metric is the Einstein metric times $1/\sqrt{\Delta}$, so $ct \mp r_*$ is constant along them with $r_* = \sqrt{r^2 - 4q^2} - 2q\arccos(2q/r)$, zero at $r = 2q$; `--verify` holds every ray to it.
+  A ray moving in reaches the singularity after the finite time $r_*/c$, as Cvetič and Youm state for massless particles of zero angular momentum (hep-th/9507160).
+- Conformal diagram, one view per chart: Minkowski's triangle by $\arctan(ct \mp r_*)$, the singularity a timelike line where Minkowski's centre stands, each point a 2-sphere; the Kretschmann scalar is checked to diverge on it.
+- Embedding diagram, one view per chart at $t = 0$ on the equator.
+  For the Einstein metric $\rho = r\Delta^{1/4}$ and $(d\rho/dr)^2 - g_{rr} = 4(1 - 3q^2/r^2)/(r^2\Delta^{3/2}) > 0$ for every $r > 2q$, so every circle grows faster than the distance out to it and the slice is drawn in Minkowski space, $dX^2 + dY^2 - dZ^2$, as anti-de Sitter space's static slice is.
+  Near $r = 2q$ the surface turns toward a light cone of that space, its metric length about $(r - 2q)/q$ of its drawn length, so the profile is drawn from $r = 2.05q$, with knots crowded toward that end and eleven decimals, which keeps every chord within $2.7 \times 10^{-5}$ of its proper length.
+  For a massive member the slice would be in Minkowski space inside $r_c = 2q^2/M$ and in flat space outside it, level at $r_c$; that member is not drawn.
+  The string metric's slice is $dr^2 + r^2d\phi^2$, the flat plane outside the circle $r = 2q$.
+- Curvature figure: the stored Kretschmann and Ricci scalars of the Einstein metric against $r$ from $2q$ to $6q$, on logarithmic scales cut near $r = 2q$, where both grow without bound; the Ricci scalar is checked against Kallosh's closed form, hep-th/9506113 App. B.
