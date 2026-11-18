@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 261,
+  "count": 262,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -26082,6 +26082,11 @@
           "id": "rotation_halts",
           "kind": "composite",
           "text": "A counterrotating dust shell joins two cylindrical vacuum regions and couples its radial motion to their waves. The shell has a positive lower circumference bound when its particles carry angular momentum [apostolatos1992rotation, gleiser2012radiative]."
+        },
+        {
+          "id": "waves_in_friedmann",
+          "kind": "family",
+          "text": "Waves with distinct fronts in Friedmann universes of stiff fluid, which Georgii A. Alekseev and Jerry B. Griffiths related in 1997 to a generalisation of the cylindrical pulse of Nathan Rosen [alekseev1997]."
         }
       ],
       "references": [
@@ -26115,7 +26120,8 @@
         "brill1959",
         "gurtug_sakalli2003",
         "apostolatos1992rotation",
-        "gleiser2012radiative"
+        "gleiser2012radiative",
+        "alekseev1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/einstein_rosen_waves.json",
@@ -30024,6 +30030,11 @@
           "id": "scalar_collapse_cosmology",
           "kind": "generalisation",
           "text": "A flat Friedmann universe of massless scalar field with the naked singularity of Fisher's solution at its centre from the big bang on. With $b = 0$ it is that universe alone [husain1994exact, faraoni2013]."
+        },
+        {
+          "id": "waves_in_friedmann",
+          "kind": "composite",
+          "text": "Gravitational waves sent into open, flat and closed Friedmann universes of stiff fluid, $p = \\rho$, by Jiří Bičák and Jerry B. Griffiths. Ahead of each wave front the spacetime is the stiff Friedmann universe itself, and behind it the field is algebraically general [bicak1994, bicak1996]."
         }
       ],
       "references": [
@@ -30109,7 +30120,9 @@
         "smith1997",
         "mena2008toroidal",
         "husain1994exact",
-        "faraoni2013"
+        "faraoni2013",
+        "bicak1994",
+        "bicak1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -32709,6 +32722,11 @@
           "id": "moncrief_taub_nut",
           "kind": "special_case",
           "text": "An infinite dimensional toroidal subfamily extends through a compact Cauchy horizon [moncrief1981nut]."
+        },
+        {
+          "id": "waves_in_friedmann",
+          "kind": "family",
+          "text": "Gowdy-type closed universes filled with a stiff fluid, in which Jiří Bičák and Jerry B. Griffiths followed toroidal gravitational waves from one axis at the big bang to the other at the big crunch [bicak1996]."
         }
       ],
       "references": [
@@ -32743,7 +32761,8 @@
         "szybka_wyrebowski2016",
         "charach1979",
         "nungesser_rendall2009",
-        "moncrief1981nut"
+        "moncrief1981nut",
+        "bicak1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gowdy.json",
@@ -40605,6 +40624,11 @@
           "id": "pre_big_bang",
           "kind": "generalisation",
           "text": "Kasner's metric with the dilaton of low energy string theory, $\\phi = (\\sum_i\\beta_i - 1)\\ln(-t)$, on $t < 0$. The squares of the exponents still sum to one while their sum is free, and with every exponent negative space expands faster and faster toward $t = 0$ [gasperini2003prebigbang]."
+        },
+        {
+          "id": "waves_in_friedmann",
+          "kind": "family",
+          "text": "A vacuum Kasner universe is one background of the waves with distinct fronts of Georgii A. Alekseev and Jerry B. Griffiths, who gave complete solutions for it and for the flat and open Friedmann universes of stiff fluid [alekseev1995]."
         }
       ],
       "references": [
@@ -40632,7 +40656,8 @@
         "belinskii1975",
         "bedran1997",
         "chyba1985",
-        "gasperini2003prebigbang"
+        "gasperini2003prebigbang",
+        "alekseev1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kasner.json",
@@ -44829,6 +44854,11 @@
           "id": "penrose_impulsive_wave",
           "kind": "programme",
           "text": "Penrose's impulsive wave with a spherical front, made by cutting flat spacetime along a light cone and gluing it back with a warp [penrose1972impulsive]."
+        },
+        {
+          "id": "waves_in_friedmann",
+          "kind": "family",
+          "text": "The same collision in an expanding open universe of stiff fluid. Jiří Bičák and Jerry B. Griffiths found that future spacelike singularities \"apparently do not occur\" there [bicak1994]."
         }
       ],
       "references": [
@@ -44848,7 +44878,8 @@
         "griffiths1991",
         "szekeres1975",
         "eardley2002",
-        "penrose1972impulsive"
+        "penrose1972impulsive",
+        "bicak1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/khan_penrose.json",
@@ -77294,6 +77325,11 @@
           "id": "frw",
           "kind": "family",
           "text": "At $b=0$ and $a^2=3/2$ the proper time scale factor is $\\tau^{1/3}$, the spatially flat Friedmann universe of a stiff fluid."
+        },
+        {
+          "id": "waves_in_friedmann",
+          "kind": "family",
+          "text": "Plane gravitational waves running into the spatially flat Friedmann universe of stiff fluid. Georgii A. Alekseev and Jerry B. Griffiths generated these waves by the method of John Wainwright, W. C. W. Ince and B. J. Marshman [alekseev1995, wainwright1979stiff]."
         }
       ],
       "references": [
@@ -77303,7 +77339,8 @@
         "rendall1995plane",
         "wainwright1979stiff",
         "belinskii1973",
-        "andersson2001"
+        "andersson2001",
+        "alekseev1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stiff_fluid_universes.json",
@@ -88537,6 +88574,450 @@
           ],
           "ricci_scalar": "R = \\dfrac{6b^2\\,F - 4}{R_0^2\\,b^2}",
           "kretschmann": "K = \\dfrac{4\\left(3b^4\\,F^2\\sin^4 X + 3b^4\\,F^2 - 6b^4\\,F - 2b^2\\,F\\sin^2 X - 2b^2\\,F\\sin^4 X + 3b^4 + 2b^2\\sin^2 X + \\sin^4 X\\right)\\csc^4 X}{R_0^4\\,b^4}"
+        }
+      ]
+    },
+    {
+      "id": "waves_in_friedmann",
+      "name": "Gravitational Waves in Friedmann Universes",
+      "short_name": "Waves in Friedmann Universes",
+      "description": "Exact gravitational waves with distinct fronts running into Friedmann universes filled with a stiff fluid, $p = \\rho$, found by Jiří Bičák and Jerry B. Griffiths in 1994 and 1996. The fronts are planes or cylinders in the open and flat universes and tori in the closed one, and each wave is partly reflected, so the field behind its front is algebraically general.",
+      "tags": [
+        "cosmology",
+        "gravitational wave",
+        "colliding plane waves",
+        "stiff fluid",
+        "perfect fluid",
+        "inhomogeneous",
+        "expanding universe",
+        "FLRW",
+        "impulsive wave",
+        "shock wave",
+        "cylindrical symmetry",
+        "torus",
+        "curvature singularity",
+        "exact solution",
+        "time-dependent",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use signature $(-,+,+,+)$ and $G=c=1$, with $R_{\\mu\\nu}=R^\\alpha{}_{\\mu\\alpha\\nu}$; every chart is Bičák and Griffiths's line element multiplied by $-1$ [bicak1996]. The coordinates are dimensionless, $\\gamma$ is an area, the fluid is at rest in every chart, and $R$ and $K$ are the Ricci and Kretschmann scalars.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "Ahead of every wave front the spacetime is a Friedmann universe filled with a stiff fluid, open, flat or closed [bicak1996]. Its Weyl tensor vanishes, so the Weyl tensor behind the front belongs to the waves alone [bicak1994]."
+        },
+        {
+          "id": "stiff_fluid_universes",
+          "kind": "family",
+          "text": "The same matter with two commuting Killing vectors. Alekseev and Griffiths generated their stiff fluid waves by the method of John Wainwright, W. C. W. Ince and B. J. Marshman [alekseev1995, wainwright1979stiff]."
+        },
+        {
+          "id": "gowdy",
+          "kind": "family",
+          "text": "A closed Friedmann universe with toroidal waves is a Gowdy-type spacetime filled with a stiff fluid. Its two commuting, hypersurface orthogonal Killing vectors have tori for orbits, and the wave fronts are those tori [bicak1996]."
+        },
+        {
+          "id": "khan_penrose",
+          "kind": "family",
+          "text": "Plane gravitational waves colliding in flat space, where the collision ends in a future spacelike singularity. In the expanding open universe of stiff fluid such singularities \"apparently do not occur\" [bicak1994]."
+        },
+        {
+          "id": "einstein_rosen_waves",
+          "kind": "family",
+          "text": "Cylindrical gravitational waves in vacuum. Nathan Rosen built a pulse of them with a distinct front, and Alekseev and Griffiths related the waves in Friedmann universes to a generalisation of that pulse [alekseev1997]."
+        },
+        {
+          "id": "kasner",
+          "kind": "family",
+          "text": "Plane waves with distinct fronts also run into a vacuum Kasner universe, for which Alekseev and Griffiths gave complete solutions [alekseev1995]."
+        }
+      ],
+      "references": [
+        "bicak1994",
+        "bicak1996",
+        "tabensky1973",
+        "centrella1982",
+        "griffiths1993stiff",
+        "tipler1980",
+        "feinstein1994",
+        "alekseev1995",
+        "alekseev1996wavefronts",
+        "alekseev1997",
+        "bicak2000exact",
+        "senovilla2001",
+        "wainwright1979stiff"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/waves_in_friedmann.json",
+      "charts": [
+        {
+          "id": "plane_wave",
+          "name": "Plane Wave, Flat Universe",
+          "coordinates": [
+            "\\eta",
+            "z",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\eta \\in (0,\\infty)",
+            "z \\in (-\\eta,\\eta)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "z=\\eta\\;\\text{(wave front)}",
+            "\\eta\\to0\\;\\text{(big bang)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\gamma",
+              "description": "Positive area that sets the scale of the universe."
+            },
+            {
+              "symbol": "A",
+              "description": "Dimensionless amplitude of the wave, any real number; $A=0$ is the flat universe."
+            },
+            {
+              "symbol": "H = \\dfrac{\\left(\\eta^2+2z^2\\right)\\arccos(z/\\eta)-3z\\sqrt{\\eta^2-z^2}}{3\\pi\\eta^2}",
+              "description": "Profile $H_2(z/\\eta)$ of Alekseev and Griffiths, zero on the front $z=\\eta$ and $1$ at $z=-\\eta$."
+            },
+            {
+              "symbol": "K = \\dfrac{4\\left(z\\arccos(z/\\eta)-\\sqrt{\\eta^2-z^2}\\right)}{3\\pi\\eta}",
+              "description": "Slope of the profile, $dH_2/d(z/\\eta)$."
+            },
+            {
+              "symbol": "V = A\\eta^2H",
+              "description": "The wave, which stretches $x$ and shrinks $y$ along the front."
+            },
+            {
+              "symbol": "S = -\\dfrac{A^2\\eta^2}{8}\\left(4\\eta^2H^2+\\left(\\eta^2-z^2\\right)K^2\\right)",
+              "description": "Change the wave makes in the conformal factor, zero on the front and negative behind it."
+            }
+          ],
+          "convention": "Bičák and Griffiths's (1.1) and (7.1)-(7.3) with $e^{-U}=2\\eta$ and $e^{-M}=2\\eta e^{-S}$ [bicak1996], and the one term profile of Alekseev and Griffiths with $n=2$ [alekseev1995]; the front $z=\\eta$ moves toward $+z$, ahead of it is the flat planar chart, and $\\rho=p=3e^{S}/(64\\pi\\gamma\\eta^3)$.",
+          "line_element": "ds^2 = 2\\gamma\\eta\\left(e^{-S}\\left(-d\\eta^2+dz^2\\right)+e^{V}dx^2+e^{-V}dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-2\\eta\\,\\gamma\\,e^{-S}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "2\\eta\\,\\gamma\\,e^{-S}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "2\\eta\\,\\gamma\\,e^{V}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "2\\eta\\,\\gamma\\,e^{-V}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3e^{S}}{4\\eta^3\\,\\gamma}",
+          "kretschmann": "K = -\\dfrac{\\left(168A^4\\,H^2\\,K^2\\,\\eta^6\\,z^4 - 240A^4\\,H^2\\,K^2\\,\\eta^8\\,z^2 + 60A^6\\,H^2\\,K^4\\,\\eta^8\\,z^6 - 132A^6\\,H^2\\,K^4\\,\\eta^{10}\\,z^4 + 84A^6\\,H^2\\,K^4\\,\\eta^{12}\\,z^2 - 160A^6\\,H^3\\,K^3\\,\\eta^9\\,z^5 + 256A^6\\,H^3\\,K^3\\,\\eta^{11}\\,z^3 + 240A^6\\,H^4\\,K^2\\,\\eta^{10}\\,z^4 - 288A^6\\,H^4\\,K^2\\,\\eta^{12}\\,z^2 - 56A^4\\,H\\,K^3\\,\\eta^5\\,z^5 + 144A^4\\,H\\,K^3\\,\\eta^7\\,z^3 - 224A^4\\,H^3\\,K\\,\\eta^7\\,z^3 - 12A^6\\,H\\,K^5\\,\\eta^7\\,z^7 + 36A^6\\,H\\,K^5\\,\\eta^9\\,z^5 - 36A^6\\,H\\,K^5\\,\\eta^{11}\\,z^3 - 96A^6\\,H^3\\,K^3\\,\\eta^{13}\\,z - 192A^6\\,H^5\\,K\\,\\eta^{11}\\,z^3 - 16A^2\\,H\\,K\\,\\eta^3\\,z^3 - 88A^4\\,H\\,K^3\\,\\eta^9\\,z + 72A^4\\,H^2\\,K^2\\,\\eta^{10} + 32A^4\\,H^3\\,K\\,\\eta^9\\,z + 12A^6\\,H\\,K^5\\,\\eta^{13}\\,z - 12A^6\\,H^2\\,K^4\\,\\eta^{14} + 48A^6\\,H^4\\,K^2\\,\\eta^{14} + 192A^6\\,H^5\\,K\\,\\eta^{13}\\,z + 112A^2\\,H\\,K\\,\\eta^5\\,z + 16A^2\\,H^2\\,\\eta^4\\,z^2 + 4A^2\\,K^2\\,\\eta^2\\,z^4 - 20A^2\\,K^2\\,\\eta^4\\,z^2 + 112A^4\\,H^4\\,\\eta^8\\,z^2 + 7A^4\\,K^4\\,\\eta^4\\,z^6 - 25A^4\\,K^4\\,\\eta^6\\,z^4 + 29A^4\\,K^4\\,\\eta^8\\,z^2 + 64A^6\\,H^6\\,\\eta^{12}\\,z^2 + A^6\\,K^6\\,\\eta^6\\,z^8 - 4A^6\\,K^6\\,\\eta^8\\,z^6 + 6A^6\\,K^6\\,\\eta^{10}\\,z^4 - 4A^6\\,K^6\\,\\eta^{12}\\,z^2 - 144A^2\\,H^2\\,\\eta^6 + 16A^2\\,K^2\\,\\eta^6 + 144A^4\\,H^4\\,\\eta^{10} - 11A^4\\,K^4\\,\\eta^{10} - 64A^6\\,H^6\\,\\eta^{14} + A^6\\,K^6\\,\\eta^{14} - 15\\eta^2 + 15z^2\\right)e^{2S}}{16\\eta^6\\,\\gamma^2\\left(\\eta + z\\right)\\left(\\eta - z\\right)}"
+        },
+        {
+          "id": "flat_planar",
+          "name": "Flat Universe, Planar",
+          "coordinates": [
+            "\\eta",
+            "z",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\eta \\in (0,\\infty)",
+            "z \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "\\eta\\to0\\;\\text{(big bang)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\gamma",
+              "description": "Positive area that sets the scale of the universe."
+            }
+          ],
+          "convention": "Bičák and Griffiths's (2.4) with $a^2=2\\gamma\\eta$ [bicak1996]; $x$ and $y$ span the planes of constant $\\eta$ and $z$, and $\\rho=p=3/(64\\pi\\gamma\\eta^3)$.",
+          "line_element": "ds^2 = 2\\gamma\\eta\\left(-d\\eta^2+dz^2+dx^2+dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-2\\eta\\,\\gamma"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "2\\eta\\,\\gamma"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "2\\eta\\,\\gamma"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "2\\eta\\,\\gamma"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{4\\eta^3\\,\\gamma}",
+          "kretschmann": "K = \\dfrac{15}{16\\eta^6\\,\\gamma^2}"
+        },
+        {
+          "id": "flat_cylindrical",
+          "name": "Flat Universe, Cylindrical",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\phi",
+            "z"
+          ],
+          "domains": [
+            "\\eta \\in (0,\\infty)",
+            "r \\in [0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "z \\in (-\\infty,\\infty)",
+            "\\eta\\to0\\;\\text{(big bang)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\gamma",
+              "description": "Positive area that sets the scale of the universe."
+            }
+          ],
+          "convention": "Bičák and Griffiths's (2.5) with $a^2=2\\gamma\\eta$ [bicak1996], $r$ for their radius; the null surfaces of constant $\\eta-r$ are cylinders about $r=0$.",
+          "line_element": "ds^2 = 2\\gamma\\eta\\left(-d\\eta^2+dr^2+r^2d\\phi^2+dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-2\\eta\\,\\gamma"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "2\\eta\\,\\gamma"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "2\\eta\\,\\gamma"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "2\\eta\\,\\gamma\\,r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3}{4\\eta^3\\,\\gamma}",
+          "kretschmann": "K = \\dfrac{15}{16\\eta^6\\,\\gamma^2}"
+        },
+        {
+          "id": "open_planar",
+          "name": "Open Universe, Planar",
+          "coordinates": [
+            "\\eta",
+            "\\mu",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "\\eta \\in (0,\\infty)",
+            "\\mu \\in (-\\infty,\\infty)",
+            "x \\in (-\\infty,\\infty)",
+            "y \\in (-\\infty,\\infty)",
+            "\\eta\\to0\\;\\text{(big bang)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\gamma",
+              "description": "Positive area that sets the scale of the universe."
+            }
+          ],
+          "convention": "Bičák and Griffiths's (3.15) with $a^2=\\gamma\\sinh2\\eta$ [bicak1996], from the hyperboloid coordinates of their (2.6)-(2.13) [bicak1994]; the surfaces of constant $\\eta$ and $\\mu$ are flat planes, and $\\rho=p=3/(8\\pi\\gamma\\sinh^32\\eta)$.",
+          "line_element": "ds^2 = \\gamma\\sinh(2\\eta)\\left(-d\\eta^2+d\\mu^2+e^{-2\\mu}\\left(dx^2+dy^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-2\\gamma\\sinh\\eta\\cosh\\eta"
+            },
+            {
+              "indices": [
+                "\\mu",
+                "\\mu"
+              ],
+              "value": "2\\gamma\\sinh\\eta\\cosh\\eta"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "2\\gamma\\,e^{-2\\mu}\\sinh\\eta\\cosh\\eta"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "2\\gamma\\,e^{-2\\mu}\\sinh\\eta\\cosh\\eta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\gamma\\sinh^3(2\\eta)}",
+          "kretschmann": "K = \\dfrac{60}{\\gamma^2\\sinh^6(2\\eta)}"
+        },
+        {
+          "id": "open_cylindrical",
+          "name": "Open Universe, Cylindrical",
+          "coordinates": [
+            "\\eta",
+            "r",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "\\eta \\in (0,\\infty)",
+            "r \\in [0,\\infty)",
+            "\\phi \\in [0,2\\pi)",
+            "y \\in (-\\infty,\\infty)",
+            "\\eta\\to0\\;\\text{(big bang)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\gamma",
+              "description": "Positive area that sets the scale of the universe."
+            }
+          ],
+          "convention": "Bičák and Griffiths's (3.16) with $a^2=\\gamma\\sinh2\\eta$ [bicak1996], $r$ for their radius, written with $\\tfrac12\\sinh2r\\tanh r=\\sinh^2r$ and $\\tfrac12\\sinh2r\\coth r=\\cosh^2r$.",
+          "line_element": "ds^2 = \\gamma\\sinh(2\\eta)\\left(-d\\eta^2+dr^2+\\sinh^2r\\,d\\phi^2+\\cosh^2r\\,dy^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-2\\gamma\\sinh\\eta\\cosh\\eta"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "2\\gamma\\sinh\\eta\\cosh\\eta"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\gamma\\left(e^{r} + 1\\right)^2\\left(e^{r} - 1\\right)^2e^{-2r}\\sinh\\eta\\cosh\\eta}{2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\gamma\\left(e^{2r} + 1\\right)^2e^{-2r}\\sinh\\eta\\cosh\\eta}{2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\gamma\\sinh^3(2\\eta)}",
+          "kretschmann": "K = \\dfrac{60}{\\gamma^2\\sinh^6(2\\eta)}"
+        },
+        {
+          "id": "closed_toroidal",
+          "name": "Closed Universe, Toroidal",
+          "coordinates": [
+            "\\eta",
+            "\\zeta",
+            "\\delta",
+            "\\sigma"
+          ],
+          "domains": [
+            "\\eta \\in (0,\\pi/2)",
+            "\\zeta \\in [0,\\pi/2]",
+            "\\delta \\in [0,2\\pi)",
+            "\\sigma \\in [0,2\\pi)",
+            "\\eta\\to0\\;\\text{(big bang)}",
+            "\\eta\\to\\pi/2\\;\\text{(big crunch)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\gamma",
+              "description": "Positive area that sets the scale of the universe."
+            }
+          ],
+          "convention": "Bičák and Griffiths's (4.7) with $a^2=\\gamma\\sin2\\eta$ [bicak1996]; the surfaces of constant $\\eta$ and $\\zeta$ are tori, $\\zeta=0$ and $\\zeta=\\pi/2$ are the circles at their two axes, and $\\rho=p=3/(8\\pi\\gamma\\sin^32\\eta)$.",
+          "line_element": "ds^2 = \\gamma\\sin(2\\eta)\\left(-d\\eta^2+d\\zeta^2+\\sin^2\\zeta\\,d\\delta^2+\\cos^2\\zeta\\,d\\sigma^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "-2\\gamma\\sin\\eta\\cos\\eta"
+            },
+            {
+              "indices": [
+                "\\zeta",
+                "\\zeta"
+              ],
+              "value": "2\\gamma\\sin\\eta\\cos\\eta"
+            },
+            {
+              "indices": [
+                "\\delta",
+                "\\delta"
+              ],
+              "value": "2\\gamma\\sin\\eta\\cos\\eta\\sin^2\\zeta"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "2\\gamma\\sin\\eta\\cos\\eta\\cos^2\\zeta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{6}{\\gamma\\sin^3(2\\eta)}",
+          "kretschmann": "K = \\dfrac{60}{\\gamma^2\\sin^6(2\\eta)}"
         }
       ]
     },

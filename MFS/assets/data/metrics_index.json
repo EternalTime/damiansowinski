@@ -2234,7 +2234,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5280ad49b672c9f2",
+    "version": "3aa6a48a4f1a0d3a",
     "diagrams": "dc0f3031798ca092",
     "conformal": "2876dfbbabbb4b26",
     "embedding": "f736444606912902",
@@ -2569,7 +2569,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "b93a1e47761bc918",
+    "version": "602afa1d70e4a75b",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2815,7 +2815,7 @@
       "BKL",
       "torus"
     ],
-    "version": "4027b326546b99d9",
+    "version": "f30fef518052821c",
     "diagrams": "c99d35fac02e04dd",
     "conformal": "431800db7085dc77",
     "embedding": "84b1c9abf03c3c01",
@@ -3532,7 +3532,7 @@
       "BKL",
       "homogeneous"
     ],
-    "version": "c4c4043b2f9274a2",
+    "version": "8b1606fbbca71f34",
     "diagrams": "a84952c23e2fa052",
     "embedding": "e2698f474fe29ce2"
   },
@@ -3960,7 +3960,7 @@
       "idealized model",
       "Einstein equations"
     ],
-    "version": "6c3de99ebd919a96",
+    "version": "3dfab81328969b48",
     "diagrams": "39424436cf59ea7f",
     "conformal": "6fa408bb4e46f514",
     "embedding": "0633d69609fb99f8",
@@ -6794,7 +6794,7 @@
       "time-dependent",
       "stiff fluid"
     ],
-    "version": "0de40acd16fc9f71",
+    "version": "d1d647c5b1769558",
     "diagrams": "adc8c2dc582c9b84",
     "conformal": "f462a84914c217d1",
     "embedding": "6a1bc6f9c3a87571",
@@ -7731,6 +7731,36 @@
     "version": "7d98fbae6cb58856",
     "diagrams": "7d4e79254c15cf2f",
     "embedding": "0bbd48dbcc626017"
+  },
+  {
+    "id": "waves_in_friedmann",
+    "name": "Waves in Friedmann Universes",
+    "tags": [
+      "cosmology",
+      "gravitational wave",
+      "colliding plane waves",
+      "stiff fluid",
+      "perfect fluid",
+      "inhomogeneous",
+      "expanding universe",
+      "FLRW",
+      "impulsive wave",
+      "shock wave",
+      "cylindrical symmetry",
+      "torus",
+      "curvature singularity",
+      "exact solution",
+      "time-dependent",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "c8809127c75a3340",
+    "diagrams": "01fe0af916b50a3d",
+    "conformal": "fa03b5ac35bd5a1a",
+    "embedding": "61c8e8bb4bd25473",
+    "curvature": "e468b10ba3e3b65b"
   },
   {
     "id": "white_hole",
