@@ -1888,6 +1888,7 @@ A view is:
 - `clip`: TeX prose saying how each axis of values is scaled and where a value is cut, printed after "scale".
 
 The classes drawn today are `K` for a spacetime's own Kretschmann scalar, `R` for its Ricci scalar and `reference` for a comparison, among the curves, and `horizon`, `ergosurface`, where $g_{tt}$ vanishes, `string` for a cosmic string, `singular` for a point or, on a map, a curve where the scalar diverges, `zero` for a point where it vanishes and `front` for the front of an impulsive wave, among the marks.
+Several curves of one scalar, as on an axis and on an equator, stand on a panel each, as the Curzon-Chazy particle's do, since a class is drawn in one colour.
 
 ### Drawing the figure
 
@@ -2226,7 +2227,7 @@ At $p = 1$ the null singularity $u = 0$ lies at $\tau = \infty$, so every curve 
 Every chart publishes the same two scalars at the same event, so no view names a chart, and the caption gives $u$ in $\tau$.
 A map over $x$ and $\tau$ would repeat one curve along every line of constant $x$, grown by $e^{4\tau}$ toward $u = v = 0$, and a movie of $p$ would show the singularity $x_s = \tanh^{-1}(1/p)$ coming in from $x = \infty$ as $p$ passes 1, which the three views and the caption's formula show, so the figure has neither.
 The file is 37 KB, and 11 KB as the server compresses it.
-The eye of the storm has one line view of its Boyer-Lindquist chart at $m = 1$, $a = 3m/5$ and $\ell = m/5$, both scalars against $r/m$ from 0 to 4 on the axis and on the equator, $K\,m^4$ on a signed logarithmic scale from $-10^3$ to $10^7$ and $R\,m^2$ from 0 to $10^4$, each linear within $10^{-3}$ of zero, with the horizons marked; both peak just outside the centre, $K$ at $5.5 \times 10^6/m^4$ near $r = 0.036\,m$ on the equator, and fall to zero at $r = 0$. `eye_of_the_storm` in `curvature.py` checks $R$ and $K$ against Simpson and Visser's (3.1) and (3.3), the ingoing chart's against them, $K$ at $\ell = 0$ against Kerr's published scalar, the fall to zero in sixty digits, the horizons and the panels.
+The eye of the storm has one line view of its Boyer-Lindquist chart at $m = 1$, $a = 3m/5$ and $\ell = m/5$, each scalar against $r/m$ from 0 to 4 in a panel on the axis and one on the equator, $K\,m^4$ on a signed logarithmic scale from $-10^3$ to $10^7$ and $R\,m^2$ from 0 to $10^4$, each linear within $10^{-3}$ of zero, with the horizons marked; both peak just outside the centre, $K$ at $5.5 \times 10^6/m^4$ near $r = 0.036\,m$ on the equator, and fall to zero at $r = 0$. `eye_of_the_storm` in `curvature.py` checks $R$ and $K$ against Simpson and Visser's (3.1) and (3.3), the ingoing chart's against them, $K$ at $\ell = 0$ against Kerr's published scalar, the fall to zero in sixty digits, the horizons and the panels.
 
 The charged de Sitter black hole has one line view for each of its three charged charts, at $r_s = 1$, $r_q = r_s/2$ and $\Lambda = 27/(64r_s^2)$, the lukewarm parameters of its other drawings, over $0.2 \le r/r_s \le 3$.
 Each draws the stored $K$ on a logarithmic scale from $10^{-1}$ to $10^6$, in units of $r_s^{-4}$, with the inner, black hole and cosmological horizons marked at $0.431\,r_s$, $2r_s/3$ and $2r_s$.

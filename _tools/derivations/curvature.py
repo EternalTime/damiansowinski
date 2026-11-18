@@ -18052,9 +18052,10 @@ def eye_of_the_storm(ck, src):
     equator, at m = 1, a = 3m/5 and ell = m/5, the parameters of its other drawings.
 
     The Boyer-Lindquist chart publishes K and R in r and theta alone, the same at every t and phi,
-    and the ingoing chart publishes the same two, so one figure serves both: two panels over
-    0 <= r/m <= 4, each holding a curve at theta = 0 and one at theta = pi/2, with the horizons r_-
-    and r_+, the zeros of the published g^rr, marked. Checked here: R is Simpson and Visser's
+    and the ingoing chart publishes the same two, so one figure serves both: a panel of each scalar
+    on the axis, theta = 0, and one on the equator, theta = pi/2, over 0 <= r/m <= 4, as the
+    Curzon-Chazy particle's directions stand, with the horizons r_- and r_+, the zeros of the
+    published g^rr, marked. Checked here: R is Simpson and Visser's
     2 m ell^2 e^{-ell/r}/(r^3 Sigma) and K their (3.3); both charts publish the same scalars; at
     ell = 0 K is Kerr's published scalar; both scalars fall to zero toward r = 0 on both curves, in
     sixty digits; R is positive everywhere; the horizons are the zeros of Delta on both curves; and
@@ -18063,8 +18064,11 @@ def eye_of_the_storm(ck, src):
     params = dict(EOS_PARAMS)
     values = list(params.values())
     x_axis = axis("$r/m$", 0, 4)
-    panels = [{"id": "K", "name": "$K\\,m^4$", "aspect": 2, "scale": EOS_K, "ticks": value_ticks(EOS_K)},
-              {"id": "R", "name": "$R\\,m^2$", "aspect": 2, "scale": EOS_R, "ticks": value_ticks(EOS_R)}]
+    held = {"axis": {"\\theta": 0.0}, "plane": {"\\theta": math.pi / 2}}
+    panels = [{"id": f"{name}_{where}", "name": f"${name}(r, {at})\\,m^{power}$", "aspect": 2, "scale": scale,
+               "ticks": value_ticks(scale)}
+              for name, power, scale in (("K", 4, EOS_K), ("R", 2, EOS_R))
+              for where, at in (("axis", "0"), ("plane", "\\pi/2"))]
     shape_checks(ck, metric, [p["aspect"] for p in panels])
     names = ["m", "a", "\\ell"]
     K = nr_published(src, metric, system, "kretschmann", ["r", "theta"], names)
@@ -18089,34 +18093,34 @@ def eye_of_the_storm(ck, src):
     kerr = K_kerr.expr.xreplace({K_kerr.coords[0]: r, K_kerr.coords[1]: th, K_kerr.params[0]: mm,
                                  K_kerr.params[1]: aa, K_kerr.params[2]: 1})
     ck(f"{metric} K at ell = 0 is Kerr's published scalar", sp.simplify(K.expr.subs(ll, 0) - kerr) == 0)
-    held = {"axis": {"\\theta": 0.0}, "equator": {"\\theta": math.pi / 2}}
     height = PLOT_W / 2
     curves, horizons = [], None
-    for cls, fixed in held.items():
+    for where, fixed in held.items():
         Kc, Rc, gc = Held(K, fixed), Held(R, fixed), Held(grr, fixed)
         for name, scalar in (("K", Kc), ("R", Rc)):
             small = [abs(float(scalar.exact([x, *values]))) for x in (0.005, 0.0025, 0.001)]
-            ck(f"{metric} {name} on the {cls} falls to zero toward r = 0",
+            ck(f"{metric} {name} on the {where} falls to zero toward r = 0",
                small[0] > small[1] > small[2] and small[2] < 1e-12, f"{small}")
-        ck(f"{metric} R on the {cls} is positive at every r drawn",
+        ck(f"{metric} R on the {where} is positive at every r drawn",
            all(float(Rc.exact([x, *values])) > 0 for x in np.linspace(0, 4, 401)[1:]))
-        found = zeros(ck, f"{metric} g^rr on the {cls}", gc, 1e-3, 4, values)
-        ck(f"{metric} g^rr on the {cls} vanishes at r_- = 0.4349 m and r_+ = 1.5151 m",
+        found = zeros(ck, f"{metric} g^rr on the {where}", gc, 1e-3, 4, values)
+        ck(f"{metric} g^rr on the {where} vanishes at r_- = 0.4349 m and r_+ = 1.5151 m",
            len(found) == 2 and abs(found[0] - 0.4348787520714) < 1e-10 and abs(found[1] - 1.5150508229447) < 1e-10,
            f"{found}")
         horizons = found
         for name, scalar, scale in (("K", Kc, EOS_K), ("R", Rc, EOS_R)):
             up, down = beyond(scalar, x_axis, scale, values, (1e-3, 4))
-            ck(f"{metric} {name} on the {cls} stays inside its panel", not up and not down, f"{up} {down}")
-            curves += line_curves(ck, f"{metric} {cls}", name, cls, scalar, "r", x_axis, scale, height, params,
-                                  within=(1e-3, 4))
+            ck(f"{metric} {name} on the {where} stays inside its panel", not up and not down, f"{up} {down}")
+            curves += line_curves(ck, f"{metric} {where}", f"{name}_{where}", name, scalar, "r", x_axis, scale,
+                                  height, params, within=(1e-3, 4))
     return [{
         "id": system, "system": system, "label": "$a = 0.6\\,m$, $\\ell = 0.2\\,m$",
         "kind": "line", "x": x_axis, "panels": panels,
         "curves": curves, "marks": [{"class": "horizon", "x": h} for h in horizons],
-        "legend": [["line", "axis", "axis"], ["line", "equator", "equator"], ["line", "horizon", "horizons"]],
-        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the eye of the storm, falling to zero at "
-                    "the centre."],
+        "legend": [["line", "K", "$K$, the Kretschmann scalar"], ["line", "R", "$R$, the Ricci scalar"],
+                   ["line", "horizon", "horizons"]],
+        "caption": ["The Kretschmann scalar $K$ and the Ricci scalar $R$ of the eye of the storm on its axis "
+                    "($\\theta = 0$) and on its equator ($\\theta = \\pi/2$), falling to zero at the centre."],
         "ricci_sentences": [],
         "per_scalar": scalar_clips("Signed log, $-10^3$ to $10^7$.", "Signed log, 0 to $10^4$."),
         "settings": "$m = 1$, $a = 0.6\\,m$, $\\ell = 0.2\\,m$.",

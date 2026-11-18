@@ -369,15 +369,18 @@ def curvature_views(ck, src, cv):
     cv.shape_checks(ck, METRIC + "/wave", [p["aspect"] for p in panels])
     curves = []
     for field, scalar in (("K", "kretschmann"), ("R", "ricci_scalar")):
-        for system, cls, params in (("plane_wave", "wave", {"gamma": 1, "A": 2}), ("flat_planar", "ahead", {"gamma": 1})):
+        # The flat universe ahead of the front is drawn beside the wave region as a comparison.
+        for system, cls, params in (("plane_wave", field, {"gamma": 1, "A": 2}),
+                                    ("flat_planar", "reference", {"gamma": 1})):
             stored = cv.Held(cv.nr_published(src, METRIC, system, scalar, ["z", "eta"], list(params)), {"eta": 1})
             curves += cv.line_curves(ck, METRIC + "/wave", field, cls, stored, "z", xaxis, scales[field],
                                      cv.PLOT_W / 2, params)
     return [{"id": "wave", "label": "Across the wave", "kind": "line", "x": xaxis, "panels": panels,
              "curves": curves, "marks": [],
-             "legend": [["line", "wave", "behind the front"], ["line", "ahead", "the flat universe ahead"]],
-             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the wave region at $\eta=1$, from $z=-\eta$ to the front $z=\eta$. "
+             "legend": [["line", "K", "$K$"], ["line", "R", "$R$"], ["line", "reference", "the flat universe ahead"]],
+             "caption": [r"The Kretschmann scalar $K$ and the Ricci scalar $R$ of the wave region at $\eta=1$, from $z=-\eta$ to the front $z=\eta$, "
+                         r"beside the flat universe ahead. "
                          r"On the front $K$ meets the flat universe's $15/16$, and behind it $K$ falls below zero. "
                          r"Behind the front $R=-3e^{S}/4$ lies nearer zero, where the fluid is less dense."],
              "ricci_sentences": [[0, 2]], "settings": "$\\gamma=1$, $A=2$, $\\eta=1$.",
-             "clip": "Linear vertical scales.", "per_scalar": cv.scalar_clips("Linear scale.", "Linear scale.")}]
+             "clip": "Linear scales.", "per_scalar": cv.scalar_clips("Linear scale.", "Linear scale.")}]

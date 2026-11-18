@@ -2262,7 +2262,7 @@
     "diagrams": "c8b0e54e16a6bfdd",
     "conformal": "0e13a713f3a4548b",
     "embedding": "f0b07e38099aa4fc",
-    "curvature": "87df3980405fd124"
+    "curvature": "c8bde5315c05dd84"
   },
   {
     "id": "elliptic_de_sitter",
@@ -2480,7 +2480,7 @@
     "diagrams": "21aca3206b5c5cd4",
     "conformal": "c278958d595c6a20",
     "embedding": "378760e6120898dc",
-    "curvature": "5466f0c23c30d8fb"
+    "curvature": "bdb511ad18f2f3fd"
   },
   {
     "id": "fisher_jnw",
@@ -7793,7 +7793,7 @@
     "diagrams": "01fe0af916b50a3d",
     "conformal": "fa03b5ac35bd5a1a",
     "embedding": "61c8e8bb4bd25473",
-    "curvature": "e468b10ba3e3b65b"
+    "curvature": "a7c04ed0fc8c31cb"
   },
   {
     "id": "white_hole",

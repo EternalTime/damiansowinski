@@ -244,15 +244,18 @@ def curvature_views(ck, src, cv):
     x = cv.axis("$r/m$", 1, 6)
     scale = {"kind": "symlog", "from": -100, "to": 100, "linear": .001}
     published = cv.nr_published(src, METRIC, "exterior", "kretschmann", ["r", "theta"], ["m", "q", "a"])
+    # A panel for each direction, the axis above the equator, as the Curzon-Chazy particle's stand.
+    panels = [{"id": where, "name": f"$K(r, {at})\\,m^4$", "aspect": 2, "scale": scale,
+               "ticks": cv.value_ticks(scale)} for where, at in (("axis", "0"), ("plane", "\\pi/2"))]
+    cv.shape_checks(ck, METRIC, [p["aspect"] for p in panels])
     curves = []
-    for cls, theta in (("axis", 0), ("equator", np.pi/2)):
+    for where, theta in (("axis", 0), ("plane", np.pi/2)):
         held = cv.Held(published, {"theta": theta})
-        curves += cv.line_curves(ck, METRIC, "K", cls, held, "r", x, scale, cv.PLOT_W,
+        curves += cv.line_curves(ck, f"{METRIC} {where}", where, "K", held, "r", x, scale, cv.PLOT_W / 2,
                                  {"m": 1, "q": np.sqrt(2), "a": 2})
     return [{"id": "exterior", "label": "Smooth exterior", "kind": "line", "x": x,
-             "panels": [{"id": "K", "name": "$Km^4$", "aspect": 1, "scale": scale,
-                         "ticks": cv.value_ticks(scale)}], "curves": curves, "marks": [],
-             "legend": [["line", "axis", "the rotation axis"], ["line", "equator", "the equator"]],
+             "panels": panels, "curves": curves, "marks": [],
+             "legend": [["line", "K", "$K$, the Kretschmann scalar"]],
              "caption": [r"The smooth exterior Kretschmann scalar $K$ ($\theta=0$ and $\theta=\pi/2$), from its outer limit at the shell."],
              "settings": r"$m=1$, $q^2=2m^2$, $a=2m$.",
-             "clip": "Signed logarithmic scale, linear near zero; both curves within the panel."}]
+             "clip": "Signed logarithmic scale, linear near zero; each curve within its panel."}]
