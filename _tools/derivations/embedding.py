@@ -5600,6 +5600,72 @@ def topological_star(ck, src):
     return views
 
 
+def kaluza_klein_melvin(ck, src):
+    """The surface of rho and y through the axis of the twisted space at one moment, t = 0 and
+    z = 0, on the half planes varphi = 0 and varphi = pi of the adapted chart, at R = 1 and
+    B = 1/2R, the largest field of a distinct spacetime. In flat five dimensional space it is a
+    helicoid, and its metric d rho^2 + (1 + B^2 rho^2) dy^2 is that of a surface of revolution
+    whose circle, the fifth dimension, has the radius R sqrt(1 + B^2 rho^2): R on the axis and
+    growing in proportion to rho far from it (Dowker, Gauntlett, Gibbons and Horowitz 1995,
+    after (2.6)). Along the surface dR/ds = B^2 rho R/sqrt(1 + B^2 rho^2) < BR <= 1/2, so flat
+    space carries all of it, which is checked. The two half planes meet on the axis, the smallest
+    circle, where both sheets stand vertical. Each height is checked against scipy's quadrature of
+    its slope, written by hand. The geometry is static, so the view is one surface and no movie."""
+    from scipy.integrate import quad
+    name = "Kaluza-Klein Melvin universe"
+    b = 0.5
+    params = {"R": 1, "B": "1/2"}
+    sl = Slice(src, "kaluza_klein_melvin", "adapted", "\\rho", "y", {"t": 0, "z": 0, "varphi": 0}, params)
+    top = 4.0
+    size = 2 * top
+
+    def radius(x):
+        return np.sqrt(1 + b * b * np.asarray(x, dtype=float) ** 2)
+
+    def slope(x):
+        # dR/ds with s = rho the proper distance from the axis.
+        x = np.asarray(x, dtype=float)
+        return b * b * x / np.sqrt(1 + b * b * x ** 2)
+
+    def height(x):
+        # dz/drho = sqrt(1 - (dR/drho)^2).
+        def of(u):
+            return math.sqrt(1 - float(slope(u)) ** 2)
+        return np.array([quad(of, 0.0, v, epsabs=1e-12, epsrel=1e-12, limit=200)[0] for v in np.atleast_1d(x)])
+    marks = (1.0, 2.0, 3.0)
+    near = Piece("near", "sheet", sl, 0.0, top, 0.0, 1,
+                 (("throat", "the axis $\\rho = 0$, the smallest circle, where the half plane $\\varphi = \\pi$ "
+                             "begins"),
+                  ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                 [(0.0, "horizon", "$\\rho = 0$")] + [(x, "r", None) for x in marks] + [(top, "r", "$\\rho = 4R$")],
+                 size)
+    far = Piece("far", "sheet2", sl, 0.0, top, 0.0, -1,
+                (("throat", "the axis $\\rho = 0$"), ("edge", "the surface runs on to $\\rho \\to \\infty$")),
+                [(x, "r2", None) for x in marks] + [(top, "r2", None)], size)
+    ck.join(f"{name}, the two half planes on the axis", near, 0.0, far, 0.0)
+    for p in (near, far):
+        ck.isometry(f"{name}, {p.id}", p)
+        ck.radius(f"{name}, {p.id}: its circles have the radius R sqrt(1 + B^2 rho^2)", p, radius, size)
+        ck.form(f"{name}, {p.id}: the quadrature of its height", p, lambda x, s=p.sense: s * height(x), size)
+    xs = np.linspace(0.0, 200.0, 2001)
+    ck.add(f"{name}: dR/ds stays below BR = 1/2, so flat space carries the surface",
+           float(max(np.max(slope(xs)) - 0.5, 0.0)), 0.0)
+    ck.add(f"{name}: the circle on the axis has the radius R", abs(float(radius(0.0)) - 1), 1e-15)
+    ck.add(f"{name}: far from the axis the radius grows as B rho", abs(float(radius(1e8)) / 1e8 - b), 1e-12)
+    surface = Surface([near, far])
+    fig = figure_of([surface], {"sheet": "cover"}, size)
+    ring_label(fig, [0, 0, 0], *near.at(0.0), "$\\rho = 0$", dx=14)
+    ring_label(fig, [0, 0, 0], *near.at(2.0), "$2R$")
+    ring_label(fig, [0, 0, 0], *near.at(top), "$4R$")
+    fig.legend("fill", "cover", "the surface on $\\varphi = 0$ and $\\pi$")
+    fig.legend("line", "r", "$\\rho$ constant, $1$ to $4R$")
+    fig.legend("line", "r2", "the same on $\\varphi = \\pi$")
+    fig.legend("line", "horizon", "the axis, where the half planes meet")
+    fig.legend("line", "meridian", "$y$ constant")
+    return [view("circle", "The fifth dimension", "$R$", [surface], fig.done(),
+                 settings="$R = 1$ and $B = 1/2R$ ($t = 0$, $z = 0$).")]
+
+
 def regular_black_hole_pure_gravity(ck, src):
     """Bueno, Cano and Hennigar's regular black hole of five dimensions at r_0 = 1 and l = 12/25,
     where the horizons, the two positive roots of the published g^rr, are r_- = 3r_0/5 and
@@ -18603,6 +18669,7 @@ DRAWN = {
     "topological_black_hole": topological_black_hole,
     "ads_soliton": ads_soliton,
     "topological_star": topological_star,
+    "kaluza_klein_melvin": kaluza_klein_melvin,
     "siklos": siklos,
     "kundt_waves": kundt_waves,
     "schrodinger_spacetime": schrodinger_spacetime,
@@ -19636,6 +19703,10 @@ CAPTIONS = {
         "out to them, as on the static slice of anti-de Sitter space, and the surface climbs at "
         "$dZ/dr = \\sqrt{1 - 1/f}$ from level toward a light cone of Minkowski space, as the hyperboloid of "
         "anti-de Sitter space does. Both parts lie level at the circle, so they meet there with one tangent plane.",
+    ],
+    ("kaluza_klein_melvin", "circle"): [
+        "The surface of $\\rho$ and $y$ through the axis at one moment ($B = 1/2R$), each circle the fifth "
+        "dimension, of circumference $2\\pi R\\sqrt{1 + B^2\\rho^2}$.",
     ],
     ("topological_star", "cigar"): [
         "The surface of $\\rho$ and $\\psi$ of the star at one moment of $t$ and one point of the sphere "
