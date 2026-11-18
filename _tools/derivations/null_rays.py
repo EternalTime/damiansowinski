@@ -19495,5 +19495,11 @@ CLOSED_FORMS.update(_scalar_collapse_forms)
 import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings
 _dilaton_unusual_asymptotics_drawings.register_null(sys.modules[__name__])
 
+import waves_in_friedmann as _waves_in_friedmann
+DIAGRAMS.extend(_waves_in_friedmann.diagram_specs(Diagram, SIDEWAYS))
+CAPTIONS.update(_waves_in_friedmann.diagram_captions())
+CLOSED_FORMS.update(_waves_in_friedmann.null_forms())
+
+
 if __name__ == "__main__":
     sys.exit(main())

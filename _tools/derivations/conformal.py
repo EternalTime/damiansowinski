@@ -32429,5 +32429,16 @@ CAPTIONS.update({(_scalar_collapse_drawings.METRIC, vid): [text]
 import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings
 _dilaton_unusual_asymptotics_drawings.register_conformal(sys.modules[__name__])
 
+import waves_in_friedmann as _waves_in_friedmann
+
+
+def waves_in_friedmann(ck, src):
+    return _waves_in_friedmann.conformal_views(ck, src, sys.modules[__name__])
+
+
+DRAWN[_waves_in_friedmann.METRIC] = waves_in_friedmann
+CAPTIONS.update(_waves_in_friedmann.conformal_captions())
+
+
 if __name__ == "__main__":
     sys.exit(main())

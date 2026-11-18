@@ -5161,6 +5161,11 @@ _rotation_halts_drawings.register_slices(sys.modules[__name__])
 HIDDEN[("nappi_witten", "whisker", "periodic")] = (
     "the static extension has r<0, whereas the embedded cosmological moment has r=1/2")
 
+import waves_in_friedmann as _waves_in_friedmann
+FLAT[(_waves_in_friedmann.METRIC, "closed_toroidal", "closed")] = (
+    lambda: _waves_in_friedmann.slice_marks(sys.modules[__name__], "closed_toroidal", "closed"))
+
+
 if __name__ == "__main__":
     print("the transformations the slices are carried through:")
     sys.exit(1 if checks() else 0)
