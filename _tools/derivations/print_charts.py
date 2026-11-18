@@ -37770,5 +37770,10 @@ import dilaton_unusual_asymptotics as _dilaton_unusual_asymptotics
 _dilaton_unusual_asymptotics.register(sys.modules[__name__])
 
 
+
+import waves_in_friedmann as _waves_in_friedmann
+CHARTS[_waves_in_friedmann.METRIC] = [lambda system=system: _waves_in_friedmann.chart_spec(system)
+                                      for system in _waves_in_friedmann.CHARTS]
+
 if __name__ == "__main__":
     main()
