@@ -19320,6 +19320,8 @@ def waves_in_friedmann(ck, src):
 
 DRAWN[_waves_in_friedmann.METRIC] = waves_in_friedmann
 
+import repulson_drawings as _repulson_drawings
+_repulson_drawings.register_curvature(sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())
