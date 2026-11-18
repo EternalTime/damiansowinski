@@ -323,6 +323,11 @@
       "id": "brout_englert_gunzig",
       "kind": "composite",
       "text": "Empty flat space with a universe growing inside the forward light cone of one of its events. In the universe of Brout, Englert, and Gunzig matter is created inside the cone and the total energy stays that of empty space [brout1979causal]."
+    },
+    {
+      "id": "kaluza_klein_melvin",
+      "kind": "family",
+      "text": "Flat spacetime of five dimensions with its fifth dimension rolled into a circle with a twist. Seen from four dimensions it is a tube of magnetic flux [dowker1995]."
     }
   ],
   "references": [
@@ -410,7 +415,8 @@
     "astorino2022swirling",
     "lyndenbell1978",
     "lopez1984electron",
-    "brout1979causal"
+    "brout1979causal",
+    "dowker1995"
   ],
   "coordinates": [
     {

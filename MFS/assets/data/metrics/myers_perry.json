@@ -72,6 +72,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "A static, charged black hole in five dimensions with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "kaluza_klein_melvin",
+      "kind": "family",
+      "text": "Flat spacetime of five dimensions with a twisted circle, a magnetic field seen from four dimensions. Myers and Perry's hole with one rotation, continued to imaginary time, approaches it far away and describes its decay [dowker1995]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "pomeransky2006",
     "cvetic1996rotating",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "dowker1995"
   ],
   "coordinates": [
     {

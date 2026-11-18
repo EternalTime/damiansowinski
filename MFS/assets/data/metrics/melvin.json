@@ -102,6 +102,11 @@
       "id": "early_braneworlds",
       "kind": "family",
       "text": "The magnetic membranes of Gibbons and Wiltshire extend the flux tube construction to higher dimensions [gibbonswiltshire1987]."
+    },
+    {
+      "id": "kaluza_klein_melvin",
+      "kind": "family",
+      "text": "The flux tube of Kaluza and Klein's theory, whose dilaton couples to the field with strength $\\sqrt{3}$. In five dimensions it is flat, with its points identified by a step around a circle and a turn about the axis [dowker1995]."
     }
   ],
   "references": [
@@ -137,7 +142,8 @@
     "astorino2025",
     "astorino2022swirling",
     "cardoso2025",
-    "gibbonswiltshire1987"
+    "gibbonswiltshire1987",
+    "dowker1995"
   ],
   "coordinates": [
     {

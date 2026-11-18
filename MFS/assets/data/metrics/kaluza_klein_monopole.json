@@ -136,6 +136,11 @@
       "id": "klebanov_witten",
       "kind": "family",
       "text": "The compact five dimensions of the throat carry a circle bundle over two 2-spheres. The monopole's spatial Taub-NUT geometry carries a circle bundle over one 2-sphere [klebanovwitten1998]."
+    },
+    {
+      "id": "kaluza_klein_melvin",
+      "kind": "family",
+      "text": "Flat spacetime of five dimensions with a twisted circle, which seen from four dimensions is a magnetic field. The field decays by creating these monopoles in pairs with antimonopoles [dowker1995]."
     }
   ],
   "references": [
@@ -171,7 +176,8 @@
     "myers1987compact",
     "vafa1996ftheory",
     "giddings1988",
-    "klebanovwitten1998"
+    "klebanovwitten1998",
+    "dowker1995"
   ],
   "coordinates": [
     {

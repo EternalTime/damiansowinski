@@ -64,6 +64,11 @@
       "id": "kerr_bertotti_robinson",
       "kind": "family",
       "text": "Kerr's hole in the other uniform magnetic field, Bertotti and Robinson's, found by Jiří Podolský and Hryhorii Ovcharenko in 2025. It is of type D, its ergoregion stays near the hole, and it carries a charge close to $maB$ when $aB$ is small [podolsky2025, ovcharenko2026b]."
+    },
+    {
+      "id": "kaluza_klein_melvin",
+      "kind": "family",
+      "text": "The magnetic universe of Kaluza and Klein's theory, flat in five dimensions. Liang Ma, Peng-Yu Wu, and Hong Lü used the rotation that makes it out of flat space to set Kerr's black hole in a uniform magnetic field of that theory in 2026 [ma2026]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "astorino2016",
     "blandford1977",
     "podolsky2025",
-    "ovcharenko2026b"
+    "ovcharenko2026b",
+    "ma2026"
   ],
   "coordinates": [
     {

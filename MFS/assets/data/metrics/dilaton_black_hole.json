@@ -117,6 +117,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "limit",
       "text": "Charged black holes of the same theory whose region far away is neither flat nor anti-de Sitter space [chan1995]. The one at the string coupling is the limit of the dilaton black hole in which the charge approaches its extreme value and the neighbourhood of the horizon is magnified without bound [clement2003]."
+    },
+    {
+      "id": "kaluza_klein_melvin",
+      "kind": "family",
+      "text": "The flux tube of Kaluza and Klein's theory, where the dilaton couples with strength $\\sqrt{3}$, which Gibbons and Maeda found among the solutions of these theories. In five dimensions it is flat space with a twisted circle [dowker1994b, dowker1995]."
     }
   ],
   "references": [
@@ -149,7 +154,9 @@
     "gasperini1993prebigbang",
     "horne1992black",
     "chan1995",
-    "clement2003"
+    "clement2003",
+    "dowker1994b",
+    "dowker1995"
   ],
   "coordinates": [
     {
