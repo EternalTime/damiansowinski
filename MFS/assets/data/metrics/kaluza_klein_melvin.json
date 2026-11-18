@@ -455,6 +455,245 @@
         "\\ddot{\\varphi} + \\dfrac{2}{\\rho}\\dot{\\rho}\\dot{\\varphi} + \\dfrac{2B}{\\rho}\\dot{\\rho}\\dot{y} = 0",
         "\\ddot{y} = 0"
       ]
+    },
+    {
+      "id": "minkowski",
+      "name": "Minkowski Angle",
+      "coords": [
+        "t",
+        "z",
+        "\\rho",
+        "\\phi",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\phi \\in [0, 2\\pi)",
+        "y \\in [0, 2\\pi R)",
+        "(\\phi, y) \\sim (\\phi + 2\\pi RB, y + 2\\pi R)",
+        "B \\in (-1/2R, 1/2R] \\;\\text{(distinct spacetimes)}",
+        "\\rho = 0 \\;\\text{(the axis, a regular line)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "R",
+          "description": "Radius of the fifth dimension, along which $y$ has period $2\\pi R$"
+        },
+        {
+          "symbol": "B",
+          "description": "Magnetic field on the axis seen from four dimensions; once around the fifth dimension the plane about the axis turns through $2\\pi RB$"
+        }
+      ],
+      "convention": "We use coordinates $(t, z, \\rho, \\phi, y)$, with $t$ carrying dimensions of time and $z$, $\\rho$, and $y$ lengths, and identify each point with its images under $\\phi \\to \\phi + 2\\pi$ and $(\\phi, y) \\to (\\phi + 2\\pi RB, y + 2\\pi R)$ [dowker1995]. The angle $\\phi$ is $\\varphi + By$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dz^2 + d\\rho^2 + \\rho^2d\\phi^2 + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\rho^2"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{1}{\\rho^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\rho}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{1}{\\rho}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "\\rho",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\rho",
+                  "\\phi"
+                ],
+                "value": "\\rho"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\rho"
+                ],
+                "value": "\\rho"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{z} = 0",
+        "\\ddot{\\rho} - \\rho\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{\\rho}\\dot{\\rho}\\dot{\\phi} = 0",
+        "\\ddot{y} = 0"
+      ]
     }
   ]
 }
