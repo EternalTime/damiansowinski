@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 262,
+  "count": 263,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -20909,6 +20909,11 @@
           "id": "dilaton_unusual_asymptotics",
           "kind": "limit",
           "text": "Charged black holes of the same theory whose region far away is neither flat nor anti-de Sitter space [chan1995]. The one at the string coupling is the limit of the dilaton black hole in which the charge approaches its extreme value and the neighbourhood of the horizon is magnified without bound [clement2003]."
+        },
+        {
+          "id": "kaluza_klein_melvin",
+          "kind": "family",
+          "text": "The flux tube of Kaluza and Klein's theory, where the dilaton couples with strength $\\sqrt{3}$, which Gibbons and Maeda found among the solutions of these theories. In five dimensions it is flat space with a twisted circle [dowker1994b, dowker1995]."
         }
       ],
       "references": [
@@ -20941,7 +20946,9 @@
         "gasperini1993prebigbang",
         "horne1992black",
         "chan1995",
-        "clement2003"
+        "clement2003",
+        "dowker1994b",
+        "dowker1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -39810,6 +39817,246 @@
       ]
     },
     {
+      "id": "kaluza_klein_melvin",
+      "name": "Kaluza-Klein Melvin Universe",
+      "short_name": "Kaluza-Klein Melvin",
+      "description": "Flat spacetime of five dimensions whose fifth dimension is a circle with a twist, so that anything taken once around it comes back turned through a fixed angle about an axis. Seen from four dimensions it is a tube of magnetic flux with a dilaton, the counterpart in Kaluza-Klein theory of the Melvin magnetic universe. Fay Dowker, Jerome Gauntlett, Gary Gibbons, and Gary Horowitz showed in 1995 that it can decay by a bubble of nothing or by creating pairs of Kaluza-Klein monopoles.",
+      "tags": [
+        "flat",
+        "vacuum",
+        "conformally flat",
+        "five-dimensional",
+        "static",
+        "stationary",
+        "Kaluza-Klein",
+        "compact dimension",
+        "higher dimensions",
+        "magnetic field",
+        "dilaton",
+        "Einstein-Maxwell-dilaton",
+        "string theory",
+        "cylindrical symmetry",
+        "axisymmetric",
+        "topology",
+        "not asymptotically flat",
+        "instability",
+        "black hole pair creation",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "family",
+          "text": "Flat spacetime of four dimensions. The magnetic universe is flat as well, in five dimensions, with its points identified by a step around the fifth dimension and a turn about an axis [dowker1995]."
+        },
+        {
+          "id": "melvin",
+          "kind": "family",
+          "text": "The flux tube of Einstein-Maxwell theory, with no dilaton. Gibbons and Maeda's solutions run from it, at the coupling $a = 0$, to this universe seen from four dimensions, at $a = \\sqrt{3}$ [dowker1994b]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "The monopole the magnetic universe creates in pairs as it decays, a monopole and an antimonopole accelerating apart. The instanton of that creation is the rotating black hole of five dimensions continued to imaginary time [dowker1994b, dowker1995]."
+        },
+        {
+          "id": "myers_perry",
+          "kind": "family",
+          "text": "The rotating black hole of five dimensions. With one rotation and continued to imaginary time, it is the instanton for both decays of the magnetic universe, the bubble and the pair of monopoles [dowker1995]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The charged black hole of string theory, where the dilaton couples to the Maxwell field with strength $1$. The magnetic flux tube that Gibbons and Maeda found in the same theories is this universe at the coupling $\\sqrt{3}$ [dowker1994b]."
+        },
+        {
+          "id": "kerr_melvin",
+          "kind": "family",
+          "text": "Kerr's black hole in the Melvin universe of Einstein-Maxwell theory. Liang Ma, Peng-Yu Wu, and Hong Lü used the rotation that makes this universe to set a Kerr black hole in a uniform magnetic field of Kaluza-Klein theory in 2026 [ma2026]."
+        }
+      ],
+      "references": [
+        "dowker1995",
+        "dowker1994b",
+        "melvin1964",
+        "gibbons1988",
+        "dowker1994",
+        "witten1982kk",
+        "myers1986",
+        "russo1996",
+        "dowker1996",
+        "costa2001",
+        "gutperle2001",
+        "ma2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_melvin.json",
+      "charts": [
+        {
+          "id": "adapted",
+          "name": "Adapted Angle",
+          "coordinates": [
+            "t",
+            "z",
+            "\\rho",
+            "\\varphi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\varphi \\in [0, 2\\pi)",
+            "y \\in [0, 2\\pi R)",
+            "B \\in (-1/2R, 1/2R] \\;\\text{(distinct spacetimes)}",
+            "\\rho = 0 \\;\\text{(the axis, a regular line)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the fifth dimension, along which $y$ has period $2\\pi R$"
+            },
+            {
+              "symbol": "B",
+              "description": "Magnetic field on the axis seen from four dimensions; once around the fifth dimension the plane about the axis turns through $2\\pi RB$"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, \\rho, \\varphi, y)$, with $t$ carrying dimensions of time, $z$, $\\rho$, and $y$ lengths, $\\varphi$ periodic with period $2\\pi$, and $y$ periodic with period $2\\pi R$, each identified on its own [dowker1994b, dowker1995]. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dz^2 + d\\rho^2 + \\rho^2\\left(d\\varphi + B\\,dy\\right)^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\rho^2"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "y"
+              ],
+              "value": "B\\,\\rho^2"
+            },
+            {
+              "indices": [
+                "y",
+                "\\varphi"
+              ],
+              "value": "B\\,\\rho^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "B^2\\,\\rho^2 + 1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "minkowski",
+          "name": "Minkowski Angle",
+          "coordinates": [
+            "t",
+            "z",
+            "\\rho",
+            "\\phi",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\phi \\in [0, 2\\pi)",
+            "y \\in [0, 2\\pi R)",
+            "(\\phi, y) \\sim (\\phi + 2\\pi RB, y + 2\\pi R)",
+            "B \\in (-1/2R, 1/2R] \\;\\text{(distinct spacetimes)}",
+            "\\rho = 0 \\;\\text{(the axis, a regular line)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "R",
+              "description": "Radius of the fifth dimension, along which $y$ has period $2\\pi R$"
+            },
+            {
+              "symbol": "B",
+              "description": "Magnetic field on the axis seen from four dimensions; once around the fifth dimension the plane about the axis turns through $2\\pi RB$"
+            }
+          ],
+          "convention": "We use coordinates $(t, z, \\rho, \\phi, y)$, with $t$ carrying dimensions of time and $z$, $\\rho$, and $y$ lengths, and identify each point with its images under $\\phi \\to \\phi + 2\\pi$ and $(\\phi, y) \\to (\\phi + 2\\pi RB, y + 2\\pi R)$ [dowker1995]. The angle $\\phi$ is $\\varphi + By$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dz^2 + d\\rho^2 + \\rho^2d\\phi^2 + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^2"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "kaluza_klein_monopole",
       "name": "Kaluza-Klein Monopole",
       "short_name": "Kaluza-Klein Monopole",
@@ -39946,6 +40193,11 @@
           "id": "klebanov_witten",
           "kind": "family",
           "text": "The compact five dimensions of the throat carry a circle bundle over two 2-spheres. The monopole's spatial Taub-NUT geometry carries a circle bundle over one 2-sphere [klebanovwitten1998]."
+        },
+        {
+          "id": "kaluza_klein_melvin",
+          "kind": "family",
+          "text": "Flat spacetime of five dimensions with a twisted circle, which seen from four dimensions is a magnetic field. The field decays by creating these monopoles in pairs with antimonopoles [dowker1995]."
         }
       ],
       "references": [
@@ -39981,7 +40233,8 @@
         "myers1987compact",
         "vafa1996ftheory",
         "giddings1988",
-        "klebanovwitten1998"
+        "klebanovwitten1998",
+        "dowker1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -43686,6 +43939,11 @@
           "id": "kerr_bertotti_robinson",
           "kind": "family",
           "text": "Kerr's hole in the other uniform magnetic field, Bertotti and Robinson's, found by Jiří Podolský and Hryhorii Ovcharenko in 2025. It is of type D, its ergoregion stays near the hole, and it carries a charge close to $maB$ when $aB$ is small [podolsky2025, ovcharenko2026b]."
+        },
+        {
+          "id": "kaluza_klein_melvin",
+          "kind": "family",
+          "text": "The magnetic universe of Kaluza and Klein's theory, flat in five dimensions. Liang Ma, Peng-Yu Wu, and Hong Lü used the rotation that makes it out of flat space to set Kerr's black hole in a uniform magnetic field of that theory in 2026 [ma2026]."
         }
       ],
       "references": [
@@ -43705,7 +43963,8 @@
         "astorino2016",
         "blandford1977",
         "podolsky2025",
-        "ovcharenko2026b"
+        "ovcharenko2026b",
+        "ma2026"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr_melvin.json",
@@ -53406,6 +53665,11 @@
           "id": "early_braneworlds",
           "kind": "family",
           "text": "The magnetic membranes of Gibbons and Wiltshire extend the flux tube construction to higher dimensions [gibbonswiltshire1987]."
+        },
+        {
+          "id": "kaluza_klein_melvin",
+          "kind": "family",
+          "text": "The flux tube of Kaluza and Klein's theory, whose dilaton couples to the field with strength $\\sqrt{3}$. In five dimensions it is flat, with its points identified by a step around a circle and a turn about the axis [dowker1995]."
         }
       ],
       "references": [
@@ -53441,7 +53705,8 @@
         "astorino2025",
         "astorino2022swirling",
         "cardoso2025",
-        "gibbonswiltshire1987"
+        "gibbonswiltshire1987",
+        "dowker1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/melvin.json",
@@ -54205,6 +54470,11 @@
           "id": "brout_englert_gunzig",
           "kind": "composite",
           "text": "Empty flat space with a universe growing inside the forward light cone of one of its events. In the universe of Brout, Englert, and Gunzig matter is created inside the cone and the total energy stays that of empty space [brout1979causal]."
+        },
+        {
+          "id": "kaluza_klein_melvin",
+          "kind": "family",
+          "text": "Flat spacetime of five dimensions with its fifth dimension rolled into a circle with a twist. Seen from four dimensions it is a tube of magnetic flux [dowker1995]."
         }
       ],
       "references": [
@@ -54292,7 +54562,8 @@
         "astorino2022swirling",
         "lyndenbell1978",
         "lopez1984electron",
-        "brout1979causal"
+        "brout1979causal",
+        "dowker1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -57804,6 +58075,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "A static, charged black hole in five dimensions with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "kaluza_klein_melvin",
+          "kind": "family",
+          "text": "Flat spacetime of five dimensions with a twisted circle, a magnetic field seen from four dimensions. Myers and Perry's hole with one rotation, continued to imaginary time, approaches it far away and describes its decay [dowker1995]."
         }
       ],
       "references": [
@@ -57828,7 +58104,8 @@
         "pomeransky2006",
         "cvetic1996rotating",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "dowker1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/myers_perry.json",

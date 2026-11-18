@@ -1603,6 +1603,17 @@ The charged black holes of gravity in five dimensions with the fifth dimension a
 - chart Einstein Metric, Four Dimensions: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r - r_s}{\sqrt{r\left(r + q - r_s\right)}}c^2dt^2 + \dfrac{\sqrt{r\left(r + q - r_s\right)}}{r - r_s}dr^2 + r\sqrt{r\left(r + q - r_s\right)}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Einstein Metric, Ingoing Eddington-Finkelstein: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\dfrac{r - r_s}{\sqrt{r\left(r + q - r_s\right)}}dv^2 + 2\,dv\,dr + r\sqrt{r\left(r + q - r_s\right)}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Kaluza-Klein Melvin Universe
+
+Flat spacetime of five dimensions whose fifth dimension is a circle with a twist, so that anything taken once around it comes back turned through a fixed angle about an axis. Seen from four dimensions it is a tube of magnetic flux with a dilaton, the counterpart in Kaluza-Klein theory of the Melvin magnetic universe. Fay Dowker, Jerome Gauntlett, Gary Gibbons, and Gary Horowitz showed in 1995 that it can decay by a bubble of nothing or by creating pairs of Kaluza-Klein monopoles.
+
+- id: `kaluza_klein_melvin`
+- tags: flat, vacuum, conformally flat, five-dimensional, static, stationary, Kaluza-Klein, compact dimension, higher dimensions, magnetic field, dilaton, Einstein-Maxwell-dilaton, string theory, cylindrical symmetry, axisymmetric, topology, not asymptotically flat, instability, black hole pair creation, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_melvin.json
+- chart Adapted Angle: coordinates $(t, z, \rho, \varphi, y)$, $$ds^2 = -c^2dt^2 + dz^2 + d\rho^2 + \rho^2\left(d\varphi + B\,dy\right)^2 + dy^2$$
+- chart Minkowski Angle: coordinates $(t, z, \rho, \phi, y)$, $$ds^2 = -c^2dt^2 + dz^2 + d\rho^2 + \rho^2d\phi^2 + dy^2$$
+
 ### Kaluza-Klein Monopole
 
 A static vacuum solution of gravity in five dimensions, four of space and one of time, that Rafael Sorkin, and David Gross and Malcolm Perry, found in 1983: Euclidean Taub-NUT space with a time added. The fifth dimension is a circle that shrinks smoothly to a point at the centre, and seen from four dimensions the twist of that circle is the field of a magnetic monopole.
