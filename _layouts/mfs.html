@@ -6153,10 +6153,10 @@
        own scalars are drawn in the colours of the two families of light rays, K in pink and R in
        cyan, a comparison dashed in grey, a horizon as a spacetime diagram marks g^rr = 0, a
        cosmic string in the gold of a world line, a singularity as a point, or on a map as a pink
-       line, and a point where the scalar vanishes as a point; a map's colours are an image
-       under its frame, the dark ground's on the screen and paper's in print. A movie's play button
-       stands in the top left corner of the ground, as an embedding diagram's does, and the name
-       of its frame above the plot, below the button. */
+       line, and where the scalar vanishes as an open point, or on a map as a white line; a map's
+       colours are an image under its frame, the dark ground's on the screen and paper's in print.
+       A movie's play button stands in the top left corner of the ground, as an embedding
+       diagram's does, and the name of its frame above the plot, below the button. */
     .mfs-cv-figure.mfs-cv-movie { padding-top: max(2em, calc(34px + 0.5em)); }
     .mfs-cv-figure .cv-frame { grid-area: frame; padding-bottom: 0.6em; }
     .mfs-cv-figure .nr-xreach > span { display: block; }
@@ -6184,7 +6184,7 @@
        enough to cover the stepped edge of the null cells where the chart ends at it. */
     path.cv-singular, line.cv-singular { fill: none; stroke: var(--pink-dark); stroke-width: 3; stroke-linecap: round; }
     .cv-casing.cv-casing-singular { stroke-width: 8; }
-    circle.cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
+    .cv-zero { fill: none; stroke: var(--text-bright); stroke-width: 2; }
     .cv-casing { fill: none; stroke: #000; stroke-width: 4; stroke-linecap: butt; }
     .cv-paper { display: none; }
     /* A figure that turns, an embedding diagram or a figure of light cones: the drawing takes
@@ -6875,7 +6875,7 @@
       .mfs-print-body .cv-axis-zero { stroke: #bbb; }
       .mfs-print-body circle.cv-singular { fill: #c2185b; stroke: #fff; }
       .mfs-print-body path.cv-singular, .mfs-print-body line.cv-singular { stroke: #c2185b; }
-      .mfs-print-body circle.cv-zero { stroke: #000; }
+      .mfs-print-body .cv-zero { stroke: #000; }
       .mfs-print-body .cv-casing { stroke: #fff; }
       /* A figure's label stands on the surface beside the circle it names, over its lines, on
          a ground of its own on the screen; the print copy clears every ground, so here it
