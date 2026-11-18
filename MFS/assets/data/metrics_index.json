@@ -1854,7 +1854,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "25e1f5e623dc9121",
+    "version": "265ce86f1c26af8a",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -3364,7 +3364,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "012c0eb4e352f874",
+    "version": "3fdfcdcc6ded1b49",
     "diagrams": "23593684842e4900",
     "conformal": "82c544ce8dcb28c0",
     "embedding": "6a27809442290a10"
@@ -3447,7 +3447,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "a5153947f56114fa",
+    "version": "4fe507e7bf938c8b",
     "diagrams": "90d54985332dcf14",
     "conformal": "5cfc3dbdae277601",
     "embedding": "94f99c7e8cc53d34",
@@ -3514,7 +3514,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "e3180c344de0eee4",
+    "version": "211efd71b070d6c3",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -6038,7 +6038,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2a7caf9f7dbbad74",
+    "version": "309784e1d8cfd934",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6130,6 +6130,42 @@
     "conformal": "639eea78631ca3e1",
     "embedding": "4d304b421f18a69a",
     "curvature": "58681f439a504154"
+  },
+  {
+    "id": "repulson",
+    "name": "Repulson",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "electric charge",
+      "magnetic charge",
+      "electromagnetic field",
+      "gauge field",
+      "supersymmetric",
+      "string theory",
+      "low energy string theory",
+      "dilaton",
+      "scalar field",
+      "compact dimension",
+      "naked singularity",
+      "curvature singularity",
+      "no horizon",
+      "negative mass",
+      "mass",
+      "isotropic coordinates",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "4634ca4a8814d6f9",
+    "diagrams": "092fa9897cedb47f",
+    "conformal": "444a6ffb245b1a50",
+    "embedding": "c79c615f799fef4b",
+    "curvature": "247698818ef4a72c"
   },
   {
     "id": "roberts",
@@ -6338,7 +6374,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "00e944b0dec4b876",
+    "version": "566e4bba75decf8a",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -7160,7 +7196,7 @@
       "idealized model",
       "dyon"
     ],
-    "version": "55909f02435e1fde",
+    "version": "8d9a50a4925d370d",
     "diagrams": "3ed264d5e1cddbce",
     "conformal": "0d346a206bbd9515",
     "embedding": "1154c266ff9d9f93"
@@ -7820,7 +7856,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2c5b908e2736b13f",
+    "version": "6cca9939c462f143",
     "diagrams": "c33f3919dd425f85",
     "conformal": "05af67c07226ebb3",
     "embedding": "f02661da1ce5940b"

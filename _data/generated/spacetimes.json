@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 263,
+  "count": 264,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -20914,6 +20914,11 @@
           "id": "kaluza_klein_melvin",
           "kind": "family",
           "text": "The flux tube of Kaluza and Klein's theory, where the dilaton couples with strength $\\sqrt{3}$, which Gibbons and Maeda found among the solutions of these theories. In five dimensions it is flat space with a twisted circle [dowker1994b, dowker1995]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "Charged solutions of the same low energy string theory with no horizon and a singularity that repels massive particles, some of them with zero mass [kallosh1995white]."
         }
       ],
       "references": [
@@ -20948,7 +20953,8 @@
         "chan1995",
         "clement2003",
         "dowker1994b",
-        "dowker1995"
+        "dowker1995",
+        "kallosh1995white"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -38608,6 +38614,11 @@
           "id": "brill_charged_taub_nut",
           "kind": "family",
           "text": "The single source of complex mass is Brill's charged Taub-NUT at $r_q^2 = m^2 + l^2$, where its two horizons meet. With more charge than that Brill's metric has no horizon and is a wormhole [clement2016]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "Klaus Behrndt's stationary solutions of the heterotic string are a string version of these metrics, and at one point of their moduli some of them lose their mass [behrndt1995]."
         }
       ],
       "references": [
@@ -38627,7 +38638,8 @@
         "kallosh1994anomaly",
         "kramer1980",
         "neugebauer2009",
-        "clement2016"
+        "clement2016",
+        "behrndt1995"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_wilson_perjes.json",
@@ -39265,6 +39277,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "A five dimensional Einstein-Maxwell black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "Renata Kallosh and Andrei Linde's charged solutions of the heterotic string hold the extreme electric hole of this family at zero charge, and one such hole with a partner of opposite charge and negative mass, placed at one point, makes a massless one [kallosh1995white, ortin1996]."
         }
       ],
       "references": [
@@ -39286,7 +39303,9 @@
         "cvetic1996static",
         "lake2006static",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "kallosh1995white",
+        "ortin1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json",
@@ -40198,6 +40217,11 @@
           "id": "kaluza_klein_melvin",
           "kind": "family",
           "text": "Flat spacetime of five dimensions with a twisted circle, which seen from four dimensions is a magnetic field. The field decays by creating these monopoles in pairs with antimonopoles [dowker1995]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "Bound to an H-monopole whose magnetic charge has the opposite sign, it makes a magnetic repulson of the heterotic string, a naked singularity that repels massive particles [cvetic1995singular]."
         }
       ],
       "references": [
@@ -40234,7 +40258,8 @@
         "vafa1996ftheory",
         "giddings1988",
         "klebanovwitten1998",
-        "dowker1995"
+        "dowker1995",
+        "cvetic1995singular"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -68233,6 +68258,11 @@
           "id": "dilaton_unusual_asymptotics",
           "kind": "limit_source",
           "text": "Charged black holes with a dilaton of coupling $a$ and an exponential potential, neither flat nor anti-de Sitter far away. For $a^2 < 1$ one family of them has two horizons, and it tends to the Reissner-Nordström black hole in the limit $a \\to 0$ [chan1995]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "Charged solutions of the heterotic string with a naked singularity at which gravity repels, as it does near the timelike singularity of Reissner-Nordström [cano2019]."
         }
       ],
       "references": [
@@ -68288,7 +68318,8 @@
         "banerjee1998",
         "gott1986charged",
         "horne1992black",
-        "chan1995"
+        "chan1995",
+        "cano2019"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -69071,6 +69102,233 @@
           ],
           "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
           "kretschmann": "K = \\dfrac{128r_s^2\\left(24H^2\\tau^2\\rho^2 + r_s^2\\right)}{\\left(2H\\tau\\rho + r_s\\right)^8} + \\dfrac{24H^4}{c^4}"
+        }
+      ]
+    },
+    {
+      "id": "repulson",
+      "name": "Repulsons and Massless Black Holes",
+      "short_name": "Repulson",
+      "description": "The static, supersymmetric, charged solutions of the heterotic string reduced to four dimensions whose naked singularity turns back every massive particle, found by Klaus Behrndt, by Renata Kallosh and Andrei Linde, and by Mirjam Cvetič and Donam Youm in 1995. Gravity attracts far away and repels inside a radius set by the mass and the charge, and with the mass zero it repels at every radius and space is still curved.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "electric charge",
+        "magnetic charge",
+        "electromagnetic field",
+        "gauge field",
+        "supersymmetric",
+        "string theory",
+        "low energy string theory",
+        "dilaton",
+        "scalar field",
+        "compact dimension",
+        "naked singularity",
+        "curvature singularity",
+        "no horizon",
+        "negative mass",
+        "mass",
+        "isotropic coordinates",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and $M$ and $q$ are lengths, Kallosh and Linde's mass and charge in units with $G = 1$ and the dilaton zero at infinity [kallosh1995white]. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "family",
+          "text": "The black holes of Cvetič and Youm with four charges, the two of each kind of one sign, which have horizons. With the two charges of one kind of opposite sign the same solutions are singular and repel massive particles [cvetic1995singular]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The magnetic black hole of coupling $a = 1$ is, in the heterotic string, a Kaluza-Klein monopole together with an H-monopole [johnson2000]. With the two magnetic charges of opposite sign the pair is singular and repels massive particles [cvetic1995singular]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "family",
+          "text": "With $q = 0$ the electric solution of Kallosh and Linde is the extreme electric hole of coupling $a = \\sqrt{3}$, with $\\Delta = 1 + 4M/r$ [kallosh1995white]. Ortín made the massless hole from one of these holes and a partner of opposite charge and negative mass, placed at one point [ortin1996]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "A magnetic repulson of Cvetič and Youm is a Kaluza-Klein monopole bound to an H-monopole whose magnetic charge has the opposite sign [cvetic1995singular]."
+        },
+        {
+          "id": "israel_wilson_perjes",
+          "kind": "family",
+          "text": "Behrndt's stationary solutions of the heterotic string are a string version of these metrics, and their static limit is the Majumdar-Papapetrou black hole [behrndt1995]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "The charged black hole of Einstein-Maxwell theory. Gravity repels near its timelike singularity as near the repulson's, and near that of Schwarzschild's solution with negative mass [cano2019]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "family",
+          "text": "With negative mass its singularity is naked and repels [cano2019]. The repulson's singularity acts on test particles \"as a body with a negative mass\", in Kallosh and Linde's words [kallosh1995white]."
+        },
+        {
+          "id": "white_hole",
+          "kind": "family",
+          "text": "The time reverse of a collapse, the older meaning of the name. Kallosh and Linde called the repulsons white holes because they reflect every massive particle, and used \"repulsons\" to avoid this meaning [kallosh1995white]."
+        }
+      ],
+      "references": [
+        "kallosh1995white",
+        "behrndt1995",
+        "strominger1995massless",
+        "kallosh1995duality",
+        "cvetic1995singular",
+        "ortin1996",
+        "kallosh1996balance",
+        "emparan1996",
+        "gaida1998",
+        "gaida1999",
+        "johnson2000",
+        "johnson2001",
+        "natsuume2002",
+        "cano2019"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/repulson.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Einstein Metric, Isotropic",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(2\\sqrt{M^2 + q^2} - 2M, \\infty\\right)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass as a length, in units with $G = c = 1$; $M \\ge 0$, and $M = 0$ is the massless repulson"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge as a length, in units with $G = c = 1$ and the dilaton zero at infinity"
+            },
+            {
+              "symbol": "\\Delta = 1 + \\dfrac{4M}{r} - \\dfrac{4q^2}{r^2}",
+              "description": "Metric function, a pure number, zero at the singularity $r_0 = 2\\left(\\sqrt{M^2 + q^2} - M\\right)$"
+            }
+          ],
+          "convention": "We use the isotropic coordinates $(t, r, \\theta, \\phi)$ of Kallosh and Linde's Einstein metric [kallosh1995white], with $t$ carrying dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{\\sqrt{\\Delta}} + \\sqrt{\\Delta}\\left(dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{\\sqrt{\\Delta}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\sqrt{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,\\sqrt{\\Delta}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,\\sqrt{\\Delta}\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4r^2\\,\\Delta\\,q^2 + 6r^2\\,M^2 - 24r\\,M\\,q^2 + 24q^4}{r^6\\,\\Delta^{5/2}}",
+          "kretschmann": "K = \\dfrac{48r^6\\,\\Delta^2\\,M^2 - 256r^5\\,\\Delta^2\\,M\\,q^2 + 368r^4\\,\\Delta^2\\,q^4 - 192r^5\\,\\Delta\\,M^3 + 1376r^4\\,\\Delta\\,M^2\\,q^2 - 3200r^3\\,\\Delta\\,M\\,q^4 + 2432r^2\\,\\Delta\\,q^6 + 284r^4\\,M^4 - 2272r^3\\,M^3\\,q^2 + 6816r^2\\,M^2\\,q^4 - 9088r\\,M\\,q^6 + 4544q^8}{r^{12}\\Delta^5}"
+        },
+        {
+          "id": "string",
+          "name": "String Metric",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in \\left(2\\sqrt{M^2 + q^2} - 2M, \\infty\\right)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = r_0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "M",
+              "description": "Mass as a length, in units with $G = c = 1$; $M \\ge 0$, and $M = 0$ is the massless repulson"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge as a length, in units with $G = c = 1$ and the dilaton zero at infinity"
+            },
+            {
+              "symbol": "\\Delta = 1 + \\dfrac{4M}{r} - \\dfrac{4q^2}{r^2}",
+              "description": "Metric function, a pure number, zero at the singularity $r_0 = 2\\left(\\sqrt{M^2 + q^2} - M\\right)$"
+            }
+          ],
+          "convention": "We use the same coordinates on the string metric $e^{2\\varphi}g_{\\mu\\nu}$ of Kallosh and Linde [kallosh1995white], with $g_{\\mu\\nu}$ the Einstein metric and $e^{-2\\varphi} = \\sqrt{\\Delta}$ the dilaton, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dt^2}{\\Delta} + dr^2 + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{1}{\\Delta}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{8r^2\\,\\Delta\\,q^2 + 24r^2\\,M^2 - 96r\\,M\\,q^2 + 96q^4}{r^6\\,\\Delta^2}",
+          "kretschmann": "K = \\dfrac{96r^6\\,\\Delta^2\\,M^2 - 512r^5\\,\\Delta^2\\,M\\,q^2 + 704r^4\\,\\Delta^2\\,q^4 - 384r^5\\,\\Delta\\,M^3 + 2688r^4\\,\\Delta\\,M^2\\,q^2 - 6144r^3\\,\\Delta\\,M\\,q^4 + 4608r^2\\,\\Delta\\,q^6 + 576r^4\\,M^4 - 4608r^3\\,M^3\\,q^2 + 13824r^2\\,M^2\\,q^4 - 18432r\\,M\\,q^6 + 9216q^8}{r^{12}\\Delta^4}"
         }
       ]
     },
@@ -71402,6 +71660,11 @@
           "id": "dilaton_unusual_asymptotics",
           "kind": "limit_source",
           "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$, neither flat nor anti-de Sitter far away. In the limit $a \\to \\infty$ the dilaton and the Maxwell field decouple and the metric is Schwarzschild's [chan1995, clement2004]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "A naked singularity of string theory that repels massive particles, acting on them \"as a body with a negative mass\" [kallosh1995white]."
         }
       ],
       "references": [
@@ -71554,7 +71817,8 @@
         "hellaby2002",
         "bicak1993",
         "chan1995",
-        "clement2004"
+        "clement2004",
+        "kallosh1995white"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -80814,6 +81078,11 @@
           "id": "myers_perry",
           "kind": "family",
           "text": "Two things done to Frank Tangherlini's hole of five dimensions: Myers and Malcolm Perry set it spinning, and in string theory it carries three charges. Cvetič and Youm's rotating solution has the charges and both spins at once [cvetic1996rotating]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "The same solutions with the two charges of one kind of opposite sign, singular and repelling massive particles. When the two charges are also equal in size the mass vanishes [cvetic1995singular]."
         }
       ],
       "references": [
@@ -80831,7 +81100,8 @@
         "maldacena1996",
         "johnson1996",
         "cvetic1996static",
-        "strominger1998"
+        "strominger1998",
+        "cvetic1995singular"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_bh_three_four_charges.json",
@@ -89362,6 +89632,11 @@
           "id": "black_to_white_hole",
           "kind": "family",
           "text": "A white hole that follows a black hole in one spacetime. Haggard and Rovelli glue a collapsing shell of light to its time reverse with a quantum region between [haggard2015fireworks]."
+        },
+        {
+          "id": "repulson",
+          "kind": "family",
+          "text": "Renata Kallosh and Andrei Linde called the charged solutions of string theory whose singularity reflects every massive particle \"supersymmetric white holes\", and also repulsons, to avoid confusion with this older meaning [kallosh1995white]."
         }
       ],
       "references": [
@@ -89385,7 +89660,8 @@
         "blau1989",
         "oripoisson1994",
         "vaidya1953",
-        "haggard2015fireworks"
+        "haggard2015fireworks",
+        "kallosh1995white"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/white_hole.json",
