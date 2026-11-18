@@ -37780,5 +37780,9 @@ CHARTS[_kaluza_klein_melvin.METRIC] = [lambda system=system: _kaluza_klein_melvi
                                        for system in _kaluza_klein_melvin.CHARTS]
 
 
+import repulson as _repulson
+CHARTS[_repulson.METRIC] = [lambda system=system: _repulson.chart_spec(system) for system in _repulson.CHARTS]
+
+
 if __name__ == "__main__":
     main()

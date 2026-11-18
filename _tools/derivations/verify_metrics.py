@@ -5527,5 +5527,10 @@ RATES.update(_waves_in_friedmann.RATES)
 import kaluza_klein_melvin as _kaluza_klein_melvin
 DIMENSIONS.update(_kaluza_klein_melvin.DIMENSIONS)
 
+import repulson as _repulson
+DIMENSIONS.update(_repulson.DIMENSIONS)
+HELD.update(_repulson.HELD)
+RATES.update(_repulson.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
