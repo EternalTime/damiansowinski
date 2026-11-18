@@ -1854,7 +1854,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "705a9478094f30c3",
+    "version": "25e1f5e623dc9121",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -3454,6 +3454,39 @@
     "curvature": "85a9f8819b737f32"
   },
   {
+    "id": "kaluza_klein_melvin",
+    "name": "Kaluza-Klein Melvin",
+    "tags": [
+      "flat",
+      "vacuum",
+      "conformally flat",
+      "five-dimensional",
+      "static",
+      "stationary",
+      "Kaluza-Klein",
+      "compact dimension",
+      "higher dimensions",
+      "magnetic field",
+      "dilaton",
+      "Einstein-Maxwell-dilaton",
+      "string theory",
+      "cylindrical symmetry",
+      "axisymmetric",
+      "topology",
+      "not asymptotically flat",
+      "instability",
+      "black hole pair creation",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "114bc399d519b04a",
+    "diagrams": "9f6be913605f535e",
+    "conformal": "dbbf049d030986e6",
+    "embedding": "244b7c88e353c551"
+  },
+  {
     "id": "kaluza_klein_monopole",
     "name": "Kaluza-Klein Monopole",
     "tags": [
@@ -3481,7 +3514,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "7cbf7790f17edb7a",
+    "version": "e3180c344de0eee4",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -3862,7 +3895,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "5e749bb3119f4bbc",
+    "version": "1cb5b618de14334a",
     "diagrams": "52dc7aa47036e41f",
     "conformal": "a47e310b101f3a62",
     "embedding": "8c4b344875f825be",
@@ -4768,7 +4801,7 @@
       "idealized model",
       "black hole pair creation"
     ],
-    "version": "91ecefbe21e3283e",
+    "version": "e02227675b138193",
     "diagrams": "5ac02048c1fc2550",
     "conformal": "c58cffe574b8cbeb",
     "embedding": "f82056eed836aaf8",
@@ -4822,7 +4855,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "d40d691b81696197",
+    "version": "bdd1e9ae629ea373",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -5161,7 +5194,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "cc226279afa8ee80",
+    "version": "debb1ca7b890fc72",
     "diagrams": "fbe2465fce912260",
     "conformal": "42cc22e76d6903e7",
     "embedding": "b633d0ecea5ae29e",
