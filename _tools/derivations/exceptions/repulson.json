@@ -6,7 +6,13 @@
         "repulson/isotropic/radial": [
           "string"
         ],
+        "conformal repulson/isotropic": [
+          "string"
+        ],
         "repulson/string/radial": [
+          "einstein"
+        ],
+        "conformal repulson/string": [
           "einstein"
         ]
       }
