@@ -3366,6 +3366,21 @@ A rigidly rotating body of perfect fluid in closed form, its energy density and 
 - chart Mars's Ingoing: coordinates $(v, y, z, \phi)$, $$ds^2 = -\dfrac{V - U}{v_1 + v_2}\left(dv + v_1 d\phi\right)^2 + 2\left(dy - U d\phi\right)\left(dv + v_1 d\phi\right) + \left(v_1 + v_2\right)\left(\dfrac{dz^2}{U} + U d\phi^2\right)$$
 - chart Whittaker's Static Limit: coordinates $(t, X, \theta, \phi)$, $$ds^2 = -F\,c^2dt^2 + R_0^2\left(\dfrac{dX^2}{F} + \sin^2 X\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Gravitational Waves in Friedmann Universes
+
+Exact gravitational waves with distinct fronts running into Friedmann universes filled with a stiff fluid, $p = \rho$, found by Jiří Bičák and Jerry B. Griffiths in 1994 and 1996. The fronts are planes or cylinders in the open and flat universes and tori in the closed one, and each wave is partly reflected, so the field behind its front is algebraically general.
+
+- id: `waves_in_friedmann`
+- tags: cosmology, gravitational wave, colliding plane waves, stiff fluid, perfect fluid, inhomogeneous, expanding universe, FLRW, impulsive wave, shock wave, cylindrical symmetry, torus, curvature singularity, exact solution, time-dependent, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/waves_in_friedmann.json
+- chart Plane Wave, Flat Universe: coordinates $(\eta, z, x, y)$, $$ds^2 = 2\gamma\eta\left(e^{-S}\left(-d\eta^2+dz^2\right)+e^{V}dx^2+e^{-V}dy^2\right)$$
+- chart Flat Universe, Planar: coordinates $(\eta, z, x, y)$, $$ds^2 = 2\gamma\eta\left(-d\eta^2+dz^2+dx^2+dy^2\right)$$
+- chart Flat Universe, Cylindrical: coordinates $(\eta, r, \phi, z)$, $$ds^2 = 2\gamma\eta\left(-d\eta^2+dr^2+r^2d\phi^2+dz^2\right)$$
+- chart Open Universe, Planar: coordinates $(\eta, \mu, x, y)$, $$ds^2 = \gamma\sinh(2\eta)\left(-d\eta^2+d\mu^2+e^{-2\mu}\left(dx^2+dy^2\right)\right)$$
+- chart Open Universe, Cylindrical: coordinates $(\eta, r, \phi, y)$, $$ds^2 = \gamma\sinh(2\eta)\left(-d\eta^2+dr^2+\sinh^2r\,d\phi^2+\cosh^2r\,dy^2\right)$$
+- chart Closed Universe, Toroidal: coordinates $(\eta, \zeta, \delta, \sigma)$, $$ds^2 = \gamma\sin(2\eta)\left(-d\eta^2+d\zeta^2+\sin^2\zeta\,d\delta^2+\cos^2\zeta\,d\sigma^2\right)$$
+
 ### White Hole, the Lagging Core of Novikov and Ne'eman
 
 A ball of dust that comes out of a singularity through the past horizon of Schwarzschild's exterior, J. Robert Oppenheimer and Hartland Snyder's collapse with the time reversed. Igor Novikov and Yuval Ne'eman proposed it in 1964 and 1965 as a piece of the big bang that started late, and as an explanation of the quasars.
