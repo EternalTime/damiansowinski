@@ -739,6 +739,38 @@ def supertranslation_hair(ck, src):
 
 # ---------------------------------------------------------------- Minkowski
 
+def kaluza_klein_melvin(ck, src):
+    """The plane of t and rho through the axis of the twisted space, z = 0 and y = 0, with
+    x = rho on varphi = 0 and x = -rho on varphi = pi, in each chart. On it the metric is
+    -c^2dt^2 + d rho^2 in both, flat and totally geodesic, so p, q = arctan((ct -+ x)/R) bring
+    it into the whole diamond, as they bring Minkowski's plane y = z = 0. The two charts share
+    t and rho, and phi = varphi + By is phi = varphi on y = 0."""
+    views = []
+    dia_box = [-PI - 0.35, PI + 0.35, -PI - 0.25, PI + 0.25]
+    TS, XS = (-4, -2, -1, 0, 1, 2, 4), (-4, -2, -1, 0, 1, 2, 4)
+    plane = slices.moments("kaluza_klein_melvin")[0]
+    reach = plane.reach("adapted", "\\rho")[1]
+    along_x = np.linspace(-reach, reach, 3)
+    for system, angle in (("adapted", "varphi"), ("minkowski", "phi")):
+        pl = Plane(src, "kaluza_klein_melvin", system, ("t", "\\rho"), {"z": "0", angle: "0", "y": "0"},
+                   {"R": 1, "B": "1/2"})
+        ck.chart(f"Kaluza-Klein Melvin {system}", pl, mink_pq, ck.uniform(-20, 20), ck.uniform(0.01, 20),
+                 lambda t, x: (1, 0))
+        ck.finite(f"Kaluza-Klein Melvin {system}: the axis rho = 0 is regular",
+                  pl.kretschmann(ck.uniform(-5, 5, 50), np.full(50, 1e-6)))
+        v = View(system, "Through the axis", dia_box, system)
+        v.fill("region", DIAMOND)
+        v.fill("cover", DIAMOND)
+        grid(v, "r", lambda x, t: mink_pq(t, x), XS, S_ALL)
+        grid(v, "t", mink_pq, TS, S_ALL)
+        diamond_edges(v)
+        v.legend("r", "$\\rho$ constant, with $x = \\pm\\rho$")
+        v.legend("t", "$ct$ constant")
+        v.slice(plane, [mink_pq(0 * along_x, along_x)])
+        views.append(v)
+    return views
+
+
 def minkowski(ck, src):
     """Minkowski's triangle and diamond.
 
@@ -27596,7 +27628,7 @@ DRAWN = {
     "ads_soliton": ads_soliton,
     "topological_star": topological_star,
     "coleman_de_luccia": coleman_de_luccia,
-    "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
+    "kaluza_klein_melvin": kaluza_klein_melvin, "minkowski": minkowski, "supertranslation_hair": supertranslation_hair, "schwarzschild": schwarzschild, "rn_metric": reissner_nordstrom, "hayward": hayward, "regular_black_hole_pure_gravity": regular_black_hole_pure_gravity, "hiscock": hiscock, "quantum_oppenheimer_snyder": quantum_oppenheimer_snyder, "bardeen": bardeen, "mass_inflation": mass_inflation,
     "kerr": kerr, "kerr_disc_source": kerr_disc_source, "kerr_newman": kerr_newman, "eye_of_the_storm": eye_of_the_storm, "kerr_de_sitter": kerr_de_sitter, "kerr_taub_nut": kerr_taub_nut, "kerr_melvin": kerr_melvin,
     "brill_charged_taub_nut": brill_charged_taub_nut,
     "de_sitter": de_sitter,
@@ -28375,6 +28407,14 @@ CAPTIONS = {
         "diagram a 2-sphere of radius $c(v - u)/2$. The lines of constant $u$ and of constant $v$ are light rays, "
         "the 45° lines of the triangle, with $p = \\arctan(cu/\\ell)$ and $q = \\arctan(cv/\\ell)$ for any length "
         "$\\ell$, and the centre is the line $u = v$.",
+    ],
+    ("kaluza_klein_melvin", "adapted"): [
+        "The plane of $t$ and $\\rho$ through the axis ($z = 0$, $y = 0$, $x = \\pm\\rho$ on $\\varphi = 0$ and $\\pi$), "
+        "brought by $p, q = \\arctan((ct \\mp x)/R)$ into the whole diamond, each point in the diagram a single event.",
+    ],
+    ("kaluza_klein_melvin", "minkowski"): [
+        "The same plane in the Minkowski chart ($z = 0$, $y = 0$, $x = \\pm\\rho$ on $\\phi = 0$ and $\\pi$), "
+        "brought by $p, q = \\arctan((ct \\mp x)/R)$ into the whole diamond, each point in the diagram a single event.",
     ],
     ("minkowski", "cartesian"): [
         "The plane $y = z = 0$, flat and totally geodesic, brought by $p, q = \\arctan((ct \\mp x)/\\ell)$, with "
