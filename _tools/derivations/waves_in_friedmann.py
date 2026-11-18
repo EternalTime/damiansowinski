@@ -302,7 +302,7 @@ def conformal_views(ck, src, cf):
             if system == "plane_wave":
                 wave = [[0, 0], [pi/2, pi/2], [0, pi], [-pi/2, pi/2]]
                 v.fill("cover2", wave)
-                v.legend("cover2", "the chart, behind the front and ahead of $z=-\\eta$")
+                v.legend("cover2", "the wave region, $|z|<\\eta$")
             v.line("null", [[[0, 0], [pi/2, pi/2]]])
             rr = cf.spread(0, np.inf, 500, 10)
             xs = rr if cylinder else np.concatenate([-rr[::-1], rr])
