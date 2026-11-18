@@ -73,6 +73,11 @@
       "id": "rotation_halts",
       "kind": "composite",
       "text": "A counterrotating dust shell joins two cylindrical vacuum regions and couples its radial motion to their waves. The shell has a positive lower circumference bound when its particles carry angular momentum [apostolatos1992rotation, gleiser2012radiative]."
+    },
+    {
+      "id": "waves_in_friedmann",
+      "kind": "family",
+      "text": "Waves with distinct fronts in Friedmann universes of stiff fluid, which Georgii A. Alekseev and Jerry B. Griffiths related in 1997 to a generalisation of the cylindrical pulse of Nathan Rosen [alekseev1997]."
     }
   ],
   "references": [
@@ -106,7 +111,8 @@
     "brill1959",
     "gurtug_sakalli2003",
     "apostolatos1992rotation",
-    "gleiser2012radiative"
+    "gleiser2012radiative",
+    "alekseev1997"
   ],
   "coordinates": [
     {

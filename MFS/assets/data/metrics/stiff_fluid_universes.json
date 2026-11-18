@@ -28,6 +28,11 @@
       "id": "frw",
       "kind": "family",
       "text": "At $b=0$ and $a^2=3/2$ the proper time scale factor is $\\tau^{1/3}$, the spatially flat Friedmann universe of a stiff fluid."
+    },
+    {
+      "id": "waves_in_friedmann",
+      "kind": "family",
+      "text": "Plane gravitational waves running into the spatially flat Friedmann universe of stiff fluid. Georgii A. Alekseev and Jerry B. Griffiths generated these waves by the method of John Wainwright, W. C. W. Ince and B. J. Marshman [alekseev1995, wainwright1979stiff]."
     }
   ],
   "references": [
@@ -37,7 +42,8 @@
     "rendall1995plane",
     "wainwright1979stiff",
     "belinskii1973",
-    "andersson2001"
+    "andersson2001",
+    "alekseev1995"
   ],
   "coordinates": [
     {

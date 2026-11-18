@@ -112,6 +112,11 @@
       "id": "pre_big_bang",
       "kind": "generalisation",
       "text": "Kasner's metric with the dilaton of low energy string theory, $\\phi = (\\sum_i\\beta_i - 1)\\ln(-t)$, on $t < 0$. The squares of the exponents still sum to one while their sum is free, and with every exponent negative space expands faster and faster toward $t = 0$ [gasperini2003prebigbang]."
+    },
+    {
+      "id": "waves_in_friedmann",
+      "kind": "family",
+      "text": "A vacuum Kasner universe is one background of the waves with distinct fronts of Georgii A. Alekseev and Jerry B. Griffiths, who gave complete solutions for it and for the flat and open Friedmann universes of stiff fluid [alekseev1995]."
     }
   ],
   "references": [
@@ -139,7 +144,8 @@
     "belinskii1975",
     "bedran1997",
     "chyba1985",
-    "gasperini2003prebigbang"
+    "gasperini2003prebigbang",
+    "alekseev1995"
   ],
   "coordinates": [
     {

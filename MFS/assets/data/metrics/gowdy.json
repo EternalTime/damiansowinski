@@ -88,6 +88,11 @@
       "id": "moncrief_taub_nut",
       "kind": "special_case",
       "text": "An infinite dimensional toroidal subfamily extends through a compact Cauchy horizon [moncrief1981nut]."
+    },
+    {
+      "id": "waves_in_friedmann",
+      "kind": "family",
+      "text": "Gowdy-type closed universes filled with a stiff fluid, in which Jiří Bičák and Jerry B. Griffiths followed toroidal gravitational waves from one axis at the big bang to the other at the big crunch [bicak1996]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "szybka_wyrebowski2016",
     "charach1979",
     "nungesser_rendall2009",
-    "moncrief1981nut"
+    "moncrief1981nut",
+    "bicak1996"
   ],
   "coordinates": [
     {
