@@ -1,4 +1,17 @@
 {
+  "hidden_views": [
+    {
+      "reason": "The repulson's Einstein metric and its string metric measure one manifold two ways: the Einstein chart marks the Einstein metric's moment and the string chart its own.",
+      "drawings": {
+        "repulson/isotropic/radial": [
+          "string"
+        ],
+        "repulson/string/radial": [
+          "einstein"
+        ]
+      }
+    }
+  ],
   "flat_moments": [
     {
       "reason": "The string metric's moment t = 0 is dr^2 + r^2 dphi^2 on the equator, the flat plane outside the circle r = 2q; the Einstein metric's moment beside it is the curved one.",

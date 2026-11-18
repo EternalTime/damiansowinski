@@ -5226,3 +5226,7 @@ HIDDEN.update({key: _scalar_collapse_drawings.HIDDEN_REASON
 
 import dilaton_unusual_asymptotics_drawings as _dilaton_unusual_asymptotics_drawings  # noqa: E402
 _dilaton_unusual_asymptotics_drawings.register_slices(sys.modules[__name__])
+
+import repulson_drawings as _repulson_drawings  # noqa: E402
+FLAT.update(_repulson_drawings.slice_table(sys.modules[__name__]))
+FLAT_METRICS.add(_repulson_drawings.METRIC)
