@@ -180,11 +180,11 @@ PLANES = (
      "eta**2 - z**2", ("front", "eta", "wave front $z=\\eta$", "signed")),
     ("flat_planar", "flat", "Flat universe", ("\\eta", "z"), (-2.0, 2.0, 0.0, 3.0), {"x": "0", "y": "0"},
      None, ("front", "eta", "wave front $z=\\eta$", "signed")),
-    ("flat_cylindrical", "flat_cylinder", "Cylinders, flat", ("\\eta", "r"), (0.0, 3.0, 0.0, 3.0),
+    ("flat_cylindrical", "flat_cylinder", "Cylinders, flat", ("\\eta", "r"), (0.0, 2.0, 0.0, 3.0),
      {"phi": "0", "z": "0"}, None, ("front", "eta", "cylindrical front $r=\\eta$")),
     ("open_planar", "open", "Open universe", ("\\eta", "\\mu"), (-2.0, 2.0, 0.0, 3.0), {"x": "0", "y": "0"},
      None, ("front", "eta", "wave front $\\mu=\\eta$", "signed")),
-    ("open_cylindrical", "open_cylinder", "Cylinders, open", ("\\eta", "r"), (0.0, 3.0, 0.0, 3.0),
+    ("open_cylindrical", "open_cylinder", "Cylinders, open", ("\\eta", "r"), (0.0, 2.0, 0.0, 3.0),
      {"phi": "0", "y": "0"}, None, ("front", "eta", "cylindrical front $r=\\eta$")),
     ("closed_toroidal", "closed", "Closed universe", ("\\eta", "\\zeta"), (0.0, 1.5707963267948966, 0.0, 1.5707963267948966),
      {"delta": "0", "sigma": "0"}, None, ("front", "eta", "toroidal front $\\zeta=\\eta$")),
@@ -192,10 +192,10 @@ PLANES = (
 CAPTION = {
     "wave": r"The plane of $\eta$ and $z$ ($x=y=0$) behind the wave front $z=\eta$, light rays at $45°$.",
     "flat": r"The plane of $\eta$ and $z$ ($x=y=0$) of the flat stiff universe ahead of the front $z=\eta$.",
-    "flat_cylinder": r"The plane of $\eta$ and $r$ ($\phi=z=0$) of the flat stiff universe, with the cylindrical front $r=\eta$.",
+    "flat_cylinder": r"The plane of $\eta$ and $r$ ($\phi=z=0$) of the flat stiff universe drawn through the axis as $x=\pm r$, with the cylindrical front $r=\eta$.",
     "open": r"The plane of $\eta$ and $\mu$ ($x=y=0$) of the open stiff universe, with the plane front $\mu=\eta$.",
-    "open_cylinder": r"The plane of $\eta$ and $r$ ($\phi=y=0$) of the open stiff universe, with the cylindrical front $r=\eta$.",
-    "closed": r"The plane of $\eta$ and $\zeta$ ($\delta=\sigma=0$) of the closed stiff universe, from the axis $\zeta=0$ to the axis $\zeta=\pi/2$, with the toroidal front $\zeta=\eta$.",
+    "open_cylinder": r"The plane of $\eta$ and $r$ ($\phi=y=0$) of the open stiff universe drawn through the axis as $x=\pm r$, with the cylindrical front $r=\eta$.",
+    "closed": r"The plane of $\eta$ and $\zeta$ ($\delta=\sigma=0$) of the closed stiff universe between its two axes, with the toroidal front $\zeta=\eta$.",
 }
 
 
@@ -207,8 +207,9 @@ def diagram_specs(Diagram, sideways):
         params = {"gamma": 1, **({"A": 2} if system == "plane_wave" else {})}
         xname = plane[1]
         extra = {"where": where} if where else {}
-        rows.append(Diagram(METRIC, system, vid, label, plane, box, f"${xname}$", "$\\eta$", params, fixed,
-                            tau="eta", families=sideways if not cylinder else ("ingoing", "outgoing"),
+        rows.append(Diagram(METRIC, system, vid, label, plane, box, "$x$" if cylinder else f"${xname}$", "$\\eta$",
+                            params, fixed, tau="eta", mirror=cylinder,
+                            families=sideways if not cylinder else ("ingoing", "outgoing"),
                             curves=(front,), cones=(5, 5), **extra))
     return rows
 
@@ -218,9 +219,11 @@ def diagram_captions():
 
 
 def null_forms():
-    """The two null families of every plane, eta + x and eta - x."""
+    """The two null families of every planar view, eta + x and eta - x. A ray of the cylindrical
+    and toroidal views turns back at an axis, where the family it belongs to changes, so those
+    views have none."""
     return {(METRIC, system, vid): ((lambda e, x: e + x), (lambda e, x: e - x), None)
-            for system, vid, *_ in PLANES}
+            for system, vid, *_ in PLANES if system in ("plane_wave", "flat_planar", "open_planar")}
 
 
 MOMENT = 0.7853981633974483   # eta = pi/4, the moment of greatest expansion of the closed universe
@@ -236,7 +239,8 @@ def slice_marks(slices, system, vid):
 
 def conformal_views(ck, src, cf):
     """Each plane is a conformal factor times Minkowski's half plane eta > 0, by p, q = arctan(eta -+ x),
-    the closed universe's square eta, zeta in (0, pi/2) under p, q = (eta -+ zeta)/2 as it stands."""
+    the closed universe's square eta, zeta in (0, pi/2) under p, q = (eta - pi/4 -+ zeta)/2, which puts
+    its greatest expansion, the embedding's moment, on T = 0."""
     import math
     import numpy as np
 
@@ -249,13 +253,13 @@ def conformal_views(ck, src, cf):
         cylinder = vid.endswith("cylinder")
         if closed:
             def pq(t, x):
-                t, x = np.asarray(t, float), np.asarray(x, float)
+                t, x = np.asarray(t, float) - pi/4, np.asarray(x, float)
                 return (t - x) / 2, (t + x) / 2
             ck.chart(f"{METRIC}/{system}", plane, pq, ck.uniform(0.05, 1.5), ck.uniform(0.05, 1.5), lambda t, x: (1, 0))
             ck.diverges(f"{system}: K diverges toward the big bang", plane.kretschmann(0.01, 0.7), plane.kretschmann(0.001, 0.7))
             ck.diverges(f"{system}: K diverges toward the big crunch", plane.kretschmann(pi/2 - 0.01, 0.7),
                         plane.kretschmann(pi/2 - 0.001, 0.7))
-            box = [-0.25, pi/2 + 0.25, -0.25, pi/2 + 0.25]
+            box = [-0.25, pi/2 + 0.25, -pi/4 - 0.25, pi/4 + 0.25]
         else:
             pq = cf.mink_pq
             if system == "plane_wave":
@@ -269,13 +273,14 @@ def conformal_views(ck, src, cf):
             box = [-0.25, pi + 0.25, -0.25, pi + 0.25] if cylinder else [-pi - 0.25, pi + 0.25, -0.25, pi + 0.25]
         v = cf.View(vid, label, box, system)
         if closed:
-            square = [[0, 0], [pi/2, 0], [pi/2, pi/2], [0, pi/2]]
+            q = pi/4
+            square = [[0, -q], [pi/2, -q], [pi/2, q], [0, q]]
             v.fill("region", square)
             v.fill("cover", square)
-            v.line("singular", [[[0, 0], [pi/2, 0]], [[0, pi/2], [pi/2, pi/2]]], zig=True)
-            v.line("centre", [[[0, 0], [0, pi/2]], [[pi/2, 0], [pi/2, pi/2]]])
-            v.line("null", [[[0, 0], [pi/2, pi/2]]])
-            for t in (pi/8, pi/4, 3*pi/8):
+            v.line("singular", [[[0, -q], [pi/2, -q]], [[0, q], [pi/2, q]]], zig=True)
+            v.line("centre", [[[0, -q], [0, q]], [[pi/2, -q], [pi/2, q]]])
+            v.line("null", [[[0, -q], [pi/2, q]]])
+            for t in (-pi/8, 0, pi/8):
                 v.line("t", [[[0, t], [pi/2, t]]])
             v.legend("t", "$\\eta$ constant")
             v.legend("singular", "big bang $\\eta=0$ and big crunch $\\eta=\\pi/2$")
@@ -284,7 +289,7 @@ def conformal_views(ck, src, cf):
             moment = cf.slices.moments(METRIC, "hemisphere", label="$\\eta=\\pi/4$")[0]
             reach = np.linspace(*moment.reach("closed_toroidal", "\\zeta"), 81)
             v.slice(moment, [pq(np.full_like(reach, MOMENT), reach)])
-            v.set(settings="$\\gamma=1$; drawn as it stands, $T=\\eta$, $X=\\zeta$.")
+            v.set(settings="$\\gamma=1$; $T=\\eta-\\pi/4$, $X=\\zeta$.")
         else:
             whole = [[0, 0], [pi, 0], [0, pi]] if cylinder else [[-pi, 0], [pi, 0], [0, pi]]
             v.fill("region", whole)
@@ -344,7 +349,7 @@ def embedding_views(ck, src, em):
     surface = em.Surface([cap])
     fig = em.figure_of([surface], {"sheet": "cover"}, size)
     fig.legend("fill", "cover", "$\\eta=\\pi/4$, $\\sigma=0$")
-    fig.legend("line", "r", "tori $\\zeta=\\pi/8$, $\\pi/4$, $3\\pi/8$")
+    fig.legend("line", "r", "$\\zeta$ constant, at $\\pi/8$, $\\pi/4$ and $3\\pi/8$")
     fig.legend("line", "meridian", "$\\delta$ constant")
     data = fig.done()
     return [em.view("hemisphere", "Closed universe", "$\\sqrt{\\gamma}$", [surface], data, settings="$\\gamma=1$.")]

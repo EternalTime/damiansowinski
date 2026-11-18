@@ -5164,6 +5164,10 @@ HIDDEN[("nappi_witten", "whisker", "periodic")] = (
 import waves_in_friedmann as _waves_in_friedmann
 FLAT[(_waves_in_friedmann.METRIC, "closed_toroidal", "closed")] = (
     lambda: _waves_in_friedmann.slice_marks(sys.modules[__name__], "closed_toroidal", "closed"))
+# The flat and open universes and the plane wave have no moment of the closed universe's embedding.
+FLAT.update({(_waves_in_friedmann.METRIC, system, vid): (lambda: [])
+             for system, vid, *_ in _waves_in_friedmann.PLANES if system != "closed_toroidal"})
+FLAT_METRICS.add(_waves_in_friedmann.METRIC)
 
 
 if __name__ == "__main__":

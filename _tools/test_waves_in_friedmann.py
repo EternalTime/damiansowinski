@@ -95,7 +95,7 @@ class WavesInFriedmann(unittest.TestCase):
         _, rf, gf, *_ = self.charts['flat_planar']
         eta, z = r.symbol['\\eta'], r.symbol['z']
         for value in (sp.Rational(1, 2), 1, 3):
-            near = {eta: value, z: value * (1 - sp.Rational(1, 10**24)), r.parameters['A']: 2,
+            near = {eta: sp.Float(value, 50), z: sp.Float(value, 50) * (1 - sp.Float('1e-24', 50)), r.parameters['A']: 2,
                     r.parameters['gamma']: 1, r.c: 1}
             flat = {rf.symbol['\\eta']: value, rf.parameters['gamma']: 1, rf.c: 1}
             for i in range(4):
@@ -108,7 +108,7 @@ class WavesInFriedmann(unittest.TestCase):
         entry, r, *_ = self.charts['plane_wave']
         eta, z = r.symbol['\\eta'], r.symbol['z']
         H = r('H')
-        self.assertLess(abs(sp.N(H.subs({eta: 1, z: -1 + sp.Rational(1, 10**30)}), 40) - 1), 1e-12)
+        self.assertLess(abs(sp.N(H.subs({eta: 1, z: sp.Float('-1', 50) + sp.Float('1e-30', 50)}), 40) - 1), 1e-12)
 
 
 if __name__ == '__main__':

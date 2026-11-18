@@ -1,0 +1,39 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The moment eta = pi/4 is the closed universe's greatest expansion; the flat and open universes and the plane wave have no such moment.",
+      "drawings": {
+        "waves_in_friedmann/plane_wave/wave": [
+          "hemisphere"
+        ],
+        "waves_in_friedmann/flat_planar/flat": [
+          "hemisphere"
+        ],
+        "waves_in_friedmann/flat_cylindrical/flat_cylinder": [
+          "hemisphere"
+        ],
+        "waves_in_friedmann/open_planar/open": [
+          "hemisphere"
+        ],
+        "waves_in_friedmann/open_cylindrical/open_cylinder": [
+          "hemisphere"
+        ],
+        "conformal waves_in_friedmann/wave": [
+          "hemisphere"
+        ],
+        "conformal waves_in_friedmann/flat": [
+          "hemisphere"
+        ],
+        "conformal waves_in_friedmann/flat_cylinder": [
+          "hemisphere"
+        ],
+        "conformal waves_in_friedmann/open": [
+          "hemisphere"
+        ],
+        "conformal waves_in_friedmann/open_cylinder": [
+          "hemisphere"
+        ]
+      }
+    }
+  ]
+}

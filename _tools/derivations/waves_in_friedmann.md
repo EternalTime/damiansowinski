@@ -33,6 +33,7 @@ So $\rho = p = 3e^S/(64\pi\gamma\eta^3)$ in the flat universe, with $S = 0$ ahea
 ## Drawings
 
 Every plane of $\eta$ and one spatial coordinate carries a conformal factor times $-d\eta^2 + dx^2$, so the light rays are the lines $\eta \mp x$ constant in every chart and each wave front is the ray $x = \eta$.
-The conformal diagrams are Minkowski's upper half plane, or its quarter $r \ge 0$, under $p, q = \arctan(\eta \mp x)$; the closed universe's square $\eta, \zeta \in (0, \pi/2)$ is drawn as it stands.
+The conformal diagrams are Minkowski's upper half plane, or its quarter $r \ge 0$, under $p, q = \arctan(\eta \mp x)$; the closed universe's square $\eta, \zeta \in (0, \pi/2)$ is drawn by $p, q = (\eta - \pi/4 \mp \zeta)/2$, which puts its greatest expansion, the embedding's moment, on $T = 0$.
+The cylindrical views are drawn through their axis as $x = \pm r$; the rays of the cylindrical and toroidal views turn back at an axis, so only the planar views have closed forms for the ray check.
 The embedding diagram is the closed universe at its greatest expansion, $\eta = \pi/4$, cut at $\sigma = 0$: $a^2(d\zeta^2 + \sin^2\zeta\,d\delta^2)$ with $a^2 = \gamma\sin2\eta = \gamma$, the hemisphere from the axis $\zeta = 0$ at its pole to the axis $\zeta = \pi/2$ at its rim, the fronts $\zeta$ constant its circles of latitude.
 The curvature figure draws $K$ and $R$ across the wave region at $\eta = 1$ and $A = 2$ beside the flat universe's $K = 15/(16\gamma^2\eta^6)$ and $R = -3/(4\gamma\eta^3)$.

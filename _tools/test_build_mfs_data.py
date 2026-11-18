@@ -5852,6 +5852,9 @@ class Slices(unittest.TestCase):
         if key == "dimensionally_continued/conformal/radial":
             # The embedding is read in the static r, and the conformal chart's rho is arccos(r_+/r) at r_+ = 1.
             return (lambda X: 0.0), [math.acos(1 / r) for r in self.reach(surface)]
+        if key == "waves_in_friedmann/closed_toroidal/closed":
+            # The closed stiff universe at its greatest expansion, eta = pi/4, from axis to axis.
+            return (lambda X: math.pi / 4), list(self.reach(surface))
         if surface["pieces"][0].get("grid"):
             u = surface["pieces"][0]["grid"]["u"][-1]
             return (lambda X: 0.0), [-u, u]
