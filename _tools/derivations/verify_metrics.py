@@ -3351,6 +3351,8 @@ FUNCTIONS = {
     "ATAN": sp.atan,
     # \\arcsin and \\mathrm{arsinh}, spelled the same way, for Wahlquist's h_1 and h_2.
     "ASINH": sp.asinh, "ASIN": sp.asin,
+    # \\arccos the same way, for the profile H_2 of the gravitational waves in Friedmann universes.
+    "ACOS": sp.acos,
     # Lambert's function, the principal branch, written \\mathrm{W}: Kruskal's chart of the white
     # hole defines the areal radius by it, (1 - r/r_s) e^(r/r_s) = UV.
     "LAMBERTW": sp.LambertW,
@@ -4485,7 +4487,7 @@ class Reader:
             text = text.replace("\\" + command, " " + command + " ")
         text = text.replace("\\exp", " exp ").replace("\\ln", " log ").replace("\\log", " log ")
         text = text.replace("\\arctan", " ATAN ")
-        text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ")
+        text = text.replace("\\mathrm{arsinh}", " ASINH ").replace("\\arcsin", " ASIN ").replace("\\arccos", " ACOS ")
         text = text.replace("\\mathrm{W}", " LAMBERTW ")
         text = text.replace("\\mathrm{F}", " ELLIPF ").replace("\\mid", ",")
         text = text.replace("\\mathrm{K}", " ELLIPK ").replace("\\mathrm{E}", " ELLIPE ")
@@ -5516,6 +5518,11 @@ RATES.update(_scalar_collapse_cosmology.RATES)
 
 import dilaton_unusual_asymptotics as _dilaton_unusual_asymptotics
 _dilaton_unusual_asymptotics.register_dimensions(sys.modules[__name__])
+
+import waves_in_friedmann as _waves_in_friedmann
+DIMENSIONS.update(_waves_in_friedmann.DIMENSIONS)
+HELD.update(_waves_in_friedmann.HELD)
+RATES.update(_waves_in_friedmann.RATES)
 
 if __name__ == "__main__":
     sys.exit(main())
