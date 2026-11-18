@@ -3534,6 +3534,14 @@ DIAGRAMS = [
             "$r/m$", "$ct/m$", {"m": 1}, KK_HOPF),
     Diagram("kaluza_klein_monopole", "taub_nut", "radial", "$t$ and $\\rho$", ("t", "\\rho"), (0, 16, -8, 8),
             "$\\rho/m$", "$ct/m$", {"m": 1}, KK_HOPF),
+    # The Kaluza-Klein Melvin universe at R = 1 and B = 1/2R on its plane of t and rho through the axis,
+    # varphi = 0 on the right and pi on the left, in each chart: flat, every ray at 45 degrees.
+    Diagram("kaluza_klein_melvin", "adapted", "through", "through the axis", ("t", "\\rho"), (0, 4, -4, 4),
+            "$x/R$", "$ct/R$", {"R": 1, "B": "1/2"}, {"z": "0", "varphi": "0", "y": "0"}, mirror=True,
+            families=SIDEWAYS, cones=(4, 8)),
+    Diagram("kaluza_klein_melvin", "minkowski", "through", "through the axis", ("t", "\\rho"), (0, 4, -4, 4),
+            "$x/R$", "$ct/R$", {"R": 1, "B": "1/2"}, {"z": "0", "phi": "0", "y": "0"}, mirror=True,
+            families=SIDEWAYS, cones=(4, 8)),
     # The Kaluza-Klein black holes: the rays with no momentum along the circle, which are the rays of
     # the Einstein metric of four dimensions, on the plane of the time and the radius of each chart.
     Diagram("kaluza_klein_black_hole", "electric", "radial", "$t$ and $r$", ("t", "r"), (0, 6, -3, 3),
@@ -7825,6 +7833,14 @@ CAPTIONS = {
         "The same plane of $u$ and $r$ ($\\theta = \\pi/2$, $\\phi = 0$), drawn against the chart's own "
         "coordinates. The outgoing family is $u = $ const and runs horizontally here, since $u$ is itself a null "
         "coordinate. The ingoing family turns vertical at $r_h$ and leans toward larger $r$ inside it.",
+    ],
+    ("kaluza_klein_melvin", "adapted", "through"): [
+        "The plane of $t$ and $\\rho$ through the axis ($z = 0$, $y = 0$, $\\varphi = 0$ on the right and "
+        "$\\pi$ on the left), each point in the plane a single event, with every ray at 45°.",
+    ],
+    ("kaluza_klein_melvin", "minkowski", "through"): [
+        "The same plane in the Minkowski chart ($z = 0$, $y = 0$, $\\phi = 0$ on the right and $\\pi$ on the "
+        "left), each point in the plane a single event, with every ray at 45°.",
     ],
     ("kaluza_klein_monopole", "gross_perry", "radial"): [
         "The plane of $t$ and $r$ ($\\theta = 0$, $x_5 = 0$) of the Kaluza-Klein monopole, each point in the "

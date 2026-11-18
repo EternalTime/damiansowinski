@@ -3106,6 +3106,11 @@ FLAT = {
     ("black_saturn", "polar", "far"): lambda: black_saturn_t("far"),
     # The Kaluza-Klein monopole's cigar, the half axis theta = 0 at t = 0, on its plane of t and the radius
     # in each chart; the Taub-NUT radius is rho = r + 2m.
+    # The Kaluza-Klein Melvin universe's surface through the axis at t = 0, on its plane of t and rho in
+    # each chart; the two charts share t and rho.
+    **{("kaluza_klein_melvin", system, "through"): lambda: one(
+        "kaluza_klein_melvin", lambda m: along(0.0, *m.reach("adapted", "\\rho")))
+       for system in ("adapted", "minkowski")},
     ("kaluza_klein_monopole", "gross_perry", "radial"): lambda: one(
         "kaluza_klein_monopole", lambda m: along(0.0, *m.reach("gross_perry", "r"))),
     ("kaluza_klein_monopole", "gross_perry", "through"): lambda: one(
