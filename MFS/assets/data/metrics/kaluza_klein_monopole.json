@@ -141,6 +141,11 @@
       "id": "kaluza_klein_melvin",
       "kind": "family",
       "text": "Flat spacetime of five dimensions with a twisted circle, which seen from four dimensions is a magnetic field. The field decays by creating these monopoles in pairs with antimonopoles [dowker1995]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "Bound to an H-monopole whose magnetic charge has the opposite sign, it makes a magnetic repulson of the heterotic string, a naked singularity that repels massive particles [cvetic1995singular]."
     }
   ],
   "references": [
@@ -177,7 +182,8 @@
     "vafa1996ftheory",
     "giddings1988",
     "klebanovwitten1998",
-    "dowker1995"
+    "dowker1995",
+    "cvetic1995singular"
   ],
   "coordinates": [
     {

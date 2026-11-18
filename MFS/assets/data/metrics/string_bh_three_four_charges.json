@@ -77,6 +77,11 @@
       "id": "myers_perry",
       "kind": "family",
       "text": "Two things done to Frank Tangherlini's hole of five dimensions: Myers and Malcolm Perry set it spinning, and in string theory it carries three charges. Cvetič and Youm's rotating solution has the charges and both spins at once [cvetic1996rotating]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "The same solutions with the two charges of one kind of opposite sign, singular and repelling massive particles. When the two charges are also equal in size the mass vanishes [cvetic1995singular]."
     }
   ],
   "references": [
@@ -94,7 +99,8 @@
     "maldacena1996",
     "johnson1996",
     "cvetic1996static",
-    "strominger1998"
+    "strominger1998",
+    "cvetic1995singular"
   ],
   "coordinates": [
     {

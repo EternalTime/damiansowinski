@@ -223,6 +223,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "limit_source",
       "text": "Charged black holes with a dilaton of coupling $a$ and an exponential potential, neither flat nor anti-de Sitter far away. For $a^2 < 1$ one family of them has two horizons, and it tends to the Reissner-Nordström black hole in the limit $a \\to 0$ [chan1995]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "Charged solutions of the heterotic string with a naked singularity at which gravity repels, as it does near the timelike singularity of Reissner-Nordström [cano2019]."
     }
   ],
   "references": [
@@ -278,7 +283,8 @@
     "banerjee1998",
     "gott1986charged",
     "horne1992black",
-    "chan1995"
+    "chan1995",
+    "cano2019"
   ],
   "coordinates": [
     {

@@ -122,6 +122,11 @@
       "id": "kaluza_klein_melvin",
       "kind": "family",
       "text": "The flux tube of Kaluza and Klein's theory, where the dilaton couples with strength $\\sqrt{3}$, which Gibbons and Maeda found among the solutions of these theories. In five dimensions it is flat space with a twisted circle [dowker1994b, dowker1995]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "Charged solutions of the same low energy string theory with no horizon and a singularity that repels massive particles, some of them with zero mass [kallosh1995white]."
     }
   ],
   "references": [
@@ -156,7 +161,8 @@
     "chan1995",
     "clement2003",
     "dowker1994b",
-    "dowker1995"
+    "dowker1995",
+    "kallosh1995white"
   ],
   "coordinates": [
     {

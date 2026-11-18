@@ -63,6 +63,11 @@
       "id": "black_to_white_hole",
       "kind": "family",
       "text": "A white hole that follows a black hole in one spacetime. Haggard and Rovelli glue a collapsing shell of light to its time reverse with a quantum region between [haggard2015fireworks]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "Renata Kallosh and Andrei Linde called the charged solutions of string theory whose singularity reflects every massive particle \"supersymmetric white holes\", and also repulsons, to avoid confusion with this older meaning [kallosh1995white]."
     }
   ],
   "references": [
@@ -86,7 +91,8 @@
     "blau1989",
     "oripoisson1994",
     "vaidya1953",
-    "haggard2015fireworks"
+    "haggard2015fireworks",
+    "kallosh1995white"
   ],
   "coordinates": [
     {

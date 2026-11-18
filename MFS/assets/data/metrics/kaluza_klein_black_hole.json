@@ -83,6 +83,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "A five dimensional Einstein-Maxwell black hole localized on a compact circle, with a round 3-sphere horizon [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "Renata Kallosh and Andrei Linde's charged solutions of the heterotic string hold the extreme electric hole of this family at zero charge, and one such hole with a partner of opposite charge and negative mass, placed at one point, makes a massless one [kallosh1995white, ortin1996]."
     }
   ],
   "references": [
@@ -104,7 +109,9 @@
     "cvetic1996static",
     "lake2006static",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "kallosh1995white",
+    "ortin1996"
   ],
   "coordinates": [
     {

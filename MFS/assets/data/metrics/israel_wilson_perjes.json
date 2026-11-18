@@ -58,6 +58,11 @@
       "id": "brill_charged_taub_nut",
       "kind": "family",
       "text": "The single source of complex mass is Brill's charged Taub-NUT at $r_q^2 = m^2 + l^2$, where its two horizons meet. With more charge than that Brill's metric has no horizon and is a wormhole [clement2016]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "Klaus Behrndt's stationary solutions of the heterotic string are a string version of these metrics, and at one point of their moduli some of them lose their mass [behrndt1995]."
     }
   ],
   "references": [
@@ -77,7 +82,8 @@
     "kallosh1994anomaly",
     "kramer1980",
     "neugebauer2009",
-    "clement2016"
+    "clement2016",
+    "behrndt1995"
   ],
   "coordinates": [
     {

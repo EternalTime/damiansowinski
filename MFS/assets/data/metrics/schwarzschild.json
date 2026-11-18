@@ -564,6 +564,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "limit_source",
       "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$, neither flat nor anti-de Sitter far away. In the limit $a \\to \\infty$ the dilaton and the Maxwell field decouple and the metric is Schwarzschild's [chan1995, clement2004]."
+    },
+    {
+      "id": "repulson",
+      "kind": "family",
+      "text": "A naked singularity of string theory that repels massive particles, acting on them \"as a body with a negative mass\" [kallosh1995white]."
     }
   ],
   "references": [
@@ -716,7 +721,8 @@
     "hellaby2002",
     "bicak1993",
     "chan1995",
-    "clement2004"
+    "clement2004",
+    "kallosh1995white"
   ],
   "coordinates": [
     {
