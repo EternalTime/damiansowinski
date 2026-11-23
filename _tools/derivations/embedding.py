@@ -22677,6 +22677,9 @@ CAPTIONS.update(_waves_in_friedmann.embedding_captions())
 import repulson_drawings as _repulson_drawings
 _repulson_drawings.register_embedding(sys.modules[__name__])
 
+import dressed_btz_drawings as _dressed_btz_drawings
+_dressed_btz_drawings.register_embedding(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
 
