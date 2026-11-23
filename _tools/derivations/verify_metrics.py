@@ -5532,5 +5532,8 @@ DIMENSIONS.update(_repulson.DIMENSIONS)
 HELD.update(_repulson.HELD)
 RATES.update(_repulson.RATES)
 
+import dressed_btz as _dressed_btz
+DIMENSIONS.update(_dressed_btz.DIMENSIONS)
+
 if __name__ == "__main__":
     sys.exit(main())

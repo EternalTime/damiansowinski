@@ -37783,6 +37783,10 @@ CHARTS[_kaluza_klein_melvin.METRIC] = [lambda system=system: _kaluza_klein_melvi
 import repulson as _repulson
 CHARTS[_repulson.METRIC] = [lambda system=system: _repulson.chart_spec(system) for system in _repulson.CHARTS]
 
+import dressed_btz as _dressed_btz
+CHARTS[_dressed_btz.METRIC] = [lambda system=system: _dressed_btz.chart_spec(system)
+                                for system in _dressed_btz.CHARTS]
+
 
 if __name__ == "__main__":
     main()
