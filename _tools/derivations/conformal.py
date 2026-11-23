@@ -142,6 +142,11 @@ NOT_DRAWN = {"skyrmion_hair", "ori_piran", "charged_godel_universe", "godel", "s
              # The exterior charts end at the direction-dependent singular surface; their global
              # extension and a conformal compactification are not established by these charts.
              "quevedo_mashhoon",
+             # Every plane of t and one direction of the Roman ring is a plane of Minkowski space, and the
+             # identifications join it at each mouth to another place a time T away, so the ring's causal
+             # structure lies on a closed curve round a polygon of mouths, which no plane of two coordinates
+             # holds; the figure in three dimensions draws it (roman_ring.md).
+             "roman_ring",
              "ozsvath_dust",
              # Bonnor and Faulkes's oscillating sphere: an interior whose metric depends on t and r, as
              # Tolman and Bondi's does, with F(t) known only numerically, so no compactification is drawn.

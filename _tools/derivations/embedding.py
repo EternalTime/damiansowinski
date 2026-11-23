@@ -18846,7 +18846,11 @@ DRAWN = {
 # both spacelike and of constant time across the radiation: the slices of constant cT of the
 # Kerr-Schild chart stop being spacelike near the envelope, where the energy density 2f/x grows
 # without bound (koutras_mcintosh.md).
-NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1", "koutras_mcintosh"}
+# Each slice of constant t of the Roman ring is flat space with the balls about its 2N mouths
+# removed, and the identifications join each entrance sphere at t + T to its exit sphere at t, on
+# another slice, so no surface of one moment closes over a mouth: what one moment holds is the
+# plane with holes in it, and the ring is a closed curve in time as well as space (roman_ring.md).
+NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1", "koutras_mcintosh", "roman_ring"}
 
 CAPTIONS = {
     ("brown_teitelboim", "equator"): [r"The equatorial slice at the membrane's minimum radius ($\theta = \pi/2$, $R_0 = 1/2$)."],
