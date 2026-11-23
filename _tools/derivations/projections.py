@@ -3005,3 +3005,6 @@ for _chart, _null, _letter in (("brinkmann", "v", "x"), ("rosen", "w", "y")):
 import torus_universe_2plus1 as _torus
 FIGURES.extend(_torus.projection_specs(Projection))
 CAPTIONS.update(_torus.projection_captions())
+
+import koutras_mcintosh_drawings as _koutras_mcintosh_drawings
+_koutras_mcintosh_drawings.register_projection(__import__(__name__))

@@ -32488,6 +32488,10 @@ _dressed_btz_drawings.register_conformal(sys.modules[__name__])
 # The free mass function of the null time and the radius leaves the global completion and the event
 # horizons undetermined, as Mallett's free mass history does; generalised_vaidya.md gives the reason.
 NOT_DRAWN.add("generalised_vaidya")
+# The Koutras-McIntosh spacetimes leave the amplitude f(u) free and end on the envelope x = 0 of the
+# wave fronts, a curvature singularity at which every curvature scalar vanishes (Podolsky and Belan,
+# 2004), so no global completion is established to compactify; koutras_mcintosh.md gives the reason.
+NOT_DRAWN.add("koutras_mcintosh")
 
 if __name__ == "__main__":
     sys.exit(main())

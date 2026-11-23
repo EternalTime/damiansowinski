@@ -18842,7 +18842,11 @@ DRAWN = {
 # not have (hauser_wave.md Step 8).
 # A compact flat torus has no smooth isometric immersion in Euclidean three-space.
 # Its intrinsic paired-edge developments appear in the spacetime figures.
-NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1"}
+# Every wave front of the Koutras-McIntosh spacetimes is a flat half plane, and no slice of them is
+# both spacelike and of constant time across the radiation: the slices of constant cT of the
+# Kerr-Schild chart stop being spacelike near the envelope, where the energy density 2f/x grows
+# without bound (koutras_mcintosh.md).
+NOT_DRAWN = {"lentz", "hauser_wave", "torus_universe_2plus1", "koutras_mcintosh"}
 
 CAPTIONS = {
     ("brown_teitelboim", "equator"): [r"The equatorial slice at the membrane's minimum radius ($\theta = \pi/2$, $R_0 = 1/2$)."],

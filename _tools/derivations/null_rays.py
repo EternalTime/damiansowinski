@@ -19525,5 +19525,8 @@ _dressed_btz_drawings.register_null(sys.modules[__name__])
 import generalised_vaidya_drawings as _generalised_vaidya_drawings
 _generalised_vaidya_drawings.register_null(sys.modules[__name__])
 
+import koutras_mcintosh_drawings as _koutras_mcintosh_drawings
+_koutras_mcintosh_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
