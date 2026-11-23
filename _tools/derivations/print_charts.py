@@ -37792,6 +37792,9 @@ import generalised_vaidya as _generalised_vaidya
 CHARTS[_generalised_vaidya.METRIC] = [lambda system=system: _generalised_vaidya.chart_spec(system)
                                       for system in _generalised_vaidya.CHARTS]
 
+import koutras_mcintosh as _koutras_mcintosh
+_koutras_mcintosh.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

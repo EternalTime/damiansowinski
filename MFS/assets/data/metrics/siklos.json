@@ -75,6 +75,11 @@
       "id": "petrov_homogeneous",
       "kind": "family",
       "text": "Kaigorodov's counterpart with no cosmological constant: the other vacuum whose four symmetries reach every event exactly once. Gary Gibbons and Steffen Gielen found Kaigorodov's group among the deformations of Petrov's [gibbons2008petrov]."
+    },
+    {
+      "id": "koutras_mcintosh",
+      "kind": "family",
+      "text": "Conformally flat pure radiation without a cosmological constant, the class that holds Wils's metric. With $\\Lambda < 0$ part of that class is a conformally flat Siklos wave [podolskyprikryl2009]."
     }
   ],
   "references": [
@@ -98,7 +103,8 @@
     "duval2009",
     "griffiths2004",
     "hotta1993",
-    "gibbons2008petrov"
+    "gibbons2008petrov",
+    "podolskyprikryl2009"
   ],
   "coordinates": [
     {

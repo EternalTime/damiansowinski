@@ -11600,6 +11600,39 @@
    "\\phi"
   ]
  },
+ "koutras_mcintosh/edgar_ludwig": {
+  "stamp": "a8edd085c27b699e",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "koutras_mcintosh/kerr_schild": {
+  "stamp": "e0cdd9824001aa85",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
+ "koutras_mcintosh/koutras_mcintosh": {
+  "stamp": "b1deb6763ce720f3",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [],
+  "sphere": null
+ },
  "kowalski_glikman/brinkmann": {
   "stamp": "4d55f333a7fc20fb",
   "relations": {},

@@ -1,0 +1,4244 @@
+{
+  "id": "koutras_mcintosh",
+  "name": "Koutras-McIntosh Spacetimes",
+  "short_name": "Koutras-McIntosh",
+  "description": "Null radiation in a conformally flat spacetime whose curvature scalars of every order are zero and which in general has no Killing vector and no homothety. Where the radiation is weak its fronts are half planes tangent to a cylinder growing at the speed of light, and concentrated on one front it is an impulsive pp-wave.",
+  "tags": [
+    "null dust",
+    "Kundt class",
+    "vanishing scalar invariants",
+    "conformally flat",
+    "radiating",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Pure radiation is energy streaming at the speed of light along a single null direction, with a stress tensor proportional to $l_a l_b$ for a null vector $l$ [edgarludwig1997]. Dietrich Kramer, Hans Stephani, Malcolm MacCallum, and Eduard Herlt concluded in their book of exact solutions that every conformally flat spacetime filled with pure radiation is a plane wave [edgarludwig1997ghp]. Patrick Wils found one in 1989 that is not, and pointed out that it contradicts their Theorem 32.17 [wils1989, edgarludwig1997]. Wils took the metric to complete the class of conformally flat fields of pure radiation that are not plane waves [edgarludwig1997ghp]. Its Weyl tensor vanishes, one free function $f(u)$ of a null coordinate $u$ sets the strength of the radiation, and spacetime is flat where $f$ vanishes [edgarludwig1997, griffithspodolsky1998].¶Relativists decide whether two metrics describe one spacetime by comparing the components of the Riemann tensor and of its covariant derivatives in frames fixed by the curvature, one order of derivative at a time, until an order brings nothing new [koutras1992, edgarvickers1999]. Relativists had expected no spacetime to need more than the third order [koutras1992]. Andreas Koutras showed in 1992 that Wils's metric needs the fourth, the first spacetime known to do so [koutras1992, edgarvickers1999]. Koutras found as well that the metric admits at most one Killing vector and one homothety, and in general no Killing vector [koutras1992, edgarludwig1997ghp].¶Koutras and Colin McIntosh rewrote Wils's metric in 1996 and gave a family with two constants $a$ and $b$, $$ds^2 = \\left(a^2w^2 - 2f(u)\\,(ax + b)(x^2 + y^2)\\right)du^2 - 2(ax + b)\\,du\\,dw + 2aw\\,du\\,dx + dx^2 + dy^2,$$ which is a plane wave at $a = 0$ and Wils's metric at $b = 0$ [koutrasmcintosh1996, edgarludwig1997, griffithspodolsky1998]. They called it \"A metric with no symmetries or invariants\" [koutrasmcintosh1996]. Every scalar built from its Riemann tensor and from the covariant derivatives of that tensor vanishes, as each one does in flat space, and for general $a$, $b$, and $f$ it admits no isometry and no homothety, even locally [koutrasmcintosh1996]. In a null frame its curvature has one nonzero component, the Ricci component of the radiation, $\\Phi_{22} = 2f(u)/(ax + b)$ [griffithspodolsky1998].¶S. Brian Edgar and Garry Ludwig set out to derive Wils's metric again, to test a method of integration that rests on four independent scalars of the geometry, which a spacetime with no Killing vector supplies [edgarludwig1997ghp]. They obtained in 1997 the whole class of conformally flat spacetimes of pure radiation that are not plane waves, with three free functions $f(u)$, $g(u)$, and $h(u)$; it contains Koutras and McIntosh's family with $a \\neq 0$ and reduces to Wils's metric when $g$ and $h$ vanish [edgarludwig1997, edgarludwig1997ghp]. The rays of every such spacetime neither expand, shear, nor twist, so it belongs to Wolfgang Kundt's class, and no null electromagnetic field, massless scalar field, or neutrino field can be its source [edgarludwig1997, griffithspodolsky1998]. Jim Skea classified the class with the program CLASSI and found that it is wider than Wils's metric and that none of its members needs more than the fourth order [edgarludwig1997, skea1997]. The functions $g$ and $h$ first appear in the second derivatives of the curvature, and telling Wils's metric from the rest takes the fourth [griffithspodolsky1998].¶Jerry Griffiths and Jiří Podolský took the source to be a null fluid of incoherent radiation and interpreted its geometry in 1998 [griffithspodolsky1998]. Where the radiation is weak, its wave surfaces are half planes tangent to a cylinder whose radius grows at the speed of light, each one turned about the cylinder's axis from the one before, for Wils's metric and the whole class alike [griffithspodolsky1998]. An observer outside sees the radiation arrive from a direction that turns until the edge of the cylinder passes, coming last along the radius [griffithspodolsky1998]. Concentrated on one front, the radiation is an impulsive pp-wave whose direction of travel depends on the front [griffithspodolsky1998]. The cylinder, at $x = 0$, is the envelope of the fronts, and Griffiths and Podolský took it for a coordinate singularity with a void of flat space inside [griffithspodolsky1998]. Podolský and Miroslav Beláň followed null geodesics toward it in 2004 and found components of the curvature in a parallelly propagated frame diverging there, so the cylinder is a curvature singularity at which every curvature scalar vanishes [podolskybelan2004].¶Alan Barnes solved the conformal Killing equations of the class in 2001 and found fifteen conformal symmetries, as conformal flatness requires, and in general no Killing vector and no homothety [barnes2001]. Wils's metric with constant $f$ has both, which together make a group of homotheties of two dimensions that Ludwig and Edgar had missed [barnes2001]. Podolský and Ondřej Prikryl wrote the class and its extensions to a cosmological constant in one system of coordinates in 2009 and confirmed the derivations made with invariant operators [podolskyprikryl2009]. Boris Kruglikov and Wijnand Steneker, writing of the Koutras-McIntosh spacetimes in 2022, proved that they have Killing vectors only when $a = 0$, the plane waves, or when $b = 0$ and $f(u) = (c_0 + c_1u + c_2u^2)^{-2}$ [kruglikovsteneker2022]. For generic $a$, $b$, and $f$ they found no Killing tensor up to degree six beyond the energy and its powers, which are then the only conserved quantities of a free particle polynomial in its momentum up to that degree [kruglikovsteneker2022].",
+  "related": [
+    {
+      "id": "pp_wave",
+      "kind": "special_case",
+      "text": "The family at $a = 0$ and $b = 1$, a plane wave of pure radiation whose profile is quadratic and the same in every direction across it, so that its Weyl tensor vanishes [griffithspodolsky1998, kruglikovsteneker2022]."
+    },
+    {
+      "id": "kundt_waves",
+      "kind": "family",
+      "text": "The gravitational waves of Kundt's class, whose rays neither expand nor twist. Where they are weak their fronts are the same half planes tangent to a cylinder growing at the speed of light, and the cylinder is a curvature singularity in both [griffithspodolsky1998, podolskybelan2004]."
+    },
+    {
+      "id": "siklos",
+      "kind": "family",
+      "text": "Waves crossing anti-de Sitter space. With a negative cosmological constant, part of the conformally flat class of pure radiation is the conformally flat subfamily of Siklos's waves [podolskyprikryl2009]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "special_case",
+      "text": "The radiation turned off. At $f = 0$ the metric is flat space, in coordinates that end on a cylinder growing at the speed of light [griffithspodolsky1998]."
+    }
+  ],
+  "references": [
+    "edgarludwig1997",
+    "edgarludwig1997ghp",
+    "wils1989",
+    "griffithspodolsky1998",
+    "koutras1992",
+    "edgarvickers1999",
+    "koutrasmcintosh1996",
+    "skea1997",
+    "podolskybelan2004",
+    "barnes2001",
+    "podolskyprikryl2009",
+    "kruglikovsteneker2022"
+  ],
+  "coordinates": [
+    {
+      "id": "koutras_mcintosh",
+      "name": "Koutras-McIntosh",
+      "coords": [
+        "u",
+        "w",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "w \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "ax + b > 0 \\;\\text{(the side of the envelope the radiation fills)}",
+        "ax + b = 0 \\;\\text{(the envelope of the wave fronts, for } a \\neq 0\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "A pure number. With $a = 0$ and $b > 0$ the metric is a plane wave, and with $b = 0$ it is Wils's metric"
+        },
+        {
+          "symbol": "b",
+          "description": "A length; for $a \\neq 0$ the envelope of the wave fronts is $ax + b = 0$"
+        },
+        {
+          "symbol": "f = f(u)",
+          "description": "Amplitude of the radiation, an inverse length, a function of $u$ alone; the Ricci tensor is $R_{uu} = 4(ax + b)f$, and $f = 0$ is flat space"
+        }
+      ],
+      "convention": "We use Koutras and McIntosh's coordinates $(u, w, x, y)$, with $u$ a pure number labelling the wave fronts, $w$ a length along the rays, and $x$ and $y$ lengths on the front. We leave the amplitude $f$ free. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = dx^2 + dy^2 - 2\\left(ax + b\\right)du\\,dw + 2aw\\,du\\,dx + \\left(a^2w^2 - 2f\\left(ax + b\\right)\\left(x^2 + y^2\\right)\\right)du^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\left(2f\\left(a\\,x + b\\right)\\left(x^2 + y^2\\right) - a^2\\,w^2\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "w"
+          ],
+          "value": "-\\left(a\\,x + b\\right)"
+        },
+        {
+          "indices": [
+            "w",
+            "u"
+          ],
+          "value": "-\\left(a\\,x + b\\right)"
+        },
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "a\\,w"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "a\\,w"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "w"
+          ],
+          "value": "-\\dfrac{1}{a\\,x + b}"
+        },
+        {
+          "indices": [
+            "w",
+            "u"
+          ],
+          "value": "-\\dfrac{1}{a\\,x + b}"
+        },
+        {
+          "indices": [
+            "w",
+            "w"
+          ],
+          "value": "\\dfrac{2f\\left(x^2 + y^2\\right)}{a\\,x + b}"
+        },
+        {
+          "indices": [
+            "w",
+            "x"
+          ],
+          "value": "\\dfrac{a\\,w}{a\\,x + b}"
+        },
+        {
+          "indices": [
+            "x",
+            "w"
+          ],
+          "value": "\\dfrac{a\\,w}{a\\,x + b}"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{a^2\\,w}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{a^2\\,w}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{a^2\\,w}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{a}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{a}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{\\left(a\\,x + b\\right)\\left(x^2 + y^2\\right)\\partial_u f + a\\,f\\,w\\left(a\\,x^2 - a\\,y^2 + 2b\\,x\\right)}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{f\\left(a\\,x^2 - a\\,y^2 + 2b\\,x\\right)}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{f\\left(a\\,x^2 - a\\,y^2 + 2b\\,x\\right)}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "y"
+                ],
+                "value": "2f\\,y"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "u"
+                ],
+                "value": "2f\\,y"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{f\\left(a\\,x + b\\right)\\left(3a\\,x^2 + a\\,y^2 + 2b\\,x\\right) - a^3\\,w^2}{a\\,x + b}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "w"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "x",
+                  "w",
+                  "u"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "2f\\,y\\left(a\\,x + b\\right)"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\left(a\\,x + b\\right)\\left(x^2 + y^2\\right)\\partial_u f"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "w"
+                ],
+                "value": "a^2\\,w"
+              },
+              {
+                "indices": [
+                  "u",
+                  "w",
+                  "u"
+                ],
+                "value": "a^2\\,w"
+              },
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "u"
+                ],
+                "value": "-a^2\\,w"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-f\\left(3a\\,x^2 + a\\,y^2 + 2b\\,x\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-f\\left(3a\\,x^2 + a\\,y^2 + 2b\\,x\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "f\\left(3a\\,x^2 + a\\,y^2 + 2b\\,x\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f\\,y\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-2f\\,y\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "2f\\,y\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "x"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "u"
+                ],
+                "value": "-a"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "w"
+                ],
+                "value": "a"
+              },
+              {
+                "indices": [
+                  "x",
+                  "w",
+                  "u"
+                ],
+                "value": "a"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-2a\\,f\\,w"
+              },
+              {
+                "indices": [
+                  "w",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "2a\\,f\\,w"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-2f"
+              },
+              {
+                "indices": [
+                  "w",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "2f"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f"
+              },
+              {
+                "indices": [
+                  "w",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "2f"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "2f\\left(a\\,x + b\\right)"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f\\left(a\\,x + b\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "2f\\left(a\\,x + b\\right)"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "4f\\left(a\\,x + b\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "w",
+                  "u"
+                ],
+                "value": "-4f"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{4f}{a\\,x + b}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "4f\\left(a\\,x + b\\right)"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "w",
+                  "u"
+                ],
+                "value": "-4f"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "w",
+                  "w"
+                ],
+                "value": "\\dfrac{4f}{a\\,x + b}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\dfrac{a^2\\,w}{a\\,x + b}\\dot{u}^2 + \\dfrac{2a}{a\\,x + b}\\dot{u}\\dot{x} = 0",
+        "\\ddot{w} + \\dfrac{\\left(a\\,x + b\\right)\\left(x^2 + y^2\\right)\\partial_u f + a\\,f\\,w\\left(a\\,x^2 - a\\,y^2 + 2b\\,x\\right)}{a\\,x + b}\\dot{u}^2 + \\dfrac{2f\\left(a\\,x^2 - a\\,y^2 + 2b\\,x\\right)}{a\\,x + b}\\dot{u}\\dot{x} + 4f\\,y\\,\\dot{u}\\dot{y} = 0",
+        "\\ddot{x} + \\dfrac{f\\left(a\\,x + b\\right)\\left(3a\\,x^2 + a\\,y^2 + 2b\\,x\\right) - a^3\\,w^2}{a\\,x + b}\\dot{u}^2 + 2a\\,\\dot{u}\\dot{w} - \\dfrac{2a^2\\,w}{a\\,x + b}\\dot{u}\\dot{x} = 0",
+        "\\ddot{y} + 2f\\,y\\left(a\\,x + b\\right)\\dot{u}^2 = 0"
+      ]
+    },
+    {
+      "id": "edgar_ludwig",
+      "name": "Edgar-Ludwig",
+      "coords": [
+        "u",
+        "v",
+        "x",
+        "y"
+      ],
+      "domains": [
+        "u \\in (-\\infty, \\infty)",
+        "v \\in (-\\infty, \\infty)",
+        "x \\in (0, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "x = 0 \\;\\text{(the envelope of the wave fronts)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "f = f(u)",
+          "description": "Amplitude of the radiation, an inverse length, a function of $u$ alone; the Ricci tensor is $R_{uu} = 4xf$, and $f = 0$ is flat space"
+        },
+        {
+          "symbol": "g = g(u)",
+          "description": "A length, a function of $u$ alone, absent from the Ricci tensor; with $g = h = 0$ the metric is Wils's"
+        },
+        {
+          "symbol": "h = h(u)",
+          "description": "An area, a function of $u$ alone, absent from the Ricci tensor; with $g$ and $h$ constant the metric is Wils's in other coordinates"
+        }
+      ],
+      "convention": "We use Wils's coordinates $(u, v, x, y)$, with $u$ a pure number labelling the wave fronts, $v$ an area along the rays, and $x$ and $y$ lengths on the front; $v = xw$ in Koutras and McIntosh's coordinates at $a = 1$ and $b = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = dx^2 + dy^2 - 2\\,du\\,dv + \\dfrac{4v}{x}du\\,dx + \\left(\\dfrac{v^2}{x^2} - 2fx\\left(x^2 + y^2 + gy + h\\right)\\right)du^2",
+      "metric_components": [
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "-\\dfrac{2f\\,x^3\\left(x^2 + y^2 + g\\,y + h\\right) - v^2}{x^2}"
+        },
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "u",
+            "x"
+          ],
+          "value": "\\dfrac{2v}{x}"
+        },
+        {
+          "indices": [
+            "x",
+            "u"
+          ],
+          "value": "\\dfrac{2v}{x}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "u",
+            "v"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "v",
+            "u"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{2f\\,x^3\\left(x^2 + y^2 + g\\,y + h\\right) + 3v^2}{x^2}"
+        },
+        {
+          "indices": [
+            "v",
+            "x"
+          ],
+          "value": "\\dfrac{2v}{x}"
+        },
+        {
+          "indices": [
+            "x",
+            "v"
+          ],
+          "value": "\\dfrac{2v}{x}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{v}{x^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{v}{x^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{v}{x^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "v"
+                ],
+                "value": "-\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{x^5\\left(x^2 + y^2 + g\\,y + h\\right)\\partial_u f + f\\,x^5\\left(4v + y\\,\\partial_u g + \\partial_u h\\right) - v^3}{x^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "\\dfrac{f\\,x^3\\left(x^2 - y^2 - g\\,y - h\\right) - 2v^2}{x^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "\\dfrac{f\\,x^3\\left(x^2 - y^2 - g\\,y - h\\right) - 2v^2}{x^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "y"
+                ],
+                "value": "f\\,x\\left(2y + g\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u"
+                ],
+                "value": "f\\,x\\left(2y + g\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "f\\,x\\left(2y + g\\right)"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x"
+                ],
+                "value": "\\dfrac{2v}{x^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{2v}{x^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{2v}{x^2}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{f\\,x^3\\left(3x^2 + y^2 + g\\,y + h\\right) - v^2}{x^3}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "-x\\left(\\left(x^2 + y^2 + g\\,y + h\\right)\\partial_u f + f\\left(y\\,\\partial_u g + \\partial_u h\\right)\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{v}{x^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{v}{x^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{v}{x^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{f\\,x^3\\left(3x^2 + y^2 + g\\,y + h\\right) + v^2}{x^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{f\\,x^3\\left(3x^2 + y^2 + g\\,y + h\\right) + v^2}{x^3}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{f\\,x^3\\left(3x^2 + y^2 + g\\,y + h\\right) + v^2}{x^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-f\\,x\\left(2y + g\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "-f\\,x\\left(2y + g\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u"
+                ],
+                "value": "f\\,x\\left(2y + g\\right)"
+              },
+              {
+                "indices": [
+                  "u",
+                  "v",
+                  "x"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x"
+                ],
+                "value": "-\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "v"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "x",
+                  "v",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{x}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x"
+                ],
+                "value": "-\\dfrac{2v}{x^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-4f\\,v"
+              },
+              {
+                "indices": [
+                  "v",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "4f\\,v"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "2f\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "v",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "2f\\,x"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "2f\\,x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "2f\\,x"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "u",
+                  "x"
+                ],
+                "value": "2f\\,x"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x",
+                  "x",
+                  "u"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "u",
+                  "y"
+                ],
+                "value": "2f\\,x"
+              },
+              {
+                "indices": [
+                  "u",
+                  "y",
+                  "y",
+                  "u"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "u",
+                  "x"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "x",
+                  "u",
+                  "x",
+                  "u"
+                ],
+                "value": "2f\\,x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "u",
+                  "y"
+                ],
+                "value": "-2f\\,x"
+              },
+              {
+                "indices": [
+                  "y",
+                  "u",
+                  "y",
+                  "u"
+                ],
+                "value": "2f\\,x"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "4f\\,x"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-4f\\,x"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "4f\\,x"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "4f\\,x"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "u"
+                ],
+                "value": "-4f\\,x"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "4f\\,x"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{u} + \\dfrac{v}{x^2}\\dot{u}^2 + \\dfrac{2}{x}\\dot{u}\\dot{x} = 0",
+        "\\ddot{v} + \\dfrac{x^5\\left(x^2 + y^2 + g\\,y + h\\right)\\partial_u f + f\\,x^5\\left(4v + y\\,\\partial_u g + \\partial_u h\\right) - v^3}{x^4}\\dot{u}^2 + \\dfrac{2v}{x^2}\\dot{u}\\dot{v} + \\dfrac{2f\\,x^3\\left(x^2 - y^2 - g\\,y - h\\right) - 4v^2}{x^3}\\dot{u}\\dot{x} + 2f\\,x\\left(2y + g\\right)\\dot{u}\\dot{y} - \\dfrac{2}{x}\\dot{v}\\dot{x} + \\dfrac{2v}{x^2}\\dot{x}^2 = 0",
+        "\\ddot{x} + \\dfrac{f\\,x^3\\left(3x^2 + y^2 + g\\,y + h\\right) - v^2}{x^3}\\dot{u}^2 + \\dfrac{2}{x}\\dot{u}\\dot{v} - \\dfrac{4v}{x^2}\\dot{u}\\dot{x} = 0",
+        "\\ddot{y} + f\\,x\\left(2y + g\\right)\\dot{u}^2 = 0"
+      ]
+    },
+    {
+      "id": "kerr_schild",
+      "name": "Kerr-Schild",
+      "coords": [
+        "T",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "X \\in (-\\infty, \\infty)",
+        "Y \\in (-\\infty, \\infty)",
+        "Z \\in (-\\infty, \\infty)",
+        "X^2 + Z^2 > c^2T^2 \\;\\text{(outside the envelope of the wave fronts)}",
+        "cT + Z = 0,\\; X < 0 \\;\\text{(the wave front } u \\to \\pm\\infty\\text{)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "\\ell",
+          "description": "A length setting the strength of the radiation, $f = 1/\\ell$, positive so that the energy density is positive"
+        },
+        {
+          "symbol": "x = \\sqrt{X^2 + Z^2 - c^2T^2}",
+          "description": "Distance along a wave front from the line where it touches the envelope, the cylinder $X^2 + Z^2 = c^2T^2$"
+        },
+        {
+          "symbol": "u = \\dfrac{X - x}{cT + Z}",
+          "description": "Label of the wave front through the event, $u = \\tan(\\alpha/2)$ for the front $cT = X\\sin\\alpha + Z\\cos\\alpha$"
+        },
+        {
+          "symbol": "v = \\dfrac{cT + Z}{2x}",
+          "description": "A coordinate along the rays; $2xv = cT + Z$ is the $w$ of Koutras and McIntosh's chart at $a = 1$ and $b = 0$"
+        }
+      ],
+      "convention": "We use the inertial coordinates $(T, X, Y, Z)$ of the flat space the radiation crosses, with $T$ a time, for Wils's metric with $f = 1/\\ell$; $x$, $u$, and $v$ are the coordinates of the Kundt form as functions of these. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2 - \\dfrac{x^2 + Y^2}{2\\ell x}\\left(\\left(1 + u^2\\right)c\\,dT - 2u\\,dX - \\left(1 - u^2\\right)dZ\\right)^2",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-\\dfrac{u^4\\,x^2 + u^4\\,Y^2 + 2u^2\\,x^2 + 2u^2\\,Y^2 + x^2 + 2x\\,\\ell + Y^2}{2x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "T",
+            "X"
+          ],
+          "value": "\\dfrac{u\\left(u^2 + 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "X",
+            "T"
+          ],
+          "value": "\\dfrac{u\\left(u^2 + 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "T",
+            "Z"
+          ],
+          "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{2x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "Z",
+            "T"
+          ],
+          "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{2x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "-\\dfrac{2u^2\\,x^2 + 2u^2\\,Y^2 - x\\,\\ell}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "X",
+            "Z"
+          ],
+          "value": "\\dfrac{u\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "Z",
+            "X"
+          ],
+          "value": "\\dfrac{u\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Z",
+            "Z"
+          ],
+          "value": "-\\dfrac{u^4\\,x^2 + u^4\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 + x^2 - 2x\\,\\ell + Y^2}{2x\\,\\ell}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "\\dfrac{u^4\\,x^2 + u^4\\,Y^2 + 2u^2\\,x^2 + 2u^2\\,Y^2 + x^2 - 2x\\,\\ell + Y^2}{2x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "T",
+            "X"
+          ],
+          "value": "\\dfrac{u\\left(u^2 + 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "X",
+            "T"
+          ],
+          "value": "\\dfrac{u\\left(u^2 + 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "T",
+            "Z"
+          ],
+          "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{2x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "Z",
+            "T"
+          ],
+          "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{2x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "X",
+            "X"
+          ],
+          "value": "\\dfrac{2u^2\\,x^2 + 2u^2\\,Y^2 + x\\,\\ell}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "X",
+            "Z"
+          ],
+          "value": "-\\dfrac{u\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "Z",
+            "X"
+          ],
+          "value": "-\\dfrac{u\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+        },
+        {
+          "indices": [
+            "Y",
+            "Y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "Z",
+            "Z"
+          ],
+          "value": "\\dfrac{u^4\\,x^2 + u^4\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 + x^2 + 2x\\,\\ell + Y^2}{2x\\,\\ell}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2\\left(u^2\\,v\\,x^2 - u^2\\,v\\,Y^2 - u\\,x^2 - 3u\\,Y^2 + v\\,x^2 - v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 + x^2 - Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 + x^2 - Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 3u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 3u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 + x^2 - Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 + 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 + 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 5u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 + u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 - 3x^2 - Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 - x^2 - Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 - x^2 - Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 + u^4\\,x^2 - 5u^4\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 + u^4\\,x^2 - 5u^4\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{u^2\\left(2u\\,v\\,x^2 - 2u\\,v\\,Y^2 - x^2 - 3Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2u^2\\,Y}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^2\\,Y}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{2u^2\\,Y}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 + x^2 + Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 + x^2 + Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 + u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 5u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 - 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 - 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 3u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 3u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 - x^2 + Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2\\left(u^2\\,v\\,x^2 - u^2\\,v\\,Y^2 - u\\,x^2 - 3u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2\\left(u^2\\,v\\,x^2 - u^2\\,v\\,Y^2 - u\\,x^2 - 3u\\,Y^2 + v\\,x^2 - v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 + x^2 - Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 + x^2 - Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 3u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 3u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 + x^2 - Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 + 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 + 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 5u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 + u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 - 3x^2 - Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 - x^2 - Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 - x^2 - Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 + u^4\\,x^2 - 5u^4\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 + u^4\\,x^2 - 5u^4\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "X"
+                ],
+                "value": "-\\dfrac{u^2\\left(2u\\,v\\,x^2 - 2u\\,v\\,Y^2 - x^2 - 3Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2u^2\\,Y}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^2\\,Y}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{2u^2\\,Y}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 + x^2 + Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 + x^2 + Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 + u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 5u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 - 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 - 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 3u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 3u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 - x^2 + Y^2\\right)}{x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2\\right)}{4x^2\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2\\left(u^2\\,v\\,x^2 - u^2\\,v\\,Y^2 - u\\,x^2 - 3u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Y",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Z",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Y",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Z",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "Z",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Y",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{2x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z",
+                  "X"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "T",
+                  "Y"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "T",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "T",
+                  "Y"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "X",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z",
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "X",
+                  "Y"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Y",
+                  "Y",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "X",
+                  "Y"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Y",
+                  "X",
+                  "Y",
+                  "X"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T",
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{2u^2}{x\\,\\ell}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{4u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{x\\,\\ell}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{4u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{x\\,\\ell}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{4u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{x\\,\\ell}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{4u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{x\\,\\ell}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{4u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{x\\,\\ell}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "T",
+                  "T"
+                ],
+                "value": "\\dfrac{\\left(u^2 + 1\\right)^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "X"
+                ],
+                "value": "\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "T"
+                ],
+                "value": "\\dfrac{2u\\left(u^2 + 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "T",
+                  "Z"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "T"
+                ],
+                "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "X"
+                ],
+                "value": "\\dfrac{4u^2}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "X",
+                  "Z"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "X"
+                ],
+                "value": "-\\dfrac{2u\\left(u^2 - 1\\right)}{x\\,\\ell}"
+              },
+              {
+                "indices": [
+                  "Z",
+                  "Z"
+                ],
+                "value": "\\dfrac{\\left(u^2 - 1\\right)^2}{x\\,\\ell}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} - \\dfrac{\\left(u^2 + 1\\right)^2\\left(u^2\\,v\\,x^2 - u^2\\,v\\,Y^2 - u\\,x^2 - 3u\\,Y^2 + v\\,x^2 - v\\,Y^2\\right)}{4x^2\\,\\ell}\\dot{T}^2 + \\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 + x^2 - Y^2\\right)}{2x^2\\,\\ell}\\dot{T}\\dot{X} + \\dfrac{Y\\left(u^2 + 1\\right)^2}{x\\,\\ell}\\dot{T}\\dot{Y} - \\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 3u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{2x^2\\,\\ell}\\dot{T}\\dot{Z} - \\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 + x^2 - Y^2\\right)}{x^2\\,\\ell}\\dot{X}^2 - \\dfrac{2u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}\\dot{X}\\dot{Y} + \\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 + 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{2x^2\\,\\ell}\\dot{X}\\dot{Z} + \\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}\\dot{Y}\\dot{Z} - \\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 + 5u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}\\dot{Z}^2 = 0",
+        "\\ddot{X} - \\dfrac{\\left(u^2 + 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 + u^2\\,x^2 - 5u^2\\,Y^2 + 2u\\,v\\,x^2 - 2u\\,v\\,Y^2 - 3x^2 - Y^2\\right)}{4x^2\\,\\ell}\\dot{T}^2 + \\dfrac{2u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 + u\\,v\\,x^2 - u\\,v\\,Y^2 - x^2 - Y^2\\right)}{x^2\\,\\ell}\\dot{T}\\dot{X} + \\dfrac{2u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}\\dot{T}\\dot{Y} - \\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 + u^4\\,x^2 - 5u^4\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2}{2x^2\\,\\ell}\\dot{T}\\dot{Z} - \\dfrac{u^2\\left(2u\\,v\\,x^2 - 2u\\,v\\,Y^2 - x^2 - 3Y^2\\right)}{x^2\\,\\ell}\\dot{X}^2 - \\dfrac{4u^2\\,Y}{x\\,\\ell}\\dot{X}\\dot{Y} + \\dfrac{2u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 + x^2 + Y^2\\right)}{x^2\\,\\ell}\\dot{X}\\dot{Z} + \\dfrac{2u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}\\dot{Y}\\dot{Z} - \\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 + u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 + 3x^2 + Y^2\\right)}{4x^2\\,\\ell}\\dot{Z}^2 = 0",
+        "\\ddot{Y} + \\dfrac{Y\\left(u^2 + 1\\right)^2}{2x\\,\\ell}\\dot{T}^2 - \\dfrac{2u\\,Y\\left(u^2 + 1\\right)}{x\\,\\ell}\\dot{T}\\dot{X} + \\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}\\dot{T}\\dot{Z} + \\dfrac{2u^2\\,Y}{x\\,\\ell}\\dot{X}^2 - \\dfrac{2u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}\\dot{X}\\dot{Z} + \\dfrac{Y\\left(u^2 - 1\\right)^2}{2x\\,\\ell}\\dot{Z}^2 = 0",
+        "\\ddot{Z} + \\dfrac{\\left(u^2 + 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 5u\\,x^2 + u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}\\dot{T}^2 - \\dfrac{2u^5\\,v\\,x^2 - 2u^5\\,v\\,Y^2 - 3u^4\\,x^2 - 5u^4\\,Y^2 - 8u^2\\,x^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2}{2x^2\\,\\ell}\\dot{T}\\dot{X} - \\dfrac{Y\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)}{x\\,\\ell}\\dot{T}\\dot{Y} + \\dfrac{\\left(u^2 - 1\\right)\\left(u^4\\,v\\,x^2 - u^4\\,v\\,Y^2 - u^3\\,x^2 - 3u^3\\,Y^2 - 3u\\,x^2 - u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{2x^2\\,\\ell}\\dot{T}\\dot{Z} + \\dfrac{u\\left(u^3\\,v\\,x^2 - u^3\\,v\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 - u\\,v\\,x^2 + u\\,v\\,Y^2 - x^2 + Y^2\\right)}{x^2\\,\\ell}\\dot{X}^2 + \\dfrac{2u\\,Y\\left(u^2 - 1\\right)}{x\\,\\ell}\\dot{X}\\dot{Y} - \\dfrac{\\left(u^2 - 1\\right)\\left(2u^3\\,v\\,x^2 - 2u^3\\,v\\,Y^2 - 3u^2\\,x^2 - 5u^2\\,Y^2 - 2u\\,v\\,x^2 + 2u\\,v\\,Y^2 - x^2 + Y^2\\right)}{2x^2\\,\\ell}\\dot{X}\\dot{Z} - \\dfrac{Y\\left(u^2 - 1\\right)^2}{x\\,\\ell}\\dot{Y}\\dot{Z} + \\dfrac{\\left(u^2 - 1\\right)^2\\left(u^2\\,v\\,x^2 - u^2\\,v\\,Y^2 - u\\,x^2 - 3u\\,Y^2 - v\\,x^2 + v\\,Y^2\\right)}{4x^2\\,\\ell}\\dot{Z}^2 = 0"
+      ]
+    }
+  ]
+}

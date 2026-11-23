@@ -66,6 +66,11 @@
       "id": "hauser_wave",
       "kind": "family",
       "text": "Hauser's twisting wave, the type N vacuum whose rays both spread and twist, the one of its kind known in closed form [godazgar2021]."
+    },
+    {
+      "id": "koutras_mcintosh",
+      "kind": "family",
+      "text": "Their counterpart of pure radiation, conformally flat and with the same rolling fronts and the same singular cylinder [griffithspodolsky1998, podolskybelan2004]."
     }
   ],
   "references": [

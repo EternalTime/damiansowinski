@@ -5540,5 +5540,10 @@ DIMENSIONS.update(_generalised_vaidya.DIMENSIONS)
 HELD.update(_generalised_vaidya.HELD)
 RATES.update(_generalised_vaidya.RATES)
 
+import koutras_mcintosh as _koutras_mcintosh
+DIMENSIONS.update(_koutras_mcintosh.DIMENSIONS)
+HELD.update(_koutras_mcintosh.HELD)
+RATES.update(_koutras_mcintosh.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

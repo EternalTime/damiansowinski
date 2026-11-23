@@ -328,6 +328,11 @@
       "id": "kaluza_klein_melvin",
       "kind": "family",
       "text": "Flat spacetime of five dimensions with its fifth dimension rolled into a circle with a twist. Seen from four dimensions it is a tube of magnetic flux [dowker1995]."
+    },
+    {
+      "id": "koutras_mcintosh",
+      "kind": "generalisation",
+      "text": "Flat spacetime filled with incoherent null radiation that leaves its Weyl tensor zero. In general the result has no Killing vector and no homothety [koutrasmcintosh1996, griffithspodolsky1998]."
     }
   ],
   "references": [
@@ -416,7 +421,9 @@
     "lyndenbell1978",
     "lopez1984electron",
     "brout1979causal",
-    "dowker1995"
+    "dowker1995",
+    "koutrasmcintosh1996",
+    "griffithspodolsky1998"
   ],
   "coordinates": [
     {

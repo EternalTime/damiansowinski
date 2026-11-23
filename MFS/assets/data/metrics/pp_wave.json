@@ -133,6 +133,11 @@
       "id": "nappi_witten",
       "kind": "family",
       "text": "Nappi and Witten constructed an exact string plane wave in 1993 with a constant dilaton and an antisymmetric tensor. Their 1992 closed universe expands and recollapses, with spatially varying curvature [nappi1993, nappi1992]."
+    },
+    {
+      "id": "koutras_mcintosh",
+      "kind": "generalisation",
+      "text": "Plane waves of pure radiation set on half planes that turn from one front to the next. At $a = 0$ Koutras and McIntosh's family is the conformally flat plane wave [griffithspodolsky1998, kruglikovsteneker2022]."
     }
   ],
   "references": [
@@ -182,7 +187,9 @@
     "godazgar2021",
     "figueroa2001",
     "nappi1993",
-    "nappi1992"
+    "nappi1992",
+    "griffithspodolsky1998",
+    "kruglikovsteneker2022"
   ],
   "coordinates": [
     {
