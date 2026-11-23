@@ -931,6 +931,7 @@ van Stockum's plane of $t$ and $r$ is not drawn: every null geodesic leaves it, 
 The proper distance chart of Morris-Thorne leaves its functions free with no choice made for them, while its spherical chart draws the Ellis-Bronnikov member.
 Lense and Thirring's weak field chart of the slowly rotating star holds where $m/r$ is small, and there its planes are flat to the eye.
 Natário's plane flow chart, the Brinkmann chart of the pp-wave, Robinson and Trautman's chart of $x$ and $y$, Minkowski's double null chart, the Cartesian and null cylindrical charts of the Aichelburg-Sexl shock, and the global and conformal charts of the domain wall would each only repeat a plane drawn elsewhere, flat or the same as another chart's.
+The Hopf chart of the spinning black hole of Breckenridge, Myers, Peet, and Vafa holds the Hopf fibre as a coordinate direction only on the axes $\theta = 0$ and $\theta = \pi/2$, where its angles are degenerate, and its plane of $t$ and $r$ with the fibre divided out is the plane its Euler chart draws.
 
 Nothing at all is drawn of Lentz's soliton, the Mixmaster universe or Gott's core.
 Lentz's soliton exists only as a numerical integral over his rhomboid sources, so no soliton of the class can be written down, and a potential written in its place would draw another soliton of the class.

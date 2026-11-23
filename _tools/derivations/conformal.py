@@ -32495,5 +32495,9 @@ NOT_DRAWN.add("generalised_vaidya")
 # 2004), so no global completion is established to compactify; koutras_mcintosh.md gives the reason.
 NOT_DRAWN.add("koutras_mcintosh")
 
+import bmpv_drawings as _bmpv_drawings
+DRAWN[_bmpv_drawings.METRIC] = lambda ck, src: _bmpv_drawings.conformal_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_bmpv_drawings.conformal_captions())
+
 if __name__ == "__main__":
     sys.exit(main())

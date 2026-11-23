@@ -22691,6 +22691,10 @@ DRAWN[_generalised_vaidya_drawings.METRIC] = lambda ck, src: _generalised_vaidya
     ck, src, sys.modules[__name__])
 CAPTIONS.update(_generalised_vaidya_drawings.embedding_captions())
 
+import bmpv_drawings as _bmpv_drawings
+DRAWN[_bmpv_drawings.METRIC] = lambda ck, src: _bmpv_drawings.embedding_views(ck, src, sys.modules[__name__])
+CAPTIONS.update(_bmpv_drawings.embedding_captions())
+
 if __name__ == "__main__":
     sys.exit(main())
 

@@ -19332,5 +19332,8 @@ import generalised_vaidya_drawings as _generalised_vaidya_drawings
 DRAWN[_generalised_vaidya_drawings.METRIC] = lambda ck, src: _generalised_vaidya_drawings.curvature_views(
     ck, src, sys.modules[__name__])
 
+import bmpv_drawings as _bmpv_drawings
+DRAWN[_bmpv_drawings.METRIC] = lambda ck, src: _bmpv_drawings.curvature_views(ck, src, sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

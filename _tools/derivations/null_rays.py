@@ -19530,5 +19530,8 @@ _generalised_vaidya_drawings.register_null(sys.modules[__name__])
 import koutras_mcintosh_drawings as _koutras_mcintosh_drawings
 _koutras_mcintosh_drawings.register_null(sys.modules[__name__])
 
+import bmpv_drawings as _bmpv_drawings
+_bmpv_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

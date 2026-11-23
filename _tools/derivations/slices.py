@@ -5245,3 +5245,8 @@ FLAT[(_generalised_vaidya_drawings.METRIC, "ingoing", "collapse")] = (
 FLAT_METRICS.add(_generalised_vaidya_drawings.METRIC)
 HIDDEN.update({(_generalised_vaidya_drawings.METRIC, system, view): _generalised_vaidya_drawings.HIDDEN_REASON
                for system, view in (("husain", "hair"), ("outgoing", "strings"))})
+
+import bmpv_drawings as _bmpv_drawings  # noqa: E402
+FLAT.update({(_bmpv_drawings.METRIC, system, "radial"): (lambda system=system: _bmpv_drawings.slice_marks(sys.modules[__name__], system))
+             for system in ("euler", "isotropic", "ingoing")})
+FLAT_METRICS.add(_bmpv_drawings.METRIC)
