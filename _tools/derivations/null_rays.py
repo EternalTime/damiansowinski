@@ -19519,5 +19519,8 @@ CLOSED_FORMS.update(_waves_in_friedmann.null_forms())
 import repulson_drawings as _repulson_drawings
 _repulson_drawings.register_null(sys.modules[__name__])
 
+import dressed_btz_drawings as _dressed_btz_drawings
+_dressed_btz_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

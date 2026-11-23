@@ -5230,3 +5230,7 @@ _dilaton_unusual_asymptotics_drawings.register_slices(sys.modules[__name__])
 import repulson_drawings as _repulson_drawings  # noqa: E402
 FLAT.update(_repulson_drawings.slice_table(sys.modules[__name__]))
 FLAT_METRICS.add(_repulson_drawings.METRIC)
+
+import dressed_btz_drawings as _dressed_btz_drawings  # noqa: E402
+FLAT.update(_dressed_btz_drawings.slice_table(sys.modules[__name__]))
+FLAT_METRICS.add(_dressed_btz_drawings.METRIC)
