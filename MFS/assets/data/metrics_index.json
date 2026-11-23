@@ -4161,6 +4161,25 @@
     "embedding": "0f0d0ccead353b13"
   },
   {
+    "id": "koutras_mcintosh",
+    "name": "Koutras-McIntosh",
+    "tags": [
+      "null dust",
+      "Kundt class",
+      "vanishing scalar invariants",
+      "conformally flat",
+      "radiating",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "1d6fa8a44ff64b34",
+    "diagrams": "de57f46c4261fd59"
+  },
+  {
     "id": "kowalski_glikman",
     "name": "Kowalski-Glikman Wave",
     "tags": [
@@ -4247,7 +4266,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b1f6dde8b10f1576",
+    "version": "6717f74ebc2e2ae8",
     "diagrams": "652793375fdb6141",
     "embedding": "aa93f3cc510fade8"
   },
@@ -4931,7 +4950,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "bdd1e9ae629ea373",
+    "version": "8d071c140465d8b8",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -5890,7 +5909,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f262a530e7036746",
+    "version": "054b5fd5d33c497f",
     "diagrams": "6e432dbfef4f0d7d",
     "embedding": "c2fea606320f23bc"
   },
@@ -6714,7 +6733,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "585438821dd3912a",
+    "version": "475d4c908fbed274",
     "diagrams": "630177f337a42e3a",
     "conformal": "c5087b775be3abf6",
     "embedding": "ad8fbfdcb04765f7"

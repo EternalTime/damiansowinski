@@ -1847,6 +1847,18 @@ A flat universe of dust whose particles all spin about one axis, in the Einstein
 - chart Comoving Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Conformal Time: coordinates $(\eta, r, \theta, \phi)$, $$ds^2 = a^2\left(-d\eta^2 + dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 
+### Koutras-McIntosh Spacetimes
+
+Null radiation in a conformally flat spacetime whose curvature scalars of every order are zero and which in general has no Killing vector and no homothety. Where the radiation is weak its fronts are half planes tangent to a cylinder growing at the speed of light, and concentrated on one front it is an impulsive pp-wave.
+
+- id: `koutras_mcintosh`
+- tags: null dust, Kundt class, vanishing scalar invariants, conformally flat, radiating, time-dependent, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/koutras_mcintosh.json
+- chart Koutras-McIntosh: coordinates $(u, w, x, y)$, $$ds^2 = dx^2 + dy^2 - 2\left(ax + b\right)du\,dw + 2aw\,du\,dx + \left(a^2w^2 - 2f\left(ax + b\right)\left(x^2 + y^2\right)\right)du^2$$
+- chart Edgar-Ludwig: coordinates $(u, v, x, y)$, $$ds^2 = dx^2 + dy^2 - 2\,du\,dv + \dfrac{4v}{x}du\,dx + \left(\dfrac{v^2}{x^2} - 2fx\left(x^2 + y^2 + gy + h\right)\right)du^2$$
+- chart Kerr-Schild: coordinates $(T, X, Y, Z)$, $$ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2 - \dfrac{x^2 + Y^2}{2\ell x}\left(\left(1 + u^2\right)c\,dT - 2u\,dX - \left(1 - u^2\right)dZ\right)^2$$
+
 ### Kowalski-Glikman's Eleven Dimensional Wave
 
 An eleven dimensional supergravity wave with parallel null 4-form flux and 32 Killing spinors. Three transverse directions focus at twice the frequency of the other six.

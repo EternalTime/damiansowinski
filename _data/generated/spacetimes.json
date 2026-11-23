@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 266,
+  "count": 267,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -46817,6 +46817,352 @@
       ]
     },
     {
+      "id": "koutras_mcintosh",
+      "name": "Koutras-McIntosh Spacetimes",
+      "short_name": "Koutras-McIntosh",
+      "description": "Null radiation in a conformally flat spacetime whose curvature scalars of every order are zero and which in general has no Killing vector and no homothety. Where the radiation is weak its fronts are half planes tangent to a cylinder growing at the speed of light, and concentrated on one front it is an impulsive pp-wave.",
+      "tags": [
+        "null dust",
+        "Kundt class",
+        "vanishing scalar invariants",
+        "conformally flat",
+        "radiating",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "pp_wave",
+          "kind": "special_case",
+          "text": "The family at $a = 0$ and $b = 1$, a plane wave of pure radiation whose profile is quadratic and the same in every direction across it, so that its Weyl tensor vanishes [griffithspodolsky1998, kruglikovsteneker2022]."
+        },
+        {
+          "id": "kundt_waves",
+          "kind": "family",
+          "text": "The gravitational waves of Kundt's class, whose rays neither expand nor twist. Where they are weak their fronts are the same half planes tangent to a cylinder growing at the speed of light, and the cylinder is a curvature singularity in both [griffithspodolsky1998, podolskybelan2004]."
+        },
+        {
+          "id": "siklos",
+          "kind": "family",
+          "text": "Waves crossing anti-de Sitter space. With a negative cosmological constant, part of the conformally flat class of pure radiation is the conformally flat subfamily of Siklos's waves [podolskyprikryl2009]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "special_case",
+          "text": "The radiation turned off. At $f = 0$ the metric is flat space, in coordinates that end on a cylinder growing at the speed of light [griffithspodolsky1998]."
+        }
+      ],
+      "references": [
+        "edgarludwig1997",
+        "edgarludwig1997ghp",
+        "wils1989",
+        "griffithspodolsky1998",
+        "koutras1992",
+        "edgarvickers1999",
+        "koutrasmcintosh1996",
+        "skea1997",
+        "podolskybelan2004",
+        "barnes2001",
+        "podolskyprikryl2009",
+        "kruglikovsteneker2022"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/koutras_mcintosh.json",
+      "charts": [
+        {
+          "id": "koutras_mcintosh",
+          "name": "Koutras-McIntosh",
+          "coordinates": [
+            "u",
+            "w",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "w \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "ax + b > 0 \\;\\text{(the side of the envelope the radiation fills)}",
+            "ax + b = 0 \\;\\text{(the envelope of the wave fronts, for } a \\neq 0\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "A pure number. With $a = 0$ and $b > 0$ the metric is a plane wave, and with $b = 0$ it is Wils's metric"
+            },
+            {
+              "symbol": "b",
+              "description": "A length; for $a \\neq 0$ the envelope of the wave fronts is $ax + b = 0$"
+            },
+            {
+              "symbol": "f = f(u)",
+              "description": "Amplitude of the radiation, an inverse length, a function of $u$ alone; the Ricci tensor is $R_{uu} = 4(ax + b)f$, and $f = 0$ is flat space"
+            }
+          ],
+          "convention": "We use Koutras and McIntosh's coordinates $(u, w, x, y)$, with $u$ a pure number labelling the wave fronts, $w$ a length along the rays, and $x$ and $y$ lengths on the front. We leave the amplitude $f$ free. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 2\\left(ax + b\\right)du\\,dw + 2aw\\,du\\,dx + \\left(a^2w^2 - 2f\\left(ax + b\\right)\\left(x^2 + y^2\\right)\\right)du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(2f\\left(a\\,x + b\\right)\\left(x^2 + y^2\\right) - a^2\\,w^2\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "w"
+              ],
+              "value": "-\\left(a\\,x + b\\right)"
+            },
+            {
+              "indices": [
+                "w",
+                "u"
+              ],
+              "value": "-\\left(a\\,x + b\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "a\\,w"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "a\\,w"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "edgar_ludwig",
+          "name": "Edgar-Ludwig",
+          "coordinates": [
+            "u",
+            "v",
+            "x",
+            "y"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "v \\in (-\\infty, \\infty)",
+            "x \\in (0, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "x = 0 \\;\\text{(the envelope of the wave fronts)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(u)",
+              "description": "Amplitude of the radiation, an inverse length, a function of $u$ alone; the Ricci tensor is $R_{uu} = 4xf$, and $f = 0$ is flat space"
+            },
+            {
+              "symbol": "g = g(u)",
+              "description": "A length, a function of $u$ alone, absent from the Ricci tensor; with $g = h = 0$ the metric is Wils's"
+            },
+            {
+              "symbol": "h = h(u)",
+              "description": "An area, a function of $u$ alone, absent from the Ricci tensor; with $g$ and $h$ constant the metric is Wils's in other coordinates"
+            }
+          ],
+          "convention": "We use Wils's coordinates $(u, v, x, y)$, with $u$ a pure number labelling the wave fronts, $v$ an area along the rays, and $x$ and $y$ lengths on the front; $v = xw$ in Koutras and McIntosh's coordinates at $a = 1$ and $b = 0$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = dx^2 + dy^2 - 2\\,du\\,dv + \\dfrac{4v}{x}du\\,dx + \\left(\\dfrac{v^2}{x^2} - 2fx\\left(x^2 + y^2 + gy + h\\right)\\right)du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\dfrac{2f\\,x^3\\left(x^2 + y^2 + g\\,y + h\\right) - v^2}{x^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "u",
+                "x"
+              ],
+              "value": "\\dfrac{2v}{x}"
+            },
+            {
+              "indices": [
+                "x",
+                "u"
+              ],
+              "value": "\\dfrac{2v}{x}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "kerr_schild",
+          "name": "Kerr-Schild",
+          "coordinates": [
+            "T",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "X \\in (-\\infty, \\infty)",
+            "Y \\in (-\\infty, \\infty)",
+            "Z \\in (-\\infty, \\infty)",
+            "X^2 + Z^2 > c^2T^2 \\;\\text{(outside the envelope of the wave fronts)}",
+            "cT + Z = 0,\\; X < 0 \\;\\text{(the wave front } u \\to \\pm\\infty\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "A length setting the strength of the radiation, $f = 1/\\ell$, positive so that the energy density is positive"
+            },
+            {
+              "symbol": "x = \\sqrt{X^2 + Z^2 - c^2T^2}",
+              "description": "Distance along a wave front from the line where it touches the envelope, the cylinder $X^2 + Z^2 = c^2T^2$"
+            },
+            {
+              "symbol": "u = \\dfrac{X - x}{cT + Z}",
+              "description": "Label of the wave front through the event, $u = \\tan(\\alpha/2)$ for the front $cT = X\\sin\\alpha + Z\\cos\\alpha$"
+            },
+            {
+              "symbol": "v = \\dfrac{cT + Z}{2x}",
+              "description": "A coordinate along the rays; $2xv = cT + Z$ is the $w$ of Koutras and McIntosh's chart at $a = 1$ and $b = 0$"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(T, X, Y, Z)$ of the flat space the radiation crosses, with $T$ a time, for Wils's metric with $f = 1/\\ell$; $x$, $u$, and $v$ are the coordinates of the Kundt form as functions of these. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dT^2 + dX^2 + dY^2 + dZ^2 - \\dfrac{x^2 + Y^2}{2\\ell x}\\left(\\left(1 + u^2\\right)c\\,dT - 2u\\,dX - \\left(1 - u^2\\right)dZ\\right)^2",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{u^4\\,x^2 + u^4\\,Y^2 + 2u^2\\,x^2 + 2u^2\\,Y^2 + x^2 + 2x\\,\\ell + Y^2}{2x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "T",
+                "X"
+              ],
+              "value": "\\dfrac{u\\left(u^2 + 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "X",
+                "T"
+              ],
+              "value": "\\dfrac{u\\left(u^2 + 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "T",
+                "Z"
+              ],
+              "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{2x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "Z",
+                "T"
+              ],
+              "value": "-\\dfrac{\\left(u^2 + 1\\right)\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{2x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "X",
+                "X"
+              ],
+              "value": "-\\dfrac{2u^2\\,x^2 + 2u^2\\,Y^2 - x\\,\\ell}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "X",
+                "Z"
+              ],
+              "value": "\\dfrac{u\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "Z",
+                "X"
+              ],
+              "value": "\\dfrac{u\\left(u^2 - 1\\right)\\left(x^2 + Y^2\\right)}{x\\,\\ell}"
+            },
+            {
+              "indices": [
+                "Y",
+                "Y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "Z",
+                "Z"
+              ],
+              "value": "-\\dfrac{u^4\\,x^2 + u^4\\,Y^2 - 2u^2\\,x^2 - 2u^2\\,Y^2 + x^2 - 2x\\,\\ell + Y^2}{2x\\,\\ell}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "kowalski_glikman",
       "name": "Kowalski-Glikman's Eleven Dimensional Wave",
       "short_name": "Kowalski-Glikman Wave",
@@ -47562,6 +47908,11 @@
           "id": "hauser_wave",
           "kind": "family",
           "text": "Hauser's twisting wave, the type N vacuum whose rays both spread and twist, the one of its kind known in closed form [godazgar2021]."
+        },
+        {
+          "id": "koutras_mcintosh",
+          "kind": "family",
+          "text": "Their counterpart of pure radiation, conformally flat and with the same rolling fronts and the same singular cylinder [griffithspodolsky1998, podolskybelan2004]."
         }
       ],
       "references": [
@@ -55070,6 +55421,11 @@
           "id": "kaluza_klein_melvin",
           "kind": "family",
           "text": "Flat spacetime of five dimensions with its fifth dimension rolled into a circle with a twist. Seen from four dimensions it is a tube of magnetic flux [dowker1995]."
+        },
+        {
+          "id": "koutras_mcintosh",
+          "kind": "generalisation",
+          "text": "Flat spacetime filled with incoherent null radiation that leaves its Weyl tensor zero. In general the result has no Killing vector and no homothety [koutrasmcintosh1996, griffithspodolsky1998]."
         }
       ],
       "references": [
@@ -55158,7 +55514,9 @@
         "lyndenbell1978",
         "lopez1984electron",
         "brout1979causal",
-        "dowker1995"
+        "dowker1995",
+        "koutrasmcintosh1996",
+        "griffithspodolsky1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -66392,6 +66750,11 @@
           "id": "nappi_witten",
           "kind": "family",
           "text": "Nappi and Witten constructed an exact string plane wave in 1993 with a constant dilaton and an antisymmetric tensor. Their 1992 closed universe expands and recollapses, with spatially varying curvature [nappi1993, nappi1992]."
+        },
+        {
+          "id": "koutras_mcintosh",
+          "kind": "generalisation",
+          "text": "Plane waves of pure radiation set on half planes that turn from one front to the next. At $a = 0$ Koutras and McIntosh's family is the conformally flat plane wave [griffithspodolsky1998, kruglikovsteneker2022]."
         }
       ],
       "references": [
@@ -66441,7 +66804,9 @@
         "godazgar2021",
         "figueroa2001",
         "nappi1993",
-        "nappi1992"
+        "nappi1992",
+        "griffithspodolsky1998",
+        "kruglikovsteneker2022"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pp_wave.json",
@@ -74964,6 +75329,11 @@
           "id": "petrov_homogeneous",
           "kind": "family",
           "text": "Kaigorodov's counterpart with no cosmological constant: the other vacuum whose four symmetries reach every event exactly once. Gary Gibbons and Steffen Gielen found Kaigorodov's group among the deformations of Petrov's [gibbons2008petrov]."
+        },
+        {
+          "id": "koutras_mcintosh",
+          "kind": "family",
+          "text": "Conformally flat pure radiation without a cosmological constant, the class that holds Wils's metric. With $\\Lambda < 0$ part of that class is a conformally flat Siklos wave [podolskyprikryl2009]."
         }
       ],
       "references": [
@@ -74987,7 +75357,8 @@
         "duval2009",
         "griffiths2004",
         "hotta1993",
-        "gibbons2008petrov"
+        "gibbons2008petrov",
+        "podolskyprikryl2009"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/siklos.json",
