@@ -175,3 +175,176 @@ def embedding_views(ck, src, em):
     fig.legend("line", "meridian", "$\\theta$ constant, every $15°$")
     return [em.view("throat", "Through the throat", "$l$", [surface], fig.done(),
                     settings="$l = 1$ and $B = l/2$, so $r_+ = l$; beyond $g_{rr} = 1$, lengths in $dX^2 + dY^2 - dZ^2$.")]
+
+
+# ---------------------------------------------------------------- conformal diagram
+
+S_SINGULAR = 2 * math.exp(-1.5)          # UV at r = 0
+
+
+def pq(cf, cell, t, r):
+    """(p, q) of points (t, r) of a cell, t the static time of its region: U = -+exp(-kappa u),
+    V = +-exp(kappa v), u, v = ct -+ r_*, p = arctan U, q = arctan V, the cells of a Tower."""
+    t = np.asarray(t, dtype=float)
+    rs = rstar(r)
+    u, v = t - rs, t + rs
+
+    def G(w):
+        return cf.atan_exp(-KAPPA * np.asarray(w, dtype=float))
+    return {"I": (-G(u), G(-v)), "II": (G(u), G(-v)), "IV": (-G(u), -G(-v)), "I'": (G(u), -G(-v))}[cell]
+
+
+def ingoing(cf, w, r):
+    """(p, q) of points (cv, r) of the ingoing chart: V = exp(kappa v), U = UV(r)/V."""
+    w, r = np.asarray(w, dtype=float), np.asarray(r, dtype=float)
+    return np.arctan(UV(r) * np.exp(-KAPPA * w)), cf.atan_exp(KAPPA * w)
+
+
+def register_conformal(cf):
+    cf.DRAWN[METRIC] = lambda ck, src: conformal_views(ck, src, cf)
+    end = ("each point a circle, with a timelike boundary $r \\to \\infty$ and a spacelike singularity $r = 0$ "
+           "bowed toward the centre.")
+    cf.CAPTIONS[(METRIC, "static")] = [
+        "The dressed black hole ($B = l/2$) maximally extended in Kruskal's coordinates, " + end]
+    cf.CAPTIONS[(METRIC, "ingoing")] = [
+        "The dressed black hole ($B = l/2$) in its ingoing chart, one exterior and the black hole, " + end]
+
+
+def conformal_views(ck, src, cf):
+    """The static and ingoing charts on Kruskal's extension of the module docstring: the conformal
+    boundary on the straight lines X = +-pi/2 and the singularity on tan p tan q = 2 exp(-3/2)."""
+    import sympy as sp
+    HALF = cf.HALF
+    name = "dressed BTZ"
+    # r_* and UV against the published metric: dr_*/dr = 1/F = g^rr of the static chart, and
+    # exp(2 kappa r_*) = |UV|.
+    r = sp.Symbol("r", positive=True)
+    Bs, ls = sp.Rational(1, 2), sp.Integer(1)
+    rs_sym = ls ** 2 * sp.Rational(2, 9) / Bs * sp.log((r - 2 * Bs) / (r + Bs)) - ls ** 2 / (3 * (r + Bs))
+    st = cf.Plane(src, METRIC, STATIC, ("t", "r"), FIXED, PARAMS)
+    gi = st.gi[1, 1].subs(st.x1, r)
+    ck.limit(f"{name}: dr_*/dr is the published g^rr inverted", [float(sp.simplify(sp.diff(rs_sym, r) * gi - 1))], [0.0], 1e-15)
+    rr = np.array([0.05, 0.3, 0.7, 1.4, 3.0, 20.0])
+    ck.limit(f"{name}: exp(2 kappa r_*) is |UV|", np.exp(2 * KAPPA * rstar(rr)), np.abs(UV(rr)), 1e-12)
+    ck.limit(f"{name}: kappa = F'(r_+)/2 = 9B/(4l^2)", [KAPPA], [float(sp.diff(gi, r).subs(r, 1) / 2)], 1e-12)
+    ck.limit(f"{name}: UV is -1 as r -> infinity and 2 exp(-3/2) at r = 0", UV(np.array([1e12, 0.0])),
+             [-1.0, S_SINGULAR], 1e-9)
+    for cell, ranges, future, where in (("I", (1.001, 40), (1, 0), "exterior"), ("II", (0.01, 0.999), (0, -1), "black hole"),
+                                        ("IV", (0.01, 0.999), (0, 1), "white hole"),
+                                        ("I'", (1.001, 40), (-1, 0), "other exterior")):
+        ck.chart(f"{name} static, {where}", st, lambda t, r, c=cell: pq(cf, c, t, r),
+                 ck.uniform(-4, 4), ck.uniform(*ranges), lambda t, r, d=future: d)
+    ein = cf.Plane(src, METRIC, INGOING, ("v", "r"), FIXED, PARAMS)
+    ck.chart(f"{name} ingoing Eddington-Finkelstein", ein, lambda w, r: ingoing(cf, w, r),
+             ck.uniform(-4, 4), ck.uniform(0.01, 40), lambda w, r: (1, -60))
+    ck.limit(f"{name}: the ingoing and static coordinates put one event at one point",
+             ingoing(cf, 0.4 + rstar(3.0), 3.0), pq(cf, "I", 0.4, 3.0), 1e-12)
+    p, q = pq(cf, "I", np.array([-0.5, 0.0, 0.5]), np.full(3, 1e9))
+    ck.limit(f"{name}: r -> infinity lands on the vertical line X = pi/2", q - p, [HALF] * 3, 1e-6)
+    p, q = pq(cf, "II", np.array([-1.0, 0.0, 1.0]), np.full(3, 1e-9))
+    ck.limit(f"{name}: r -> 0 lands on tan p tan q = 2 exp(-3/2)", np.tan(p) * np.tan(q), [S_SINGULAR] * 3, 1e-6)
+    mid = 2 * math.atan(math.sqrt(S_SINGULAR))
+    ck.limit(f"{name}: the singularity crosses the axis at T = 2 arctan sqrt(2 exp(-3/2)) = 1.178", (p + q)[1], mid, 1e-6)
+    p, q = pq(cf, "I", np.array([0.5]), np.array([RP * (1 + 1e-12)]))
+    ck.limit(f"{name}: r -> r_+ at fixed t lands on the bifurcation circle", cf.point(p[0], q[0]), [0, 0], 1e-4)
+    K = st.kretschmann
+    ck.diverges(f"{name}: the Kretschmann scalar diverges at r = 0", K(0, 1e-2), K(0, 1e-3))
+    ck.finite(f"{name}: the Kretschmann scalar is finite at r = r_+", K(np.zeros(3), np.array([0.999, 1, 1.001])))
+
+    box = [-HALF - 0.3, HALF + 0.3, -HALF - 0.25, HALF + 0.25]
+    a = np.linspace(1e-6, HALF - 1e-6, 400)
+    top = [cf.point(x, math.atan(S_SINGULAR / math.tan(x))) for x in a]      # from the left corner to the right
+    bottom = [[X, -T] for X, T in top]
+    right = [[HALF, -HALF], [HALF, HALF]]
+    whole = [[-HALF, -HALF]] + bottom + [[HALF, -HALF], [HALF, HALF]] + top[::-1] + [[-HALF, HALF]]
+    R_OUT, R_IN, TS = (1.2, 1.5, 2.0, 4.0), (0.3, 0.6, 0.9), (-0.8, -0.4, -0.2, 0, 0.2, 0.4, 0.8)
+
+    def edges(v):
+        v.line("boundary", [right, [[-HALF, -HALF], [-HALF, HALF]]])
+        v.line("horizon", [[[-HALF, -HALF], [HALF, HALF]], [[HALF, -HALF], [-HALF, HALF]]])
+        v.line("singular", [top, bottom], zig=True)
+        v.label_xt([0, mid], "$r = 0$", "b", dy=-8)
+        v.label_xt([0, -mid], "$r = 0$", "t", dy=8)
+        v.label_xt([HALF, 0.9], "$r \\to \\infty$", "l", "small", dx=6)
+        v.label_xt([-HALF, 0.9], "$r \\to \\infty$", "r", "small", dx=-6)
+        v.label_xt([-cf.Q4, cf.Q4], "$r_+$", "tr", "small", dx=-6, dy=2)
+        v.legend("horizon", "the horizon $r_+$")
+        v.legend("boundary", "$r \\to \\infty$")
+        v.legend("singular", "the singularity $r = 0$")
+
+    views = []
+    t = cf.spread(-np.inf, np.inf, 500, 6)
+    v = cf.View("static", "Static", box, STATIC)
+    v.fill("region", whole)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]])
+    for rv in R_OUT:
+        v.curve("r", *pq(cf, "I", t, np.full_like(t, rv)))
+    rr = cf.spread(RP, np.inf, 500, 14)
+    for tt in TS:
+        v.curve("t", *pq(cf, "I", np.full_like(rr, tt), rr))
+    edges(v)
+    v.legend("cover", "covered by $t$ and $r > r_+$")
+    v.legend("r", "$r$ constant")
+    v.legend("t", "$ct$ constant")
+    views.append(v)
+
+    v = cf.View("ingoing", "Ingoing Eddington-Finkelstein", box, INGOING)
+    v.fill("region", whole)
+    v.fill("cover", [[0, 0], [HALF, -HALF], [HALF, HALF]] + top[::-1] + [[-HALF, HALF]])
+    for rv in R_OUT + R_IN:
+        v.curve("r", *ingoing(cf, t, np.full_like(t, rv)))
+    rr = cf.spread(0, np.inf, 600, 14)
+    for w in (-0.4, 0, 0.4, 0.8, 1.2):
+        v.curve("null", *ingoing(cf, np.full_like(rr, w), rr))
+    edges(v)
+    v.legend("cover", "covered by $v$ and $r > 0$")
+    v.legend("r", "$r$ constant")
+    v.legend("null", "$v$ constant, an ingoing ray")
+    views.append(v)
+    moment, = cf.slices.moments(METRIC, "throat")
+    lo, hi = moment.reach(STATIC, "r")
+    rm = np.linspace(hi, lo, 300)
+    a_, b_ = pq(cf, "I'", 0 * rm, rm), pq(cf, "I", 0 * rm, rm[::-1])
+    line = (np.concatenate([a_[0], b_[0]]), np.concatenate([a_[1], b_[1]]))
+    for view in views:
+        view.set(settings="$l = 1$ and $B = l/2$, so $r_+ = l$.")
+        view.slice(moment, [line])
+    return views
+
+
+# ---------------------------------------------------------------- curvature figure
+
+def register_curvature(cv):
+    cv.DRAWN[METRIC] = lambda ck, src: curvature_views(ck, src, cv)
+
+
+def curvature_views(ck, src, cv):
+    """The stored Kretschmann scalar of the static chart at B = l/2 against r, from r = l/4 to 3l,
+    read from the metric file and never recomputed; the Ricci scalar, -6/l^2 at every point, is
+    stated in the caption. Checks hold K to Martinez and Zanelli's 12(r^6 + 2B^6)/(l^4 r^6), to
+    falling outward toward 12/l^4, and the stored R to -6/l^2."""
+    lo, hi = 0.25, TOP
+    xaxis = cv.axis("$r/l$", lo, hi)
+    scale = {"kind": "log", "from": 10, "to": 1e4}
+    panels = [{"id": "K", "name": "$K\\,l^4$", "aspect": 2, "scale": scale, "ticks": cv.value_ticks(scale)}]
+    cv.shape_checks(ck, METRIC, [p["aspect"] for p in panels])
+    K = cv.nr_published(src, METRIC, STATIC, "kretschmann", ["r"], list(PARAMS))
+    R = cv.nr_published(src, METRIC, STATIC, "ricci_scalar", ["r"], list(PARAMS))
+    for at in (0.3, 1.0, 2.5):
+        want = 12 * (at ** 6 + 2 * B ** 6) / (L ** 4 * at ** 6)
+        ck(f"{METRIC} K at r = {at}l is Martinez and Zanelli's (KR)", abs(float(K.exact([at, 1, 0.5])) - want) < 1e-9 * want)
+        ck(f"{METRIC} R at r = {at}l is -6/l^2", abs(float(R.exact([at, 1, 0.5])) + 6) < 1e-12)
+    xs = np.linspace(lo, hi, 400)
+    values = K(xs, 1, 0.5)
+    ck(f"{METRIC} K lies within its scale and falls outward",
+       bool(np.all(values > scale["from"]) and np.all(values < scale["to"]) and np.all(np.diff(values) < 0)))
+    ck(f"{METRIC} K tends to 12/l^4 far out", abs(float(K(np.array([40.0]), 1, 0.5)[0]) - 12) < 1e-6)
+    curves = cv.line_curves(ck, METRIC, "K", "K", K, "r", xaxis, scale, cv.PLOT_W / 2, {"l": 1.0, "B": 0.5})
+    marks = [{"class": "horizon", "x": RP}]
+    return [{"id": "hole", "label": "Dressed black hole", "kind": "line", "system": STATIC, "x": xaxis,
+             "panels": panels, "curves": curves, "marks": marks,
+             "legend": [["line", "K", "$K$"], ["line", "horizon", "the horizon $r_+ = 2B$"]],
+             "caption": ["The Kretschmann scalar $K$ of the dressed black hole ($B = l/2$) against $r$, finite on "
+                         "the horizon, growing without bound toward the singularity $r = 0$ and falling to $12/l^4$ "
+                         "far away. The Ricci scalar is $-6/l^2$ at every point."],
+             "settings": SETTINGS, "clip": "$K\\,l^4$ logarithmic, from $r = l/4$."}]
