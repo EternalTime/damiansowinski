@@ -8217,7 +8217,7 @@
         },
         {
           "symbol": "q",
-          "description": "Charge of the black hole as a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$, with $|q| \\leq m$"
+          "description": "Charge of the black hole as a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$, with $|q| \\leq m$; for $|q| < m$ the horizons are $r_\\pm = m \\pm \\sqrt{m^2 - q^2}$"
         },
         {
           "symbol": "R",
