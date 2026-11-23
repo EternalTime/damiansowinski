@@ -171,6 +171,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "family",
       "text": "Kevin Chan and Robert Mann found a family of black holes with a dilaton in three dimensions in 1994, this one among them, by letting the radius of the circles grow as a power of $r$ [chan1994]. The same ansatz in four dimensions produced these charged holes a year later [chan1995]."
+    },
+    {
+      "id": "dressed_btz",
+      "kind": "family",
+      "text": "A static black hole of three dimensions dressed in a conformally coupled scalar field that is finite outside it. Cristián Martínez and Jorge Zanelli found it in 1996 in the theory of this hole with the field added, and its curvature grows without bound at its centre [martinez1996]."
     }
   ],
   "references": [
@@ -212,7 +217,8 @@
     "husain1994",
     "banados1994",
     "chan1994",
-    "chan1995"
+    "chan1995",
+    "martinez1996"
   ],
   "coordinates": [
     {

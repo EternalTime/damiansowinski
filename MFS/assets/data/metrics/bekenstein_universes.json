@@ -59,6 +59,11 @@
       "id": "murphy_viscous_universe",
       "kind": "family",
       "text": "Another Friedmann universe of the 1970s whose matter breaks the strong energy condition and keeps the curvature finite at every finite time, there through the bulk viscosity of its fluid."
+    },
+    {
+      "id": "dressed_btz",
+      "kind": "family",
+      "text": "A black hole of three dimensions dressed in a conformally coupled scalar field, which Cristián Martínez and Jorge Zanelli found in 1996. There the coupling constant to the curvature is $1/8$, which plays the part of $1/6$ in four dimensions [martinez1996]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "bekenstein1989",
     "parker1990",
     "molinaparis1999",
-    "cimaglia2024"
+    "cimaglia2024",
+    "martinez1996"
   ],
   "coordinates": [
     {

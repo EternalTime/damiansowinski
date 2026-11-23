@@ -46,6 +46,11 @@
       "id": "rn_metric",
       "kind": "family",
       "text": "The Reissner-Nordström black hole keeps its charge inside two horizons. Gott, Simon, and Alpert likened the one horizon at $r_c$ to the inner of the two [gott1986charged]."
+    },
+    {
+      "id": "dressed_btz",
+      "kind": "family",
+      "text": "A black hole of three dimensions dressed in a conformally coupled scalar field. Marcela Cárdenas, Oscar Fuentealba, and Cristián Martínez gave it an electric charge in 2014, with Maxwell's Lagrangian raised to the power $3/4$ so that the field stays conformal [cardenas2014]."
     }
   ],
   "references": [
@@ -74,7 +79,8 @@
     "mao2024",
     "radiative2024",
     "miyashita2024",
-    "miyashita2025"
+    "miyashita2025",
+    "cardenas2014"
   ],
   "coordinates": [
     {

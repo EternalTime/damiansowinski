@@ -56,6 +56,11 @@
       "id": "distorted_schwarzschild",
       "kind": "family",
       "text": "Schwarzschild's rod of Weyl's class with a growing quadrupole of distant matter laid over it, in a vacuum. Here the growing term is a dipole of a scalar field [herdeiro2025]."
+    },
+    {
+      "id": "dressed_btz",
+      "kind": "family",
+      "text": "A black hole of three dimensions with a scalar field that is finite on its horizon and falls off far away. The field is conformally coupled, and the hole needs a negative cosmological constant [martinez1996]."
     }
   ],
   "references": [
@@ -72,7 +77,8 @@
     "lim2026",
     "barrientos2025free",
     "stelea2025",
-    "barrientos2026"
+    "barrientos2026",
+    "martinez1996"
   ],
   "coordinates": [
     {

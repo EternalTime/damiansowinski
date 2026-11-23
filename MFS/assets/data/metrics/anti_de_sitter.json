@@ -217,6 +217,11 @@
       "id": "dimensionally_continued",
       "kind": "generalisation",
       "text": "Black holes of Lovelock's theory with every coefficient set by the anti-de Sitter radius. Anti-de Sitter space is their solution of mass $M = 0$ in even dimensions and of $M = -1$ in odd ones [banados1994]."
+    },
+    {
+      "id": "dressed_btz",
+      "kind": "family",
+      "text": "A black hole of three dimensions dressed in a conformally coupled scalar field, which approaches anti-de Sitter space far from its horizon. Its Ricci scalar is that of anti-de Sitter space at every point, though its Cotton tensor is not zero [martinez1996, natsuume2000a]."
     }
   ],
   "references": [
@@ -281,7 +286,9 @@
     "smith1997",
     "danielsson1999",
     "balasubramanian2011",
-    "banados1994"
+    "banados1994",
+    "martinez1996",
+    "natsuume2000a"
   ],
   "coordinates": [
     {

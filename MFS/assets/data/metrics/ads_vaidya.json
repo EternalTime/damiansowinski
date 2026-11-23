@@ -97,6 +97,11 @@
       "id": "btz_shock_wave",
       "kind": "family",
       "text": "A shell of null particles lying on the horizon of the eternal black hole of three dimensions. Here the shell falls from the boundary into anti-de Sitter space and makes the hole [husain1994]."
+    },
+    {
+      "id": "dressed_btz",
+      "kind": "family",
+      "text": "A black hole of three dimensions dressed in a conformally coupled scalar field. Luis Avilés, Hideki Maeda, and Cristián Martínez worked through this collapse of light before finding a collapse of such a field from the massless BTZ spacetime that can settle to that black hole [aviles2018]."
     }
   ],
   "references": [
@@ -116,7 +121,8 @@
     "balasubramanian2011",
     "liu2014",
     "anous2016",
-    "cardona2026"
+    "cardona2026",
+    "aviles2018"
   ],
   "coordinates": [
     {
