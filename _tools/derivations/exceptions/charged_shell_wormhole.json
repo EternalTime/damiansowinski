@@ -1,0 +1,17 @@
+{
+  "hidden": [
+    {
+      "reason": "The axis on the side of one sphere away from the other, z = -d_1 - rho, never reaches the midplane z = 0 whose moment T = 0 is embedded.",
+      "drawings": [
+        "charged_shell_wormhole/polar/axis"
+      ]
+    },
+    {
+      "reason": "The black hole between the shells lies inside them, and the embedded midplane z = 0 lies outside them, in the Majumdar-Papapetrou field.",
+      "drawings": [
+        "charged_shell_wormhole/interior/radial",
+        "conformal charged_shell_wormhole/tower"
+      ]
+    }
+  ]
+}

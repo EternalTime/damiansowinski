@@ -132,11 +132,22 @@ def register_null(nr):
         "at the horizons $r_\\pm$, and inside $r_+$ the future is taken from the ingoing rays."]
 
 
+# The drawings on which the midplane z = 0 at T = 0 does not lie.
+HIDDEN = {
+    (METRIC, "polar", "axis"): "the axis on the side of one sphere away from the other, z = -d_1 - rho, which "
+                               "never reaches the midplane z = 0",
+    (METRIC, "interior", "radial"): "the black hole between the shells, inside them, where the midplane outside "
+                                    "them does not reach",
+    (METRIC, "tower"): "the black hole between the shells, inside them, where the midplane outside them does not reach",
+}
+
+
 def slice_table(slices):
     """The moment T = 0 of the midplane z = 0, the embedding view's: across the midplane's plane,
     and the one event T = 0, z = 0 where it meets the axis, in the Cartesian and bispherical charts."""
     def midplane():
-        return slices.one(METRIC, lambda m: slices.across(0.0, *m.reach("cartesian", "x")), view_id="midplane")
+        return slices.one(METRIC, lambda m: slices.across(0.0, *m.reach("cartesian", "x")), label="$T = 0$",
+                          view_id="midplane")
 
     def axis():
         m = slices.moments(METRIC, "midplane", label="$T = 0$, $z = 0$")[0]
