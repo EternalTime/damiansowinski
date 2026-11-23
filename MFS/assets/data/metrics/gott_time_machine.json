@@ -76,6 +76,11 @@
       "id": "btz_multi_holes_wormholes",
       "kind": "family",
       "text": "Sören Holst carried Gott's pair to anti-de Sitter space in a chart with Poincaré's disc at every moment, the sausage coordinates in which the black holes and wormholes of three dimensions were then drawn [holst1996, aminneborg1998]."
+    },
+    {
+      "id": "roman_ring",
+      "kind": "family",
+      "text": "Many wormholes at rest round a ring, the generalization of Roman's two wormholes, which move past each other at high speed as Gott's strings do [visser1997, lyutikov1994]."
     }
   ],
   "references": [
@@ -103,7 +108,9 @@
     "ori2005",
     "tippett2017",
     "gott1998",
-    "aminneborg1998"
+    "aminneborg1998",
+    "visser1997",
+    "lyutikov1994"
   ],
   "coordinates": [
     {

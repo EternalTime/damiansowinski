@@ -333,6 +333,11 @@
       "id": "koutras_mcintosh",
       "kind": "generalisation",
       "text": "Flat spacetime filled with incoherent null radiation that leaves its Weyl tensor zero. In general the result has no Killing vector and no homothety [koutrasmcintosh1996, griffithspodolsky1998]."
+    },
+    {
+      "id": "roman_ring",
+      "kind": "locally_same",
+      "text": "Minkowski space with $N$ wormholes cut into it and set round a ring, each pair of mouths identified with a time shift $T$. Outside the mouths it is this spacetime [visser1997]."
     }
   ],
   "references": [
@@ -423,7 +428,8 @@
     "brout1979causal",
     "dowker1995",
     "koutrasmcintosh1996",
-    "griffithspodolsky1998"
+    "griffithspodolsky1998",
+    "visser1997"
   ],
   "coordinates": [
     {

@@ -3267,6 +3267,11 @@
       "id": "charged_shell_wormhole",
       "kind": "family",
       "text": "A wormhole whose time shift is built in. Its two mouths lie on either side of a charged black hole, one in the future of the other, and every event outside them lies on a closed timelike curve [schein1996, aichelburg1998]."
+    },
+    {
+      "id": "roman_ring",
+      "kind": "family",
+      "text": "Many wormholes at rest round a ring, none of them a time machine, each with a time shift $T$ much less than its jump. Once round the whole ring a geodesic becomes timelike when the crossings between wormholes are shorter than $cT$ [visser1997]."
     }
   ],
   "references": [
@@ -3289,6 +3294,7 @@
     "everett1997",
     "tippett2017",
     "schein1996",
-    "aichelburg1998"
+    "aichelburg1998",
+    "visser1997"
   ]
 }

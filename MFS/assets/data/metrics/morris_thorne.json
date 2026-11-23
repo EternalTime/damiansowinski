@@ -112,6 +112,11 @@
       "id": "giddings_strominger",
       "kind": "family",
       "text": "Steven B. Giddings and Andrew Strominger's wormhole of 1988, four dimensions of space and no time, two flat regions joined at a 3-sphere of radius $a$ that an axion's field holds open [giddings1988]. Its radial profile is this wormhole's with $\\Phi = 0$ and $b = a^4/r^3$, with 3-spheres for 2-spheres."
+    },
+    {
+      "id": "roman_ring",
+      "kind": "family",
+      "text": "A ring of wormholes with throats of no length, at rest in flat space. Together they come arbitrarily close to a time machine, and none of them is near one alone [visser1997]."
     }
   ],
   "references": [
@@ -143,7 +148,8 @@
     "james2015",
     "kodama1978preprint",
     "maldacena2018",
-    "giddings1988"
+    "giddings1988",
+    "visser1997"
   ],
   "coordinates": [
     {

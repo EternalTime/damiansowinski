@@ -87,6 +87,11 @@
       "id": "torus_universe_2plus1",
       "kind": "family",
       "text": "Two commuting boost and translation identifications close the spacelike sections into tori. Their extension across a null boundary has timelike tori and closed timelike curves [louko_marolf1994]."
+    },
+    {
+      "id": "roman_ring",
+      "kind": "family",
+      "text": "Minkowski space brought close to a time machine by identifications too: pairs of mouths joined across a jump $L$ with a time shift $T$, set round a ring [visser1997]."
     }
   ],
   "references": [
@@ -112,7 +117,8 @@
     "gott1998",
     "brill1996",
     "moncriefisenberg1983",
-    "louko_marolf1994"
+    "louko_marolf1994",
+    "visser1997"
   ],
   "coordinates": [
     {

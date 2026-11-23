@@ -80,6 +80,11 @@
       "id": "misner_brill_lindquist",
       "kind": "family",
       "text": "Initial data for black holes at rest. Richard Lindquist found such data for charged bridges with inversion images in 1963, the method behind the potential outside the two charged spheres [lindquist1963, schein1996]."
+    },
+    {
+      "id": "roman_ring",
+      "kind": "family",
+      "text": "Many wormholes at rest round a ring in one flat universe, each with a time shift $T$. Once round the ring a geodesic becomes timelike when each crossing between wormholes is shorter than $cT$ [visser1997]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "galloway1997",
     "clement1997",
     "moffat2015",
-    "kastor1993"
+    "kastor1993",
+    "visser1997"
   ],
   "coordinates": [
     {
