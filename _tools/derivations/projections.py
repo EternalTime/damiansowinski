@@ -1369,6 +1369,10 @@ CAPTIONS = {
         "The rays parallel to the axis cross it at $\\mu cu = \\pi/2$ of the Brinkmann chart, which is "
         "$U = \\infty$, the edge of this chart. Each curve is a null geodesic.",
     ],
+    ("roman_ring", "rest", "ring"): [
+        "The slice $z = 0$ of $t$, $x$, and $y$, $t$ up, with four wormholes at rest. Each crossing from an "
+        "exit mouth at $t$ to the next entrance at $t + T$ lies just outside the light cone at its start.",
+    ],
     ("wormhole_time_machine", "lorentz", "trip"): [
         "The slice $Y = 0$ of $T$, $Z$, and $X$ in the Lorentz frame of the left mouth, $T$ up, with the mouths "
         "drawn as their world lines. The left mouth rests at $Z = 0$, and the right one leaves $Z = 10\\,r_0$ "
@@ -1664,6 +1668,9 @@ CAPTIONS = {
 }
 
 
+# Visser's Roman ring as its figure draws it, in units of the crossing ell, with c = 1.
+ROMAN_RING = {"N": 4, "L": 4, "T": "4/5", "ell": 1, "R": "3/20"}
+
 FIGURES = [
     Projection("stockum_dust", "cylindrical", "tipping", "light cones about the axis", stockum,
                {"R": 1}, {"z": "0"}),
@@ -1731,6 +1738,11 @@ FIGURES = [
                lambda spec: wormhole_trip(spec), {"b": 1}, {"Y": "0"},
                input="Mouths of radius $b = r_0$ that start $D = 10\\,r_0$ apart, the right one on a round trip "
                      "with rapidity $\\eta = \\tfrac{3}{2}\\sin^3(2\\pi\\tau/P)$ and $P = 54\\,r_0/c$."),
+    # Visser's Roman ring of four wormholes, as his Fig. 2 draws it, in units of the crossing ell:
+    # jumps L = 4 ell, time shift cT = 0.8 ell and mouths of radius R = 0.15 ell.
+    Projection("roman_ring", "rest", "ring", "the ring in three dimensions", lambda spec: roman_ring_loop(spec),
+               ROMAN_RING, {"z": "0"},
+               input="$N = 4$, $L = 4\\,\\ell$, $cT = 0.8\\,\\ell$, $R = 0.15\\,\\ell$, mouths on a circle."),
     # Tippett and Tsang's bubble as its flat views declare it, in units of A.
     Projection("tippett_tsang", "cartesian", "ring", "the bubble in three dimensions", time_machine_ring, {},
                {"z": "0"}, input=nr.TT_INPUT, functions={"h": nr.TT_H}),
@@ -1884,6 +1896,94 @@ def string_rays(spec, n=12, half_width=1.8, left=-3.0, right=3.0, height=2.1, bo
     fig.legend("fill", "wedge", f"the missing wedge, $\\delta = {round(np.degrees(2 * wedge))}°$; its two edges are one line")
     fig.legend("fill", "double", "where light from both sides arrives")
     return fig.done(pad=0.0), sl
+
+
+def roman_ring_mouths(N, L, ell):
+    """The places of the mouths of a symmetric ring in the plane z = 0, entrance a_k and exit b_k,
+    k = 0, ..., N - 1: the polygon of 2N sides inscribed in a circle whose sides are alternately L,
+    a wormhole's jump, and ell, a crossing, turned into itself by a rotation through 2 pi/N. Visser
+    gives the lengths and the symmetry (1997, p. 2 and Fig. 2) and the circle is the drawing's.
+    The half angles A and B the two chords subtend satisfy A + B = pi/N and L/sin A = ell/sin B."""
+    A = np.arctan2(L * np.sin(np.pi / N), ell + L * np.cos(np.pi / N))
+    rho = L / (2 * np.sin(A))
+    start = 2 * np.pi * np.arange(N) / N
+    a = rho * np.stack([np.cos(start), np.sin(start)], axis=1)
+    b = rho * np.stack([np.cos(start + 2 * A), np.sin(start + 2 * A)], axis=1)
+    return a, b, rho
+
+
+def roman_ring_loop(spec, camera=Camera(-62, 30)):
+    """Visser's Roman ring on the slice z = 0 of its rest frame chart, drawn cartesian with t up, in
+    units of the crossing ell and with c = 1.
+
+    The mouths stand at the corners of roman_ring_mouths. Wormhole k joins its entrance sphere at
+    t + T to its exit sphere at t, Visser 1993 eq. (3.1) with the separation L; so the closed curve
+    leaving the exit mouth b_k at t = 0 crosses flat space to the entrance mouth a_(k+1), arriving at
+    t = T, where it is the event (0, b_(k+1)), and after N crossings it is back where it left. Every
+    crossing is checked against the published metric to have the interval ell^2 - (cT)^2, positive
+    while cT < ell, the whole closed geodesic s^2 = N^2(ell^2 - c^2T^2), Visser 1997 eq. (2), the
+    sides of the polygon L and ell, and each jump to fall by T over the distance L."""
+    sl = Slice(spec.metric, spec.system, ("t", "x", "y"), "cartesian", spec.params, spec.fixed)
+    g = sl.metric((0.0, 0.0, 0.0))
+    if not (np.array_equal(g, np.diag([-1.0, 1.0, 1.0])) and np.array_equal(sl.metric((0.7, -1.3, 2.1)), g)):
+        raise SystemExit(f"{key(spec)}: the published metric on the slice is not Minkowski's")
+    value = {k: float(nr.number(v)) for k, v in spec.params.items()}
+    N, L, T, ell, R = int(value["N"]), value["L"], value["T"], value["ell"], value["R"]
+    if not (T < ell < L and R < ell / 2):
+        raise SystemExit(f"{key(spec)}: the ring is drawn with cT < ell < L and mouths smaller than ell/2")
+    a, b, rho = roman_ring_mouths(N, L, ell)
+    jumps = np.linalg.norm(b - a, axis=1)
+    crossings = np.linalg.norm(np.roll(a, -1, axis=0) - b, axis=1)
+    if not (np.abs(jumps - L).max() < 1e-12 and np.abs(crossings - ell).max() < 1e-12):
+        raise SystemExit(f"{key(spec)}: the polygon does not have sides L and ell")
+    exits = [np.array([0.0, *b[k]]) for k in range(N)]
+    arrivals = [np.array([T, *a[(k + 1) % N]]) for k in range(N)]
+    total = 0.0
+    for e, f in zip(exits, arrivals):
+        k_ = f - e
+        interval = float(k_ @ g @ k_)
+        if not (abs(interval - (ell ** 2 - T ** 2)) < 1e-12 and interval > 0):
+            raise SystemExit(f"{key(spec)}: a crossing is not spacelike with interval ell^2 - (cT)^2")
+        total += np.sqrt(interval)
+    if abs(total ** 2 - N ** 2 * (ell ** 2 - T ** 2)) > 1e-10:
+        raise SystemExit(f"{key(spec)}: the closed geodesic is not s^2 = N^2(ell^2 - c^2T^2)")
+    entrances = [np.array([T, *a[k]]) for k in range(N)]
+    for k in range(N):
+        drop = entrances[k] - exits[k]
+        if not (abs(drop[0] - T) < 1e-15 and abs(np.hypot(drop[1], drop[2]) - L) < 1e-12):
+            raise SystemExit(f"{key(spec)}: a jump does not join an entrance at t + T to its exit at t")
+
+    draw = lambda e: sl.to_drawing((e[0], e[1], e[2]))
+    fig = Figure(spec.view, spec.label, camera)
+    low, top = -0.35, T + 0.45
+    wide = rho * 1.12
+    fig.line("floor", np.array([[-wide, -wide, low], [wide, -wide, low], [wide, wide, low], [-wide, wide, low]]),
+             closed=True)
+    circle = np.linspace(0.0, 2 * np.pi, 49)
+    for k in range(N):
+        for place in (a[k], b[k]):
+            fig.line("world", np.array([[place[0], place[1], low], [place[0], place[1], top]]))
+        for place, at in ((a[k], T), (b[k], 0.0)):
+            fig.line("edge", np.stack([place[0] + R * np.cos(circle), place[1] + R * np.sin(circle),
+                                       np.full_like(circle, at)], axis=1))
+    for k in range(N):
+        fig.line("axis", np.array([draw(entrances[k]), draw(exits[k])]))
+    for e, f in zip(exits, arrivals):
+        fig.line("critical", np.array([draw(e), draw(f)]))
+    cones = [future_cone(sl, tuple(e), 0.45, "tau") for e in exits]
+    for apex, rim in sorted(cones, key=lambda c: camera.depth(c[0])):
+        fig.cone(apex, rim)
+    mid = (exits[0] + arrivals[0]) / 2
+    fig.label(draw(mid), "$\\ell$", "b", dy=-6)
+    half = (entrances[1] + exits[1]) / 2
+    fig.label(draw(half), "$L$", "t", dy=6)
+    fig.label(np.array([a[0][0], a[0][1], top]), "$t$", "b", dy=-4)
+    fig.legend("line", "world", "the mouths")
+    fig.legend("line", "edge", "the spheres joined, at $t + T$ and $t$")
+    fig.legend("line", "axis", "one event on both mouths")
+    fig.legend("line", "critical", "the closed geodesic round the ring")
+    fig.legend("cone", "cone", "future light cone")
+    return fig.done(), sl
 
 
 def gott_loop(spec, x0=1.5, camera=Camera(-65, 24)):
