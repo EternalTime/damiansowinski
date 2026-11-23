@@ -5233,6 +5233,8 @@ FLAT_METRICS.add(_repulson_drawings.METRIC)
 
 import dressed_btz_drawings as _dressed_btz_drawings  # noqa: E402
 FLAT.update(_dressed_btz_drawings.slice_table(sys.modules[__name__]))
+import charged_shell_wormhole_drawings as _charged_shell_wormhole_drawings  # noqa: E402
+FLAT.update(_charged_shell_wormhole_drawings.slice_table(sys.modules[__name__]))
 FLAT_METRICS.add(_dressed_btz_drawings.METRIC)
 
 import generalised_vaidya_drawings as _generalised_vaidya_drawings  # noqa: E402

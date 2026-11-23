@@ -22683,6 +22683,8 @@ _repulson_drawings.register_embedding(sys.modules[__name__])
 
 import dressed_btz_drawings as _dressed_btz_drawings
 _dressed_btz_drawings.register_embedding(sys.modules[__name__])
+import charged_shell_wormhole_drawings as _charged_shell_wormhole_drawings
+_charged_shell_wormhole_drawings.register_embedding(sys.modules[__name__])
 
 import generalised_vaidya_drawings as _generalised_vaidya_drawings
 DRAWN[_generalised_vaidya_drawings.METRIC] = lambda ck, src: _generalised_vaidya_drawings.embedding_views(
