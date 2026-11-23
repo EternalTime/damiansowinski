@@ -1,5 +1,5 @@
 {
-  "version": "624907782c810e65",
+  "version": "b16e10f94e4dbb58",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -49323,6 +49323,198 @@
         "eprint": "1806.08377",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.99.046014"
+      }
+    },
+    "martinez1996": {
+      "type": "article",
+      "fields": {
+        "title": "Conformally dressed black hole in 2 + 1 dimensions",
+        "author": "Mart\\'inez, Cristi\\'an and Zanelli, Jorge",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "6",
+        "pages": "3830--3833",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.3830",
+        "eprint": "gr-qc/9604021",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.54.3830"
+      }
+    },
+    "natsuume2000a": {
+      "type": "article",
+      "fields": {
+        "title": "Three-dimensional gravity with a conformal scalar field and asymptotic {Virasoro} algebra",
+        "author": "Natsuume, Makoto and Okamura, Takashi and Sato, Masamichi",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "10",
+        "pages": "104005",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.104005",
+        "eprint": "hep-th/9910105",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.104005"
+      }
+    },
+    "henneaux2002": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and asymptotics of $2+1$ gravity coupled to a scalar field",
+        "author": "Henneaux, Marc and Mart\\'inez, Cristi\\'an and Troncoso, Ricardo and Zanelli, Jorge",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "10",
+        "pages": "104007",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.104007",
+        "eprint": "hep-th/0201170",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.65.104007"
+      }
+    },
+    "meng2014": {
+      "type": "article",
+      "fields": {
+        "title": "Near horizon symmetry and entropy of black holes in the presence of a conformally coupled scalar",
+        "author": "Meng, Kun and Hu, Zhan-Ning and Zhao, Liu",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "31",
+        "number": "8",
+        "pages": "085017",
+        "year": "2014",
+        "doi": "10.1088/0264-9381/31/8/085017",
+        "eprint": "1403.1921",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/31/8/085017"
+      }
+    },
+    "chan1997": {
+      "type": "article",
+      "fields": {
+        "title": "Modifications of the {BTZ} black hole by a dilaton and scalar",
+        "author": "Chan, Kevin C. K.",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "6",
+        "pages": "3564--3574",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.3564",
+        "eprint": "gr-qc/9603038",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.55.3564"
+      }
+    },
+    "natsuume2000b": {
+      "type": "article",
+      "fields": {
+        "title": "Entropy for asymptotically AdS$_3$ black holes",
+        "author": "Natsuume, Makoto and Okamura, Takashi",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "6",
+        "pages": "064027",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.62.064027",
+        "eprint": "hep-th/9911062",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.62.064027"
+      }
+    },
+    "ayonbeato2000scalar": {
+      "type": "article",
+      "fields": {
+        "title": "Note on scalar fields non-minimally coupled to (2+1)-gravity",
+        "author": "Ay\\'on-Beato, Eloy and Garc\\'ia, Alberto and Mac\\'ias, Alfredo and P\\'erez-S\\'anchez, Jos\\'e M.",
+        "journal": "Physics Letters B",
+        "volume": "495",
+        "number": "1--2",
+        "pages": "164--168",
+        "year": "2000",
+        "doi": "10.1016/S0370-2693(00)01241-7",
+        "eprint": "gr-qc/0101079",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(00)01241-7"
+      }
+    },
+    "martinez1997": {
+      "type": "article",
+      "fields": {
+        "title": "Back reaction of a conformal field on a three-dimensional black hole",
+        "author": "Mart\\'inez, Cristi\\'an and Zanelli, Jorge",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "6",
+        "pages": "3642--3646",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.3642",
+        "eprint": "gr-qc/9610050",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.55.3642"
+      }
+    },
+    "martinez1998": {
+      "type": "article",
+      "fields": {
+        "title": "Instability of a three-dimensional conformally dressed black hole",
+        "author": "Mart\\'inez, Cristi\\'an",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "2",
+        "pages": "027501",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.027501",
+        "eprint": "gr-qc/9801091",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.58.027501"
+      }
+    },
+    "gegenberg2003": {
+      "type": "article",
+      "fields": {
+        "title": "Finite action for three dimensional gravity with a minimally coupled scalar field",
+        "author": "Gegenberg, Jack and Mart\\'inez, Cristi\\'an and Troncoso, Ricardo",
+        "journal": "Physical Review D",
+        "volume": "67",
+        "number": "8",
+        "pages": "084007",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.67.084007",
+        "eprint": "hep-th/0301190",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.67.084007"
+      }
+    },
+    "cardenas2014": {
+      "type": "article",
+      "fields": {
+        "title": "Three-dimensional black holes with conformally coupled scalar and gauge fields",
+        "author": "C\\'ardenas, Marcela and Fuentealba, Oscar and Mart\\'inez, Cristi\\'an",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "12",
+        "pages": "124072",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.124072",
+        "eprint": "1408.1401",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.124072"
+      }
+    },
+    "aviles2018": {
+      "type": "article",
+      "fields": {
+        "title": "Exact black-hole formation with a conformally coupled scalar field in three dimensions",
+        "author": "Avil\\'es, Luis and Maeda, Hideki and Mart\\'inez, Cristi\\'an",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "35",
+        "number": "24",
+        "pages": "245001",
+        "year": "2018",
+        "doi": "10.1088/1361-6382/aaea9f",
+        "eprint": "1808.10040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/aaea9f"
       }
     }
   }

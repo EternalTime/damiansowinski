@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "b43be9040191858f",
+    "version": "385fecbe3d0c543e",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -299,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "0001708658183173",
+    "version": "3862ce3b36ffac6a",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -407,7 +407,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "ddf512a20bc3c12a",
+    "version": "1b5cadb944aefb6d",
     "diagrams": "1d6c29c5b6bfabeb",
     "conformal": "e5ff4de589ab53ea",
     "embedding": "799ee7b43bf96901",
@@ -4661,6 +4661,48 @@
     "embedding": "6a0f9d87d0364fdb"
   },
   {
+    "id": "dressed_btz",
+    "name": "Martínez-Zanelli",
+    "tags": [
+      "static",
+      "stationary",
+      "circularly symmetric",
+      "three-dimensional",
+      "black hole",
+      "black hole hair",
+      "scalar hair",
+      "scalar field",
+      "massless scalar field",
+      "Einstein-scalar",
+      "negative cosmological constant",
+      "cosmological constant",
+      "anti-de Sitter",
+      "horizon",
+      "event horizon",
+      "Killing horizon",
+      "curvature singularity",
+      "mass",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "Hawking temperature",
+      "no-hair theorem",
+      "conformal transformation",
+      "instability",
+      "holography",
+      "2+1 dimensional gravity",
+      "lower-dimensional gravity",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "4141374404e784c0",
+    "diagrams": "ca8bf75612e79bf6",
+    "conformal": "32db07462da34649",
+    "embedding": "3767b530fda53d4b",
+    "curvature": "d6ddf82a2b5a1f0b"
+  },
+  {
     "id": "mass_inflation",
     "name": "Mass Inflation",
     "tags": [
@@ -5764,7 +5806,7 @@
       "stationary",
       "three-dimensional"
     ],
-    "version": "8c0bba876596f3e0",
+    "version": "582585d61b2e80da",
     "diagrams": "0f6648b80d39d5f1",
     "conformal": "dd4f9146c49124e0",
     "embedding": "2bf24f5315ce27aa",
@@ -5888,7 +5930,7 @@
       "stationary",
       "three-dimensional"
     ],
-    "version": "9f14b176d51b9267",
+    "version": "3d1b3943de27702a",
     "diagrams": "9e27900d07c618e4",
     "conformal": "d6fb25d433fbd21a",
     "embedding": "aa11b776d61eb469"
@@ -6310,7 +6352,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e76e1ad2872e3759",
+    "version": "41b7101382f105c8",
     "diagrams": "4ab734ce2ff4da65",
     "conformal": "2c07e9fd30aab042",
     "embedding": "48330de47b7eda59",
@@ -7611,7 +7653,7 @@
       "five-dimensional",
       "spherically symmetric"
     ],
-    "version": "6e87876e2ae63c5b",
+    "version": "dc7e67a38835fda4",
     "diagrams": "a72f42dab2b437ae",
     "conformal": "20d33b0ad03499d3",
     "embedding": "6614b788b39f0b9d",
