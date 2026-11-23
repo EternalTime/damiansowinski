@@ -32484,6 +32484,8 @@ _repulson_drawings.register_conformal(sys.modules[__name__])
 
 import dressed_btz_drawings as _dressed_btz_drawings
 _dressed_btz_drawings.register_conformal(sys.modules[__name__])
+import charged_shell_wormhole_drawings as _charged_shell_wormhole_drawings
+_charged_shell_wormhole_drawings.register_conformal(sys.modules[__name__])
 
 # The free mass function of the null time and the radius leaves the global completion and the event
 # horizons undetermined, as Mallett's free mass history does; generalised_vaidya.md gives the reason.
