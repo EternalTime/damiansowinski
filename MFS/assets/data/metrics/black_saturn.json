@@ -58,6 +58,11 @@
       "id": "belinski_zakharov",
       "kind": "family",
       "text": "The method that made black Saturn. Belinski and Zakharov found it in 1978 in four dimensions, where two solitons on flat space are Kerr's black hole [belinskii1978, belinskii1979]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A supersymmetric hole of five dimensions that can sit at the centre of supersymmetric black rings, two of which can share its charges [gauntlett2005]."
     }
   ],
   "references": [
@@ -76,7 +81,8 @@
     "elvang2007phases",
     "chrusciel2010",
     "szybka2011",
-    "emparan2008"
+    "emparan2008",
+    "gauntlett2005"
   ],
   "coordinates": [
     {

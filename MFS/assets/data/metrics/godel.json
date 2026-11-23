@@ -86,6 +86,11 @@
       "id": "charged_godel_universe",
       "kind": "generalisation",
       "text": "Rigidly rotating charged dust in a uniform magnetic field. Setting the magnetic field to zero recovers Gödel's universe."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A spinning black hole of supergravity in five dimensions with closed timelike curves, in view from far away when it spins past its bound. The same theory holds a maximally supersymmetric analogue of Gödel's universe [gauntlett2003, gibbons1999susy]."
     }
   ],
   "references": [
@@ -119,7 +124,9 @@
     "reboucas2009",
     "gurses2010",
     "astorino2022swirling",
-    "wylleman2010"
+    "wylleman2010",
+    "gauntlett2003",
+    "gibbons1999susy"
   ],
   "coordinates": [
     {

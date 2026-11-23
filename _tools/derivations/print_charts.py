@@ -37798,6 +37798,9 @@ CHARTS[_generalised_vaidya.METRIC] = [lambda system=system: _generalised_vaidya.
 import koutras_mcintosh as _koutras_mcintosh
 _koutras_mcintosh.register(sys.modules[__name__])
 
+import bmpv as _bmpv
+_bmpv.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

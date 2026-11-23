@@ -103,6 +103,11 @@
       "id": "electron_bubble",
       "kind": "composite",
       "text": "A rotating charged shell at $r=q^2/(2m)$ joins the exterior to a flat interior [lopez1984electron, burinskii2002sources]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A charged spinning hole of five dimensions that is supersymmetric, which in four dimensions only the hole with no spin can be [gauntlett1999]."
     }
   ],
   "references": [
@@ -137,7 +142,8 @@
     "ghosh2015",
     "israel1970",
     "lopez1984electron",
-    "burinskii2002sources"
+    "burinskii2002sources",
+    "gauntlett1999"
   ],
   "coordinates": [
     {

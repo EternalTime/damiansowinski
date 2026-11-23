@@ -95,6 +95,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "family",
       "text": "Take one angle of the black hole of five dimensions as an extra dimension, and in four dimensions it is a magnetic black hole with a dilaton at the Kaluza-Klein coupling. Its region far away, flat in five dimensions, is neither flat nor anti-de Sitter in four [clement2004]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A charged hole of five dimensions that spins with a horizon that does not turn. With its spin set to zero it is the extreme charged version of this hole [gauntlett1999]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "horowitzmaeda2002",
     "myers1987compact",
     "banados1994",
-    "clement2004"
+    "clement2004",
+    "gauntlett1999"
   ],
   "coordinates": [
     {

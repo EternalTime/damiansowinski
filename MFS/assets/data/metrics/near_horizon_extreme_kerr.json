@@ -67,6 +67,11 @@
       "id": "eternal_traversable_wormhole",
       "kind": "family",
       "text": "Anti-de Sitter space of two dimensions in global coordinates, with a static dilaton, made a wormhole by a coupling of its two boundaries [maldacena2018]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A supersymmetric spinning hole of five dimensions whose region next to the horizon is homogeneous, a squashed 3-sphere fibred over anti-de Sitter space of two dimensions [gauntlett1999]."
     }
   ],
   "references": [
@@ -84,7 +89,8 @@
     "gralla2018",
     "meinel2002",
     "bengtsson2006",
-    "maldacena2018"
+    "maldacena2018",
+    "gauntlett1999"
   ],
   "coordinates": [
     {

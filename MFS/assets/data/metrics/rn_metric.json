@@ -238,6 +238,11 @@
       "id": "charged_shell_wormhole",
       "kind": "composite",
       "text": "Two of its outer regions cut at one radius and glued to two charged spheres in a single universe, so that a traveller who crosses the black hole comes back out into the same universe [schein1996]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A charged hole of five dimensions with spin, supersymmetric and regular. With no spin it is the extreme Reissner-Nordström hole of five dimensions [gauntlett1999]."
     }
   ],
   "references": [
@@ -296,7 +301,8 @@
     "chan1995",
     "cano2019",
     "husain1996null",
-    "schein1996"
+    "schein1996",
+    "gauntlett1999"
   ],
   "coordinates": [
     {

@@ -5550,5 +5550,10 @@ DIMENSIONS.update(_charged_shell_wormhole.DIMENSIONS)
 HELD.update(_charged_shell_wormhole.HELD)
 RATES.update(_charged_shell_wormhole.RATES)
 
+import bmpv as _bmpv
+DIMENSIONS.update(_bmpv.DIMENSIONS)
+HELD.update(_bmpv.HELD)
+RATES.update(_bmpv.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

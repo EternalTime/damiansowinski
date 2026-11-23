@@ -121,6 +121,11 @@
       "id": "klebanov_witten",
       "kind": "family",
       "text": "The internal circle of the throat twists over two 2-spheres through the connection $d\\psi+\\cos\\theta_1\\,d\\phi_1+\\cos\\theta_2\\,d\\phi_2$. Taub-NUT carries the same angular connection over a single sphere [klebanovwitten1998]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A spinning hole of five dimensions whose region of closed timelike curves is similar to the outer reaches of Lorentzian Taub-NUT [gibbons1999susy]."
     }
   ],
   "references": [
@@ -157,7 +162,8 @@
     "moncrief1981nut",
     "gibbonsmanton1995",
     "tong2005",
-    "klebanovwitten1998"
+    "klebanovwitten1998",
+    "gibbons1999susy"
   ],
   "coordinates": [
     {

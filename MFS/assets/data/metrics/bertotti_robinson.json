@@ -149,6 +149,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "limit_source",
       "text": "Charged black holes with a dilaton coupled to the Maxwell field at strength $a$. In the limit $a \\to 0$ they lose their mass and each is the Bertotti-Robinson spacetime in other coordinates [clement2004]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A charged hole of five dimensions whose throat, with no spin, is anti-de Sitter space of two dimensions times a round 3-sphere [gauntlett1999]."
     }
   ],
   "references": [
@@ -186,7 +191,8 @@
     "figueroa2003maximally",
     "evtyagin2021mtt",
     "anderson2022noninheriting",
-    "clement2004"
+    "clement2004",
+    "gauntlett1999"
   ],
   "coordinates": [
     {

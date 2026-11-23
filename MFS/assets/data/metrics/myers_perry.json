@@ -77,6 +77,11 @@
       "id": "kaluza_klein_melvin",
       "kind": "family",
       "text": "Flat spacetime of five dimensions with a twisted circle, a magnetic field seen from four dimensions. Myers and Perry's hole with one rotation, continued to imaginary time, approaches it far away and describes its decay [dowker1995]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A charged hole made from this one by boosts and dualities of string theory, with equal and opposite spins. It is supersymmetric and its horizon does not rotate [breckenridge1997, gauntlett1999]."
     }
   ],
   "references": [
@@ -102,7 +107,9 @@
     "cvetic1996rotating",
     "horowitzmaeda2002",
     "myers1987compact",
-    "dowker1995"
+    "dowker1995",
+    "breckenridge1997",
+    "gauntlett1999"
   ],
   "coordinates": [
     {

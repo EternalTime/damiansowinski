@@ -146,6 +146,11 @@
       "id": "repulson",
       "kind": "family",
       "text": "Bound to an H-monopole whose magnetic charge has the opposite sign, it makes a magnetic repulson of the heterotic string, a naked singularity that repels massive particles [cvetic1995singular]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "A spinning hole of five dimensions that, at the centre of a Taub-NUT space, is a black hole of four dimensions with the same entropy [gaiotto2006]."
     }
   ],
   "references": [
@@ -183,7 +188,8 @@
     "giddings1988",
     "klebanovwitten1998",
     "dowker1995",
-    "cvetic1995singular"
+    "cvetic1995singular",
+    "gaiotto2006"
   ],
   "coordinates": [
     {

@@ -82,6 +82,11 @@
       "id": "repulson",
       "kind": "family",
       "text": "The same solutions with the two charges of one kind of opposite sign, singular and repelling massive particles. When the two charges are also equal in size the mass vanishes [cvetic1995singular]."
+    },
+    {
+      "id": "bmpv",
+      "kind": "family",
+      "text": "The hole of five dimensions with its charges equal set spinning. Its angular momenta in its two planes are equal in size and opposite in sign, and its horizon does not rotate [breckenridge1997, gauntlett1999]."
     }
   ],
   "references": [
@@ -100,7 +105,9 @@
     "johnson1996",
     "cvetic1996static",
     "strominger1998",
-    "cvetic1995singular"
+    "cvetic1995singular",
+    "breckenridge1997",
+    "gauntlett1999"
   ],
   "coordinates": [
     {
