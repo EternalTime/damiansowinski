@@ -293,6 +293,11 @@ REGIONS = {
         "regions": [["interior"], ["exterior", "exterior_ingoing", "exterior_outgoing", "exterior_isotropic"]],
         "why": "the flat space inside the shell and the charge's field outside it are two regions of one spacetime",
     },
+    "charged_shell_wormhole": {
+        "regions": [["cartesian", "bispherical", "polar"], ["interior"]],
+        "why": "Majumdar and Papapetrou's field outside the two shells and the Reissner-Nordstrom black hole "
+               "between them are two regions of one spacetime",
+    },
     "kaluza_klein_black_hole": {
         "regions": [["electric", "eddington_finkelstein_ingoing", "magnetic", "dyonic"]],
         "why": "einstein and einstein_eddington_finkelstein print the metric of four dimensions the "
