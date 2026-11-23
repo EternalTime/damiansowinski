@@ -20,3 +20,13 @@ The shells are in no chart, since the time of one side is not the time of the ot
 
 The 1996 letter's numerical critical value, printed as $(R/d_1)_{crit} \approx 9.993858$, cannot be a ratio below one; the 1998 article withdraws it and proves the energy density positive for every $R < d_1$ at small enough $m$ and $|q|$.
 The shell pressure is printed with opposite overall signs in the 1996 and 1998 texts, so no pressure formula is given.
+
+## The drawings
+
+`charged_shell_wormhole_drawings.py` draws every view at $R = 1$, $d_1 = 2R$ and $m_1 = R/2$, so that $V_0 = 3/2$ and the shells sit at $r = 3R/2$, with a black hole of $m = R/4$ and $q = 6R/25$ between them, $q/2m = 0.48$ as the live Reissner-Nordström tower is drawn, so that $r_+ = 8R/25$ and $r_- = 9R/50$.
+The potential is the first twelve images, written in twenty digits; with $\sinh n\mu_0$ growing as $(2 + \sqrt{3})^n/2$ they leave it within about $10^{-7}$ of the whole series outside the spheres.
+At those values the founders' surface energy density is positive all round each shell, smallest at the pole facing the other sphere, which `_tools/test_charged_shell_wormhole.py` holds.
+The spacetime diagrams are the axis through both spheres, hatched inside them, and the midplane in the Cartesian chart, the stretch of the axis between the shells in the bispherical chart drawn against $a\mu$, the axis outward from one shell in the polar chart, and the black hole between the shells in its own chart.
+The conformal diagram is that black hole's maximal extension with one shell in an exterior and the other in the exterior above the inner horizon, the next universe's, and the parts of those exteriors beyond the shells filled as removed.
+The embedding diagram is the midplane $z = 0$ at $T = 0$, a surface of revolution about the axis, and the curvature figure is the stored Kretschmann scalar inside, against $r$, and on the midplane, against $x$.
+The moment of the midplane lies on the two Cartesian views and on the bispherical one, at the event $T = 0$, $z = 0$ on the axes; `exceptions/charged_shell_wormhole.json` names the polar view and the two drawings of the black hole as holding no moment of it.
