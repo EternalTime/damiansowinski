@@ -518,6 +518,15 @@ OVERRULED = {
                "spacetime keeps only the rotations about the string"),
     ("shell_void", "conformally flat"): (False, "the dust shell has distributional Weyl curvature although both smooth bulks are conformally flat"),
     ("shell_void", "stationary"): (False, "the accreting shell moves through the two smooth regions"),
+    ("roman_ring", "flat"): (
+        False, "the chart is Minkowski's outside the mouths, but the Riemann tensor is a delta function on the "
+               "identified spheres, Visser 1994 eq. (91), so the ring is locally flat and carries that tag by hand"),
+    ("roman_ring", "vacuum"): (
+        False, "each mouth holds an infinitesimally thin layer of exotic matter, Visser 1994 Sec. III, where the "
+               "Ricci tensor is a delta function, eq. (83)"),
+    ("roman_ring", "conformally flat"): (
+        False, "the Weyl tensor of a spherical mouth is a delta function of the traceless jump in its second "
+               "fundamental form, Visser 1994 eq. (90), which a sphere of radius R does not make zero"),
     ("shell_void", "static"): (False, "the accreting shell moves through the two smooth regions"),
     ("israel_shell", "vacuum"): (
         False, "both regions are empty and the shell of dust between them is in no chart, since g_rr "
