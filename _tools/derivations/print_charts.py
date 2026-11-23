@@ -37787,6 +37787,9 @@ import dressed_btz as _dressed_btz
 CHARTS[_dressed_btz.METRIC] = [lambda system=system: _dressed_btz.chart_spec(system)
                                 for system in _dressed_btz.CHARTS]
 
+import charged_shell_wormhole as _charged_shell_wormhole
+CHARTS[_charged_shell_wormhole.METRIC] = [lambda system=system: _charged_shell_wormhole.chart_spec(system)
+                                          for system in _charged_shell_wormhole.CHARTS]
 
 import generalised_vaidya as _generalised_vaidya
 CHARTS[_generalised_vaidya.METRIC] = [lambda system=system: _generalised_vaidya.chart_spec(system)

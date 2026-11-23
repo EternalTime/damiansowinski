@@ -5545,5 +5545,10 @@ DIMENSIONS.update(_koutras_mcintosh.DIMENSIONS)
 HELD.update(_koutras_mcintosh.HELD)
 RATES.update(_koutras_mcintosh.RATES)
 
+import charged_shell_wormhole as _charged_shell_wormhole
+DIMENSIONS.update(_charged_shell_wormhole.DIMENSIONS)
+HELD.update(_charged_shell_wormhole.HELD)
+RATES.update(_charged_shell_wormhole.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
