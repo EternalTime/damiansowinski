@@ -83,6 +83,11 @@
       "id": "mallett_radiating_star",
       "kind": "generalisation",
       "text": "A mass that varies with null time, accompanied by radial radiation in a de Sitter background."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "Kottler's black hole with the mass inside each sphere free to depend on null time and on the radius. Anzhong Wang and Yumei Wu found the cosmological constant in the term $\\Lambda r^3/6$ of that mass [wang1999generalized]."
     }
   ],
   "references": [
@@ -107,7 +112,8 @@
     "romans1992",
     "akcay2011",
     "kiselev2003",
-    "hotta1993"
+    "hotta1993",
+    "wang1999generalized"
   ],
   "coordinates": [
     {

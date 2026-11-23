@@ -54,6 +54,11 @@
       "id": "ads_vaidya",
       "kind": "family",
       "text": "Vaidya's metric with a negative cosmological constant, where light falling in from the boundary of anti-de Sitter space leaves a black hole [lemos1999]."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "The radiating star with the mass inside each sphere free to depend on the radius in any way. Its cosmological constant is the term $\\Lambda r^3/6$ that Anzhong Wang and Yumei Wu added to Vaidya's mass [wang1999generalized]."
     }
   ],
   "references": [
@@ -88,7 +93,8 @@
     "senovilla2023beyond",
     "boyanov2026semiclassical",
     "bonnor1970",
-    "lemos1999"
+    "lemos1999",
+    "wang1999generalized"
   ],
   "coordinates": [
     {

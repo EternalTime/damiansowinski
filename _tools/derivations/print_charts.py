@@ -37788,5 +37788,10 @@ CHARTS[_dressed_btz.METRIC] = [lambda system=system: _dressed_btz.chart_spec(sys
                                 for system in _dressed_btz.CHARTS]
 
 
+import generalised_vaidya as _generalised_vaidya
+CHARTS[_generalised_vaidya.METRIC] = [lambda system=system: _generalised_vaidya.chart_spec(system)
+                                      for system in _generalised_vaidya.CHARTS]
+
+
 if __name__ == "__main__":
     main()

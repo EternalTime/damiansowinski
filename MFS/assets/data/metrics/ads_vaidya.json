@@ -102,6 +102,11 @@
       "id": "dressed_btz",
       "kind": "family",
       "text": "A black hole of three dimensions dressed in a conformally coupled scalar field. Luis Avilés, Hideki Maeda, and Cristián Martínez worked through this collapse of light before finding a collapse of such a field from the massless BTZ spacetime that can settle to that black hole [aviles2018]."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "family",
+      "text": "Vaidya's metric with the mass inside each sphere depending on the radius as well. Anti-de Sitter space of four dimensions is the term $\\Lambda r^3/6$ in that mass with $\\Lambda < 0$ [wang1999generalized]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "liu2014",
     "anous2016",
     "cardona2026",
-    "aviles2018"
+    "aviles2018",
+    "wang1999generalized"
   ],
   "coordinates": [
     {

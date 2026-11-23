@@ -110,6 +110,11 @@
       "id": "limiting_curvature",
       "kind": "family",
       "text": "Universes in a theory of gravity built to keep its curvature below a limit, where a collapsing universe turns into de Sitter space [brandenberger1993]. Hayward's core is de Sitter space of radius $\\ell$ for every mass and meets the same kind of limit, as Valeri Frolov showed in 2016 [frolov2016]."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "Hayward's regular black hole with its mass function free to depend on null time and on the radius in any way. The hole that Hayward let form and evaporate in 2006 is one such spacetime [hayward2006, mkenyeleye2014]."
     }
   ],
   "references": [
@@ -138,7 +143,8 @@
     "ashtekar2006bounce",
     "bueno2025regular",
     "simpson2022eye",
-    "brandenberger1993"
+    "brandenberger1993",
+    "mkenyeleye2014"
   ],
   "coordinates": [
     {

@@ -228,6 +228,11 @@
       "id": "repulson",
       "kind": "family",
       "text": "Charged solutions of the heterotic string with a naked singularity at which gravity repels, as it does near the timelike singularity of Reissner-Nordström [cano2019]."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "The charged black hole with its mass free to depend on null time and on the radius. Viqar Husain's family of 1996 returns it at $k = 1$ with $f = M$ and $2g = Q^2$ [husain1996null]."
     }
   ],
   "references": [
@@ -284,7 +289,8 @@
     "gott1986charged",
     "horne1992black",
     "chan1995",
-    "cano2019"
+    "cano2019",
+    "husain1996null"
   ],
   "coordinates": [
     {

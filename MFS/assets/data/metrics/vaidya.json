@@ -165,6 +165,11 @@
       "id": "scalar_collapse_cosmology",
       "kind": "family",
       "text": "A scalar field universe whose contracting branch Xiaobao Wang, Xiaoning Wu, and Sijie Gao joined along a light ray to Vaidya's outgoing radiation in 2019. The black hole that remains has a mass that follows a power law of exponent $1/2$ [wang2019critical]."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "Vaidya's metric with the mass inside each sphere depending on the radius too, so that a fluid with density and pressure streams in beside the null dust. Viqar Husain found the first of these in 1996, and Anzhong Wang and Yumei Wu showed that such solutions add [husain1996null, wang1999generalized]."
     }
   ],
   "references": [
@@ -208,7 +213,9 @@
     "husain1994",
     "lemos1999",
     "nozawa2006",
-    "wang2019critical"
+    "wang2019critical",
+    "husain1996null",
+    "wang1999generalized"
   ],
   "coordinates": [
     {

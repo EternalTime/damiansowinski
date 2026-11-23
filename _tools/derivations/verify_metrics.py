@@ -5535,5 +5535,10 @@ RATES.update(_repulson.RATES)
 import dressed_btz as _dressed_btz
 DIMENSIONS.update(_dressed_btz.DIMENSIONS)
 
+import generalised_vaidya as _generalised_vaidya
+DIMENSIONS.update(_generalised_vaidya.DIMENSIONS)
+HELD.update(_generalised_vaidya.HELD)
+RATES.update(_generalised_vaidya.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

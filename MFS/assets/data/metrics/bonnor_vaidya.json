@@ -65,6 +65,11 @@
       "id": "mallett_radiating_star",
       "kind": "family",
       "text": "A spherical radiating body with a positive cosmological constant and no electric charge."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "The charged star with the term $q^2/2r$ in its mass replaced by any function of the radius. Viqar Husain's fluid with pressure $P = k\\rho$ gives back this charge term at $k = 1$ [husain1996null]."
     }
   ],
   "references": [
@@ -83,7 +88,8 @@
     "kehle2022",
     "poisson1990",
     "poisson1989",
-    "gao2008"
+    "gao2008",
+    "husain1996null"
   ],
   "coordinates": [
     {

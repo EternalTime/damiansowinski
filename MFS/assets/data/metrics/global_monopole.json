@@ -59,6 +59,11 @@
       "id": "global_texture",
       "kind": "family",
       "text": "A collapsing four component scalar field with a time dependent solid angle deficit. The monopole has a static deficit outside its core [durrer1992textures]."
+    },
+    {
+      "id": "generalised_vaidya",
+      "kind": "generalisation",
+      "text": "The monopole's field with the mass inside each sphere free to depend on null time and on the radius. Anzhong Wang and Yumei Wu found the monopole in the term $ar/2$ of that mass, with $a = \\Delta$ [wang1999generalized]."
     }
   ],
   "references": [
@@ -79,7 +84,8 @@
     "kiselev2003",
     "visser2020",
     "vafa1996ftheory",
-    "durrer1992textures"
+    "durrer1992textures",
+    "wang1999generalized"
   ],
   "coordinates": [
     {
