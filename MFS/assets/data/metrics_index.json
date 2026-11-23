@@ -461,7 +461,7 @@
       "homogeneous",
       "product spacetime"
     ],
-    "version": "b41401ecbf2028cc",
+    "version": "12edaf0db62beeae",
     "diagrams": "7b995662594f7524",
     "conformal": "d58ee6f7393843e4",
     "embedding": "4b36293b1a64925a"
@@ -619,7 +619,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "63222288e5ffded1",
+    "version": "a2013600075be91a",
     "diagrams": "a3694a0de448693c",
     "embedding": "c10aef25dd1f318a",
     "curvature": "a20afe04d7fc58db"
@@ -657,6 +657,52 @@
     "diagrams": "606c7fd2b39fc9d5",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "163c135cc969d5f9"
+  },
+  {
+    "id": "bmpv",
+    "name": "BMPV Black Hole",
+    "tags": [
+      "black hole",
+      "charged black hole",
+      "rotating",
+      "rotating black hole",
+      "stationary",
+      "extremal",
+      "supersymmetric",
+      "supergravity",
+      "string theory",
+      "brane",
+      "black hole entropy",
+      "black hole thermodynamics",
+      "electric charge",
+      "angular momentum",
+      "mass",
+      "frame dragging",
+      "horizon",
+      "event horizon",
+      "Killing horizon",
+      "curvature singularity",
+      "closed timelike curves",
+      "time machine",
+      "geodesically complete",
+      "causal structure",
+      "maximal extension",
+      "near-horizon limit",
+      "Hopf fibration",
+      "black hole uniqueness",
+      "asymptotically flat",
+      "higher dimensions",
+      "five-dimensional",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "cc63f9126a7fe995",
+    "diagrams": "e06db6cd616f0ae4",
+    "conformal": "3b2693a7a9691132",
+    "embedding": "7d07c7f54d0959fc",
+    "curvature": "90dd46f4a5356c2f"
   },
   {
     "id": "bondi_sachs",
@@ -2762,7 +2808,7 @@
       "idealized model",
       "negative cosmological constant"
     ],
-    "version": "8abd7a370964e157",
+    "version": "3ab5915d1dbcd35c",
     "diagrams": "7bf82d9d4b9ce74d",
     "embedding": "05f185c5abaada89"
   },
@@ -3548,7 +3594,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "211efd71b070d6c3",
+    "version": "f50758e96da1392f",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -3965,7 +4011,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "989fc28115f470fd",
+    "version": "a77bc467fe4c97b7",
     "diagrams": "1e74e2bd30acc12c",
     "conformal": "76f39633ed5e928c",
     "embedding": "21f2586270043652",
@@ -5289,7 +5335,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "debb1ca7b890fc72",
+    "version": "1ad6a04d87e03fd6",
     "diagrams": "fbe2465fce912260",
     "conformal": "42cc22e76d6903e7",
     "embedding": "b633d0ecea5ae29e",
@@ -5400,7 +5446,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "ff1b82609d395b59",
+    "version": "dd67b7896980a6b3",
     "diagrams": "762c153757fcd27b",
     "conformal": "ad18bb59a6c85dec",
     "embedding": "7667dd747e7d1a4d",
@@ -6133,7 +6179,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "7b1c21198f083b39",
+    "version": "51d5ccd5f7a6c0ae",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6256,7 +6302,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4634ca4a8814d6f9",
+    "version": "20816db1f501e573",
     "diagrams": "092fa9897cedb47f",
     "conformal": "444a6ffb245b1a50",
     "embedding": "c79c615f799fef4b",
@@ -6641,7 +6687,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "e4515d7c01e95cd3",
+    "version": "c2f43669fa16e659",
     "diagrams": "5e6f09418e784399",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -7248,7 +7294,7 @@
       "idealized model",
       "not asymptotically flat"
     ],
-    "version": "c3022b71fb724d9e",
+    "version": "08683fd786ad2b4e",
     "diagrams": "86d43f7abeacc5f4",
     "embedding": "30d5a7483e08a078",
     "curvature": "67bff764e3e14927"
@@ -7334,7 +7380,7 @@
       "idealized model",
       "dyon"
     ],
-    "version": "8d9a50a4925d370d",
+    "version": "e53bed147514dc8c",
     "diagrams": "3ed264d5e1cddbce",
     "conformal": "0d346a206bbd9515",
     "embedding": "1154c266ff9d9f93"

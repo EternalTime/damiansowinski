@@ -476,6 +476,19 @@ Schwarzschild's black hole extended along one more direction of space, a static 
 - chart Kerr-Schild: coordinates $(T, r, \theta, \phi, z)$, $$ds^2 = -\left(1 - \dfrac{r_s}{r}\right)c^2dT^2 + \dfrac{2r_s}{r}c\,dT\,dr + \left(1 + \dfrac{r_s}{r}\right)dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + dz^2$$
 - chart Schwarzschild, Six Dimensions: coordinates $(t, r, \psi, \theta, \phi, z)$, $$ds^2 = -\left(1 - \dfrac{r_h^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{r_h^2}{r^2}} + r^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right) + dz^2$$
 
+### Breckenridge-Myers-Peet-Vafa Spinning Black Hole
+
+The extreme charged black hole of five dimensions that Jason Breckenridge, Robert Myers, Amanda Peet, and Cumrun Vafa set spinning in 1996, with angular momenta of equal size and opposite sign in its two planes and a horizon that does not rotate. Spun past its bound it has no horizon and no singularity, and its closed timelike curves are in view from far away.
+
+- id: `bmpv`
+- tags: black hole, charged black hole, rotating, rotating black hole, stationary, extremal, supersymmetric, supergravity, string theory, brane, black hole entropy, black hole thermodynamics, electric charge, angular momentum, mass, frame dragging, horizon, event horizon, Killing horizon, curvature singularity, closed timelike curves, time machine, geodesically complete, causal structure, maximal extension, near-horizon limit, Hopf fibration, black hole uniqueness, asymptotically flat, higher dimensions, five-dimensional, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/bmpv.json
+- chart Breckenridge-Myers-Peet-Vafa Radius, Hopf Angles: coordinates $(t, r, \theta, \phi, \psi)$, $$ds^2 = -\left(1 - \dfrac{\mu}{r^2}\right)^2\left(c\,dt - \dfrac{j\sin^2\theta}{r^2 - \mu}d\phi + \dfrac{j\cos^2\theta}{r^2 - \mu}d\psi\right)^2 + \left(1 - \dfrac{\mu}{r^2}\right)^{-2}dr^2 + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2 + \cos^2\theta\,d\psi^2\right)$$
+- chart Breckenridge-Myers-Peet-Vafa Radius, Euler Angles: coordinates $(t, r, \alpha, \beta, \gamma)$, $$ds^2 = -\left(1 - \dfrac{\mu}{r^2}\right)^2\left(c\,dt + \dfrac{j}{2\left(r^2 - \mu\right)}\left(d\gamma + \cos\beta\,d\alpha\right)\right)^2 + \left(1 - \dfrac{\mu}{r^2}\right)^{-2}dr^2 + \dfrac{r^2}{4}\left(d\alpha^2 + d\beta^2 + d\gamma^2 + 2\cos\beta\,d\alpha\,d\gamma\right)$$
+- chart Isotropic, Euler Angles: coordinates $(t, r, \theta, \phi, \psi)$, $$ds^2 = -\dfrac{1}{H^2}\left(c\,dt + \dfrac{j}{2r^2}\left(d\psi + \cos\theta\,d\phi\right)\right)^2 + H\left(dr^2 + \dfrac{r^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2 + \left(d\psi + \cos\theta\,d\phi\right)^2\right)\right)$$
+- chart Ingoing, Euler Angles: coordinates $(v, r, \theta, \phi, \tilde\psi)$, $$ds^2 = -\left(1 - \dfrac{\mu}{r^2}\right)^2c^2dv^2 + \dfrac{2r^3}{\sqrt{r^6 - j^2}}c\,dv\,dr - \left(1 - \dfrac{\mu}{r^2}\right)\dfrac{j}{r^2}c\,dv\,\left(d\tilde\psi + \cos\theta\,d\phi\right) + \dfrac{r^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right) + \dfrac{r^6 - j^2}{4r^4}\left(d\tilde\psi + \cos\theta\,d\phi\right)^2$$
+
 ### Bondi-Sachs Radiating Metric
 
 The form the metric of an isolated body that sends out gravitational waves takes in coordinates built on its outgoing light cones, given by Hermann Bondi, M. G. J. van der Burg, A. W. K. Metzner, and Rainer Sachs in 1962. In it the mass of the body falls for as long as news of a change in the body reaches infinity, and cannot rise.

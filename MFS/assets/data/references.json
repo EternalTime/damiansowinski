@@ -1,5 +1,5 @@
 {
-  "version": "4c94c7a243ba1047",
+  "version": "e29daff4cb15f9b4",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -50012,6 +50012,274 @@
         "eprint": "1412.5424",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/1412.5424"
+      }
+    },
+    "breckenridge1997": {
+      "type": "article",
+      "fields": {
+        "title": "{D}-branes and spinning black holes",
+        "author": "Breckenridge, J. C. and Myers, R. C. and Peet, A. W. and Vafa, C.",
+        "journal": "Physics Letters B",
+        "volume": "391",
+        "number": "1-2",
+        "pages": "93--98",
+        "year": "1997",
+        "doi": "10.1016/S0370-2693(96)01460-8",
+        "eprint": "hep-th/9602065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(96)01460-8"
+      }
+    },
+    "breckenridge1996": {
+      "type": "article",
+      "fields": {
+        "title": "Macroscopic and microscopic entropy of near-extremal spinning black holes",
+        "author": "Breckenridge, J. C. and Lowe, D. A. and Myers, R. C. and Peet, A. W. and Strominger, A. and Vafa, C.",
+        "journal": "Physics Letters B",
+        "volume": "381",
+        "number": "4",
+        "pages": "423--426",
+        "year": "1996",
+        "doi": "10.1016/0370-2693(96)00553-9",
+        "eprint": "hep-th/9603078",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/0370-2693(96)00553-9"
+      }
+    },
+    "kallosh1997": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetric rotating black holes and attractors",
+        "author": "Kallosh, Renata and Rajaraman, Arvind and Wong, Wing Kai",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "6",
+        "pages": "R3246--R3249",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.R3246",
+        "eprint": "hep-th/9611094",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.55.R3246"
+      }
+    },
+    "gauntlett1999": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes of {$D = 5$} supergravity",
+        "author": "Gauntlett, Jerome P. and Myers, Robert C. and Townsend, Paul K.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "1",
+        "pages": "1--21",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/1/001",
+        "eprint": "hep-th/9810204",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/1/001"
+      }
+    },
+    "kunz2006": {
+      "type": "article",
+      "fields": {
+        "title": "{$D=5$} {Einstein-Maxwell-Chern-Simons} black holes",
+        "author": "Kunz, Jutta and Navarro-L\\'erida, Francisco",
+        "journal": "Physical Review Letters",
+        "volume": "96",
+        "number": "8",
+        "pages": "081101",
+        "year": "2006",
+        "doi": "10.1103/PhysRevLett.96.081101",
+        "eprint": "hep-th/0510250",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.96.081101"
+      }
+    },
+    "gibbons1999susy": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetric rotating black holes and causality violation",
+        "author": "Gibbons, G. W. and Herdeiro, C. A. R.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "11",
+        "pages": "3619--3652",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/11/311",
+        "eprint": "hep-th/9906098",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/11/311"
+      }
+    },
+    "herdeiro2000": {
+      "type": "article",
+      "fields": {
+        "title": "Special properties of five-dimensional {BPS} rotating black holes",
+        "author": "Herdeiro, C. A. R.",
+        "journal": "Nuclear Physics B",
+        "volume": "582",
+        "number": "1-3",
+        "pages": "363--392",
+        "year": "2000",
+        "doi": "10.1016/S0550-3213(00)00335-7",
+        "eprint": "hep-th/0003063",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(00)00335-7"
+      }
+    },
+    "dyson2004": {
+      "type": "article",
+      "fields": {
+        "title": "Chronology protection in string theory",
+        "author": "Dyson, Lisa",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2004",
+        "number": "03",
+        "pages": "024",
+        "year": "2004",
+        "doi": "10.1088/1126-6708/2004/03/024",
+        "eprint": "hep-th/0302052",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2004/03/024"
+      }
+    },
+    "reall2003": {
+      "type": "article",
+      "fields": {
+        "title": "Higher dimensional black holes and supersymmetry",
+        "author": "Reall, Harvey S.",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "2",
+        "pages": "024024",
+        "year": "2003",
+        "note": "Erratum: Physical Review D 70, 089902 (2004)",
+        "doi": "10.1103/PhysRevD.68.024024",
+        "eprint": "hep-th/0211290",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.68.024024"
+      }
+    },
+    "elvang2004": {
+      "type": "article",
+      "fields": {
+        "title": "A supersymmetric black ring",
+        "author": "Elvang, Henriette and Emparan, Roberto and Mateos, David and Reall, Harvey S.",
+        "journal": "Physical Review Letters",
+        "volume": "93",
+        "number": "21",
+        "pages": "211302",
+        "year": "2004",
+        "doi": "10.1103/PhysRevLett.93.211302",
+        "eprint": "hep-th/0407065",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.93.211302"
+      }
+    },
+    "gauntlett2005": {
+      "type": "article",
+      "fields": {
+        "title": "Concentric black rings",
+        "author": "Gauntlett, Jerome P. and Gutowski, Jan B.",
+        "journal": "Physical Review D",
+        "volume": "71",
+        "number": "2",
+        "pages": "025013",
+        "year": "2005",
+        "doi": "10.1103/PhysRevD.71.025013",
+        "eprint": "hep-th/0408010",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.71.025013"
+      }
+    },
+    "kunduri2014": {
+      "type": "article",
+      "fields": {
+        "title": "Black hole non-uniqueness via spacetime topology in five dimensions",
+        "author": "Kunduri, Hari K. and Lucietti, James",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2014",
+        "number": "10",
+        "pages": "082",
+        "year": "2014",
+        "doi": "10.1007/JHEP10(2014)082",
+        "eprint": "1407.8002",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP10(2014)082"
+      }
+    },
+    "breunholder2019": {
+      "type": "article",
+      "fields": {
+        "title": "Supersymmetric black hole non-uniqueness in five dimensions",
+        "author": "Breunh\\\"older, Veronika and Lucietti, James",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2019",
+        "number": "3",
+        "pages": "105",
+        "year": "2019",
+        "doi": "10.1007/JHEP03(2019)105",
+        "eprint": "1812.07329",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP03(2019)105"
+      }
+    },
+    "desmet2005": {
+      "type": "article",
+      "fields": {
+        "title": "The {Petrov} type of the {BMPV} metric",
+        "author": "De Smet, Pieter-Jan",
+        "journal": "General Relativity and Gravitation",
+        "volume": "37",
+        "number": "1",
+        "pages": "237--242",
+        "year": "2005",
+        "doi": "10.1007/s10714-005-0013-3",
+        "eprint": "gr-qc/0401033",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-005-0013-3"
+      }
+    },
+    "gaiotto2006": {
+      "type": "article",
+      "fields": {
+        "title": "New connections between {4D} and {5D} black holes",
+        "author": "Gaiotto, Davide and Strominger, Andrew and Yin, Xi",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2006",
+        "number": "02",
+        "pages": "024",
+        "year": "2006",
+        "doi": "10.1088/1126-6708/2006/02/024",
+        "eprint": "hep-th/0503217",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2006/02/024"
+      }
+    },
+    "sen2012": {
+      "type": "article",
+      "fields": {
+        "title": "Logarithmic corrections to rotating extremal black hole entropy in four and five dimensions",
+        "author": "Sen, Ashoke",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "8",
+        "pages": "1947--1991",
+        "year": "2012",
+        "doi": "10.1007/s10714-012-1373-0",
+        "eprint": "1109.3706",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-012-1373-0"
+      }
+    },
+    "ruiperez2026": {
+      "type": "misc",
+      "fields": {
+        "title": "{BMPV} black hole at first order in $\\alpha'$",
+        "author": "Ruip\\'erez, Alejandro",
+        "year": "2026",
+        "eprint": "2606.31987",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2606.31987"
       }
     }
   }
