@@ -1530,7 +1530,7 @@
       "idealized model",
       "point charge"
     ],
-    "version": "abb5df243cb60f97",
+    "version": "69042566791c2d1c",
     "diagrams": "08d0c075bece562f",
     "conformal": "9a86449fd5dc7244",
     "embedding": "7947127423217b5b"
@@ -3367,7 +3367,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "34b2710c0f8caa21",
+    "version": "7fc7a8e4dd67c895",
     "diagrams": "02dc301797257580",
     "conformal": "3af58a8247811924",
     "embedding": "2d27d1ba3b61e75b",
@@ -3703,7 +3703,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b77d7c83d5dd0faf",
+    "version": "1c8156485a958262",
     "diagrams": "aa8f329620c5927d",
     "conformal": "52493b5ac50704d6",
     "embedding": "c4aa8198bba8d575",
@@ -4585,7 +4585,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "7b126b7bfaa7cfa6",
+    "version": "2f945a925fea6ad6",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7",
@@ -5011,7 +5011,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "73e88b6a7190d8e2",
+    "version": "4fa7c3baae8dc971",
     "embedding": "0c96027fa617beeb",
     "curvature": "680446e324dac4e2"
   },
@@ -5165,7 +5165,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "b720a212c1b209e8",
+    "version": "8fa11038529decdd",
     "diagrams": "10a1f2ea1c9df0a4",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
@@ -6133,7 +6133,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "d6f51d5dd1518ec6",
+    "version": "7b1c21198f083b39",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6410,6 +6410,49 @@
     "conformal": "2c07e9fd30aab042",
     "embedding": "48330de47b7eda59",
     "curvature": "54286353a8682151"
+  },
+  {
+    "id": "charged_shell_wormhole",
+    "name": "Schein-Aichelburg",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "thin shell",
+      "matched solution",
+      "junction conditions",
+      "electric charge",
+      "electromagnetic field",
+      "Einstein-Maxwell",
+      "charged black hole",
+      "harmonic function",
+      "closed timelike curves",
+      "time machine",
+      "energy conditions",
+      "topological censorship",
+      "topology",
+      "Cauchy horizon",
+      "inner horizon",
+      "horizon",
+      "event horizon",
+      "curvature singularity",
+      "timelike singularity",
+      "maximal extension",
+      "axisymmetric",
+      "static",
+      "stationary",
+      "asymptotically flat",
+      "causal structure",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "31b216005ce72574",
+    "diagrams": "81668e29ad24b5fb",
+    "conformal": "98426700f19a6cc5",
+    "embedding": "1f2717c1c56ae78c",
+    "curvature": "b5354f44bcd1660c"
   },
   {
     "id": "schrodinger_spacetime",
@@ -7842,7 +7885,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "ab1fb95f3535df45",
+    "version": "1581e6aa9df809b7",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24",

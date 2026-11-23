@@ -2780,6 +2780,19 @@ Schwarzschild's black hole in a massless scalar field whose gradient far away po
 - chart Weyl: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -e^{2\psi}c^2dt^2 + e^{-2\psi}\left(e^{2\gamma}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2\right)$$
 - chart Scalar Universe: coordinates $(t, \rho, \phi, z)$, $$ds^2 = -c^2dt^2 + e^{-b^2\rho^2}\left(d\rho^2 + dz^2\right) + \rho^2d\phi^2$$
 
+### Schein-Aichelburg Wormhole Between Charged Shells
+
+A static, axially symmetric wormhole whose two mouths open into the same universe, built by Friedrich Schein and Peter Christian Aichelburg in 1996 from two charged spheres held apart by their electric repulsion. Outside the spheres is the Majumdar-Papapetrou field, inside them one Reissner-Nordström black hole, and the shells of charged matter on the spheres can satisfy all the energy conditions. A traveller crosses the black hole from one mouth to the other in one direction only, and every point outside lies on a closed timelike curve.
+
+- id: `charged_shell_wormhole`
+- tags: wormhole, traversable, thin shell, matched solution, junction conditions, electric charge, electromagnetic field, Einstein-Maxwell, charged black hole, harmonic function, closed timelike curves, time machine, energy conditions, topological censorship, topology, Cauchy horizon, inner horizon, horizon, event horizon, curvature singularity, timelike singularity, maximal extension, axisymmetric, static, stationary, asymptotically flat, causal structure, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/charged_shell_wormhole.json
+- chart Cartesian Exterior: coordinates $(T, x, y, z)$, $$ds^2 = -\dfrac{c^2dT^2}{V^2} + V^2\left(dx^2 + dy^2 + dz^2\right)$$
+- chart Bispherical Exterior: coordinates $(T, \mu, \eta, \phi)$, $$ds^2 = -\dfrac{c^2dT^2}{V^2} + \dfrac{V^2a^2}{W^2}\left(d\mu^2 + d\eta^2 + \sin^2\eta\,d\phi^2\right)$$
+- chart Polar Exterior: coordinates $(T, \rho, \theta, \phi)$, $$ds^2 = -\dfrac{c^2dT^2}{V^2} + V^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Reissner-Nordström Interior: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r} + \dfrac{q^2}{r^2}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{2m}{r} + \dfrac{q^2}{r^2}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Schrödinger Spacetime
 
 Anti-de Sitter space with one term added to its metric, which cuts its symmetries down to those of the free Schrödinger equation: Galilean boosts, a scaling under which time goes as the square of length, and a conserved mass. Dam Thanh Son, and Koushik Balasubramanian and John McGreevy, proposed it in 2008 as the gravitational dual of cold atoms at unitarity. Every event on a surface of constant time has the same future.

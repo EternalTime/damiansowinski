@@ -1,5 +1,5 @@
 {
-  "version": "e42b6e8b34c0cedd",
+  "version": "4c94c7a243ba1047",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -49889,6 +49889,129 @@
         "eprint": "2207.03474",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2207.03474"
+      }
+    },
+    "schein1996": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable Wormholes in Geometries of Charged Shells",
+        "author": "Schein, F. and Aichelburg, P. C.",
+        "journal": "Physical Review Letters",
+        "volume": "77",
+        "number": "20",
+        "pages": "4130--4133",
+        "year": "1996",
+        "doi": "10.1103/PhysRevLett.77.4130",
+        "eprint": "gr-qc/9606069",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.77.4130"
+      }
+    },
+    "schein1996string": {
+      "type": "article",
+      "fields": {
+        "title": "String-supported wormhole spacetimes containing closed timelike curves",
+        "author": "Schein, F. and Aichelburg, P. C. and Israel, W.",
+        "journal": "Physical Review D",
+        "volume": "54",
+        "number": "6",
+        "pages": "3800--3805",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.54.3800",
+        "eprint": "gr-qc/9602053",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.54.3800"
+      }
+    },
+    "aichelburg1998": {
+      "type": "article",
+      "fields": {
+        "title": "Wormholes and Timetravel",
+        "author": "Aichelburg, P. C. and Schein, F.",
+        "journal": "Acta Physica Polonica B",
+        "volume": "29",
+        "number": "4",
+        "pages": "1025--1032",
+        "year": "1998",
+        "url": "https://www.actaphys.uj.edu.pl/R/29/4/1025/pdf"
+      }
+    },
+    "lindquist1963": {
+      "type": "article",
+      "fields": {
+        "title": "Initial-Value Problem on {Einstein-Rosen} Manifolds",
+        "author": "Lindquist, Richard W.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "4",
+        "number": "7",
+        "pages": "938--950",
+        "year": "1963",
+        "doi": "10.1063/1.1704020",
+        "url": "https://doi.org/10.1063/1.1704020"
+      }
+    },
+    "galloway1997": {
+      "type": "article",
+      "fields": {
+        "title": "The cosmic censor forbids naked topology",
+        "author": "Galloway, G. J. and Woolgar, E.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "number": "1",
+        "pages": "L1--L7",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/1/001",
+        "eprint": "gr-qc/9609007",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9609007"
+      }
+    },
+    "clement1997": {
+      "type": "article",
+      "fields": {
+        "title": "Flat wormholes from cosmic strings",
+        "author": "Cl\\'ement, G\\'erard",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "38",
+        "number": "11",
+        "pages": "5807--5819",
+        "year": "1997",
+        "doi": "10.1063/1.532167",
+        "eprint": "gr-qc/9701060",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9701060"
+      }
+    },
+    "smirnov2016": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable intra-Universe wormholes and timeholes in General Relativity: two new solutions",
+        "author": "Smirnov, Alexey L.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "33",
+        "number": "22",
+        "pages": "225005",
+        "year": "2016",
+        "doi": "10.1088/0264-9381/33/22/225005",
+        "eprint": "1612.04643",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1612.04643"
+      }
+    },
+    "moffat2015": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes in modified gravity ({MOG})",
+        "author": "Moffat, J. W.",
+        "journal": "The European Physical Journal C",
+        "volume": "75",
+        "number": "4",
+        "pages": "175",
+        "year": "2015",
+        "doi": "10.1140/epjc/s10052-015-3405-x",
+        "eprint": "1412.5424",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/1412.5424"
       }
     }
   }

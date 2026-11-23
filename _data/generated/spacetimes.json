@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 267,
+  "count": 268,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -17413,6 +17413,11 @@
           "id": "electron_bubble",
           "kind": "family",
           "text": "The oblate shell rotates rigidly and carries tangential tension [burinskii2002sources]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "Two charged shells at rest with Reissner and Nordström's field between them, joined into a wormhole whose two mouths open into one universe [schein1996]."
         }
       ],
       "references": [
@@ -17435,7 +17440,8 @@
         "poisson1989",
         "ori1991charged",
         "bonnor1965",
-        "burinskii2002sources"
+        "burinskii2002sources",
+        "schein1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell.json",
@@ -38666,6 +38672,11 @@
           "id": "ads_vaidya",
           "kind": "family",
           "text": "A thin shell of light falling in anti-de Sitter space, with anti-de Sitter space inside it and a black hole outside. Its event horizon forms at the centre before the shell arrives, as this one's does [hubeny2007]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "Two charged shells at rest, their energy density set by the same junction conditions, joined through a Reissner-Nordström black hole into a wormhole [schein1996]."
         }
       ],
       "references": [
@@ -38694,7 +38705,8 @@
         "sakaihaines2000void",
         "gleiser2012radiative",
         "peleg1995",
-        "hubeny2007"
+        "hubeny2007",
+        "schein1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/israel_shell.json",
@@ -41969,6 +41981,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "A static extremal charged black hole in five dimensions, with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "The same charged spheres in Majumdar and Papapetrou's static field, with no expansion, joined through a Reissner-Nordström black hole into a wormhole with both mouths in one universe. Alexey Smirnov made it expand in 2016 [schein1996, smirnov2016]."
         }
       ],
       "references": [
@@ -41989,7 +42006,9 @@
         "sperhake2015",
         "lindquist1957",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "schein1996",
+        "smirnov2016"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kastor_traschen.json",
@@ -51911,6 +51930,11 @@
           "id": "myers_compactified",
           "kind": "family",
           "text": "An extremal charged hole in five dimensions with one spatial direction curled into a circle, made from a periodic row of higher dimensional holes [horowitzmaeda2002, myers1987compact]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "composite",
+          "text": "Two of its charged bodies made into spheres and joined through a Reissner-Nordström black hole, a wormhole with both mouths in one universe [schein1996]."
         }
       ],
       "references": [
@@ -51953,7 +51977,8 @@
         "gibbons1995",
         "semerak2016",
         "horowitzmaeda2002",
-        "myers1987compact"
+        "myers1987compact",
+        "schein1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -56182,6 +56207,11 @@
           "id": "bowen_york",
           "kind": "family",
           "text": "Linear momentum and spin enter through a conformal extrinsic curvature that solves the momentum constraint. The Hamiltonian constraint then determines the spatial conformal factor [cook2000, brandt1997]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "A static wormhole whose outside potential is found by the same inversion images, two charged spheres joined through a Reissner-Nordström black hole [schein1996]."
         }
       ],
       "references": [
@@ -56215,7 +56245,8 @@
         "clifton2012",
         "friedman1993",
         "brill1959",
-        "brill1996"
+        "brill1996",
+        "schein1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner_brill_lindquist.json",
@@ -57925,6 +57956,11 @@
           "id": "tippett_tsang",
           "kind": "family",
           "text": "A time machine in the shape of a box. Benjamin Tippett and David Tsang's bubble of 2017 carries its riders round a closed timelike curve, and like the wormhole it needs matter that violates the energy conditions [tippett2017]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "A wormhole whose time shift is built in. Its two mouths lie on either side of a charged black hole, one in the future of the other, and every event outside them lies on a closed timelike curve [schein1996, aichelburg1998]."
         }
       ],
       "references": [
@@ -57945,7 +57981,9 @@
         "ori2005",
         "everett1996",
         "everett1997",
-        "tippett2017"
+        "tippett2017",
+        "schein1996",
+        "aichelburg1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
@@ -69216,6 +69254,11 @@
           "id": "generalised_vaidya",
           "kind": "generalisation",
           "text": "The charged black hole with its mass free to depend on null time and on the radius. Viqar Husain's family of 1996 returns it at $k = 1$ with $f = M$ and $2g = Q^2$ [husain1996null]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "composite",
+          "text": "Two of its outer regions cut at one radius and glued to two charged spheres in a single universe, so that a traveller who crosses the black hole comes back out into the same universe [schein1996]."
         }
       ],
       "references": [
@@ -69273,7 +69316,8 @@
         "horne1992black",
         "chan1995",
         "cano2019",
-        "husain1996null"
+        "husain1996null",
+        "schein1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -71528,6 +71572,395 @@
           ],
           "ricci_scalar": "R = 2b^2e^{b^2\\,\\rho^2}",
           "kretschmann": "K = 12b^4e^{2b^2\\,\\rho^2}"
+        }
+      ]
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "name": "Schein-Aichelburg Wormhole Between Charged Shells",
+      "short_name": "Schein-Aichelburg",
+      "description": "A static, axially symmetric wormhole whose two mouths open into the same universe, built by Friedrich Schein and Peter Christian Aichelburg in 1996 from two charged spheres held apart by their electric repulsion. Outside the spheres is the Majumdar-Papapetrou field, inside them one Reissner-Nordström black hole, and the shells of charged matter on the spheres can satisfy all the energy conditions. A traveller crosses the black hole from one mouth to the other in one direction only, and every point outside lies on a closed timelike curve.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "thin shell",
+        "matched solution",
+        "junction conditions",
+        "electric charge",
+        "electromagnetic field",
+        "Einstein-Maxwell",
+        "charged black hole",
+        "harmonic function",
+        "closed timelike curves",
+        "time machine",
+        "energy conditions",
+        "topological censorship",
+        "topology",
+        "Cauchy horizon",
+        "inner horizon",
+        "horizon",
+        "event horizon",
+        "curvature singularity",
+        "timelike singularity",
+        "maximal extension",
+        "axisymmetric",
+        "static",
+        "stationary",
+        "asymptotically flat",
+        "causal structure",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "piece",
+          "text": "The outside of the shells, Majumdar and Papapetrou's field of two charged bodies at rest, with $V$ held at one value on both spheres by a series of image charges [schein1996]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "piece",
+          "text": "The inside of the shells, one Reissner-Nordström black hole cut at the radius $r = RV_0$ in two of its outer regions, one in the future of the other [schein1996]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "A wormhole made into a time machine by moving one mouth, with closed timelike curves only beyond a Cauchy horizon. Outside the two charged shells closed timelike curves pass through every event, for all time [aichelburg1998]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Another wormhole held open by thin shells, with one shell of negative energy density joining two universes. The two charged shells join one universe to itself and can obey the energy conditions [schein1996]."
+        },
+        {
+          "id": "charged_shell",
+          "kind": "family",
+          "text": "A single shell of charged dust with Reissner and Nordström's field outside. The two charged shells hold that field between them, and a traveller crosses it from one shell to the other [schein1996]."
+        },
+        {
+          "id": "israel_shell",
+          "kind": "family",
+          "text": "The shell of dust that Werner Israel solved with the junction conditions in 1966. The same conditions set the energy density of the two charged shells [israel1966, schein1996]."
+        },
+        {
+          "id": "kastor_traschen",
+          "kind": "family",
+          "text": "Charged black holes in an expanding universe. Alexey Smirnov put two charged shells into it in 2016, with a Reissner-Nordström-de Sitter black hole between them, and got a cosmological version of this wormhole [smirnov2016]."
+        },
+        {
+          "id": "misner_brill_lindquist",
+          "kind": "family",
+          "text": "Initial data for black holes at rest. Richard Lindquist found such data for charged bridges with inversion images in 1963, the method behind the potential outside the two charged spheres [lindquist1963, schein1996]."
+        }
+      ],
+      "references": [
+        "schein1996",
+        "majumdar1947",
+        "papapetrou1947",
+        "reissner1916",
+        "nordstrom1918",
+        "aichelburg1998",
+        "schein1996string",
+        "lindquist1963",
+        "israel1966",
+        "smirnov2016",
+        "friedman1993",
+        "galloway1997",
+        "clement1997",
+        "moffat2015",
+        "kastor1993"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell_wormhole.json",
+      "charts": [
+        {
+          "id": "cartesian",
+          "name": "Cartesian Exterior",
+          "coordinates": [
+            "T",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "x^2 + y^2 + (z \\mp d_1)^2 \\geq R^2 \\;\\text{(outside both spheres)}",
+            "x^2 + y^2 + (z \\mp d_1)^2 = R^2 \\;\\text{(the shells)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "V = V(x,y,z)",
+              "description": "Dimensionless potential, $V = 1 + \\sum_{n \\geq 1} m_n\\left(|\\mathbf{x} - d_n\\hat{\\mathbf{z}}|^{-1} + |\\mathbf{x} + d_n\\hat{\\mathbf{z}}|^{-1}\\right)$ over the image charges $m_n = (-1)^{n+1}m_1\\sinh\\mu_0/\\sinh n\\mu_0$, harmonic outside the spheres, $1 + m_1/R$ on both, and 1 at infinity; the components hold for any $V$, harmonic or not"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of each sphere, a length, with $R < d_1$"
+            },
+            {
+              "symbol": "d_1",
+              "description": "Distance of each sphere's centre from the origin, a length; the images of the potential sit at $d_n = a\\coth n\\mu_0$ for integer $n \\geq 1$, with $a = \\sqrt{d_1^2 - R^2}$ and $\\mu_0 = \\operatorname{arccosh}(d_1/R)$"
+            },
+            {
+              "symbol": "m_1",
+              "description": "Mass parameter of each sphere, $m_1 = GM_1/c^2$, a length; when the spheres are far apart each has the mass $M_1$ and a charge $Q_1$ with $GQ_1^2/(4\\pi\\epsilon_0c^4) = m_1^2$"
+            }
+          ],
+          "convention": "We use coordinates $(T, x, y, z)$ outside the spheres, with $T$ having dimensions of time, $x$, $y$, and $z$ lengths, $\\mathbf{x} = (x, y, z)$, and $\\hat{\\mathbf{z}}$ the unit vector along the axis through the two centres. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dT^2}{V^2} + V^2\\left(dx^2 + dy^2 + dz^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{1}{V^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "V^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "V^2"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "V^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\partial_x^2 V + 2\\partial_y^2 V + 2\\partial_z^2 V}{V^3}",
+          "kretschmann": "K = \\dfrac{4V^2\\left(2\\partial_x^2 V\\,\\partial_y^2 V + 2\\partial_x^2 V\\,\\partial_z^2 V + 2\\partial_y^2 V\\,\\partial_z^2 V + 4\\left(\\partial_x\\partial_y V\\right)^2 + 4\\left(\\partial_x\\partial_z V\\right)^2 + 3\\left(\\partial_x^2 V\\right)^2 + 4\\left(\\partial_y\\partial_z V\\right)^2 + 3\\left(\\partial_y^2 V\\right)^2 + 3\\left(\\partial_z^2 V\\right)^2\\right) - 8V\\left(12\\partial_x V\\,\\partial_x\\partial_y V\\,\\partial_y V + 12\\partial_x V\\,\\partial_x\\partial_z V\\,\\partial_z V + 12\\partial_y V\\,\\partial_y\\partial_z V\\,\\partial_z V + 5\\left(\\partial_x V\\right)^2\\,\\partial_x^2 V - \\left(\\partial_x V\\right)^2\\,\\partial_y^2 V - \\left(\\partial_x V\\right)^2\\,\\partial_z^2 V + 5\\left(\\partial_y V\\right)^2\\,\\partial_y^2 V - \\left(\\partial_y V\\right)^2\\,\\partial_z^2 V + 5\\left(\\partial_z V\\right)^2\\,\\partial_z^2 V - \\partial_x^2 V\\left(\\partial_y V\\right)^2 - \\partial_x^2 V\\left(\\partial_z V\\right)^2 - \\partial_y^2 V\\left(\\partial_z V\\right)^2\\right) + 56\\left(\\left(\\partial_x V\\right)^2 + \\left(\\partial_y V\\right)^2 + \\left(\\partial_z V\\right)^2\\right)^2}{V^8}"
+        },
+        {
+          "id": "bispherical",
+          "name": "Bispherical Exterior",
+          "coordinates": [
+            "T",
+            "\\mu",
+            "\\eta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "\\mu \\in [-\\mu_0, \\mu_0]",
+            "\\eta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\mu = \\pm\\mu_0 \\;\\text{(the shells)}",
+            "(\\mu, \\eta) = (0, 0) \\;\\text{(spatial infinity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "V = V(\\mu,\\eta)",
+              "description": "Dimensionless potential, $V = 1 + \\dfrac{m_1}{R}\\left[1 + \\sqrt{\\cosh\\mu - \\cos\\eta}\\sum_{n=-\\infty}^{\\infty}\\dfrac{(-1)^{n+1}}{\\sqrt{\\cosh(\\mu + 2n\\mu_0) - \\cos\\eta}}\\right]$ over the integers $n$, with $R = a/\\sinh\\mu_0$, equal to $1 + m_1/R$ on both spheres and to 1 at infinity; the components hold for any $V$, harmonic or not"
+            },
+            {
+              "symbol": "W = \\cosh\\mu - \\cos\\eta",
+              "description": "Dimensionless factor of the bispherical coordinates, $a/W$ the scale of each coordinate direction, zero only at spatial infinity"
+            },
+            {
+              "symbol": "a",
+              "description": "Focal length of the bispherical coordinates, a length; the spheres have radius $a/\\sinh\\mu_0$ and centres $z = \\pm a\\coth\\mu_0$"
+            },
+            {
+              "symbol": "\\mu_0",
+              "description": "Value of $\\mu$ on the sphere about $z = a\\coth\\mu_0$, a positive number"
+            },
+            {
+              "symbol": "m_1",
+              "description": "Mass parameter of each sphere, $m_1 = GM_1/c^2$, a length; when the spheres are far apart each has the mass $M_1$ and a charge $Q_1$ with $GQ_1^2/(4\\pi\\epsilon_0c^4) = m_1^2$"
+            }
+          ],
+          "convention": "We use bispherical coordinates $(T, \\mu, \\eta, \\phi)$ outside the spheres, $\\coth\\mu = (x^2 + y^2 + z^2 + a^2)/2az$, $\\cot\\eta = (x^2 + y^2 + z^2 - a^2)/2a\\sqrt{x^2 + y^2}$, and $\\tan\\phi = y/x$ in Cartesian coordinates $(x, y, z)$, with $T$ having dimensions of time. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dT^2}{V^2} + \\dfrac{V^2a^2}{W^2}\\left(d\\mu^2 + d\\eta^2 + \\sin^2\\eta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{1}{V^2}"
+            },
+            {
+              "indices": [
+                "\\mu",
+                "\\mu"
+              ],
+              "value": "\\dfrac{V^2\\,a^2}{W^2}"
+            },
+            {
+              "indices": [
+                "\\eta",
+                "\\eta"
+              ],
+              "value": "\\dfrac{V^2\\,a^2}{W^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "-\\dfrac{V^2\\,a^2\\left(\\cos\\eta + 1\\right)\\left(\\cos\\eta - 1\\right)}{W^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2W\\left(W\\,\\partial_\\eta V\\,\\cos\\eta + W\\,\\partial_\\eta^2 V\\,\\sin\\eta + W\\,\\partial_\\mu^2 V\\,\\sin\\eta - \\partial_\\mu V\\,\\sin\\eta\\sinh\\mu + \\partial_\\eta V\\,\\cos^2\\eta - \\partial_\\eta V\\right)\\csc\\eta}{V^3\\,a^2}",
+          "kretschmann": "K = -\\dfrac{4W^2\\left(2V^2\\,W^2\\,\\partial_\\eta V\\,\\partial_\\eta^2 V\\,\\sin\\eta\\cos\\eta + 2V^2\\,W^2\\,\\partial_\\eta V\\,\\partial_\\mu^2 V\\,\\sin\\eta\\cos\\eta - 2V^2\\,W^2\\,\\partial_\\eta^2 V\\,\\partial_\\mu^2 V\\,\\cos^2\\eta - V^2\\,W^2\\left(\\partial_\\eta V\\right)^2\\,\\cos^2\\eta - 3V^2\\,W^2\\left(\\partial_\\eta^2 V\\right)^2\\,\\cos^2\\eta - 7V^2\\,W^2\\left(\\partial_\\mu V\\right)^2\\,\\cos^2\\eta - 4V^2\\,W^2\\left(\\partial_\\mu\\partial_\\eta V\\right)^2\\,\\cos^2\\eta - 3V^2\\,W^2\\left(\\partial_\\mu^2 V\\right)^2\\,\\cos^2\\eta + 2V^2\\,W^2\\,\\partial_\\eta^2 V\\,\\partial_\\mu^2 V + 4V^2\\,W^2\\left(\\partial_\\eta V\\right)^2 + 3V^2\\,W^2\\left(\\partial_\\eta^2 V\\right)^2 + 7V^2\\,W^2\\left(\\partial_\\mu V\\right)^2 + 4V^2\\,W^2\\left(\\partial_\\mu\\partial_\\eta V\\right)^2 + 3V^2\\,W^2\\left(\\partial_\\mu^2 V\\right)^2 - 6V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\mu V\\,\\sin\\eta\\cos\\eta\\sinh\\mu - 2V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\eta^2 V\\,\\sin\\eta\\cos^2\\eta - 8V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\mu\\partial_\\eta V\\,\\cos^2\\eta\\sinh\\mu + 6V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\mu^2 V\\,\\sin\\eta\\cos^2\\eta + 6V^2\\,W\\,\\partial_\\eta^2 V\\,\\partial_\\mu V\\,\\cos^2\\eta\\sinh\\mu - 8V^2\\,W\\,\\partial_\\mu V\\,\\partial_\\mu\\partial_\\eta V\\,\\sin\\eta\\cos^2\\eta - 2V^2\\,W\\,\\partial_\\mu V\\,\\partial_\\mu^2 V\\,\\cos^2\\eta\\sinh\\mu + 2V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\eta^2 V\\,\\sin\\eta + 8V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\mu\\partial_\\eta V\\,\\sinh\\mu - 6V^2\\,W\\,\\partial_\\eta V\\,\\partial_\\mu^2 V\\,\\sin\\eta - 6V^2\\,W\\,\\partial_\\eta^2 V\\,\\partial_\\mu V\\,\\sinh\\mu + 8V^2\\,W\\,\\partial_\\mu V\\,\\partial_\\mu\\partial_\\eta V\\,\\sin\\eta + 2V^2\\,W\\,\\partial_\\mu V\\,\\partial_\\mu^2 V\\,\\sinh\\mu - 2V^2\\,W\\left(\\partial_\\eta V\\right)^2\\,\\cos^3\\eta - 14V^2\\,W\\left(\\partial_\\mu V\\right)^2\\,\\cos^3\\eta + 2V^2\\,W\\left(\\partial_\\eta V\\right)^2\\,\\cos\\eta + 14V^2\\,W\\left(\\partial_\\mu V\\right)^2\\,\\cos\\eta - 6V^2\\,\\partial_\\eta V\\,\\partial_\\mu V\\,\\sin\\eta\\cos^2\\eta\\sinh\\mu + 6V^2\\,\\partial_\\eta V\\,\\partial_\\mu V\\,\\sin\\eta\\sinh\\mu - 6V^2\\left(\\partial_\\eta V\\right)^2\\,\\cos^2\\eta + 3V^2\\left(\\partial_\\eta V\\right)^2\\,\\cos^4\\eta + 6V^2\\left(\\partial_\\mu V\\right)^2\\,\\cos^2\\eta - 3V^2\\left(\\partial_\\mu V\\right)^2\\,\\cos^4\\eta + 3V^2\\left(\\partial_\\eta V\\right)^2 - 3V^2\\left(\\partial_\\mu V\\right)^2 + 24V\\,W^2\\,\\partial_\\eta V\\,\\partial_\\mu V\\,\\partial_\\mu\\partial_\\eta V\\,\\cos^2\\eta + 2V\\,W^2\\,\\partial_\\eta V\\left(\\partial_\\mu V\\right)^2\\,\\sin\\eta\\cos\\eta - 2V\\,W^2\\,\\partial_\\eta^2 V\\left(\\partial_\\mu V\\right)^2\\,\\cos^2\\eta + 10V\\,W^2\\left(\\partial_\\eta V\\right)^2\\,\\partial_\\eta^2 V\\,\\cos^2\\eta - 2V\\,W^2\\left(\\partial_\\eta V\\right)^2\\,\\partial_\\mu^2 V\\,\\cos^2\\eta + 10V\\,W^2\\left(\\partial_\\mu V\\right)^2\\,\\partial_\\mu^2 V\\,\\cos^2\\eta - 24V\\,W^2\\,\\partial_\\eta V\\,\\partial_\\mu V\\,\\partial_\\mu\\partial_\\eta V + 2V\\,W^2\\left(\\partial_\\eta V\\right)^3\\,\\sin\\eta\\cos\\eta + 2V\\,W^2\\,\\partial_\\eta^2 V\\left(\\partial_\\mu V\\right)^2 - 10V\\,W^2\\left(\\partial_\\eta V\\right)^2\\,\\partial_\\eta^2 V + 2V\\,W^2\\left(\\partial_\\eta V\\right)^2\\,\\partial_\\mu^2 V - 10V\\,W^2\\left(\\partial_\\mu V\\right)^2\\,\\partial_\\mu^2 V + 14V\\,W\\,\\partial_\\eta V\\left(\\partial_\\mu V\\right)^2\\,\\sin\\eta\\cos^2\\eta + 14V\\,W\\left(\\partial_\\eta V\\right)^2\\,\\partial_\\mu V\\,\\cos^2\\eta\\sinh\\mu - 14V\\,W\\,\\partial_\\eta V\\left(\\partial_\\mu V\\right)^2\\,\\sin\\eta - 14V\\,W\\left(\\partial_\\eta V\\right)^2\\,\\partial_\\mu V\\,\\sinh\\mu + 14V\\,W\\left(\\partial_\\eta V\\right)^3\\,\\sin\\eta\\cos^2\\eta + 14V\\,W\\left(\\partial_\\mu V\\right)^3\\,\\cos^2\\eta\\sinh\\mu - 14V\\,W\\left(\\partial_\\eta V\\right)^3\\,\\sin\\eta - 14V\\,W\\left(\\partial_\\mu V\\right)^3\\,\\sinh\\mu - 28W^2\\left(\\partial_\\eta V\\right)^2\\left(\\partial_\\mu V\\right)^2\\,\\cos^2\\eta + 28W^2\\left(\\partial_\\eta V\\right)^2\\left(\\partial_\\mu V\\right)^2 - 14W^2\\left(\\partial_\\eta V\\right)^4\\,\\cos^2\\eta - 14W^2\\left(\\partial_\\mu V\\right)^4\\,\\cos^2\\eta + 14W^2\\left(\\partial_\\eta V\\right)^4 + 14W^2\\left(\\partial_\\mu V\\right)^4\\right)}{V^8\\,a^4\\left(\\cos\\eta + 1\\right)\\left(\\cos\\eta - 1\\right)}"
+        },
+        {
+          "id": "polar",
+          "name": "Polar Exterior",
+          "coordinates": [
+            "T",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "\\rho \\in [R, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\rho^2 - 4d_1\\rho\\cos\\theta + 4d_1^2 \\geq R^2 \\;\\text{(outside the other sphere)}",
+            "\\rho = R \\;\\text{(one shell)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "V = V(\\rho,\\theta)",
+              "description": "Dimensionless potential, harmonic outside the spheres, equal to $1 + m_1/R$ on both and to 1 at infinity; at $\\rho\\sin\\theta\\cos\\phi$, $\\rho\\sin\\theta\\sin\\phi$, $\\rho\\cos\\theta - d_1$ it is the image series of the Cartesian chart; the components hold for any $V$, harmonic or not"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of each sphere, a length, with $R < d_1$"
+            },
+            {
+              "symbol": "d_1",
+              "description": "Distance of each sphere's centre from the midpoint between them, a length, so that the other centre lies at $\\rho = 2d_1$, $\\theta = 0$"
+            },
+            {
+              "symbol": "m_1",
+              "description": "Mass parameter of each sphere, $m_1 = GM_1/c^2$, a length; when the spheres are far apart each has the mass $M_1$ and a charge $Q_1$ with $GQ_1^2/(4\\pi\\epsilon_0c^4) = m_1^2$"
+            }
+          ],
+          "convention": "We use polar coordinates $(T, \\rho, \\theta, \\phi)$ about the centre of one sphere, with $T$ having dimensions of time, $\\rho$ the distance from that centre, and $\\theta$ measured from the axis toward the other sphere. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ means $d(cT)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{c^2dT^2}{V^2} + V^2\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-\\dfrac{1}{V^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "V^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "V^2\\,\\rho^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "V^2\\,\\rho^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2\\left(\\rho^2\\,\\partial_\\rho^2 V\\,\\sin\\theta + 2\\rho\\,\\partial_\\rho V\\,\\sin\\theta + \\partial_\\theta V\\,\\cos\\theta + \\partial_\\theta^2 V\\,\\sin\\theta\\right)\\csc\\theta}{V^3\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{4\\left(V^2\\left(2\\rho^2\\,\\partial_\\rho^2 V\\,\\partial_\\theta V\\,\\sin\\theta\\cos\\theta + 8\\rho\\,\\partial_\\rho V\\,\\partial_\\theta V\\,\\sin\\theta\\cos\\theta + 2\\rho^2\\,\\partial_\\rho^2 V\\,\\partial_\\theta^2 V\\,\\sin^2\\theta + 4\\rho^3\\,\\partial_\\rho V\\,\\partial_\\rho^2 V\\,\\sin^2\\theta + 2\\partial_\\theta V\\,\\partial_\\theta^2 V\\,\\sin\\theta\\cos\\theta + 8\\rho\\,\\partial_\\rho V\\,\\partial_\\theta^2 V\\,\\sin^2\\theta - 8\\rho\\,\\partial_\\rho\\partial_\\theta V\\,\\partial_\\theta V\\,\\sin^2\\theta + 8\\rho^2\\left(\\partial_\\rho V\\right)^2\\,\\sin^2\\theta + 4\\rho^2\\left(\\partial_\\rho\\partial_\\theta V\\right)^2\\,\\sin^2\\theta + 3\\rho^4\\left(\\partial_\\rho^2 V\\right)^2\\,\\sin^2\\theta + \\left(\\partial_\\theta V\\right)^2\\,\\sin^2\\theta + 3\\left(\\partial_\\theta^2 V\\right)^2\\,\\sin^2\\theta + 3\\left(\\partial_\\theta V\\right)^2\\right) - 2V\\left(12\\rho^2\\,\\partial_\\rho V\\,\\partial_\\rho\\partial_\\theta V\\,\\partial_\\theta V\\,\\sin\\theta - \\rho^2\\,\\partial_\\rho^2 V\\left(\\partial_\\theta V\\right)^2\\,\\sin\\theta - \\rho^2\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\theta V\\,\\cos\\theta - \\rho^2\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\theta^2 V\\,\\sin\\theta + 5\\rho^4\\left(\\partial_\\rho V\\right)^2\\,\\partial_\\rho^2 V\\,\\sin\\theta - 8\\rho\\,\\partial_\\rho V\\left(\\partial_\\theta V\\right)^2\\,\\sin\\theta + 5\\left(\\partial_\\theta V\\right)^2\\,\\partial_\\theta^2 V\\,\\sin\\theta - 2\\rho^3\\left(\\partial_\\rho V\\right)^3\\,\\sin\\theta - \\left(\\partial_\\theta V\\right)^3\\,\\cos\\theta\\right)\\sin\\theta + 14\\left(\\rho^2\\left(\\partial_\\rho V\\right)^2 + \\left(\\partial_\\theta V\\right)^2\\right)^2\\sin^2\\theta\\right)\\csc^2\\theta}{V^8\\,\\rho^4}"
+        },
+        {
+          "id": "interior",
+          "name": "Reissner-Nordström Interior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, R + m_1]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = R + m_1 \\;\\text{(the shells)}",
+            "r = m \\pm \\sqrt{m^2 - q^2} \\;\\text{(the horizons, for}\\; |q| < m\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m",
+              "description": "Mass of the black hole between the shells as a length, $m = GM/c^2$"
+            },
+            {
+              "symbol": "q",
+              "description": "Charge of the black hole as a length, $q^2 = GQ^2/(4\\pi\\epsilon_0c^4)$, with $|q| \\leq m$; for $|q| < m$ the horizons are $r_\\pm = m \\pm \\sqrt{m^2 - q^2}$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of each sphere outside, a length; the shells sit at the areal radius $R + m_1$, outside the horizons"
+            },
+            {
+              "symbol": "m_1",
+              "description": "Mass parameter of each sphere, $m_1 = GM_1/c^2$, a length; when the spheres are far apart each has the mass $M_1$ and a charge $Q_1$ with $GQ_1^2/(4\\pi\\epsilon_0c^4) = m_1^2$"
+            }
+          ],
+          "convention": "We use Reissner-Nordström's coordinates $(t, r, \\theta, \\phi)$ between the shells, with $t$ having dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)c^2dt^2 + \\dfrac{dr^2}{1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\left(1 - \\dfrac{2m}{r} + \\dfrac{q^2}{r^2}\\right)^{-1}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\left(6m^2r^2 - 12mq^2r + 7q^4\\right)}{r^8}"
         }
       ]
     },
@@ -89093,6 +89526,11 @@
           "id": "kerr_disc_source",
           "kind": "family",
           "text": "Kerr's spacetime cut at the disc in its ring and glued to itself, with all the cut's matter on the seam [israel1970]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "Two thin shells of charged matter that can obey the energy conditions, joined through a Reissner-Nordström black hole into a wormhole with both mouths in one universe [schein1996]."
         }
       ],
       "references": [
@@ -89120,7 +89558,8 @@
         "danielson2021",
         "james2015",
         "kraus1999",
-        "israel1970"
+        "israel1970",
+        "schein1996"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",
