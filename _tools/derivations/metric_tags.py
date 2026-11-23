@@ -524,6 +524,10 @@ OVERRULED = {
     ("roman_ring", "vacuum"): (
         False, "each mouth holds an infinitesimally thin layer of exotic matter, Visser 1994 Sec. III, where the "
                "Ricci tensor is a delta function, eq. (83)"),
+    ("roman_ring", "stationary"): (
+        True, "the identifications join each entrance sphere at t + T to its exit sphere at t, and a translation of t "
+              "takes every such pair to another, so d_t is a timelike Killing vector of the ring; Visser 1993 Sec. IV "
+              "uses that time translation invariance for a wormhole whose mouths are at rest"),
     ("roman_ring", "conformally flat"): (
         False, "the Weyl tensor of a spherical mouth is a delta function of the traceless jump in its second "
                "fundamental form, Visser 1994 eq. (90), which a sphere of radius R does not make zero"),

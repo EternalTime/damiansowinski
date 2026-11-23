@@ -20,7 +20,6 @@
     "quantum gravity",
     "causal structure",
     "stationary",
-    "static",
     "exact solution",
     "Lorentzian",
     "Einstein equations",
@@ -107,7 +106,7 @@
         },
         {
           "symbol": "L",
-          "description": "Distance between the two mouths of each wormhole: with $\\mathbf{x}$ the position in space, the entrance mouth of wormhole $k$ is at rest at $\\mathbf{a}_k$ and its exit mouth at $\\mathbf{b}_k$, and $|\\mathbf{b}_k - \\mathbf{a}_k| = L$"
+          "description": "Distance between the two mouths of each wormhole, $|\\mathbf{b}_k - \\mathbf{a}_k| = L$, with $\\mathbf{x}$ the position in space, $\\mathbf{a}_k$ the place of the entrance mouth of wormhole $k$ and $\\mathbf{b}_k$ the place of its exit mouth, both at rest"
         },
         {
           "symbol": "T",
