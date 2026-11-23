@@ -1,5 +1,5 @@
 {
-  "version": "b16e10f94e4dbb58",
+  "version": "603ad5fef82e6ae9",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -49515,6 +49515,228 @@
         "eprint": "1808.10040",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1361-6382/aaea9f"
+      }
+    },
+    "husain1996null": {
+      "type": "article",
+      "fields": {
+        "title": "Exact solutions for null fluid collapse",
+        "author": "Husain, Viqar",
+        "journal": "Physical Review D",
+        "volume": "53",
+        "number": "4",
+        "pages": "R1759--R1762",
+        "year": "1996",
+        "doi": "10.1103/PhysRevD.53.R1759",
+        "eprint": "gr-qc/9511011",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.53.R1759"
+      }
+    },
+    "wang1999generalized": {
+      "type": "article",
+      "fields": {
+        "title": "Generalized {Vaidya} Solutions",
+        "author": "Wang, Anzhong and Wu, Yumei",
+        "journal": "General Relativity and Gravitation",
+        "volume": "31",
+        "number": "1",
+        "pages": "107--114",
+        "year": "1999",
+        "doi": "10.1023/A:1018819521971",
+        "eprint": "gr-qc/9803038",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1023/A:1018819521971"
+      }
+    },
+    "brown1997hair": {
+      "type": "article",
+      "fields": {
+        "title": "Black Holes with Short Hair",
+        "author": "Brown, J. David and Husain, Viqar",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "6",
+        "number": "5",
+        "pages": "563--573",
+        "year": "1997",
+        "doi": "10.1142/S0218271897000340",
+        "eprint": "gr-qc/9707027",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271897000340"
+      }
+    },
+    "glass1998string": {
+      "type": "article",
+      "fields": {
+        "title": "Radiation and string atmosphere for relativistic stars",
+        "author": "Glass, E. N. and Krisch, J. P.",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "10",
+        "pages": "R5945--R5947",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.R5945",
+        "eprint": "gr-qc/9803040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.R5945"
+      }
+    },
+    "glass1999twofluid": {
+      "type": "article",
+      "fields": {
+        "title": "Two-fluid atmosphere for relativistic stars",
+        "author": "Glass, E. N. and Krisch, J. P.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "16",
+        "number": "4",
+        "pages": "1175--1184",
+        "year": "1999",
+        "doi": "10.1088/0264-9381/16/4/007",
+        "eprint": "gr-qc/9901034",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/16/4/007"
+      }
+    },
+    "heydarzade2018surrounded": {
+      "type": "article",
+      "fields": {
+        "title": "Surrounded {Vaidya} solution by cosmological fields",
+        "author": "Heydarzade, Y. and Darabi, F.",
+        "journal": "The European Physical Journal C",
+        "volume": "78",
+        "number": "7",
+        "pages": "582",
+        "year": "2018",
+        "doi": "10.1140/epjc/s10052-018-6041-4",
+        "eprint": "1710.04485",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-018-6041-4"
+      }
+    },
+    "harko2000quark": {
+      "type": "article",
+      "fields": {
+        "title": "Collapsing strange quark matter in {Vaidya} geometry",
+        "author": "Harko, T. and Cheng, K. S.",
+        "journal": "Physics Letters A",
+        "volume": "266",
+        "number": "4--6",
+        "pages": "249--253",
+        "year": "2000",
+        "doi": "10.1016/S0375-9601(00)00005-0",
+        "eprint": "gr-qc/0104087",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0375-9601(00)00005-0"
+      }
+    },
+    "ghosh2002typeii": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of type {II} fluid in higher dimensional space-times",
+        "author": "Ghosh, S. G. and Dadhich, Naresh",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "12",
+        "pages": "127502",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.127502",
+        "eprint": "gr-qc/0204091",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.65.127502"
+      }
+    },
+    "maharaj2012atmospheres": {
+      "type": "article",
+      "fields": {
+        "title": "Radiating stars with generalised {Vaidya} atmospheres",
+        "author": "Maharaj, S. D. and Govender, G. and Govender, M.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "44",
+        "number": "4",
+        "pages": "1089--1099",
+        "year": "2012",
+        "doi": "10.1007/s10714-012-1329-4",
+        "eprint": "1301.1417",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-012-1329-4"
+      }
+    },
+    "mkenyeleye2014": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational collapse of generalized {Vaidya} spacetime",
+        "author": "Mkenyeleye, Maombi D. and Goswami, Rituparno and Maharaj, Sunil D.",
+        "journal": "Physical Review D",
+        "volume": "90",
+        "number": "6",
+        "pages": "064034",
+        "year": "2014",
+        "doi": "10.1103/PhysRevD.90.064034",
+        "eprint": "1407.4309",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.90.064034"
+      }
+    },
+    "bojowald2005threshold": {
+      "type": "article",
+      "fields": {
+        "title": "Black Hole Mass Threshold from Nonsingular Quantum Gravitational Collapse",
+        "author": "Bojowald, Martin and Goswami, Rituparno and Maartens, Roy and Singh, Parampreet",
+        "journal": "Physical Review Letters",
+        "volume": "95",
+        "number": "9",
+        "pages": "091302",
+        "year": "2005",
+        "doi": "10.1103/PhysRevLett.95.091302",
+        "eprint": "gr-qc/0503041",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevLett.95.091302"
+      }
+    },
+    "vertogradov2025horizon": {
+      "type": "article",
+      "fields": {
+        "title": "Dynamical black holes: Apparent horizon versus energy conditions",
+        "author": "Vertogradov, Vitalii",
+        "journal": "Physics Letters B",
+        "volume": "867",
+        "pages": "139607",
+        "year": "2025",
+        "doi": "10.1016/j.physletb.2025.139607",
+        "eprint": "2410.10582",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.physletb.2025.139607"
+      }
+    },
+    "chakrabarti2026limitations": {
+      "type": "article",
+      "fields": {
+        "title": "On the limitations of a generalized {Vaidya} metric",
+        "author": "Chakrabarti, Soumya and Dadhich, Naresh and Singha, Chiranjeeb",
+        "journal": "General Relativity and Gravitation",
+        "volume": "58",
+        "number": "6",
+        "pages": "67",
+        "year": "2026",
+        "doi": "10.1007/s10714-026-03569-4",
+        "eprint": "2511.09011",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-026-03569-4"
+      }
+    },
+    "vertogradov2026shadow": {
+      "type": "article",
+      "fields": {
+        "title": "Shadow of the generalized {Vaidya} black hole",
+        "author": "Vertogradov, V. and \\\"Ovg\\\"un, A.",
+        "journal": "Physics of the Dark Universe",
+        "volume": "53",
+        "pages": "102402",
+        "year": "2026",
+        "doi": "10.1016/j.dark.2026.102402",
+        "eprint": "2607.17483",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/j.dark.2026.102402"
       }
     }
   }

@@ -1265,6 +1265,18 @@ A straight cosmic string carrying a wave of arbitrary shape that runs along it a
 - chart Isotropic: coordinates $(u, v, x, y)$, $$ds^2 = -du\,dv - 2\left(x\,A'' + y\,B''\right)du^2 + \left(\dfrac{\rho}{\ell}\right)^{2b - 2}\left(dx^2 + dy^2\right)$$
 - chart Moving String: coordinates $(u, V, X, Y)$, $$ds^2 = -du\,dV + dX^2 + dY^2 + \left(\left(\dfrac{\rho}{\ell}\right)^{2b - 2} - 1\right)\left(\left(dX - A'\,du\right)^2 + \left(dY - B'\,du\right)^2\right)$$
 
+### Generalised Vaidya Spacetime
+
+Prahlad Chunilal Vaidya's metric with the mass inside each sphere depending on the radius as well as on null time, so that null dust streams through a fluid whose density and pressures follow from the mass function. Viqar Husain found the first family in 1996, with pressure in proportion to density, Edward N. Glass and Jean P. Krisch gave the outgoing form with a fluid of strings in 1998, and Anzhong Wang and Yumei Wu showed in 1999 that the matter is linear in the mass function, so solutions add.
+
+- id: `generalised_vaidya`
+- tags: null dust, radiating, accreting, time-dependent, black hole, mass, horizon, apparent horizon, exact solution, Lorentzian, Einstein equations, idealized model, naked singularity, cosmic censorship, gravitational collapse, anisotropic pressure, equation of state, energy conditions, superposition, Petrov type D, junction conditions, black hole shadow, spherically symmetric, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/generalised_vaidya.json
+- chart Ingoing: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)c^2dv^2 + 2c\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Outgoing: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)c^2du^2 - 2c\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Husain's Null Fluid: coordinates $(v, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2f}{r} + \dfrac{2h}{2k - 1}\right)c^2dv^2 + 2c\,dv\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Davis-Ray Ghost Neutrinos
 
 A current of neutrinos along one axis of Abraham Taub's static plane symmetric vacuum, which Talmadge M. Davis and John R. Ray found in 1974. The neutrinos carry no energy or momentum, so the geometry around them is that of empty space, with a timelike singularity on one side.

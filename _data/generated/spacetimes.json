@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 265,
+  "count": 266,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -10194,6 +10194,11 @@
           "id": "mallett_radiating_star",
           "kind": "family",
           "text": "A spherical radiating body with a positive cosmological constant and no electric charge."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "The charged star with the term $q^2/2r$ in its mass replaced by any function of the radius. Viqar Husain's fluid with pressure $P = k\\rho$ gives back this charge term at $k = 1$ [husain1996null]."
         }
       ],
       "references": [
@@ -10212,7 +10217,8 @@
         "kehle2022",
         "poisson1990",
         "poisson1989",
-        "gao2008"
+        "gao2008",
+        "husain1996null"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bonnor_vaidya.json",
@@ -30629,6 +30635,318 @@
       ]
     },
     {
+      "id": "generalised_vaidya",
+      "name": "Generalised Vaidya Spacetime",
+      "short_name": "Generalised Vaidya",
+      "description": "Prahlad Chunilal Vaidya's metric with the mass inside each sphere depending on the radius as well as on null time, so that null dust streams through a fluid whose density and pressures follow from the mass function. Viqar Husain found the first family in 1996, with pressure in proportion to density, Edward N. Glass and Jean P. Krisch gave the outgoing form with a fluid of strings in 1998, and Anzhong Wang and Yumei Wu showed in 1999 that the matter is linear in the mass function, so solutions add.",
+      "tags": [
+        "null dust",
+        "radiating",
+        "accreting",
+        "time-dependent",
+        "black hole",
+        "mass",
+        "horizon",
+        "apparent horizon",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "naked singularity",
+        "cosmic censorship",
+        "gravitational collapse",
+        "anisotropic pressure",
+        "equation of state",
+        "energy conditions",
+        "superposition",
+        "Petrov type D",
+        "junction conditions",
+        "black hole shadow",
+        "spherically symmetric",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and every mass is written as a length, $G/c^2$ times the mass. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "vaidya",
+          "kind": "special_case",
+          "text": "Vaidya's metric is the case where the mass depends on null time alone. Then the fluid is gone and only the null dust streams through [wang1999generalized]."
+        },
+        {
+          "id": "bonnor_vaidya",
+          "kind": "special_case",
+          "text": "The charged member, with $m = f(v) - q^2(v)/2r$, whose fluid is the electric field of the charge $q$. It is Husain's family at $k = 1$ [husain1996null, wang1999generalized]."
+        },
+        {
+          "id": "kiselev",
+          "kind": "special_case",
+          "text": "Valery Kiselev's static black hole is Husain's family with $f$ and $g$ held constant and $w = (2k - 1)/3$. Yaghoub Heydarzade and Farhad Darabi let its two constants change with time [heydarzade2018surrounded]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "Husain's family at $k = 1$ with $f = M$ and $2g = Q^2$ held constant, the static charged black hole [husain1996null]."
+        },
+        {
+          "id": "schwarzschild_de_sitter",
+          "kind": "special_case",
+          "text": "Kottler's black hole is the static case $m = M + \\Lambda r^3/6$, a mass and a cosmological constant added together [wang1999generalized]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "special_case",
+          "text": "The global monopole is the static case $m = r_s/2 + \\Delta r/2$, with $\\Delta$ the solid angle deficit. Anzhong Wang and Yumei Wu identified the term linear in $r$ with the field of a monopole [wang1999generalized]."
+        },
+        {
+          "id": "mallett_radiating_star",
+          "kind": "special_case",
+          "text": "Ronald Mallett's star is the outgoing case $m = m(u) + \\Lambda r^3/6$, Vaidya's light and a cosmological constant added together [wang1999generalized]."
+        },
+        {
+          "id": "hayward",
+          "kind": "special_case",
+          "text": "Sean Hayward's black hole is the case $m = Mr^3/(r^3 + 2M\\ell^2)$, with $\\ell$ the length of its de Sitter core. Hayward let $M$ change with null time so that the hole forms and evaporates [hayward2006, mkenyeleye2014]."
+        },
+        {
+          "id": "ads_vaidya",
+          "kind": "family",
+          "text": "Vaidya's ingoing light in anti-de Sitter space. In four dimensions it is the case $m = m(v) + \\Lambda r^3/6$ with $\\Lambda < 0$ [wang1999generalized]."
+        }
+      ],
+      "references": [
+        "vaidya1951",
+        "husain1996null",
+        "wang1999generalized",
+        "brown1997hair",
+        "glass1998string",
+        "glass1999twofluid",
+        "heydarzade2018surrounded",
+        "kiselev2003",
+        "harko2000quark",
+        "ghosh2002typeii",
+        "maharaj2012atmospheres",
+        "mkenyeleye2014",
+        "bojowald2005threshold",
+        "vertogradov2025horizon",
+        "chakrabarti2026limitations",
+        "vertogradov2026shadow",
+        "hayward2006"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/generalised_vaidya.json",
+      "charts": [
+        {
+          "id": "ingoing",
+          "name": "Ingoing",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2m \\;\\text{(the marginally trapped spheres)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(v,r)",
+              "description": "Mass function, a length: $G/c^2$ times the mass inside the sphere of radius $r$ at the advanced time $v$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ having dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = cv$, where $\\partial_v m$ means $c^{-1}\\partial m/\\partial v$, and $\\dot{v}$ in the geodesic equations means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\partial_r m + 2r\\,\\partial_r^2 m}{r^2}",
+          "kretschmann": "K = \\dfrac{32r^2\\left(\\partial_r m\\right)^2 - 16r^3\\,\\partial_r m\\,\\partial_r^2 m - 64m\\,r\\,\\partial_r m + 4r^4\\left(\\partial_r^2 m\\right)^2 + 16m\\,r^2\\,\\partial_r^2 m + 48m^2}{r^6}"
+        },
+        {
+          "id": "outgoing",
+          "name": "Outgoing",
+          "coordinates": [
+            "u",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "u \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2m \\;\\text{(the marginally trapped spheres)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "m = m(u,r)",
+              "description": "Mass function, a length: $G/c^2$ times the mass inside the sphere of radius $r$ at the retarded time $u$"
+            }
+          ],
+          "convention": "We use coordinates $(u, r, \\theta, \\phi)$, with the retarded time $u$ having dimensions of time and $r$ the areal radius. We take components in the chart $x^0 = cu$, where $\\partial_u m$ means $c^{-1}\\partial m/\\partial u$, and $\\dot{u}$ in the geodesic equations means $d(cu)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2m}{r}\\right)c^2du^2 - 2c\\,du\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "-\\left(1 - \\dfrac{2m}{r}\\right)"
+            },
+            {
+              "indices": [
+                "u",
+                "r"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "r",
+                "u"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4\\partial_r m + 2r\\,\\partial_r^2 m}{r^2}",
+          "kretschmann": "K = \\dfrac{32r^2\\left(\\partial_r m\\right)^2 - 16r^3\\,\\partial_r m\\,\\partial_r^2 m - 64m\\,r\\,\\partial_r m + 4r^4\\left(\\partial_r^2 m\\right)^2 + 16m\\,r^2\\,\\partial_r^2 m + 48m^2}{r^6}"
+        },
+        {
+          "id": "husain",
+          "name": "Husain's Null Fluid",
+          "coordinates": [
+            "v",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "v \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r = 2m \\;\\text{(the marginally trapped spheres)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Ratio of the pressure $P$ around each sphere to the energy density $\\rho$ of the fluid, $P = k\\rho$, a pure number with $k \\neq 1/2$"
+            },
+            {
+              "symbol": "f = f(v)",
+              "description": "Function of the advanced time, a length: the part of the mass function that does not depend on $r$"
+            },
+            {
+              "symbol": "q = q(v)",
+              "description": "Function of the advanced time, a length, which sets the fluid's energy density, $\\rho = \\left(c^4/4\\pi Gr^2\\right)\\left(q/r\\right)^{2k}$"
+            },
+            {
+              "symbol": "h = \\left(\\dfrac{q}{r}\\right)^{2k}",
+              "description": "The fluid's term in the lapse, a pure number"
+            },
+            {
+              "symbol": "m = f - \\dfrac{q}{2k - 1}\\left(\\dfrac{q}{r}\\right)^{2k - 1}",
+              "description": "Mass function, a length, the solution of $P = k\\rho$"
+            }
+          ],
+          "convention": "We use coordinates $(v, r, \\theta, \\phi)$, with the advanced time $v$ having dimensions of time and $r$ the areal radius, and take components in the chart $x^0 = cv$. Husain's function $g$ is written $q^{2k}$, with $q$ a length. A prime is a derivative along $x^0$, $f' = df/d(cv)$, and $\\dot{v}$ in the geodesic equations means $d(cv)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(1 - \\dfrac{2f}{r} + \\dfrac{2h}{2k - 1}\\right)c^2dv^2 + 2c\\,dv\\,dr + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "-\\left(1 - \\dfrac{2f}{r} + \\dfrac{2h}{2k - 1}\\right)"
+            },
+            {
+              "indices": [
+                "v",
+                "r"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "r",
+                "v"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4h\\left(k - 1\\right)}{r^2}",
+          "kretschmann": "K = \\dfrac{48f^2}{r^6} - \\dfrac{32\\left(k + 1\\right)\\left(2k + 1\\right)f\\,h}{\\left(2k - 1\\right)r^5} + \\dfrac{16\\left(4k^4 + 4k^3 + 5k^2 + 1\\right)h^2}{\\left(2k - 1\\right)^2r^4}"
+        }
+      ]
+    },
+    {
       "id": "ghost_neutrinos",
       "name": "Davis-Ray Ghost Neutrinos",
       "short_name": "Ghost Neutrinos",
@@ -31249,6 +31567,11 @@
           "id": "global_texture",
           "kind": "family",
           "text": "A collapsing four component scalar field with a time dependent solid angle deficit. The monopole has a static deficit outside its core [durrer1992textures]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "The monopole's field with the mass inside each sphere free to depend on null time and on the radius. Anzhong Wang and Yumei Wu found the monopole in the term $ar/2$ of that mass, with $a = \\Delta$ [wang1999generalized]."
         }
       ],
       "references": [
@@ -31269,7 +31592,8 @@
         "kiselev2003",
         "visser2020",
         "vafa1996ftheory",
-        "durrer1992textures"
+        "durrer1992textures",
+        "wang1999generalized"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/global_monopole.json",
@@ -35403,6 +35727,11 @@
           "id": "limiting_curvature",
           "kind": "family",
           "text": "Universes in a theory of gravity built to keep its curvature below a limit, where a collapsing universe turns into de Sitter space [brandenberger1993]. Hayward's core is de Sitter space of radius $\\ell$ for every mass and meets the same kind of limit, as Valeri Frolov showed in 2016 [frolov2016]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "Hayward's regular black hole with its mass function free to depend on null time and on the radius in any way. The hole that Hayward let form and evaporate in 2006 is one such spacetime [hayward2006, mkenyeleye2014]."
         }
       ],
       "references": [
@@ -35431,7 +35760,8 @@
         "ashtekar2006bounce",
         "bueno2025regular",
         "simpson2022eye",
-        "brandenberger1993"
+        "brandenberger1993",
+        "mkenyeleye2014"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hayward.json",
@@ -45363,6 +45693,11 @@
           "id": "minkowski",
           "kind": "conformal",
           "text": "Kiselev's matter alone at $w = -2/3$ is conformal to the part $\\tau + \\rho > 0$ of Minkowski space, with the factor $4r_q^2/(\\tau + \\rho)^2$ [kiselev2003]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "Kiselev's black hole with its mass and its surrounding matter changing in null time, which Yaghoub Heydarzade and Farhad Darabi wrote in 2018. Viqar Husain's null fluid collapse of 1996 is the case $w = (2k - 1)/3$ [heydarzade2018surrounded, husain1996null]."
         }
       ],
       "references": [
@@ -45380,7 +45715,9 @@
         "ghosh2016",
         "newman1965janis",
         "boonserm2020",
-        "barriola1989"
+        "barriola1989",
+        "heydarzade2018surrounded",
+        "husain1996null"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kiselev.json",
@@ -51848,6 +52185,11 @@
           "id": "ads_vaidya",
           "kind": "family",
           "text": "Vaidya's metric with a negative cosmological constant, where light falling in from the boundary of anti-de Sitter space leaves a black hole [lemos1999]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "The radiating star with the mass inside each sphere free to depend on the radius in any way. Its cosmological constant is the term $\\Lambda r^3/6$ that Anzhong Wang and Yumei Wu added to Vaidya's mass [wang1999generalized]."
         }
       ],
       "references": [
@@ -51882,7 +52224,8 @@
         "senovilla2023beyond",
         "boyanov2026semiclassical",
         "bonnor1970",
-        "lemos1999"
+        "lemos1999",
+        "wang1999generalized"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/mallett_radiating_star.json",
@@ -68503,6 +68846,11 @@
           "id": "repulson",
           "kind": "family",
           "text": "Charged solutions of the heterotic string with a naked singularity at which gravity repels, as it does near the timelike singularity of Reissner-Nordström [cano2019]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "The charged black hole with its mass free to depend on null time and on the radius. Viqar Husain's family of 1996 returns it at $k = 1$ with $f = M$ and $2g = Q^2$ [husain1996null]."
         }
       ],
       "references": [
@@ -68559,7 +68907,8 @@
         "gott1986charged",
         "horne1992black",
         "chan1995",
-        "cano2019"
+        "cano2019",
+        "husain1996null"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -72883,6 +73232,11 @@
           "id": "mallett_radiating_star",
           "kind": "generalisation",
           "text": "A mass that varies with null time, accompanied by radial radiation in a de Sitter background."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "Kottler's black hole with the mass inside each sphere free to depend on null time and on the radius. Anzhong Wang and Yumei Wu found the cosmological constant in the term $\\Lambda r^3/6$ of that mass [wang1999generalized]."
         }
       ],
       "references": [
@@ -72907,7 +73261,8 @@
         "romans1992",
         "akcay2011",
         "kiselev2003",
-        "hotta1993"
+        "hotta1993",
+        "wang1999generalized"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_de_sitter.json",
@@ -86022,6 +86377,11 @@
           "id": "scalar_collapse_cosmology",
           "kind": "family",
           "text": "A scalar field universe whose contracting branch Xiaobao Wang, Xiaoning Wu, and Sijie Gao joined along a light ray to Vaidya's outgoing radiation in 2019. The black hole that remains has a mass that follows a power law of exponent $1/2$ [wang2019critical]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "generalisation",
+          "text": "Vaidya's metric with the mass inside each sphere depending on the radius too, so that a fluid with density and pressure streams in beside the null dust. Viqar Husain found the first of these in 1996, and Anzhong Wang and Yumei Wu showed that such solutions add [husain1996null, wang1999generalized]."
         }
       ],
       "references": [
@@ -86065,7 +86425,9 @@
         "husain1994",
         "lemos1999",
         "nozawa2006",
-        "wang2019critical"
+        "wang2019critical",
+        "husain1996null",
+        "wang1999generalized"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/vaidya.json",
@@ -86309,6 +86671,11 @@
           "id": "dressed_btz",
           "kind": "family",
           "text": "A black hole of three dimensions dressed in a conformally coupled scalar field. Luis Avilés, Hideki Maeda, and Cristián Martínez worked through this collapse of light before finding a collapse of such a field from the massless BTZ spacetime that can settle to that black hole [aviles2018]."
+        },
+        {
+          "id": "generalised_vaidya",
+          "kind": "family",
+          "text": "Vaidya's metric with the mass inside each sphere depending on the radius as well. Anti-de Sitter space of four dimensions is the term $\\Lambda r^3/6$ in that mass with $\\Lambda < 0$ [wang1999generalized]."
         }
       ],
       "references": [
@@ -86329,7 +86696,8 @@
         "liu2014",
         "anous2016",
         "cardona2026",
-        "aviles2018"
+        "aviles2018",
+        "wang1999generalized"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ads_vaidya.json",

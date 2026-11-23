@@ -870,7 +870,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "de346f94fc2d0229",
+    "version": "d78cc94755a369fa",
     "diagrams": "25fdab20a4c5b620",
     "conformal": "e4851ed687f44f24",
     "embedding": "92e727392bc99d4e",
@@ -2598,6 +2598,40 @@
     "embedding": "0674f5fcca5d25f8"
   },
   {
+    "id": "generalised_vaidya",
+    "name": "Generalised Vaidya",
+    "tags": [
+      "null dust",
+      "radiating",
+      "accreting",
+      "time-dependent",
+      "black hole",
+      "mass",
+      "horizon",
+      "apparent horizon",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "naked singularity",
+      "cosmic censorship",
+      "gravitational collapse",
+      "anisotropic pressure",
+      "equation of state",
+      "energy conditions",
+      "superposition",
+      "Petrov type D",
+      "junction conditions",
+      "black hole shadow",
+      "spherically symmetric",
+      "four-dimensional"
+    ],
+    "version": "2d31a836471ef323",
+    "diagrams": "eeeec821960426e5",
+    "embedding": "a2104ed5c1fb6a3a",
+    "curvature": "e68dfb59225f4959"
+  },
+  {
     "id": "ghost_neutrinos",
     "name": "Ghost Neutrinos",
     "tags": [
@@ -2680,7 +2714,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "28986d097220ab16",
+    "version": "848e6e8fc48369fe",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "0715fc5083d2df7a",
@@ -3024,7 +3058,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "75e4b57b16260dc1",
+    "version": "238db59d15351f15",
     "diagrams": "a15527f5015cc33a",
     "conformal": "17d38d5b746db304",
     "embedding": "69d565d6dacdbb99",
@@ -4027,7 +4061,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1b4b30220846a655",
+    "version": "45746d31b6694059",
     "diagrams": "b8b3958f55b02f60",
     "conformal": "35112b5f8f3a4ad7",
     "embedding": "f88f2136771d0f0a",
@@ -4615,7 +4649,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "259995f61c9d86c1",
+    "version": "c9b8a63adec9a3e1",
     "diagrams": "5ff071701e011e10",
     "embedding": "b7ac17d3dbbc3535",
     "curvature": "c4423b74d3fb91f9"
@@ -6080,7 +6114,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "309784e1d8cfd934",
+    "version": "d6f51d5dd1518ec6",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6513,7 +6547,7 @@
       "Birkhoff theorem",
       "black hole pair creation"
     ],
-    "version": "c373f436a5517826",
+    "version": "bd3b88afcb35657e",
     "diagrams": "01986085179076c1",
     "conformal": "49ab4c59d25e2f88",
     "embedding": "2693e5d4af5edd89"
@@ -7608,7 +7642,7 @@
       "cosmic censorship",
       "Birkhoff theorem"
     ],
-    "version": "e620185562d34903",
+    "version": "7f7139d77b185f7e",
     "diagrams": "87052dae566b6395",
     "conformal": "d81c68a5362e7d21",
     "embedding": "dc1a255a7631d404",
@@ -7653,7 +7687,7 @@
       "five-dimensional",
       "spherically symmetric"
     ],
-    "version": "dc7e67a38835fda4",
+    "version": "666f77576282aa7f",
     "diagrams": "a72f42dab2b437ae",
     "conformal": "20d33b0ad03499d3",
     "embedding": "6614b788b39f0b9d",
