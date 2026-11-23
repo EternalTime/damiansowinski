@@ -76,6 +76,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "A static extremal charged black hole in five dimensions, with one spatial direction compactified on a circle [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "The same charged spheres in Majumdar and Papapetrou's static field, with no expansion, joined through a Reissner-Nordström black hole into a wormhole with both mouths in one universe. Alexey Smirnov made it expand in 2016 [schein1996, smirnov2016]."
     }
   ],
   "references": [
@@ -96,7 +101,9 @@
     "sperhake2015",
     "lindquist1957",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "schein1996",
+    "smirnov2016"
   ],
   "coordinates": [
     {

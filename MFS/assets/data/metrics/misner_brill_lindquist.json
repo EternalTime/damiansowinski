@@ -100,6 +100,11 @@
       "id": "bowen_york",
       "kind": "family",
       "text": "Linear momentum and spin enter through a conformal extrinsic curvature that solves the momentum constraint. The Hamiltonian constraint then determines the spatial conformal factor [cook2000, brandt1997]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "A static wormhole whose outside potential is found by the same inversion images, two charged spheres joined through a Reissner-Nordström black hole [schein1996]."
     }
   ],
   "references": [
@@ -133,7 +138,8 @@
     "clifton2012",
     "friedman1993",
     "brill1959",
-    "brill1996"
+    "brill1996",
+    "schein1996"
   ],
   "coordinates": [
     {

@@ -2735,6 +2735,11 @@
       "id": "kerr_disc_source",
       "kind": "family",
       "text": "Kerr's spacetime cut at the disc in its ring and glued to itself, with all the cut's matter on the seam [israel1970]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "Two thin shells of charged matter that can obey the energy conditions, joined through a Reissner-Nordström black hole into a wormhole with both mouths in one universe [schein1996]."
     }
   ],
   "references": [
@@ -2762,6 +2767,7 @@
     "danielson2021",
     "james2015",
     "kraus1999",
-    "israel1970"
+    "israel1970",
+    "schein1996"
   ]
 }

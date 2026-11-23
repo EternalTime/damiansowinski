@@ -121,6 +121,11 @@
       "id": "myers_compactified",
       "kind": "family",
       "text": "An extremal charged hole in five dimensions with one spatial direction curled into a circle, made from a periodic row of higher dimensional holes [horowitzmaeda2002, myers1987compact]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "composite",
+      "text": "Two of its charged bodies made into spheres and joined through a Reissner-Nordström black hole, a wormhole with both mouths in one universe [schein1996]."
     }
   ],
   "references": [
@@ -163,7 +168,8 @@
     "gibbons1995",
     "semerak2016",
     "horowitzmaeda2002",
-    "myers1987compact"
+    "myers1987compact",
+    "schein1996"
   ],
   "coordinates": [
     {

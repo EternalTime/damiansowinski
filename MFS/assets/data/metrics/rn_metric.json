@@ -233,6 +233,11 @@
       "id": "generalised_vaidya",
       "kind": "generalisation",
       "text": "The charged black hole with its mass free to depend on null time and on the radius. Viqar Husain's family of 1996 returns it at $k = 1$ with $f = M$ and $2g = Q^2$ [husain1996null]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "composite",
+      "text": "Two of its outer regions cut at one radius and glued to two charged spheres in a single universe, so that a traveller who crosses the black hole comes back out into the same universe [schein1996]."
     }
   ],
   "references": [
@@ -290,7 +295,8 @@
     "horne1992black",
     "chan1995",
     "cano2019",
-    "husain1996null"
+    "husain1996null",
+    "schein1996"
   ],
   "coordinates": [
     {

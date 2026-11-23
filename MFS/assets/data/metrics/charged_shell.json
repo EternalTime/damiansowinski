@@ -80,6 +80,11 @@
       "id": "electron_bubble",
       "kind": "family",
       "text": "The oblate shell rotates rigidly and carries tangential tension [burinskii2002sources]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "Two charged shells at rest with Reissner and Nordström's field between them, joined into a wormhole whose two mouths open into one universe [schein1996]."
     }
   ],
   "references": [
@@ -102,7 +107,8 @@
     "poisson1989",
     "ori1991charged",
     "bonnor1965",
-    "burinskii2002sources"
+    "burinskii2002sources",
+    "schein1996"
   ],
   "coordinates": [
     {

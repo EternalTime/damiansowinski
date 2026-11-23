@@ -97,6 +97,11 @@
       "id": "ads_vaidya",
       "kind": "family",
       "text": "A thin shell of light falling in anti-de Sitter space, with anti-de Sitter space inside it and a black hole outside. Its event horizon forms at the centre before the shell arrives, as this one's does [hubeny2007]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "Two charged shells at rest, their energy density set by the same junction conditions, joined through a Reissner-Nordström black hole into a wormhole [schein1996]."
     }
   ],
   "references": [
@@ -125,7 +130,8 @@
     "sakaihaines2000void",
     "gleiser2012radiative",
     "peleg1995",
-    "hubeny2007"
+    "hubeny2007",
+    "schein1996"
   ],
   "coordinates": [
     {

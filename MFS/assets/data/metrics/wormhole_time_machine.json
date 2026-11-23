@@ -3262,6 +3262,11 @@
       "id": "tippett_tsang",
       "kind": "family",
       "text": "A time machine in the shape of a box. Benjamin Tippett and David Tsang's bubble of 2017 carries its riders round a closed timelike curve, and like the wormhole it needs matter that violates the energy conditions [tippett2017]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "A wormhole whose time shift is built in. Its two mouths lie on either side of a charged black hole, one in the future of the other, and every event outside them lies on a closed timelike curve [schein1996, aichelburg1998]."
     }
   ],
   "references": [
@@ -3282,6 +3287,8 @@
     "ori2005",
     "everett1996",
     "everett1997",
-    "tippett2017"
+    "tippett2017",
+    "schein1996",
+    "aichelburg1998"
   ]
 }
