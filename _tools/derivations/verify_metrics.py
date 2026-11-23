@@ -1101,6 +1101,9 @@ DIMENSIONS = {
         "g": "L/T**2", "F": "1", "\\Phi": "1", "r": "L", "N": "1",
     },
     ("wormhole_time_machine", "short_throat"): {"t": "T", "l": "L", "\\theta": "1", "\\phi": "1", "b": "L"},
+    # Visser's Roman ring in the rest frame of the mouths: N counts the wormholes, L and ell are
+    # distances, R the radius of a mouth and T the time shift of each wormhole.
+    ("roman_ring", "rest"): {"t": "T", "x": "L", "y": "L", "z": "L", "N": "1", "L": "L", "T": "T", "\\ell": "L", "R": "L"},
     # Tippett and Tsang's bubble: the top hat function h is a pure number, and lambda, the polar
     # angle of the plane of ct and x, is the time of the two charts that use it.
     ("tippett_tsang", "cartesian"): {"t": "T", "x": "L", "y": "L", "z": "L", "h": "1"},

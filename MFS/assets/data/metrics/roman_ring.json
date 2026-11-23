@@ -1,0 +1,270 @@
+{
+  "id": "roman_ring",
+  "name": "Roman Ring of Wormholes",
+  "short_name": "Roman Ring",
+  "description": "Flat Minkowski space holding $N$ identical traversable wormholes at rest round a polygon, built by Matt Visser in 1997, each with its mouths a distance $L$ apart and a time shift $T$ between them, and each exit mouth a distance $\\ell$ from the entrance of the next. No single wormhole and no smaller group of them is near to forming a time machine, and the geodesic once round the whole ring is timelike once $cT > \\ell$. With enough wormholes the vacuum polarization at the throats stays arbitrarily small all the way to the reliability horizon.",
+  "tags": [
+    "wormhole",
+    "traversable",
+    "thin shell",
+    "cut and paste",
+    "exotic matter",
+    "locally flat",
+    "multiply connected",
+    "topology",
+    "closed timelike curves",
+    "time machine",
+    "chronology horizon",
+    "chronology protection",
+    "quantum field theory in curved spacetime",
+    "quantum gravity",
+    "causal structure",
+    "stationary",
+    "static",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "four-dimensional",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A traveller who steps into one wormhole of a Roman ring comes out of its other mouth a distance $L$ away and earlier by a time $T$, and then crosses a short stretch of flat space, of length $\\ell$, to the entrance of the next wormhole [visser1997]. Matt Visser of Washington University in Saint Louis set $N$ identical wormholes round a symmetric polygon in otherwise flat Minkowski space in 1997, with all their mouths at rest with respect to each other and $\\ell$ much smaller than $L$ [visser1997]. The space between the mouths is flat, and the Riemann tensor is a delta function on the surfaces that are identified [visser1997, visser1994]. After $N$ jumps and $N$ crossings the traveller is home, and the closed geodesic once round the ring has a length $s$ with $s^2 = N^2(\\ell^2 - c^2T^2)$ [visser1997]. That geodesic is timelike once $cT > \\ell$, and a geodesic through one wormhole and back through flat space has the interval $L^2 - c^2T^2$, large and positive for $cT$ much smaller than $L$ [visser1997]. Visser wrote that \"no subset of wormholes is near to chronology violation, though the combined system can be arbitrarily close to chronology violation\" [visser1997].¶Each wormhole is a pair of timelike world lines identified in Minkowski space, the model Visser had used in 1993, in which the event at time $t$ on the mouth at the origin is identified with the event at time $t + T$ on the mouth a distance $L$ away [visser1997, visser1993]. One such wormhole becomes a time machine once its mouths are closer together than $cT$, and Stephen Hawking conjectured that physics prevents a time machine from forming [visser1993]. Thomas Roman had considered two wormholes, neither a time machine on its own, that together make one, and Visser called this the Roman configuration [visser1994]. Visser showed in 1994 that two wormholes with their mouths at rest make a time machine once their two time shifts together exceed the time light takes for the two crossings from the exit mouth of each to the entrance mouth of the other [visser1994]. Maxim Lyutikov computed the vacuum polarization in Roman's spacetime, two wormholes moving at high speed past each other, and found in 1994 that its divergence at the chronology horizon can be made arbitrarily weak by taking their impact parameter arbitrarily large compared with their throat radii [lyutikov1994]. For two wormholes of human scale, Visser found the throats disrupted by vacuum polarization long before the Planck scale, and could push the disruption below it only with wormholes of femtometre radius as far apart as the radius of the universe [visser1994].¶Visser estimated the vacuum polarization at a point on any throat as $\\langle T^{\\mu\\nu}\\rangle \\approx \\Delta\\,\\hbar c\\,t^{\\mu\\nu}/s^4$, with $t^{\\mu\\nu}$ a dimensionless tensor built from the metric and the tangent to the geodesic, and $\\Delta$ the van Vleck determinant of the geodesic [visser1997]. On its way round, the geodesic passes through the $N - 1$ other wormholes, each mouth defocusing it, and at a throat $\\Delta = [N/U_{N-1}(1 + \\ell/R)]^2$, with $U_{N-1}$ a Chebyshev polynomial of the second kind and $R$ the radius of each mouth [visser1997]. The time shift and the jump drop out of the determinant, and for $\\ell$ much larger than $R$ it falls as $N^2(R/2\\ell)^{2(N-1)}$ [visser1997]. Visser adapted the determinant from a calculation of 1994 for a geodesic that wraps $N$ times through a single wormhole, in which the polynomials that appear are Chebyshev polynomials of the second kind in disguise, and called the proof \"a combinatoric agony\" [visser1997, visser1994]. With enough wormholes the determinant, and the vacuum polarization at every throat with it, is as small as desired [visser1997].¶Visser then shrank the ring adiabatically, holding $T$ fixed and letting $\\ell$ fall toward $cT$ [visser1997]. In a letter of the same year Visser defined the unreliable region, the points joined to themselves by a spacelike geodesic no longer than the Planck length $\\ell_P$, and the reliability horizon, the boundary of its future [visser1997reliability]. Inside that region, Visser argued, linearized gravitons interact strongly and the curvature fluctuates on the Planck scale even where its expectation value is mild [visser1997reliability]. For the ring the reliability horizon lies at $\\sqrt{\\ell^2 - c^2T^2} = \\ell_P$, and there too the vacuum polarization at each throat goes to zero as $N$ grows [visser1997]. With enough wormholes the back reaction can be kept, in Visser's words, \"arbitrarily small all the way down to the reliability horizon\" [visser1997].¶Serguei Krasnikov and Sergey Sushkov had found two other classes of time machine whose vacuum polarization is arbitrarily small all the way to the chronology horizon, and Visser obtained the ring \"in a radically different (and perhaps more physically transparent) manner\" [visser1997]. Visser concluded from the ring that no chronology protection theorem referring only to the reliable region can be physically reliable within semiclassical quantum gravity [visser1997]. Visser took the ring as \"an indication that resolving issues of chronology protection requires a fully developed theory of quantum gravity\", and in the letter of the same year suggested adopting chronology protection as an axiom [visser1997, visser1997reliability].¶Claes Cramer and Bernard Kay answered in 1998 that, by a theorem of Kay, Marek Radzikowski, and Robert Wald, the stress energy tensor of a linear scalar field in any Hadamard state is ill defined on a compactly generated Cauchy horizon, however small it is made on the way there [cramer1998, kay1997]. They argued that a time machine can still be taken to mean one that semiclassical gravity describes, and interpreted the theorem then as a \"no-go theorem\" [cramer1998]. Michael Cassidy and Hawking traced in 1998 the dominant divergence of the effective action of a quantum field at the polarised hypersurfaces of an acausal spacetime, the events joined to themselves by closed null geodesics, to two contributions [cassidy1998]. The first is finite only if the van Vleck determinant vanishes, as in the Roman ring, and they expected the second, which need not depend on that determinant, to make the action diverge in the ring too, \"although this remains to be explicitly shown\" [cassidy1998].",
+  "related": [
+    {
+      "id": "minkowski",
+      "kind": "locally_same",
+      "text": "Away from the mouths the ring is Minkowski space, with the surfaces round each pair of mouths identified [visser1997, visser1994]."
+    },
+    {
+      "id": "wormhole_time_machine",
+      "kind": "family",
+      "text": "One traversable wormhole made into a time machine. Each wormhole of the ring has the time shift such a machine needs, with its mouths kept farther apart than $cT$ [visser1993, visser1997]."
+    },
+    {
+      "id": "thin_shell_wormhole",
+      "kind": "family",
+      "text": "Cut and paste wormholes of the type Visser discussed in 1989, the kind each wormhole of the ring may be taken to be [visser1997]."
+    },
+    {
+      "id": "morris_thorne",
+      "kind": "family",
+      "text": "The smooth traversable wormhole, a throat of finite length between two mouths. The wormholes of the ring have throats shrunk to no length, flat space with the two mouths identified [visser1994]."
+    },
+    {
+      "id": "misner",
+      "kind": "family",
+      "text": "Minkowski space identified under a boost, a flat time machine made by identification alone. The ring's identifications join pairs of world lines across a jump $L$ with a time shift $T$ [cassidy1998, visser1997]."
+    },
+    {
+      "id": "gott_time_machine",
+      "kind": "family",
+      "text": "Two cosmic strings moving past each other at high speed, flat Minkowski space with identifications away from the strings. Roman's two wormholes also move past each other at high speed [cassidy1998, lyutikov1994]."
+    },
+    {
+      "id": "charged_shell_wormhole",
+      "kind": "family",
+      "text": "A wormhole with both mouths in one universe, built from two charged shells that can satisfy the energy conditions. Every point outside the shells lies on a closed timelike curve [schein1996]."
+    }
+  ],
+  "references": [
+    "visser1997",
+    "visser1994",
+    "visser1993",
+    "lyutikov1994",
+    "visser1997reliability",
+    "cramer1998",
+    "kay1997",
+    "cassidy1998",
+    "schein1996"
+  ],
+  "coordinates": [
+    {
+      "id": "rest",
+      "name": "Rest Frame of the Mouths",
+      "coords": [
+        "t",
+        "x",
+        "y",
+        "z"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "z \\in (-\\infty, \\infty)",
+        "|\\mathbf{x} - \\mathbf{a}_k| \\le R \\;\\text{and}\\; |\\mathbf{x} - \\mathbf{b}_k| \\le R \\;\\text{(the balls removed)}",
+        "\\mathcal{A}_k(t + T) \\sim \\mathcal{B}_k(t) \\;\\text{(each pair of spheres identified)}",
+        "N = 2, 3, \\dots",
+        "cT \\ll L, \\; \\ell \\ll L, \\; R \\ll \\ell",
+        "\\ell > cT \\;\\text{(the closed geodesic round the ring spacelike)}",
+        "\\text{flat outside the mouths: every curvature tensor vanishes}"
+      ],
+      "parameters": [
+        {
+          "symbol": "N",
+          "description": "Number of wormholes in the ring, numbered $k = 1, \\dots, N$ in order round it"
+        },
+        {
+          "symbol": "L",
+          "description": "Distance between the two mouths of each wormhole: with $\\mathbf{x}$ the position in space, the entrance mouth of wormhole $k$ is at rest at $\\mathbf{a}_k$ and its exit mouth at $\\mathbf{b}_k$, and $|\\mathbf{b}_k - \\mathbf{a}_k| = L$"
+        },
+        {
+          "symbol": "T",
+          "description": "Time shift of each wormhole: the entrance mouth at time $t + T$ is the exit mouth at time $t$"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Distance from the exit mouth of each wormhole to the entrance mouth of the next, $|\\mathbf{a}_{k+1} - \\mathbf{b}_k| = \\ell$, with $\\mathbf{a}_{N+1} = \\mathbf{a}_1$"
+        },
+        {
+          "symbol": "R",
+          "description": "Radius of each mouth: with $\\mathcal{A}_k(t)$ and $\\mathcal{B}_k(t)$ the spheres of radius $R$ about $\\mathbf{a}_k$ and $\\mathbf{b}_k$ at time $t$, the ball inside each sphere is removed"
+        }
+      ],
+      "convention": "We use the coordinates $(t, x, y, z)$ of the rest frame of the mouths, with $t$ having dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "x",
+            "x"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "z",
+            "z"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": []
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": []
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} = 0",
+        "\\ddot{x} = 0",
+        "\\ddot{y} = 0",
+        "\\ddot{z} = 0"
+      ]
+    }
+  ]
+}

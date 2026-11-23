@@ -4,7 +4,7 @@ charts of tov, malament_hogarth, nordstrom_scalar, einstein_1912_static, mixmast
 schwarzschild_de_sitter, schwarzschild_ads, topological_black_hole, ads_soliton, milne, einstein_rosen_waves, nariai, aichelburg_sexl, hotta_tanaka,
 khan_penrose, global_monopole, domain_wall, majumdar_papapetrou, melvin, thin_shell_wormhole, levi_civita, curzon_chazy, bonnor_rotating_dust,
 robinson_trautman, string_black_hole, mcvittie, tangherlini, boulware_deser, gott_time_machine, zipoy_voorhees, szekeres,
-kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine,
+kaluza_klein_monopole, bell_szekeres, spinning_string, photon_rocket, light_beam, wormhole_time_machine, roman_ring,
 damour_solodukhin, ori_time_machine, reissner_nordstrom_de_sitter, reissner_nordstrom_ads, string_wave, simpson_visser, bardeen, hayward, regular_black_hole_pure_gravity, fisher_jnw,
 black_string, myers_perry, black_saturn, near_horizon_extreme_kerr, hartle_thorne, randall_sundrum, witten_black_hole,
 som_raychaudhuri, point_particle_2plus1, coleman_de_luccia, senovilla, roberts, gravastar, siklos, kundt_waves,
@@ -6748,6 +6748,105 @@ def wormhole_accelerated_frame(chart):
 
 
 CHARTS["wormhole_time_machine"] = [lambda s=s: wormhole_time_machine(s) for s in WTM_CHARTS]
+
+
+# -- The Roman ring ------------------------------------------------------------------------
+
+def roman_ring():
+    """Visser's Roman ring (1997) in the rest frame of the mouths, Cartesian coordinates of
+    Minkowski space where the physics is in the domains: N wormholes, the entrance mouth of
+    wormhole k at a_k and its exit mouth at b_k, |b_k - a_k| = L and |a_(k+1) - b_k| = ell, the
+    balls of radius R about the mouths removed and each entrance sphere at t + T identified with
+    its exit sphere at t, Visser 1997 p. 2 and Fig. 1, Visser 1993 eq. (3.1) and Visser 1994
+    eq. (124). Outside the mouths every curvature tensor vanishes. roman_ring.md derives it."""
+    coords, parameters = ["t", "x", "y", "z"], ["N", "L", "T", "\\ell", "R"]
+    probe = vm.Reader(coords, parameters, ())
+    reals = "(-\\infty, \\infty)"
+    return {
+        "metric_id": "roman_ring",
+        "system": {"id": "rest", "name": "Rest Frame of the Mouths", "coords": coords,
+                   "domains": [f"{x} \\in {reals}" for x in coords] + [
+                       "|\\mathbf{x} - \\mathbf{a}_k| \\le R \\;\\text{and}\\; |\\mathbf{x} - \\mathbf{b}_k| \\le R "
+                       "\\;\\text{(the balls removed)}",
+                       "\\mathcal{A}_k(t + T) \\sim \\mathcal{B}_k(t) \\;\\text{(each pair of spheres identified)}",
+                       "N = 2, 3, \\dots",
+                       "cT \\ll L, \\; \\ell \\ll L, \\; R \\ll \\ell",
+                       "\\ell > cT \\;\\text{(the closed geodesic round the ring spacelike)}",
+                       "\\text{flat outside the mouths: every curvature tensor vanishes}"],
+                   "parameters": parameters, "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2"},
+        "chart_line_element": "ds^2 = -dt^2 + dx^2 + dy^2 + dz^2",
+        "printer": {"lead": [probe.c, probe.symbol["t"]]},
+        "time": "t",
+        "check": roman_ring_check,
+    }
+
+
+def roman_ring_polygon(N, L, ell):
+    """The mouths of a symmetric ring in the plane z = 0, entrance a_k and exit b_k for k = 0, ..., N - 1:
+    a polygon of 2N sides inscribed in a circle, the sides alternately L (a wormhole) and ell (a crossing),
+    turned into itself by a rotation through 2 pi/N. Visser gives the lengths and the symmetry alone
+    (1997, p. 2 and Fig. 2); this circle is the drawings' choice. The half angles A and B of the two
+    chords satisfy A + B = pi/N and L/sin(A) = ell/sin(B), the diameter of the circle."""
+    A = sp.atan2(L * sp.sin(sp.pi / N), ell + L * sp.cos(sp.pi / N))
+    rho = L / (2 * sp.sin(A))
+    a, b = [], []
+    for k in range(N):
+        start = 2 * sp.pi * k / N
+        a.append((rho * sp.cos(start), rho * sp.sin(start)))
+        b.append((rho * sp.cos(start + 2 * A), rho * sp.sin(start + 2 * A)))
+    return a, b, rho
+
+
+def roman_ring_check(chart):
+    """The chart is Minkowski's; and Visser's own formulas hold where they meet.
+
+    Visser 1994 eqs. (115)-(116) give the van Vleck determinant at a throat of a geodesic wrapping N
+    times through a wormhole as N^2 P_(N-1)(2 ell/R)^-2, with P_N(z) the sum over n of C(N + n + 1, 2n + 1) z^n
+    of eq. (65). P_N(z) = U_N(1 + z/2), a Chebyshev polynomial of the second kind; the argument printed in
+    eq. (66), (z + 4)/2, fails at N = 1, where P_1 = 2 + z. With it the determinant is Visser 1997 eq. (6),
+    [N/U_(N-1)(1 + ell/R)]^2, which falls as N^2 (R/2 ell)^(2(N - 1)), eq. (7), for ell much larger than R.
+    The symmetric polygon of the drawings has sides L and ell, and once round it the closed geodesic,
+    N crossings of length ell and N time shifts T, has s^2 = N^2(ell^2 - c^2T^2), eq. (2)."""
+    if chart.geo.g != sp.diag(-1, 1, 1, 1):
+        raise AssertionError("the rest frame chart is not Minkowski's metric")
+    z, x = sp.symbols("z x")
+    for n in range(9):
+        P = sum(sp.binomial(n + j + 1, 2 * j + 1) * z ** j for j in range(n + 1))
+        if sp.expand(P - sp.chebyshevu(n, 1 + z / 2)) != 0:
+            raise AssertionError(f"P_{n}(z) is not U_{n}(1 + z/2)")
+    for N in range(2, 7):
+        for q in (sp.Rational(3, 2), 7, sp.Rational(1000, 3)):
+            P = sum(sp.binomial(N + j, 2 * j + 1) * (2 * q) ** j for j in range(N))
+            if sp.simplify(N ** 2 / P ** 2 - (N / sp.chebyshevu(N - 1, 1 + q)) ** 2) != 0:
+                raise AssertionError(f"the 1994 and 1997 determinants differ at N = {N}, ell/R = {q}")
+        q = 10 ** 5
+        ratio = (N / sp.chebyshevu(N - 1, 1 + q)) ** 2 / (N ** 2 * sp.Rational(1, 2 * q) ** (2 * (N - 1)))
+        if abs(float(ratio) - 1) > 1e-3 * N:
+            raise AssertionError(f"Visser's eq. (7) does not approximate eq. (6) at N = {N}")
+        L, ell, cT = sp.Integer(10), sp.Rational(3, 2), sp.Rational(6, 5)
+        a, b, rho = roman_ring_polygon(N, L, ell)
+        for k in range(N):
+            jump = sp.sqrt((b[k][0] - a[k][0]) ** 2 + (b[k][1] - a[k][1]) ** 2)
+            nxt = a[(k + 1) % N]
+            cross = sp.sqrt((nxt[0] - b[k][0]) ** 2 + (nxt[1] - b[k][1]) ** 2)
+            if abs(float(jump - L)) > 1e-12 or abs(float(cross - ell)) > 1e-12:
+                raise AssertionError(f"the polygon at N = {N} does not have sides L and ell")
+        # A closed curve once round: N straight crossings of length ell taking times d_k, the jumps
+        # summing to N T. Its length is stationary, as Visser 1994 eq. (130) asks of the two-wormhole
+        # curve, where every d_k = T, and there it is s = N sqrt(ell^2 - c^2T^2).
+        d = sp.symbols(f"d0:{N}")
+        length = sum(sp.sqrt(ell ** 2 - dk ** 2) for dk in d)
+        lam = sp.Symbol("lam")
+        grad = [sp.diff(length, dk) - lam for dk in d] + [sum(d) - N * cT]
+        at = {dk: cT for dk in d}
+        lam_at = sp.diff(length, d[0]).subs(at)
+        if any(sp.simplify(g.subs(at).subs(lam, lam_at)) != 0 for g in grad):
+            raise AssertionError(f"the equal crossings are not where the length round the ring is stationary at N = {N}")
+        if sp.simplify(length.subs(at) ** 2 - N ** 2 * (ell ** 2 - cT ** 2)) != 0:
+            raise AssertionError("the closed geodesic round the ring is not s^2 = N^2(ell^2 - c^2T^2)")
+
+
+CHARTS["roman_ring"] = [roman_ring]
 
 
 # -- The Damour-Solodukhin wormhole ------------------------------------------------------
