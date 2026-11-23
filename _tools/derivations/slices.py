@@ -5234,3 +5234,10 @@ FLAT_METRICS.add(_repulson_drawings.METRIC)
 import dressed_btz_drawings as _dressed_btz_drawings  # noqa: E402
 FLAT.update(_dressed_btz_drawings.slice_table(sys.modules[__name__]))
 FLAT_METRICS.add(_dressed_btz_drawings.METRIC)
+
+import generalised_vaidya_drawings as _generalised_vaidya_drawings  # noqa: E402
+FLAT[(_generalised_vaidya_drawings.METRIC, "ingoing", "collapse")] = (
+    lambda: _generalised_vaidya_drawings.slice_marks(sys.modules[__name__]))
+FLAT_METRICS.add(_generalised_vaidya_drawings.METRIC)
+HIDDEN.update({(_generalised_vaidya_drawings.METRIC, system, view): _generalised_vaidya_drawings.HIDDEN_REASON
+               for system, view in (("husain", "hair"), ("outgoing", "strings"))})

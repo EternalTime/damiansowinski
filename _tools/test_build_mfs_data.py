@@ -3312,6 +3312,7 @@ class StacksAndMovies(unittest.TestCase):
               ("malament_hogarth", "plane"): "$ct$", ("mixmaster", "sphere"): "$c\\tau$",
               ("oppenheimer_snyder", "collapse"): "$c\\tau$", ("white_hole", "explosion"): "$c\\tau$",
               ("vaidya", "shell"): "$v - r$", ("ads_vaidya", "shell"): "$cv - \\ell\\arctan(r/\\ell)$",
+              ("generalised_vaidya", "collapse"): "$cv - r$",
               ("semiclosed_world", "bag"): "$c\\tau$", ("datt_ruban_t_models", "tsphere"): "$c\\tau$",
               ("lindquist_wheeler_lattice", "lattice"): "$c\\tau$",
               ("bonnor_vaidya", "shell"): "$v - r$", ("israel_shell", "shell"): "$v - r$", ("black_to_white_hole", "collapse"): "$ct$",
@@ -5303,7 +5304,8 @@ class Slices(unittest.TestCase):
         if key == "ads_vaidya/ingoing_three/shell":
             # The moment cv - l arctan(r/l) = t l, drawn against r and cv at l = 1.
             return (lambda X: t + math.atan(X)), list(self.reach(surface))
-        if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell"):
+        if key in ("vaidya/eddington_finkelstein_ingoing/shell", "bonnor_vaidya/eddington_finkelstein_ingoing/shell",
+                   "generalised_vaidya/ingoing/collapse"):
             return (lambda X: t), list(self.reach(surface))
         if key.startswith("charged_shell/"):
             # The balanced shell at rest: t = 0 in the isotropic chart, from the shell out. The falling

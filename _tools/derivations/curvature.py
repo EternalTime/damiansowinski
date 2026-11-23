@@ -19326,5 +19326,9 @@ _repulson_drawings.register_curvature(sys.modules[__name__])
 import dressed_btz_drawings as _dressed_btz_drawings
 _dressed_btz_drawings.register_curvature(sys.modules[__name__])
 
+import generalised_vaidya_drawings as _generalised_vaidya_drawings
+DRAWN[_generalised_vaidya_drawings.METRIC] = lambda ck, src: _generalised_vaidya_drawings.curvature_views(
+    ck, src, sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

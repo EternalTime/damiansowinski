@@ -19522,5 +19522,8 @@ _repulson_drawings.register_null(sys.modules[__name__])
 import dressed_btz_drawings as _dressed_btz_drawings
 _dressed_btz_drawings.register_null(sys.modules[__name__])
 
+import generalised_vaidya_drawings as _generalised_vaidya_drawings
+_generalised_vaidya_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
