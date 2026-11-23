@@ -5919,6 +5919,23 @@ class Slices(unittest.TestCase):
         if key == "dimensionally_continued/conformal/radial":
             # The embedding is read in the static r, and the conformal chart's rho is arccos(r_+/r) at r_+ = 1.
             return (lambda X: 0.0), [math.acos(1 / r) for r in self.reach(surface)]
+        if key.startswith("bmpv/"):
+            # The moment t = 0 of the Hopf chart at mu = 1 and j = 1/2: t = 0 along the same radius on the
+            # Euler chart, along the isotropic sqrt(r^2 - mu), and on the ingoing chart cv = r_*, drawn against
+            # cv - r, with r_* = r - int_r^inf (sqrt(1 - j^2/s^6)/(1 - 1/s^2)^2 - 1) ds, the shift of the
+            # advanced time, taken here by mpmath's quadrature of that integral.
+            lo, hi = self.reach(surface)
+            if "/isotropic/" in key:
+                return (lambda X: 0.0), [math.sqrt(r * r - 1) for r in (lo, hi)]
+            if "/ingoing/" in key:
+                import mpmath
+
+                def rstar(r):
+                    tail = mpmath.quad(lambda s: mpmath.sqrt(1 - mpmath.mpf(1) / (4 * s ** 6)) / (1 - 1 / s ** 2) ** 2 - 1,
+                                       [r, 2, 50, mpmath.inf])
+                    return float(r - tail)
+                return (lambda X: rstar(X) - X), [lo, hi]
+            return (lambda X: 0.0), [lo, hi]
         if key == "waves_in_friedmann/closed_toroidal/closed":
             # The closed stiff universe at its greatest expansion, eta = pi/4, from axis to axis.
             return (lambda X: math.pi / 4), list(self.reach(surface))
