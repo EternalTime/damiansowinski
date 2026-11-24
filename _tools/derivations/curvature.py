@@ -19338,5 +19338,8 @@ DRAWN[_bmpv_drawings.METRIC] = lambda ck, src: _bmpv_drawings.curvature_views(ck
 import naked_black_holes_drawings as _naked_black_holes_drawings
 _naked_black_holes_drawings.register_curvature(sys.modules[__name__])
 
+import chamseddine_volkov_monopole_drawings as _chamseddine_volkov_monopole_drawings
+_chamseddine_volkov_monopole_drawings.register_curvature(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

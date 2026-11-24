@@ -5310,3 +5310,7 @@ _constant_curvature_black_hole_drawings.register_slices(sys.modules[__name__])
 
 import naked_black_holes_drawings as _naked_black_holes_drawings  # noqa: E402
 _naked_black_holes_drawings.register_slices(sys.modules[__name__])
+
+import chamseddine_volkov_monopole_drawings as _chamseddine_volkov_monopole_drawings  # noqa: E402
+FLAT.update(_chamseddine_volkov_monopole_drawings.slice_table(sys.modules[__name__]))
+FLAT_METRICS.add(_chamseddine_volkov_monopole_drawings.METRIC)

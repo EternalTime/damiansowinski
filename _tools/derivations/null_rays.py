@@ -19539,5 +19539,8 @@ _constant_curvature_black_hole_drawings.register_null(sys.modules[__name__])
 import naked_black_holes_drawings as _naked_black_holes_drawings
 _naked_black_holes_drawings.register_null(sys.modules[__name__])
 
+import chamseddine_volkov_monopole_drawings as _chamseddine_volkov_monopole_drawings
+_chamseddine_volkov_monopole_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
