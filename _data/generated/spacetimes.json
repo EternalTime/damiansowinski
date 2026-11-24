@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 270,
+  "count": 271,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1626,6 +1626,11 @@
           "id": "dressed_btz",
           "kind": "family",
           "text": "A black hole of three dimensions dressed in a conformally coupled scalar field, which approaches anti-de Sitter space far from its horizon. Its Ricci scalar is that of anti-de Sitter space at every point, though its Cotton tensor is not zero [martinez1996, natsuume2000a]."
+        },
+        {
+          "id": "constant_curvature_black_hole",
+          "kind": "locally_same",
+          "text": "Anti-de Sitter space of four or more dimensions with its points identified along a boost, a black hole that is anti-de Sitter space at every point [banados1998]."
         }
       ],
       "references": [
@@ -1692,7 +1697,8 @@
         "balasubramanian2011",
         "banados1994",
         "martinez1996",
-        "natsuume2000a"
+        "natsuume2000a",
+        "banados1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3932,6 +3938,11 @@
           "id": "dressed_btz",
           "kind": "family",
           "text": "A static black hole of three dimensions dressed in a conformally coupled scalar field that is finite outside it. Cristián Martínez and Jorge Zanelli found it in 1996 in the theory of this hole with the field added, and its curvature grows without bound at its centre [martinez1996]."
+        },
+        {
+          "id": "constant_curvature_black_hole",
+          "kind": "family",
+          "text": "The same identification of anti-de Sitter space along a boost, in any number of dimensions. In three dimensions its Kruskal metric is this hole without rotation [banados1998]."
         }
       ],
       "references": [
@@ -3974,7 +3985,8 @@
         "banados1994",
         "chan1994",
         "chan1995",
-        "martinez1996"
+        "martinez1996",
+        "banados1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -19034,6 +19046,634 @@
           ],
           "ricci_scalar": "R = 4\\Lambda_F",
           "kretschmann": "K = \\dfrac{8\\Lambda_F^2}{3}"
+        }
+      ]
+    },
+    {
+      "id": "constant_curvature_black_hole",
+      "name": "Constant Curvature Black Holes",
+      "short_name": "Constant Curvature Black Holes",
+      "description": "Anti-de Sitter space of four or more dimensions with its points identified along a boost, a black hole of constant negative curvature whose event horizon in four dimensions is a torus that grows in time.",
+      "tags": [
+        "black hole",
+        "anti-de Sitter",
+        "constant curvature",
+        "negative cosmological constant",
+        "cosmological constant",
+        "higher dimensions",
+        "horizon",
+        "event horizon",
+        "apparent horizon",
+        "trapped surface",
+        "horizon topology",
+        "torus",
+        "topology",
+        "time-dependent",
+        "causal structure",
+        "closed timelike curves",
+        "Kruskal extension",
+        "BTZ black hole",
+        "supergravity",
+        "black hole thermodynamics",
+        "black hole entropy",
+        "AdS/CFT",
+        "holography",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "Einstein space",
+        "conformally flat",
+        "four-dimensional",
+        "five-dimensional"
+      ],
+      "signature": "(-,+,\\ldots,+)",
+      "convention": "No coordinate has dimensions of time, and a dot in the geodesic equations is a derivative with respect to an affine parameter. The Ricci tensor is the standard contraction $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "locally_same",
+          "text": "The space these black holes are quotients of, by the group that one boost generates, so the two are the same at every point [banados1998]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions, made by identifying points of anti-de Sitter space in the same way. Without rotation it is the Kruskal metric of these holes in three dimensions [banados1998]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "Black holes that Åminneborg, Bengtsson, Holst, and Peldán made by identifying points of anti-de Sitter space in the same 1996 paper as the toroidal hole of four dimensions, with horizons of genus two or more [aminneborg1996]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space with a curvature singularity at its centre. Continued analytically into a bubble of nothing with its mass set to zero, and with points identified, it becomes the hole of four dimensions [aman2008, cai2002constant]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Flat space with its points identified by a boost. Anti-de Sitter space identified in the same way is a black hole [banados1998]."
+        },
+        {
+          "id": "btz_multi_holes_wormholes",
+          "kind": "family",
+          "text": "Anti-de Sitter space of three dimensions cut along timelike surfaces and glued back together, into many black holes or one with a wormhole inside, each of constant curvature as these holes are."
+        }
+      ],
+      "references": [
+        "banados1998",
+        "aminneborg1996",
+        "holst1997",
+        "banados1998gomberoff",
+        "figueroa2004",
+        "creighton1998",
+        "cai2002constant",
+        "ross2005",
+        "aman2008",
+        "aminneborg2008",
+        "cai2011",
+        "guilleminot2017",
+        "guilleminot2018",
+        "anand2025"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/constant_curvature_black_hole.json",
+      "charts": [
+        {
+          "id": "kruskal",
+          "name": "Kruskal",
+          "coordinates": [
+            "y_0",
+            "y_1",
+            "y_2",
+            "\\varphi"
+          ],
+          "domains": [
+            "y_0 \\in (-\\infty, \\infty)",
+            "y_1 \\in (-\\infty, \\infty)",
+            "y_2 \\in (-\\infty, \\infty)",
+            "\\varphi \\in [0, 2\\pi)",
+            "-1 < -y_0^2 + y_1^2 + y_2^2 < 1",
+            "y_0^2 = y_1^2 + y_2^2 \\;\\text{(the event horizon)}",
+            "y_0^2 = 1 + y_1^2 + y_2^2 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            },
+            {
+              "symbol": "r = r_+\\dfrac{1 - y_0^2 + y_1^2 + y_2^2}{1 + y_0^2 - y_1^2 - y_2^2}",
+              "description": "Radius of the circle of $\\varphi$, a length"
+            }
+          ],
+          "convention": "We use Bañados, Gomberoff, and Martínez's Kruskal coordinates $(y_0, y_1, y_2, \\varphi)$, all dimensionless, with $\\varphi$ the identified angle.",
+          "line_element": "ds^2 = \\dfrac{l^2\\left(r + r_+\\right)^2}{r_+^2}\\left(-dy_0^2 + dy_1^2 + dy_2^2\\right) + r^2d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "y_0",
+                "y_0"
+              ],
+              "value": "-\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "y_1",
+                "y_1"
+              ],
+              "value": "\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "y_2",
+                "y_2"
+              ],
+              "value": "\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{r_+^2\\left(y_0^2 - y_1^2 - y_2^2 - 1\\right)^2}{\\left(y_0^2 - y_1^2 - y_2^2 + 1\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{l^2}",
+          "kretschmann": "K = \\dfrac{24}{l^4}"
+        },
+        {
+          "id": "static",
+          "name": "Static",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in (0, \\pi)",
+            "\\varphi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            }
+          ],
+          "convention": "We use Bañados, Gomberoff, and Martínez's static coordinates $(t, r, \\theta, \\varphi)$, with $r$ a length and $t$, $\\theta$, and $\\varphi$ dimensionless.",
+          "line_element": "ds^2 = \\left(r^2 - r_+^2\\right)\\left(-\\sin^2\\theta\\,dt^2 + \\dfrac{l^2}{r_+^2}d\\theta^2\\right) + \\dfrac{l^2\\,dr^2}{r^2 - r_+^2} + r^2d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(r + r_+\\right)\\left(r - r_+\\right)\\sin^2\\theta"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{l^2}{\\left(r + r_+\\right)\\left(r - r_+\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{l^2\\left(r + r_+\\right)\\left(r - r_+\\right)}{r_+^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{l^2}",
+          "kretschmann": "K = \\dfrac{24}{l^4}"
+        },
+        {
+          "id": "exterior",
+          "name": "Exterior",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in [0, 2\\pi)",
+            "\\varphi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            }
+          ],
+          "convention": "We use Bañados, Gomberoff, and Martínez's coordinates $(t, r, \\theta, \\varphi)$ of the whole exterior, with $r$ a length and $t$, $\\theta$, and $\\varphi$ dimensionless.",
+          "line_element": "ds^2 = \\left(r^2 - r_+^2\\right)\\left(-dt^2 + \\dfrac{l^2}{r_+^2}\\cosh^2\\left(\\dfrac{r_+t}{l}\\right)\\,d\\theta^2\\right) + \\dfrac{l^2\\,dr^2}{r^2 - r_+^2} + r^2d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(r + r_+\\right)\\left(r - r_+\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{l^2}{\\left(r + r_+\\right)\\left(r - r_+\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{l^2\\left(r + r_+\\right)\\left(r - r_+\\right)\\cosh^2\\left(\\dfrac{r_+\\,t}{l}\\right)}{r_+^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{l^2}",
+          "kretschmann": "K = \\dfrac{24}{l^4}"
+        },
+        {
+          "id": "interior",
+          "name": "Holst-Peldán Interior",
+          "coordinates": [
+            "r",
+            "t",
+            "\\psi",
+            "\\varphi"
+          ],
+          "domains": [
+            "r \\in (0, 1)",
+            "t \\in [0, \\infty)",
+            "\\psi \\in [0, 2\\pi r_+/l)",
+            "\\varphi \\in [0, 2\\pi)",
+            "r = 0 \\;\\text{(the singularity)}",
+            "r = 1 \\;\\text{(the event horizon)}",
+            "r = 1/2 \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            }
+          ],
+          "convention": "We use Holst and Peldán's coordinates $(r, t, \\psi, \\varphi)$ of the interior, all dimensionless, with their unit radius restored as $l$. Their $r$ is the radius of the Kruskal chart divided by $r_+$, their $\\psi$ is $r_+/l$ times the identified angle $\\varphi$ of the other charts, and their $\\varphi$ is the angle $\\theta$ of the exterior chart.",
+          "line_element": "ds^2 = l^2\\left(-\\dfrac{dr^2}{1 - r^2} + \\left(1 - r^2\\right)dt^2 + r^2d\\psi^2 + \\left(1 - r^2\\right)\\sinh^2t\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "-\\dfrac{l^2}{\\left(1 + r\\right)\\left(1 - r\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "l^2\\left(1 + r\\right)\\left(1 - r\\right)"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "l^2\\,r^2"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "l^2\\left(1 + r\\right)\\left(1 - r\\right)\\sinh^2 t"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{l^2}",
+          "kretschmann": "K = \\dfrac{24}{l^4}"
+        },
+        {
+          "id": "null",
+          "name": "Holst-Peldán Null",
+          "coordinates": [
+            "u",
+            "v",
+            "\\psi",
+            "\\varphi"
+          ],
+          "domains": [
+            "u \\in (0, \\pi/4)",
+            "v \\in [u, \\pi/2 - u)",
+            "\\psi \\in [0, 2\\pi r_+/l)",
+            "\\varphi \\in [0, 2\\pi)",
+            "u = 0 \\;\\text{(the event horizon)}",
+            "u + v = \\pi/2 \\;\\text{(the singularity)}",
+            "\\tan u\\tan v = 1/3 \\;\\text{(the apparent horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            },
+            {
+              "symbol": "\\alpha = u + v",
+              "description": "Sum of the null coordinates"
+            },
+            {
+              "symbol": "\\beta = v - u",
+              "description": "Difference of the null coordinates"
+            }
+          ],
+          "convention": "We use Holst and Peldán's null coordinates $(u, v, \\psi, \\varphi)$, all dimensionless, with $\\tan u = e^{-t}\\sqrt{(1 - r)/(1 + r)}$ and $\\tan v = e^t\\sqrt{(1 - r)/(1 + r)}$ in the interior chart and their unit radius restored as $l$.",
+          "line_element": "ds^2 = \\dfrac{l^2}{\\cos^2\\beta}\\left(-4\\,du\\,dv + \\cos^2\\alpha\\,d\\psi^2 + \\sin^2\\beta\\,d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "u",
+                "v"
+              ],
+              "value": "-\\dfrac{2l^2}{\\cos^2\\beta}"
+            },
+            {
+              "indices": [
+                "v",
+                "u"
+              ],
+              "value": "-\\dfrac{2l^2}{\\cos^2\\beta}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\dfrac{l^2\\cos^2\\alpha}{\\cos^2\\beta}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{l^2\\sin^2\\beta}{\\cos^2\\beta}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{l^2}",
+          "kretschmann": "K = \\dfrac{24}{l^4}"
+        },
+        {
+          "id": "kruskal_five",
+          "name": "Kruskal, Five Dimensions",
+          "coordinates": [
+            "y_0",
+            "y_1",
+            "y_2",
+            "y_3",
+            "\\varphi"
+          ],
+          "domains": [
+            "y_0 \\in (-\\infty, \\infty)",
+            "y_1 \\in (-\\infty, \\infty)",
+            "y_2 \\in (-\\infty, \\infty)",
+            "y_3 \\in (-\\infty, \\infty)",
+            "\\varphi \\in [0, 2\\pi)",
+            "-1 < -y_0^2 + y_1^2 + y_2^2 + y_3^2 < 1",
+            "y_0^2 = y_1^2 + y_2^2 + y_3^2 \\;\\text{(the event horizon)}",
+            "y_0^2 = 1 + y_1^2 + y_2^2 + y_3^2 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            },
+            {
+              "symbol": "r = r_+\\dfrac{1 - y_0^2 + y_1^2 + y_2^2 + y_3^2}{1 + y_0^2 - y_1^2 - y_2^2 - y_3^2}",
+              "description": "Radius of the circle of $\\varphi$, a length"
+            }
+          ],
+          "convention": "We use Bañados's Kruskal coordinates $(y_0, y_1, y_2, y_3, \\varphi)$ of five dimensions, all dimensionless, with $\\varphi$ the identified angle.",
+          "line_element": "ds^2 = \\dfrac{l^2\\left(r + r_+\\right)^2}{r_+^2}\\left(-dy_0^2 + dy_1^2 + dy_2^2 + dy_3^2\\right) + r^2d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "y_0",
+                "y_0"
+              ],
+              "value": "-\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 - y_3^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "y_1",
+                "y_1"
+              ],
+              "value": "\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 - y_3^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "y_2",
+                "y_2"
+              ],
+              "value": "\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 - y_3^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "y_3",
+                "y_3"
+              ],
+              "value": "\\dfrac{4l^2}{\\left(y_0^2 - y_1^2 - y_2^2 - y_3^2 + 1\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{r_+^2\\left(y_0^2 - y_1^2 - y_2^2 - y_3^2 - 1\\right)^2}{\\left(y_0^2 - y_1^2 - y_2^2 - y_3^2 + 1\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{l^2}",
+          "kretschmann": "K = \\dfrac{40}{l^4}"
+        },
+        {
+          "id": "static_five",
+          "name": "Static, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\chi",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in [0, \\pi/2)",
+            "\\chi \\in [0, 2\\pi)",
+            "\\varphi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            }
+          ],
+          "convention": "We use Bañados's static coordinates $(t, r, \\theta, \\chi, \\varphi)$ of five dimensions, with $r$ a length and $t$, $\\theta$, $\\chi$, and $\\varphi$ dimensionless.",
+          "line_element": "ds^2 = \\left(r^2 - r_+^2\\right)\\left(-\\cos^2\\theta\\,dt^2 + \\dfrac{l^2}{r_+^2}\\left(d\\theta^2 + \\sin^2\\theta\\,d\\chi^2\\right)\\right) + \\dfrac{l^2\\,dr^2}{r^2 - r_+^2} + r^2d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(r + r_+\\right)\\left(r - r_+\\right)\\cos^2\\theta"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{l^2}{\\left(r + r_+\\right)\\left(r - r_+\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{l^2\\left(r + r_+\\right)\\left(r - r_+\\right)}{r_+^2}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{l^2\\left(r + r_+\\right)\\left(r - r_+\\right)\\sin^2\\theta}{r_+^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{l^2}",
+          "kretschmann": "K = \\dfrac{40}{l^4}"
+        },
+        {
+          "id": "exterior_five",
+          "name": "Exterior, Five Dimensions",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\chi",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_+, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\chi \\in [0, 2\\pi)",
+            "\\varphi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "l",
+              "description": "Anti-de Sitter radius, a length, with $\\Lambda = -3/l^2$ in four dimensions and $\\Lambda = -6/l^2$ in five"
+            },
+            {
+              "symbol": "r_+",
+              "description": "Horizon radius, a length, the radius of each circle on the horizon"
+            }
+          ],
+          "convention": "We use Cai's coordinates $(t, r, \\theta, \\chi, \\varphi)$ of the whole exterior in five dimensions, with $r$ a length and $t$, $\\theta$, $\\chi$, and $\\varphi$ dimensionless.",
+          "line_element": "ds^2 = \\left(r^2 - r_+^2\\right)\\left(-dt^2 + \\dfrac{l^2}{r_+^2}\\cosh^2\\left(\\dfrac{r_+t}{l}\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\chi^2\\right)\\right) + \\dfrac{l^2\\,dr^2}{r^2 - r_+^2} + r^2d\\varphi^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(r + r_+\\right)\\left(r - r_+\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{l^2}{\\left(r + r_+\\right)\\left(r - r_+\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{l^2\\left(r + r_+\\right)\\left(r - r_+\\right)\\cosh^2\\left(\\dfrac{r_+\\,t}{l}\\right)}{r_+^2}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{l^2\\left(r + r_+\\right)\\left(r - r_+\\right)\\cosh^2\\left(\\dfrac{r_+\\,t}{l}\\right)\\sin^2\\theta}{r_+^2}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "r^2"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{20}{l^2}",
+          "kretschmann": "K = \\dfrac{40}{l^4}"
         }
       ]
     },
@@ -53472,6 +54112,11 @@
           "id": "btz_shock_wave",
           "kind": "family",
           "text": "The BTZ black hole with a shock wave on its horizon, another way of changing the inside of the black hole while each outside stays the BTZ black hole's."
+        },
+        {
+          "id": "constant_curvature_black_hole",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four or more dimensions identified along one boost, a single black hole whose event horizon in four dimensions is a growing torus [aminneborg1996]."
         }
       ],
       "references": [
@@ -56540,6 +57185,11 @@
           "id": "roman_ring",
           "kind": "family",
           "text": "Minkowski space brought close to a time machine by identifications too: pairs of mouths joined across a jump $L$ with a time shift $T$, set round a ring [visser1997]."
+        },
+        {
+          "id": "constant_curvature_black_hole",
+          "kind": "family",
+          "text": "Anti-de Sitter space identified under a boost, a black hole in four or more dimensions, as Misner's space is Minkowski space identified under one [banados1998]."
         }
       ],
       "references": [
@@ -56566,7 +57216,8 @@
         "brill1996",
         "moncriefisenberg1983",
         "louko_marolf1994",
-        "visser1997"
+        "visser1997",
+        "banados1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -74554,6 +75205,11 @@
           "id": "dimensionally_continued",
           "kind": "generalisation",
           "text": "The same black hole continued to every even dimension in Lovelock's theory with every coefficient set by one length. In $D = 2n$ dimensions the metric function has $(r_s/r)^{1/(n-1)}$ where this one has $r_s/r$ [banados1994]."
+        },
+        {
+          "id": "constant_curvature_black_hole",
+          "kind": "family",
+          "text": "Anti-de Sitter space identified along a boost. The Schwarzschild-anti-de Sitter hole continued analytically into a bubble of nothing with its mass set to zero, and with points identified, is the constant curvature hole of four dimensions [aman2008, cai2002constant]."
         }
       ],
       "references": [
@@ -74591,7 +75247,9 @@
         "smith1997",
         "mena2008toroidal",
         "lemos1999",
-        "banados1994"
+        "banados1994",
+        "aman2008",
+        "cai2002constant"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -85974,6 +86632,11 @@
           "id": "dilaton_unusual_asymptotics",
           "kind": "family",
           "text": "Rong-Gen Cai, Jeong-Young Ji, and Kwang-Sup Soh gave the flat and the hyperbolic hole a dilaton with an exponential potential in 1997, by the ansatz that had produced the spherical holes. With the dilaton they are neither flat nor anti-de Sitter far away [cai1998]."
+        },
+        {
+          "id": "constant_curvature_black_hole",
+          "kind": "family",
+          "text": "Anti-de Sitter space of four dimensions identified along a single boost, the first construction of the same 1996 paper, with a toroidal event horizon that grows in time [aminneborg1996, holst1997]."
         }
       ],
       "references": [
@@ -86012,7 +86675,8 @@
         "mena2008toroidal",
         "bhattacharyya2009",
         "cai1999",
-        "cai1998"
+        "cai1998",
+        "holst1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",

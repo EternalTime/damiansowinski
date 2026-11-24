@@ -855,6 +855,23 @@ The spacetime of a false vacuum decaying, found by Sidney Coleman and Frank De L
 - chart Static, Inside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_T r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_T r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Static, Outside the Wall: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda_F r^2}{3}\right)c^2dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda_F r^2}{3}} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Constant Curvature Black Holes
+
+Anti-de Sitter space of four or more dimensions with its points identified along a boost, a black hole of constant negative curvature whose event horizon in four dimensions is a torus that grows in time.
+
+- id: `constant_curvature_black_hole`
+- tags: black hole, anti-de Sitter, constant curvature, negative cosmological constant, cosmological constant, higher dimensions, horizon, event horizon, apparent horizon, trapped surface, horizon topology, torus, topology, time-dependent, causal structure, closed timelike curves, Kruskal extension, BTZ black hole, supergravity, black hole thermodynamics, black hole entropy, AdS/CFT, holography, exact solution, Lorentzian, Einstein equations, idealized model, Einstein space, conformally flat, four-dimensional, five-dimensional
+- signature: (-,+,\ldots,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/constant_curvature_black_hole.json
+- chart Kruskal: coordinates $(y_0, y_1, y_2, \varphi)$, $$ds^2 = \dfrac{l^2\left(r + r_+\right)^2}{r_+^2}\left(-dy_0^2 + dy_1^2 + dy_2^2\right) + r^2d\varphi^2$$
+- chart Static: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = \left(r^2 - r_+^2\right)\left(-\sin^2\theta\,dt^2 + \dfrac{l^2}{r_+^2}d\theta^2\right) + \dfrac{l^2\,dr^2}{r^2 - r_+^2} + r^2d\varphi^2$$
+- chart Exterior: coordinates $(t, r, \theta, \varphi)$, $$ds^2 = \left(r^2 - r_+^2\right)\left(-dt^2 + \dfrac{l^2}{r_+^2}\cosh^2\left(\dfrac{r_+t}{l}\right)\,d\theta^2\right) + \dfrac{l^2\,dr^2}{r^2 - r_+^2} + r^2d\varphi^2$$
+- chart Holst-Peldán Interior: coordinates $(r, t, \psi, \varphi)$, $$ds^2 = l^2\left(-\dfrac{dr^2}{1 - r^2} + \left(1 - r^2\right)dt^2 + r^2d\psi^2 + \left(1 - r^2\right)\sinh^2t\,d\varphi^2\right)$$
+- chart Holst-Peldán Null: coordinates $(u, v, \psi, \varphi)$, $$ds^2 = \dfrac{l^2}{\cos^2\beta}\left(-4\,du\,dv + \cos^2\alpha\,d\psi^2 + \sin^2\beta\,d\varphi^2\right)$$
+- chart Kruskal, Five Dimensions: coordinates $(y_0, y_1, y_2, y_3, \varphi)$, $$ds^2 = \dfrac{l^2\left(r + r_+\right)^2}{r_+^2}\left(-dy_0^2 + dy_1^2 + dy_2^2 + dy_3^2\right) + r^2d\varphi^2$$
+- chart Static, Five Dimensions: coordinates $(t, r, \theta, \chi, \varphi)$, $$ds^2 = \left(r^2 - r_+^2\right)\left(-\cos^2\theta\,dt^2 + \dfrac{l^2}{r_+^2}\left(d\theta^2 + \sin^2\theta\,d\chi^2\right)\right) + \dfrac{l^2\,dr^2}{r^2 - r_+^2} + r^2d\varphi^2$$
+- chart Exterior, Five Dimensions: coordinates $(t, r, \theta, \chi, \varphi)$, $$ds^2 = \left(r^2 - r_+^2\right)\left(-dt^2 + \dfrac{l^2}{r_+^2}\cosh^2\left(\dfrac{r_+t}{l}\right)\left(d\theta^2 + \sin^2\theta\,d\chi^2\right)\right) + \dfrac{l^2\,dr^2}{r^2 - r_+^2} + r^2d\varphi^2$$
+
 ### Counter Rotating Discs as Sources of Vacuum Fields
 
 Two regions of a known vacuum field joined across a thin disc. A displaced cut and reflection can produce positive surface density and two streams of ordinary matter circling in opposite senses.

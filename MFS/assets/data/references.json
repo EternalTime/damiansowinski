@@ -1,5 +1,5 @@
 {
-  "version": "629367b7ca55c022",
+  "version": "e890d7424f5ab8b2",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -50358,6 +50358,214 @@
         "eprint": "gr-qc/9708028",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.57.1052"
+      }
+    },
+    "banados1998": {
+      "type": "article",
+      "fields": {
+        "title": "Constant curvature black holes",
+        "author": "Ba\\~nados, M\\'aximo",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "2",
+        "pages": "1068--1072",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.1068",
+        "eprint": "gr-qc/9703040",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.1068"
+      }
+    },
+    "holst1997": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes and causal structure in anti-de {Sitter} isometric spacetimes",
+        "author": "Holst, S\\\"oren and Peld\\'an, Peter",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "14",
+        "number": "12",
+        "pages": "3433--3452",
+        "year": "1997",
+        "doi": "10.1088/0264-9381/14/12/025",
+        "eprint": "gr-qc/9705067",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/14/12/025"
+      }
+    },
+    "banados1998gomberoff": {
+      "type": "article",
+      "fields": {
+        "title": "Anti-de {Sitter} space and black holes",
+        "author": "Ba\\~nados, M\\'aximo and Gomberoff, Andr\\'es and Mart\\'inez, Cristi\\'an",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "11",
+        "pages": "3575--3598",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/11/018",
+        "eprint": "hep-th/9805087",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/11/018"
+      }
+    },
+    "figueroa2004": {
+      "type": "article",
+      "fields": {
+        "title": "Quotients of {AdS}$_{p+1}\\times S^q$: Causally well-behaved spaces and black holes",
+        "author": "Figueroa-O'Farrill, Jos\\'e and Madden, Owen and Ross, Simon F. and Sim\\'on, Joan",
+        "journal": "Physical Review D",
+        "volume": "69",
+        "number": "12",
+        "pages": "124026",
+        "year": "2004",
+        "doi": "10.1103/PhysRevD.69.124026",
+        "eprint": "hep-th/0402094",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.69.124026"
+      }
+    },
+    "creighton1998": {
+      "type": "article",
+      "fields": {
+        "title": "Entropy of constant curvature black holes in general relativity",
+        "author": "Creighton, Jolien D. E. and Mann, Robert B.",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "2",
+        "pages": "024013",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.024013",
+        "eprint": "gr-qc/9710042",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.58.024013"
+      }
+    },
+    "cai2002constant": {
+      "type": "article",
+      "fields": {
+        "title": "Constant curvature black hole and dual field theory",
+        "author": "Cai, Rong-Gen",
+        "journal": "Physics Letters B",
+        "volume": "544",
+        "number": "1-2",
+        "pages": "176--182",
+        "year": "2002",
+        "doi": "10.1016/S0370-2693(02)02498-X",
+        "eprint": "hep-th/0206223",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(02)02498-X"
+      }
+    },
+    "ross2005": {
+      "type": "article",
+      "fields": {
+        "title": "Time-dependent spacetimes in {AdS/CFT}: Bubble and black hole",
+        "author": "Ross, Simon F. and Titchener, Georgina",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2005",
+        "number": "02",
+        "pages": "021",
+        "year": "2005",
+        "doi": "10.1088/1126-6708/2005/02/021",
+        "eprint": "hep-th/0411128",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2005/02/021"
+      }
+    },
+    "aman2008": {
+      "type": "article",
+      "fields": {
+        "title": "Anti-de {Sitter} quotients, bubbles of nothing, and black holes",
+        "author": "Åman, Jan E. and Åminneborg, Stefan and Bengtsson, Ingemar and Pidokrajt, Narit",
+        "journal": "General Relativity and Gravitation",
+        "volume": "40",
+        "number": "12",
+        "pages": "2557--2567",
+        "year": "2008",
+        "doi": "10.1007/s10714-008-0639-z",
+        "eprint": "0801.4214",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/s10714-008-0639-z"
+      }
+    },
+    "aminneborg2008": {
+      "type": "article",
+      "fields": {
+        "title": "Anti-de {Sitter} quotients: when are they black holes?",
+        "author": "Åminneborg, Stefan and Bengtsson, Ingemar",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "25",
+        "number": "9",
+        "pages": "095019",
+        "year": "2008",
+        "doi": "10.1088/0264-9381/25/9/095019",
+        "eprint": "0801.3163",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/25/9/095019"
+      }
+    },
+    "cai2011": {
+      "type": "article",
+      "fields": {
+        "title": "Hawking temperature of constant curvature black holes",
+        "author": "Cai, Rong-Gen and Myung, Yun Soo",
+        "journal": "Physical Review D",
+        "volume": "83",
+        "number": "10",
+        "pages": "107502",
+        "year": "2011",
+        "doi": "10.1103/PhysRevD.83.107502",
+        "eprint": "1012.5709",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.83.107502"
+      }
+    },
+    "guilleminot2017": {
+      "type": "article",
+      "fields": {
+        "title": "Constant curvature black holes in {Einstein-AdS} gravity: Conserved quantities",
+        "author": "Guilleminot, Pablo and Olea, Rodrigo and Petrov, Alexander N.",
+        "journal": "Physical Review D",
+        "volume": "95",
+        "number": "12",
+        "pages": "124039",
+        "year": "2017",
+        "doi": "10.1103/PhysRevD.95.124039",
+        "eprint": "1704.06290",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.95.124039"
+      }
+    },
+    "guilleminot2018": {
+      "type": "article",
+      "fields": {
+        "title": "Constant curvature black holes in {Einstein AdS} gravity: Euclidean action and thermodynamics",
+        "author": "Guilleminot, Pablo and Olea, Rodrigo and Petrov, Alexander N.",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "6",
+        "pages": "064046",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.97.064046",
+        "eprint": "1712.09055",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.97.064046"
+      }
+    },
+    "anand2025": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes in constant curvature black holes",
+        "author": "Anand, Ankit and Campos Delgado, Ruben and Samart, Daris",
+        "journal": "The European Physical Journal C",
+        "volume": "85",
+        "number": "3",
+        "pages": "353",
+        "year": "2025",
+        "doi": "10.1140/epjc/s10052-025-14038-8",
+        "eprint": "2410.16210",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1140/epjc/s10052-025-14038-8"
       }
     }
   }

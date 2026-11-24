@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "385fecbe3d0c543e",
+    "version": "c779db81e0e2c8c3",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -299,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "3862ce3b36ffac6a",
+    "version": "461d8a327bdee759",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -1638,6 +1638,47 @@
     "diagrams": "0a8a12ca162aa30b",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
+  },
+  {
+    "id": "constant_curvature_black_hole",
+    "name": "Constant Curvature Black Holes",
+    "tags": [
+      "black hole",
+      "anti-de Sitter",
+      "constant curvature",
+      "negative cosmological constant",
+      "cosmological constant",
+      "higher dimensions",
+      "horizon",
+      "event horizon",
+      "apparent horizon",
+      "trapped surface",
+      "horizon topology",
+      "torus",
+      "topology",
+      "time-dependent",
+      "causal structure",
+      "closed timelike curves",
+      "Kruskal extension",
+      "BTZ black hole",
+      "supergravity",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "AdS/CFT",
+      "holography",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "Einstein space",
+      "conformally flat",
+      "four-dimensional",
+      "five-dimensional"
+    ],
+    "version": "78539854f9acce5e",
+    "diagrams": "96d29779c5f3eab6",
+    "conformal": "ccbf54ef2a4dd2d2",
+    "embedding": "7bbb7b7d618ed78e"
   },
   {
     "id": "counter_rotating_discs",
@@ -4754,7 +4795,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "89d8d03291373130",
+    "version": "11baed957d7b38a7",
     "diagrams": "02cb54738b1e1077",
     "conformal": "4d5f7414085f41e0",
     "embedding": "6a0f9d87d0364fdb"
@@ -5020,7 +5061,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "2362d6512ca34523",
+    "version": "58d43fe07d8ab7ab",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -6649,7 +6690,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "afbf2b457f3cf3d3",
+    "version": "978bf19feeb78a4c",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -7619,7 +7660,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "fe56662ee1d2c992",
+    "version": "ed94ff0adeeae11f",
     "diagrams": "70598c77af726b80",
     "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"
