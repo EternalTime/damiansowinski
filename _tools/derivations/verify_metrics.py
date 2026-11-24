@@ -5584,6 +5584,8 @@ RATES.update(_chamseddine_volkov_monopole.RATES)
 import holographic_rg_flow as _holographic_rg_flow
 DIMENSIONS.update(_holographic_rg_flow.DIMENSIONS)
 
+import krasnikov_time_machine as _krasnikov_time_machine
+DIMENSIONS.update(_krasnikov_time_machine.DIMENSIONS)
 
 if __name__ == "__main__":
     sys.exit(main())

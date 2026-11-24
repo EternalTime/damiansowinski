@@ -37915,5 +37915,10 @@ import holographic_rg_flow as _holographic_rg_flow
 _holographic_rg_flow.register(sys.modules[__name__])
 
 
+import krasnikov_time_machine as _krasnikov_time_machine
+CHARTS[_krasnikov_time_machine.METRIC] = [lambda system=system: _krasnikov_time_machine.chart_spec(system)
+                                          for system in _krasnikov_time_machine.CHARTS]
+
+
 if __name__ == "__main__":
     main()
