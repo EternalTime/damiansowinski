@@ -32521,6 +32521,8 @@ _chamseddine_volkov_monopole_drawings.register_conformal(sys.modules[__name__])
 import holographic_rg_flow_drawings as _holographic_rg_flow_drawings
 _holographic_rg_flow_drawings.register_conformal(sys.modules[__name__])
 
+import krasnikov_time_machine_drawings as _krasnikov_time_machine_drawings
+_krasnikov_time_machine_drawings.register_conformal(sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())

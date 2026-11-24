@@ -5317,3 +5317,7 @@ FLAT_METRICS.add(_chamseddine_volkov_monopole_drawings.METRIC)
 
 import holographic_rg_flow_drawings as _holographic_rg_flow_drawings  # noqa: E402
 _holographic_rg_flow_drawings.register_slices(sys.modules[__name__])
+
+import krasnikov_time_machine_drawings as _krasnikov_time_machine_drawings  # noqa: E402
+FLAT.update(_krasnikov_time_machine_drawings.slice_table(sys.modules[__name__]))
+FLAT_METRICS.add(_krasnikov_time_machine_drawings.METRIC)
