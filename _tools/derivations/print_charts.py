@@ -37925,6 +37925,9 @@ CHARTS[_krasnikov_time_machine.METRIC] = [lambda system=system: _krasnikov_time_
 import stu_black_holes as _stu_black_holes
 _stu_black_holes.register(sys.modules[__name__])
 
+import conformal_scalar_wormholes as _conformal_scalar_wormholes
+_conformal_scalar_wormholes.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

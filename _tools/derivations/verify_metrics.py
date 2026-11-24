@@ -5595,5 +5595,10 @@ DIMENSIONS.update(_stu_black_holes.DIMENSIONS)
 HELD.update(_stu_black_holes.HELD)
 RATES.update(_stu_black_holes.RATES)
 
+import conformal_scalar_wormholes as _conformal_scalar_wormholes
+DIMENSIONS.update(_conformal_scalar_wormholes.DIMENSIONS)
+HELD.update(_conformal_scalar_wormholes.HELD)
+RATES.update(_conformal_scalar_wormholes.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
