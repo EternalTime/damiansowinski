@@ -95,6 +95,11 @@
       "id": "early_braneworlds",
       "kind": "programme",
       "text": "Earlier localization constructions include Akama's vortex, a scalar domain wall, and Visser's electric geometry [akama1983pregeometry, rubakov1983, visser1985]."
+    },
+    {
+      "id": "holographic_rg_flow",
+      "kind": "family",
+      "text": "Thick walls of scalar field in anti-de Sitter space of five dimensions, the flows of the renormalisation group of holography. DeWolfe and coauthors used their equations of first order to fix the distance between Randall and Sundrum's two walls [dewolfe2000]."
     }
   ],
   "references": [
@@ -123,7 +128,8 @@
     "kraus1999",
     "ida2000",
     "akama1983pregeometry",
-    "visser1985"
+    "visser1985",
+    "dewolfe2000"
   ],
   "coordinates": [
     {

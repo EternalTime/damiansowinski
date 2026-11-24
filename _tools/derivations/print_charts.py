@@ -37911,6 +37911,9 @@ import chamseddine_volkov_monopole as _chamseddine_volkov_monopole
 CHARTS[_chamseddine_volkov_monopole.METRIC] = [lambda system=system: _chamseddine_volkov_monopole.chart_spec(system)
                                                 for system in _chamseddine_volkov_monopole.CHARTS]
 
+import holographic_rg_flow as _holographic_rg_flow
+_holographic_rg_flow.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

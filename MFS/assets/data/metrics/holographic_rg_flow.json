@@ -1,0 +1,4056 @@
+{
+  "id": "holographic_rg_flow",
+  "name": "Holographic Renormalisation Group Flow",
+  "short_name": "Holographic RG Flow",
+  "description": "Walls of scalar field in anti-de Sitter space of five dimensions, dual to flows of the renormalisation group of $\\mathcal{N} = 4$ super Yang-Mills theory, with the distance from the boundary as the energy scale. Luciano Girardello, Michela Petrini, Massimo Porrati, and Alberto Zaffaroni built them in 1998, and wherever the null energy condition holds a $c$-function falls along them toward the infrared.",
+  "tags": [
+    "holography",
+    "AdS/CFT",
+    "anti-de Sitter",
+    "supergravity",
+    "supersymmetric",
+    "scalar field",
+    "minimally coupled scalar field",
+    "domain wall",
+    "planar symmetry",
+    "curvature singularity",
+    "higher dimensions",
+    "exact solution",
+    "Lorentzian",
+    "Einstein equations",
+    "idealized model",
+    "five-dimensional",
+    "static",
+    "stationary",
+    "conformally flat"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "Under Juan Maldacena's correspondence, two regions of anti-de Sitter space of five dimensions with different radii, joined by a wall of scalar field, correspond to two conformal field theories joined by a flow of the renormalisation group [maldacena1998, girardello1998, freedman1999]. The region near the boundary corresponds to the field theory at high energies and the region deep inside to its fixed point at low energies, and the cube of each radius sets the central charge at that end [girardello1998, freedman1999]. Luciano Girardello, Michela Petrini, Massimo Porrati, and Alberto Zaffaroni found such walls in October 1998 in the gauged supergravity of five dimensions, between the critical point of its potential dual to $\\mathcal{N} = 4$ super Yang-Mills theory and two critical points with no supersymmetry [girardello1998]. They proved that the walls exist by treating the scalar as a particle that rolls, with friction that stays positive, from one critical point to the other, and they gave a function of the radius that equals the central charge at each end and decreases toward the infrared [girardello1998]. Jacques Distler and Frederic Zamora reached the same critical points a few days later and found the point with $SU(3)$ symmetry stable and the point with $SO(5)$ symmetry unstable [girardello1998, distler1998].¶Daniel Z. Freedman, Steven S. Gubser, Krzysztof Pilch, and Nicholas P. Warner wrote the most general metric with the symmetries of flat spacetime along the wall in April 1999, $ds^2 = e^{2A(r)}\\eta_{\\mu\\nu}dx^\\mu dx^\\nu + dr^2$, with $r$ the proper distance across it and $A = r/L$ for anti-de Sitter space of radius $L$ [freedman1999]. Their wall keeps an eighth of the supersymmetry and \"interpolates between an exterior anti-de Sitter region with maximal supersymmetry and an interior anti-de Sitter region with one quarter of the maximal supersymmetry\" [freedman1999]. Its field theory is $\\mathcal{N} = 4$ super Yang-Mills theory with a mass for one of its three adjoint chiral superfields, and the central charges at the two ends stand in the ratio $27/32$, the value computed in the field theory [freedman1999]. Demanding that the supersymmetry survive, Freedman and coauthors reduced the equations of motion to equations of first order, a gradient flow of a superpotential $W$ of the scalars with $A' = -gW/3$ for the gauge coupling $g$ of the supergravity [freedman1999]. They integrated the wall numerically, starting from the infrared end, where small errors decay [freedman1999]. From Einstein's equations they showed that $A'' \\le 0$ for any such metric whose matter obeys the null energy condition, so that $\\mathcal{C}(r) = \\mathcal{C}_0/A'^3$, with $\\mathcal{C}_0$ a constant, does not increase toward the infrared and equals the central charge wherever the geometry is anti-de Sitter [freedman1999].¶Kostas Skenderis and Paul K. Townsend found such equations of first order in 1999 for walls of a scalar whose potential admits a stable anti-de Sitter vacuum, with $e^{A}$ as the scale of the renormalisation group [skenderis1999]. Oliver DeWolfe, Freedman, Gubser, and Andreas Karch showed that the potential $V$ of a single scalar $\\phi$ can be written as $V = \\tfrac{1}{8}\\left(\\partial W/\\partial\\phi\\right)^2 - \\tfrac{1}{3}W^2$ by solving for $W$ [dewolfe2000]. Every flat wall of the scalar then solves $\\phi' = \\tfrac{1}{2}\\partial W/\\partial\\phi$ and $A' = -W/3$ for some $W$, with or without supersymmetry [dewolfe2000]. With $W = 3/L - b\\phi^2$, for a constant $b$, they solved these equations in closed form, and used the solution to fix the distance between the two walls of Lisa Randall and Raman Sundrum's construction, after Walter Goldberger and Mark Wise [dewolfe2000, randall1999a, goldberger1999]. DeWolfe and coauthors also suggested $|W|^{-3}$ as a $c$-function for flows without supersymmetry [dewolfe2000].¶Girardello, Petrini, Porrati, and Zaffaroni solved a supersymmetric flow in closed form, from $\\mathcal{N} = 4$ super Yang-Mills theory with one mass for all three of its chiral superfields to pure $\\mathcal{N} = 1$ super Yang-Mills theory [girardello2000]. Up to a constant factor, its warp factor is $e^{2A} = e^{2r/L} - 1$, with $r$ measured from a curvature singularity at $r = 0$, and it grows as $e^{2r/L}$ toward the boundary [girardello2000, bianchi2001]. Quarks confine and magnetic monopoles are screened in this geometry, and in a solution with a second scalar, which falls off as $e^{-3r/L}$ near the boundary, that scalar is the gaugino condensate of the field theory [girardello2000]. Freedman, Gubser, Pilch, and Warner solved flows of another kind in closed form, in which scalar expectation values break the gauge symmetry, and whose geometries in ten dimensions are continuous distributions of D3-branes [freedman2000]. For the branes spread over a uniform disc they found a mass gap in a correlator of two operators and \"perfect screening\" of quarks [freedman2000].¶Jan de Boer, Erik Verlinde, and Herman Verlinde wrote the equations of supergravity along $r$ as a problem of Hamilton and Jacobi in 2000, and found that the action on the boundary obeys the Callan-Symanzik equations [deboer2000]. Pilch and Warner lifted the wall of Freedman and coauthors to ten dimensions in full, and found that the flow of Girardello and coauthors becomes in ten dimensions a dielectric 7-brane in the infrared, with a singularity that they interpreted as a ring of 5-branes [pilch2000]. Steven S. Gubser proposed in 2000 that these walls may have large curvatures only where the scalar potential stays bounded above, as in the flow of Girardello and coauthors [gubser2000]. Massimo Bianchi, Freedman, and Skenderis renormalised the action of supergravity on the flow of Girardello and coauthors and on the disc of branes in 2001, and computed correlators of two stress tensors [bianchi2001]. On the disc, where conformal symmetry breaks spontaneously, those correlators have a pole at zero mass, and in the flow of Girardello and coauthors, where a mass breaks it explicitly, they have none [bianchi2001].¶Robert C. Myers and Aninda Sinha added terms of second and third order in the curvature to gravity in 2010, so that the two central charges $a$ and $c$ of the field theory in four dimensions differ, and found that the flow of $a$ is monotonic and the flow of $c$ is not [myers2010seeing]. Extending the analysis to other dimensions, they conjectured a $c$-theorem in arbitrary dimensions for a coefficient $a^*_d$ in the entanglement entropy between two halves of a sphere [myers2010seeing]. Evan Deddo, James T. Liu, Leopoldo A. Pando Zayas, and Robert J. Saskowski reproved the $c$-, $F$-, and $a$-theorems in two, three, and four dimensions in 2024 from the null energy condition and the Ryu-Takayanagi formula, starting from the inequality of Freedman and coauthors [deddo2024, freedman1999].",
+  "related": [
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "Near its boundary each flow here approaches anti-de Sitter space of five dimensions, the conformal vacuum of $\\mathcal{N} = 4$ super Yang-Mills theory. The inner end of Freedman and coauthors' wall is anti-de Sitter space again, with a smaller radius [freedman1999]."
+    },
+    {
+      "id": "three_brane_throat",
+      "kind": "family",
+      "text": "The throat of coincident three-branes, anti-de Sitter space of five dimensions times a sphere, where every flow here starts. Spread over a uniform disc, the branes give the flow of the Coulomb branch solved in closed form [freedman2000]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "Two walls of zero thickness in anti-de Sitter space of five dimensions. DeWolfe, Freedman, Gubser, and Karch held them apart with a scalar in the bulk, solving the equations of first order of these flows in closed form [dewolfe2000]."
+    },
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "A thin wall with flat space on either side. Walls between regions of anti-de Sitter space with different radii had been studied in supergravity of four dimensions before the flows here, in five [skenderis1999]."
+    }
+  ],
+  "references": [
+    "maldacena1998",
+    "girardello1998",
+    "freedman1999",
+    "distler1998",
+    "skenderis1999",
+    "dewolfe2000",
+    "randall1999a",
+    "goldberger1999",
+    "girardello2000",
+    "bianchi2001",
+    "freedman2000",
+    "deboer2000",
+    "pilch2000",
+    "gubser2000",
+    "myers2010seeing",
+    "deddo2024"
+  ],
+  "coordinates": [
+    {
+      "id": "proper_distance",
+      "name": "Confining Flow, Proper Distance",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "r"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "r \\in (0, \\infty)",
+        "r = 0 \\;\\text{(the singularity)}",
+        "r \\to \\infty \\;\\text{(the boundary)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Radius of the anti-de Sitter space the flow approaches at its boundary, a length"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, r)$, with $t$ having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $r$ the proper distance from the singularity, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\left(e^{2r/L} - 1\\right)\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + dr^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\left(e^{2r/L} - 1\\right)"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\left(e^{2r/L} - 1\\right)"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\left(e^{2r/L} - 1\\right)"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\left(e^{2r/L} - 1\\right)"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{e^{2r/L} - 1}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{1}{e^{2r/L} - 1}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{1}{e^{2r/L} - 1}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{1}{e^{2r/L} - 1}"
+        },
+        {
+          "indices": [
+            "r",
+            "r"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "r",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "r",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "r",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "r",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "r",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "r"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "r",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{2r/L}}{L}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "r",
+                  "x_1",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "r",
+                  "r",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "r",
+                  "x_2",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "r",
+                  "r",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "r",
+                  "x_3",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "r",
+                  "r",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_1",
+                  "x_1",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_1",
+                  "r",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_2",
+                  "x_2",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_2",
+                  "r",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_3",
+                  "x_3",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_3",
+                  "r",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{e^{4r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "t",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "r",
+                  "r",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "r",
+                  "x_1",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "r",
+                  "r",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "r",
+                  "x_2",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "r",
+                  "r",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "r",
+                  "x_3",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "r",
+                  "r",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "t",
+                  "r"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "t",
+                  "r",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_1",
+                  "x_1",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_1",
+                  "r",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_2",
+                  "x_2",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_2",
+                  "r",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_3",
+                  "x_3",
+                  "r"
+                ],
+                "value": "\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "x_3",
+                  "r",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\left(2e^{2r/L} - 1\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^3}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "-\\dfrac{4\\left(e^{2r/L} - 2\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{4\\left(5e^{2r/L} - 4\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}",
+      "kretschmann": "K = \\dfrac{8\\left(5e^{4r/L} - 8e^{2r/L} + 8\\right)e^{4r/L}}{L^4\\left(e^{2r/L} - 1\\right)^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6e^{2r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              },
+              {
+                "indices": [
+                  "r",
+                  "r"
+                ],
+                "value": "\\dfrac{6e^{4r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}\\dot{t}\\dot{r} = 0",
+        "\\ddot{x_1} + \\dfrac{2e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}\\dot{x_1}\\dot{r} = 0",
+        "\\ddot{x_2} + \\dfrac{2e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}\\dot{x_2}\\dot{r} = 0",
+        "\\ddot{x_3} + \\dfrac{2e^{2r/L}}{L\\left(e^{2r/L} - 1\\right)}\\dot{x_3}\\dot{r} = 0",
+        "\\ddot{r} + \\dfrac{e^{2r/L}}{L}\\dot{t}^2 - \\dfrac{e^{2r/L}}{L}\\dot{x_1}^2 - \\dfrac{e^{2r/L}}{L}\\dot{x_2}^2 - \\dfrac{e^{2r/L}}{L}\\dot{x_3}^2 = 0"
+      ]
+    },
+    {
+      "id": "bfs_u",
+      "name": "Confining Flow, Coordinate $u$",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "u"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "u \\in (0, 1)",
+        "u = 0 \\;\\text{(the singularity)}",
+        "u \\to 1 \\;\\text{(the boundary)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Radius of the anti-de Sitter space the flow approaches at its boundary, a length"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, u)$, with $t$ having dimensions of time and $x_1$, $x_2$, and $x_3$ lengths along the wall, and take components in the chart $x^0 = ct$. The coordinate $u = 1 - e^{-2r/L}$ is that of Bianchi, Freedman, and Skenderis [bianchi2001], where $r$ is the proper distance from the singularity. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{u}{1 - u}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + \\dfrac{L^2\\,du^2}{4\\left(1 - u\\right)^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{u}{1 - u}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{u}{1 - u}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{u}{1 - u}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{u}{1 - u}"
+        },
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\dfrac{L^2}{4\\left(1 - u\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1 - u}{u}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{1 - u}{u}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{1 - u}{u}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{1 - u}{u}"
+        },
+        {
+          "indices": [
+            "u",
+            "u"
+          ],
+          "value": "\\dfrac{4\\left(1 - u\\right)^2}{L^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{2u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2}{L^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2}{L^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2}{L^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2}{L^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{1 - u}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{L^2}{4\\left(1 - u\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "x_1",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "u",
+                  "x_1"
+                ],
+                "value": "\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "x_2",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "u",
+                  "x_2"
+                ],
+                "value": "\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "x_3",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "u",
+                  "x_3"
+                ],
+                "value": "\\dfrac{2u - 1}{4u^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "u",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "u",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "u",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2u - 1}{L^2\\,u\\left(1 - u\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{1}{L^2\\left(1 - u\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "t",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "u",
+                  "u",
+                  "t"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "x_1",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "u",
+                  "u",
+                  "x_1"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "x_2",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "u",
+                  "u",
+                  "x_2"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "x_3",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "u",
+                  "u",
+                  "x_3"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "t",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "t",
+                  "u",
+                  "t"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "x_1",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_1",
+                  "u",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "x_2",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_2",
+                  "u",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "x_3",
+                  "u"
+                ],
+                "value": "\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "x_3",
+                  "u",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2u - 1}{4u\\left(1 - u\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2u + 2}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{2u - 1}{u^2\\left(1 - u\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2u + 2}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{8u - 4}{L^2\\,u^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(u + 1\\right)\\left(1 - u\\right)}{L^2\\,u^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\left(u + 1\\right)\\left(1 - u\\right)}{L^2\\,u^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\left(u + 1\\right)\\left(1 - u\\right)}{L^2\\,u^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\left(u + 1\\right)\\left(1 - u\\right)}{L^2\\,u^3}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "-\\dfrac{16\\left(2u - 1\\right)\\left(1 - u\\right)^2}{L^4\\,u^2}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{16u + 4}{L^2\\,u^2}",
+      "kretschmann": "K = \\dfrac{64u^2 - 64u + 40}{L^4\\,u^4}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6}{L^2\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6}{L^2\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6}{L^2\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6}{L^2\\left(1 - u\\right)}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{3}{2u^2\\left(1 - u\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{6}{L^2\\,u}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6}{L^2\\,u}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6}{L^2\\,u}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6}{L^2\\,u}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{6}{L^2\\,u^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6\\left(1 - u\\right)}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6\\left(1 - u\\right)}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6\\left(1 - u\\right)}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6\\left(1 - u\\right)}{L^2\\,u^2}"
+              },
+              {
+                "indices": [
+                  "u",
+                  "u"
+                ],
+                "value": "\\dfrac{24\\left(1 - u\\right)^2}{L^4\\,u^2}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{1}{u\\left(1 - u\\right)}\\dot{t}\\dot{u} = 0",
+        "\\ddot{x_1} + \\dfrac{1}{u\\left(1 - u\\right)}\\dot{x_1}\\dot{u} = 0",
+        "\\ddot{x_2} + \\dfrac{1}{u\\left(1 - u\\right)}\\dot{x_2}\\dot{u} = 0",
+        "\\ddot{x_3} + \\dfrac{1}{u\\left(1 - u\\right)}\\dot{x_3}\\dot{u} = 0",
+        "\\ddot{u} + \\dfrac{2}{L^2}\\dot{t}^2 - \\dfrac{2}{L^2}\\dot{x_1}^2 - \\dfrac{2}{L^2}\\dot{x_2}^2 - \\dfrac{2}{L^2}\\dot{x_3}^2 + \\dfrac{1}{1 - u}\\dot{u}^2 = 0"
+      ]
+    },
+    {
+      "id": "coulomb_disc",
+      "name": "Coulomb Branch Disc",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "v"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "v \\in (0, 1)",
+        "v = 0 \\;\\text{(the singularity)}",
+        "v \\to 1 \\;\\text{(the boundary)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "L",
+          "description": "Radius of the anti-de Sitter space the flow approaches at its boundary, a length"
+        },
+        {
+          "symbol": "\\ell",
+          "description": "Radius of the disc of D3-branes in ten dimensions, a length"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, v)$, with $t$ having dimensions of time and $x_1$, $x_2$, and $x_3$ lengths along the wall, and take components in the chart $x^0 = ct$. The coordinate $v = e^{\\sqrt{6}\\Phi}$ is that of Bianchi, Freedman, and Skenderis [bianchi2001], with $\\Phi$ the scalar of the flow. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+      "line_element": "ds^2 = \\dfrac{\\ell^2v^{2/3}}{L^2\\left(1 - v\\right)}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + \\dfrac{L^2\\,dv^2}{4v^{4/3}\\left(1 - v\\right)^2}",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{L^2}{4v^{4/3}\\left(1 - v\\right)^2}"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{L^2\\left(1 - v\\right)}{\\ell^2\\,v^{2/3}}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{L^2\\left(1 - v\\right)}{\\ell^2\\,v^{2/3}}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{L^2\\left(1 - v\\right)}{\\ell^2\\,v^{2/3}}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{L^2\\left(1 - v\\right)}{\\ell^2\\,v^{2/3}}"
+        },
+        {
+          "indices": [
+            "v",
+            "v"
+          ],
+          "value": "\\dfrac{4v^{4/3}\\left(1 - v\\right)^2}{L^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "t"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "v"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "v",
+                  "x_1"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "v"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "v",
+                  "x_2"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "v"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "v",
+                  "x_3"
+                ],
+                "value": "\\dfrac{v + 2}{6v\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{5v - 2}{3v\\left(1 - v\\right)}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "v",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "v",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "v",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)}{6L^2\\,v^{1/3}\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{L^2\\left(5v - 2\\right)}{12v^{7/3}\\left(1 - v\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v + 2\\right)^2}{9L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "v",
+                  "x_1",
+                  "v"
+                ],
+                "value": "\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "v",
+                  "v",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "v",
+                  "x_2",
+                  "v"
+                ],
+                "value": "\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "v",
+                  "v",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "v",
+                  "x_3",
+                  "v"
+                ],
+                "value": "\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "v",
+                  "v",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{v - 4}{12v\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "x_1",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "v",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "x_2",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "v",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "x_3",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "v",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^2\\,v\\left(v - 4\\right)}{3L^4\\left(1 - v\\right)}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "t",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_2",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_3",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "t",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_1",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_1",
+                  "x_2",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_3",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "t",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_1",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_1",
+                  "x_3",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_2",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_2",
+                  "x_3",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^4\\,v^{2/3}\\left(v + 2\\right)^2}{9L^6\\left(1 - v\\right)^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "t",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "v",
+                  "v",
+                  "t"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "v",
+                  "x_1",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "v",
+                  "v",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "v",
+                  "x_2",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "v",
+                  "v",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "v",
+                  "x_3",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "v",
+                  "v",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "t",
+                  "v"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "t",
+                  "v",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "x_1",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_1",
+                  "v",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "x_2",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_2",
+                  "v",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "x_3",
+                  "v"
+                ],
+                "value": "-\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "x_3",
+                  "v",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\ell^2\\left(v - 4\\right)}{12L^2\\,v^{1/3}\\left(1 - v\\right)^3}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\ell^2\\left(2v + 1\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{4\\ell^2\\left(2v + 1\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{4\\ell^2\\left(2v + 1\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{4\\ell^2\\left(2v + 1\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{v - 4}{3v\\left(1 - v\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{8v + 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{8v + 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{8v + 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{8v + 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{4v^{1/3}\\left(v - 4\\right)}{3L^2}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{4\\left(2v + 1\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{4\\left(2v + 1\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{4\\left(2v + 1\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{4\\left(2v + 1\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{16v^{5/3}\\left(v - 4\\right)\\left(1 - v\\right)^2}{3L^4}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{4v^2 - 48v - 16}{3L^2\\,v^{2/3}}",
+      "kretschmann": "K = \\dfrac{56v^4 - 320v^3 + 960v^2 + 256v + 128}{27L^4\\,v^{4/3}}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\ell^2\\left(v^2 - 8v - 2\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\left(v^2 - 8v - 2\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\left(v^2 - 8v - 2\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\ell^2\\left(v^2 - 8v - 2\\right)}{3L^4\\left(1 - v\\right)}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{\\left(v + 2\\right)^2}{6v^2\\left(1 - v\\right)^2}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2v^2 - 16v - 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2v^2 - 16v - 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2v^2 - 16v - 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2v^2 - 16v - 4}{3L^2\\,v^{2/3}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{2\\left(v + 2\\right)^2}{3L^2\\,v^{2/3}}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\left(v^2 - 8v - 2\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\left(v^2 - 8v - 2\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\left(v^2 - 8v - 2\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\left(v^2 - 8v - 2\\right)\\left(1 - v\\right)}{3\\ell^2\\,v^{4/3}}"
+              },
+              {
+                "indices": [
+                  "v",
+                  "v"
+                ],
+                "value": "\\dfrac{8v^{2/3}\\left(v + 2\\right)^2\\left(1 - v\\right)^2}{3L^4}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{v + 2}{3v\\left(1 - v\\right)}\\dot{t}\\dot{v} = 0",
+        "\\ddot{x_1} + \\dfrac{v + 2}{3v\\left(1 - v\\right)}\\dot{x_1}\\dot{v} = 0",
+        "\\ddot{x_2} + \\dfrac{v + 2}{3v\\left(1 - v\\right)}\\dot{x_2}\\dot{v} = 0",
+        "\\ddot{x_3} + \\dfrac{v + 2}{3v\\left(1 - v\\right)}\\dot{x_3}\\dot{v} = 0",
+        "\\ddot{v} + \\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}\\dot{t}^2 - \\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}\\dot{x_1}^2 - \\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}\\dot{x_2}^2 - \\dfrac{2\\ell^2\\,v\\left(v + 2\\right)}{3L^4}\\dot{x_3}^2 + \\dfrac{5v - 2}{3v\\left(1 - v\\right)}\\dot{v}^2 = 0"
+      ]
+    }
+  ]
+}

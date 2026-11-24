@@ -100,6 +100,11 @@
       "id": "naked_black_holes",
       "kind": "family",
       "text": "Charged black holes whose tidal forces grow huge just outside the horizon close to extremality. Among the extreme branes with one Ramond-Ramond charge, the three-brane alone keeps its tidal forces finite at its horizon [horowitz1997naked]."
+    },
+    {
+      "id": "holographic_rg_flow",
+      "kind": "family",
+      "text": "Flows away from the throat's anti-de Sitter space, driven by masses or by spreading the branes apart. Spread over a uniform disc, the branes give a flow solved in closed form [freedman2000]."
     }
   ],
   "references": [
@@ -122,7 +127,8 @@
     "blau2002penrose",
     "berenstein2002",
     "klebanovwitten1998",
-    "horowitz1997naked"
+    "horowitz1997naked",
+    "freedman2000"
   ],
   "coordinates": [
     {

@@ -70,6 +70,11 @@
       "id": "brown_teitelboim",
       "kind": "family",
       "text": "A charged spherical wall that separates regions of different cosmological constant [hirano2018bt]."
+    },
+    {
+      "id": "holographic_rg_flow",
+      "kind": "family",
+      "text": "Thick walls of scalar field between regions of anti-de Sitter space of five dimensions with different radii, which in holography correspond to flows of the renormalisation group [skenderis1999, girardello1998]."
     }
   ],
   "references": [
@@ -93,7 +98,9 @@
     "kraus1999",
     "rubakov1983",
     "rubakov2001extra",
-    "hirano2018bt"
+    "hirano2018bt",
+    "skenderis1999",
+    "girardello1998"
   ],
   "coordinates": [
     {

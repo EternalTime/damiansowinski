@@ -5581,5 +5581,9 @@ DIMENSIONS.update(_chamseddine_volkov_monopole.DIMENSIONS)
 HELD.update(_chamseddine_volkov_monopole.HELD)
 RATES.update(_chamseddine_volkov_monopole.RATES)
 
+import holographic_rg_flow as _holographic_rg_flow
+DIMENSIONS.update(_holographic_rg_flow.DIMENSIONS)
+
+
 if __name__ == "__main__":
     sys.exit(main())

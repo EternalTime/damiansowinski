@@ -232,6 +232,11 @@
       "id": "chamseddine_volkov_monopole",
       "kind": "family",
       "text": "A monopole of $N = 4$ gauged supergravity. In the $SO(4)$ theory a ratio $\\xi$ of two gauge couplings deforms it into spaces that approach anti-de Sitter space with an excess of solid angle, and at $\\xi = 1$ into anti-de Sitter space [chamseddine2004]."
+    },
+    {
+      "id": "holographic_rg_flow",
+      "kind": "family",
+      "text": "Walls of scalar field in anti-de Sitter space of five dimensions that approach it at the boundary correspond to flows of the renormalisation group of the field theory there, with the distance from the boundary as the energy scale [girardello1998, freedman1999]."
     }
   ],
   "references": [
@@ -300,7 +305,9 @@
     "martinez1996",
     "natsuume2000a",
     "banados1998",
-    "chamseddine2004"
+    "chamseddine2004",
+    "girardello1998",
+    "freedman1999"
   ],
   "coordinates": [
     {
