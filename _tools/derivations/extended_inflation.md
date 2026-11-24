@@ -49,8 +49,6 @@ All drawings take $\omega=3/2$, hence $p=2$, and $c=t_0=1$.
 This representative accelerating branch is not a claim of observational viability.
 Radial null rays have $r\pm c\eta$ constant, with $\eta=-t_0^2/t$ at $p=2$.
 Each chart has its own radial spacetime diagram.
-The slice $t=t_0$, $\theta=\pi/2$ is a Euclidean plane, embedded as $z=0$ with proper radius $r$.
-One moment is drawn, so no movie is needed.
 The compactification $T\pm X=2\arctan[(c\eta\pm r)/(ct_0)]$ maps the radial region to $0\le X\le\pi$, $X-\pi\le T<0$.
 The regular centre is $X=0$ for $-\pi<T<0$; future infinity is the spacelike boundary $T=0$.
 The open sloping past edge $T=X-\pi$ corresponds to $\eta\to-\infty$, $r\to\infty$ with $c\eta+r$ fixed, hence $t\to0$ and divergent curvature.
@@ -58,6 +56,30 @@ It is a null singular boundary; the past endpoint of every finite comoving radiu
 The spatial-infinity corner $(\pi,0)$ has path-dependent curvature limits and is not claimed to be a regular event.
 The observer at the centre has the formal event horizon $r=-c\eta$, of proper radius $ct/(p-1)$, if the background continues indefinitely.
 The curvature figure reads the stored $R$ and $K$ and plots their time dependence without recomputing tensors.
+
+### The embedding diagram
+
+Every moment is flat: on the equator $\theta=\pi/2$ of a surface of constant $t$ the published metric is $a^2(dr^2+r^2d\phi^2)$, so a moment drawn alone is Euclid's plane, the same surface as a moment of Minkowski space.
+What the metric adds is the growth of its one scale factor $a=(t/t_0)^p$, the same in every direction, so a ring on the plane stays a circle and the moment's shape is the same at every $t$.
+The published Christoffel symbols have no $\Gamma^i{}_{tt}$, so a particle at rest in the chart stays at rest, and a ring of free particles at rest on $r=r_1$ is, at every $t$, the circle of proper radius $ar_1$.
+A radial light ray has $dr/dt=c/a$, so the observer at the centre has the event horizon of comoving radius $c\int_t^\infty dt'/a=ct_0^pt^{1-p}/(p-1)$, the line $r=-c\eta$ of the conformal chart, of proper radius $ct/(p-1)$.
+The horizon's proper radius grows at the steady rate $c/(p-1)$, while the ring's grows as $t^p$, faster and faster since $\ddot a=p(p-1)a/t^2>0$, so each ring is inside the horizon at early times and outside it later.
+De Sitter's horizon has one proper radius at every time and the Big Rip's shrinks; here it widens, and the ring outgrows it.
+The embedding diagram draws that ring and that horizon in the form of the Big Rip's: first the ring's world tube, a stack of circles, each at the height of its time, and beside it the flat moments played as a movie.
+
+It is drawn at $p=2$ and $t_0=c=1$, as every other drawing of the page is.
+There the ring's proper radius is $(t/t_0)^2r_1$, and the horizon's comoving radius is $ct_0^2/t$ and its proper radius $ct$, checked in BootLoops' sympy and mpmath against the published line element.
+The ring is on $r_1=ct_0$, the conformal diagram's line $r=ct_0$ and the areal radius $ct_0$ at $t=t_0$, where $a=1$, so it meets the horizon at $t=t_0$ itself: $ct_0^2/t=ct_0$ there.
+The moments run from $t=t_0/2$ to $3t_0/2$, symmetric about $t_0$ and inside the spacetime diagram's $0.2\le t/t_0\le2.7$, with the three key moments $t_0/2$, $t_0$ and $3t_0/2$, the first two of them lines of the conformal diagram.
+Over that run the ring grows ninefold, from $ct_0/4$ to $9ct_0/4$, and the horizon threefold, from $ct_0/2$ to $3ct_0/2$.
+A run on to $2t_0$, the conformal diagram's last line, would make the ring grow sixteenfold, and its first moment, drawn at one scale with the last, would be a circle a sixteenth as wide as the last, too small for its twelve particles to stand apart.
+The movie has a frame every $t_0/40$, 41 frames, so the ring's steps lengthen from frame to frame while the horizon's stay $ct_0/40$; its disc has the proper radius $2.5\,ct_0$, past the ring's widest reach of $2.25\,ct_0$.
+The tube stands $3\,ct_0$ high for each $t_0$, $3\,ct_0$ in all against its widest reach of $4.5\,ct_0$, and its axis of time runs a quarter of its length past the last moment, to $t=7t_0/4$, as every stack's does.
+On the tube the ring is marked at the three moments, each named beside it, with twelve of its particles as points and their world lines up the tube, and the axis is named $t$; the movie marks the ring, twelve of its particles, the horizon and lines from the centre every $30°$, and names the frame below the drawing.
+`embedding` in `extended_inflation_drawings.py` checks that each moment is a plane, the scale factor read on the slice and along $t$ against $(t/t_0)^2$, every profile against the published metric and against $\rho=ar$ at $z=0$, the published Christoffel symbols for particles at rest, the ring's proper radius against $(t/t_0)^2ct_0$, the horizon's comoving radius, integrated from the published $g_{tt}$ and $g_{rr}$, against $ct_0^2/t$, the conformal chart's published scale factor at $\eta=-t_0^2/t$ against the cosmic chart's at $t$, the horizon's proper radius against $ct$, the ring inside it before $t_0$, on it at $t_0$ and outside it after, the horizon's steady steps and the ring's lengthening ones, and every row of the tube against the slice at its time: 671 checks, none failing.
+
+Each moment is marked on both spacetime diagrams, as the whole line of constant $t$ in the cosmic chart and of $\eta=-t_0^2/t$ in the conformal chart, and on both views of the conformal diagram as the line $\eta=-t_0^2/t$, as the Big Rip's moments are.
+The collection's `view_text.length` counts 285 characters on the embedding's world tube and 382 on its ring.
 
 ## Limits of the approximation
 
