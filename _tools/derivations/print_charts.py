@@ -37932,6 +37932,9 @@ _conformal_scalar_wormholes.register(sys.modules[__name__])
 import heterotic_m_theory_wall as _heterotic_m_theory_wall
 _heterotic_m_theory_wall.register(sys.modules[__name__])
 
+import brane_black_holes as _brane_black_holes
+_brane_black_holes.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

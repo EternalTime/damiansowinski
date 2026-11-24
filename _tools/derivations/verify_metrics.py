@@ -5605,5 +5605,10 @@ DIMENSIONS.update(_heterotic_m_theory_wall.DIMENSIONS)
 HELD.update(_heterotic_m_theory_wall.HELD)
 RATES.update(_heterotic_m_theory_wall.RATES)
 
+import brane_black_holes as _brane_black_holes
+DIMENSIONS.update(_brane_black_holes.DIMENSIONS)
+HELD.update(_brane_black_holes.HELD)
+RATES.update(_brane_black_holes.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
