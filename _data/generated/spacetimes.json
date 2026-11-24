@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 275,
+  "count": 276,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -18884,6 +18884,11 @@
           "id": "brout_englert_gunzig",
           "kind": "family",
           "text": "An open universe inside the light cone of one event, with empty flat space outside it [brout1979causal]. Gott found the geometry inside similar when the outside is de Sitter space [gott1982]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "generalisation",
+          "text": "Coleman and De Luccia's bounce with the field at its regular pole set anywhere. The field then runs off to infinity at the other pole, and the open universe needs no false vacuum [hawking1998open]."
         }
       ],
       "references": [
@@ -18912,7 +18917,8 @@
         "hirano2018bt",
         "giddings1988",
         "coleman1988",
-        "brout1979causal"
+        "brout1979causal",
+        "hawking1998open"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/coleman_de_luccia.json",
@@ -22057,6 +22063,11 @@
           "id": "brout_englert_gunzig",
           "kind": "composite",
           "text": "A universe born at one event of empty flat space. Its fireball of particle creation is de Sitter space in hyperbolic slices, and an open Friedmann universe follows it [gott1983]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "family",
+          "text": "De Sitter space deformed by a scalar field that climbs its potential, cut through the poles of its Euclidean 4-sphere. Inside the light cone of the regular pole is an infinite open universe that inflates [hawking1998open]."
         }
       ],
       "references": [
@@ -22112,7 +22123,8 @@
         "weinberg2007hm",
         "hirano2018bt",
         "brandenberger1993",
-        "gott1983"
+        "gott1983",
+        "hawking1998open"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -28294,6 +28306,11 @@
           "id": "poincare_dodecahedral",
           "kind": "family",
           "text": "A closed Friedmann universe with points of space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. The identification moves points within one moment and keeps the direction of time [luminet2003]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "family",
+          "text": "A deformed 4-sphere whose singularity Kirklin, Turok, and Wiseman found to be a zero of the conformal factor on a regular $RP^4$, the 4-sphere with antipodes identified [kirklin2001]."
         }
       ],
       "references": [
@@ -28310,7 +28327,8 @@
         "louko1998",
         "lachiezerey1995",
         "gott1998",
-        "luminet2003"
+        "luminet2003",
+        "kirklin2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/elliptic_de_sitter.json",
@@ -31506,6 +31524,11 @@
           "id": "krasnikov_time_machine",
           "kind": "composite",
           "text": "A time machine inside a universe that is a closed Friedmann universe outside a layer round the equator of its 3-sphere. Serguei Krasnikov built it in 1998 with the weak energy condition obeyed throughout [krasnikov1998wec]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "composite",
+          "text": "An open Friedmann universe, $k = -1$, born inside the light cone of the regular pole of a deformed 4-sphere, with a timelike singularity outside it [hawking1998open]."
         }
       ],
       "references": [
@@ -31594,7 +31617,8 @@
         "faraoni2013",
         "bicak1994",
         "bicak1996",
-        "krasnikov1998wec"
+        "krasnikov1998wec",
+        "hawking1998open"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -35210,6 +35234,11 @@
           "id": "giddings_strominger",
           "kind": "family",
           "text": "A wormhole of four dimensions with no time that an axion's field holds open, which Steven B. Giddings and Andrew Strominger drew as \"a gravitational instanton with two asymptotically Euclidean regions\" [giddings1988]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "family",
+          "text": "A Riemannian space of four dimensions with a scalar field, regular at one pole and singular at the other, with a finite action [hawking1998open]."
         }
       ],
       "references": [
@@ -35232,7 +35261,8 @@
         "vilenkin1982",
         "atiyahhitchin1985",
         "gibbonsmanton1995",
-        "giddings1988"
+        "giddings1988",
+        "hawking1998open"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gravitational_instantons.json",
@@ -36714,6 +36744,11 @@
           "id": "universe_from_nothing",
           "kind": "family",
           "text": "A round Euclidean 4-sphere enters both constructions. The Hawking-Moss exponent compares a whole sphere at the barrier maximum with a false vacuum sphere [weinberg2007hm]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "generalisation",
+          "text": "The round 4-sphere with its field started off the stationary point. The field climbs its potential, the sphere deforms, and its second pole closes on a singularity [hawking1998open]."
         }
       ],
       "references": [
@@ -36727,7 +36762,8 @@
         "gregory2020hm",
         "shi2026hm",
         "miyachi2024hm",
-        "saito2025hm"
+        "saito2025hm",
+        "hawking1998open"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hawking_moss.json",
@@ -37073,6 +37109,401 @@
           ],
           "ricci_scalar": "R = \\dfrac{12}{\\ell^2}",
           "kretschmann": "K = \\dfrac{24}{\\ell^4}"
+        }
+      ]
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "name": "Hawking-Turok Instanton",
+      "short_name": "Hawking-Turok",
+      "description": "A deformed 4-sphere with no time in it, regular at one pole and singular at the other, on which a scalar field climbs its potential; Stephen Hawking and Neil Turok found it in 1998 for a generic potential. Cut through its poles and continued to real time, it holds an infinite open universe that inflates beside a timelike singularity, with no false vacuum.",
+      "tags": [
+        "gravitational instanton",
+        "Euclidean quantum gravity",
+        "quantum cosmology",
+        "Riemannian",
+        "Lorentzian",
+        "inflation",
+        "open universe",
+        "hyperbolic space",
+        "expanding universe",
+        "cosmology",
+        "scalar field",
+        "minimally coupled scalar field",
+        "Einstein-scalar",
+        "curvature singularity",
+        "timelike singularity",
+        "naked singularity",
+        "Kaluza-Klein",
+        "exact solution",
+        "Einstein equations",
+        "idealized model",
+        "four-dimensional",
+        "conformally flat",
+        "spherically symmetric"
+      ],
+      "signature": "(+,+,+,+)",
+      "convention": "We keep factors of $c$ and $G$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The instanton and the two instantons in closed form are Riemannian, of signature $(+,+,+,+)$, and the region outside the bubble wall and the open universe are Lorentzian.",
+      "related": [
+        {
+          "id": "coleman_de_luccia",
+          "kind": "special_case",
+          "text": "The instanton whose field comes to rest just as the second pole closes, so that both poles are regular; it needs a potential with a false vacuum [hawking1998open]."
+        },
+        {
+          "id": "hawking_moss",
+          "kind": "special_case",
+          "text": "The instanton with its field at a stationary point of the potential, where the field never moves and the deformed 4-sphere is round [hawking1998open]."
+        },
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "Inside the bubble wall is an open Friedmann universe, $k = -1$, with the scale factor $a(t) = -ib(it)$ continued from the instanton [hawking1998open]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "Outside the bubble wall the continued instanton is \"a spatially inhomogeneous De Sitter-like metric\", and de Sitter space itself when the field stays constant [hawking1998open]."
+        },
+        {
+          "id": "gravitational_instantons",
+          "kind": "family",
+          "text": "Riemannian solutions of Einstein's equations. This one has a scalar field and ends on a singularity, and its action is finite all the same [hawking1998open]."
+        },
+        {
+          "id": "universe_from_nothing",
+          "kind": "family",
+          "text": "The same no-boundary proposal with the 4-sphere cut at its equator, where it continues to a closed universe [hawking1998open]."
+        },
+        {
+          "id": "elliptic_de_sitter",
+          "kind": "family",
+          "text": "Kirklin, Turok, and Wiseman found the instanton to be conformal to a regular space with the topology of $RP^4$, the 4-sphere with antipodal points identified, with its singularity on a noncontractible $RP^3$ [kirklin2001]."
+        }
+      ],
+      "references": [
+        "hawking1998open",
+        "coleman1980",
+        "bucher1995",
+        "hartle1983",
+        "turok1998four",
+        "lavrelashvili1998",
+        "unruh1998",
+        "linde1998open",
+        "hawking1998comment",
+        "vilenkin1998singular",
+        "wu1998",
+        "turok1999",
+        "garriga1998smooth",
+        "chiba1998",
+        "kirklin2001",
+        "garriga2000singular",
+        "hashimoto2001",
+        "hawking1998reall",
+        "gratton1999",
+        "gratton2000observational",
+        "vilenkin1999debate",
+        "chudaykin2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/hawking_turok_instanton.json",
+      "charts": [
+        {
+          "id": "instanton",
+          "name": "Instanton",
+          "coordinates": [
+            "\\sigma",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\sigma \\in [0, \\sigma_f)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\sigma = 0 \\;\\text{(the regular pole)}",
+            "\\sigma = \\sigma_f \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b = b(\\sigma)",
+              "description": "Radius of the 3-sphere of latitude $\\sigma$, a length, with $b \\approx \\sigma$ near the regular pole $\\sigma = 0$ and $b \\propto (\\sigma_f - \\sigma)^{1/3}$ near the singularity $\\sigma = \\sigma_f$. It is $\\ell\\sin(\\sigma/\\ell)$ on the round 4-sphere of radius $\\ell$, where the field rests at a stationary point of its potential"
+            },
+            {
+              "symbol": "\\sigma_f",
+              "description": "Proper distance from the regular pole to the singularity, a length"
+            }
+          ],
+          "convention": "We use the proper distance $\\sigma$ from the regular pole, a length, and the angles $\\psi$, $\\theta$, and $\\phi$ on the 3-sphere of latitude $\\sigma$. We leave $b(\\sigma)$ free, a prime is a derivative with respect to $\\sigma$, and a dot in the geodesic equations is a derivative with respect to arc length.",
+          "line_element": "ds^2 = d\\sigma^2 + b^2\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "b^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "b^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6 - 6\\left(b'\\right)^2 - 6b\\,b''}{b^2}",
+          "kretschmann": "K = \\dfrac{12b^2\\left(b''\\right)^2 - 24\\left(b'\\right)^2 + 12\\left(b'\\right)^4 + 12}{b^4}"
+        },
+        {
+          "id": "bubble_exterior",
+          "name": "Outside the Bubble Wall",
+          "coordinates": [
+            "\\tau",
+            "\\sigma",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\sigma \\in (0, \\sigma_f)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\sigma = 0 \\;\\text{(the bubble wall)}",
+            "\\sigma = \\sigma_f \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "b = b(\\sigma)",
+              "description": "Radius of curvature of the hyperboloid at $\\sigma$, a length, continued from the radius of the instanton's 3-sphere of latitude $\\sigma$. It vanishes on the bubble wall $\\sigma = 0$, where $b' = 1$, and at the singularity $\\sigma = \\sigma_f$"
+            },
+            {
+              "symbol": "\\sigma_f",
+              "description": "Proper distance from the bubble wall to the singularity, a length"
+            }
+          ],
+          "convention": "We continue the instanton's chart with $\\psi = \\pi/2 + i\\tau$, with $\\tau$ a dimensionless time, itself the chart's $x^0$, $\\sigma$ a length, and $\\theta$ and $\\phi$ the angles of the 2-sphere. We leave $b(\\sigma)$ free, a prime is a derivative with respect to $\\sigma$, and a dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = d\\sigma^2 + b^2\\left(-d\\tau^2 + \\cosh^2\\tau\\,d\\theta^2 + \\cosh^2\\tau\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-b^2"
+            },
+            {
+              "indices": [
+                "\\sigma",
+                "\\sigma"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "b^2\\cosh^2\\tau"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "b^2\\cosh^2\\tau\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6 - 6\\left(b'\\right)^2 - 6b\\,b''}{b^2}",
+          "kretschmann": "K = \\dfrac{12b^2\\left(b''\\right)^2 - 24\\left(b'\\right)^2 + 12\\left(b'\\right)^4 + 12}{b^4}"
+        },
+        {
+          "id": "open_universe",
+          "name": "Open Universe",
+          "coordinates": [
+            "t",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (0, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "t = 0 \\;\\text{(the bubble wall)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the open universe, a length, zero on the bubble wall $t = 0$, where $a' = 1$, and continued from the radius $b$ of the instanton's 3-spheres as $a(t) = -ib(ict)$"
+            }
+          ],
+          "convention": "We continue the chart outside the bubble wall with $\\sigma = ict$ and $\\tau = i\\pi/2 + \\chi$, with $t$ having dimensions of time, the proper time since the bubble wall along the comoving world lines, and $\\chi$ a rapidity, a pure number. We leave the scale factor $a(t)$ free. We take components in the chart $x^0 = ct$, a prime is the derivative along that chart time, $a' = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + a^2\\left(d\\chi^2 + \\sinh^2\\chi\\,d\\theta^2 + \\sinh^2\\chi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\sinh^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\sinh^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{6a\\,a'' + 6\\left(a'\\right)^2 - 6}{a^2}",
+          "kretschmann": "K = \\dfrac{12a^2\\left(a''\\right)^2 - 24\\left(a'\\right)^2 + 12\\left(a'\\right)^4 + 12}{a^4}"
+        },
+        {
+          "id": "exponential",
+          "name": "Exponential Potential",
+          "coordinates": [
+            "\\chi",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\chi \\in [0, \\pi/2)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\chi = 0 \\;\\text{(the regular pole)}",
+            "\\chi = \\pi/2 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Length setting the size of the instanton, with $\\ell^2 = 3c^4/(4\\pi GV_0)$ for the potential energy density $V_0$ of the field at the regular pole $\\chi = 0$"
+            }
+          ],
+          "convention": "We use the angle $\\chi$ from the regular pole and the angles $\\psi$, $\\theta$, and $\\phi$ on the 3-sphere of latitude $\\chi$, all pure numbers. A dot in the geodesic equations is a derivative with respect to arc length.",
+          "line_element": "ds^2 = \\ell^2\\cos\\chi\\left(d\\chi^2 + \\sin^2\\chi\\,d\\psi^2 + \\sin^2\\chi\\sin^2\\psi\\,d\\theta^2 + \\sin^2\\chi\\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\ell^2\\cos\\chi"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\cos\\chi"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\cos\\chi\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\ell^2\\sin^2\\chi\\cos\\chi\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{45\\cos^2\\chi + 3}{2\\ell^2\\cos^3\\chi}",
+          "kretschmann": "K = \\dfrac{18\\cos^2\\chi + 351\\cos^4\\chi + 15}{4\\ell^4\\cos^6\\chi}"
+        },
+        {
+          "id": "vilenkin",
+          "name": "Vilenkin's Instanton",
+          "coordinates": [
+            "T",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (0, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "T = 0 \\;\\text{(the singularity)}",
+            "T \\to \\infty \\;\\text{(flat space)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "Length setting the size of the instanton, with $b = T^{1/2}(A^2 + T^2)^{1/4}$ the radius of its 3-sphere at $T$"
+            }
+          ],
+          "convention": "We use Chiba's coordinate $T$, a length, zero at the singularity and the radius of the 3-spheres far from it, and the angles $\\psi$, $\\theta$, and $\\phi$ on those 3-spheres. A dot in the geodesic equations is a derivative with respect to arc length.",
+          "line_element": "ds^2 = \\dfrac{T}{\\sqrt{A^2 + T^2}}\\left(dT^2 + \\left(A^2 + T^2\\right)\\left(d\\psi^2 + \\sin^2\\psi\\,d\\theta^2 + \\sin^2\\psi\\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "\\dfrac{T}{\\sqrt{A^2 + T^2}}"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "T\\,\\sqrt{A^2 + T^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "T\\,\\sqrt{A^2 + T^2}\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "T\\,\\sqrt{A^2 + T^2}\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3A^4}{2T^3\\left(A^2 + T^2\\right)^{3/2}}",
+          "kretschmann": "K = \\dfrac{15A^8}{4T^6\\left(A^2 + T^2\\right)^3}"
         }
       ]
     },
@@ -89116,6 +89547,11 @@
           "id": "hawking_moss",
           "kind": "family",
           "text": "The Hawking-Moss saddle is a whole Euclidean 4-sphere with a scalar field at a barrier maximum. Its action is compared with a false vacuum sphere to describe a vacuum transition [weinberg2007hm]."
+        },
+        {
+          "id": "hawking_turok_instanton",
+          "kind": "family",
+          "text": "The no-boundary proposal applied to a deformed 4-sphere cut through its poles, which continues to an infinite open universe [hawking1998open]."
         }
       ],
       "references": [
@@ -89131,7 +89567,8 @@
         "gott1998",
         "bousso1996",
         "laflamme1987",
-        "weinberg2007hm"
+        "weinberg2007hm",
+        "hawking1998open"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/universe_from_nothing.json",

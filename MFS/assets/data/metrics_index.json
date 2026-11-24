@@ -1666,7 +1666,7 @@
       "idealized model",
       "conformally flat"
     ],
-    "version": "aec0533a9fce6316",
+    "version": "32ccd97202ad7a0a",
     "diagrams": "0a8a12ca162aa30b",
     "conformal": "c502811813a25858",
     "embedding": "eb3e037703b01e9d"
@@ -1934,7 +1934,7 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "05d48e943d14cddc",
+    "version": "2d96cdf375c97866",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
@@ -2416,7 +2416,7 @@
       "static",
       "spherically symmetric"
     ],
-    "version": "eb6c8670572865b8",
+    "version": "002573382c5f67d8",
     "diagrams": "e73839d0a0529179",
     "conformal": "2fed97c5ab6ddc3d",
     "embedding": "954af1b6ad40d276"
@@ -2688,7 +2688,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "c7910a510ee3e58b",
+    "version": "4192c2841682cd43",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -3034,7 +3034,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "570a63a1a58955b0",
+    "version": "febb183c559de382",
     "embedding": "9506b0f6bee702ce",
     "curvature": "23007b402fd37c38"
   },
@@ -3139,11 +3139,43 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "e63b5ed7e81ac3e0",
+    "version": "0632d0a340cfa3bb",
     "diagrams": "1595ec6b66273613",
     "conformal": "32be75dd18ea06d1",
     "embedding": "603810d2fd81ec88",
     "curvature": "a722ed880328aefb"
+  },
+  {
+    "id": "hawking_turok_instanton",
+    "name": "Hawking-Turok",
+    "tags": [
+      "gravitational instanton",
+      "Euclidean quantum gravity",
+      "quantum cosmology",
+      "Riemannian",
+      "Lorentzian",
+      "inflation",
+      "open universe",
+      "hyperbolic space",
+      "expanding universe",
+      "cosmology",
+      "scalar field",
+      "minimally coupled scalar field",
+      "Einstein-scalar",
+      "curvature singularity",
+      "timelike singularity",
+      "naked singularity",
+      "Kaluza-Klein",
+      "exact solution",
+      "Einstein equations",
+      "idealized model",
+      "four-dimensional",
+      "conformally flat",
+      "spherically symmetric"
+    ],
+    "version": "5ff85ce109f787ac",
+    "embedding": "0151146abadde0fe",
+    "curvature": "b20351ee97bb315d"
   },
   {
     "id": "hayward",
@@ -7897,7 +7929,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "af158828dc90c6e1",
+    "version": "67059063f4cc1eeb",
     "diagrams": "a9188dda865e16c7",
     "conformal": "f418f5e5af0df32b",
     "embedding": "5c081e057e4b8c91"

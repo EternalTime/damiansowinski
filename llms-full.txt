@@ -1490,6 +1490,20 @@ A homogeneous scalar field at a positive potential maximum on a Euclidean 4-sphe
 - chart Wall Constant Field Continuation: coordinates $(\xi, \psi, \theta, \phi)$, $$ds^2 = d\xi^2 + \ell^2\sin^2(\xi/\ell)\left(-d\psi^2 + \cosh^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
 - chart Closed Constant Field Continuation: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -dt^2 + \ell^2\cosh^2(t/\ell)\left(d\chi^2 + \sin^2\chi\,d\theta^2 + \sin^2\chi\sin^2\theta\,d\phi^2\right)$$
 
+### Hawking-Turok Instanton
+
+A deformed 4-sphere with no time in it, regular at one pole and singular at the other, on which a scalar field climbs its potential; Stephen Hawking and Neil Turok found it in 1998 for a generic potential. Cut through its poles and continued to real time, it holds an infinite open universe that inflates beside a timelike singularity, with no false vacuum.
+
+- id: `hawking_turok_instanton`
+- tags: gravitational instanton, Euclidean quantum gravity, quantum cosmology, Riemannian, Lorentzian, inflation, open universe, hyperbolic space, expanding universe, cosmology, scalar field, minimally coupled scalar field, Einstein-scalar, curvature singularity, timelike singularity, naked singularity, Kaluza-Klein, exact solution, Einstein equations, idealized model, four-dimensional, conformally flat, spherically symmetric
+- signature: (+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/hawking_turok_instanton.json
+- chart Instanton: coordinates $(\sigma, \psi, \theta, \phi)$, $$ds^2 = d\sigma^2 + b^2\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Outside the Bubble Wall: coordinates $(\tau, \sigma, \theta, \phi)$, $$ds^2 = d\sigma^2 + b^2\left(-d\tau^2 + \cosh^2\tau\,d\theta^2 + \cosh^2\tau\sin^2\theta\,d\phi^2\right)$$
+- chart Open Universe: coordinates $(t, \chi, \theta, \phi)$, $$ds^2 = -c^2dt^2 + a^2\left(d\chi^2 + \sinh^2\chi\,d\theta^2 + \sinh^2\chi\sin^2\theta\,d\phi^2\right)$$
+- chart Exponential Potential: coordinates $(\chi, \psi, \theta, \phi)$, $$ds^2 = \ell^2\cos\chi\left(d\chi^2 + \sin^2\chi\,d\psi^2 + \sin^2\chi\sin^2\psi\,d\theta^2 + \sin^2\chi\sin^2\psi\sin^2\theta\,d\phi^2\right)$$
+- chart Vilenkin's Instanton: coordinates $(T, \psi, \theta, \phi)$, $$ds^2 = \dfrac{T}{\sqrt{A^2 + T^2}}\left(dT^2 + \left(A^2 + T^2\right)\left(d\psi^2 + \sin^2\psi\,d\theta^2 + \sin^2\psi\sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Hayward Regular Black Hole
 
 A black hole with two horizons and a regular centre, Schwarzschild's metric far away and de Sitter space at the core. Sean Hayward wrote it down in 2006 and let its mass change in time, so that a region of trapped surfaces forms, evaporates, and leaves neither a singularity nor an event horizon.

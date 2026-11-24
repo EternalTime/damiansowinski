@@ -1,5 +1,5 @@
 {
-  "version": "d6de047757dfc179",
+  "version": "4f9f456682c83b78",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -51133,6 +51133,295 @@
         "year": "2009",
         "doi": "10.1007/s11229-008-9338-2",
         "url": "https://doi.org/10.1007/s11229-008-9338-2"
+      }
+    },
+    "hawking1998open": {
+      "type": "article",
+      "fields": {
+        "title": "Open inflation without false vacua",
+        "author": "Hawking, S. W. and Turok, Neil",
+        "journal": "Physics Letters B",
+        "volume": "425",
+        "number": "1-2",
+        "pages": "25--32",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)00234-2",
+        "eprint": "hep-th/9802030",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9802030"
+      }
+    },
+    "turok1998four": {
+      "type": "article",
+      "fields": {
+        "title": "Open inflation, the four form and the cosmological constant",
+        "author": "Turok, Neil and Hawking, S. W.",
+        "journal": "Physics Letters B",
+        "volume": "432",
+        "number": "3-4",
+        "pages": "271--278",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)00651-0",
+        "eprint": "hep-th/9803156",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9803156"
+      }
+    },
+    "lavrelashvili1998": {
+      "type": "article",
+      "fields": {
+        "title": "Quadratic action of the Hawking-Turok instanton",
+        "author": "Lavrelashvili, George",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "6",
+        "pages": "063505",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.063505",
+        "eprint": "gr-qc/9804056",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9804056"
+      }
+    },
+    "unruh1998": {
+      "type": "misc",
+      "fields": {
+        "title": "On the Hawking Turok solution to the Open Universe wave function",
+        "author": "Unruh, W. G.",
+        "year": "1998",
+        "eprint": "gr-qc/9803050",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9803050"
+      }
+    },
+    "linde1998open": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum creation of an open inflationary universe",
+        "author": "Linde, Andrei",
+        "journal": "Physical Review D",
+        "volume": "58",
+        "number": "8",
+        "pages": "083514",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.58.083514",
+        "eprint": "gr-qc/9802038",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9802038"
+      }
+    },
+    "hawking1998comment": {
+      "type": "misc",
+      "fields": {
+        "title": "Comment on `Quantum Creation of an Open Universe', by Andrei Linde",
+        "author": "Hawking, S. W. and Turok, Neil",
+        "year": "1998",
+        "eprint": "gr-qc/9802062",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9802062"
+      }
+    },
+    "vilenkin1998singular": {
+      "type": "article",
+      "fields": {
+        "title": "Singular instantons and the creation of open universes",
+        "author": "Vilenkin, Alexander",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "12",
+        "pages": "R7069--R7070",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.R7069",
+        "eprint": "hep-th/9803084",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9803084"
+      }
+    },
+    "wu1998": {
+      "type": "article",
+      "fields": {
+        "title": "Creation of Closed or Open Universe from Constrained Instanton",
+        "author": "Wu, Z. C.",
+        "journal": "General Relativity and Gravitation",
+        "volume": "30",
+        "number": "11",
+        "pages": "1639--1643",
+        "year": "1998",
+        "doi": "10.1023/A:1026668322706",
+        "eprint": "hep-th/9803121",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9803121"
+      }
+    },
+    "turok1999": {
+      "type": "article",
+      "fields": {
+        "title": "Stability of flat space to singular instantons",
+        "author": "Turok, Neil",
+        "journal": "Physics Letters B",
+        "volume": "458",
+        "number": "2-3",
+        "pages": "202--208",
+        "year": "1999",
+        "doi": "10.1016/S0370-2693(99)00587-0",
+        "eprint": "gr-qc/9901079",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9901079"
+      }
+    },
+    "garriga1998smooth": {
+      "type": "misc",
+      "fields": {
+        "title": "Smooth ``creation'' of an open universe in five dimensions",
+        "author": "Garriga, Jaume",
+        "year": "1998",
+        "eprint": "hep-th/9804106",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9804106"
+      }
+    },
+    "chiba1998": {
+      "type": "article",
+      "fields": {
+        "title": "Resolving the singularity of the Hawking-Turok type instanton",
+        "author": "Chiba, Takeshi",
+        "journal": "Physics Letters B",
+        "volume": "442",
+        "number": "1-4",
+        "pages": "59--62",
+        "year": "1998",
+        "doi": "10.1016/S0370-2693(98)01273-8",
+        "eprint": "gr-qc/9810002",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9810002"
+      }
+    },
+    "kirklin2001": {
+      "type": "article",
+      "fields": {
+        "title": "Singular cosmological instantons made regular",
+        "author": "Kirklin, Kelley and Turok, Neil and Wiseman, Toby",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "8",
+        "pages": "083509",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.083509",
+        "eprint": "hep-th/0005062",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0005062"
+      }
+    },
+    "garriga2000singular": {
+      "type": "article",
+      "fields": {
+        "title": "Open inflation and the singular boundary",
+        "author": "Garriga, Jaume",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "4",
+        "pages": "047301",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.047301",
+        "eprint": "hep-th/9803210",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9803210"
+      }
+    },
+    "hashimoto2001": {
+      "type": "article",
+      "fields": {
+        "title": "Action of singular instantons of Hawking-Turok type",
+        "author": "Hashimoto, Masashi",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "4",
+        "pages": "043510",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.043510",
+        "eprint": "hep-th/0005102",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/0005102"
+      }
+    },
+    "gratton2000observational": {
+      "type": "article",
+      "fields": {
+        "title": "Observational test of quantum cosmology",
+        "author": "Gratton, Steven and Hertog, Thomas and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "6",
+        "pages": "063501",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.62.063501",
+        "eprint": "astro-ph/9907212",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9907212"
+      }
+    },
+    "vilenkin1999debate": {
+      "type": "inproceedings",
+      "fields": {
+        "title": "The quantum cosmology debate",
+        "author": "Vilenkin, Alexander",
+        "booktitle": "Second International Workshop on Particle Physics and the Early Universe (COSMO-98)",
+        "series": "AIP Conference Proceedings",
+        "volume": "478",
+        "pages": "23--29",
+        "year": "1999",
+        "doi": "10.1063/1.59443",
+        "eprint": "gr-qc/9812027",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9812027"
+      }
+    },
+    "chudaykin2026": {
+      "type": "article",
+      "fields": {
+        "title": "Inflation, open Universes, and dark energy",
+        "author": "Chudaykin, Anton and Ivanov, Mikhail M. and Kallosh, Renata and Linde, Andrei and Philcox, Oliver H. E. and Yamada, Yusuke",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2026",
+        "number": "10",
+        "pages": "069",
+        "year": "2026",
+        "doi": "10.1088/1475-7516/2026/10/069",
+        "eprint": "2607.28445",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2607.28445"
+      }
+    },
+    "hawking1998reall": {
+      "type": "article",
+      "fields": {
+        "title": "Inflation, singular instantons, and eleven dimensional cosmology",
+        "author": "Hawking, S. W. and Reall, Harvey S.",
+        "journal": "Physical Review D",
+        "volume": "59",
+        "number": "2",
+        "pages": "023502",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.59.023502",
+        "eprint": "hep-th/9807100",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/hep-th/9807100"
+      }
+    },
+    "gratton1999": {
+      "type": "article",
+      "fields": {
+        "title": "Cosmological perturbations from the no boundary Euclidean path integral",
+        "author": "Gratton, Steven and Turok, Neil",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "12",
+        "pages": "123507",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.123507",
+        "eprint": "astro-ph/9902265",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/astro-ph/9902265"
       }
     }
   }
