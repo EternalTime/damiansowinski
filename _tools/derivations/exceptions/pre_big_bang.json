@@ -1,3 +1,10 @@
 {
-  "flat": "Each constant t spatial plane is Euclidean, with the lengths along each axis scaled by (-t) to the power of its exponent, all one at t = -1."
+  "hidden": [
+    {
+      "reason": "The spacetime and conformal diagrams draw the expanding isotropic member, every exponent -1/sqrt3, another member of the family than (-2/7, -3/7, -6/7), whose ring is embedded.",
+      "drawings": ["pre_big_bang/synchronous/tx", "pre_big_bang/conformal/etax", "conformal pre_big_bang/conformal"]
+    }
+  ],
+  "flat": "Its moments are flat planes, and the expansion shows in its ring of free particles, stacked up its axis of time.",
+  "height": "Its view tube stacks the ring of free particles up its axis of time, a grid whose height is the time."
 }

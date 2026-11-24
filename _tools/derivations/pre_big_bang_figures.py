@@ -1,9 +1,17 @@
-"""Draw the pre-big bang dilaton vacuum at its expanding isotropic member, every exponent -1/sqrt3.
+"""Draw the pre-big bang dilaton vacuum.
 
-The moment t = -1, where every scale factor is one, is a flat space.  In the conformal time of
-the same member, k = -1/(1 + sqrt3), it is eta = -(1 + k).  Along x a light ray keeps
-x -+ (-t)^s/s with s = 1 - beta = 1 + 1/sqrt3, which is x +- eta.  pre_big_bang.md beside this
-file records each.
+The spacetime diagrams, the conformal diagram and the curvature figure draw the expanding
+isotropic member, every exponent -1/sqrt3.  In its conformal time, k = -1/(1 + sqrt3), the moment
+t = -1 is eta = -(1 + k).  Along x a light ray keeps x -+ (-t)^s/s with s = 1 - beta = 1 + 1/sqrt3,
+which is x +- eta.
+
+The embedding diagram draws the member (-2/7, -3/7, -6/7), every exponent negative and no two
+equal, since a moment of the isotropic member is Euclid's plane with one scale and a ring on it
+stays a circle.  The plane y = 0 holds the slowest and the fastest stretch, and a ring of free
+particles at rest on x^2 + z^2 = l^2 at t = -1 is the ellipse of semi-axes (-t)^(-2/7) l and
+(-t)^(-6/7) l from t = -1 to -1/4, drawn as its world tube and as a movie.  Its moments lie on
+none of the other drawings, which draw another member.  pre_big_bang.md beside this file records
+each.
 """
 import math
 
@@ -15,9 +23,24 @@ PARAMS = {"synchronous": {"beta_1": BETA, "beta_2": BETA, "beta_3": BETA}, "conf
 CLOCKS = {"synchronous": ("t", "t"), "conformal": ("\\eta", "eta")}
 VIEWS = {"synchronous": "tx", "conformal": "etax"}
 S = 1 + 1 / math.sqrt(3)
-# The moment t = -1 in each chart's time: eta = -(1 + k) = -1/s.
-MOMENT = {"synchronous": -1.0, "conformal": -1 / S}
-REACH = 2.0
+
+# The member embedded: every exponent negative, so space expands along every axis, and the two
+# exponents of the plane y = 0 the farthest apart, the slowest and the fastest stretch.
+RING = {"beta_1": "-2/7", "beta_2": "-3/7", "beta_3": "-6/7"}
+RING_BETAS = (-2 / 7, -3 / 7, -6 / 7)
+# The ring's moments, from t = -1, where every scale factor is one and the ring is the circle of
+# radius l, to t = -1/4, a frame every 1/40 of t; the stack's axis of time runs a quarter of its
+# length past the last, to t = -1/16, short of the singularity at t = 0.
+NAMED = ("-1", "-3/4", "-1/2", "-1/4")
+STEP = 0.025
+LIFT = 4.0          # the height of a unit of t up the stack
+TOP = 3.5           # the disc's proper radius, past the ring's widest reach, (1/4)^(-6/7) = 3.28 l
+SIZE = 2 * TOP
+
+# The drawings on which no moment of the embedding lies, and why.
+HIDDEN_REASON = ("the expanding isotropic member, every exponent -1/sqrt3, another member of the family than "
+                 "(-2/7, -3/7, -6/7), whose ring is embedded")
+HIDDEN = [(METRIC, system, VIEWS[system]) for system in SYSTEMS] + [(METRIC, "conformal")]
 
 
 def eta_of(t):
@@ -54,39 +77,81 @@ def null_forms():
     }
 
 
-def slice_marks(slices, system):
-    """The moment t = -1 on the plane of each chart."""
-    def lines(moment):
-        hi = moment.reach("synchronous", "x")[1]
-        return slices.across(MOMENT[system], 0, hi)
-    return slices.one(METRIC, lines, label="$t = -1$", view_id="plane")
+def ring_axes(u):
+    """The semi-axes (-t)^beta_1 and (-t)^beta_3 of the ring at the time u, in units of l."""
+    import numpy as np
+
+    minus_t = -np.asarray(u, dtype=float)
+    return minus_t ** RING_BETAS[0], minus_t ** RING_BETAS[2]
 
 
 def embedding_views(ck, src, em):
-    """The plane z = 0 at t = -1, where every scale factor is one, isometric to Euclid's plane."""
+    """The plane y = 0 of the member (-2/7, -3/7, -6/7) from t = -1 to t = -1/4, flat at every
+    moment, (-t)^(-4/7) dx^2 + (-t)^(-12/7) dz^2, with a ring of free particles at rest on
+    x^2 + z^2 = l^2, which the published Christoffel symbols keep at rest: the ellipse of semi-axes
+    (-t)^beta_1 l along x and (-t)^beta_3 l along z, the circle of radius l at t = -1, where every
+    scale factor is one. Drawn first as the ring's world tube, each ellipse at the height of its
+    time, and beside it as a movie of the flat moments, a frame every 1/40 of t."""
     import numpy as np
+    import sympy as sp
 
-    sl = em.Slice(src, METRIC, "synchronous", "x", None, {"t": -1, "z": 0}, PARAMS["synchronous"], turn="y")
-    ck.plane("pre-big bang: the spatial plane", sl, np.linspace(0.001, REACH, 80))
-    plane = em.Piece("plane", "sheet", sl, 0, REACH, 0, 1,
-                     (("axis", "$x = y = 0$"), ("edge", "The plane extends to infinity.")),
-                     [(v, "r", None) for v in (0.5, 1, 1.5, 2)], 5.0)
-    ck.isometry("pre-big bang: spatial plane", plane)
-    ck.radius("pre-big bang: radius", plane, lambda x: x, 5.0)
-    ck.form("pre-big bang: height", plane, lambda x: 0 * x, 5.0)
-    surface = em.Surface([plane])
-    fig = em.figure_of([surface], {"sheet": "cover"}, 5.0, em.FLAT_CAMERA)
-    fig.legend("fill", "cover", "$t = -1$, $z = 0$")
-    fig.legend("line", "r", "Circles of constant radius")
-    fig.legend("line", "meridian", "Radial lines")
-    data = fig.done()
-    data["box"] = [-2.5, 2.5, -2.5, 2.5]
-    return [em.view("plane", "A spatial plane", "$\\ell$", [surface], data,
-                    settings="$\\beta_i = -1/\\sqrt3$, $t = -1$, with $\\ell$ the unit of $t$ and of every length.")]
+    betas = [sp.Rational(RING[f"beta_{i}"]) for i in (1, 2, 3)]
+    ck.exact("pre-big bang: the exponents embedded lie on the sphere sum_i beta_i^2 = 1, every one negative",
+             sum(b * b for b in betas) == 1 and all(b < 0 for b in betas))
+    ck.add("pre-big bang: the floats of the exponents are the published fractions",
+           max(abs(float(b) - f) for b, f in zip(betas, RING_BETAS)), 1e-15)
+    em.at_rest(ck, src, METRIC, "synchronous")
+    keys = [float(sp.Rational(s)) for s in NAMED]
+    moments, at = em.ring_moments(keys, STEP,
+                                  lambda k: (f"$t = {NAMED[k]}$", keys[k], {"t": NAMED[k], "y": 0}, None),
+                                  lambda t: (f"$t = {t:g}$", t, {"t": repr(t), "y": 0}, None))
+    frames = em.ring_sequence(ck, src, "pre-big bang", METRIC, "synchronous", moments, TOP, RING)
+    surfaces = [frames[i] for i in at]
+    alpha = np.linspace(0, 2 * math.pi, 361)
+    for s, (_, time, _, _) in zip(frames, moments):
+        a, b = ring_axes(time)
+        want = np.column_stack([a * np.cos(alpha), b * np.sin(alpha)])
+        ck.add(f"pre-big bang, t = {time}: the ellipse of semi-axes (-t)^beta_1 and (-t)^beta_3",
+               float(np.max(np.abs(s.curves[0].points[:, :2] - want))), 1e-12)
+    # Every semi-axis grows faster and faster: (-t)^beta has the second derivative
+    # beta (beta - 1) (-t)^(beta - 2), positive for a negative beta.
+    t = sp.Symbol("t", negative=True)
+    ck.exact("pre-big bang: both semi-axes of the ring grow, and grow faster, as t rises toward zero",
+             all(sp.simplify(sp.diff((-t) ** b, t) * (-t) ** (1 - b)) == -b and
+                 sp.simplify(sp.diff((-t) ** b, t, 2) * (-t) ** (2 - b)) == b * (b - 1) for b in (betas[0], betas[2])))
+
+    def plane(u, a, b):
+        sl = em.FlatPlane(src, METRIC, "synchronous", "x", "z", {"t": repr(float(u)), "y": 0}, RING)
+        return float(np.max(np.abs(sl.scale - [a, b])))
+    tube = em.stack(ck, "pre-big bang", surfaces, ring_axes, LIFT, plane, SIZE,
+                    "the world tube runs on before $t = -1$ and widens without bound toward $t = 0$")
+    ck.exact("pre-big bang: the stack's axis of time ends short of the singularity at t = 0",
+             tube.data()["axis"]["to"] < 0)
+    tube_fig = em.stack_figure(tube, SIZE, "$t$", [
+        ("fill", "cover", "the ring at each $t$"),
+        ("line", "particles", "the ring at four moments, twelve particles marked"),
+        ("line", "worldline", "their world lines"),
+        ("line", "axis", "the axis of time")])
+    fig, played = em.ring_movie(frames, SIZE, "$t$")
+    fig.legend("fill", "cover", "the plane $y = 0$")
+    fig.legend("line", "particles", "the ring $x^2 + z^2 = \\ell^2$, twelve particles marked")
+    fig.legend("line", "meridian", "lines from the centre every $30°$")
+    settings = "$(\\beta_1, \\beta_2, \\beta_3) = (-2/7, -3/7, -6/7)$, $\\ell$ the unit of $t$ and of every length."
+    return [em.view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                    height="$t$, a height of $4\\,\\ell$ for each unit of $t$"),
+            em.view("ring", "A ring of particles", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
 def embedding_captions():
-    return {(METRIC, "plane"): [r"A flat spatial plane at $t = -1$, where every scale factor is one ($z = 0$)."]}
+    return {
+        (METRIC, "tube"): [
+            r"The world tube of a ring of free particles on the plane $y = 0$ ($t$ from $-1$ to $-1/4$), each "
+            r"ellipse at the height of its $t$, widening faster and faster toward $t = 0$, fastest along $z$."],
+        (METRIC, "ring"): [
+            r"A ring of free particles ($t$ from $-1$ to $-1/4$), an ellipse of semiaxes "
+            r"$(-t)^{\beta_1}\ell$ and $(-t)^{\beta_3}\ell$ along $x$ and $z$, growing faster and faster toward "
+            r"$t = 0$."],
+    }
 
 
 def conformal_views(ck, src, cf):
@@ -116,10 +181,6 @@ def conformal_views(ck, src, cf):
     v.legend("t", r"$\eta$ constant")
     v.legend("singular", "Curvature singularity")
     v.legend("scri", "Past null infinity")
-    moment = cf.slices.moments(METRIC, "plane", label="$t = -1$")[0]
-    reach = moment.reach("synchronous", "x")[1]
-    x = np.linspace(-reach, reach, 81)
-    v.slice(moment, [cf.mink_pq(np.full_like(x, MOMENT["conformal"]), x)])
     v.set(settings=r"$k = -1/(1 + \sqrt3)$, $p = \arctan(\eta - x)$, $q = \arctan(\eta + x)$.",
           restriction=r"The plane $y = z = 0$, with each point a single event.")
     return [v]

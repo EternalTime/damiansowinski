@@ -3987,11 +3987,6 @@ import wiggly_string_drawings as _wiggly_string_drawings
 FLAT[(_wiggly_string_drawings.METRIC, _wiggly_string_drawings.SYSTEM, "radial")] = (
     lambda: _wiggly_string_drawings.slice_marks(sys.modules[__name__]))
 
-import pre_big_bang_figures as _pre_big_bang_figures
-FLAT.update({(_pre_big_bang_figures.METRIC, system, _pre_big_bang_figures.VIEWS[system]):
-             (lambda system=system: _pre_big_bang_figures.slice_marks(sys.modules[__name__], system))
-             for system in _pre_big_bang_figures.SYSTEMS})
-
 import nappi_witten_drawings as _nappi_witten_drawings
 FLAT.update({(_nappi_witten_drawings.METRIC, system, "polar"):
              (lambda system=system: _nappi_witten_drawings.slice_marks(sys.modules[__name__], system))
@@ -5245,6 +5240,9 @@ FLAT[(_generalised_vaidya_drawings.METRIC, "ingoing", "collapse")] = (
 FLAT_METRICS.add(_generalised_vaidya_drawings.METRIC)
 HIDDEN.update({(_generalised_vaidya_drawings.METRIC, system, view): _generalised_vaidya_drawings.HIDDEN_REASON
                for system, view in (("husain", "hair"), ("outgoing", "strings"))})
+
+import pre_big_bang_figures as _pre_big_bang_figures  # noqa: E402
+HIDDEN.update({key: _pre_big_bang_figures.HIDDEN_REASON for key in _pre_big_bang_figures.HIDDEN})
 
 import bmpv_drawings as _bmpv_drawings  # noqa: E402
 FLAT.update({(_bmpv_drawings.METRIC, system, "radial"): (lambda system=system: _bmpv_drawings.slice_marks(sys.modules[__name__], system))
