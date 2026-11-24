@@ -3296,6 +3296,7 @@ class StacksAndMovies(unittest.TestCase):
     STACKS = chosen_entries({"kasner": 1.5, "kasner_scalar": 1.5, "kasner_magnetic": 1.5, "bianchi": 2.5, "pp_wave": 0.5, "aichelburg_sexl": 0.5, "khan_penrose": 3.0,
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
               "big_rip": 1.0,
+              "extended_inflation": 3.0,
               "murphy_viscous_universe": 1.0,
               "pre_big_bang": 4.0,
               "maximally_supersymmetric_plane_wave": 0.8,
@@ -3343,7 +3344,8 @@ class StacksAndMovies(unittest.TestCase):
               ("kasner", "ring"): "$t$", ("kasner_scalar", "ring"): "$t$", ("kasner_magnetic", "ring"): "$t$", ("bianchi", "ring"): "$c\\bar Ht$", ("pp_wave", "ring"): "$cu$",
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
-              ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$", ("murphy_viscous_universe", "ring"): "$t$",
+              ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$", ("extended_inflation", "ring"): "$t/t_0$",
+              ("murphy_viscous_universe", "ring"): "$t$",
               ("pre_big_bang", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
@@ -4625,9 +4627,9 @@ class Slices(unittest.TestCase):
             return (lambda X: end - math.sinh(2 * end) / 2
                     + math.sinh(end) ** 2 * math.cosh(eta(X) - 2 * math.log(0.8))), ends
         if key.startswith("extended_inflation/"):
-            # The fixed reference surface is t=t_0=1, eta=-1 at p=2.
-            level = 1.0 if "/cosmic/" in key else -1.0
-            return (lambda X: level), list(self.reach(surface))
+            # Every moment of t runs across the whole drawing, and at p = 2 it is eta = -t_0^2/t,
+            # in units of t_0.
+            return ((lambda X: t) if "/cosmic/" in key else (lambda X: -1 / t)), None
 
         if key == "global_texture/collapse/radial":
             # One fixed equatorial moment at t=-ell, with ell=1.
@@ -6191,9 +6193,16 @@ class Slices(unittest.TestCase):
                             self.assertAlmostEqual(T, math.pi/4, delta=2e-4, msg=where)
                             self.assertGreaterEqual(X, lo-2e-4, where)
                             self.assertLessEqual(X, hi+2e-4, where)
-                    elif metric_id in ("extended_inflation", "global_texture"):
+                    elif metric_id == "extended_inflation":
+                        # The moment t at p = 2 is eta = -t_0^2/t in units of t_0, carried by
+                        # p, q = arctan(eta -+ r), and runs across the whole region.
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            scale = 1 + tp * tp + tq * tq
+                            self.assertLess(abs((tp + tq) / 2 + 1 / t), 2e-4 * scale, f"{where} at {(X, T)}")
+                    elif metric_id == "global_texture":
                         # tan((T-X)/2)=clock-r and tan((T+X)/2)=clock+r:
-                        # eta=-1 for extended inflation, t=-1 for the fixed texture moment.
+                        # t=-1 for the fixed texture moment.
                         lo, hi = self.reach(surface)
                         for X, T in points:
                             tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)

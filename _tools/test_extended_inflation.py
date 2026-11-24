@@ -3,6 +3,9 @@
 The chart printer owns the field equations and coordinate-map checks.
 These checks pin the reference data in the de Sitter limit, the distinct
 Einstein metric, the growing nucleation ratio and the null singular edge.
+The embedding diagram's ring of free particles, the central observer's event
+horizon and the ring's world tube are held to the metric at p = 2, from the
+numbers in its file.
 """
 import json
 import math
@@ -81,6 +84,48 @@ class Physics(unittest.TestCase):
             last_K, last_gap = value, gap
         self.assertLess(last_gap, 0.0002)
         self.assertGreater(last_K, 1e18)
+
+    def test_embedding_is_a_ring_of_free_particles_outgrowing_the_central_event_horizon(self):
+        # At p = 2 and t_0 = c = 1 a ring at rest on r = c t_0 has the proper radius a r = t^2, and the
+        # event horizon of the observer at the centre, of comoving radius c int_t^oo dt'/a = 1/t, the
+        # proper radius t: the ring is inside it before t = t_0 and outside it after.
+        embedding = json.loads((ROOT / "MFS/assets/data/embedding/extended_inflation.json").read_text())
+        views = {view["id"]: view for view in embedding["views"]}
+        self.assertEqual(list(views), ["tube", "ring"])
+        ring = views["ring"]
+        self.assertEqual([s["time"] for s in ring["surfaces"]], [0.5, 1, 1.5])
+        frames = ring["movie"]["frames"]
+        values = [frame["value"] for frame in frames]
+        self.assertEqual((values[0], values[-1], len(values)), (0.5, 1.5, 41))
+        for earlier, later in zip(values, values[1:]):
+            self.assertAlmostEqual(later - earlier, 0.025, delta=1e-6)
+        radii = []
+        for frame in frames:
+            t = frame["value"]
+            curves = {curve["class"]: curve for curve in frame["curves"]}
+            for name, want in (("particles", t * t), ("horizon", t)):
+                for X, Y, Z in curves[name]["points"]:
+                    self.assertAlmostEqual(math.hypot(X, Y), want, delta=1e-6, msg=(name, t))
+                    self.assertEqual(Z, 0, (name, t))
+            self.assertEqual(len(frame["dots"]), 12, t)
+            radii.append(tuple(math.hypot(*curves[name]["points"][0][:2]) for name in ("particles", "horizon")))
+            plane = frame["pieces"][0]
+            for r, rho, z in plane["points"]:
+                self.assertAlmostEqual(rho, t * t * r, delta=1e-6, msg=t)
+                self.assertEqual(z, 0, t)
+            self.assertGreater(plane["points"][-1][1], t * t, t)
+        inside = [ring < horizon for ring, horizon in radii]
+        self.assertEqual(inside, [t < 1 for t in values[:20]] + [False] * 21)
+        self.assertAlmostEqual(radii[20][0], radii[20][1], delta=1e-12)
+        grown = [later[0] - earlier[0] for earlier, later in zip(radii, radii[1:])]
+        self.assertTrue(all(later > earlier > 0 for earlier, later in zip(grown, grown[1:])))
+        tube = views["tube"]["surfaces"][0]
+        grid = tube["pieces"][0]["grid"]
+        for u, a, b, z in zip(grid["u"], grid["a"], grid["b"], grid["z"]):
+            self.assertAlmostEqual(a, u * u, delta=1e-6, msg=u)
+            self.assertAlmostEqual(b, u * u, delta=1e-6, msg=u)
+            self.assertAlmostEqual(z, 3 * u, delta=1e-6, msg=u)
+        self.assertEqual([c["time"] for c in tube["curves"]], [0.5, 1, 1.5])
 
 
 if __name__ == "__main__":
