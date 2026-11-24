@@ -5307,3 +5307,6 @@ FLAT_METRICS.add(_bmpv_drawings.METRIC)
 
 import constant_curvature_black_hole_drawings as _constant_curvature_black_hole_drawings  # noqa: E402
 _constant_curvature_black_hole_drawings.register_slices(sys.modules[__name__])
+
+import naked_black_holes_drawings as _naked_black_holes_drawings  # noqa: E402
+_naked_black_holes_drawings.register_slices(sys.modules[__name__])

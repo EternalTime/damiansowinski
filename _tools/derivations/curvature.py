@@ -19335,5 +19335,8 @@ DRAWN[_generalised_vaidya_drawings.METRIC] = lambda ck, src: _generalised_vaidya
 import bmpv_drawings as _bmpv_drawings
 DRAWN[_bmpv_drawings.METRIC] = lambda ck, src: _bmpv_drawings.curvature_views(ck, src, sys.modules[__name__])
 
+import naked_black_holes_drawings as _naked_black_holes_drawings
+_naked_black_holes_drawings.register_curvature(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

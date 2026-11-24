@@ -22895,6 +22895,9 @@ DRAWN[_constant_curvature_black_hole_drawings.METRIC] = lambda ck, src: _constan
     ck, src, sys.modules[__name__])
 CAPTIONS.update(_constant_curvature_black_hole_drawings.embedding_captions())
 
+import naked_black_holes_drawings as _naked_black_holes_drawings
+_naked_black_holes_drawings.register_embedding(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
 
