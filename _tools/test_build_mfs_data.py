@@ -5786,6 +5786,9 @@ class Slices(unittest.TestCase):
         if key == "randall_sundrum/conformal/tw":
             # The conformal distance of the circles the embedding reaches in the proper distance y, at k = 1.
             return (lambda X: 0.0), [math.copysign(math.expm1(abs(y)), y) for y in self.reach(surface)]
+        if key == "holographic_rg_flow/bfs_u/tu":
+            # The coordinate u = 1 - e^{-2r/L} of the circles the embedding reaches in the proper distance r, at L = 1.
+            return (lambda X: 0.0), [-math.expm1(-2 * r) for r in self.reach(surface)]
         if key == "randall_sundrum/poincare/tz":
             # One side, from the wall at z = 1/k to z = e^{ky}/k of the farthest circle.
             return (lambda X: 0.0), [1.0, math.exp(self.reach(surface)[1])]
