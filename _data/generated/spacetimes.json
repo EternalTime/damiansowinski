@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 280,
+  "count": 281,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -13138,6 +13138,11 @@
           "id": "heterotic_m_theory_wall",
           "kind": "family",
           "text": "The walls of heterotic M-theory set moving, their size, their separation, and the volume of the Calabi-Yau space following powers of time [lukas1999cosmological]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "A wall in flat space of five dimensions with a curvature term in its own action, whose Friedmann equation goes over to one with the square of the density as matter thins out on one of its two branches [deffayet2001cosmology]."
         }
       ],
       "references": [
@@ -13156,7 +13161,8 @@
         "visser1989nuclphysb",
         "singh2006",
         "chamblin2001",
-        "lukas1999cosmological"
+        "lukas1999cosmological",
+        "deffayet2001cosmology"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brane_wall_universe.json",
@@ -22712,6 +22718,11 @@
           "id": "hawking_turok_instanton",
           "kind": "family",
           "text": "De Sitter space deformed by a scalar field that climbs its potential, cut through the poles of its Euclidean 4-sphere. Inside the light cone of the regular pole is an infinite open universe that inflates [hawking1998open]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "De Sitter space as a wall in flat space of five dimensions, which expands with no cosmological constant because the wall has a curvature term of its own [deffayet2001cosmology, deffayet2002accelerated]."
         }
       ],
       "references": [
@@ -22768,7 +22779,9 @@
         "hirano2018bt",
         "brandenberger1993",
         "gott1983",
-        "hawking1998open"
+        "hawking1998open",
+        "deffayet2001cosmology",
+        "deffayet2002accelerated"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/de_sitter.json",
@@ -22885,6 +22898,379 @@
           ],
           "ricci_scalar": "R = \\dfrac{12H^2}{c^2}",
           "kretschmann": "K = \\dfrac{24H^4}{c^4}"
+        }
+      ]
+    },
+    {
+      "id": "dgp_wall",
+      "name": "Dvali-Gabadadze-Porrati Braneworld",
+      "short_name": "DGP Braneworld",
+      "description": "A wall with three dimensions of space in flat space of five dimensions, with a curvature term of its own in its action, proposed by Gia Dvali, Gregory Gabadadze, and Massimo Porrati in 2000. Gravity on the wall is four dimensional below a crossover length $r_c$ and five dimensional above it. On one of the two branches of Cédric Deffayet's cosmology of 2001 an empty wall expands at the rate $c/r_c$ with no cosmological constant, the hyperboloid of radius $r_c$ with two copies of its outside glued along it.",
+      "tags": [
+        "braneworld",
+        "brane",
+        "domain wall",
+        "thin shell",
+        "junction conditions",
+        "matched solution",
+        "higher dimensions",
+        "five-dimensional",
+        "reflection symmetry",
+        "spherically symmetric",
+        "orbifold",
+        "cosmology",
+        "expanding universe",
+        "FLRW",
+        "de Sitter",
+        "dark energy",
+        "alternative theories of gravity",
+        "locally flat",
+        "conformally flat",
+        "instability",
+        "negative energy",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "Off the wall $R_{\\mu\\nu} = 0$, and on it $G_{ab} - 8\\pi GT_{ab}/c^4 = (K_{ab} - h_{ab}K)/r_c$, with $h_{ab}$ the metric on the wall, $G_{ab}$ its Einstein tensor, $T_{ab}$ the stress tensor of its matter, $K_{ab}$ its extrinsic curvature with the normal pointing away from it, and $r_c$ the crossover length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, $\\delta$ is the Dirac delta, and we keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "One dimension down, a hyperboloid in flat space with two copies of its inside glued along it, a wall with tension alone. In five dimensions that wall is the branch $\\epsilon = -1$, and the empty wall of the branch $\\epsilon = +1$ keeps two copies of the outside [deffayet2001cosmology, gregory2007perspective]."
+        },
+        {
+          "id": "de_sitter",
+          "kind": "family",
+          "text": "The empty wall of the branch $\\epsilon = +1$ is de Sitter space of radius $r_c$, expanding at the rate $c/r_c$ with no cosmological constant [deffayet2001cosmology, deffayet2002accelerated]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "family",
+          "text": "Flat space of five dimensions is the bulk on both sides of the wall, and on the branch $\\epsilon = -1$ an empty wall with no tension is Minkowski space of four dimensions at rest [deffayet2001cosmology, gregory2007perspective]."
+        },
+        {
+          "id": "frw",
+          "kind": "family",
+          "text": "The universe on the wall is Friedmann's, with a term $-\\epsilon(c/r_c)\\sqrt{H^2 + kc^2/a^2}$ added to the Friedmann equation [deffayet2001cosmology]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "Gravity on Randall and Sundrum's wall is four dimensional because the warped fifth dimension has a finite volume. Here the fifth dimension is flat and infinite in volume, and gravity on the wall is four dimensional below $r_c$ because of the curvature term of the wall [dvali2000brane]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "A wall with matter on it between two copies of anti-de Sitter space. Without its curvature term the wall in flat space obeys a Friedmann equation with the square of the density, which the branch $\\epsilon = -1$ approaches as matter thins out [deffayet2001cosmology]."
+        },
+        {
+          "id": "early_braneworlds",
+          "kind": "family",
+          "text": "Dvali, Gabadadze, and Porrati suggested that the curvature term of the wall could come from a kink of a scalar field across it, a wall of the kind on which these early models trap matter [dvali2000brane]."
+        }
+      ],
+      "references": [
+        "dvali2000brane",
+        "collins2000orbifolds",
+        "shtanov2000brane",
+        "deffayet2001cosmology",
+        "gregory2007perspective",
+        "deffayet2002accelerated",
+        "deffayet2002continuity",
+        "luty2003strong",
+        "nicolis2004consistency",
+        "gorbunov2006ghosts",
+        "charmousis2006specteroscopy",
+        "maartens2006constraints",
+        "fang2008challenges",
+        "dai2026desi",
+        "sahni2003braneworld",
+        "mishra2025desi"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dgp_wall.json",
+      "charts": [
+        {
+          "id": "gaussian_normal",
+          "name": "Deffayet, Gaussian Normal",
+          "coordinates": [
+            "t",
+            "y",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in [0, \\infty) \\;\\text{on the branch}\\; \\epsilon = +1",
+            "y \\in (-\\infty, 0] \\;\\text{on the branch}\\; \\epsilon = -1",
+            "\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+            "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y = 0 \\;\\text{(the wall, where the side kept meets its mirror image)}",
+            "N = 0 \\;\\text{and}\\; A = 0 \\;\\text{(coordinate singularities)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "k",
+              "description": "Curvature of space on the wall, $k \\in \\{-1, 0, +1\\}$"
+            },
+            {
+              "symbol": "a = a(t)",
+              "description": "Scale factor of the universe on the wall, a length, the value of $A$ at $y = 0$. With $H = (da/dt)/a$ and $\\rho$ the density of the matter on the wall, $H^2 + kc^2/a^2 - (\\epsilon c/r_c)\\sqrt{H^2 + kc^2/a^2} = 8\\pi G\\rho/3$, with $\\epsilon = +1$ where lengths along the wall grow with distance from it and $\\epsilon = -1$ where they shrink"
+            },
+            {
+              "symbol": "A = a + y\\sqrt{\\dot{a}^2 + k}",
+              "description": "Scale factor of the 3-space at the distance $|y|$ from the wall, a length"
+            },
+            {
+              "symbol": "N = 1 + \\dfrac{y\\ddot{a}}{\\sqrt{\\dot{a}^2 + k}}",
+              "description": "Lapse, $N = \\partial_tA/\\dot{a}$, equal to $1$ on the wall"
+            }
+          ],
+          "convention": "We use coordinates $(t, y, \\chi, \\theta, \\phi)$, with $t$ the proper time on the wall, having dimensions of time, $y$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. On the branch $\\epsilon = +1$ two copies of the side $y \\ge 0$ are glued along the wall, and on the branch $\\epsilon = -1$ two copies of the side $y \\le 0$, so that $y$ stands where Deffayet writes $\\epsilon|y|$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -N^2c^2dt^2 + A^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-N^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{A^2}{1 - k\\chi^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "A^2\\,\\chi^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "A^2\\,\\chi^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        },
+        {
+          "id": "global",
+          "name": "Global",
+          "coordinates": [
+            "t",
+            "y",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "y = 0 \\;\\text{(the wall)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_c",
+              "description": "Crossover length, the radius of the empty wall, which expands at the rate $c/r_c$"
+            }
+          ],
+          "convention": "We use coordinates $(t, y, \\psi, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, having dimensions of time, $y$ the proper distance from the wall, with $\\mathrm{sgn}(y)$ its sign, and $\\psi$, $\\theta$, and $\\phi$ angles on the 3-sphere the wall is at each moment. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{|y|}{r_c}\\right)^2\\left(-c^2dt^2 + r_c^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right) + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r_c + |y|\\right)^2}{r_c^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{16\\delta(y)}{r_c}",
+          "kretschmann": "K = 0 \\;\\text{for}\\; y \\neq 0"
+        },
+        {
+          "id": "planar",
+          "name": "Planar",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "y = 0 \\;\\text{(the wall)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_c",
+              "description": "Crossover length, the radius of the empty wall, which expands at the rate $c/r_c$"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, y)$, with $t$ the proper time of an observer at rest on the wall, having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $y$ the proper distance from it, with $\\mathrm{sgn}(y)$ its sign. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = \\left(1 + \\dfrac{|y|}{r_c}\\right)^2\\left(-c^2dt^2 + e^{2ct/r_c}\\left(dx_1^2 + dx_2^2 + dx_3^2\\right)\\right) + dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r_c + |y|\\right)^2}{r_c^2}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^2}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^2}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{16\\delta(y)}{r_c}",
+          "kretschmann": "K = 0 \\;\\text{for}\\; y \\neq 0"
+        },
+        {
+          "id": "inertial",
+          "name": "Inertial",
+          "coordinates": [
+            "T",
+            "R",
+            "\\psi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "T \\in (-\\infty, \\infty)",
+            "R \\in [\\sqrt{r_c^2 + c^2T^2}, \\infty)",
+            "\\psi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "R = \\sqrt{r_c^2 + c^2T^2} \\;\\text{(the wall, where this side meets its mirror image)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_c",
+              "description": "Crossover length, the radius of the empty wall, which expands at the rate $c/r_c$"
+            }
+          ],
+          "convention": "We use the inertial coordinates $(T, R, \\psi, \\theta, \\phi)$ of one side of the wall, with $T$ having dimensions of time, $R$ the distance from the centre of the 3-sphere the wall is at each moment, and $\\psi$, $\\theta$, and $\\phi$ angles on it. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ is the derivative of $cT$.",
+          "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "T",
+                "T"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "R",
+                "R"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "\\psi",
+                "\\psi"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2\\sin^2\\psi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\psi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
         }
       ]
     },
@@ -24764,6 +25150,11 @@
           "id": "heterotic_m_theory_wall",
           "kind": "family",
           "text": "A universe on a wall at the end of the eleventh dimension of M-theory, two such walls bounding a fifth dimension once six more are curled into a Calabi-Yau space [lukas1999universe]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "A wall in flat space of five dimensions whose own curvature term makes gravity four dimensional at short distances, a term its authors suggested a kink of a scalar field across the wall could produce [dvali2000brane]."
         }
       ],
       "references": [
@@ -24781,7 +25172,8 @@
         "giovannini2001",
         "frere2001",
         "csaki2001",
-        "lukas1999universe"
+        "lukas1999universe",
+        "dvali2000brane"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/early_braneworlds.json",
@@ -32191,6 +32583,11 @@
           "id": "hawking_turok_instanton",
           "kind": "composite",
           "text": "An open Friedmann universe, $k = -1$, born inside the light cone of the regular pole of a deformed 4-sphere, with a timelike singularity outside it [hawking1998open]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "Friedmann's universe on a wall in flat space of five dimensions, whose Friedmann equation gains a term in the square root of its own left side and on one branch accelerates with no cosmological constant [deffayet2001cosmology]."
         }
       ],
       "references": [
@@ -32280,7 +32677,8 @@
         "bicak1994",
         "bicak1996",
         "krasnikov1998wec",
-        "hawking1998open"
+        "hawking1998open",
+        "deffayet2001cosmology"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -59032,6 +59430,11 @@
           "id": "chamseddine_volkov_monopole",
           "kind": "family",
           "text": "A monopole of gauged supergravity whose plane of time and radius is conformal to half of the flat plane, so it has the conformal diagram of Minkowski space, although it is curved and not asymptotically flat [chamseddine1997]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "A wall in flat space of five dimensions with a curvature term in its action, on which gravity is four dimensional below a crossover length. With no tension and no matter the wall can stay flat [dvali2000brane, gregory2007perspective]."
         }
       ],
       "references": [
@@ -59124,7 +59527,9 @@
         "koutrasmcintosh1996",
         "griffithspodolsky1998",
         "visser1997",
-        "chamseddine1997"
+        "chamseddine1997",
+        "dvali2000brane",
+        "gregory2007perspective"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -72374,6 +72779,11 @@
           "id": "brane_black_holes",
           "kind": "family",
           "text": "The same wall one dimension down, in anti-de Sitter space of four dimensions, where Emparan, Horowitz, and Myers found black holes on it exactly [emparan2000branes]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "A wall in flat space of five dimensions, the fifth of infinite volume, on which a curvature term in the wall's own action makes gravity four dimensional below a crossover length [dvali2000brane]."
         }
       ],
       "references": [
@@ -72405,7 +72815,8 @@
         "visser1985",
         "dewolfe2000",
         "lukas1999universe",
-        "emparan2000branes"
+        "emparan2000branes",
+        "dvali2000brane"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -94072,6 +94483,11 @@
           "id": "heterotic_m_theory_wall",
           "kind": "family",
           "text": "A pair of flat walls in five dimensional supergravity that stay at rest, held there by a potential for the volume of a Calabi-Yau space between them [lukas1999universe]."
+        },
+        {
+          "id": "dgp_wall",
+          "kind": "family",
+          "text": "The same hyperboloid one dimension up, in flat space of five dimensions, with a curvature term in the wall's action. With tension alone the wall keeps two copies of its inside, and with no tension it can keep two copies of its outside and expand with no cosmological constant [deffayet2001cosmology, gregory2007perspective]."
         }
       ],
       "references": [
@@ -94098,7 +94514,9 @@
         "hirano2018bt",
         "skenderis1999",
         "girardello1998",
-        "lukas1999universe"
+        "lukas1999universe",
+        "deffayet2001cosmology",
+        "gregory2007perspective"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",

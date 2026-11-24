@@ -999,6 +999,19 @@ The maximally symmetric vacuum solution with constant positive curvature, driven
 - chart Static Spherical: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{\Lambda r^2}{3}\right)c^2 dt^2 + \dfrac{dr^2}{1 - \dfrac{\Lambda r^2}{3}} + r^2 d\Omega^2$$
 - chart Flat Slicing: coordinates $(t, x, y, z)$, $$ds^2 = -c^2 dt^2 + e^{2Ht}\left(dx^2 + dy^2 + dz^2\right)$$
 
+### Dvali-Gabadadze-Porrati Braneworld
+
+A wall with three dimensions of space in flat space of five dimensions, with a curvature term of its own in its action, proposed by Gia Dvali, Gregory Gabadadze, and Massimo Porrati in 2000. Gravity on the wall is four dimensional below a crossover length $r_c$ and five dimensional above it. On one of the two branches of Cédric Deffayet's cosmology of 2001 an empty wall expands at the rate $c/r_c$ with no cosmological constant, the hyperboloid of radius $r_c$ with two copies of its outside glued along it.
+
+- id: `dgp_wall`
+- tags: braneworld, brane, domain wall, thin shell, junction conditions, matched solution, higher dimensions, five-dimensional, reflection symmetry, spherically symmetric, orbifold, cosmology, expanding universe, FLRW, de Sitter, dark energy, alternative theories of gravity, locally flat, conformally flat, instability, negative energy, time-dependent, exact solution, Lorentzian, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/dgp_wall.json
+- chart Deffayet, Gaussian Normal: coordinates $(t, y, \chi, \theta, \phi)$, $$ds^2 = -N^2c^2dt^2 + A^2\left(\dfrac{d\chi^2}{1 - k\chi^2} + \chi^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right) + dy^2$$
+- chart Global: coordinates $(t, y, \psi, \theta, \phi)$, $$ds^2 = \left(1 + \dfrac{|y|}{r_c}\right)^2\left(-c^2dt^2 + r_c^2\cosh^2\left(\dfrac{ct}{r_c}\right)\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right) + dy^2$$
+- chart Planar: coordinates $(t, x_1, x_2, x_3, y)$, $$ds^2 = \left(1 + \dfrac{|y|}{r_c}\right)^2\left(-c^2dt^2 + e^{2ct/r_c}\left(dx_1^2 + dx_2^2 + dx_3^2\right)\right) + dy^2$$
+- chart Inertial: coordinates $(T, R, \psi, \theta, \phi)$, $$ds^2 = -c^2dT^2 + dR^2 + R^2\left(d\psi^2 + \sin^2\psi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Gibbons-Maeda-Garfinkle-Horowitz-Strominger Dilaton Black Hole
 
 The static, spherically symmetric charged black hole of low energy string theory, a solution of Einstein's equations with a Maxwell field and a scalar field, the dilaton, coupled to it. On the plane of time and radius its metric is Schwarzschild's, with one horizon at the Schwarzschild radius for every charge and no inner horizon, and the area of its spheres vanishes at the singularity.

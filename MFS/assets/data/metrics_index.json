@@ -1200,7 +1200,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "1b5a0652f3b34fb9",
+    "version": "fa3dac391caee2d5",
     "diagrams": "16913809b57177fb",
     "conformal": "ce3ca95a4083e894",
     "embedding": "bedfefcf30c45163",
@@ -2014,10 +2014,45 @@
       "spherically symmetric",
       "dark energy"
     ],
-    "version": "2d96cdf375c97866",
+    "version": "df0009e9ba50a83c",
     "diagrams": "b1166493c0272984",
     "conformal": "5b2642d34289c174",
     "embedding": "168a0415f5dda720"
+  },
+  {
+    "id": "dgp_wall",
+    "name": "DGP Braneworld",
+    "tags": [
+      "braneworld",
+      "brane",
+      "domain wall",
+      "thin shell",
+      "junction conditions",
+      "matched solution",
+      "higher dimensions",
+      "five-dimensional",
+      "reflection symmetry",
+      "spherically symmetric",
+      "orbifold",
+      "cosmology",
+      "expanding universe",
+      "FLRW",
+      "de Sitter",
+      "dark energy",
+      "alternative theories of gravity",
+      "locally flat",
+      "conformally flat",
+      "instability",
+      "negative energy",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "idealized model"
+    ],
+    "version": "258ea5dc61779ca9",
+    "diagrams": "6bf71379e15c3216",
+    "conformal": "d15796fbaa9c226b",
+    "embedding": "a9a7607abfcfdaa7"
   },
   {
     "id": "dilaton_black_hole",
@@ -2220,7 +2255,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "a22ae09400917669",
+    "version": "806f16b3d4dbe7e1",
     "diagrams": "331d3ed0e92420c7",
     "conformal": "420755ae5fafd02e",
     "embedding": "cb5e3996e73277cc",
@@ -2768,7 +2803,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "4192c2841682cd43",
+    "version": "e947332069805ea0",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -5274,7 +5309,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "264f63693746e92a",
+    "version": "4775e644e389944b",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -6434,7 +6469,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "8fe66759052912e6",
+    "version": "b620e28c8b98c7d7",
     "diagrams": "598394eb07802f5f",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -8305,7 +8340,7 @@
       "spherically symmetric",
       "black hole pair creation"
     ],
-    "version": "7909093063431d1a",
+    "version": "6bca16d0bd4354eb",
     "diagrams": "89350711900d66d8",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"
