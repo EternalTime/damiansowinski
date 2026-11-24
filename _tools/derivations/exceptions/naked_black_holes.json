@@ -1,0 +1,18 @@
+{
+  "hidden": [
+    {
+      "reason": "The black hole with two charges is another black hole than the one whose moment is embedded, the dilaton black hole of coupling a = 1/2 with r_- = r_+/2.",
+      "drawings": [
+        "naked_black_holes/two_charges/radial",
+        "conformal naked_black_holes/two_charges"
+      ]
+    },
+    {
+      "reason": "The string metric measures the manifold another way than the Einstein metric whose moment is embedded.",
+      "drawings": [
+        "naked_black_holes/string_ns/radial",
+        "conformal naked_black_holes/string_ns"
+      ]
+    }
+  ]
+}
