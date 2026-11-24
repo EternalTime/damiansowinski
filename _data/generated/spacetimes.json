@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 269,
+  "count": 270,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -32956,6 +32956,11 @@
           "id": "btz_multi_holes_wormholes",
           "kind": "family",
           "text": "Sören Holst carried Gott's pair to anti-de Sitter space in a chart with Poincaré's disc at every moment, the sausage coordinates in which the black holes and wormholes of three dimensions were then drawn [holst1996, aminneborg1998]."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "family",
+          "text": "Many wormholes at rest round a ring, the generalization of Roman's two wormholes, which move past each other at high speed as Gott's strings do [visser1997, lyutikov1994]."
         }
       ],
       "references": [
@@ -32983,7 +32988,9 @@
         "ori2005",
         "tippett2017",
         "gott1998",
-        "aminneborg1998"
+        "aminneborg1998",
+        "visser1997",
+        "lyutikov1994"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -56077,6 +56084,11 @@
           "id": "koutras_mcintosh",
           "kind": "generalisation",
           "text": "Flat spacetime filled with incoherent null radiation that leaves its Weyl tensor zero. In general the result has no Killing vector and no homothety [koutrasmcintosh1996, griffithspodolsky1998]."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "locally_same",
+          "text": "Minkowski space with $N$ wormholes cut into it and set round a ring, each pair of mouths identified with a time shift $T$. Outside the mouths it is this spacetime [visser1997]."
         }
       ],
       "references": [
@@ -56167,7 +56179,8 @@
         "brout1979causal",
         "dowker1995",
         "koutrasmcintosh1996",
-        "griffithspodolsky1998"
+        "griffithspodolsky1998",
+        "visser1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",
@@ -56522,6 +56535,11 @@
           "id": "torus_universe_2plus1",
           "kind": "family",
           "text": "Two commuting boost and translation identifications close the spacelike sections into tori. Their extension across a null boundary has timelike tori and closed timelike curves [louko_marolf1994]."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "family",
+          "text": "Minkowski space brought close to a time machine by identifications too: pairs of mouths joined across a jump $L$ with a time shift $T$, set round a ring [visser1997]."
         }
       ],
       "references": [
@@ -56547,7 +56565,8 @@
         "gott1998",
         "brill1996",
         "moncriefisenberg1983",
-        "louko_marolf1994"
+        "louko_marolf1994",
+        "visser1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -58346,6 +58365,11 @@
           "id": "giddings_strominger",
           "kind": "family",
           "text": "Steven B. Giddings and Andrew Strominger's wormhole of 1988, four dimensions of space and no time, two flat regions joined at a 3-sphere of radius $a$ that an axion's field holds open [giddings1988]. Its radial profile is this wormhole's with $\\Phi = 0$ and $b = a^4/r^3$, with 3-spheres for 2-spheres."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "family",
+          "text": "A ring of wormholes with throats of no length, at rest in flat space. Together they come arbitrarily close to a time machine, and none of them is near one alone [visser1997]."
         }
       ],
       "references": [
@@ -58377,7 +58401,8 @@
         "james2015",
         "kodama1978preprint",
         "maldacena2018",
-        "giddings1988"
+        "giddings1988",
+        "visser1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -58587,6 +58612,11 @@
           "id": "charged_shell_wormhole",
           "kind": "family",
           "text": "A wormhole whose time shift is built in. Its two mouths lie on either side of a charged black hole, one in the future of the other, and every event outside them lies on a closed timelike curve [schein1996, aichelburg1998]."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "family",
+          "text": "Many wormholes at rest round a ring, none of them a time machine, each with a time shift $T$ much less than its jump. Once round the whole ring a geodesic becomes timelike when the crossings between wormholes are shorter than $cT$ [visser1997]."
         }
       ],
       "references": [
@@ -58609,7 +58639,8 @@
         "everett1997",
         "tippett2017",
         "schein1996",
-        "aichelburg1998"
+        "aichelburg1998",
+        "visser1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
@@ -71674,6 +71705,167 @@
       ]
     },
     {
+      "id": "roman_ring",
+      "name": "Roman Ring of Wormholes",
+      "short_name": "Roman Ring",
+      "description": "Flat Minkowski space holding $N$ identical traversable wormholes at rest round a polygon, built by Matt Visser in 1997, each with its mouths a distance $L$ apart and a time shift $T$ between them, and each exit mouth a distance $\\ell$ from the entrance of the next. No single wormhole and no smaller group of them is near to forming a time machine, and the geodesic once round the whole ring is timelike once $cT > \\ell$. With enough wormholes the vacuum polarization at the throats stays arbitrarily small all the way to the reliability horizon.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "thin shell",
+        "cut and paste",
+        "exotic matter",
+        "locally flat",
+        "multiply connected",
+        "topology",
+        "closed timelike curves",
+        "time machine",
+        "chronology horizon",
+        "chronology protection",
+        "quantum field theory in curved spacetime",
+        "quantum gravity",
+        "causal structure",
+        "stationary",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, and the Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "minkowski",
+          "kind": "locally_same",
+          "text": "Away from the mouths the ring is Minkowski space, with the surfaces round each pair of mouths identified [visser1997, visser1994]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "One traversable wormhole made into a time machine. Each wormhole of the ring has the time shift such a machine needs, with its mouths kept farther apart than $cT$ [visser1993, visser1997]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Cut and paste wormholes of the type Visser discussed in 1989, the kind each wormhole of the ring may be taken to be [visser1997]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The smooth traversable wormhole, a throat of finite length between two mouths. The wormholes of the ring have throats shrunk to no length, flat space with the two mouths identified [visser1994]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Minkowski space identified under a boost, a flat time machine made by identification alone. The ring's identifications join pairs of world lines across a jump $L$ with a time shift $T$ [cassidy1998, visser1997]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Two cosmic strings moving past each other at high speed, flat Minkowski space with identifications away from the strings. Roman's two wormholes also move past each other at high speed [cassidy1998, lyutikov1994]."
+        },
+        {
+          "id": "charged_shell_wormhole",
+          "kind": "family",
+          "text": "A wormhole with both mouths in one universe, built from two charged shells that can satisfy the energy conditions. Every point outside the shells lies on a closed timelike curve [schein1996]."
+        }
+      ],
+      "references": [
+        "visser1997",
+        "visser1994",
+        "visser1993",
+        "lyutikov1994",
+        "visser1997reliability",
+        "cramer1998",
+        "kay1997",
+        "cassidy1998",
+        "schein1996"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/roman_ring.json",
+      "charts": [
+        {
+          "id": "rest",
+          "name": "Rest Frame of the Mouths",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "|\\mathbf{x} - \\mathbf{a}_k| \\le R \\;\\text{and}\\; |\\mathbf{x} - \\mathbf{b}_k| \\le R \\;\\text{(the balls removed)}",
+            "\\mathcal{A}_k(t + T) \\sim \\mathcal{B}_k(t) \\;\\text{(each pair of spheres identified)}",
+            "N = 2, 3, \\dots",
+            "cT \\ll L, \\; \\ell \\ll L, \\; R \\ll \\ell",
+            "\\ell > cT \\;\\text{(the closed geodesic round the ring spacelike)}",
+            "\\text{flat outside the mouths: every curvature tensor vanishes}"
+          ],
+          "parameters": [
+            {
+              "symbol": "N",
+              "description": "Number of wormholes in the ring, numbered $k = 1, \\dots, N$ in order round it"
+            },
+            {
+              "symbol": "L",
+              "description": "Distance between the two mouths of each wormhole, $|\\mathbf{b}_k - \\mathbf{a}_k| = L$, with $\\mathbf{x}$ the position in space, $\\mathbf{a}_k$ the place of the entrance mouth of wormhole $k$ and $\\mathbf{b}_k$ the place of its exit mouth, both at rest"
+            },
+            {
+              "symbol": "T",
+              "description": "Time shift of each wormhole: the entrance mouth at time $t + T$ is the exit mouth at time $t$"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Distance from the exit mouth of each wormhole to the entrance mouth of the next, $|\\mathbf{a}_{k+1} - \\mathbf{b}_k| = \\ell$, with $\\mathbf{a}_{N+1} = \\mathbf{a}_1$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of each mouth: with $\\mathcal{A}_k(t)$ and $\\mathcal{B}_k(t)$ the spheres of radius $R$ about $\\mathbf{a}_k$ and $\\mathbf{b}_k$ at time $t$, the ball inside each sphere is removed"
+            }
+          ],
+          "convention": "We use the coordinates $(t, x, y, z)$ of the rest frame of the mouths, with $t$ having dimensions of time. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-1"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "1"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = 0"
+        }
+      ]
+    },
+    {
       "id": "rp3_geon",
       "name": "RP³ Geon",
       "short_name": "RP³ Geon",
@@ -72307,6 +72499,11 @@
           "id": "misner_brill_lindquist",
           "kind": "family",
           "text": "Initial data for black holes at rest. Richard Lindquist found such data for charged bridges with inversion images in 1963, the method behind the potential outside the two charged spheres [lindquist1963, schein1996]."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "family",
+          "text": "Many wormholes at rest round a ring in one flat universe, each with a time shift $T$. Once round the ring a geodesic becomes timelike when each crossing between wormholes is shorter than $cT$ [visser1997]."
         }
       ],
       "references": [
@@ -72324,7 +72521,8 @@
         "galloway1997",
         "clement1997",
         "moffat2015",
-        "kastor1993"
+        "kastor1993",
+        "visser1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/charged_shell_wormhole.json",
@@ -90201,6 +90399,11 @@
           "id": "charged_shell_wormhole",
           "kind": "family",
           "text": "Two thin shells of charged matter that can obey the energy conditions, joined through a Reissner-Nordström black hole into a wormhole with both mouths in one universe [schein1996]."
+        },
+        {
+          "id": "roman_ring",
+          "kind": "family",
+          "text": "Visser's cut and paste wormholes set round a ring in flat space, each joining two mouths in one universe with a time shift. With enough of them the vacuum polarization at every throat is as small as desired [visser1997]."
         }
       ],
       "references": [
@@ -90229,7 +90432,8 @@
         "james2015",
         "kraus1999",
         "israel1970",
-        "schein1996"
+        "schein1996",
+        "visser1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

@@ -1,5 +1,5 @@
 {
-  "version": "e29daff4cb15f9b4",
+  "version": "629367b7ca55c022",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -50280,6 +50280,84 @@
         "eprint": "2606.31987",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2606.31987"
+      }
+    },
+    "visser1997": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes: The {Roman} ring",
+        "author": "Visser, Matt",
+        "journal": "Physical Review D",
+        "volume": "55",
+        "number": "8",
+        "pages": "5212--5214",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.55.5212",
+        "eprint": "gr-qc/9702043",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.55.5212"
+      }
+    },
+    "visser1994": {
+      "type": "article",
+      "fields": {
+        "title": "van {Vleck} determinants: Traversable wormhole spacetimes",
+        "author": "Visser, Matt",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "8",
+        "pages": "3963--3980",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.3963",
+        "eprint": "gr-qc/9311026",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.49.3963"
+      }
+    },
+    "lyutikov1994": {
+      "type": "article",
+      "fields": {
+        "title": "Vacuum polarization at the chronology horizon of the {Roman} spacetime",
+        "author": "Lyutikov, Maxim",
+        "journal": "Physical Review D",
+        "volume": "49",
+        "number": "8",
+        "pages": "4041--4048",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.49.4041",
+        "url": "https://doi.org/10.1103/PhysRevD.49.4041"
+      }
+    },
+    "visser1997reliability": {
+      "type": "article",
+      "fields": {
+        "title": "The reliability horizon for semi-classical quantum gravity: metric fluctuations are often more important than back-reaction",
+        "author": "Visser, Matt",
+        "journal": "Physics Letters B",
+        "volume": "415",
+        "number": "1",
+        "pages": "8--14",
+        "year": "1997",
+        "doi": "10.1016/S0370-2693(97)01226-4",
+        "eprint": "gr-qc/9702041",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(97)01226-4"
+      }
+    },
+    "cramer1998": {
+      "type": "article",
+      "fields": {
+        "title": "Thermal and two-particle stress-energy must be ill defined on the two-dimensional {Misner} space chronology horizon",
+        "author": "Cramer, Claes R. and Kay, Bernard S.",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "2",
+        "pages": "1052--1056",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.1052",
+        "eprint": "gr-qc/9708028",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.1052"
       }
     }
   }

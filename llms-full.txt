@@ -2769,6 +2769,16 @@ The vacuum field of an isolated body sending out gravitational waves on expandin
 - chart Robinson-Trautman: coordinates $(u, r, x, y)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{P^2}\left(dx^2 + dy^2\right)$$
 - chart Axisymmetric: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -2H\,c^2du^2 - 2c\,du\,dr + \dfrac{r^2}{f^2}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Roman Ring of Wormholes
+
+Flat Minkowski space holding $N$ identical traversable wormholes at rest round a polygon, built by Matt Visser in 1997, each with its mouths a distance $L$ apart and a time shift $T$ between them, and each exit mouth a distance $\ell$ from the entrance of the next. No single wormhole and no smaller group of them is near to forming a time machine, and the geodesic once round the whole ring is timelike once $cT > \ell$. With enough wormholes the vacuum polarization at the throats stays arbitrarily small all the way to the reliability horizon.
+
+- id: `roman_ring`
+- tags: wormhole, traversable, thin shell, cut and paste, exotic matter, locally flat, multiply connected, topology, closed timelike curves, time machine, chronology horizon, chronology protection, quantum field theory in curved spacetime, quantum gravity, causal structure, stationary, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/roman_ring.json
+- chart Rest Frame of the Mouths: coordinates $(t, x, y, z)$, $$ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2$$
+
 ### RP³ Geon
 
 Schwarzschild's black hole with its second exterior folded onto the first: the Kruskal events $(T, X, \theta, \phi)$ and $(T, -X, \pi - \theta, \phi + \pi)$ are one event. Outside the horizon it is Schwarzschild's spacetime, and behind it the black hole and the white hole are each half of Kruskal's. Space at the moment of time symmetry is real projective space with a point removed, and the spacetime is orientable in time and in space.

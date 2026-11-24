@@ -2835,7 +2835,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "f7087a455e7303a2",
+    "version": "ffc5266f1cc3a0a1",
     "diagrams": "a06fed0d8a214d89",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -4996,7 +4996,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "8d071c140465d8b8",
+    "version": "57c84fc345bba5d9",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"
@@ -5020,7 +5020,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "9d17c694594ec7f9",
+    "version": "2362d6512ca34523",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -5184,7 +5184,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "794bda622601963a",
+    "version": "799a4bc4a98399b8",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922",
@@ -5211,7 +5211,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "8fa11038529decdd",
+    "version": "04dafcbf7679eb99",
     "diagrams": "10a1f2ea1c9df0a4",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
@@ -6374,6 +6374,35 @@
     "embedding": "7b7a1d9f63195b3e"
   },
   {
+    "id": "roman_ring",
+    "name": "Roman Ring",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "thin shell",
+      "cut and paste",
+      "exotic matter",
+      "locally flat",
+      "multiply connected",
+      "topology",
+      "closed timelike curves",
+      "time machine",
+      "chronology horizon",
+      "chronology protection",
+      "quantum field theory in curved spacetime",
+      "quantum gravity",
+      "causal structure",
+      "stationary",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "e7bec0b363cc41e4",
+    "diagrams": "1864a4dc6e198626"
+  },
+  {
     "id": "rp3_geon",
     "name": "RP³ Geon",
     "tags": [
@@ -6494,7 +6523,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "31b216005ce72574",
+    "version": "0ea9a83661f6d85b",
     "diagrams": "81668e29ad24b5fb",
     "conformal": "98426700f19a6cc5",
     "embedding": "1f2717c1c56ae78c",
@@ -7931,7 +7960,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "1581e6aa9df809b7",
+    "version": "9d230005f7ef4852",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24",
