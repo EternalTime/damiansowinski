@@ -580,6 +580,74 @@ class FlatPlane(Slice):
         return np.column_stack([self.scale[0] * cx.ravel(), self.scale[1] * cy.ravel(), np.zeros(cx.size)])
 
 
+class StretchedPlane(Slice):
+    """A plane of two coordinates x and y of a chart, every other coordinate held fixed, on which
+    the published metric is g_xx(x) dx^2 + g_yy dy^2, g_yy constant and no cross term, which is
+    checked, as a moment of the universes of stiff fluid, whose g_chichi grows as e^(2ab chi). It is
+    flat: the proper distance X(x) from x = 0, the integral of sqrt(g_xx) taken in sympy and checked
+    by differentiating it, makes it dX^2 + g_yy dy^2, Euclid's plane. It is drawn as a flat disc about
+    the chart's origin with its profile along x, the circle through the point x of the profile of
+    proper radius X(x), so g_phiphi = X(x)^2. `draw` carries chart points (x, y) to the drawing's
+    (X, Y, 0), `at_distance` carries a proper distance X back to its x, and `edge` is the least X
+    the plane reaches, X as x tends to minus infinity, finite where sqrt(g_xx) falls off fast enough."""
+
+    def __init__(self, sources, metric_id, system_id, x, y, fixed, params=None):
+        _, entry, R = nr.load(metric_id, system_id)
+        sources.note(metric_id, system_id, FIELDS)
+        self.metric_id, self.system_id, self.coordinate = metric_id, system_id, x
+        self.lorentz, self.numeric = False, False
+        names = {R._plain(n): s for n, s in R.symbol.items()}
+        names.update(R.parameters)
+        held = sorted(R._plain(c) for c in entry["coords"] if c not in (x, y))
+        if held != sorted(fixed):
+            raise SystemExit(f"{metric_id}/{system_id}: the plane of {x} and {y} holds {held} fixed, "
+                             f"and the table fixes {sorted(fixed)}")
+        subs = {R.c: 1}
+        subs.update({R.parameters[k]: sp.sympify(v) for k, v in (params or {}).items()})
+        held_at = {names[k]: sp.sympify(v) for k, v in fixed.items()}
+
+        def prep(e):
+            # The chart's own definition of a name it holds as a function, as F, is written out first.
+            return sp.simplify(e.subs(R.held).doit().subs(subs).subs(held_at))
+        g = nr.published_matrix(R, entry, "metric_components")
+        i, j = entry["coords"].index(x), entry["coords"].index(y)
+        gxx, gyy, gxy = prep(g[i, i]), prep(g[j, j]), prep(g[i, j])
+        self.x, self.phi = R.symbol[x], sp.Symbol("varphi", real=True)
+        where = f"{metric_id}/{system_id} on the plane of {x} and {y}"
+        if gxy != 0 or gyy.free_symbols or not gyy > 0 or gxx.free_symbols - {self.x}:
+            raise SystemExit(f"{where}: g_xx = {gxx}, g_yy = {gyy} and g_xy = {gxy}, so the plane is not "
+                             "g_xx(x) dx^2 + g_yy dy^2 with g_yy constant")
+        s = sp.Dummy("s", real=True)
+        self.proper_x = sp.simplify(sp.integrate(sp.sqrt(gxx.subs(self.x, s)), (s, 0, self.x)))
+        if self.proper_x.has(sp.Integral) or sp.simplify(sp.diff(self.proper_x, self.x) - sp.sqrt(gxx)) != 0:
+            raise SystemExit(f"{where}: no proper distance along {x} in closed form")
+        self.edge = float(sp.limit(self.proper_x, self.x, -sp.oo))
+        self._X = sp.lambdify(self.x, self.proper_x, "numpy")
+        self.scale_y = math.sqrt(float(gyy))
+        self.gxx, self.gxp, self.gpp = gxx, sp.Integer(0), self.proper_x ** 2
+        self._surface(where)
+
+    def draw(self, cx, cy):
+        """The drawing's (X, Y, 0) of the chart points (cx, cy) of the plane."""
+        cx, cy = np.broadcast_arrays(np.asarray(cx, dtype=float), np.asarray(cy, dtype=float))
+        X = self._at(self._X, cx.ravel())
+        return np.column_stack([X, self.scale_y * cy.ravel(), np.zeros(cx.size)])
+
+    def at_distance(self, X):
+        """The x at each proper distance X from x = 0, found to the last digit, X above `edge`."""
+        def one(d):
+            if d <= self.edge:
+                raise SystemExit(f"{self.metric_id}/{self.system_id}: the proper distance {d} lies beyond "
+                                 f"the plane's edge {self.edge}")
+            lo, hi = -1.0, 1.0
+            while float(self._X(lo)) > d:
+                lo *= 2
+            while float(self._X(hi)) < d:
+                hi *= 2
+            return brentq(lambda v: float(self._X(v)) - d, lo, hi, xtol=1e-15, rtol=4 * np.finfo(float).eps)
+        return np.array([one(float(d)) for d in np.atleast_1d(X)])
+
+
 def half_angles(e, theta):
     """e, a function of cos(theta) and sin(theta)^2 and of multiples of theta, written as a ratio
     of polynomials in sin^2(theta/2), factored: 1 - cos(theta) = 2 sin^2(theta/2) then keeps every
@@ -18494,22 +18562,137 @@ def brane_wall_universe(ck, src):
 
 
 
+STIFF_FLUID = {"a": 1, "b": 1, "ell": 1}   # as the spacetime diagrams, the conformal diagram and the curvature maps
+
+
+def stiff_fluid_flow(ck, src):
+    """The fluid of the comoving chart keeps its labels chi, y and z. With the scalar
+    sigma = a ln t + b chi - b^2 t^2/(2a) of the chart's convention, the published Einstein tensor is
+    d sigma d sigma - g (grad sigma)^2/2, the scalar's stress, which is the stiff fluid's wherever the
+    gradient is timelike; raised with the published inverse metric the gradient has no chi, y or z
+    component, so the fluid's velocity, along it, is d_t; and it is timelike at every moment drawn,
+    t < a/b. Checked at points of the moments drawn, with chi from -2 to 1 and y, z away from 0."""
+    metric_id, system_id = "stiff_fluid_universes", "comoving"
+    src.note(metric_id, system_id, ["inverse_metric_components", "einstein_tensor"])
+    _, entry, R = nr.load(metric_id, system_id)
+    X = [R.symbol[c] for c in entry["coords"]]
+    t, chi = X[0], X[1]
+    a, b = R.parameters["a"], R.parameters["b"]
+    subs = {R.c: 1, **{R.parameters[k]: sp.sympify(v) for k, v in STIFF_FLUID.items()}}
+
+    def matrix(rows):
+        return nr.published_matrix(R, {"coords": entry["coords"], "rows": rows}, "rows").subs(R.held).doit().subs(subs)
+    g = matrix(entry["metric_components"])
+    gi = matrix(entry["inverse_metric_components"])
+    G = matrix(entry["einstein_tensor"]["variants"]["ll"]["nonzero"])
+    sigma = (a * sp.log(t) + b * chi - b ** 2 * t ** 2 / (2 * a)).subs(subs)
+    d = sp.Matrix([sp.diff(sigma, c) for c in X])
+    raised, norm = gi * d, (d.T * gi * d)[0]
+    stress = d * d.T - g * norm / 2
+    worst_raised = worst_stress = 0.0
+    timelike = True
+    for tv in (sp.Rational(1, 10), sp.Rational(1, 2), sp.Rational(19, 20)):
+        for cv in (-2, 0, 1):
+            at = {t: tv, chi: cv, X[2]: sp.Rational(1, 3), X[3]: sp.Rational(-2, 5)}
+            worst_raised = max(worst_raised, *(abs(float(raised[k].subs(at).evalf(30))) for k in (1, 2, 3)))
+            worst_stress = max(worst_stress, *(abs(float((G[i, j] - stress[i, j]).subs(at).evalf(30)))
+                                               for i in range(4) for j in range(4)))
+            timelike = timelike and float(norm.subs(at).evalf(30)) < 0
+    ck.add("Stiff fluid: the published Einstein tensor is the stress of sigma = a ln t + b chi - b^2t^2/(2a)",
+           worst_stress, 1e-25)
+    ck.add("Stiff fluid: grad sigma, raised with the published inverse metric, has no chi, y or z component, "
+           "so the fluid keeps its comoving labels", worst_raised, 1e-25)
+    ck.exact("Stiff fluid: grad sigma is timelike at every moment drawn, so the fluid has a rest frame there", timelike)
+
+
 def stiff_fluid_universes(ck, src):
-    """The symmetry plane t=1/2,x=0 at a=b=ell=1, with induced metric
-    ell^2 t(dy^2+dz^2), a flat disc. Its physical radius is sqrt(t) times
-    the coordinate radius, checked against the published metric and every chord."""
-    sl = FlatPlane(src, "stiff_fluid_universes", "areal", "y", "z", {"t": "1/2", "x": 0},
-                   {"a": 1, "b": 1, "ell": 1})
-    top, size = 1.0, 2.0
-    plane = disc(sl, "plane", top, "the origin of the symmetry plane", "the plane extends to infinity", [], size)
-    ck.isometry("stiff fluid symmetry plane", plane)
-    ck.add("stiff fluid transverse lengths scale as sqrt(t)", float(np.max(np.abs(sl.scale-math.sqrt(0.5)))), 1e-12)
-    surface = Surface([plane])
-    fig = figure_of([surface], {"sheet": "cover"}, size)
-    fig.legend("fill", "cover", "the symmetry plane, intrinsically flat")
-    fig.legend("line", "meridian", "radial lines in proper distance")
-    return [view("plane", "A symmetry plane", "$\\ell$", [surface], fig.done(),
-                 system="areal", settings="$a=b=1$, $t=1/2$, $x=0$, $\\ell=1$.")]
+    """The plane z = 0 of the comoving chart through a ring of the fluid at a = b = ell = 1, the values
+    the other diagrams declare, at the moments t = 0.1 to 0.95 of the fluid region 0 < t < a/b = 1, a
+    frame every 0.025. Each moment is the plane ell^2 (F dchi^2 + t dy^2) with
+    F = t^(a^2 - 1/2) e^(2ab chi - b^2t^2/2), flat: in the proper distance
+    X = A(t)(e^(ab chi) - 1)/(ab) from the fluid world line chi = 0, A = ell t^(a^2/2 - 1/4) e^(-b^2t^2/4),
+    it is dX^2 + ell^2 t dy^2. The fluid keeps its labels, stiff_fluid_flow(), so a ring of it round at
+    t = 1/2, of radius ell/3 about chi = 0, is at every other t the ellipse of semi-axes
+    (ell/3) A(t)/A(1/2) = (ell/3)(2t)^(1/4) e^((1 - 4t^2)/16) across the planes and (ell/3) sqrt(2t)
+    within them, checked: across the planes it widens until t = sqrt(a^2 - 1/2)/b = 1/sqrt(2) and
+    narrows after, and within them it widens as sqrt(t). A shift of chi multiplies the quotient metric
+    by a constant, so the ring takes the same shapes about every fluid world line. Each moment ends
+    where chi -> -infinity, at the proper distance A(t)/(ab) from chi = 0, where the density diverges,
+    and the disc of radius ell/2 is checked to lie inside it at every frame; the ring's world tube is
+    the stack of the ellipses, a height of 1.5 ell for each unit of t."""
+    stiff_fluid_flow(ck, src)
+    name, metric_id, system_id = "Stiff fluid", "stiff_fluid_universes", "comoving"
+    radius, top = 1 / 3, 0.5
+    size = 2 * top
+    alpha = np.linspace(0, 2 * math.pi, 361)
+
+    def moment(t):
+        return StretchedPlane(src, metric_id, system_id, "\\chi", "y", {"t": t, "z": 0}, STIFF_FLUID)
+
+    def across(t):
+        t = np.asarray(t, dtype=float)
+        return radius * (2 * t) ** 0.25 * np.exp((1 - 4 * t * t) / 16)
+
+    def within(t):
+        return radius * np.sqrt(2 * np.asarray(t, dtype=float))
+    # The ring's labels: the fluid elements on the circle of radius ell/3 about chi = 0 at t = 1/2.
+    rounded_at = moment("1/2")
+    chi = rounded_at.at_distance(radius * np.cos(alpha))
+    y = radius * np.sin(alpha) / rounded_at.scale_y
+    # The movie runs through the moments at a steady t, a frame every 0.025 of it, t = k/40.
+    steps = range(4, 39)
+    keys = [steps.index(k) for k in (4, 10, 20, 30, 38)]
+    frames = []
+    for k in steps:
+        t = k / 40
+        sl = moment(f"{k}/40")
+        where = f"{name}, t = {t:g}"
+        hi = float(sl.at_distance(top)[0])
+        plane = Piece("plane", "sheet", sl, 0.0, hi, 0.0, 1,
+                      (("axis", "the centre of the ring, on the fluid world line $\\chi = 0$"),
+                       ("edge", "the plane runs on, flat")), [], size)
+        ck.isometry(where, plane)
+        edge = t ** 0.25 * math.exp(-t * t / 4)
+        ck.add(f"{where}: chi -> -infinity lies at the proper distance A(t)/(ab) = t^(1/4) e^(-t^2/4) l",
+               abs(-sl.edge - edge), 1e-12)
+        ck.exact(f"{where}: the disc of radius l/2 lies inside the moment, short of chi -> -infinity at {edge:.4f} l",
+                 top < -sl.edge)
+        P = sl.draw(chi, y)
+        ck.on_piece(f"{where}, the ring", plane, P)
+        proper = np.array([sl.proper(0.0, c) for c in chi])
+        ck.add(f"{where}, the ring's X against the proper distance from chi = 0", float(np.max(np.abs(P[:, 0] - proper))),
+               1e-10)
+        want = np.column_stack([across(t) * np.cos(alpha), within(t) * np.sin(alpha)])
+        ck.add(f"{where}: the ring is the ellipse of semi-axes (l/3)(2t)^(1/4)e^((1 - 4t^2)/16) and (l/3)sqrt(2t)",
+               float(np.max(np.abs(P[:, :2] - want))), 1e-12)
+        frames.append(Surface([plane], label=f"$t = {t:g}$", time=t, curves=[Curve(plane, "particles", P, closed=True)],
+                              dots=[(plane, "particles", Q) for Q in P[:-1:30]]))
+    widest = max(np.linspace(0.1, 0.95, 8501), key=lambda t: float(across(t)))
+    ck.add(f"{name}: the ring is widest across the planes at t = 1/sqrt(2)", abs(widest - 1 / math.sqrt(2)), 1e-4)
+    ck.exact(f"{name}: the ring is wider across the planes than within them before t = 1/2 and narrower after",
+             bool(across(0.4) > within(0.4) and across(0.6) < within(0.6)))
+    surfaces = [frames[i] for i in keys]
+
+    def plane_at(u, a, b):
+        # The ring drawn from the published metric at the row's own time, against the row.
+        P = moment(repr(float(u))).draw(chi[:-1], y[:-1])
+        return float(np.max(np.abs(P[:, :2] - np.column_stack([a * np.cos(alpha[:-1]), b * np.sin(alpha[:-1])]))))
+    tube = stack(ck, name, surfaces, lambda u: (across(u), within(u)), 1.5, plane_at, size,
+                 "the ring's world tube runs on before $t = 0.1$ and after $t = 0.95$")
+    # Every word a view shows, its caption, settings and legend together, stays within 400 characters.
+    tube_fig = stack_figure(tube, size, "$t$", [
+        ("fill", "cover", "each ring at the height of its time"),
+        ("line", "particles", "the ring at five moments"),
+        ("line", "worldline", "world lines of the twelve marked elements"),
+        ("line", "axis", "the world line $\\chi = 0$")])
+    fig, played = ring_movie(frames, size, "$t$")
+    fig.legend("fill", "cover", "the plane $z = 0$")
+    fig.legend("line", "particles", "the ring, radius $\\ell/3$ at $t = 0.5$, twelve elements marked")
+    fig.legend("line", "meridian", "radii, every $30°$")
+    settings = "$a = b = 1$ and $\\ell = 1$, the unit of every length."
+    return [view("tube", "The ring's world tube", "$\\ell$", [tube], tube_fig, settings=settings,
+                 height="$t$, a height of $1.5\\,\\ell$ for each unit of $t$"),
+            view("ring", "A ring of the fluid", "$\\ell$", surfaces, fig.done(), movie=played, settings=settings)]
 
 
 def static_five_soliton(ck, src):
@@ -18865,7 +19048,15 @@ CAPTIONS = {
         r"The spatial equator ($t=y=0$, $\theta=\pi/2$), in Minkowski space inside $r=36r_s/35$ and Euclidean space beyond. "
         r"The circles approach zero radius at the singularity $h=0$.",
     ],
-    ("stiff_fluid_universes", "plane"): ["A transverse symmetry plane at one moment. Proper lengths within it are $\\ell\\sqrt{t}$ times coordinate lengths."],
+    ("stiff_fluid_universes", "tube"): [
+        "The world tube of a ring of the fluid ($0.1 \\le t \\le 0.95$), its width across the symmetry planes of $y$ "
+        "and $z$ varying as $t^{1/4}e^{-t^2/4}$, greatest at $t = 1/\\sqrt{2}$, and within them as $\\sqrt{t}$.",
+    ],
+    ("stiff_fluid_universes", "ring"): [
+        "The plane $z = 0$ through a ring of the fluid ($0.1 \\le t \\le 0.95$), flat at every moment. Round at "
+        "$t = 0.5$, the ring widens across the symmetry planes of $y$ and $z$ until $t = 1/\\sqrt{2}$, then narrows; "
+        "within them it widens as $\\sqrt{t}$.",
+    ],
     ("ab_metrics", "neck"): [
         "The surface of $r$ and $\\phi$ of B I ($z = 0$) at moments of the de Sitter slicing from $\\tau = -0.8$ "
         "to $0.8$, each drawn as a surface in flat space with every distance along it the metric distance. On "

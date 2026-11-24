@@ -27476,7 +27476,7 @@ def stiff_fluid_universes(ck, src):
     p=atan(4(t-x)),q=atan(4(t+x)). The upper spacelike edge is a
     null scalar gradient, not a curvature singularity; the canonical scalar
     extends across it. All three coordinate maps are checked against their
-    published metrics, and the fixed embedding moment is traced on the strip."""
+    published metrics, and each moment of the embedding is traced on the strip."""
     params = {"a": 1, "b": 1, "ell": 1}
     def fmap(t,x):
         return np.arctan(4*(t-x)),np.arctan(4*(t+x))
@@ -27506,8 +27506,11 @@ def stiff_fluid_universes(ck, src):
     v.line("chartedge",[upper])
     grid(v,"r",lambda x,t:fmap(t,x),(-1,-0.5,0,0.5,1),np.linspace(0.001,0.999,400))
     grid(v,"t",fmap,(0.2,0.4,0.6,0.8),span)
-    for m in slices.moments("stiff_fluid_universes",label="$t=1/2$"):
-        v.slice(m,points=[fmap(0.5,0.0)])
+    # Each moment t of the embedding is the line t constant across the disc it is drawn as.
+    for m in slices.moments("stiff_fluid_universes"):
+        lo,hi = (c-m.time**2/2 for c in slices.stiff_fluid_reach(m))
+        x = np.linspace(lo,hi,401)
+        v.slice(m,lines=[fmap(np.full_like(x,m.time),x)])
     v.label_xt([0,-0.1],"$t=0$","t")
     v.label_xt([0,2*math.atan(4)+0.1],"$t=1$","b")
     v.legend("cover","the fluid region $0<t<1$")

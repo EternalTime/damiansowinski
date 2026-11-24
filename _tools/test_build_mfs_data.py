@@ -3300,7 +3300,8 @@ class StacksAndMovies(unittest.TestCase):
               "pre_big_bang": 4.0,
               "maximally_supersymmetric_plane_wave": 0.8,
               "cahen_wallach": 2.0,
-              "holographic_superconductor": 1.0})   # the height of a unit of time
+              "holographic_superconductor": 1.0,
+              "stiff_fluid_universes": 1.5})   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
     # pictures of their moments until the captain asked on 1 October 2026 for every one of them
     # to play, and TimeSlicedViewsAreMovies keeps any other from standing so again.
@@ -3349,6 +3350,7 @@ class StacksAndMovies(unittest.TestCase):
               ("cahen_wallach", "ring"): "$cu/L$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$", ("holographic_superconductor", "ring"): "$-\\rho$",
+              ("stiff_fluid_universes", "ring"): "$t$",
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
               ("black_string", "ripple"): "$v$"}, lambda key: key[0])
 
@@ -4569,6 +4571,15 @@ class Slices(unittest.TestCase):
                 self.assertTrue(mark["lines"] or mark["points"] or mark["fills"], where)
                 self.assertTrue(mark["label"].count("$") % 2 == 0 and mark["label"], where)
 
+    def stiff_fluid_reach(self, t):
+        """The comoving chi from one side to the other of the disc the flat view of the universes of
+        stiff fluid draws at the moment t: the disc stands about the fluid world line chi = 0 with its
+        rim at one proper distance on either side, and its profile X = A(t)(e^chi - 1), at a = b = 1,
+        ends at chi_hi, so the near side is at e^chi_lo = 2 - e^chi_hi."""
+        ring = next(v for v in self.embedding["stiff_fluid_universes"]["views"] if v["id"] == "ring")
+        hi = next(s for s in ring["surfaces"] if s["time"] == t)["pieces"][0]["points"][-1][0]
+        return math.log(2 - math.exp(hi)), hi
+
     def flat_expected(self, key, view, surface, mark):
         """The moment on a flat view as its drawn axes put it: Y as a function of X, and the
         ends a line of it may have short of the box."""
@@ -4682,10 +4693,10 @@ class Slices(unittest.TestCase):
             # t=1 is T=1 and chi=psi for both logarithmic shifts.
             return (lambda X: 1.0), [0.0, 2*math.pi]
         if key.startswith("stiff_fluid_universes/"):
-            # The one embedded symmetry plane is t=1/2,x=0, a point on each quotient.
-            # chi=x+t^2/2=1/8 in the fluid labels; the characteristic view displays x,t.
-            location = 0.125 if "/comoving/" in key else 0.0
-            return (lambda X: 0.5), [location]
+            # Each moment t is the line t constant across the disc of the flat view, read as chi in the fluid
+            # labels and as x = chi - t^2/2 in the areal and characteristic views.
+            shift = 0.0 if "/comoving/" in key else t * t / 2
+            return (lambda X: t), [c - shift for c in self.stiff_fluid_reach(t)]
         if key.startswith("draining_bathtub/"):
             # The laboratory's t = 0 and the Kerr-like chart's T = 0, with T = t - ln(r^2 - 1)/2 for the
             # drain at |A| = c = 1: each a level line in its own chart and a curve in the other's.
@@ -6218,11 +6229,17 @@ class Slices(unittest.TestCase):
                             self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
                             self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
                     elif metric_id == "stiff_fluid_universes":
-                        # At t=1/2,x=0, p=q=atan(2), hence X=0,T=2 atan(2).
-                        self.assertEqual(len(points), 1, where)
-                        X, T = points[0]
-                        self.assertLess(abs(X), 2e-4, where)
-                        self.assertLess(abs(T - 2 * math.atan(2)), 2e-4, where)
+                        # p, q = arctan(4(t -+ x)): each moment is (tan p + tan q)/8 = t, from one side of
+                        # the flat view's disc to the other, x = chi - t^2/2 at both ends.
+                        lo, hi = (c - t * t / 2 for c in self.stiff_fluid_reach(t))
+                        (line,) = mark["lines"]
+                        for X, T in line:
+                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
+                            scale = 1 + tp*tp + tq*tq
+                            self.assertLess(abs((tp+tq)/8-t), 2e-4*scale, where)
+                        for (X, T), end in ((line[0], lo), (line[-1], hi)):
+                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
+                            self.assertLess(abs((tq-tp)/8-end), 2e-4*(1+tp*tp+tq*tq), where)
                     elif metric_id == "frw":
                         eta = bisect(lambda e: e - math.sin(e) - t, 0, 2 * math.pi)
                         self.assertTrue(all(abs(T - eta) < 2e-4 for _, T in points), where)

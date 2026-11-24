@@ -1275,6 +1275,34 @@ def one(metric_id, lines_of, label=None, view_id=None):
     return [Mark(m, lines_of(m), label=label) for m in moments(metric_id, view_id)]
 
 
+def stiff_fluid_reach(m):
+    """The comoving chi from one side of the disc a moment t of the universes of stiff fluid is drawn
+    as to the other, at a = b = 1: the disc stands about the fluid world line chi = 0, and in the
+    proper distance X = A(t)(e^chi - 1) from it its rim lies at X = +-R, so where the profile of the
+    flat view's moment at t ends, chi_hi, e^chi_hi - 1 = R/A, and on the near side e^chi_lo = 2 - e^chi_hi.
+    A moment of the ring's world tube is the moment of the flat view at its time."""
+    ring = next(v for v in embedding("stiff_fluid_universes")["views"] if v["id"] == "ring")
+    surface = next(s for s in ring["surfaces"] if s["time"] == m.time)
+    (piece,) = surface["pieces"]
+    hi = piece["points"][-1][0]
+    return math.log(2 - math.exp(hi)), hi
+
+
+def stiff_fluid(chart):
+    """Each moment t of the universes of stiff fluid, the line of constant t across the disc it is drawn
+    as, in the drawing's chart: chi in the comoving chart, x = chi - t^2/2 in the areal chart, and
+    (u, v) = (t - x, t + x) in the characteristic chart, at a = b = 1."""
+    def lines(m):
+        t, chi = m.time, np.array(stiff_fluid_reach(m))
+        if chart == "comoving":
+            return [[(t, c) for c in chi]]
+        x = chi - t * t / 2
+        if chart == "areal":
+            return [[(t, v) for v in x]]
+        return [[(t - v, t + v) for v in x]]
+    return one("stiff_fluid_universes", lines)
+
+
 # Kerr-de Sitter as its diagrams draw it, (r_s, a, Lambda): Lambda > 0 in units of r_s and
 # Lambda < 0 in units of l = sqrt(-3/Lambda).
 KDS = {"de_sitter": (1.0, 0.45, 0.2), "anti_de_sitter": (2.0, 0.5, -3.0)}
@@ -2768,12 +2796,9 @@ FLAT = {
             "isotropic":lambda h:(1+h)/(4*(1-h)),
             "lake":lambda h:h}[system](h) for h in m.reach("lake","h")])))
        for system in ("spherical","isotropic","lake")},
-    ("stiff_fluid_universes", "areal", "tx"): lambda: [
-        Mark(m, points=[(0.5,0.0)]) for m in moments("stiff_fluid_universes", label="$t=1/2$")],
-    ("stiff_fluid_universes", "comoving", "fluid"): lambda: [
-        Mark(m, points=[(0.5,0.125)]) for m in moments("stiff_fluid_universes", label="$t=1/2$")],
-    ("stiff_fluid_universes", "characteristic", "null"): lambda: [
-        Mark(m, points=[(0.5,0.5)]) for m in moments("stiff_fluid_universes", label="$t=1/2$")],
+    ("stiff_fluid_universes", "areal", "tx"): lambda: stiff_fluid("areal"),
+    ("stiff_fluid_universes", "comoving", "fluid"): lambda: stiff_fluid("comoving"),
+    ("stiff_fluid_universes", "characteristic", "null"): lambda: stiff_fluid("characteristic"),
     **{("hotta_tanaka", system, view): (lambda system=system, fixed=fixed: _hotta_tanaka(system, fixed))
        for system in ("conformally_flat", "global", "kruskal")
        for view, fixed in (("equator", math.pi / 2), ("near", math.pi / 12))
@@ -5099,6 +5124,34 @@ def checks():
     miss = max(abs(complex((pulled - g_har).subs(th, u)[i, j])) for u in rng.uniform(-3, 3, 20)
                for i in range(4) for j in range(4))
     report("LQC bounce: t = t_b sinh(tau/t_b) pulls the cosmic chart back onto the harmonic one", miss, 1e-10)
+    # The universes of stiff fluid at a = b = 1: x = chi - t^2/2 pulls the areal chart back onto the comoving one,
+    # and t = (u + v)/2, x = (v - u)/2 onto the characteristic one, with each chart's own F written out; and the
+    # profile of every moment of the flat view is X = A(t)(e^chi - 1), whose disc reaches e^chi = 2 - e^chi_hi.
+    def stiff(system):
+        _, entry, reader = nr.load("stiff_fluid_universes", system)
+        g = nr.published_matrix(reader, entry, "metric_components").subs(reader.held).doit()
+        subs = {reader.c: 1, **{reader.parameters[k]: 1 for k in ("a", "b", "ell")}}
+        return g.subs(subs), [reader.symbol[c] for c in entry["coords"]]
+    g_ar, (ta, xa, ya, za) = stiff("areal")
+    miss = 0.0
+    for system, image_of in (("comoving", lambda t, c, y, z: [t, c - t ** 2 / 2, y, z]),
+                             ("characteristic", lambda u, v, y, z: [(u + v) / 2, (v - u) / 2, y, z])):
+        g_o, X = stiff(system)
+        image = image_of(*X)
+        J = sp.Matrix(4, 4, lambda i, j: sp.diff(image[i], X[j]))
+        pulled = J.T * g_ar.subs(dict(zip((ta, xa, ya, za), image)), simultaneous=True) * J
+        points = ({X[0]: p, X[1]: q, X[2]: 0.3, X[3]: -0.4} for p, q in rng.uniform([0.2, -0.5], [0.8, 0.5], (10, 2)))
+        miss = max(miss, *(abs(float((pulled - g_o).subs(at)[i, j])) for at in points for i in range(4) for j in range(4)))
+    report("Stiff fluid: x = chi - t^2/2 and t = (u + v)/2, x = (v - u)/2 pull the areal chart back onto the "
+           "comoving and characteristic ones", miss, 1e-12)
+    worst = 0.0
+    for m in moments("stiff_fluid_universes", "ring"):
+        (piece,) = m.surface["pieces"]
+        chi = np.array([p[0] for p in piece["points"]])
+        rho = np.array([p[1] for p in piece["points"]])
+        A = m.time ** 0.25 * math.exp(-m.time ** 2 / 4)
+        worst = max(worst, float(np.max(np.abs(rho - A * (np.exp(chi) - 1)))))
+    report("Stiff fluid: every moment's profile is X = t^(1/4) e^(-t^2/4)(e^chi - 1)", worst, 1e-6)
     return failures
 
 
