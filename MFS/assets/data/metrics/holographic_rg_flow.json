@@ -47,6 +47,11 @@
       "id": "domain_wall",
       "kind": "family",
       "text": "A thin wall with flat space on either side. Walls between regions of anti-de Sitter space with different radii had been studied in supergravity of four dimensions before the flows here, in five [skenderis1999]."
+    },
+    {
+      "id": "heterotic_m_theory_wall",
+      "kind": "family",
+      "text": "A wall of five dimensional gauged supergravity from M-theory, with the volume of a Calabi-Yau space as its scalar, falling toward one of the two walls that end the fifth dimension [lukas1999universe]."
     }
   ],
   "references": [
@@ -65,7 +70,8 @@
     "pilch2000",
     "gubser2000",
     "myers2010seeing",
-    "deddo2024"
+    "deddo2024",
+    "lukas1999universe"
   ],
   "coordinates": [
     {

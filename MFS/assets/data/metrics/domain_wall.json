@@ -75,6 +75,11 @@
       "id": "holographic_rg_flow",
       "kind": "family",
       "text": "Thick walls of scalar field between regions of anti-de Sitter space of five dimensions with different radii, which in holography correspond to flows of the renormalisation group [skenderis1999, girardello1998]."
+    },
+    {
+      "id": "heterotic_m_theory_wall",
+      "kind": "family",
+      "text": "A pair of flat walls in five dimensional supergravity that stay at rest, held there by a potential for the volume of a Calabi-Yau space between them [lukas1999universe]."
     }
   ],
   "references": [
@@ -100,7 +105,8 @@
     "rubakov2001extra",
     "hirano2018bt",
     "skenderis1999",
-    "girardello1998"
+    "girardello1998",
+    "lukas1999universe"
   ],
   "coordinates": [
     {

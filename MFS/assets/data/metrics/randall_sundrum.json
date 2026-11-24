@@ -100,6 +100,11 @@
       "id": "holographic_rg_flow",
       "kind": "family",
       "text": "Thick walls of scalar field in anti-de Sitter space of five dimensions, the flows of the renormalisation group of holography. DeWolfe and coauthors used their equations of first order to fix the distance between Randall and Sundrum's two walls [dewolfe2000]."
+    },
+    {
+      "id": "heterotic_m_theory_wall",
+      "kind": "family",
+      "text": "Two flat walls of heterotic M-theory at the ends of a fifth dimension, with a warp factor that is a power of a function linear in the distance along it and the volume of a Calabi-Yau space changing between them [lukas1999universe]."
     }
   ],
   "references": [
@@ -129,7 +134,8 @@
     "ida2000",
     "akama1983pregeometry",
     "visser1985",
-    "dewolfe2000"
+    "dewolfe2000",
+    "lukas1999universe"
   ],
   "coordinates": [
     {

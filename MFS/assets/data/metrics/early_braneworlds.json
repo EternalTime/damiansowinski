@@ -40,6 +40,11 @@
       "id": "ads_soliton",
       "kind": "family",
       "text": "Bannister's regular axis in the Squires family has the geometry of the five dimensional anti-de Sitter soliton [bannister1987]."
+    },
+    {
+      "id": "heterotic_m_theory_wall",
+      "kind": "family",
+      "text": "A universe on a wall at the end of the eleventh dimension of M-theory, two such walls bounding a fifth dimension once six more are curled into a Calabi-Yau space [lukas1999universe]."
     }
   ],
   "references": [
@@ -56,7 +61,8 @@
     "gogberashvili2002",
     "giovannini2001",
     "frere2001",
-    "csaki2001"
+    "csaki2001",
+    "lukas1999universe"
   ],
   "coordinates": [
     {

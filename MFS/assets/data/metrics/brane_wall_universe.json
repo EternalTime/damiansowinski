@@ -78,6 +78,11 @@
       "id": "ads_vaidya",
       "kind": "family",
       "text": "The black hole of anti-de Sitter space with light falling into it. Andrew Chamblin, Andreas Karch, and Ali Nayeri took it for the space on both sides of the wall in 2001, and its growing mass is a radiation term in the wall's Friedmann equation [chamblin2001]."
+    },
+    {
+      "id": "heterotic_m_theory_wall",
+      "kind": "family",
+      "text": "The walls of heterotic M-theory set moving, their size, their separation, and the volume of the Calabi-Yau space following powers of time [lukas1999cosmological]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "shiromizu2000",
     "visser1989nuclphysb",
     "singh2006",
-    "chamblin2001"
+    "chamblin2001",
+    "lukas1999cosmological"
   ],
   "coordinates": [
     {
