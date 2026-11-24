@@ -3301,6 +3301,7 @@ class StacksAndMovies(unittest.TestCase):
               "pre_big_bang": 4.0,
               "maximally_supersymmetric_plane_wave": 0.8,
               "cahen_wallach": 2.0,
+              "kowalski_glikman": 1 / 6,
               "holographic_superconductor": 1.0,
               "stiff_fluid_universes": 1.5})   # the height of a unit of time
     # Every movie, by its spacetime and view, with its variable. The last nine stood as separate
@@ -3350,6 +3351,7 @@ class StacksAndMovies(unittest.TestCase):
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("cahen_wallach", "ring"): "$cu/L$",
+              ("kowalski_glikman", "ring"): "$\\mu cu$",
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$", ("holographic_superconductor", "ring"): "$-\\rho$",
               ("stiff_fluid_universes", "ring"): "$t$",
@@ -6154,6 +6156,20 @@ class Slices(unittest.TestCase):
                         hi = self.reach(surface, "conical", reference=True)[1]
                         self.assertLessEqual(max(max(r) for r in rings), hi + 1e-3, where)
                         self.assertTrue(all(abs(r - hi) < 1e-3 for rim in rims for r in rim), where)
+                        continue
+                    if metric_id == "kowalski_glikman":
+                        # Each wave front stands above the floor at the height mu c u of its u, the disc of
+                        # proper radius 1.5/mu about the axis, which the Rosen chart's y_i = x_i/sin(omega_i cu)
+                        # draws as the ellipse of semi-axes 1.5/sin(mu cu/3) and 1.5/sin(mu cu/6).
+                        rosen = any(f is figure for f in data["projections"].get("rosen", []))
+                        t = surface["time"]
+                        scale = (math.sin(t / 3), math.sin(t / 6)) if rosen else (1.0, 1.0)
+                        (ring,) = [ring for rings in mark["fills"] for ring in rings]
+                        for p in ring:
+                            along = -(p[1] - t * math.cos(e)) / math.sin(e)
+                            X, Y = along * math.cos(a) - p[0] * math.sin(a), along * math.sin(a) + p[0] * math.cos(a)
+                            self.assertAlmostEqual(math.hypot(X * scale[0], Y * scale[1]), 1.5, delta=1e-3, msg=where)
+                        self.assertEqual(rims, [], where)
                         continue
                     if metric_id == "tippett_tsang":
                         # The moment ct = A/2 stands above the floor, the rectangle of the height's plane.
