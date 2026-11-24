@@ -644,6 +644,18 @@ A static star of uniform density whose pressure across the radius differs from i
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/bowers_liang.json
 - chart Areal Radius: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -N^{1/Q}c^2dt^2 + \dfrac{dr^2}{Z} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Emparan-Horowitz-Myers Black Holes on a Brane
+
+Exact black holes on a wall with two dimensions of space in anti-de Sitter space of four dimensions, found by Roberto Emparan, Gary T. Horowitz, and Robert C. Myers in 1999 by cutting the C-metric of anti-de Sitter space along a surface of constant extrinsic curvature and gluing it to a copy of itself. Far from the hole the wall approaches a cone, as gravity in three dimensions requires, and the mass of the cone equals the thermodynamic mass of the hole in four dimensions.
+
+- id: `brane_black_holes`
+- tags: braneworld, brane, black hole, accelerating, anti-de Sitter, negative cosmological constant, cosmological constant, cosmic string, conical singularity, horizon, event horizon, Killing horizon, curvature singularity, Petrov type D, black hole thermodynamics, black hole entropy, Hawking temperature, thin shell, junction conditions, reflection symmetry, BTZ black hole, black string, Gregory-Laflamme instability, 2+1 dimensional gravity, mass, rotating black hole, angular momentum, holography, axisymmetric, exact solution, Lorentzian, Einstein equations, idealized model, four-dimensional, static, stationary, Einstein space
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/brane_black_holes.json
+- chart Flat Wall: coordinates $(t, y, x, \varphi)$, $$ds^2 = \dfrac{\ell^2}{\left(x - y\right)^2}\left(-\left(y^2 + 2\mu y^3\right)dt^2 + \dfrac{dy^2}{y^2 + 2\mu y^3} + \dfrac{dx^2}{1 - x^2 - 2\mu x^3} + \left(1 - x^2 - 2\mu x^3\right)d\varphi^2\right)$$
+- chart Two Walls: coordinates $(t, y, x, \varphi)$, $$ds^2 = \dfrac{1}{A^2\left(x - y\right)^2}\left(\left(-\lambda + ky^2 - 2mAy^3\right)dt^2 - \dfrac{dy^2}{-\lambda + ky^2 - 2mAy^3} + \dfrac{dx^2}{1 + kx^2 - 2mAx^3} + \left(1 + kx^2 - 2mAx^3\right)d\varphi^2\right)$$
+- chart Rotating: coordinates $(t, y, x, \varphi)$, $$ds^2 = \dfrac{1}{A^2\left(x - y\right)^2}\left(\dfrac{-\lambda + ky^2 - 2mAy^3 - a^2y^4}{1 + a^2x^2y^2}\left(dt + ax^2d\varphi\right)^2 - \dfrac{1 + a^2x^2y^2}{-\lambda + ky^2 - 2mAy^3 - a^2y^4}dy^2 + \dfrac{1 + a^2x^2y^2}{1 + kx^2 - 2mAx^3 + a^2\lambda x^4}dx^2 + \dfrac{1 + kx^2 - 2mAx^3 + a^2\lambda x^4}{1 + a^2x^2y^2}\left(d\varphi - ay^2dt\right)^2\right)$$
+
 ### Braneworld Cosmology
 
 A universe with three dimensions of space that is a wall in anti-de Sitter space of five, moving through the static black hole of that space, as Per Kraus and Daisuke Ida set it out in 1999. Those who live on the wall read its motion as the expansion of their universe, with a Friedmann equation that carries the square of the density and the black hole's mass as a term that falls off like radiation.

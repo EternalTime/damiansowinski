@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 279,
+  "count": 280,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1646,6 +1646,11 @@
           "id": "stu_black_holes",
           "kind": "family",
           "text": "Black holes of this space in five dimensions with three charges and two scalar fields, which with $\\mu = q_1 = q_2 = q_3 = 0$ and $k = 1$ are anti-de Sitter space of five dimensions."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "composite",
+          "text": "Two pieces of anti-de Sitter space of four dimensions glued along a flat wall are the black hole on the wall with its mass set to zero [emparan2000branes]."
         }
       ],
       "references": [
@@ -1716,7 +1721,8 @@
         "banados1998",
         "chamseddine2004",
         "girardello1998",
-        "freedman1999"
+        "freedman1999",
+        "emparan2000branes"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -3961,6 +3967,11 @@
           "id": "constant_curvature_black_hole",
           "kind": "family",
           "text": "The same identification of anti-de Sitter space along a boost, in any number of dimensions. In three dimensions its Kruskal metric is this hole without rotation [banados1998]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "A large black hole on a wall curved like anti-de Sitter space in four dimensions is this one on the wall, stretched off it as a black string to a second wall [emparan2000branes2]."
         }
       ],
       "references": [
@@ -4004,7 +4015,8 @@
         "chan1994",
         "chan1995",
         "martinez1996",
-        "banados1998"
+        "banados1998",
+        "emparan2000branes2"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/btz.json",
@@ -8166,6 +8178,11 @@
           "id": "three_dim_black_string",
           "kind": "family",
           "text": "A charged black string in three dimensions from string theory, with an event horizon, an inner horizon, and a timelike singularity. The dilaton and antisymmetric field of its string metric violate the strong energy condition, which lets a static black string exist below five dimensions [horne1992black]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "Black strings stretched between two walls in anti-de Sitter space of four dimensions, which at large masses have more entropy than black holes localized on one wall [emparan2000branes2]."
         }
       ],
       "references": [
@@ -8197,7 +8214,8 @@
         "lake2006static",
         "horowitzmaeda2002",
         "myers1987compact",
-        "horne1992black"
+        "horne1992black",
+        "emparan2000branes2"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/black_string.json",
@@ -12692,6 +12710,351 @@
       ]
     },
     {
+      "id": "brane_black_holes",
+      "name": "Emparan-Horowitz-Myers Black Holes on a Brane",
+      "short_name": "Brane Black Holes",
+      "description": "Exact black holes on a wall with two dimensions of space in anti-de Sitter space of four dimensions, found by Roberto Emparan, Gary T. Horowitz, and Robert C. Myers in 1999 by cutting the C-metric of anti-de Sitter space along a surface of constant extrinsic curvature and gluing it to a copy of itself. Far from the hole the wall approaches a cone, as gravity in three dimensions requires, and the mass of the cone equals the thermodynamic mass of the hole in four dimensions.",
+      "tags": [
+        "braneworld",
+        "brane",
+        "black hole",
+        "accelerating",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "cosmic string",
+        "conical singularity",
+        "horizon",
+        "event horizon",
+        "Killing horizon",
+        "curvature singularity",
+        "Petrov type D",
+        "black hole thermodynamics",
+        "black hole entropy",
+        "Hawking temperature",
+        "thin shell",
+        "junction conditions",
+        "reflection symmetry",
+        "BTZ black hole",
+        "black string",
+        "Gregory-Laflamme instability",
+        "2+1 dimensional gravity",
+        "mass",
+        "rotating black hole",
+        "angular momentum",
+        "holography",
+        "axisymmetric",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "four-dimensional",
+        "static",
+        "stationary",
+        "Einstein space"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "Every coordinate is a pure number, with the lengths in the factor that multiplies the line element, and the Ricci tensor is the standard contraction, $R_{\\alpha\\beta} = R^\\gamma{}_{\\alpha\\gamma\\beta}$.",
+      "related": [
+        {
+          "id": "quantum_btz",
+          "kind": "family",
+          "text": "The metric induced on the wall at $x = 0$ when the wall has a negative cosmological constant, with a term in $1/r$ from the fourth dimension [emparan2000branes2]."
+        },
+        {
+          "id": "c_metric",
+          "kind": "family",
+          "text": "The accelerating black hole with no cosmological constant. With one, Emparan, Horowitz, and Myers cut its anti-de Sitter version along $x = 0$, and a wall takes the place of its cosmic string [emparan2000branes]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "The same wall one dimension up, with three dimensions of space in anti-de Sitter space of five. There Emparan, Horowitz, and Myers expected corrections in $1/r^2$ to Newton's potential [emparan2000branes]."
+        },
+        {
+          "id": "btz",
+          "kind": "family",
+          "text": "The black hole of three dimensions with a negative cosmological constant. A large hole on a wall curved like anti-de Sitter space induces it there exactly, as a black string stretched between two walls [emparan2000branes2]."
+        },
+        {
+          "id": "black_string",
+          "kind": "family",
+          "text": "A black hole stretched along an extra dimension. Between two walls in anti-de Sitter space of four dimensions such strings have the larger entropy at large masses, and holes localized on one wall have it below about $M_3 = 1/(32G_3)$ [emparan2000branes2]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "piece",
+          "text": "At $\\mu = 0$ each side of the wall is a piece of anti-de Sitter space of four dimensions, in Poincaré coordinates [emparan2000branes]."
+        },
+        {
+          "id": "point_particle_2plus1",
+          "kind": "family",
+          "text": "A point mass in three dimensions with no cosmological constant is a cone, and far from the hole the wall approaches one [emparan2000branes]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "With $k = -1$ the metric induced on the wall at $x = 0$ is a slice through the equator of this black hole, and the mass on the wall is negative [emparan2000branes2]."
+        },
+        {
+          "id": "kerr",
+          "kind": "family",
+          "text": "Set spinning on a flat wall, the hole induces there the equatorial geometry of Kerr's black hole, and a small one has the same angular momentum on the wall as in four dimensions [emparan2000branes2]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "family",
+          "text": "With a tidal charge from a fifth dimension in place of the electric charge, Reissner and Nordström's metric solves the equations induced on a wall with three dimensions of space [dadhich2000]."
+        }
+      ],
+      "references": [
+        "emparan2000branes",
+        "randall1999b",
+        "plebanski1976",
+        "emparan2000branes2",
+        "banados1992",
+        "chamblin2000",
+        "dadhich2000",
+        "casadio2002",
+        "emparan2001thick",
+        "kudoh2003",
+        "anber2008",
+        "emparan2009plasma",
+        "hennigar2026solitons"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brane_black_holes.json",
+      "charts": [
+        {
+          "id": "flat_wall",
+          "name": "Flat Wall",
+          "coordinates": [
+            "t",
+            "y",
+            "x",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, x)",
+            "x \\in [0, x_2]",
+            "\\varphi \\in [0, \\Delta\\varphi)",
+            "x = 0 \\;\\text{(the wall, where this side meets its mirror image)}",
+            "y = -1/(2\\mu) \\;\\text{(the horizon of the black hole)}",
+            "y = 0 \\;\\text{(the horizon of anti-de Sitter space)}",
+            "y \\to -\\infty \\;\\text{(the curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\ell",
+              "description": "Radius of anti-de Sitter space, a length, with $R_{\\alpha\\beta} = -(3/\\ell^2)g_{\\alpha\\beta}$ on each side of the wall"
+            },
+            {
+              "symbol": "\\mu",
+              "description": "Mass parameter, a positive pure number; the horizon $y = -1/(2\\mu)$ meets the wall at the radius $r = 2\\mu\\ell$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, y, x, \\varphi)$ of Roberto Emparan, Gary T. Horowitz, and Robert C. Myers on one side of the wall, with $x_2$ the positive root of $1 - x^2 - 2\\mu x^3$ and $\\Delta\\varphi = 2\\pi/(x_2(1 + 3\\mu x_2))$. On the wall the time $\\hat t = \\ell t$ and the radius $r = -\\ell/y$ are lengths. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2}{\\left(x - y\\right)^2}\\left(-\\left(y^2 + 2\\mu y^3\\right)dt^2 + \\dfrac{dy^2}{y^2 + 2\\mu y^3} + \\dfrac{dx^2}{1 - x^2 - 2\\mu x^3} + \\left(1 - x^2 - 2\\mu x^3\\right)d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\ell^2\\,y^2\\left(1 + 2\\mu y\\right)}{\\left(x - y\\right)^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{\\ell^2}{y^2\\left(x - y\\right)^2\\left(1 + 2\\mu y\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{\\ell^2}{\\left(x - y\\right)^2\\left(1 - x^2 - 2\\mu x^3\\right)}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{\\ell^2\\left(1 - x^2 - 2\\mu x^3\\right)}{\\left(x - y\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{12}{\\ell^2}",
+          "kretschmann": "K = \\dfrac{24}{\\ell^4} + \\dfrac{48\\mu^2\\left(x - y\\right)^6}{\\ell^4}"
+        },
+        {
+          "id": "two_walls",
+          "name": "Two Walls",
+          "coordinates": [
+            "t",
+            "y",
+            "x",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, 0]",
+            "x \\in [0, x_2]",
+            "\\varphi \\in [0, \\Delta\\varphi)",
+            "\\lambda > 0",
+            "x = 0 \\;\\text{(the wall that holds the black hole)}",
+            "y = 0 \\;\\text{(the second wall)}",
+            "y = y_0 \\;\\text{(the horizon of the black hole)}",
+            "y \\to -\\infty \\;\\text{(the curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "Acceleration, an inverse length; the radius of anti-de Sitter space is $\\ell_4 = 1/(A\\sqrt{\\lambda + 1})$, with $R_{\\alpha\\beta} = -(3/\\ell_4^2)g_{\\alpha\\beta}$ between the walls"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, not negative; at $m = 0$ the space between the walls is a piece of anti-de Sitter space"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "A positive pure number; the wall $x = 0$ is curved like anti-de Sitter space of three dimensions of radius $\\ell_3 = 1/(A\\sqrt{\\lambda})$"
+            },
+            {
+              "symbol": "k",
+              "description": "The sign $+1$, $0$ or $-1$; at $m = 0$ the wall $x = 0$ is anti-de Sitter space of three dimensions in global coordinates for $k = -1$, and the black hole of Bañados, Teitelboim, and Zanelli of zero mass for $k = 0$ and of positive mass for $k = +1$"
+            }
+          ],
+          "convention": "We use Emparan, Horowitz, and Myers's coordinates $(t, y, x, \\varphi)$ between the walls $x = 0$ and $y = 0$, with $x_2$ the positive root of $1 + kx^2 - 2mAx^3$, $y_0$ the least root of $-\\lambda + ky^2 - 2mAy^3$, and $\\Delta\\varphi = 2\\pi/(x_2(3mAx_2 - k))$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{1}{A^2\\left(x - y\\right)^2}\\left(\\left(-\\lambda + ky^2 - 2mAy^3\\right)dt^2 - \\dfrac{dy^2}{-\\lambda + ky^2 - 2mAy^3} + \\dfrac{dx^2}{1 + kx^2 - 2mAx^3} + \\left(1 + kx^2 - 2mAx^3\\right)d\\varphi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\lambda - ky^2 + 2mAy^3}{A^2\\left(x - y\\right)^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{1}{A^2\\left(x - y\\right)^2\\left(\\lambda - ky^2 + 2mAy^3\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{1}{A^2\\left(x - y\\right)^2\\left(1 + kx^2 - 2mAx^3\\right)}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{1 + kx^2 - 2mAx^3}{A^2\\left(x - y\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -12A^2\\left(\\lambda + 1\\right)",
+          "kretschmann": "K = 24A^4\\left(\\lambda + 1\\right)^2 + 48m^2A^6\\left(x - y\\right)^6"
+        },
+        {
+          "id": "rotating",
+          "name": "Rotating",
+          "coordinates": [
+            "t",
+            "y",
+            "x",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, 0]",
+            "x \\in [0, x_2]",
+            "\\varphi \\in [0, \\Delta\\varphi)",
+            "\\lambda \\ge 0",
+            "x = 0 \\;\\text{(the wall that holds the black hole)}",
+            "y = 0 \\;\\text{(the second wall for } \\lambda > 0\\text{)}",
+            "1/y^2 + a^2x^2 = 0 \\;\\text{(the ring singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "A",
+              "description": "Acceleration, an inverse length; the radius of anti-de Sitter space is $\\ell_4 = 1/(A\\sqrt{\\lambda + 1})$, with $R_{\\alpha\\beta} = -(3/\\ell_4^2)g_{\\alpha\\beta}$ off the walls"
+            },
+            {
+              "symbol": "m",
+              "description": "Mass parameter, a length, not negative; at $m = 0$ the spacetime off the walls is a piece of anti-de Sitter space"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "A pure number, not negative; at $\\lambda = 0$ the wall $x = 0$ is flat far from the hole, and for $\\lambda > 0$ it is curved like anti-de Sitter space of three dimensions"
+            },
+            {
+              "symbol": "k",
+              "description": "The sign $+1$, $0$ or $-1$; a flat wall has $k = -1$"
+            },
+            {
+              "symbol": "a",
+              "description": "Rotation, a pure number; at $\\lambda = 0$ and $k = -1$ the wall $x = 0$ has the equatorial geometry of Kerr's black hole of mass $m$ and rotation parameter $a/A$"
+            }
+          ],
+          "convention": "We use Emparan, Horowitz, and Myers's coordinates $(t, y, x, \\varphi)$ of the rotating metric, with $x_2$ the least positive root of $1 + kx^2 - 2mAx^3 + a^2\\lambda x^4$. Points are identified along $\\varphi \\to \\varphi + \\Delta\\varphi$ at fixed $t + ax_2^2\\varphi$, with $\\Delta\\varphi = 2\\pi/(x_2(3mAx_2 - k - 2a^2\\lambda x_2^2))$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{1}{A^2\\left(x - y\\right)^2}\\left(\\dfrac{-\\lambda + ky^2 - 2mAy^3 - a^2y^4}{1 + a^2x^2y^2}\\left(dt + ax^2d\\varphi\\right)^2 - \\dfrac{1 + a^2x^2y^2}{-\\lambda + ky^2 - 2mAy^3 - a^2y^4}dy^2 + \\dfrac{1 + a^2x^2y^2}{1 + kx^2 - 2mAx^3 + a^2\\lambda x^4}dx^2 + \\dfrac{1 + kx^2 - 2mAx^3 + a^2\\lambda x^4}{1 + a^2x^2y^2}\\left(d\\varphi - ay^2dt\\right)^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "\\dfrac{\\left(-\\lambda + ky^2 - 2mAy^3 - a^2y^4\\right) + a^2y^4\\left(1 + kx^2 - 2mAx^3 + a^2\\lambda x^4\\right)}{A^2\\left(x - y\\right)^2\\left(1 + a^2x^2y^2\\right)}"
+            },
+            {
+              "indices": [
+                "t",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{a\\left(x^2\\left(-\\lambda + ky^2 - 2mAy^3 - a^2y^4\\right) - y^2\\left(1 + kx^2 - 2mAx^3 + a^2\\lambda x^4\\right)\\right)}{A^2\\left(x - y\\right)^2\\left(1 + a^2x^2y^2\\right)}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "t"
+              ],
+              "value": "\\dfrac{a\\left(x^2\\left(-\\lambda + ky^2 - 2mAy^3 - a^2y^4\\right) - y^2\\left(1 + kx^2 - 2mAx^3 + a^2\\lambda x^4\\right)\\right)}{A^2\\left(x - y\\right)^2\\left(1 + a^2x^2y^2\\right)}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{1 + a^2x^2y^2}{A^2\\left(x - y\\right)^2\\left(\\lambda - ky^2 + 2mAy^3 + a^2y^4\\right)}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{1 + a^2x^2y^2}{A^2\\left(x - y\\right)^2\\left(1 + kx^2 - 2mAx^3 + a^2\\lambda x^4\\right)}"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "\\dfrac{a^2x^4\\left(-\\lambda + ky^2 - 2mAy^3 - a^2y^4\\right) + \\left(1 + kx^2 - 2mAx^3 + a^2\\lambda x^4\\right)}{A^2\\left(x - y\\right)^2\\left(1 + a^2x^2y^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = -12A^2\\left(\\lambda + 1\\right)",
+          "kretschmann": "K = 24A^4\\left(\\lambda + 1\\right)^2 + \\dfrac{48m^2A^6\\left(x - y\\right)^6\\left(1 - 15a^2x^2y^2 + 15a^4x^4y^4 - a^6x^6y^6\\right)}{\\left(1 + a^2x^2y^2\\right)^6}"
+        }
+      ]
+    },
+    {
       "id": "brane_wall_universe",
       "name": "Braneworld Cosmology",
       "short_name": "Braneworld Cosmology",
@@ -16035,6 +16398,11 @@
           "id": "super_entropic",
           "kind": "family",
           "text": "Kerr-anti-de Sitter spun up to $a = \\ell$, whose horizon is noncompact with finite area, as an accelerating hole's becomes when its conical deficit reaches $2\\pi$ [appels2020]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "Its anti-de Sitter version cut along $x = 0$ and glued to a copy of itself, so that a wall takes the place of the cosmic string and holds the black hole [emparan2000branes]."
         }
       ],
       "references": [
@@ -16071,7 +16439,8 @@
         "emparan2020qbtz",
         "strominger2017superrotations",
         "astorino2022removal",
-        "appels2020"
+        "appels2020",
+        "emparan2000branes"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/c_metric.json",
@@ -45492,6 +45861,11 @@
           "id": "counter_rotating_discs",
           "kind": "composite",
           "text": "A displaced cut and reflection turn regions of Kerr's field into the exterior of a thin disc with counter rotating matter [bicak1993kerr]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "The equator of this black hole is the geometry a spinning hole induces on a flat wall in the C-metric of anti-de Sitter space, and a small one has the same angular momentum on the wall as in four dimensions [emparan2000branes2]."
         }
       ],
       "references": [
@@ -45572,7 +45946,8 @@
         "gleiser1998by",
         "xanthopoulos1986rotating",
         "bini2009",
-        "bicak1993kerr"
+        "bicak1993kerr",
+        "emparan2000branes2"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kerr.json",
@@ -69795,6 +70170,11 @@
           "id": "ads_dust_collapse",
           "kind": "family",
           "text": "A disc of dust falling under a negative cosmological constant. Below a threshold density it ends as a naked conical singularity, and above it as a black hole [mann1993]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "A black hole of four dimensions on a wall in anti-de Sitter space, which far from the hole makes the wall a cone, as a point mass does in three dimensions [emparan2000branes]."
         }
       ],
       "references": [
@@ -69823,7 +70203,8 @@
         "louko_marolf1994",
         "gott1986charged",
         "gibbonsgreenperry1996",
-        "mann1993"
+        "mann1993",
+        "emparan2000branes"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/point_particle_2plus1.json",
@@ -70855,6 +71236,11 @@
           "id": "dressed_btz",
           "kind": "family",
           "text": "A black hole of three dimensions dressed in a classical conformally coupled scalar field. Its metric has a term in $1/r$ of the same form, which Cristián Martínez and Jorge Zanelli found again for a quantum conformal field at one loop [martinez1996, martinez1997]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "The spacetime this metric is read from, the C-metric of anti-de Sitter space cut along $x = 0$ and glued to a copy of itself, with the black hole on the wall [emparan2000branes2]."
         }
       ],
       "references": [
@@ -71983,6 +72369,11 @@
           "id": "heterotic_m_theory_wall",
           "kind": "family",
           "text": "Two flat walls of heterotic M-theory at the ends of a fifth dimension, with a warp factor that is a power of a function linear in the distance along it and the volume of a Calabi-Yau space changing between them [lukas1999universe]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "The same wall one dimension down, in anti-de Sitter space of four dimensions, where Emparan, Horowitz, and Myers found black holes on it exactly [emparan2000branes]."
         }
       ],
       "references": [
@@ -72013,7 +72404,8 @@
         "akama1983pregeometry",
         "visser1985",
         "dewolfe2000",
-        "lukas1999universe"
+        "lukas1999universe",
+        "emparan2000branes"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -72850,6 +73242,11 @@
           "id": "naked_black_holes",
           "kind": "generalisation",
           "text": "Charged black holes with a dilaton coupled at strength $a$, which at $a = 0$ are the Reissner-Nordström black hole. Close to extremality and large, they crush a falling body sideways before it reaches the horizon [horowitz1997naked]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "With a tidal charge from a fifth dimension in place of the electric charge, this metric solves the equations induced on a wall with three dimensions of space, and with a negative tidal charge it has one horizon, outside Schwarzschild's [dadhich2000]."
         }
       ],
       "references": [
@@ -72910,7 +73307,8 @@
         "husain1996null",
         "schein1996",
         "gauntlett1999",
-        "horowitz1997naked"
+        "horowitz1997naked",
+        "dadhich2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -77493,6 +77891,11 @@
           "id": "stu_black_holes",
           "kind": "family",
           "text": "Black holes of anti-de Sitter space in five dimensions with three charges. With the charges set to zero they are this hole's counterpart in five dimensions [behrndt1999]."
+        },
+        {
+          "id": "brane_black_holes",
+          "kind": "family",
+          "text": "A slice through the equator of this black hole is the metric induced on a wall in the C-metric of anti-de Sitter space, where its mass is negative [emparan2000branes2]."
         }
       ],
       "references": [
@@ -77533,7 +77936,8 @@
         "banados1994",
         "aman2008",
         "cai2002constant",
-        "behrndt1999"
+        "behrndt1999",
+        "emparan2000branes2"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",

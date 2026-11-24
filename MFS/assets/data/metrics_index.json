@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "9072cc7b8889a841",
+    "version": "3d6463414283f994",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -299,7 +299,7 @@
       "Einstein space",
       "conformally flat"
     ],
-    "version": "461d8a327bdee759",
+    "version": "d1cb6efc8c3ed288",
     "diagrams": "6ea71ecfd6a99f72",
     "conformal": "1839877814357d2c",
     "embedding": "2c639ca6fbd71045"
@@ -685,7 +685,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "8d31dda21900b4e3",
+    "version": "d98ebe56ff043148",
     "diagrams": "606c7fd2b39fc9d5",
     "conformal": "ef75cb2ee29e15d6",
     "embedding": "163c135cc969d5f9"
@@ -1123,6 +1123,54 @@
     "curvature": "e0fc95f39523b139"
   },
   {
+    "id": "brane_black_holes",
+    "name": "Brane Black Holes",
+    "tags": [
+      "braneworld",
+      "brane",
+      "black hole",
+      "accelerating",
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "cosmic string",
+      "conical singularity",
+      "horizon",
+      "event horizon",
+      "Killing horizon",
+      "curvature singularity",
+      "Petrov type D",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "Hawking temperature",
+      "thin shell",
+      "junction conditions",
+      "reflection symmetry",
+      "BTZ black hole",
+      "black string",
+      "Gregory-Laflamme instability",
+      "2+1 dimensional gravity",
+      "mass",
+      "rotating black hole",
+      "angular momentum",
+      "holography",
+      "axisymmetric",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "four-dimensional",
+      "static",
+      "stationary",
+      "Einstein space"
+    ],
+    "version": "724e3a36dc955d77",
+    "diagrams": "0a0c0f587fb3fbe7",
+    "conformal": "7f1841b3402dea27",
+    "embedding": "702bd806a5daf9e4",
+    "curvature": "e95ffdda082d7908"
+  },
+  {
     "id": "brane_wall_universe",
     "name": "Braneworld Cosmology",
     "tags": [
@@ -1417,7 +1465,7 @@
       "stationary",
       "black hole pair creation"
     ],
-    "version": "e8e7eb620ea81671",
+    "version": "97226f7564ffad31",
     "diagrams": "60cc56f450326363",
     "conformal": "d6c09caa82c5caf6",
     "embedding": "8cf5301ea3792cef",
@@ -3982,7 +4030,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "f570de2dcf55ae7c",
+    "version": "181b3c76d403261b",
     "diagrams": "46c8aa74dccf2dc8",
     "conformal": "20eac56de27af9d3",
     "embedding": "48db04f9a5970be7",
@@ -6205,7 +6253,7 @@
       "conformally flat",
       "tachyon"
     ],
-    "version": "d1c6555115f890b3",
+    "version": "dfd1eb1550641814",
     "diagrams": "31e9dff1390f00d4",
     "conformal": "e4928f85ed18ab72",
     "embedding": "c40545f1ea0c929c"
@@ -6299,7 +6347,7 @@
       "stationary",
       "three-dimensional"
     ],
-    "version": "3d1b3943de27702a",
+    "version": "62536780cc171ac3",
     "diagrams": "9e27900d07c618e4",
     "conformal": "d6fb25d433fbd21a",
     "embedding": "aa11b776d61eb469"
@@ -6386,7 +6434,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "334027b7b1f46590",
+    "version": "8fe66759052912e6",
     "diagrams": "598394eb07802f5f",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -6449,7 +6497,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "e8757f14520e893c",
+    "version": "c8ecb7d18d7a9b9e",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6919,7 +6967,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "14cbafaf09a183ed",
+    "version": "f6ddb7e7ad6d087a",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"

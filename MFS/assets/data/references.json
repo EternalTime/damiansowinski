@@ -1,5 +1,5 @@
 {
-  "version": "5a8015d799b1d161",
+  "version": "45e2eacd12f466be",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -51890,6 +51890,118 @@
         "eprint": "hep-th/0611259",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1103/PhysRevD.75.103510"
+      }
+    },
+    "dadhich2000": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes on the brane",
+        "author": "Dadhich, Naresh and Maartens, Roy and Papadopoulos, Philippos and Rezania, Vahid",
+        "journal": "Physics Letters B",
+        "volume": "487",
+        "number": "1-2",
+        "pages": "1--6",
+        "year": "2000",
+        "doi": "10.1016/S0370-2693(00)00798-X",
+        "eprint": "hep-th/0003061",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(00)00798-X"
+      }
+    },
+    "casadio2002": {
+      "type": "article",
+      "fields": {
+        "title": "New black holes in the brane world?",
+        "author": "Casadio, Roberto and Fabbri, Alessandro and Mazzacurati, Lorenzo",
+        "journal": "Physical Review D",
+        "volume": "65",
+        "number": "8",
+        "pages": "084040",
+        "year": "2002",
+        "doi": "10.1103/PhysRevD.65.084040",
+        "eprint": "gr-qc/0111072",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.65.084040"
+      }
+    },
+    "emparan2001thick": {
+      "type": "article",
+      "fields": {
+        "title": "Black holes on thick branes",
+        "author": "Emparan, Roberto and Gregory, Ruth and Santos, Caroline",
+        "journal": "Physical Review D",
+        "volume": "63",
+        "number": "10",
+        "pages": "104022",
+        "year": "2001",
+        "doi": "10.1103/PhysRevD.63.104022",
+        "eprint": "hep-th/0012100",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.63.104022"
+      }
+    },
+    "kudoh2003": {
+      "type": "article",
+      "fields": {
+        "title": "Small localized black holes in a braneworld: Formulation and numerical method",
+        "author": "Kudoh, Hideaki and Tanaka, Takahiro and Nakamura, Takashi",
+        "journal": "Physical Review D",
+        "volume": "68",
+        "number": "2",
+        "pages": "024035",
+        "year": "2003",
+        "doi": "10.1103/PhysRevD.68.024035",
+        "eprint": "gr-qc/0301089",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.68.024035"
+      }
+    },
+    "anber2008": {
+      "type": "article",
+      "fields": {
+        "title": "New exact solutions on the Randall-Sundrum 2-brane: lumps of dark radiation and accelerated black holes",
+        "author": "Anber, Mohamed and Sorbo, Lorenzo",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2008",
+        "number": "07",
+        "pages": "098",
+        "year": "2008",
+        "doi": "10.1088/1126-6708/2008/07/098",
+        "eprint": "0803.2242",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2008/07/098"
+      }
+    },
+    "emparan2009plasma": {
+      "type": "article",
+      "fields": {
+        "title": "Exact gravitational dual of a plasma ball",
+        "author": "Emparan, Roberto and Milanesi, Giuseppe",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2009",
+        "number": "08",
+        "pages": "012",
+        "year": "2009",
+        "doi": "10.1088/1126-6708/2009/08/012",
+        "eprint": "0905.4590",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2009/08/012"
+      }
+    },
+    "hennigar2026solitons": {
+      "type": "article",
+      "fields": {
+        "title": "Quantum solitons",
+        "author": "Hennigar, Robie A. and Patra, Ayan K. and Ross, Simon F.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "08",
+        "pages": "097",
+        "year": "2026",
+        "doi": "10.1007/JHEP08(2026)097",
+        "eprint": "2604.05026",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP08(2026)097"
       }
     }
   }
