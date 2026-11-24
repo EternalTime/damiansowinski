@@ -1525,6 +1525,18 @@ A black hole that forms and then radiates itself away, built by William Hiscock 
 - chart Outgoing Vaidya: coordinates $(u, r, \theta, \phi)$, $$ds^2 = -\left(1 - \dfrac{2m}{r}\right)du^2 - 2\,du\,dr + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 - chart Flat Double Null: coordinates $(u, v, \theta, \phi)$, $$ds^2 = -du\,dv + \dfrac{(v - u)^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
 
+### Holographic Renormalisation Group Flow
+
+Walls of scalar field in anti-de Sitter space of five dimensions, dual to flows of the renormalisation group of $\mathcal{N} = 4$ super Yang-Mills theory, with the distance from the boundary as the energy scale. Luciano Girardello, Michela Petrini, Massimo Porrati, and Alberto Zaffaroni built them in 1998, and wherever the null energy condition holds a $c$-function falls along them toward the infrared.
+
+- id: `holographic_rg_flow`
+- tags: holography, AdS/CFT, anti-de Sitter, supergravity, supersymmetric, scalar field, minimally coupled scalar field, domain wall, planar symmetry, curvature singularity, higher dimensions, exact solution, Lorentzian, Einstein equations, idealized model, five-dimensional, static, stationary, conformally flat
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/holographic_rg_flow.json
+- chart Confining Flow, Proper Distance: coordinates $(t, x_1, x_2, x_3, r)$, $$ds^2 = \left(e^{2r/L} - 1\right)\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + dr^2$$
+- chart Confining Flow, Coordinate $u$: coordinates $(t, x_1, x_2, x_3, u)$, $$ds^2 = \dfrac{u}{1 - u}\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + \dfrac{L^2\,du^2}{4\left(1 - u\right)^2}$$
+- chart Coulomb Branch Disc: coordinates $(t, x_1, x_2, x_3, v)$, $$ds^2 = \dfrac{\ell^2v^{2/3}}{L^2\left(1 - v\right)}\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + \dfrac{L^2\,dv^2}{4v^{4/3}\left(1 - v\right)^2}$$
+
 ### Inside a Holographic Superconductor
 
 The inside of a planar charged black hole of anti-de Sitter space that carries charged scalar hair below a critical temperature, the gravitational dual of a superconductor. It has no inner horizon: the Einstein-Rosen bridge collapses, the scalar field oscillates, and the spacetime ends at a spacelike Kasner singularity, sometimes after one or more Kasner inversions.

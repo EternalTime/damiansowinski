@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 273,
+  "count": 274,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1636,6 +1636,11 @@
           "id": "chamseddine_volkov_monopole",
           "kind": "family",
           "text": "A monopole of $N = 4$ gauged supergravity. In the $SO(4)$ theory a ratio $\\xi$ of two gauge couplings deforms it into spaces that approach anti-de Sitter space with an excess of solid angle, and at $\\xi = 1$ into anti-de Sitter space [chamseddine2004]."
+        },
+        {
+          "id": "holographic_rg_flow",
+          "kind": "family",
+          "text": "Walls of scalar field in anti-de Sitter space of five dimensions that approach it at the boundary correspond to flows of the renormalisation group of the field theory there, with the distance from the boundary as the energy scale [girardello1998, freedman1999]."
         }
       ],
       "references": [
@@ -1704,7 +1709,9 @@
         "martinez1996",
         "natsuume2000a",
         "banados1998",
-        "chamseddine2004"
+        "chamseddine2004",
+        "girardello1998",
+        "freedman1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -37924,6 +37931,284 @@
       ]
     },
     {
+      "id": "holographic_rg_flow",
+      "name": "Holographic Renormalisation Group Flow",
+      "short_name": "Holographic RG Flow",
+      "description": "Walls of scalar field in anti-de Sitter space of five dimensions, dual to flows of the renormalisation group of $\\mathcal{N} = 4$ super Yang-Mills theory, with the distance from the boundary as the energy scale. Luciano Girardello, Michela Petrini, Massimo Porrati, and Alberto Zaffaroni built them in 1998, and wherever the null energy condition holds a $c$-function falls along them toward the infrared.",
+      "tags": [
+        "holography",
+        "AdS/CFT",
+        "anti-de Sitter",
+        "supergravity",
+        "supersymmetric",
+        "scalar field",
+        "minimally coupled scalar field",
+        "domain wall",
+        "planar symmetry",
+        "curvature singularity",
+        "higher dimensions",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "five-dimensional",
+        "static",
+        "stationary",
+        "conformally flat"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "Near its boundary each flow here approaches anti-de Sitter space of five dimensions, the conformal vacuum of $\\mathcal{N} = 4$ super Yang-Mills theory. The inner end of Freedman and coauthors' wall is anti-de Sitter space again, with a smaller radius [freedman1999]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The throat of coincident three-branes, anti-de Sitter space of five dimensions times a sphere, where every flow here starts. Spread over a uniform disc, the branes give the flow of the Coulomb branch solved in closed form [freedman2000]."
+        },
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "Two walls of zero thickness in anti-de Sitter space of five dimensions. DeWolfe, Freedman, Gubser, and Karch held them apart with a scalar in the bulk, solving the equations of first order of these flows in closed form [dewolfe2000]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A thin wall with flat space on either side. Walls between regions of anti-de Sitter space with different radii had been studied in supergravity of four dimensions before the flows here, in five [skenderis1999]."
+        }
+      ],
+      "references": [
+        "maldacena1998",
+        "girardello1998",
+        "freedman1999",
+        "distler1998",
+        "skenderis1999",
+        "dewolfe2000",
+        "randall1999a",
+        "goldberger1999",
+        "girardello2000",
+        "bianchi2001",
+        "freedman2000",
+        "deboer2000",
+        "pilch2000",
+        "gubser2000",
+        "myers2010seeing",
+        "deddo2024"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/holographic_rg_flow.json",
+      "charts": [
+        {
+          "id": "proper_distance",
+          "name": "Confining Flow, Proper Distance",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "r = 0 \\;\\text{(the singularity)}",
+            "r \\to \\infty \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the anti-de Sitter space the flow approaches at its boundary, a length"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, r)$, with $t$ having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $r$ the proper distance from the singularity, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(e^{2r/L} - 1\\right)\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + dr^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\left(e^{2r/L} - 1\\right)"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\left(e^{2r/L} - 1\\right)"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\left(e^{2r/L} - 1\\right)"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\left(e^{2r/L} - 1\\right)"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "1"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{4\\left(5e^{2r/L} - 4\\right)e^{2r/L}}{L^2\\left(e^{2r/L} - 1\\right)^2}",
+          "kretschmann": "K = \\dfrac{8\\left(5e^{4r/L} - 8e^{2r/L} + 8\\right)e^{4r/L}}{L^4\\left(e^{2r/L} - 1\\right)^4}"
+        },
+        {
+          "id": "bfs_u",
+          "name": "Confining Flow, Coordinate $u$",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "u"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "u \\in (0, 1)",
+            "u = 0 \\;\\text{(the singularity)}",
+            "u \\to 1 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the anti-de Sitter space the flow approaches at its boundary, a length"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, u)$, with $t$ having dimensions of time and $x_1$, $x_2$, and $x_3$ lengths along the wall, and take components in the chart $x^0 = ct$. The coordinate $u = 1 - e^{-2r/L}$ is that of Bianchi, Freedman, and Skenderis [bianchi2001], where $r$ is the proper distance from the singularity. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{u}{1 - u}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + \\dfrac{L^2\\,du^2}{4\\left(1 - u\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{u}{1 - u}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{u}{1 - u}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{u}{1 - u}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\dfrac{u}{1 - u}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{L^2}{4\\left(1 - u\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{16u + 4}{L^2\\,u^2}",
+          "kretschmann": "K = \\dfrac{64u^2 - 64u + 40}{L^4\\,u^4}"
+        },
+        {
+          "id": "coulomb_disc",
+          "name": "Coulomb Branch Disc",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "v"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "v \\in (0, 1)",
+            "v = 0 \\;\\text{(the singularity)}",
+            "v \\to 1 \\;\\text{(the boundary)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "L",
+              "description": "Radius of the anti-de Sitter space the flow approaches at its boundary, a length"
+            },
+            {
+              "symbol": "\\ell",
+              "description": "Radius of the disc of D3-branes in ten dimensions, a length"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, v)$, with $t$ having dimensions of time and $x_1$, $x_2$, and $x_3$ lengths along the wall, and take components in the chart $x^0 = ct$. The coordinate $v = e^{\\sqrt{6}\\Phi}$ is that of Bianchi, Freedman, and Skenderis [bianchi2001], with $\\Phi$ the scalar of the flow. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\dfrac{\\ell^2v^{2/3}}{L^2\\left(1 - v\\right)}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + \\dfrac{L^2\\,dv^2}{4v^{4/3}\\left(1 - v\\right)^2}",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "\\dfrac{\\ell^2\\,v^{2/3}}{L^2\\left(1 - v\\right)}"
+            },
+            {
+              "indices": [
+                "v",
+                "v"
+              ],
+              "value": "\\dfrac{L^2}{4v^{4/3}\\left(1 - v\\right)^2}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4v^2 - 48v - 16}{3L^2\\,v^{2/3}}",
+          "kretschmann": "K = \\dfrac{56v^4 - 320v^3 + 960v^2 + 256v + 128}{27L^4\\,v^{4/3}}"
+        }
+      ]
+    },
+    {
       "id": "holographic_superconductor",
       "name": "Inside a Holographic Superconductor",
       "short_name": "Holographic Superconductor",
@@ -70216,6 +70501,11 @@
           "id": "early_braneworlds",
           "kind": "programme",
           "text": "Earlier localization constructions include Akama's vortex, a scalar domain wall, and Visser's electric geometry [akama1983pregeometry, rubakov1983, visser1985]."
+        },
+        {
+          "id": "holographic_rg_flow",
+          "kind": "family",
+          "text": "Thick walls of scalar field in anti-de Sitter space of five dimensions, the flows of the renormalisation group of holography. DeWolfe and coauthors used their equations of first order to fix the distance between Randall and Sundrum's two walls [dewolfe2000]."
         }
       ],
       "references": [
@@ -70244,7 +70534,8 @@
         "kraus1999",
         "ida2000",
         "akama1983pregeometry",
-        "visser1985"
+        "visser1985",
+        "dewolfe2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -85081,6 +85372,11 @@
           "id": "naked_black_holes",
           "kind": "family",
           "text": "Charged black holes whose tidal forces grow huge just outside the horizon close to extremality. Among the extreme branes with one Ramond-Ramond charge, the three-brane alone keeps its tidal forces finite at its horizon [horowitz1997naked]."
+        },
+        {
+          "id": "holographic_rg_flow",
+          "kind": "family",
+          "text": "Flows away from the throat's anti-de Sitter space, driven by masses or by spreading the branes apart. Spread over a uniform disc, the branes give a flow solved in closed form [freedman2000]."
         }
       ],
       "references": [
@@ -85103,7 +85399,8 @@
         "blau2002penrose",
         "berenstein2002",
         "klebanovwitten1998",
-        "horowitz1997naked"
+        "horowitz1997naked",
+        "freedman2000"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",
@@ -91228,6 +91525,11 @@
           "id": "brown_teitelboim",
           "kind": "family",
           "text": "A charged spherical wall that separates regions of different cosmological constant [hirano2018bt]."
+        },
+        {
+          "id": "holographic_rg_flow",
+          "kind": "family",
+          "text": "Thick walls of scalar field between regions of anti-de Sitter space of five dimensions with different radii, which in holography correspond to flows of the renormalisation group [skenderis1999, girardello1998]."
         }
       ],
       "references": [
@@ -91251,7 +91553,9 @@
         "kraus1999",
         "rubakov1983",
         "rubakov2001extra",
-        "hirano2018bt"
+        "hirano2018bt",
+        "skenderis1999",
+        "girardello1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",

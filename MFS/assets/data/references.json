@@ -1,5 +1,5 @@
 {
-  "version": "51d36508c30555d5",
+  "version": "d050b9d8e62f8c16",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -50847,6 +50847,214 @@
         "eprint": "2609.27979",
         "archiveprefix": "arXiv",
         "url": "https://arxiv.org/abs/2609.27979"
+      }
+    },
+    "girardello1998": {
+      "type": "article",
+      "fields": {
+        "title": "Novel local {CFT} and exact results on perturbations of $N = 4$ super {Yang Mills} from {AdS} dynamics",
+        "author": "Girardello, Luciano and Petrini, Michela and Porrati, Massimo and Zaffaroni, Alberto",
+        "journal": "Journal of High Energy Physics",
+        "volume": "1998",
+        "number": "12",
+        "pages": "022",
+        "year": "1998",
+        "doi": "10.1088/1126-6708/1998/12/022",
+        "eprint": "hep-th/9810126",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/1998/12/022"
+      }
+    },
+    "distler1998": {
+      "type": "article",
+      "fields": {
+        "title": "Non-supersymmetric conformal field theories from stable anti-de {Sitter} spaces",
+        "author": "Distler, Jacques and Zamora, Frederic",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "2",
+        "number": "6",
+        "pages": "1405--1439",
+        "year": "1998",
+        "doi": "10.4310/ATMP.1998.v2.n6.a6",
+        "eprint": "hep-th/9810206",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.1998.v2.n6.a6"
+      }
+    },
+    "freedman1999": {
+      "type": "article",
+      "fields": {
+        "title": "Renormalization group flows from holography: supersymmetry and a $c$-theorem",
+        "author": "Freedman, D. Z. and Gubser, S. S. and Pilch, K. and Warner, N. P.",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "3",
+        "number": "2",
+        "pages": "363--417",
+        "year": "1999",
+        "doi": "10.4310/ATMP.1999.v3.n2.a7",
+        "eprint": "hep-th/9904017",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.1999.v3.n2.a7"
+      }
+    },
+    "skenderis1999": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational stability and renormalization-group flow",
+        "author": "Skenderis, Kostas and Townsend, Paul K.",
+        "journal": "Physics Letters B",
+        "volume": "468",
+        "number": "1--2",
+        "pages": "46--51",
+        "year": "1999",
+        "doi": "10.1016/S0370-2693(99)01212-5",
+        "eprint": "hep-th/9909070",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(99)01212-5"
+      }
+    },
+    "dewolfe2000": {
+      "type": "article",
+      "fields": {
+        "title": "Modeling the fifth dimension with scalars and gravity",
+        "author": "DeWolfe, O. and Freedman, D. Z. and Gubser, S. S. and Karch, A.",
+        "journal": "Physical Review D",
+        "volume": "62",
+        "number": "4",
+        "pages": "046008",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.62.046008",
+        "eprint": "hep-th/9909134",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.62.046008"
+      }
+    },
+    "girardello2000": {
+      "type": "article",
+      "fields": {
+        "title": "The supergravity dual of $N = 1$ super {Yang-Mills} theory",
+        "author": "Girardello, L. and Petrini, M. and Porrati, M. and Zaffaroni, A.",
+        "journal": "Nuclear Physics B",
+        "volume": "569",
+        "number": "1--3",
+        "pages": "451--469",
+        "year": "2000",
+        "doi": "10.1016/S0550-3213(99)00764-6",
+        "eprint": "hep-th/9909047",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0550-3213(99)00764-6"
+      }
+    },
+    "freedman2000": {
+      "type": "article",
+      "fields": {
+        "title": "Continuous distributions of {D3}-branes and gauged supergravity",
+        "author": "Freedman, Daniel Z. and Gubser, Steven S. and Pilch, Krzysztof and Warner, Nicholas P.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "07",
+        "pages": "038",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/07/038",
+        "eprint": "hep-th/9906194",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/07/038"
+      }
+    },
+    "deboer2000": {
+      "type": "article",
+      "fields": {
+        "title": "On the holographic renormalization group",
+        "author": "de Boer, Jan and Verlinde, Erik and Verlinde, Herman",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2000",
+        "number": "08",
+        "pages": "003",
+        "year": "2000",
+        "doi": "10.1088/1126-6708/2000/08/003",
+        "eprint": "hep-th/9912012",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2000/08/003"
+      }
+    },
+    "pilch2000": {
+      "type": "article",
+      "fields": {
+        "title": "$\\mathcal{N} = 1$ supersymmetric renormalization group flows from {IIB} supergravity",
+        "author": "Pilch, Krzysztof and Warner, Nicholas P.",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "4",
+        "number": "3",
+        "pages": "627--677",
+        "year": "2000",
+        "doi": "10.4310/ATMP.2000.v4.n3.a5",
+        "eprint": "hep-th/0006066",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.2000.v4.n3.a5"
+      }
+    },
+    "bianchi2001": {
+      "type": "article",
+      "fields": {
+        "title": "How to go with an {RG} flow",
+        "author": "Bianchi, Massimo and Freedman, Daniel Z. and Skenderis, Kostas",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2001",
+        "number": "08",
+        "pages": "041",
+        "year": "2001",
+        "doi": "10.1088/1126-6708/2001/08/041",
+        "eprint": "hep-th/0105276",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1126-6708/2001/08/041"
+      }
+    },
+    "myers2010seeing": {
+      "type": "article",
+      "fields": {
+        "title": "Seeing a $c$-theorem with holography",
+        "author": "Myers, Robert C. and Sinha, Aninda",
+        "journal": "Physical Review D",
+        "volume": "82",
+        "number": "4",
+        "pages": "046006",
+        "year": "2010",
+        "doi": "10.1103/PhysRevD.82.046006",
+        "eprint": "1006.1263",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.82.046006"
+      }
+    },
+    "deddo2024": {
+      "type": "article",
+      "fields": {
+        "title": "Explicit entropic proofs of irreversibility theorems for holographic {RG} flows",
+        "author": "Deddo, Evan and Liu, James T. and Pando Zayas, Leopoldo A. and Saskowski, Robert J.",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2024",
+        "number": "09",
+        "pages": "179",
+        "year": "2024",
+        "doi": "10.1007/JHEP09(2024)179",
+        "eprint": "2404.15077",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP09(2024)179"
+      }
+    },
+    "gubser2000": {
+      "type": "article",
+      "fields": {
+        "title": "Curvature singularities: the good, the bad, and the naked",
+        "author": "Gubser, Steven S.",
+        "journal": "Advances in Theoretical and Mathematical Physics",
+        "volume": "4",
+        "number": "3",
+        "pages": "679--745",
+        "year": "2000",
+        "doi": "10.4310/ATMP.2000.v4.n3.a6",
+        "eprint": "hep-th/0002160",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.4310/ATMP.2000.v4.n3.a6"
       }
     }
   }
