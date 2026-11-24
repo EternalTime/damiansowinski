@@ -22579,7 +22579,7 @@ def kowalski_glikman(ck, src):
     return _kowalski_glikman.embedding_views(ck, src, sys.modules[__name__])
 
 DRAWN["kowalski_glikman"] = kowalski_glikman
-CAPTIONS[("kowalski_glikman", "plane")] = _kowalski_glikman.EMBEDDING_CAPTION
+CAPTIONS.update(_kowalski_glikman.EMBEDDING_CAPTIONS)
 
 import shell_void as _shell_void
 

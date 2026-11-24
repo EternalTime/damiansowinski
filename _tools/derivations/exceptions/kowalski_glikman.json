@@ -1,11 +1,21 @@
 {
-  "flat": "At fixed u and v the transverse surface has induced metric dx_1^2 + dx_4^2 and embeds isometrically as a Euclidean plane. Its nonzero tidal curvature acts between successive wave fronts.",
-  "hidden": [
+  "flat": "Its moments are flat planes, the wave fronts dx_1^2 + dx_4^2 at every u, and the two rates at which the wave pulls free particles together show in its ring of them, stacked up its axis of u.",
+  "height": "Its view tube stacks the ring of free particles up its axis of u, a grid whose height is mu c u.",
+  "hidden_moments": [
     {
-      "reason": "The embedded wave front u=0 is a coordinate caustic outside the open Rosen patch 0<u<3*pi/(mu*c).",
-      "drawings": [
-        "kowalski_glikman/rosen/focus"
-      ]
+      "reason": "The ring is drawn at mu c u = 0, 3 pi/2, 3 pi, 9 pi/2 and 6 pi, in the ring's view and on the tube alike: the Rosen chart covers 0 < mu c u < 3 pi and its figure 1.2 <= mu c u <= 3 pi - 1.2, so the figure holds 3 pi/2 alone.",
+      "drawings": {
+        "kowalski_glikman/rosen/focus": [
+          ["ring", 0, null],
+          ["ring", 2, null],
+          ["ring", 3, null],
+          ["ring", 4, null],
+          ["tube", 0, 0],
+          ["tube", 0, 2],
+          ["tube", 0, 3],
+          ["tube", 0, 4]
+        ]
+      }
     }
   ]
 }
