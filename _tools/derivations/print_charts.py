@@ -22,7 +22,8 @@ bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce, limiting_curvature,
 maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm,
-buchdahl_sphere, ozsvath_dust, kerr_disc_source, cahen_wallach and stu_black_holes, and Godel's cylindrical chart.
+buchdahl_sphere, ozsvath_dust, kerr_disc_source, cahen_wallach, stu_black_holes and heterotic_m_theory_wall, and Godel's
+cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -37927,6 +37928,9 @@ _stu_black_holes.register(sys.modules[__name__])
 
 import conformal_scalar_wormholes as _conformal_scalar_wormholes
 _conformal_scalar_wormholes.register(sys.modules[__name__])
+
+import heterotic_m_theory_wall as _heterotic_m_theory_wall
+_heterotic_m_theory_wall.register(sys.modules[__name__])
 
 
 if __name__ == "__main__":

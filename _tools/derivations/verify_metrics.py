@@ -5600,5 +5600,10 @@ DIMENSIONS.update(_conformal_scalar_wormholes.DIMENSIONS)
 HELD.update(_conformal_scalar_wormholes.HELD)
 RATES.update(_conformal_scalar_wormholes.RATES)
 
+import heterotic_m_theory_wall as _heterotic_m_theory_wall
+DIMENSIONS.update(_heterotic_m_theory_wall.DIMENSIONS)
+HELD.update(_heterotic_m_theory_wall.HELD)
+RATES.update(_heterotic_m_theory_wall.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
