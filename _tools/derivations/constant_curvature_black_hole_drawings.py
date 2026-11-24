@@ -253,7 +253,7 @@ def conformal_views(ck, src, cf):
     v.label_xt([H * 0.62, 0], "exterior", cls="region")
     v.label_xt([H * 0.28, H * 0.72], "black hole", cls="region")
     v.label_xt([H * 0.28, -H * 0.72], "white hole", cls="region")
-    v.legend("horizon", "the event horizon $y_0 = \\rho$")
+    v.legend("horizon", "the horizons $y_0 = \\pm\\rho$")
     v.legend("boundary", "infinity")
     v.legend("singular", "$r = 0$, where the curvature is finite")
     v.legend("centre", "the axis $\\rho = 0$")
