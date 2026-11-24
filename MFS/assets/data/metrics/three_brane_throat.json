@@ -95,6 +95,11 @@
       "id": "klebanov_witten",
       "kind": "family",
       "text": "Threebranes at a conifold tip approach anti-de Sitter space of five dimensions times $T^{1,1}$ in the limit near their horizon. The product has ten dimensions, one radius for both factors, compact isometry $SU(2)\\times SU(2)\\times U(1)$, and eight supersymmetries [klebanovwitten1998]."
+    },
+    {
+      "id": "naked_black_holes",
+      "kind": "family",
+      "text": "Charged black holes whose tidal forces grow huge just outside the horizon close to extremality. Among the extreme branes with one Ramond-Ramond charge, the three-brane alone keeps its tidal forces finite at its horizon [horowitz1997naked]."
     }
   ],
   "references": [
@@ -116,7 +121,8 @@
     "lin2004",
     "blau2002penrose",
     "berenstein2002",
-    "klebanovwitten1998"
+    "klebanovwitten1998",
+    "horowitz1997naked"
   ],
   "coordinates": [
     {

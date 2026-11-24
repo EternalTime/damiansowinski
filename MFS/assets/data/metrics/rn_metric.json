@@ -243,6 +243,11 @@
       "id": "bmpv",
       "kind": "family",
       "text": "A charged hole of five dimensions with spin, supersymmetric and regular. With no spin it is the extreme Reissner-Nordström hole of five dimensions [gauntlett1999]."
+    },
+    {
+      "id": "naked_black_holes",
+      "kind": "generalisation",
+      "text": "Charged black holes with a dilaton coupled at strength $a$, which at $a = 0$ are the Reissner-Nordström black hole. Close to extremality and large, they crush a falling body sideways before it reaches the horizon [horowitz1997naked]."
     }
   ],
   "references": [
@@ -302,7 +307,8 @@
     "cano2019",
     "husain1996null",
     "schein1996",
-    "gauntlett1999"
+    "gauntlett1999",
+    "horowitz1997naked"
   ],
   "coordinates": [
     {

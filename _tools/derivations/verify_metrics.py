@@ -5571,5 +5571,10 @@ DIMENSIONS.update(_constant_curvature_black_hole.DIMENSIONS)
 HELD.update(_constant_curvature_black_hole.HELD)
 RATES.update(_constant_curvature_black_hole.RATES)
 
+import naked_black_holes as _naked_black_holes
+DIMENSIONS.update(_naked_black_holes.DIMENSIONS)
+HELD.update(_naked_black_holes.HELD)
+RATES.update(_naked_black_holes.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

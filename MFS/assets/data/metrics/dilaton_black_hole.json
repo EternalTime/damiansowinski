@@ -127,6 +127,11 @@
       "id": "repulson",
       "kind": "family",
       "text": "Charged solutions of the same low energy string theory with no horizon and a singularity that repels massive particles, some of them with zero mass [kallosh1995white]."
+    },
+    {
+      "id": "naked_black_holes",
+      "kind": "generalisation",
+      "text": "The same black holes with the dilaton coupled at any strength $a$. Close to extremality and with a large horizon they crush a falling body with tidal forces outside the horizon, where all curvature invariants are small [horowitz1997naked]."
     }
   ],
   "references": [
@@ -162,7 +167,8 @@
     "clement2003",
     "dowker1994b",
     "dowker1995",
-    "kallosh1995white"
+    "kallosh1995white",
+    "horowitz1997naked"
   ],
   "coordinates": [
     {

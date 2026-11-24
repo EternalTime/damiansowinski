@@ -37903,6 +37903,9 @@ _bmpv.register(sys.modules[__name__])
 import constant_curvature_black_hole as _constant_curvature_black_hole
 _constant_curvature_black_hole.register(sys.modules[__name__])
 
+import naked_black_holes as _naked_black_holes
+_naked_black_holes.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

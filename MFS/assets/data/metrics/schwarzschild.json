@@ -569,6 +569,11 @@
       "id": "repulson",
       "kind": "family",
       "text": "A naked singularity of string theory that repels massive particles, acting on them \"as a body with a negative mass\" [kallosh1995white]."
+    },
+    {
+      "id": "naked_black_holes",
+      "kind": "generalisation",
+      "text": "Charged black holes with a dilaton, which with no charge are Schwarzschild's. Close to extremality their curvature grows under a radial boost, and a body falling in is crushed sideways outside the horizon [horowitz1997naked]."
     }
   ],
   "references": [
@@ -722,7 +727,8 @@
     "bicak1993",
     "chan1995",
     "clement2004",
-    "kallosh1995white"
+    "kallosh1995white",
+    "horowitz1997naked"
   ],
   "coordinates": [
     {
