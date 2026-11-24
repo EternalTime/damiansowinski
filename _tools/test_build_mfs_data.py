@@ -3353,6 +3353,7 @@ class StacksAndMovies(unittest.TestCase):
               ("string_wave", "ring"): "$u$", ("simpson_visser", "inside"): "$c\\tau$",
               ("hotta_tanaka", "ring"): "$\\tau$", ("holographic_superconductor", "ring"): "$-\\rho$",
               ("stiff_fluid_universes", "ring"): "$t$",
+              **{("exponential_scalar_universes", member): "$t$" for member in ("inflation", "tracking", "coasting")},
               **{("roberts", case): "$ct$" for case in ("disperses", "threshold", "collapses")},
               ("black_string", "ripple"): "$v$"}, lambda key: key[0])
 
@@ -4647,11 +4648,12 @@ class Slices(unittest.TestCase):
             return (lambda X: 0.0), ([-1.0, 1.0] if "/cartesian/" in key else [1.0])
 
         if key.startswith("exponential_scalar_universes/"):
+            # Each moment t of a member's movie is the whole plane z = 0, a line across the drawing: t in the
+            # cosmic charts, eta = t^(1-p)/(1-p) in the conformal chart and eta = ln t in the coasting one.
             chart = key.split("/")[1]
             p = {"inflation": 2, "tracking": 2/3, "coasting": 1}[mark["view"]]
-            clock = 1 if chart.startswith("cosmic") else 0 if p == 1 else 1/(1-p)
-            lo, hi = self.reach(surface)
-            return (lambda X: clock), [lo if chart == "cosmic_spherical" else -hi, hi]
+            clock = t if chart.startswith("cosmic") else math.log(t) if p == 1 else t ** (1 - p) / (1 - p)
+            return (lambda X: clock), None
 
         if key.startswith("scalar_collapse_cosmology/"):
             # The embedded moment is eta = eta_0 = 2b, which is ct = ct_0 = 4b/3 in the comoving chart.
@@ -6211,15 +6213,14 @@ class Slices(unittest.TestCase):
                             self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
                             self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
                     elif metric_id == "exponential_scalar_universes":
+                        # The moment t is the whole plane z = 0, the curve eta(t) of every r >= 0.
                         p = {"inflation": 2, "tracking": 2/3, "coasting": 1}[mark["view"]]
-                        eta = 0 if p == 1 else 1/(1-p)
-                        lo, hi = self.reach(surface)
+                        eta = math.log(t) if p == 1 else t ** (1 - p) / (1 - p)
                         for X, T in points:
                             u, v = math.tan((T-X)/2), math.tan((T+X)/2)
                             tolerance = 2e-4*(1+u*u+v*v)
                             self.assertLess(abs((u+v)/2-eta), tolerance, where)
-                            self.assertLessEqual(lo-tolerance, (v-u)/2, where)
-                            self.assertLessEqual((v-u)/2, hi+tolerance, where)
+                            self.assertLessEqual(-tolerance, (v-u)/2, where)
                     elif metric_id == "scalar_collapse_cosmology":
                         # p, q = arctan((eta -+ r_*)/4b), r_* the integral of f^(-gamma) dr from r = b, on the
                         # moment eta = eta_0 = 2b: (tan p + tan q)/2 = eta/4b = 1/2 and r_* is not negative.

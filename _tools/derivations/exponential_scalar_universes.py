@@ -130,38 +130,141 @@ def eta_of(t, p):
     return np.log(t) if p == 1 else t**(1-p)/(1-p)
 
 
-def embedding_views(ck, src, em):
-    """Three individual moments t=t_0, each an isometric Euclidean plane."""
-    import numpy as np
+# The embedding's movies, one a member, over the same span of cosmic time, a frame every STEP of it,
+# with the key moments the other drawings mark. Each ring of free particles at rest in the chart has
+# the comoving radius RING, so that it meets the member's horizon at t = t_0, and each moment is the
+# disc of proper radius TOP about the ring's centre.
+MOVIE_KEYS = (("1/2", r"$t=0.5\,t_0$"), ("1", "$t=t_0$"), ("3/2", r"$t=1.5\,t_0$"))
+STEP = 0.025
+RING = {"inflation": 1, "tracking": 3, "coasting": 1}
+TOP = {"inflation": 2.5, "tracking": 5.0, "coasting": 1.75}
+HORIZON = {"inflation": "event", "tracking": "particle"}
+PTEXT = {"inflation": "2", "tracking": "2/3", "coasting": "1"}
 
+
+def horizon_radius(src, p):
+    """The comoving radius of the horizon of the observer at r = 0 as a function of t, read from the
+    published metric of the cosmic Cartesian chart at a_0 = t_0 = 1: the integral of dt/sqrt(g_xx)
+    from t to infinity, the event horizon, for p > 1, and from 0 to t, the particle horizon, for p < 1.
+    Returns the sympy expression in a positive t, or None where both integrals diverge, at p = 1."""
+    import sympy as sp
+    import null_rays as nr
+
+    src.note(METRIC, "cosmic_cartesian", ["metric_components"])
+    _, entry, R = nr.load(METRIC, "cosmic_cartesian")
+    t, s = sp.Symbol("t", positive=True), sp.Symbol("s", positive=True)
+    subs = {R.c: 1, R.parameters["p"]: sp.nsimplify(p), R.parameters["a_0"]: 1, R.parameters["t_0"]: 1}
+    g = nr.published_matrix(R, entry, "metric_components").subs(R.held).doit().subs(subs)
+    rate = sp.powsimp(sp.simplify(1 / sp.sqrt(g[1, 1].subs(R.symbol["t"], s))), force=True)
+    future = sp.integrate(rate, (s, t, sp.oo))
+    past = sp.integrate(rate, (s, 0, t))
+    if p > 1 and future.is_finite and not past.is_finite:
+        return sp.simplify(future)
+    if p < 1 and past.is_finite and not future.is_finite:
+        return sp.simplify(past)
+    if p == 1 and not future.is_finite and not past.is_finite:
+        return None
+    raise AssertionError(f"{METRIC}: the horizon integrals of p = {p} are {future} and {past}")
+
+
+def embedding_views(ck, src, em):
+    """For each member, the plane z = 0 of the cosmic Cartesian chart at the moments t = t_0/2 to
+    3t_0/2, a frame every t_0/40, at a_0 = t_0 = 1. Each moment is flat, a^2 (dx^2 + dy^2) with the
+    chart's own a = t^p, and a ring of free particles at rest in the chart on x^2 + y^2 = RING^2,
+    which the published Christoffel symbols keep at rest, is the circle of proper radius RING t^p:
+    growing faster and faster at p = 2, more and more slowly at p = 2/3 and steadily at p = 1. Beside
+    it, where the member has one, is the horizon of the observer at the centre, read from the
+    published metric: at p = 2 the event horizon, of proper radius t/(p - 1) = t, and at p = 2/3 the
+    particle horizon, of proper radius t/(1 - p) = 3t, each of which the ring meets at t = t_0, the
+    ring of comoving radius 1 inside the event horizon before t_0 and outside it after, the ring of
+    comoving radius 3 outside the particle horizon before t_0 and inside it after. At p = 1 both
+    integrals of dt/a diverge and no horizon is drawn."""
+    import math
+    import numpy as np
+    import sympy as sp
+    import null_rays as nr
+
+    em.at_rest(ck, src, METRIC, "cosmic_cartesian")
+    _, _, reader = nr.load(METRIC, "cosmic_cartesian")
+    (scale,) = (str(rule) for rule in reader.held.values())
+    keys = [float(sp.Rational(k)) for k, _ in MOVIE_KEYS]
+    times, at = em.movie_values(keys, STEP)
+    alpha = np.linspace(0, 2 * math.pi, 361)
     views = []
     for vid, label, p in EXAMPLES:
-        sl = em.Slice(src, METRIC, "cosmic_spherical", "r", r"\phi", {"t": 1, **em.EQUATOR},
-                      {"p": p, "a_0": 1, "t_0": 1})
-        size = 5.0
-        disc = em.Piece("plane", "sheet", sl, 0, 2, 0, 1,
-                        (("axis", "$r=0$"), ("edge", r"$r\to\infty$")),
-                        [(0.5, "r", None), (1, "r", None), (1.5, "r", None), (2, "r", None)], size)
-        ck.plane(label, sl, np.linspace(0.001, 2, 80))
-        ck.isometry(label, disc)
-        ck.radius(label+": rho = a r", disc, lambda r: r, size)
-        ck.form(label+": Z = 0", disc, lambda r: 0*r, size)
-        surface = em.Surface([disc])
-        fig = em.figure_of([surface], {"sheet": "cover"}, size, meridians=12)
-        fig.legend("fill", "cover", r"$t=t_0$, $\theta=\pi/2$")
-        fig.legend("line", "r", "$r/t_0=1/2,1,3/2,2$")
-        fig.legend("line", "meridian", r"$\phi$ constant")
-        data = fig.done()
-        data['box'] = [-2.5, 2.5, -2.5, 2.5]
-        views.append(em.view(vid, label, "$t_0$", [surface], data,
-                            settings='$p='+('2/3' if vid == 'tracking' else f'{p:g}')+'$, $a_0=t_0=1$.'))
+        name, R, top = f"{label} ($p={PTEXT[vid]}$)", RING[vid], TOP[vid]
+        size = 2 * top
+        params = {"p": PTEXT[vid], "a_0": 1, "t_0": 1}
+        closed = horizon_radius(src, p)
+        r_h = None if closed is None else sp.lambdify(sp.Symbol("t", positive=True), closed, "math")
+        if vid == "inflation":
+            ck.exact(f"{name}: the event horizon's comoving radius is 1/t", sp.simplify(closed - 1 / sp.Symbol("t", positive=True)) == 0)
+        elif vid == "tracking":
+            ck.exact(f"{name}: the particle horizon's comoving radius is 3t^(1/3)",
+                     sp.simplify(closed - 3 * sp.cbrt(sp.Symbol("t", positive=True))) == 0)
+        else:
+            ck.exact(f"{name}: both integrals of dt/a diverge, so the observer at the centre has no horizon", closed is None)
+        frames, radii, horizons = [], [], []
+        for i, t in enumerate(times):
+            key = at.index(i) if i in at else None
+            fixed = {"t": MOVIE_KEYS[key][0] if key is not None else repr(round(t, 9)), "z": 0}
+            moment = MOVIE_KEYS[key][1] if key is not None else f"$t={t:g}\\,t_0$"
+            where = f"{name}, t = {t:g}"
+            sl = em.FlatPlane(src, METRIC, "cosmic_cartesian", "x", "y", fixed, params, {"a": scale})
+            ck.add(f"{where}: the plane is a^2(dx^2 + dy^2) with a = t^p", float(np.max(np.abs(sl.scale - t ** p))), 1e-12)
+            marks = [] if r_h is None else [(r_h(t), "horizon", None)]
+            plane = em.disc(sl, "plane", top, "the centre of the ring", "the plane continues, flat, to infinity", marks, size)
+            ck.isometry(where, plane)
+            ring, dots = em.particles(ck, where, sl, plane, R * np.cos(alpha), R * np.sin(alpha))
+            radius = np.hypot(ring.points[:, 0], ring.points[:, 1])
+            ck.add(f"{where}: the ring is the circle of proper radius {R} t^p", float(np.max(np.abs(radius - R * t ** p))), 1e-12)
+            radii.append(float(radius[0]))
+            if r_h is not None:
+                rho, _ = plane.at(r_h(t))
+                ck.add(f"{where}: the {HORIZON[vid]} horizon's proper radius is t/|p - 1|", abs(float(rho) - t / abs(p - 1)), 1e-12)
+                ck.exact(f"{where}: the horizon lies on the disc", t / abs(p - 1) < top)
+                horizons.append(float(rho))
+            frames.append(em.Surface([plane], label=moment, time=t, curves=[ring], dots=dots))
+        steps = np.diff(radii)
+        growth = np.diff(steps)
+        if vid == "inflation":
+            ck.exact(f"{name}: the ring grows faster and faster", bool(np.all(steps > 0) and np.all(growth > 0)))
+        elif vid == "tracking":
+            ck.exact(f"{name}: the ring grows more and more slowly", bool(np.all(steps > 0) and np.all(growth < 0)))
+        else:
+            ck.add(f"{name}: the ring grows steadily", float(np.max(np.abs(growth))), 1e-12)
+        if horizons:
+            k = at[1]
+            ck.add(f"{name}: the ring meets the {HORIZON[vid]} horizon at t = t_0", abs(radii[k] - horizons[k]), 1e-12)
+            inside_before = vid == "inflation"
+            ck.exact(f"{name}: the ring lies {'inside' if inside_before else 'outside'} the horizon before t_0 and "
+                     f"{'outside' if inside_before else 'inside'} it after",
+                     all((r < h) == inside_before for r, h in zip(radii[:k], horizons[:k]))
+                     and all((r > h) == inside_before for r, h in zip(radii[k + 1:], horizons[k + 1:])))
+        fig, played = em.ring_movie(frames, size, "$t$")
+        fig.legend("fill", "cover", "the plane $z=0$ at each moment, flat")
+        fig.legend("line", "particles", "free particles at rest in the chart, twelve marked")
+        if vid in HORIZON:
+            fig.legend("line", "horizon", f"the {HORIZON[vid]} horizon of the observer at the centre")
+        fig.legend("line", "meridian", "radii, every $30°$")
+        views.append(em.view(vid, label, "$t_0$", [frames[i] for i in at], fig.done(), movie=played,
+                             settings=f"$p={PTEXT[vid]}$, $a_0=t_0=1$."))
     return views
 
 
 def embedding_captions():
-    """Single-moment equatorial planes."""
-    return {(METRIC, vid): [r"A flat equatorial plane at $t=t_0$, with $\rho=ar$ and $Z=0$; the disc cut at $r=2t_0$."]
-            for vid, _, _ in EXAMPLES}
+    """A ring of free particles on the plane z = 0 of each member, with the horizon where it has one."""
+    span = r"($t_0/2\le t\le3t_0/2$)"
+    return {
+        (METRIC, "inflation"): [
+            rf"The plane $z=0$ through a ring of free particles {span}, flat at every moment, the ring growing as $t^2$ "
+            r"and crossing the event horizon, of proper radius $t$, at $t=t_0$."],
+        (METRIC, "tracking"): [
+            rf"The plane $z=0$ through a ring of free particles {span}, flat at every moment, the ring growing as "
+            r"$t^{2/3}$ and crossed by the particle horizon, of proper radius $3t$, at $t=t_0$."],
+        (METRIC, "coasting"): [
+            rf"The plane $z=0$ through a ring of free particles {span}, flat at every moment, the ring growing as $t$."],
+    }
 
 
 PLANES = (("cosmic_cartesian", "inflation", 2.0),
@@ -210,13 +313,15 @@ def null_forms():
 
 
 def slice_marks(slices, system, vid):
-    """The embedding moment t=t_0 in the null chart at the same parameters."""
+    """Each moment t of the member's movie in the drawing's chart at the same parameters: the moment
+    is the whole plane z = 0, so its line of constant time runs across the drawing, t in the cosmic
+    charts and eta(t) in the conformal ones."""
     p = dict((x[0], x[2]) for x in EXAMPLES)[vid]
-    clock = 1 if system.startswith('cosmic') else float(eta_of(1, p))
+    lo = 0.0 if system == 'cosmic_spherical' else -slices.BIG
     def line(moment):
-        hi = moment.reach('cosmic_spherical', 'r')[1]
-        return slices.along(clock, 0 if system == 'cosmic_spherical' else -hi, hi)
-    return slices.one(METRIC, line, label="$t=t_0$", view_id=vid)
+        clock = moment.time if system.startswith('cosmic') else float(eta_of(moment.time, p))
+        return slices.along(clock, lo, slices.BIG)
+    return slices.one(METRIC, line, view_id=vid)
 
 
 def conformal_views(ck, src, cf):
@@ -269,9 +374,9 @@ def conformal_views(ck, src, cf):
         v.legend('singular', '$t=0$')
         v.legend('scri', r'$\eta=0$, future infinity' if p > 1 else 'future null infinity')
         v.legend('centre', '$r=0$')
-        moment = cf.slices.moments(METRIC, vid, label="$t=t_0$")[0]
-        reach = np.linspace(*moment.reach('cosmic_spherical', 'r'), 81)
-        v.slice(moment, [cf.mink_pq(np.full_like(reach, float(eta_of(1, p))), reach)])
+        # Each moment of the embedding's movie is the whole plane z = 0, the curve of its eta(t).
+        for moment in cf.slices.moments(METRIC, vid):
+            v.slice(moment, [cf.mink_pq(np.full_like(rr, float(eta_of(moment.time, p))), rr)])
         v.set(settings='$p='+('2/3' if vid == 'tracking' else f'{p:g}')+'$, $a_0=t_0=1$, '+r'$U,V=\arctan(\eta\mp r)$, $T=U+V$, $X=V-U$.')
         views.append(v)
     return views
