@@ -1,0 +1,18 @@
+{
+  "hidden": [
+    {
+      "reason": "The static bulk at lambda = 1/2 is another spacetime than the static walls whose moment is embedded, the bulk through which Chamblin and Reall's walls move.",
+      "drawings": [
+        "heterotic_m_theory_wall/static_bulk/tr",
+        "conformal heterotic_m_theory_wall/static_bulk"
+      ]
+    },
+    {
+      "reason": "The moving walls are another spacetime than the static walls whose moment is embedded, Lukas, Ovrut and Waldram's solution in which the size of the walls and the length of the interval change with time.",
+      "drawings": [
+        "heterotic_m_theory_wall/rolling/ty",
+        "conformal heterotic_m_theory_wall/rolling"
+      ]
+    }
+  ]
+}

@@ -19353,6 +19353,9 @@ _stu_black_holes_drawings.register_curvature(sys.modules[__name__])
 import conformal_scalar_wormholes_drawings as _conformal_scalar_wormholes_drawings
 _conformal_scalar_wormholes_drawings.register_curvature(sys.modules[__name__])
 
+import heterotic_m_theory_wall_drawings as _heterotic_m_theory_wall_drawings
+_heterotic_m_theory_wall_drawings.register_curvature(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

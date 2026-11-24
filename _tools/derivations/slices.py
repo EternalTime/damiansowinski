@@ -5329,3 +5329,6 @@ import conformal_scalar_wormholes_drawings as _conformal_scalar_wormholes_drawin
 FLAT.update(_conformal_scalar_wormholes_drawings.slice_table(sys.modules[__name__]))
 FLAT_METRICS.add(_conformal_scalar_wormholes_drawings.METRIC)
 HIDDEN.update(_conformal_scalar_wormholes_drawings.HIDDEN)
+
+import heterotic_m_theory_wall_drawings as _heterotic_m_theory_wall_drawings  # noqa: E402
+_heterotic_m_theory_wall_drawings.register_slices(sys.modules[__name__])
