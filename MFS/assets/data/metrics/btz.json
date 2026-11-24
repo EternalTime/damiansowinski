@@ -176,6 +176,11 @@
       "id": "dressed_btz",
       "kind": "family",
       "text": "A static black hole of three dimensions dressed in a conformally coupled scalar field that is finite outside it. Cristián Martínez and Jorge Zanelli found it in 1996 in the theory of this hole with the field added, and its curvature grows without bound at its centre [martinez1996]."
+    },
+    {
+      "id": "constant_curvature_black_hole",
+      "kind": "family",
+      "text": "The same identification of anti-de Sitter space along a boost, in any number of dimensions. In three dimensions its Kruskal metric is this hole without rotation [banados1998]."
     }
   ],
   "references": [
@@ -218,7 +223,8 @@
     "banados1994",
     "chan1994",
     "chan1995",
-    "martinez1996"
+    "martinez1996",
+    "banados1998"
   ],
   "coordinates": [
     {

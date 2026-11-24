@@ -37900,6 +37900,9 @@ _koutras_mcintosh.register(sys.modules[__name__])
 import bmpv as _bmpv
 _bmpv.register(sys.modules[__name__])
 
+import constant_curvature_black_hole as _constant_curvature_black_hole
+_constant_curvature_black_hole.register(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     main()

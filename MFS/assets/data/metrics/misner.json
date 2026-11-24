@@ -92,6 +92,11 @@
       "id": "roman_ring",
       "kind": "family",
       "text": "Minkowski space brought close to a time machine by identifications too: pairs of mouths joined across a jump $L$ with a time shift $T$, set round a ring [visser1997]."
+    },
+    {
+      "id": "constant_curvature_black_hole",
+      "kind": "family",
+      "text": "Anti-de Sitter space identified under a boost, a black hole in four or more dimensions, as Misner's space is Minkowski space identified under one [banados1998]."
     }
   ],
   "references": [
@@ -118,7 +123,8 @@
     "brill1996",
     "moncriefisenberg1983",
     "louko_marolf1994",
-    "visser1997"
+    "visser1997",
+    "banados1998"
   ],
   "coordinates": [
     {

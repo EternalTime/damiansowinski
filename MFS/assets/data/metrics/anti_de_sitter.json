@@ -222,6 +222,11 @@
       "id": "dressed_btz",
       "kind": "family",
       "text": "A black hole of three dimensions dressed in a conformally coupled scalar field, which approaches anti-de Sitter space far from its horizon. Its Ricci scalar is that of anti-de Sitter space at every point, though its Cotton tensor is not zero [martinez1996, natsuume2000a]."
+    },
+    {
+      "id": "constant_curvature_black_hole",
+      "kind": "locally_same",
+      "text": "Anti-de Sitter space of four or more dimensions with its points identified along a boost, a black hole that is anti-de Sitter space at every point [banados1998]."
     }
   ],
   "references": [
@@ -288,7 +293,8 @@
     "balasubramanian2011",
     "banados1994",
     "martinez1996",
-    "natsuume2000a"
+    "natsuume2000a",
+    "banados1998"
   ],
   "coordinates": [
     {

@@ -88,6 +88,11 @@
       "id": "btz_shock_wave",
       "kind": "family",
       "text": "The BTZ black hole with a shock wave on its horizon, another way of changing the inside of the black hole while each outside stays the BTZ black hole's."
+    },
+    {
+      "id": "constant_curvature_black_hole",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four or more dimensions identified along one boost, a single black hole whose event horizon in four dimensions is a growing torus [aminneborg1996]."
     }
   ],
   "references": [

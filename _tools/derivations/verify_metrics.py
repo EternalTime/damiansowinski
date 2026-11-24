@@ -5566,5 +5566,10 @@ DIMENSIONS.update(_bmpv.DIMENSIONS)
 HELD.update(_bmpv.HELD)
 RATES.update(_bmpv.RATES)
 
+import constant_curvature_black_hole as _constant_curvature_black_hole
+DIMENSIONS.update(_constant_curvature_black_hole.DIMENSIONS)
+HELD.update(_constant_curvature_black_hole.HELD)
+RATES.update(_constant_curvature_black_hole.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

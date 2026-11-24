@@ -490,6 +490,13 @@ OVERRULED = {
         False, "the monotone Kretschmann scalar has a timelike gradient, excluding a timelike Killing "
                "field; the physical conformal domain has (1-p) eta > 0 and a^2 > 0"),
 
+    ("constant_curvature_black_hole", "stationary"): (
+        False, "the static charts' d_t is timelike only in the part of the exterior they cover, and Holst and "
+               "Peldan, gr-qc/9705067, show no Killing field is timelike throughout the exterior of the hole"),
+    ("constant_curvature_black_hole", "static"): (
+        False, "the static charts' d_t is timelike only in the part of the exterior they cover, and Holst and "
+               "Peldan, gr-qc/9705067, show no Killing field is timelike throughout the exterior of the hole"),
+
     ("cahen_wallach", "stationary"): (
         True, "the Brinkmann chart's d_u is a Killing vector whose norm, (lambda_1 x^2 + lambda_2 y^2)c^2, takes "
               "a sign the parameters leave open, but d_u + a d_v with a > 0 is a Killing vector too, of norm "

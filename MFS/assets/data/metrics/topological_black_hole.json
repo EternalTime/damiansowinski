@@ -128,6 +128,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "family",
       "text": "Rong-Gen Cai, Jeong-Young Ji, and Kwang-Sup Soh gave the flat and the hyperbolic hole a dilaton with an exponential potential in 1997, by the ansatz that had produced the spherical holes. With the dilaton they are neither flat nor anti-de Sitter far away [cai1998]."
+    },
+    {
+      "id": "constant_curvature_black_hole",
+      "kind": "family",
+      "text": "Anti-de Sitter space of four dimensions identified along a single boost, the first construction of the same 1996 paper, with a toroidal event horizon that grows in time [aminneborg1996, holst1997]."
     }
   ],
   "references": [
@@ -166,7 +171,8 @@
     "mena2008toroidal",
     "bhattacharyya2009",
     "cai1999",
-    "cai1998"
+    "cai1998",
+    "holst1997"
   ],
   "coordinates": [
     {
