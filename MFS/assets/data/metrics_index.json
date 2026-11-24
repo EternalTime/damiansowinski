@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "d5e2d21da883ea47",
+    "version": "9072cc7b8889a841",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -698,7 +698,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "cc63f9126a7fe995",
+    "version": "6d329a9cd4f5235f",
     "diagrams": "e06db6cd616f0ae4",
     "conformal": "3b2693a7a9691132",
     "embedding": "7d07c7f54d0959fc",
@@ -1321,7 +1321,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "d2fa3532702ab144",
+    "version": "e20e471e19a2da3a",
     "diagrams": "bdaefdbb18d751c9",
     "conformal": "b92adf8ac5f81806",
     "embedding": "eabc5caf8eb84bcd",
@@ -6431,7 +6431,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "edf2d22ae43c54ce",
+    "version": "75721ce4dd61b598",
     "diagrams": "84d8aa4c800066d0",
     "conformal": "3d5ddd92f7851875",
     "embedding": "b5e538549e42926e"
@@ -6855,7 +6855,7 @@
       "idealized model",
       "Einstein space"
     ],
-    "version": "978bf19feeb78a4c",
+    "version": "14cbafaf09a183ed",
     "diagrams": "1fc6612302f13cf4",
     "conformal": "01527c3f93dbe1c9",
     "embedding": "d3f0fd120a6d665b"
@@ -6922,7 +6922,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "c2f43669fa16e659",
+    "version": "92cb1b25b82ab6ac",
     "diagrams": "5e6f09418e784399",
     "conformal": "94cab2e957646c35",
     "embedding": "68458b3281a24534"
@@ -7334,6 +7334,59 @@
     "curvature": "55082a4c1b9c2c9d"
   },
   {
+    "id": "stu_black_holes",
+    "name": "STU Black Holes",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "five-dimensional",
+      "black hole",
+      "charged black hole",
+      "electric charge",
+      "hyperspherical symmetry",
+      "horizon topology",
+      "hyperbolic space",
+      "black brane",
+      "anti-de Sitter",
+      "negative cosmological constant",
+      "cosmological constant",
+      "AdS/CFT",
+      "holography",
+      "supergravity",
+      "string theory",
+      "D3-brane",
+      "brane",
+      "scalar field",
+      "harmonic function",
+      "supersymmetric",
+      "extremal",
+      "naked singularity",
+      "curvature singularity",
+      "timelike singularity",
+      "null singularity",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "Hawking temperature",
+      "black hole thermodynamics",
+      "black hole entropy",
+      "instability",
+      "phase transition",
+      "mass",
+      "higher dimensions",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "46b0f7e7e2ff8c01",
+    "diagrams": "d1309cfdf25404cb",
+    "conformal": "62e456dd903bca12",
+    "embedding": "4810c28815ff0761",
+    "curvature": "75cadc2c36b22127"
+  },
+  {
     "id": "sultana_dyer",
     "name": "Sultana-Dyer",
     "tags": [
@@ -7615,7 +7668,7 @@
       "idealized model",
       "dyon"
     ],
-    "version": "4adc7a783ac6a38f",
+    "version": "b24e99b37dae2d8d",
     "diagrams": "3ed264d5e1cddbce",
     "conformal": "0d346a206bbd9515",
     "embedding": "1154c266ff9d9f93"
@@ -7657,7 +7710,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "14d081e621a5aae3",
+    "version": "5c603bf77d1ed9f2",
     "diagrams": "e574af654990108c",
     "conformal": "5eac0de61d9d83c8",
     "embedding": "7006f557a81541c6",
@@ -7825,7 +7878,7 @@
       "Einstein space",
       "torus"
     ],
-    "version": "ed94ff0adeeae11f",
+    "version": "eb2c392f0932a19b",
     "diagrams": "70598c77af726b80",
     "conformal": "6872f29e07f595c3",
     "embedding": "930f06c7003fad35"

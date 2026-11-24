@@ -3166,6 +3166,20 @@ A straight string with finite energy per unit length, a curved transverse space,
 - chart Cartesian transverse coordinates: coordinates $(t, w, x, y)$, $$ds^2 = -c^2dt^2 + dw^2 + H\left(dx^2 + dy^2\right)$$
 - chart Polar transverse coordinates: coordinates $(t, w, r, \phi)$, $$ds^2 = -c^2dt^2 + dw^2 + H\left(dr^2 + r^2d\phi^2\right)$$
 
+### Black Holes of Anti-de Sitter Space with Three Charges
+
+Static black holes of anti-de Sitter space in five dimensions with three electric charges and two scalar fields, found by Klaus Behrndt, Mirjam Cvetič, and Wafic Sabra in the STU model of gauged supergravity, with horizons that are 3-spheres, flat, or hyperbolic. Lifted to ten dimensions the charges are spins of D3-branes, and the supersymmetric solutions are superstars, naked singularities whose sources are giant gravitons.
+
+- id: `stu_black_holes`
+- tags: static, stationary, spherically symmetric, five-dimensional, black hole, charged black hole, electric charge, hyperspherical symmetry, horizon topology, hyperbolic space, black brane, anti-de Sitter, negative cosmological constant, cosmological constant, AdS/CFT, holography, supergravity, string theory, D3-brane, brane, scalar field, harmonic function, supersymmetric, extremal, naked singularity, curvature singularity, timelike singularity, null singularity, horizon, event horizon, inner horizon, Hawking temperature, black hole thermodynamics, black hole entropy, instability, phase transition, mass, higher dimensions, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/stu_black_holes.json
+- chart Spherical Horizon, $k = 1$: coordinates $(t, r, \chi, \theta, \phi)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}f\,c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(\dfrac{dr^2}{f} + r^2\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)$$
+- chart Flat Horizon, $k = 0$: coordinates $(t, r, x, y, z)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}f\,c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(\dfrac{dr^2}{f} + \dfrac{r^2}{L^2}\left(dx^2 + dy^2 + dz^2\right)\right)$$
+- chart Hyperbolic Horizon, $k = -1$: coordinates $(t, r, \chi, \theta, \phi)$, $$ds^2 = -\left(H_1\,H_2\,H_3\right)^{-2/3}f\,c^2dt^2 + \left(H_1\,H_2\,H_3\right)^{1/3}\left(\dfrac{dr^2}{f} + r^2\left(d\chi^2 + \sinh^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)$$
+- chart Past $r = 0$, Radius $\rho$: coordinates $(t, \rho, \chi, \theta, \phi)$, $$ds^2 = -\dfrac{D}{\rho^{4/3}\left(P_1\,P_2\right)^{2/3}}c^2dt^2 + \dfrac{\rho^{8/3}\left(P_1\,P_2\right)^{1/3}}{D}d\rho^2 + \rho^{2/3}\left(P_1\,P_2\right)^{1/3}\left(d\chi^2 + \sin^2\chi\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+- chart Black Brane, Coordinate $u$: coordinates $(t, x, y, z, u)$, $$ds^2 = -\dfrac{r_+^2f}{L^2u\left(H_1\,H_2\,H_3\right)^{2/3}}c^2dt^2 + \dfrac{r_+^2\left(H_1\,H_2\,H_3\right)^{1/3}}{L^2u}\left(dx^2 + dy^2 + dz^2\right) + \dfrac{L^2\left(H_1\,H_2\,H_3\right)^{1/3}}{4u^2f}du^2$$
+
 ### Sultana-Dyer Black Hole in an Expanding Universe
 
 A black hole in the Einstein-de Sitter universe, Schwarzschild's metric multiplied by the square of the scale factor of a flat universe of dust, which Joseph Sultana and Charles Dyer found in 2005. Its event horizon grows with the universe, and its matter is a dust and a null dust that fall into the hole.

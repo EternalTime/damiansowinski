@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 276,
+  "count": 277,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1641,6 +1641,11 @@
           "id": "holographic_rg_flow",
           "kind": "family",
           "text": "Walls of scalar field in anti-de Sitter space of five dimensions that approach it at the boundary correspond to flows of the renormalisation group of the field theory there, with the distance from the boundary as the energy scale [girardello1998, freedman1999]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Black holes of this space in five dimensions with three charges and two scalar fields, which with $\\mu = q_1 = q_2 = q_3 = 0$ and $k = 1$ are anti-de Sitter space of five dimensions."
         }
       ],
       "references": [
@@ -8342,6 +8347,11 @@
           "id": "bertotti_robinson",
           "kind": "family",
           "text": "The throat of the extreme charged hole of four dimensions, anti-de Sitter space of two dimensions times a 2-sphere. Next to its horizon this hole with $j = 0$ is anti-de Sitter space of two dimensions times a round 3-sphere [gauntlett1999]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Static black holes of five dimensions with three charges in anti-de Sitter space, where no supersymmetric one has a regular horizon [behrndt1998bps]."
         }
       ],
       "references": [
@@ -8365,7 +8375,8 @@
         "desmet2005",
         "gaiotto2006",
         "sen2012",
-        "ruiperez2026"
+        "ruiperez2026",
+        "behrndt1998bps"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bmpv.json",
@@ -15107,6 +15118,11 @@
           "id": "maximally_supersymmetric_plane_wave",
           "kind": "special_case",
           "text": "The black half plane. Its geometry is the plane wave of ten dimensions that keeps all 32 supersymmetries, the Penrose limit of the black disc along a light ray circling its 5-sphere [lin2004, blau2002penrose]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space in five dimensions with three charges. With no mass above their charges, $\\mu = 0$, they lift to the superstars of ten dimensions [myers2001]."
         }
       ],
       "references": [
@@ -72273,6 +72289,11 @@
           "id": "holographic_superconductor",
           "kind": "family",
           "text": "Its planar form with charged scalar hair, grown below a critical temperature. The condensate removes the inner Cauchy horizon, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space in five dimensions with three charges and two scalar fields. With the three charges equal they are this hole's counterpart in five dimensions [myers2001]."
         }
       ],
       "references": [
@@ -72292,7 +72313,8 @@
         "mann1997negative",
         "brill1997",
         "awada1983",
-        "hartnoll2021diving"
+        "hartnoll2021diving",
+        "myers2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/reissner_nordstrom_ads.json",
@@ -76699,6 +76721,11 @@
           "id": "constant_curvature_black_hole",
           "kind": "family",
           "text": "Anti-de Sitter space identified along a boost. The Schwarzschild-anti-de Sitter hole continued analytically into a bubble of nothing with its mass set to zero, and with points identified, is the constant curvature hole of four dimensions [aman2008, cai2002constant]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space in five dimensions with three charges. With the charges set to zero they are this hole's counterpart in five dimensions [behrndt1999]."
         }
       ],
       "references": [
@@ -76738,7 +76765,8 @@
         "lemos1999",
         "banados1994",
         "aman2008",
-        "cai2002constant"
+        "cai2002constant",
+        "behrndt1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild_ads.json",
@@ -77364,6 +77392,11 @@
           "id": "bmpv",
           "kind": "family",
           "text": "A charged hole of five dimensions that spins with a horizon that does not turn. With its spin set to zero it is the extreme charged version of this hole [gauntlett1999]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "generalisation",
+          "text": "Its hole in five dimensions with three charges and a negative cosmological constant, a black hole of gauged supergravity [behrndt1999]."
         }
       ],
       "references": [
@@ -77395,7 +77428,8 @@
         "myers1987compact",
         "banados1994",
         "clement2004",
-        "gauntlett1999"
+        "gauntlett1999",
+        "behrndt1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/tangherlini.json",
@@ -83014,6 +83048,613 @@
       ]
     },
     {
+      "id": "stu_black_holes",
+      "name": "Black Holes of Anti-de Sitter Space with Three Charges",
+      "short_name": "STU Black Holes",
+      "description": "Static black holes of anti-de Sitter space in five dimensions with three electric charges and two scalar fields, found by Klaus Behrndt, Mirjam Cvetič, and Wafic Sabra in the STU model of gauged supergravity, with horizons that are 3-spheres, flat, or hyperbolic. Lifted to ten dimensions the charges are spins of D3-branes, and the supersymmetric solutions are superstars, naked singularities whose sources are giant gravitons.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "five-dimensional",
+        "black hole",
+        "charged black hole",
+        "electric charge",
+        "hyperspherical symmetry",
+        "horizon topology",
+        "hyperbolic space",
+        "black brane",
+        "anti-de Sitter",
+        "negative cosmological constant",
+        "cosmological constant",
+        "AdS/CFT",
+        "holography",
+        "supergravity",
+        "string theory",
+        "D3-brane",
+        "brane",
+        "scalar field",
+        "harmonic function",
+        "supersymmetric",
+        "extremal",
+        "naked singularity",
+        "curvature singularity",
+        "timelike singularity",
+        "null singularity",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "Hawking temperature",
+        "black hole thermodynamics",
+        "black hole entropy",
+        "instability",
+        "phase transition",
+        "mass",
+        "higher dimensions",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, with the Ricci tensor the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The radius $L$ of anti-de Sitter space is a length, and the parameters $\\mu$ and $q_i$ are lengths squared.",
+      "related": [
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "special_case",
+          "text": "The hole of five dimensions with no cosmological constant, $L \\to \\infty$, and a horizon that is a 3-sphere. With the gauging only its metric function changes, by the term in $L$ [behrndt1999]."
+        },
+        {
+          "id": "tangherlini",
+          "kind": "special_case",
+          "text": "This black hole with no charge and no cosmological constant, $q_1 = q_2 = q_3 = 0$ and $L \\to \\infty$."
+        },
+        {
+          "id": "reissner_nordstrom_ads",
+          "kind": "family",
+          "text": "The charged black hole of anti-de Sitter space in four dimensions. With its three charges equal this hole is the same kind of hole in five dimensions, with constant scalars [myers2001]."
+        },
+        {
+          "id": "schwarzschild_ads",
+          "kind": "family",
+          "text": "The black hole of anti-de Sitter space with no charge, in four dimensions. With no charge this hole is its counterpart in five dimensions [behrndt1999]."
+        },
+        {
+          "id": "topological_black_hole",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space in four dimensions with flat and hyperbolic horizons. These holes have the same three kinds of horizon in five dimensions, $k = 1$, $0$, and $-1$ [behrndt1999]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The throat of a stack of three-branes, anti-de Sitter space of five dimensions times a 5-sphere. With the branes spinning in three planes, away from extremality, the region near them is this hole with a flat horizon [cvetic1999embed]."
+        },
+        {
+          "id": "bubbling_ads",
+          "kind": "family",
+          "text": "Smooth geometries of ten dimensions drawn as droplets on a plane. Lifted to ten dimensions, the solutions here with $\\mu = 0$ are superstars, whose naked singularities Robert C. Myers and Øyvind Tafjord traced to giant gravitons [myers2001]."
+        },
+        {
+          "id": "bmpv",
+          "kind": "family",
+          "text": "The supersymmetric hole of five dimensions in flat space with its charges equal, set spinning. In anti-de Sitter space no static supersymmetric hole of this kind has a regular horizon [behrndt1998bps]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "The vacuum of these holes, in four dimensions. With $\\mu = q_1 = q_2 = q_3 = 0$ and $k = 1$ the metric here is anti-de Sitter space of five dimensions."
+        }
+      ],
+      "references": [
+        "behrndt1999",
+        "behrndt1998bps",
+        "cvetic1999phases",
+        "cvetic1999embed",
+        "myers2001",
+        "gutowski2004",
+        "son2006",
+        "gladden2025"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/stu_black_holes.json",
+      "charts": [
+        {
+          "id": "sphere",
+          "name": "Spherical Horizon, $k = 1$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\mu \\ge 0,\\quad q_1, q_2, q_3 \\ge 0",
+            "f = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Nonextremality parameter, a length squared; with $\\mu = 0$ the solution is supersymmetric"
+            },
+            {
+              "symbol": "q_1",
+              "description": "Parameter of the first charge, a length squared; the charge is proportional to $\\sqrt{q_1(\\mu + q_1)}$"
+            },
+            {
+              "symbol": "q_2",
+              "description": "Parameter of the second charge, a length squared; the charge is proportional to $\\sqrt{q_2(\\mu + q_2)}$"
+            },
+            {
+              "symbol": "q_3",
+              "description": "Parameter of the third charge, a length squared; the charge is proportional to $\\sqrt{q_3(\\mu + q_3)}$"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{q_1}{r^2}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{q_2}{r^2}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{q_3}{r^2}",
+              "description": "Harmonic function of the third charge, a pure number"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{\\mu}{r^2} + \\dfrac{r^2}{L^2}H_1\\,H_2\\,H_3",
+              "description": "Metric function, a pure number, zero on each horizon"
+            }
+          ],
+          "convention": "We use the radius $r$ of Behrndt, Cvetič, and Sabra [behrndt1999] and the angles $(\\chi, \\theta, \\phi)$ of the 3-sphere, with $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. The mass is $M = \\pi c^2\\left(3\\mu + 2q_1 + 2q_2 + 2q_3\\right)/(8G)$, with $G$ Newton's constant in five dimensions [behrndt1999].",
+          "line_element": "ds^2 = -\\left(H_1\\,H_2\\,H_3\\right)^{-2/3}f\\,c^2dt^2 + \\left(H_1\\,H_2\\,H_3\\right)^{1/3}\\left(\\dfrac{dr^2}{f} + r^2\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f}{H_1^{2/3}\\,H_2^{2/3}\\,H_3^{2/3}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{f}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2r^2\\,H_1^3\\,H_2^3\\,H_3^2 - 2r^2\\,H_1^3\\,H_2^3\\,H_3 + 2r^2\\,H_1^3\\,H_2^2\\,H_3^3 + 20r^2\\,H_1^3\\,H_2^2\\,H_3^2 - 2r^2\\,H_1^3\\,H_2\\,H_3^3 + 2r^2\\,H_1^2\\,H_2^3\\,H_3^3 + 20r^2\\,H_1^2\\,H_2^3\\,H_3^2 + 20r^2\\,H_1^2\\,H_2^2\\,H_3^3 + 6H_1^2\\,H_2^2\\,H_3^2\\,L^2 - 2f\\,H_1^2\\,H_2^2\\,H_3\\,L^2 - 2H_1^2\\,H_2^2\\,H_3\\,L^2 - 2f\\,H_1^2\\,H_2^2\\,L^2 - 2f\\,H_1^2\\,H_2\\,H_3^2\\,L^2 - 2H_1^2\\,H_2\\,H_3^2\\,L^2 + 4f\\,H_1^2\\,H_2\\,H_3\\,L^2 - 2f\\,H_1^2\\,H_3^2\\,L^2 - 2r^2\\,H_1\\,H_2^3\\,H_3^3 - 2f\\,H_1\\,H_2^2\\,H_3^2\\,L^2 - 2H_1\\,H_2^2\\,H_3^2\\,L^2 + 4f\\,H_1\\,H_2^2\\,H_3\\,L^2 + 4f\\,H_1\\,H_2\\,H_3^2\\,L^2 - 2f\\,H_2^2\\,H_3^2\\,L^2}{3r^2\\,H_1^{7/3}\\,H_2^{7/3}\\,H_3^{7/3}\\,L^2}",
+          "kretschmann": "K = \\dfrac{660r^4\\,H_1^6\\,H_2^6\\,H_3^4 - 1320r^4\\,H_1^6\\,H_2^6\\,H_3^3 + 660r^4\\,H_1^6\\,H_2^6\\,H_3^2 + 1320r^4\\,H_1^6\\,H_2^5\\,H_3^5 - 1944r^4\\,H_1^6\\,H_2^5\\,H_3^4 + 624r^4\\,H_1^6\\,H_2^5\\,H_3^3 + 660r^4\\,H_1^6\\,H_2^4\\,H_3^6 - 1944r^4\\,H_1^6\\,H_2^4\\,H_3^5 + 1656r^4\\,H_1^6\\,H_2^4\\,H_3^4 - 1320r^4\\,H_1^6\\,H_2^3\\,H_3^6 + 624r^4\\,H_1^6\\,H_2^3\\,H_3^5 + 660r^4\\,H_1^6\\,H_2^2\\,H_3^6 + 1320r^4\\,H_1^5\\,H_2^6\\,H_3^5 - 1944r^4\\,H_1^5\\,H_2^6\\,H_3^4 + 624r^4\\,H_1^5\\,H_2^6\\,H_3^3 + 1320r^4\\,H_1^5\\,H_2^5\\,H_3^6 - 1872r^4\\,H_1^5\\,H_2^5\\,H_3^5 + 1296r^4\\,H_1^5\\,H_2^5\\,H_3^4 + 2016r^2\\,H_1^5\\,H_2^5\\,H_3^4\\,L^2 - 1320r^2\\,f\\,H_1^5\\,H_2^5\\,H_3^3\\,L^2 - 3336r^2\\,H_1^5\\,H_2^5\\,H_3^3\\,L^2 + 2520r^2\\,f\\,H_1^5\\,H_2^5\\,H_3^2\\,L^2 + 1320r^2\\,H_1^5\\,H_2^5\\,H_3^2\\,L^2 - 1200r^2\\,f\\,H_1^5\\,H_2^5\\,H_3\\,L^2 - 1944r^4\\,H_1^5\\,H_2^4\\,H_3^6 + 1296r^4\\,H_1^5\\,H_2^4\\,H_3^5 + 2016r^2\\,H_1^5\\,H_2^4\\,H_3^5\\,L^2 - 2640r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^4\\,L^2 - 3216r^2\\,H_1^5\\,H_2^4\\,H_3^4\\,L^2 + 3912r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^3\\,L^2 + 1944r^2\\,H_1^5\\,H_2^4\\,H_3^3\\,L^2 - 1440r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^2\\,L^2 + 624r^4\\,H_1^5\\,H_2^3\\,H_3^6 - 1320r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^5\\,L^2 - 3336r^2\\,H_1^5\\,H_2^3\\,H_3^5\\,L^2 + 3912r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^4\\,L^2 + 1944r^2\\,H_1^5\\,H_2^3\\,H_3^4\\,L^2 - 2784r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^3\\,L^2 + 2520r^2\\,f\\,H_1^5\\,H_2^2\\,H_3^5\\,L^2 + 1320r^2\\,H_1^5\\,H_2^2\\,H_3^5\\,L^2 - 1440r^2\\,f\\,H_1^5\\,H_2^2\\,H_3^4\\,L^2 - 1200r^2\\,f\\,H_1^5\\,H_2\\,H_3^5\\,L^2 + 660r^4\\,H_1^4\\,H_2^6\\,H_3^6 - 1944r^4\\,H_1^4\\,H_2^6\\,H_3^5 + 1656r^4\\,H_1^4\\,H_2^6\\,H_3^4 - 1944r^4\\,H_1^4\\,H_2^5\\,H_3^6 + 1296r^4\\,H_1^4\\,H_2^5\\,H_3^5 + 2016r^2\\,H_1^4\\,H_2^5\\,H_3^5\\,L^2 - 2640r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^4\\,L^2 - 3216r^2\\,H_1^4\\,H_2^5\\,H_3^4\\,L^2 + 3912r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^3\\,L^2 + 1944r^2\\,H_1^4\\,H_2^5\\,H_3^3\\,L^2 - 1440r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^2\\,L^2 + 1656r^4\\,H_1^4\\,H_2^4\\,H_3^6 - 2640r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^5\\,L^2 - 3216r^2\\,H_1^4\\,H_2^4\\,H_3^5\\,L^2 + 4176r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^4\\,L^2 + 1872r^2\\,H_1^4\\,H_2^4\\,H_3^4\\,L^2 + 2052H_1^4\\,H_2^4\\,H_3^4\\,L^4 - 2208r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^3\\,L^2 - 2016f\\,H_1^4\\,H_2^4\\,H_3^3\\,L^4 - 2016H_1^4\\,H_2^4\\,H_3^3\\,L^4 + 660f^2\\,H_1^4\\,H_2^4\\,H_3^2\\,L^4 + 2976f\\,H_1^4\\,H_2^4\\,H_3^2\\,L^4 + 660H_1^4\\,H_2^4\\,H_3^2\\,L^4 - 1200f^2\\,H_1^4\\,H_2^4\\,H_3\\,L^4 - 1200f\\,H_1^4\\,H_2^4\\,H_3\\,L^4 + 596f^2\\,H_1^4\\,H_2^4\\,L^4 + 3912r^2\\,f\\,H_1^4\\,H_2^3\\,H_3^5\\,L^2 + 1944r^2\\,H_1^4\\,H_2^3\\,H_3^5\\,L^2 - 2208r^2\\,f\\,H_1^4\\,H_2^3\\,H_3^4\\,L^2 - 2016f\\,H_1^4\\,H_2^3\\,H_3^4\\,L^4 - 2016H_1^4\\,H_2^3\\,H_3^4\\,L^4 + 1320f^2\\,H_1^4\\,H_2^3\\,H_3^3\\,L^4 + 3648f\\,H_1^4\\,H_2^3\\,H_3^3\\,L^4 + 1320H_1^4\\,H_2^3\\,H_3^3\\,L^4 - 1968f^2\\,H_1^4\\,H_2^3\\,H_3^2\\,L^4 - 1968f\\,H_1^4\\,H_2^3\\,H_3^2\\,L^4 + 656f^2\\,H_1^4\\,H_2^3\\,H_3\\,L^4 - 1440r^2\\,f\\,H_1^4\\,H_2^2\\,H_3^5\\,L^2 + 660f^2\\,H_1^4\\,H_2^2\\,H_3^4\\,L^4 + 2976f\\,H_1^4\\,H_2^2\\,H_3^4\\,L^4 + 660H_1^4\\,H_2^2\\,H_3^4\\,L^4 - 1968f^2\\,H_1^4\\,H_2^2\\,H_3^3\\,L^4 - 1968f\\,H_1^4\\,H_2^2\\,H_3^3\\,L^4 + 1464f^2\\,H_1^4\\,H_2^2\\,H_3^2\\,L^4 - 1200f^2\\,H_1^4\\,H_2\\,H_3^4\\,L^4 - 1200f\\,H_1^4\\,H_2\\,H_3^4\\,L^4 + 656f^2\\,H_1^4\\,H_2\\,H_3^3\\,L^4 + 596f^2\\,H_1^4\\,H_3^4\\,L^4 - 1320r^4\\,H_1^3\\,H_2^6\\,H_3^6 + 624r^4\\,H_1^3\\,H_2^6\\,H_3^5 + 624r^4\\,H_1^3\\,H_2^5\\,H_3^6 - 1320r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^5\\,L^2 - 3336r^2\\,H_1^3\\,H_2^5\\,H_3^5\\,L^2 + 3912r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^4\\,L^2 + 1944r^2\\,H_1^3\\,H_2^5\\,H_3^4\\,L^2 - 2784r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^3\\,L^2 + 3912r^2\\,f\\,H_1^3\\,H_2^4\\,H_3^5\\,L^2 + 1944r^2\\,H_1^3\\,H_2^4\\,H_3^5\\,L^2 - 2208r^2\\,f\\,H_1^3\\,H_2^4\\,H_3^4\\,L^2 - 2016f\\,H_1^3\\,H_2^4\\,H_3^4\\,L^4 - 2016H_1^3\\,H_2^4\\,H_3^4\\,L^4 + 1320f^2\\,H_1^3\\,H_2^4\\,H_3^3\\,L^4 + 3648f\\,H_1^3\\,H_2^4\\,H_3^3\\,L^4 + 1320H_1^3\\,H_2^4\\,H_3^3\\,L^4 - 1968f^2\\,H_1^3\\,H_2^4\\,H_3^2\\,L^4 - 1968f\\,H_1^3\\,H_2^4\\,H_3^2\\,L^4 + 656f^2\\,H_1^3\\,H_2^4\\,H_3\\,L^4 - 2784r^2\\,f\\,H_1^3\\,H_2^3\\,H_3^5\\,L^2 + 1320f^2\\,H_1^3\\,H_2^3\\,H_3^4\\,L^4 + 3648f\\,H_1^3\\,H_2^3\\,H_3^4\\,L^4 + 1320H_1^3\\,H_2^3\\,H_3^4\\,L^4 - 2304f^2\\,H_1^3\\,H_2^3\\,H_3^3\\,L^4 - 2304f\\,H_1^3\\,H_2^3\\,H_3^3\\,L^4 + 1200f^2\\,H_1^3\\,H_2^3\\,H_3^2\\,L^4 - 1968f^2\\,H_1^3\\,H_2^2\\,H_3^4\\,L^4 - 1968f\\,H_1^3\\,H_2^2\\,H_3^4\\,L^4 + 1200f^2\\,H_1^3\\,H_2^2\\,H_3^3\\,L^4 + 656f^2\\,H_1^3\\,H_2\\,H_3^4\\,L^4 + 660r^4\\,H_1^2\\,H_2^6\\,H_3^6 + 2520r^2\\,f\\,H_1^2\\,H_2^5\\,H_3^5\\,L^2 + 1320r^2\\,H_1^2\\,H_2^5\\,H_3^5\\,L^2 - 1440r^2\\,f\\,H_1^2\\,H_2^5\\,H_3^4\\,L^2 - 1440r^2\\,f\\,H_1^2\\,H_2^4\\,H_3^5\\,L^2 + 660f^2\\,H_1^2\\,H_2^4\\,H_3^4\\,L^4 + 2976f\\,H_1^2\\,H_2^4\\,H_3^4\\,L^4 + 660H_1^2\\,H_2^4\\,H_3^4\\,L^4 - 1968f^2\\,H_1^2\\,H_2^4\\,H_3^3\\,L^4 - 1968f\\,H_1^2\\,H_2^4\\,H_3^3\\,L^4 + 1464f^2\\,H_1^2\\,H_2^4\\,H_3^2\\,L^4 - 1968f^2\\,H_1^2\\,H_2^3\\,H_3^4\\,L^4 - 1968f\\,H_1^2\\,H_2^3\\,H_3^4\\,L^4 + 1200f^2\\,H_1^2\\,H_2^3\\,H_3^3\\,L^4 + 1464f^2\\,H_1^2\\,H_2^2\\,H_3^4\\,L^4 - 1200r^2\\,f\\,H_1\\,H_2^5\\,H_3^5\\,L^2 - 1200f^2\\,H_1\\,H_2^4\\,H_3^4\\,L^4 - 1200f\\,H_1\\,H_2^4\\,H_3^4\\,L^4 + 656f^2\\,H_1\\,H_2^4\\,H_3^3\\,L^4 + 656f^2\\,H_1\\,H_2^3\\,H_3^4\\,L^4 + 596f^2\\,H_2^4\\,H_3^4\\,L^4}{27r^4\\,H_1^{14/3}\\,H_2^{14/3}\\,H_3^{14/3}\\,L^4}"
+        },
+        {
+          "id": "flat",
+          "name": "Flat Horizon, $k = 0$",
+          "coordinates": [
+            "t",
+            "r",
+            "x",
+            "y",
+            "z"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "\\mu \\ge 0,\\quad q_1, q_2, q_3 \\ge 0",
+            "f = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Nonextremality parameter, a length squared"
+            },
+            {
+              "symbol": "q_1",
+              "description": "Parameter of the first charge, a length squared; the charge is proportional to $\\sqrt{q_1\\mu}$"
+            },
+            {
+              "symbol": "q_2",
+              "description": "Parameter of the second charge, a length squared; the charge is proportional to $\\sqrt{q_2\\mu}$"
+            },
+            {
+              "symbol": "q_3",
+              "description": "Parameter of the third charge, a length squared; the charge is proportional to $\\sqrt{q_3\\mu}$"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{q_1}{r^2}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{q_2}{r^2}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{q_3}{r^2}",
+              "description": "Harmonic function of the third charge, a pure number"
+            },
+            {
+              "symbol": "f = -\\dfrac{\\mu}{r^2} + \\dfrac{r^2}{L^2}H_1\\,H_2\\,H_3",
+              "description": "Metric function, a pure number, zero on each horizon"
+            }
+          ],
+          "convention": "We use the radius $r$ of Behrndt, Cvetič, and Sabra [behrndt1999] and lengths $(x, y, z)$ along the flat horizon, with $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(H_1\\,H_2\\,H_3\\right)^{-2/3}f\\,c^2dt^2 + \\left(H_1\\,H_2\\,H_3\\right)^{1/3}\\left(\\dfrac{dr^2}{f} + \\dfrac{r^2}{L^2}\\left(dx^2 + dy^2 + dz^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f}{H_1^{2/3}\\,H_2^{2/3}\\,H_3^{2/3}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{f}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{L^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{L^2}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2r^2\\,H_1^3\\,H_2^3\\,H_3^2 - 2r^2\\,H_1^3\\,H_2^3\\,H_3 + 2r^2\\,H_1^3\\,H_2^2\\,H_3^3 + 20r^2\\,H_1^3\\,H_2^2\\,H_3^2 - 2r^2\\,H_1^3\\,H_2\\,H_3^3 + 2r^2\\,H_1^2\\,H_2^3\\,H_3^3 + 20r^2\\,H_1^2\\,H_2^3\\,H_3^2 + 20r^2\\,H_1^2\\,H_2^2\\,H_3^3 - 2f\\,H_1^2\\,H_2^2\\,H_3\\,L^2 - 2f\\,H_1^2\\,H_2^2\\,L^2 - 2f\\,H_1^2\\,H_2\\,H_3^2\\,L^2 + 4f\\,H_1^2\\,H_2\\,H_3\\,L^2 - 2f\\,H_1^2\\,H_3^2\\,L^2 - 2r^2\\,H_1\\,H_2^3\\,H_3^3 - 2f\\,H_1\\,H_2^2\\,H_3^2\\,L^2 + 4f\\,H_1\\,H_2^2\\,H_3\\,L^2 + 4f\\,H_1\\,H_2\\,H_3^2\\,L^2 - 2f\\,H_2^2\\,H_3^2\\,L^2}{3r^2\\,H_1^{7/3}\\,H_2^{7/3}\\,H_3^{7/3}\\,L^2}",
+          "kretschmann": "K = \\dfrac{660r^4\\,H_1^6\\,H_2^6\\,H_3^4 - 1320r^4\\,H_1^6\\,H_2^6\\,H_3^3 + 660r^4\\,H_1^6\\,H_2^6\\,H_3^2 + 1320r^4\\,H_1^6\\,H_2^5\\,H_3^5 - 1944r^4\\,H_1^6\\,H_2^5\\,H_3^4 + 624r^4\\,H_1^6\\,H_2^5\\,H_3^3 + 660r^4\\,H_1^6\\,H_2^4\\,H_3^6 - 1944r^4\\,H_1^6\\,H_2^4\\,H_3^5 + 1656r^4\\,H_1^6\\,H_2^4\\,H_3^4 - 1320r^4\\,H_1^6\\,H_2^3\\,H_3^6 + 624r^4\\,H_1^6\\,H_2^3\\,H_3^5 + 660r^4\\,H_1^6\\,H_2^2\\,H_3^6 + 1320r^4\\,H_1^5\\,H_2^6\\,H_3^5 - 1944r^4\\,H_1^5\\,H_2^6\\,H_3^4 + 624r^4\\,H_1^5\\,H_2^6\\,H_3^3 + 1320r^4\\,H_1^5\\,H_2^5\\,H_3^6 - 1872r^4\\,H_1^5\\,H_2^5\\,H_3^5 + 1296r^4\\,H_1^5\\,H_2^5\\,H_3^4 - 1320r^2\\,f\\,H_1^5\\,H_2^5\\,H_3^3\\,L^2 + 2520r^2\\,f\\,H_1^5\\,H_2^5\\,H_3^2\\,L^2 - 1200r^2\\,f\\,H_1^5\\,H_2^5\\,H_3\\,L^2 - 1944r^4\\,H_1^5\\,H_2^4\\,H_3^6 + 1296r^4\\,H_1^5\\,H_2^4\\,H_3^5 - 2640r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^4\\,L^2 + 3912r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^3\\,L^2 - 1440r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^2\\,L^2 + 624r^4\\,H_1^5\\,H_2^3\\,H_3^6 - 1320r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^5\\,L^2 + 3912r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^4\\,L^2 - 2784r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^3\\,L^2 + 2520r^2\\,f\\,H_1^5\\,H_2^2\\,H_3^5\\,L^2 - 1440r^2\\,f\\,H_1^5\\,H_2^2\\,H_3^4\\,L^2 - 1200r^2\\,f\\,H_1^5\\,H_2\\,H_3^5\\,L^2 + 660r^4\\,H_1^4\\,H_2^6\\,H_3^6 - 1944r^4\\,H_1^4\\,H_2^6\\,H_3^5 + 1656r^4\\,H_1^4\\,H_2^6\\,H_3^4 - 1944r^4\\,H_1^4\\,H_2^5\\,H_3^6 + 1296r^4\\,H_1^4\\,H_2^5\\,H_3^5 - 2640r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^4\\,L^2 + 3912r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^3\\,L^2 - 1440r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^2\\,L^2 + 1656r^4\\,H_1^4\\,H_2^4\\,H_3^6 - 2640r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^5\\,L^2 + 4176r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^4\\,L^2 - 2208r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^3\\,L^2 + 660f^2\\,H_1^4\\,H_2^4\\,H_3^2\\,L^4 - 1200f^2\\,H_1^4\\,H_2^4\\,H_3\\,L^4 + 596f^2\\,H_1^4\\,H_2^4\\,L^4 + 3912r^2\\,f\\,H_1^4\\,H_2^3\\,H_3^5\\,L^2 - 2208r^2\\,f\\,H_1^4\\,H_2^3\\,H_3^4\\,L^2 + 1320f^2\\,H_1^4\\,H_2^3\\,H_3^3\\,L^4 - 1968f^2\\,H_1^4\\,H_2^3\\,H_3^2\\,L^4 + 656f^2\\,H_1^4\\,H_2^3\\,H_3\\,L^4 - 1440r^2\\,f\\,H_1^4\\,H_2^2\\,H_3^5\\,L^2 + 660f^2\\,H_1^4\\,H_2^2\\,H_3^4\\,L^4 - 1968f^2\\,H_1^4\\,H_2^2\\,H_3^3\\,L^4 + 1464f^2\\,H_1^4\\,H_2^2\\,H_3^2\\,L^4 - 1200f^2\\,H_1^4\\,H_2\\,H_3^4\\,L^4 + 656f^2\\,H_1^4\\,H_2\\,H_3^3\\,L^4 + 596f^2\\,H_1^4\\,H_3^4\\,L^4 - 1320r^4\\,H_1^3\\,H_2^6\\,H_3^6 + 624r^4\\,H_1^3\\,H_2^6\\,H_3^5 + 624r^4\\,H_1^3\\,H_2^5\\,H_3^6 - 1320r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^5\\,L^2 + 3912r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^4\\,L^2 - 2784r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^3\\,L^2 + 3912r^2\\,f\\,H_1^3\\,H_2^4\\,H_3^5\\,L^2 - 2208r^2\\,f\\,H_1^3\\,H_2^4\\,H_3^4\\,L^2 + 1320f^2\\,H_1^3\\,H_2^4\\,H_3^3\\,L^4 - 1968f^2\\,H_1^3\\,H_2^4\\,H_3^2\\,L^4 + 656f^2\\,H_1^3\\,H_2^4\\,H_3\\,L^4 - 2784r^2\\,f\\,H_1^3\\,H_2^3\\,H_3^5\\,L^2 + 1320f^2\\,H_1^3\\,H_2^3\\,H_3^4\\,L^4 - 2304f^2\\,H_1^3\\,H_2^3\\,H_3^3\\,L^4 + 1200f^2\\,H_1^3\\,H_2^3\\,H_3^2\\,L^4 - 1968f^2\\,H_1^3\\,H_2^2\\,H_3^4\\,L^4 + 1200f^2\\,H_1^3\\,H_2^2\\,H_3^3\\,L^4 + 656f^2\\,H_1^3\\,H_2\\,H_3^4\\,L^4 + 660r^4\\,H_1^2\\,H_2^6\\,H_3^6 + 2520r^2\\,f\\,H_1^2\\,H_2^5\\,H_3^5\\,L^2 - 1440r^2\\,f\\,H_1^2\\,H_2^5\\,H_3^4\\,L^2 - 1440r^2\\,f\\,H_1^2\\,H_2^4\\,H_3^5\\,L^2 + 660f^2\\,H_1^2\\,H_2^4\\,H_3^4\\,L^4 - 1968f^2\\,H_1^2\\,H_2^4\\,H_3^3\\,L^4 + 1464f^2\\,H_1^2\\,H_2^4\\,H_3^2\\,L^4 - 1968f^2\\,H_1^2\\,H_2^3\\,H_3^4\\,L^4 + 1200f^2\\,H_1^2\\,H_2^3\\,H_3^3\\,L^4 + 1464f^2\\,H_1^2\\,H_2^2\\,H_3^4\\,L^4 - 1200r^2\\,f\\,H_1\\,H_2^5\\,H_3^5\\,L^2 - 1200f^2\\,H_1\\,H_2^4\\,H_3^4\\,L^4 + 656f^2\\,H_1\\,H_2^4\\,H_3^3\\,L^4 + 656f^2\\,H_1\\,H_2^3\\,H_3^4\\,L^4 + 596f^2\\,H_2^4\\,H_3^4\\,L^4}{27r^4\\,H_1^{14/3}\\,H_2^{14/3}\\,H_3^{14/3}\\,L^4}"
+        },
+        {
+          "id": "hyperbolic",
+          "name": "Hyperbolic Horizon, $k = -1$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\chi \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\mu \\ge q_1, q_2, q_3 \\ge 0",
+            "f = 0 \\;\\text{(the horizons)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Nonextremality parameter, a length squared; the gauge fields are real for $\\mu \\ge q_i$"
+            },
+            {
+              "symbol": "q_1",
+              "description": "Parameter of the first charge, a length squared; the charge is proportional to $\\sqrt{q_1(\\mu - q_1)}$"
+            },
+            {
+              "symbol": "q_2",
+              "description": "Parameter of the second charge, a length squared; the charge is proportional to $\\sqrt{q_2(\\mu - q_2)}$"
+            },
+            {
+              "symbol": "q_3",
+              "description": "Parameter of the third charge, a length squared; the charge is proportional to $\\sqrt{q_3(\\mu - q_3)}$"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length"
+            },
+            {
+              "symbol": "H_1 = 1 + \\dfrac{q_1}{r^2}",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\dfrac{q_2}{r^2}",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\dfrac{q_3}{r^2}",
+              "description": "Harmonic function of the third charge, a pure number"
+            },
+            {
+              "symbol": "f = -1 - \\dfrac{\\mu}{r^2} + \\dfrac{r^2}{L^2}H_1\\,H_2\\,H_3",
+              "description": "Metric function, a pure number, zero on each horizon"
+            }
+          ],
+          "convention": "We use the radius $r$ of Behrndt, Cvetič, and Sabra [behrndt1999] and the coordinates $(\\chi, \\theta, \\phi)$ of hyperbolic 3-space, with $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\left(H_1\\,H_2\\,H_3\\right)^{-2/3}f\\,c^2dt^2 + \\left(H_1\\,H_2\\,H_3\\right)^{1/3}\\left(\\dfrac{dr^2}{f} + r^2\\left(d\\chi^2 + \\sinh^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f}{H_1^{2/3}\\,H_2^{2/3}\\,H_3^{2/3}}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}}{f}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\left(e^{\\chi} + 1\\right)^2\\left(e^{\\chi} - 1\\right)^2e^{-2\\chi}}{4}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r^2\\,H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\left(e^{\\chi} + 1\\right)^2\\left(e^{\\chi} - 1\\right)^2e^{-2\\chi}\\sin^2\\theta}{4}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2r^2\\,H_1^3\\,H_2^3\\,H_3^2 - 2r^2\\,H_1^3\\,H_2^3\\,H_3 + 2r^2\\,H_1^3\\,H_2^2\\,H_3^3 + 20r^2\\,H_1^3\\,H_2^2\\,H_3^2 - 2r^2\\,H_1^3\\,H_2\\,H_3^3 + 2r^2\\,H_1^2\\,H_2^3\\,H_3^3 + 20r^2\\,H_1^2\\,H_2^3\\,H_3^2 + 20r^2\\,H_1^2\\,H_2^2\\,H_3^3 - 6H_1^2\\,H_2^2\\,H_3^2\\,L^2 - 2f\\,H_1^2\\,H_2^2\\,H_3\\,L^2 + 2H_1^2\\,H_2^2\\,H_3\\,L^2 - 2f\\,H_1^2\\,H_2^2\\,L^2 - 2f\\,H_1^2\\,H_2\\,H_3^2\\,L^2 + 2H_1^2\\,H_2\\,H_3^2\\,L^2 + 4f\\,H_1^2\\,H_2\\,H_3\\,L^2 - 2f\\,H_1^2\\,H_3^2\\,L^2 - 2r^2\\,H_1\\,H_2^3\\,H_3^3 - 2f\\,H_1\\,H_2^2\\,H_3^2\\,L^2 + 2H_1\\,H_2^2\\,H_3^2\\,L^2 + 4f\\,H_1\\,H_2^2\\,H_3\\,L^2 + 4f\\,H_1\\,H_2\\,H_3^2\\,L^2 - 2f\\,H_2^2\\,H_3^2\\,L^2}{3r^2\\,H_1^{7/3}\\,H_2^{7/3}\\,H_3^{7/3}\\,L^2}",
+          "kretschmann": "K = \\dfrac{660r^4\\,H_1^6\\,H_2^6\\,H_3^4 - 1320r^4\\,H_1^6\\,H_2^6\\,H_3^3 + 660r^4\\,H_1^6\\,H_2^6\\,H_3^2 + 1320r^4\\,H_1^6\\,H_2^5\\,H_3^5 - 1944r^4\\,H_1^6\\,H_2^5\\,H_3^4 + 624r^4\\,H_1^6\\,H_2^5\\,H_3^3 + 660r^4\\,H_1^6\\,H_2^4\\,H_3^6 - 1944r^4\\,H_1^6\\,H_2^4\\,H_3^5 + 1656r^4\\,H_1^6\\,H_2^4\\,H_3^4 - 1320r^4\\,H_1^6\\,H_2^3\\,H_3^6 + 624r^4\\,H_1^6\\,H_2^3\\,H_3^5 + 660r^4\\,H_1^6\\,H_2^2\\,H_3^6 + 1320r^4\\,H_1^5\\,H_2^6\\,H_3^5 - 1944r^4\\,H_1^5\\,H_2^6\\,H_3^4 + 624r^4\\,H_1^5\\,H_2^6\\,H_3^3 + 1320r^4\\,H_1^5\\,H_2^5\\,H_3^6 - 1872r^4\\,H_1^5\\,H_2^5\\,H_3^5 + 1296r^4\\,H_1^5\\,H_2^5\\,H_3^4 - 2016r^2\\,H_1^5\\,H_2^5\\,H_3^4\\,L^2 - 1320r^2\\,f\\,H_1^5\\,H_2^5\\,H_3^3\\,L^2 + 3336r^2\\,H_1^5\\,H_2^5\\,H_3^3\\,L^2 + 2520r^2\\,f\\,H_1^5\\,H_2^5\\,H_3^2\\,L^2 - 1320r^2\\,H_1^5\\,H_2^5\\,H_3^2\\,L^2 - 1200r^2\\,f\\,H_1^5\\,H_2^5\\,H_3\\,L^2 - 1944r^4\\,H_1^5\\,H_2^4\\,H_3^6 + 1296r^4\\,H_1^5\\,H_2^4\\,H_3^5 - 2016r^2\\,H_1^5\\,H_2^4\\,H_3^5\\,L^2 - 2640r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^4\\,L^2 + 3216r^2\\,H_1^5\\,H_2^4\\,H_3^4\\,L^2 + 3912r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^3\\,L^2 - 1944r^2\\,H_1^5\\,H_2^4\\,H_3^3\\,L^2 - 1440r^2\\,f\\,H_1^5\\,H_2^4\\,H_3^2\\,L^2 + 624r^4\\,H_1^5\\,H_2^3\\,H_3^6 - 1320r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^5\\,L^2 + 3336r^2\\,H_1^5\\,H_2^3\\,H_3^5\\,L^2 + 3912r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^4\\,L^2 - 1944r^2\\,H_1^5\\,H_2^3\\,H_3^4\\,L^2 - 2784r^2\\,f\\,H_1^5\\,H_2^3\\,H_3^3\\,L^2 + 2520r^2\\,f\\,H_1^5\\,H_2^2\\,H_3^5\\,L^2 - 1320r^2\\,H_1^5\\,H_2^2\\,H_3^5\\,L^2 - 1440r^2\\,f\\,H_1^5\\,H_2^2\\,H_3^4\\,L^2 - 1200r^2\\,f\\,H_1^5\\,H_2\\,H_3^5\\,L^2 + 660r^4\\,H_1^4\\,H_2^6\\,H_3^6 - 1944r^4\\,H_1^4\\,H_2^6\\,H_3^5 + 1656r^4\\,H_1^4\\,H_2^6\\,H_3^4 - 1944r^4\\,H_1^4\\,H_2^5\\,H_3^6 + 1296r^4\\,H_1^4\\,H_2^5\\,H_3^5 - 2016r^2\\,H_1^4\\,H_2^5\\,H_3^5\\,L^2 - 2640r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^4\\,L^2 + 3216r^2\\,H_1^4\\,H_2^5\\,H_3^4\\,L^2 + 3912r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^3\\,L^2 - 1944r^2\\,H_1^4\\,H_2^5\\,H_3^3\\,L^2 - 1440r^2\\,f\\,H_1^4\\,H_2^5\\,H_3^2\\,L^2 + 1656r^4\\,H_1^4\\,H_2^4\\,H_3^6 - 2640r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^5\\,L^2 + 3216r^2\\,H_1^4\\,H_2^4\\,H_3^5\\,L^2 + 4176r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^4\\,L^2 - 1872r^2\\,H_1^4\\,H_2^4\\,H_3^4\\,L^2 + 2052H_1^4\\,H_2^4\\,H_3^4\\,L^4 - 2208r^2\\,f\\,H_1^4\\,H_2^4\\,H_3^3\\,L^2 + 2016f\\,H_1^4\\,H_2^4\\,H_3^3\\,L^4 - 2016H_1^4\\,H_2^4\\,H_3^3\\,L^4 + 660f^2\\,H_1^4\\,H_2^4\\,H_3^2\\,L^4 - 2976f\\,H_1^4\\,H_2^4\\,H_3^2\\,L^4 + 660H_1^4\\,H_2^4\\,H_3^2\\,L^4 - 1200f^2\\,H_1^4\\,H_2^4\\,H_3\\,L^4 + 1200f\\,H_1^4\\,H_2^4\\,H_3\\,L^4 + 596f^2\\,H_1^4\\,H_2^4\\,L^4 + 3912r^2\\,f\\,H_1^4\\,H_2^3\\,H_3^5\\,L^2 - 1944r^2\\,H_1^4\\,H_2^3\\,H_3^5\\,L^2 - 2208r^2\\,f\\,H_1^4\\,H_2^3\\,H_3^4\\,L^2 + 2016f\\,H_1^4\\,H_2^3\\,H_3^4\\,L^4 - 2016H_1^4\\,H_2^3\\,H_3^4\\,L^4 + 1320f^2\\,H_1^4\\,H_2^3\\,H_3^3\\,L^4 - 3648f\\,H_1^4\\,H_2^3\\,H_3^3\\,L^4 + 1320H_1^4\\,H_2^3\\,H_3^3\\,L^4 - 1968f^2\\,H_1^4\\,H_2^3\\,H_3^2\\,L^4 + 1968f\\,H_1^4\\,H_2^3\\,H_3^2\\,L^4 + 656f^2\\,H_1^4\\,H_2^3\\,H_3\\,L^4 - 1440r^2\\,f\\,H_1^4\\,H_2^2\\,H_3^5\\,L^2 + 660f^2\\,H_1^4\\,H_2^2\\,H_3^4\\,L^4 - 2976f\\,H_1^4\\,H_2^2\\,H_3^4\\,L^4 + 660H_1^4\\,H_2^2\\,H_3^4\\,L^4 - 1968f^2\\,H_1^4\\,H_2^2\\,H_3^3\\,L^4 + 1968f\\,H_1^4\\,H_2^2\\,H_3^3\\,L^4 + 1464f^2\\,H_1^4\\,H_2^2\\,H_3^2\\,L^4 - 1200f^2\\,H_1^4\\,H_2\\,H_3^4\\,L^4 + 1200f\\,H_1^4\\,H_2\\,H_3^4\\,L^4 + 656f^2\\,H_1^4\\,H_2\\,H_3^3\\,L^4 + 596f^2\\,H_1^4\\,H_3^4\\,L^4 - 1320r^4\\,H_1^3\\,H_2^6\\,H_3^6 + 624r^4\\,H_1^3\\,H_2^6\\,H_3^5 + 624r^4\\,H_1^3\\,H_2^5\\,H_3^6 - 1320r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^5\\,L^2 + 3336r^2\\,H_1^3\\,H_2^5\\,H_3^5\\,L^2 + 3912r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^4\\,L^2 - 1944r^2\\,H_1^3\\,H_2^5\\,H_3^4\\,L^2 - 2784r^2\\,f\\,H_1^3\\,H_2^5\\,H_3^3\\,L^2 + 3912r^2\\,f\\,H_1^3\\,H_2^4\\,H_3^5\\,L^2 - 1944r^2\\,H_1^3\\,H_2^4\\,H_3^5\\,L^2 - 2208r^2\\,f\\,H_1^3\\,H_2^4\\,H_3^4\\,L^2 + 2016f\\,H_1^3\\,H_2^4\\,H_3^4\\,L^4 - 2016H_1^3\\,H_2^4\\,H_3^4\\,L^4 + 1320f^2\\,H_1^3\\,H_2^4\\,H_3^3\\,L^4 - 3648f\\,H_1^3\\,H_2^4\\,H_3^3\\,L^4 + 1320H_1^3\\,H_2^4\\,H_3^3\\,L^4 - 1968f^2\\,H_1^3\\,H_2^4\\,H_3^2\\,L^4 + 1968f\\,H_1^3\\,H_2^4\\,H_3^2\\,L^4 + 656f^2\\,H_1^3\\,H_2^4\\,H_3\\,L^4 - 2784r^2\\,f\\,H_1^3\\,H_2^3\\,H_3^5\\,L^2 + 1320f^2\\,H_1^3\\,H_2^3\\,H_3^4\\,L^4 - 3648f\\,H_1^3\\,H_2^3\\,H_3^4\\,L^4 + 1320H_1^3\\,H_2^3\\,H_3^4\\,L^4 - 2304f^2\\,H_1^3\\,H_2^3\\,H_3^3\\,L^4 + 2304f\\,H_1^3\\,H_2^3\\,H_3^3\\,L^4 + 1200f^2\\,H_1^3\\,H_2^3\\,H_3^2\\,L^4 - 1968f^2\\,H_1^3\\,H_2^2\\,H_3^4\\,L^4 + 1968f\\,H_1^3\\,H_2^2\\,H_3^4\\,L^4 + 1200f^2\\,H_1^3\\,H_2^2\\,H_3^3\\,L^4 + 656f^2\\,H_1^3\\,H_2\\,H_3^4\\,L^4 + 660r^4\\,H_1^2\\,H_2^6\\,H_3^6 + 2520r^2\\,f\\,H_1^2\\,H_2^5\\,H_3^5\\,L^2 - 1320r^2\\,H_1^2\\,H_2^5\\,H_3^5\\,L^2 - 1440r^2\\,f\\,H_1^2\\,H_2^5\\,H_3^4\\,L^2 - 1440r^2\\,f\\,H_1^2\\,H_2^4\\,H_3^5\\,L^2 + 660f^2\\,H_1^2\\,H_2^4\\,H_3^4\\,L^4 - 2976f\\,H_1^2\\,H_2^4\\,H_3^4\\,L^4 + 660H_1^2\\,H_2^4\\,H_3^4\\,L^4 - 1968f^2\\,H_1^2\\,H_2^4\\,H_3^3\\,L^4 + 1968f\\,H_1^2\\,H_2^4\\,H_3^3\\,L^4 + 1464f^2\\,H_1^2\\,H_2^4\\,H_3^2\\,L^4 - 1968f^2\\,H_1^2\\,H_2^3\\,H_3^4\\,L^4 + 1968f\\,H_1^2\\,H_2^3\\,H_3^4\\,L^4 + 1200f^2\\,H_1^2\\,H_2^3\\,H_3^3\\,L^4 + 1464f^2\\,H_1^2\\,H_2^2\\,H_3^4\\,L^4 - 1200r^2\\,f\\,H_1\\,H_2^5\\,H_3^5\\,L^2 - 1200f^2\\,H_1\\,H_2^4\\,H_3^4\\,L^4 + 1200f\\,H_1\\,H_2^4\\,H_3^4\\,L^4 + 656f^2\\,H_1\\,H_2^4\\,H_3^3\\,L^4 + 656f^2\\,H_1\\,H_2^3\\,H_3^4\\,L^4 + 596f^2\\,H_2^4\\,H_3^4\\,L^4}{27r^4\\,H_1^{14/3}\\,H_2^{14/3}\\,H_3^{14/3}\\,L^4}"
+        },
+        {
+          "id": "continued",
+          "name": "Past $r = 0$, Radius $\\rho$",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\chi \\in [0, \\pi]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "\\mu \\ge 0,\\quad q_1 \\ge q_2 \\ge q_3 > 0",
+            "D = 0 \\;\\text{(the horizons)}",
+            "\\rho = \\sqrt{q_3} \\;\\text{(the radius } r = 0\\text{)}",
+            "\\rho = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "Nonextremality parameter, a length squared; with $\\mu = 0$ the solution is supersymmetric"
+            },
+            {
+              "symbol": "q_1",
+              "description": "Parameter of the first charge, a length squared; the charge is proportional to $\\sqrt{q_1(\\mu + q_1)}$"
+            },
+            {
+              "symbol": "q_2",
+              "description": "Parameter of the second charge, a length squared; the charge is proportional to $\\sqrt{q_2(\\mu + q_2)}$"
+            },
+            {
+              "symbol": "q_3",
+              "description": "Parameter of the third charge, a length squared; the charge is proportional to $\\sqrt{q_3(\\mu + q_3)}$, the smallest of the three"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length"
+            },
+            {
+              "symbol": "P_1 = \\rho^2 + q_1 - q_3",
+              "description": "$r^2H_1$ written in $\\rho$, a length squared"
+            },
+            {
+              "symbol": "P_2 = \\rho^2 + q_2 - q_3",
+              "description": "$r^2H_2$ written in $\\rho$, a length squared"
+            },
+            {
+              "symbol": "D = \\left(\\rho^2 - q_3\\right)^2 - \\mu\\left(\\rho^2 - q_3\\right) + \\dfrac{\\rho^2\\left(\\rho^2 + q_1 - q_3\\right)\\left(\\rho^2 + q_2 - q_3\\right)}{L^2}",
+              "description": "$r^4f$ written in $\\rho$, a length to the fourth power, zero on each horizon"
+            }
+          ],
+          "convention": "We use the radius $\\rho$ of Myers and Tafjord [myers2001], $\\rho^2 = r^2 + q_3$ with $r$ the radius of the spherical chart, and the angles $(\\chi, \\theta, \\phi)$ of the 3-sphere, with $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{D}{\\rho^{4/3}\\left(P_1\\,P_2\\right)^{2/3}}c^2dt^2 + \\dfrac{\\rho^{8/3}\\left(P_1\\,P_2\\right)^{1/3}}{D}d\\rho^2 + \\rho^{2/3}\\left(P_1\\,P_2\\right)^{1/3}\\left(d\\chi^2 + \\sin^2\\chi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{D}{\\rho^{4/3}\\,P_1^{2/3}\\,P_2^{2/3}}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\rho^{8/3}\\,P_1^{1/3}\\,P_2^{1/3}}{D}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\rho^{2/3}\\,P_1^{1/3}\\,P_2^{1/3}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\rho^{2/3}\\,P_1^{1/3}\\,P_2^{1/3}\\sin^2\\chi"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\rho^{2/3}\\,P_1^{1/3}\\,P_2^{1/3}\\sin^2\\chi\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\rho^2\\,P_1^3\\,P_2^3 - 20\\rho^4\\,P_1^3\\,P_2^2 + 2\\rho^6\\,P_1^3\\,P_2 - 20\\rho^4\\,P_1^2\\,P_2^3 + 2D\\,P_1^2\\,P_2^2\\,L^2 - 20\\rho^6\\,P_1^2\\,P_2^2 - 2\\rho^4\\,P_1^2\\,P_2^2\\,L^2 - 4\\rho^2\\,P_1^2\\,P_2^2\\,L^2\\,q_3 - 2\\rho^2\\,P_1^2\\,P_2^2\\,L^2\\,\\mu - 4\\rho^2\\,D\\,P_1^2\\,P_2\\,L^2 + 4\\rho^6\\,P_1^2\\,P_2\\,L^2 - 4\\rho^4\\,P_1^2\\,P_2\\,L^2\\,q_3 - 2\\rho^4\\,P_1^2\\,P_2\\,L^2\\,\\mu + 2\\rho^4\\,D\\,P_1^2\\,L^2 + 2\\rho^6\\,P_1\\,P_2^3 - 4\\rho^2\\,D\\,P_1\\,P_2^2\\,L^2 + 4\\rho^6\\,P_1\\,P_2^2\\,L^2 - 4\\rho^4\\,P_1\\,P_2^2\\,L^2\\,q_3 - 2\\rho^4\\,P_1\\,P_2^2\\,L^2\\,\\mu - 4\\rho^4\\,D\\,P_1\\,P_2\\,L^2 + 2\\rho^4\\,D\\,P_2^2\\,L^2}{3\\rho^{14/3}\\,P_1^{7/3}\\,P_2^{7/3}\\,L^2}",
+          "kretschmann": "K = \\dfrac{660\\rho^4\\,P_1^6\\,P_2^6 + 624\\rho^6\\,P_1^6\\,P_2^5 + 1656\\rho^8\\,P_1^6\\,P_2^4 + 624\\rho^{10}\\,P_1^6\\,P_2^3 + 660\\rho^{12}\\,P_1^6\\,P_2^2 + 624\\rho^6\\,P_1^5\\,P_2^6 - 1200\\rho^2\\,D\\,P_1^5\\,P_2^5\\,L^2 + 1296\\rho^8\\,P_1^5\\,P_2^5 + 624\\rho^6\\,P_1^5\\,P_2^5\\,L^2 - 2640\\rho^4\\,P_1^5\\,P_2^5\\,L^2\\,q_3 - 1320\\rho^4\\,P_1^5\\,P_2^5\\,L^2\\,\\mu - 1440\\rho^4\\,D\\,P_1^5\\,P_2^4\\,L^2 + 1296\\rho^{10}\\,P_1^5\\,P_2^4 + 3312\\rho^8\\,P_1^5\\,P_2^4\\,L^2 - 3888\\rho^6\\,P_1^5\\,P_2^4\\,L^2\\,q_3 - 1944\\rho^6\\,P_1^5\\,P_2^4\\,L^2\\,\\mu - 2784\\rho^6\\,D\\,P_1^5\\,P_2^3\\,L^2 + 624\\rho^{12}\\,P_1^5\\,P_2^3 + 1872\\rho^{10}\\,P_1^5\\,P_2^3\\,L^2 - 3888\\rho^8\\,P_1^5\\,P_2^3\\,L^2\\,q_3 - 1944\\rho^8\\,P_1^5\\,P_2^3\\,L^2\\,\\mu - 1440\\rho^8\\,D\\,P_1^5\\,P_2^2\\,L^2 + 2640\\rho^{12}\\,P_1^5\\,P_2^2\\,L^2 - 2640\\rho^{10}\\,P_1^5\\,P_2^2\\,L^2\\,q_3 - 1320\\rho^{10}\\,P_1^5\\,P_2^2\\,L^2\\,\\mu - 1200\\rho^{10}\\,D\\,P_1^5\\,P_2\\,L^2 + 1656\\rho^8\\,P_1^4\\,P_2^6 - 1440\\rho^4\\,D\\,P_1^4\\,P_2^5\\,L^2 + 1296\\rho^{10}\\,P_1^4\\,P_2^5 + 3312\\rho^8\\,P_1^4\\,P_2^5\\,L^2 - 3888\\rho^6\\,P_1^4\\,P_2^5\\,L^2\\,q_3 - 1944\\rho^6\\,P_1^4\\,P_2^5\\,L^2\\,\\mu + 596D^2\\,P_1^4\\,P_2^4\\,L^4 - 2208\\rho^6\\,D\\,P_1^4\\,P_2^4\\,L^2 - 744\\rho^4\\,D\\,P_1^4\\,P_2^4\\,L^4 + 2400\\rho^2\\,D\\,P_1^4\\,P_2^4\\,L^4\\,q_3 + 1200\\rho^2\\,D\\,P_1^4\\,P_2^4\\,L^4\\,\\mu + 1656\\rho^{12}\\,P_1^4\\,P_2^4 + 3168\\rho^{10}\\,P_1^4\\,P_2^4\\,L^2 - 3744\\rho^8\\,P_1^4\\,P_2^4\\,L^2\\,q_3 - 1872\\rho^8\\,P_1^4\\,P_2^4\\,L^2\\,\\mu + 660\\rho^8\\,P_1^4\\,P_2^4\\,L^4 - 1248\\rho^6\\,P_1^4\\,P_2^4\\,L^4\\,q_3 - 624\\rho^6\\,P_1^4\\,P_2^4\\,L^4\\,\\mu + 2640\\rho^4\\,P_1^4\\,P_2^4\\,L^4\\,q_3^2 + 2640\\rho^4\\,P_1^4\\,P_2^4\\,L^4\\,\\mu\\,q_3 + 660\\rho^4\\,P_1^4\\,P_2^4\\,L^4\\,\\mu^2 + 656\\rho^2\\,D^2\\,P_1^4\\,P_2^3\\,L^4 - 2208\\rho^8\\,D\\,P_1^4\\,P_2^3\\,L^2 - 2928\\rho^6\\,D\\,P_1^4\\,P_2^3\\,L^4 + 3936\\rho^4\\,D\\,P_1^4\\,P_2^3\\,L^4\\,q_3 + 1968\\rho^4\\,D\\,P_1^4\\,P_2^3\\,L^4\\,\\mu + 3888\\rho^{12}\\,P_1^4\\,P_2^3\\,L^2 - 3888\\rho^{10}\\,P_1^4\\,P_2^3\\,L^2\\,q_3 - 1944\\rho^{10}\\,P_1^4\\,P_2^3\\,L^2\\,\\mu + 1248\\rho^{10}\\,P_1^4\\,P_2^3\\,L^4 - 6528\\rho^8\\,P_1^4\\,P_2^3\\,L^4\\,q_3 - 3264\\rho^8\\,P_1^4\\,P_2^3\\,L^4\\,\\mu + 5280\\rho^6\\,P_1^4\\,P_2^3\\,L^4\\,q_3^2 + 5280\\rho^6\\,P_1^4\\,P_2^3\\,L^4\\,\\mu\\,q_3 + 1320\\rho^6\\,P_1^4\\,P_2^3\\,L^4\\,\\mu^2 + 1464\\rho^4\\,D^2\\,P_1^4\\,P_2^2\\,L^4 - 1440\\rho^{10}\\,D\\,P_1^4\\,P_2^2\\,L^2 - 2280\\rho^8\\,D\\,P_1^4\\,P_2^2\\,L^4 + 3936\\rho^6\\,D\\,P_1^4\\,P_2^2\\,L^4\\,q_3 + 1968\\rho^6\\,D\\,P_1^4\\,P_2^2\\,L^4\\,\\mu + 2640\\rho^{12}\\,P_1^4\\,P_2^2\\,L^4 - 5280\\rho^{10}\\,P_1^4\\,P_2^2\\,L^4\\,q_3 - 2640\\rho^{10}\\,P_1^4\\,P_2^2\\,L^4\\,\\mu + 2640\\rho^8\\,P_1^4\\,P_2^2\\,L^4\\,q_3^2 + 2640\\rho^8\\,P_1^4\\,P_2^2\\,L^4\\,\\mu\\,q_3 + 660\\rho^8\\,P_1^4\\,P_2^2\\,L^4\\,\\mu^2 + 656\\rho^6\\,D^2\\,P_1^4\\,P_2\\,L^4 - 2400\\rho^{10}\\,D\\,P_1^4\\,P_2\\,L^4 + 2400\\rho^8\\,D\\,P_1^4\\,P_2\\,L^4\\,q_3 + 1200\\rho^8\\,D\\,P_1^4\\,P_2\\,L^4\\,\\mu + 596\\rho^8\\,D^2\\,P_1^4\\,L^4 + 624\\rho^{10}\\,P_1^3\\,P_2^6 - 2784\\rho^6\\,D\\,P_1^3\\,P_2^5\\,L^2 + 624\\rho^{12}\\,P_1^3\\,P_2^5 + 1872\\rho^{10}\\,P_1^3\\,P_2^5\\,L^2 - 3888\\rho^8\\,P_1^3\\,P_2^5\\,L^2\\,q_3 - 1944\\rho^8\\,P_1^3\\,P_2^5\\,L^2\\,\\mu + 656\\rho^2\\,D^2\\,P_1^3\\,P_2^4\\,L^4 - 2208\\rho^8\\,D\\,P_1^3\\,P_2^4\\,L^2 - 2928\\rho^6\\,D\\,P_1^3\\,P_2^4\\,L^4 + 3936\\rho^4\\,D\\,P_1^3\\,P_2^4\\,L^4\\,q_3 + 1968\\rho^4\\,D\\,P_1^3\\,P_2^4\\,L^4\\,\\mu + 3888\\rho^{12}\\,P_1^3\\,P_2^4\\,L^2 - 3888\\rho^{10}\\,P_1^3\\,P_2^4\\,L^2\\,q_3 - 1944\\rho^{10}\\,P_1^3\\,P_2^4\\,L^2\\,\\mu + 1248\\rho^{10}\\,P_1^3\\,P_2^4\\,L^4 - 6528\\rho^8\\,P_1^3\\,P_2^4\\,L^4\\,q_3 - 3264\\rho^8\\,P_1^3\\,P_2^4\\,L^4\\,\\mu + 5280\\rho^6\\,P_1^3\\,P_2^4\\,L^4\\,q_3^2 + 5280\\rho^6\\,P_1^3\\,P_2^4\\,L^4\\,\\mu\\,q_3 + 1320\\rho^6\\,P_1^3\\,P_2^4\\,L^4\\,\\mu^2 + 1200\\rho^4\\,D^2\\,P_1^3\\,P_2^3\\,L^4 - 2784\\rho^{10}\\,D\\,P_1^3\\,P_2^3\\,L^2 - 3600\\rho^8\\,D\\,P_1^3\\,P_2^3\\,L^4 + 4608\\rho^6\\,D\\,P_1^3\\,P_2^3\\,L^4\\,q_3 + 2304\\rho^6\\,D\\,P_1^3\\,P_2^3\\,L^4\\,\\mu + 5280\\rho^{12}\\,P_1^3\\,P_2^3\\,L^4 - 10560\\rho^{10}\\,P_1^3\\,P_2^3\\,L^4\\,q_3 - 5280\\rho^{10}\\,P_1^3\\,P_2^3\\,L^4\\,\\mu + 5280\\rho^8\\,P_1^3\\,P_2^3\\,L^4\\,q_3^2 + 5280\\rho^8\\,P_1^3\\,P_2^3\\,L^4\\,\\mu\\,q_3 + 1320\\rho^8\\,P_1^3\\,P_2^3\\,L^4\\,\\mu^2 + 1200\\rho^6\\,D^2\\,P_1^3\\,P_2^2\\,L^4 - 3936\\rho^{10}\\,D\\,P_1^3\\,P_2^2\\,L^4 + 3936\\rho^8\\,D\\,P_1^3\\,P_2^2\\,L^4\\,q_3 + 1968\\rho^8\\,D\\,P_1^3\\,P_2^2\\,L^4\\,\\mu + 656\\rho^8\\,D^2\\,P_1^3\\,P_2\\,L^4 + 660\\rho^{12}\\,P_1^2\\,P_2^6 - 1440\\rho^8\\,D\\,P_1^2\\,P_2^5\\,L^2 + 2640\\rho^{12}\\,P_1^2\\,P_2^5\\,L^2 - 2640\\rho^{10}\\,P_1^2\\,P_2^5\\,L^2\\,q_3 - 1320\\rho^{10}\\,P_1^2\\,P_2^5\\,L^2\\,\\mu + 1464\\rho^4\\,D^2\\,P_1^2\\,P_2^4\\,L^4 - 1440\\rho^{10}\\,D\\,P_1^2\\,P_2^4\\,L^2 - 2280\\rho^8\\,D\\,P_1^2\\,P_2^4\\,L^4 + 3936\\rho^6\\,D\\,P_1^2\\,P_2^4\\,L^4\\,q_3 + 1968\\rho^6\\,D\\,P_1^2\\,P_2^4\\,L^4\\,\\mu + 2640\\rho^{12}\\,P_1^2\\,P_2^4\\,L^4 - 5280\\rho^{10}\\,P_1^2\\,P_2^4\\,L^4\\,q_3 - 2640\\rho^{10}\\,P_1^2\\,P_2^4\\,L^4\\,\\mu + 2640\\rho^8\\,P_1^2\\,P_2^4\\,L^4\\,q_3^2 + 2640\\rho^8\\,P_1^2\\,P_2^4\\,L^4\\,\\mu\\,q_3 + 660\\rho^8\\,P_1^2\\,P_2^4\\,L^4\\,\\mu^2 + 1200\\rho^6\\,D^2\\,P_1^2\\,P_2^3\\,L^4 - 3936\\rho^{10}\\,D\\,P_1^2\\,P_2^3\\,L^4 + 3936\\rho^8\\,D\\,P_1^2\\,P_2^3\\,L^4\\,q_3 + 1968\\rho^8\\,D\\,P_1^2\\,P_2^3\\,L^4\\,\\mu + 1464\\rho^8\\,D^2\\,P_1^2\\,P_2^2\\,L^4 - 1200\\rho^{10}\\,D\\,P_1\\,P_2^5\\,L^2 + 656\\rho^6\\,D^2\\,P_1\\,P_2^4\\,L^4 - 2400\\rho^{10}\\,D\\,P_1\\,P_2^4\\,L^4 + 2400\\rho^8\\,D\\,P_1\\,P_2^4\\,L^4\\,q_3 + 1200\\rho^8\\,D\\,P_1\\,P_2^4\\,L^4\\,\\mu + 656\\rho^8\\,D^2\\,P_1\\,P_2^3\\,L^4 + 596\\rho^8\\,D^2\\,P_2^4\\,L^4}{27\\rho^{28/3}\\,P_1^{14/3}\\,P_2^{14/3}\\,L^4}"
+        },
+        {
+          "id": "brane",
+          "name": "Black Brane, Coordinate $u$",
+          "coordinates": [
+            "t",
+            "x",
+            "y",
+            "z",
+            "u"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x \\in (-\\infty, \\infty)",
+            "y \\in (-\\infty, \\infty)",
+            "z \\in (-\\infty, \\infty)",
+            "u \\in (0, \\infty)",
+            "r_+ > 0,\\quad \\kappa_1, \\kappa_2, \\kappa_3 \\ge 0",
+            "u = 1 \\;\\text{(the event horizon)}",
+            "u = 0 \\;\\text{(the boundary of anti-de Sitter space)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_+",
+              "description": "Value of the flat chart's radius $r$ at the event horizon, a length"
+            },
+            {
+              "symbol": "L",
+              "description": "Radius of anti-de Sitter space, a length"
+            },
+            {
+              "symbol": "\\kappa_1",
+              "description": "Parameter of the first charge, $\\kappa_1 = q_1/r_+^2$, a pure number"
+            },
+            {
+              "symbol": "\\kappa_2",
+              "description": "Parameter of the second charge, $\\kappa_2 = q_2/r_+^2$, a pure number"
+            },
+            {
+              "symbol": "\\kappa_3",
+              "description": "Parameter of the third charge, $\\kappa_3 = q_3/r_+^2$, a pure number"
+            },
+            {
+              "symbol": "H_1 = 1 + \\kappa_1u",
+              "description": "Harmonic function of the first charge, a pure number"
+            },
+            {
+              "symbol": "H_2 = 1 + \\kappa_2u",
+              "description": "Harmonic function of the second charge, a pure number"
+            },
+            {
+              "symbol": "H_3 = 1 + \\kappa_3u",
+              "description": "Harmonic function of the third charge, a pure number"
+            },
+            {
+              "symbol": "f = H_1\\,H_2\\,H_3 - u^2\\left(1 + \\kappa_1\\right)\\left(1 + \\kappa_2\\right)\\left(1 + \\kappa_3\\right)",
+              "description": "Metric function, a pure number, zero on the event horizon $u = 1$"
+            }
+          ],
+          "convention": "We use the coordinate $u = r_+^2/r^2$ of Son and Starinets [son2006], with $r$ the radius of the flat chart, the lengths $(x, y, z)$ along the horizon, and $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. Their temperature $T_0$ is $\\hbar cr_+/(\\pi k_BL^2)$ [son2006].",
+          "line_element": "ds^2 = -\\dfrac{r_+^2f}{L^2u\\left(H_1\\,H_2\\,H_3\\right)^{2/3}}c^2dt^2 + \\dfrac{r_+^2\\left(H_1\\,H_2\\,H_3\\right)^{1/3}}{L^2u}\\left(dx^2 + dy^2 + dz^2\\right) + \\dfrac{L^2\\left(H_1\\,H_2\\,H_3\\right)^{1/3}}{4u^2f}du^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{f\\,r_+^2}{u\\,H_1^{2/3}\\,H_2^{2/3}\\,H_3^{2/3}\\,L^2}"
+            },
+            {
+              "indices": [
+                "x",
+                "x"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\,r_+^2}{u\\,L^2}"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\,r_+^2}{u\\,L^2}"
+            },
+            {
+              "indices": [
+                "z",
+                "z"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\,r_+^2}{u\\,L^2}"
+            },
+            {
+              "indices": [
+                "u",
+                "u"
+              ],
+              "value": "\\dfrac{H_1^{1/3}\\,H_2^{1/3}\\,H_3^{1/3}\\,L^2}{4u^2\\,f}"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{2H_1^3\\,H_2^3\\,H_3^2 - 2H_1^3\\,H_2^3\\,H_3 + 2H_1^3\\,H_2^2\\,H_3^3 + 20H_1^3\\,H_2^2\\,H_3^2 - 2H_1^3\\,H_2\\,H_3^3 + 2H_1^2\\,H_2^3\\,H_3^3 + 20H_1^2\\,H_2^3\\,H_3^2 + 20H_1^2\\,H_2^2\\,H_3^3 - 2f\\,H_1^2\\,H_2^2\\,H_3 - 2f\\,H_1^2\\,H_2^2 - 2f\\,H_1^2\\,H_2\\,H_3^2 + 4f\\,H_1^2\\,H_2\\,H_3 - 2f\\,H_1^2\\,H_3^2 - 2H_1\\,H_2^3\\,H_3^3 - 2f\\,H_1\\,H_2^2\\,H_3^2 + 4f\\,H_1\\,H_2^2\\,H_3 + 4f\\,H_1\\,H_2\\,H_3^2 - 2f\\,H_2^2\\,H_3^2}{3H_1^{7/3}\\,H_2^{7/3}\\,H_3^{7/3}\\,L^2}",
+          "kretschmann": "K = \\dfrac{660H_1^6\\,H_2^6\\,H_3^4 - 1320H_1^6\\,H_2^6\\,H_3^3 + 660H_1^6\\,H_2^6\\,H_3^2 + 1320H_1^6\\,H_2^5\\,H_3^5 - 1944H_1^6\\,H_2^5\\,H_3^4 + 624H_1^6\\,H_2^5\\,H_3^3 + 660H_1^6\\,H_2^4\\,H_3^6 - 1944H_1^6\\,H_2^4\\,H_3^5 + 1656H_1^6\\,H_2^4\\,H_3^4 - 1320H_1^6\\,H_2^3\\,H_3^6 + 624H_1^6\\,H_2^3\\,H_3^5 + 660H_1^6\\,H_2^2\\,H_3^6 + 1320H_1^5\\,H_2^6\\,H_3^5 - 1944H_1^5\\,H_2^6\\,H_3^4 + 624H_1^5\\,H_2^6\\,H_3^3 + 1320H_1^5\\,H_2^5\\,H_3^6 - 1872H_1^5\\,H_2^5\\,H_3^5 + 1296H_1^5\\,H_2^5\\,H_3^4 - 1320f\\,H_1^5\\,H_2^5\\,H_3^3 + 2520f\\,H_1^5\\,H_2^5\\,H_3^2 - 1200f\\,H_1^5\\,H_2^5\\,H_3 - 1944H_1^5\\,H_2^4\\,H_3^6 + 1296H_1^5\\,H_2^4\\,H_3^5 - 2640f\\,H_1^5\\,H_2^4\\,H_3^4 + 3912f\\,H_1^5\\,H_2^4\\,H_3^3 - 1440f\\,H_1^5\\,H_2^4\\,H_3^2 + 624H_1^5\\,H_2^3\\,H_3^6 - 1320f\\,H_1^5\\,H_2^3\\,H_3^5 + 3912f\\,H_1^5\\,H_2^3\\,H_3^4 - 2784f\\,H_1^5\\,H_2^3\\,H_3^3 + 2520f\\,H_1^5\\,H_2^2\\,H_3^5 - 1440f\\,H_1^5\\,H_2^2\\,H_3^4 - 1200f\\,H_1^5\\,H_2\\,H_3^5 + 660H_1^4\\,H_2^6\\,H_3^6 - 1944H_1^4\\,H_2^6\\,H_3^5 + 1656H_1^4\\,H_2^6\\,H_3^4 - 1944H_1^4\\,H_2^5\\,H_3^6 + 1296H_1^4\\,H_2^5\\,H_3^5 - 2640f\\,H_1^4\\,H_2^5\\,H_3^4 + 3912f\\,H_1^4\\,H_2^5\\,H_3^3 - 1440f\\,H_1^4\\,H_2^5\\,H_3^2 + 1656H_1^4\\,H_2^4\\,H_3^6 - 2640f\\,H_1^4\\,H_2^4\\,H_3^5 + 4176f\\,H_1^4\\,H_2^4\\,H_3^4 - 2208f\\,H_1^4\\,H_2^4\\,H_3^3 + 660f^2\\,H_1^4\\,H_2^4\\,H_3^2 - 1200f^2\\,H_1^4\\,H_2^4\\,H_3 + 596f^2\\,H_1^4\\,H_2^4 + 3912f\\,H_1^4\\,H_2^3\\,H_3^5 - 2208f\\,H_1^4\\,H_2^3\\,H_3^4 + 1320f^2\\,H_1^4\\,H_2^3\\,H_3^3 - 1968f^2\\,H_1^4\\,H_2^3\\,H_3^2 + 656f^2\\,H_1^4\\,H_2^3\\,H_3 - 1440f\\,H_1^4\\,H_2^2\\,H_3^5 + 660f^2\\,H_1^4\\,H_2^2\\,H_3^4 - 1968f^2\\,H_1^4\\,H_2^2\\,H_3^3 + 1464f^2\\,H_1^4\\,H_2^2\\,H_3^2 - 1200f^2\\,H_1^4\\,H_2\\,H_3^4 + 656f^2\\,H_1^4\\,H_2\\,H_3^3 + 596f^2\\,H_1^4\\,H_3^4 - 1320H_1^3\\,H_2^6\\,H_3^6 + 624H_1^3\\,H_2^6\\,H_3^5 + 624H_1^3\\,H_2^5\\,H_3^6 - 1320f\\,H_1^3\\,H_2^5\\,H_3^5 + 3912f\\,H_1^3\\,H_2^5\\,H_3^4 - 2784f\\,H_1^3\\,H_2^5\\,H_3^3 + 3912f\\,H_1^3\\,H_2^4\\,H_3^5 - 2208f\\,H_1^3\\,H_2^4\\,H_3^4 + 1320f^2\\,H_1^3\\,H_2^4\\,H_3^3 - 1968f^2\\,H_1^3\\,H_2^4\\,H_3^2 + 656f^2\\,H_1^3\\,H_2^4\\,H_3 - 2784f\\,H_1^3\\,H_2^3\\,H_3^5 + 1320f^2\\,H_1^3\\,H_2^3\\,H_3^4 - 2304f^2\\,H_1^3\\,H_2^3\\,H_3^3 + 1200f^2\\,H_1^3\\,H_2^3\\,H_3^2 - 1968f^2\\,H_1^3\\,H_2^2\\,H_3^4 + 1200f^2\\,H_1^3\\,H_2^2\\,H_3^3 + 656f^2\\,H_1^3\\,H_2\\,H_3^4 + 660H_1^2\\,H_2^6\\,H_3^6 + 2520f\\,H_1^2\\,H_2^5\\,H_3^5 - 1440f\\,H_1^2\\,H_2^5\\,H_3^4 - 1440f\\,H_1^2\\,H_2^4\\,H_3^5 + 660f^2\\,H_1^2\\,H_2^4\\,H_3^4 - 1968f^2\\,H_1^2\\,H_2^4\\,H_3^3 + 1464f^2\\,H_1^2\\,H_2^4\\,H_3^2 - 1968f^2\\,H_1^2\\,H_2^3\\,H_3^4 + 1200f^2\\,H_1^2\\,H_2^3\\,H_3^3 + 1464f^2\\,H_1^2\\,H_2^2\\,H_3^4 - 1200f\\,H_1\\,H_2^5\\,H_3^5 - 1200f^2\\,H_1\\,H_2^4\\,H_3^4 + 656f^2\\,H_1\\,H_2^4\\,H_3^3 + 656f^2\\,H_1\\,H_2^3\\,H_3^4 + 596f^2\\,H_2^4\\,H_3^4}{27H_1^{14/3}\\,H_2^{14/3}\\,H_3^{14/3}\\,L^4}"
+        }
+      ]
+    },
+    {
       "id": "sultana_dyer",
       "name": "Sultana-Dyer Black Hole in an Expanding Universe",
       "short_name": "Sultana-Dyer",
@@ -85506,6 +86147,11 @@
           "id": "naked_black_holes",
           "kind": "family",
           "text": "Large charged black holes close to extremality whose tidal forces crush a falling body outside the horizon. The hole of five dimensions with three charges is one of them when one charge is much smaller than another [horowitz1997naked]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "generalisation",
+          "text": "Its hole of five dimensions put in anti-de Sitter space, with a horizon that is a 3-sphere, flat, or hyperbolic. With the gauging only the metric function changes, gaining $r^2H_1H_2H_3/L^2$ [behrndt1999]."
         }
       ],
       "references": [
@@ -85527,7 +86173,8 @@
         "cvetic1995singular",
         "breckenridge1997",
         "gauntlett1999",
-        "horowitz1997naked"
+        "horowitz1997naked",
+        "behrndt1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_bh_three_four_charges.json",
@@ -86072,6 +86719,11 @@
           "id": "holographic_rg_flow",
           "kind": "family",
           "text": "Flows away from the throat's anti-de Sitter space, driven by masses or by spreading the branes apart. Spread over a uniform disc, the branes give a flow solved in closed form [freedman2000]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Black holes of gauged supergravity in five dimensions with three charges. Lifted to ten dimensions, the one with a flat horizon is the region near a stack of three-branes spinning in three planes [cvetic1999embed]."
         }
       ],
       "references": [
@@ -86095,7 +86747,8 @@
         "berenstein2002",
         "klebanovwitten1998",
         "horowitz1997naked",
-        "freedman2000"
+        "freedman2000",
+        "cvetic1999embed"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",
@@ -88144,6 +88797,11 @@
           "id": "constant_curvature_black_hole",
           "kind": "family",
           "text": "Anti-de Sitter space of four dimensions identified along a single boost, the first construction of the same 1996 paper, with a toroidal event horizon that grows in time [aminneborg1996, holst1997]."
+        },
+        {
+          "id": "stu_black_holes",
+          "kind": "family",
+          "text": "Black holes of anti-de Sitter space in five dimensions with three charges, whose horizons are 3-spheres, flat, or hyperbolic as $k$ is $1$, $0$, or $-1$ [behrndt1999]."
         }
       ],
       "references": [
@@ -88183,7 +88841,8 @@
         "bhattacharyya2009",
         "cai1999",
         "cai1998",
-        "holst1997"
+        "holst1997",
+        "behrndt1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/topological_black_hole.json",
