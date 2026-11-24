@@ -227,6 +227,11 @@
       "id": "constant_curvature_black_hole",
       "kind": "locally_same",
       "text": "Anti-de Sitter space of four or more dimensions with its points identified along a boost, a black hole that is anti-de Sitter space at every point [banados1998]."
+    },
+    {
+      "id": "chamseddine_volkov_monopole",
+      "kind": "family",
+      "text": "A monopole of $N = 4$ gauged supergravity. In the $SO(4)$ theory a ratio $\\xi$ of two gauge couplings deforms it into spaces that approach anti-de Sitter space with an excess of solid angle, and at $\\xi = 1$ into anti-de Sitter space [chamseddine2004]."
     }
   ],
   "references": [
@@ -294,7 +299,8 @@
     "banados1994",
     "martinez1996",
     "natsuume2000a",
-    "banados1998"
+    "banados1998",
+    "chamseddine2004"
   ],
   "coordinates": [
     {

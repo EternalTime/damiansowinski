@@ -32,7 +32,8 @@
     "mandal1991",
     "giddings1992",
     "gasperini1993prebigbang",
-    "clement2003"
+    "clement2003",
+    "maldacena2001"
   ],
   "coordinates": [
     {
@@ -1446,6 +1447,11 @@
       "id": "dilaton_unusual_asymptotics",
       "kind": "family",
       "text": "Black holes that approach a linear dilaton background far away. For a magnetic charge at the string coupling, the one without mass is in the string metric a flat plane of time and distance times a sphere, the dilaton linear in the distance [clement2003]."
+    },
+    {
+      "id": "chamseddine_volkov_monopole",
+      "kind": "family",
+      "text": "A monopole of gauged supergravity whose lift to ten dimensions is the geometry of fivebranes wrapped on a 2-sphere. Far from the centre the dilaton of that lift is linear in the radial coordinate, with a logarithmic correction [maldacena2001]."
     }
   ]
 }

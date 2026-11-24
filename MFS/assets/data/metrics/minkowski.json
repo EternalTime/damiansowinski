@@ -338,6 +338,11 @@
       "id": "roman_ring",
       "kind": "locally_same",
       "text": "Minkowski space with $N$ wormholes cut into it and set round a ring, each pair of mouths identified with a time shift $T$. Outside the mouths it is this spacetime [visser1997]."
+    },
+    {
+      "id": "chamseddine_volkov_monopole",
+      "kind": "family",
+      "text": "A monopole of gauged supergravity whose plane of time and radius is conformal to half of the flat plane, so it has the conformal diagram of Minkowski space, although it is curved and not asymptotically flat [chamseddine1997]."
     }
   ],
   "references": [
@@ -429,7 +434,8 @@
     "dowker1995",
     "koutrasmcintosh1996",
     "griffithspodolsky1998",
-    "visser1997"
+    "visser1997",
+    "chamseddine1997"
   ],
   "coordinates": [
     {

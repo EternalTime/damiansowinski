@@ -74,6 +74,11 @@
       "id": "skyrmion_hair",
       "kind": "family",
       "text": "A black hole inside a gravitating skyrmion, with a field extending beyond its horizon [dvali2016skyrmion]."
+    },
+    {
+      "id": "chamseddine_volkov_monopole",
+      "kind": "family",
+      "text": "A static ball of Yang-Mills field and a dilaton held by gravity with no Higgs field. It is supersymmetric, known in closed form, and a magnetic monopole [chamseddine1997]."
     }
   ],
   "references": [
@@ -98,7 +103,8 @@
     "gleiser1989",
     "lee1989",
     "herdeiro2014",
-    "dvali2016skyrmion"
+    "dvali2016skyrmion",
+    "chamseddine1997"
   ],
   "coordinates": [
     {

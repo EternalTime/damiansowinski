@@ -64,6 +64,11 @@
       "id": "generalised_vaidya",
       "kind": "generalisation",
       "text": "The monopole's field with the mass inside each sphere free to depend on null time and on the radius. Anzhong Wang and Yumei Wu found the monopole in the term $ar/2$ of that mass, with $a = \\Delta$ [wang1999generalized]."
+    },
+    {
+      "id": "chamseddine_volkov_monopole",
+      "kind": "family",
+      "text": "A monopole of a Yang-Mills field and a dilaton with no Higgs field, whose spheres far from the centre have more area than in flat space at the same distance. In Schwarzschild coordinates, with $g_{rr} = 1/N$, its function $N$ grows as $\\ln r$ [chamseddine1997]."
     }
   ],
   "references": [
@@ -85,7 +90,8 @@
     "visser2020",
     "vafa1996ftheory",
     "durrer1992textures",
-    "wang1999generalized"
+    "wang1999generalized",
+    "chamseddine1997"
   ],
   "coordinates": [
     {

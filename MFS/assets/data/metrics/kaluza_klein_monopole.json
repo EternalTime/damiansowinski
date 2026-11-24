@@ -151,6 +151,11 @@
       "id": "bmpv",
       "kind": "family",
       "text": "A spinning hole of five dimensions that, at the centre of a Taub-NUT space, is a black hole of four dimensions with the same entropy [gaiotto2006]."
+    },
+    {
+      "id": "chamseddine_volkov_monopole",
+      "kind": "family",
+      "text": "A monopole of gauged supergravity in four dimensions, regular everywhere. Lifted to ten dimensions its Yang-Mills field also appears in the metric, as components mixing the four dimensions with a 3-sphere [chamseddine1998]."
     }
   ],
   "references": [
@@ -189,7 +194,8 @@
     "klebanovwitten1998",
     "dowker1995",
     "cvetic1995singular",
-    "gaiotto2006"
+    "gaiotto2006",
+    "chamseddine1998"
   ],
   "coordinates": [
     {
