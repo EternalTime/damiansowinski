@@ -81,6 +81,11 @@
       "id": "roman_ring",
       "kind": "family",
       "text": "Many wormholes at rest round a ring, the generalization of Roman's two wormholes, which move past each other at high speed as Gott's strings do [visser1997, lyutikov1994]."
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "kind": "family",
+      "text": "Serguei Krasnikov's time machine of 1998. Krasnikov classed the causality violation of Gott's strings as cosmological and set it apart from a time machine an advanced civilization might build [krasnikov1998wec]."
     }
   ],
   "references": [
@@ -110,7 +115,8 @@
     "gott1998",
     "aminneborg1998",
     "visser1997",
-    "lyutikov1994"
+    "lyutikov1994",
+    "krasnikov1998wec"
   ],
   "coordinates": [
     {

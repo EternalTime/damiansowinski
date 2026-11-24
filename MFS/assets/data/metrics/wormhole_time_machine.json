@@ -3272,6 +3272,11 @@
       "id": "roman_ring",
       "kind": "family",
       "text": "Many wormholes at rest round a ring, none of them a time machine, each with a time shift $T$ much less than its jump. Once round the whole ring a geodesic becomes timelike when the crossings between wormholes are shorter than $cT$ [visser1997]."
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "kind": "family",
+      "text": "Serguei Krasnikov's time machine of 1998, whose horizon is not compactly generated. Its matter obeys the weak energy condition, and the region holding its closed timelike curves has no singularity [krasnikov1998wec]."
     }
   ],
   "references": [
@@ -3295,6 +3300,7 @@
     "tippett2017",
     "schein1996",
     "aichelburg1998",
-    "visser1997"
+    "visser1997",
+    "krasnikov1998wec"
   ]
 }

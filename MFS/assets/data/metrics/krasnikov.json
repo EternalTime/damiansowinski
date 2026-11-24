@@ -47,6 +47,11 @@
       "id": "tippett_tsang",
       "kind": "family",
       "text": "One bubble with a closed timelike curve inside it. Tippett and Tsang observed in 2017 that a traveller needs a succession of tubes or warp bubbles to close a world line, and built a bubble that needs no second [tippett2017, everett1997]."
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "kind": "programme",
+      "text": "Krasnikov's time machine of 1998, made from the Deutsch-Politzer spacetime with a conformal factor. Its closed timelike curves form in a region with no singularity, and the weak energy condition holds throughout [krasnikov1998wec]."
     }
   ],
   "references": [
@@ -59,7 +64,8 @@
     "flynn2008january",
     "flynn2010jim",
     "flynn2012lion",
-    "tippett2017"
+    "tippett2017",
+    "krasnikov1998wec"
   ],
   "coordinates": [
     {

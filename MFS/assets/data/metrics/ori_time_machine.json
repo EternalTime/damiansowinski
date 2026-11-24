@@ -57,6 +57,11 @@
       "id": "tippett_tsang",
       "kind": "family",
       "text": "A time machine of the same class by Tippett and Tsang's sorting, a bubble that runs round a circle in the plane of $t$ and $x$. Its wall violates the null energy condition and carries naked singularities [tippett2017]."
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "kind": "family",
+      "text": "Serguei Krasnikov's time machine of 1998, the Deutsch-Politzer spacetime with a conformal factor, whose matter also obeys the weak energy condition. The region holding its closed timelike curves has no singularity [krasnikov1998wec]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "dietz2012ori",
     "kay1997",
     "kim1991",
-    "tippett2017"
+    "tippett2017",
+    "krasnikov1998wec"
   ],
   "coordinates": [
     {

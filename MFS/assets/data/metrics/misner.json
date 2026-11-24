@@ -97,6 +97,11 @@
       "id": "constant_curvature_black_hole",
       "kind": "family",
       "text": "Anti-de Sitter space identified under a boost, a black hole in four or more dimensions, as Misner's space is Minkowski space identified under one [banados1998]."
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "kind": "family",
+      "text": "Serguei Krasnikov's time machine of 1998, whose closed timelike curves form in a region with no singularity [krasnikov1998wec]. Krasnikov made the acausal extension of Misner space causal in 2002 by removing one ray and dividing the metric by a function that vanishes on it [krasnikov2002]."
     }
   ],
   "references": [
@@ -124,7 +129,9 @@
     "moncriefisenberg1983",
     "louko_marolf1994",
     "visser1997",
-    "banados1998"
+    "banados1998",
+    "krasnikov1998wec",
+    "krasnikov2002"
   ],
   "coordinates": [
     {

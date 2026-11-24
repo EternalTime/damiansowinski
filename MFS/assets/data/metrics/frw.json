@@ -246,6 +246,11 @@
       "id": "waves_in_friedmann",
       "kind": "composite",
       "text": "Gravitational waves sent into open, flat and closed Friedmann universes of stiff fluid, $p = \\rho$, by Jiří Bičák and Jerry B. Griffiths. Ahead of each wave front the spacetime is the stiff Friedmann universe itself, and behind it the field is algebraically general [bicak1994, bicak1996]."
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "kind": "composite",
+      "text": "A time machine inside a universe that is a closed Friedmann universe outside a layer round the equator of its 3-sphere. Serguei Krasnikov built it in 1998 with the weak energy condition obeyed throughout [krasnikov1998wec]."
     }
   ],
   "references": [
@@ -333,7 +338,8 @@
     "husain1994exact",
     "faraoni2013",
     "bicak1994",
-    "bicak1996"
+    "bicak1996",
+    "krasnikov1998wec"
   ],
   "coordinates": [
     {
