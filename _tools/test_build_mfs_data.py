@@ -5936,6 +5936,12 @@ class Slices(unittest.TestCase):
                     return float(r - tail)
                 return (lambda X: rstar(X) - X), [lo, hi]
             return (lambda X: 0.0), [lo, hi]
+        if key.startswith("constant_curvature_black_hole/kruskal/"):
+            # The moment t = 0 of the exterior chart at r_+ = l is the line y_0 = 0 of the Kruskal plane through
+            # both halves theta = 0 and pi, out to y_1 = +-sqrt((r - r_+)/(r + r_+)) at the embedding's reach.
+            lo, hi = self.reach(surface)
+            a = math.sqrt((hi - 1) / (hi + 1))
+            return (lambda X: 0.0), [-a, a]
         if key == "waves_in_friedmann/closed_toroidal/closed":
             # The closed stiff universe at its greatest expansion, eta = pi/4, from axis to axis.
             return (lambda X: math.pi / 4), list(self.reach(surface))
