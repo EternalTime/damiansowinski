@@ -1538,6 +1538,19 @@ A spherically symmetric universe of inhomogeneous dust with two regions joined b
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/hellaby_kruskal.json
 - chart Comoving Synchronous: coordinates $(t, r, \theta, \phi)$, $$ds^2=-dt^2+\dfrac{(\partial_r Y)^2}{1+f}dr^2+Y^2(d\theta^2+\sin^2\theta\,d\phi^2)$$
 
+### Heterotic M-Theory Domain Wall
+
+Two flat walls with three dimensions of space at the ends of the interval of heterotic M-theory, found by André Lukas, Burt A. Ovrut, Kellogg S. Stelle, and Daniel Waldram in 1999. Between the walls the metric scales with powers of a function $H$ linear in the coordinate $y$ along the interval, the volume of the Calabi-Yau space scales as $H^3$, and our universe is the worldvolume of one wall.
+
+- id: `heterotic_m_theory_wall`
+- tags: braneworld, brane, domain wall, higher dimensions, five-dimensional, supergravity, supersymmetric, string theory, orbifold, reflection symmetry, planar symmetry, static, scalar field, curvature singularity, cosmology, time-dependent, exact solution, Lorentzian, Einstein equations, idealized model, stationary
+- signature: (-,+,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/heterotic_m_theory_wall.json
+- chart Lukas, Ovrut, Stelle, and Waldram, Static Walls: coordinates $(t, x_1, x_2, x_3, y)$, $$ds^2 = a_0^2H\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\right) + b_0^2H^4dy^2$$
+- chart Lehners, McFadden, and Turok, Conformally Flat: coordinates $(t, x_1, x_2, x_3, w)$, $$ds^2 = h^{2/5}\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dw^2\right)$$
+- chart Chamblin and Reall, Static Bulk: coordinates $(t, x_1, x_2, x_3, r)$, $$ds^2 = -r^2\left(1 - \lambda^2r^2\right)c^2dt^2 + \dfrac{18r^{10}}{\alpha^2\left(1 - \lambda^2r^2\right)}dr^2 + r^2\left(dx_1^2 + dx_2^2 + dx_3^2\right)$$
+- chart Lukas, Ovrut, and Waldram, Rolling Walls: coordinates $(t, x_1, x_2, x_3, y)$, $$ds^2 = a_0^2H\left(-c^2dt^2 + a^2\left(dx_1^2 + dx_2^2 + dx_3^2\right)\right) + b^2b_0^2H^4dy^2$$
+
 ### Hiscock's Evaporating Black Hole
 
 A black hole that forms and then radiates itself away, built by William Hiscock in 1981 from Vaidya's metric. Inside a surface just outside the apparent horizon negative energy falls in and lowers the mass, and outside it positive energy carries the same mass off to infinity. The event horizon ends after a finite time, and the last point of the singularity is naked.

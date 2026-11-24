@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 278,
+  "count": 279,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -12770,6 +12770,11 @@
           "id": "ads_vaidya",
           "kind": "family",
           "text": "The black hole of anti-de Sitter space with light falling into it. Andrew Chamblin, Andreas Karch, and Ali Nayeri took it for the space on both sides of the wall in 2001, and its growing mass is a radiation term in the wall's Friedmann equation [chamblin2001]."
+        },
+        {
+          "id": "heterotic_m_theory_wall",
+          "kind": "family",
+          "text": "The walls of heterotic M-theory set moving, their size, their separation, and the volume of the Calabi-Yau space following powers of time [lukas1999cosmological]."
         }
       ],
       "references": [
@@ -12787,7 +12792,8 @@
         "shiromizu2000",
         "visser1989nuclphysb",
         "singh2006",
-        "chamblin2001"
+        "chamblin2001",
+        "lukas1999cosmological"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/brane_wall_universe.json",
@@ -24384,6 +24390,11 @@
           "id": "ads_soliton",
           "kind": "family",
           "text": "Bannister's regular axis in the Squires family has the geometry of the five dimensional anti-de Sitter soliton [bannister1987]."
+        },
+        {
+          "id": "heterotic_m_theory_wall",
+          "kind": "family",
+          "text": "A universe on a wall at the end of the eleventh dimension of M-theory, two such walls bounding a fifth dimension once six more are curled into a Calabi-Yau space [lukas1999universe]."
         }
       ],
       "references": [
@@ -24400,7 +24411,8 @@
         "gogberashvili2002",
         "giovannini2001",
         "frere2001",
-        "csaki2001"
+        "csaki2001",
+        "lukas1999universe"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/early_braneworlds.json",
@@ -38385,6 +38397,460 @@
       ]
     },
     {
+      "id": "heterotic_m_theory_wall",
+      "name": "Heterotic M-Theory Domain Wall",
+      "short_name": "Heterotic M-Theory Wall",
+      "description": "Two flat walls with three dimensions of space at the ends of the interval of heterotic M-theory, found by André Lukas, Burt A. Ovrut, Kellogg S. Stelle, and Daniel Waldram in 1999. Between the walls the metric scales with powers of a function $H$ linear in the coordinate $y$ along the interval, the volume of the Calabi-Yau space scales as $H^3$, and our universe is the worldvolume of one wall.",
+      "tags": [
+        "braneworld",
+        "brane",
+        "domain wall",
+        "higher dimensions",
+        "five-dimensional",
+        "supergravity",
+        "supersymmetric",
+        "string theory",
+        "orbifold",
+        "reflection symmetry",
+        "planar symmetry",
+        "static",
+        "scalar field",
+        "curvature singularity",
+        "cosmology",
+        "time-dependent",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model",
+        "stationary"
+      ],
+      "signature": "(-,+,+,+,+)",
+      "convention": "The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, and $\\delta$ is the Dirac delta. We keep factors of $c$ explicit.",
+      "related": [
+        {
+          "id": "randall_sundrum",
+          "kind": "family",
+          "text": "Two flat walls at the ends of a fifth dimension as well, with anti-de Sitter space between them. With quantum corrections, and a K3 surface and a torus in place of the Calabi-Yau space, Cvetič and Wiesner found the heterotic wall continuing to anti-de Sitter space, a thick version of Randall and Sundrum's single wall [cvetic2026smooth]."
+        },
+        {
+          "id": "domain_wall",
+          "kind": "family",
+          "text": "A thin wall with flat space on either side, which accelerates as a bubble. The heterotic walls stay flat and at rest, held there by a potential for the volume of the Calabi-Yau space [lukas1999universe]."
+        },
+        {
+          "id": "brane_wall_universe",
+          "kind": "family",
+          "text": "A wall in anti-de Sitter space of five dimensions moving past a black hole, which those on it see as an expanding universe. The heterotic walls move too, rigidly, their size and separation following powers of time [lukas1999cosmological]."
+        },
+        {
+          "id": "holographic_rg_flow",
+          "kind": "family",
+          "text": "Walls of scalar field in gauged supergravity of five dimensions, there between regions of anti-de Sitter space. In the heterotic wall the scalar is the volume of the Calabi-Yau space, with a potential that falls as the inverse square of that volume [lukas1999universe]."
+        },
+        {
+          "id": "early_braneworlds",
+          "kind": "family",
+          "text": "Universes confined to a wall or a vortex in more dimensions, the first brane universes [khoury2001ekpyrotic]."
+        },
+        {
+          "id": "pre_big_bang",
+          "kind": "family",
+          "text": "Another beginning for the big bang from string theory, from an almost empty vacuum that then deflates faster than light [khoury2001ekpyrotic]."
+        }
+      ],
+      "references": [
+        "horava1996heterotic",
+        "horava1996eleven",
+        "witten1996strong",
+        "lukas1999universe",
+        "lukas1999cosmological",
+        "khoury2001ekpyrotic",
+        "cvetic2024nonperturbative",
+        "cvetic2026smooth",
+        "chamblin1999dynamic",
+        "lehners2007colliding",
+        "reig2026dark",
+        "blumenhagen2026towards"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/heterotic_m_theory_wall.json",
+      "charts": [
+        {
+          "id": "static",
+          "name": "Lukas, Ovrut, Stelle, and Waldram, Static Walls",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "y"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "y \\in [-\\pi\\rho, \\pi\\rho]",
+            "y = 0 \\;\\text{(a wall)}",
+            "y = \\pm\\pi\\rho \\;\\text{(the other wall)}",
+            "H > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "Inverse length fixed by the Calabi-Yau data, with $\\alpha^2/(3V^2)$ the potential of the volume $V$"
+            },
+            {
+              "symbol": "a_0",
+              "description": "Pure number, the scale of the four dimensions along the walls"
+            },
+            {
+              "symbol": "b_0",
+              "description": "Pure number, the scale of the interval and of the volume $V$"
+            },
+            {
+              "symbol": "c_0",
+              "description": "Pure number, the value of $H$ on the wall at $y = 0$"
+            },
+            {
+              "symbol": "\\rho",
+              "description": "Length, with $\\pi\\rho$ the coordinate length of the interval from one wall to the other"
+            },
+            {
+              "symbol": "H = \\frac{\\sqrt{2}}{3}\\alpha|y| + c_0",
+              "description": "Pure number, linear in $|y|$ between the walls"
+            },
+            {
+              "symbol": "V = b_0 H^3",
+              "description": "Volume of the Calabi-Yau space, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, y)$, with $t$ having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths along the walls, and $y$ a length across the interval, with $\\mathrm{sgn}(y)$ its sign. The points $y$ and $-y$ are one point, and we take $|y| < \\pi\\rho$, away from the wall at $y = \\pm\\pi\\rho$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = a_0^2H\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2\\right) + b_0^2H^4dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-a_0^2\\,H"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "a_0^2\\,H"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "a_0^2\\,H"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "a_0^2\\,H"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "b_0^2\\,H^4"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{14\\alpha^2}{9b_0^2\\,H^6} - \\dfrac{8\\sqrt{2}\\alpha\\,\\delta(y)}{3b_0^2\\,c_0^5}",
+          "kretschmann": "K = \\dfrac{106\\alpha^4}{81b_0^4\\,H^{12}} \\;\\text{for}\\; y \\neq 0"
+        },
+        {
+          "id": "conformal",
+          "name": "Lehners, McFadden, and Turok, Conformally Flat",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "w"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "w \\in [-w_0, w_0]",
+            "w = -w_0 \\;\\text{(the wall of negative tension)}",
+            "w = w_0 \\;\\text{(the wall of positive tension)}",
+            "h > 0"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "Inverse length fixed by the Calabi-Yau data, with $\\alpha^2/(3V^2)$ the potential of the volume $V$"
+            },
+            {
+              "symbol": "w_0",
+              "description": "Length, with the walls at $w = \\pm w_0$"
+            },
+            {
+              "symbol": "h_0",
+              "description": "Pure number, the value of $h$ on the wall at $w = -w_0$"
+            },
+            {
+              "symbol": "h = \\frac{5\\sqrt{2}}{6}\\alpha\\left(w + w_0\\right) + h_0",
+              "description": "Pure number, linear in $w$ between the walls"
+            },
+            {
+              "symbol": "V = h^{6/5}",
+              "description": "Volume of the Calabi-Yau space, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, w)$, with $t$ having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths along the walls, and $w$ a length across the interval. The interval ends on the walls at $w = \\pm w_0$, and we take $|w| < w_0$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = h^{2/5}\\left(-c^2dt^2 + dx_1^2 + dx_2^2 + dx_3^2 + dw^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-h^{2/5}"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "h^{2/5}"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "h^{2/5}"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "h^{2/5}"
+            },
+            {
+              "indices": [
+                "w",
+                "w"
+              ],
+              "value": "h^{2/5}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{14\\alpha^2}{9h^{12/5}}",
+          "kretschmann": "K = \\dfrac{106\\alpha^4}{81h^{24/5}}"
+        },
+        {
+          "id": "static_bulk",
+          "name": "Chamblin and Reall, Static Bulk",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "r"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "r \\in (0, 1/\\lambda)",
+            "\\lambda \\ge 0",
+            "r = 0 \\;\\text{(the timelike naked singularity)}",
+            "r = 1/\\lambda \\;\\text{(the cosmological horizon)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "Inverse length fixed by the Calabi-Yau data, with $\\alpha^2/(3V^2)$ the potential of the volume $V$"
+            },
+            {
+              "symbol": "\\lambda",
+              "description": "Pure number, with $r = 1/\\lambda$ the cosmological horizon; at $\\lambda = 0$ the walls stay at rest wherever they are placed"
+            },
+            {
+              "symbol": "V = r^6",
+              "description": "Volume of the Calabi-Yau space, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, r)$, with $t$ the static time, having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths, and $r$ a pure number, the scale of the three flat directions. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = -r^2\\left(1 - \\lambda^2r^2\\right)c^2dt^2 + \\dfrac{18r^{10}}{\\alpha^2\\left(1 - \\lambda^2r^2\\right)}dr^2 + r^2\\left(dx_1^2 + dx_2^2 + dx_3^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-r^2\\left(1 - \\lambda^2r^2\\right)"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{18r^{10}}{\\alpha^2\\left(1 - \\lambda^2r^2\\right)}"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{\\alpha^2\\left(14 - 9\\lambda^2\\,r^2\\right)}{9r^{12}}",
+          "kretschmann": "K = \\dfrac{\\alpha^4\\left(99\\lambda^4\\,r^4 - 198\\lambda^2\\,r^2 + 106\\right)}{81r^{24}}"
+        },
+        {
+          "id": "rolling",
+          "name": "Lukas, Ovrut, and Waldram, Rolling Walls",
+          "coordinates": [
+            "t",
+            "x_1",
+            "x_2",
+            "x_3",
+            "y"
+          ],
+          "domains": [
+            "t \\in (t_0, \\infty)",
+            "x_1 \\in (-\\infty, \\infty)",
+            "x_2 \\in (-\\infty, \\infty)",
+            "x_3 \\in (-\\infty, \\infty)",
+            "y \\in [-\\pi\\rho, \\pi\\rho]",
+            "y = 0 \\;\\text{(a wall)}",
+            "y = \\pm\\pi\\rho \\;\\text{(the other wall)}",
+            "H > 0",
+            "t = t_0 \\;\\text{(the curvature singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\alpha",
+              "description": "Inverse length fixed by the Calabi-Yau data, with $\\alpha^2/(3V^2)$ the potential of the volume $V$"
+            },
+            {
+              "symbol": "a_0",
+              "description": "Pure number, the scale of the four dimensions along the walls"
+            },
+            {
+              "symbol": "b_0",
+              "description": "Pure number, the scale of the interval and of the volume $V$"
+            },
+            {
+              "symbol": "c_0",
+              "description": "Pure number, the value of $H$ on the wall at $y = 0$"
+            },
+            {
+              "symbol": "\\rho",
+              "description": "Length, with $\\pi\\rho$ the coordinate length of the interval from one wall to the other"
+            },
+            {
+              "symbol": "A",
+              "description": "Pure number, the scale of $a$"
+            },
+            {
+              "symbol": "B",
+              "description": "Pure number, the scale of $b$"
+            },
+            {
+              "symbol": "t_0",
+              "description": "Time of the curvature singularity"
+            },
+            {
+              "symbol": "p",
+              "description": "Exponent of the size of the walls, $\\frac{3}{11}\\left(1 \\mp \\frac{4}{3\\sqrt{3}}\\right)$, the upper sign with the upper sign of $q$"
+            },
+            {
+              "symbol": "q",
+              "description": "Exponent of the length of the interval and of the volume $V$, $\\frac{2}{11}\\left(1 \\pm 2\\sqrt{3}\\right)$"
+            },
+            {
+              "symbol": "H = \\frac{\\sqrt{2}}{3}\\alpha|y| + c_0",
+              "description": "Pure number, linear in $|y|$ between the walls"
+            },
+            {
+              "symbol": "a = A\\left(t - t_0\\right)^p",
+              "description": "Scale factor of the walls, a pure number"
+            },
+            {
+              "symbol": "b = B\\left(t - t_0\\right)^q",
+              "description": "Scale factor of the interval, a pure number"
+            },
+            {
+              "symbol": "V = b_0\\,b\\,H^3",
+              "description": "Volume of the Calabi-Yau space, a pure number"
+            }
+          ],
+          "convention": "We use coordinates $(t, x_1, x_2, x_3, y)$, with $t$ the comoving time, having dimensions of time and taken in a fixed unit in the powers of $t - t_0$, $x_1$, $x_2$, and $x_3$ lengths along the walls, and $y$ a length across the interval, with $\\mathrm{sgn}(y)$ its sign. The points $y$ and $-y$ are one point, and we take $|y| < \\pi\\rho$, away from the wall at $y = \\pm\\pi\\rho$. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+          "line_element": "ds^2 = a_0^2H\\left(-c^2dt^2 + a^2\\left(dx_1^2 + dx_2^2 + dx_3^2\\right)\\right) + b^2b_0^2H^4dy^2",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-a_0^2\\,H"
+            },
+            {
+              "indices": [
+                "x_1",
+                "x_1"
+              ],
+              "value": "a_0^2\\,H\\,a^2"
+            },
+            {
+              "indices": [
+                "x_2",
+                "x_2"
+              ],
+              "value": "a_0^2\\,H\\,a^2"
+            },
+            {
+              "indices": [
+                "x_3",
+                "x_3"
+              ],
+              "value": "a_0^2\\,H\\,a^2"
+            },
+            {
+              "indices": [
+                "y",
+                "y"
+              ],
+              "value": "b_0^2\\,H^4\\,b^2"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{14\\alpha^2\\,a_0^2\\,c^2\\left(t - t_0\\right)^2 + 54b_0^2\\,H^5\\,b^2\\,p\\,q + 108b_0^2\\,H^5\\,b^2\\,p^2 + 18b_0^2\\,H^5\\,b^2\\,q^2 - 54b_0^2\\,H^5\\,b^2\\,p - 18b_0^2\\,H^5\\,b^2\\,q}{9a_0^2\\,b_0^2\\,H^6\\,b^2\\,c^2\\left(t - t_0\\right)^2} - \\dfrac{8\\sqrt{2}\\alpha\\,\\delta(y)}{3b_0^2\\,b^2\\,c_0^5}",
+          "kretschmann": "K = \\dfrac{106\\alpha^4\\,a_0^4\\,c^4\\left(t - t_0\\right)^4 + 540\\alpha^2\\,a_0^2\\,b_0^2\\,H^5\\,b^2\\,c^2\\,p\\,q\\left(t - t_0\\right)^2 - 216\\alpha^2\\,a_0^2\\,b_0^2\\,H^5\\,b^2\\,c^2\\,p^2\\left(t - t_0\\right)^2 + 72\\alpha^2\\,a_0^2\\,b_0^2\\,H^5\\,b^2\\,c^2\\,q^2\\left(t - t_0\\right)^2 + 108\\alpha^2\\,a_0^2\\,b_0^2\\,H^5\\,b^2\\,c^2\\,p\\left(t - t_0\\right)^2 - 180\\alpha^2\\,a_0^2\\,b_0^2\\,H^5\\,b^2\\,c^2\\,q\\left(t - t_0\\right)^2 + 972b_0^4\\,H^{10}\\,b^4\\,p^2\\,q^2 + 972b_0^4\\,H^{10}\\,b^4\\,p^2 - 1944b_0^4\\,H^{10}\\,b^4\\,p^3 + 1944b_0^4\\,H^{10}\\,b^4\\,p^4 + 324b_0^4\\,H^{10}\\,b^4\\,q^2 - 648b_0^4\\,H^{10}\\,b^4\\,q^3 + 324b_0^4\\,H^{10}\\,b^4\\,q^4}{81a_0^4\\,b_0^4\\,H^{12}\\,b^4\\,c^4\\left(t - t_0\\right)^4} \\;\\text{for}\\; y \\neq 0"
+        }
+      ]
+    },
+    {
       "id": "hiscock",
       "name": "Hiscock's Evaporating Black Hole",
       "short_name": "Hiscock",
@@ -38702,6 +39168,11 @@
           "id": "domain_wall",
           "kind": "family",
           "text": "A thin wall with flat space on either side. Walls between regions of anti-de Sitter space with different radii had been studied in supergravity of four dimensions before the flows here, in five [skenderis1999]."
+        },
+        {
+          "id": "heterotic_m_theory_wall",
+          "kind": "family",
+          "text": "A wall of five dimensional gauged supergravity from M-theory, with the volume of a Calabi-Yau space as its scalar, falling toward one of the two walls that end the fifth dimension [lukas1999universe]."
         }
       ],
       "references": [
@@ -38720,7 +39191,8 @@
         "pilch2000",
         "gubser2000",
         "myers2010seeing",
-        "deddo2024"
+        "deddo2024",
+        "lukas1999universe"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/holographic_rg_flow.json",
@@ -70132,6 +70604,11 @@
           "id": "lqc_bounce",
           "kind": "family",
           "text": "A flat universe of a massless scalar field in which the big bang is replaced by a bounce of loop quantum cosmology. Long before the bounce it contracts as $(-t)^{1/3}$, the Einstein frame of the isotropic expansion here [gasperini2003prebigbang]."
+        },
+        {
+          "id": "heterotic_m_theory_wall",
+          "kind": "family",
+          "text": "A big bang that begins when a wall drifting across the fifth dimension of heterotic M-theory strikes ours and fills it with hot radiation [khoury2001ekpyrotic]."
         }
       ],
       "references": [
@@ -70169,7 +70646,8 @@
         "conzinu2025nonminimal",
         "tan2026ligo",
         "vilascurras2026lisa",
-        "gasperini2026horizons"
+        "gasperini2026horizons",
+        "khoury2001ekpyrotic"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/pre_big_bang.json",
@@ -71500,6 +71978,11 @@
           "id": "holographic_rg_flow",
           "kind": "family",
           "text": "Thick walls of scalar field in anti-de Sitter space of five dimensions, the flows of the renormalisation group of holography. DeWolfe and coauthors used their equations of first order to fix the distance between Randall and Sundrum's two walls [dewolfe2000]."
+        },
+        {
+          "id": "heterotic_m_theory_wall",
+          "kind": "family",
+          "text": "Two flat walls of heterotic M-theory at the ends of a fifth dimension, with a warp factor that is a power of a function linear in the distance along it and the volume of a Calabi-Yau space changing between them [lukas1999universe]."
         }
       ],
       "references": [
@@ -71529,7 +72012,8 @@
         "ida2000",
         "akama1983pregeometry",
         "visser1985",
-        "dewolfe2000"
+        "dewolfe2000",
+        "lukas1999universe"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/randall_sundrum.json",
@@ -93179,6 +93663,11 @@
           "id": "holographic_rg_flow",
           "kind": "family",
           "text": "Thick walls of scalar field between regions of anti-de Sitter space of five dimensions with different radii, which in holography correspond to flows of the renormalisation group [skenderis1999, girardello1998]."
+        },
+        {
+          "id": "heterotic_m_theory_wall",
+          "kind": "family",
+          "text": "A pair of flat walls in five dimensional supergravity that stay at rest, held there by a potential for the volume of a Calabi-Yau space between them [lukas1999universe]."
         }
       ],
       "references": [
@@ -93204,7 +93693,8 @@
         "rubakov2001extra",
         "hirano2018bt",
         "skenderis1999",
-        "girardello1998"
+        "girardello1998",
+        "lukas1999universe"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/domain_wall.json",

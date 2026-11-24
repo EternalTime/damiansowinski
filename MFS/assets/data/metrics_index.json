@@ -1152,7 +1152,7 @@
       "five-dimensional",
       "idealized model"
     ],
-    "version": "b104da7885bb5a33",
+    "version": "1b5a0652f3b34fb9",
     "diagrams": "16913809b57177fb",
     "conformal": "ce3ca95a4083e894",
     "embedding": "bedfefcf30c45163",
@@ -2172,7 +2172,7 @@
       "Lorentzian",
       "idealized model"
     ],
-    "version": "5bdc309d29111b5c",
+    "version": "a22ae09400917669",
     "diagrams": "331d3ed0e92420c7",
     "conformal": "420755ae5fafd02e",
     "embedding": "cb5e3996e73277cc",
@@ -3277,6 +3277,38 @@
     "curvature": "cc8c1ecf6970da50"
   },
   {
+    "id": "heterotic_m_theory_wall",
+    "name": "Heterotic M-Theory Wall",
+    "tags": [
+      "braneworld",
+      "brane",
+      "domain wall",
+      "higher dimensions",
+      "five-dimensional",
+      "supergravity",
+      "supersymmetric",
+      "string theory",
+      "orbifold",
+      "reflection symmetry",
+      "planar symmetry",
+      "static",
+      "scalar field",
+      "curvature singularity",
+      "cosmology",
+      "time-dependent",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model",
+      "stationary"
+    ],
+    "version": "fe2c77e9df396e5b",
+    "diagrams": "21ae710945117255",
+    "conformal": "f1334ef47f0c5e7a",
+    "embedding": "3b44c598022661e4",
+    "curvature": "af8de3529ed1c41b"
+  },
+  {
     "id": "hiscock",
     "name": "Hiscock",
     "tags": [
@@ -3340,7 +3372,7 @@
       "stationary",
       "conformally flat"
     ],
-    "version": "fb214d8484e8d8a7",
+    "version": "504be3a2e4e400f0",
     "diagrams": "d06eb1ad90def94c",
     "conformal": "f1c3c868d9a562cf",
     "embedding": "8a5dcbc8852398b8",
@@ -6223,7 +6255,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "2992410d981abdb4",
+    "version": "69c4fd05050ffc8a",
     "diagrams": "4b2f2e548fe78fb8",
     "conformal": "fca5edbfa634c348",
     "embedding": "f7eb68bb05cb637f",
@@ -6354,7 +6386,7 @@
       "idealized model",
       "stationary"
     ],
-    "version": "bf7bdff661d4fcac",
+    "version": "334027b7b1f46590",
     "diagrams": "598394eb07802f5f",
     "conformal": "c88536bb72659ebe",
     "embedding": "69d23ef08a8a8c79"
@@ -8225,7 +8257,7 @@
       "spherically symmetric",
       "black hole pair creation"
     ],
-    "version": "3cdf472a583149a7",
+    "version": "7909093063431d1a",
     "diagrams": "89350711900d66d8",
     "conformal": "4d7dd21af4c45eda",
     "embedding": "93b27ed492458d6f"
