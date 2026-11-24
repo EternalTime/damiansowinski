@@ -4001,6 +4001,33 @@
   ],
   "sphere": null
  },
+ "chamseddine_volkov_monopole/chamseddine_volkov": {
+  "stamp": "b79cd780d2935afa",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": false,
+  "killing": [
+   {
+    "coord": "t",
+    "timelike": true,
+    "hypersurface_orthogonal": true,
+    "translation": true
+   },
+   {
+    "coord": "\\varphi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\varphi"
+  ]
+ },
  "chandrasekhar_xanthopoulos/angular": {
   "stamp": "1f8edbdb4f22c283",
   "relations": {},

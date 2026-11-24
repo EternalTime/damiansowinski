@@ -5576,5 +5576,10 @@ DIMENSIONS.update(_naked_black_holes.DIMENSIONS)
 HELD.update(_naked_black_holes.HELD)
 RATES.update(_naked_black_holes.RATES)
 
+import chamseddine_volkov_monopole as _chamseddine_volkov_monopole
+DIMENSIONS.update(_chamseddine_volkov_monopole.DIMENSIONS)
+HELD.update(_chamseddine_volkov_monopole.HELD)
+RATES.update(_chamseddine_volkov_monopole.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())

@@ -1,0 +1,1504 @@
+{
+  "id": "chamseddine_volkov_monopole",
+  "name": "Chamseddine-Volkov Monopole",
+  "short_name": "Chamseddine-Volkov Monopole",
+  "description": "A static, spherically symmetric monopole of gauged supergravity in four dimensions, with a Yang-Mills field, a dilaton, and no Higgs field, regular everywhere and supersymmetric. Its plane of time and radius is conformal to half of the flat plane, so its causal structure is that of Minkowski space, although it is not asymptotically flat.",
+  "tags": [
+    "soliton",
+    "magnetic monopole",
+    "Yang-Mills field",
+    "Einstein-Yang-Mills",
+    "gauge field",
+    "dilaton",
+    "supergravity",
+    "supersymmetric",
+    "string theory",
+    "low energy string theory",
+    "holography",
+    "regular centre",
+    "geodesically complete",
+    "globally hyperbolic",
+    "not asymptotically flat",
+    "static",
+    "stationary",
+    "spherically symmetric",
+    "exact solution",
+    "Lorentzian",
+    "four-dimensional"
+  ],
+  "signature": "(-,+,+,+)",
+  "convention": "We use Chamseddine and Volkov's units, $c = 4\\pi G = 1$ with the gauge coupling $1$, in which the scale $a$ is a length, and turn their signature $(+,-,-,-)$ to $(-,+,+,+)$ [chamseddine1997]. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+  "history": "A magnetic monopole can be made of a Yang-Mills field, a dilaton, and gravity, with no Higgs field [chamseddine1997]. Ali H. Chamseddine of ETH Zürich and Mikhail S. Volkov of the University of Zürich found it in 1997 among the supersymmetric solutions of an $N = 4$ supergravity [chamseddine1997]. Daniel Z. Freedman and John H. Schwarz had built that theory, with gauge group $SU(2) \\times SU(2)$, in 1978 [freedman1978]. Chamseddine and Volkov kept one of its two Yang-Mills fields, purely magnetic, together with gravity and the dilaton, whose potential acts as \"an effective negative, position-dependent cosmological term\" [chamseddine1997]. Solving the conditions for supersymmetry to survive, Chamseddine and Volkov found in closed form all the static, spherically symmetric, purely magnetic supersymmetric solutions of the truncated theory [chamseddine1997]. They showed in 1998 that with both Yang-Mills fields present no such solution exists, and that the solutions they had found keep a quarter of the supersymmetries [chamseddine1998].¶One of these solutions is regular everywhere, with line element $ds^2 = a^2 (\\sinh\\rho / R)(-dt^2 + d\\rho^2 + R^2 d\\Omega^2)$, where $R^2 = 2\\rho\\coth\\rho - \\rho^2/\\sinh^2\\rho - 1$ and $a$ is a free scale [chamseddine1997]. Its Yang-Mills field has the amplitude $w = \\rho/\\sinh\\rho$, which with $\\rho$ taken as a radius is the field of the Bogomol'nyi-Prasad-Sommerfield monopole of flat space, a result Chamseddine and Volkov called \"quite surprising\" [chamseddine1997]. The space has the topology of $\\mathbb{R}^4$, and the other solutions are singular at the centre, among them the one with $w = 0$, the field of a Dirac monopole [chamseddine1997, chamseddine1998].¶Far from the centre all curvature invariants tend to zero, but not fast enough for the space to be asymptotically flat, and no total energy can be assigned to it [chamseddine1997]. The plane of $t$ and $\\rho$ is conformal to half of the flat plane, so the conformal diagram is that of Minkowski space, and the spacetime is geodesically complete and globally hyperbolic [chamseddine1997]. The negative cosmological term focuses timelike geodesics, which oscillate about the centre, each with its own period, so that geodesics leaving one event do not meet again [chamseddine1997]. In Schwarzschild coordinates, known only parametrically through $r = a\\sqrt{R\\sinh\\rho}$, the amplitude $w$ falls off as a power of $r$, since every field of the theory is massless [chamseddine1998].¶Chamseddine and Volkov also obtained the gauged theory from supergravity in ten dimensions on a group manifold, and with it lifted the monopole to a solution of string theory at leading order [chamseddine1998]. In the string frame the lift near the centre is Minkowski space of seven dimensions times a 3-sphere, and the Yang-Mills field appears as components off the diagonal of the metric [chamseddine1998]. Juan Maldacena and Carlos Nuñez found that the lift is the geometry of a large number of fivebranes wrapped on a 2-sphere, whose theory at low energy is pure $N = 1$ super Yang-Mills [maldacena2001]. They took the solution from Chamseddine and Volkov and showed that it is smooth and that the gauge theory dual to it confines [maldacena2001]. Worldsheet instantons break the chiral symmetry $U(1)_R$ of that theory to $Z_{2N}$, and the solution breaks it further to $Z_2$, with $N$ different solutions for its $N$ vacua [maldacena2001]. The Abelian solution with the field of a Dirac monopole is singular at its centre, and Maldacena and Nuñez compared the two as an SU(2) monopole compares with a Dirac monopole [maldacena2001].¶Steven S. Gubser, Arkady A. Tseytlin, and Volkov showed in 2001 that the supersymmetric solutions form a single family with the monopole as its only regular member, and found black holes with regular horizons in the same theory [gubser2001nonabelian]. None of those black holes is colder than the Hagedorn temperature of the little string theory on the fivebranes, and their entropy falls as their temperature rises [gubser2001nonabelian]. Diego H. Correa, Enrique F. Moreno, Sebastien Reuillon, and Fidel A. Schaposnik took the Penrose limit along a radial null geodesic in 2003, which needed the gauge coupling scaled to zero, and found a plane wave keeping twice the monopole's supersymmetries [correa2003]. Chamseddine and Volkov placed the monopole in 2004 inside an $N = 4$ supergravity with gauge group $SO(4)$, where a ratio $\\xi$ of two gauge couplings deforms it, for $\\xi > 0$, into spaces that approach anti-de Sitter space \"with an excess of the solid angle\" [chamseddine2004]. At $\\xi = 1$ the deformed solution is anti-de Sitter space, and for $\\xi < 0$ its spatial sections have the topology of a 3-sphere [chamseddine2004].¶Burkhard Kleihaus, Jutta Kunz, and Eugen Radu found in 2008 an exact solution for the monopole in a background magnetic field, and it reduces to the monopole when the field is switched off [kleihaus2008]. Chamseddine and Volkov found in 2011 an infinite tower of bound states among the small perturbations of the monopole, with the same frequencies for bosons of either parity and for fermions [chamseddine2011]. A fermion scattered off the monopole flips its isospin, as fermions scattered off a monopole of flat space do [chamseddine2011]. Fabio Podestà and Alberto Raffero proved in 2026 that a family of complete metrics on the affine quadric, a space of six dimensions, joins a Ricci-flat Kähler metric to the metric of six dimensions in the lift [podesta2026]. Every member of their family other than the Kähler one has positive scalar curvature [podesta2026].",
+  "related": [
+    {
+      "id": "bartnik_mckinnon",
+      "kind": "family",
+      "text": "Another static ball of Yang-Mills field held by gravity with no Higgs field. It is not supersymmetric and has no magnetic charge [chamseddine1997]."
+    },
+    {
+      "id": "dilaton_black_hole",
+      "kind": "family",
+      "text": "The magnetic black hole of the same supergravity with both gauge couplings set to zero, an Abelian field, and a dilaton. In that theory the static, spherically symmetric, purely magnetic supersymmetric solutions are these black holes [chamseddine1998]."
+    },
+    {
+      "id": "global_monopole",
+      "kind": "family",
+      "text": "A monopole of scalar fields whose spheres far from the centre have less area than in flat space at the same distance. Here the spheres have more, and in Schwarzschild coordinates, with $g_{rr} = 1/N$, the function $N$ grows as $\\ln r$ [chamseddine1997]."
+    },
+    {
+      "id": "kaluza_klein_monopole",
+      "kind": "family",
+      "text": "Another monopole that is a regular geometry in more dimensions, a vacuum solution in five. Lifted to ten dimensions, the Yang-Mills field of this monopole also appears in the metric, as components mixing the four dimensions with a 3-sphere [chamseddine1998]."
+    },
+    {
+      "id": "linear_dilaton",
+      "kind": "family",
+      "text": "The string frame of fivebranes in flat space has a dilaton linear in the distance down their throat. Far from the centre the lift of this monopole to ten dimensions has a dilaton linear in its radial coordinate as well, with a logarithmic correction [maldacena2001]."
+    },
+    {
+      "id": "anti_de_sitter",
+      "kind": "family",
+      "text": "In the SO(4) gauged supergravity a ratio $\\xi$ of two gauge couplings deforms the monopole into spaces that approach anti-de Sitter space with an excess of solid angle, and at $\\xi = 1$ into anti-de Sitter space [chamseddine2004]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "family",
+      "text": "The plane of $t$ and $\\rho$ is conformal to half of the flat plane, so the monopole has the conformal diagram of Minkowski space, although its curvature does not vanish [chamseddine1997]."
+    }
+  ],
+  "references": [
+    "chamseddine1997",
+    "freedman1978",
+    "chamseddine1998",
+    "maldacena2001",
+    "gubser2001nonabelian",
+    "correa2003",
+    "chamseddine2004",
+    "kleihaus2008",
+    "chamseddine2011",
+    "podesta2026"
+  ],
+  "coordinates": [
+    {
+      "id": "chamseddine_volkov",
+      "name": "Chamseddine-Volkov",
+      "coords": [
+        "t",
+        "\\rho",
+        "\\theta",
+        "\\varphi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "\\rho \\in [0, \\infty)",
+        "\\theta \\in [0, \\pi]",
+        "\\varphi \\in [0, 2\\pi)"
+      ],
+      "parameters": [
+        {
+          "symbol": "a",
+          "description": "Scale of the monopole, a length, which the field equations leave free: the metric and $e^{2\\phi}$ grow as $a^2$"
+        },
+        {
+          "symbol": "R = \\sqrt{2\\rho\\coth\\rho - \\dfrac{\\rho^2}{\\sinh^2\\rho} - 1}",
+          "description": "Dimensionless, with $R^2 = \\rho^2 + O(\\rho^4)$ near the centre and $R^2 = 2\\rho + O(1)$ far away; the sphere at $\\rho$ has the areal radius $r = a\\sqrt{R\\sinh\\rho}$"
+        }
+      ],
+      "convention": "We use Chamseddine and Volkov's coordinates $(t, \\rho, \\theta, \\varphi)$ [chamseddine1997], with $t$ and $\\rho$ dimensionless, so $t$ is itself the chart's $x^0$. The Yang-Mills field has the amplitude $w = \\rho/\\sinh\\rho$ and the dilaton is $e^{2\\phi} = a^2\\sinh\\rho/(2R)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+      "line_element": "ds^2 = \\dfrac{a^2\\sinh\\rho}{R}\\left(-dt^2 + d\\rho^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\varphi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{a^2\\sinh\\rho}{R}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{a^2\\sinh\\rho}{R}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "R\\,a^2\\sinh\\rho"
+        },
+        {
+          "indices": [
+            "\\varphi",
+            "\\varphi"
+          ],
+          "value": "R\\,a^2\\sinh\\rho\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{R}{a^2\\sinh\\rho}"
+        },
+        {
+          "indices": [
+            "\\rho",
+            "\\rho"
+          ],
+          "value": "\\dfrac{R}{a^2\\sinh\\rho}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{R\\,a^2\\sinh\\rho}"
+        },
+        {
+          "indices": [
+            "\\varphi",
+            "\\varphi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{R\\,a^2\\sinh\\rho}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)\\sin^2\\theta}{2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho\\right)}{2R^3\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho\\right)}{2R^3\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho\\right)}{2R^3\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho\\right)}{2R^3\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)}{2R\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)}{2R\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)}{2R\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)\\sin^2\\theta}{2R\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)\\sin^2\\theta}{2R\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)\\sin^2\\theta}{2R\\sinh^2\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-R\\,a^2\\sinh\\rho\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "R\\,a^2\\sinh\\rho\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "R\\,a^2\\sinh\\rho\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{4R^2\\sinh^6\\rho}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho\\right)}{2R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho\\right)}{2R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho\\right)}{2R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho - 3R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 3R^2\\sinh^4\\rho - 2\\rho^4\\sinh^2\\rho - 2\\rho^4 + 8\\rho^3\\sinh\\rho\\cosh\\rho - 12\\rho^2\\sinh^2\\rho - 4\\rho^2\\sinh^4\\rho + 8\\rho\\sinh^3\\rho\\cosh\\rho - 2\\sinh^4\\rho - 2\\sinh^6\\rho\\right)}{2R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{4R\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{4R\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{4R\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(R^4\\sinh^4\\rho + R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho\\right)\\sin^2\\theta}{4R\\sinh^5\\rho}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{R^4\\sinh^6\\rho + 3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^2\\sinh^2\\rho + \\rho^2 - 2\\rho\\sinh\\rho\\cosh\\rho + \\sinh^2\\rho - 2\\sinh^4\\rho}{2R^2\\sinh^4\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^6\\rho - R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - R^2\\sinh^4\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{2R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(R^4\\sinh^6\\rho - R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - R^2\\sinh^4\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{2R^2\\sinh^6\\rho}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^6\\rho + 3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^3\\,a^2\\sinh^7\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^2\\sinh^2\\rho + \\rho^2 - 2\\rho\\sinh\\rho\\cosh\\rho + \\sinh^2\\rho - 2\\sinh^4\\rho}{2R\\,a^2\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^6\\rho - R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - R^2\\sinh^4\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{2R^3\\,a^2\\sinh^7\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^6\\rho - R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - R^2\\sinh^4\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{2R^3\\,a^2\\sinh^7\\rho}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{R^4\\sinh^6\\rho + 3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^2\\,a^4\\sinh^8\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^2\\sinh^2\\rho + \\rho^2 - 2\\rho\\sinh\\rho\\cosh\\rho + \\sinh^2\\rho - 2\\sinh^4\\rho}{2a^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{R^4\\sinh^6\\rho - R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - R^2\\sinh^4\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{2R^4\\,a^4\\sinh^8\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(R^4\\sinh^6\\rho - R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - R^2\\sinh^4\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\csc^2\\theta}{2R^4\\,a^4\\sinh^8\\rho}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = \\dfrac{3R^4\\sinh^4\\rho - 3R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^3\\,a^2\\sinh^7\\rho}",
+      "kretschmann": "K = \\dfrac{15R^8\\sinh^8\\rho + 6R^8\\sinh^{10}\\rho + 3R^8\\sinh^{12}\\rho + 12R^6\\,\\rho^2\\sinh^6\\rho + 8R^6\\,\\rho^2\\sinh^8\\rho + 4R^6\\,\\rho^2\\sinh^{10}\\rho - 24R^6\\,\\rho\\sinh^7\\rho\\cosh\\rho - 8R^6\\,\\rho\\sinh^9\\rho\\cosh\\rho + 12R^6\\sinh^8\\rho - 16R^6\\sinh^{10}\\rho - 4R^6\\sinh^{12}\\rho + 70R^4\\,\\rho^4\\sinh^4\\rho + 84R^4\\,\\rho^4\\sinh^6\\rho + 26R^4\\,\\rho^4\\sinh^8\\rho - 280R^4\\,\\rho^3\\sinh^5\\rho\\cosh\\rho - 168R^4\\,\\rho^3\\sinh^7\\rho\\cosh\\rho + 420R^4\\,\\rho^2\\sinh^6\\rho + 320R^4\\,\\rho^2\\sinh^8\\rho - 28R^4\\,\\rho^2\\sinh^{10}\\rho - 280R^4\\,\\rho\\sinh^7\\rho\\cosh\\rho + 88R^4\\,\\rho\\sinh^9\\rho\\cosh\\rho + 70R^4\\sinh^8\\rho - 44R^4\\sinh^{10}\\rho + 10R^4\\sinh^{12}\\rho + 84R^2\\,\\rho^6\\sinh^2\\rho + 136R^2\\,\\rho^6\\sinh^4\\rho + 52R^2\\,\\rho^6\\sinh^6\\rho - 504R^2\\,\\rho^5\\sinh^3\\rho\\cosh\\rho - 376R^2\\,\\rho^5\\sinh^5\\rho\\cosh\\rho + 1260R^2\\,\\rho^4\\sinh^4\\rho + 1216R^2\\,\\rho^4\\sinh^6\\rho + 84R^2\\,\\rho^4\\sinh^8\\rho - 1680R^2\\,\\rho^3\\sinh^5\\rho\\cosh\\rho - 464R^2\\,\\rho^3\\sinh^7\\rho\\cosh\\rho + 1260R^2\\,\\rho^2\\sinh^6\\rho + 856R^2\\,\\rho^2\\sinh^8\\rho + 12R^2\\,\\rho^2\\sinh^{10}\\rho - 504R^2\\,\\rho\\sinh^7\\rho\\cosh\\rho - 88R^2\\,\\rho\\sinh^9\\rho\\cosh\\rho + 84R^2\\sinh^8\\rho + 64R^2\\sinh^{10}\\rho - 20R^2\\sinh^{12}\\rho + 54\\rho^8\\sinh^2\\rho + 27\\rho^8\\sinh^4\\rho + 27\\rho^8 - 216\\rho^7\\sinh^3\\rho\\cosh\\rho - 216\\rho^7\\sinh\\rho\\cosh\\rho + 756\\rho^6\\sinh^2\\rho + 864\\rho^6\\sinh^4\\rho + 108\\rho^6\\sinh^6\\rho - 1512\\rho^5\\sinh^3\\rho\\cosh\\rho - 648\\rho^5\\sinh^5\\rho\\cosh\\rho + 1890\\rho^4\\sinh^4\\rho + 1620\\rho^4\\sinh^6\\rho + 162\\rho^4\\sinh^8\\rho - 1512\\rho^3\\sinh^5\\rho\\cosh\\rho - 648\\rho^3\\sinh^7\\rho\\cosh\\rho + 756\\rho^2\\sinh^6\\rho + 864\\rho^2\\sinh^8\\rho + 108\\rho^2\\sinh^{10}\\rho - 216\\rho\\sinh^7\\rho\\cosh\\rho - 216\\rho\\sinh^9\\rho\\cosh\\rho + 27\\sinh^8\\rho + 54\\sinh^{10}\\rho + 27\\sinh^{12}\\rho}{4R^6\\,a^4\\sinh^{14}\\rho}",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho + 6R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 12R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 6R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + 3\\rho^4\\sinh^2\\rho + 3\\rho^4 - 12\\rho^3\\sinh\\rho\\cosh\\rho + 18\\rho^2\\sinh^2\\rho + 6\\rho^2\\sinh^4\\rho - 12\\rho\\sinh^3\\rho\\cosh\\rho + 3\\sinh^4\\rho + 3\\sinh^6\\rho}{4R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^4\\sinh^4\\rho + 3R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\sin^2\\theta}{4R^2\\sinh^6\\rho}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho + 6R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 12R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 6R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + 3\\rho^4\\sinh^2\\rho + 3\\rho^4 - 12\\rho^3\\sinh\\rho\\cosh\\rho + 18\\rho^2\\sinh^2\\rho + 6\\rho^2\\sinh^4\\rho - 12\\rho\\sinh^3\\rho\\cosh\\rho + 3\\sinh^4\\rho + 3\\sinh^6\\rho}{4R^3\\,a^2\\sinh^7\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^4\\sinh^4\\rho + 3R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^3\\,a^2\\sinh^7\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^3\\,a^2\\sinh^7\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^3\\,a^2\\sinh^7\\rho}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho + 6R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 12R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 6R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + 3\\rho^4\\sinh^2\\rho + 3\\rho^4 - 12\\rho^3\\sinh\\rho\\cosh\\rho + 18\\rho^2\\sinh^2\\rho + 6\\rho^2\\sinh^4\\rho - 12\\rho\\sinh^3\\rho\\cosh\\rho + 3\\sinh^4\\rho + 3\\sinh^6\\rho}{4R^2\\,a^4\\sinh^8\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^4\\sinh^4\\rho + 3R^4\\sinh^6\\rho + 2R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^2\\,a^4\\sinh^8\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho}{4R^4\\,a^4\\sinh^8\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(3R^4\\sinh^4\\rho - R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^2\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho + 4R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho - 2R^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho - \\rho^4\\sinh^2\\rho - \\rho^4 + 4\\rho^3\\sinh\\rho\\cosh\\rho - 6\\rho^2\\sinh^2\\rho - 2\\rho^2\\sinh^4\\rho + 4\\rho\\sinh^3\\rho\\cosh\\rho - \\sinh^4\\rho - \\sinh^6\\rho\\right)\\csc^2\\theta}{4R^4\\,a^4\\sinh^8\\rho}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{3R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{3R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{3R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{3R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{6R^4\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{3R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{3R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{3R^2\\sinh^6\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho}{3R^2\\sinh^6\\rho}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{3R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\rho",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{3R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "t",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{3R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "t",
+                  "\\rho",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{3R^5\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\theta",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\rho",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\rho",
+                  "\\theta",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\varphi",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\rho",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "t",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "t",
+                  "\\varphi",
+                  "t"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\rho",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\rho",
+                  "\\varphi",
+                  "\\rho"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{6R^3\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{3R\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\varphi",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{3R\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\theta",
+                  "\\varphi"
+                ],
+                "value": "\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{3R\\sinh^5\\rho}"
+              },
+              {
+                "indices": [
+                  "\\varphi",
+                  "\\theta",
+                  "\\varphi",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{a^2\\left(3R^2\\,\\rho^2\\sinh^2\\rho + 2R^2\\,\\rho^2\\sinh^4\\rho - 6R^2\\,\\rho\\sinh^3\\rho\\cosh\\rho + 3R^2\\sinh^4\\rho - R^2\\sinh^6\\rho + 2\\rho^4\\sinh^2\\rho + 2\\rho^4 - 8\\rho^3\\sinh\\rho\\cosh\\rho + 12\\rho^2\\sinh^2\\rho + 4\\rho^2\\sinh^4\\rho - 8\\rho\\sinh^3\\rho\\cosh\\rho + 2\\sinh^4\\rho + 2\\sinh^6\\rho\\right)\\sin^2\\theta}{3R\\sinh^5\\rho}"
+              }
+            ]
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{R^2\\sinh^3\\rho}\\dot{t}\\dot{\\rho} = 0",
+        "\\ddot{\\rho} + \\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}\\dot{t}^2 + \\dfrac{R^2\\sinh^2\\rho\\cosh\\rho - \\rho^2\\cosh\\rho + 2\\rho\\sinh\\rho - \\sinh^2\\rho\\cosh\\rho}{2R^2\\sinh^3\\rho}\\dot{\\rho}^2 - \\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{2\\sinh^3\\rho}\\dot{\\theta}^2 - \\dfrac{\\left(R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho\\right)\\sin^2\\theta}{2\\sinh^3\\rho}\\dot{\\varphi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{R^2\\sinh^3\\rho}\\dot{\\rho}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\varphi}^2 = 0",
+        "\\ddot{\\varphi} + \\dfrac{R^2\\sinh^2\\rho\\cosh\\rho + \\rho^2\\cosh\\rho - 2\\rho\\sinh\\rho + \\sinh^2\\rho\\cosh\\rho}{R^2\\sinh^3\\rho}\\dot{\\rho}\\dot{\\varphi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\varphi} = 0"
+      ]
+    }
+  ]
+}

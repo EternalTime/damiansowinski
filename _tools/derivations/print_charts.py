@@ -37907,5 +37907,10 @@ import naked_black_holes as _naked_black_holes
 _naked_black_holes.register(sys.modules[__name__])
 
 
+import chamseddine_volkov_monopole as _chamseddine_volkov_monopole
+CHARTS[_chamseddine_volkov_monopole.METRIC] = [lambda system=system: _chamseddine_volkov_monopole.chart_spec(system)
+                                                for system in _chamseddine_volkov_monopole.CHARTS]
+
+
 if __name__ == "__main__":
     main()
