@@ -1,5 +1,5 @@
 {
-  "version": "2393099937b97d6e",
+  "version": "3ab6b49cf275728f",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -51534,6 +51534,170 @@
         "eprint": "hep-th/0401042",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1088/1126-6708/2004/02/006"
+      }
+    },
+    "barcelo1999": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes from massless conformally coupled scalar fields",
+        "author": "Barcel{\\'o}, Carlos and Visser, Matt",
+        "journal": "Physics Letters B",
+        "volume": "466",
+        "number": "2-4",
+        "pages": "127--134",
+        "year": "1999",
+        "doi": "10.1016/S0370-2693(99)01117-X",
+        "eprint": "gr-qc/9908029",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1016/S0370-2693(99)01117-X"
+      }
+    },
+    "froyland1982": {
+      "type": "article",
+      "fields": {
+        "title": "Static, spherically symmetric scalar fields with a traceless energy-momentum tensor in general relativity",
+        "author": "Frøyland, Jan",
+        "journal": "Physical Review D",
+        "volume": "25",
+        "number": "6",
+        "pages": "1470--1473",
+        "year": "1982",
+        "doi": "10.1103/PhysRevD.25.1470",
+        "url": "https://doi.org/10.1103/PhysRevD.25.1470"
+      }
+    },
+    "bronnikov1996": {
+      "type": "article",
+      "fields": {
+        "title": "Extra dimensions, nonminimal couplings, horizons and wormholes",
+        "author": "Bronnikov, Kirill A.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "2",
+        "pages": "221--226",
+        "year": "1996",
+        "eprint": "gr-qc/9703020",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/9703020"
+      }
+    },
+    "bronnikov2001conformal": {
+      "type": "article",
+      "fields": {
+        "title": "Scalar vacuum structure in general relativity and alternative theories. {Conformal} continuations",
+        "author": "Bronnikov, Kirill A.",
+        "journal": "Acta Physica Polonica B",
+        "volume": "32",
+        "number": "11",
+        "pages": "3571--3592",
+        "year": "2001",
+        "eprint": "gr-qc/0110125",
+        "archiveprefix": "arXiv",
+        "url": "https://www.actaphys.uj.edu.pl/R/32/11/3571"
+      }
+    },
+    "ray2025": {
+      "type": "article",
+      "fields": {
+        "title": "Revisiting the static spherically symmetric solutions of gravity with a conformally coupled scalar field",
+        "author": "Ray, Sourya",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "42",
+        "number": "1",
+        "pages": "017002",
+        "year": "2025",
+        "doi": "10.1088/1361-6382/ad953d",
+        "eprint": "2406.14345",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1361-6382/ad953d"
+      }
+    },
+    "bronnikov2001instability": {
+      "type": "article",
+      "fields": {
+        "title": "Instability of wormholes with a nonminimally coupled scalar field",
+        "author": "Bronnikov, K. A. and Grinyok, S.",
+        "journal": "Gravitation and Cosmology",
+        "volume": "7",
+        "pages": "297--300",
+        "year": "2001",
+        "eprint": "gr-qc/0201083",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/gr-qc/0201083"
+      }
+    },
+    "barcelo2002twilight": {
+      "type": "article",
+      "fields": {
+        "title": "Twilight for the energy conditions?",
+        "author": "Barcel{\\'o}, Carlos and Visser, Matt",
+        "journal": "International Journal of Modern Physics D",
+        "volume": "11",
+        "number": "10",
+        "pages": "1553--1560",
+        "year": "2002",
+        "doi": "10.1142/S0218271802002888",
+        "eprint": "gr-qc/0205066",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1142/S0218271802002888"
+      }
+    },
+    "butcher2015": {
+      "type": "article",
+      "fields": {
+        "title": "Traversable wormholes and classical scalar fields",
+        "author": "Butcher, Luke M.",
+        "journal": "Physical Review D",
+        "volume": "91",
+        "number": "12",
+        "pages": "124031",
+        "year": "2015",
+        "doi": "10.1103/PhysRevD.91.124031",
+        "eprint": "1503.04145",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.91.124031"
+      }
+    },
+    "willenborg2018": {
+      "type": "article",
+      "fields": {
+        "title": "Geodesic motion around traversable wormholes supported by a massless conformally coupled scalar field",
+        "author": "Willenborg, Felix and Grunau, Saskia and Kleihaus, Burkhard and Kunz, Jutta",
+        "journal": "Physical Review D",
+        "volume": "97",
+        "number": "12",
+        "pages": "124002",
+        "year": "2018",
+        "doi": "10.1103/PhysRevD.97.124002",
+        "eprint": "1801.09769",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.97.124002"
+      }
+    },
+    "cisterna2023": {
+      "type": "article",
+      "fields": {
+        "title": "Exact rotating wormholes via {Ehlers} transformations",
+        "author": "Cisterna, Adolfo and M\\\"uller, Keanu and Pallikaris, Konstantinos and Vigan\\`o, Adriano",
+        "journal": "Physical Review D",
+        "volume": "108",
+        "number": "2",
+        "pages": "024066",
+        "year": "2023",
+        "doi": "10.1103/PhysRevD.108.024066",
+        "eprint": "2306.14541",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.108.024066"
+      }
+    },
+    "vidal2026": {
+      "type": "misc",
+      "fields": {
+        "title": "Traversable wormholes supported by conformally coupled scalar fields in $D \\geq 4$: geometry, geodesics, and quasinormal modes",
+        "author": "Vidal, Pablo",
+        "year": "2026",
+        "eprint": "2609.38217",
+        "archiveprefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.38217"
       }
     }
   }

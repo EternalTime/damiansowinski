@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 277,
+  "count": 278,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -4233,6 +4233,253 @@
       ]
     },
     {
+      "id": "conformal_scalar_wormholes",
+      "name": "Barceló-Visser Wormholes of a Conformally Coupled Scalar Field",
+      "short_name": "Barceló-Visser",
+      "description": "Static, spherically symmetric traversable wormholes held open by a massless scalar field coupled to the curvature with the strength $1/6$, written down by Kirill Bronnikov in 1973 and found again by Carlos Barceló and Matt Visser in 1999 in a class with three parameters that also holds Schwarzschild's black hole and naked singularities. The effective Newton constant has opposite signs at the two ends of each wormhole, and the wormholes are unstable.",
+      "tags": [
+        "wormhole",
+        "traversable",
+        "throat",
+        "scalar field",
+        "massless scalar field",
+        "Einstein-scalar",
+        "conformal transformation",
+        "energy condition violation",
+        "naked singularity",
+        "curvature singularity",
+        "negative mass",
+        "instability",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit, with the Ricci tensor the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$. The length $\\mu$ is half Barceló and Visser's $\\eta$, and $b = \\tan(\\Delta/2)$ for their angle $\\Delta$.",
+      "related": [
+        {
+          "id": "fisher_jnw",
+          "kind": "conformal",
+          "text": "The minimally coupled scalar field whose metric Barceló and Visser multiplied by a conformal factor $\\Omega^2$ to reach these solutions, with Fisher's $b = 2\\eta$ and $\\gamma = \\cos\\chi$. The wormholes come from $\\gamma = 1/2$ [barcelo1999]."
+        },
+        {
+          "id": "majumdar_papapetrou",
+          "kind": "conformal",
+          "text": "One extremal charged hole with $m = \\mu$, in isotropic coordinates. With its metric multiplied by $(1 - b\\mu/\\bar r)^2$ and $b < 0$, the solution is a wormhole of this class, and at $b = 0$ it is the geometry of the black hole of Bocharova, Bronnikov, Melnikov, and Bekenstein [ray2025]."
+        },
+        {
+          "id": "ellis_bronnikov",
+          "kind": "family",
+          "text": "Another wormhole of a massless scalar field, held open by a field whose kinetic energy is negative. Here the field has the ordinary sign and is coupled to the curvature, and the effective Newton constant changes sign across the throat [barcelo1999]."
+        },
+        {
+          "id": "morris_thorne",
+          "kind": "family",
+          "text": "The general static traversable wormhole, whose throat needs matter that breaks the null energy condition. A classical field coupled to the curvature can be that matter [barcelo1999]."
+        },
+        {
+          "id": "thin_shell_wormhole",
+          "kind": "family",
+          "text": "Matt Visser's wormhole of 1989, with all its matter in one thin shell. Barceló and Visser proposed two thin shells of ordinary matter to give these wormholes a positive effective Newton constant at both ends, and Luke M. Butcher proved that the shells would need matter that breaks the null energy condition [barcelo1999, butcher2015]."
+        },
+        {
+          "id": "bekenstein_universes",
+          "kind": "family",
+          "text": "Friedmann universes of dust and the same conformally coupled field, which Barceló and Visser credited as the first sign that a classical scalar field can break the energy conditions [barcelo2000]."
+        },
+        {
+          "id": "dressed_btz",
+          "kind": "family",
+          "text": "A black hole of three dimensions with a conformally coupled scalar field and a negative cosmological constant. In four dimensions with no cosmological constant the coupling $1/6$ gives these wormholes [barcelo1999]."
+        },
+        {
+          "id": "swirling_universe_black_hole",
+          "kind": "family",
+          "text": "Schwarzschild's black hole in a swirling universe. Adolfo Cisterna, Keanu Müller, Konstantinos Pallikaris, and Adriano Viganò set a wormhole of this class in the same rotating background in 2023 [cisterna2023]."
+        }
+      ],
+      "references": [
+        "barcelo1999",
+        "bronnikov1973",
+        "froyland1982",
+        "agnese1985",
+        "bronnikov1996",
+        "bronnikov2001conformal",
+        "ray2025",
+        "barcelo2000",
+        "bronnikov2001instability",
+        "barcelo2002twilight",
+        "butcher2015",
+        "willenborg2018",
+        "cisterna2023",
+        "vidal2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/conformal_scalar_wormholes.json",
+      "charts": [
+        {
+          "id": "isotropic",
+          "name": "Isotropic, $\\chi = \\pi/3$",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "b < 0",
+            "\\rho = \\mu\\sqrt{-b} \\;\\text{(the throat)}",
+            "\\rho \\to 0 \\;\\text{(the second flat region)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "A length; far from the throat as $\\rho \\to \\infty$ the metric is Schwarzschild's with $r_s = 2\\mu(1 + b)$"
+            },
+            {
+              "symbol": "b",
+              "description": "A pure number, negative for the wormholes, whose throat is the sphere $\\rho = \\mu\\sqrt{-b}$; the scalar field is $\\phi_c = \\sqrt{3c^4/(4\\pi G)}\\,(b\\rho - \\mu)/(\\rho - b\\mu)$, and $b = -1$ is the symmetric wormhole"
+            }
+          ],
+          "convention": "We use Barceló and Visser's isotropic radius $\\bar r$, written $\\rho$, a length with $r = \\rho(1 + \\mu/\\rho)^2$ on $\\rho > \\mu$ for their radius $r$, and $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = \\left(1 - \\dfrac{b\\mu}{\\rho}\\right)^2\\left(-\\left(1 + \\dfrac{\\mu}{\\rho}\\right)^{-2}c^2dt^2 + \\left(1 + \\dfrac{\\mu}{\\rho}\\right)^2\\left(d\\rho^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(\\rho - \\mu\\,b\\right)^2}{\\left(\\rho + \\mu\\right)^2}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{\\left(\\rho + \\mu\\right)^2\\left(\\rho - \\mu\\,b\\right)^2}{\\rho^4}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{\\left(\\rho + \\mu\\right)^2\\left(\\rho - \\mu\\,b\\right)^2}{\\rho^2}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{\\left(\\rho + \\mu\\right)^2\\left(\\rho - \\mu\\,b\\right)^2\\sin^2\\theta}{\\rho^2}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{8\\mu^2\\,\\rho^6\\left(6b^2\\,\\rho^4 + 6\\rho^4 - 4\\mu\\,b^3\\,\\rho^3 + 16\\mu\\,b^2\\,\\rho^3 - 28\\mu\\,b\\,\\rho^3 + \\mu^2\\,b^4\\,\\rho^2 - 4\\mu^2\\,b^3\\,\\rho^2 + 62\\mu^2\\,b^2\\,\\rho^2 - 4\\mu^2\\,b\\,\\rho^2 + \\mu^2\\,\\rho^2 - 28\\mu^3\\,b^3\\,\\rho + 16\\mu^3\\,b^2\\,\\rho - 4\\mu^3\\,b\\,\\rho + 6\\mu^4\\,b^4 + 6\\mu^4\\,b^2\\right)}{\\left(\\rho + \\mu\\right)^8\\left(\\rho - \\mu\\,b\\right)^8}"
+        },
+        {
+          "id": "three_parameter",
+          "name": "All Three Parameters",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (4\\mu, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "w \\ge 0,\\quad b < 1",
+            "r = 4\\mu \\;\\text{(the horizon, for } w = 0\\text{)}",
+            "r = 4\\mu \\;\\text{(a curvature singularity, for } w \\neq 0, 1/6\\text{)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "\\mu",
+              "description": "A length; far from $r = 4\\mu$ the metric is Schwarzschild's with $r_s = 4\\mu(\\gamma + 2b\\sigma)$"
+            },
+            {
+              "symbol": "b",
+              "description": "A pure number below 1, for which $\\Omega$ is positive; the scalar field is $\\phi_c = \\sqrt{3c^4/(4\\pi G)}\\,\\Psi/\\Omega$"
+            },
+            {
+              "symbol": "w",
+              "description": "A pure number; $w = 0$ is Schwarzschild's black hole with $r_s = 4\\mu$, and $w = 1/6$, where $\\chi = \\pi/3$, the branch of the wormholes"
+            },
+            {
+              "symbol": "\\gamma = \\dfrac{1 - 12w^2}{1 + 12w^2}",
+              "description": "Fisher's exponent, a pure number"
+            },
+            {
+              "symbol": "\\sigma = \\dfrac{2w}{1 + 12w^2}",
+              "description": "The exponent of Barceló and Visser's conformal factor, a pure number"
+            },
+            {
+              "symbol": "f = 1 - \\dfrac{4\\mu}{r}",
+              "description": "Schwarzschild's function with $4\\mu$ for $r_s$, a pure number"
+            },
+            {
+              "symbol": "F = f^{\\gamma}",
+              "description": "The square of the lapse of the Fisher-Janis-Newman-Winicour metric, a pure number"
+            },
+            {
+              "symbol": "\\Omega = \\dfrac{(1 + b)f^{\\sigma} + (1 - b)f^{-\\sigma}}{2}",
+              "description": "Barceló and Visser's conformal factor, a pure number"
+            },
+            {
+              "symbol": "\\Psi = \\dfrac{(1 + b)f^{\\sigma} - (1 - b)f^{-\\sigma}}{2}",
+              "description": "A pure number with $\\Omega^2 - \\Psi^2 = 1 - b^2$"
+            }
+          ],
+          "convention": "We use Barceló and Visser's radius $r$, a length, and $t$ having dimensions of time, and take components in the chart $x^0 = ct$, so $\\dot{t}$ in the geodesic equations means $d(ct)/d\\lambda$. Their angle $\\chi \\in [0, \\pi)$ has $w = \\tan(\\chi/2)/(2\\sqrt{3})$, so $\\gamma = \\cos\\chi$ and $\\sigma = \\sin\\chi/(2\\sqrt{3})$.",
+          "line_element": "ds^2 = \\Omega^2\\left(-F\\,c^2dt^2 + \\dfrac{dr^2}{F} + \\dfrac{f}{F}\\,r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\Omega^2\\,F"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\Omega^2}{F}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\dfrac{r\\,\\Omega^2\\left(r - 4\\mu\\right)}{F}"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\dfrac{r\\,\\Omega^2\\left(r - 4\\mu\\right)\\sin^2\\theta}{F}"
+            }
+          ],
+          "ricci_scalar": "R = 0",
+          "kretschmann": "K = \\dfrac{64F^2\\,\\mu^2\\left(9r^2\\,\\Omega^4\\,\\gamma^2 - 24r\\,\\Omega^4\\,\\gamma^3\\,\\mu - 36r\\,\\Omega^4\\,\\gamma^2\\,\\mu - 12r\\,\\Omega^4\\,\\gamma\\,\\mu + 18\\Omega^4\\,\\gamma^4\\,\\mu^2 + 48\\Omega^4\\,\\gamma^3\\,\\mu^2 + 48\\Omega^4\\,\\gamma^2\\,\\mu^2 + 24\\Omega^4\\,\\gamma\\,\\mu^2 + 6\\Omega^4\\,\\mu^2 - 16r\\,\\Omega^3\\,\\Psi\\,\\gamma^2\\,\\mu\\,\\sigma + 16r\\,\\Omega^3\\,\\Psi\\,\\mu\\,\\sigma + 16\\Omega^3\\,\\Psi\\,\\gamma^3\\,\\mu^2\\,\\sigma + 32\\Omega^3\\,\\Psi\\,\\gamma^2\\,\\mu^2\\,\\sigma - 16\\Omega^3\\,\\Psi\\,\\gamma\\,\\mu^2\\,\\sigma - 32\\Omega^3\\,\\Psi\\,\\mu^2\\,\\sigma - 3r^2\\,\\Omega^2\\,\\Psi^2\\,\\gamma^2 + 3r^2\\,\\Omega^2\\,\\Psi^2 + 8r\\,\\Omega^2\\,\\Psi^2\\,\\gamma^3\\,\\mu + 12r\\,\\Omega^2\\,\\Psi^2\\,\\gamma^2\\,\\mu - 8r\\,\\Omega^2\\,\\Psi^2\\,\\gamma\\,\\mu - 12r\\,\\Omega^2\\,\\Psi^2\\,\\mu - 4\\Omega^2\\,\\Psi^2\\,\\gamma^4\\,\\mu^2 - 16\\Omega^2\\,\\Psi^2\\,\\gamma^3\\,\\mu^2 - 12\\Omega^2\\,\\Psi^2\\,\\gamma^2\\,\\mu^2 + 16\\Omega^2\\,\\Psi^2\\,\\gamma\\,\\mu^2 + 16\\Omega^2\\,\\Psi^2\\,\\mu^2 - 16r\\,\\Omega\\,\\Psi^3\\,\\gamma^2\\,\\mu\\,\\sigma + 16r\\,\\Omega\\,\\Psi^3\\,\\mu\\,\\sigma + 16\\Omega\\,\\Psi^3\\,\\gamma^3\\,\\mu^2\\,\\sigma + 32\\Omega\\,\\Psi^3\\,\\gamma^2\\,\\mu^2\\,\\sigma - 16\\Omega\\,\\Psi^3\\,\\gamma\\,\\mu^2\\,\\sigma - 32\\Omega\\,\\Psi^3\\,\\mu^2\\,\\sigma + 2\\Psi^4\\,\\gamma^4\\,\\mu^2 - 4\\Psi^4\\,\\gamma^2\\,\\mu^2 + 2\\Psi^4\\,\\mu^2\\right)}{3r^4\\,\\Omega^8\\left(r - 4\\mu\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "bardeen",
       "name": "Bardeen Regular Black Hole",
       "short_name": "Bardeen",
@@ -4994,6 +5241,11 @@
           "id": "dressed_btz",
           "kind": "family",
           "text": "A black hole of three dimensions dressed in a conformally coupled scalar field, which Cristián Martínez and Jorge Zanelli found in 1996. There the coupling constant to the curvature is $1/8$, which plays the part of $1/6$ in four dimensions [martinez1996]."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "family",
+          "text": "Wormholes held open by the same conformally coupled field with no dust, found by Carlos Barceló and Matt Visser in 1999 [barcelo1999]."
         }
       ],
       "references": [
@@ -5008,7 +5260,8 @@
         "parker1990",
         "molinaparis1999",
         "cimaglia2024",
-        "martinez1996"
+        "martinez1996",
+        "barcelo1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bekenstein_universes.json",
@@ -28732,6 +28985,11 @@
           "id": "giddings_strominger",
           "kind": "family",
           "text": "A wormhole with no time in it, Steven B. Giddings and Andrew Strominger's of 1988: four dimensions of space whose two flat regions meet at a 3-sphere that an axion's field holds open [giddings1988]. A slice through its throat levels off at a finite height, about $1.311$ times the throat's radius."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "family",
+          "text": "A wormhole of a massless scalar field with the ordinary sign of energy, coupled to the curvature with the strength $1/6$. Its effective Newton constant has opposite signs at the two ends [barcelo1999]."
         }
       ],
       "references": [
@@ -28759,7 +29017,8 @@
         "kodama1978preprint",
         "kodama1978",
         "bronnikov2024",
-        "giddings1988"
+        "giddings1988",
+        "barcelo1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ellis_bronnikov.json",
@@ -30275,6 +30534,11 @@
           "id": "scalar_collapse_cosmology",
           "kind": "conformal",
           "text": "Fisher's solution at $\\gamma = \\sqrt{3}/2$ multiplied by a factor that grows with time. At that exponent the product solves Einstein's equations again, and the scalar field fills an expanding universe [husain1994exact]."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "conformal",
+          "text": "With this metric multiplied by a conformal factor that solves a linear equation in the scalar field, the scalar field is massless and coupled to the curvature with the strength $1/6$, and at $\\gamma = 1/2$ the solutions are traversable wormholes [barcelo1999]."
         }
       ],
       "references": [
@@ -30309,7 +30573,8 @@
         "herdeiro2025",
         "banerjee1998",
         "kramer1971projective",
-        "husain1994exact"
+        "husain1994exact",
+        "barcelo1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/fisher_jnw.json",
@@ -54377,6 +54642,11 @@
           "id": "charged_shell_wormhole",
           "kind": "composite",
           "text": "Two of its charged bodies made into spheres and joined through a Reissner-Nordström black hole, a wormhole with both mouths in one universe [schein1996]."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "conformal",
+          "text": "With the isotropic metric of one extremal hole multiplied by $(1 + km/r)^2$, for a positive constant $k$, the solution is a traversable wormhole of a conformally coupled scalar field, with a second flat region where $r \\to 0$ [ray2025]."
         }
       ],
       "references": [
@@ -54420,7 +54690,8 @@
         "semerak2016",
         "horowitzmaeda2002",
         "myers1987compact",
-        "schein1996"
+        "schein1996",
+        "ray2025"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/majumdar_papapetrou.json",
@@ -55576,6 +55847,11 @@
           "id": "charged_three_dimensions",
           "kind": "family",
           "text": "A point charge with Maxwell's field in three dimensions, whose field falls off so slowly that it curves spacetime at every radius. Cárdenas, Fuentealba, and Martínez charged this black hole with Maxwell's Lagrangian raised to the power $3/4$, which is conformally invariant in three dimensions [cardenas2014]."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "family",
+          "text": "Wormholes of four dimensions held open by a conformally coupled scalar field, with no cosmological constant [barcelo1999]."
         }
       ],
       "references": [
@@ -55591,7 +55867,8 @@
         "martinez1998",
         "gegenberg2003",
         "cardenas2014",
-        "aviles2018"
+        "aviles2018",
+        "barcelo1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dressed_btz.json",
@@ -60203,6 +60480,11 @@
           "id": "roman_ring",
           "kind": "family",
           "text": "A ring of wormholes with throats of no length, at rest in flat space. Together they come arbitrarily close to a time machine, and none of them is near one alone [visser1997]."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "family",
+          "text": "Wormholes held open by a massless scalar field coupled to the curvature, a classical source that breaks the null energy condition [barcelo1999]."
         }
       ],
       "references": [
@@ -60235,7 +60517,8 @@
         "kodama1978preprint",
         "maldacena2018",
         "giddings1988",
-        "visser1997"
+        "visser1997",
+        "barcelo1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/morris_thorne.json",
@@ -84714,6 +84997,11 @@
           "id": "stockum_dust",
           "kind": "family",
           "text": "Another universe that turns, van Stockum's cylinder of dust spinning about its axis."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "family",
+          "text": "A wormhole of a conformally coupled scalar field set in the same swirling background, which drags it into rotation [cisterna2023]."
         }
       ],
       "references": [
@@ -84725,7 +85013,8 @@
         "astorino2025binary",
         "capobianco2024",
         "barrientos2024",
-        "dipinto2025"
+        "dipinto2025",
+        "cisterna2023"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/swirling_universe_black_hole.json",
@@ -93247,6 +93536,11 @@
           "id": "roman_ring",
           "kind": "family",
           "text": "Visser's cut and paste wormholes set round a ring in flat space, each joining two mouths in one universe with a time shift. With enough of them the vacuum polarization at every throat is as small as desired [visser1997]."
+        },
+        {
+          "id": "conformal_scalar_wormholes",
+          "kind": "family",
+          "text": "Wormholes of a conformally coupled scalar field, which Barceló and Visser proposed to join to two outer regions with two thin shells of ordinary matter [barcelo1999]."
         }
       ],
       "references": [
@@ -93276,7 +93570,8 @@
         "kraus1999",
         "israel1970",
         "schein1996",
-        "visser1997"
+        "visser1997",
+        "barcelo1999"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/thin_shell_wormhole.json",

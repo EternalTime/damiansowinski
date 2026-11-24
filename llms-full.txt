@@ -339,6 +339,17 @@ A rotating black hole in three spacetime dimensions with a negative cosmological
 - chart Ingoing Eddington-Finkelstein: coordinates $(v, r, \tilde\phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - M + \dfrac{J^2}{4r^2}\right)dv^2 + 2\,dv\,dr + r^2\left(d\tilde\phi - \dfrac{J}{2r^2}dv\right)^2$$
 - chart Outgoing Eddington-Finkelstein: coordinates $(u, r, \tilde\phi)$, $$ds^2 = -\left(\dfrac{r^2}{\ell^2} - M + \dfrac{J^2}{4r^2}\right)du^2 - 2\,du\,dr + r^2\left(d\tilde\phi - \dfrac{J}{2r^2}du\right)^2$$
 
+### Barceló-Visser Wormholes of a Conformally Coupled Scalar Field
+
+Static, spherically symmetric traversable wormholes held open by a massless scalar field coupled to the curvature with the strength $1/6$, written down by Kirill Bronnikov in 1973 and found again by Carlos Barceló and Matt Visser in 1999 in a class with three parameters that also holds Schwarzschild's black hole and naked singularities. The effective Newton constant has opposite signs at the two ends of each wormhole, and the wormholes are unstable.
+
+- id: `conformal_scalar_wormholes`
+- tags: wormhole, traversable, throat, scalar field, massless scalar field, Einstein-scalar, conformal transformation, energy condition violation, naked singularity, curvature singularity, negative mass, instability, static, stationary, spherically symmetric, asymptotically flat, exact solution, Lorentzian, Einstein equations, four-dimensional, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/conformal_scalar_wormholes.json
+- chart Isotropic, $\chi = \pi/3$: coordinates $(t, \rho, \theta, \phi)$, $$ds^2 = \left(1 - \dfrac{b\mu}{\rho}\right)^2\left(-\left(1 + \dfrac{\mu}{\rho}\right)^{-2}c^2dt^2 + \left(1 + \dfrac{\mu}{\rho}\right)^2\left(d\rho^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)\right)$$
+- chart All Three Parameters: coordinates $(t, r, \theta, \phi)$, $$ds^2 = \Omega^2\left(-F\,c^2dt^2 + \dfrac{dr^2}{F} + \dfrac{f}{F}\,r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Bardeen Regular Black Hole
 
 A black hole with horizons and no singularity, which James Bardeen proposed in 1968. A ball of de Sitter space sits where Schwarzschild's singularity would be, and Eloy Ayón-Beato and Alberto García showed in 2000 that the field of a magnetic monopole in a nonlinear electrodynamics is its source.

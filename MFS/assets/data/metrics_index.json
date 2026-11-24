@@ -305,6 +305,38 @@
     "embedding": "2c639ca6fbd71045"
   },
   {
+    "id": "conformal_scalar_wormholes",
+    "name": "Barceló-Visser",
+    "tags": [
+      "wormhole",
+      "traversable",
+      "throat",
+      "scalar field",
+      "massless scalar field",
+      "Einstein-scalar",
+      "conformal transformation",
+      "energy condition violation",
+      "naked singularity",
+      "curvature singularity",
+      "negative mass",
+      "instability",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional",
+      "idealized model"
+    ],
+    "version": "93ff8aa9288cf5ab",
+    "diagrams": "dc39e74fb4a6ab08",
+    "conformal": "2c82e4a4cbbd723e",
+    "embedding": "1fb20e5243003e57",
+    "curvature": "f64c7ff8694c2fc5"
+  },
+  {
     "id": "bardeen",
     "name": "Bardeen",
     "tags": [
@@ -407,7 +439,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "1b5cadb944aefb6d",
+    "version": "e96cc723827fb041",
     "diagrams": "1d6c29c5b6bfabeb",
     "conformal": "e5ff4de589ab53ea",
     "embedding": "799ee7b43bf96901",
@@ -2442,7 +2474,7 @@
       "idealized model",
       "scalar-tensor theory"
     ],
-    "version": "8ee31c25a2b3b19c",
+    "version": "f43c82490c44e9ba",
     "diagrams": "7b3fbccc74f5b578",
     "conformal": "13e145da297e8d51",
     "embedding": "8c16d5714cfa992a",
@@ -2632,7 +2664,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "23d33f220351db3d",
+    "version": "755ab268b2294121",
     "diagrams": "3ae6a5324e2f9841",
     "conformal": "0ad248166c7cdb8f",
     "embedding": "702d68d9fe0d4f1d",
@@ -4797,7 +4829,7 @@
       "idealized model",
       "black hole shadow"
     ],
-    "version": "2f945a925fea6ad6",
+    "version": "d13d9fe1cd30bcb8",
     "diagrams": "c6edded6cce52897",
     "conformal": "334186f800f59252",
     "embedding": "b9bf3c95064c40a7",
@@ -4961,7 +4993,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "4141374404e784c0",
+    "version": "c65e407568254e1b",
     "diagrams": "ca8bf75612e79bf6",
     "conformal": "32db07462da34649",
     "embedding": "3767b530fda53d4b",
@@ -5350,7 +5382,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "799a4bc4a98399b8",
+    "version": "e930748beaa80c8e",
     "diagrams": "1de01953e7c22d84",
     "conformal": "956949c7f4a96538",
     "embedding": "2fb2f35ad8d95922",
@@ -7530,7 +7562,7 @@
       "idealized model",
       "mass"
     ],
-    "version": "ac0e9c03a4d49f7a",
+    "version": "2ded87159b7b41e8",
     "diagrams": "e6957591dd83230d",
     "conformal": "bcf35826e01e4d80",
     "embedding": "c546bedc62cbd556",
@@ -8219,7 +8251,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "9d230005f7ef4852",
+    "version": "e788ac7b54567fde",
     "diagrams": "d3c0cce1a6061334",
     "conformal": "651a421afaa54900",
     "embedding": "c9905ef896f1be24",
