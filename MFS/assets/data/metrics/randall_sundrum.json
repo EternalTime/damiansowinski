@@ -110,6 +110,11 @@
       "id": "brane_black_holes",
       "kind": "family",
       "text": "The same wall one dimension down, in anti-de Sitter space of four dimensions, where Emparan, Horowitz, and Myers found black holes on it exactly [emparan2000branes]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "A wall in flat space of five dimensions, the fifth of infinite volume, on which a curvature term in the wall's own action makes gravity four dimensional below a crossover length [dvali2000brane]."
     }
   ],
   "references": [
@@ -141,7 +146,8 @@
     "visser1985",
     "dewolfe2000",
     "lukas1999universe",
-    "emparan2000branes"
+    "emparan2000branes",
+    "dvali2000brane"
   ],
   "coordinates": [
     {

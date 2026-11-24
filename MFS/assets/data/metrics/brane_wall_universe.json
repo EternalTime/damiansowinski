@@ -83,6 +83,11 @@
       "id": "heterotic_m_theory_wall",
       "kind": "family",
       "text": "The walls of heterotic M-theory set moving, their size, their separation, and the volume of the Calabi-Yau space following powers of time [lukas1999cosmological]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "A wall in flat space of five dimensions with a curvature term in its own action, whose Friedmann equation goes over to one with the square of the density as matter thins out on one of its two branches [deffayet2001cosmology]."
     }
   ],
   "references": [
@@ -101,7 +106,8 @@
     "visser1989nuclphysb",
     "singh2006",
     "chamblin2001",
-    "lukas1999cosmological"
+    "lukas1999cosmological",
+    "deffayet2001cosmology"
   ],
   "coordinates": [
     {

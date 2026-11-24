@@ -256,6 +256,11 @@
       "id": "hawking_turok_instanton",
       "kind": "composite",
       "text": "An open Friedmann universe, $k = -1$, born inside the light cone of the regular pole of a deformed 4-sphere, with a timelike singularity outside it [hawking1998open]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "Friedmann's universe on a wall in flat space of five dimensions, whose Friedmann equation gains a term in the square root of its own left side and on one branch accelerates with no cosmological constant [deffayet2001cosmology]."
     }
   ],
   "references": [
@@ -345,7 +350,8 @@
     "bicak1994",
     "bicak1996",
     "krasnikov1998wec",
-    "hawking1998open"
+    "hawking1998open",
+    "deffayet2001cosmology"
   ],
   "coordinates": [
     {

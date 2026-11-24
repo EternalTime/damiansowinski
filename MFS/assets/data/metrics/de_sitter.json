@@ -214,6 +214,11 @@
       "id": "hawking_turok_instanton",
       "kind": "family",
       "text": "De Sitter space deformed by a scalar field that climbs its potential, cut through the poles of its Euclidean 4-sphere. Inside the light cone of the regular pole is an infinite open universe that inflates [hawking1998open]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "De Sitter space as a wall in flat space of five dimensions, which expands with no cosmological constant because the wall has a curvature term of its own [deffayet2001cosmology, deffayet2002accelerated]."
     }
   ],
   "references": [
@@ -270,7 +275,9 @@
     "hirano2018bt",
     "brandenberger1993",
     "gott1983",
-    "hawking1998open"
+    "hawking1998open",
+    "deffayet2001cosmology",
+    "deffayet2002accelerated"
   ],
   "coordinates": [
     {

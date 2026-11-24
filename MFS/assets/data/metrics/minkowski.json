@@ -343,6 +343,11 @@
       "id": "chamseddine_volkov_monopole",
       "kind": "family",
       "text": "A monopole of gauged supergravity whose plane of time and radius is conformal to half of the flat plane, so it has the conformal diagram of Minkowski space, although it is curved and not asymptotically flat [chamseddine1997]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "A wall in flat space of five dimensions with a curvature term in its action, on which gravity is four dimensional below a crossover length. With no tension and no matter the wall can stay flat [dvali2000brane, gregory2007perspective]."
     }
   ],
   "references": [
@@ -435,7 +440,9 @@
     "koutrasmcintosh1996",
     "griffithspodolsky1998",
     "visser1997",
-    "chamseddine1997"
+    "chamseddine1997",
+    "dvali2000brane",
+    "gregory2007perspective"
   ],
   "coordinates": [
     {

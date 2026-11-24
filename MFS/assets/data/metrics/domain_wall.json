@@ -80,6 +80,11 @@
       "id": "heterotic_m_theory_wall",
       "kind": "family",
       "text": "A pair of flat walls in five dimensional supergravity that stay at rest, held there by a potential for the volume of a Calabi-Yau space between them [lukas1999universe]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "The same hyperboloid one dimension up, in flat space of five dimensions, with a curvature term in the wall's action. With tension alone the wall keeps two copies of its inside, and with no tension it can keep two copies of its outside and expand with no cosmological constant [deffayet2001cosmology, gregory2007perspective]."
     }
   ],
   "references": [
@@ -106,7 +111,9 @@
     "hirano2018bt",
     "skenderis1999",
     "girardello1998",
-    "lukas1999universe"
+    "lukas1999universe",
+    "deffayet2001cosmology",
+    "gregory2007perspective"
   ],
   "coordinates": [
     {

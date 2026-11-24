@@ -45,6 +45,11 @@
       "id": "heterotic_m_theory_wall",
       "kind": "family",
       "text": "A universe on a wall at the end of the eleventh dimension of M-theory, two such walls bounding a fifth dimension once six more are curled into a Calabi-Yau space [lukas1999universe]."
+    },
+    {
+      "id": "dgp_wall",
+      "kind": "family",
+      "text": "A wall in flat space of five dimensions whose own curvature term makes gravity four dimensional at short distances, a term its authors suggested a kink of a scalar field across the wall could produce [dvali2000brane]."
     }
   ],
   "references": [
@@ -62,7 +67,8 @@
     "giovannini2001",
     "frere2001",
     "csaki2001",
-    "lukas1999universe"
+    "lukas1999universe",
+    "dvali2000brane"
   ],
   "coordinates": [
     {
