@@ -5332,3 +5332,8 @@ HIDDEN.update(_conformal_scalar_wormholes_drawings.HIDDEN)
 
 import heterotic_m_theory_wall_drawings as _heterotic_m_theory_wall_drawings  # noqa: E402
 _heterotic_m_theory_wall_drawings.register_slices(sys.modules[__name__])
+
+import brane_black_holes_drawings as _brane_black_holes_drawings  # noqa: E402
+FLAT.update(_brane_black_holes_drawings.slice_table(sys.modules[__name__]))
+FLAT_METRICS.add(_brane_black_holes_drawings.METRIC)
+HIDDEN.update(_brane_black_holes_drawings.HIDDEN)

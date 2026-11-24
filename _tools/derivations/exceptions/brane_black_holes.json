@@ -1,0 +1,11 @@
+{
+  "hidden": [
+    {
+      "reason": "The two-wall chart and the rotating chart are drawn at other members of the family than the hole on a flat wall at mu = 1/8 whose moment t = 0 is embedded: two walls curved like anti-de Sitter space, and a spinning hole.",
+      "drawings": [
+        "brane_black_holes/two_walls/axis",
+        "brane_black_holes/rotating/wall"
+      ]
+    }
+  ]
+}

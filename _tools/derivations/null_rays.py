@@ -19560,5 +19560,8 @@ _conformal_scalar_wormholes_drawings.register_null(sys.modules[__name__])
 import heterotic_m_theory_wall_drawings as _heterotic_m_theory_wall_drawings
 _heterotic_m_theory_wall_drawings.register_null(sys.modules[__name__])
 
+import brane_black_holes_drawings as _brane_black_holes_drawings
+_brane_black_holes_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
