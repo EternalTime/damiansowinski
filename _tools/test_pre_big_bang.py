@@ -5,10 +5,12 @@ power of -t is a power of a positive number, and held to what the History and th
 state: both string frame equations hold on the sphere sum_i beta_i^2 = 1 and fail off it, the
 curvature grows without bound as t rises to zero for every exponents but the flat ones, the
 shifted dilaton is the same for every exponents and under the inversion of the scale factors,
-and the Einstein frame is Kasner's universe with a massless scalar field.
+and the Einstein frame is Kasner's universe with a massless scalar field. The embedding diagram's
+ring of free particles is held to the member it draws, from the numbers in its file.
 """
 
 import json
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -197,6 +199,52 @@ class PreBigBang(unittest.TestCase):
                 at = {eta: -(1 + value) * s, k: value}
                 minus_t = s ** (1 + value)
                 self.assertLess(abs(sp.N(scalar.subs(at) - (3 * beta - 1) ** 2 / minus_t ** 2, 30)), 1e-20)
+
+    def test_embedding_is_a_ring_of_free_particles_of_a_member_with_every_exponent_negative(self):
+        # The member embedded lies on the sphere with every exponent negative, so the ring of particles at
+        # rest in the chart on x^2 + z^2 = l^2 is the ellipse of semi-axes (-t)^beta_1 l along x and
+        # (-t)^beta_3 l along z, the circle of radius l at t = -1, both growing faster and faster as t
+        # rises toward zero.
+        member = (sp.Rational(-2, 7), sp.Rational(-3, 7), sp.Rational(-6, 7))
+        self.assertEqual(sum(b ** 2 for b in member), 1)
+        self.assertEqual(equations(member), (sp.zeros(4, 4), 0))
+        embedding = json.loads((ROOT / "MFS/assets/data/embedding/pre_big_bang.json").read_text())
+        views = {view["id"]: view for view in embedding["views"]}
+        self.assertEqual(list(views), ["tube", "ring"])
+        for view in views.values():
+            self.assertIn("(-2/7, -3/7, -6/7)", view["settings"])
+        along_x, along_z = float(member[0]), float(member[2])
+        ring = views["ring"]
+        self.assertEqual([s["time"] for s in ring["surfaces"]], [-1, -0.75, -0.5, -0.25])
+        frames = ring["movie"]["frames"]
+        values = [frame["value"] for frame in frames]
+        for earlier, later in zip(values, values[1:]):
+            self.assertAlmostEqual(later - earlier, 0.025, delta=1e-6)
+        widths = []
+        for frame in frames:
+            t = frame["value"]
+            points = frame["curves"][0]["points"]
+            a, b = max(abs(p[0]) for p in points), max(abs(p[1]) for p in points)
+            self.assertAlmostEqual(a, (-t) ** along_x, delta=1e-6, msg=t)
+            self.assertAlmostEqual(b, (-t) ** along_z, delta=1e-6, msg=t)
+            for X, Y, Z in points:
+                self.assertAlmostEqual(math.hypot(X / a, Y / b), 1, delta=1e-5, msg=t)
+                self.assertEqual(Z, 0, t)
+            widths.append((a, b))
+        self.assertEqual(widths[0], (1, 1))
+        # The frames stand a steady step of t apart, so steps that lengthen are an expansion that speeds up.
+        for k in (0, 1):
+            grown = [later[k] - earlier[k] for earlier, later in zip(widths, widths[1:])]
+            self.assertTrue(all(step > 0 for step in grown), k)
+            self.assertTrue(all(later > earlier for earlier, later in zip(grown, grown[1:])), k)
+        self.assertTrue(all(b > a for a, b in widths[1:]))
+        tube = views["tube"]["surfaces"][0]
+        grid = tube["pieces"][0]["grid"]
+        for u, a, b in zip(grid["u"], grid["a"], grid["b"]):
+            self.assertAlmostEqual(a, (-u) ** along_x, delta=1e-6, msg=u)
+            self.assertAlmostEqual(b, (-u) ** along_z, delta=1e-6, msg=u)
+        # The axis of time, at a height of 4 l for each unit of t, stops short of the singularity at t = 0.
+        self.assertLess(tube["axis"]["to"], 0)
 
 
 if __name__ == "__main__":

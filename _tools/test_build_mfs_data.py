@@ -3297,6 +3297,7 @@ class StacksAndMovies(unittest.TestCase):
               "bell_szekeres": 3.0, "light_beam": 0.4, "chandrasekhar_xanthopoulos": 3.0, "belinski_zakharov": 2.0,
               "big_rip": 1.0,
               "murphy_viscous_universe": 1.0,
+              "pre_big_bang": 4.0,
               "maximally_supersymmetric_plane_wave": 0.8,
               "cahen_wallach": 2.0,
               "holographic_superconductor": 1.0})   # the height of a unit of time
@@ -3342,6 +3343,7 @@ class StacksAndMovies(unittest.TestCase):
               ("aichelburg_sexl", "ring"): "$u$", ("khan_penrose", "ring"): "$\\tau$",
               ("bell_szekeres", "ring"): "$\\xi$", ("chandrasekhar_xanthopoulos", "ring"): "$\\psi$",
               ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$", ("murphy_viscous_universe", "ring"): "$t$",
+              ("pre_big_bang", "ring"): "$t$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("cahen_wallach", "ring"): "$cu/L$",
@@ -4624,12 +4626,6 @@ class Slices(unittest.TestCase):
             # The embedded moment has tau=1/q and eta=0 at q=1.
             _, hi = self.reach(surface)
             level = 1.0 if "/cosmic/" in key else 0.0
-            return (lambda X: level), [-hi, hi]
-
-        if key.startswith("pre_big_bang/"):
-            # The embedded moment is t=-1, which is eta=-1/(1+1/sqrt3) in conformal time.
-            _, hi = self.reach(surface)
-            level = -1.0 if "/synchronous/" in key else -1 / (1 + 1 / math.sqrt(3))
             return (lambda X: level), [-hi, hi]
 
         if key.startswith("electron_bubble/"):
@@ -6194,15 +6190,6 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp+tq)/2+1), 2e-4*scale, where)
                             self.assertLessEqual(lo-2e-4*scale, (tq-tp)/2, where)
                             self.assertLessEqual((tq-tp)/2, hi+2e-4*scale, where)
-                    elif metric_id == "pre_big_bang":
-                        # tan((T-X)/2)=eta-x and tan((T+X)/2)=eta+x, with eta=-1/(1+1/sqrt3) at t=-1.
-                        eta = -1 / (1 + 1 / math.sqrt(3))
-                        hi = self.reach(surface)[1]
-                        for X, T in points:
-                            tp, tq = math.tan((T-X)/2), math.tan((T+X)/2)
-                            scale = 1 + tp*tp + tq*tq
-                            self.assertLess(abs((tp+tq)/2-eta), 2e-4*scale, where)
-                            self.assertLessEqual(abs((tq-tp)/2), hi+2e-4*scale, where)
                     elif metric_id == "exponential_scalar_universes":
                         p = {"inflation": 2, "tracking": 2/3, "coasting": 1}[mark["view"]]
                         eta = 0 if p == 1 else 1/(1-p)
