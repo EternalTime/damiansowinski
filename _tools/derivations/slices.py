@@ -5324,3 +5324,8 @@ FLAT_METRICS.add(_krasnikov_time_machine_drawings.METRIC)
 
 import stu_black_holes_drawings as _stu_black_holes_drawings  # noqa: E402
 _stu_black_holes_drawings.register_slices(sys.modules[__name__])
+
+import conformal_scalar_wormholes_drawings as _conformal_scalar_wormholes_drawings  # noqa: E402
+FLAT.update(_conformal_scalar_wormholes_drawings.slice_table(sys.modules[__name__]))
+FLAT_METRICS.add(_conformal_scalar_wormholes_drawings.METRIC)
+HIDDEN.update(_conformal_scalar_wormholes_drawings.HIDDEN)

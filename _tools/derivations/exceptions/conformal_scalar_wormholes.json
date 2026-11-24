@@ -1,0 +1,10 @@
+{
+  "hidden": [
+    {
+      "reason": "The chart in r is drawn at another member of the class than the wormhole whose moment t = 0 is embedded, w = 1/4 and b = -1/4, with a naked singularity at r = 4 mu.",
+      "drawings": [
+        "conformal_scalar_wormholes/three_parameter/radial"
+      ]
+    }
+  ]
+}

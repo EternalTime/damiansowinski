@@ -32530,5 +32530,8 @@ _hawking_turok_instanton_drawings.register_conformal(sys.modules[__name__])
 import stu_black_holes_drawings as _stu_black_holes_drawings
 _stu_black_holes_drawings.register_conformal(sys.modules[__name__])
 
+import conformal_scalar_wormholes_drawings as _conformal_scalar_wormholes_drawings
+_conformal_scalar_wormholes_drawings.register_conformal(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())
