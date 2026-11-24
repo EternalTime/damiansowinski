@@ -5250,3 +5250,6 @@ import bmpv_drawings as _bmpv_drawings  # noqa: E402
 FLAT.update({(_bmpv_drawings.METRIC, system, "radial"): (lambda system=system: _bmpv_drawings.slice_marks(sys.modules[__name__], system))
              for system in ("euler", "isotropic", "ingoing")})
 FLAT_METRICS.add(_bmpv_drawings.METRIC)
+
+import constant_curvature_black_hole_drawings as _constant_curvature_black_hole_drawings  # noqa: E402
+_constant_curvature_black_hole_drawings.register_slices(sys.modules[__name__])

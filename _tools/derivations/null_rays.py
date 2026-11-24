@@ -19533,5 +19533,8 @@ _koutras_mcintosh_drawings.register_null(sys.modules[__name__])
 import bmpv_drawings as _bmpv_drawings
 _bmpv_drawings.register_null(sys.modules[__name__])
 
+import constant_curvature_black_hole_drawings as _constant_curvature_black_hole_drawings
+_constant_curvature_black_hole_drawings.register_null(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

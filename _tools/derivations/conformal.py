@@ -32504,5 +32504,10 @@ import bmpv_drawings as _bmpv_drawings
 DRAWN[_bmpv_drawings.METRIC] = lambda ck, src: _bmpv_drawings.conformal_views(ck, src, sys.modules[__name__])
 CAPTIONS.update(_bmpv_drawings.conformal_captions())
 
+import constant_curvature_black_hole_drawings as _constant_curvature_black_hole_drawings
+DRAWN[_constant_curvature_black_hole_drawings.METRIC] = lambda ck, src: _constant_curvature_black_hole_drawings.conformal_views(
+    ck, src, sys.modules[__name__])
+CAPTIONS.update(_constant_curvature_black_hole_drawings.conformal_captions())
+
 if __name__ == "__main__":
     sys.exit(main())

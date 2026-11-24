@@ -1,0 +1,19 @@
+{
+  "hidden": [
+    {
+      "reason": "The hole of five dimensions is another spacetime than the hole of four, whose moment is embedded.",
+      "drawings": [
+        "constant_curvature_black_hole/kruskal_five/plane",
+        "constant_curvature_black_hole/static_five/radial",
+        "constant_curvature_black_hole/exterior_five/radial"
+      ]
+    },
+    {
+      "reason": "The interior charts cover the black hole between the event horizon and the singularity, which the moment t = 0 meets only in the circle r = r_+ at their edge.",
+      "drawings": [
+        "constant_curvature_black_hole/interior/radial",
+        "constant_curvature_black_hole/null/plane"
+      ]
+    }
+  ]
+}
