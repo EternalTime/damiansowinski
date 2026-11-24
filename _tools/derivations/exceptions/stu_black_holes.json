@@ -1,0 +1,17 @@
+{
+  "hidden": [
+    {
+      "reason": "The black hole with a flat horizon is another black hole than the one whose moment is embedded, the hole with a spherical horizon at q_1 = 4 r_+^2, q_2 = 2 r_+^2, q_3 = r_+^2 and L = 3 r_+.",
+      "drawings": [
+        "stu_black_holes/flat/radial",
+        "stu_black_holes/brane/radial"
+      ]
+    },
+    {
+      "reason": "The black hole with a hyperbolic horizon is another black hole than the one whose moment is embedded, the hole with a spherical horizon at q_1 = 4 r_+^2, q_2 = 2 r_+^2, q_3 = r_+^2 and L = 3 r_+.",
+      "drawings": [
+        "stu_black_holes/hyperbolic/radial"
+      ]
+    }
+  ]
+}

@@ -19551,6 +19551,8 @@ _krasnikov_time_machine_drawings.register_null(sys.modules[__name__])
 import hawking_turok_instanton_drawings as _hawking_turok_instanton_drawings
 _hawking_turok_instanton_drawings.register_null(sys.modules[__name__])
 
+import stu_black_holes_drawings as _stu_black_holes_drawings
+_stu_black_holes_drawings.register_null(sys.modules[__name__])
 
 if __name__ == "__main__":
     sys.exit(main())

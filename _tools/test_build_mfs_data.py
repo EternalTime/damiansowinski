@@ -4605,6 +4605,10 @@ class Slices(unittest.TestCase):
         if key == "early_braneworlds/magnetic_general/radial":
             # The same magnetic surface: beta=(1+rho^2/a^2)^(1/3), with a=1.
             return (lambda X: 0.0), [(1+rho*rho)**(1/3) for rho in self.reach(surface)]
+        if key == "stu_black_holes/continued/radial":
+            # The moment t = 0 embedded in the radius r of the spherical chart, drawn in Myers and
+            # Tafjord's rho^2 = r^2 + q_3, with q_3 = r_+^2 = 1 at the member drawn.
+            return (lambda X: 0.0), [math.sqrt(r * r + 1) for r in self.reach(surface)]
         if key.startswith("shell_void/"):
             # One fixed slice: exterior t=2t0, interior T=1.0043869706139898t0,
             # the matched clock reading in the independently recorded trajectory audit.
