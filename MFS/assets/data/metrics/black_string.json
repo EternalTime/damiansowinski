@@ -92,6 +92,11 @@
       "id": "three_dim_black_string",
       "kind": "family",
       "text": "A charged black string in three dimensions from string theory, with an event horizon, an inner horizon, and a timelike singularity. The dilaton and antisymmetric field of its string metric violate the strong energy condition, which lets a static black string exist below five dimensions [horne1992black]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "Black strings stretched between two walls in anti-de Sitter space of four dimensions, which at large masses have more entropy than black holes localized on one wall [emparan2000branes2]."
     }
   ],
   "references": [
@@ -123,7 +128,8 @@
     "lake2006static",
     "horowitzmaeda2002",
     "myers1987compact",
-    "horne1992black"
+    "horne1992black",
+    "emparan2000branes2"
   ],
   "coordinates": [
     {

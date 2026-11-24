@@ -87,6 +87,11 @@
       "id": "ads_dust_collapse",
       "kind": "family",
       "text": "A disc of dust falling under a negative cosmological constant. Below a threshold density it ends as a naked conical singularity, and above it as a black hole [mann1993]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "A black hole of four dimensions on a wall in anti-de Sitter space, which far from the hole makes the wall a cone, as a point mass does in three dimensions [emparan2000branes]."
     }
   ],
   "references": [
@@ -115,7 +120,8 @@
     "louko_marolf1994",
     "gott1986charged",
     "gibbonsgreenperry1996",
-    "mann1993"
+    "mann1993",
+    "emparan2000branes"
   ],
   "coordinates": [
     {

@@ -105,6 +105,11 @@
       "id": "heterotic_m_theory_wall",
       "kind": "family",
       "text": "Two flat walls of heterotic M-theory at the ends of a fifth dimension, with a warp factor that is a power of a function linear in the distance along it and the volume of a Calabi-Yau space changing between them [lukas1999universe]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "The same wall one dimension down, in anti-de Sitter space of four dimensions, where Emparan, Horowitz, and Myers found black holes on it exactly [emparan2000branes]."
     }
   ],
   "references": [
@@ -135,7 +140,8 @@
     "akama1983pregeometry",
     "visser1985",
     "dewolfe2000",
-    "lukas1999universe"
+    "lukas1999universe",
+    "emparan2000branes"
   ],
   "coordinates": [
     {

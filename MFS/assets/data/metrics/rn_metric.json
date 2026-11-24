@@ -248,6 +248,11 @@
       "id": "naked_black_holes",
       "kind": "generalisation",
       "text": "Charged black holes with a dilaton coupled at strength $a$, which at $a = 0$ are the Reissner-Nordström black hole. Close to extremality and large, they crush a falling body sideways before it reaches the horizon [horowitz1997naked]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "With a tidal charge from a fifth dimension in place of the electric charge, this metric solves the equations induced on a wall with three dimensions of space, and with a negative tidal charge it has one horizon, outside Schwarzschild's [dadhich2000]."
     }
   ],
   "references": [
@@ -308,7 +313,8 @@
     "husain1996null",
     "schein1996",
     "gauntlett1999",
-    "horowitz1997naked"
+    "horowitz1997naked",
+    "dadhich2000"
   ],
   "coordinates": [
     {

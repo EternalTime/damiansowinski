@@ -271,6 +271,11 @@
       "id": "counter_rotating_discs",
       "kind": "composite",
       "text": "A displaced cut and reflection turn regions of Kerr's field into the exterior of a thin disc with counter rotating matter [bicak1993kerr]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "The equator of this black hole is the geometry a spinning hole induces on a flat wall in the C-metric of anti-de Sitter space, and a small one has the same angular momentum on the wall as in four dimensions [emparan2000branes2]."
     }
   ],
   "references": [
@@ -351,7 +356,8 @@
     "gleiser1998by",
     "xanthopoulos1986rotating",
     "bini2009",
-    "bicak1993kerr"
+    "bicak1993kerr",
+    "emparan2000branes2"
   ],
   "coordinates": [
     {

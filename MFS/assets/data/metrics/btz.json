@@ -181,6 +181,11 @@
       "id": "constant_curvature_black_hole",
       "kind": "family",
       "text": "The same identification of anti-de Sitter space along a boost, in any number of dimensions. In three dimensions its Kruskal metric is this hole without rotation [banados1998]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "A large black hole on a wall curved like anti-de Sitter space in four dimensions is this one on the wall, stretched off it as a black string to a second wall [emparan2000branes2]."
     }
   ],
   "references": [
@@ -224,7 +229,8 @@
     "chan1994",
     "chan1995",
     "martinez1996",
-    "banados1998"
+    "banados1998",
+    "emparan2000branes2"
   ],
   "coordinates": [
     {

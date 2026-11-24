@@ -76,6 +76,11 @@
       "id": "dressed_btz",
       "kind": "family",
       "text": "A black hole of three dimensions dressed in a classical conformally coupled scalar field. Its metric has a term in $1/r$ of the same form, which Cristián Martínez and Jorge Zanelli found again for a quantum conformal field at one loop [martinez1996, martinez1997]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "The spacetime this metric is read from, the C-metric of anti-de Sitter space cut along $x = 0$ and glued to a copy of itself, with the black hole on the wall [emparan2000branes2]."
     }
   ],
   "references": [

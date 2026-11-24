@@ -123,6 +123,11 @@
       "id": "stu_black_holes",
       "kind": "family",
       "text": "Black holes of anti-de Sitter space in five dimensions with three charges. With the charges set to zero they are this hole's counterpart in five dimensions [behrndt1999]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "A slice through the equator of this black hole is the metric induced on a wall in the C-metric of anti-de Sitter space, where its mass is negative [emparan2000branes2]."
     }
   ],
   "references": [
@@ -163,7 +168,8 @@
     "banados1994",
     "aman2008",
     "cai2002constant",
-    "behrndt1999"
+    "behrndt1999",
+    "emparan2000branes2"
   ],
   "coordinates": [
     {

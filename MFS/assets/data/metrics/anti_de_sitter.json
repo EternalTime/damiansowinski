@@ -242,6 +242,11 @@
       "id": "stu_black_holes",
       "kind": "family",
       "text": "Black holes of this space in five dimensions with three charges and two scalar fields, which with $\\mu = q_1 = q_2 = q_3 = 0$ and $k = 1$ are anti-de Sitter space of five dimensions."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "composite",
+      "text": "Two pieces of anti-de Sitter space of four dimensions glued along a flat wall are the black hole on the wall with its mass set to zero [emparan2000branes]."
     }
   ],
   "references": [
@@ -312,7 +317,8 @@
     "banados1998",
     "chamseddine2004",
     "girardello1998",
-    "freedman1999"
+    "freedman1999",
+    "emparan2000branes"
   ],
   "coordinates": [
     {

@@ -136,6 +136,11 @@
       "id": "super_entropic",
       "kind": "family",
       "text": "Kerr-anti-de Sitter spun up to $a = \\ell$, whose horizon is noncompact with finite area, as an accelerating hole's becomes when its conical deficit reaches $2\\pi$ [appels2020]."
+    },
+    {
+      "id": "brane_black_holes",
+      "kind": "family",
+      "text": "Its anti-de Sitter version cut along $x = 0$ and glued to a copy of itself, so that a wall takes the place of the cosmic string and holds the black hole [emparan2000branes]."
     }
   ],
   "references": [
@@ -172,7 +177,8 @@
     "emparan2020qbtz",
     "strominger2017superrotations",
     "astorino2022removal",
-    "appels2020"
+    "appels2020",
+    "emparan2000branes"
   ],
   "coordinates": [
     {
