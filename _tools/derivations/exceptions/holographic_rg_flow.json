@@ -1,0 +1,29 @@
+{
+  "hidden_views": [
+    {
+      "reason": "The disc of branes is another flow than the confining flow that these drawings show.",
+      "drawings": {
+        "holographic_rg_flow/proper_distance/tr": [
+          "disc"
+        ],
+        "holographic_rg_flow/bfs_u/tu": [
+          "disc"
+        ],
+        "conformal holographic_rg_flow/proper_distance": [
+          "disc"
+        ]
+      }
+    },
+    {
+      "reason": "The confining flow is another flow than the disc of branes that these drawings show.",
+      "drawings": {
+        "holographic_rg_flow/coulomb_disc/tv": [
+          "flow"
+        ],
+        "conformal holographic_rg_flow/coulomb_disc": [
+          "flow"
+        ]
+      }
+    }
+  ]
+}

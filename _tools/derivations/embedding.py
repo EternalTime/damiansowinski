@@ -22901,6 +22901,10 @@ _naked_black_holes_drawings.register_embedding(sys.modules[__name__])
 import chamseddine_volkov_monopole_drawings as _chamseddine_volkov_monopole_drawings
 _chamseddine_volkov_monopole_drawings.register_embedding(sys.modules[__name__])
 
+import holographic_rg_flow_drawings as _holographic_rg_flow_drawings
+_holographic_rg_flow_drawings.register_embedding(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())
 
