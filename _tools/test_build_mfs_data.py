@@ -3299,6 +3299,7 @@ class StacksAndMovies(unittest.TestCase):
               "extended_inflation": 3.0,
               "murphy_viscous_universe": 1.0,
               "pre_big_bang": 4.0,
+              "linear_dilaton": 2.0,
               "maximally_supersymmetric_plane_wave": 0.8,
               "cahen_wallach": 2.0,
               "kowalski_glikman": 1 / 6,
@@ -3348,6 +3349,7 @@ class StacksAndMovies(unittest.TestCase):
               ("belinski_zakharov", "ring"): "$\\tau$", ("big_rip", "ring"): "$t$", ("extended_inflation", "ring"): "$t/t_0$",
               ("murphy_viscous_universe", "ring"): "$t$",
               ("pre_big_bang", "ring"): "$t$",
+              ("linear_dilaton", "ring"): "$q\\tau$",
               ("gowdy", "torus"): "$t$", ("light_beam", "ring"): "$u$",
               ("maximally_supersymmetric_plane_wave", "ring"): "$\\mu cu$",
               ("cahen_wallach", "ring"): "$cu/L$",
@@ -4639,10 +4641,10 @@ class Slices(unittest.TestCase):
             return (lambda X: -1.0), list(self.reach(surface))
 
         if key.startswith("linear_dilaton/"):
-            # The embedded moment has tau=1/q and eta=0 at q=1.
-            _, hi = self.reach(surface)
-            level = 1.0 if "/cosmic/" in key else 0.0
-            return (lambda X: level), [-hi, hi]
+            # Each moment tau of the ring and its world tube is the whole plane z = 0, a line across the
+            # drawing: tau in the cosmic chart and eta = ln(q tau)/q in the conformal one, at q = 1.
+            clock = t if "/cosmic/" in key else math.log(t)
+            return (lambda X: clock), None
 
         if key.startswith("electron_bubble/"):
             # At the shell r0=m=1, the two clocks agree at zero.
@@ -6334,6 +6336,14 @@ class Slices(unittest.TestCase):
                             self.assertLess(abs((tp + tq) / 2 - t), 2e-4 * scale, where)
                             self.assertLessEqual(lo - 2e-4 * scale, (tq - tp) / 2, where)
                             self.assertLessEqual((tq - tp) / 2, hi + 2e-4 * scale, where)
+                    elif metric_id == "linear_dilaton":
+                        # The moment tau is eta = ln(q tau)/q at q = 1 on both views, by p, q = arctan(eta -+ x),
+                        # across the whole diamond.
+                        eta = math.log(t)
+                        for X, T in points:
+                            tp, tq = math.tan((T - X) / 2), math.tan((T + X) / 2)
+                            scale = 1 + tp * tp + tq * tq
+                            self.assertLess(abs((tp + tq) / 2 - eta), 2e-4 * scale, f"{where} at {(X, T)}")
                     elif metric_id == "big_rip":
                         # The moment t at w = -3/2 is eta = -(-t)^(7/3) in units of eta_0, carried by
                         # p, q = arctan(eta -+ r).
