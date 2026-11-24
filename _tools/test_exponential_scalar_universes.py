@@ -2,6 +2,8 @@
 
 The chart generator tests the matter equations and coordinate pullbacks.
 These checks cover the phase-plane stability claims and improper null integrals.
+The embedding diagram's rings of free particles and horizons are held to the members drawn,
+from the numbers in its file.
 """
 import json
 import math
@@ -151,6 +153,64 @@ class ExponentialScalar(unittest.TestCase):
         print(f'Dust display: {rays} complete rays; {covered} segments meet 0<t<=0.02 t0; '
               f'vertical bound {vertical:.12g}; past-endpoint bound {past:.12g}; '
               f'pixel bound {520*max(vertical,past):.6g}.')
+
+    def test_embedding_is_a_movie_of_a_ring_of_free_particles_for_each_member(self):
+        """Each member's ring of free particles at rest in the chart is the circle of proper radius
+        R t^p on the flat plane z = 0, R = 1, 3 and 1, from t = t_0/2 to 3t_0/2 a frame every t_0/40.
+        The event horizon at p = 2, of proper radius t, and the particle horizon at p = 2/3, of
+        proper radius 3t, each meet the ring at t = t_0, and the coasting member has neither."""
+        embedding = json.loads((ROOT/'MFS/assets/data/embedding/exponential_scalar_universes.json').read_text())
+        views = {view['id']: view for view in embedding['views']}
+        self.assertEqual(list(views), ['inflation', 'tracking', 'coasting'])
+        members = {'inflation': (2, 1, 'event'), 'tracking': (2/3, 3, 'particle'), 'coasting': (1, 1, None)}
+        for vid, (p, ring, horizon) in members.items():
+            view = views[vid]
+            self.assertEqual([s['time'] for s in view['surfaces']], [0.5, 1, 1.5], vid)
+            self.assertEqual(view['movie']['variable'], '$t$', vid)
+            frames = view['movie']['frames']
+            values = [frame['value'] for frame in frames]
+            self.assertEqual(len(frames), 41, vid)
+            for earlier, later in zip(values, values[1:]):
+                self.assertAlmostEqual(later - earlier, 0.025, delta=1e-6, msg=vid)
+            radii, horizons = [], []
+            for frame in frames:
+                t = frame['value']
+                (curve,) = frame['curves']
+                self.assertEqual(curve['class'], 'particles', vid)
+                for X, Y, Z in curve['points']:
+                    self.assertAlmostEqual(math.hypot(X, Y), ring*t**p, delta=2e-6, msg=f'{vid} at {t}')
+                    self.assertEqual(Z, 0, vid)
+                radii.append(math.hypot(*curve['points'][0][:2]))
+                found = [r for r in frame['rings'] if r['class'] == 'horizon']
+                if horizon is None:
+                    self.assertEqual(found, [], f'{vid} at {t}')
+                    continue
+                (circle,) = found
+                # The comoving radius 1/t of the event horizon, or 3t^(1/3) of the particle horizon, at the proper radius t/|p - 1|.
+                self.assertAlmostEqual(circle['x'], t**(1-p)/abs(p-1), delta=1e-9, msg=f'{vid} at {t}')
+                self.assertAlmostEqual(circle['rho'], t/abs(p-1), delta=1e-6, msg=f'{vid} at {t}')
+                horizons.append(circle['rho'])
+            # The frames stand a steady step of t apart: steps that lengthen are an expansion that speeds up.
+            steps = [later-earlier for earlier, later in zip(radii, radii[1:])]
+            changes = [later-earlier for earlier, later in zip(steps, steps[1:])]
+            self.assertTrue(all(step > 0 for step in steps), vid)
+            if vid == 'inflation':
+                self.assertTrue(all(change > 0 for change in changes), vid)
+            elif vid == 'tracking':
+                self.assertTrue(all(change < 0 for change in changes), vid)
+            else:
+                self.assertLess(max(abs(change) for change in changes), 4e-6, vid)
+            legend = {cls: text for _, cls, text in view['figure']['legend']}
+            if horizon is None:
+                self.assertNotIn('horizon', legend, vid)
+                continue
+            self.assertIn(f'the {horizon} horizon', legend['horizon'], vid)
+            # The ring meets its horizon at t = t_0, from inside the event horizon and from outside the particle horizon.
+            k = values.index(1)
+            self.assertAlmostEqual(radii[k], horizons[k], delta=2e-6, msg=vid)
+            inside = vid == 'inflation'
+            self.assertTrue(all((r < h) == inside for r, h in zip(radii[:k], horizons[:k])), vid)
+            self.assertTrue(all((r > h) == inside for r, h in zip(radii[k+1:], horizons[k+1:])), vid)
 
 
 if __name__ == '__main__':
