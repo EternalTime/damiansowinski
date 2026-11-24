@@ -103,6 +103,11 @@
       "id": "bertotti_robinson",
       "kind": "family",
       "text": "The throat of the extreme charged hole of four dimensions, anti-de Sitter space of two dimensions times a 2-sphere. Next to its horizon this hole with $j = 0$ is anti-de Sitter space of two dimensions times a round 3-sphere [gauntlett1999]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Static black holes of five dimensions with three charges in anti-de Sitter space, where no supersymmetric one has a regular horizon [behrndt1998bps]."
     }
   ],
   "references": [
@@ -126,7 +131,8 @@
     "desmet2005",
     "gaiotto2006",
     "sen2012",
-    "ruiperez2026"
+    "ruiperez2026",
+    "behrndt1998bps"
   ],
   "coordinates": [
     {

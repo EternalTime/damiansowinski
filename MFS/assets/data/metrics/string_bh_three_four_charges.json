@@ -92,6 +92,11 @@
       "id": "naked_black_holes",
       "kind": "family",
       "text": "Large charged black holes close to extremality whose tidal forces crush a falling body outside the horizon. The hole of five dimensions with three charges is one of them when one charge is much smaller than another [horowitz1997naked]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "generalisation",
+      "text": "Its hole of five dimensions put in anti-de Sitter space, with a horizon that is a 3-sphere, flat, or hyperbolic. With the gauging only the metric function changes, gaining $r^2H_1H_2H_3/L^2$ [behrndt1999]."
     }
   ],
   "references": [
@@ -113,7 +118,8 @@
     "cvetic1995singular",
     "breckenridge1997",
     "gauntlett1999",
-    "horowitz1997naked"
+    "horowitz1997naked",
+    "behrndt1999"
   ],
   "coordinates": [
     {

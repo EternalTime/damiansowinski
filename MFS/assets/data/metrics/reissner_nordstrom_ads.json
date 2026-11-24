@@ -78,6 +78,11 @@
       "id": "holographic_superconductor",
       "kind": "family",
       "text": "Its planar form with charged scalar hair, grown below a critical temperature. The condensate removes the inner Cauchy horizon, and the inside ends at a spacelike Kasner singularity [hartnoll2021diving]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Black holes of anti-de Sitter space in five dimensions with three charges and two scalar fields. With the three charges equal they are this hole's counterpart in five dimensions [myers2001]."
     }
   ],
   "references": [
@@ -97,7 +102,8 @@
     "mann1997negative",
     "brill1997",
     "awada1983",
-    "hartnoll2021diving"
+    "hartnoll2021diving",
+    "myers2001"
   ],
   "coordinates": [
     {

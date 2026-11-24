@@ -118,6 +118,11 @@
       "id": "constant_curvature_black_hole",
       "kind": "family",
       "text": "Anti-de Sitter space identified along a boost. The Schwarzschild-anti-de Sitter hole continued analytically into a bubble of nothing with its mass set to zero, and with points identified, is the constant curvature hole of four dimensions [aman2008, cai2002constant]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Black holes of anti-de Sitter space in five dimensions with three charges. With the charges set to zero they are this hole's counterpart in five dimensions [behrndt1999]."
     }
   ],
   "references": [
@@ -157,7 +162,8 @@
     "lemos1999",
     "banados1994",
     "aman2008",
-    "cai2002constant"
+    "cai2002constant",
+    "behrndt1999"
   ],
   "coordinates": [
     {

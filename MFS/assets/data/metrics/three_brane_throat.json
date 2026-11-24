@@ -105,6 +105,11 @@
       "id": "holographic_rg_flow",
       "kind": "family",
       "text": "Flows away from the throat's anti-de Sitter space, driven by masses or by spreading the branes apart. Spread over a uniform disc, the branes give a flow solved in closed form [freedman2000]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Black holes of gauged supergravity in five dimensions with three charges. Lifted to ten dimensions, the one with a flat horizon is the region near a stack of three-branes spinning in three planes [cvetic1999embed]."
     }
   ],
   "references": [
@@ -128,7 +133,8 @@
     "berenstein2002",
     "klebanovwitten1998",
     "horowitz1997naked",
-    "freedman2000"
+    "freedman2000",
+    "cvetic1999embed"
   ],
   "coordinates": [
     {

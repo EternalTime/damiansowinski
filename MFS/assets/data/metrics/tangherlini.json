@@ -100,6 +100,11 @@
       "id": "bmpv",
       "kind": "family",
       "text": "A charged hole of five dimensions that spins with a horizon that does not turn. With its spin set to zero it is the extreme charged version of this hole [gauntlett1999]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "generalisation",
+      "text": "Its hole in five dimensions with three charges and a negative cosmological constant, a black hole of gauged supergravity [behrndt1999]."
     }
   ],
   "references": [
@@ -131,7 +136,8 @@
     "myers1987compact",
     "banados1994",
     "clement2004",
-    "gauntlett1999"
+    "gauntlett1999",
+    "behrndt1999"
   ],
   "coordinates": [
     {

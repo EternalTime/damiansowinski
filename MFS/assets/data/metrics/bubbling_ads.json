@@ -53,6 +53,11 @@
       "id": "maximally_supersymmetric_plane_wave",
       "kind": "special_case",
       "text": "The black half plane. Its geometry is the plane wave of ten dimensions that keeps all 32 supersymmetries, the Penrose limit of the black disc along a light ray circling its 5-sphere [lin2004, blau2002penrose]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Black holes of anti-de Sitter space in five dimensions with three charges. With no mass above their charges, $\\mu = 0$, they lift to the superstars of ten dimensions [myers2001]."
     }
   ],
   "references": [

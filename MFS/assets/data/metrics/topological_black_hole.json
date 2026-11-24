@@ -133,6 +133,11 @@
       "id": "constant_curvature_black_hole",
       "kind": "family",
       "text": "Anti-de Sitter space of four dimensions identified along a single boost, the first construction of the same 1996 paper, with a toroidal event horizon that grows in time [aminneborg1996, holst1997]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Black holes of anti-de Sitter space in five dimensions with three charges, whose horizons are 3-spheres, flat, or hyperbolic as $k$ is $1$, $0$, or $-1$ [behrndt1999]."
     }
   ],
   "references": [
@@ -172,7 +177,8 @@
     "bhattacharyya2009",
     "cai1999",
     "cai1998",
-    "holst1997"
+    "holst1997",
+    "behrndt1999"
   ],
   "coordinates": [
     {

@@ -237,6 +237,11 @@
       "id": "holographic_rg_flow",
       "kind": "family",
       "text": "Walls of scalar field in anti-de Sitter space of five dimensions that approach it at the boundary correspond to flows of the renormalisation group of the field theory there, with the distance from the boundary as the energy scale [girardello1998, freedman1999]."
+    },
+    {
+      "id": "stu_black_holes",
+      "kind": "family",
+      "text": "Black holes of this space in five dimensions with three charges and two scalar fields, which with $\\mu = q_1 = q_2 = q_3 = 0$ and $k = 1$ are anti-de Sitter space of five dimensions."
     }
   ],
   "references": [
