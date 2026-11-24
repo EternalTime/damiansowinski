@@ -2745,6 +2745,11 @@
       "id": "roman_ring",
       "kind": "family",
       "text": "Visser's cut and paste wormholes set round a ring in flat space, each joining two mouths in one universe with a time shift. With enough of them the vacuum polarization at every throat is as small as desired [visser1997]."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "family",
+      "text": "Wormholes of a conformally coupled scalar field, which Barceló and Visser proposed to join to two outer regions with two thin shells of ordinary matter [barcelo1999]."
     }
   ],
   "references": [
@@ -2774,6 +2779,7 @@
     "kraus1999",
     "israel1970",
     "schein1996",
-    "visser1997"
+    "visser1997",
+    "barcelo1999"
   ]
 }

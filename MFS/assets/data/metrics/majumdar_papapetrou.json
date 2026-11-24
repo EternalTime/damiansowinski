@@ -126,6 +126,11 @@
       "id": "charged_shell_wormhole",
       "kind": "composite",
       "text": "Two of its charged bodies made into spheres and joined through a Reissner-Nordström black hole, a wormhole with both mouths in one universe [schein1996]."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "conformal",
+      "text": "With the isotropic metric of one extremal hole multiplied by $(1 + km/r)^2$, for a positive constant $k$, the solution is a traversable wormhole of a conformally coupled scalar field, with a second flat region where $r \\to 0$ [ray2025]."
     }
   ],
   "references": [
@@ -169,7 +174,8 @@
     "semerak2016",
     "horowitzmaeda2002",
     "myers1987compact",
-    "schein1996"
+    "schein1996",
+    "ray2025"
   ],
   "coordinates": [
     {

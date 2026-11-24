@@ -117,6 +117,11 @@
       "id": "roman_ring",
       "kind": "family",
       "text": "A ring of wormholes with throats of no length, at rest in flat space. Together they come arbitrarily close to a time machine, and none of them is near one alone [visser1997]."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "family",
+      "text": "Wormholes held open by a massless scalar field coupled to the curvature, a classical source that breaks the null energy condition [barcelo1999]."
     }
   ],
   "references": [
@@ -149,7 +154,8 @@
     "kodama1978preprint",
     "maldacena2018",
     "giddings1988",
-    "visser1997"
+    "visser1997",
+    "barcelo1999"
   ],
   "coordinates": [
     {

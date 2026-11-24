@@ -64,6 +64,11 @@
       "id": "dressed_btz",
       "kind": "family",
       "text": "A black hole of three dimensions dressed in a conformally coupled scalar field, which Cristián Martínez and Jorge Zanelli found in 1996. There the coupling constant to the curvature is $1/8$, which plays the part of $1/6$ in four dimensions [martinez1996]."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "family",
+      "text": "Wormholes held open by the same conformally coupled field with no dust, found by Carlos Barceló and Matt Visser in 1999 [barcelo1999]."
     }
   ],
   "references": [
@@ -78,7 +83,8 @@
     "parker1990",
     "molinaparis1999",
     "cimaglia2024",
-    "martinez1996"
+    "martinez1996",
+    "barcelo1999"
   ],
   "coordinates": [
     {

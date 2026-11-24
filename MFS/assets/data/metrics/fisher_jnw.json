@@ -94,6 +94,11 @@
       "id": "scalar_collapse_cosmology",
       "kind": "conformal",
       "text": "Fisher's solution at $\\gamma = \\sqrt{3}/2$ multiplied by a factor that grows with time. At that exponent the product solves Einstein's equations again, and the scalar field fills an expanding universe [husain1994exact]."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "conformal",
+      "text": "With this metric multiplied by a conformal factor that solves a linear equation in the scalar field, the scalar field is massless and coupled to the curvature with the strength $1/6$, and at $\\gamma = 1/2$ the solutions are traversable wormholes [barcelo1999]."
     }
   ],
   "references": [
@@ -128,7 +133,8 @@
     "herdeiro2025",
     "banerjee1998",
     "kramer1971projective",
-    "husain1994exact"
+    "husain1994exact",
+    "barcelo1999"
   ],
   "coordinates": [
     {

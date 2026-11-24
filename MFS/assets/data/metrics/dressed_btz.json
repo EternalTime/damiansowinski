@@ -74,6 +74,11 @@
       "id": "charged_three_dimensions",
       "kind": "family",
       "text": "A point charge with Maxwell's field in three dimensions, whose field falls off so slowly that it curves spacetime at every radius. Cárdenas, Fuentealba, and Martínez charged this black hole with Maxwell's Lagrangian raised to the power $3/4$, which is conformally invariant in three dimensions [cardenas2014]."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "family",
+      "text": "Wormholes of four dimensions held open by a conformally coupled scalar field, with no cosmological constant [barcelo1999]."
     }
   ],
   "references": [
@@ -89,7 +94,8 @@
     "martinez1998",
     "gegenberg2003",
     "cardenas2014",
-    "aviles2018"
+    "aviles2018",
+    "barcelo1999"
   ],
   "coordinates": [
     {

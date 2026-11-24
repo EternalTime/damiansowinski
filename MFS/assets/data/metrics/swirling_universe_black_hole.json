@@ -84,6 +84,11 @@
       "id": "stockum_dust",
       "kind": "family",
       "text": "Another universe that turns, van Stockum's cylinder of dust spinning about its axis."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "family",
+      "text": "A wormhole of a conformally coupled scalar field set in the same swirling background, which drags it into rotation [cisterna2023]."
     }
   ],
   "references": [
@@ -95,7 +100,8 @@
     "astorino2025binary",
     "capobianco2024",
     "barrientos2024",
-    "dipinto2025"
+    "dipinto2025",
+    "cisterna2023"
   ],
   "coordinates": [
     {

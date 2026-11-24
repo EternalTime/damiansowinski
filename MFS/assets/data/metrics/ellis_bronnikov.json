@@ -94,6 +94,11 @@
       "id": "giddings_strominger",
       "kind": "family",
       "text": "A wormhole with no time in it, Steven B. Giddings and Andrew Strominger's of 1988: four dimensions of space whose two flat regions meet at a 3-sphere that an axion's field holds open [giddings1988]. A slice through its throat levels off at a finite height, about $1.311$ times the throat's radius."
+    },
+    {
+      "id": "conformal_scalar_wormholes",
+      "kind": "family",
+      "text": "A wormhole of a massless scalar field with the ordinary sign of energy, coupled to the curvature with the strength $1/6$. Its effective Newton constant has opposite signs at the two ends [barcelo1999]."
     }
   ],
   "references": [
@@ -121,7 +126,8 @@
     "kodama1978preprint",
     "kodama1978",
     "bronnikov2024",
-    "giddings1988"
+    "giddings1988",
+    "barcelo1999"
   ],
   "coordinates": [
     {
