@@ -22,7 +22,7 @@ bach_weyl_ring, kerr_bertotti_robinson, einstein_dirac_maxwell_wormhole, quantum
 jackiw_teitelboim_black_hole, eternal_traversable_wormhole, unruh_acoustic_hole, vuorio_warped_ads, interstellar_wormhole, btz_shock_wave, supertranslation_hair,
 poincare_dodecahedral, black_to_white_hole, big_rip, kerr_scalar_hair, bubbling_ads, lqc_bounce, limiting_curvature,
 maximally_supersymmetric_plane_wave, kodama_kink, bardeen_perturbations, holographic_superconductor, eye_of_the_storm,
-buchdahl_sphere, ozsvath_dust, kerr_disc_source and cahen_wallach, and Godel's cylindrical chart.
+buchdahl_sphere, ozsvath_dust, kerr_disc_source, cahen_wallach and stu_black_holes, and Godel's cylindrical chart.
 
     .venv.noindex/bin/python _tools/derivations/print_charts.py [--metric <id>]... [--budget <seconds>]
     .venv.noindex/bin/python _tools/derivations/verify_metrics.py --system <id>/<system>
@@ -37921,6 +37921,9 @@ _hawking_turok_instanton.register(sys.modules[__name__])
 import krasnikov_time_machine as _krasnikov_time_machine
 CHARTS[_krasnikov_time_machine.METRIC] = [lambda system=system: _krasnikov_time_machine.chart_spec(system)
                                           for system in _krasnikov_time_machine.CHARTS]
+
+import stu_black_holes as _stu_black_holes
+_stu_black_holes.register(sys.modules[__name__])
 
 
 if __name__ == "__main__":

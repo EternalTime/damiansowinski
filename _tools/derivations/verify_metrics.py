@@ -5590,6 +5590,10 @@ DIMENSIONS.update(_krasnikov_time_machine.DIMENSIONS)
 import hawking_turok_instanton as _hawking_turok_instanton
 DIMENSIONS.update(_hawking_turok_instanton.DIMENSIONS)
 
+import stu_black_holes as _stu_black_holes
+DIMENSIONS.update(_stu_black_holes.DIMENSIONS)
+HELD.update(_stu_black_holes.HELD)
+RATES.update(_stu_black_holes.RATES)
 
 if __name__ == "__main__":
     sys.exit(main())
