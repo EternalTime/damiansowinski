@@ -1,0 +1,3434 @@
+{
+  "id": "dgp_wall",
+  "name": "Dvali-Gabadadze-Porrati Braneworld",
+  "short_name": "DGP Braneworld",
+  "description": "A wall with three dimensions of space in flat space of five dimensions, with a curvature term of its own in its action, proposed by Gia Dvali, Gregory Gabadadze, and Massimo Porrati in 2000. Gravity on the wall is four dimensional below a crossover length $r_c$ and five dimensional above it. On one of the two branches of Cédric Deffayet's cosmology of 2001 an empty wall expands at the rate $c/r_c$ with no cosmological constant, the hyperboloid of radius $r_c$ with two copies of its outside glued along it.",
+  "tags": [
+    "braneworld",
+    "brane",
+    "domain wall",
+    "thin shell",
+    "junction conditions",
+    "matched solution",
+    "higher dimensions",
+    "five-dimensional",
+    "reflection symmetry",
+    "spherically symmetric",
+    "orbifold",
+    "cosmology",
+    "expanding universe",
+    "FLRW",
+    "de Sitter",
+    "dark energy",
+    "alternative theories of gravity",
+    "locally flat",
+    "conformally flat",
+    "instability",
+    "negative energy",
+    "time-dependent",
+    "exact solution",
+    "Lorentzian",
+    "idealized model"
+  ],
+  "signature": "(-,+,+,+,+)",
+  "convention": "Off the wall $R_{\\mu\\nu} = 0$, and on it $G_{ab} - 8\\pi GT_{ab}/c^4 = (K_{ab} - h_{ab}K)/r_c$, with $h_{ab}$ the metric on the wall, $G_{ab}$ its Einstein tensor, $T_{ab}$ the stress tensor of its matter, $K_{ab}$ its extrinsic curvature with the normal pointing away from it, and $r_c$ the crossover length. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$, $\\delta$ is the Dirac delta, and we keep factors of $c$ explicit.",
+  "history": "Gravity near a mass on a wall in flat space of five dimensions is four dimensional when the wall has a curvature term of its own in its action, and far from the mass it is five dimensional [dvali2000brane]. Gia Dvali, Gregory Gabadadze, and Massimo Porrati proposed this in 2000 for a wall of zero tension, with the term written into the classical action or induced on the wall by loops of the matter confined to it [dvali2000brane]. The potential between two masses on the wall falls as $1/r$ below the crossover length $r_c = M_P^2/(2M^3)$, with $M_P$ and $M$ the Planck masses of four and five dimensions, and as $1/r^2$ beyond it [dvali2000brane]. The graviton exchanged between the masses has the tensor structure of a massive graviton, whose extra scalar polarization adds to the attraction, and Dvali, Gabadadze, and Porrati suggested a repulsive vector field to cancel it [dvali2000brane]. For a Planck mass of five dimensions near a TeV they found $r_c \\sim 10^{15}$ cm, the size of the solar system, and required a crossover about $10^8$ times larger to keep the correction to Newton's law below the relativistic precession of Mercury's perihelion [dvali2000brane].¶Hael Collins and Bob Holdom had put the same term into the action of a wall at the edge of anti-de Sitter space, and of a bubble wall expanding into the outside of a black hole, and written the Friedmann equation of each [collins2000orbifolds]. Yuri Shtanov derived the equations again for a wall bounding a space of constant curvature, and found that an empty wall with tuned constants can stay at rest or expand as de Sitter space, $a = a_0\\cosh(c\\tau/a_0)$, from one initial state [shtanov2000brane]. Cédric Deffayet made the space on both sides of the wall flat and empty, each the mirror image of the other, and derived $H^2 + kc^2/a^2 - (\\epsilon c/r_c)\\sqrt{H^2 + kc^2/a^2} = 8\\pi G\\rho/3$, with $\\epsilon = +1$ where lengths along the wall grow with distance from it and $\\epsilon = -1$ where they shrink [deffayet2001cosmology]. As matter thins out, the branch $\\epsilon = -1$ goes over to a five dimensional regime with $H$ linear in the density, and the branch $\\epsilon = +1$ to expansion at the constant rate $H = c/r_c$ [deffayet2001cosmology]. Deffayet called that expansion \"a self-inflationary solution which produces a late accelerated expansion\", credited Shtanov with noticing it, and found the energy of the wall as seen from the bulk negative on its branch, whatever the density of its matter [deffayet2001cosmology].¶Deffayet put the bulk in Gaussian normal coordinates, $y$ the proper distance from the wall, in which the scale factor changes linearly in $|y|$ [deffayet2001cosmology]. By a change to inertial coordinates of Minkowski space, in which the wall moves, Deffayet showed the bulk to be a slice of Minkowski space [deffayet2001cosmology]. A wall that is de Sitter space is a hyperboloid of the same radius in Minkowski space, $-c^2T^2 + X_1^2 + X_2^2 + X_3^2 + X_4^2 = r_c^2$ for the empty wall of the branch $\\epsilon = +1$ [deffayet2001cosmology]. Deffayet's coordinates cover two copies of one side of it, glued along the wall, the outside on the branch $\\epsilon = +1$ and the inside on the branch $\\epsilon = -1$, where a wall with tension alone inflates as a domain wall does [deffayet2001cosmology, gregory2007perspective]. Ruth Gregory, Nemanja Kaloper, Robert C. Myers, and Antonio Padilla noted that keeping the outside mimics a wall of negative tension, and that the curvature term acts as one even when the tension is positive [gregory2007perspective]. Without the mirror symmetry the wall joins two asymptotically flat regions in a wormhole, and on the branch $\\epsilon = +1$ they found the energy of five dimensions unbounded from below [gregory2007perspective].¶Deffayet, Dvali, and Gabadadze proposed in 2002 that the accelerating expansion of the universe is the branch $\\epsilon = +1$, with $r_c$ near the present Hubble length and no cosmological constant on the wall [deffayet2002accelerated]. A flat universe with a density parameter of matter of 0.3 needs $r_c = 1.4\\,c/H_0$, and they argued that, with gravity leaking into the fifth dimension, an observer on the wall has no infinite future horizon [deffayet2002accelerated]. With Arkady Vainshtein they showed that the exact solutions of the model are continuous in $1/r_c$, and argued from its cosmologies that the scalar polarization \"decouples from the matter in the limit of vanishing graviton mass\" [deffayet2002continuity]. Markus A. Luty, Massimo Porrati, and Riccardo Rattazzi found in 2003 that the bending of the wall interacts strongly below about 1000 km when $r_c$ is near the Hubble length, and that on the branch $\\epsilon = +1$ with little vacuum energy this bending is a ghost, a mode of negative energy [luty2003strong].¶Alberto Nicolis and Rattazzi confirmed the ghost, Dmitry Gorbunov, Kazuya Koyama, and Sergei Sibiryakov computed it explicitly, and Christos Charmousis, Gregory, Kaloper, and Padilla found it for any tension, with the branch $\\epsilon = -1$ free of it [nicolis2004consistency, gorbunov2006ghosts, charmousis2006specteroscopy]. Charmousis, Gregory, Kaloper, and Padilla concluded that \"the self-accelerating solutions are not a reliable benchmark for cosmic acceleration driven by gravity modified in the IR\" [charmousis2006specteroscopy]. Roy Maartens and Elisabetta Majerotto found flat models of the branch $\\epsilon = +1$ inside the joint 2 sigma contour of supernovae, the microwave background, and baryon oscillations, with a cosmological constant fitting better [maartens2006constraints]. Wenjuan Fang, Sheng Wang, Wayne Hu, Zoltán Haiman, Lam Hui, and Morgan May found a flat universe on that branch nominally 5.3 sigma worse than one with a cosmological constant, from excess anisotropy of the microwave background at the lowest multipoles [fang2008challenges]. Xinyi Dai, Yupeng Yang, and Yicheng Wang fitted it in 2026 to the baryon oscillations of the second data release of the Dark Energy Spectroscopic Instrument, DESI, with the microwave background, supernovae, and cosmic chronometers, and found that it cannot fit the oscillations and the microwave background together [dai2026desi].¶On the branch $\\epsilon = -1$ an empty wall with no tension is flat and at rest [gregory2007perspective]. Varun Sahni and Shtanov gave the wall a tension, and on that branch, which they called BRANE1, found the present equation of state of dark energy below $-1$, as for phantom energy [sahni2003braneworld]. Swagat S. Mishra, William L. Matthewson, Sahni, Arman Shafieloo, and Shtanov put a rolling scalar field on the branch with no tension, the \"phantom brane\", and fitted it in 2025 to the baryon oscillations of DESI's second release as closely as dark energy whose equation of state changes linearly in the scale factor [mishra2025desi].",
+  "related": [
+    {
+      "id": "domain_wall",
+      "kind": "family",
+      "text": "One dimension down, a hyperboloid in flat space with two copies of its inside glued along it, a wall with tension alone. In five dimensions that wall is the branch $\\epsilon = -1$, and the empty wall of the branch $\\epsilon = +1$ keeps two copies of the outside [deffayet2001cosmology, gregory2007perspective]."
+    },
+    {
+      "id": "de_sitter",
+      "kind": "family",
+      "text": "The empty wall of the branch $\\epsilon = +1$ is de Sitter space of radius $r_c$, expanding at the rate $c/r_c$ with no cosmological constant [deffayet2001cosmology, deffayet2002accelerated]."
+    },
+    {
+      "id": "minkowski",
+      "kind": "family",
+      "text": "Flat space of five dimensions is the bulk on both sides of the wall, and on the branch $\\epsilon = -1$ an empty wall with no tension is Minkowski space of four dimensions at rest [deffayet2001cosmology, gregory2007perspective]."
+    },
+    {
+      "id": "frw",
+      "kind": "family",
+      "text": "The universe on the wall is Friedmann's, with a term $-\\epsilon(c/r_c)\\sqrt{H^2 + kc^2/a^2}$ added to the Friedmann equation [deffayet2001cosmology]."
+    },
+    {
+      "id": "randall_sundrum",
+      "kind": "family",
+      "text": "Gravity on Randall and Sundrum's wall is four dimensional because the warped fifth dimension has a finite volume. Here the fifth dimension is flat and infinite in volume, and gravity on the wall is four dimensional below $r_c$ because of the curvature term of the wall [dvali2000brane]."
+    },
+    {
+      "id": "brane_wall_universe",
+      "kind": "family",
+      "text": "A wall with matter on it between two copies of anti-de Sitter space. Without its curvature term the wall in flat space obeys a Friedmann equation with the square of the density, which the branch $\\epsilon = -1$ approaches as matter thins out [deffayet2001cosmology]."
+    },
+    {
+      "id": "early_braneworlds",
+      "kind": "family",
+      "text": "Dvali, Gabadadze, and Porrati suggested that the curvature term of the wall could come from a kink of a scalar field across it, a wall of the kind on which these early models trap matter [dvali2000brane]."
+    }
+  ],
+  "references": [
+    "dvali2000brane",
+    "collins2000orbifolds",
+    "shtanov2000brane",
+    "deffayet2001cosmology",
+    "gregory2007perspective",
+    "deffayet2002accelerated",
+    "deffayet2002continuity",
+    "luty2003strong",
+    "nicolis2004consistency",
+    "gorbunov2006ghosts",
+    "charmousis2006specteroscopy",
+    "maartens2006constraints",
+    "fang2008challenges",
+    "dai2026desi",
+    "sahni2003braneworld",
+    "mishra2025desi"
+  ],
+  "coordinates": [
+    {
+      "id": "gaussian_normal",
+      "name": "Deffayet, Gaussian Normal",
+      "coords": [
+        "t",
+        "y",
+        "\\chi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "y \\in [0, \\infty) \\;\\text{on the branch}\\; \\epsilon = +1",
+        "y \\in (-\\infty, 0] \\;\\text{on the branch}\\; \\epsilon = -1",
+        "\\chi \\in [0, 1/\\sqrt{k}) \\;\\text{for}\\; k > 0",
+        "\\chi \\in [0, \\infty) \\;\\text{for}\\; k \\le 0",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "y = 0 \\;\\text{(the wall, where the side kept meets its mirror image)}",
+        "N = 0 \\;\\text{and}\\; A = 0 \\;\\text{(coordinate singularities)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "k",
+          "description": "Curvature of space on the wall, $k \\in \\{-1, 0, +1\\}$"
+        },
+        {
+          "symbol": "a = a(t)",
+          "description": "Scale factor of the universe on the wall, a length, the value of $A$ at $y = 0$. With $H = (da/dt)/a$ and $\\rho$ the density of the matter on the wall, $H^2 + kc^2/a^2 - (\\epsilon c/r_c)\\sqrt{H^2 + kc^2/a^2} = 8\\pi G\\rho/3$, with $\\epsilon = +1$ where lengths along the wall grow with distance from it and $\\epsilon = -1$ where they shrink"
+        },
+        {
+          "symbol": "A = a + y\\sqrt{\\dot{a}^2 + k}",
+          "description": "Scale factor of the 3-space at the distance $|y|$ from the wall, a length"
+        },
+        {
+          "symbol": "N = 1 + \\dfrac{y\\ddot{a}}{\\sqrt{\\dot{a}^2 + k}}",
+          "description": "Lapse, $N = \\partial_tA/\\dot{a}$, equal to $1$ on the wall"
+        }
+      ],
+      "convention": "We use coordinates $(t, y, \\chi, \\theta, \\phi)$, with $t$ the proper time on the wall, having dimensions of time, $y$ the proper distance from it, a length, and $\\chi$ a comoving radius, a pure number. On the branch $\\epsilon = +1$ two copies of the side $y \\ge 0$ are glued along the wall, and on the branch $\\epsilon = -1$ two copies of the side $y \\le 0$, so that $y$ stands where Deffayet writes $\\epsilon|y|$. We take components in the chart $x^0 = ct$, a dot on the scale factor is $\\dot{a} = da/d(ct)$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = -N^2c^2dt^2 + A^2\\left(\\dfrac{d\\chi^2}{1 - k\\chi^2} + \\chi^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right) + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-N^2"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{A^2}{1 - k\\chi^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "A^2\\,\\chi^2"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "A^2\\,\\chi^2\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{1}{N^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\chi",
+            "\\chi"
+          ],
+          "value": "\\dfrac{1 - k\\chi^2}{A^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{1}{A^2\\,\\chi^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\theta}{A^2\\,\\chi^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t N}{N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y N}{N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_y N}{N}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A\\,\\partial_t A}{N^2\\left(1 - k\\,\\chi^2\\right)}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{A\\,\\chi^2\\,\\partial_t A}{N^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta}{N^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "N\\,\\partial_y N"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A\\,\\partial_y A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_y A"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_y A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\partial_t A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{\\partial_y A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\partial_y A}{A}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\partial_y A}{A}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\partial_y A}{A}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{k\\,\\chi}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\chi\\left(1 - k\\,\\chi^2\\right)"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\chi\\left(1 - k\\,\\chi^2\\right)\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{1}{\\chi}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "t"
+                ],
+                "value": "-N\\,\\partial_t N"
+              },
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-N\\,\\partial_y N"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-N\\,\\partial_y N"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "N\\,\\partial_y N"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A\\,\\partial_t A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "t",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A\\,\\partial_t A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "t"
+                ],
+                "value": "\\dfrac{A\\,\\partial_t A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_t A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "-\\dfrac{A\\,\\partial_y A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "y",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A\\,\\partial_y A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "y"
+                ],
+                "value": "\\dfrac{A\\,\\partial_y A}{1 - k\\,\\chi^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_y A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_y A"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_y A"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A\\,\\chi^2\\,\\partial_y A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_y A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "A\\,\\chi^2\\,\\partial_y A\\,\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\chi",
+                  "\\chi"
+                ],
+                "value": "\\dfrac{A^2\\,k\\,\\chi}{\\left(1 - k\\,\\chi^2\\right)^2}"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-A^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\chi",
+                  "\\theta"
+                ],
+                "value": "A^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\chi"
+                ],
+                "value": "A^2\\,\\chi"
+              },
+              {
+                "indices": [
+                  "\\chi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\chi",
+                  "\\phi"
+                ],
+                "value": "A^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\chi"
+                ],
+                "value": "A^2\\,\\chi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-A^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "A^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "A^2\\,\\chi^2\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{\\partial_t N}{N}\\dot{t}^2 + \\dfrac{2\\partial_y N}{N}\\dot{t}\\dot{y} + \\dfrac{A\\,\\partial_t A}{N^2\\left(1 - k\\,\\chi^2\\right)}\\dot{\\chi}^2 + \\dfrac{A\\,\\chi^2\\,\\partial_t A}{N^2}\\dot{\\theta}^2 + \\dfrac{A\\,\\chi^2\\,\\partial_t A\\,\\sin^2\\theta}{N^2}\\dot{\\phi}^2 = 0",
+        "\\ddot{y} + N\\,\\partial_y N\\,\\dot{t}^2 - \\dfrac{A\\,\\partial_y A}{1 - k\\,\\chi^2}\\dot{\\chi}^2 - A\\,\\chi^2\\,\\partial_y A\\,\\dot{\\theta}^2 - A\\,\\chi^2\\,\\partial_y A\\,\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\chi} + \\dfrac{2\\partial_t A}{A}\\dot{t}\\dot{\\chi} + \\dfrac{2\\partial_y A}{A}\\dot{y}\\dot{\\chi} + \\dfrac{k\\,\\chi}{1 - k\\,\\chi^2}\\dot{\\chi}^2 - \\chi\\left(1 - k\\,\\chi^2\\right)\\dot{\\theta}^2 - \\chi\\left(1 - k\\,\\chi^2\\right)\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2\\partial_t A}{A}\\dot{t}\\dot{\\theta} + \\dfrac{2\\partial_y A}{A}\\dot{y}\\dot{\\theta} + \\dfrac{2}{\\chi}\\dot{\\chi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2\\partial_t A}{A}\\dot{t}\\dot{\\phi} + \\dfrac{2\\partial_y A}{A}\\dot{y}\\dot{\\phi} + \\dfrac{2}{\\chi}\\dot{\\chi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "global",
+      "name": "Global",
+      "coords": [
+        "t",
+        "y",
+        "\\psi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "\\psi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "y = 0 \\;\\text{(the wall)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_c",
+          "description": "Crossover length, the radius of the empty wall, which expands at the rate $c/r_c$"
+        }
+      ],
+      "convention": "We use coordinates $(t, y, \\psi, \\theta, \\phi)$, with $t$ the proper time of an observer at rest on the wall, having dimensions of time, $y$ the proper distance from the wall, with $\\mathrm{sgn}(y)$ its sign, and $\\psi$, $\\theta$, and $\\phi$ angles on the 3-sphere the wall is at each moment. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = \\left(1 + \\dfrac{|y|}{r_c}\\right)^2\\left(-c^2dt^2 + r_c^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)\\right) + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\left(r_c + |y|\\right)^2}{r_c^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "\\psi"
+          ],
+          "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{r_c^2}{\\left(r_c + |y|\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "\\psi"
+          ],
+          "value": "\\dfrac{1}{\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\psi}{\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\psi\\csc^2\\theta}{\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "y",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "r_c\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "r_c\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "r_c\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "t",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{1}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\psi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\psi"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\psi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\psi"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "t",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "t",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "t",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "y",
+                  "\\psi"
+                ],
+                "value": "\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "y"
+                ],
+                "value": "\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "\\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\psi",
+                  "\\theta"
+                ],
+                "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\psi"
+                ],
+                "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\psi",
+                  "\\phi"
+                ],
+                "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\psi"
+                ],
+                "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\left(r_c + |y|\\right)^2\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "y",
+                  "y",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "y",
+                  "\\psi",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\psi",
+                  "y",
+                  "\\psi"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\psi",
+                  "\\psi",
+                  "y"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\psi",
+                  "y",
+                  "\\psi"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\psi",
+                  "\\psi",
+                  "y"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "y",
+                  "y",
+                  "\\psi"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "y",
+                  "\\psi",
+                  "y"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\theta",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "y",
+                  "\\theta"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "y",
+                  "\\theta",
+                  "y"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "y",
+                  "\\phi",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "y",
+                  "\\phi"
+                ],
+                "value": "2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "y",
+                  "\\phi",
+                  "y"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{8\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-2r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{8\\delta(y)}{r_c}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{8\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c^3\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\dfrac{2\\delta(y)\\csc^2\\psi}{r_c^3\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\dfrac{2\\delta(y)\\csc^2\\psi\\csc^2\\theta}{r_c^3\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{16\\delta(y)}{r_c}",
+      "kretschmann": "K = 0 \\;\\text{for}\\; y \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "6r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "6r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "6r_c\\,\\delta(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c^3\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{6\\delta(y)\\csc^2\\psi}{r_c^3\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{6\\delta(y)\\csc^2\\psi\\csc^2\\theta}{r_c^3\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{t}\\dot{y} + r_c\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\dot{\\psi}^2 + r_c\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\,\\dot{\\theta}^2 + r_c\\sinh\\left(\\dfrac{ct}{r_c}\\right)\\cosh\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{y} + \\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}\\dot{t}^2 - \\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\dot{\\psi}^2 - \\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\,\\dot{\\theta}^2 - \\left(r_c + |y|\\right)\\mathrm{sgn}(y)\\cosh^2\\left(\\dfrac{ct}{r_c}\\right)\\sin^2\\psi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\psi} + \\dfrac{2}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)\\dot{t}\\dot{\\psi} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{y}\\dot{\\psi} - \\sin\\psi\\cos\\psi\\,\\dot{\\theta}^2 - \\sin\\psi\\cos\\psi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)\\dot{t}\\dot{\\theta} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{y}\\dot{\\theta} + 2\\cot\\psi\\,\\dot{\\psi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{r_c}\\tanh\\left(\\dfrac{ct}{r_c}\\right)\\dot{t}\\dot{\\phi} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{y}\\dot{\\phi} + 2\\cot\\psi\\,\\dot{\\psi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    },
+    {
+      "id": "planar",
+      "name": "Planar",
+      "coords": [
+        "t",
+        "x_1",
+        "x_2",
+        "x_3",
+        "y"
+      ],
+      "domains": [
+        "t \\in (-\\infty, \\infty)",
+        "x_1 \\in (-\\infty, \\infty)",
+        "x_2 \\in (-\\infty, \\infty)",
+        "x_3 \\in (-\\infty, \\infty)",
+        "y \\in (-\\infty, \\infty)",
+        "y = 0 \\;\\text{(the wall)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_c",
+          "description": "Crossover length, the radius of the empty wall, which expands at the rate $c/r_c$"
+        }
+      ],
+      "convention": "We use coordinates $(t, x_1, x_2, x_3, y)$, with $t$ the proper time of an observer at rest on the wall, having dimensions of time, $x_1$, $x_2$, and $x_3$ lengths along the wall, and $y$ the proper distance from it, with $\\mathrm{sgn}(y)$ its sign. We take components in the chart $x^0 = ct$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{t}$ is the derivative of $ct$.",
+      "line_element": "ds^2 = \\left(1 + \\dfrac{|y|}{r_c}\\right)^2\\left(-c^2dt^2 + e^{2ct/r_c}\\left(dx_1^2 + dx_2^2 + dx_3^2\\right)\\right) + dy^2",
+      "metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{\\left(r_c + |y|\\right)^2}{r_c^2}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^2}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^2}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "t",
+            "t"
+          ],
+          "value": "-\\dfrac{r_c^2}{\\left(r_c + |y|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x_1",
+            "x_1"
+          ],
+          "value": "\\dfrac{r_c^2e^{-2ct/r_c}}{\\left(r_c + |y|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x_2",
+            "x_2"
+          ],
+          "value": "\\dfrac{r_c^2e^{-2ct/r_c}}{\\left(r_c + |y|\\right)^2}"
+        },
+        {
+          "indices": [
+            "x_3",
+            "x_3"
+          ],
+          "value": "\\dfrac{r_c^2e^{-2ct/r_c}}{\\left(r_c + |y|\\right)^2}"
+        },
+        {
+          "indices": [
+            "y",
+            "y"
+          ],
+          "value": "1"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\mathrm{sgn}(y)}{r_c + |y|}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{1}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{1}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{1}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{1}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "t",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "t",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "t",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "t"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)^2e^{2ct/r_c}}{r_c^3}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "y",
+                  "x_1"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "y",
+                  "x_2"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "y",
+                  "x_3"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              }
+            ]
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "t",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "t",
+                  "y",
+                  "y",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "t",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "t",
+                  "y",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "x_1",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "y",
+                  "y",
+                  "x_1"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "x_2",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "y",
+                  "y",
+                  "x_2"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "x_3",
+                  "y"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "y",
+                  "y",
+                  "x_3"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "x_1",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_1",
+                  "y",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "x_2",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_2",
+                  "y",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "x_3",
+                  "y"
+                ],
+                "value": "\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "x_3",
+                  "y",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{8\\delta(y)}{r_c}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{8\\delta(y)}{r_c}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{2\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{-2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{-2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "-\\dfrac{2\\delta(y)e^{-2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "y",
+                  "y"
+                ],
+                "value": "-\\dfrac{8\\delta(y)}{r_c}"
+              }
+            ]
+          }
+        }
+      },
+      "ricci_scalar": "R = -\\dfrac{16\\delta(y)}{r_c}",
+      "kretschmann": "K = 0 \\;\\text{for}\\; y \\neq 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6\\delta(y)e^{2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6\\delta(y)e^{2ct/r_c}}{r_c}"
+              }
+            ]
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6\\delta(y)}{r_c}"
+              }
+            ]
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": [
+              {
+                "indices": [
+                  "t",
+                  "t"
+                ],
+                "value": "-\\dfrac{6\\delta(y)}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_1",
+                  "x_1"
+                ],
+                "value": "\\dfrac{6\\delta(y)e^{-2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_2",
+                  "x_2"
+                ],
+                "value": "\\dfrac{6\\delta(y)e^{-2ct/r_c}}{r_c}"
+              },
+              {
+                "indices": [
+                  "x_3",
+                  "x_3"
+                ],
+                "value": "\\dfrac{6\\delta(y)e^{-2ct/r_c}}{r_c}"
+              }
+            ]
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{t} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{t}\\dot{y} + \\dfrac{e^{2ct/r_c}}{r_c}\\dot{x_1}^2 + \\dfrac{e^{2ct/r_c}}{r_c}\\dot{x_2}^2 + \\dfrac{e^{2ct/r_c}}{r_c}\\dot{x_3}^2 = 0",
+        "\\ddot{x_1} + \\dfrac{2}{r_c}\\dot{t}\\dot{x_1} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{x_1}\\dot{y} = 0",
+        "\\ddot{x_2} + \\dfrac{2}{r_c}\\dot{t}\\dot{x_2} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{x_2}\\dot{y} = 0",
+        "\\ddot{x_3} + \\dfrac{2}{r_c}\\dot{t}\\dot{x_3} + \\dfrac{2\\mathrm{sgn}(y)}{r_c + |y|}\\dot{x_3}\\dot{y} = 0",
+        "\\ddot{y} + \\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)}{r_c^2}\\dot{t}^2 - \\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}\\dot{x_1}^2 - \\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}\\dot{x_2}^2 - \\dfrac{\\left(r_c + |y|\\right)\\mathrm{sgn}(y)e^{2ct/r_c}}{r_c^2}\\dot{x_3}^2 = 0"
+      ]
+    },
+    {
+      "id": "inertial",
+      "name": "Inertial",
+      "coords": [
+        "T",
+        "R",
+        "\\psi",
+        "\\theta",
+        "\\phi"
+      ],
+      "domains": [
+        "T \\in (-\\infty, \\infty)",
+        "R \\in [\\sqrt{r_c^2 + c^2T^2}, \\infty)",
+        "\\psi \\in [0, \\pi]",
+        "\\theta \\in [0, \\pi]",
+        "\\phi \\in [0, 2\\pi)",
+        "R = \\sqrt{r_c^2 + c^2T^2} \\;\\text{(the wall, where this side meets its mirror image)}"
+      ],
+      "parameters": [
+        {
+          "symbol": "r_c",
+          "description": "Crossover length, the radius of the empty wall, which expands at the rate $c/r_c$"
+        }
+      ],
+      "convention": "We use the inertial coordinates $(T, R, \\psi, \\theta, \\phi)$ of one side of the wall, with $T$ having dimensions of time, $R$ the distance from the centre of the 3-sphere the wall is at each moment, and $\\psi$, $\\theta$, and $\\phi$ angles on it. We take components in the chart $x^0 = cT$, and a dot in the geodesic equations is a derivative with respect to an affine parameter, so $\\dot{T}$ is the derivative of $cT$.",
+      "line_element": "ds^2 = -c^2dT^2 + dR^2 + R^2\\left(d\\psi^2 + \\sin^2\\psi\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+      "metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "\\psi"
+          ],
+          "value": "R^2"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "R^2\\sin^2\\psi"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "R^2\\sin^2\\psi\\sin^2\\theta"
+        }
+      ],
+      "inverse_metric_components": [
+        {
+          "indices": [
+            "T",
+            "T"
+          ],
+          "value": "-1"
+        },
+        {
+          "indices": [
+            "R",
+            "R"
+          ],
+          "value": "1"
+        },
+        {
+          "indices": [
+            "\\psi",
+            "\\psi"
+          ],
+          "value": "\\dfrac{1}{R^2}"
+        },
+        {
+          "indices": [
+            "\\theta",
+            "\\theta"
+          ],
+          "value": "\\dfrac{\\csc^2\\psi}{R^2}"
+        },
+        {
+          "indices": [
+            "\\phi",
+            "\\phi"
+          ],
+          "value": "\\dfrac{\\csc^2\\psi\\csc^2\\theta}{R^2}"
+        }
+      ],
+      "christoffel": {
+        "default": "ull",
+        "variants": {
+          "ull": {
+            "note": "\\Gamma^\\mu{}_{\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "R",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-R"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "R",
+                  "\\psi"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "\\dfrac{1}{R}"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\psi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\psi"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\psi",
+                  "\\phi"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\psi"
+                ],
+                "value": "\\cot\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "\\cot\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "\\cot\\theta"
+              }
+            ]
+          },
+          "lll": {
+            "note": "\\Gamma_{\\mu\\nu\\rho}",
+            "nonzero": [
+              {
+                "indices": [
+                  "R",
+                  "\\psi",
+                  "\\psi"
+                ],
+                "value": "-R"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "R",
+                  "\\psi"
+                ],
+                "value": "R"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\psi",
+                  "R"
+                ],
+                "value": "R"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "R",
+                  "\\theta"
+                ],
+                "value": "R\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "R"
+                ],
+                "value": "R\\sin^2\\psi"
+              },
+              {
+                "indices": [
+                  "R",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "R",
+                  "\\phi"
+                ],
+                "value": "R\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "R"
+                ],
+                "value": "R\\sin^2\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\theta",
+                  "\\theta"
+                ],
+                "value": "-R^2\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\psi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\theta",
+                  "\\psi"
+                ],
+                "value": "R^2\\sin\\psi\\cos\\psi"
+              },
+              {
+                "indices": [
+                  "\\psi",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\psi",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\psi"
+                ],
+                "value": "R^2\\sin\\psi\\cos\\psi\\sin^2\\theta"
+              },
+              {
+                "indices": [
+                  "\\theta",
+                  "\\phi",
+                  "\\phi"
+                ],
+                "value": "-R^2\\sin^2\\psi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\theta",
+                  "\\phi"
+                ],
+                "value": "R^2\\sin^2\\psi\\sin\\theta\\cos\\theta"
+              },
+              {
+                "indices": [
+                  "\\phi",
+                  "\\phi",
+                  "\\theta"
+                ],
+                "value": "R^2\\sin^2\\psi\\sin\\theta\\cos\\theta"
+              }
+            ]
+          }
+        }
+      },
+      "riemann": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "R^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "R_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "R_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "R^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "R^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "ricci_scalar": "R = 0",
+      "kretschmann": "K = 0",
+      "einstein_tensor": {
+        "default": "ll",
+        "variants": {
+          "ll": {
+            "note": "G_{\\mu\\nu}",
+            "nonzero": []
+          },
+          "ul": {
+            "note": "G^\\mu{}_\\nu",
+            "nonzero": []
+          },
+          "uu": {
+            "note": "G^{\\mu\\nu}",
+            "nonzero": []
+          }
+        }
+      },
+      "weyl_tensor": {
+        "default": "ulll",
+        "variants": {
+          "ulll": {
+            "note": "C^\\mu{}_{\\nu\\rho\\sigma}",
+            "nonzero": []
+          },
+          "llll": {
+            "note": "C_{\\mu\\nu\\rho\\sigma}",
+            "nonzero": []
+          }
+        }
+      },
+      "geodesics": [
+        "\\ddot{T} = 0",
+        "\\ddot{R} - R\\,\\dot{\\psi}^2 - R\\sin^2\\psi\\,\\dot{\\theta}^2 - R\\sin^2\\psi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\psi} + \\dfrac{2}{R}\\dot{R}\\dot{\\psi} - \\sin\\psi\\cos\\psi\\,\\dot{\\theta}^2 - \\sin\\psi\\cos\\psi\\sin^2\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\theta} + \\dfrac{2}{R}\\dot{R}\\dot{\\theta} + 2\\cot\\psi\\,\\dot{\\psi}\\dot{\\theta} - \\sin\\theta\\cos\\theta\\,\\dot{\\phi}^2 = 0",
+        "\\ddot{\\phi} + \\dfrac{2}{R}\\dot{R}\\dot{\\phi} + 2\\cot\\psi\\,\\dot{\\psi}\\dot{\\phi} + 2\\cot\\theta\\,\\dot{\\theta}\\dot{\\phi} = 0"
+      ]
+    }
+  ]
+}

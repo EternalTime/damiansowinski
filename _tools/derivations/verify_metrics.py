@@ -5610,5 +5610,10 @@ DIMENSIONS.update(_brane_black_holes.DIMENSIONS)
 HELD.update(_brane_black_holes.HELD)
 RATES.update(_brane_black_holes.RATES)
 
+import dgp_wall as _dgp_wall
+DIMENSIONS.update(_dgp_wall.DIMENSIONS)
+HELD.update(_dgp_wall.HELD)
+RATES.update(_dgp_wall.RATES)
+
 if __name__ == "__main__":
     sys.exit(main())
