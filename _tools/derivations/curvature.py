@@ -19344,6 +19344,9 @@ _chamseddine_volkov_monopole_drawings.register_curvature(sys.modules[__name__])
 import holographic_rg_flow_drawings as _holographic_rg_flow_drawings
 _holographic_rg_flow_drawings.register_curvature(sys.modules[__name__])
 
+import hawking_turok_instanton_drawings as _hawking_turok_instanton_drawings
+_hawking_turok_instanton_drawings.register_curvature(sys.modules[__name__])
+
 
 if __name__ == "__main__":
     sys.exit(main())

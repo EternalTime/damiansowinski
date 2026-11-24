@@ -22907,6 +22907,10 @@ _holographic_rg_flow_drawings.register_embedding(sys.modules[__name__])
 import krasnikov_time_machine_drawings as _krasnikov_time_machine_drawings
 _krasnikov_time_machine_drawings.register_embedding(sys.modules[__name__])
 
+import hawking_turok_instanton_drawings as _hawking_turok_instanton_drawings
+_hawking_turok_instanton_drawings.register_embedding(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())
 
