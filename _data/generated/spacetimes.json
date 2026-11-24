@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 272,
+  "count": 273,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -1631,6 +1631,11 @@
           "id": "constant_curvature_black_hole",
           "kind": "locally_same",
           "text": "Anti-de Sitter space of four or more dimensions with its points identified along a boost, a black hole that is anti-de Sitter space at every point [banados1998]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A monopole of $N = 4$ gauged supergravity. In the $SO(4)$ theory a ratio $\\xi$ of two gauge couplings deforms it into spaces that approach anti-de Sitter space with an excess of solid angle, and at $\\xi = 1$ into anti-de Sitter space [chamseddine2004]."
         }
       ],
       "references": [
@@ -1698,7 +1703,8 @@
         "banados1994",
         "martinez1996",
         "natsuume2000a",
-        "banados1998"
+        "banados1998",
+        "chamseddine2004"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/anti_de_sitter.json",
@@ -4621,6 +4627,11 @@
           "id": "skyrmion_hair",
           "kind": "family",
           "text": "A black hole inside a gravitating skyrmion, with a field extending beyond its horizon [dvali2016skyrmion]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A static ball of Yang-Mills field and a dilaton held by gravity with no Higgs field. It is supersymmetric, known in closed form, and a magnetic monopole [chamseddine1997]."
         }
       ],
       "references": [
@@ -4645,7 +4656,8 @@
         "gleiser1989",
         "lee1989",
         "herdeiro2014",
-        "dvali2016skyrmion"
+        "dvali2016skyrmion",
+        "chamseddine1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/bartnik_mckinnon.json",
@@ -16231,6 +16243,150 @@
       ]
     },
     {
+      "id": "chamseddine_volkov_monopole",
+      "name": "Chamseddine-Volkov Monopole",
+      "short_name": "Chamseddine-Volkov Monopole",
+      "description": "A static, spherically symmetric monopole of gauged supergravity in four dimensions, with a Yang-Mills field, a dilaton, and no Higgs field, regular everywhere and supersymmetric. Its plane of time and radius is conformal to half of the flat plane, so its causal structure is that of Minkowski space, although it is not asymptotically flat.",
+      "tags": [
+        "soliton",
+        "magnetic monopole",
+        "Yang-Mills field",
+        "Einstein-Yang-Mills",
+        "gauge field",
+        "dilaton",
+        "supergravity",
+        "supersymmetric",
+        "string theory",
+        "low energy string theory",
+        "holography",
+        "regular centre",
+        "geodesically complete",
+        "globally hyperbolic",
+        "not asymptotically flat",
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "exact solution",
+        "Lorentzian",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We use Chamseddine and Volkov's units, $c = 4\\pi G = 1$ with the gauge coupling $1$, in which the scale $a$ is a length, and turn their signature $(+,-,-,-)$ to $(-,+,+,+)$ [chamseddine1997]. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "bartnik_mckinnon",
+          "kind": "family",
+          "text": "Another static ball of Yang-Mills field held by gravity with no Higgs field. It is not supersymmetric and has no magnetic charge [chamseddine1997]."
+        },
+        {
+          "id": "dilaton_black_hole",
+          "kind": "family",
+          "text": "The magnetic black hole of the same supergravity with both gauge couplings set to zero, an Abelian field, and a dilaton. In that theory the static, spherically symmetric, purely magnetic supersymmetric solutions are these black holes [chamseddine1998]."
+        },
+        {
+          "id": "global_monopole",
+          "kind": "family",
+          "text": "A monopole of scalar fields whose spheres far from the centre have less area than in flat space at the same distance. Here the spheres have more, and in Schwarzschild coordinates, with $g_{rr} = 1/N$, the function $N$ grows as $\\ln r$ [chamseddine1997]."
+        },
+        {
+          "id": "kaluza_klein_monopole",
+          "kind": "family",
+          "text": "Another monopole that is a regular geometry in more dimensions, a vacuum solution in five. Lifted to ten dimensions, the Yang-Mills field of this monopole also appears in the metric, as components mixing the four dimensions with a 3-sphere [chamseddine1998]."
+        },
+        {
+          "id": "linear_dilaton",
+          "kind": "family",
+          "text": "The string frame of fivebranes in flat space has a dilaton linear in the distance down their throat. Far from the centre the lift of this monopole to ten dimensions has a dilaton linear in its radial coordinate as well, with a logarithmic correction [maldacena2001]."
+        },
+        {
+          "id": "anti_de_sitter",
+          "kind": "family",
+          "text": "In the SO(4) gauged supergravity a ratio $\\xi$ of two gauge couplings deforms the monopole into spaces that approach anti-de Sitter space with an excess of solid angle, and at $\\xi = 1$ into anti-de Sitter space [chamseddine2004]."
+        },
+        {
+          "id": "minkowski",
+          "kind": "family",
+          "text": "The plane of $t$ and $\\rho$ is conformal to half of the flat plane, so the monopole has the conformal diagram of Minkowski space, although its curvature does not vanish [chamseddine1997]."
+        }
+      ],
+      "references": [
+        "chamseddine1997",
+        "freedman1978",
+        "chamseddine1998",
+        "maldacena2001",
+        "gubser2001nonabelian",
+        "correa2003",
+        "chamseddine2004",
+        "kleihaus2008",
+        "chamseddine2011",
+        "podesta2026"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/chamseddine_volkov_monopole.json",
+      "charts": [
+        {
+          "id": "chamseddine_volkov",
+          "name": "Chamseddine-Volkov",
+          "coordinates": [
+            "t",
+            "\\rho",
+            "\\theta",
+            "\\varphi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "\\rho \\in [0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\varphi \\in [0, 2\\pi)"
+          ],
+          "parameters": [
+            {
+              "symbol": "a",
+              "description": "Scale of the monopole, a length, which the field equations leave free: the metric and $e^{2\\phi}$ grow as $a^2$"
+            },
+            {
+              "symbol": "R = \\sqrt{2\\rho\\coth\\rho - \\dfrac{\\rho^2}{\\sinh^2\\rho} - 1}",
+              "description": "Dimensionless, with $R^2 = \\rho^2 + O(\\rho^4)$ near the centre and $R^2 = 2\\rho + O(1)$ far away; the sphere at $\\rho$ has the areal radius $r = a\\sqrt{R\\sinh\\rho}$"
+            }
+          ],
+          "convention": "We use Chamseddine and Volkov's coordinates $(t, \\rho, \\theta, \\varphi)$ [chamseddine1997], with $t$ and $\\rho$ dimensionless, so $t$ is itself the chart's $x^0$. The Yang-Mills field has the amplitude $w = \\rho/\\sinh\\rho$ and the dilaton is $e^{2\\phi} = a^2\\sinh\\rho/(2R)$. A dot in the geodesic equations is a derivative with respect to an affine parameter.",
+          "line_element": "ds^2 = \\dfrac{a^2\\sinh\\rho}{R}\\left(-dt^2 + d\\rho^2 + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\varphi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{a^2\\sinh\\rho}{R}"
+            },
+            {
+              "indices": [
+                "\\rho",
+                "\\rho"
+              ],
+              "value": "\\dfrac{a^2\\sinh\\rho}{R}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R\\,a^2\\sinh\\rho"
+            },
+            {
+              "indices": [
+                "\\varphi",
+                "\\varphi"
+              ],
+              "value": "R\\,a^2\\sinh\\rho\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{3R^4\\sinh^4\\rho - 3R^4\\sinh^6\\rho - 2R^2\\,\\rho^2\\sinh^4\\rho - 2R^2\\sinh^6\\rho + \\rho^4\\sinh^2\\rho + \\rho^4 - 4\\rho^3\\sinh\\rho\\cosh\\rho + 6\\rho^2\\sinh^2\\rho + 2\\rho^2\\sinh^4\\rho - 4\\rho\\sinh^3\\rho\\cosh\\rho + \\sinh^4\\rho + \\sinh^6\\rho}{2R^3\\,a^2\\sinh^7\\rho}",
+          "kretschmann": "K = \\dfrac{15R^8\\sinh^8\\rho + 6R^8\\sinh^{10}\\rho + 3R^8\\sinh^{12}\\rho + 12R^6\\,\\rho^2\\sinh^6\\rho + 8R^6\\,\\rho^2\\sinh^8\\rho + 4R^6\\,\\rho^2\\sinh^{10}\\rho - 24R^6\\,\\rho\\sinh^7\\rho\\cosh\\rho - 8R^6\\,\\rho\\sinh^9\\rho\\cosh\\rho + 12R^6\\sinh^8\\rho - 16R^6\\sinh^{10}\\rho - 4R^6\\sinh^{12}\\rho + 70R^4\\,\\rho^4\\sinh^4\\rho + 84R^4\\,\\rho^4\\sinh^6\\rho + 26R^4\\,\\rho^4\\sinh^8\\rho - 280R^4\\,\\rho^3\\sinh^5\\rho\\cosh\\rho - 168R^4\\,\\rho^3\\sinh^7\\rho\\cosh\\rho + 420R^4\\,\\rho^2\\sinh^6\\rho + 320R^4\\,\\rho^2\\sinh^8\\rho - 28R^4\\,\\rho^2\\sinh^{10}\\rho - 280R^4\\,\\rho\\sinh^7\\rho\\cosh\\rho + 88R^4\\,\\rho\\sinh^9\\rho\\cosh\\rho + 70R^4\\sinh^8\\rho - 44R^4\\sinh^{10}\\rho + 10R^4\\sinh^{12}\\rho + 84R^2\\,\\rho^6\\sinh^2\\rho + 136R^2\\,\\rho^6\\sinh^4\\rho + 52R^2\\,\\rho^6\\sinh^6\\rho - 504R^2\\,\\rho^5\\sinh^3\\rho\\cosh\\rho - 376R^2\\,\\rho^5\\sinh^5\\rho\\cosh\\rho + 1260R^2\\,\\rho^4\\sinh^4\\rho + 1216R^2\\,\\rho^4\\sinh^6\\rho + 84R^2\\,\\rho^4\\sinh^8\\rho - 1680R^2\\,\\rho^3\\sinh^5\\rho\\cosh\\rho - 464R^2\\,\\rho^3\\sinh^7\\rho\\cosh\\rho + 1260R^2\\,\\rho^2\\sinh^6\\rho + 856R^2\\,\\rho^2\\sinh^8\\rho + 12R^2\\,\\rho^2\\sinh^{10}\\rho - 504R^2\\,\\rho\\sinh^7\\rho\\cosh\\rho - 88R^2\\,\\rho\\sinh^9\\rho\\cosh\\rho + 84R^2\\sinh^8\\rho + 64R^2\\sinh^{10}\\rho - 20R^2\\sinh^{12}\\rho + 54\\rho^8\\sinh^2\\rho + 27\\rho^8\\sinh^4\\rho + 27\\rho^8 - 216\\rho^7\\sinh^3\\rho\\cosh\\rho - 216\\rho^7\\sinh\\rho\\cosh\\rho + 756\\rho^6\\sinh^2\\rho + 864\\rho^6\\sinh^4\\rho + 108\\rho^6\\sinh^6\\rho - 1512\\rho^5\\sinh^3\\rho\\cosh\\rho - 648\\rho^5\\sinh^5\\rho\\cosh\\rho + 1890\\rho^4\\sinh^4\\rho + 1620\\rho^4\\sinh^6\\rho + 162\\rho^4\\sinh^8\\rho - 1512\\rho^3\\sinh^5\\rho\\cosh\\rho - 648\\rho^3\\sinh^7\\rho\\cosh\\rho + 756\\rho^2\\sinh^6\\rho + 864\\rho^2\\sinh^8\\rho + 108\\rho^2\\sinh^{10}\\rho - 216\\rho\\sinh^7\\rho\\cosh\\rho - 216\\rho\\sinh^9\\rho\\cosh\\rho + 27\\sinh^8\\rho + 54\\sinh^{10}\\rho + 27\\sinh^{12}\\rho}{4R^6\\,a^4\\sinh^{14}\\rho}"
+        }
+      ]
+    },
+    {
       "id": "dilaton_unusual_asymptotics",
       "name": "Chan-Horne-Mann Dilaton Black Holes",
       "short_name": "Chan-Horne-Mann",
@@ -22202,6 +22358,11 @@
           "id": "naked_black_holes",
           "kind": "generalisation",
           "text": "The same black holes with the dilaton coupled at any strength $a$. Close to extremality and with a large horizon they crush a falling body with tidal forces outside the horizon, where all curvature invariants are small [horowitz1997naked]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A monopole of the $N = 4$ supergravity whose ungauged form has these black holes as its static, spherically symmetric, purely magnetic supersymmetric solutions. With one gauge coupling kept the field is non-Abelian and the monopole is regular everywhere [chamseddine1998]."
         }
       ],
       "references": [
@@ -22238,7 +22399,8 @@
         "dowker1994b",
         "dowker1995",
         "kallosh1995white",
-        "horowitz1997naked"
+        "horowitz1997naked",
+        "chamseddine1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -32831,6 +32993,11 @@
           "id": "generalised_vaidya",
           "kind": "generalisation",
           "text": "The monopole's field with the mass inside each sphere free to depend on null time and on the radius. Anzhong Wang and Yumei Wu found the monopole in the term $ar/2$ of that mass, with $a = \\Delta$ [wang1999generalized]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A monopole of a Yang-Mills field and a dilaton with no Higgs field, whose spheres far from the centre have more area than in flat space at the same distance. In Schwarzschild coordinates, with $g_{rr} = 1/N$, its function $N$ grows as $\\ln r$ [chamseddine1997]."
         }
       ],
       "references": [
@@ -32852,7 +33019,8 @@
         "visser2020",
         "vafa1996ftheory",
         "durrer1992textures",
-        "wang1999generalized"
+        "wang1999generalized",
+        "chamseddine1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/global_monopole.json",
@@ -41861,6 +42029,11 @@
           "id": "bmpv",
           "kind": "family",
           "text": "A spinning hole of five dimensions that, at the centre of a Taub-NUT space, is a black hole of four dimensions with the same entropy [gaiotto2006]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A monopole of gauged supergravity in four dimensions, regular everywhere. Lifted to ten dimensions its Yang-Mills field also appears in the metric, as components mixing the four dimensions with a 3-sphere [chamseddine1998]."
         }
       ],
       "references": [
@@ -41899,7 +42072,8 @@
         "klebanovwitten1998",
         "dowker1995",
         "cvetic1995singular",
-        "gaiotto2006"
+        "gaiotto2006",
+        "chamseddine1998"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_monopole.json",
@@ -52028,6 +52202,11 @@
           "id": "dilaton_unusual_asymptotics",
           "kind": "family",
           "text": "Black holes that approach a linear dilaton background far away. For a magnetic charge at the string coupling, the one without mass is in the string metric a flat plane of time and distance times a sphere, the dilaton linear in the distance [clement2003]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A monopole of gauged supergravity whose lift to ten dimensions is the geometry of fivebranes wrapped on a 2-sphere. Far from the centre the dilaton of that lift is linear in the radial coordinate, with a logarithmic correction [maldacena2001]."
         }
       ],
       "references": [
@@ -52041,7 +52220,8 @@
         "mandal1991",
         "giddings1992",
         "gasperini1993prebigbang",
-        "clement2003"
+        "clement2003",
+        "maldacena2001"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/linear_dilaton.json",
@@ -56746,6 +56926,11 @@
           "id": "roman_ring",
           "kind": "locally_same",
           "text": "Minkowski space with $N$ wormholes cut into it and set round a ring, each pair of mouths identified with a time shift $T$. Outside the mouths it is this spacetime [visser1997]."
+        },
+        {
+          "id": "chamseddine_volkov_monopole",
+          "kind": "family",
+          "text": "A monopole of gauged supergravity whose plane of time and radius is conformal to half of the flat plane, so it has the conformal diagram of Minkowski space, although it is curved and not asymptotically flat [chamseddine1997]."
         }
       ],
       "references": [
@@ -56837,7 +57022,8 @@
         "dowker1995",
         "koutrasmcintosh1996",
         "griffithspodolsky1998",
-        "visser1997"
+        "visser1997",
+        "chamseddine1997"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/minkowski.json",

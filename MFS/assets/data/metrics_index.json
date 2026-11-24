@@ -99,7 +99,7 @@
       "stationary",
       "spherically symmetric"
     ],
-    "version": "c779db81e0e2c8c3",
+    "version": "427aeabd5eb1bf45",
     "diagrams": "3126b713e8a7ceb2",
     "conformal": "93d9f9787354d3bc",
     "embedding": "33cf315a311a845d"
@@ -370,7 +370,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "350ea836418edb48",
+    "version": "05ede369c1b981b8",
     "diagrams": "04a29fa582f0c7a2",
     "conformal": "acaf9c7da5b177a4",
     "embedding": "b0d9da588a8a0e63",
@@ -1416,6 +1416,38 @@
     "embedding": "de42a4c092d5d323"
   },
   {
+    "id": "chamseddine_volkov_monopole",
+    "name": "Chamseddine-Volkov Monopole",
+    "tags": [
+      "soliton",
+      "magnetic monopole",
+      "Yang-Mills field",
+      "Einstein-Yang-Mills",
+      "gauge field",
+      "dilaton",
+      "supergravity",
+      "supersymmetric",
+      "string theory",
+      "low energy string theory",
+      "holography",
+      "regular centre",
+      "geodesically complete",
+      "globally hyperbolic",
+      "not asymptotically flat",
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "exact solution",
+      "Lorentzian",
+      "four-dimensional"
+    ],
+    "version": "1d29b503d998c9d9",
+    "diagrams": "259f306d9389d4f9",
+    "conformal": "63e8bd6cc1c70ee8",
+    "embedding": "0bf897927a182277",
+    "curvature": "5923cd33d43f3a86"
+  },
+  {
     "id": "dilaton_unusual_asymptotics",
     "name": "Chan-Horne-Mann",
     "tags": [
@@ -1941,7 +1973,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "f9d73876818838eb",
+    "version": "1f4c9c7e2f6ff572",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -2801,7 +2833,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "848e6e8fc48369fe",
+    "version": "3b5d1b26d7db207a",
     "diagrams": "fa2f1e08173abce4",
     "conformal": "f6e3d96167454df0",
     "embedding": "0715fc5083d2df7a",
@@ -3635,7 +3667,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "f50758e96da1392f",
+    "version": "1cf48a3ae7938be1",
     "diagrams": "e9244cb74392e23f",
     "conformal": "f602e8960e9f39f9",
     "embedding": "dfb086757c0677ec"
@@ -4560,7 +4592,7 @@
       "dilaton",
       "string theory"
     ],
-    "version": "76cd01b4ae0116b3",
+    "version": "25194a562f3e473a",
     "diagrams": "14c81f9c0259c57a",
     "conformal": "23cbeee934fdf617",
     "embedding": "d5e6eb2461829666",
@@ -5037,7 +5069,7 @@
       "spherically symmetric",
       "Einstein equations"
     ],
-    "version": "57c84fc345bba5d9",
+    "version": "264f63693746e92a",
     "diagrams": "8682a860d329f091",
     "conformal": "9da752365c77270b",
     "embedding": "32a5018b0ec61d91"

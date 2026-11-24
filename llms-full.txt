@@ -761,6 +761,16 @@ The plane waves whose curvature is the same at every event and carried unchanged
 - chart Rotating, Conformally Flat Member: coordinates $(u, v, x, y)$, $$ds^2 = -2c\,du\,dv + dx^2 + dy^2 + 2\omega c\left(x\,dy - y\,dx\right)du$$
 - chart Rosen, Vacuum Member: coordinates $(u, v, p, q)$, $$ds^2 = -2c\,du\,dv + \sinh^2\left(kcu\right)dp^2 + \sin^2\left(kcu\right)dq^2$$
 
+### Chamseddine-Volkov Monopole
+
+A static, spherically symmetric monopole of gauged supergravity in four dimensions, with a Yang-Mills field, a dilaton, and no Higgs field, regular everywhere and supersymmetric. Its plane of time and radius is conformal to half of the flat plane, so its causal structure is that of Minkowski space, although it is not asymptotically flat.
+
+- id: `chamseddine_volkov_monopole`
+- tags: soliton, magnetic monopole, Yang-Mills field, Einstein-Yang-Mills, gauge field, dilaton, supergravity, supersymmetric, string theory, low energy string theory, holography, regular centre, geodesically complete, globally hyperbolic, not asymptotically flat, static, stationary, spherically symmetric, exact solution, Lorentzian, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/chamseddine_volkov_monopole.json
+- chart Chamseddine-Volkov: coordinates $(t, \rho, \theta, \varphi)$, $$ds^2 = \dfrac{a^2\sinh\rho}{R}\left(-dt^2 + d\rho^2 + R^2\left(d\theta^2 + \sin^2\theta\,d\varphi^2\right)\right)$$
+
 ### Chan-Horne-Mann Dilaton Black Holes
 
 Static, spherically symmetric charged black holes of Einstein-Maxwell-dilaton gravity, found by Kevin Chan, James Horne, and Robert Mann in 1995, whose region far away is neither flat nor de Sitter nor anti-de Sitter space. The curvature falls to zero at large distances and the dilaton grows as the logarithm of the radius, and with no dilaton potential the hole has one horizon and no extremal limit for every nonzero charge.
