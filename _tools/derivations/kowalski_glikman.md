@@ -73,14 +73,6 @@ The Brinkmann view spans $0\le\mu cu\le6\pi$, while the Rosen view stays within 
 Rays from the Brinkmann origin have oscillator amplitudes $(6\cos\alpha,6\sin\alpha)/\mu$; initially parallel rays start at $(2\cos\alpha,2\sin\alpha)/\mu$, with eight evenly spaced values of $\alpha$.
 Projection and isometric spatial embedding are separate constructions.
 
-A spatial surface at fixed $u$ and $v$, with only $x_1$ and $x_4$ varying, has induced metric $dx_1^2+dx_4^2$.
-Its Euclidean embedding is the plane $(x_1,x_4,0)$.
-The static drawing fixes $u=v=0$, reaches the transverse radius $3/\mu$, and uses polar coordinates solely to parametrize this plane.
-The pulled-back two-metric is $d\rho^2+\rho^2d\varphi^2$; five generator checks compare the embedded distances and planar height with the published metric.
-The same surface is marked on the floor of the Brinkmann view.
-The wave front $u=0$ is a caustic outside the open Rosen patch; its absence there and the flat transverse embedding are recorded in the spacetime's exceptions.
-A moving ring of particles describes geodesics and is not used as this spatial embedding.
-
 The scalar figure must use the stored zero Ricci and Kretschmann scalars through the existing curvature generator.
 It must state the vanishing contractions without introducing a nonzero scalar; tidal curvature is represented by the geodesic focusing.
 
@@ -90,10 +82,33 @@ An axial Minkowski diamond omits transverse focusing, and the isotropic IIB conf
 The conformal generator records this geometry in NOT_DRAWN for that reason.
 Every figure must keep its aspect between one half and two, and every displayed view aims at 400 source characters.
 
+## Embedding diagram
+
+A wave front of constant $u$ has the induced metric $dx_1^2+\cdots+dx_9^2$ whatever $v$ is on it, so every front is flat, and the curvature shows in how free particles move from one front to the next.
+No $\Gamma^u$ is published in the Brinkmann chart, so $u$ is affine on every geodesic, and a free particle obeys $d^2x_i/d(cu)^2=-\Gamma^{x_i}{}_{uu}=-\omega_i^2x_i$.
+The two rates differ only between the two blocks of directions, so the drawing holds the plane of $x_1$, one of the three directions of the flux, at $\omega_1=\mu/3$, and $x_4$, one of the other six, at $\omega_4=\mu/6$, with $v$ and every other $x_i$ zero.
+A plane inside either block holds a single rate, and a ring in it would stay a circle.
+The ring is 360 free particles at rest at $u=0$ on $x_1^2+x_4^2=1/\mu^2$, each run with the published Christoffel symbols, and the generator checks that the published $\Gamma^{x_i}{}_{uu}$ keep a particle at rest in the plane there.
+The run is the ellipse of semi-axes $|\cos(\mu cu/3)|/\mu$ along $x_1$ and $|\cos(\mu cu/6)|/\mu$ along $x_4$ to $10^{-8}$.
+It closes onto a segment of the $x_4$ axis of half length $1/(\sqrt2\mu)$ at $\mu cu=3\pi/2$ and $9\pi/2$, onto a segment of the $x_1$ axis of half length $1/\mu$ at $3\pi$, and is back at rest on its first circle at $6\pi$, each particle at its mirror image across the $x_1$ axis.
+Those values were computed in sympy from the published $g_{uu}$ and enclosed in Arb balls with BootLoops before the generator was written.
+The drawing runs over one whole period of the ring's shape, $0\le\mu cu\le6\pi$, at $\mu=1$, which is also the range of the Brinkmann spacetime view, whose rays from the origin meet again at $\mu cu=6\pi$.
+Its five moments are $\mu cu=0$, $3\pi/2$, $3\pi$, $9\pi/2$, and $6\pi$: the circle, the three segments, and the circle again.
+
+The two views take the form of the pp-wave's ring.
+The first is the ring's world tube, a stack of ellipses whose columns are the particles, one a degree, at a height of $1/(6\mu)$ for each $1/\mu$ of $cu$, so the five moments stand $\pi/4$ apart up an axis of height $\pi$, each ring labelled with its $\mu cu$ and twelve world lines drawn.
+The second is the flat wave front, the disc of proper radius $1.5/\mu$ about the centre of the ring, with the ring and twelve of its particles marked, played as a movie with a frame every $\pi/10$ of $\mu cu$, sixty-one frames, each named by its $\mu cu$ as a fraction of $\pi$.
+Every frame turns about the centre of the ring at one scale.
+Past a focus along $x_1$ the particle that set out at the angle $\alpha$ stands at $\pi-\alpha$ of the ellipse, and past one along $x_4$ at $-\alpha$, so each frame's curve is read round in the angles of the ellipse, and the tube's rows hold the semi-axes $|\cos(\mu cu/3)|$ and $|\cos(\mu cu/6)|$, which `check_ellipses` in the build holds at zero or above for a stack without shear.
+The generator makes 451 checks of the two views, none failing.
+
+The five fronts are marked on the spacetime views as discs at their heights, in the ring's view and on the tube alike.
+The Brinkmann view holds all five.
+The Rosen view covers $1.2\le\mu cu\le3\pi-1.2$, so it holds $3\pi/2$ alone, drawn there as the ellipse of semi-axes $1.5/\sin(\mu cu/3)$ and $1.5/\sin(\mu cu/6)$ in $y_1$ and $y_4$; the spacetime's exceptions record the other four as absent from it.
+
 ## Stored scalar figure
 
 The curvature generator reads the published Brinkmann scalars through its existing scalar reader.
 Both linear panels draw zero over $0\le\mu cu\le6\pi$, with vertical ranges from $-1$ to $1$ for $K/\mu^4$ and $R/\mu^2$.
 The generator passed its fourteen checks without computing a new curvature tensor.
 The joint caption uses the existing per-scalar split structure, with its third sentence assigned to the Ricci placement.
-There is one static embedding and no movie or stack.
