@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 274,
+  "count": 275,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -31501,6 +31501,11 @@
           "id": "waves_in_friedmann",
           "kind": "composite",
           "text": "Gravitational waves sent into open, flat and closed Friedmann universes of stiff fluid, $p = \\rho$, by Jiří Bičák and Jerry B. Griffiths. Ahead of each wave front the spacetime is the stiff Friedmann universe itself, and behind it the field is algebraically general [bicak1994, bicak1996]."
+        },
+        {
+          "id": "krasnikov_time_machine",
+          "kind": "composite",
+          "text": "A time machine inside a universe that is a closed Friedmann universe outside a layer round the equator of its 3-sphere. Serguei Krasnikov built it in 1998 with the weak energy condition obeyed throughout [krasnikov1998wec]."
         }
       ],
       "references": [
@@ -31588,7 +31593,8 @@
         "husain1994exact",
         "faraoni2013",
         "bicak1994",
-        "bicak1996"
+        "bicak1996",
+        "krasnikov1998wec"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/frw.json",
@@ -33782,6 +33788,11 @@
           "id": "roman_ring",
           "kind": "family",
           "text": "Many wormholes at rest round a ring, the generalization of Roman's two wormholes, which move past each other at high speed as Gott's strings do [visser1997, lyutikov1994]."
+        },
+        {
+          "id": "krasnikov_time_machine",
+          "kind": "family",
+          "text": "Serguei Krasnikov's time machine of 1998. Krasnikov classed the causality violation of Gott's strings as cosmological and set it apart from a time machine an advanced civilization might build [krasnikov1998wec]."
         }
       ],
       "references": [
@@ -33811,7 +33822,8 @@
         "gott1998",
         "aminneborg1998",
         "visser1997",
-        "lyutikov1994"
+        "lyutikov1994",
+        "krasnikov1998wec"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/gott_time_machine.json",
@@ -49513,6 +49525,11 @@
           "id": "tippett_tsang",
           "kind": "family",
           "text": "One bubble with a closed timelike curve inside it. Tippett and Tsang observed in 2017 that a traveller needs a succession of tubes or warp bubbles to close a world line, and built a bubble that needs no second [tippett2017, everett1997]."
+        },
+        {
+          "id": "krasnikov_time_machine",
+          "kind": "programme",
+          "text": "Krasnikov's time machine of 1998, made from the Deutsch-Politzer spacetime with a conformal factor. Its closed timelike curves form in a region with no singularity, and the weak energy condition holds throughout [krasnikov1998wec]."
         }
       ],
       "references": [
@@ -49525,7 +49542,8 @@
         "flynn2008january",
         "flynn2010jim",
         "flynn2012lion",
-        "tippett2017"
+        "tippett2017",
+        "krasnikov1998wec"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/krasnikov.json",
@@ -49601,6 +49619,233 @@
           ],
           "ricci_scalar": "R = -\\dfrac{4\\,r\\,\\left(1 + k\\right)^2\\,\\partial_r^2 k + 4\\,\\left(1 + k\\right)^2\\,\\partial_r k - r\\,\\left(1 + k\\right)\\,\\left(\\partial_r k\\right)^2 - 8\\,r\\,\\left(1 + k\\right)\\,\\partial_t^2 k - 8\\,r\\,\\left(1 + k\\right)\\,\\partial_t\\partial_x k + 8\\,r\\,\\left(\\partial_t k\\right)^2 + 8\\,r\\,\\partial_t k\\,\\partial_x k}{2\\,r\\,\\left(1 + k\\right)^3}",
           "kretschmann": "K = \\dfrac{8\\,\\left(1 + k\\right)^4\\left(\\left(\\partial_r k\\right)^2 + r^2\\,\\left(\\partial_r^2 k\\right)^2\\right) - 8\\,r^2\\,\\left(1 + k\\right)^3\\left(\\left(\\partial_r k\\right)^2\\,\\partial_r^2 k + 4\\,\\partial_t\\partial_r k\\,\\left(\\partial_t\\partial_r k + \\partial_x\\partial_r k\\right)\\right) + r^2\\,\\left(1 + k\\right)^2\\left(3\\,\\left(\\partial_r k\\right)^4 - 16\\,\\left(\\partial_r k\\right)^2\\,\\left(\\partial_t^2 k + \\partial_t\\partial_x k\\right) + 32\\,\\partial_r k\\left(\\partial_t k\\,\\left(\\partial_t\\partial_r k + \\partial_x\\partial_r k\\right) + \\partial_t\\partial_r k\\,\\left(\\partial_t k + \\partial_x k\\right)\\right) + 64\\,\\left(\\partial_t^2 k + \\partial_t\\partial_x k\\right)^2 - 32\\,\\left(\\partial_t\\partial_r k + \\partial_x\\partial_r k\\right)^2\\right) + 16\\,r^2\\,\\left(1 + k\\right)\\,\\left(\\partial_t k + \\partial_x k\\right)\\left(4\\,\\partial_r k\\,\\left(\\partial_t\\partial_r k + \\partial_x\\partial_r k\\right) - \\left(\\partial_r k\\right)^2\\,\\partial_t k - 8\\,\\partial_t k\\,\\left(\\partial_t^2 k + \\partial_t\\partial_x k\\right)\\right) + 32\\,r^2\\,\\left(\\partial_t k + \\partial_x k\\right)^2\\left(2\\,\\left(\\partial_t k\\right)^2 - \\left(\\partial_r k\\right)^2\\right)}{4\\,r^2\\,\\left(1 + k\\right)^6}"
+        }
+      ]
+    },
+    {
+      "id": "krasnikov_time_machine",
+      "name": "Krasnikov Time Machine",
+      "short_name": "Krasnikov Time Machine",
+      "description": "Serguei Krasnikov's time machine of 1998, the Deutsch-Politzer spacetime with its metric multiplied by a conformal factor that sends its singular points to infinity, times a 2-sphere, inside a closed universe that is a Friedmann universe outside a layer round the equator of its 3-sphere. The region holding its closed timelike curves has no singularity, and the weak energy condition holds throughout.",
+      "tags": [
+        "time machine",
+        "closed timelike curves",
+        "chronology protection",
+        "weak energy condition",
+        "energy conditions",
+        "singularity theorems",
+        "conformal transformation",
+        "cut and paste",
+        "topology",
+        "multiply connected",
+        "product spacetime",
+        "causal structure",
+        "cosmology",
+        "closed universe",
+        "three sphere",
+        "FLRW",
+        "time-dependent",
+        "spherically symmetric",
+        "idealized model",
+        "Lorentzian",
+        "Einstein equations",
+        "four-dimensional"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "No factor of $c$ appears, and a dot in the geodesic equations is a derivative with respect to an affine parameter. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "frw",
+          "kind": "piece",
+          "text": "The closed Friedmann universe, whose metric Krasnikov's universe has wherever $|\\chi| > n$, with $a$ a function of $\\tau$ alone and $\\rho = \\cos\\chi$ [krasnikov1998wec]."
+        },
+        {
+          "id": "ori_time_machine",
+          "kind": "family",
+          "text": "Another time machine whose matter obeys the weak energy condition. Amos Ori's model of 2005 has an empty torus at its core, wrapped in matter that obeys the dominant and strong energy conditions as well [ori2005]."
+        },
+        {
+          "id": "krasnikov",
+          "kind": "programme",
+          "text": "The tube Krasnikov made in 1998 by changing the metric along a traveller's outward path. With it a round trip of any length might take an arbitrarily short time for an observer on Earth [krasnikov1998]."
+        },
+        {
+          "id": "misner",
+          "kind": "family",
+          "text": "Minkowski space identified under a boost, with closed timelike curves beyond a horizon. Krasnikov pointed to it as a time machine whose compactness does not keep out singularities, a possible source of unpredictable information [krasnikov1998wec]."
+        },
+        {
+          "id": "wormhole_time_machine",
+          "kind": "family",
+          "text": "A traversable wormhole made into a time machine, which an advanced civilization able to create and maintain the wormhole might build. Whether the wormhole can be created and maintained turns in part on whether quantum fields obey an averaged weak energy condition [morris1988prl]."
+        },
+        {
+          "id": "gott_time_machine",
+          "kind": "family",
+          "text": "Two cosmic strings passing at high speed. Krasnikov classed the causality violation they make as cosmological, with that of the Gödel universe, and set both apart from a time machine an advanced civilization might build [krasnikov1998wec]."
+        }
+      ],
+      "references": [
+        "krasnikov1998wec",
+        "hawking1992",
+        "politzer1992",
+        "chamblin1994",
+        "maeda1998",
+        "krasnikov2002",
+        "earman2009",
+        "ori2005",
+        "krasnikov1998",
+        "morris1988prl"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/krasnikov_time_machine.json",
+      "charts": [
+        {
+          "id": "time_machine",
+          "name": "Time Machine",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-m, m)",
+            "\\chi \\in (-m, m)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "(\\tau, \\chi) \\neq (\\pm h, \\pm h)",
+            "\\tau = \\pm h,\\; |\\chi| < h \\;\\text{(the two cuts, the upper bank of each glued to the lower bank of the other)}",
+            "|\\tau| < h,\\; |\\chi| < 2h - |\\tau| \\;\\text{(the causality violating set)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "f = f(\\tau,\\chi)",
+              "description": "Smooth bounded function of $\\tau$ and $\\chi$, having dimensions of inverse length, that vanishes only at the four points $(\\pm h, \\pm h)$ and near the upper cut repeats its values near the lower one, $f(\\tau, \\chi) = f(\\tau - 2h, \\chi)$"
+            },
+            {
+              "symbol": "R",
+              "description": "Radius of the 2-sphere, a length, with $R^{-2} \\ge f\\left(\\partial_\\chi^2f - \\partial_\\tau^2f\\right) + \\left(\\partial_\\tau f\\right)^2 - \\left(\\partial_\\chi f\\right)^2$ at every point of the square, so that the weak energy condition holds there"
+            },
+            {
+              "symbol": "h",
+              "description": "Number with $0 < h < m/2$; the cuts $\\tau = \\pm h$, $|\\chi| < h$ end at the four points $(\\pm h, \\pm h)$, where $f$ vanishes"
+            },
+            {
+              "symbol": "m",
+              "description": "Half the side of the square $|\\tau|, |\\chi| < m$"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$, with $\\tau$ and $\\chi$ dimensionless, so that $f$ has dimensions of inverse length and $R$ is a length [krasnikov1998wec].",
+          "line_element": "ds^2 = f^{-2}\\left(-d\\tau^2 + d\\chi^2\\right) + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-\\dfrac{1}{f^2}"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "\\dfrac{1}{f^2}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2 - 2R^2\\left(\\partial_\\chi f\\right)^2 + 2R^2\\left(\\partial_\\tau f\\right)^2 + 2f\\,R^2\\,\\partial_\\chi^2 f - 2f\\,R^2\\,\\partial_\\tau^2 f}{R^2}",
+          "kretschmann": "K = \\dfrac{4f^2\\,R^4\\left(\\partial_\\tau^2 f\\right)^2 - 8f^2\\,R^4\\,\\partial_\\tau^2 f\\,\\partial_\\chi^2 f + 4f^2\\,R^4\\left(\\partial_\\chi^2 f\\right)^2 - 8f\\,R^4\\left(\\partial_\\tau f\\right)^2\\,\\partial_\\tau^2 f + 8f\\,R^4\\left(\\partial_\\tau f\\right)^2\\,\\partial_\\chi^2 f + 8f\\,R^4\\left(\\partial_\\chi f\\right)^2\\,\\partial_\\tau^2 f - 8f\\,R^4\\left(\\partial_\\chi f\\right)^2\\,\\partial_\\chi^2 f + 4R^4\\left(\\partial_\\tau f\\right)^4 - 8R^4\\left(\\partial_\\tau f\\right)^2\\left(\\partial_\\chi f\\right)^2 + 4R^4\\left(\\partial_\\chi f\\right)^4 + 4}{R^4}"
+        },
+        {
+          "id": "universe",
+          "name": "Almost Friedmann Universe",
+          "coordinates": [
+            "\\tau",
+            "\\chi",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "\\tau \\in (-\\infty, \\infty)",
+            "\\chi \\in [-\\pi/2, \\pi/2]",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "a > 0 \\;\\text{(between the cosmological singularities, where } a = 0\\text{)}",
+            "|\\tau|, |\\chi| < m \\;\\text{(the time machine)}",
+            "(\\tau, \\chi) \\neq (\\pm h, \\pm h)",
+            "\\tau = \\pm h,\\; |\\chi| < h \\;\\text{(the two cuts, the upper bank of each glued to the lower bank of the other)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "a = a(\\tau,\\chi)",
+              "description": "Scale factor, a length; on the square $|\\tau|, |\\chi| < m$, $a = 1/f$, with $f$ the function in the metric $f^{-2}\\left(-d\\tau^2 + d\\chi^2\\right)$ of the curved Deutsch-Politzer time machine, and off the square $a$ is a positive function of $\\tau$ alone with $\\partial_\\tau^2\\ln a \\le 0$ that vanishes at the cosmological singularities"
+            },
+            {
+              "symbol": "\\rho = \\rho(\\tau,\\chi)",
+              "description": "Radius of the 2-spheres in units of $a$, dimensionless; on the square, $\\rho = fR$, with $R$ the radius of the 2-sphere of the time machine, and off the square $\\rho$ is a positive function of $\\chi$ alone with $\\partial_\\chi^2\\rho \\le 0$"
+            },
+            {
+              "symbol": "h",
+              "description": "Number with $0 < h < m/2$; the cuts $\\tau = \\pm h$, $|\\chi| < h$ end at the four points $(\\pm h, \\pm h)$, where $f$ vanishes"
+            },
+            {
+              "symbol": "m",
+              "description": "Half the side of the square $|\\tau|, |\\chi| < m$ holding the time machine, with $m < \\pi/2$; Krasnikov takes $f$ equal outside the square to the number $f_0 < \\cos m/R$, so that the conditions on $a$ and $\\rho$ can be met"
+            },
+            {
+              "symbol": "n",
+              "description": "Number between $m$ and $\\pi/2$; where $|\\chi| > n$, $\\rho = \\cos\\chi$ and the universe is a closed Friedmann universe"
+            }
+          ],
+          "convention": "We use coordinates $(\\tau, \\chi, \\theta, \\phi)$ on $\\mathbb{R} \\times S^3$, with $\\tau$ and $\\chi$ dimensionless and $\\chi$, $\\theta$, and $\\phi$ polar coordinates on $S^3$, so that $a$ is a length and $\\rho$ is dimensionless [krasnikov1998wec].",
+          "line_element": "ds^2 = a^2\\left(-d\\tau^2 + d\\chi^2 + \\rho^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "\\tau",
+                "\\tau"
+              ],
+              "value": "-a^2"
+            },
+            {
+              "indices": [
+                "\\chi",
+                "\\chi"
+              ],
+              "value": "a^2"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "a^2\\,\\rho^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "a^2\\,\\rho^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{4a\\,\\rho\\,\\partial_\\tau^2\\rho - 4a\\,\\rho\\,\\partial_\\chi^2\\rho + 2a\\left(\\partial_\\tau\\rho\\right)^2 - 2a\\left(\\partial_\\chi\\rho\\right)^2 + 2a + 6\\rho^2\\,\\partial_\\tau^2 a - 6\\rho^2\\,\\partial_\\chi^2 a + 12\\rho\\,\\partial_\\tau a\\,\\partial_\\tau\\rho - 12\\rho\\,\\partial_\\chi a\\,\\partial_\\chi\\rho}{a^3\\,\\rho^2}",
+          "kretschmann": "K = \\dfrac{8a^4\\,\\rho^2\\left(\\partial_\\tau^2\\rho\\right)^2 + 8a^4\\,\\rho^2\\left(\\partial_\\chi^2\\rho\\right)^2 - 16a^4\\,\\rho^2\\left(\\partial_\\tau\\partial_\\chi\\rho\\right)^2 + 4a^4\\left(\\partial_\\tau\\rho\\right)^4 - 8a^4\\left(\\partial_\\tau\\rho\\right)^2\\left(\\partial_\\chi\\rho\\right)^2 + 8a^4\\left(\\partial_\\tau\\rho\\right)^2 + 4a^4\\left(\\partial_\\chi\\rho\\right)^4 - 8a^4\\left(\\partial_\\chi\\rho\\right)^2 + 4a^4 + 16a^3\\,\\rho^3\\,\\partial_\\tau^2 a\\,\\partial_\\tau^2\\rho + 16a^3\\,\\rho^3\\,\\partial_\\chi^2 a\\,\\partial_\\chi^2\\rho - 32a^3\\,\\rho^3\\,\\partial_\\tau\\partial_\\chi a\\,\\partial_\\tau\\partial_\\chi\\rho + 16a^3\\,\\rho^2\\,\\partial_\\tau a\\,\\partial_\\tau\\rho\\,\\partial_\\tau^2\\rho - 16a^3\\,\\rho^2\\,\\partial_\\tau a\\,\\partial_\\tau\\rho\\,\\partial_\\chi^2\\rho - 16a^3\\,\\rho^2\\,\\partial_\\chi a\\,\\partial_\\chi\\rho\\,\\partial_\\tau^2\\rho + 16a^3\\,\\rho^2\\,\\partial_\\chi a\\,\\partial_\\chi\\rho\\,\\partial_\\chi^2\\rho + 16a^3\\,\\rho\\,\\partial_\\tau a\\left(\\partial_\\tau\\rho\\right)^3 - 16a^3\\,\\rho\\,\\partial_\\tau a\\,\\partial_\\tau\\rho\\left(\\partial_\\chi\\rho\\right)^2 + 16a^3\\,\\rho\\,\\partial_\\tau a\\,\\partial_\\tau\\rho - 16a^3\\,\\rho\\,\\partial_\\chi a\\left(\\partial_\\tau\\rho\\right)^2\\,\\partial_\\chi\\rho + 16a^3\\,\\rho\\,\\partial_\\chi a\\left(\\partial_\\chi\\rho\\right)^3 - 16a^3\\,\\rho\\,\\partial_\\chi a\\,\\partial_\\chi\\rho + 12a^2\\,\\rho^4\\left(\\partial_\\tau^2 a\\right)^2 - 8a^2\\,\\rho^4\\,\\partial_\\tau^2 a\\,\\partial_\\chi^2 a + 12a^2\\,\\rho^4\\left(\\partial_\\chi^2 a\\right)^2 - 16a^2\\,\\rho^4\\left(\\partial_\\tau\\partial_\\chi a\\right)^2 - 16a^2\\,\\rho^3\\left(\\partial_\\tau a\\right)^2\\,\\partial_\\tau^2\\rho - 16a^2\\,\\rho^3\\left(\\partial_\\tau a\\right)^2\\,\\partial_\\chi^2\\rho + 64a^2\\,\\rho^3\\,\\partial_\\tau a\\,\\partial_\\chi a\\,\\partial_\\tau\\partial_\\chi\\rho + 16a^2\\,\\rho^3\\,\\partial_\\tau a\\,\\partial_\\tau\\rho\\,\\partial_\\tau^2 a - 16a^2\\,\\rho^3\\,\\partial_\\tau a\\,\\partial_\\tau\\rho\\,\\partial_\\chi^2 a - 16a^2\\,\\rho^3\\left(\\partial_\\chi a\\right)^2\\,\\partial_\\tau^2\\rho - 16a^2\\,\\rho^3\\left(\\partial_\\chi a\\right)^2\\,\\partial_\\chi^2\\rho - 16a^2\\,\\rho^3\\,\\partial_\\chi a\\,\\partial_\\chi\\rho\\,\\partial_\\tau^2 a + 16a^2\\,\\rho^3\\,\\partial_\\chi a\\,\\partial_\\chi\\rho\\,\\partial_\\chi^2 a + 40a^2\\,\\rho^2\\left(\\partial_\\tau a\\right)^2\\left(\\partial_\\tau\\rho\\right)^2 - 8a^2\\,\\rho^2\\left(\\partial_\\tau a\\right)^2\\left(\\partial_\\chi\\rho\\right)^2 + 8a^2\\,\\rho^2\\left(\\partial_\\tau a\\right)^2 - 64a^2\\,\\rho^2\\,\\partial_\\tau a\\,\\partial_\\chi a\\,\\partial_\\tau\\rho\\,\\partial_\\chi\\rho - 8a^2\\,\\rho^2\\left(\\partial_\\chi a\\right)^2\\left(\\partial_\\tau\\rho\\right)^2 + 40a^2\\,\\rho^2\\left(\\partial_\\chi a\\right)^2\\left(\\partial_\\chi\\rho\\right)^2 - 8a^2\\,\\rho^2\\left(\\partial_\\chi a\\right)^2 - 24a\\,\\rho^4\\left(\\partial_\\tau a\\right)^2\\,\\partial_\\tau^2 a - 8a\\,\\rho^4\\left(\\partial_\\tau a\\right)^2\\,\\partial_\\chi^2 a + 64a\\,\\rho^4\\,\\partial_\\tau a\\,\\partial_\\chi a\\,\\partial_\\tau\\partial_\\chi a - 8a\\,\\rho^4\\left(\\partial_\\chi a\\right)^2\\,\\partial_\\tau^2 a - 24a\\,\\rho^4\\left(\\partial_\\chi a\\right)^2\\,\\partial_\\chi^2 a + 16a\\,\\rho^3\\left(\\partial_\\tau a\\right)^3\\,\\partial_\\tau\\rho - 16a\\,\\rho^3\\left(\\partial_\\tau a\\right)^2\\,\\partial_\\chi a\\,\\partial_\\chi\\rho - 16a\\,\\rho^3\\,\\partial_\\tau a\\left(\\partial_\\chi a\\right)^2\\,\\partial_\\tau\\rho + 16a\\,\\rho^3\\left(\\partial_\\chi a\\right)^3\\,\\partial_\\chi\\rho + 24\\rho^4\\left(\\partial_\\tau a\\right)^4 - 48\\rho^4\\left(\\partial_\\tau a\\right)^2\\left(\\partial_\\chi a\\right)^2 + 24\\rho^4\\left(\\partial_\\chi a\\right)^4}{a^8\\,\\rho^4}"
         }
       ]
     },
@@ -57673,6 +57918,11 @@
           "id": "constant_curvature_black_hole",
           "kind": "family",
           "text": "Anti-de Sitter space identified under a boost, a black hole in four or more dimensions, as Misner's space is Minkowski space identified under one [banados1998]."
+        },
+        {
+          "id": "krasnikov_time_machine",
+          "kind": "family",
+          "text": "Serguei Krasnikov's time machine of 1998, whose closed timelike curves form in a region with no singularity [krasnikov1998wec]. Krasnikov made the acausal extension of Misner space causal in 2002 by removing one ray and dividing the metric by a function that vanishes on it [krasnikov2002]."
         }
       ],
       "references": [
@@ -57700,7 +57950,9 @@
         "moncriefisenberg1983",
         "louko_marolf1994",
         "visser1997",
-        "banados1998"
+        "banados1998",
+        "krasnikov1998wec",
+        "krasnikov2002"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/misner.json",
@@ -59751,6 +60003,11 @@
           "id": "roman_ring",
           "kind": "family",
           "text": "Many wormholes at rest round a ring, none of them a time machine, each with a time shift $T$ much less than its jump. Once round the whole ring a geodesic becomes timelike when the crossings between wormholes are shorter than $cT$ [visser1997]."
+        },
+        {
+          "id": "krasnikov_time_machine",
+          "kind": "family",
+          "text": "Serguei Krasnikov's time machine of 1998, whose horizon is not compactly generated. Its matter obeys the weak energy condition, and the region holding its closed timelike curves has no singularity [krasnikov1998wec]."
         }
       ],
       "references": [
@@ -59774,7 +60031,8 @@
         "tippett2017",
         "schein1996",
         "aichelburg1998",
-        "visser1997"
+        "visser1997",
+        "krasnikov1998wec"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/wormhole_time_machine.json",
@@ -64375,6 +64633,11 @@
           "id": "tippett_tsang",
           "kind": "family",
           "text": "A time machine of the same class by Tippett and Tsang's sorting, a bubble that runs round a circle in the plane of $t$ and $x$. Its wall violates the null energy condition and carries naked singularities [tippett2017]."
+        },
+        {
+          "id": "krasnikov_time_machine",
+          "kind": "family",
+          "text": "Serguei Krasnikov's time machine of 1998, the Deutsch-Politzer spacetime with a conformal factor, whose matter also obeys the weak energy condition. The region holding its closed timelike curves has no singularity [krasnikov1998wec]."
         }
       ],
       "references": [
@@ -64396,7 +64659,8 @@
         "dietz2012ori",
         "kay1997",
         "kim1991",
-        "tippett2017"
+        "tippett2017",
+        "krasnikov1998wec"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/ori_time_machine.json",

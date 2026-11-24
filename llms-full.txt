@@ -1943,6 +1943,17 @@ A tube of modified spacetime laid down along the path of an outbound ship, flat 
 - full data: https://damiansowinski.com/MFS/assets/data/metrics/krasnikov.json
 - chart Cylindrical: coordinates $(t, x, r, \phi)$, $$ds^2 = -\left(c\,dt - dx\right)\left(c\,dt + k\,dx\right) + dr^2 + r^2d\phi^2$$
 
+### Krasnikov Time Machine
+
+Serguei Krasnikov's time machine of 1998, the Deutsch-Politzer spacetime with its metric multiplied by a conformal factor that sends its singular points to infinity, times a 2-sphere, inside a closed universe that is a Friedmann universe outside a layer round the equator of its 3-sphere. The region holding its closed timelike curves has no singularity, and the weak energy condition holds throughout.
+
+- id: `krasnikov_time_machine`
+- tags: time machine, closed timelike curves, chronology protection, weak energy condition, energy conditions, singularity theorems, conformal transformation, cut and paste, topology, multiply connected, product spacetime, causal structure, cosmology, closed universe, three sphere, FLRW, time-dependent, spherically symmetric, idealized model, Lorentzian, Einstein equations, four-dimensional
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/krasnikov_time_machine.json
+- chart Time Machine: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = f^{-2}\left(-d\tau^2 + d\chi^2\right) + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Almost Friedmann Universe: coordinates $(\tau, \chi, \theta, \phi)$, $$ds^2 = a^2\left(-d\tau^2 + d\chi^2 + \rho^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)\right)$$
+
 ### Kundt Waves
 
 Exact gravitational waves on plane fronts whose rays turn from one front to the next. In flat space the fronts are half planes touching a cylinder that expands at the speed of light, each turned a little from the one before, and the cylinder is a curvature singularity at which every curvature scalar vanishes.

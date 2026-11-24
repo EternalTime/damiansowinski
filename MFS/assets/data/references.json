@@ -1,5 +1,5 @@
 {
-  "version": "d050b9d8e62f8c16",
+  "version": "d6de047757dfc179",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -51055,6 +51055,84 @@
         "eprint": "hep-th/0002160",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.4310/ATMP.2000.v4.n3.a6"
+      }
+    },
+    "krasnikov1998wec": {
+      "type": "article",
+      "fields": {
+        "title": "A singularity-free {WEC}-respecting time machine",
+        "author": "Krasnikov, S. V.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "15",
+        "number": "4",
+        "pages": "997--1003",
+        "year": "1998",
+        "doi": "10.1088/0264-9381/15/4/020",
+        "eprint": "gr-qc/9702031",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/15/4/020"
+      }
+    },
+    "politzer1992": {
+      "type": "article",
+      "fields": {
+        "title": "Simple quantum systems in spacetimes with closed timelike curves",
+        "author": "Politzer, H. David",
+        "journal": "Physical Review D",
+        "volume": "46",
+        "number": "10",
+        "pages": "4470--4476",
+        "year": "1992",
+        "doi": "10.1103/PhysRevD.46.4470",
+        "eprint": "hep-th/9207076",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.46.4470"
+      }
+    },
+    "chamblin1994": {
+      "type": "article",
+      "fields": {
+        "title": "Kinks and time machines",
+        "author": "Chamblin, Andrew and Gibbons, G. W. and Steif, Alan R.",
+        "journal": "Physical Review D",
+        "volume": "50",
+        "number": "4",
+        "pages": "R2353--R2355",
+        "year": "1994",
+        "doi": "10.1103/PhysRevD.50.R2353",
+        "eprint": "gr-qc/9405001",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.50.R2353"
+      }
+    },
+    "krasnikov2002": {
+      "type": "article",
+      "fields": {
+        "title": "No time machines in classical general relativity",
+        "author": "Krasnikov, S.",
+        "journal": "Classical and Quantum Gravity",
+        "volume": "19",
+        "number": "15",
+        "pages": "4109--4129",
+        "year": "2002",
+        "doi": "10.1088/0264-9381/19/15/316",
+        "eprint": "gr-qc/0111054",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/0264-9381/19/15/316"
+      }
+    },
+    "earman2009": {
+      "type": "article",
+      "fields": {
+        "title": "Do the laws of physics forbid the operation of time machines?",
+        "author": "Earman, John and Smeenk, Christopher and W\\\"uthrich, Christian",
+        "journal": "Synthese",
+        "volume": "169",
+        "number": "1",
+        "pages": "91--124",
+        "year": "2009",
+        "doi": "10.1007/s11229-008-9338-2",
+        "url": "https://doi.org/10.1007/s11229-008-9338-2"
       }
     }
   }

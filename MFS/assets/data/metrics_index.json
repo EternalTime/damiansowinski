@@ -2688,7 +2688,7 @@
       "conformally flat",
       "spherically symmetric"
     ],
-    "version": "602afa1d70e4a75b",
+    "version": "c7910a510ee3e58b",
     "diagrams": "8ba167a0fd9be7b3",
     "conformal": "8eae1f29962efe8c",
     "embedding": "36a4b8cf07813dbb"
@@ -2908,7 +2908,7 @@
       "vacuum",
       "conformally flat"
     ],
-    "version": "ffc5266f1cc3a0a1",
+    "version": "2b73089989e15d13",
     "diagrams": "a06fed0d8a214d89",
     "conformal": "14c873edf7fb75dc",
     "embedding": "c0db8a34cdba1339"
@@ -4393,9 +4393,40 @@
       "four-dimensional",
       "quantum inequality"
     ],
-    "version": "11b9998454395427",
+    "version": "4d12c093b652978c",
     "diagrams": "8465ef9c4b047da5",
     "embedding": "166bc957997dd4b5"
+  },
+  {
+    "id": "krasnikov_time_machine",
+    "name": "Krasnikov Time Machine",
+    "tags": [
+      "time machine",
+      "closed timelike curves",
+      "chronology protection",
+      "weak energy condition",
+      "energy conditions",
+      "singularity theorems",
+      "conformal transformation",
+      "cut and paste",
+      "topology",
+      "multiply connected",
+      "product spacetime",
+      "causal structure",
+      "cosmology",
+      "closed universe",
+      "three sphere",
+      "FLRW",
+      "time-dependent",
+      "spherically symmetric",
+      "idealized model",
+      "Lorentzian",
+      "Einstein equations",
+      "four-dimensional"
+    ],
+    "version": "d8c27cd61690889c",
+    "diagrams": "b54d4a1699dff150",
+    "embedding": "111e0746e591c224"
   },
   {
     "id": "kundt_waves",
@@ -5123,7 +5154,7 @@
       "conformally flat",
       "Einstein equations"
     ],
-    "version": "58d43fe07d8ab7ab",
+    "version": "1f7c8b68f0d7bec2",
     "diagrams": "8b3c9d02bd75c817",
     "conformal": "62cc3d3fab22417e",
     "embedding": "74f663204d97446f"
@@ -5314,7 +5345,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "04dafcbf7679eb99",
+    "version": "f8a0b7d495d53f53",
     "diagrams": "10a1f2ea1c9df0a4",
     "conformal": "325a9c57971cf007",
     "embedding": "5d574463e63f1df8"
@@ -5717,7 +5748,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "4f46b4550229d0e4",
+    "version": "ea80a84df64cc4bd",
     "diagrams": "f02d33ce21e424e5",
     "conformal": "caada1e1189ae9f1",
     "embedding": "984dd972b1a2fddf"
