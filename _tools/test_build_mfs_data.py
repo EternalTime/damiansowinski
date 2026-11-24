@@ -3330,6 +3330,7 @@ class StacksAndMovies(unittest.TestCase):
               ("einstein_rosen_waves", "pulse"): "$ct$", ("nariai", "universe"): "$ct$",
               ("twisting_cylindrical_waves", "pulse"): "$ct$",
               ("domain_wall", "moments"): "$kct$", ("kantowski_sachs", "dust"): "$\\eta$",
+              ("dgp_wall", "moments"): "$ct/r_c$",
               ("robinson_trautman", "fronts"): "$cu$", ("mcvittie", "flamm"): "$ct$",
               ("supertranslation_hair", "shells"): "$\\rho$",
               ("sultana_dyer", "paraboloid"): "$\\eta$",
@@ -5185,6 +5186,18 @@ class Slices(unittest.TestCase):
             if "/schwarzschild_interior/" in key:
                 return (lambda X: surface["pieces"][0]["points"][0][1]), None
             return (lambda X: t if "/dust/" in key else math.pi / 2 + t + math.sin(t) * math.cos(t)), None
+        if key.startswith("dgp_wall/"):
+            # A moment ct/r_c of the global chart meets the plane x_i = 0 of the planar chart along t = const,
+            # the Gaussian normal chart's at a = r_c cosh(ct/r_c) along t = const on its side y > 0, and the
+            # inertial chart's through the centre along cT = |R| tanh(ct/r_c) from the wall at
+            # |R| = cosh(ct/r_c) out, r_c = 1, each out to the embedding's reach or the edge of the drawing.
+            lo, hi = self.reach(surface)
+            if key == "dgp_wall/inertial/through":
+                ch = math.cosh(t)
+                return (lambda X: abs(X) * math.tanh(t)), [-(1 + hi) * ch, -ch, ch, (1 + hi) * ch]
+            if key == "dgp_wall/gaussian_normal/ty":
+                return (lambda X: t), [0.0, hi]
+            return (lambda X: t), [lo, hi]
         if key == "domain_wall/planar/tz":
             # A moment kct of the global chart meets the plane x = y = 0 along t = const, every z.
             return (lambda X: t), None
@@ -6372,6 +6385,16 @@ class Slices(unittest.TestCase):
                             k = min(max(k, 0.0), 1.0)
                             return math.hypot(X - ax - k * (bx - ax), T - ay - k * (by - ay))
                         self.assertLess(min(off(a, b) for a, b in zip(tube, tube[1:])), 5e-3, where)
+                    elif metric_id == "dgp_wall":
+                        # The side y > 0 is the part X >= pi/2 of Minkowski's triangle outside the wall, the side
+                        # y < 0 its mirror image in the wall, and the moment ct/r_c runs along cT = R tanh(ct/r_c).
+                        for X, T in points:
+                            p, q = (T - X) / 2, (T + X) / 2
+                            a, b = (math.tan(p), math.tan(q)) if X >= math.pi / 2 else (math.tan(q - math.pi / 2),
+                                                                                         math.tan(p + math.pi / 2))
+                            cT, R = (a + b) / 2, (b - a) / 2
+                            self.assertLess(abs(cT - R * math.tanh(t)), 2e-4 * (1 + a * a + b * b), f"{where} at {(X, T)}")
+                            self.assertGreaterEqual(R * R - cT * cT, 1 - 2e-4 * (1 + a * a + b * b), f"{where} at {(X, T)}")
                     elif metric_id == "domain_wall":
                         # Each side is Minkowski's triangle cut at the wall X = pi/2, the side z > 0
                         # mirrored in it, and the moment kct runs along cT = R tanh(kct) on both.

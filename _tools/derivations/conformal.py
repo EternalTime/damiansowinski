@@ -32539,5 +32539,8 @@ _heterotic_m_theory_wall_drawings.register_conformal(sys.modules[__name__])
 import brane_black_holes_drawings as _brane_black_holes_drawings
 _brane_black_holes_drawings.register_conformal(sys.modules[__name__])
 
+import dgp_wall_drawings as _dgp_wall_drawings
+_dgp_wall_drawings.register_conformal(sys.modules[__name__])
+
 if __name__ == "__main__":
     sys.exit(main())

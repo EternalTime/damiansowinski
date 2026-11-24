@@ -1,0 +1,8 @@
+{
+  "flat_moments": [
+    {
+      "reason": "The moment ct = 0 of the empty wall, when the wall stops at its radius r_c, is the flat plane outside the circle of radius r_c taken twice and joined at the circle; the moments either side of it are the cones it opens into.",
+      "moments": [["moments", 2]]
+    }
+  ]
+}

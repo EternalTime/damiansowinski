@@ -5337,3 +5337,6 @@ import brane_black_holes_drawings as _brane_black_holes_drawings  # noqa: E402
 FLAT.update(_brane_black_holes_drawings.slice_table(sys.modules[__name__]))
 FLAT_METRICS.add(_brane_black_holes_drawings.METRIC)
 HIDDEN.update(_brane_black_holes_drawings.HIDDEN)
+
+import dgp_wall_drawings as _dgp_wall_drawings  # noqa: E402
+_dgp_wall_drawings.register_slices(sys.modules[__name__])
