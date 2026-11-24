@@ -209,6 +209,11 @@
       "id": "brout_englert_gunzig",
       "kind": "composite",
       "text": "A universe born at one event of empty flat space. Its fireball of particle creation is de Sitter space in hyperbolic slices, and an open Friedmann universe follows it [gott1983]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "family",
+      "text": "De Sitter space deformed by a scalar field that climbs its potential, cut through the poles of its Euclidean 4-sphere. Inside the light cone of the regular pole is an infinite open universe that inflates [hawking1998open]."
     }
   ],
   "references": [
@@ -264,7 +269,8 @@
     "weinberg2007hm",
     "hirano2018bt",
     "brandenberger1993",
-    "gott1983"
+    "gott1983",
+    "hawking1998open"
   ],
   "coordinates": [
     {

@@ -77,6 +77,11 @@
       "id": "hawking_moss",
       "kind": "family",
       "text": "The Hawking-Moss saddle is a whole Euclidean 4-sphere with a scalar field at a barrier maximum. Its action is compared with a false vacuum sphere to describe a vacuum transition [weinberg2007hm]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "family",
+      "text": "The no-boundary proposal applied to a deformed 4-sphere cut through its poles, which continues to an infinite open universe [hawking1998open]."
     }
   ],
   "references": [
@@ -92,7 +97,8 @@
     "gott1998",
     "bousso1996",
     "laflamme1987",
-    "weinberg2007hm"
+    "weinberg2007hm",
+    "hawking1998open"
   ],
   "coordinates": [
     {

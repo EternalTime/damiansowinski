@@ -71,6 +71,11 @@
       "id": "poincare_dodecahedral",
       "kind": "family",
       "text": "A closed Friedmann universe with points of space identified under a group of 120 rotations of the 3-sphere, so that space is a dodecahedron with each face glued to the face opposite it. The identification moves points within one moment and keeps the direction of time [luminet2003]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "family",
+      "text": "A deformed 4-sphere whose singularity Kirklin, Turok, and Wiseman found to be a zero of the conformal factor on a regular $RP^4$, the 4-sphere with antipodes identified [kirklin2001]."
     }
   ],
   "references": [
@@ -87,7 +92,8 @@
     "louko1998",
     "lachiezerey1995",
     "gott1998",
-    "luminet2003"
+    "luminet2003",
+    "kirklin2001"
   ],
   "coordinates": [
     {

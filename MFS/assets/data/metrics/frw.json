@@ -251,6 +251,11 @@
       "id": "krasnikov_time_machine",
       "kind": "composite",
       "text": "A time machine inside a universe that is a closed Friedmann universe outside a layer round the equator of its 3-sphere. Serguei Krasnikov built it in 1998 with the weak energy condition obeyed throughout [krasnikov1998wec]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "composite",
+      "text": "An open Friedmann universe, $k = -1$, born inside the light cone of the regular pole of a deformed 4-sphere, with a timelike singularity outside it [hawking1998open]."
     }
   ],
   "references": [
@@ -339,7 +344,8 @@
     "faraoni2013",
     "bicak1994",
     "bicak1996",
-    "krasnikov1998wec"
+    "krasnikov1998wec",
+    "hawking1998open"
   ],
   "coordinates": [
     {

@@ -9698,6 +9698,114 @@
    "\\phi"
   ]
  },
+ "hawking_turok_instanton/bubble_exterior": {
+  "stamp": "321385c73facf7ac",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "hawking_turok_instanton/exponential": {
+  "stamp": "5fafbce985a31d82",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "hawking_turok_instanton/instanton": {
+  "stamp": "3190fdbf1aefd9d4",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "hawking_turok_instanton/open_universe": {
+  "stamp": "cc2b5ee30dc7db9f",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\theta",
+   "\\phi"
+  ]
+ },
+ "hawking_turok_instanton/vilenkin": {
+  "stamp": "6d8b113f50420695",
+  "relations": {},
+  "orders": null,
+  "dimension": 4,
+  "ricci_flat": false,
+  "einstein": null,
+  "conformally_flat": true,
+  "killing": [
+   {
+    "coord": "\\phi",
+    "timelike": false,
+    "hypersurface_orthogonal": true,
+    "translation": false
+   }
+  ],
+  "sphere": [
+   "\\psi",
+   "\\theta",
+   "\\phi"
+  ]
+ },
  "hayward/eddington_finkelstein_ingoing": {
   "stamp": "3a498ff528b26244",
   "relations": {},

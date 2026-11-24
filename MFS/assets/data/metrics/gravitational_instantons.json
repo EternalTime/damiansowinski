@@ -74,6 +74,11 @@
       "id": "giddings_strominger",
       "kind": "family",
       "text": "A wormhole of four dimensions with no time that an axion's field holds open, which Steven B. Giddings and Andrew Strominger drew as \"a gravitational instanton with two asymptotically Euclidean regions\" [giddings1988]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "family",
+      "text": "A Riemannian space of four dimensions with a scalar field, regular at one pole and singular at the other, with a finite action [hawking1998open]."
     }
   ],
   "references": [
@@ -96,7 +101,8 @@
     "vilenkin1982",
     "atiyahhitchin1985",
     "gibbonsmanton1995",
-    "giddings1988"
+    "giddings1988",
+    "hawking1998open"
   ],
   "coordinates": [
     {

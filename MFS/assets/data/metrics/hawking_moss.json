@@ -40,7 +40,8 @@
     "gregory2020hm",
     "shi2026hm",
     "miyachi2024hm",
-    "saito2025hm"
+    "saito2025hm",
+    "hawking1998open"
   ],
   "related": [
     {
@@ -57,6 +58,11 @@
       "id": "universe_from_nothing",
       "kind": "family",
       "text": "A round Euclidean 4-sphere enters both constructions. The Hawking-Moss exponent compares a whole sphere at the barrier maximum with a false vacuum sphere [weinberg2007hm]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "generalisation",
+      "text": "The round 4-sphere with its field started off the stationary point. The field climbs its potential, the sphere deforms, and its second pole closes on a singularity [hawking1998open]."
     }
   ],
   "coordinates": [

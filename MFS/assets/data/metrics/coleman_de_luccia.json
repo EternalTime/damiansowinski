@@ -86,6 +86,11 @@
       "id": "brout_englert_gunzig",
       "kind": "family",
       "text": "An open universe inside the light cone of one event, with empty flat space outside it [brout1979causal]. Gott found the geometry inside similar when the outside is de Sitter space [gott1982]."
+    },
+    {
+      "id": "hawking_turok_instanton",
+      "kind": "generalisation",
+      "text": "Coleman and De Luccia's bounce with the field at its regular pole set anywhere. The field then runs off to infinity at the other pole, and the open universe needs no false vacuum [hawking1998open]."
     }
   ],
   "references": [
@@ -114,7 +119,8 @@
     "hirano2018bt",
     "giddings1988",
     "coleman1988",
-    "brout1979causal"
+    "brout1979causal",
+    "hawking1998open"
   ],
   "coordinates": [
     {

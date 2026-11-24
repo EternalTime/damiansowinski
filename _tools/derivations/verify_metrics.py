@@ -5587,5 +5587,9 @@ DIMENSIONS.update(_holographic_rg_flow.DIMENSIONS)
 import krasnikov_time_machine as _krasnikov_time_machine
 DIMENSIONS.update(_krasnikov_time_machine.DIMENSIONS)
 
+import hawking_turok_instanton as _hawking_turok_instanton
+DIMENSIONS.update(_hawking_turok_instanton.DIMENSIONS)
+
+
 if __name__ == "__main__":
     sys.exit(main())

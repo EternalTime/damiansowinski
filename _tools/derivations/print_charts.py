@@ -37914,6 +37914,9 @@ CHARTS[_chamseddine_volkov_monopole.METRIC] = [lambda system=system: _chamseddin
 import holographic_rg_flow as _holographic_rg_flow
 _holographic_rg_flow.register(sys.modules[__name__])
 
+import hawking_turok_instanton as _hawking_turok_instanton
+_hawking_turok_instanton.register(sys.modules[__name__])
+
 
 import krasnikov_time_machine as _krasnikov_time_machine
 CHARTS[_krasnikov_time_machine.METRIC] = [lambda system=system: _krasnikov_time_machine.chart_spec(system)
